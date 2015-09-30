@@ -1,0 +1,4 @@
+# Save as .codeclimate.yml (note leading .) in project root directory
+languages:
+  Ruby: true
+  JavaScript: true
