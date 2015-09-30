@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "jscs": "2.2.1",
+    "jshint": "2.8.0"
+  }
+}

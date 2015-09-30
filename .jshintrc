@@ -1,0 +1,19 @@
+// http://jshint.com/docs/options/
+// We want to be as strict as feasible; so don't change this file without
+// team discussion! Thanks.
+// Also don't change it before reading the JSHint documentation
+{
+  // Enforcing
+  "enforceall": true, // start out strict
+  "strict": true, // must have "'use strict';"
+  "es5": false, // fixes a bug in JSHint
+  "es3": false, // fixes a bug related to JSON global. https://github.com/jshint/jshint/issues/2213
+  "nocomma": false, // fixes: https://github.com/jshint/jshint/issues/2044
+  "camelcase": false,
+  "laxcomma": false,
+
+  //Environment
+  "jasmine": true,
+  "jquery": true, // allow `$` as global variable
+  "browser": true // allow `window`
+}
