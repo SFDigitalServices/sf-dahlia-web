@@ -1,0 +1,50 @@
+verify_plugin_signatures: false
+
+# We ignore the following git hooks provided by overcommit for now
+PostCheckout:
+  ALL:
+    enabled: false
+CommitMsg:
+  ALL:
+    enabled: false
+
+# Custom options for CCP repository
+PreCommit:
+  # Ignore all Overcommit default options
+  ALL:
+    enabled: false
+    on_warn: fail
+
+  # Enable explicitly each desired pre commit check
+  RuboCop:
+    enabled: true
+    description: 'Analyzing with Rubocop'
+    required_executable: 'rubocop'
+
+  RailsSchemaUpToDate:
+    enabled: true
+    description: 'Checking if database schema is up to date'
+    include:
+      - 'db/migrate/*.rb'
+      - 'db/schema.rb'
+      - 'db/structure.sql'
+
+  YamlSyntax:
+    enabled: true
+    description: 'Checking YAML syntax'
+
+  JsHint:
+    enabled: true
+    description: 'Analyzing with JSHint'
+    required_executable: 'jshint'
+    install_command: 'npm install'
+
+  Jscs:
+    enabled: true
+    description: 'Analyzing with JSCS'
+    required_executable: 'jscs'
+    install_command: 'npm install'
+
+  RailsBestPractices:
+    enabled: true
+    description: 'Checking Rails best practices'
