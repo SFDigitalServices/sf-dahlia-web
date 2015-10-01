@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 gem 'rails', '~> 4.2.4'
+gem 'pg'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -33,6 +35,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :test do
   gem 'codeclimate-test-reporter'
+end
+
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'rspec-core'
+  gem 'shoulda-matchers'
+  gem 'factory_girl_rails', require: false
+  gem 'awesome_print'
+  gem 'dotenv-rails'
+  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'jasmine-jquery-rails'
+  gem 'pry'
 end
 
 # Use ActiveModel has_secure_password
