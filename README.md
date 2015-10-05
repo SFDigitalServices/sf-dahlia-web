@@ -6,12 +6,25 @@
 
 [![Build Status](https://semaphoreci.com/api/v1/projects/53186731-1e6c-43a4-9d43-860e0759ea9a/558206/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web)
 
-### Getting started ###
+## Purpose ##
 
+DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created for the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
+
+## Dependencies ##
+Before you install DAHLIA, your system should have the following:
+1. [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see Gemfile for version)
+2. [Homebrew](http://brew.sh)
+4. bundler `gem install bundler`
+5. [PostgreSQL](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
+6. npm `brew install node`
+
+### Getting started ###
 We will create a Boxen for this project, but for now to get started:
 
-1. Clone repo into desktop and open in command line
-2. Run `bundle install` in command line to download all necessary gems
+## How to Install ##
+1. Clone the repo `git clone https://github.com/Exygy/sf-dahlia-web.git`
+2. Open a terminal window
+3. Run `bundle install` in command line to download all necessary gems
 3. Run `npm install` to run the js style and code linters
 
 ### Acceptance/Feature Apps ###
@@ -44,18 +57,14 @@ To identify and have Rubocop automatically correct violations when possible, run
 ### Changing the Style Guide settings
 Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
 
-### License ####
-Copyright (C) 2015  City and County of San Francisco
+### Credits ###
 
-DAHLIA is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 3 of the License, or
-(at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+### License ###
+Copyright (C) 2015 City and County of San Francisco
 
-You should have received a copy of the GNU General Public License along
-with DAHLIA.
+DAHLIA is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with DAHLIA. If not, see [http://choosealicense.com/licenses/gpl-2.0/](http://choosealicense.com/licenses/gpl-2.0/)
