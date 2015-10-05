@@ -1,5 +1,6 @@
 {
-  "devDependencies": {
+  "license": "GPL-3.0",
+  "devDependencies":  {
     "jscs": "2.2.1",
     "jshint": "2.8.0"
   }
