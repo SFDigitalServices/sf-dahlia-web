@@ -12,11 +12,12 @@ DAHLIA is the affordable housing portal for the City and County of San Francisco
 
 ## Dependencies ##
 Before you install DAHLIA, your system should have the following:
-1. [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see Gemfile for version)
-2. [Homebrew](http://brew.sh)
-4. bundler `gem install bundler`
-5. [PostgreSQL](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
-6. npm `brew install node`
+
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see Gemfile for version)
+- [Homebrew](http://brew.sh) 
+- bundler `gem install bundler`
+- [PostgreSQL](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
+- npm `brew install node`
 
 ### Getting started ###
 We will create a Boxen for this project, but for now to get started:
@@ -26,6 +27,7 @@ We will create a Boxen for this project, but for now to get started:
 2. Open a terminal window
 3. Run `bundle install` in command line to download all necessary gems
 3. Run `npm install` to run the js style and code linters
+4. Run `overcommit --install` to install git hooks into the repo
 
 ### Acceptance/Feature Apps ###
 
