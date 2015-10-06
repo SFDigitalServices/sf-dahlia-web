@@ -8,7 +8,7 @@
 
 ## Purpose ##
 
-DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created for the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
+DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created by the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
 
 ## Dependencies ##
 Before you install DAHLIA, your system should have the following:
