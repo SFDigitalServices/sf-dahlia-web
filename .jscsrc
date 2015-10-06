@@ -1,5 +1,5 @@
 {
-  "preset": "google",
+  "preset": "airbnb",
   "excludeFiles": [
     "vendor/bundle",
     "spec/javascripts/helpers",
