@@ -11,6 +11,12 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
+# Ignore all node modules
+node_modules/
+
+# Ingore Bower components
+lib/assets/bower_components
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
