@@ -48,3 +48,7 @@ PreCommit:
   RailsBestPractices:
     enabled: true
     description: 'Checking Rails best practices'
+
+  CustomScript:
+    enabled: true
+    required_executable: './bin/overcommit-pre-commit'
