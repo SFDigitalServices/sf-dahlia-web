@@ -7,11 +7,13 @@ gem 'rails', '~> 4.2.4'
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0'
+# Slim templates generator for Rails 3 and 4
+gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
@@ -24,14 +26,18 @@ group :development do
   gem 'spring'
 end
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
+# takes care of importing javascript dependencies
+# see /bower.json for more info
+gem 'bower-rails'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
+# Adds HTML templates into Angular's $templateCache using asset pipeline.
+gem 'angular-rails-templates'
+# NOTE: angular-rails-templates not yet compatible with sprockets > 3.0
+# https://github.com/pitr/angular-rails-templates/issues/93
+gem 'sprockets', '~> 2.12.4'
 
 group :test do
   gem 'codeclimate-test-reporter'
