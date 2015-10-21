@@ -1,7 +1,22 @@
 {
-  "license": "GPL-3.0",
-  "devDependencies":  {
+  "author": "Exygy",
+  "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.1",
     "jscs": "2.2.1",
     "jshint": "2.8.0"
-  }
+  },
+  "license": "GNU GENERAL PUBLIC LICENSE",
+  "keywords": [
+    "angular",
+    "rails"
+  ],
+  "name": "sf-dahila-web",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Exygy/sf-dahlia-web"
+  },
+  "version": "0.1.0"
 }
