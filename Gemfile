@@ -53,6 +53,7 @@ group :development, :test do
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'jasmine-jquery-rails'
   gem 'pry'
+  gem 'quiet_assets'
 end
 
 # Use ActiveModel has_secure_password
