@@ -24,5 +24,5 @@
       url: '/',
       templateUrl: 'welcome.html'
     })
-  $urlRouterProvider.otherwise('/welcome') # default to welcome screen
+  $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
