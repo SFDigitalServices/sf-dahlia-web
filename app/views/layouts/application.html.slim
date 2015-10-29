@@ -1,0 +1,14 @@
+doctype html
+html lang="en"
+  head
+    title DAHLIA
+    = stylesheet_link_tag 'application', media: 'all'
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1"
+    = csrf_meta_tags
+
+  body ng-app="dahlia" id="ng-app"
+    div ui-view="" class="inner-wrap"
+
+  = javascript_include_tag 'application'
+  = yield :javascript

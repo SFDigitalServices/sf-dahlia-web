@@ -1,13 +1,16 @@
-@dalia = angular.module 'dalia', [
+@dahlia = angular.module 'dahlia', [
   # controllers
   # services / factory
   # filters
   # dependencies
+  'ui.router',
+  'templates',
+  'mm.foundation',
 ]
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
-@dalia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
+@dahlia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
   $stateProvider
     .state('listings', {
       url: '/listings',
@@ -19,8 +22,7 @@
         ]
     }).state('welcome', {
       url: '/',
-      templateUrl: 'welcome.html',
-      controller: 'WelcomeController'
+      templateUrl: 'welcome.html'
     })
   $urlRouterProvider.otherwise('/welcome') # default to welcome screen
 ]
