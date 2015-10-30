@@ -14,15 +14,15 @@
   $stateProvider
     .state('listings', {
       url: '/listings',
-      templateUrl: 'listings.html'
-      controller: 'ListingsController',
-      resolve:
-        listings: ['$stateParams', 'ListingsService', ($stateParams, ListingsService) ->
-          ListingsService.getListings()
-        ]
+      templateUrl: 'listings/templates/listings.html'
+      # controller: 'ListingsController',
+      # resolve:
+      #   listings: ['$stateParams', 'ListingsService', ($stateParams, ListingsService) ->
+      #     ListingsService.getListings()
+      #   ]
     }).state('welcome', {
       url: '/',
-      templateUrl: 'welcome.html'
+      templateUrl: 'shared/templates/welcome.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
