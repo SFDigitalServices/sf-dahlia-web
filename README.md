@@ -34,6 +34,10 @@ We will create a Boxen for this project, but for now to get started:
 Running grunt will migrate the css over from the patter library.
 6. Run `rake bower:install`
 
+## Running Tests ##
+
+Run `thor tests`. This will run syntax linters, code quality linters, rspec and jasmine specs.
+
 ### Acceptance/Feature Apps ###
 
 Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.

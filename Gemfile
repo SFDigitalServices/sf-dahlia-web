@@ -57,6 +57,7 @@ group :development, :test do
   gem 'jasmine-jquery-rails'
   gem 'pry'
   gem 'quiet_assets'
+  gem 'thor-rails'
 end
 
 # Use ActiveModel has_secure_password
