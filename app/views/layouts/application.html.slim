@@ -8,7 +8,7 @@ html lang="en"
     = csrf_meta_tags
 
   body ng-app="dahlia" id="ng-app"
-    div ui-view="" class="inner-wrap"
+    ui-view
 
   = javascript_include_tag 'application'
   = yield :javascript
