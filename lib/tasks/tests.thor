@@ -10,7 +10,6 @@ class Tests < Thor
     'rubocop' => 'bundle exec rubocop --rails',
     'jscs' => 'bundle exec node_modules/jscs/bin/jscs .',
     'jshint' => 'bundle exec node_modules/jshint/bin/jshint .',
-    'cane' => 'bundle exec cane',
     'rails_best_practices' => 'bundle exec rails_best_practices',
     'rspec' => 'bundle exec rspec',
     'jasmine' => 'SKIP_FIXTURES=true rake jasmine:ci',

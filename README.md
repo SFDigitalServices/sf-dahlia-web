@@ -30,7 +30,8 @@ We will create a Boxen for this project, but for now to get started:
 3. Run `bundle install` in command line to download all necessary gems
 3. Run `npm install` to run the js style and code linters
 4. Run `overcommit --install` to install git hooks into the repo
-5. Run `grunt`. Ensure that the *latest* pattern library is in the same folder as this repo.
+5. Run `bower install`
+6. Run `grunt`. Ensure that the *latest* pattern library is in the same folder as this repo.
 Running grunt will migrate the css over from the patter library.
 6. Run `rake bower:install`
 
