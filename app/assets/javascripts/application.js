@@ -14,5 +14,4 @@
 //= require angular-foundation
 //= require angular-ui-router
 //= require angular-rails-templates
-//= require angular-pageslide-directive
 //= require_tree .

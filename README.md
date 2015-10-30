@@ -56,6 +56,34 @@ To identify and have Rubocop automatically correct violations when possible, run
 * `rubocop -a [path_to_file]` for individual files
 * `rubocop -a` for all Ruby files
 
+#### JavaScript File Structure ####
+
+When adding new modules to the JavaScript dirctory, please follow the example structure below to mantain a modular component structure.
+
+```
+- javascripts
+    - applications
+        - ApplicationsController.js
+        - ApplicationsService.js
+        - templates
+            - applications.html
+    - listings
+        - ListingController.js
+        - ListingService.js
+        - templates
+            - listings.html
+            - listing.html
+    - shared
+        - SharedService.js
+        - SharedController.js
+        - LanguageController.js
+        - LanguageService.js
+        - directives
+        - filters
+        - templates
+            - welcome.html
+```
+
 ### Changing the Style Guide settings
 Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
 
