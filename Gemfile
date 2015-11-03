@@ -38,8 +38,6 @@ gem 'angular-rails-templates'
 # NOTE: angular-rails-templates not yet compatible with sprockets > 3.0
 # https://github.com/pitr/angular-rails-templates/issues/93
 gem 'sprockets', '~> 2.12.4'
-gem 'execjs' # The Ruby buildpack has a magic behavior where if it detects the
-# execjs gem, it will bundle Node.js with the build.This should make bower work.
 
 group :test do
   gem 'codeclimate-test-reporter'

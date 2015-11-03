@@ -249,7 +249,6 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   dotenv-rails
-  execjs
   factory_girl_rails
   jasmine!
   jasmine-jquery-rails

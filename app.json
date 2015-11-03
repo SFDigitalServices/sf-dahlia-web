@@ -6,5 +6,10 @@
   "addons":[
     "newrelic",
     "papertrail"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/ddollar/heroku-buildpack-multi.git"
+    }
   ]
 }
