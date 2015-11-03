@@ -7,6 +7,8 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module SfDahliaWeb
+  # setting up config for application
   class Application < Rails::Application
+    config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
   end
 end

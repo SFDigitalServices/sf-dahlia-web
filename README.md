@@ -19,6 +19,7 @@ Before you install DAHLIA, your system should have the following:
 - [PostgreSQL](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
 - `brew install node`
 - npm install -g grunt-cli (To run grunt commands globally)
+- npm install bower
 
 ### Getting started ###
 We will create a Boxen for this project, but for now to get started:
@@ -31,6 +32,7 @@ We will create a Boxen for this project, but for now to get started:
 4. Run `overcommit --install` to install git hooks into the repo
 5. Run `grunt`. Ensure that the *latest* pattern library is in the same folder as this repo.
 Running grunt will migrate the css over from the patter library.
+6. Run `rake bower:install`
 
 ### Acceptance/Feature Apps ###
 
