@@ -1,0 +1,19 @@
+{
+  "listing":
+  {
+    "id": 0,
+    "name": "Stevenson Lofts",
+    "address": "529 Stevenson St, San Francisco CA, 94134",
+    "developer": "Relisto Leasing Agency",
+    "application_due_date": "2015-12-12",
+    "image_url": "",
+    "units": [
+      {
+        "id": 0,
+        "unit_type": "Studio",
+        "min_monthly_income": 2975,
+        "rent": 941
+      }
+    ]
+  }
+}
