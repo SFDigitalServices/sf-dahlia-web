@@ -22,7 +22,7 @@
       #   ]
     }).state('welcome', {
       url: '/',
-      templateUrl: 'shared/templates/welcome.html'
+      templateUrl: 'pages/templates/welcome.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
