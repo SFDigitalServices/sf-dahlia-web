@@ -2,7 +2,6 @@
   "name":"sf-dahlia-web",
   "description":"",
   "scripts":{},
-  "env":{},
   "addons":[
     "newrelic",
     "papertrail"
@@ -11,5 +10,22 @@
     {
       "url": "https://github.com/ddollar/heroku-buildpack-multi.git"
     }
-  ]
+  ],
+  "env":{
+    "LANG":{
+      "required":true
+    },
+    "RACK_ENV":{
+      "required":true
+    },
+    "RAILS_ENV":{
+      "required":true
+    },
+    "RAILS_SERVE_STATIC_FILES":{
+      "required":true
+    },
+    "SECRET_KEY_BASE":{
+      "required":true
+    }
+  }
 }
