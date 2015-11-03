@@ -1,0 +1,10 @@
+{
+  "name":"sf-dahlia-web",
+  "description":"",
+  "scripts":{},
+  "env":{},
+  "addons":[
+    "newrelic",
+    "papertrail"
+  ]
+}
