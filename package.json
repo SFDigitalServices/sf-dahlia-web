@@ -10,6 +10,9 @@
     "jscs": "2.2.1",
     "jshint": "2.8.0"
   },
+  "dependencies": {
+    "bower": "^1.6.5"
+  },
   "scripts": {
       "postinstall": "bower install"
   },
