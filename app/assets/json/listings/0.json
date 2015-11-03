@@ -7,13 +7,26 @@
     "developer": "Relisto Leasing Agency",
     "application_due_date": "2015-12-12",
     "image_url": "",
+    "map_url": "",
+    "application_url": "https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg",
     "units": [
       {
         "id": 0,
         "unit_type": "Studio",
         "min_monthly_income": 2975,
-        "rent": 941
+        "rent": 941,
+        "occupancy_low": 1, 
+        "occupancy_high": 2,
+        "availability": 9
       }
-    ]
+    ],
+    "application": {
+      "property_manager": "Caritas Management Corporation",
+      "property_manager_address": "1358 Valencia St, San Francisco, CA 94102",
+      "map_url": "",
+      "office_open": "8:30am",
+      "office_closed": "5:00pm",
+      "property_manager_phone": "(415) 333-9956"
+    }
   }
 }
