@@ -38,8 +38,8 @@ module.exports = function(grunt) {
       },
       files: [
         {
-          expand: true, flatten: true, 
-          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.css'], 
+          expand: true, flatten: true,
+          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.css'],
           dest: '<%= applicationAssetsPath %>/stylesheets/'
         }
       ]
