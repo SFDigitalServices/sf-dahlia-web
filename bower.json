@@ -2,7 +2,12 @@
   "name": "sf-dahlia-web",
   "lib": {
     "name": "bower-rails generated lib assets",
-    "dependencies": {}
+    "dependencies": {
+      "angular": "~1.4.7",
+      "angular-ui-router": "~0.2.15",
+      "angular-foundation": "~0.7.0",
+      "angular-pageslide-directive": "~1.0.5"
+    }
   },
   "vendor": {
     "name": "bower-rails generated vendor assets",

@@ -16,6 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
+gem 'puma'
 
 group :development do
   gem 'rubocop', require: false
@@ -42,6 +43,8 @@ gem 'sprockets', '~> 2.12.4'
 group :test do
   gem 'codeclimate-test-reporter'
 end
+
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'rspec-rails'
