@@ -5,10 +5,8 @@
     "name": "Trinity Place",
     "address": "1188 Mission St, San Francisco CA, 94134",
     "developer": "Caritas Management Group",
-    "application_due_date": "2015-12-01",
     "image_url": "",
     "map_url": "",
-    "application_url": "https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg",
     "units": [
       {
         "id": 0,
@@ -29,10 +27,12 @@
         "availability": 9
       }
     ],
-    "application": {
+    "application_info": {
       "property_manager": "Caritas Management Corporation",
       "property_manager_address": "1358 Valencia St, San Francisco, CA 94102",
       "map_url": "",
+      "url": "https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg",
+      "due_date": "2015-12-01",
       "office_open": "8:30am",
       "office_closed": "5:00pm",
       "property_manager_phone": "(415) 333-9956"
