@@ -37,6 +37,28 @@
           "rent": 1066
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "Franciscan Towers",
+      "address": "217 Eddy Street, San Francisco, CA 94134",
+      "developer": "Tenderloin Neighborhood Development",
+      "application_due_date": "2015-11-01",
+      "image_url": "",
+      "units": [
+        {
+          "id": 0,
+          "unit_type": "Studio",
+          "min_monthly_income": 2353,
+          "rent": 939
+        },
+        {
+          "id": 2,
+          "unit_type": "1BR",
+          "min_monthly_income": 2353,
+          "rent": 1074
+        }
+      ]
     }
   ]
 }
