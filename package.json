@@ -13,9 +13,9 @@
   "dependencies": {
     "bower": "^1.6.5"
   },
-  "engine": {
-    "node": "0.10.x",
-    "npm": "1.4.x"
+  "engines": {
+    "node": "4.1.x",
+    "npm": "2.1.x"
   },
   "scripts": {
       "postinstall": "bower install"
