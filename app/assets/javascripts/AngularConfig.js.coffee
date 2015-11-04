@@ -4,6 +4,7 @@
   # services / factory
   'ListingFactoryModule',
   # filters
+  'customFilters',
   # dependencies
   'ui.router',
   'templates',
