@@ -1,1 +1,29 @@
-h1 Listing
+div.property-hero
+  figure.property-hero_figure
+    div.p-relative
+      img.property-hero_thumb src="http://placehold.it/420x220"
+  header.property-hero_content.text-center
+    h1.property-hero_title.gamma
+      a href="#" Trinity Place Apartments
+    p 1188 Mission St, San Francisco CA, 94134
+    p.c-steel Caritas Management Group
+    a.t-micro href="#" View on Map
+  div.property-hero_stats
+    figcaption.property-card_stats
+    ul.stats-list.triple ng-repeat="unit in listing.unit"
+      li
+        div.stats-list_value
+        | {{unit.unit_type}}
+        span bedrooms
+      li
+        div.stats-list_value
+        | {{unit.min_monthly_income | currency:"$":0}}
+        span min income
+      li
+        div.stats-list_value
+        | {{unit.rent | currency:"$":0}}
+        span rent
+  div.property-hero_action.text-center
+    p.t-small Deadline: Dec 12th 2015
+    a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
+    p.t-small Listing Updated: Aug 15th 2015
