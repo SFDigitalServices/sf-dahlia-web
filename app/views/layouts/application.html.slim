@@ -8,11 +8,7 @@ html lang="en"
     = csrf_meta_tags
 
   body ng-app="dahlia" id="ng-app"
-    nav.top-bar data-topbar="" role="navigation"
-      ul.title-area
-        li.name
-          h1
-            a href="#"  SF DAHLIA Housing
+    ng-include src="'shared/templates/nav.html'"
 
     ui-view
 
