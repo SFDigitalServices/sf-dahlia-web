@@ -13,7 +13,7 @@
         "unit_type": "Studio",
         "min_monthly_income": 2353,
         "rent": 939,
-        "occupancy_low": 1, 
+        "occupancy_low": 1,
         "occupancy_high": 2,
         "availability": 9
       },
@@ -22,12 +22,12 @@
         "unit_type": "1BR",
         "min_monthly_income": 2353,
         "rent": 1074,
-        "occupancy_low": 1, 
+        "occupancy_low": 1,
         "occupancy_high": 3,
         "availability": 9
       }
     ],
-    "application": {
+    "application_info": {
       "property_manager": "Caritas Management Corporation",
       "property_manager_address": "1358 Valencia St, San Francisco, CA 94102",
       "map_url": "",
