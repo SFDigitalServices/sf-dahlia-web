@@ -13,7 +13,3 @@ ListingController = ($scope, $state, ListingService) ->
 ListingModule = angular.module('ListingModule', []);
 ListingController.$inject = ['$scope', '$state', 'ListingService']
 ListingModule.controller 'ListingController', ListingController
-ListingModule.directive 'dahliaShortListing', ->
-  scope:
-    listing: '='
-  templateUrl: 'listings/templates/short_listing.html'
