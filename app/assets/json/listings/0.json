@@ -5,7 +5,7 @@
     "name": "Stevenson Lofts",
     "address": "529 Stevenson St, San Francisco CA, 94134",
     "developer": "Relisto Leasing Agency",
-    "image_url": "",
+    "image_url": "http://placehold.it/420x220",
     "map_url": "",
     "units": [
       {
@@ -13,7 +13,7 @@
         "unit_type": "Studio",
         "min_monthly_income": 2975,
         "rent": 941,
-        "occupancy_low": 1, 
+        "occupancy_low": 1,
         "occupancy_high": 2,
         "availability": 9
       }

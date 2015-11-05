@@ -5,7 +5,7 @@
     "name": "Trinity Place",
     "address": "1188 Mission St, San Francisco CA, 94134",
     "developer": "Caritas Management Group",
-    "image_url": "",
+    "image_url": "http://placehold.it/420x220",
     "map_url": "",
     "units": [
       {
@@ -13,7 +13,7 @@
         "unit_type": "Studio",
         "min_monthly_income": 2347,
         "rent": 939,
-        "occupancy_low": 1, 
+        "occupancy_low": 1,
         "occupancy_high": 2,
         "availability": 9
       },
@@ -22,7 +22,7 @@
         "unit_type": "1BR",
         "min_monthly_income": 2650,
         "rent": 1066,
-        "occupancy_low": 1, 
+        "occupancy_low": 1,
         "occupancy_high": 3,
         "availability": 9
       }
