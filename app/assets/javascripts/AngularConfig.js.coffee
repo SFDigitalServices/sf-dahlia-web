@@ -5,6 +5,7 @@
   'customFilters',
   # dependencies
   'ui.router',
+  'ngCookies',
   'templates',
   'mm.foundation',
 ]
@@ -23,6 +24,7 @@ angular.module('dahlia.controllers',[])
       controller: 'ListingController',
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
           ListingService.getListings()
         ]
     }).state('listing', {
@@ -31,6 +33,7 @@ angular.module('dahlia.controllers',[])
       controller: 'ListingController',
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
           ListingService.getListing($stateParams.id)
         ]
     }).state('welcome', {

@@ -4,10 +4,11 @@ ul.padding-top--2x
       figure.property-card_figure
         .property-card_container
           img.property-card_thumb ng-src="{{listing.image_url}}"
-          a.property-card_like href="#"
-            span.ui-icon
+          a.property-card_like
+            span.ui-icon ng-click="toggleFavoriteListing(listing.id);"
               svg
-                use xlink:href="#i-like" style="display:block;"
+                use xlink:href="#i-like"
+                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
 
         figcaption.property-card_stats.hide-for-medium-up
           .stats-card.bottom
