@@ -1,0 +1,15 @@
+###
+Should only be needed in development only (i.e. for JSON assets)
+-- unless we end up referencing other /asset files (like images?)
+-- current limitation is that we have to manually reference each file
+-- also, there's a gem for this: 'js_assets' but it didn't seem to work
+###
+@project_assets =
+  <% 3.times do |i| %>
+  'listings/<%= i %>.json': '<%= asset_path "listings/#{i}.json" %>',
+  <% end %>
+  'listings.json': '<%= asset_path "listings.json" %>'
+
+# provides global JS function `asset_path()` which will give you access to proper asset pipeline file paths
+@asset_path = (path) ->
+  @project_assets[path]

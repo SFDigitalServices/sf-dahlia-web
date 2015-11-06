@@ -1,0 +1,41 @@
+{
+  "listing":
+  {
+    "id": 2,
+    "name": "Franciscan Towers",
+    "address": "217 Eddy Street, San Francisco, CA 94134",
+    "developer": "Tenderloin Neighborhood Development",
+    "image_url": "http://placehold.it/420x220",
+    "map_url": "",
+    "units": [
+      {
+        "id": 0,
+        "unit_type": "Studio",
+        "min_monthly_income": 2353,
+        "rent": 939,
+        "occupancy_low": 1,
+        "occupancy_high": 2,
+        "availability": 9
+      },
+      {
+        "id": 2,
+        "unit_type": "1BR",
+        "min_monthly_income": 2353,
+        "rent": 1074,
+        "occupancy_low": 1,
+        "occupancy_high": 3,
+        "availability": 9
+      }
+    ],
+    "application_info": {
+      "property_manager": "Caritas Management Corporation",
+      "property_manager_address": "1358 Valencia St, San Francisco, CA 94102",
+      "map_url": "",
+      "url": "https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg",
+      "due_date": "2015-12-01",
+      "office_open": "8:30am",
+      "office_closed": "5:00pm",
+      "property_manager_phone": "(415) 333-9956"
+    }
+  }
+}

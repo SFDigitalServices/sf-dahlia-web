@@ -1,1 +1,61 @@
-h1 Listing
+div.property-hero
+  figure.property-hero_figure
+    div.p-relative
+      img.property-hero_thumb src="{{listing.image_url}}"
+      span.ui-icon
+       svg
+         use xlink:href="#i-like"
+  header.property-hero_content.text-center
+    h1.property-hero_title.gamma
+      a href="#" {{listing.name}}
+    p
+      | {{listing.address}}
+    p.c-steel
+      | {{listing.developer}}
+    a.t-micro href="https://www.google.com/maps/place/{{listing.address}}" View on Map
+  div.property-hero_stats ng-repeat="unit in listing.units"
+    figcaption.property-card_stats
+      ul.stats-list.triple
+        li
+          div.stats-list_value
+           | {{unit.unit_type}}
+          span Bedrooms
+        li
+          div.stats-list_value
+           | {{unit.min_monthly_income | currency:"$":0}}
+          span Min Income
+        li
+          div.stats-list_value
+           | {{unit.rent | currency:"$":0}}
+          span Rent
+    ul.stats-list.double
+      li.t-small
+        span
+          ' Occupancy
+        span
+          ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
+        span people
+      li.t-small
+        span.status-list_value
+          ' Availability
+        span
+          ' {{unit.availability}}
+        span units
+
+  div.property-hero_action.text-center
+    div.property-block.block.bg-mist.text-center
+      h3 HOW TO APPLY
+      h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
+    a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
+    p Pickup and turn in paper applications
+    h4
+      | {{listing.application_info.property_manager}}
+    h4
+      | {{listing.application_info.property_manager_address}}
+    a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
+    h4 Office Hours
+    h4
+      | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
+    a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
+    h4
+      | {{listing.application_info.property_manager_phone}}
