@@ -8,11 +8,13 @@
     var fakeListingService;
     var fakeListings = getJSONFixture('/listings.json').listings;
     var fakeListing = getJSONFixture('/listings/0.json').listing;
+    var fakeListingFavorites =  {};
 
     beforeEach(module('dahlia.controllers', function($provide) {
       fakeListingService = {
         listings: fakeListings,
         listing: fakeListing,
+        favorites: fakeListingFavorites,
       };
 
       $provide.value('ListingService', fakeListingService);
@@ -38,5 +40,10 @@
       });
     });
 
+    describe('$scope.favorites', function() {
+      it('populates scope with favorites', function() {
+        expect(scope.favorites).toEqual(fakeListingFavorites);
+      });
+    });
   });
 }());
