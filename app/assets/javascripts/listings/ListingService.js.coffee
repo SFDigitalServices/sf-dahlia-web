@@ -2,7 +2,6 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-
 ListingService = ($http, $modal, $cookies) ->
   Service = {}
   Service.listing = {}
@@ -10,11 +9,8 @@ ListingService = ($http, $modal, $cookies) ->
   Service.favorites = {}
 
   Service.getFavoriteListings = () ->
-    console.log('getFavoriteListings called')
-    # 1. Read the favorite listings array from favorites cookie
-    # Service.favorites = ...
-    # 2. Pass the array Salesforce api call to return favorites.
-    # Service.getListingsByIds(favorites)
+    Service.favorites = [1,2]
+    Service.getListingsByIds(Service.favorites)
 
   Service.getListing = (_id) ->
     angular.copy({}, Service.listing)
@@ -24,13 +20,10 @@ ListingService = ($http, $modal, $cookies) ->
       # console.log data
     )
 
-  Service.getListingsByIds = (_ids) ->
+  Service.getListingsByIds = (favoriteIds) ->
     angular.copy({}, Service.listings)
-    # Currently this pulls the same dataset that Listings uses, we want to make a 
-    # new API Call to Salesforce for our listings by IDs.
     $http.get(asset_path("listings.json")).success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
-      # console.log(Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
