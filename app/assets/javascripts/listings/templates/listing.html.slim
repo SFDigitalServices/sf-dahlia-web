@@ -59,44 +59,321 @@ div.property-hero
     a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
     h4
       | {{listing.application_info.property_manager_phone}}
-  accordion
-    accordion-group
-        accordion-heading
-          h4 Eligibility
-          h5 Income, occupancy, and preferences
-        p Lottery preferences
-        accordion
-          accordion-group
-            accordion-heading
-              h4 Certificate of Preference
-            p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaces by Agency action.
-            | For more information please call
-            a href="tel: 415-701-5613" 415-701-5613
-          accordion-group
-            accordion-heading
-              h4 Ellis Act Preference
-            p Some fantastically easy to understand explanation of Ellis Act here
-          accordion-group
-            accordion-heading
-              h4 Live/Work Preference
-            p Some super easy to understand information here
-    accordion-group
-        accordion-heading
-         h4 Process
-         h5 Important dates and contact information
-        This is just some content to illustrate fancy headings.
-    accordion-group
-        accordion-heading
-         h4 Features
-         h5 Amenities, unit details, and additional fees
-        This is just some content to illustrate fancy headings.
-    accordion-group
-        accordion-heading
-         h4 Neighborhood
-         h5 Location and transportation
-        This is just some content to illustrate fancy headings.
-    accordion-group
-        accordion-heading
-         h4 Legal
-         h5 Required documents and selection criteria
-        This is just some content to illustrate fancy headings.
+
+
+
+  ul.property-accordion.accordion data-accordion=""
+  li.accordion-navigation
+    a.accordion-header href="#panel1a"
+      | Eligibility
+      span.accordion-subheader Income, occupancy, preferences, and subsidies
+      span.ui-control.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down"
+    #panel1a.content.active
+      .content-panel
+        h4.tiny.t-sans Requirements
+        .stats-card.bg-mist
+          ul.stats-list.double
+            li
+              | Studio
+            li
+              | 1-2 people
+          ul.stats-list.double
+            li
+              .stats-list_value $2,347/mo
+              | min income
+            li
+              .stats-list_value $3,270 - $4,204/mo
+              | max income
+          table.stats-table
+            thead
+              tr
+                th occupancy
+                th max income/mo
+                th max income/yr
+            tbody
+              tr.stat-row
+                td 1 person
+                td $3,245/mo
+                td $38,950/yr
+              tr.stat-row
+                td 2 person
+                td $3,708/mo
+                td $44,500/yr
+        .unit-requirements.stats-card.bg-mist
+          ul.stats-list.double
+            li
+              | 1 Bedroom
+            li
+              | 2-4 people
+          ul.stats-list.double
+            li
+              .stats-list_value $2,347/mo
+              | min income
+            li
+              .stats-list_value $3,270 - $4,204/mo
+              | max income
+      .content-panel
+        h4.tiny.t-sans Lottery Preferences
+        ul.accordion-nested.accordion data-accordion=""
+          li.accordion-navigation
+            a.accordion-header href="#panel1a-a"
+              | Certificate of Preference
+              span.ui-control.ui-icon.ui-small
+                svg
+                  use xlink:href="#i-arrow-down"
+            #panel1a-a.content
+              p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+          li.accordion-navigation
+            a.accordion-header href="#panel1a-b"
+              | Ellis Act Preference
+              span.ui-control.ui-icon.ui-small
+                svg
+                  use xlink:href="#i-arrow-down"
+            #panel1a-b.content
+              p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+          li.accordion-navigation
+            a.accordion-header href="#panel1a-c"
+              | Live/Work Preference
+              span.ui-control.ui-icon.ui-small
+                svg
+                  use xlink:href="#i-arrow-down"
+            #panel1a-c.content
+              p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+      .content-panel
+        h4.tiny.t-sans Rental Assistance
+        ul.accordion-nested.accordion data-accordion=""
+          li.accordion-navigation
+            a href="#panel1b-a"
+              | Subsidies and Vouchers
+              span.ui-control.ui-icon.ui-small
+                svg
+                  use xlink:href="#i-arrow-down"
+            #panel1b-a.content
+              p
+                | Section 8 housing vouchers and other valid rental assistance programs can be used to rent a BMR unit. In the case of a valid rent subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after the use of
+                | the subsidy.
+  li.accordion-navigation
+    a.accordion-header href="#panel2a"
+      | Process
+      span.accordion-subheader Important dates and contact information
+      span.ui-control.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down"
+    #panel2a.content
+      .content-panel
+        h4.tiny.t-sans Application Deadline
+        h3 Nov 21st, 2015
+        hr/
+      .content-panel
+        h4.tiny.t-sans Information Sessions
+        ul
+          li
+            h3.no-margin Oct 27th
+            span 1:00pm – 2:30pm
+            p.t-bold.no-margin San Francisco LGBT Community Center
+            p 1800 Market Street, San Francisco
+        hr/
+      .content-panel
+        h4.tiny.t-sans Open Houses
+        ul.content-list
+          li
+            h3.no-margin Oct 10th
+            span 1:00pm – 2:30pm
+          li
+            h3.no-margin Oct 18th
+            span 1:00pm – 2:30pm
+        hr/
+      .content-panel
+        h4.tiny.t-sans Public Lottery
+        ul
+          li
+            h3.no-margin Nov 28th
+            span 1:00pm – 2:30pm
+            p.t-bold.no-margin San Francisco LGBT Community Center
+            p 1800 Market Street, San Francisco
+        hr/
+      .content-panel.text-center
+        h4.tiny.t-sans Contact
+        h3.no-margin Garbo Chang
+        p Property Manager
+        .button-stack
+          button.button Submit
+          button.button Submit
+        h5.t-sans.no-margin Caritas Management Corporation
+        p 1358 Valencia St, San Francisco, CA 94102
+        a href="#"  Get directions
+      .content-panel.text-center
+        h4.tiny.t-sans.no-margin Office Hours
+        h5.t-sans 8:30 am - 5:00pm
+        button.button Submit
+  li.accordion-navigation
+    a.accordion-header href="#panel3a"
+      | Features
+      span.accordion-subheader Amenities, unit details and additional fees
+      span.ui-control.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down"
+    #panel3a.content
+      .content-panel
+        p A great place to call home. 11 units available. Located in SOMAs featuring great amenities in a centralized location.
+      .content-panel
+        .row.collapse
+          .small-6.columns
+            span.t-small.c-steel Neighborhood
+            p SOMA
+          .small-6.columns
+            span.t-small.c-steel Built
+            p 2015
+        .row.collapse.margin-bottom
+          .small-12.columns
+            span.t-small.c-steel Property Amenities
+          .row.collapse
+            .small-6.columns
+              ul
+                li 24-hour Desk
+                li Elevator
+                li Lobby
+                li Laundry Facilities
+                li Community TV Room
+                li All units w/ Private Bathrooms and Kitchens
+            .small-6.columns
+              ul
+                li Cats allowed
+                li Dogs allowed
+                li Water and Trash Included
+                li No Parking
+        .row.collapse
+          .small-12.columns
+            span.t-small.c-steel Accessibility
+          .row.collapse
+            .small-6.columns
+              ul
+                li Wheelchair Accees
+                li Grab Bars
+      .content-panel
+        h5.t-sans.t-small.c-steel Unit Features
+        .stats-card.bg-mist
+          ul.stats-list.double
+            li
+              | Studio
+            li
+              | 1 unit
+          ul.stats-list.double
+            li.t-small
+              | Accessable Unit
+            li.t-small
+              | 469 sqft
+          table.stats-table--stack
+            tbody
+              tr.stat-row
+                td
+                  b.tablesaw-cell-label Unit Number
+                  span.tablesaw-cell-content 127
+                td
+                  b.tablesaw-cell-label Area
+                  span.tablesaw-cell-content 469 sqft
+                td
+                  b.tablesaw-cell-label Bathrooms
+                  span.tablesaw-cell-content 1 bath
+                td
+                  b.tablesaw-cell-label Floor
+                  span.tablesaw-cell-content 1st floor
+                td
+                  b.tablesaw-cell-label Building
+                  span.tablesaw-cell-content South Tower
+                td
+                  b.tablesaw-cell-label Acccessibilty
+                  span.tablesaw-cell-content Wheelchair access, grab bars
+        .stats-card.bg-mist
+          ul.stats-list.double
+            li
+              | 1 Bedroom
+            li
+              | 9 units
+          ul.stats-list.double
+            li.t-small
+              | Accessable Units
+            li.t-small
+              | 639 - 900 sqft
+      .content-panel
+        .content-panel--expanded.bg-mist
+          h5.t-sans.t-small.c-steel Additional Fees
+          .row.collapse.margin-bottom
+            .small-6.columns
+              span.t-small Application Fee
+              p.t-delta.no-margin $40
+              span.t-small.c-steel due post-lottery
+            .small-6.columns
+              span.t-small Deposit
+              p.t-delta.no-margin $500 - 941
+              span.t-small.c-steel based on credit score
+          .row.collapse
+            .small-12.columns
+              p Renter pays phone, internet and cable
+  li.accordion-navigation
+    a.accordion-header href="#panel4a"
+      | Neighborhood
+      span.accordion-subheader Location and transportation
+      span.ui-control.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down"
+    #panel4a.content
+      .property-map.map-panel.content-panel--full
+        figure.property-map_figure.p-relative
+          img.property-map_thumb src="/assets/toolkit/images/map.png" /
+          a.map-link.ui-link href="#"
+            span.ui-icon
+              svg
+                use xlink:href="#i-map" /
+            | Get Directions
+  li.accordion-navigation
+    a.accordion-header href="#panel5a"
+      | Legal
+      span.accordion-subheader Required documents and selection criteria
+      span.ui-control.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down"
+    #panel5a.content
+      ul.accordion-nested.accordion data-accordion=""
+        li.accordion-navigation
+          a.accordion-header href="#panel1a-a"
+            | Property Selection Criteria
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-a.content
+            p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+        li.accordion-navigation
+          a.accordion-header href="#panel1a-b"
+            | Required Documents
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-b.content
+            p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+        li.accordion-navigation
+          a.accordion-header href="#panel1a-c"
+            | Legal Disclaimers
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-c.content
+            p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+        li.accordion-navigation
+          a.accordion-header href="#panel1a-d"
+            | Smoking Policy
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-d.content
+            p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+        li.accordion-navigation
+          a.accordion-header href="#panel1a-e"
+            | Pets Policy
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-e.content
+            p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
