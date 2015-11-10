@@ -2,9 +2,11 @@ div.property-hero
   figure.property-hero_figure
     div.p-relative
       img.property-hero_thumb src="{{listing.image_url}}"
-      span.ui-icon
-       svg
-         use xlink:href="#i-like"
+      a.property-hero_like ng-click="toggleFavoriteListing(listing.id);"
+        span.ui-icon
+          svg
+            use xlink:href="#i-like"
+            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
   header.property-hero_content.text-center
     h1.property-hero_title.gamma
       a href="#" {{listing.name}}
@@ -14,33 +16,33 @@ div.property-hero
       | {{listing.developer}}
     a.t-micro href="https://www.google.com/maps/place/{{listing.address}}" View on Map
   div.property-hero_stats ng-repeat="unit in listing.units"
-    figcaption.property-card_stats
+    div.stats-card
       ul.stats-list.triple
         li
           div.stats-list_value
            | {{unit.unit_type}}
-          span Bedrooms
+          span.stats-list_label Bedrooms
         li
           div.stats-list_value
            | {{unit.min_monthly_income | currency:"$":0}}
-          span Min Income
+          span.stats-list_label Min Income
         li
           div.stats-list_value
            | {{unit.rent | currency:"$":0}}
-          span Rent
-    ul.stats-list.double
-      li.t-small
-        span
-          ' Occupancy
-        span
-          ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
-        span people
-      li.t-small
-        span.status-list_value
-          ' Availability
-        span
-          ' {{unit.availability}}
-        span units
+          span.stats-list_label Rent
+      ul.stats-list.double.bg-smoke
+        li.t-small
+          span
+            ' Occupancy
+          span
+            ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
+          span people
+        li.t-small
+          span.status-list_value
+            ' Availability
+          span
+            ' {{unit.availability}}
+          span units
 
   div.property-hero_action.text-center
     div.property-block.block.bg-mist.text-center

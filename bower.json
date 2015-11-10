@@ -6,7 +6,8 @@
       "angular": "~1.4.7",
       "angular-ui-router": "~0.2.15",
       "angular-foundation": "~0.7.0",
-      "angular-pageslide-directive": "~1.0.5"
+      "angular-pageslide-directive": "~1.0.5",
+      "angular-cookies": "~1.4.7"
     }
   },
   "vendor": {
@@ -18,7 +19,8 @@
     "angular-ui-router": "~0.2.15",
     "angular-foundation": "~0.7.0",
     "angular-pageslide-directive": "~1.0.5",
-    "angular-mocks": "~1.4.7"
+    "angular-mocks": "~1.4.7",
+    "angular-cookies": "~1.4.7"
   },
   "resolutions": {
     "angular": "~1.4.7"
