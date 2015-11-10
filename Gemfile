@@ -44,8 +44,6 @@ group :test do
   gem 'codeclimate-test-reporter'
 end
 
-gem 'rails_12factor', group: :production
-
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-core'
@@ -53,11 +51,16 @@ group :development, :test do
   gem 'factory_girl_rails', require: false
   gem 'awesome_print'
   gem 'dotenv-rails'
+  gem 'jquery-rails' # only needed for jasmine-jquery
   gem 'jasmine', github: 'pivotal/jasmine-gem'
-  gem 'jasmine-jquery-rails'
+  gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
   gem 'pry'
   gem 'quiet_assets'
   gem 'thor-rails'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password

@@ -96,6 +96,10 @@ GEM
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-rails (4.0.5)
+      rails-dom-testing (~> 1.0)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     json (1.8.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -257,6 +261,7 @@ DEPENDENCIES
   jasmine!
   jasmine-jquery-rails
   jbuilder (~> 2.0)
+  jquery-rails
   overcommit
   pg
   pry
