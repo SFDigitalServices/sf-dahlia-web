@@ -9,32 +9,7 @@ ListingService = ($http, $modal, $cookies) ->
   Service.favorites = {}
 
   Service.getFavoriteListings = () ->
-    Service.favorites = [1,2]
     Service.getListingsByIds(Service.favorites)
-
-  Service.getListing = (_id) ->
-    angular.copy({}, Service.listing)
-    $http.get("/json/listings/"+_id+".json").success((data, status, headers, config) ->
-      angular.copy((if data and data.listing then data.listing else {}), Service.listing)
-    ).error( (data, status, headers, config) ->
-      # console.log data
-    )
-
-  Service.getListingsByIds = (favoriteIds) ->
-    angular.copy({}, Service.listings)
-    $http.get(asset_path("listings.json")).success((data, status, headers, config) ->
-      angular.copy((if data and data.listings then data.listings else {}), Service.listings)
-    ).error( (data, status, headers, config) ->
-      # console.log data
-    )
-
-  Service.getListingsByIds = (favoriteIds) ->
-    angular.copy({}, Service.listings)
-    $http.get("/json/listings.json").success((data, status, headers, config) ->
-      angular.copy((if data and data.listings then data.listings else {}), Service.listings)
-    ).error( (data, status, headers, config) ->
-      # console.log data
-    )
 
   Service.getFavorites = () ->
     favorites = $cookies.getObject('Service.favorites') || {}
@@ -45,7 +20,27 @@ ListingService = ($http, $modal, $cookies) ->
     Service.favorites[listing_id] = !Service.favorites[listing_id]
     $cookies.putObject('Service.favorites', Service.favorites)
 
+  ###################################### Salesforce API Calls ###################################
+
+  Service.getListing = (_id) ->
+    angular.copy({}, Service.listing)
+    $http.get("/json/listings/"+_id+".json").success((data, status, headers, config) ->
+      angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
   Service.getListings = () ->
+    angular.copy({}, Service.listings)
+    $http.get("/json/listings.json").success((data, status, headers, config) ->
+      angular.copy((if data and data.listings then data.listings else {}), Service.listings)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
+  # This is currently making a call to the same json data file as getListings
+  # When wired to Salesforce, pass an array of Listing IDs that we would like returned.
+  Service.getListingsByIds = (ids) ->
     angular.copy({}, Service.listings)
     $http.get("/json/listings.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
