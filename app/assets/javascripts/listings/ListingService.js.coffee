@@ -22,9 +22,16 @@ ListingService = ($http, $modal, $cookies) ->
 
   Service.getListingsByIds = (favoriteIds) ->
     angular.copy({}, Service.listings)
+    $http.get(asset_path("listings.json")).success((data, status, headers, config) ->
+      angular.copy((if data and data.listings then data.listings else {}), Service.listings)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
+  Service.getListingsByIds = (favoriteIds) ->
+    angular.copy({}, Service.listings)
     $http.get("/json/listings.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
-      # console.log(Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
@@ -42,7 +49,6 @@ ListingService = ($http, $modal, $cookies) ->
     angular.copy({}, Service.listings)
     $http.get("/json/listings.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
-      # console.log(Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
