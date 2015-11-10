@@ -1,0 +1,38 @@
+.property-card.responsive
+  figure.property-card_figure
+    .p-relative
+      img.property-card_thumb ng-src="{{listing.image_url}}"
+      a.property-card_like href="#"
+        span.ui-icon
+          svg
+            use xlink:href="#i-like"
+
+    figcaption.property-card_stats
+      ul.stats-list.triple ng-repeat="unit in listing.units"
+        li
+          .stats-list_value
+            | {{unit.unit_type}}
+          span bedrooms
+        li
+          .stats-list_value
+            | {{unit.min_monthly_income | currency:"$":0}}
+          span min income
+        li
+          .stats-list_value
+            | {{unit.rent | currency:"$":0}}
+          span rent
+
+  header.property-card_content
+    h1.property-card_title.gamma
+      a ng-href="#/listings/{{listing.id}}"
+        | {{listing.name}}
+
+    p
+      | {{listing.address}}
+    p.c-steel
+      | {{listing.developer}}
+    p
+      | Application Due {{listing.application_due_date | dateSuffix}}
+    .property-card_action
+      a.button.tiny.secondary ng-href="#/listings/{{listing.id}}"
+        | See Details
