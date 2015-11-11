@@ -42,6 +42,7 @@ angular.module('dahlia.controllers',[])
       controller: 'ListingController',
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
           ListingService.getFavoriteListings()
         ]
     }).state('welcome', {

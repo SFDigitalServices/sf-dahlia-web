@@ -11,7 +11,7 @@ ListingController = ($scope, $state, ListingService) ->
     ListingService.toggleFavoriteListing(listing_id)
 
   $scope.isFavorited = (listing_id) ->
-    $scope.favorites[listing_id]
+    ListingService.isFavorited(listing_id)
 
 ############################################################################################
 ######################################## CONFIG ############################################
