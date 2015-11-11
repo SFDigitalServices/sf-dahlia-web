@@ -1,7 +1,7 @@
 vendor/bundle
 vendor/assets/javascripts
 lib/assets/bower_components
-spec/javascripts/helpers
+spec/javascripts/helpers/*.js
 public/assets
 node_modules
 Gruntfile.js

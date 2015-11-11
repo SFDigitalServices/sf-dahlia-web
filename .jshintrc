@@ -20,7 +20,12 @@
     "pending": true,
     "getJSONFixture": true, // jasmine-jquery
     "loadFixture": true, // jasmine-jquery
-    "readFixtures": true // jasmine-jquery
+    "readFixtures": true, // jasmine-jquery
+    "stubAngularAjaxRequest": true,
+    "stubAjaxRequest": true,
+    "stubAjaxRequestWithStatus": true,
+    "stubAjaxRequestNoFixture": true,
+    "withoutMockAjax": true
   },
   "jasmine": true,
   "jquery": true, // allow `$` as global variable

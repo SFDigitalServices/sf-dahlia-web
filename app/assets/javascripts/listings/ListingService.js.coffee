@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $modal, $cookies) ->
+ListingService = ($http, $cookies) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -36,7 +36,6 @@ ListingService = ($http, $modal, $cookies) ->
     $http.get("/json/listings/"+_id+".json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
     ).error( (data, status, headers, config) ->
-      # console.log data
     )
 
   Service.getListings = () ->
@@ -44,7 +43,6 @@ ListingService = ($http, $modal, $cookies) ->
     $http.get("/json/listings.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
     )
 
   # This is currently making a call to the same json data file as getListings
@@ -58,7 +56,6 @@ ListingService = ($http, $modal, $cookies) ->
       # ---- ------ ------
       angular.copy(listings, Service.listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
     )
 
   return Service
@@ -68,7 +65,7 @@ ListingService = ($http, $modal, $cookies) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$modal', '$cookies']
+ListingService.$inject = ['$http', '$cookies']
 
 angular
   .module('dahlia.services')
