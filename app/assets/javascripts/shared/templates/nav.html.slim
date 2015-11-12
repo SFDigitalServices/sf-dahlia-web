@@ -3,13 +3,22 @@ nav.top-bar role="navigation"
     li.name
       h1
         a ui-sref="welcome" SF DAHLIA Housing
-    li class="toggle-topbar active"
-      a ui-sref="favorites"
+    li ng-show="shared.showListingsNav()" class="toggle-topbar"
+      a ui-sref="listings"
         span class="ui-icon"
           svg
             use xlink:href="#i-like-fill"
+    li ng-show="shared.showFavoritesNav()" class="toggle-topbar"
+      a ui-sref="favorites"
+        span class="ui-icon"
+          svg
+            use xlink:href="#i-search"
+
   section class="top-bar-section"
     ul class="right"
-      li
+      li ng-show="shared.showListingsNav()"
+        a ui-sref="listings"
+          | Listings
+      li ng-show="shared.showFavoritesNav()"
         a ui-sref="favorites"
           | My Favorites

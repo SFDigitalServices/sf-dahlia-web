@@ -73,4 +73,3 @@ ListingService.$inject = ['$http', '$modal', '$cookies']
 angular
   .module('dahlia.services')
   .service('ListingService', ListingService)
-
