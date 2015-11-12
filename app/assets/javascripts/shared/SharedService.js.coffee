@@ -6,7 +6,7 @@ SharedService = ($http, $state) ->
   Service = {}
 
   Service.showListingsNav = () ->
-    $state.current.name == "favorites" || $state.current.name == "listing"
+    ["favorites", "listing", "share"].indexOf($state.current.name) > -1
 
   Service.showFavoritesNav = () ->
     $state.current.name == "listings"

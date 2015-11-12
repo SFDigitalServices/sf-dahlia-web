@@ -15,7 +15,7 @@
   header.property-card_content
     hgroup.property-card_info
       h1.property-card_title.gamma
-        a ng-href="#/listings/{{listing.id}}"
+        a ui-sref="listing({id: listing.id})"
           | {{listing.name}}
 
       p
@@ -25,11 +25,13 @@
       p
         | Application Due {{listing.application_due_date | dateSuffix}}
       .property-card_action
-        a.button.tiny.secondary ng-href="#/listings/{{listing.id}}"
+        a.button.tiny.secondary ui-sref="listing({id: listing.id})"
           | See Details
     .property-card_stats.show-for-medium-up
       .stats-card.bottom.bg-mist
         ng-include src="'listings/templates/_stats-list.html'"
+    button.button.small.secondary ng-show="shared.showSharing()" ui-sref="share({id: listing.id})"
+      | Share Property
 
     ul.button-group ng-show="shared.showSocial()"
       li
