@@ -1,15 +1,18 @@
 @dahlia = angular.module 'dahlia', [
-  # controllers
-  'ListingModule',
-  # services / factory
-  'ListingFactoryModule',
+  'dahlia.controllers',
+  'dahlia.services',
   # filters
   'customFilters',
   # dependencies
   'ui.router',
+  'ngCookies',
   'templates',
   'mm.foundation',
 ]
+
+# Service and Controller modules
+angular.module('dahlia.services', [])
+angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
@@ -21,6 +24,7 @@
       controller: 'ListingController',
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
           ListingService.getListings()
         ]
     }).state('listing', {
@@ -29,6 +33,7 @@
       controller: 'ListingController',
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
           ListingService.getListing($stateParams.id)
         ]
     }).state('welcome', {

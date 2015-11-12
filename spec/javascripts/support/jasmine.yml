@@ -12,6 +12,8 @@
 #
 src_files:
   - assets/application.js
+  - assets/jquery.js
+  - assets/jasmine-jquery.js
 
 # stylesheets
 #
@@ -51,7 +53,7 @@ helpers:
 #   - **/*[sS]pec.js
 #
 spec_files:
-  - '**/*[sS]pec.js'
+  - '**/*[Ss]pec.{js,coffee}'
 
 # src_dir
 #

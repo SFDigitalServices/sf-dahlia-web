@@ -10,9 +10,18 @@
   "es3": false, // fixes a bug related to JSON global. https://github.com/jshint/jshint/issues/2213
   "nocomma": false, // fixes: https://github.com/jshint/jshint/issues/2044
   "camelcase": false,
-  "laxcomma": false,
 
   //Environment
+  "globals": {
+    "dahlia": true, // Our JS namespace
+    "angular": true, // Angular
+    "module": true, // Angular
+    "inject": true, // Angular
+    "pending": true,
+    "getJSONFixture": true, // jasmine-jquery
+    "loadFixture": true, // jasmine-jquery
+    "readFixtures": true // jasmine-jquery
+  },
   "jasmine": true,
   "jquery": true, // allow `$` as global variable
   "browser": true // allow `window`

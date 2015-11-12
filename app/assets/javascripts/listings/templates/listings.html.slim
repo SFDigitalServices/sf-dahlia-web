@@ -1,40 +1,34 @@
 ul.padding-top--2x
   li.margin-bottom--2x ng-repeat="listing in listings"
-    .property-card.responsive
+    .property-card
       figure.property-card_figure
-        .p-relative
+        .property-card_container
           img.property-card_thumb ng-src="{{listing.image_url}}"
-          a.property-card_like href="#"
+          a.property-card_like ng-click="toggleFavoriteListing(listing.id);"
             span.ui-icon
               svg
                 use xlink:href="#i-like"
+                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
 
-        figcaption.property-card_stats
-          ul.stats-list.triple ng-repeat="unit in listing.units"
-            li
-              .stats-list_value
-                | {{unit.unit_type}}
-              span bedrooms
-            li
-              .stats-list_value
-                | {{unit.min_monthly_income | currency:"$":0}}
-              span min income
-            li
-              .stats-list_value
-                | {{unit.rent | currency:"$":0}}
-              span rent
+        figcaption.property-card_stats.hide-for-medium-up
+          .stats-card.bottom
+            ng-include src="'listings/templates/_stats-list.html'"
 
       header.property-card_content
-        h1.property-card_title.gamma
-          a ng-href="#/listings/{{listing.id}}"
-            | {{listing.name}}
+        hgroup.property-card_info
+          h1.property-card_title.gamma
+            a ng-href="#/listings/{{listing.id}}"
+              | {{listing.name}}
 
-        p
-          | {{listing.address}}
-        p.c-steel
-          | {{listing.developer}}
-        p
-          | Application Due {{listing.application_due_date | dateSuffix}}
-        .property-card_action
-          a.button.tiny.secondary ng-href="#/listings/{{listing.id}}"
-            | See Details
+          p
+            | {{listing.address}}
+          p.c-steel
+            | {{listing.developer}}
+          p
+            | Application Due {{listing.application_due_date | dateSuffix}}
+          .property-card_action
+            a.button.tiny.secondary ng-href="#/listings/{{listing.id}}"
+              | See Details
+        .property-card_stats.show-for-medium-up
+          .stats-card.bottom.bg-mist
+            ng-include src="'listings/templates/_stats-list.html'"
