@@ -2,6 +2,7 @@
   'use strict';
 
   describe('ListingService', function() {
+    jasmine.getJSONFixtures().fixturesPath = '/public/json';
     var ListingService;
     var httpBackend;
     var fakeListings = getJSONFixture('/listings.json');

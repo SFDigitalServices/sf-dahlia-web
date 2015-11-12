@@ -16,7 +16,7 @@
         listing: fakeListing,
         favorites: fakeListingFavorites,
       };
-
+      fakeListingService.toggleFavoriteListing = jasmine.createSpy();
       $provide.value('ListingService', fakeListingService);
     }));
 
@@ -43,6 +43,31 @@
     describe('$scope.favorites', function() {
       it('populates scope with favorites', function() {
         expect(scope.favorites).toEqual(fakeListingFavorites);
+      });
+    });
+
+    describe('$scope.toggleFavoriteListing', function() {
+      it('expect ListingService.function to be called', function() {
+        scope.toggleFavoriteListing(1);
+        expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled();
+      });
+    });
+
+    describe('$scope.isFavorited', function() {
+      describe('listing is favorited', function() {
+        it('function returns true', function() {
+          var listingId = fakeListing.id;
+          scope.favorites[listingId] = true;
+          expect(scope.isFavorited(listingId)).toEqual(true);
+        });
+      });
+
+      describe('listing is not favorited', function() {
+        it('function returns false', function() {
+          var listingId = fakeListing.id;
+          scope.favorites[listingId] = false;
+          expect(scope.isFavorited(listingId)).toEqual(false);
+        });
       });
     });
   });
