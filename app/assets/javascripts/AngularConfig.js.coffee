@@ -3,9 +3,12 @@
   'dahlia.services',
   # filters
   'customFilters',
+  # directives
+  'customDirectives',
   # dependencies
   'ui.router',
   'ngCookies',
+  'angular-clipboard',
   'templates',
   'mm.foundation',
 ]
@@ -48,6 +51,10 @@ angular.module('dahlia.controllers',[])
     }).state('welcome', {
       url: '/',
       templateUrl: 'pages/templates/welcome.html'
+    }).state('share', {
+      url: '/share/:id',
+      templateUrl: 'pages/templates/share.html'
+      controller: 'ShareController'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
