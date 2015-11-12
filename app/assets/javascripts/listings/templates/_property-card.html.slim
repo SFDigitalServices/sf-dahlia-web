@@ -31,10 +31,12 @@
       .stats-card.bottom.bg-mist
         ng-include src="'listings/templates/_stats-list.html'"
 
-    ul.button-group
+    ul.button-group ng-show="shared.showSocial()"
       li
-        button.button.secondary ng-show="shared.showSharing()"
+        button.button.secondary
           | Share
       li
         button.button.secondary href="tel: {{listing.application_info.property_manager_phone}}"
-          | Call Manager {{listing.application_info.property_manager_phone}}
+          | Call Manager
+          br
+          | {{listing.application_info.property_manager_phone}}
