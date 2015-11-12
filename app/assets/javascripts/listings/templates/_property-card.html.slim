@@ -30,7 +30,12 @@
     .property-card_stats.show-for-medium-up
       .stats-card.bottom.bg-mist
         ng-include src="'listings/templates/_stats-list.html'"
-    button.button.small.secondary ng-show="shared.showSharing()" ui-sref="share({id: listing.id})"
-      | Share Property
-
-
+    ul.button-group ng-show="shared.showSocial()"
+      li
+        button.button.secondary ui-sref="share({id: listing.id})"
+          | Share Property
+      li
+        a.button.secondary href="tel: {{listing.application_info.property_manager_phone}}"
+          | Call Manager
+          br
+          | {{listing.application_info.property_manager_phone}}

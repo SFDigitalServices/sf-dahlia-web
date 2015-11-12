@@ -11,7 +11,7 @@ SharedService = ($http, $state) ->
   Service.showFavoritesNav = () ->
     $state.current.name == "listings"
 
-  Service.showSharing = () ->
+  Service.showSocial = () ->
     $state.current.name == "favorites"
 
   return Service
