@@ -1,0 +1,18 @@
+ng-include src="'shared/templates/nav.html'"
+
+header.header-block
+  a.button.tiny(back-button)
+    | < Back
+
+.property-block.block.text-center
+  h1.gamma Share this listing with a housing counselor, family member or friend.
+  .row
+    form.large-12.columns ng-submit="emailShare()"
+      .row.collapse
+        .small-8.columns
+          input placeholder="Enter email address" type="email" ng-model="email"
+        .small-4.columns
+          input.button.postfix type="submit" value="Send"
+    .large-12.columns
+      button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+        | Get shareable link
