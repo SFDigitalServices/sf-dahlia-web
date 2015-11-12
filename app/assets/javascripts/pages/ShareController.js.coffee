@@ -2,7 +2,8 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShareController = ($scope, $state, $window) ->
+ShareController = ($scope, $state, $window, SharedService) ->
+  $scope.shared = SharedService
 
   $scope.clipboardLink = ->
     # get the link to /listings/:id using the listing :id of the share page route
@@ -20,7 +21,7 @@ ShareController = ($scope, $state, $window) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShareController.$inject = ['$scope', '$state', '$window']
+ShareController.$inject = ['$scope', '$state', '$window', 'SharedService']
 
 angular
   .module('dahlia.controllers')

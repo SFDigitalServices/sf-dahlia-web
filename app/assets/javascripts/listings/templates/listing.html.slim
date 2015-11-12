@@ -65,5 +65,5 @@ div.property-hero
       | {{listing.application_info.property_manager_phone}}
 
   div.property-hero_action.text-center
-    a.button.small ng-href="#/share/{{listing.id}}"
+    a.button.small.secondary ui-sref="share({id: listing.id})"
       | Share Property

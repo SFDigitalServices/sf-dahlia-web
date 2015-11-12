@@ -1,3 +1,5 @@
+ng-include src="'shared/templates/nav.html'"
+
 header.header-block
   a.button.tiny(back-button)
     | < Back
@@ -12,5 +14,5 @@ header.header-block
         .small-4.columns
           input.button.postfix type="submit" value="Send"
     .large-12.columns
-      button(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+      button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
         | Get shareable link
