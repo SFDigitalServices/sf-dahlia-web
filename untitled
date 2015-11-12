@@ -1,71 +1,6 @@
-ng-include src="'shared/templates/nav.html'"
-
-div.property-hero
-  figure.property-hero_figure
-    div.p-relative
-      img.property-hero_thumb src="{{listing.image_url}}"
-      a.property-hero_like ng-click="toggleFavoriteListing(listing.id);"
-        span.ui-icon
-          svg
-            use xlink:href="#i-like"
-            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
-  header.property-hero_content.text-center
-    h1.property-hero_title.gamma
-      | {{listing.name}}
-    p
-      | {{listing.address}}
-    p.c-steel
-      | {{listing.developer}}
-    a.t-micro href="https://www.google.com/maps/place/{{listing.address}}" View on Map
-  div.property-hero_stats ng-repeat="unit in listing.units"
-    div.stats-card
-      ul.stats-list.triple
-        li
-          div.stats-list_value
-           | {{unit.unit_type}}
-          span.stats-list_label Bedrooms
-        li
-          div.stats-list_value
-           | {{unit.min_monthly_income | currency:"$":0}}
-          span.stats-list_label Min Income
-        li
-          div.stats-list_value
-           | {{unit.rent | currency:"$":0}}
-          span.stats-list_label Rent
-      ul.stats-list.double.bg-smoke
-        li.t-small
-          span
-            ' Occupancy
-          span
-            ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
-          span people
-        li.t-small
-          span.status-list_value
-            ' Availability
-          span
-            ' {{unit.availability}}
-          span units
-
-  div.property-hero_action.text-center
-    div.property-block.block.bg-mist.text-center
-      h3 HOW TO APPLY
-      h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
-    a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
-    p Pickup and turn in paper applications
-    h4
-      | {{listing.application_info.property_manager}}
-    h4
-      | {{listing.application_info.property_manager_address}}
-    a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
-    h4 Office Hours
-    h4
-      | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
-    a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
-    h4
-      | {{listing.application_info.property_manager_phone}}
-  div.property-hero_action.text-center
-    a.button.small.secondary ui-sref="share({id: listing.id})"
-      | Share Property
+accordion.property-accordion.accordion
+  accordion-group.accordion-navigation
+    accordion-heading.accordion-header
 
 accordion.property-accordion.accordion
   accordion-group.accordion-navigation
@@ -150,7 +85,7 @@ accordion.property-accordion.accordion
         h4.tiny.t-sans Rental Assistance
         accordion.accordion-nested.accordion
           accordion-group.accordion-navigation
-            accordion-heading
+            a
               | Subsidies and Vouchers
               span.ui-control.ui-icon.ui-small
                 svg
@@ -204,15 +139,15 @@ accordion.property-accordion.accordion
         h3.no-margin Garbo Chang
         p Property Manager
         .button-stack
-          button.button Call
-          button.button Email
+          button.button Submit
+          button.button Submit
         h5.t-sans.no-margin Caritas Management Corporation
         p 1358 Valencia St, San Francisco, CA 94102
         a href="#"  Get directions
       .content-panel.text-center
         h4.tiny.t-sans.no-margin Office Hours
         h5.t-sans 8:30 am - 5:00pm
-        button.button Visit Website
+        button.button Submit
   accordion-group.accordion-navigation
     accordion-heading.accordion-header
       | Features
@@ -327,8 +262,8 @@ accordion.property-accordion.accordion
     #panel4a.content
       .property-map.map-panel.content-panel--full
         figure.property-map_figure.p-relative
-          iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.379895347056!2d-122.4125466837633!3d37.781135879758395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858084e5540655%3A0x8fc08301d5de417f!2s529+Stevenson+St%2C+San+Francisco%2C+CA+94103!5e0!3m2!1sen!2sus!4v1447289216863" width="600" height="450" frameborder="0" style="border:0"
-          a.map-link.ui-link href="https://goo.gl/maps/wXGpZhc23E82"
+          img.property-map_thumb src="/assets/toolkit/images/map.png" /
+          a.map-link.ui-link href="#"
             span.ui-icon
               svg
                 use xlink:href="#i-map" /
