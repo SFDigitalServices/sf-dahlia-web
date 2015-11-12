@@ -61,3 +61,7 @@ div.property-hero
     a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
     h4
       | {{listing.application_info.property_manager_phone}}
+
+  div.property-hero_action.text-center
+    a.button.small ng-href="#/share/{{listing.id}}"
+      | Share Property

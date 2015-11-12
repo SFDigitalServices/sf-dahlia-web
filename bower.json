@@ -7,7 +7,8 @@
       "angular-ui-router": "~0.2.15",
       "angular-foundation": "~0.7.0",
       "angular-pageslide-directive": "~1.0.5",
-      "angular-cookies": "~1.4.7"
+      "angular-cookies": "~1.4.7",
+      "angular-clipboard": "~1.1.1"
     }
   },
   "vendor": {
@@ -20,7 +21,8 @@
     "angular-foundation": "~0.7.0",
     "angular-pageslide-directive": "~1.0.5",
     "angular-mocks": "~1.4.7",
-    "angular-cookies": "~1.4.7"
+    "angular-cookies": "~1.4.7",
+    "angular-clipboard": "~1.1.1"
   },
   "resolutions": {
     "angular": "~1.4.7"
