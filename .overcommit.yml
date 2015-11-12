@@ -8,8 +8,12 @@ CommitMsg:
   ALL:
     enabled: false
 
-# Custom options for CCP repository
+# Custom options for Dahlia repository
 PreCommit:
+
+  BundleCheck:
+    enabled: true
+
   # Ignore all Overcommit default options
   ALL:
     enabled: false
@@ -33,21 +37,23 @@ PreCommit:
     enabled: true
     description: 'Checking YAML syntax'
 
-  JsHint:
-    enabled: true
-    description: 'Analyzing with JSHint'
-    required_executable: 'jshint'
-    install_command: 'npm install'
-
-  Jscs:
-    enabled: true
-    description: 'Analyzing with JSCS'
-    required_executable: 'jscs'
-    install_command: 'npm install'
-
   RailsBestPractices:
     enabled: true
     description: 'Checking Rails best practices'
+
+  CoffeeLint:
+    enabled: true
+    description: 'Analyzing with CoffeeLint'
+    required_executable: 'coffeelint'
+    install_command: 'npm install'
+
+  TrailingWhitespace:
+    enabled: true
+    description: 'Checking for trailing whitespace'
+    exclude:
+      - 'spec/cassettes/**/*.yml'
+      - 'app/assets/**/*.svg'
+      - 'lib/assets/bower_components/**/*'
 
   CustomScript:
     enabled: true
