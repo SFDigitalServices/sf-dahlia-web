@@ -55,16 +55,16 @@ do ->
 
     describe 'Service.toggleFavoriteListing', ->
       describe 'When a listing is favorited', ->
-        expectedResult = 1: true
+        expectedResult = [1]
         listingId = 1
         beforeEach ->
           ListingService.toggleFavoriteListing listingId
           return
         afterEach ->
-          $cookies.remove listingId
+          $cookies.remove 'storedFavorites'
           return
         it 'should store Service.favorites in cookies', ->
-          cookieQuery = $cookies.getObject('Service.favorites')
+          cookieQuery = $cookies.getObject('storedFavorites')
           expect(cookieQuery).toEqual expectedResult
           expect(cookieQuery).toEqual ListingService.favorites
           return
@@ -74,7 +74,7 @@ do ->
         return
 
       describe 'When a favorited listing is unfavorited', ->
-        expectedResult = 1: false
+        expectedResult = []
         listingId = 1
         beforeEach ->
           ListingService.toggleFavoriteListing listingId
@@ -83,10 +83,10 @@ do ->
           #unfavoriting listing
           return
         afterEach ->
-          $cookies.remove listingId
+          $cookies.remove 'storedFavorites'
           return
         it 'should update Service.favorites in cookies', ->
-          cookieQuery = $cookies.getObject('Service.favorites')
+          cookieQuery = $cookies.getObject('storedFavorites')
           expect(cookieQuery).toEqual expectedResult
           expect(cookieQuery).toEqual ListingService.favorites
           return
@@ -101,7 +101,7 @@ do ->
         it 'updates Service.favorites with appropriate data', ->
           ListingService.toggleFavoriteListing 1
           ListingService.getFavorites()
-          expect(ListingService.favorites).toEqual 1: true
+          expect(ListingService.favorites).toEqual [1]
           return
         return
       return

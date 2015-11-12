@@ -6,6 +6,7 @@ do ->
     scope = undefined
     state = undefined
     fakeListingService = undefined
+    fakeSharedService = undefined
     fakeListings = getJSONFixture('/listings.json').listings
     fakeListing = getJSONFixture('/listings/0.json').listing
     fakeListingFavorites = {}
@@ -16,6 +17,7 @@ do ->
         listing: fakeListing
         favorites: fakeListingFavorites
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
+      fakeListingService.isFavorited = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       return
     )
@@ -25,6 +27,7 @@ do ->
       $controller 'ListingController',
         $scope: scope
         $state: state
+        SharedService: fakeSharedService
       return
     )
 
@@ -54,22 +57,10 @@ do ->
       return
 
     describe '$scope.isFavorited', ->
-
-      describe 'listing is favorited', ->
-        it 'function returns true', ->
-          listingId = fakeListing.id
-          scope.favorites[listingId] = true
-          expect(scope.isFavorited(listingId)).toEqual true
-          return
+      it 'expects ListingService.function to be called', ->
+        listingId = fakeListing.id
+        scope.isFavorited(listingId)
+        expect(fakeListingService.isFavorited).toHaveBeenCalled()
         return
-
-      describe 'listing is not favorited', ->
-        it 'function returns false', ->
-          listingId = fakeListing.id
-          scope.favorites[listingId] = false
-          expect(scope.isFavorited(listingId)).toEqual false
-          return
-        return
-      return
     return
   return
