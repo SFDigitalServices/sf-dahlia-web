@@ -14,7 +14,10 @@
           "min_monthly_income": 2975,
           "rent": 941
         }
-      ]
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 333-9956"
+      }
     },
     {
       "id": 1,
@@ -36,7 +39,10 @@
           "min_monthly_income": 2650,
           "rent": 1066
         }
-      ]
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 215-9944"
+      }
     },
     {
       "id": 2,
@@ -58,7 +64,10 @@
           "min_monthly_income": 2353,
           "rent": 1074
         }
-      ]
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 456-9457"
+      }
     }
   ]
 }

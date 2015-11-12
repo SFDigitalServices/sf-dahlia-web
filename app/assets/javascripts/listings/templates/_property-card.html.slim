@@ -33,4 +33,12 @@
     button.button.small.secondary ng-show="shared.showSharing()" ui-sref="share({id: listing.id})"
       | Share Property
 
-
+    ul.button-group ng-show="shared.showSocial()"
+      li
+        button.button.secondary
+          | Share
+      li
+        a.button.secondary href="tel: {{listing.application_info.property_manager_phone}}"
+          | Call Manager
+          br
+          | {{listing.application_info.property_manager_phone}}
