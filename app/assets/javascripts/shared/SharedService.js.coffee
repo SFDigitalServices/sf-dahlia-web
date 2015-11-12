@@ -6,10 +6,10 @@ SharedService = ($http, $state) ->
   Service = {}
 
   Service.showListingsNav = () ->
-    $state.current.name != "listings"
+    $state.current.name == "favorites" || $state.current.name == "listing"
 
   Service.showFavoritesNav = () ->
-    $state.current.name != "favorites"
+    $state.current.name == "listings"
 
   return Service
 
