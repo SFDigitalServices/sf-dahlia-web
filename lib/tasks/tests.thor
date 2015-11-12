@@ -8,10 +8,9 @@ class Tests < Thor
 
   COMMANDS = {
     'rubocop' => 'bundle exec rubocop --rails',
-    'jscs' => 'bundle exec node_modules/jscs/bin/jscs .',
-    'jshint' => 'bundle exec node_modules/jshint/bin/jshint .',
     'rails_best_practices' => 'bundle exec rails_best_practices',
     'rspec' => 'bundle exec rspec',
+    'coffeelint' => 'coffeelint .',
     'jasmine' => 'SKIP_FIXTURES=true rake jasmine:ci',
   }
 

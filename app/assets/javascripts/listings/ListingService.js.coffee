@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $modal, $cookies) ->
+ListingService = ($http, $cookies) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -68,7 +68,7 @@ ListingService = ($http, $modal, $cookies) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$modal', '$cookies']
+ListingService.$inject = ['$http', '$cookies']
 
 angular
   .module('dahlia.services')

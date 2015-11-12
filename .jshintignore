@@ -1,7 +1,0 @@
-vendor/bundle
-vendor/assets/javascripts
-lib/assets/bower_components
-spec/javascripts/helpers
-public/assets
-node_modules
-Gruntfile.js

@@ -7,14 +7,13 @@
   'customDirectives',
   # dependencies
   'ui.router',
-  'ngCookies',
   'angular-clipboard',
   'templates',
   'mm.foundation',
 ]
 
 # Service and Controller modules
-angular.module('dahlia.services', [])
+angular.module('dahlia.services', ['ngCookies'])
 angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
