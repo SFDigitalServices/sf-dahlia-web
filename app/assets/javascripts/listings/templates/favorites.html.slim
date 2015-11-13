@@ -1,5 +1,3 @@
-ng-include src="'shared/templates/nav.html'"
-
 ul.padding-top--2x
   li.margin-bottom--2x ng-repeat="listing in listings"
     ng-include src="'listings/templates/_property-card.html'" ng-show="isFavorited(listing.id)"
