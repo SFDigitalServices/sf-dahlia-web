@@ -20,40 +20,62 @@ angular.module('dahlia.controllers',[])
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
 @dahlia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
   $stateProvider
-    .state('listings', {
-      url: '/listings',
-      templateUrl: 'listings/templates/listings.html'
-      controller: 'ListingController',
+    .state('dahlia', {
+      url: ''
+      abstract: true
+      views:
+        'nav@':
+          templateUrl: 'shared/templates/nav.html'
+          controller: 'NavController'
+    })
+    .state('dahlia.listings', {
+      url: '/listings'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listings.html'
+          controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
           ListingService.getListings()
         ]
-    }).state('listing', {
+    })
+    .state('dahlia.listing', {
       url: '/listings/:id',
-      templateUrl: 'listings/templates/listing.html'
-      controller: 'ListingController',
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listing.html'
+          controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
           ListingService.getListing($stateParams.id)
         ]
-    }).state('favorites', {
-      url: '/favorites',
-      templateUrl: 'listings/templates/favorites.html'
-      controller: 'ListingController',
+    })
+    .state('dahlia.favorites', {
+      url: '/favorites'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/favorites.html'
+          controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
           ListingService.getFavoriteListings()
         ]
-    }).state('welcome', {
-      url: '/',
-      templateUrl: 'pages/templates/welcome.html'
-    }).state('share', {
-      url: '/share/:id',
-      templateUrl: 'pages/templates/share.html'
-      controller: 'ShareController'
+    })
+    .state('dahlia.welcome', {
+      url: '/'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/welcome.html'
+    })
+    .state('dahlia.share', {
+      url: '/share/:id'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/share.html'
+          controller: 'ShareController'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
