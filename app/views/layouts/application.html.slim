@@ -8,9 +8,8 @@ html lang="en"
     = csrf_meta_tags
 
   body ng-app="dahlia" id="ng-app"
-    ng-include src="'shared/templates/nav.html'"
-
-    ui-view
+    div(ui-view="nav")
+    div(ui-view="container")
 
     / icon collection
     ng-include src="'shared/templates/icons.html'"

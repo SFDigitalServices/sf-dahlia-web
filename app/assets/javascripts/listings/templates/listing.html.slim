@@ -9,7 +9,7 @@ div.property-hero
             use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
   header.property-hero_content.text-center
     h1.property-hero_title.gamma
-      a href="#" {{listing.name}}
+      | {{listing.name}}
     p
       | {{listing.address}}
     p.c-steel
@@ -61,8 +61,9 @@ div.property-hero
     a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
     h4
       | {{listing.application_info.property_manager_phone}}
-
-/ From Pattern library
+    div.property-hero_action.text-center
+      a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
+        | Share Property
 
 accordion.property-accordion.accordion
   accordion-group.accordion-navigation

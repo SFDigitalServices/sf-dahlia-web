@@ -2,24 +2,27 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, SharedService, ListingService) ->
+ShareController = ($scope, $state, $window, SharedService) ->
   $scope.shared = SharedService
-  $scope.listings = ListingService.listings
-  $scope.listing = ListingService.listing
-  $scope.favorites = ListingService.favorites
 
-  $scope.toggleFavoriteListing = (listing_id) ->
-    ListingService.toggleFavoriteListing(listing_id)
+  $scope.clipboardLink = ->
+    # get the link to /listings/:id using the listing :id of the share page route
+    link = $state.href('listing', {id: $state.params.id})
+    "http://#{$window.location.host}/#{link}"
 
-  $scope.isFavorited = (listing_id) ->
-    ListingService.isFavorited(listing_id)
+  $scope.clipboardSuccess = ->
+    $window.alert("The Listing URL has been copied to your clipboard.")
+
+  $scope.emailShare = ->
+    $window.alert("Email sent.")
+    $scope.email = ''
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', 'SharedService', 'ListingService']
+ShareController.$inject = ['$scope', '$state', '$window', 'SharedService']
 
 angular
   .module('dahlia.controllers')
-  .controller('ListingController', ListingController)
+  .controller('ShareController', ShareController)

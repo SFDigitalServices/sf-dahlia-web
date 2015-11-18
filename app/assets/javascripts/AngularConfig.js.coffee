@@ -3,42 +3,79 @@
   'dahlia.services',
   # filters
   'customFilters',
+  # directives
+  'customDirectives',
   # dependencies
   'ui.router',
-  'ngCookies',
+  'angular-clipboard',
   'templates',
   'mm.foundation',
 ]
 
 # Service and Controller modules
-angular.module('dahlia.services', [])
+angular.module('dahlia.services', ['ngCookies'])
 angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
 @dahlia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
   $stateProvider
-    .state('listings', {
-      url: '/listings',
-      templateUrl: 'listings/templates/listings.html'
-      controller: 'ListingController',
+    .state('dahlia', {
+      url: ''
+      abstract: true
+      views:
+        'nav@':
+          templateUrl: 'shared/templates/nav.html'
+          controller: 'NavController'
+    })
+    .state('dahlia.listings', {
+      url: '/listings'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listings.html'
+          controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
           ListingService.getListings()
         ]
-    }).state('listing', {
+    })
+    .state('dahlia.listing', {
       url: '/listings/:id',
-      templateUrl: 'listings/templates/listing.html'
-      controller: 'ListingController',
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listing.html'
+          controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
           ListingService.getListing($stateParams.id)
         ]
-    }).state('welcome', {
-      url: '/',
-      templateUrl: 'pages/templates/welcome.html'
+    })
+    .state('dahlia.favorites', {
+      url: '/favorites'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/favorites.html'
+          controller: 'ListingController'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getFavorites()
+          ListingService.getFavoriteListings()
+        ]
+    })
+    .state('dahlia.welcome', {
+      url: '/'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/welcome.html'
+    })
+    .state('dahlia.share', {
+      url: '/share/:id'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/share.html'
+          controller: 'ShareController'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]

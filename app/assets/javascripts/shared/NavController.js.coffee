@@ -2,24 +2,23 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, SharedService, ListingService) ->
-  $scope.shared = SharedService
-  $scope.listings = ListingService.listings
-  $scope.listing = ListingService.listing
-  $scope.favorites = ListingService.favorites
+NavController = ($scope, $state) ->
 
-  $scope.toggleFavoriteListing = (listing_id) ->
-    ListingService.toggleFavoriteListing(listing_id)
+  $scope.showListingsNav = () ->
+    ["dahlia.favorites", "dahlia.listing", "dahlia.share"].indexOf($state.current.name) > -1
 
-  $scope.isFavorited = (listing_id) ->
-    ListingService.isFavorited(listing_id)
+  $scope.showFavoritesNav = () ->
+    $state.current.name == "dahlia.listings"
+
+  $scope.showSocial = () ->
+    $state.current.name == "dahlia.favorites"
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', 'SharedService', 'ListingService']
+NavController.$inject = ['$scope', '$state']
 
 angular
   .module('dahlia.controllers')
-  .controller('ListingController', ListingController)
+  .controller('NavController', NavController)
