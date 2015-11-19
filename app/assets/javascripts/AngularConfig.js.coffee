@@ -88,7 +88,12 @@ angular.module('dahlia.controllers',[])
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getEligibilityFilters()
         ]
-
+    .state('dahlia.income_calculator', {
+      url: '/income_calculator'
+      views:
+        'container@':
+          templateUrl: 'income_calculator/templates/income_calculator.html'
+          controller: 'IncomeCalculatorController'
     })
     .state('dahlia.income-calculator', {
       url: '/income-calculator'
