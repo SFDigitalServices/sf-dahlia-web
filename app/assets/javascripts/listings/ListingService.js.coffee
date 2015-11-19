@@ -50,7 +50,6 @@ ListingService = ($http, $cookies) ->
   Service.getListings = () ->
     angular.copy({}, Service.listings)
     listings_endpoint = "/api/v1/listings.json"
-
     # check for object emptiness
     unless angular.equals({}, Service.eligibility_filters)
       # this is how we "fake" this call for now, by hitting a different JSON endpoint

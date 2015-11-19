@@ -44,7 +44,6 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
   $scope.hasEligibilityFilters = ->
     ! angular.equals({}, ListingService.getEligibilityFilters())
 
-
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
