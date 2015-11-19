@@ -2,11 +2,15 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-EligibilityEstimatorController = ($scope, $state) ->
+EligibilityEstimatorController = ($scope, $state, ListingService) ->
   formDefaults =
     'household_size': ''
     'income_timeframe': ''
     'income_total': ''
+
+  # check if we need to pre-populate the form with our stored filters
+  unless angular.equals({}, ListingService.getEligibilityFilters())
+    $scope.filters = ListingService.getEligibilityFilters()
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -15,7 +19,8 @@ EligibilityEstimatorController = ($scope, $state) ->
     # for now, this doesn't actually "submit", it just clears the form
     if ($scope.eligibilityForm.$valid)
       # submit
-      console.log 'Submitted!'
+      ListingService.setEligibilityFilters($scope.filters)
+      $state.go('dahlia.listings')
     else
       $scope.hideAlert = false
 
@@ -24,6 +29,7 @@ EligibilityEstimatorController = ($scope, $state) ->
     $scope.eligibilityForm.$setPristine()
     $scope.hideAlert = false
     $scope.filters = angular.copy(formDefaults)
+    ListingService.setEligibilityFilters({})
 
   $scope.inputInvalid = (name) ->
     form = $scope.eligibilityForm
@@ -39,7 +45,7 @@ EligibilityEstimatorController = ($scope, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-EligibilityEstimatorController.$inject = ['$scope', '$state']
+EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingService']
 
 angular
   .module('dahlia.controllers')

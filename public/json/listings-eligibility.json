@@ -1,0 +1,76 @@
+{
+  "listings": [
+    {
+      "id": 0,
+      "eligibility_match": 1,
+      "name": "Stevenson Lofts",
+      "address": "529 Stevenson St, San Francisco CA, 94134",
+      "developer": "Relisto Leasing Agency",
+      "application_due_date": "2015-12-12",
+      "image_url": "http://placehold.it/474x316",
+      "units": [
+        {
+          "id": 0,
+          "unit_type": "Studio",
+          "min_monthly_income": 2975,
+          "rent": 941
+        }
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 333-9956"
+      }
+    },
+    {
+      "id": 1,
+      "eligibility_match": 1,
+      "name": "Trinity Place",
+      "address": "1188 Mission St, San Francisco CA, 94134",
+      "developer": "Caritas Management Group",
+      "application_due_date": "2015-12-01",
+      "image_url": "http://placehold.it/474x316",
+      "units": [
+        {
+          "id": 0,
+          "unit_type": "Studio",
+          "min_monthly_income": 2347,
+          "rent": 939
+        },
+        {
+          "id": 2,
+          "unit_type": "1BR",
+          "min_monthly_income": 2650,
+          "rent": 1066
+        }
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 215-9944"
+      }
+    },
+    {
+      "id": 2,
+      "eligibility_match": 2,
+      "name": "Franciscan Towers",
+      "address": "217 Eddy Street, San Francisco, CA 94134",
+      "developer": "Tenderloin Neighborhood Development",
+      "application_due_date": "2015-11-01",
+      "image_url": "http://placehold.it/474x316",
+      "units": [
+        {
+          "id": 0,
+          "unit_type": "Studio",
+          "min_monthly_income": 2353,
+          "rent": 939
+        },
+        {
+          "id": 2,
+          "unit_type": "1BR",
+          "min_monthly_income": 2353,
+          "rent": 1074
+        }
+      ],
+      "application_info": {
+        "property_manager_phone": "(415) 456-9457"
+      }
+    }
+  ]
+}

@@ -37,6 +37,7 @@ angular.module('dahlia.controllers',[])
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavorites()
+          ListingService.getEligibilityFilters()
           ListingService.getListings()
         ]
     })
@@ -83,6 +84,11 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
+      resolve:
+        listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getEligibilityFilters()
+        ]
+
     })
     .state('dahlia.income-calculator', {
       url: '/income-calculator'
