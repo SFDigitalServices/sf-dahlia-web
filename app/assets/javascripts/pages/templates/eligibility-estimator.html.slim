@@ -1,8 +1,7 @@
 section.sub-bar.bg-mist
   .row
     h3.sub-bar_header.epsilon Estimate Eligibility
-    a.button.tiny ng-show="eligibilityForm.$pristine"
-      / currently non-functional per the story -- could link back to listings?
+    a.button.tiny ui-sref="dahlia.listings" ng-show="eligibilityForm.$pristine"
       | Cancel
     a.button.tiny ng-click="clearForm()" ng-show="!eligibilityForm.$pristine"
       | Clear Filters
