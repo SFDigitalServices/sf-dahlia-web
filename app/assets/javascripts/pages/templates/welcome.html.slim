@@ -1,18 +1,24 @@
 section.bg-mist
   .row
     header.hero-header.bg-mist.text-center
-      h1.hero-title Welcome to the SF DAHLIA Housing Portal
+      h1.hero-title
+        | Welcome to the SF DAHLIA Housing Portal
       .row
         .medium-8.medium-centered.columns
-          p.gamma.c-steel Enter details about household size and income and we'll highlight properties you might be eligible for
-          button.button Estimate Eligibility
+          p.gamma.c-steel
+            | Enter details about household size and income and we'll highlight properties you might be eligible for
+          a.button ui-sref="dahlia.eligibility-estimator"
+            | Estimate Eligibility
 section.row
   .medium-8.medium-centered.columns
     .block.text-center
-      p.delta Skip eligibility and browse all currently available rental properties
-      a.button.secondary ui-sref="dahlia.listings" See All Properties
+      p.delta
+        | Skip eligibility and browse all currently available rental properties
+      a.button.secondary ui-sref="dahlia.listings"
+        | See All Properties
     .text-center
-      h4.t-epsilon.t-sans.c-steel Select Language
+      h4.t-epsilon.t-sans.c-steel
+        | Select Language
       section.language-actions
         ul.button-group.even-3
           li

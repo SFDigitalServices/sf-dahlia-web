@@ -77,6 +77,13 @@ angular.module('dahlia.controllers',[])
           templateUrl: 'pages/templates/share.html'
           controller: 'ShareController'
     })
+    .state('dahlia.eligibility-estimator', {
+      url: '/eligibility-estimator'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/eligibility-estimator.html'
+          controller: 'EligibilityEstimatorController'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]
 
