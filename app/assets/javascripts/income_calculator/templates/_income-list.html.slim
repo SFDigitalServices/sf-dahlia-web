@@ -1,0 +1,11 @@
+span ng-if="incomeSources().length > 0"
+  section.row
+    .medium-8.columns
+      form.padding-top.padding-bottom.no-margin
+        .income-source ng-repeat="income in incomeSources()"
+          .income-source_item
+            span.income-source_name
+              | {{ income.source }}: ${{ income.value }}/{{ income.frequency }}
+            a.income-source_link href="#"  Edit
+
+  hr.hr-5.margin-top
