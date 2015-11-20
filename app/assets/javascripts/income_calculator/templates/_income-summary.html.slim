@@ -1,0 +1,14 @@
+span ng-show="display.summary"
+  section.row.margin-top--2x
+    .medium-8.columns
+      .row
+        .large-12.columns
+          p
+            | Total Household Income
+            span.t-bold.right
+              | ${{ totalHouseholdIncome() }}/year
+      .button-stack--paginate.text-center.row.padding-top
+        .small-12.medium-6.medium-push-6.columns
+          button.button.expand Finish
+        .small-12.medium-6.medium-pull-6.columns
+          button.button.blank.expand Cancel

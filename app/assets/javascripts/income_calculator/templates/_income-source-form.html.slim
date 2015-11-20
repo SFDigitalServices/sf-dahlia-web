@@ -9,7 +9,7 @@ span ng-show="display.incomeForm"
               option value="Wages"  Wages
               option value=("Social Security")  Social Security
               option value="Disability"  Disability
-              option value="Unemplyment"  Unemployment
+              option value="Unemployment"  Unemployment
               option value="Calworks"  CalWorks
       .row
         .large-12.columns.margin-bottom
@@ -18,13 +18,13 @@ span ng-show="display.incomeForm"
             input placeholder="$" type="text" ng-model="incomeSource().value"
           .radio-group
             p.d-inline-block
-              input#pokemonRed name="pokemon" type="radio" value="monthly" ng-model="incomeSource().frequency"
+              input#pokemonRed name="pokemon" type="radio" value="month" ng-model="incomeSource().frequency"
               label for="pokemonRed"  per month
             p.d-inline-block
-              input#pokemonBlue name="pokemon" type="radio" value="yearly" ng-model="incomeSource().frequency"
+              input#pokemonBlue name="pokemon" type="radio" value="year" ng-model="incomeSource().frequency"
               label for="pokemonBlue"  per year
 
-      .row.margin-bottom
+      .row.margin-bottom ng-if="incomeSources().length < 30"
         .large-12.columns
           button.button.tint.expand ng-click="addAdditionalIncome()"
             span.ui-icon.ui-link
@@ -33,7 +33,7 @@ span ng-show="display.incomeForm"
             | Add another income source
 
       .button-stack--paginate.text-center.row.padding-top
-        .small-12.medium-6.medium-push-6.columns
+        .small-12.medium-6.medium-push-6.columns ng-click="showSummaryPage()"
           button.button.expand Next
         .small-12.medium-6.medium-pull-6.columns
           button.button.blank.expand Cancel

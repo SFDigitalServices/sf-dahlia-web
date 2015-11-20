@@ -14,6 +14,12 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.addAdditionalIncome = () ->
     IncomeCalculatorService.addIncomeSource($scope.incomeSource)
 
+  $scope.showSummaryPage = () ->
+    IncomeCalculatorService.showSummaryPage()
+
+  $scope.totalHouseholdIncome = () ->
+    IncomeCalculatorService.calculateTotalYearlyIncome()
+
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 
 angular

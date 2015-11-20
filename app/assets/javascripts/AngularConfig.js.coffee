@@ -83,6 +83,7 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
+    })
     .state('dahlia.income_calculator', {
       url: '/income_calculator'
       views:
