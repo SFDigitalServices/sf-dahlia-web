@@ -1,4 +1,4 @@
-IncomeCalculatorService = () ->
+IncomeCalculatorService = ($state) ->
   Service = {}
   Service.display = { intro: true, incomeForm: false, summary: false }
   Service.incomeSources = []
@@ -17,6 +17,10 @@ IncomeCalculatorService = () ->
     Service.display.intro = false
     Service.display.incomeForm = false
     Service.display.summary = true
+
+  Service.returnToEligibility = () ->
+    Service._resetDisplay()
+    $state.go('dahlia.eligibility-estimator')
 
   Service.calculateTotalYearlyIncome = () ->
     totalYearlyIncome = 0
@@ -39,10 +43,12 @@ IncomeCalculatorService = () ->
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     parts.join '.'
 
+  Service._resetDisplay = () ->
+    Service.display = { intro: true, incomeForm: false, summary: false }
 
   return Service
 
-IncomeCalculatorService.$inject = []
+IncomeCalculatorService.$inject = ['$state']
 
 angular
   .module('dahlia.services')
