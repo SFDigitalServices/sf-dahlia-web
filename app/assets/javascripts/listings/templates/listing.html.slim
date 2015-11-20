@@ -48,26 +48,44 @@ section.section-hero.row
                 ' {{unit.availability}}
               span units
 
-      div.property-hero_action.text-center
-        div.property-block.block.bg-mist.text-center
-          h3 HOW TO APPLY
-          h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
-        a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
-        p Pickup and turn in paper applications
-        h4
-          | {{listing.application_info.property_manager}}
-        h4
-          | {{listing.application_info.property_manager_address}}
-        a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
-        h4 Office Hours
-        h4
-          | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
-        a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
-        h4
-          | {{listing.application_info.property_manager_phone}}
-        div.property-hero_action.text-center
-          a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
-            | Share Property
+      / div.property-hero_action.text-center
+      /   div.property-block.block.bg-mist.text-center
+      /     h3 HOW TO APPLY
+      /     h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
+      /   a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
+      /   p Pickup and turn in paper applications
+      /   h4
+      /     | {{listing.application_info.property_manager}}
+      /   h4
+      /     | {{listing.application_info.property_manager_address}}
+      /   a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
+      /   h4 Office Hours
+      /   h4
+      /     | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
+      /   a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
+      /   h4
+      /     | {{listing.application_info.property_manager_phone}}
+      /   div.property-hero_action.text-center
+      /     a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
+      /       | Share Property
+
+      .property-hero_action.text-center
+        .hide-for-medium-up
+          p.t-small
+            | Deadline: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
+            .text-center
+              ng-include src="'listings/templates/_panel-apply.html'"
+        hr.hr-5.tall.show-for-small-only
+        .action-group.row
+          .medium-6.columns
+            p.date.t-small
+              | Listing Updated: Aug 15th 2015
+          .medium-6.columns
+            a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
+              span.ui-icon.ui-link
+                svg
+                  use xlink:href="#i-forward"
+              |  Share this Listing
 
     accordion.property-accordion.accordion
       accordion-group.accordion-navigation
@@ -179,6 +197,10 @@ section.section-hero.row
           span.ui-control.ui-icon.ui-small
             svg
               use xlink:href="#i-arrow-down"
+
+        .show-for-medium-up.text-center.margin-bottom
+          ng-include src="'listings/templates/_panel-apply.html'"
+
         .content-panel.wide
           h4.tiny.t-sans Application Deadline
           h3 Nov 21st, 2015
