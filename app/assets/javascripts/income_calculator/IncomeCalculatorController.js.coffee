@@ -23,6 +23,9 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.returnToEligibility = () ->
     IncomeCalculatorService.returnToEligibility()
 
+  $scope.deleteIncome = (income) ->
+    IncomeCalculatorService.deleteIncome(income)
+
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 
 angular

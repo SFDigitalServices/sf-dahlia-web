@@ -22,6 +22,10 @@ IncomeCalculatorService = ($state) ->
     Service._resetDisplay()
     $state.go('dahlia.eligibility-estimator')
 
+  Service.deleteIncome = (income) ->
+    Service.incomeSources = Service.incomeSources.filter (e) -> e != income
+
+
   Service.calculateTotalYearlyIncome = () ->
     totalYearlyIncome = 0
     for source in Service.incomeSources

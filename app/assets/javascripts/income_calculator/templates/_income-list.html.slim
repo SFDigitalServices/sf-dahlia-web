@@ -11,7 +11,8 @@ span ng-if="incomeSources().length > 0" ng-show="display.incomeForm || display.s
               .income-source_item
                 span.income-source_name
                   | {{ income.source }}: ${{ income.value }}/{{ income.frequency }}
-                a.income-source_link href="#"  Edit
+                a.income-source_link ng-click="deleteIncome(income)" Delete
+                a.income-source_link href="#" style="margin-right:3px;" Edit |
 
   hr.hr-5.margin-top
 
