@@ -5,8 +5,7 @@ IncomeCalculatorService = ($state) ->
   Service.incomeSource = { source: undefined, value: undefined, frequency: undefined }
 
   Service.showIncomeForm = () ->
-    Service.display.intro = false
-    Service.display.incomeForm = true
+    Service.display = {intro: false, incomeForm: true, summary: false}
 
   Service.addIncomeSource = (incomeSource) ->
     Service._parseIncomeValue()
@@ -14,9 +13,7 @@ IncomeCalculatorService = ($state) ->
     Service._resetIncomeSource()
 
   Service.showSummaryPage = () ->
-    Service.display.intro = false
-    Service.display.incomeForm = false
-    Service.display.summary = true
+    Service.display = {intro: false, incomeForm: false, summary: true}
 
   Service.returnToEligibility = () ->
     Service._resetDisplay()
@@ -25,6 +22,10 @@ IncomeCalculatorService = ($state) ->
   Service.deleteIncome = (income) ->
     Service.incomeSources = Service.incomeSources.filter (e) -> e != income
 
+  Service.editIncome = (income) ->
+    Service.showIncomeForm()
+    Service.incomeSource = income
+    Service.deleteIncome(income)
 
   Service.calculateTotalYearlyIncome = () ->
     totalYearlyIncome = 0
@@ -36,7 +37,7 @@ IncomeCalculatorService = ($state) ->
     return Service._numberWithCommas(totalYearlyIncome)
 
   Service._parseIncomeValue = () ->
-    value = Service.incomeSource.value
+    value = String(Service.incomeSource.value)
     Service.incomeSource.value = parseFloat(value.replace(/,/g, ''), 10)
 
   Service._resetIncomeSource = () ->

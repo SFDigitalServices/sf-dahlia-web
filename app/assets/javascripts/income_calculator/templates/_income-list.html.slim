@@ -1,8 +1,8 @@
-span ng-if="incomeSources().length > 0" ng-show="display.incomeForm || display.summary"
+span ng-if="incomeSources().length > 0" ng-show="display().incomeForm || display().summary"
   section.row
     .medium-8.columns
       form.padding-top.padding-bottom.no-margin
-        .row ng-show="display.summary"
+        .row ng-show="display().summary"
           .large-12.columns
             h1.gamma Alright, here's your total annual income
         .row
@@ -12,7 +12,7 @@ span ng-if="incomeSources().length > 0" ng-show="display.incomeForm || display.s
                 span.income-source_name
                   | {{ income.source }}: ${{ income.value }}/{{ income.frequency }}
                 a.income-source_link ng-click="deleteIncome(income)" Delete
-                a.income-source_link href="#" style="margin-right:3px;" Edit |
+                a.income-source_link ng-click="editIncome(income)" style="margin-right:3px;" Edit |
 
   hr.hr-5.margin-top
 

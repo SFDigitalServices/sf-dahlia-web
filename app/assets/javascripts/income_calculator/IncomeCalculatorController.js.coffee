@@ -1,6 +1,7 @@
 IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
 
-  $scope.display = IncomeCalculatorService.display
+  $scope.display = () ->
+    IncomeCalculatorService.display
 
   $scope.incomeSources = () ->
     IncomeCalculatorService.incomeSources
@@ -25,6 +26,9 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
 
   $scope.deleteIncome = (income) ->
     IncomeCalculatorService.deleteIncome(income)
+
+  $scope.editIncome = (income) ->
+    IncomeCalculatorService.editIncome(income)
 
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 

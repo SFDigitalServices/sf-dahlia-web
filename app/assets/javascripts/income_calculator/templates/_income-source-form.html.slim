@@ -1,4 +1,4 @@
-span ng-show="display.incomeForm"
+span ng-show="display().incomeForm"
   section.row.margin-top--2x
     .medium-8.columns
       .row
@@ -30,7 +30,7 @@ span ng-show="display.incomeForm"
             span.ui-icon.ui-link
               svg
                 use xlink:href="#i-plus"
-            | Add another income source
+            | Add additional income source
 
       .button-stack--paginate.text-center.row.padding-top
         .small-12.medium-6.medium-push-6.columns ng-click="showSummaryPage()"
