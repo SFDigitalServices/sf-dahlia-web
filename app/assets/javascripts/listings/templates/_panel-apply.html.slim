@@ -1,11 +1,11 @@
 h3.delta How to Apply
 .application-actions.button-stack
-  button.button.small.oil.toggle.toggler
-    | Application Options
-    / span class="ui-control ui-icon ui-small i-white"
-    /   svg
-    /     use xlink:href="#i-arrow-down"
-.application-options.toggled
+  button.button.small.oil.toggle.toggler ng-click="toggleApplicationOptions()" ng-class="activeClass"
+    | Other Application Options
+    span class="ui-control ui-icon ui-small i-white"
+      svg
+        use xlink:href="#i-arrow-down"
+.application-options.toggled ng-show="showApplicationOptions"
   .option-group
     h4.t-sans.t-base.t-bold.no-margin Pickup and turn in application
     p.no-margin

@@ -48,27 +48,6 @@ section.section-hero.row
                 ' {{unit.availability}}
               span units
 
-      / div.property-hero_action.text-center
-      /   div.property-block.block.bg-mist.text-center
-      /     h3 HOW TO APPLY
-      /     h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
-      /   a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
-      /   p Pickup and turn in paper applications
-      /   h4
-      /     | {{listing.application_info.property_manager}}
-      /   h4
-      /     | {{listing.application_info.property_manager_address}}
-      /   a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
-      /   h4 Office Hours
-      /   h4
-      /     | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
-      /   a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
-      /   h4
-      /     | {{listing.application_info.property_manager_phone}}
-      /   div.property-hero_action.text-center
-      /     a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
-      /       | Share Property
-
       .property-hero_action.text-center
         .hide-for-medium-up
           p.t-small
