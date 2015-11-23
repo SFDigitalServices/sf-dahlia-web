@@ -96,7 +96,7 @@ section.section-hero.row
               | This is based on your household size which includes anyone living in the unit including any age.
 
           .stats-card.bg-tint
-            ul.stats-list.stats-toggle.double.toggler.has-toggle
+            ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
               li
                 .stats-list_value.highlight
                   | 1-6
@@ -116,7 +116,7 @@ section.section-hero.row
                 svg
                   use xlink:href="#i-arrow-down"
 
-            table.stats-table
+            table.stats-table ng-show="showIncomeTable"
               tbody
                 tr.stat-row
                   td

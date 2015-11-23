@@ -7,15 +7,21 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
   $scope.listings = ListingService.listings
   $scope.listing = ListingService.listing
   $scope.favorites = ListingService.favorites
-  $scope.activeClass = ""
+  $scope.activeOpionsClass = ""
+  $scope.activeIncomeClass = ""
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
 
   $scope.showApplicationOptions = false
   $scope.toggleApplicationOptions = () ->
-    $scope.activeClass = if $scope.activeClass == 'active' then '' else 'active'
+    $scope.activeOpionsClass = if $scope.activeOpionsClass == 'active' then '' else 'active'
     $scope.showApplicationOptions = !$scope.showApplicationOptions
+
+  $scope.showIncomeTable = false
+  $scope.toggleIncomeTable = () ->
+    $scope.activeIncomeClass = if $scope.activeIncomeClass == 'active' then '' else 'active'
+    $scope.showIncomeTable = !$scope.showIncomeTable
 
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
