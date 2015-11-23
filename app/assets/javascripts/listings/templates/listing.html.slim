@@ -156,7 +156,7 @@ section.section-hero.row
             p.t-small.c-steel
               | Preference holders will be given highest ranking in the lottery process.
 
-          accordion.accordion-nested.accordion
+          accordion.accordion-nested.accordion.trigger-left
             accordion-group.accordion-navigation
               accordion-heading.accordion-header
                 | Certificate of Preference
@@ -183,25 +183,26 @@ section.section-hero.row
                 p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
 
         .content-panel-grid.row [data-equalizer]
-          .content-panel
-            header.panel-header [data-equalizer-watch]
-              h4.t-epsilon.t-sans.margin-bottom--half Credit Rating
-              p.t-small.c-steel A credit report will be obtained on each applicant after their eligibility for the Inclusionary BMR program has been determined.
+          .padding.clearfix
+            .content-panel
+              header.panel-header [data-equalizer-watch]
+                h4.t-epsilon.t-sans.margin-bottom--half Credit Rating
+                p.t-small.c-steel A credit report will be obtained on each applicant after their eligibility for the Inclusionary BMR program has been determined.
 
-          .content-panel
-            header.panel-header [data-equalizer-watch]
-              h4.t-epsilon.t-sans.margin-bottom--half Rental Assistance
-              p.t-small.c-steel Section 8 housing vouchers and other valid rental assistance programs can be used to rent a BMR unit.</p>
+            .content-panel
+              header.panel-header [data-equalizer-watch]
+                h4.t-epsilon.t-sans.margin-bottom--half Rental Assistance
+                p.t-small.c-steel Section 8 housing vouchers and other valid rental assistance programs can be used to rent a BMR unit.</p>
 
-          .content-panel
-            header.panel-header [data-equalizer-watch]
-              h4.t-epsilon.t-sans.margin-bottom--half Eviction History
-              p.t-small.c-steel Applicants with an eviction by a previous landlord, for cause, within the last 7 years will be rejected.
+            .content-panel
+              header.panel-header [data-equalizer-watch]
+                h4.t-epsilon.t-sans.margin-bottom--half Eviction History
+                p.t-small.c-steel Applicants with an eviction by a previous landlord, for cause, within the last 7 years will be rejected.
 
-          .content-panel
-            header.panel-header [data-equalizer-watch]
-              h4.t-epsilon.t-sans.margin-bottom--halfCriminal History
-              p.t-small.c-steel Criminal reports are not ordered or reviewed until credit history has been ordered and scored with an approval rating.
+            .content-panel
+              header.panel-header [data-equalizer-watch]
+                h4.t-epsilon.t-sans.margin-bottom--halfCriminal History
+                p.t-small.c-steel Criminal reports are not ordered or reviewed until credit history has been ordered and scored with an approval rating.
 
       accordion-group.accordion-navigation.accordion-process
         accordion-heading
@@ -312,21 +313,21 @@ section.section-hero.row
             ul.unit-stats.stats-list.double
               li
                 span.stats-list_value
-                | Studio
+                  | Studio
               li
                 span.stats-list_value
-                | 1
+                  | 1
                   span.value-label
-                  | unit
+                    | unit
             ul.unit-stats.stats-list.double
               li.t-small
                 span.stats-list_value
-                | Accessable Unit
+                  | Accessible
               li.t-small
                 span.stats-list_value
-                | 469
+                  | 469
                   span.value-label
-                  | sqft
+                    | sqft
             table.stats-table--stack
               tbody
                 tr.stat-row
@@ -354,12 +355,19 @@ section.section-hero.row
                 span.stats-list_value
                 | 1 Bedroom
               li
-                | 9 units
+                span.stats-list_value
+                  | 9
+                  span.value-label
+                    | units
             ul.unit-stats.stats-list.double
-              li.t-small
-                | Accessable Units
-              li.t-small
-                | 639 - 900 sqft
+              li
+                span.stats-list_value
+                  | Accessible
+              li
+                span.stats-list_value
+                  | 639 - 900
+                  span.value-label
+                    | sqft
         .content-panel.wide
           .content-panel--expanded.bg-mist
             h5.t-sans.t-small.c-steel Additional Fees
@@ -391,12 +399,12 @@ section.section-hero.row
 
         .property-map.map-panel
             figure.property-map_figure.p-relative
-              iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.379895347056!2d-122.4125466837633!3d37.781135879758395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858084e5540655%3A0x8fc08301d5de417f!2s529+Stevenson+St%2C+San+Francisco%2C+CA+94103!5e0!3m2!1sen!2sus!4v1447289216863" width="600" height="450" frameborder="0" style="border:0"
-              a.map-link.ui-link href="https://goo.gl/maps/wXGpZhc23E82"
-                span.ui-icon
-                  svg
-                    use xlink:href="#i-map" /
-                | Get Directions
+              iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.379895347056!2d-122.4125466837633!3d37.781135879758395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858084e5540655%3A0x8fc08301d5de417f!2s529+Stevenson+St%2C+San+Francisco%2C+CA+94103!5e0!3m2!1sen!2sus!4v1447289216863" width="640" height="450" frameborder="0" style="border:0"
+            a.map-link.ui-link href="https://goo.gl/maps/wXGpZhc23E82"
+              span.ui-icon
+                svg
+                  use xlink:href="#i-map" /
+              | Get Directions
 
       accordion-group.accordion-navigation
         accordion-heading
@@ -413,7 +421,7 @@ section.section-hero.row
             | Required documents and selection criteria
 
         .content-panel.wide
-          accordion.accordion-nested.accordion
+          accordion.accordion-nested.accordion.trigger-left
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Property Selection Criteria
