@@ -3,7 +3,7 @@ nav.top-bar role="navigation"
     ul.title-area
       li.name
         h1
-          a ui-sref="dahlia.welcome" SF DAHLIA Housing {{state}}
+          a ui-sref="dahlia.welcome" SF DAHLIA Housing Portal
       li ng-show="showListingsNav()" class="toggle-topbar"
         a ui-sref="dahlia.listings"
           span.ui-icon
@@ -11,7 +11,7 @@ nav.top-bar role="navigation"
               use xlink:href="#i-search"
       li ng-show="showFavoritesNav()" class="toggle-topbar"
         a ui-sref="dahlia.favorites"
-          span.ui-icon
+          span.ui-icon.i-white
             svg
               use xlink:href="#i-like-fill"
 
@@ -22,4 +22,7 @@ nav.top-bar role="navigation"
             | Listings
         li ng-show="showFavoritesNav()"
           a ui-sref="dahlia.favorites"
+            span.ui-icon.i-white
+              svg
+                use xlink:href="#i-like-fill"
             | My Favorites

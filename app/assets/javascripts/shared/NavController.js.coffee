@@ -5,10 +5,10 @@
 NavController = ($scope, $state) ->
 
   $scope.showListingsNav = () ->
-    ["dahlia.favorites", "dahlia.listing", "dahlia.share"].indexOf($state.current.name) > -1
+    ["dahlia.favorites", "dahlia.listing", "dahlia.share", "dahlia.eligibility-estimator"].indexOf($state.current.name) > -1
 
   $scope.showFavoritesNav = () ->
-    $state.current.name == "dahlia.listings"
+    ["dahlia.welcome", "dahlia.listings"].indexOf($state.current.name) > -1
 
   $scope.showSocial = () ->
     $state.current.name == "dahlia.favorites"
