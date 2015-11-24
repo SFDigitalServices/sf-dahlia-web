@@ -5,35 +5,28 @@ class SalesforceService
     Restforce.new
   end
 
+  # run a Salesforce SOQL query
   def self.query(q)
     client.query(q)
   end
 
-  def self.listings
-    q = %{
-      Select Id,
-      Property_Name__c,
-      Property_Street_Address__c,
-      Property_City__c,
-      Property_State__c,
-      Property_Zip_Code__c,
-      Developer__c,
-      Application_Due_Date__c,
-      Property_URL__c,
-      (
-        SELECT Unit_Type__c,
-        BMR_Rent_Monthly__c,
-        BMR_Rental_Minimum_Monthly_Income_Needed__c FROM Units__r
-      ),
-      Application_Phone__c
-      from Listing__c Where Status__c = 'Active'
-    }
+  # get all open listings or specific set of listings by id
+  # `ids` is a comma-separated list of ids
+  def self.listings(ids = nil)
+    params = ids.present? ? { ids: ids } : nil
+    api_get('/services/apexrest/Listings', params)
+  end
 
-    begin
-      # do we need to worry about pages?
-      query(q).current_page
-    rescue
-      []
-    end
+  # get one detailed listing result by id
+  def self.listing(id)
+    api_get("/services/apexrest/Listings/#{id}").first
+  end
+
+  def self.api_get(endpoint, params = nil)
+    # TODO: could have smarter error catching than this?
+    response = client.get(endpoint, params)
+    response.body
+  rescue
+    []
   end
 end

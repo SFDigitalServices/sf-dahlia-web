@@ -33,7 +33,7 @@ ListingService = ($http, $cookies) ->
 
   Service.getListing = (_id) ->
     angular.copy({}, Service.listing)
-    $http.get("/json/listings/"+_id+".json").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
     ).error( (data, status, headers, config) ->
       # console.log data
@@ -51,11 +51,8 @@ ListingService = ($http, $cookies) ->
   # When wired to Salesforce, pass an array of Listing IDs that we would like returned.
   Service.getListingsByIds = (ids) ->
     angular.copy([], Service.listings)
-    $http.get("/json/listings.json").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings.json", {params: {ids: ids.join(',') }}).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
-      # ---- this filter is only needed while we don't have a real API call
-      listings = listings.filter (l) -> ids.indexOf(l.id) > -1
-      # ---- ------ ------
       angular.copy(listings, Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
