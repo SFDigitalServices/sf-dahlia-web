@@ -409,7 +409,7 @@ section.section-hero.row
                   li Grab Bars
         .content-panel.wide
           h5.t-sans.t-small.c-steel Unit Features
-          .unit-features.stats-card.stats-toggle.toggler
+          .unit-features.stats-card.stats-toggle.toggler ng-click="toggleStudioTable()" ng-class="activeStudioClass"
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
                 span.stats-list_value
@@ -430,7 +430,7 @@ section.section-hero.row
               span.ui-control.ui-icon.ui-small
                 svg
                   use xlink:href="#i-arrow-down"
-            table.stats-table--stack
+            table.stats-table--stack ng-show="showStudioTable"
               tbody
                 tr.stat-row
                   td
@@ -451,7 +451,7 @@ section.section-hero.row
                   td
                     b.tablesaw-cell-label Acccessibilty
                     span.tablesaw-cell-content Wheelchair access, grab bars
-          .unit-features.stats-card.stats-toggle.toggler
+          .unit-features.stats-card.stats-toggle.toggler ng-click="toggle1BedTable()" ng-class="active1BedClass"
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
                 span.stats-list_value
@@ -472,6 +472,27 @@ section.section-hero.row
               span.ui-control.ui-icon.ui-small
                 svg
                   use xlink:href="#i-arrow-down"
+            table.stats-table--stack ng-show="show1BedTable"
+              tbody
+                tr.stat-row
+                  td
+                    b.tablesaw-cell-label Unit Number
+                    span.tablesaw-cell-content 128
+                  td
+                    b.tablesaw-cell-label Area
+                    span.tablesaw-cell-content 669 sqft
+                  td
+                    b.tablesaw-cell-label Bathrooms
+                    span.tablesaw-cell-content 1 bath
+                  td
+                    b.tablesaw-cell-label Floor
+                    span.tablesaw-cell-content 1st floor
+                  td
+                    b.tablesaw-cell-label Building
+                    span.tablesaw-cell-content South Tower
+                  td
+                    b.tablesaw-cell-label Acccessibilty
+                    span.tablesaw-cell-content Wheelchair access, grab bars
         .content-panel.wide
           .content-panel--expanded.bg-mist
             h5.t-sans.t-small.c-steel Additional Fees
