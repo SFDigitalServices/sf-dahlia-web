@@ -451,27 +451,46 @@ section.section-hero.row
               span.ui-control.ui-icon.ui-small
                 svg
                   use xlink:href="#i-arrow-down"
-            table.stats-table--stack
-              tbody
-                tr.stat-row
-                  td
-                    b.tablesaw-cell-label Unit Number
-                    span.tablesaw-cell-content 127
-                  td
-                    b.tablesaw-cell-label Area
-                    span.tablesaw-cell-content 469 sqft
-                  td
-                    b.tablesaw-cell-label Bathrooms
-                    span.tablesaw-cell-content 1 bath
-                  td
-                    b.tablesaw-cell-label Floor
-                    span.tablesaw-cell-content 1st floor
-                  td
-                    b.tablesaw-cell-label Building
-                    span.tablesaw-cell-content South Tower
-                  td
-                    b.tablesaw-cell-label Acccessibilty
-                    span.tablesaw-cell-content Wheelchair access, grab bars
+            ul.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
+              li
+                span.stats-list_label.bottom Unit Number
+                .stats-list_value 127
+              li
+                span.stats-list_label.bottom Area
+                .stats-list_value 469 sqft
+              li
+                span.stats-list_label.bottom Bathrooms
+                .stats-list_value 1 bath
+              li
+                span.stats-list_label.bottom Floor
+                .stats-list_value 1st floor
+              li
+                span.stats-list_label.bottom Building
+                .stats-list_value South Tower
+              li.stat-full
+                span.stats-list_label.bottom Acccessibilty
+                .stats-list_value Wheelchair access, grab bars
+            / table.stats-table--stack
+            /   tbody
+            /     tr.stat-row
+            /       td
+            /         strong.tablesaw-cell-label Unit Number
+            /         span.tablesaw-cell-content 127
+            /       td
+            /         strong.tablesaw-cell-label Area
+            /         span.tablesaw-cell-content 469 sqft
+            /       td
+            /         strong.tablesaw-cell-label Bathrooms
+            /         span.tablesaw-cell-content 1 bath
+            /       td
+            /         strong.tablesaw-cell-label Floor
+            /         span.tablesaw-cell-content 1st floor
+            /       td
+            /         strong.tablesaw-cell-label Building
+            /         span.tablesaw-cell-content South Tower
+            /       td
+            /         strong.tablesaw-cell-label Acccessibilty
+            /         span.tablesaw-cell-content Wheelchair access, grab bars
           .unit-features.stats-card.stats-toggle.toggler
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
