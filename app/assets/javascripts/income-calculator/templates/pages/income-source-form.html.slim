@@ -21,16 +21,14 @@ span ng-show="display().initialIncomeForm"
             input placeholder="$" type="text" ng-model="incomeSource().value"
           .radio-group
             p.d-inline-block
-              input#pokemonRed name="pokemon" type="radio" value="month" ng-model="incomeSource().frequency"
-              label for="pokemonRed"  per month
+              input#incomeFrequencyMonth name="incomeFrequency" type="radio" value="month" ng-model="incomeSource().frequency"
+              label for="incomeFrequencyMonth"  per month
             p.d-inline-block
-              input#pokemonBlue name="pokemon" type="radio" value="year" ng-model="incomeSource().frequency"
-              label for="pokemonBlue"  per year
+              input#incomeFrequencyYear name="incomeFrequency" type="radio" value="year" ng-model="incomeSource().frequency"
+              label for="incomeFrequencyYear"  per year
 
       .button-stack--paginate.text-center.row.padding-top
               .small-12.medium-6.medium-push-6.columns ng-click="addAdditionalIncome();showIncomeManagement();"
                 button.button.expand Save income Source
               .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
                 button.button.blank.expand Cancel
-
-
