@@ -10,7 +10,9 @@ EligibilityEstimatorController = ($scope, $state, ListingService) ->
 
   # check if we need to pre-populate the form with our stored filters
   unless angular.equals({}, ListingService.getEligibilityFilters())
-    $scope.filters = ListingService.getEligibilityFilters()
+    $scope.filters = angular.copy(ListingService.getEligibilityFilters())
+  else
+    $scope.filters = angular.copy(formDefaults)
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -39,6 +41,9 @@ EligibilityEstimatorController = ($scope, $state, ListingService) ->
     form = $scope.eligibilityForm
     # show alert if we've submitted an invalid form, and we haven't manually hidden it
     form.$submitted && form.$invalid && $scope.hideAlert == false
+
+  $scope.isDefaultForm = ->
+    angular.equals(formDefaults, $scope.filters)
 
 
 ############################################################################################

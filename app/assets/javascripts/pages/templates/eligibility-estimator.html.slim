@@ -1,9 +1,9 @@
 section.sub-bar.bg-mist
   .row
     h3.sub-bar_header.epsilon Estimate Eligibility
-    a.button.tiny ui-sref="dahlia.listings" ng-show="eligibilityForm.$pristine"
+    a.button.tiny ui-sref="dahlia.listings" ng-show="isDefaultForm()"
       | Cancel
-    a.button.tiny ng-click="clearForm()" ng-show="!eligibilityForm.$pristine"
+    a.button.tiny ng-click="clearForm()" ng-show="!isDefaultForm()"
       | Clear Filters
 
 section.row
