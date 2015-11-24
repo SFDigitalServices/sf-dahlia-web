@@ -84,11 +84,11 @@ angular.module('dahlia.controllers',[])
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
     })
-    .state('dahlia.income_calculator', {
-      url: '/income_calculator'
+    .state('dahlia.income-calculator', {
+      url: '/income-calculator'
       views:
         'container@':
-          templateUrl: 'income_calculator/templates/income_calculator.html'
+          templateUrl: 'income-calculator/templates/income-calculator.html'
           controller: 'IncomeCalculatorController'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen

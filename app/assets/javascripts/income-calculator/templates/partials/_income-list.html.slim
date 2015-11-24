@@ -13,4 +13,4 @@ span ng-if="incomeSources().length > 0"
                 span.income-source_name
                   | {{ income.source }}: ${{ income.value }}/{{ income.frequency }}
                 a.income-source_link type="buttpm" ng-click="toggleIncomeEditForm(uniqueId(income))" Edit
-                ng-include src="'income_calculator/templates/partials/_income-source-edit-form.html'"
+                ng-include src="'income-calculator/templates/partials/_income-source-edit-form.html'"
