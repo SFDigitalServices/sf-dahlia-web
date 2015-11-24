@@ -29,7 +29,7 @@ section.section-hero.row
             li
               div.stats-list_value
                 | {{unit.min_monthly_income | currency:"$":0}}
-                span.value-label 
+                span.value-label
                   | /mo
               span.stats-list_label min income
             li
@@ -40,7 +40,7 @@ section.section-hero.row
               div.stats-list_value
                 | {{unit.availability}}
                 span.value-label  units
-              span.stats-list_label available  
+              span.stats-list_label available
           ul.stats-list.double.bg-smoke.medium-full.labels-inline.hide-for-medium-up
             li.t-small
               span
@@ -54,27 +54,6 @@ section.section-hero.row
               span
                 ' {{unit.availability}}
               span units
-
-      / div.property-hero_action.text-center
-      /   div.property-block.block.bg-mist.text-center
-      /     h3 HOW TO APPLY
-      /     h3.t-small Due: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
-      /   a.button.small target="_blank" href="https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxwb3RyZXJvMTAxMGJtcjIwMTV8Z3g6NTZhNTg3ZDM4OGJlYTdiMg" Download Application
-      /   p Pickup and turn in paper applications
-      /   h4
-      /     | {{listing.application_info.property_manager}}
-      /   h4
-      /     | {{listing.application_info.property_manager_address}}
-      /   a href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}" Get directions
-      /   h4 Office Hours
-      /   h4
-      /     | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
-      /   a href="tel: {{listing.application_info.property_manager_phone}}" Call Property Manager
-      /   h4
-      /     | {{listing.application_info.property_manager_phone}}
-      /   div.property-hero_action.text-center
-      /     a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
-      /       | Share Property
 
       .property-hero_action.text-center
         .hide-for-medium-up
@@ -117,27 +96,27 @@ section.section-hero.row
               | This is based on your household size which includes anyone living in the unit including any age.
 
           .stats-card.bg-tint
-            ul.stats-list.stats-toggle.double.toggler.has-toggle
+            ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
               li
                 .stats-list_value.highlight
                   | 1-6
-                  span.value-label 
+                  span.value-label
                     |  people
-                span.stats-list_label 
+                span.stats-list_label
                   | household size
               li
                 .stats-list_value.highlight
                   | $3,270 - $4,204
-                  span.value-label 
+                  span.value-label
                     |  /mo
-                span.stats-list_label 
+                span.stats-list_label
                   | max income
 
               span.ui-control.ui-icon.ui-small
                 svg
                   use xlink:href="#i-arrow-down"
 
-            table.stats-table
+            table.stats-table ng-show="showIncomeTable"
               tbody
                 tr.stat-row
                   td
@@ -161,7 +140,7 @@ section.section-hero.row
                       | 2
                       span.value-label
                         |  person
-                  td 
+                  td
                     span.stats-table_value
                       | $3,708
                       span.value-label
@@ -182,10 +161,10 @@ section.section-hero.row
                       | $3,245
                       span.value-label
                         | /mo
-                  td 
+                  td
                     span.stats-table_value
                       | $38,950
-                      span.value-label 
+                      span.value-label
                         | /yr
                 tr.stat-row
                   td
@@ -230,7 +209,7 @@ section.section-hero.row
                       | $5,416
                       span.value-label
                         | /mo
-                  td 
+                  td
                     span.stats-table_value
                       | $65,000
                       span.value-label
@@ -240,7 +219,7 @@ section.section-hero.row
                   th occupancy
                   th max income/mo
                   th max income/yr
-          
+
         .content-panel.wide.lined
           header.margin-bottom
             h4.t-epsilon.t-sans.no-margin
@@ -252,22 +231,22 @@ section.section-hero.row
             ul.stats-list.tall.double
               li
                 span.stats-list_value
-                  | Studio 
+                  | Studio
               li
                 span.stats-list_value
-                  | 1-2 
-                  span.value-label 
+                  | 1-2
+                  span.value-label
                     |  people
 
           .stats-card.bg-mist
             ul.stats-list.tall.double
               li
                 span.stats-list_value
-                  | 1 Bedroom 
+                  | 1 Bedroom
               li
                 span.stats-list_value
-                  | 1-3 
-                  span.value-label 
+                  | 1-3
+                  span.value-label
                     |  people
 
         .content-panel.wide.lined
@@ -302,7 +281,7 @@ section.section-hero.row
                     use xlink:href="#i-arrow-down"
               #panel1a-c.content
                 p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
-        
+
         .content-panel-grid.row [data-equalizer]
           .padding.clearfix
             .content-panel
@@ -430,28 +409,28 @@ section.section-hero.row
                   li Grab Bars
         .content-panel.wide
           h5.t-sans.t-small.c-steel Unit Features
-          .unit-features.stats-card.stats-toggle.toggler
+          .unit-features.stats-card.stats-toggle.toggler ng-click="toggleStudioTable()" ng-class="activeStudioClass"
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
                 span.stats-list_value
                   | Studio
               li
                 span.stats-list_value
-                  | 1 
+                  | 1
                   span.value-label
-                    | unit
+                    |  unit
               li.t-small
                 span.stats-list_value.t-small
                   | Accessible
               li
                 span.stats-list_value
-                  | 469 
+                  | 469
                   span.value-label
-                    | sqft
+                    |  sqft
               span.ui-control.ui-icon.ui-small
                 svg
                   use xlink:href="#i-arrow-down"
-            ul.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
+            ul.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="showStudioTable"
               li
                 span.stats-list_label.bottom Unit Number
                 .stats-list_value 127
@@ -470,48 +449,49 @@ section.section-hero.row
               li.stat-full
                 span.stats-list_label.bottom Acccessibilty
                 .stats-list_value Grab bars
-            / table.stats-table--stack
-            /   tbody
-            /     tr.stat-row
-            /       td
-            /         strong.tablesaw-cell-label Unit Number
-            /         span.tablesaw-cell-content 127
-            /       td
-            /         strong.tablesaw-cell-label Area
-            /         span.tablesaw-cell-content 469 sqft
-            /       td
-            /         strong.tablesaw-cell-label Bathrooms
-            /         span.tablesaw-cell-content 1 bath
-            /       td
-            /         strong.tablesaw-cell-label Floor
-            /         span.tablesaw-cell-content 1st floor
-            /       td
-            /         strong.tablesaw-cell-label Building
-            /         span.tablesaw-cell-content South Tower
-            /       td
-            /         strong.tablesaw-cell-label Acccessibilty
-            /         span.tablesaw-cell-content Wheelchair access, grab bars
-          .unit-features.stats-card.stats-toggle.toggler
+           
+          .unit-features.stats-card.stats-toggle.toggler ng-click="toggle1BedTable()" ng-class="active1BedClass"
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
                 span.stats-list_value
                   | 1 Bedroom
               li
                 span.stats-list_value
-                  | 9 
+                  | 9
                   span.value-label
-                    | units
+                    |  units
               li
                 span.stats-list_value.t-small
                   | Accessible
               li
                 span.stats-list_value
-                  | 639 - 900 
+                  | 639 - 900
                   span.value-label
-                    | sqft
+                    |  sqft
               span.ui-control.ui-icon.ui-small
                 svg
-                  use xlink:href="#i-arrow-down"        
+                  use xlink:href="#i-arrow-down"
+            table.stats-table--stack ng-show="show1BedTable"
+              tbody
+                tr.stat-row
+                  td
+                    b.tablesaw-cell-label Unit Number
+                    span.tablesaw-cell-content 128
+                  td
+                    b.tablesaw-cell-label Area
+                    span.tablesaw-cell-content 669 sqft
+                  td
+                    b.tablesaw-cell-label Bathrooms
+                    span.tablesaw-cell-content 1 bath
+                  td
+                    b.tablesaw-cell-label Floor
+                    span.tablesaw-cell-content 1st floor
+                  td
+                    b.tablesaw-cell-label Building
+                    span.tablesaw-cell-content South Tower
+                  td
+                    b.tablesaw-cell-label Acccessibilty
+                    span.tablesaw-cell-content Wheelchair access, grab bars
         .content-panel.wide
           .content-panel--expanded.bg-mist
             h5.t-sans.t-small.c-steel Additional Fees
