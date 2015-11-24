@@ -9,8 +9,20 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.incomeSource = () ->
     IncomeCalculatorService.incomeSource
 
+  $scope.uniqueId = (income) ->
+    income.source + income.value + income.frequency
+
   $scope.showIncomeForm = () ->
     IncomeCalculatorService.showIncomeForm()
+
+  $scope.incomeEditFormToggled = (uniqueId) ->
+    IncomeCalculatorService.incomeEditFormToggled(uniqueId)
+
+  $scope.showIncomeManagement = () ->
+    IncomeCalculatorService.showIncomeManagement()
+
+  $scope.toggleIncomeEditForm = (uniqueId) ->
+    IncomeCalculatorService.toggleIncomeEditForm(uniqueId)
 
   $scope.addAdditionalIncome = () ->
     IncomeCalculatorService.addIncomeSource($scope.incomeSource)
@@ -21,14 +33,16 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.totalHouseholdIncome = () ->
     IncomeCalculatorService.calculateTotalYearlyIncome()
 
-  $scope.returnToEligibility = () ->
-    IncomeCalculatorService.returnToEligibility()
+  $scope.returnToEligibility = (totalIncome) ->
+    IncomeCalculatorService.returnToEligibility(totalIncome)
 
   $scope.deleteIncome = (income) ->
     IncomeCalculatorService.deleteIncome(income)
 
-  $scope.editIncome = (income) ->
-    IncomeCalculatorService.editIncome(income)
+  $scope.additionalIncome =false
+
+  $scope.toggleAdditionalIncomeForm = () ->
+    $scope.additionalIncome = !$scope.additionalIncome
 
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 

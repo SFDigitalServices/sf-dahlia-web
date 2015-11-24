@@ -1,7 +1,10 @@
-span ng-show="display().incomeForm"
+span ng-show="display().initialIncomeForm"
   section.row.margin-top--2x
     .medium-8.columns
       .row
+        .large-12.columns
+          h1.gamma.margin-bottom
+            | Add an income source:
         .large-12.columns
           label
             | Where is this income from?
@@ -24,16 +27,10 @@ span ng-show="display().incomeForm"
               input#pokemonBlue name="pokemon" type="radio" value="year" ng-model="incomeSource().frequency"
               label for="pokemonBlue"  per year
 
-      .row.margin-bottom ng-if="incomeSources().length < 30"
-        .large-12.columns
-          button.button.tint.expand ng-click="addAdditionalIncome()"
-            span.ui-icon.ui-link
-              svg
-                use xlink:href="#i-plus"
-            | Add additional income source
-
       .button-stack--paginate.text-center.row.padding-top
-        .small-12.medium-6.medium-push-6.columns ng-click="showSummaryPage()"
-          button.button.expand Next
-        .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
-          button.button.blank.expand Cancel
+              .small-12.medium-6.medium-push-6.columns ng-click="addAdditionalIncome();showIncomeManagement();"
+                button.button.expand Save income Source
+              .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
+                button.button.blank.expand Cancel
+
+
