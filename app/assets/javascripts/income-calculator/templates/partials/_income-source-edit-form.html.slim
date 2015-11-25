@@ -13,19 +13,18 @@ section.row.margin-top--2x ng-if="incomeEditFormToggled(uniqueId(income))"
     .row
       .large-12.columns
         label
-          | How much is the income this source?
+          | How much is the income this source? Edit
           input placeholder="$" type="text" ng-model="income.value"
         .radio-group
           p.d-inline-block
-            input#pokemonRed name="pokemon" type="radio" value="month" ng-model="income.frequency"
-            label for="pokemonRed"  per month
+            input id="income_frequency_month_{{::$id}}" name="income_frequency" type="radio" value="month" ng-model="income.frequency"
+            label for="income_frequency_month_{{::$id}}"  per month
           p.d-inline-block
-            input#pokemonBlue name="pokemon" type="radio" value="year" ng-model="income.frequency"
-            label for="pokemonBlue"  per year
+            input id="income_frequency_year_{{::$id}}" name="income_frequency" type="radio" value="year" ng-model="income.frequency"
+            label for="income_frequency_year_{{::$id}}"  per year
 
     .button-stack--paginate.text-center.row.padding-top
-            .small-6.medium-push-6.columns
-              button.button.expand type="button" ng-click="toggleIncomeEditForm(uniqueId(income))" Save
-            .small-6.medium-6.medium-pull-6.columns
-              button.button.blank.expand type="button" ng-click="deleteIncome(income)" Delete
-
+      .small-6.medium-push-6.columns
+        button.button.expand type="button" ng-click="toggleIncomeEditForm(uniqueId(income))" Save
+      .small-6.medium-6.medium-pull-6.columns
+        button.button.blank.expand type="button" ng-click="deleteIncome(income)" Delete

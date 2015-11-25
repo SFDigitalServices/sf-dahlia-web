@@ -17,18 +17,18 @@ span ng-show="display().initialIncomeForm"
       .row
         .large-12.columns.margin-bottom
           label
-            | How much is the income this source?
+            | How much is the income this source? Source
             input placeholder="$" type="text" ng-model="incomeSource().value"
           .radio-group
             p.d-inline-block
-              input#incomeFrequencyMonth name="incomeFrequency" type="radio" value="month" ng-model="incomeSource().frequency"
-              label for="incomeFrequencyMonth"  per month
+              input id="income_frequency_month_{{::$id}}" name="income_frequency" type="radio" value="month"
+              label for="income_frequency_month_{{::$id}}"  per month
             p.d-inline-block
-              input#incomeFrequencyYear name="incomeFrequency" type="radio" value="year" ng-model="incomeSource().frequency"
-              label for="incomeFrequencyYear"  per year
+              input id="income_frequency_year_{{::$id}}" name="income_frequency" type="radio" value="year"
+              label for="income_frequency_year_{{::$id}}"  per year
 
       .button-stack--paginate.text-center.row.padding-top
-              .small-12.medium-6.medium-push-6.columns ng-click="addAdditionalIncome();showIncomeManagement();"
-                button.button.expand Save income Source
-              .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
-                button.button.blank.expand Cancel
+        .small-12.medium-6.medium-push-6.columns ng-click="addAdditionalIncome();showIncomeManagement();"
+          button.button.expand Save income Source
+        .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
+          button.button.blank.expand Cancel
