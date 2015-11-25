@@ -17,10 +17,10 @@ section.row.margin-top--2x
           input placeholder="$" type="text" ng-model="incomeSource().value"
         .radio-group
           p.d-inline-block
-            input id="income_frequency_month_{{::$id}}" name="income_frequency" type="radio" value="month"
+            input id="income_frequency_month_{{::$id}}" name="income_frequency" type="radio" value="month" ng-model="incomeSource().frequency"
             label for="income_frequency_month_{{::$id}}"  per month
           p.d-inline-block
-            input id="income_frequency_year_{{::$id}}" name="income_frequency" type="radio" value="year"
+            input id="income_frequency_year_{{::$id}}" name="income_frequency" type="radio" value="year" ng-model="incomeSource().frequency"
             label for="income_frequency_year_{{::$id}}"  per year
 
     .button-stack--paginate.text-center.row
