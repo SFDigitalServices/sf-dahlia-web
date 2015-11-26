@@ -1,0 +1,49 @@
+section.row.margin-top--2x
+  .medium-8.columns
+    .row
+      .large-12.columns ng-if="noIncomeSources()"
+        h1.gamma.margin-bottom
+          | Add an income source:
+      .large-12.columns
+        label
+          | Where is this income from?
+          select ng-model="income.source"
+            option value="Wages"  Wages
+            option value="Social Security"  Social Security
+            option value="Disability"  Disability
+            option value="Unemployment"  Unemployment
+            option value="Calworks"  CalWorks
+    .row
+      .large-12.columns.margin-bottom
+        label
+          | How much is the income this source?
+          input placeholder="$" type="text" ng-model="income.value"
+        .radio-group
+          p.d-inline-block
+            input id="income_frequency_month_{{::$id}}" type="radio" value="month" ng-model="income.frequency"
+            label for="income_frequency_month_{{::$id}}"  per month
+          p.d-inline-block
+            input id="income_frequency_year_{{::$id}}" type="radio" value="year" ng-model="income.frequency"
+            label for="income_frequency_year_{{::$id}}"  per year
+
+    .button-stack--paginate.text-center.row
+      / show this button for the initial form (we don't have income sources)
+      .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
+        button.button.expand ng-click="addAdditionalIncome()"
+          | Save income Source
+      .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
+        button.button.blank.expand ui-sref="dahlia.eligibility-estimator"
+          | Cancel
+
+      / show this button if we're on the additional income form
+      .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
+        button.button.tint.expand ng-click="addAdditionalIncome();toggleAdditionalIncomeForm()"
+          | Add income Source
+
+
+      / show these buttons if we're iterating over income list (better way to check?)
+      .small-6.medium-push-6.columns ng-if="$index != undefined"
+        button.button.expand type="button" ng-click="toggleIncomeEditForm(income)"
+          | Save
+      .small-6.medium-6.medium-pull-6.columns ng-if="$index != undefined"
+        button.button.blank.expand type="button" ng-click="deleteIncome(income)" Delete

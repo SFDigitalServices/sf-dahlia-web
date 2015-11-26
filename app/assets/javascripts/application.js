@@ -15,5 +15,6 @@
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require angular-cookies
+//= require ngstorage
 //= require angular-clipboard
 //= require_tree .

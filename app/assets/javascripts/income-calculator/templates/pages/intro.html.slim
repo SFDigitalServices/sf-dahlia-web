@@ -1,4 +1,4 @@
-section.row ng-show="display().intro"
+section.row
   .medium-8.columns
     .padding-top.padding-bottom
       header.padding-bottom
@@ -19,7 +19,8 @@ section.row ng-show="display().intro"
         p examples: Alimony, Retirement/Pension
 
     .button-stack--paginate.text-center.row.padding-top
-      .small-12.medium-6.medium-push-6.columns ng-click="showIncomeForm()"
-        button.button.expand Next
-      .small-12.medium-6.medium-pull-6.columns ng-click="returnToEligibility()"
-        button.button.blank.expand Cancel
+      .small-12.medium-6.medium-push-6.columns
+        button.button.expand ui-sref="dahlia.income-calculator.management" Next
+      .small-12.medium-6.medium-pull-6.columns
+        button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
+
