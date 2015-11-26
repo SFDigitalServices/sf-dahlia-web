@@ -1,9 +1,9 @@
 section.sub-bar.bg-mist
   .row
     h3.sub-bar_header.epsilon Estimate Eligibility
-    a.button.tiny ui-sref="dahlia.listings" ng-show="isDefaultForm()"
-      | Cancel
-    a.button.tiny ng-click="clearForm()" ng-show="!isDefaultForm()"
+    / a.button.tiny ui-sref="dahlia.listings" ng-show="isDefaultForm()"
+    /   | Cancel
+    a.button.tiny ng-click="clearForm()"
       | Clear Filters
 
 section.row
@@ -66,8 +66,8 @@ section.row
         .small-12.medium-6.medium-push-6.columns
           input.button.button.expand type="submit" value="View Matching Properties"
         .small-12.medium-6.medium-pull-6.columns
-          a.button.button.blank.expand ng-click="clearForm()"
-            | Reset Filters
+          button.button.blank.expand ui-sref="dahlia.listings"
+            | Cancel
 
 
 / -- TBD -- for another story...

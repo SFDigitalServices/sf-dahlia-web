@@ -37,6 +37,8 @@ ListingService = ($http, $localStorage) ->
   Service.setEligibilityFilters = (filters) ->
     angular.copy(filters, Service.eligibility_filters)
 
+  Service.hasEligibilityFilters = ->
+    ! angular.equals(Service.eligibility_filter_defaults, Service.eligibility_filters)
 
   ###################################### Salesforce API Calls ###################################
 
@@ -52,7 +54,7 @@ ListingService = ($http, $localStorage) ->
     angular.copy({}, Service.listings)
     listings_endpoint = "/api/v1/listings.json"
     # check for default state
-    unless angular.equals(Service.eligibility_filter_defaults, Service.eligibility_filters)
+    if Service.hasEligibilityFilters()
       # this is how we "fake" this call for now, by hitting a different JSON endpoint
       listings_endpoint = "/json/listings-eligibility.json"
     $http.get(listings_endpoint).success((data, status, headers, config) ->

@@ -42,7 +42,7 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
     "#{listing.address}, #{listing.city} #{listing.state}, #{listing.zipcode}"
 
   $scope.hasEligibilityFilters = ->
-    ! angular.equals({}, ListingService.eligibility_filters)
+    ListingService.hasEligibilityFilters()
 
 ############################################################################################
 ######################################## CONFIG ############################################
