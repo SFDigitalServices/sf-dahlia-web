@@ -17,7 +17,7 @@ IncomeCalculatorService = ($localStorage) ->
     # persist the changes to Service.incomeSources / $localStorage
     angular.copy(incomeSources, Service.incomeSources)
 
-  Service.calculateTotalYearlyIncome = () ->
+  Service.totalYearlyIncome = ->
     totalYearlyIncome = 0
     for source in Service.incomeSources
       source.value = Service._parseIncomeValue(source.value)
@@ -25,7 +25,10 @@ IncomeCalculatorService = ($localStorage) ->
         totalYearlyIncome = totalYearlyIncome + source.value
       else if source.frequency == 'month'
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
-    return totalYearlyIncome
+    totalYearlyIncome
+
+  Service.formattedYearlyIncome = ->
+    Service._numberWithCommas(Service.totalYearlyIncome())
 
   Service._parseIncomeValue = (value) ->
     parseFloat(String(value).replace(/,/g, ''), 10)

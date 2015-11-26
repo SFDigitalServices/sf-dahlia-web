@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-EligibilityEstimatorController = ($scope, $state, ListingService) ->
+EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculatorService) ->
   formDefaults =
     'household_size': ''
     'income_timeframe': ''
@@ -11,6 +11,12 @@ EligibilityEstimatorController = ($scope, $state, ListingService) ->
   # check if we need to pre-populate the form with our stored filters
   unless angular.equals({}, ListingService.getEligibilityFilters())
     $scope.filters = ListingService.getEligibilityFilters()
+
+  # check if we've used the IncomeCalculator to calculate income
+  if IncomeCalculatorService.totalYearlyIncome() > 0
+    $scope.filters.income_total = IncomeCalculatorService.totalYearlyIncome()
+    $scope.filters.income_timeframe = 'per_year'
+
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -43,12 +49,15 @@ EligibilityEstimatorController = ($scope, $state, ListingService) ->
   $scope.isDefaultForm = ->
     angular.equals(formDefaults, $scope.filters)
 
+  $scope.hasCalculatedIncome = ->
+    IncomeCalculatorService.totalYearlyIncome() > 0
+
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingService']
+EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingService', 'IncomeCalculatorService']
 
 angular
   .module('dahlia.controllers')

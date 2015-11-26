@@ -37,9 +37,14 @@ section.row
         .medium-12.columns.bg-mist.padding-top.padding-bottom
           h3.t-sans.gamma
             | Next add up your income from wages, benefits and other sources.
-          label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            span.eligibility-form_header Household Income
-            input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
+          .row.collapse
+            label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              span.eligibility-form_header Household Income
+            .columns ng-class="{ 'small-9': hasCalculatedIncome(), 'small-12': !hasCalculatedIncome() }"
+              input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
+            .small-3.columns ng-show="hasCalculatedIncome()"
+              button.postfix ui-sref="dahlia.income-calculator.edit" Edit
+
             small.error ng-show="inputInvalid('income_total')"
               | Please enter an income amount
           .radio-group
@@ -52,10 +57,11 @@ section.row
             small.error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe
 
-        .medium-12.columns.bg-tint.padding-top
+        .medium-12.columns.bg-tint.padding-top ng-show="!hasCalculatedIncome()"
           p.t-tiny.margin-bottom
             ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. To help, we created a
             a ui-sref="dahlia.income-calculator.intro" Household Income Calculator
+
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
           input.button.button.expand type="submit" value="View Matching Properties"
