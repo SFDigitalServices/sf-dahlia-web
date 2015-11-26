@@ -3,26 +3,18 @@
 ############################################################################################
 
 EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculatorService) ->
-  formDefaults =
-    'household_size': ''
-    'income_timeframe': ''
-    'income_total': ''
-
-  # check if we need to pre-populate the form with our stored filters
-  unless angular.equals({}, ListingService.getEligibilityFilters())
-    $scope.filters = ListingService.getEligibilityFilters()
+  $scope.filter_defaults = ListingService.eligibility_filter_defaults
+  $scope.filters = angular.copy(ListingService.eligibility_filters)
 
   # check if we've used the IncomeCalculator to calculate income
   if IncomeCalculatorService.totalYearlyIncome() > 0
     $scope.filters.income_total = IncomeCalculatorService.totalYearlyIncome()
     $scope.filters.income_timeframe = 'per_year'
 
-
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
 
   $scope.submitForm = () ->
-    # for now, this doesn't actually "submit", it just clears the form
     if ($scope.eligibilityForm.$valid)
       # submit
       ListingService.setEligibilityFilters($scope.filters)
@@ -34,8 +26,8 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     $scope.eligibilityForm.$setUntouched()
     $scope.eligibilityForm.$setPristine()
     $scope.hideAlert = false
-    $scope.filters = angular.copy(formDefaults)
-    ListingService.setEligibilityFilters({})
+    angular.copy($scope.filter_defaults, $scope.filters)
+    ListingService.setEligibilityFilters($scope.filters)
 
   $scope.inputInvalid = (name) ->
     form = $scope.eligibilityForm
@@ -47,7 +39,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     form.$submitted && form.$invalid && $scope.hideAlert == false
 
   $scope.isDefaultForm = ->
-    angular.equals(formDefaults, $scope.filters)
+    angular.equals($scope.filter_defaults, $scope.filters)
 
   $scope.hasCalculatedIncome = ->
     IncomeCalculatorService.totalYearlyIncome() > 0
