@@ -23,11 +23,13 @@ IncomeCalculatorService = ($state, $localStorage) ->
   Service.calculateTotalYearlyIncome = () ->
     totalYearlyIncome = 0
     for source in Service.incomeSources
+      source.value = Service._parseIncomeValue(source.value)
       if source.frequency == 'year'
         totalYearlyIncome = totalYearlyIncome + source.value
       else if source.frequency == 'month'
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
-    return Service._numberWithCommas(totalYearlyIncome)
+    return totalYearlyIncome
+    # return Service._numberWithCommas(totalYearlyIncome)
 
   Service.toggleIncomeEditForm = (uniqueId) ->
     Service.toggledIncomeEditForms[uniqueId] = !Service.toggledIncomeEditForms[uniqueId]
@@ -40,12 +42,6 @@ IncomeCalculatorService = ($state, $localStorage) ->
 
   # Service._resetIncomeSource = () ->
   #   Service.incomeSource =  {}
-
-  Service._numberWithCommas = (number) ->
-    # TURN INTO A FILTER
-    parts = number.toString().split('.')
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    parts.join '.'
 
   return Service
 
