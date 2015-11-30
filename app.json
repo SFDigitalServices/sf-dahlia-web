@@ -26,6 +26,33 @@
     },
     "SECRET_KEY_BASE":{
       "required":true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    },
+    "SALESFORCE_USERNAME":{
+      "required":true
+    },
+    "SALESFORCE_PASSWORD":{
+      "required":true
+    },
+    "SALESFORCE_SECURITY_TOKEN":{
+      "required":true
+    },
+    "SALESFORCE_CLIENT_SECRET":{
+      "required":true
+    },
+    "SALESFORCE_CLIENT_ID":{
+      "required":true
+    },
+    "SALESFORCE_HOST":{
+      "required":true
+    },
+    "SALESFORCE_INSTANCE_URL":{
+      "required":true
     }
   }
 }
