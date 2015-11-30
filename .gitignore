@@ -23,3 +23,6 @@ lib/assets/bower_components
 
 # Ignore .ruby-version file that is used by rbenv
 .ruby-version
+
+# Ignore .env, can store protected information
+.env

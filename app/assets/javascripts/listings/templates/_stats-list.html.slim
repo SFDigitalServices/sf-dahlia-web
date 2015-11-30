@@ -1,7 +1,7 @@
 ul.stats-list.triple ng-repeat="unit in listing.units"
   li
     .stats-list_value
-      | {{unit.unit_type}}
+      | {{unit.unit_type || 'N/A'}}
     span.stats-list_label bedrooms
   li
     .stats-list_value

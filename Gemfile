@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 gem 'rails', '~> 4.2.4'
+gem 'rails-api'
+
 gem 'pg'
 
 # Use SCSS for stylesheets
@@ -18,15 +20,6 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer',  platforms: :ruby
 gem 'puma'
 
-group :development do
-  gem 'rubocop', require: false
-  gem 'rails_best_practices'
-  gem 'overcommit'
-  # Spring speeds up development by keeping your application running in the
-  # background. Read more: https://github.com/rails/spring
-  gem 'spring'
-end
-
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # takes care of importing javascript dependencies
@@ -40,8 +33,20 @@ gem 'angular-rails-templates'
 # https://github.com/pitr/angular-rails-templates/issues/93
 gem 'sprockets', '~> 2.12.4'
 
+# salesforce
+gem 'restforce', require: false
+
 group :test do
   gem 'codeclimate-test-reporter'
+end
+
+group :development do
+  gem 'rubocop', require: false
+  gem 'rails_best_practices'
+  gem 'overcommit'
+  # Spring speeds up development by keeping your application running in the
+  # background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end
 
 group :development, :test do
@@ -56,6 +61,8 @@ group :development, :test do
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
   gem 'pry'
   gem 'quiet_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'thor-rails'
 end
 

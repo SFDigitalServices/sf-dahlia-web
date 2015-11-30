@@ -15,10 +15,10 @@ section.section-hero.row
         h1.property-hero_title.gamma.no-margin
           | {{listing.name}}
         p
-          | {{listing.address}}
+          | {{formattedAddress(listing)}}
         p.c-steel
           | {{listing.developer}}
-        a.t-micro href="https://www.google.com/maps/place/{{listing.address}}" View on Map
+        a.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}" View on Map
       div.property-hero_stats ng-repeat="unit in listing.units"
         div.stats-card
           ul.stats-list.triple.medium-quad
@@ -450,7 +450,7 @@ section.section-hero.row
                 li.stat-full
                   span.stats-list_label.bottom Acccessibilty
                   .stats-list_value Grab bars
-           
+
           .unit-features.stats-card.stats-toggle.toggler ng-click="toggle1BedTable()" ng-class="active1BedClass"
             ul.unit-stats.stats-list.double.medium-quad.has-toggle
               li
@@ -529,7 +529,7 @@ section.section-hero.row
                   .stats-list_value North Tower
                 li.stat-full
                   span.stats-list_label.bottom Acccessibilty
-                  .stats-list_value Grab bars    
+                  .stats-list_value Grab bars
         .content-panel.wide
           .content-panel--expanded.bg-mist
             h5.t-sans.t-small.c-steel Additional Fees
