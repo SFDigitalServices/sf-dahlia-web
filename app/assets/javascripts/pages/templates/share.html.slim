@@ -1,16 +1,24 @@
-header.header-block
-  a.button.tiny(back-button)
-    | < Back
-
-.property-block.block.text-center
-  h1.gamma Share this listing with a housing counselor, family member or friend.
+section.sub-bar.bg-mist
   .row
-    form.large-12.columns ng-submit="emailShare()"
-      .row.collapse
-        .small-8.columns
-          input placeholder="Enter email address" type="email" ng-model="email"
-        .small-4.columns
-          input.button.postfix type="submit" value="Send"
     .large-12.columns
-      button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
-        | Get shareable link
+      a.button.tiny(back-button)
+        | Back
+
+section.section-full
+  .row
+    .medium-8.columns.padding-top--2x
+      h1.gamma
+        | Share this listing with a housing counselor, family member or friend.
+      form.no-margin ng-submit="emailShare()"
+        .row.collapse
+          .small-8.large-10.columns
+            input placeholder="Enter Email" type="email" ng-model="email"
+          .small-4.large-2.columns
+            input.button.postfix type="submit" value="Send"
+  .row
+    .medium-8.columns.small-only-text-center
+      hr.hr-5.tall
+      h1.gamma.show-for-medium-up
+        | Copy the link to the property to send in a text or email.
+      button.button.small.secondary(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+        | Get Sharable Link
