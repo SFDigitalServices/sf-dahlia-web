@@ -5,6 +5,7 @@
   'customFilters',
   # directives
   'customDirectives',
+  'pageslide-directive',
   # dependencies
   'ui.router',
   'angular-clipboard',
@@ -26,6 +27,9 @@ angular.module('dahlia.controllers',[])
       views:
         'nav@':
           templateUrl: 'shared/templates/nav.html'
+          controller: 'NavController'
+        'nav-mobile@':
+          templateUrl: 'shared/templates/nav-mobile.html'
           controller: 'NavController'
     })
     .state('dahlia.listings', {
