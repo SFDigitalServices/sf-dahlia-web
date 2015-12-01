@@ -6,14 +6,11 @@ IncomeCalculatorService = ($state, $localStorage) ->
     frequency: undefined
     editing: false
 
-  # Service.toggledIncomeEditForms = {}
-  # Service.incomeSources = []
   Service.incomeSources = $localStorage.incomeSources || []
 
   Service.addIncomeSource = (income) ->
     income.value = Service._parseIncomeValue(income.value)
     Service.incomeSources.push(income)
-    # Service._resetIncomeSource()
 
   Service.deleteIncome = (income) ->
     incomeSources = Service.incomeSources.filter (e) -> e != income
@@ -29,7 +26,6 @@ IncomeCalculatorService = ($state, $localStorage) ->
       else if source.frequency == 'month'
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
     return totalYearlyIncome
-    # return Service._numberWithCommas(totalYearlyIncome)
 
   Service.toggleIncomeEditForm = (uniqueId) ->
     Service.toggledIncomeEditForms[uniqueId] = !Service.toggledIncomeEditForms[uniqueId]
@@ -39,9 +35,6 @@ IncomeCalculatorService = ($state, $localStorage) ->
 
   Service._parseIncomeValue = (value) ->
     parseFloat(String(value).replace(/,/g, ''), 10)
-
-  # Service._resetIncomeSource = () ->
-  #   Service.incomeSource =  {}
 
   return Service
 

@@ -31,29 +31,6 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.toggleAdditionalIncomeForm = () ->
     $scope.additionalIncome = !$scope.additionalIncome
 
-
-  # $scope.display = () ->
-  #   IncomeCalculatorService.display
-
-  # $scope.incomeSource = () ->
-  #   IncomeCalculatorService.incomeSource
-
-  # $scope.uniqueId = (income) ->
-  #   income.source + income.value + income.frequency
-
-  # $scope.incomeEditFormToggled = (uniqueId) ->
-  #   IncomeCalculatorService.incomeEditFormToggled(uniqueId)
-
-  # $scope.showIncomeManagement = () ->
-  #   IncomeCalculatorService.showIncomeManagement()
-
-  # $scope.showSummaryPage = () ->
-  #   IncomeCalculatorService.showSummaryPage()
-
-  # $scope.returnToEligibility = (totalIncome) ->
-  #   IncomeCalculatorService.returnToEligibility(totalIncome)
-
-
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 
 angular
