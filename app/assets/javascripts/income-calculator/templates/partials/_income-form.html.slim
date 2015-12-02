@@ -16,7 +16,7 @@ section.row.margin-top--2x
     .row
       .large-12.columns.margin-bottom
         label
-          | How much is the income this source?
+          | How much is the income of this source?
           input placeholder="$" type="text" ng-model="income.value"
         .radio-group
           p.d-inline-block
@@ -30,7 +30,7 @@ section.row.margin-top--2x
       / show this button for the initial form (we don't have income sources)
       .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
         button.button.expand ng-click="addAdditionalIncome()"
-          | Save income Source
+          | Save income source
       .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
         button.button.blank.expand ui-sref="dahlia.eligibility-estimator"
           | Cancel
