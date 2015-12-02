@@ -13,7 +13,7 @@
 ]
 
 # Service and Controller modules
-angular.module('dahlia.services', ['ngCookies'])
+angular.module('dahlia.services', ['ngCookies', 'ngStorage'])
 angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
@@ -83,6 +83,32 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
+    })
+    .state('dahlia.income-calculator', {
+      url: '/income-calculator'
+      abstract: true
+      views:
+        'container@':
+          templateUrl: 'income-calculator/templates/income-calculator.html'
+          controller: 'IncomeCalculatorController'
+    })
+    .state('dahlia.income-calculator.intro', {
+      url: '/intro'
+      views:
+        'container':
+          templateUrl: 'income-calculator/templates/pages/intro.html'
+    })
+    .state('dahlia.income-calculator.management', {
+      url: '/management'
+      views:
+        'container':
+          templateUrl: 'income-calculator/templates/pages/management.html'
+    })
+    .state('dahlia.income-calculator.summary', {
+      url: '/summary'
+      views:
+        'container':
+          templateUrl: 'income-calculator/templates/pages/summary.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 ]

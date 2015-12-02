@@ -1,0 +1,31 @@
+section.row
+  .medium-8.columns
+    form.padding-top.padding-bottom.no-margin
+      .large-12.columns
+        h1.gamma Alright, here's your total annual income:
+
+section.row
+  .large-12.columns
+    .income-source ng-repeat="income in incomeSources"
+      .income-source_item
+        span.income-source_name
+          | {{ income.source }}: {{ income.value | currency : $ : 2 }}/{{ income.frequency }}
+
+hr.hr-5.margin-top
+
+section.row.margin-top--2x
+  .medium-8.columns
+    .row
+      .large-12.columns
+        p
+          | Total Household Income
+          span.t-bold.right
+            | {{ totalHouseholdIncome() | currency : $ : 2 }}/year
+    .button-stack--paginate.text-center.row.padding-top
+      .small-12.medium-6.medium-push-6.columns
+        button.button.expand ui-sref="dahlia.eligibility-estimator" Finish
+      .small-12.medium-6.medium-pull-6.columns
+        / should cancel also clear out incomeSources?? otherwise these 2 buttons are the same
+        / but, if cancel does clear things out -- might accidentally delete a lot of work
+        / -- perhaps better: could be a "back" to take you back to edit
+        button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel

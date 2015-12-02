@@ -1,0 +1,16 @@
+span ng-if="hasIncomeSources()"
+  section.row
+    .medium-8.columns
+      form.padding-top.padding-bottom.no-margin
+        .row
+          .large-12.columns
+            h1.gamma.margin-bottom
+              | Here's the income you've added so far:
+        .row
+          .large-12.columns
+            .income-source ng-repeat="income in incomeSources track by $index"
+              .income-source_item.margin-bottom
+                span.income-source_name
+                  | {{ income.source }}: ${{ income.value }}/{{ income.frequency }}
+                a.income-source_link ng-click="toggleIncomeEditForm(income)" Edit
+                ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-show="income.editing"
