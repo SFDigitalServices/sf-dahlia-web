@@ -27,12 +27,6 @@ IncomeCalculatorService = ($localStorage) ->
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
     return totalYearlyIncome
 
-  Service.toggleIncomeEditForm = (uniqueId) ->
-    Service.toggledIncomeEditForms[uniqueId] = !Service.toggledIncomeEditForms[uniqueId]
-
-  Service.incomeEditFormToggled = (uniqueId) ->
-    Service.toggledIncomeEditForms[uniqueId]
-
   Service._parseIncomeValue = (value) ->
     parseFloat(String(value).replace(/,/g, ''), 10)
 
