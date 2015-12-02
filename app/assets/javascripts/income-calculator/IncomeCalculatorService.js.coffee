@@ -1,16 +1,20 @@
 IncomeCalculatorService = ($localStorage) ->
   Service = {}
   Service.defaultIncomeSource =
+    id: undefined
     source: undefined
     value: undefined
     frequency: undefined
     editing: false
+  Service.current_id = 1
 
   $localStorage.incomeSources ?= []
   Service.incomeSources = $localStorage.incomeSources
 
   Service.addIncomeSource = (income) ->
     income.value = Service._parseIncomeValue(income.value)
+    Service.current_id += 1
+    income.id = Service.current_id
     Service.incomeSources.push(income)
 
   Service.deleteIncome = (income) ->

@@ -13,4 +13,5 @@ span ng-if="hasIncomeSources()"
                 span.income-source_name
                   | {{ income.source }}: {{ income.value | currency : $ : 2 }}/{{ income.frequency }}
                 a.income-source_link ng-click="toggleIncomeEditForm(income)" Edit
-                ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-show="income.editing"
+                ng-form name="forms.incomeForm_{{income.id}}" novalidate=""
+                  ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-show="income.editing"
