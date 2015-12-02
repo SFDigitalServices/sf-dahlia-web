@@ -22,7 +22,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     $scope.income = angular.copy(IncomeCalculatorService.defaultIncomeSource)
 
   $scope.totalHouseholdIncome = () ->
-    IncomeCalculatorService.formattedYearlyIncome()
+    IncomeCalculatorService.calculateTotalYearlyIncome()
 
   $scope.deleteIncome = (income) ->
     IncomeCalculatorService.deleteIncome(income)

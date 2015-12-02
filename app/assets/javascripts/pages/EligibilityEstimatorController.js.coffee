@@ -7,8 +7,8 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
   $scope.filters = angular.copy(ListingService.eligibility_filters)
 
   # check if we've used the IncomeCalculator to calculate income
-  if IncomeCalculatorService.totalYearlyIncome() > 0
-    $scope.filters.income_total = IncomeCalculatorService.totalYearlyIncome()
+  if IncomeCalculatorService.calculateTotalYearlyIncome() > 0
+    $scope.filters.income_total = IncomeCalculatorService.calculateTotalYearlyIncome()
     $scope.filters.income_timeframe = 'per_year'
 
   # hideAlert tracks if the user has manually closed the alert "X"
@@ -43,7 +43,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     angular.equals($scope.filter_defaults, $scope.filters)
 
   $scope.hasCalculatedIncome = ->
-    IncomeCalculatorService.totalYearlyIncome() > 0
+    IncomeCalculatorService.calculateTotalYearlyIncome() > 0
 
 
 ############################################################################################

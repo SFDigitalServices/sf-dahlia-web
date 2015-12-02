@@ -21,7 +21,7 @@ IncomeCalculatorService = ($localStorage) ->
   Service.resetIncomeSources = ->
     angular.copy([], Service.incomeSources)
 
-  Service.totalYearlyIncome = ->
+  Service.calculateTotalYearlyIncome = ->
     totalYearlyIncome = 0
     for source in Service.incomeSources
       source.value = Service._parseIncomeValue(source.value)
@@ -31,17 +31,8 @@ IncomeCalculatorService = ($localStorage) ->
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
     totalYearlyIncome
 
-  Service.formattedYearlyIncome = ->
-    Service._numberWithCommas(Service.totalYearlyIncome())
-
   Service._parseIncomeValue = (value) ->
     parseFloat(String(value).replace(/,/g, ''), 10)
-
-  Service._numberWithCommas = (number) ->
-    # TURN INTO A FILTER
-    parts = number.toString().split('.')
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    parts.join '.'
 
   return Service
 
