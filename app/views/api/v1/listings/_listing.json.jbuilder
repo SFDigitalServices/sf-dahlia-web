@@ -21,4 +21,6 @@ json.application_info do
   json.property_manager_phone listing['Application_Phone__c']
 end
 
+json.developer listing['Developer__c']
+
 json.image_url "http://placehold.it/474x316"
