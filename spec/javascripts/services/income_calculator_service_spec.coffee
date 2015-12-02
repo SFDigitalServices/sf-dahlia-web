@@ -21,6 +21,8 @@ do ->
     beforeEach inject((_IncomeCalculatorService_, _$localStorage_) ->
       IncomeCalculatorService = _IncomeCalculatorService_
       $localStorage = _$localStorage_
+      # re-initialize incomeSources
+      $localStorage.incomeSources = []
       return
     )
 

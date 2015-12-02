@@ -49,7 +49,7 @@ ListingService = ($http, $cookies) ->
 
   Service.getListings = () ->
     angular.copy({}, Service.listings)
-    listings_endpoint = "/json/listings.json"
+    listings_endpoint = "/api/v1/listings.json"
 
     # check for object emptiness
     unless angular.equals({}, Service.eligibility_filters)
