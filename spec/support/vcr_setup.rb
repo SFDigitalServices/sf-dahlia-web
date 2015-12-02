@@ -13,5 +13,8 @@ VCR.configure do |config|
     config.filter_sensitive_data("<<#{val}>>") do
       ENV[val]
     end
+
+    # needed for codeclimate to work
+    config.ignore_hosts 'codeclimate.com'
   end
 end
