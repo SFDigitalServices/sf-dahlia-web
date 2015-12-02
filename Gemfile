@@ -6,8 +6,6 @@ ruby '2.2.3'
 gem 'rails', '~> 4.2.4'
 gem 'rails-api'
 
-gem 'pg'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Slim templates generator for Rails 3 and 4
@@ -38,6 +36,8 @@ gem 'restforce', require: false
 
 group :test do
   gem 'codeclimate-test-reporter'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
