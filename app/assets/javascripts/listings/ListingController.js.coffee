@@ -38,6 +38,9 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
+  $scope.formattedAddress = (listing) ->
+    "#{listing.address}, #{listing.city} #{listing.state}, #{listing.zipcode}"
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
