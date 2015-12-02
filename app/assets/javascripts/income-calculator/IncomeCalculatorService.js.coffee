@@ -1,4 +1,4 @@
-IncomeCalculatorService = ($state, $localStorage) ->
+IncomeCalculatorService = ($localStorage) ->
   Service = {}
   Service.defaultIncomeSource =
     source: undefined
@@ -38,7 +38,7 @@ IncomeCalculatorService = ($state, $localStorage) ->
 
   return Service
 
-IncomeCalculatorService.$inject = ['$state', '$localStorage']
+IncomeCalculatorService.$inject = ['$localStorage']
 
 angular
   .module('dahlia.services')
