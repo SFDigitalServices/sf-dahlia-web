@@ -7,7 +7,7 @@ html lang="en"
     meta name="viewport" content="width=device-width, initial-scale=1"
     = csrf_meta_tags
 
-  body ng-app="dahlia" id="ng-app"
+  body ng-app="dahlia" id="ng-app" ng-controller="NavController"
     div(ui-view="nav")
     div(ui-view="container")
     div(ui-view="nav-mobile")
