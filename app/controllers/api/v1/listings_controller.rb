@@ -16,13 +16,13 @@ class Api::V1::ListingsController < ApiController
   private
 
   def check_salesforce_enabled
-    use_salesforce = Rails.env.production? || ENV['SALESFORCE_ENABLE'].present?
-    return true if use_salesforce
+    use_json = Rails.env.development? && ENV['SALESFORCE_ENABLE'].blank?
+    return true unless use_json
     # if not using salesforce, return fake JSON
     if params[:id].present?
-      redirect_to "/json/listings/#{params[:id]}.json"
+      return render file: "public/json/listings/#{params[:id]}.json"
     else
-      redirect_to '/json/listings.json'
+      return render file: 'public/json/listings.json'
     end
   end
 end

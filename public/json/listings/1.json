@@ -1,7 +1,7 @@
 {
   "listing":
   {
-    "id": 1,
+    "id": "1",
     "name": "Trinity Place",
     "address": "1188 Mission St",
     "city": "San Francisco",
@@ -12,7 +12,7 @@
     "map_url": "",
     "units": [
       {
-        "id": 0,
+        "id": "0",
         "unit_type": "Studio",
         "min_monthly_income": 2347,
         "rent": 939,
@@ -21,7 +21,7 @@
         "availability": 9
       },
       {
-        "id": 2,
+        "id": "2",
         "unit_type": "1BR",
         "min_monthly_income": 2650,
         "rent": 1066,

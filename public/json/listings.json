@@ -1,7 +1,7 @@
 {
   "listings": [
     {
-      "id": 0,
+      "id": "0",
       "name": "Stevenson Lofts",
       "address": "529 Stevenson St",
       "city": "San Francisco",
@@ -12,7 +12,7 @@
       "image_url": "http://placehold.it/474x316",
       "units": [
         {
-          "id": 0,
+          "id": "0",
           "unit_type": "Studio",
           "min_monthly_income": 2975,
           "rent": 941
@@ -23,7 +23,7 @@
       }
     },
     {
-      "id": 1,
+      "id": "1",
       "name": "Trinity Place",
       "address": "1188 Mission St",
       "city": "San Francisco",
@@ -34,13 +34,13 @@
       "image_url": "http://placehold.it/474x316",
       "units": [
         {
-          "id": 0,
+          "id": "0",
           "unit_type": "Studio",
           "min_monthly_income": 2347,
           "rent": 939
         },
         {
-          "id": 2,
+          "id": "2",
           "unit_type": "1BR",
           "min_monthly_income": 2650,
           "rent": 1066
@@ -51,7 +51,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Franciscan Towers",
       "address": "217 Eddy Street",
       "city": "San Francisco",
@@ -62,13 +62,13 @@
       "image_url": "http://placehold.it/474x316",
       "units": [
         {
-          "id": 0,
+          "id": "0",
           "unit_type": "Studio",
           "min_monthly_income": 2353,
           "rent": 939
         },
         {
-          "id": 2,
+          "id": "2",
           "unit_type": "1BR",
           "min_monthly_income": 2353,
           "rent": 1074

@@ -1,7 +1,7 @@
 {
   "listing":
   {
-    "id": 0,
+    "id": "0",
     "name": "Stevenson Lofts",
     "address": "529 Stevenson St",
     "city": "San Francisco",
@@ -12,7 +12,7 @@
     "map_url": "",
     "units": [
       {
-        "id": 0,
+        "id": "0",
         "unit_type": "Studio",
         "min_monthly_income": 2975,
         "rent": 941,
