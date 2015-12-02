@@ -2,6 +2,7 @@
 angular.module('customFilters', [])
 .filter 'dateSuffix', ['$filter', ($filter) ->
   (input) ->
+    return '' unless input
     suffixes = ['th', 'st', 'nd', 'rd']
     dtfilter = $filter('date')(input, 'MMMM d')
     day = parseInt(dtfilter.slice(-2))

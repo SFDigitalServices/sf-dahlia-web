@@ -12,6 +12,9 @@
       .stats-card.bottom
         ng-include src="'listings/templates/_stats-list.html'"
 
+    span.status-label.label.success ng-show="listing.eligibility_match == 1" Matched
+    span.status-label.label.negative ng-show="listing.eligibility_match == 2" Not a Match
+
   header.property-card_content
     hgroup.property-card_info
       h1.property-card_title.gamma

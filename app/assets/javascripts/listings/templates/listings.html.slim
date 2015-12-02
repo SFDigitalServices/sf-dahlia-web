@@ -3,7 +3,7 @@ section.sub-bar.bg-mist
     h3.sub-bar_header.epsilon
       | Estimate Eligibility
     a.button--start.button.tiny ui-sref="dahlia.eligibility-estimator"
-      | Get Started
+      | {{ hasEligibilityFilters() ? 'Edit' : 'Get Started' }}
 
 ul.padding-top--2x
   li.margin-bottom--2x ng-repeat="listing in listings"
