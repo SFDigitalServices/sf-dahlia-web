@@ -36,8 +36,6 @@ angular.module('dahlia.controllers',[])
           controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getFavorites()
-          ListingService.getEligibilityFilters()
           ListingService.getListings()
         ]
     })
