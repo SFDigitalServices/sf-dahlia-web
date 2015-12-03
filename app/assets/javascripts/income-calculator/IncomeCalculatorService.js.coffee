@@ -47,12 +47,6 @@ IncomeCalculatorService = ($localStorage) ->
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
     totalYearlyIncome
 
-  Service.noIncomeEditing = () ->
-    for source in Service.incomeSources
-      if source.editing == true
-        return true
-    return false
-
   Service._parseIncomeValue = (value) ->
     cleanVal = String(value).replace(/[^0-9\.]+/g, '') || 0
     # set to 2 decimal places, then convert back to float

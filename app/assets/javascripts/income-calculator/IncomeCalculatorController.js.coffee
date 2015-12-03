@@ -8,9 +8,6 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     income.editing = false
   $scope.additionalIncome = false
 
-  $scope.noIncomeEditing = () ->
-    IncomeCalculatorService.noIncomeEditing()
-
   $scope.noIncomeSources = ->
     $scope.incomeSources.length == 0
 
@@ -39,8 +36,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
       form.$setUntouched() if form
       form.$setPristine() if form
       $scope.resetIncomeSource()
-      # close the additionalIncome form
-      $scope.additionalIncome = false
+      $scope.closeAdditionalIncomeForm()
 
   $scope.resetIncomeSource = ->
     $scope.income = IncomeCalculatorService.newIncomeSource()
@@ -53,6 +49,9 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
 
   $scope.toggleAdditionalIncomeForm = () ->
     $scope.additionalIncome = !$scope.additionalIncome
+
+  $scope.closeAdditionalIncomeForm = () ->
+    $scope.additionalIncome = false
 
   $scope.nextId = ->
     IncomeCalculatorService.nextId()
