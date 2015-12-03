@@ -6,6 +6,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   # close all of the edit forms on controller init
   angular.forEach $scope.incomeSources, (income, i) ->
     income.editing = false
+  $scope.additionalIncome = false
 
   $scope.noIncomeEditing = () ->
     IncomeCalculatorService.noIncomeEditing()
@@ -19,15 +20,28 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.toggleIncomeEditForm = (income) ->
     income.editing = !income.editing
 
-  $scope.invalidForm = (formId) ->
-    form = $scope.forms["incomeForm_#{formId}"]
-    form.$invalid
+  $scope.form = (id) ->
+    $scope.forms["incomeForm_#{id}"]
+
+  $scope.inputInvalid = (formId, name) ->
+    if form = $scope.form(formId)
+      if form[name]
+        form[name].$invalid && (form[name].$touched || form.$submitted)
 
   $scope.addAdditionalIncome = () ->
     # this is where we should add validation checking!
-    IncomeCalculatorService.addIncomeSource($scope.income)
-    # reset $scope.income
-    $scope.income = angular.copy(IncomeCalculatorService.defaultIncomeSource)
+    form = $scope.form($scope.income.id)
+    if form.$invalid
+      form.$setSubmitted()
+    else
+      IncomeCalculatorService.addIncomeSource($scope.income)
+      form.$setUntouched()
+      form.$setPristine()
+      $scope.additionalIncome = false
+      $scope.resetIncomeSource()
+
+  $scope.resetIncomeSource = ->
+    $scope.income = IncomeCalculatorService.newIncomeSource()
 
   $scope.totalHouseholdIncome = () ->
     IncomeCalculatorService.calculateTotalYearlyIncome()
@@ -35,9 +49,17 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.deleteIncome = (income) ->
     IncomeCalculatorService.deleteIncome(income)
 
-  $scope.additionalIncome = false
   $scope.toggleAdditionalIncomeForm = () ->
     $scope.additionalIncome = !$scope.additionalIncome
+
+  $scope.nextId = ->
+    IncomeCalculatorService.nextId()
+
+  $scope.cleanValue = (income) ->
+    income.value = $scope.parsedValue(income.value)
+
+  $scope.parsedValue = (value) ->
+    IncomeCalculatorService._parseIncomeValue(value)
 
 IncomeCalculatorController.$inject = ['$scope', 'IncomeCalculatorService']
 

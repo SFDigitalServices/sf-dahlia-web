@@ -1,21 +1,33 @@
 IncomeCalculatorService = ($localStorage) ->
   Service = {}
+  Service.current_id = 1
+
   Service.defaultIncomeSource =
     id: undefined
     source: undefined
     value: undefined
     frequency: undefined
     editing: false
-  Service.current_id = 1
 
   $localStorage.incomeSources ?= []
   Service.incomeSources = $localStorage.incomeSources
 
+  Service.nextId = ->
+    max_id = Service.current_id
+    for source in Service.incomeSources
+      max_id = source.id if source.id > max_id
+    Service.current_id = max_id + 1
+
   Service.addIncomeSource = (income) ->
     income.value = Service._parseIncomeValue(income.value)
-    Service.current_id += 1
-    income.id = Service.current_id
+    income.editing = false
+    income.id = Service.nextId()
     Service.incomeSources.push(income)
+
+  Service.newIncomeSource = ->
+    income = angular.copy(Service.defaultIncomeSource)
+    income.id = Service.nextId()
+    income
 
   Service.deleteIncome = (income) ->
     incomeSources = Service.incomeSources.filter (e) -> e != income
@@ -42,7 +54,7 @@ IncomeCalculatorService = ($localStorage) ->
     return false
 
   Service._parseIncomeValue = (value) ->
-    parseFloat(String(value).replace(/,/g, ''), 10)
+    parseFloat(String(value).replace(/[^0-9\.]+/g, '') || 0).toFixed(2)
 
   return Service
 
