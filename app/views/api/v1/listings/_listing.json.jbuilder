@@ -1,3 +1,5 @@
+json.raw  listing
+
 json.id      listing['Id']
 json.name    listing['Property_Name__c']
 
@@ -22,5 +24,8 @@ json.application_info do
 end
 
 json.developer listing['Developer__c']
+
+json.neighborhood listing['Neighborhood__c']
+
 
 json.image_url "http://placehold.it/474x316"
