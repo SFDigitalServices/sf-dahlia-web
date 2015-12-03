@@ -7,6 +7,9 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   angular.forEach $scope.incomeSources, (income, i) ->
     income.editing = false
 
+  $scope.noIncomeEditing = () ->
+    IncomeCalculatorService.noIncomeEditing()
+
   $scope.noIncomeSources = ->
     $scope.incomeSources.length == 0
 
@@ -14,19 +17,14 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     $scope.incomeSources.length > 0
 
   $scope.toggleIncomeEditForm = (income) ->
-    # IncomeCalculatorService.toggleIncomeEditForm(income)
     income.editing = !income.editing
 
-  $scope.addAdditionalIncome = (formId) ->
-    # this is where we should add validation checking!
+  $scope.invalidForm = (formId) ->
     form = $scope.forms["incomeForm_#{formId}"]
-    console.log $scope.forms, formId
-    if form.$invalid
-      console.log 'oh no!'
-      return false
-    # do this using ng-show??
-    if formId == 'additional'
-      $scope.toggleAdditionalIncomeForm()
+    form.$invalid
+
+  $scope.addAdditionalIncome = () ->
+    # this is where we should add validation checking!
     IncomeCalculatorService.addIncomeSource($scope.income)
     # reset $scope.income
     $scope.income = angular.copy(IncomeCalculatorService.defaultIncomeSource)
