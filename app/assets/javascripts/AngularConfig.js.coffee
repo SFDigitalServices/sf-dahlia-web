@@ -13,7 +13,7 @@
 ]
 
 # Service and Controller modules
-angular.module('dahlia.services', ['ngCookies', 'ngStorage'])
+angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
@@ -49,7 +49,6 @@ angular.module('dahlia.controllers',[])
           controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getFavorites()
           ListingService.getListing($stateParams.id)
         ]
     })
@@ -61,7 +60,6 @@ angular.module('dahlia.controllers',[])
           controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getFavorites()
           ListingService.getFavoriteListings()
         ]
     })
@@ -84,11 +82,6 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
-      resolve:
-        listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getEligibilityFilters()
-        ]
-
     })
     .state('dahlia.income-calculator', {
       url: '/income-calculator'
@@ -104,11 +97,11 @@ angular.module('dahlia.controllers',[])
         'container':
           templateUrl: 'income-calculator/templates/pages/intro.html'
     })
-    .state('dahlia.income-calculator.management', {
-      url: '/management'
+    .state('dahlia.income-calculator.edit', {
+      url: '/edit'
       views:
         'container':
-          templateUrl: 'income-calculator/templates/pages/management.html'
+          templateUrl: 'income-calculator/templates/pages/edit.html'
     })
     .state('dahlia.income-calculator.summary', {
       url: '/summary'

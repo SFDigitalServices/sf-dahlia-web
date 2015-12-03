@@ -6,7 +6,8 @@ IncomeCalculatorService = ($localStorage) ->
     frequency: undefined
     editing: false
 
-  Service.incomeSources = $localStorage.incomeSources || []
+  $localStorage.incomeSources ?= []
+  Service.incomeSources = $localStorage.incomeSources
 
   Service.addIncomeSource = (income) ->
     income.value = Service._parseIncomeValue(income.value)
@@ -17,7 +18,10 @@ IncomeCalculatorService = ($localStorage) ->
     # persist the changes to Service.incomeSources / $localStorage
     angular.copy(incomeSources, Service.incomeSources)
 
-  Service.calculateTotalYearlyIncome = () ->
+  Service.resetIncomeSources = ->
+    angular.copy([], Service.incomeSources)
+
+  Service.calculateTotalYearlyIncome = ->
     totalYearlyIncome = 0
     for source in Service.incomeSources
       source.value = Service._parseIncomeValue(source.value)
@@ -25,7 +29,7 @@ IncomeCalculatorService = ($localStorage) ->
         totalYearlyIncome = totalYearlyIncome + source.value
       else if source.frequency == 'month'
         totalYearlyIncome = totalYearlyIncome + (source.value * 12)
-    return totalYearlyIncome
+    totalYearlyIncome
 
   Service._parseIncomeValue = (value) ->
     parseFloat(String(value).replace(/,/g, ''), 10)

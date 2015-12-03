@@ -7,16 +7,16 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
-    $cookies = undefined
+    $localStorage = undefined
     requestURL = undefined
 
     beforeEach module('dahlia.services', ->
     )
 
-    beforeEach inject((_$httpBackend_, _ListingService_, _$cookies_) ->
+    beforeEach inject((_$httpBackend_, _ListingService_, _$localStorage_) ->
       httpBackend = _$httpBackend_
       ListingService = _ListingService_
-      $cookies = _$cookies_
+      $localStorage = _$localStorage_
       requestURL = ListingService.requestURL
       return
     )
@@ -58,15 +58,14 @@ do ->
         expectedResult = [1]
         listingId = 1
         beforeEach ->
+          ListingService.favorites = $localStorage.favorites = []
           ListingService.toggleFavoriteListing listingId
           return
         afterEach ->
-          $cookies.remove 'storedFavorites'
           return
-        it 'should store Service.favorites in cookies', ->
-          cookieQuery = $cookies.getObject('storedFavorites')
-          expect(cookieQuery).toEqual expectedResult
-          expect(cookieQuery).toEqual ListingService.favorites
+        it 'should store Service.favorites in localStorage', ->
+          expect($localStorage.favorites).toEqual expectedResult
+          expect($localStorage.favorites).toEqual ListingService.favorites
           return
         it 'should updated Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
@@ -77,18 +76,17 @@ do ->
         expectedResult = []
         listingId = 1
         beforeEach ->
-          ListingService.toggleFavoriteListing listingId
+          ListingService.favorites = $localStorage.favorites = []
           #favoriting listing
           ListingService.toggleFavoriteListing listingId
           #unfavoriting listing
+          ListingService.toggleFavoriteListing listingId
           return
         afterEach ->
-          $cookies.remove 'storedFavorites'
           return
-        it 'should update Service.favorites in cookies', ->
-          cookieQuery = $cookies.getObject('storedFavorites')
-          expect(cookieQuery).toEqual expectedResult
-          expect(cookieQuery).toEqual ListingService.favorites
+        it 'should update Service.favorites in localStorage', ->
+          expect($localStorage.favorites).toEqual expectedResult
+          expect($localStorage.favorites).toEqual ListingService.favorites
           return
         it 'should updated Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
@@ -98,9 +96,10 @@ do ->
 
     describe 'Service.getFavorites', ->
       describe 'When a listing has been favorited', ->
+        beforeEach ->
+          ListingService.favorites = $localStorage.favorites = []
         it 'updates Service.favorites with appropriate data', ->
           ListingService.toggleFavoriteListing 1
-          ListingService.getFavorites()
           expect(ListingService.favorites).toEqual [1]
           return
         return
