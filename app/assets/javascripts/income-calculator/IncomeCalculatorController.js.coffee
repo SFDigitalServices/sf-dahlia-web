@@ -31,14 +31,16 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   $scope.addAdditionalIncome = () ->
     # this is where we should add validation checking!
     form = $scope.form($scope.income.id)
-    if form.$invalid
+    if form && form.$invalid
+      # trigger error messages by setting form to submitted
       form.$setSubmitted()
     else
       IncomeCalculatorService.addIncomeSource($scope.income)
-      form.$setUntouched()
-      form.$setPristine()
-      $scope.additionalIncome = false
+      form.$setUntouched() if form
+      form.$setPristine() if form
       $scope.resetIncomeSource()
+      # close the additionalIncome form
+      $scope.additionalIncome = false
 
   $scope.resetIncomeSource = ->
     $scope.income = IncomeCalculatorService.newIncomeSource()

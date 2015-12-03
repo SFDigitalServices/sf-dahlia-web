@@ -5,11 +5,13 @@ do ->
     IncomeCalculatorService = undefined
     $localStorage = undefined
     defaultIncomeSource =
-        source: undefined
-        value: undefined
-        frequency: undefined
-        editing: false
+      id: undefined
+      source: undefined
+      value: undefined
+      frequency: undefined
+      editing: false
     fakeIncomeSource =
+      id: 1
       source: "Wages"
       value: "8000"
       frequency: "year"

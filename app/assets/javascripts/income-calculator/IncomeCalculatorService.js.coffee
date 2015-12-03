@@ -54,7 +54,9 @@ IncomeCalculatorService = ($localStorage) ->
     return false
 
   Service._parseIncomeValue = (value) ->
-    parseFloat(String(value).replace(/[^0-9\.]+/g, '') || 0).toFixed(2)
+    cleanVal = String(value).replace(/[^0-9\.]+/g, '') || 0
+    # set to 2 decimal places, then convert back to float
+    parseFloat(parseFloat(cleanVal).toFixed(2))
 
   return Service
 
