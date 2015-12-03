@@ -48,6 +48,7 @@ group :development do
   # background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'better_errors'
+  gem 'rack-mini-profiler'
 end
 
 group :development, :test do
@@ -67,6 +68,8 @@ group :development, :test do
 end
 
 group :production do
+  gem 'dalli'
+  gem 'memcachier'
   gem 'rails_12factor'
 end
 

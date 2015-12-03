@@ -4,7 +4,8 @@
   "scripts":{},
   "addons":[
     "newrelic",
-    "papertrail"
+    "papertrail",
+    "memcachier"
   ],
   "buildpacks": [
     {
