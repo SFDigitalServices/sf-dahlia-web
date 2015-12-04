@@ -1,26 +1,28 @@
-section.row
+section.row.shift--top
   .medium-8.columns
-    .padding-top.padding-bottom
-      header.padding-bottom
-        h1.t-gamma Add sources for each household member over 18 one at a time.
-        p.t-delta Examples include:
-      .text-group.padding-bottom
-        h3.t-delta.t-sans.c-steel.margin-bottom--half Wages
-        p includes: tips, commissions, bonuses,
-      .text-group.padding-bottom
-        h3.t-delta.t-sans.c-steel.margin-bottom--half Public Benefits
-        ul.two-column.padding-bottom
-          li Social Security
-          li Disability
-          li Unemployment
-          li CalWorks
-      .text-group.padding-bottom
-        h3.t-delta.t-sans.c-steel.margin-bottom--half Wages
-        p examples: Alimony, Retirement/Pension
+    .form-card
+      .row
+        .medium-12.columns.margin-bottom--2x
+          header.padding-bottom
+            h1.t-gamma.t-sans Add sources for each household member over 18 one at a time.
+            p.t-delta Examples include:
+          .text-group.padding-bottom
+            h3.t-delta.t-sans.c-steel.margin-bottom--half Wages
+            p includes: tips, commissions, bonuses,
+          .text-group.padding-bottom
+            h3.t-delta.t-sans.c-steel.margin-bottom--half Public Benefits
+            ul.two-column.padding-bottom
+              li Social Security
+              li Disability
+              li Unemployment
+              li CalWorks
+          .text-group.padding-bottom
+            h3.t-delta.t-sans.c-steel.margin-bottom--half Wages
+            p examples: Alimony, Retirement/Pension
 
-    .button-stack--paginate.text-center.row.padding-top
-      .small-12.medium-6.medium-push-6.columns
-        button.button.expand ui-sref="dahlia.income-calculator.edit" Next
-      .small-12.medium-6.medium-pull-6.columns
-        button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
+        .button-stack--paginate.text-center.row.padding-top
+          .small-12.medium-6.medium-push-6.columns
+            button.button.expand ui-sref="dahlia.income-calculator.edit" Next
+          .small-12.medium-6.medium-pull-6.columns
+            button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
 

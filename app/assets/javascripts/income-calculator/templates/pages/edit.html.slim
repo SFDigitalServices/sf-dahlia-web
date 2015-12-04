@@ -1,22 +1,26 @@
-/ this is the initial form when none have been entered yet
-ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-if="noIncomeSources()"
+section.row.shift--top
+  .medium-8.columns
+    .form-card
+      / this is the initial form when none have been entered yet
+      ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-if="noIncomeSources()"
 
-ng-include src="'income-calculator/templates/partials/_income-list.html'"
+      ng-include src="'income-calculator/templates/partials/_income-list.html'"
 
-div ng-show="incomeSources.length < 30 && incomeSources.length > 0"
-  hr.hr-5.margin-top.margin-bottom
-  .row.margin-bottom
-    .large-12.columns
-      button.button.tint.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()"
-        span.ui-icon.ui-link
-          svg
-            use xlink:href="#i-plus"
-        | Add additional income source
-      div.income-source_item ng-show="additionalIncome"
-        ng-include src="'income-calculator/templates/partials/_income-form.html'"
+      div ng-show="incomeSources.length < 30 && incomeSources.length > 0"
+        hr.hr-5.margin-top.margin-bottom
+        .row.margin-bottom
+          .large-12.columns
+            /button.button.tertiary.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="activeClass"
+            button.button.tint.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="activeClass"
+              span.ui-icon.ui-link
+                svg
+                  use xlink:href="#i-plus"
+              | Add additional income source
+            div.income-source_item ng-show="additionalIncome"
+              ng-include src="'income-calculator/templates/partials/_income-form.html'"
 
-  .button-stack--paginate.text-center.row
-    .small-12.medium-6.medium-push-6.columns
-      button.button.expand ui-sref="dahlia.income-calculator.summary" Done
-    .small-12.medium-6.medium-pull-6.columns
-      button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
+        .button-stack--paginate.text-center.row
+          .small-12.medium-6.medium-push-6.columns
+            button.button.expand ui-sref="dahlia.income-calculator.summary" Done
+          .small-12.medium-6.medium-pull-6.columns
+            button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
