@@ -317,7 +317,8 @@ section.section-hero.row
 
         .content-panel.content-lead.padding-bottom.border-bottom
           h4.t-small.t-sans.t-bold Application Deadline
-          h3.t-delta.t-sans.c-steel Nov 21st, 2015
+          h3.t-delta.t-sans.c-steel
+            | {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
         .content-panel.padding-bottom.border-bottom
           h4.t-small.t-sans.t-bold Information Sessions
           ul
