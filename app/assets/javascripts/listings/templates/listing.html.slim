@@ -382,7 +382,8 @@ section.section-hero.row
                 | {{listing.neighborhood}}
             .small-6.columns
               span.t-small.c-steel Built
-              p 2015
+              p
+                | {{listing.year_built}}
           .row.collapse.margin-bottom
             .small-12.columns
               span.t-small.c-steel Property Amenities
@@ -538,15 +539,18 @@ section.section-hero.row
             .row.collapse.margin-bottom
               .small-6.columns
                 span.t-small Application Fee
-                p.t-delta.no-margin $40
+                p.t-delta.no-margin
+                  | {{listing.application_info.fee | currency:"$":0}}
                 span.t-small.c-steel due post-lottery
               .small-6.columns
                 span.t-small Deposit
-                p.t-delta.no-margin $500 - 941
+                p.t-delta.no-margin
+                  | {{listing.application_info.deposit_min | currency:"$":0}} - {{listing.application_info.deposit_max}}
                 span.t-small.c-steel based on credit score
             .row.collapse
               .small-12.columns
-                p Renter pays phone, internet and cable
+                p
+                  | Costs not included: {{listing.application_info.costs_not_included | currency:"$":0}}
 
       accordion-group.accordion-navigation
         accordion-heading
@@ -593,7 +597,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-a.content
-                  p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+                  p
+                    | {{listing.property_selection_criteria}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Required Documents
@@ -601,7 +606,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-b.content
-                  p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+                  p
+                    | {{listing.required_documents}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Legal Disclaimers
@@ -609,7 +615,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-c.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.legal_disclaimers}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Smoking Policy
@@ -617,7 +624,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-d.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.smoking_policy}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Pets Policy
@@ -625,7 +633,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-e.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.pet_policy}}
 
 section.page-section
   div.row
