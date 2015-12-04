@@ -11,12 +11,12 @@ section.row.shift--top
         .row.margin-bottom
           .large-12.columns
             /button.button.tertiary.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="activeClass"
-            button.button.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="additionalIncomeClass"
+            button.button.tint.expand style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="activeClass"
               span.ui-icon.ui-link
                 svg
                   use xlink:href="#i-plus"
               | Add additional income source
-            div.income-source_item.expand ng-show="additionalIncome"
+            div.income-source_item ng-show="additionalIncome"
               ng-include src="'income-calculator/templates/partials/_income-form.html'"
 
         .button-stack--paginate.text-center.row
