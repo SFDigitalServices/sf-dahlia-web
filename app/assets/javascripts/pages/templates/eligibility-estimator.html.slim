@@ -1,73 +1,76 @@
-section.sub-bar.bg-mist
+header.lead-header.shift-offset--bottom.bg-attention
   .row
-    h3.sub-bar_header.epsilon Estimate Eligibility
-    / a.button.tiny ui-sref="dahlia.listings" ng-show="isDefaultForm()"
-    /   | Cancel
-    a.button.tiny ng-click="clearForm()"
-      | Clear Filters
+    .large-12.columns
+      h1.lead-title.t-beta.c-white Estimate Eligibility
+      .medium-8.columns.no-padding.show-for-medium-up
+        p.c-white.t-gamma.t-light Enter details about household size and income and we'll highlight properties you might be eligible for.
 
-section.row
+section.row.shift--top
   .medium-8.columns
     .alert-box.alert.margin-top alert="" close="hideAlert = true" ng-show="showAlert()"
       | You'll need to resolve any errors before moving on.
 
-    form.padding-top name="eligibilityForm" ng-submit="submitForm()" novalidate=""
+    form.form-card name="eligibilityForm" ng-submit="submitForm()" novalidate=""
       .row
         .medium-12.columns.margin-bottom
-          h3.t-sans.gamma
-            | First we'll ask you about the number of people in your household.
-          label.p-relative ng-class="{ error: inputInvalid('household_size') }"
-            span.eligibility-form_header Household Size
-            span.has-tip.a-top-right tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="left" aria-haspopup="true"
-              span.ui-icon.ui-medium.i-primary
-                svg
-                  use xlink:href="#i-info"
-            select name="household_size" ng-model="filters.household_size" required=""
-              option value="" How many people are you applying to live with?
-              option value="1" 1 person
-              option value="2" 2 people
-              option value="3" 3 people
-              option value="4" 4 people
-              option value="5" 5 people
-              option value="6" 6 people
-            small.error ng-show="inputInvalid('household_size')"
-              | Please enter a household size
+          .border-bottom.padding-bottom
+            h3.t-sans.gamma.margin-bottom--half
+              | How many people are you applying to live with?
+            p.show-for-medium-up.c-steel.margin-bottom--2x Household is defined as anyone living with you in the residence, including spouse, roomates, parents and children.
+            .form-group.p-relative
+              label ng-class="{ error: inputInvalid('household_size') }"
+                span.eligibility-form_header Household Size
+                select name="household_size" ng-model="filters.household_size" required=""
+                  option value="" Enter number of people
+                  option value="1" 1 person
+                  option value="2" 2 people
+                  option value="3" 3 people
+                  option value="4" 4 people
+                  option value="5" 5 people
+                  option value="6" 6 people
+              small.error ng-show="inputInvalid('household_size')"
+                | Please enter a household size
+              span.show-for-small-only.has-tip.tip-top-right tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="left" aria-haspopup="true"
+                span.ui-icon.ui-medium.i-primary
+                  svg
+                    use xlink:href="#i-info"
 
       .row.margin-bottom
-        .medium-12.columns.bg-mist.padding-top.padding-bottom
+        .medium-12.columns.padding-top.padding-bottom
           h3.t-sans.gamma
             | Next add up your income from wages, benefits and other sources.
-          .row.collapse
-            label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-              span.eligibility-form_header Household Income
-            .columns ng-class="{ 'small-9': hasCalculatedIncome(), 'small-12': !hasCalculatedIncome() }"
-              input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
-            .small-3.columns ng-show="hasCalculatedIncome()"
-              button.postfix ui-sref="dahlia.income-calculator.edit" Edit
-
-            small.error ng-show="inputInvalid('income_total')"
-              | Please enter an income amount
+          label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+            span.eligibility-form_header Household Income
+            input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
+            button.input-editor.button.tiny.secondary ui-sref="dahlia.income-calculator.edit" ng-show="hasCalculatedIncome()"
+              | Edit
+          / <input type="text" placeholder="Total all of your income sources" />
+          / <a href="" class="input-editor button tiny secondary">Edit</a>
+          small.error ng-show="inputInvalid('income_total')"
+            | Please enter an income amount
           .radio-group
-            p.d-inline-block
+            p.d-inline-block.no-margin
               input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
               label for="per_month" per month
-            p.d-inline-block
+            p.d-inline-block.no-margin
               input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
               label for="per_year" per year
             small.error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe
 
-        .medium-12.columns.bg-tint.padding-top ng-show="!hasCalculatedIncome()"
-          p.t-tiny.margin-bottom
-            ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. To help, we created a
-            a ui-sref="dahlia.income-calculator.intro" Household Income Calculator
+        .medium-12.columns
+          .note.bg-tint.padding.margin-bottom--2x ng-show="!hasCalculatedIncome()"
+            p.t-tiny.no-margin
+              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. To help, we created a
+              a ui-sref="dahlia.income-calculator.intro" Household Income Calculator
 
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
           input.button.button.expand type="submit" value="View Matching Properties"
         .small-12.medium-6.medium-pull-6.columns
-          button.button.blank.expand ui-sref="dahlia.listings"
-            | Cancel
+          a.button.blank.expand ng-click="clearForm()"
+            | Reset Filters
+
 
 
 / -- TBD -- for another story...
