@@ -1,4 +1,6 @@
 require 'restforce'
+require 'facets/hash/rekey'
+
 # encapsulate all Salesforce querying functions in one handy service
 class SalesforceService
   @retries = 1
@@ -34,6 +36,7 @@ class SalesforceService
 
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
+    # response.body.map{|result| massage(result)}
     response.body
   rescue Restforce::UnauthorizedError
     if @retries > 0
@@ -51,6 +54,12 @@ class SalesforceService
     Rails.cache.fetch('salesforce_oauth_token', force: force) do
       auth = client.authenticate!
       auth.access_token
+    end
+  end
+
+  def self.massage(response)
+    response.rekey do |key|
+      key.gsub('__c', '').gsub('__r', '').underscore
     end
   end
 end
