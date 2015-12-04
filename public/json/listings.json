@@ -8,7 +8,6 @@
       "state": "CA",
       "zipcode": "94134",
       "developer": "Relisto Leasing Agency",
-      "application_due_date": "2015-12-12",
       "image_url": "http://placehold.it/474x316",
       "units": [
         {
@@ -19,7 +18,8 @@
         }
       ],
       "application_info": {
-        "property_manager_phone": "(415) 333-9956"
+        "contact_phone": "(415) 333-9956",
+        "due_date": "2015-12-12"
       }
     },
     {
@@ -47,7 +47,8 @@
         }
       ],
       "application_info": {
-        "property_manager_phone": "(415) 215-9944"
+        "contact_phone": "(415) 215-9944",
+        "due_date": "2015-12-12"
       }
     },
     {
@@ -75,7 +76,8 @@
         }
       ],
       "application_info": {
-        "property_manager_phone": "(415) 456-9457"
+        "contact_phone": "(415) 456-9457",
+        "due_date": "2015-12-12"
       }
     }
   ]

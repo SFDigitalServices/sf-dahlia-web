@@ -26,7 +26,7 @@
       p.c-steel
         | {{listing.developer}}
       p
-        | Application Due {{listing.application_due_date | dateSuffix}}
+        | Application Due {{listing.application_info.due_date | dateSuffix}}
       .property-card_action
         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.id})"
           | See Details
@@ -41,7 +41,7 @@
         button.button.secondary
           | Share
       li
-        a.button.secondary href="tel: {{listing.application_info.property_manager_phone}}"
+        a.button.secondary href="tel: {{listing.application_info.contact_phone}}"
           | Call Manager
           br
-          | {{listing.application_info.property_manager_phone}}
+          | {{listing.application_info.contact_phone}}

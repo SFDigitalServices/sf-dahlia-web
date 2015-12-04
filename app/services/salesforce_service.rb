@@ -43,7 +43,7 @@ class SalesforceService
     else
       []
     end
-  rescue Error
+  rescue StandardError
     []
   end
 
