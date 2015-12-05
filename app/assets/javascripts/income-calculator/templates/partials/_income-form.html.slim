@@ -1,5 +1,5 @@
 form
-  .row
+  .row.padding-top--2x
     .large-12.columns ng-if="noIncomeSources()"
       h1.gamma.margin-bottom
         | Add an income source:
@@ -36,7 +36,7 @@ form
 
     / show this button if we're on the additional income form
     .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
-      button.button.tint.expand ng-click="addAdditionalIncome();toggleAdditionalIncomeForm()"
+      button.button.tint.expand.no-margin ng-click="addAdditionalIncome();toggleAdditionalIncomeForm()"
         | Add income Source
 
 

@@ -1,5 +1,5 @@
 span ng-if="hasIncomeSources()"
-  form.padding-top.padding-bottom.no-margin
+  form.no-margin
     .row
       .large-12.columns
         h1.gamma.margin-bottom.t-sans
@@ -11,4 +11,6 @@ span ng-if="hasIncomeSources()"
             span.income-source_name
               | {{ income.source }}: {{ income.value | currency : $ : 2 }}/{{ income.frequency }}
             a.income-source_link ng-click="toggleIncomeEditForm(income)" Edit
-            ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-show="income.editing"
+            
+            .income-source_nested.bg-mist
+              ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-show="income.editing"
