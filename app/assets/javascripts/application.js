@@ -14,6 +14,8 @@
 //= require angular-foundation
 //= require angular-ui-router
 //= require angular-rails-templates
+//= require angular-pageslide-directive
 //= require ngstorage
+//= require angular-pageslide-directive
 //= require angular-clipboard
 //= require_tree .

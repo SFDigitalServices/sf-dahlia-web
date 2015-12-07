@@ -8,12 +8,14 @@ do ->
     fakeIncomeCalculatorService = undefined
 
     defaultIncomeSource =
+      id: undefined
       source: undefined
       value: undefined
       frequency: undefined
       editing: false
 
     fakeIncomeSource =
+      id: 1
       source: "Wages"
       value: "8000"
       frequency: "year"
@@ -28,6 +30,7 @@ do ->
       fakeIncomeCalculatorService.addIncomeSource = jasmine.createSpy()
       fakeIncomeCalculatorService.calculateTotalYearlyIncome = jasmine.createSpy()
       fakeIncomeCalculatorService.deleteIncome = jasmine.createSpy()
+      fakeIncomeCalculatorService.newIncomeSource = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
@@ -96,8 +99,8 @@ do ->
         expect(fakeIncomeCalculatorService.addIncomeSource).toHaveBeenCalled()
         return
 
-      it 'resets scope.income to default', ->
-        expect(scope.income).toEqual defaultIncomeSource
+      it 'resets scope.income to a new income source', ->
+        expect(fakeIncomeCalculatorService.newIncomeSource).toHaveBeenCalled()
         return
       return
 
