@@ -7,6 +7,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
   angular.forEach $scope.incomeSources, (income, i) ->
     income.editing = false
   $scope.additionalIncome = false
+  $scope.additionalIncomeClass = "tint"
 
   $scope.noIncomeSources = ->
     $scope.incomeSources.length == 0
@@ -40,6 +41,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
 
   $scope.resetIncomeSource = ->
     $scope.income = IncomeCalculatorService.newIncomeSource()
+    $scope.additionalIncomeClass = "tint"
 
   $scope.totalHouseholdIncome = () ->
     IncomeCalculatorService.calculateTotalYearlyIncome()
@@ -48,6 +50,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     IncomeCalculatorService.deleteIncome(income)
 
   $scope.toggleAdditionalIncomeForm = () ->
+    $scope.additionalIncomeClass = if $scope.additionalIncomeClass == 'tint' then 'ternary' else 'tint'
     $scope.additionalIncome = !$scope.additionalIncome
 
   $scope.closeAdditionalIncomeForm = () ->
