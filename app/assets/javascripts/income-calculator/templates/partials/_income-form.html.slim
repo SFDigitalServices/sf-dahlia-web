@@ -47,8 +47,8 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
 
     / show this button if we're on the additional income form
     .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
-      button.button.tint.expand.no-margin ng-click="addAdditionalIncome()"
-        | Add income Source
+      button.button.tint.expand ng-click="addAdditionalIncome()"
+        | Save income Source
 
     / show these buttons if we're iterating over income list (better way to check?)
     .small-6.medium-push-6.columns ng-if="$index != undefined"
