@@ -1,24 +1,33 @@
-section.sub-bar.bg-mist
+section.sub-bar.bg-mist.show-for-small-only
   .row
     .large-12.columns
       a.button.tiny(back-button)
         | Back
-
+header.lead-header.shift-offset--bottom.bg-attention-tint
+  .row
+    .large-12.columns
+      h1.lead-title.t-beta Share this Listing
+      .medium-8.columns.no-padding
+        p.t-gamma.t-light Send a link to a housing conselor, family member or friend.
 section.section-full
-  .row
-    .medium-8.columns.padding-top--2x
-      h1.gamma
-        | Share this listing with a housing counselor, family member or friend.
-      form.no-margin ng-submit="emailShare()"
-        .row.collapse
-          .small-8.large-10.columns
-            input placeholder="Enter Email" type="email" ng-model="email"
-          .small-4.large-2.columns
-            input.button.postfix type="submit" value="Send"
-  .row
-    .medium-8.columns.small-only-text-center
-      hr.hr-5.tall
-      h1.gamma.show-for-medium-up
-        | Copy the link to the property to send in a text or email.
-      button.button.small.secondary(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
-        | Get Sharable Link
+  .row.shift--top
+    .medium-8.columns
+      form.form-card
+        .alert-box.success ng-show="showShareSuccess"
+          span.alert-icon
+            span.ui-icon.ui-medium
+              svg
+                use xlink:href="#i-check"
+          p.alert-body
+            | You shared this listing!
+          a.close ng-click="closeShareSuccess()" &times;
+        span.ui-icon.ui-link
+          svg
+            use xlink:href="#i-link"
+        | Get Shareable Link
+        .row
+          .large-12.columns
+            label
+              input placeholder="Link" readonly="readonly" type="text" ng-model="textToCopy"
+            button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+              | Copy Link

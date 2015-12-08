@@ -1,60 +1,58 @@
 / `income` == $scope.income in the case of addInitial and addAdditional
 / `income` == passed in income (income in incomeSources) when it's the edit form
-section.row.margin-top--2x
-  ng-form.medium-8.columns name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || nextId()"
-    .row
-      .large-12.columns ng-if="noIncomeSources()"
-        h1.gamma.margin-bottom
-          | Add an income source:
-      .large-12.columns
-        label ng-class="{ error: inputInvalid(income.id, 'source') }"
-          | Where is this income from?
-          select ng-model="income.source" name="source" required=""
-            option value="Wages"  Wages
-            option value="Social Security"  Social Security
-            option value="Disability"  Disability
-            option value="Unemployment"  Unemployment
-            option value="Calworks"  CalWorks
-          small.error ng-show="inputInvalid(income.id, 'source')"
-            | Please enter an income source
+ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || nextId()"
+  .row.padding-top--2x
+    .large-12.columns ng-if="noIncomeSources()"
+      h1.gamma.margin-bottom
+        | Add an income source:
+    .large-12.columns
+      label ng-class="{ error: inputInvalid(income.id, 'source') }"
+        | Where is this income from?
+        select ng-model="income.source" name="source" required=""
+          option value="Wages"  Wages
+          option value="Social Security"  Social Security
+          option value="Disability"  Disability
+          option value="Unemployment"  Unemployment
+          option value="Calworks"  CalWorks
+        small.error ng-show="inputInvalid(income.id, 'source')"
+          | Please enter an income source
 
-    .row
-      .large-12.columns.margin-bottom
-        label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
-          | How much is the income of this source?
-          input placeholder="$" type="text" ng-model="income.value" name="value" required=""
-          small.error ng-show="inputInvalid(income.id, 'value')"
-            | Please enter an income amount
-        .radio-group
-          p.d-inline-block
-            / `::$id` is a "one-time binding" of $id
-            / see: https://docs.angularjs.org/guide/expression
-            input id="income_frequency_month_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="month" ng-model="income.frequency" required=""
-            label for="income_frequency_month_{{income.id}}"  per month
-          p.d-inline-block
-            input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" required=""
-            label for="income_frequency_year_{{income.id}}"  per year
-          small.error ng-show="inputInvalid(income.id, 'frequency_'+income.id)"
-              | Please enter an income frequency
+  .row
+    .large-12.columns.margin-bottom
+      label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+        | How much is the income of this source?
+        input placeholder="$" type="text" ng-model="income.value" name="value" required=""
+        small.error ng-show="inputInvalid(income.id, 'value')"
+          | Please enter an income amount
+      .radio-group
+        p.d-inline-block
+          / `::$id` is a "one-time binding" of $id
+          / see: https://docs.angularjs.org/guide/expression
+          input id="income_frequency_month_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="month" ng-model="income.frequency" required=""
+          label for="income_frequency_month_{{income.id}}"  per month
+        p.d-inline-block
+          input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" required=""
+          label for="income_frequency_year_{{income.id}}"  per year
+        small.error ng-show="inputInvalid(income.id, 'frequency_'+income.id)"
+            | Please enter an income frequency
 
-    .button-stack--paginate.text-center.row
-      / show this button for the initial form (we don't have income sources)
-      .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
-        button.button.expand ng-click="addAdditionalIncome()"
-          | Save income source
-      .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
-        button.button.blank.expand ui-sref="dahlia.eligibility-estimator"
-          | Cancel
+  .button-stack--paginate.text-center.row
+    / show this button for the initial form (we don't have income sources)
+    .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
+      button.button.expand ng-click="addAdditionalIncome()"
+        | Save income source
+    .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
+      button.button.blank.expand ui-sref="dahlia.eligibility-estimator"
+        | Cancel
 
-      / show this button if we're on the additional income form
-      .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
-        button.button.tint.expand ng-click="addAdditionalIncome()"
-          | Add income Source
+    / show this button if we're on the additional income form
+    .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
+      button.button.tint.expand ng-click="addAdditionalIncome()"
+        | Save income Source
 
-
-      / show these buttons if we're iterating over income list (better way to check?)
-      .small-6.medium-push-6.columns ng-if="$index != undefined"
-        button.button.expand type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
-          | Save
-      .small-6.medium-6.medium-pull-6.columns ng-if="$index != undefined"
-        button.button.blank.expand type="button" ng-click="deleteIncome(income)" Delete
+    / show these buttons if we're iterating over income list (better way to check?)
+    .small-6.medium-push-6.columns ng-if="$index != undefined"
+      button.button.expand type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
+        | Save
+    .small-6.medium-6.medium-pull-6.columns ng-if="$index != undefined"
+      button.button.blank.expand type="button" ng-click="deleteIncome(income)" Delete
