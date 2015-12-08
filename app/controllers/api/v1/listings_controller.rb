@@ -5,17 +5,21 @@ class Api::V1::ListingsController < ApiController
     # params[:ids] is a comma-separated list of ids
     params[:ids] = params[:ids] if params[:ids].present?
     @listings = SalesforceService.listings(params[:ids])
+    render json: { listings: @listings }
   end
 
   def show
     @listing = SalesforceService.listing(params[:id])
+    render json: { listing: @listing }
   end
 
-  # TODO: fake for now
+  # TODO: fake generation of matches for now
   def eligibility
     @listings = SalesforceService.listings
     @listings.each do |listing|
-      listing['fake_eligibility_match'] = rand < 0.5 ? 1 : 2
+      # fake it 'till you make it!
+      listing['Eligibility_Match'] = rand < 0.5 ? 1 : 2
     end
+    render json: { listings: @listings }
   end
 end

@@ -11,18 +11,20 @@ h3.delta How to Apply
   .option-group
     h4.t-sans.t-base.t-bold.no-margin Pickup and turn in application
     p.no-margin
-      | {{listing.application_info.property_manager}}
+      / | {{listing.Contact_Name}}
     p.c-steel
-      | {{listing.application_info.property_manager_address}}
-    a.t-small.d-block.ui-link.margin-bottom href="https://www.google.com/maps/place/{{listing.application_info.property_manager_address}}"
+      | {{listing.Property_Street_Address}}
+    a.t-small.d-block.ui-link.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
       span.ui-icon
         svg
           use xlink:href="#i-map"
       | Get Directions
     p.no-margin Office Hours
     p
-      | {{listing.application_info.office_open}} - {{listing.application_info.office_closed}}
-    a.button.small.secondary ng-href="{{listing.application_info.download_url}}"
+      / fields not entered yet...
+      / | {{listing.Office_Open}} - {{listing.Office_Closed}}
+
+    a.button.small.secondary ng-href="{{listing.Download_URL}}"
       span.ui-icon.ui-link
         svg
           use xlink:href="#i-download"
@@ -37,6 +39,6 @@ h3.delta How to Apply
   .option-group
     h4.t-sans.t-base.t-bold.no-margin Call Property
     p.margin-bottom--half
-      a href="tel: {{listing.application_info.contact_phone}}"
-        | {{listing.application_info.contact_phone}}
+      a href="tel: {{listing.Application_Phone}}"
+        | {{listing.Application_Phone}}
     p.c-steel.t-small Hear a recorded message from the property manager
