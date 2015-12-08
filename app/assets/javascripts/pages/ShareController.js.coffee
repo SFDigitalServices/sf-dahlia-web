@@ -4,6 +4,7 @@
 
 ShareController = ($scope, $state, $window, SharedService) ->
   $scope.shared = SharedService
+  $scope.showShareSuccess = false
 
   $scope.clipboardLink = ->
     # get the link to /listings/:id using the listing :id of the share page route
@@ -11,7 +12,10 @@ ShareController = ($scope, $state, $window, SharedService) ->
     "http://#{$window.location.host}/#{link}"
 
   $scope.clipboardSuccess = ->
-    $window.alert("The Listing URL has been copied to your clipboard.")
+    $scope.showShareSuccess = true
+
+  $scope.closeShareSuccess = ->
+    $scope.showShareSuccess = false
 
   $scope.emailShare = ->
     $window.alert("Email sent.")
