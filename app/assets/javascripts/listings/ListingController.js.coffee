@@ -39,7 +39,7 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    "#{listing.address}, #{listing.city} #{listing.state}, #{listing.zipcode}"
+    "#{listing.Property_Street_Address}, #{listing.Property_City} #{listing.Property_State}, #{listing.Property_Zip_Code}"
 
   $scope.hasEligibilityFilters = ->
     ListingService.hasEligibilityFilters()

@@ -1,13 +1,13 @@
-ul.stats-list.triple ng-repeat="unit in listing.units"
+ul.stats-list.triple ng-repeat="unit in listing.Units"
   li
     .stats-list_value
-      | {{unit.unit_type || 'N/A'}}
+      | {{unit.Unit_Type || 'N/A'}}
     span.stats-list_label bedrooms
   li
     .stats-list_value
-      | {{unit.min_monthly_income | currency:"$":0}}
+      | {{unit.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
     span.stats-list_label min income
   li
     .stats-list_value
-      | {{unit.rent | currency:"$":0}}
+      | {{unit.BMR_Rent_Monthly | currency:"$":0}}
     span.stats-list_label rent

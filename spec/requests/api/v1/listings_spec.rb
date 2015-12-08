@@ -13,8 +13,9 @@ describe 'Listings API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the right amount of messages are returned
-    expect(json['listings'].length).to eq(2)
+    # check to make sure the right amount of listings are returned
+    # (based on VCR cassette with 5 listings)
+    expect(json['listings'].length).to eq(5)
   end
 
   it 'sends an individual listing' do
@@ -28,6 +29,6 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of messages are returned
-    expect(json['listing']['id']).to eq('a0X210000004afdEAA')
+    expect(json['listing']['Id']).to eq('a0X210000004afdEAA')
   end
 end
