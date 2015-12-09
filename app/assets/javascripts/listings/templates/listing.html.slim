@@ -319,23 +319,26 @@ section.section-hero.row
           h4.t-small.t-sans.t-bold Application Deadline
           h3.t-delta.t-sans.c-steel
             | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
-        .content-panel.padding-bottom.border-bottom
+        .content-panel.padding-bottom.border-bottom ng-if="listing.Information_Sessions"
           h4.t-small.t-sans.t-bold Information Sessions
-          ul
+          ul ng-repeat="session in listing.Information_Sessions"
             li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 27th
-              p.c-steel 1:00pm – 2:30pm
-              p.no-margin San Francisco LGBT Community Center
-              p.c-steel 1800 Market Street, San Francisco
-        .content-panel.padding-bottom.border-bottom
+              h3.t-delta.t-sans.c-steel.no-margin
+                | {{session.Date | dateSuffix}}
+              p.c-steel
+                | {{session.Start_Time}} - {{session.End_Time}}
+              p.no-margin
+                | {{session.Venue}}
+              p.c-steel
+                | {{session.Street_Address}}, {{session.City}}
+        .content-panel.padding-bottom.border-bottom ng-if="listing.Open_Houses"
           h4.t-small.t-sans.t-bold Open Houses
-          ul.content-list
+          ul.content-list  ng-repeat="session in listing.Open_Houses"
             li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 10th
-              span.c-steel 1:00pm – 2:30pm
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 18th
-              span.c-steel 1:00pm – 2:30pm
+              h3.t-delta.t-sans.c-steel.no-margin
+                | {{session.Date | dateSuffix}}
+              span.c-steel
+                | {{session.Start_Time}} - {{session.End_Time}}
         .content-panel.padding-bottom.border-bottom
           h4.t-small.t-sans.t-bold Public Lottery
           ul
@@ -567,8 +570,9 @@ section.section-hero.row
 
         .property-map.map-panel
             figure.property-map_figure.p-relative
-              iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.379895347056!2d-122.4125466837633!3d37.781135879758395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858084e5540655%3A0x8fc08301d5de417f!2s529+Stevenson+St%2C+San+Francisco%2C+CA+94103!5e0!3m2!1sen!2sus!4v1447289216863" width="640" height="450" frameborder="0" style="border:0"
-            a.map-link.ui-link href="https://goo.gl/maps/wXGpZhc23E82"
+              iframe src="{{googleMapSrc(listing)}}" width="640" height="450" frameborder="0" style="border:0"
+
+            a.map-link.ui-link href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
               span.ui-icon
                 svg
                   use xlink:href="#i-map" /
