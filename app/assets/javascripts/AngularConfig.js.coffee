@@ -29,6 +29,8 @@ angular.module('dahlia.controllers',[])
           templateUrl: 'shared/templates/nav.html'
         'nav-mobile@':
           templateUrl: 'shared/templates/nav-mobile.html'
+        'footer@':
+          templateUrl: 'shared/templates/footer.html'
     })
     .state('dahlia.listings', {
       url: '/listings'
