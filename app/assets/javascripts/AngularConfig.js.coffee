@@ -71,6 +71,18 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/welcome.html'
     })
+    .state('dahlia.disclaimer', {
+      url: '/disclaimer'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/disclaimer.html'
+    })
+    .state('dahlia.privacy', {
+      url: '/privacy'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/privacy.html'
+    })
     .state('dahlia.share', {
       url: '/share/:id'
       views:
