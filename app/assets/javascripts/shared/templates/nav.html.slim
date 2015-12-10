@@ -2,23 +2,20 @@ nav.top-bar role="navigation"
   .row
     ul.title-area
       li.name
-        h1.t-alt-sans
-          a ui-sref="dahlia.welcome" SF DAHLIA Housing Portal
-      li.toggle-topbar
+        h1.name-logo.t-alt-sans
+          a ui-sref="dahlia.welcome" SF Affordable Housing Portal
+      li.toggle-topbar.menu-icon
         a ng-click="toggleNavMobile()"
           span
             | Menu
-          span.ui-icon.ui-large.i-white
-            svg
-              use xlink:href="#i-menu"
     section.top-bar-section
-      ul.right
+      ul.nav-menu.right
         li
           a ui-sref="dahlia.listings"
             | Browse Properties
         li
           a ui-sref="dahlia.favorites"
             | My Favorites
-        li
-          a href=""
-            | Resources
+        / li
+        /   a href=""
+        /     | Resources
