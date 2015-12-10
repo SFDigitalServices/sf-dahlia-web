@@ -11,6 +11,7 @@
       "developer": "Relisto Leasing Agency",
       "application_due_date": "2015-12-12",
       "image_url": "http://placehold.it/474x316",
+      "alt_text": "Relisto Leasing Agency",
       "units": [
         {
           "id": "0",
@@ -34,6 +35,7 @@
       "developer": "Caritas Management Group",
       "application_due_date": "2015-12-01",
       "image_url": "http://placehold.it/474x316",
+      "alt_text": "Caritas Management Group",
       "units": [
         {
           "id": "0",
@@ -63,6 +65,7 @@
       "developer": "Tenderloin Neighborhood Development",
       "application_due_date": "2015-11-01",
       "image_url": "http://placehold.it/474x316",
+      "alt_text": "Tenderloin Neighborhood Development",
       "units": [
         {
           "id": "0",
