@@ -8,6 +8,7 @@ html lang="en"
     = csrf_meta_tags
 
   body ng-app="dahlia" id="ng-app" ng-controller="NavController"
+    div(ui-view="version")
     div(ui-view="nav")
     div(ui-view="container")
     div(ui-view="nav-mobile")
