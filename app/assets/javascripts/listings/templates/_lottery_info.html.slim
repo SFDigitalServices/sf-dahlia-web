@@ -1,0 +1,70 @@
+accordion-group.accordion-navigation.accordion-process
+  accordion-heading.lead.accordion-header
+    | Results
+    span.accordion-subheader Lottery selection, important dates and contact
+    span.ui-control.ui-icon.ui-small
+      svg
+        use xlink:href="#i-arrow-down"
+
+  .content.content-section
+    .show-for-medium-up.margin-bottom
+      p.post-dealine_alert.margin-top--half.margin-bottom
+        span.label.alert Applications Closed
+
+    .content-lead
+      .content-panel.padding-bottom.no-margin.border-bottom ng-hide="lotteryDatePassed(listing)"
+        h4.t-small.t-sans.t-bold Lottery
+        h3.t-delta.t-sans.c-steel.no-margin
+          | {{ listing.Lottery_Date | date : 'mediumDate' }}
+        p.c-steel
+          | {{ listing.Lottery_Start_Time}}pm - {{ listing.Lottery_End_Time}}pm
+        p.no-margin
+          | {{ listing.Lottery_Venue }}
+        p.c-steel
+          | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
+        p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+
+      .content-panel.padding-bottom.no-margin.border-bottom ng-hide="lotteryResultsAvailable(listing)"
+        h4.t-small.t-sans.t-bold Lottery Results
+        h3.t-delta.t-sans.c-steel Jan 5, 2015
+        p.c-steel.t-small Notices will be sent to each applicant regarding their position within two weeks following the lottery.
+
+      .content-panel.padding-bottom.no-margin.border-bottom ng-if="lotteryResultsAvailable(listing)"
+        h4.t-small.t-sans.t-bold Lottery Results
+        ul.result-set.margin-bottom
+          li
+            | Rank
+            span.right Ticket
+          li
+            | 1
+            span.right 843219
+          li
+            | 1
+            span.right 843219
+          li
+            | 1
+            span.right 843219
+          li
+            | 1
+            span.right 843219
+        p.c-steel.t-small
+          / to replace with salesforce
+          | Out of 50 applications, 20 numbers were pulled.
+
+      .content-panel.padding-bottom.no-margin.border-bottom
+        h4.t-small.t-sans.t-bold What to Expect
+        p.c-steel.t-small You will be contacted by developer in lottery rank order.
+        p.c-steel.t-small Be prepared to have your application reviewed and eligibility confirmed.
+      .content-panel.padding-bottom.border-bottom
+        h4.t-small.t-sans.t-bold Contact Property Manager
+        a.margin-bottom--half href="#"
+          span.ui-icon.ui-medium.i-primary
+            svg
+              use xlink:href="#i-phone"
+          | Call (415) 928-5910
+        p.t-small.c-steel Due to high call volume you may hear a message
+        a href="#"
+          span.ui-icon.ui-medium.i-primary
+            svg
+              use xlink:href="#i-mail"
+          | Email
