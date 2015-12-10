@@ -28,6 +28,6 @@ section.section-full
         .row
           .large-12.columns
             label
-              input placeholder="Link" readonly="readonly" type="text" ng-model="textToCopy"
+              input placeholder="Link" onclick="this.focus();this.select()" readonly="readonly" type="text" ng-model="textToCopy"
             button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
               | Copy Link
