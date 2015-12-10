@@ -1,79 +1,51 @@
 div.section-head
 section.section-hero.row
-  div.accordion-container.medium-8.columns
-    div.property-hero
+  .accordion-container.medium-8.columns
+    .property-hero
       figure.property-hero_figure
         div.property-hero_container
-          img.property-hero_thumb src="{{listing.image_url}}"
-          a.property-hero_like ng-click="toggleFavoriteListing(listing.id);"
+          img.property-hero_thumb src="{{listing.Image_URL}}"
+          a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
             span.ui-icon
               svg
                 use xlink:href="#i-like"
-                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
+                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
 
       header.property-hero_content.text-center
         h1.property-hero_title.gamma.no-margin
-          | {{listing.name}}
+          | {{listing.Property_Name}}
         p
           | {{formattedAddress(listing)}}
         p.c-steel
-          | {{listing.developer}}
-        a.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}" View on Map
-      div.property-hero_stats ng-repeat="unit in listing.units"
-        div.stats-card
-          ul.stats-list.triple.medium-quad
-            li
-              div.stats-list_value
-               | {{unit.unit_type}}
-              span.stats-list_label unit type
-            li
-              div.stats-list_value
-                | {{unit.min_monthly_income | currency:"$":0}}
-                span.value-label
-                  | /mo
-              span.stats-list_label min income
-            li
-              div.stats-list_value
-               | {{unit.rent | currency:"$":0}}
-              span.stats-list_label rent
-            li.show-for-medium-up
-              div.stats-list_value
-                | {{unit.availability}}
-                span.value-label  units
-              span.stats-list_label available
-          ul.stats-list.double.bg-smoke.medium-full.labels-inline.hide-for-medium-up
-            li.t-small
-              span
-                ' Occupancy
-              span
-                ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
-              span people
-            li.t-small
-              span.status-list_value
-                ' Availability
-              span
-                ' {{unit.availability}}
-              span units
+          | {{listing.Developer}}
+        a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+          span.ui-icon
+            svg
+              use xlink:href="#i-map"
+          | View on Map
+
+        p.post-dealine_alert.show-for-small-only.margin-top--half.margin-bottom ng-if="listingApplicationClosed(listing)"
+          span.label.alert Applications Closed
+
+      ng-include src="'listings/templates/_property_unit_stats.html'"
 
       .property-hero_action.text-center
-        .hide-for-medium-up
-          p.t-small
-            | Deadline: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
-            .text-center
-              ng-include src="'listings/templates/_panel-apply.html'"
-        hr.hr-5.tall.show-for-small-only
         .action-group.row
           .medium-6.columns
-            p.date.t-small
-              | Listing Updated: Aug 15th 2015
+            / replace with salesforce value
+            p.date.t-small Listing Updated: Aug 15th 2015
           .medium-6.columns
-            a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
+            a.button.small.secondary href="/pages/share-grid.html"
               span.ui-icon.ui-link
                 svg
-                  use xlink:href="#i-forward"
-              |  Share this Listing
+                  use xlink:href="#i-forward" /
+              | Share this Listing
 
+    /accordion directive
     accordion.property-accordion.accordion
+
+      ng-include src="'listings/templates/_lottery_info.html'" ng-if="listingApplicationClosed(listing)"
+
       accordion-group.accordion-navigation
         accordion-heading
           | Eligibility
@@ -88,223 +60,111 @@ section.section-hero.row
           span.accordion-subheader
             | Income, occupancy, preferences, and subsidies
 
-        .content-panel.wide.lined.padding-top--2x
-          header.margin-bottom
-            h4.t-epsilon.t-sans.no-margin
-              | Household Income Maximum
-            p.t-small.c-steel
-              | This is based on your household size which includes anyone living in the unit including any age.
-
-          .stats-card.bg-tint
-            ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
-              li
-                .stats-list_value.highlight
-                  | 1-6
-                  span.value-label
-                    |  people
-                span.stats-list_label
-                  | household size
-              li
-                .stats-list_value.highlight
-                  | $3,270 - $4,204
-                  span.value-label
-                    |  /mo
-                span.stats-list_label
-                  | max income
-
-              span.ui-control.ui-icon.ui-small
-                svg
-                  use xlink:href="#i-arrow-down"
-
-            table.stats-table ng-show="showIncomeTable"
-              tbody
-                tr.stat-row
-                  td
-                    span.stats-table_value
-                      | 1
-                      span.value-label
-                        |  person
-                  td
-                    span.stats-table_value
-                      | $3,245
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $38,950
-                      span.value-label
-                        | /yr
-                tr.stat-row
-                  td
-                    span.stats-table_value
-                      | 2
-                      span.value-label
-                        |  person
-                  td
-                    span.stats-table_value
-                      | $3,708
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $44,500
-                      span.value-label
-                        | /yr
-                tr.stat-row
-                  td
-                   span.stats-table_value
-                    | 3
+        .content.content-section
+          .content-panel.lined
+            header.margin-bottom
+              h4.t-epsilon.t-sans.no-margin Household Maximum Income
+              /! Each unit type available has its own requirements based on household size.
+              p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
+            .stats-card.bg-tint
+              ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
+                li
+                  .stats-list_value.highlight
                     span.value-label
-                      |  person
-                  td
-                    span.stats-table_value
-                      | $3,245
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $38,950
-                      span.value-label
-                        | /yr
-                tr.stat-row
-                  td
-                    span.stats-table_value
-                      | 4
-                      span.value-label
-                        |  person
-                  td
-                    span.stats-table_value
-                      | $4,670
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $56,050
-                      span.value-label
-                        | /yr
-                tr.stat-row
-                  td
-                    span.stats-table_value
-                      | 5
-                      span.value-label
-                        |  person
-                  td
-                    span.stats-table_value
-                      | $5,045
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $60,550
-                      span.value-label
-                        | /yr
-                tr.stat-row
-                  td
-                    span.stats-table_value
-                      | 6
-                      span.value-label
-                        |  person
-                  td
-                    span.stats-table_value
-                      | $5,416
-                      span.value-label
-                        | /mo
-                  td
-                    span.stats-table_value
-                      | $65,000
-                      span.value-label
-                        | /yr
-              tfoot
-                tr
-                  th occupancy
-                  th max income/mo
-                  th max income/yr
+                    | Starts at $3,245
+                    span.value-label
+                    | /mo
+                  span.stats-list_label based on houshold size
 
-        .content-panel.wide.lined
-          header.margin-bottom
-            h4.t-epsilon.t-sans.no-margin
-              | Occupancy
-            p.t-small.c-steel
-              | Occupancy for this building differs from household size and does not include children under 6.
-
-          .stats-card.bg-mist
-            ul.stats-list.tall.double
-              li
-                span.stats-list_value
-                  | Studio
-              li
-                span.stats-list_value
-                  | 1-2
-                  span.value-label
-                    |  people
-
-          .stats-card.bg-mist
-            ul.stats-list.tall.double
-              li
-                span.stats-list_value
-                  | 1 Bedroom
-              li
-                span.stats-list_value
-                  | 1-3
-                  span.value-label
-                    |  people
-
-        .content-panel.wide.lined
-          header.margin-bottom
-            h4.t-epsilon.t-sans.no-margin
-              | Lottery Preferences
-            p.t-small.c-steel
-              | Preference holders will be given highest ranking in the lottery process.
-
-          accordion.accordion-nested.accordion.trigger-left
-            accordion-group.accordion-navigation
-              accordion-heading.accordion-header
-                | Certificate of Preference
                 span.ui-control.ui-icon.ui-small
                   svg
                     use xlink:href="#i-arrow-down"
-              #panel1a-a.content
-                p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
-            accordion-group.accordion-navigation
-              accordion-heading.accordion-header
-                | Ellis Act Preference
-                span.ui-control.ui-icon.ui-small
-                  svg
-                    use xlink:href="#i-arrow-down"
-              #panel1a-b.content
-                p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
-            accordion-group.accordion-navigation
-              accordion-heading.accordion-header
-                | Live/Work Preference
-                span.ui-control.ui-icon.ui-small
-                  svg
-                    use xlink:href="#i-arrow-down"
-              #panel1a-c.content
-                p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
 
-        .content-panel-grid.row [data-equalizer]
-          .padding.clearfix
-            .content-panel
-              header.panel-header [data-equalizer-watch]
-                h4.t-epsilon.t-sans.margin-bottom--half Credit Rating
-                p.t-small.c-steel A credit report will be obtained on each applicant after their eligibility for the Inclusionary BMR program has been determined.
+              .toggled ng-show="showIncomeTable"
+                ng-include src="'listings/templates/_income-table.html'"
 
-            .content-panel
-              header.panel-header [data-equalizer-watch]
-                h4.t-epsilon.t-sans.margin-bottom--half Rental Assistance
-                p.t-small.c-steel Section 8 housing vouchers and other valid rental assistance programs can be used to rent a BMR unit.</p>
+          .content-panel.lined
+            header.margin-bottom
+              h4.t-epsilon.t-sans.no-margin Occupancy
+              p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6.
 
-            .content-panel
-              header.panel-header [data-equalizer-watch]
-                h4.t-epsilon.t-sans.margin-bottom--half Eviction History
-                p.t-small.c-steel Applicants with an eviction by a previous landlord, for cause, within the last 7 years will be rejected.
+            .stats-card.bg-mist
+              ul.stats-list.tall.double
+                li
+                  .stats-list_value
+                    | Studio
+                li
+                  .stats-list_value
+                    | 1-2
+                    span.value-label people
+            .stats-card.bg-mist
+              ul.stats-list.tall.double
+                li
+                  .stats-list_value
+                    | 1 Bedroom
+                li
+                  .stats-list_value
+                    | 1-3
+                    span.value-label people
 
-            .content-panel
-              header.panel-header [data-equalizer-watch]
-                h4.t-epsilon.t-sans.margin-bottom--half Criminal History
-                p.t-small.c-steel Criminal reports are not ordered or reviewed until credit history has been ordered and scored with an approval rating.
+          .content-panel.lined
+            header.margin-bottom
+              h4.t-epsilon.t-sans.no-margin
+                | Lottery Preferences
+              p.t-small.c-steel
+                | Preference holders will be given highest ranking in the lottery process.
+            accordion.accordion-nested.accordion.trigger-left
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Certificate of Preference
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel1a-a.content
+                  p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Ellis Act Preference
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel1a-b.content
+                  p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Live/Work Preference
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel1a-c.content
+                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+          .content-panel.lined
+            header.panel-header data-equalizer-watch=""
+              h4.t-epsilon.t-sans.no-margin
+                | Rental Assistance
+              p.t-small.c-steel
+                | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+            p In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenat pays after use of the subsidy.
+          .content-panel
+            header.margin-bottom
+              h4.t-epsilon.t-sans.no-margin Additional Building Rules
+              p.t-small.c-steel Applicants must also qualify under the rules of the building.
+            accordion.accordion-nested.accordion.trigger-left
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Credit Rating
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel2a-a.content
+                  p A credit report will be obtained on each applicant after their eligibility for the Inclusionary BMR program has been determined.
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Eviction History
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel2a-b.content
+                  p Applicants with an eviction by a previous landlord, for cause, within the last 7 years will be rejected.
+              accordion-group.accordion-navigation
+                accordion-heading.accordion-header
+                  | Criminal History
+                  ng-include src="'shared/templates/_arrow-down.html'"
+                #panel2a-c.content
+                  p Criminal reports are not ordered or reviewed until credit history has been ordered and scored with an approval rating.
 
-      accordion-group.accordion-navigation.accordion-process
+
+      accordion-group.accordion-navigation.accordion-process ng-hide="listingApplicationClosed(listing)"
         accordion-heading
           | Process
           span.accordion-subheader Important dates and contact information
@@ -312,37 +172,9 @@ section.section-hero.row
             svg
               use xlink:href="#i-arrow-down"
 
-        .show-for-medium-up.text-center.margin-bottom
+        .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
           ng-include src="'listings/templates/_panel-apply.html'"
 
-        .content-panel.content-lead.padding-bottom.border-bottom
-          h4.t-small.t-sans.t-bold Application Deadline
-          h3.t-delta.t-sans.c-steel Nov 21st, 2015
-        .content-panel.padding-bottom.border-bottom
-          h4.t-small.t-sans.t-bold Information Sessions
-          ul
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 27th
-              p.c-steel 1:00pm – 2:30pm
-              p.no-margin San Francisco LGBT Community Center
-              p.c-steel 1800 Market Street, San Francisco
-        .content-panel.padding-bottom.border-bottom
-          h4.t-small.t-sans.t-bold Open Houses
-          ul.content-list
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 10th
-              span.c-steel 1:00pm – 2:30pm
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 18th
-              span.c-steel 1:00pm – 2:30pm
-        .content-panel.padding-bottom.border-bottom
-          h4.t-small.t-sans.t-bold Public Lottery
-          ul
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Nov 28th
-              p.c-steel 1:00pm – 2:30pm
-              p.no-margin San Francisco LGBT Community Center
-              p.c-steel 1800 Market Street, San Francisco
 
         / .content-panel.wide.text-center
         /   h4.tiny.t-sans Contact
@@ -377,10 +209,12 @@ section.section-hero.row
           .row.collapse
             .small-6.columns
               span.t-small.c-steel Neighborhood
-              p SOMA
+              p
+                | {{listing.Neighborhood}}
             .small-6.columns
               span.t-small.c-steel Built
-              p 2015
+              p
+                | {{listing.Year_Built}}
           .row.collapse.margin-bottom
             .small-12.columns
               span.t-small.c-steel Property Amenities
@@ -536,15 +370,18 @@ section.section-hero.row
             .row.collapse.margin-bottom
               .small-6.columns
                 span.t-small Application Fee
-                p.t-delta.no-margin $40
+                p.t-delta.no-margin
+                  | {{listing.Fee | currency:"$":0}}
                 span.t-small.c-steel due post-lottery
               .small-6.columns
                 span.t-small Deposit
-                p.t-delta.no-margin $500 - 941
+                p.t-delta.no-margin
+                  | {{listing.Deposit_Min | currency:"$":0}} - {{listing.Deposit_Max}}
                 span.t-small.c-steel based on credit score
             .row.collapse
               .small-12.columns
-                p Renter pays phone, internet and cable
+                p
+                  | {{listing.Costs_Not_Included}}
 
       accordion-group.accordion-navigation
         accordion-heading
@@ -586,20 +423,13 @@ section.section-hero.row
           accordion.accordion-nested.accordion.trigger-left
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
-                  | Property Selection Criteria
-                  span.ui-control.ui-icon.ui-small
-                    svg
-                      use xlink:href="#i-arrow-down"
-                #panel1a-a.content
-                  p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
-              accordion-group.accordion-navigation
-                accordion-heading.accordion-header
                   | Required Documents
                   span.ui-control.ui-icon.ui-small
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-b.content
-                  p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+                  p
+                    | {{listing.Required_Documents}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Legal Disclaimers
@@ -607,7 +437,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-c.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Legal_Disclaimers}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Smoking Policy
@@ -615,7 +446,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-d.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Smoking_Policy}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Pets Policy
@@ -623,7 +455,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-e.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Pet_Policy}}
 
 section.page-section
   div.row

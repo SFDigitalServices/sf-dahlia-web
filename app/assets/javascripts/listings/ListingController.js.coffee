@@ -39,10 +39,26 @@ ListingController = ($scope, $state, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    "#{listing.address}, #{listing.city} #{listing.state}, #{listing.zipcode}"
+    "#{listing.Property_Street_Address}, #{listing.Property_City} " +
+    "#{listing.Property_State}, #{listing.Property_Zip_Code}"
 
   $scope.hasEligibilityFilters = ->
     ListingService.hasEligibilityFilters()
+
+  $scope.listingApplicationClosed = (listing) ->
+    today = new Date
+    appDueDate = new Date(listing.Application_Due_Date)
+    appDueDate < today
+
+  $scope.lotteryDatePassed = (listing) ->
+    today = new Date
+    lotteryDate = new Date(listing.Lottery_Date)
+    lotteryDate < today
+
+  $scope.lotteryResultsAvailable = (listing) ->
+    # to replace below with something like listing.Lottery_Results.length > 0
+    false
+
 
 ############################################################################################
 ######################################## CONFIG ############################################

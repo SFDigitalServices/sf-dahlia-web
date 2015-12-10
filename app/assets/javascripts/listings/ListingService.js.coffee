@@ -56,7 +56,7 @@ ListingService = ($http, $localStorage) ->
     # check for default state
     if Service.hasEligibilityFilters()
       # this is how we "fake" this call for now, by hitting a different JSON endpoint
-      listings_endpoint = "/json/listings-eligibility.json"
+      listings_endpoint = "/api/v1/listings-eligibility.json"
     $http.get(listings_endpoint).success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
     ).error( (data, status, headers, config) ->
@@ -70,7 +70,7 @@ ListingService = ($http, $localStorage) ->
     $http.get("/api/v1/listings.json", {params: {ids: ids.join(',') }}).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
       # ---- this filter is only needed while we don't have a real API call
-      listings = listings.filter (l) -> ids.indexOf(l.id) > -1
+      # listings = listings.filter (l) -> ids.indexOf(l.id) > -1
       # ---- ------ ------
       angular.copy(listings, Service.listings)
     ).error( (data, status, headers, config) ->

@@ -1,4 +1,6 @@
 require 'restforce'
+require 'facets/hash/rekey'
+
 # encapsulate all Salesforce querying functions in one handy service
 class SalesforceService
   @retries = 1
@@ -34,7 +36,10 @@ class SalesforceService
 
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
-    response.body
+    # TODO: REMOVE when we have real images! ######
+    response.body.each { |x| x['Image_URL'] = 'https://placehold.it/474x316' }
+    ###############################################
+    massage(response.body)
   rescue Restforce::UnauthorizedError
     if @retries > 0
       @retries -= 1
@@ -43,7 +48,7 @@ class SalesforceService
     else
       []
     end
-  rescue Error
+  rescue StandardError
     []
   end
 
@@ -52,5 +57,32 @@ class SalesforceService
       auth = client.authenticate!
       auth.access_token
     end
+  end
+
+  # recursively remove "__c" and "__r" from all keys
+  def self.massage(h)
+    if h.is_a?(Hash)
+      hash_massage(h)
+    elsif h.is_a?(Array) or h.is_a?(Restforce::Collection)
+      h.map { |i| massage(i) }
+    elsif h.is_a?(Symbol) or h.is_a?(String)
+      string_massage(h)
+    else
+      h
+    end
+  end
+
+  def self.hash_massage(h)
+    # massage each hash value
+    h.each { |k, v| h[k] = massage(v) }
+    # massage each hash key
+    h.rekey do |key|
+      massage(key)
+    end
+  end
+
+  def self.string_massage(str)
+    # calls .to_s so it works for symbols too
+    str.to_s.gsub('__c', '').gsub('__r', '')
   end
 end
