@@ -24,3 +24,5 @@ end
 json.developer listing['Developer__c']
 
 json.image_url "http://placehold.it/474x316"
+
+json.alt_text "Image of Listing"

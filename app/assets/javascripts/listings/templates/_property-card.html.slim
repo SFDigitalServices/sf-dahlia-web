@@ -1,7 +1,7 @@
 .property-card
   figure.property-card_figure
     .property-card_container
-      img.property-card_thumb ng-src="{{listing.image_url}}"
+      img.property-card_thumb alt="{{listing.alt_text}}" ng-src="{{listing.image_url}}"
       a.property-card_like ng-click="toggleFavoriteListing(listing.id);"
         span.ui-icon
           svg
