@@ -175,6 +175,39 @@ section.section-hero.row
         .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
           ng-include src="'listings/templates/_panel-apply.html'"
 
+        .content-panel.content-lead.padding-bottom.border-bottom
+          h4.t-small.t-sans.t-bold Application Deadline
+          h3.t-delta.t-sans.c-steel
+            | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
+
+        .content-panel.padding-bottom.border-bottom
+          h4.t-small.t-sans.t-bold Information Sessions
+          ul
+            li
+              h3.t-delta.t-sans.c-steel.no-margin Oct 27th
+              p.c-steel 1:00pm – 2:30pm
+              p.no-margin San Francisco LGBT Community Center
+              p.c-steel 1800 Market Street, San Francisco
+
+        .content-panel.padding-bottom.border-bottom
+          h4.t-small.t-sans.t-bold Open Houses
+          ul.content-list
+            li
+              h3.t-delta.t-sans.c-steel.no-margin Oct 10th
+              span.c-steel 1:00pm – 2:30pm
+            li
+              h3.t-delta.t-sans.c-steel.no-margin Oct 18th
+              span.c-steel 1:00pm – 2:30pm
+
+        .content-panel.padding-bottom.border-bottom
+          h4.t-small.t-sans.t-bold Public Lottery
+          ul
+            li
+              h3.t-delta.t-sans.c-steel.no-margin Nov 28th
+              p.c-steel 1:00pm – 2:30pm
+              p.no-margin San Francisco LGBT Community Center
+              p.c-steel 1800 Market Street, San Francisco
+
 
         / .content-panel.wide.text-center
         /   h4.tiny.t-sans Contact
@@ -459,17 +492,12 @@ section.section-hero.row
                   p
                     | {{listing.Pet_Policy}}
 
-section.page-section
-  div.row
-    div.medium-6.medium-centered.columns
-      /{{> blocks.property-block--input}}
-
-/ Mark up for the Find A Counselor Section
-/ section.page-section.bg-mist
-/   div.row
-/     div.medium-6.medium-centered.columns
-/       div.property-block.block.bg-mist.text-center
-/         h1.gamma
-/           | Find a Housing Counselor specific to your needs
-/         button.button.small
-/           | Submit
+    .content-panel
+      .padding.bg-mist.clearfix
+        .row
+          .medium-9.columns
+            h5.t-sans.t-small.c-steel Related Programs
+            p.no-margin Inclusionary Housing Below Market Rate Rental
+            span.t-small.c-steel Monitored by the Mayors Office of Housing & Community Development
+          .medium-3.columns
+            img.right alt=("Equal Housing Opportunity Logo") src="../images/logo-equal.png" /
