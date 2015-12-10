@@ -55,7 +55,8 @@ ListingService = ($http, $localStorage) ->
     listings_endpoint = "/api/v1/listings.json"
     # check for default state
     if Service.hasEligibilityFilters()
-      # this is how we "fake" this call for now, by hitting a different JSON endpoint
+      # note: eligibility matches returned by this endpoint are currently faked
+      # and we are also not passing in any of the eligibility filters yet
       listings_endpoint = "/api/v1/listings-eligibility.json"
     $http.get(listings_endpoint).success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else {}), Service.listings)
@@ -63,15 +64,11 @@ ListingService = ($http, $localStorage) ->
       # console.log data
     )
 
-  # This is currently making a call to the same json data file as getListings
-  # When wired to Salesforce, pass an array of Listing IDs that we would like returned.
+  # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids) ->
     angular.copy([], Service.listings)
     $http.get("/api/v1/listings.json", {params: {ids: ids.join(',') }}).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
-      # ---- this filter is only needed while we don't have a real API call
-      # listings = listings.filter (l) -> ids.indexOf(l.id) > -1
-      # ---- ------ ------
       angular.copy(listings, Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data

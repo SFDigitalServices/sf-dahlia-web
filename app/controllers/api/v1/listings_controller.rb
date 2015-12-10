@@ -13,7 +13,7 @@ class Api::V1::ListingsController < ApiController
     render json: { listing: @listing }
   end
 
-  # TODO: fake generation of matches for now
+  # TODO: remove fake generation of matches once the real ones exist
   def eligibility
     @listings = SalesforceService.listings
     @listings.each do |listing|
