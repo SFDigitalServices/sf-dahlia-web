@@ -1,32 +1,45 @@
 section.bg-mist
   .row
-    header.hero-header.bg-mist.text-center
+    header.hero-header.bg-image.text-center
       h1.hero-title
-        | Welcome to the SF DAHLIA Housing Portal
+        | Discover affordable housing opportunities
       .row
         .medium-8.medium-centered.columns
           p.gamma.c-steel
-            | Enter details about household size and income and we'll highlight properties you might be eligible for
-          a.button ui-sref="dahlia.eligibility-estimator"
-            | Estimate Eligibility
+            | Browse all currently available Below Market Rate Rental properties
+          a.button ui-sref="dahlia.listings"
+            | See Properties
 section.row
   .medium-8.medium-centered.columns
-    .block.text-center
-      p.delta
-        | Skip eligibility and browse all currently available rental properties
-      a.button.secondary ui-sref="dahlia.listings"
-        | See All Properties
-    .text-center
-      h4.t-epsilon.t-sans.c-steel
-        | Select Language
-      section.language-actions
-        ul.button-group.even-3
-          li
-            button.button.blank
-              | Español
-          li
-            button.button.blank
-              | 中国
-          li
-            button.button.blank
-              | Tagalog
+    .block--tall.text-center
+      p.delta.c-steel
+        | Tell us your household size and income and we'll highlight properties that might be a fit.
+      a.button.secondary ui-sref="dahlia.eligibility-estimator"
+        | Estimate Eligibility
+    / .text-center
+    /   h4.t-epsilon.t-sans.c-steel
+    /     | Select Language
+    /   section.language-actions
+    /     ul.button-group.even-3
+    /       li
+    /         button.button.blank
+    /           | Español
+    /       li
+    /         button.button.blank
+    /           | 中国
+    /       li
+    /         button.button.blank
+    /           | Tagalog
+.property-block.block--tall.bg-mist.text-center
+  .row
+    .large-9.large-centered.columns
+      h1.beta.margin-bottom--2x
+        | Get email updates with the latest property listings every month
+      / .row.collapse
+      /   .small-8.large-10.columns
+      /     input type="text" placeholder="Enter Email"
+      /   .small-4.large-2.columns
+      /     a.button.postfix href="#"
+      /       | Sign Up
+      a.button.oil href="#"
+        | Sign Up Today

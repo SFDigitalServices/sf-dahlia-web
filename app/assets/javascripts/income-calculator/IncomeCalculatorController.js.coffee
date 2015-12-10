@@ -50,7 +50,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
     IncomeCalculatorService.deleteIncome(income)
 
   $scope.toggleAdditionalIncomeForm = () ->
-    $scope.additionalIncomeClass = if $scope.additionalIncomeClass == 'tint' then 'ternary' else 'tint'
+    $scope.additionalIncomeClass = if $scope.additionalIncomeClass == 'tint' then 'tertiary' else 'tint'
     $scope.additionalIncome = !$scope.additionalIncome
 
   $scope.closeAdditionalIncomeForm = () ->
