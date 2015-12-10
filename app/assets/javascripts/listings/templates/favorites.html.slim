@@ -1,6 +1,18 @@
+header.lead-header.bg-attention-tint
+  .row
+    .large-12.columns
+      h1.lead-title.t-beta My Favorites
+
+section.row ng-show="!favorites.length"
+  .large-12.columns
+    .block.bg-mist.margin-top--2x.medium-text-center
+      figure.block-icon
+        img src="../images/icon-heart.png" /
+      p.t-delta.t-serif.c-oil It looks like you haven’t favorited any listings yet.
+      a.button ui-sref="dahlia.listings" Browse Properties
+
 ul.padding-top--2x
   li.margin-bottom--2x ng-repeat="listing in listings"
-    ng-include src="'listings/templates/_property-card.html'"  ng-show="isFavorited(listing.id)"
-  h2 ng-show="!favorites.length" No listings found.
+    ng-include src="'listings/templates/_property-card.html'" ng-show="isFavorited(listing.id)"
 
 ng-include src="'pages/templates/_email-updates.html'"
