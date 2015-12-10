@@ -1,0 +1,30 @@
+div.property-hero_stats ng-repeat="unit in listing.Units"
+  div.stats-card
+    ul.stats-list.triple.medium-quad
+      li
+        div.stats-list_value
+         | {{unit.Unit_Type}}
+        span.stats-list_label unit type
+      li
+        div.stats-list_value
+          | {{unit.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
+          span.value-label
+            | /mo
+        span.stats-list_label min income
+      li
+        div.stats-list_value
+         | {{unit.BMR_Rent_Monthly | currency:"$":0}}
+        span.stats-list_label rent
+      li.show-for-medium-up
+        div.stats-list_value
+          / replace with salesforce value
+          | 1
+          span.value-label  units(s)
+        span.stats-list_label available
+    ul.stats-list.double.bg-smoke.medium-full.labels-inline.hide-for-medium-up
+      li
+        span.status-list_label Availability
+        .stats-list_value
+          / replace with salesforce value
+          | 1
+          span.value-label unit(s)

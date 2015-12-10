@@ -42,3 +42,33 @@ h3.delta How to Apply
       a href="tel: {{listing.Application_Phone}}"
         | {{listing.Application_Phone}}
     p.c-steel.t-small Hear a recorded message from the property manager
+
+.content-panel.content-lead.padding-bottom.border-bottom
+  h4.t-small.t-sans.t-bold Application Deadline
+  h3.t-delta.t-sans.c-steel
+    | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
+.content-panel.padding-bottom.border-bottom
+  h4.t-small.t-sans.t-bold Information Sessions
+  ul
+    li
+      h3.t-delta.t-sans.c-steel.no-margin Oct 27th
+      p.c-steel 1:00pm – 2:30pm
+      p.no-margin San Francisco LGBT Community Center
+      p.c-steel 1800 Market Street, San Francisco
+.content-panel.padding-bottom.border-bottom
+  h4.t-small.t-sans.t-bold Open Houses
+  ul.content-list
+    li
+      h3.t-delta.t-sans.c-steel.no-margin Oct 10th
+      span.c-steel 1:00pm – 2:30pm
+    li
+      h3.t-delta.t-sans.c-steel.no-margin Oct 18th
+      span.c-steel 1:00pm – 2:30pm
+.content-panel.padding-bottom.border-bottom
+  h4.t-small.t-sans.t-bold Public Lottery
+  ul
+    li
+      h3.t-delta.t-sans.c-steel.no-margin Nov 28th
+      p.c-steel 1:00pm – 2:30pm
+      p.no-margin San Francisco LGBT Community Center
+      p.c-steel 1800 Market Street, San Francisco
