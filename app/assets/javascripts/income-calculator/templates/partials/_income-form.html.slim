@@ -1,9 +1,9 @@
 / `income` == $scope.income in the case of addInitial and addAdditional
 / `income` == passed in income (income in incomeSources) when it's the edit form
 ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || nextId()"
-  .row.padding-top--2x
+  .row
     .large-12.columns ng-if="noIncomeSources()"
-      h1.gamma.margin-bottom
+      h1.gamma.t-sans.margin-bottom--2x
         | Add an income source:
     .large-12.columns
       label ng-class="{ error: inputInvalid(income.id, 'source') }"
