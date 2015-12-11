@@ -1,46 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://test.salesforce.com/services/oauth2/token
-    body:
-      encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40mohcd.com.full&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
-    headers:
-      User-Agent:
-      - Faraday v0.9.2
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 02 Dec 2015 00:40:19 GMT
-      Set-Cookie:
-      - BrowserId=nc61H-0tQuin-h9UFSzwXg;Path=/;Domain=.salesforce.com;Expires=Sun,
-        31-Jan-2016 00:40:19 GMT
-      Expires:
-      - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
-      Content-Type:
-      - application/json;charset=UTF-8
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQETp0H6qPFqN0SLDDyXgDSBvZaIWuIiZG4Zavyzyr67HXJH3qB1T4L9sYlY7QPw3yub5PB0uluN1SwV_Be2a4WySSUEk","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1449016819354","signature":"9l7UPEY8QOp29CYg1hPhPfhaHKaDTLihIM7A+YleuDw="}'
-    http_version:
-  recorded_at: Wed, 02 Dec 2015 00:40:19 GMT
-- request:
     method: get
     uri: https://cs26.salesforce.com/services/apexrest/Listings/a0X210000004afdEAA
     body:
@@ -50,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQETp0H6qPFqN0SLDDyXgDSBvZaIWuIiZG4Zavyzyr67HXJH3qB1T4L9sYlY7QPw3yub5PB0uluN1SwV_Be2a4WySSUEk
+      - OAuth 00D210000000OEp!AQMAQOR6UjtA80W21lhZPMCa6nPcwegWKKE74sSCl7LAs4z.FPkbm96m0MpBWzY7iM.u8eL8RkmJwURhs4ZlhBqKsezeVFod
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -61,10 +21,10 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Dec 2015 00:40:19 GMT
+      - Tue, 08 Dec 2015 16:16:14 GMT
       Set-Cookie:
-      - BrowserId=bKe95ER2TIWnAPp4nymiog;Path=/;Domain=.salesforce.com;Expires=Sun,
-        31-Jan-2016 00:40:19 GMT
+      - BrowserId=L126dMOpSm6D0EZedX0dig;Path=/;Domain=.salesforce.com;Expires=Sat,
+        06-Feb-2016 16:16:14 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -78,10 +38,15 @@ http_interactions:
         Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94010","Developer__c":"Big
         Developer Company","Property_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Neighborhood__c":"Presidio
         Heights","Year_Built__c":2015,"Application_Organization__c":"Acme Property
-        Management","Application_Phone__c":"(650) 987-2564","Download_URL__c":"test.com","Application_Due_Date__c":"2015-12-15","Id":"a0X210000004afdEAA","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
+        Management","Application_Phone__c":"(650) 987-2564","Download_URL__c":"http://test.com","Application_Due_Date__c":"2015-12-15","Fee__c":95.00,"Deposit_Min__c":200.00,"Deposit_Max__c":250.00,"Costs_Not_Included__c":"renter
+        responsible for having the skills to pay the bills","Lottery_Preferences__c":"Ellis
+        Act","Lottery_Date__c":"2015-12-31","Amenities__c":"this is just text","Accessibility__c":"accessibility
+        info here","Property_Selection_Criteria__c":"selection goes here","Required_Documents__c":"passport,
+        ID, others","Legal_Disclaimers__c":"uphold the law.","Smoking_Policy__c":"We
+        hate smokers!","Pet_Policy__c":"We love pets!","Id":"a0X210000004afdEAA","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
         BR","BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
         BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
         BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}}]'
     http_version:
-  recorded_at: Wed, 02 Dec 2015 00:40:19 GMT
+  recorded_at: Tue, 08 Dec 2015 16:16:14 GMT
 recorded_with: VCR 3.0.0
