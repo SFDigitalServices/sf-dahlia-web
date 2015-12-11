@@ -40,11 +40,11 @@ ListingService = ($http, $localStorage) ->
   Service.hasEligibilityFilters = ->
     ! angular.equals(Service.eligibility_filter_defaults, Service.eligibility_filters)
 
-  Service.eligibilityMonthlyIncome = ->
+  Service.eligibilityYearlyIncome = ->
     if Service.eligibility_filters.income_timeframe == 'per_month'
-      Service.eligibility_filters.income_total
+      parseFloat(Service.eligibility_filters.income_total) * 12
     else
-      parseFloat(Service.eligibility_filters.income_total) / 12
+      Service.eligibility_filters.income_total
 
   ###################################### Salesforce API Calls ###################################
 
@@ -72,7 +72,7 @@ ListingService = ($http, $localStorage) ->
     params =
       eligibility:
         householdsize: Service.eligibility_filters.household_size
-        incomelevel: Service.eligibilityMonthlyIncome()
+        incomelevel: Service.eligibilityYearlyIncome()
         # TODO: vvv implement once child selection filter is added
         childrenUnder6: 0
     $http.post("/api/v1/listings-eligibility.json", params).success((data, status, headers, config) ->
