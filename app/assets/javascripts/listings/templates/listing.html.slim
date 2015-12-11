@@ -625,17 +625,4 @@ section.section-hero.row
                 #panel1a-e.content
                   p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
 
-section.page-section
-  div.row
-    div.medium-6.medium-centered.columns
-      /{{> blocks.property-block--input}}
-
-/ Mark up for the Find A Counselor Section
-/ section.page-section.bg-mist
-/   div.row
-/     div.medium-6.medium-centered.columns
-/       div.property-block.block.bg-mist.text-center
-/         h1.gamma
-/           | Find a Housing Counselor specific to your needs
-/         button.button.small
-/           | Submit
+ng-include src="'pages/templates/_email-updates.html'"
