@@ -25,6 +25,8 @@ angular.module('dahlia.controllers',[])
       url: ''
       abstract: true
       views:
+        'version@':
+          templateUrl: 'shared/templates/version.html'
         'nav@':
           templateUrl: 'shared/templates/nav.html'
         'nav-mobile@':
@@ -70,6 +72,18 @@ angular.module('dahlia.controllers',[])
       views:
         'container@':
           templateUrl: 'pages/templates/welcome.html'
+    })
+    .state('dahlia.disclaimer', {
+      url: '/disclaimer'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/disclaimer.html'
+    })
+    .state('dahlia.privacy', {
+      url: '/privacy'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/privacy.html'
     })
     .state('dahlia.share', {
       url: '/share/:id'
