@@ -1,0 +1,47 @@
+.property-hero
+  figure.property-hero_figure
+    div.property-hero_container
+      img.property-hero_thumb src="{{listing.Image_URL}}"
+      a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
+        span.ui-icon
+          svg
+            use xlink:href="#i-like"
+            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
+
+  header.property-hero_content.text-center
+    h1.property-hero_title.gamma.no-margin
+      /need to replace with salesforce property site site
+      a href="#"
+        | {{listing.Property_Name}}
+    p
+      | {{formattedAddress(listing)}}
+    p.c-steel
+      | {{listing.Developer}}
+    a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      span.ui-icon
+        svg
+          use xlink:href="#i-map"
+      | View on Map
+
+    p.post-dealine_alert.show-for-small-only.margin-top--half.margin-bottom ng-if="listingApplicationClosed(listing)"
+      span.label.alert Applications Closed
+
+  ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+
+  .property-hero_action.text-center
+    .hide-for-medium-up
+      p.t-small
+        | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
+      .text-center ng-hide="listingApplicationClosed(listing)"
+        ng-include src="'listings/templates/listing/_panel-apply.html'"
+    hr.hr-5.tall.show-for-small-only/
+    .action-group.row
+      .medium-6.columns
+        / replace with salesforce value
+        p.date.t-small Listing Updated: Aug 15th 2015
+      .medium-6.columns
+        a.button.small.secondary href="/pages/share-grid.html"
+          span.ui-icon.ui-link
+            svg
+              use xlink:href="#i-forward" /
+          |  Share this Listing
