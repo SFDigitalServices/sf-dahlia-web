@@ -51,7 +51,7 @@ ListingService = ($http, $localStorage) ->
     )
 
   Service.getListings = () ->
-    angular.copy({}, Service.listings)
+    angular.copy([], Service.listings)
     listings_endpoint = "/api/v1/listings.json"
     # check for default state
     if Service.hasEligibilityFilters()
@@ -59,7 +59,7 @@ ListingService = ($http, $localStorage) ->
       # and we are also not passing in any of the eligibility filters yet
       listings_endpoint = "/api/v1/listings-eligibility.json"
     $http.get(listings_endpoint).success((data, status, headers, config) ->
-      angular.copy((if data and data.listings then data.listings else {}), Service.listings)
+      angular.copy((if data and data.listings then data.listings else []), Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
@@ -67,7 +67,8 @@ ListingService = ($http, $localStorage) ->
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids) ->
     angular.copy([], Service.listings)
-    $http.get("/api/v1/listings.json", {params: {ids: ids.join(',') }}).success((data, status, headers, config) ->
+    params = {params: {ids: ids.join(',') }}
+    $http.get("/api/v1/listings.json", params).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
       angular.copy(listings, Service.listings)
     ).error( (data, status, headers, config) ->
