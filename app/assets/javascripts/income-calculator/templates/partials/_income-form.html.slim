@@ -1,7 +1,7 @@
 / `income` == $scope.income in the case of addInitial and addAdditional
 / `income` == passed in income (income in incomeSources) when it's the edit form
 ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || nextId()"
-  .row
+  .row.padding-top
     .large-12.columns ng-if="noIncomeSources()"
       h1.gamma.t-sans.margin-bottom--2x
         | Add an income source:
@@ -40,7 +40,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     / show this button for the initial form (we don't have income sources)
     .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
       button.button.expand ng-click="addAdditionalIncome()"
-        | Save income source
+        | Save Income source
     .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
       button.button.blank.expand ui-sref="dahlia.eligibility-estimator"
         | Cancel
@@ -48,7 +48,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     / show this button if we're on the additional income form
     .small-12.medium-6.medium-push-6.columns ng-if="$index == undefined && hasIncomeSources()"
       button.button.tint.expand ng-click="addAdditionalIncome()"
-        | Save income Source
+        | Save Income Source
 
     / show these buttons if we're iterating over income list (better way to check?)
     .small-6.medium-push-6.columns ng-if="$index != undefined"
