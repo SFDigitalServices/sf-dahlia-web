@@ -29,6 +29,17 @@ class SalesforceService
     api_get('/services/apexrest/Listings', params)
   end
 
+  # get listings with eligibility matches applied
+  # filters:
+  #  householdsize: n
+  #  incomelevel: n
+  #  childrenUnder6: n
+  def self.eligible_listings(filters)
+    results = api_get('/services/apexrest/Listings', filters)
+    # sort the matched listings to the top of the list
+    results.partition { |i| i['Does_Match'] }.flatten
+  end
+
   # get one detailed listing result by id
   def self.listing(id)
     api_get("/services/apexrest/Listings/#{id}").first
@@ -46,9 +57,11 @@ class SalesforceService
       oauth_token(true)
       retry
     else
+      # p "UH OH -- Restforce error"
       []
     end
   rescue StandardError
+    # p "UH OH -- StandardError #{e.message}"
     []
   end
 

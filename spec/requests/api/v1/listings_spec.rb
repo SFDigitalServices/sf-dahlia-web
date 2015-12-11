@@ -34,7 +34,14 @@ describe 'Listings API' do
 
   it 'gets eligibility matches' do
     VCR.use_cassette('listings/eligibility') do
-      get '/api/v1/listings-eligibility.json'
+      params = {
+        eligibility: {
+          householdsize: 2,
+          incomelevel: 20_000,
+          childrenUnder6: 1,
+        },
+      }
+      post '/api/v1/listings-eligibility.json', params
     end
 
     json = JSON.parse(response.body)
@@ -43,6 +50,6 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the Eligibility_Match param is present
-    expect(json['listings'].first['Eligibility_Match']).not_to be_nil
+    expect(json['listings'].first['Does_Match']).not_to be_nil
   end
 end

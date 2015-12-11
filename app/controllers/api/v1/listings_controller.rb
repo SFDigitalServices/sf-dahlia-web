@@ -13,13 +13,15 @@ class Api::V1::ListingsController < ApiController
     render json: { listing: @listing }
   end
 
-  # TODO: remove fake generation of matches once the real ones exist
   def eligibility
-    @listings = SalesforceService.listings
-    @listings.each do |listing|
-      # fake it 'till you make it!
-      listing['Eligibility_Match'] = rand < 0.5 ? 1 : 2
-    end
+    e = params[:eligibility]
+    # have to massage params into number values
+    filters = {
+      householdsize: e[:householdsize].to_i,
+      incomelevel: e[:incomelevel].to_f,
+      childrenUnder6: e[:childrenUnder6].to_i,
+    }
+    @listings = SalesforceService.eligible_listings(filters)
     render json: { listings: @listings }
   end
 end
