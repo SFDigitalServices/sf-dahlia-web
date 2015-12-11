@@ -4,41 +4,41 @@ section.section-hero.row
     div.property-hero
       figure.property-hero_figure
         div.property-hero_container
-          img.property-hero_thumb src="{{listing.image_url}}"
-          a.property-hero_like ng-click="toggleFavoriteListing(listing.id);"
+          img.property-hero_thumb src="{{listing.Image_URL}}"
+          a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
             span.ui-icon
               svg
                 use xlink:href="#i-like"
-                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
+                use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
 
       header.property-hero_content.text-center
         h1.property-hero_title.gamma.no-margin
-          | {{listing.name}}
+          | {{listing.Property_Name}}
         p
           | {{formattedAddress(listing)}}
         p.c-steel
-          | {{listing.developer}}
+          | {{listing.Developer}}
         a.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}" View on Map
-      div.property-hero_stats ng-repeat="unit in listing.units"
+      div.property-hero_stats ng-repeat="unit in listing.Units"
         div.stats-card
           ul.stats-list.triple.medium-quad
             li
               div.stats-list_value
-               | {{unit.unit_type}}
+               | {{unit.Unit_Type}}
               span.stats-list_label unit type
             li
               div.stats-list_value
-                | {{unit.min_monthly_income | currency:"$":0}}
+                | {{unit.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
                 span.value-label
                   | /mo
               span.stats-list_label min income
             li
               div.stats-list_value
-               | {{unit.rent | currency:"$":0}}
+               | {{unit.BMR_Rent_Monthly | currency:"$":0}}
               span.stats-list_label rent
             li.show-for-medium-up
               div.stats-list_value
-                | {{unit.availability}}
+                / | {{unit.Availability}}
                 span.value-label  units
               span.stats-list_label available
           ul.stats-list.double.bg-smoke.medium-full.labels-inline.hide-for-medium-up
@@ -46,19 +46,19 @@ section.section-hero.row
               span
                 ' Occupancy
               span
-                ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
+                / ' {{unit.occupancy_low}} - {{unit.occupancy_high}}
               span people
             li.t-small
               span.status-list_value
                 ' Availability
               span
-                ' {{unit.availability}}
+                / ' {{unit.Availability}}
               span units
 
       .property-hero_action.text-center
         .hide-for-medium-up
           p.t-small
-            | Deadline: {{listing.application_info.due_date | date : 'EEEE, MMM d, yyyy'}}
+            | Deadline: {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
             .text-center
               ng-include src="'listings/templates/_panel-apply.html'"
         hr.hr-5.tall.show-for-small-only
@@ -67,7 +67,7 @@ section.section-hero.row
             p.date.t-small
               | Listing Updated: Aug 15th 2015
           .medium-6.columns
-            a.button.small.secondary ui-sref="dahlia.share({id: listing.id})"
+            a.button.small.secondary ui-sref="dahlia.share({id: listing.Id})"
               span.ui-icon.ui-link
                 svg
                   use xlink:href="#i-forward"
@@ -317,24 +317,28 @@ section.section-hero.row
 
         .content-panel.content-lead.padding-bottom.border-bottom
           h4.t-small.t-sans.t-bold Application Deadline
-          h3.t-delta.t-sans.c-steel Nov 21st, 2015
-        .content-panel.padding-bottom.border-bottom
+          h3.t-delta.t-sans.c-steel
+            | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
+        .content-panel.padding-bottom.border-bottom ng-if="listing.Information_Sessions"
           h4.t-small.t-sans.t-bold Information Sessions
-          ul
+          ul ng-repeat="session in listing.Information_Sessions"
             li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 27th
-              p.c-steel 1:00pm – 2:30pm
-              p.no-margin San Francisco LGBT Community Center
-              p.c-steel 1800 Market Street, San Francisco
-        .content-panel.padding-bottom.border-bottom
+              h3.t-delta.t-sans.c-steel.no-margin
+                | {{session.Date | dateSuffix}}
+              p.c-steel
+                | {{session.Start_Time}} - {{session.End_Time}}
+              p.no-margin
+                | {{session.Venue}}
+              p.c-steel
+                | {{session.Street_Address}}, {{session.City}}
+        .content-panel.padding-bottom.border-bottom ng-if="listing.Open_Houses"
           h4.t-small.t-sans.t-bold Open Houses
-          ul.content-list
+          ul.content-list  ng-repeat="session in listing.Open_Houses"
             li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 10th
-              span.c-steel 1:00pm – 2:30pm
-            li
-              h3.t-delta.t-sans.c-steel.no-margin Oct 18th
-              span.c-steel 1:00pm – 2:30pm
+              h3.t-delta.t-sans.c-steel.no-margin
+                | {{session.Date | dateSuffix}}
+              span.c-steel
+                | {{session.Start_Time}} - {{session.End_Time}}
         .content-panel.padding-bottom.border-bottom
           h4.t-small.t-sans.t-bold Public Lottery
           ul
@@ -377,10 +381,12 @@ section.section-hero.row
           .row.collapse
             .small-6.columns
               span.t-small.c-steel Neighborhood
-              p SOMA
+              p
+                | {{listing.Neighborhood}}
             .small-6.columns
               span.t-small.c-steel Built
-              p 2015
+              p
+                | {{listing.Year_Built}}
           .row.collapse.margin-bottom
             .small-12.columns
               span.t-small.c-steel Property Amenities
@@ -536,15 +542,18 @@ section.section-hero.row
             .row.collapse.margin-bottom
               .small-6.columns
                 span.t-small Application Fee
-                p.t-delta.no-margin $40
+                p.t-delta.no-margin
+                  | {{listing.Fee | currency:"$":0}}
                 span.t-small.c-steel due post-lottery
               .small-6.columns
                 span.t-small Deposit
-                p.t-delta.no-margin $500 - 941
+                p.t-delta.no-margin
+                  | {{listing.Deposit_Min | currency:"$":0}} - {{listing.Deposit_Max}}
                 span.t-small.c-steel based on credit score
             .row.collapse
               .small-12.columns
-                p Renter pays phone, internet and cable
+                p
+                  | {{listing.Costs_Not_Included}}
 
       accordion-group.accordion-navigation
         accordion-heading
@@ -561,8 +570,9 @@ section.section-hero.row
 
         .property-map.map-panel
             figure.property-map_figure.p-relative
-              iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.379895347056!2d-122.4125466837633!3d37.781135879758395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858084e5540655%3A0x8fc08301d5de417f!2s529+Stevenson+St%2C+San+Francisco%2C+CA+94103!5e0!3m2!1sen!2sus!4v1447289216863" width="640" height="450" frameborder="0" style="border:0"
-            a.map-link.ui-link href="https://goo.gl/maps/wXGpZhc23E82"
+              iframe src="{{googleMapSrc(listing)}}" width="640" height="450" frameborder="0" style="border:0"
+
+            a.map-link.ui-link href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
               span.ui-icon
                 svg
                   use xlink:href="#i-map" /
@@ -591,7 +601,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-a.content
-                  p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+                  p
+                    | {{listing.Property_Selection_Criteria}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Required Documents
@@ -599,7 +610,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-b.content
-                  p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
+                  p
+                    | {{listing.Required_Documents}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Legal Disclaimers
@@ -607,7 +619,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-c.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Legal_Disclaimers}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Smoking Policy
@@ -615,7 +628,8 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-d.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Smoking_Policy}}
               accordion-group.accordion-navigation
                 accordion-heading.accordion-header
                   | Pets Policy
@@ -623,6 +637,7 @@ section.section-hero.row
                     svg
                       use xlink:href="#i-arrow-down"
                 #panel1a-e.content
-                  p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+                  p
+                    | {{listing.Pet_Policy}}
 
 ng-include src="'pages/templates/_email-updates.html'"

@@ -13,8 +13,9 @@ describe 'Listings API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the right amount of messages are returned
-    expect(json['listings'].length).to eq(2)
+    # check to make sure the right amount of listings are returned
+    # (based on VCR cassette with 5 listings)
+    expect(json['listings'].length).to eq(5)
   end
 
   it 'sends an individual listing' do
@@ -27,7 +28,21 @@ describe 'Listings API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the right amount of messages are returned
-    expect(json['listing']['id']).to eq('a0X210000004afdEAA')
+    # check to make sure the right Id is present
+    expect(json['listing']['Id']).to eq('a0X210000004afdEAA')
+  end
+
+  it 'gets eligibility matches' do
+    VCR.use_cassette('listings/eligibility') do
+      get '/api/v1/listings-eligibility.json'
+    end
+
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+
+    # check to make sure the Eligibility_Match param is present
+    expect(json['listings'].first['Eligibility_Match']).not_to be_nil
   end
 end
