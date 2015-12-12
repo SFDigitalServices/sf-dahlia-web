@@ -10,7 +10,7 @@ accordion-heading.lead
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Household Maximum Income
       /! Each unit type available has its own requirements based on household size.
-      p.t-tiny.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
+      p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
     .stats-card.bg-tint
       ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
         li
@@ -32,7 +32,7 @@ accordion-heading.lead
   .content-panel.wide.lined
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
-      p.t-tiny.c-steel Occupancy for this building differs from household size and does not include children under 6.
+      p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6.
 
     .stats-card
       ul.stats-list.tall.double
@@ -41,8 +41,8 @@ accordion-heading.lead
             | Studio
         li
           .stats-list_value
-            | 1-2
-            span.value-label people
+            | 1&mdash;2
+            span.value-label  people
     .stats-card
       ul.stats-list.tall.double
         li
@@ -50,14 +50,14 @@ accordion-heading.lead
             | 1 Bedroom
         li
           .stats-list_value
-            | 1-3
-            span.value-label people
+            | 1&mdash;3
+            span.value-label  people
 
   .content-panel.wide.lined
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half
         | Lottery Preferences
-      p.t-tiny.c-steel
+      p.t-small.c-steel
         | Preference holders will be given highest ranking in the lottery process.
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation

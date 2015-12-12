@@ -1,5 +1,5 @@
 div.section-head
-section.section-hero.row.margin-bottom--2x
+section.section-hero.row.margin-bottom
   .accordion-container.medium-8.columns.margin-top--2x
 
     ng-include src="'listings/templates/listing/_property-hero.html'"
@@ -11,9 +11,9 @@ section.section-hero.row.margin-bottom--2x
 
       accordion-group.accordion-navigation
         header.content-header.show-for-medium-up.text-center
-          span.t-gamma.t-serif
+          span.content-header_name.t-serif
             | Eligibility
-          span.accordion-subheader
+          span.content-header_subheader
             | Income, occupancy, preferences, and subsidies
         ng-include src="'listings/templates/listing/_eligibility.html'"
 
@@ -22,15 +22,15 @@ section.section-hero.row.margin-bottom--2x
 
       accordion-group.accordion-navigation
         header.content-header.show-for-medium-up.text-center
-          span.t-gamma.t-serif
+          span.content-header_name.t-serif
             | Features
-          span.accordion-subheader
+          span.content-header_subheader
             | Amenities, unit details and additional fees
         ng-include src="'listings/templates/listing/_features.html'"
 
       accordion-group.accordion-navigation
         header.content-header.show-for-medium-up.text-center
-          span.t-gamma.t-serif
+          span.content-header_name.t-serif
             | Neighborhood
           span.accordion-subheader
             | Location and transportation
@@ -38,20 +38,20 @@ section.section-hero.row.margin-bottom--2x
 
       accordion-group.accordion-navigation
         header.content-header.show-for-medium-up.text-center
-          span.t-gamma.t-serif
+          span.content-header_name.t-serif
             | Legal
           span.accordion-subheader
             | Required documents and selection criteria
         ng-include src="'listings/templates/listing/_legal.html'"
 
+      .content-panel
+        .padding.bg-mist.clearfix
+          .row
+            .medium-9.columns
+              h5.t-sans.t-small.c-steel Related Programs
+              p.no-margin Inclusionary Housing Below Market Rate Rental
+              span.t-small.c-steel Monitored by the Mayors Office of Housing & Community Development
+            .medium-3.columns
+              img.right alt=("Equal Housing Opportunity Logo") src="../images/logo-equal.png" /
+  
 ng-include src="'pages/templates/_email-updates.html'"
-
-.content-panel
-  .padding.bg-mist.clearfix
-    .row
-      .medium-9.columns
-        h5.t-sans.t-small.c-steel Related Programs
-        p.no-margin Inclusionary Housing Below Market Rate Rental
-        span.t-small.c-steel Monitored by the Mayors Office of Housing & Community Development
-      .medium-3.columns
-        img.right alt=("Equal Housing Opportunity Logo") src="../images/logo-equal.png" /
