@@ -26,7 +26,7 @@
           | {{formattedAddress(listing)}}
         p.c-steel.margin-bottom--half
           | {{listing.Developer}}
-        p
+        p.t-semi
           | Application Due {{listing.Application_Due_Date | dateSuffix}}
       .property-card_action
         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
