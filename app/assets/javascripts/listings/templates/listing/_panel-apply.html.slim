@@ -1,0 +1,34 @@
+h2.delta How to Apply
+.application-options
+  .option-group
+    h3.t-sans.t-base.t-bold.no-margin
+      | Pickup and turn in application
+    p.no-margin
+      /need to replace with salesforce value
+      | Caritas Management Corporation
+    p.c-steel
+      | {{ listing.Property_Street_Address }},
+      br
+      | {{ listing.Property_City }} {{ listing.Property_State }} {{ listing.Property_Zip_Code }}
+    a.t-small.d-block.ui-link.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      span.ui-icon
+        svg
+          use xlink:href="#i-map"
+      | Get Directions
+    p.no-margin Office Hours
+    p.c-steel
+      /need to replace with SF value
+      | 8:30 am - 5:00pm
+
+    a.button.small.secondary ng-href="{{listing.Download_URL}}"
+      span.ui-icon.ui-link
+        svg
+          use xlink:href="#i-download"
+      |  Download Application
+
+  .option-group
+    h3.t-sans.t-base.t-bold.no-margin Call Property
+    p.margin-bottom--half
+      a href="tel: {{listing.Application_Phone}}"
+        | {{listing.Application_Phone}}
+    p.c-steel.t-small Due to high call volume you may hear recorded message
