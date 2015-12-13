@@ -1,12 +1,12 @@
 / `income` == $scope.income in the case of addInitial and addAdditional
 / `income` == passed in income (income in incomeSources) when it's the edit form
 ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || nextId()"
-  .row.padding-top
-    .large-12.columns ng-if="noIncomeSources()"
-      h1.gamma.t-sans.margin-bottom--2x
+  .row
+    header.large-12.columns ng-if="noIncomeSources()"
+      h1.t-gamma.t-sans.margin-bottom
         | Add an income source:
-    .large-12.columns
-      label ng-class="{ error: inputInvalid(income.id, 'source') }"
+    .large-12.columns.padding-top
+      label.form-label ng-class="{ error: inputInvalid(income.id, 'source') }"
         | Where is this income from?
         select ng-model="income.source" name="source" required=""
           option value="Wages"  Wages
@@ -14,12 +14,13 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
           option value="Disability"  Disability
           option value="Unemployment"  Unemployment
           option value="Calworks"  CalWorks
+          option value="Other"  Other
         small.error ng-show="inputInvalid(income.id, 'source')"
           | Please enter an income source
 
   .row
-    .large-12.columns.margin-bottom
-      label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+    .large-12.columns.margin-bottom.has-radio
+      label.form-label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
         | How much is the income of this source?
         input placeholder="$" type="text" ng-model="income.value" name="value" required=""
         small.error ng-show="inputInvalid(income.id, 'value')"

@@ -34,6 +34,9 @@ gem 'sprockets', '~> 2.12.4'
 # salesforce
 gem 'restforce', require: false
 
+# handy ruby extensions
+gem "facets", require: false
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'

@@ -1,82 +1,215 @@
 {
-  "listings": [
-    {
-      "id": "0",
-      "name": "Stevenson Lofts",
-      "address": "529 Stevenson St",
-      "city": "San Francisco",
-      "state": "CA",
-      "zipcode": "94134",
-      "developer": "Relisto Leasing Agency",
-      "application_due_date": "2015-12-12",
-      "image_url": "http://placehold.it/474x316",
-      "units": [
-        {
-          "id": "0",
-          "unit_type": "Studio",
-          "min_monthly_income": 2975,
-          "rent": 941
-        }
-      ],
-      "application_info": {
-        "property_manager_phone": "(415) 333-9956"
-      }
+  "listings": [{
+    "attributes": {
+      "type": "Listing",
+      "url": "/services/data/v35.0/sobjects/Listing/a0X210000004amREAQ"
     },
-    {
-      "id": "1",
-      "name": "Trinity Place",
-      "address": "1188 Mission St",
-      "city": "San Francisco",
-      "state": "CA",
-      "zipcode": "94134",
-      "developer": "Caritas Management Group",
-      "application_due_date": "2015-12-01",
-      "image_url": "http://placehold.it/474x316",
-      "units": [
-        {
-          "id": "0",
-          "unit_type": "Studio",
-          "min_monthly_income": 2347,
-          "rent": 939
-        },
-        {
-          "id": "2",
-          "unit_type": "1BR",
-          "min_monthly_income": 2650,
-          "rent": 1066
-        }
-      ],
-      "application_info": {
-        "property_manager_phone": "(415) 215-9944"
-      }
+    "Property_Name": "1010 16th Street",
+    "Property_Street_Address": "1010 16th Street",
+    "Property_City": "San Francisco",
+    "Property_State": "CA",
+    "Property_Zip_Code": "94107",
+    "Application_Due_Date": "2015-11-23",
+    "Application_Phone": "(866) 276-4191",
+    "Id": "a0X210000004amREAQ",
+    "Image_URL": "https://placehold.it/474x316"
+  }, {
+    "attributes": {
+      "type": "Listing",
+      "url": "/services/data/v35.0/sobjects/Listing/a0X210000004aqQEAQ"
     },
-    {
-      "id": "2",
-      "name": "Franciscan Towers",
-      "address": "217 Eddy Street",
-      "city": "San Francisco",
-      "state": "CA",
-      "zipcode": "94134",
-      "developer": "Tenderloin Neighborhood Development",
-      "application_due_date": "2015-11-01",
-      "image_url": "http://placehold.it/474x316",
-      "units": [
-        {
-          "id": "0",
-          "unit_type": "Studio",
-          "min_monthly_income": 2353,
-          "rent": 939
-        },
-        {
-          "id": "2",
-          "unit_type": "1BR",
-          "min_monthly_income": 2353,
-          "rent": 1074
-        }
-      ],
-      "application_info": {
-        "property_manager_phone": "(415) 456-9457"
-      }
-    }
-  ]
+    "Property_Name": "Stevenson Lofts",
+    "Property_Street_Address": "529 Stevenson Street and 550 Jessie Street",
+    "Property_City": "San Francisco",
+    "Property_State": "CA",
+    "Property_Zip_Code": "94103",
+    "Application_Due_Date": "2015-10-21",
+    "Application_Phone": "(415) 689-4217",
+    "Id": "a0X210000004aqQEAQ",
+    "Units": [{
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzQEAW"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYzQEAW",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzLEAW"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYzLEAW",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzGEAW"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYzGEAW",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYyrEAG"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYyrEAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzBEAW"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYzBEAW",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYz6EAG"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYz6EAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYymEAG"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYymEAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYz1EAG"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYz1EAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYywEAG"
+      },
+      "Listing": "a0X210000004aqQEAQ",
+      "Id": "a0W21000000DYywEAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }],
+    "Image_URL": "https://placehold.it/474x316"
+  }, {
+    "attributes": {
+      "type": "Listing",
+      "url": "/services/data/v35.0/sobjects/Listing/a0X210000004aqaEAA"
+    },
+    "Property_Name": "The Gantry",
+    "Property_Street_Address": "2121 Third Street",
+    "Property_City": "San Francisco",
+    "Property_State": "CA",
+    "Property_Zip_Code": "94107",
+    "Id": "a0X210000004aqaEAA",
+    "Units": [{
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzfEAG"
+      },
+      "Listing": "a0X210000004aqaEAA",
+      "Id": "a0W21000000DYzfEAG",
+      "BMR_Rent_Monthly": 941.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2352.5
+    }],
+    "Image_URL": "https://placehold.it/474x316"
+  }, {
+    "attributes": {
+      "type": "Listing",
+      "url": "/services/data/v35.0/sobjects/Listing/a0X210000004afdEAA"
+    },
+    "Property_Name": "Kaplan Tower",
+    "Property_Street_Address": "501 Gough Street",
+    "Property_City": "San Francisco",
+    "Property_State": "CA",
+    "Property_Zip_Code": "94010",
+    "Developer": "Big Developer Company",
+    "Application_Due_Date": "2015-12-15",
+    "Property_URL": "http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU",
+    "Application_Phone": "(650) 987-2564",
+    "Id": "a0X210000004afdEAA",
+    "Units": [{
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DWmLEAW"
+      },
+      "Listing": "a0X210000004afdEAA",
+      "Id": "a0W21000000DWmLEAW",
+      "Unit_Type": "2 BR",
+      "BMR_Rent_Monthly": 1523.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 0.0
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYdKEAW"
+      },
+      "Listing": "a0X210000004afdEAA",
+      "Id": "a0W21000000DYdKEAW",
+      "Unit_Type": "3 BR",
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 0.0
+    }, {
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DWmGEAW"
+      },
+      "Listing": "a0X210000004afdEAA",
+      "Id": "a0W21000000DWmGEAW",
+      "Unit_Type": "1 BR",
+      "BMR_Rent_Monthly": 985.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 0.0
+    }],
+    "Image_URL": "https://placehold.it/474x316"
+  }, {
+    "attributes": {
+      "type": "Listing",
+      "url": "/services/data/v35.0/sobjects/Listing/a0X210000004asgEAA"
+    },
+    "Property_Name": "77 Bluxome Street",
+    "Property_Street_Address": "77 Bluxome Street",
+    "Property_City": "San Francisco",
+    "Property_State": "CA",
+    "Property_Zip_Code": "94107",
+    "Application_Due_Date": "2015-12-08",
+    "Application_Phone": "77 Bluxome Street, Unit 416",
+    "Id": "a0X210000004asgEAA",
+    "Units": [{
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0W21000000DYzzEAG"
+      },
+      "Listing": "a0X210000004asgEAA",
+      "Id": "a0W21000000DYzzEAG",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 1030.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2575.0
+    }],
+    "Image_URL": "https://placehold.it/474x316"
+  }]
 }

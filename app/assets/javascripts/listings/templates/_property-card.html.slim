@@ -1,39 +1,40 @@
 .property-card
   figure.property-card_figure
     .property-card_container
-      img.property-card_thumb ng-src="{{listing.image_url}}"
-      a.property-card_like ng-click="toggleFavoriteListing(listing.id);"
+      img.property-card_thumb ng-src="{{listing.Image_URL}}"
+      a.property-card_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
             use xlink:href="#i-like"
-            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.id)"
+            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
 
     figcaption.property-card_stats.hide-for-medium-up
       .stats-card.bottom
         ng-include src="'listings/templates/_stats-list.html'"
 
-    span.status-label.label.success ng-show="listing.eligibility_match == 1" Matched
-    span.status-label.label.negative ng-show="listing.eligibility_match == 2" Not a Match
+    span.status-label.label.success ng-show="listing.Eligibility_Match == 1" Matched
+    span.status-label.label.negative ng-show="listing.Eligibility_Match == 2" Not a Match
 
   header.property-card_content
     hgroup.property-card_info
-      h1.property-card_title.gamma
-        a ui-sref="dahlia.listing({id: listing.id})"
-          | {{listing.name}}
+      .property-card_meta
+        h1.property-card_title.gamma
+          a ui-sref="dahlia.listing({id: listing.Id})"
+            | {{listing.Property_Name}}
 
-      p
-        | {{formattedAddress(listing)}}
-      p.c-steel
-        | {{listing.developer}}
-      p
-        | Application Due {{listing.application_due_date | dateSuffix}}
+        p
+          | {{formattedAddress(listing)}}
+        p.c-steel.margin-bottom--half
+          | {{listing.Developer}}
+        p.t-semi
+          | Application Due {{listing.Application_Due_Date | dateSuffix}}
       .property-card_action
-        a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.id})"
+        a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
           | See Details
     .property-card_stats.show-for-medium-up
       .stats-card.bottom.bg-mist
         ng-include src="'listings/templates/_stats-list.html'"
-    button.button.small.secondary ng-show="shared.showSharing()" ui-sref="dahlia.share({id: listing.id})"
+    button.button.small.secondary ng-show="shared.showSharing()" ui-sref="dahlia.share({id: listing.Id})"
       | Share Property
 
     ul.button-group ng-show="shared.showSocial()"
@@ -41,7 +42,7 @@
         button.button.secondary
           | Share
       li
-        a.button.secondary href="tel: {{listing.application_info.property_manager_phone}}"
+        a.button.secondary href="tel: {{listing.Application_Phone}}"
           | Call Manager
           br
-          | {{listing.application_info.property_manager_phone}}
+          | {{listing.Application_Phone}}
