@@ -5,46 +5,46 @@ accordion-heading
     svg
       use xlink:href="#i-arrow-down"
 
-.content-wrap
-  .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
-    ng-include src="'listings/templates/listing/_panel-apply.html'"
+.content-section
+  .apply-content.content-wrap
+    .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
+      ng-include src="'listings/templates/listing/_panel-apply.html'"
+    .content-panel.padding-bottom.border-bottom
+      h4.t-small.t-sans.t-bold Application Deadline
+      h3.t-delta.t-sans.c-steel
+        | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
 
-  .content-panel.padding-bottom.border-bottom
-    h4.t-small.t-sans.t-bold Application Deadline
-    h3.t-delta.t-sans.c-steel
-      | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+    .content-panel.padding-bottom.border-bottom
+      h4.t-small.t-sans.t-bold Information Sessions
+      ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
+        li
+          h3.t-delta.t-sans.c-steel.no-margin
+            | {{session.Date | dateSuffix}}
+          p.c-steel
+            | {{session.Start_Time}}&mdash;{{session.End_Time}}
+          p.no-margin
+            | {{session.Venue}}
+          p.c-steel
+            | {{session.Street_Address}}, {{session.City}}
+      p.c-steel ng-if="!listing.Information_Sessions"
+       | No information sessions scheduled yet.
 
-  .content-panel.padding-bottom.border-bottom
-    h4.t-small.t-sans.t-bold Information Sessions
-    ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
-      li
-        h3.t-delta.t-sans.c-steel.no-margin
-          | {{session.Date | dateSuffix}}
-        p.c-steel
-          | {{session.Start_Time}}&mdash;{{session.End_Time}}
-        p.no-margin
-          | {{session.Venue}}
-        p.c-steel
-          | {{session.Street_Address}}, {{session.City}}
-    p.c-steel ng-if="!listing.Information_Sessions"
-     | No information sessions scheduled yet.
+    .content-panel.padding-bottom.border-bottom
+      h4.t-small.t-sans.t-bold Open Houses
+      ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
+        li
+          h3.t-delta.t-sans.c-steel.no-margin
+            | {{session.Date | dateSuffix}}
+          span.c-steel
+            | {{session.Start_Time}}&mdash;{{session.End_Time}}
+      p.c-steel ng-if="!listing.Open_Houses"
+        | No open houses scheduled yet.
 
-  .content-panel.padding-bottom.border-bottom
-    h4.t-small.t-sans.t-bold Open Houses
-    ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
-      li
-        h3.t-delta.t-sans.c-steel.no-margin
-          | {{session.Date | dateSuffix}}
-        span.c-steel
-          | {{session.Start_Time}}&mdash;{{session.End_Time}}
-    p.c-steel ng-if="!listing.Open_Houses"
-      | No open houses scheduled yet.
-
-  .content-panel.padding-bottom
-    h4.t-small.t-sans.t-bold Public Lottery
-    ul
-      li
-        h3.t-delta.t-sans.c-steel.no-margin November 28, 2015
-        p.c-steel 1:00pm&mdash;2:30pm
-        p.no-margin San Francisco LGBT Community Center
-        p.c-steel 1800 Market Street, San Francisco
+    .content-panel.padding-bottom
+      h4.t-small.t-sans.t-bold Public Lottery
+      ul
+        li
+          h3.t-delta.t-sans.c-steel.no-margin November 28, 2015
+          p.c-steel 1:00pm&mdash;2:30pm
+          p.no-margin San Francisco LGBT Community Center
+          p.c-steel 1800 Market Street, San Francisco
