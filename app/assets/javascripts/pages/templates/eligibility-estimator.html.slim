@@ -1,16 +1,20 @@
-header.lead-header.shift-offset--bottom.bg-attention
+header.lead-header.shift-offset--bottom.bg-attention-tint
   .row
     .large-12.columns
-      h1.lead-title.t-beta.c-white Estimate Eligibility
+      h1.lead-title.t-beta Estimate Your Eligibility
       .medium-8.columns.no-padding.show-for-medium-up
-        p.c-white.t-gamma.t-light Enter details about household size and income and we'll highlight properties you might be eligible for.
+        p.t-gamma.t-light Enter details about your household size and income and we'll highlight properties for which you may be eligible.
 
 section.row.shift--top
   .medium-8.columns
-    .alert-box.alert.margin-top alert="" close="hideAlert = true" ng-show="showAlert()"
-      | You'll need to resolve any errors before moving on.
-
     form.form-card name="eligibilityForm" ng-submit="submitForm()" novalidate=""
+      .alert-box.alert.margin-top alert="" close="hideAlert = true" ng-show="showAlert()"
+        span.alert-icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-warning"
+        p.alert-body
+          | You'll need to resolve any errors before moving on.
       .row
         .medium-12.columns.margin-bottom
           .border-bottom.padding-bottom
@@ -38,7 +42,7 @@ section.row.shift--top
       .row.margin-bottom
         .medium-12.columns.padding-top.padding-bottom
           h3.t-sans.gamma
-            | Next add up your income from wages, benefits and other sources.
+            | Next add up your total household income from wages, benefits and other sources from household members 18 years or older.
           label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             span.eligibility-form_header Household Income
             input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
@@ -61,15 +65,15 @@ section.row.shift--top
         .medium-12.columns
           .note.bg-tint.padding.margin-bottom--2x ng-show="!hasCalculatedIncome()"
             p.t-tiny.no-margin
-              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. To help, we created a
-              a ui-sref="dahlia.income-calculator.intro" Household Income Calculator
+              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total,  please use the
+              a.a-deep ui-sref="dahlia.income-calculator.intro" Household Income Calculator
 
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
           input.button.expand type="submit" value="View Matching Properties"
         .small-12.medium-6.medium-pull-6.columns
           a.button.blank.expand ng-click="clearForm()"
-            | Reset Filters
+            | Reset
 
 
 

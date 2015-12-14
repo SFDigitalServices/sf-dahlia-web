@@ -5,41 +5,42 @@ accordion-heading
     svg
       use xlink:href="#i-arrow-down"
 
-.content-panel.wide
-  accordion.accordion-nested.accordion.trigger-left
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Required Documents
-          span.ui-control.ui-icon.ui-small
-            svg
-              use xlink:href="#i-arrow-down"
-        #panel1a-b.content
-          p
-            | {{listing.Required_Documents}}
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Legal Disclaimers
-          span.ui-control.ui-icon.ui-small
-            svg
-              use xlink:href="#i-arrow-down"
-        #panel1a-c.content
-          p
-            | {{listing.Legal_Disclaimers}}
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Smoking Policy
-          span.ui-control.ui-icon.ui-small
-            svg
-              use xlink:href="#i-arrow-down"
-        #panel1a-d.content
-          p
-            | {{listing.Smoking_Policy}}
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Pets Policy
-          span.ui-control.ui-icon.ui-small
-            svg
-              use xlink:href="#i-arrow-down"
-        #panel1a-e.content
-          p
-            | {{listing.Pet_Policy}}
+.content.content-section.clearfix
+  .content-panel.wide
+    accordion.accordion-nested.accordion.trigger-left
+        accordion-group.accordion-navigation
+          accordion-heading.accordion-header
+            | Required Documents
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-b.content
+            p
+              | {{listing.Required_Documents}}
+        accordion-group.accordion-navigation
+          accordion-heading.accordion-header
+            | Legal Disclaimers
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-c.content
+            p
+              | {{listing.Legal_Disclaimers}}
+        accordion-group.accordion-navigation
+          accordion-heading.accordion-header
+            | Smoking Policy
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-d.content
+            p
+              | {{listing.Smoking_Policy}}
+        accordion-group.accordion-navigation
+          accordion-heading.accordion-header
+            | Pets Policy
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
+          #panel1a-e.content
+            p
+              | {{listing.Pet_Policy}}

@@ -8,11 +8,10 @@
             use xlink:href="#i-like"
             use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
 
-  header.property-hero_content.text-center
-    h1.property-hero_title.gamma.no-margin
+  header.property-hero_content
+    h1.property-hero_title.beta
       /need to replace with salesforce property site site
-      a href="#"
-        | {{listing.Property_Name}}
+      | {{listing.Property_Name}}
     p
       | {{formattedAddress(listing)}}
     p.c-steel
@@ -31,17 +30,17 @@
   .property-hero_action.text-center
     .hide-for-medium-up
       p.t-small
-        | {{listing.Application_Due_Date | date : 'EEEE, MMM d, yyyy'}}
+        | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
       .text-center ng-hide="listingApplicationClosed(listing)"
         ng-include src="'listings/templates/listing/_panel-apply.html'"
     hr.hr-5.tall.show-for-small-only/
     .action-group.row
       .medium-6.columns
         / replace with salesforce value
-        p.date.t-small Listing Updated: Aug 15th 2015
+        p.date.t-small Listing Updated: August 15, 2015
       .medium-6.columns
-        a.button.small.secondary href="/pages/share-grid.html"
-          span.ui-icon.ui-link
+        a.button.small href="/pages/share-grid.html"
+          span.ui-icon.ui-link.i-white
             svg
               use xlink:href="#i-forward" /
           |  Share this Listing

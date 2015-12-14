@@ -5,180 +5,181 @@ accordion-heading
     svg
       use xlink:href="#i-arrow-down"
 
-.content-panel.wide
-  .row.collapse
-    .small-6.columns
-      span.t-small.c-steel Neighborhood
-      p
-        | {{listing.Neighborhood}}
-    .small-6.columns
-      span.t-small.c-steel Built
-      p
-        | {{listing.Year_Built}}
-  .row.collapse.margin-bottom
-    .small-12.columns
-      span.t-small.c-steel Property Amenities
-    .row.collapse
+.content.content-section.clearfix
+  .content-panel.wide
+    .row.collapse.padding-top
       .small-6.columns
-        ul
-          li 24-hour Desk
-          li Elevator
-          li Lobby
-          li Laundry Facilities
-          li Community TV Room
-          li All units w/ Private Bathrooms and Kitchens
+        span.content-label.t-small Neighborhood
+        p
+          | {{listing.Neighborhood}}
       .small-6.columns
-        ul
-          li Cats allowed
-          li Dogs allowed
-          li Water and Trash Included
-          li No Parking
-  .row.collapse
-    .small-12.columns
-      span.t-small.c-steel Accessibility
-    .row.collapse
-      .small-6.columns
-        ul
-          li Wheelchair Accees
-          li Grab Bars
-.content-panel.wide
-  h5.t-sans.t-small.c-steel Unit Features
-  .unit-features.stats-card.stats-toggle.toggler ng-click="toggleStudioTable()" ng-class="activeStudioClass"
-    ul.unit-stats.stats-list.double.medium-quad.has-toggle
-      li
-        span.stats-list_value
-          | Studio
-      li
-        span.stats-list_value
-          | 1
-          span.value-label
-            |  unit
-      li.t-small
-        span.stats-list_value.t-small
-          | Accessible
-      li
-        span.stats-list_value
-          | 469
-          span.value-label
-            |  sqft
-      span.ui-control.ui-icon.ui-small
-        svg
-          use xlink:href="#i-arrow-down"
-    .stats-table--stack ng-show="showStudioTable"
-      ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="showStudioTable"
-        li
-          span.stats-list_label.bottom Unit Number
-          .stats-list_value 127
-        li
-          span.stats-list_label.bottom Area
-          .stats-list_value 469 sqft
-        li
-          span.stats-list_label.bottom Bathrooms
-          .stats-list_value 1 bath
-        li
-          span.stats-list_label.bottom Floor
-          .stats-list_value 1st floor
-        li
-          span.stats-list_label.bottom Building
-          .stats-list_value South Tower
-        li.stat-full
-          span.stats-list_label.bottom Acccessibilty
-          .stats-list_value Grab bars
-
-  .unit-features.stats-card.stats-toggle.toggler ng-click="toggle1BedTable()" ng-class="active1BedClass"
-    ul.unit-stats.stats-list.double.medium-quad.has-toggle
-      li
-        span.stats-list_value
-          | 1 Bedroom
-      li
-        span.stats-list_value
-          | 9
-          span.value-label
-            |  units
-      li
-        span.stats-list_value.t-small
-          | Accessible
-      li
-        span.stats-list_value
-          | 639 - 900
-          span.value-label
-            |  sqft
-      span.ui-control.ui-icon.ui-small
-        svg
-          use xlink:href="#i-arrow-down"
-    .stats-table--stack ng-show="show1BedTable"
-      ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle
-        li
-          span.stats-list_label.bottom Unit Number
-          .stats-list_value 128
-        li
-          span.stats-list_label.bottom Area
-          .stats-list_value 639 sqft
-        li
-          span.stats-list_label.bottom Bathrooms
-          .stats-list_value 1 bath
-        li
-          span.stats-list_label.bottom Floor
-          .stats-list_value 1st floor
-        li
-          span.stats-list_label.bottom Building
-          .stats-list_value South Tower
-        li.stat-full
-          span.stats-list_label.bottom Acccessibilty
-          .stats-list_value Grab bars
-      ul.stat-row.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
-        li
-          span.stats-list_label.bottom Unit Number
-          .stats-list_value 229
-        li
-          span.stats-list_label.bottom Area
-          .stats-list_value 690 sqft
-        li
-          span.stats-list_label.bottom Bathrooms
-          .stats-list_value 1 bath
-        li
-          span.stats-list_label.bottom Floor
-          .stats-list_value 2nd floor
-        li
-          span.stats-list_label.bottom Building
-          .stats-list_value South Tower
-        li.stat-full
-          span.stats-list_label.bottom Acccessibilty
-          .stats-list_value Grab bars
-      ul.stat-row.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
-        li
-          span.stats-list_label.bottom Unit Number
-          .stats-list_value 335
-        li
-          span.stats-list_label.bottom Area
-          .stats-list_value 650 sqft
-        li
-          span.stats-list_label.bottom Bathrooms
-          .stats-list_value 1 bath
-        li
-          span.stats-list_label.bottom Floor
-          .stats-list_value 3nd floor
-        li
-          span.stats-list_label.bottom Building
-          .stats-list_value North Tower
-        li.stat-full
-          span.stats-list_label.bottom Acccessibilty
-          .stats-list_value Grab bars
-.content-panel.wide
-  .content-panel--expanded.bg-mist
-    h5.t-sans.t-small.c-steel Additional Fees
+        span.content-label.t-small.c-steel Built
+        p
+          | {{listing.Year_Built}}
     .row.collapse.margin-bottom
-      .small-6.columns
-        span.t-small Application Fee
-        p.t-delta.no-margin
-          | {{listing.Fee | currency:"$":0}}
-        span.t-small.c-steel due post-lottery
-      .small-6.columns
-        span.t-small Deposit
-        p.t-delta.no-margin
-          | {{listing.Deposit_Min | currency:"$":0}} - {{listing.Deposit_Max}}
-        span.t-small.c-steel based on credit score
+      .small-12.columns
+        span.content-label.t-small Property Amenities
+      .row.collapse
+        .small-6.columns
+          ul
+            li 24-hour Desk
+            li Elevator
+            li Lobby
+            li Laundry Facilities
+            li Community TV Room
+            li All units w/ Private Bathrooms and Kitchens
+        .small-6.columns
+          ul
+            li Cats allowed
+            li Dogs allowed
+            li Water and Trash Included
+            li No Parking
     .row.collapse
       .small-12.columns
-        p
-          | {{listing.Costs_Not_Included}}
+        span.content-label.t-small Accessibility
+      .row.collapse
+        .small-6.columns
+          ul
+            li Wheelchair Accees
+            li Grab Bars
+  .content-panel.wide
+    h5.t-sans.content-label.t-small Unit Features
+    .unit-features.stats-card.stats-toggle.toggler ng-click="toggleStudioTable()" ng-class="activeStudioClass"
+      ul.unit-stats.stats-list.double.medium-quad.has-toggle
+        li
+          span.stats-list_value
+            | Studio
+        li
+          span.stats-list_value.highlight
+            | 1
+            span.value-label
+              |  unit
+        li.t-small
+          span.t-small
+            | Accessible
+        li
+          span.stats-list_value.highlight
+            | 469
+            span.value-label
+              |  square feet
+        span.ui-control.ui-icon.ui-small
+          svg
+            use xlink:href="#i-arrow-down"
+      .stats-table--stack ng-show="showStudioTable"
+        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="showStudioTable"
+          li
+            span.stats-list_label.bottom Unit Number
+            .stats-list_value 127
+          li
+            span.stats-list_label.bottom Area
+            .stats-list_value 469 sqft
+          li
+            span.stats-list_label.bottom Bathrooms
+            .stats-list_value 1 bath
+          li
+            span.stats-list_label.bottom Floor
+            .stats-list_value 1st floor
+          li
+            span.stats-list_label.bottom Building
+            .stats-list_value South Tower
+          li.stat-full
+            span.stats-list_label.bottom Acccessibilty
+            .stats-list_value Grab bars
+
+    .unit-features.stats-card.stats-toggle.toggler ng-click="toggle1BedTable()" ng-class="active1BedClass"
+      ul.unit-stats.stats-list.double.medium-quad.has-toggle
+        li
+          span.stats-list_value
+            | 1 Bedroom
+        li
+          span.stats-list_value.highlight
+            | 9
+            span.value-label
+              |  units
+        li
+          span.t-small
+            | Accessible
+        li
+          span.stats-list_value.highlight
+            | 639&mdash;900
+            span.value-label
+              |  square feet
+        span.ui-control.ui-icon.ui-small
+          svg
+            use xlink:href="#i-arrow-down"
+      .stats-table--stack ng-show="show1BedTable"
+        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle
+          li
+            span.stats-list_label.bottom Unit Number
+            .stats-list_value 128
+          li
+            span.stats-list_label.bottom Area
+            .stats-list_value 639 sqft
+          li
+            span.stats-list_label.bottom Bathrooms
+            .stats-list_value 1 bath
+          li
+            span.stats-list_label.bottom Floor
+            .stats-list_value 1st floor
+          li
+            span.stats-list_label.bottom Building
+            .stats-list_value South Tower
+          li.stat-full
+            span.stats-list_label.bottom Acccessibilty
+            .stats-list_value Grab bars
+        ul.stat-row.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
+          li
+            span.stats-list_label.bottom Unit Number
+            .stats-list_value 229
+          li
+            span.stats-list_label.bottom Area
+            .stats-list_value 690 sqft
+          li
+            span.stats-list_label.bottom Bathrooms
+            .stats-list_value 1 bath
+          li
+            span.stats-list_label.bottom Floor
+            .stats-list_value 2nd floor
+          li
+            span.stats-list_label.bottom Building
+            .stats-list_value South Tower
+          li.stat-full
+            span.stats-list_label.bottom Acccessibilty
+            .stats-list_value Grab bars
+        ul.stat-row.stats-table--stack.stats-list.double.medium-triple.bg-mist.has-toggle
+          li
+            span.stats-list_label.bottom Unit Number
+            .stats-list_value 335
+          li
+            span.stats-list_label.bottom Area
+            .stats-list_value 650 sqft
+          li
+            span.stats-list_label.bottom Bathrooms
+            .stats-list_value 1 bath
+          li
+            span.stats-list_label.bottom Floor
+            .stats-list_value 3nd floor
+          li
+            span.stats-list_label.bottom Building
+            .stats-list_value North Tower
+          li.stat-full
+            span.stats-list_label.bottom Acccessibilty
+            .stats-list_value Grab bars
+  .content-panel.wide
+    .content-panel--expanded.bg-dust
+      h5.t-sans.content-label.t-small Additional Fees
+      .row.collapse.margin-bottom
+        .small-6.columns
+          span.t-small Application Fee
+          p.t-delta.no-margin.t-bold
+            | {{listing.Fee | currency:"$":0}}
+          span.content-label.t-small due post-lottery
+        .small-6.columns
+          span.t-small Deposit
+          p.t-delta.no-margin.t-bold
+            | {{listing.Deposit_Min | currency:"$":0}}&mdash;{{listing.Deposit_Max}}
+          span.content-label.t-small based on credit score
+      .row.collapse
+        .small-12.columns
+          p
+            | {{listing.Costs_Not_Included}}
