@@ -14,6 +14,8 @@ div.property-hero_stats ng-repeat="unit in listing.Units"
       li
         div.stats-list_value
          | {{unit.BMR_Rent_Monthly | currency:"$":0}}
+         span.value-label
+           | /month
         span.stats-list_label rent
       li.show-for-medium-up
         div.stats-list_value
