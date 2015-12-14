@@ -40,11 +40,15 @@ accordion-heading
       p.c-steel ng-if="!listing.Open_Houses"
         | No open houses scheduled yet.
 
-    .content-panel.padding-bottom
-      h4.t-small.t-sans.t-bold Public Lottery
-      ul
-        li
-          h3.t-delta.t-sans.c-steel.no-margin November 28, 2015
-          p.c-steel 1:00pm&mdash;2:30pm
-          p.no-margin San Francisco LGBT Community Center
-          p.c-steel 1800 Market Street, San Francisco
+.content-panel.padding-bottom
+  h4.t-small.t-sans.t-bold Public Lottery
+  ul
+    li
+      h3.t-delta.t-sans.c-steel.no-margin
+        | {{ listing.Lottery_Date | date : 'longDate' }}
+      p.c-steel
+        | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
+      p.no-margin
+        |  {{ listing.Lottery_Venue }}
+      p.c-steel
+        | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
