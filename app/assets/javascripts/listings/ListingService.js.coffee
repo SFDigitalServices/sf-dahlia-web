@@ -40,6 +40,12 @@ ListingService = ($http, $localStorage) ->
   Service.hasEligibilityFilters = ->
     ! angular.equals(Service.eligibility_filter_defaults, Service.eligibility_filters)
 
+  Service.eligibilityYearlyIncome = ->
+    if Service.eligibility_filters.income_timeframe == 'per_month'
+      parseFloat(Service.eligibility_filters.income_total) * 12
+    else
+      Service.eligibility_filters.income_total
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
@@ -52,17 +58,29 @@ ListingService = ($http, $localStorage) ->
 
   Service.getListings = () ->
     angular.copy([], Service.listings)
-    listings_endpoint = "/api/v1/listings.json"
     # check for default state
     if Service.hasEligibilityFilters()
-      # note: eligibility matches returned by this endpoint are currently faked
-      # and we are also not passing in any of the eligibility filters yet
-      listings_endpoint = "/api/v1/listings-eligibility.json"
-    $http.get(listings_endpoint).success((data, status, headers, config) ->
+      return Service.getListingsWithEligibility()
+    $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listings then data.listings else []), Service.listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
+
+  Service.getListingsWithEligibility = ->
+    angular.copy([], Service.listings)
+    params =
+      eligibility:
+        householdsize: Service.eligibility_filters.household_size
+        incomelevel: Service.eligibilityYearlyIncome()
+        # TODO: vvv implement once child selection filter is added
+        childrenUnder6: 0
+    $http.post("/api/v1/listings-eligibility.json", params).success((data, status, headers, config) ->
+      angular.copy((if data and data.listings then data.listings else []), Service.listings)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids) ->

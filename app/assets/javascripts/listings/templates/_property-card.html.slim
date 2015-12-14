@@ -6,14 +6,17 @@
         span.ui-icon
           svg
             use xlink:href="#i-like"
-            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
+            use xlink:href="#i-like-fill" ng-if="isFavorited(listing.Id)"
 
     figcaption.property-card_stats.hide-for-medium-up
       .stats-card.bottom
         ng-include src="'listings/templates/_stats-list.html'"
 
-    span.status-label.label.success ng-show="listing.Eligibility_Match == 1" Matched
-    span.status-label.label.negative ng-show="listing.Eligibility_Match == 2" Not a Match
+
+    span.status-label.label.success ng-if="hasEligibilityFilters() && listing.Does_Match"
+      | Matched
+    span.status-label.label.negative ng-if="hasEligibilityFilters() && !listing.Does_Match"
+      | Not a Match
 
   header.property-card_content
     hgroup.property-card_info
