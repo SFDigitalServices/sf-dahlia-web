@@ -2,8 +2,9 @@ span ng-if="hasIncomeSources()"
   form.no-margin
     .row
       .large-12.columns
-        h1.gamma.margin-bottom.t-sans
-          | Here's the income you've added so far:
+        header.margin-bottom--2x
+          h1.gamma.t-sans
+            | Here's the income you've added so far:
     .row
       .large-12.columns
         .income-source ng-repeat="income in incomeSources track by $index"
