@@ -42,7 +42,7 @@ accordion-heading
 
 .content-panel.padding-bottom
   h4.t-small.t-sans.t-bold Public Lottery
-  ul
+  ul ng-if="lotteryDateVenueAvailable(listing)"
     li
       h3.t-delta.t-sans.c-steel.no-margin
         | {{ listing.Lottery_Date | date : 'longDate' }}
@@ -52,3 +52,5 @@ accordion-heading
         |  {{ listing.Lottery_Venue }}
       p.c-steel
         | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
+  p ng-if="!lotteryDateVenueAvailable(listing)"
+    | Lottery date, time and venue to be scheduled.
