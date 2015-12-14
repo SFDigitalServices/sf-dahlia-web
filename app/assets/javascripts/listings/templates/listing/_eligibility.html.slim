@@ -5,10 +5,10 @@ accordion-heading.lead
     svg
       use xlink:href="#i-arrow-down"
 
-.content.content-section
-  .content-panel.lined
-    header.margin-bottom
-      h4.t-epsilon.t-sans.no-margin Household Maximum Income
+.content.content-section.clearfix
+  .content-panel.wide
+    header.padding-top.margin-bottom
+      h4.t-base.t-sans.margin-bottom--half Household Maximum Income
       /! Each unit type available has its own requirements based on household size.
       p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
     .stats-card.bg-tint
@@ -16,9 +16,10 @@ accordion-heading.lead
         li
           .stats-list_value.highlight
             span.value-label
-            | Starts at $3,245
+              | Starts at
+            |  $3,245
             span.value-label
-            | /mo
+              | /month
           span.stats-list_label based on houshold size
 
         span.ui-control.ui-icon.ui-small
@@ -28,33 +29,33 @@ accordion-heading.lead
       .toggled ng-show="showIncomeTable"
         ng-include src="'listings/templates/listing/_income-table.html'"
 
-  .content-panel.lined
+  .content-panel.wide.lined
     header.margin-bottom
-      h4.t-epsilon.t-sans.no-margin Occupancy
+      h4.t-base.t-sans.margin-bottom--half Occupancy
       p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6.
 
-    .stats-card.bg-mist
+    .stats-card
       ul.stats-list.tall.double
         li
           .stats-list_value
             | Studio
         li
           .stats-list_value
-            | 1-2
-            span.value-label people
-    .stats-card.bg-mist
+            | 1&mdash;2
+            span.value-label  people
+    .stats-card
       ul.stats-list.tall.double
         li
           .stats-list_value
             | 1 Bedroom
         li
           .stats-list_value
-            | 1-3
-            span.value-label people
+            | 1&mdash;3
+            span.value-label  people
 
-  .content-panel.lined
+  .content-panel.wide.lined
     header.margin-bottom
-      h4.t-epsilon.t-sans.no-margin
+      h4.t-base.t-sans.margin-bottom--half
         | Lottery Preferences
       p.t-small.c-steel
         | Preference holders will be given highest ranking in the lottery process.
@@ -64,7 +65,7 @@ accordion-heading.lead
           | Certificate of Preference
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel1a-a.content
-          p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960’s and 1970's, but may also include other persons displaced by Agency action.
+          p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960s and 1970s, but may also include other persons displaced by Agency action.
       accordion-group.accordion-navigation
         accordion-heading.accordion-header
           | Ellis Act Preference
@@ -77,16 +78,16 @@ accordion-heading.lead
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel1a-c.content
           p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
-  .content-panel.lined
+  .content-panel.wide.lined
     header.panel-header data-equalizer-watch=""
-      h4.t-epsilon.t-sans.no-margin
+      h4.t-epsilon.t-sans.margin-bottom--half
         | Rental Assistance
       p.t-small.c-steel
         | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
-    p In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenat pays after use of the subsidy.
-  .content-panel
+      p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenat pays after use of the subsidy.
+  .content-panel.wide
     header.margin-bottom
-      h4.t-epsilon.t-sans.no-margin Additional Building Rules
+      h4.t-epsilon.t-sans.margin-bottom--half Additional Building Rules
       p.t-small.c-steel Applicants must also qualify under the rules of the building.
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation
