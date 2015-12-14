@@ -20,28 +20,32 @@ accordion-heading
       .small-12.columns
         span.content-label.t-small Property Amenities
       .row.collapse
-        .small-6.columns
-          ul
-            li 24-hour Desk
-            li Elevator
-            li Lobby
-            li Laundry Facilities
-            li Community TV Room
-            li All units w/ Private Bathrooms and Kitchens
-        .small-6.columns
-          ul
-            li Cats allowed
-            li Dogs allowed
-            li Water and Trash Included
-            li No Parking
+        p
+          | {{listing.Amenities}}
+        / .small-6.columns
+        /   ul
+        /     li 24-hour Desk
+        /     li Elevator
+        /     li Lobby
+        /     li Laundry Facilities
+        /     li Community TV Room
+        /     li All units w/ Private Bathrooms and Kitchens
+        / .small-6.columns
+        /   ul
+        /     li Cats allowed
+        /     li Dogs allowed
+        /     li Water and Trash Included
+        /     li No Parking
     .row.collapse
       .small-12.columns
         span.content-label.t-small Accessibility
       .row.collapse
-        .small-6.columns
-          ul
-            li Wheelchair Accees
-            li Grab Bars
+        p
+          | {{listing.Accessibility}}
+        / .small-6.columns
+        /   ul
+        /     li Wheelchair Accees
+        /     li Grab Bars
   .content-panel.wide
     h5.t-sans.content-label.t-small Unit Features
     .unit-features.stats-card.stats-toggle.toggler ng-click="toggleStudioTable()" ng-class="activeStudioClass"
