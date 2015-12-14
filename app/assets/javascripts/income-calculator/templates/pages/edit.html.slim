@@ -6,7 +6,7 @@ section.row.shift--top
 
       ng-include src="'income-calculator/templates/partials/_income-list.html'"
 
-      div ng-show="incomeSources.length < 30 && incomeSources.length > 0"
+      div ng-if="incomeSources.length < 30 && incomeSources.length > 0"
         hr.hr-5.margin-top.margin-bottom
         .row.margin-bottom
           .large-12.columns
