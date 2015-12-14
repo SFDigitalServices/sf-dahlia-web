@@ -17,16 +17,17 @@
 
   header.property-card_content
     hgroup.property-card_info
-      h1.property-card_title.gamma
-        a ui-sref="dahlia.listing({id: listing.Id})"
-          | {{listing.Property_Name}}
+      .property-card_meta
+        h1.property-card_title.gamma
+          a ui-sref="dahlia.listing({id: listing.Id})"
+            | {{listing.Property_Name}}
 
-      p
-        | {{formattedAddress(listing)}}
-      p.c-steel
-        | {{listing.Developer}}
-      p
-        | Application Due {{listing.Application_Due_Date | dateSuffix}}
+        p
+          | {{formattedAddress(listing)}}
+        p.c-steel.margin-bottom--half
+          | {{listing.Developer}}
+        p.t-semi
+          | Application Due {{listing.Application_Due_Date | dateSuffix}}
       .property-card_action
         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
           | See Details
