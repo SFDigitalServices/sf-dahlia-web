@@ -7742,9 +7742,6 @@ input[type="radio"] {
 .lt-ie10 input[type="radio"] {
   left: 0 !important; }
 
-.lt-ie10 input[type="checkbox"] {
-  left: 0 !important; }
-
 input[type="checkbox"] + label,
 input[type="radio"] + label {
   cursor: pointer;
