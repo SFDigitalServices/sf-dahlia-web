@@ -18,4 +18,5 @@
 //= require ngstorage
 //= require angular-pageslide-directive
 //= require angular-clipboard
+//= require angular-filter
 //= require_tree .

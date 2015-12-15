@@ -11,6 +11,7 @@
   'angular-clipboard',
   'templates',
   'mm.foundation',
+  'angular.filter'
 ]
 
 # Service and Controller modules
