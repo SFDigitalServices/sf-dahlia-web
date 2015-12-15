@@ -1,26 +1,27 @@
-div.property-hero_stats ng-repeat="unit in listing.Units"
+/div.property-hero_stats ng-repeat="unit in listing.Units"
+div.property-hero_stats ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
   div.stats-card
     ul.stats-list.triple.medium-quad
       li
         div.stats-list_value
-         | {{unit.Unit_Type}}
+         | {{unit_type || 'N/A'}}
         span.stats-list_label unit type
       li
         div.stats-list_value
-          | {{unit.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
+          | {{unitBMRMinMonthlyRange(units) | currency:"$":0}}
           span.value-label
             | /month
         span.stats-list_label minimum income
       li
         div.stats-list_value
-         | {{unit.BMR_Rent_Monthly | currency:"$":0}}
+         | {{unitBMRRentMonthlyRange(units) | currency:"$":0}}
          span.value-label
            | /month
         span.stats-list_label rent
       li.show-for-medium-up
         div.stats-list_value
           / replace with salesforce value
-          | 1
+          | {{units.length}}
           span.value-label  unit(s)
         span.stats-list_label available
     ul.stats-list.double.bg-ghost.medium-full.labels-inline.hide-for-medium-up
