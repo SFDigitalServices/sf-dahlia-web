@@ -52,5 +52,5 @@ accordion-heading
             |  {{ listing.Lottery_Venue }}
           p.c-steel
             | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-      p ng-if="!lotteryDateVenueAvailable(listing)"
+      p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.

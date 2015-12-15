@@ -24,7 +24,7 @@ accordion-heading.lead.accordion-header
         p.c-steel
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
         p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
-      p ng-if="!lotteryDateVenueAvailable(listing)"
+      p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
     .content-panel.padding-bottom.no-margin.border-bottom
