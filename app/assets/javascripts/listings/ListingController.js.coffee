@@ -65,6 +65,9 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # to replace below with something like listing.Lottery_Results.length > 0
     false
 
+  $scope.lotteryDateVenueAvailable = (listing) ->
+    (listing.Lottery_Date != undefined &&
+      listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
 ############################################################################################
 ######################################## CONFIG ############################################
