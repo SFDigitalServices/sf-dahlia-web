@@ -14,19 +14,23 @@ accordion-heading.lead.accordion-header
 
     .content-panel.padding-bottom.no-margin.border-bottom ng-hide="lotteryDatePassed(listing)"
       h4.t-small.t-sans.t-bold Public Lottery
-      h3.t-delta.t-sans.c-steel.no-margin
-        | {{ listing.Lottery_Date | date : 'mediumDate' }}
-      p.c-steel
-        | {{ listing.Lottery_Start_Time}}pm&mdash;{{ listing.Lottery_End_Time}}pm
-      p.no-margin
-        | {{ listing.Lottery_Venue }}
-      p.c-steel
-        | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-      p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+      span ng-if="lotteryDateVenueAvailable(listing)"
+        h3.t-delta.t-sans.c-steel.no-margin
+          | {{ listing.Lottery_Date | date : 'longDate' }}
+        p.c-steel
+          | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
+        p.no-margin
+          | {{ listing.Lottery_Venue }}
+        p.c-steel
+          | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
+        p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+      p ng-if="!lotteryDateVenueAvailable(listing)"
+        | Lottery date, time and venue to be scheduled.
 
-    .content-panel.padding-bottom.no-margin.border-bottom ng-hide="lotteryResultsAvailable(listing)"
+    .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold Lottery Results
-      h3.t-delta.t-sans.c-steel January 5, 2015
+      h3.t-delta.t-sans.c-steel
+        | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
       p.c-steel.t-small Notices will be sent to each applicant regarding their position within two weeks following the lottery.
 
     .content-panel.padding-bottom.no-margin.border-bottom ng-if="lotteryResultsAvailable(listing)"
