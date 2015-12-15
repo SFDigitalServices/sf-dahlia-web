@@ -1,4 +1,4 @@
-verify_plugin_signatures: false
+verify_signatures: false
 
 # We ignore the following git hooks provided by overcommit for now
 PostCheckout:
