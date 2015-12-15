@@ -1,7 +1,7 @@
 .property-hero
   figure.property-hero_figure
     div.property-hero_container
-      img.property-hero_thumb src="{{listing.Image_URL}}"
+      img.property-hero_thumb src="{{imageURL(listing)}}"
       a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg

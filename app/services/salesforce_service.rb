@@ -47,9 +47,6 @@ class SalesforceService
 
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
-    # TODO: REMOVE when we have real images! ######
-    response.body.each { |x| x['Image_URL'] = 'https://placehold.it/474x316' }
-    ###############################################
     massage(response.body)
   rescue Restforce::UnauthorizedError
     if @retries > 0

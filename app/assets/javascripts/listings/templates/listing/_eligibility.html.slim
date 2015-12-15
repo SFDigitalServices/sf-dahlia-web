@@ -12,7 +12,7 @@ accordion-heading.lead
       /! Each unit type available has its own requirements based on household size.
       p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
     .stats-card.bg-tint
-      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
+      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
         li
           .stats-list_value.highlight
             span.value-label
@@ -26,7 +26,7 @@ accordion-heading.lead
           svg
             use xlink:href="#i-arrow-down"
 
-      .toggled ng-show="showIncomeTable"
+      .toggled ng-show="isActiveTable('Income')"
         ng-include src="'listings/templates/listing/_income-table.html'"
 
   .content-panel.wide.lined
