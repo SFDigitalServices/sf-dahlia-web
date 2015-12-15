@@ -1,17 +1,17 @@
-ul.stats-list.triple ng-repeat="unit in listing.Units"
+ul.stats-list.triple ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
   li
     .stats-list_value
-      | {{unit.Unit_Type || 'N/A'}}
+      | {{unit_type || 'N/A'}}
     span.stats-list_label unit type
   li
     .stats-list_value
-      | {{unit.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}
+      | {{unitBMRMinMonthlyRange(units) | currency:"$":0}}
       span.value-label
         | /month
     span.stats-list_label minimum income
   li
     .stats-list_value
-      | {{unit.BMR_Rent_Monthly | currency:"$":0}}
+      | {{unitBMRRentMonthlyRange(units) | currency:"$":0}}
       span.value-label
         | /month
     span.stats-list_label rent

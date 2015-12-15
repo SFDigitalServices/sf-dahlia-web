@@ -45,7 +45,15 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # if units.length == 1
     units[0].Unit_Square_Footage
 
+  $scope.unitBMRMinMonthlyRange = (units) ->
+    # TODO: actually find min/max
+    # if units.length == 1
+    units[0].BMR_Rental_Minimum_Monthly_Income_Needed
 
+  $scope.unitBMRRentMonthlyRange = (units) ->
+    # TODO: actually find min/max
+    # if units.length == 1
+    units[0].BMR_Rent_Monthly
 
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
