@@ -108,7 +108,7 @@ accordion-heading
         .small-6.columns
           span.t-small Deposit
           p.t-delta.no-margin.t-bold
-            | {{listing.Deposit_Min | currency:"$":0}}&mdash;{{listing.Deposit_Max}}
+            | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max">&ndash;</span>{{ listing.Deposit_Max }}
           span.content-label.t-small based on credit score
       .row.collapse
         .small-12.columns
