@@ -79,7 +79,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.lotteryDatePassed = (listing) ->
     today = new Date
     lotteryDate = new Date(listing.Lottery_Date)
-    lotteryDate < today
+    lotteryDate <= today
 
   $scope.lotteryResultsAvailable = (listing) ->
     # to replace below with something like listing.Lottery_Results.length > 0
