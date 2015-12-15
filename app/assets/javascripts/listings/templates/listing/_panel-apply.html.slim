@@ -4,8 +4,7 @@
     h3.t-sans.t-base.t-bold.no-margin
       | Pickup and turn in application
     p.no-margin
-      /need to replace with salesforce value
-      | Caritas Management Corporation
+      | {{listing.Application_Organization}}
     p.c-steel
       | {{ listing.Property_Street_Address }},
       br
@@ -17,8 +16,7 @@
       | Get Directions
     p.no-margin Office Hours
     p.c-steel
-      /need to replace with SF value
-      | 8:30 am - 5:00pm
+      | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
     a.button.small.has-icon ng-href="{{listing.Download_URL}}"
       span.ui-icon.ui-link.i-white

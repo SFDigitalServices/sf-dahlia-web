@@ -12,7 +12,7 @@ accordion-heading.lead
       /! Each unit type available has its own requirements based on household size.
       p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
     .stats-card.bg-tint
-      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleIncomeTable()" ng-class="activeIncomeClass"
+      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
         li
           .stats-list_value.highlight
             span.value-label
@@ -26,13 +26,13 @@ accordion-heading.lead
           svg
             use xlink:href="#i-arrow-down"
 
-      .toggled ng-show="showIncomeTable"
+      .toggled ng-show="isActiveTable('Income')"
         ng-include src="'listings/templates/listing/_income-table.html'"
 
   .content-panel.wide.lined
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
-      p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6.
+      p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
 
     .stats-card
       ul.stats-list.tall.double
@@ -51,6 +51,15 @@ accordion-heading.lead
         li
           .stats-list_value
             | 1&mdash;3
+            span.value-label  people
+    .stats-card
+      ul.stats-list.tall.double
+        li
+          .stats-list_value
+            | 2 Bedroom
+        li
+          .stats-list_value
+            | 2&mdash;5
             span.value-label  people
 
   .content-panel.wide.lined

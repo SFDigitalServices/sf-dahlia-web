@@ -8,7 +8,8 @@
       "angular-foundation": "~0.7.0",
       "angular-pageslide-directive": "~1.0.8",
       "angular-clipboard": "~1.1.1",
-      "ngstorage": "~0.3.10"
+      "ngstorage": "~0.3.10",
+      "angular-filter": "~0.5.8"
     }
   },
   "vendor": {
@@ -22,7 +23,8 @@
     "angular-pageslide-directive": "~1.0.8",
     "angular-mocks": "~1.4.7",
     "angular-clipboard": "~1.1.1",
-    "ngstorage": "~0.3.10"
+    "ngstorage": "~0.3.10",
+    "angular-filter": "~0.5.8"
   },
   "resolutions": {
     "angular": "~1.4.7"
