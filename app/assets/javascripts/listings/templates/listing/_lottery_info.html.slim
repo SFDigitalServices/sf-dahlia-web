@@ -24,7 +24,7 @@ accordion-heading.lead.accordion-header
         p.c-steel
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
         p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
-      p ng-if="!lotteryDateVenueAvailable(listing)"
+      p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
     .content-panel.padding-bottom.no-margin.border-bottom
@@ -61,7 +61,7 @@ accordion-heading.lead.accordion-header
       p.c-steel.t-small Be prepared to have your application reviewed and eligibility confirmed.
     .content-panel.padding-bottom
       h4.t-small.t-sans.t-bold Contact Property Manager
-      a.margin-bottom--half ng-href="tel:{{listing.Contact_Phone}}"
+      a.margin-bottom--half ng-href="tel:{{listing.Contact_Phone | htmlTel}}"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-phone"

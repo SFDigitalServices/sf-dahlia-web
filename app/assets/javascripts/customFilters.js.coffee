@@ -10,3 +10,8 @@ angular.module('customFilters', [])
     suffix = if relevantDigits <= 3 then suffixes[relevantDigits] else suffixes[0]
     dtfilter + suffix
   ]
+.filter 'htmlTel', ['$filter', ($filter) ->
+  (input) ->
+    return '' unless input
+    input.toString().trim().replace(/\D/g,'')
+  ]
