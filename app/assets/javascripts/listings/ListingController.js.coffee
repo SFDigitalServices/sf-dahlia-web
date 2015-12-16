@@ -94,6 +94,9 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # just a fallback for now
     listing.Property_URL || 'https://placehold.it/474x316'
 
+  $scope.showMatches = ->
+    $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
