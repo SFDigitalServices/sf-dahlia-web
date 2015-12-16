@@ -6,6 +6,9 @@ ListingService = ($http, $localStorage) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
+  Service.openListings = []
+  Service.closedListings = []
+  Service.lotteryResultsListings = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -57,18 +60,20 @@ ListingService = ($http, $localStorage) ->
     )
 
   Service.getListings = () ->
-    angular.copy([], Service.listings)
+    angular.copy([], Service.openListings)
+    angular.copy([], Service.closedListings)
+    angular.copy([], Service.lotteryResultsListings)
     # check for default state
     if Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
     $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
-      angular.copy((if data and data.listings then data.listings else []), Service.listings)
+      listings = if data and data.listings then data.listings else []
+      Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
 
   Service.getListingsWithEligibility = ->
-    angular.copy([], Service.listings)
     params =
       eligibility:
         householdsize: Service.eligibility_filters.household_size
@@ -76,10 +81,26 @@ ListingService = ($http, $localStorage) ->
         # TODO: vvv implement once child selection filter is added
         childrenUnder6: 0
     $http.post("/api/v1/listings-eligibility.json", params).success((data, status, headers, config) ->
-      angular.copy((if data and data.listings then data.listings else []), Service.listings)
+      listings = (if data and data.listings then data.listings else [])
+      Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
+
+  Service.groupListings = (listings) ->
+    now = new Date()
+    today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    listings.forEach (listing) ->
+      due_date = new Date(listing.Application_Due_Date)
+      if due_date > today
+        Service.openListings.push(listing)
+      else if due_date < today
+        # TODO: check if this is the right field once we're getting it from Salesforce in
+        # the /listings endpoint
+        if listing.Lottery_Members
+          Service.lotteryResultsListings.push(listing)
+        else
+          Service.closedListings.push(listing)
 
 
   # retrieves only the listings specified by the passed in array of ids

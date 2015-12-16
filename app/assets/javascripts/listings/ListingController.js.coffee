@@ -5,6 +5,9 @@
 ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
+  $scope.openListings = ListingService.openListings
+  $scope.closedListings = ListingService.closedListings
+  $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
