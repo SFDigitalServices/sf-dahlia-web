@@ -45,6 +45,11 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
   $scope.hasCalculatedIncome = ->
     IncomeCalculatorService.calculateTotalYearlyIncome() > 0
 
+  $scope.goToIncomeCalculator = (subsection) ->
+    # save our currently entered filters before we move on!
+    ListingService.setEligibilityFilters($scope.filters)
+    $state.go("dahlia.income-calculator.#{subsection}")
+
 
 ############################################################################################
 ######################################## CONFIG ############################################
