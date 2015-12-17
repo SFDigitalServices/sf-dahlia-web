@@ -19,4 +19,6 @@
 //= require angular-pageslide-directive
 //= require angular-clipboard
 //= require angular-filter
+//= require angulartics
+//= require angulartics-google-analytics
 //= require_tree .
