@@ -11,7 +11,9 @@
   'angular-clipboard',
   'templates',
   'mm.foundation',
-  'angular.filter'
+  'angular.filter',
+  'angulartics',
+  'angulartics.google.analytics',
 ]
 
 # Service and Controller modules
