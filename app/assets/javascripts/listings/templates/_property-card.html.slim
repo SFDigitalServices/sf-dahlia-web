@@ -29,8 +29,14 @@
           | {{formattedAddress(listing)}}
         p.c-steel.margin-bottom--half
           | {{listing.Developer}}
-        p.t-semi
+        p.t-semi ng-if="isOpenListing(listing)"
           | Application Due {{listing.Application_Due_Date | dateSuffix}}
+        p.t-small.c-alert ng-if="isClosedListing(listing)"
+          | Applications Closed {{listing.Application_Due_Date | dateSuffix}}
+        p.t-small.c-steel ng-if="isClosedListing(listing) && listing.Lottery_Date"
+          | Lottery Results posted {{listing.Lottery_Date | dateSuffix}}
+        p.c-success ng-if="isLotteryResultsListing(listing) && listing.Lottery_Date"
+          | Lottery Results posted {{listing.Lottery_Date | dateSuffix}}
       .property-card_action
         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
           | See Details
