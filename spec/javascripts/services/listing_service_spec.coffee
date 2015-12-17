@@ -32,11 +32,23 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
         return
-      it 'assigns Service.listings with an array of all listings', ->
+      it 'assigns Service.openListings with an array of all listings', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
         ListingService.getListings()
         httpBackend.flush()
-        expect(ListingService.listings).toEqual fakeListings.listings
+        expect(ListingService.openListings.length).toEqual 1
+        return
+      it 'assigns Service.closedListings with an array of all listings', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListings()
+        httpBackend.flush()
+        expect(ListingService.closedListings.length).toEqual 2
+        return
+      it 'assigns Service.lotteryResultsListings with an array of all listings', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListings()
+        httpBackend.flush()
+        expect(ListingService.lotteryResultsListings.length).toEqual 1
         return
       return
 
@@ -45,7 +57,7 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
         return
-      it 'assigns Service.listings with an array of all listings', ->
+      it 'assigns Service.listing with an individual listing', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 0
         httpBackend.flush()

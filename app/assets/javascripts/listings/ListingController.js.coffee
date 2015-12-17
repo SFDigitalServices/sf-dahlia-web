@@ -5,6 +5,9 @@
 ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
+  $scope.openListings = ListingService.openListings
+  $scope.closedListings = ListingService.closedListings
+  $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
@@ -96,6 +99,13 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
+
+  $scope.isOpenListing = (listing) ->
+    $scope.openListings.indexOf(listing) > -1
+  $scope.isClosedListing = (listing) ->
+    $scope.closedListings.indexOf(listing) > -1
+  $scope.isLotteryResultsListing = (listing) ->
+    $scope.lotteryResultsListings.indexOf(listing) > -1
 
 ############################################################################################
 ######################################## CONFIG ############################################

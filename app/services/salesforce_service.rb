@@ -37,6 +37,7 @@ class SalesforceService
   def self.eligible_listings(filters)
     results = api_get('/services/apexrest/Listings', filters)
     # sort the matched listings to the top of the list
+    # TODO: replace with sorting on the JS side
     results.partition { |i| i['Does_Match'] }.flatten
   end
 
