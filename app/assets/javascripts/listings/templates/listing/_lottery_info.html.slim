@@ -31,7 +31,7 @@ accordion-heading.lead.accordion-header
       h4.t-small.t-sans.t-bold Lottery Results
       h3.t-delta.t-sans.c-steel
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-      p.c-steel.t-small Notices will be sent to each applicant regarding their position within two weeks following the lottery.
+      p.c-steel.t-small Lottery results will be posted within two weeks of the lottery date.
 
     .content-panel.padding-bottom.no-margin.border-bottom ng-if="lotteryResultsAvailable(listing)"
       h4.t-small.t-sans.t-bold Lottery Results
