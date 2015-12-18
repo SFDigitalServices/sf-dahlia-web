@@ -18,7 +18,7 @@ ListingService = ($http, $localStorage) ->
     'income_timeframe': ''
     'income_total': ''
 
-  $localStorage.eligibility_filters ?= Service.eligibility_filter_defaults
+  $localStorage.eligibility_filters ?= angular.copy(Service.eligibility_filter_defaults)
   Service.eligibility_filters = $localStorage.eligibility_filters
 
   Service.getFavoriteListings = () ->
