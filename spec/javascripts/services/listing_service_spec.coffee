@@ -116,5 +116,35 @@ do ->
           return
         return
       return
+
+    describe 'Service.setEligibilityFilters', ->
+      describe 'When filters have been set', ->
+        fakeFilters =
+          household_size: 2
+          income_timeframe: 'per_month'
+          income_total: 3500
+        beforeEach ->
+          # reset eligibility filters
+          ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
+        afterEach ->
+          # reset eligibility filters
+          ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
+        it 'updates Service.eligibility_filters with appropriate data', ->
+          ListingService.setEligibilityFilters(fakeFilters)
+          expect(ListingService.eligibility_filters.income_total).toEqual 3500
+          expect(ListingService.eligibility_filters.household_size).toEqual 2
+          return
+        it 'checks if eligibility filters have been set', ->
+          expect(ListingService.hasEligibilityFilters()).toEqual false
+          ListingService.setEligibilityFilters(fakeFilters)
+          expect(ListingService.hasEligibilityFilters()).toEqual true
+          return
+        it 'returns yearly income', ->
+          ListingService.setEligibilityFilters(fakeFilters)
+          expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
+          return
+        return
+      return
+
     return
   return
