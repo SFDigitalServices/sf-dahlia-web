@@ -17,6 +17,7 @@ ListingService = ($http, $localStorage) ->
     'household_size': ''
     'income_timeframe': ''
     'income_total': ''
+    # 'children_under_6': 0  - to add
 
   $localStorage.eligibility_filters ?= angular.copy(Service.eligibility_filter_defaults)
   Service.eligibility_filters = $localStorage.eligibility_filters
@@ -47,7 +48,24 @@ ListingService = ($http, $localStorage) ->
     if Service.eligibility_filters.income_timeframe == 'per_month'
       parseFloat(Service.eligibility_filters.income_total) * 12
     else
-      Service.eligibility_filters.income_total
+      parseFloat(Service.eligibility_filters.income_total)
+
+  Service.eligibilityIncomeTimeframe = ->
+    # just return 'month' or 'year' and get rid of the 'per_'
+    if Service.eligibility_filters.income_timeframe
+      Service.eligibility_filters.income_timeframe.split('per_')[1]
+    else
+      ''
+
+  Service.eligibilityIncomeTotal = ->
+    parseFloat(Service.eligibility_filters.income_total)
+
+
+  Service.eligibilityHouseholdSize = ->
+    # only counts "adults" i.e. no children under 6
+    # NOTE: children_under_6 is not implemented yet so will always be 0
+    children = Service.eligibility_filters.children_under_6 || 0
+    Service.eligibility_filters.household_size - children
 
   ###################################### Salesforce API Calls ###################################
 
