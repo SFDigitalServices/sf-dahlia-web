@@ -16,7 +16,24 @@
     "Fee": 35.0,
     "Deposit_Min": 500.0,
     "Deposit_Max": 600.0,
-    "Lottery_Date": "2015-12-14",
+    "Lottery_Results_Date": "2015-12-25",
+    "Lottery_Date": "2010-01-01",
+    "Lottery_Start_Time": "4:00",
+    "Lottery_End_Time": "6:00",
+    "Lottery_Venue": "Exygy",
+    "Lottery_Street_Address": "4053 18th St.",
+    "Lottery_City": "San Francisco",
+    "Lottery_Summary": "out of 200, we pulled 1",
+    "Lottery_Members": [{
+      "attributes": {
+        "type": "Lottery_Member",
+        "url": "/services/data/v35.0/sobjects/Lottery_Member/a0k210000009qI9AAI"
+      },
+      "Listing": "a0X210000004asgEAA",
+      "Id": "a0k210000009qI9AAI",
+      "Lottery_Number": 85279,
+      "Rank": 1
+    }],
     "Pet_Policy": "$65 pet rent plus $500 pet deposit at move in",
     "Id": "a0X210000004amREAQ",
     "Information_Sessions": [{
