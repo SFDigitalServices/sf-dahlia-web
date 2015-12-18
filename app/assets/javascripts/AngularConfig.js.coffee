@@ -20,6 +20,12 @@
 angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',[])
 
+# allow trailing slashes and don't force case sensitivity on routes
+@dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
+  $urlMatcherFactoryProvider.caseInsensitive(true)
+  $urlMatcherFactoryProvider.strictMode(false)
+]
+
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
 @dahlia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
