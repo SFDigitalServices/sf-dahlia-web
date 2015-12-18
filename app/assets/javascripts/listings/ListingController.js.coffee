@@ -85,7 +85,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     lotteryDate <= today
 
   $scope.lotteryResultsAvailable = (listing) ->
-    listing.Lottery_Members.length > 0
+    listing.Lottery_Members && listing.Lottery_Members.length > 0
 
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
