@@ -28,7 +28,7 @@ angular.module('dahlia.controllers',[])
 
 # This routing directive tells Angular about the default route for our  The term "otherwise" here
 # might seem somewhat awkward, but it will make more sense as we add more routes to our application
-@dahlia.config ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) ->
+@dahlia.config ['$stateProvider', '$urlRouterProvider', '$locationProvider', ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider
     .state('dahlia', {
       url: ''
@@ -135,6 +135,7 @@ angular.module('dahlia.controllers',[])
           templateUrl: 'income-calculator/templates/pages/summary.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
+  $locationProvider.html5Mode(true)
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
