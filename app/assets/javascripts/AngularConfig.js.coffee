@@ -135,7 +135,10 @@ angular.module('dahlia.controllers',[])
           templateUrl: 'income-calculator/templates/pages/summary.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
-  $locationProvider.html5Mode(true)
+
+  # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
+  if !!(window.history && history.pushState)
+    $locationProvider.html5Mode(true)
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
