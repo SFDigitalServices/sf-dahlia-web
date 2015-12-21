@@ -8,4 +8,7 @@ Rails.application.routes.draw do
       post 'listings-eligibility' => 'listings#eligibility'
     end
   end
+
+  # required for Angular html5mode
+  get '*path' => 'home#index'
 end
