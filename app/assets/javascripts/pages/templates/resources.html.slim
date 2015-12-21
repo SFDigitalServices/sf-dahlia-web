@@ -1,1 +1,40 @@
-h1 Resources
+header.lead-header.bg-attention-tint
+  .row
+    .large-12.columns
+      h1.lead-title.t-beta Housing Counselor Resources
+      .medium-8.columns.no-padding
+        p.t-gamma.t-light.show-for-medium-up Talk with a local housing counselor specific to your needs.
+
+section.row
+  .medium-8.columns
+    header.section-header.margin-top--2x
+      h2.t-gamma.no-margin Featured Resources {{ scope.resources().length }}
+    ul.resources-list.block-list ng-repeat="resource in resources"
+      li.block-item
+        h3.t-delta.t-sans.margin-bottom--half
+          a.a-oil
+            | {{ resource.name }}
+        p.t-tiny.c-steel
+          | Language Services:
+          span ng-repeat="language in resource.languages"
+            span.label.radius.secondary
+              | {{ language }}
+        .has-icon-left.d-block
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-map" /
+          p.offset-icon.margin-bottom--half
+            | {{ resource.address }},
+            br
+            | {{ resource.citystate }}
+        p
+          a.button-on-small href="tel:+1{{resource.phone}}"
+            span.ui-icon.ui-medium
+              svg
+                use xlink:href="#i-phone" /
+            | Call {{ resource.phone }}
+          a.button-on-small target="_blank" href="{{resource.website}}"
+            span.ui-icon.ui-medium
+              svg
+                use xlink:href="#i-link"
+            | Visit {{ resource.name}}
