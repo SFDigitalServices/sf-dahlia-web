@@ -47,7 +47,8 @@ angular.module('dahlia.controllers',[])
       url: '/resources'
       views:
         'container@':
-          templateUrl: 'pages/templates/resources.html'
+          templateUrl: 'pages/templates/resources.html',
+          controller: 'ResourcesController'
     })
     .state('dahlia.listings', {
       url: '/listings'
