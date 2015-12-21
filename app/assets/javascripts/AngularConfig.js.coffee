@@ -37,11 +37,17 @@ angular.module('dahlia.controllers',[])
         'version@':
           templateUrl: 'shared/templates/version.html'
         'nav@':
-          templateUrl: 'shared/templates/nav.html'
+          templateUrl: 'shared/templates/nav/nav.html'
         'nav-mobile@':
-          templateUrl: 'shared/templates/nav-mobile.html'
+          templateUrl: 'shared/templates/nav/nav-mobile.html'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
+    })
+    .state('dahlia.resources',{
+      url: '/resources'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/resources.html'
     })
     .state('dahlia.listings', {
       url: '/listings'
