@@ -10,12 +10,4 @@ nav.top-bar role="navigation"
             | Menu
     section.top-bar-section
       ul.nav-menu.right
-        li
-          a ui-sref="dahlia.listings"
-            | Browse Properties
-        li
-          a ui-sref="dahlia.favorites"
-            | My Favorites
-        / li
-        /   a href=""
-        /     | Resources
+        ng-include src="'shared/templates/nav/_nav_items.html'"

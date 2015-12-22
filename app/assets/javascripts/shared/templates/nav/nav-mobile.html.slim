@@ -5,9 +5,4 @@ pageslide ps-open="showNavMobile" ps-side="right" ps-size="{{ '300px' }}" ps-clo
         use xlink:href="#i-menu"
 
   ul.nav-mobile ng-click="toggleNavMobile()"
-    li
-      a ui-sref="dahlia.listings"
-        | Browse Properties
-    li
-      a ui-sref="dahlia.favorites"
-        | My Favorites
+    ng-include src="'shared/templates/nav/_nav_items.html'"
