@@ -8,16 +8,22 @@ header.lead-header.bg-attention-tint
           a.button.small ui-sref="dahlia.eligibility-estimator"
             | {{ hasEligibilityFilters() ? 'Edit Eligibility' : 'Estimate Eligibility' }}
 
-//// Matches results bar
-/ section.results-bar.bg-mist.padding-top
-/   .row
-/     .medium-12.columns
-/       p
-/         | Showing Matches for
-/         strong 3 people
-/         | and
-/         strong $2400/month
-/         a.button.attention.tiny ui-sref="dahlia.eligibility-estimator" Edit Eligibility
+/// Matches results bar
+section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
+  .row
+    .medium-12.columns
+      p.no-margin
+        ' Showing Matches for
+        strong
+          ' {{eligibilityHouseholdSize()}}
+          ' {{eligibilityHouseholdSize() == 1 ? 'person' : 'people'}}*
+        ' and
+        strong
+          ' {{eligibilityIncomeTotal() | currency : $ : 0}}/{{eligibilityIncomeTimeframe()}}
+        a.button.attention.tiny ui-sref="dahlia.eligibility-estimator"
+          | Edit Eligibility
+      p.sub-text.t-micro.c-charcoal
+        | * Occupancy shown does not include children under 6.
 
 //// No matches found
 / .row
