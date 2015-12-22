@@ -12,7 +12,7 @@ accordion-heading.lead.accordion-header
         p.post-dealine_alert.margin-top--half
           span.label.alert Applications Closed
 
-    .content-panel.padding-bottom.no-margin.border-bottom ng-hide="lotteryDatePassed(listing)"
+    .content-panel.padding-bottom.no-margin.border-bottom ng-if="!lotteryDatePassed(listing)"
       h4.t-small.t-sans.t-bold Public Lottery
       span ng-if="lotteryDateVenueAvailable(listing)"
         h3.t-delta.t-sans.c-steel.no-margin
@@ -31,29 +31,21 @@ accordion-heading.lead.accordion-header
       h4.t-small.t-sans.t-bold Lottery Results
       h3.t-delta.t-sans.c-steel
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-      p.c-steel.t-small Lottery results will be posted within two weeks of the lottery date.
-
-    .content-panel.padding-bottom.no-margin.border-bottom ng-if="lotteryResultsAvailable(listing)"
-      h4.t-small.t-sans.t-bold Lottery Results
-      ul.result-set.margin-bottom
+      p.c-steel.t-small ng-if="!lotteryResultsAvailable(listing)"
+        | Lottery results will be posted within two weeks of the lottery date.
+      ul.result-set.margin-bottom ng-if="lotteryResultsAvailable(listing)"
         li
           | Rank
-          span.right Ticket
-        li
-          | 1
-          span.right 843219
-        li
-          | 1
-          span.right 843219
-        li
-          | 1
-          span.right 843219
-        li
-          | 1
-          span.right 843219
-      p.c-steel.t-small
-        / to replace with salesforce
-        | Out of 50 applications, 20 numbers were pulled.
+          span.right
+            | Ticket
+        li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+          | {{ticket.Rank}}
+          span.right
+            | {{ticket.Lottery_Number}}
+
+      p.c-steel.t-small ng-if="lotteryResultsAvailable(listing) && listing.Lottery_Summary"
+        / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
+        | {{listing.Lottery_Summary}}
 
     .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold What to Expect

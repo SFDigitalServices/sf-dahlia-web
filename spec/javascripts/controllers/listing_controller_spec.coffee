@@ -56,11 +56,20 @@ do ->
         return
       return
 
-    describe '$scope.isFavorited', ->
-      it 'expects ListingService.function to be called', ->
-        listingId = fakeListing.id
-        scope.isFavorited(listingId)
-        expect(fakeListingService.isFavorited).toHaveBeenCalled()
+    describe '$scope.lotteryDatePassed', ->
+      it 'checks for dates that have passed', ->
+        # fakeListing lottery date has passed
+        expect(scope.lotteryDatePassed(fakeListing)).toEqual true
         return
-    return
+      return
+
+    describe '$scope.lotteryResultsAvailable', ->
+      it 'checks that lottery results are available', ->
+        # fakeListing has lottery results
+        expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
+        return
+      return
+
+
+
   return
