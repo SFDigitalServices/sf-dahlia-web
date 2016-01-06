@@ -5,6 +5,9 @@
 SharedService = ($http, $state) ->
   Service = {}
 
+  Service.showSharing = () ->
+    $state.current.name == "dahlia.favorites"
+
   return Service
 
 
