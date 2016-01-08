@@ -27,7 +27,7 @@
     "angular-clipboard": "~1.1.1",
     "ngstorage": "~0.3.10",
     "angular-filter": "~0.5.8",
-    "angulartics": "~0.20.2",
+    "angulartics": "~1.0.2",
     "angulartics-google-analytics": "~0.1.3"
   },
   "resolutions": {
