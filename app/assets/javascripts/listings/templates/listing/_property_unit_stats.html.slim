@@ -1,4 +1,3 @@
-/div.property-hero_stats ng-repeat="unit in listing.Units"
 div.property-hero_stats ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
   div.stats-card
     ul.stats-list.triple.medium-quad
@@ -20,14 +19,14 @@ div.property-hero_stats ng-repeat="(unit_type, units) in listing.Units | groupBy
         span.stats-list_label rent
       li.show-for-medium-up
         div.stats-list_value
-          / replace with salesforce value
           | {{units.length}}
-          span.value-label  unit(s)
+          span.value-label
+            ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
         span.stats-list_label available
     ul.stats-list.double.bg-ghost.medium-full.labels-inline.hide-for-medium-up
       li
         span.stats-list_label Availability
         .stats-list_value
-          / replace with salesforce value
-          | 1
-          span.value-label  unit(s)
+          | {{units.length}}
+          span.value-label
+            ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
