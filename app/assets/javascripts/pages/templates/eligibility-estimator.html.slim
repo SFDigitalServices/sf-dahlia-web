@@ -24,7 +24,7 @@ section.row.shift--top
             .form-group.p-relative
               label ng-class="{ error: inputInvalid('household_size') }"
                 span.eligibility-form_header Household Size
-                select name="household_size" ng-model="filters.household_size" required=""
+                select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
                   option value="" Enter number of people
                   option value="1" 1 person
                   option value="2" 2 people
@@ -45,7 +45,7 @@ section.row.shift--top
             | Next add up your total household income from wages, benefits and other sources from household members 18 years or older.
           label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             span.eligibility-form_header Household Income
-            input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required=""
+            input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
               | Edit
           / <input type="text" placeholder="Total all of your income sources" />
