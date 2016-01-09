@@ -58,7 +58,7 @@ accordion-heading
             span.stats-list_value.highlight
               | {{units.length}}
               span.value-label
-                |  unit(s)
+                ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           li
             span.t-small
               | Accessible
