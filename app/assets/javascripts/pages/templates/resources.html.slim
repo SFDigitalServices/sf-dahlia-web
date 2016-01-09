@@ -14,7 +14,7 @@ section.row
         h3.t-delta.t-sans.margin-bottom--half
           a.a-oil
             | {{ resource.name }}
-        p.t-tiny.c-steel
+        p.t-tiny.c-steel ng-if="resource.languages"
           | Language Services:
           span ng-repeat="language in resource.languages"
             span.label.radius.secondary
