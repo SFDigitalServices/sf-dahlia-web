@@ -32,17 +32,6 @@ section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
 /       p.t-small.c-steel For more help we suggest contacting a housing counselor to explore your options.
 /       a.button.oil.no-margin.small href="#"  Find a Housing Counselor
 
-//// Matches found
-/ .row
-/   .large-12.columns
-/     header.section-header.margin-top--2x
-/       h2.gamma.no-margin
-/         | Matched
-/         span.ui-control.ui-icon.ui-medium
-/           svg
-/             use xlink:href="#i-check"
-/       p.no-margin Based on information you entered, you may be eligible for units at this property.
-
 //// Not Matched Listings
 / .row
 /   .large-12.columns
@@ -60,6 +49,21 @@ section.row ng-if="!openListings.length"
         img src="/images/icon-home.png"
       p.t-delta.t-serif.c-oil.no-margin
         | No properties currently have open applications.
+
+
+//// Matches found
+section ng-if="showMatches() && openListings.length"
+  .row.margin-top--2x
+    .large-12.columns
+      header.status-header.bg-success-tint
+        .status-header_icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-check"
+        hgroup.status-header_content
+          h2.gamma.no-margin
+            | Matched
+          p.no-margin Based on information you entered, you may be eligible for units at the following property.
 
 / Open Listings section (doesn't have a header)
 ul.padding-top--2x ng-if="openListings.length"
