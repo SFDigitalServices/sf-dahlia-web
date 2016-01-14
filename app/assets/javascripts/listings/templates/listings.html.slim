@@ -52,7 +52,7 @@ section.row ng-if="!openListings.length"
 
 
 //// Matches found
-section ng-if="showMatches() && openListings.length"
+section ng-if="showMatches() && anyMatches()"
   .row.margin-top--2x
     .large-12.columns
       header.status-header.bg-success-tint

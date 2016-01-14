@@ -105,10 +105,15 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # just a fallback for now
     listing.Property_URL || 'https://placehold.it/474x316'
 
-  $scope.anyMatches = ->
-    match = openListings.listing
-    debugger
+  $scope.showMatches = ->
+    $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
 
+  $scope.anyMatches = ->
+    openListings = $scope.openListings
+    for listing in openListings
+      if listing.Does_Match
+        return true
+    return false
 
   $scope.isOpenListing = (listing) ->
     $scope.openListings.indexOf(listing) > -1
