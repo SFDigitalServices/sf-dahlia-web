@@ -11,7 +11,6 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.listing = ListingService.listing
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
-  $scope.previousListing = null
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -115,14 +114,6 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
       if listing.Does_Match
         return true
     return false
-
-  $scope.showNotMatchedBanner = (thisListing) ->
-    if !thisListing.Does_Match
-      if $scope.previousListing == null || previousListing.Does_Match
-        return true
-    elsif thisListing.Does_Match
-      angular.extend(thisListing, $scope.previousListing)
-
 
   $scope.isOpenListing = (listing) ->
     $scope.openListings.indexOf(listing) > -1

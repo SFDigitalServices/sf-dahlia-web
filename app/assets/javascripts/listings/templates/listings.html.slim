@@ -68,7 +68,8 @@ section ng-if="showMatches() && anyMatches()"
 / Open Listings section (doesn't have a header)
 ul.padding-top--2x ng-if="openListings.length"
   li.margin-bottom--2x ng-repeat="listing in openListings"
-    .row ng-if="showMatches() && showNotMatchedBanner(listing)"
+
+    .row ng-if="showMatches()"
       .large-12.columns
         header.section-header.margin-top--2x
           h2.gamma.no-margin Not Matched

@@ -7,6 +7,8 @@ ListingService = ($http, $localStorage) ->
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
+  Service.openMatchListings = []
+  Service.openNotMatchListings = []
   Service.closedListings = []
   Service.lotteryResultsListings = []
 
@@ -110,9 +112,14 @@ ListingService = ($http, $localStorage) ->
     today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     listings.forEach (listing) ->
       due_date = new Date(listing.Application_Due_Date)
-      if due_date > today
-        Service.openListings.push(listing)
-      else if due_date < today
+      if due_date > today # open listings
+        if listing.Does_Match
+          Service.openMatchListings.push(listing)
+        elsif Service.hasEligibilityFilters()
+          Service.openNotMatchListings.push(listing)
+        else
+          Service.openListings.push(listing)
+      else if due_date < today # closed listings
         # TODO: check if this is the right field once we're getting it from Salesforce in
         # the /listings endpoint
         if listing.Lottery_Members
