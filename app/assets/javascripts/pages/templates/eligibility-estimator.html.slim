@@ -45,7 +45,7 @@ section.row.shift--top
             | Next add up your total household income from wages, benefits and other sources from household members 18 years or older.
           label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             span.eligibility-form_header Household Income
-            input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+            input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
               | Edit
           / <input type="text" placeholder="Total all of your income sources" />

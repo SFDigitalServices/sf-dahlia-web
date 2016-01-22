@@ -3,6 +3,7 @@
   'dahlia.services',
   # filters
   'customFilters',
+  'ng-currency',
   # directives
   'customDirectives',
   'pageslide-directive',

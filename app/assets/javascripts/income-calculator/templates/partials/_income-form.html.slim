@@ -22,7 +22,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     .large-12.columns.margin-bottom.has-radio
       label.form-label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
         | How much is the income of this source?
-        input placeholder="$" type="text" ng-model="income.value" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+        input placeholder="$" type="text" ng-model="income.value" ng-currency="" currency-symbol="$" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
         small.error ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
       .radio-group

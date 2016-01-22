@@ -21,4 +21,5 @@
 //= require angular-filter
 //= require angulartics
 //= require angulartics-google-analytics
+//= require ng-currency
 //= require_tree .
