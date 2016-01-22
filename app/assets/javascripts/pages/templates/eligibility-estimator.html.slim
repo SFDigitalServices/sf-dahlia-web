@@ -22,7 +22,7 @@ section.row.shift--top
               | How many people are you applying to live with?
             p.show-for-medium-up.c-steel.margin-bottom--2x Household is defined as anyone living with you in the residence, including spouse, roomates, parents and children.
             .form-group.p-relative
-              label ng-class="{ error: inputInvalid('household_size') }"
+              label ng-class="{ error: inputInvalid('household_size')|| inputInvalid('household_children') }"
                 span.eligibility-form_header Household Size
                 select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
                   option value="" Enter number of people
@@ -34,9 +34,13 @@ section.row.shift--top
                   option value="6" 6 people
               small.error ng-show="inputInvalid('household_size')"
                 | Please enter a household size
-              input name="peach-pie" type="checkbox"
-              label for="peach-pie" Yes, this includes children under 6
-              input name="" placeholder="How many children?" type="text"
+              input#includes_kids_under_6 name="includes_kids_under_6" type="checkbox" ng-click="toggleHouseholdChildren()"
+              label for="includes_kids_under_6" Yes, this includes children under 6
+              .household-children ng-if="householdChildren"
+                label.p-relative ng-class="{ error: inputInvalid('household_children') }"
+                  input name="household_children" ng-model="filters.household_children" placeholder="How many children?" type="text" required="" ng-class="{ error: inputInvalid('household_children') }"
+                small.error.no-margin ng-show="inputInvalid('household_children')"
+                  | Please enter number of children
               span.show-for-small-only.has-tip.tip-top-right tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="left" aria-haspopup="true"
                 span.ui-icon.ui-medium.i-primary
                   svg

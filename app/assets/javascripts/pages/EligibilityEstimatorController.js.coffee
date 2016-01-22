@@ -5,6 +5,7 @@
 EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculatorService) ->
   $scope.filter_defaults = ListingService.eligibility_filter_defaults
   $scope.filters = angular.copy(ListingService.eligibility_filters)
+  $scope.householdChildren = false
 
   # check if we've used the IncomeCalculator to calculate income
   if IncomeCalculatorService.calculateTotalYearlyIncome() > 0
@@ -41,6 +42,9 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
 
   $scope.isDefaultForm = ->
     angular.equals($scope.filter_defaults, $scope.filters)
+
+  $scope.toggleHouseholdChildren = ->
+    $scope.householdChildren = !$scope.householdChildren
 
   $scope.hasCalculatedIncome = ->
     IncomeCalculatorService.calculateTotalYearlyIncome() > 0
