@@ -36,7 +36,7 @@ section.row.shift--top
                 | Please enter a household size
               input#includes_kids_under_6 name="includes_kids_under_6" type="checkbox" ng-click="toggleHouseholdChildren()"
               label for="includes_kids_under_6" Yes, this includes children under 6
-              .household-children ng-if="householdChildren"
+              .household-children ng-show="householdChildren"
                 label.p-relative ng-class="{ error: inputInvalid('household_children') }"
                   input name="household_children" ng-model="filters.household_children" placeholder="How many children?" type="text" required="" ng-class="{ error: inputInvalid('household_children') }"
                 small.error.no-margin ng-show="inputInvalid('household_children')"
