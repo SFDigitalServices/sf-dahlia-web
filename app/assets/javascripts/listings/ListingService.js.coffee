@@ -17,7 +17,8 @@ ListingService = ($http, $localStorage) ->
     'household_size': ''
     'income_timeframe': ''
     'income_total': ''
-    # 'children_under_6': 0  - to add
+    'include_children_under_6': false
+    'children_under_6': ''
 
   $localStorage.eligibility_filters ?= angular.copy(Service.eligibility_filter_defaults)
   Service.eligibility_filters = $localStorage.eligibility_filters
@@ -62,10 +63,7 @@ ListingService = ($http, $localStorage) ->
 
 
   Service.eligibilityHouseholdSize = ->
-    # only counts "adults" i.e. no children under 6
-    # NOTE: children_under_6 is not implemented yet so will always be 0
-    children = Service.eligibility_filters.children_under_6 || 0
-    Service.eligibility_filters.household_size - children
+    Service.eligibility_filters.household_size
 
   ###################################### Salesforce API Calls ###################################
 
@@ -96,8 +94,8 @@ ListingService = ($http, $localStorage) ->
       eligibility:
         householdsize: Service.eligibility_filters.household_size
         incomelevel: Service.eligibilityYearlyIncome()
-        # TODO: vvv implement once child selection filter is added
-        childrenUnder6: 0
+        includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
+        childrenUnder6: Service.eligibility_filters.children_under_6
     $http.post("/api/v1/listings-eligibility.json", params).success((data, status, headers, config) ->
       listings = (if data and data.listings then data.listings else [])
       Service.groupListings(listings)

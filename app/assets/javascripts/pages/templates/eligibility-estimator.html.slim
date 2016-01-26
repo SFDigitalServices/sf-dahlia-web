@@ -34,6 +34,24 @@ section.row.shift--top
                   option value="6" 6 people
               small.error ng-show="inputInvalid('household_size')"
                 | Please enter a household size
+              input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6"
+              label for="include_children_under_6" Yes, this includes children under 6
+              .household-children ng-show="filters.include_children_under_6"
+                label.p-relative ng-class="{ error: inputInvalid('children_under_6') }"
+                  select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
+                    option value="" How many children?
+                    option value="1" 1 child
+                    option value="2" 2 children
+                    option value="3" 3 children
+                    option value="4" 4 children
+                    option value="5" 5 children
+                    option value="6" 6 children
+                    option value="7" 7 children
+                    option value="8" 8 children
+                    option value="9" 9 children
+                    option value="10" 10 children
+                small.error.no-margin ng-show="inputInvalid('children_under_6')"
+                  | Please enter number of children
               span.show-for-small-only.has-tip.tip-top-right tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="left" aria-haspopup="true"
                 span.ui-icon.ui-medium.i-primary
                   svg
