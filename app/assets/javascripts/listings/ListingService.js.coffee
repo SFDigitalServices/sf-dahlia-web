@@ -115,7 +115,7 @@ ListingService = ($http, $localStorage) ->
       if due_date > today # open listings
         if listing.Does_Match
           Service.openMatchListings.push(listing)
-        elsif Service.hasEligibilityFilters()
+        else if Service.hasEligibilityFilters()
           Service.openNotMatchListings.push(listing)
         else
           Service.openListings.push(listing)

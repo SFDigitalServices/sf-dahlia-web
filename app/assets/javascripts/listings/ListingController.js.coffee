@@ -5,6 +5,8 @@
 ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
+  $scope.openMatchListings = ListingService.openMatchListings
+  $scope.openNotMatchListings = ListingService.openNotMatchListings
   $scope.openListings = ListingService.openListings
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
@@ -105,15 +107,11 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # just a fallback for now
     listing.Property_URL || 'https://placehold.it/474x316'
 
+  $scope.anyOpenListings = ->
+    $scope.openListings.length || $scope.openMatchListings.length || $scope.openNotMatchListings.length
+
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
-
-  $scope.anyMatches = ->
-    openListings = $scope.openListings
-    for listing in openListings
-      if listing.Does_Match
-        return true
-    return false
 
   $scope.isOpenListing = (listing) ->
     $scope.openListings.indexOf(listing) > -1
