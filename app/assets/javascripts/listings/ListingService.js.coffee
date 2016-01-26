@@ -9,6 +9,9 @@ ListingService = ($http, $localStorage) ->
   Service.openListings = []
   Service.closedListings = []
   Service.lotteryResultsListings = []
+  # these get loaded after the listing is loaded
+  Service.AMI = []
+  Service.maxIncomeLevels = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -64,6 +67,46 @@ ListingService = ($http, $localStorage) ->
 
   Service.eligibilityHouseholdSize = ->
     Service.eligibility_filters.household_size
+
+  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
+  Service.occupancyForUnitType = (unit_type) ->
+    if unit_type == 'Studio'
+      min = 1
+      max = 2
+    else
+      # pull out the # of rooms e.g. 1 from "1 Bedroom"
+      rooms = parseInt(unit_type.substr(0,1))
+      min = rooms
+      max = (rooms * 2) + 1
+    return [min, max]
+
+  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
+  Service.occupancyMinMax = (listing) ->
+    minMax = []
+    if listing.Units
+      listing.Units.forEach (unit) ->
+        unitMinMax = Service.occupancyForUnitType(unit.Unit_Type)
+        if minMax.length == 0
+          # initialize by using the first unit's values
+          minMax = unitMinMax
+        else
+          minMax = [Math.min(minMax[0], unitMinMax[0]), Math.max(minMax[1], unitMinMax[1])]
+    return minMax
+
+  Service.maxIncomeLevelsFor = (listing) ->
+    # TODO: this should come from the listing object itself (from SF), not our function
+    occupancyMinMax = Service.occupancyMinMax(listing)
+    incomeLevels = []
+    Service.AMI.forEach (amiLevel) ->
+      occupancy = parseInt(amiLevel.numOfHousehold)
+      # only grab the incomeLevels that fit within our listing's occupancyMinMax
+      if occupancy >= occupancyMinMax[0] && occupancy <= occupancyMinMax[1]
+        incomeLevels.push({
+          occupancy: occupancy,
+          yearly: parseFloat(amiLevel.amount),
+          monthly: parseFloat(amiLevel.amount) / 12.0
+        })
+    return incomeLevels
 
   ###################################### Salesforce API Calls ###################################
 
@@ -129,6 +172,18 @@ ListingService = ($http, $localStorage) ->
     ).error( (data, status, headers, config) ->
       # console.log data
     )
+
+  Service.getListingAMI = ->
+    angular.copy([], Service.AMI)
+    percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
+    $http.get("/api/v1/ami.json?percent=#{percent}").success((data, status, headers, config) ->
+      if data && data.ami
+        angular.copy(data.ami, Service.AMI)
+        angular.copy(Service.maxIncomeLevelsFor(Service.listing), Service.maxIncomeLevels)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
 
   return Service
 

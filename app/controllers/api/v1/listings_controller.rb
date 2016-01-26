@@ -24,4 +24,10 @@ class Api::V1::ListingsController < ApiController
     @listings = SalesforceService.eligible_listings(filters)
     render json: { listings: @listings }
   end
+
+  def ami
+    percent = params[:percent].presence || 100
+    @ami = SalesforceService.ami(percent)
+    render json: { ami: @ami }
+  end
 end

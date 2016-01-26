@@ -46,6 +46,11 @@ class SalesforceService
     api_get("/services/apexrest/Listings/#{id}").first
   end
 
+  # get AMI
+  def self.ami(percent = 100)
+    api_get("/services/apexrest/ami?percent=#{percent}")
+  end
+
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
     massage(response.body)

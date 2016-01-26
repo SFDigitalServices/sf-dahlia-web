@@ -5,93 +5,18 @@ table.stats-table
       th scope="col"  household size
       th scope="col"  maximum income/month
       th scope="col"  maximum income/year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 1
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $3,567
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $42,800
-        span.value-label
-          | /year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 2
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $4,075
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $48,900
-        span.value-label
-          | /year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 3
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $4,204
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $50,450
-        span.value-label
-          | /year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 4
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $4,670
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $56,050
-        span.value-label
-         | /year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 5
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $5,045
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $60,550
-        span.value-label
-          | /year
-  tr.stat-row
-    td scope="row"
-      span.stats-table_value
-        | 6
-        span.value-label  person
-    td
-      span.stats-table_value
-        | $5,416
-        span.value-label
-          | /month
-    td
-      span.stats-table_value
-        | $65,000
-        span.value-label
-          | /year
+    tr.stat-row ng-repeat="incomeLevel in maxIncomeLevels"
+      td scope="row"
+        span.stats-table_value
+          | {{incomeLevel.occupancy}}
+          span.value-label  person
+      td
+        span.stats-table_value
+          | {{incomeLevel.monthly | currency : $ : 0}}
+          span.value-label
+            | /month
+      td
+        span.stats-table_value
+          | {{incomeLevel.yearly | currency : $ : 0}}
+          span.value-label
+            | /year

@@ -70,7 +70,10 @@ angular.module('dahlia.controllers',[])
           controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id)
+          ListingService.getListing($stateParams.id).then ->
+            # trigger this asynchronously, allowing the listing page to load first
+            setTimeout(ListingService.getListingAMI)
+
         ]
     })
     .state('dahlia.favorites', {
