@@ -62,8 +62,28 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    "#{listing.Property_Street_Address}, #{listing.Property_City} " +
-    "#{listing.Property_State}, #{listing.Property_Zip_Code}"
+    # If Street address is undefined, then return false for display and google map lookup
+    if listing.Building_Street_Address == undefined
+      return
+    # If other fields are undefined, proceed, with special string formatting
+    if listing.Building_Street_Address != undefined
+      Building_Street_Address = listing.Building_Street_Address + ', '
+    else
+      Building_Street_Address = ''
+    if listing.Building_City != undefined
+      Building_City = listing.Building_City
+    else
+      Building_City = ''
+    if listing.Building_State != undefined
+      Building_State = listing.Building_State + ', '
+    else
+      Building_State = ''
+    if listing.Building_Zip_Code != undefined
+      Building_Zip_Code = listing.Building_Zip_Code
+    else
+      Building_Zip_Code = ''
+    "#{Building_Street_Address}#{Building_City} " +
+    "#{Building_State}#{Building_Zip_Code}"
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -103,7 +123,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.imageURL = (listing) ->
     # TODO: remove "or" case when we know we have real images
     # just a fallback for now
-    listing.Property_URL || 'https://placehold.it/474x316'
+    listing.Building_URL || 'https://placehold.it/474x316'
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
