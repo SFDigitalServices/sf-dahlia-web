@@ -62,8 +62,24 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    "#{listing.Building_Street_Address}, #{listing.Building_City} " +
-    "#{listing.Building_State}, #{listing.Building_Zip_Code}"
+    if listing.Building_Street_Address != undefined
+      Building_Street_Address = listing.Building_Street_Address + ', '
+    else
+      Building_Street_Address = ''
+    if listing.Building_City != undefined
+      Building_City = listing.Building_City
+    else
+      Building_City = ''
+    if listing.Building_State != undefined
+      Building_State = listing.Building_State + ', '
+    else
+      Building_State = ''
+    if listing.Building_Zip_Code != undefined
+      Building_Zip_Code = listing.Building_Zip_Code
+    else
+      Building_Zip_Code = ''
+    "#{Building_Street_Address}#{Building_City} " +
+    "#{Building_State}#{Building_Zip_Code}"
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
