@@ -62,6 +62,10 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
+    # If Street address is undefined, then return false for display and google map lookup
+    if listing.Building_Street_Address == undefined
+      return
+    # If other fields are undefined, proceed, with special string formatting
     if listing.Building_Street_Address != undefined
       Building_Street_Address = listing.Building_Street_Address + ', '
     else

@@ -28,7 +28,7 @@ section.section-hero.row.margin-bottom
             | Amenities, unit details and additional fees
         ng-include src="'listings/templates/listing/_features.html'"
 
-      accordion-group.accordion-navigation
+      accordion-group.accordion-navigation ng-if="formattedAddress(listing)"
         header.content-header.show-for-medium-up.text-center
           span.content-header_name.t-serif
             | Neighborhood
