@@ -48,7 +48,8 @@ class SalesforceService
 
   # get AMI
   def self.ami(percent = 100)
-    api_get("/services/apexrest/ami?percent=#{percent}")
+    results = api_get("/services/apexrest/ami?percent=#{percent}")
+    results.sort_by { |i| i['numOfHousehold'] }
   end
 
   def self.api_get(endpoint, params = nil)
