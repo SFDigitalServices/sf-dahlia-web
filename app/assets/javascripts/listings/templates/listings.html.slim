@@ -32,34 +32,48 @@ section.row ng-if="!openListings.length"
       p.t-delta.t-serif.c-oil.no-margin
         | No properties currently have open applications.
 
-/ Notification: Matched listings
-section
-  .row.margin-top--2x
+/ Listings:
+/   * Open (doesn't have a header)
+/   * Before Eligibility filter
+.no-eligibility-filters ng-if="!hasEligibilityFilters()"
+  ul.padding-top--2x ng-if="openListings.length"
+    li.margin-bottom--2x ng-repeat="listing in openListings"
+      ng-include src="'listings/templates/_property-card.html'"
+
+.has-eligibility-filters ng-if="hasEligibilityFilters()"
+  / Notification: Matched listings
+  section ng-if="openMatchListings.length"
+    .row.margin-top--2x
+      .large-12.columns
+        header.status-header.bg-success-tint
+          .status-header_icon
+            span.ui-icon.ui-medium
+              svg
+                use xlink:href="#i-check"
+          hgroup.status-header_content
+            h2.gamma.no-margin
+              | Matched
+            p.no-margin Based on information you entered, you may be eligible for units at the following property.
+
+  / Listings: Open Matched Listings
+  ul.padding-top--2x ng-if="openMatchListings.length"
+    li.margin-bottom--2x ng-repeat="listing in openMatchListings"
+      ng-include src="'listings/templates/_property-card.html'"
+
+  / Notification: Not Matched listings
+  .row ng-if="openNotMatchListings.length"
     .large-12.columns
-      header.status-header.bg-success-tint
-        .status-header_icon
-          span.ui-icon.ui-medium
-            svg
-              use xlink:href="#i-check"
-        hgroup.status-header_content
-          h2.gamma.no-margin
-            | Matched
-          p.no-margin Based on information you entered, you may be eligible for units at the following property.
+      header.section-header.margin-top--2x
+        h2.gamma.no-margin Not Matched
+        p.margin-bottom--half The remaining properties don't appear to match based on your input.
+        p.t-small.c-steel.no-margin Currently this site only includes Below Market Rate rentals.
+          a.lined href="#" Click here
+          | for other rental and ownership affordable housing opportunities.
 
-/ Notification: Not Matched listings
-.row
-  .large-12.columns
-    header.section-header.margin-top--2x
-      h2.gamma.no-margin Not Matched
-      p.margin-bottom--half The remaining properties don't appear to match based on your input.
-      p.t-small.c-steel.no-margin Currently this site only includes Below Market Rate rentals.
-        a.lined href="#" Click here
-        | for other rental and ownership affordable housing opportunities.
-
-/ Listings: Open (doesn't have a header)
-ul.padding-top--2x ng-if="openListings.length"
-  li.margin-bottom--2x ng-repeat="listing in openListings"
-    ng-include src="'listings/templates/_property-card.html'"
+  / Listings: Open Not Matched Listings
+  ul.padding-top--2x ng-if="openNotMatchListings.length"
+    li.margin-bottom--2x ng-repeat="listing in openNotMatchListings"
+      ng-include src="'listings/templates/_property-card.html'"
 
 / Listings: Closed
 .row ng-if="closedListings.length"
