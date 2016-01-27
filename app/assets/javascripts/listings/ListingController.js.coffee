@@ -62,8 +62,8 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    "#{listing.Property_Street_Address}, #{listing.Property_City} " +
-    "#{listing.Property_State}, #{listing.Property_Zip_Code}"
+    "#{listing.Building_Street_Address}, #{listing.Building_City} " +
+    "#{listing.Building_State}, #{listing.Building_Zip_Code}"
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -103,7 +103,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.imageURL = (listing) ->
     # TODO: remove "or" case when we know we have real images
     # just a fallback for now
-    listing.Property_URL || 'https://placehold.it/474x316'
+    listing.Building_URL || 'https://placehold.it/474x316'
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()

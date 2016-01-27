@@ -6,9 +6,9 @@
     p.no-margin
       | {{listing.Application_Organization}}
     p.c-steel
-      | {{ listing.Property_Street_Address }},
+      | {{ listing.Building_Street_Address }},
       br
-      | {{ listing.Property_City }} {{ listing.Property_State }} {{ listing.Property_Zip_Code }}
+      | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
     a.t-small.d-block.ui-link.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
       span.ui-icon
         svg
@@ -25,7 +25,7 @@
       | Download Application
 
   .option-group
-    h3.t-sans.t-base.t-bold.no-margin Call Property
+    h3.t-sans.t-base.t-bold.no-margin Call Building
     p.margin-bottom--half
       a href="tel: {{listing.Application_Phone}}"
         | {{listing.Application_Phone}}
