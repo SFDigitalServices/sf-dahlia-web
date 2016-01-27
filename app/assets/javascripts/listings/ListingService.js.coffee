@@ -7,6 +7,8 @@ ListingService = ($http, $localStorage) ->
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
+  Service.openMatchListings = []
+  Service.openNotMatchListings = []
   Service.closedListings = []
   Service.lotteryResultsListings = []
 
@@ -106,17 +108,19 @@ ListingService = ($http, $localStorage) ->
   Service.groupListings = (listings) ->
     listings.forEach (listing) ->
       if Service.listingIsOpen(listing.Application_Due_Date)
+        # All Open Listings Array
         Service.openListings.push(listing)
-        # console.log('open', Service.openListings)
+        if listing.Does_Match
+          Service.openMatchListings.push(listing)
+        else
+          Service.openNotMatchListings.push(listing)
       else
         # TODO: check if this is the right field once we're getting it from Salesforce in
         # the /listings endpoint
         if listing.Lottery_Members
           Service.lotteryResultsListings.push(listing)
-          # console.log('lottery', Service.openListings)
         else
           Service.closedListings.push(listing)
-          # console.log('closed', Service.closedListings)
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids) ->
