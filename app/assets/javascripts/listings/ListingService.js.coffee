@@ -79,6 +79,8 @@ ListingService = ($http, $localStorage) ->
 
   Service.getListings = () ->
     angular.copy([], Service.openListings)
+    angular.copy([], Service.openMatchListings)
+    angular.copy([], Service.openNotMatchListings)
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     # check for default state
@@ -114,7 +116,7 @@ ListingService = ($http, $localStorage) ->
           Service.openMatchListings.push(listing)
         else
           Service.openNotMatchListings.push(listing)
-      else
+      else if !Service.listingIsOpen(listing.Application_Due_Date)
         # TODO: check if this is the right field once we're getting it from Salesforce in
         # the /listings endpoint
         if listing.Lottery_Members
