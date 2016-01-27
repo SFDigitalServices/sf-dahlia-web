@@ -23,43 +23,42 @@ section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
       p.sub-text.t-micro.c-charcoal
         | * Occupancy shown does not include children under 6.
 
-//// No matches found
-/ .row
-/   .large-12.columns
-/     header.section-header.margin-top--2x
-/       h2.gamma.no-margin No Matches
-/       p Based on information you entered, you don't match any current properties.
-/       p.t-small.c-steel For more help we suggest contacting a housing counselor to explore your options.
-/       a.button.oil.no-margin.small href="#"  Find a Housing Counselor
-
-//// Matches found
-/ .row
-/   .large-12.columns
-/     header.section-header.margin-top--2x
-/       h2.gamma.no-margin
-/         | Matched
-/         span.ui-control.ui-icon.ui-medium
-/           svg
-/             use xlink:href="#i-check"
-/       p.no-margin Based on information you entered, you may be eligible for units at this property.
-
-//// Not Matched Listings
-/ .row
-/   .large-12.columns
-/     header.section-header.margin-top--2x
-/       h2.gamma.no-margin Not Matched
-/       p The remaining properties don't appear to match based on your input.
-/       p.t-small.c-steel For more help we suggest contacting a housing counselor to explore your options.
-/       a.button.oil.no-margin.small href="#"  Find a Housing Counselor
-
-
-section.row ng-if="!openListings.length"
+section.row ng-if="!anyOpenListings()"
   .large-12.columns
     .block.bg-mist.margin-top--2x.text-center
       figure.block-icon
         img src="/images/icon-home.png"
       p.t-delta.t-serif.c-oil.no-margin
         | No properties currently have open applications.
+
+//// Matches found banner
+section ng-if="openMatchListings.length"
+  .row.margin-top--2x
+    .large-12.columns
+      header.status-header.bg-success-tint
+        .status-header_icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-check"
+        hgroup.status-header_content
+          h2.gamma.no-margin
+            | Matched
+          p.no-margin Based on information you entered, you may be eligible for units at the following property.
+/ Matched open listings section
+ul.padding-top--2x ng-if="openMatchListings.length"
+  li.margin-bottom--2x ng-repeat="listing in openMatchListings"
+    ng-include src="'listings/templates/_property-card.html'"
+
+//// Not Matches banner
+.row ng-if="openNotMatchListings.length"
+  .large-12.columns
+    header.section-header.margin-top--2x
+      h2.gamma.no-margin Not Matched
+      p.margin-bottom--half The remaining properties don't appear to match based on your input.
+/ Not matched open listings section
+ul.padding-top--2x ng-if="openNotMatchListings.length"
+  li.margin-bottom--2x ng-repeat="listing in openNotMatchListings"
+    ng-include src="'listings/templates/_property-card.html'"
 
 / Open Listings section (doesn't have a header)
 ul.padding-top--2x ng-if="openListings.length"

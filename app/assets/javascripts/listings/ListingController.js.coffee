@@ -5,6 +5,8 @@
 ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
+  $scope.openMatchListings = ListingService.openMatchListings
+  $scope.openNotMatchListings = ListingService.openNotMatchListings
   $scope.openListings = ListingService.openListings
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
@@ -124,6 +126,9 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     # TODO: remove "or" case when we know we have real images
     # just a fallback for now
     listing.Building_URL || 'https://placehold.it/474x316'
+
+  $scope.anyOpenListings = ->
+    $scope.openListings.length || $scope.openMatchListings.length || $scope.openNotMatchListings.length
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
