@@ -145,6 +145,12 @@ angular.module('dahlia.controllers',[])
         'container':
           templateUrl: 'income-calculator/templates/pages/summary.html'
     })
+    .state('dahlia.get-assistance',{
+      url: '/get-assistance'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/get-assistance.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
