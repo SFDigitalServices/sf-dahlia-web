@@ -13,6 +13,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.listing = ListingService.listing
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
+  $scope.maxIncomeLevels = ListingService.maxIncomeLevels
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -21,23 +22,6 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.toggleApplicationOptions = () ->
     $scope.activeOptionsClass = if $scope.activeOptionsClass == 'active' then '' else 'active'
     $scope.showApplicationOptions = !$scope.showApplicationOptions
-
-  # --- REFACTORED THE BELOW INTO toggleTable and isActiveTable
-  # --- to remove before PR+merging this branch
-  # $scope.showIncomeTable = false
-  # $scope.toggleIncomeTable = () ->
-  #   $scope.activeIncomeClass = if $scope.activeIncomeClass == 'active' then '' else 'active'
-  #   $scope.showIncomeTable = !$scope.showIncomeTable
-
-  # $scope.showStudioTable = false
-  # $scope.toggleStudioTable = () ->
-  #   $scope.activeStudioClass = if $scope.activeStudioClass == 'active' then '' else 'active'
-  #   $scope.showStudioTable = !$scope.showStudioTable
-
-  # $scope.show1BedTable = false
-  # $scope.toggle1BedTable = () ->
-  #   $scope.active1BedClass = if $scope.active1BedClass == 'active' then '' else 'active'
-  #   $scope.show1BedTable = !$scope.show1BedTable
 
   $scope.toggleTable = (table) ->
     $scope["active#{table}Class"] = if $scope["active#{table}Class"] then '' else 'active'
