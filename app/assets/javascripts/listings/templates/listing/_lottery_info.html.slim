@@ -42,6 +42,7 @@ accordion-heading.lead.accordion-header
           | {{ticket.Rank}}
           span.right
             | {{ticket.Lottery_Number}}
+        a ng-if="listing.Lottery_Members.length >= 20" ng-click="openLotteryResultsModal()" See All Results
 
       p.c-steel.t-small ng-if="lotteryResultsAvailable(listing) && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."

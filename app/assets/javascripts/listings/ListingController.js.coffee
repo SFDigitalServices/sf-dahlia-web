@@ -102,6 +102,9 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.lotteryResultsAvailable = (listing) ->
     listing.Lottery_Members && listing.Lottery_Members.length > 0
 
+  $scope.openLotteryResultsModal = () ->
+    ListingService.openLotteryResultsModal()
+
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
       listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)

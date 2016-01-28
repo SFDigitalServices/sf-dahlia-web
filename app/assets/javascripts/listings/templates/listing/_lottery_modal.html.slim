@@ -1,0 +1,13 @@
+span ng-controller="ListingController"
+  h1 Lottery Results
+  a href="#" ng-click="closeModal()" X
+
+  ul.result-set.margin-bottom ng-if="lotteryResultsAvailable(listing)"
+    li
+      | Rank
+      span.right
+        | Ticket
+    li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank' | limitTo: '20'"
+      | {{ticket.Rank}}
+      span.right
+        | {{ticket.Lottery_Number}}
