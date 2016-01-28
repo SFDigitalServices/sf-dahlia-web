@@ -8,7 +8,8 @@ span ng-controller="ListingController"
         ul.t-small.margin-bottom
             li ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
                | {{unit_type || 'N/A'}} {{units.length}} unit(s)
-        p.t-small.t-bold A total of 900 tickets were drawn in this lottery.
+        p.t-small.t-bold
+          | {{listing.Lottery_Summary}}
 
     .medium-6.medium-pull-6.columns
       .overflow-panel
