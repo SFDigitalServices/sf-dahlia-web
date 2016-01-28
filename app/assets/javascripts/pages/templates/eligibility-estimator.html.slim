@@ -20,7 +20,7 @@ section.row.shift--top
           .border-bottom.padding-bottom
             h3.t-sans.gamma.margin-bottom--half
               | How many people are you applying to live with?
-            p.show-for-medium-up.c-steel.margin-bottom--2x Household is defined as anyone living with you in the residence, including spouse, roomates, parents and children.
+            p.show-for-medium-up.c-steel.margin-bottom--2x Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
             .form-group.p-relative
               label ng-class="{ error: inputInvalid('household_size') }"
                 span.eligibility-form_header Household Size
@@ -60,7 +60,7 @@ section.row.shift--top
       .row.margin-bottom
         .medium-12.columns.padding-top.padding-bottom
           h3.t-sans.gamma
-            | Next add up your total household income from wages, benefits and other sources from household members 18 years or older.
+            | Next add up your total gross (pre-tax) household income from wages, benefits and other sources from household members 18 years or older.
           label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             span.eligibility-form_header Household Income
             input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
