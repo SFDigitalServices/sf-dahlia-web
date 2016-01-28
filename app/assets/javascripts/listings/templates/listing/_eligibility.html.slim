@@ -10,7 +10,7 @@ accordion-heading.lead
     header.padding-top.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Household Maximum Income
       /! Each unit type available has its own requirements based on household size.
-      p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit, but income from household members under 18 is NOT counted.
+      p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit.
     .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
       ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
         li
@@ -77,7 +77,7 @@ accordion-heading.lead
           p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960s and 1970s, but may also include other persons displaced by Agency action.
       accordion-group.accordion-navigation
         accordion-heading.accordion-header
-          | Ellis Act Preference
+          | Displaced Tenants Housing Preference (Ellis Act)
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel1a-b.content
           p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
@@ -93,10 +93,10 @@ accordion-heading.lead
         | Rental Assistance
       p.t-small.c-steel
         | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
-      p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenat pays after use of the subsidy.
+      p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
   .content-panel.wide
     header.margin-bottom
-      h4.t-epsilon.t-sans.margin-bottom--half Additional Building Rules
+      h4.t-epsilon.t-sans.margin-bottom--half Additional Eligibility Rules
       p.t-small.c-steel Applicants must also qualify under the rules of the building.
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation
@@ -107,7 +107,7 @@ accordion-heading.lead
           p A credit report will be obtained on each applicant after their eligibility for the Inclusionary BMR program has been determined.
       accordion-group.accordion-navigation
         accordion-heading.accordion-header
-          | Eviction History
+          | Renter's History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-b.content
           p Applicants with an eviction by a previous landlord, for cause, within the last 7 years will be rejected.
