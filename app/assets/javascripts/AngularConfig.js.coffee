@@ -44,12 +44,12 @@ angular.module('dahlia.controllers',[])
         'footer@':
           templateUrl: 'shared/templates/footer.html'
     })
-    .state('dahlia.resources',{
-      url: '/resources'
+    .state('dahlia.housing-counselors',{
+      url: '/housing-counselors'
       views:
         'container@':
-          templateUrl: 'pages/templates/resources.html',
-          controller: 'ResourcesController'
+          templateUrl: 'pages/templates/housing-counselors.html',
+          controller: 'HousingCounselorsController'
     })
     .state('dahlia.listings', {
       url: '/listings'
