@@ -65,10 +65,11 @@ section.row ng-if="!openListings.length"
     .large-12.columns
       header.section-header.margin-top--2x
         h2.gamma.no-margin Not Matched
-        p.margin-bottom--half The remaining properties don't appear to match based on your input.
-        p.t-small.c-steel.no-margin Currently this site only includes Below Market Rate rentals.
-          a.lined href="#" Click here
-          | for other rental and ownership affordable housing opportunities.
+        p.margin-bottom--half The following properties don't appear to match based on your input.
+        p.t-small.c-steel.no-margin
+          ' Currently this site only includes Below Market Rate rentals.
+          a.lined ui-sref="dahlia.resources" Click here
+          '  for other rental and ownership affordable housing opportunities.
 
   / Listings: Open Not Matched Listings
   ul.padding-top--2x ng-if="openNotMatchListings.length"
