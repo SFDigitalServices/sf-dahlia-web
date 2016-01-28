@@ -12,10 +12,9 @@
       .stats-card.bottom
         ng-include src="'listings/templates/_stats-list.html'"
 
-
-    span.status-label.label.success ng-if="showMatches() && listing.Does_Match"
+    span.status-label.label.success ng-if="showMatches() && isOpenMatchListing(listing)"
       | Matched
-    span.status-label.label.negative ng-if="showMatches() && !listing.Does_Match"
+    span.status-label.label.negative ng-if="showMatches() && isOpenNotMatchListing(listing)"
       | Not a Match
 
   header.property-card_content

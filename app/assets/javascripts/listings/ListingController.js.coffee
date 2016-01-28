@@ -6,6 +6,8 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
+  $scope.openMatchListings = ListingService.openMatchListings
+  $scope.openNotMatchListings = ListingService.openNotMatchListings
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
@@ -114,6 +116,10 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
 
   $scope.isOpenListing = (listing) ->
     $scope.openListings.indexOf(listing) > -1
+  $scope.isOpenMatchListing = (listing) ->
+    $scope.openMatchListings.indexOf(listing) > -1
+  $scope.isOpenNotMatchListing = (listing) ->
+    $scope.openNotMatchListings.indexOf(listing) > -1
   $scope.isClosedListing = (listing) ->
     $scope.closedListings.indexOf(listing) > -1
   $scope.isLotteryResultsListing = (listing) ->

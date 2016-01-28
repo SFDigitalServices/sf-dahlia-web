@@ -7,6 +7,8 @@ ListingService = ($http, $localStorage) ->
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
+  Service.openMatchListings = []
+  Service.openNotMatchListings = []
   Service.closedListings = []
   Service.lotteryResultsListings = []
   # these get loaded after the listing is loaded
@@ -120,6 +122,8 @@ ListingService = ($http, $localStorage) ->
 
   Service.getListings = () ->
     angular.copy([], Service.openListings)
+    angular.copy([], Service.openMatchListings)
+    angular.copy([], Service.openNotMatchListings)
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     # check for default state
@@ -147,20 +151,21 @@ ListingService = ($http, $localStorage) ->
     )
 
   Service.groupListings = (listings) ->
-    now = new Date()
-    today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
     listings.forEach (listing) ->
-      due_date = new Date(listing.Application_Due_Date)
-      if due_date > today
+      if Service.listingIsOpen(listing.Application_Due_Date)
+        # All Open Listings Array
         Service.openListings.push(listing)
-      else if due_date < today
+        if listing.Does_Match
+          Service.openMatchListings.push(listing)
+        else
+          Service.openNotMatchListings.push(listing)
+      else if !Service.listingIsOpen(listing.Application_Due_Date)
         # TODO: check if this is the right field once we're getting it from Salesforce in
         # the /listings endpoint
         if listing.Lottery_Members
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
-
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids) ->
@@ -173,6 +178,16 @@ ListingService = ($http, $localStorage) ->
       # console.log data
     )
 
+  # Business logic for determining if a listing is open
+  Service.listingIsOpen = (due_date) ->
+    now = new Date()
+    today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    due_date = new Date(due_date)
+    if due_date > today
+      true
+    else
+      false
+
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
     percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
@@ -183,7 +198,6 @@ ListingService = ($http, $localStorage) ->
     ).error( (data, status, headers, config) ->
       # console.log data
     )
-
 
   return Service
 
