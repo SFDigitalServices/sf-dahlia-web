@@ -39,7 +39,7 @@ accordion-heading.lead.accordion-header
             | Rank
             span.right
               | Ticket
-          li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank' | limitTo: '20'"
+          li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
             | {{ticket.Rank}}
             span.right
               | {{ticket.Lottery_Number}}
