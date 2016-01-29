@@ -151,11 +151,11 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/get-assistance.html'
     })
-    .state('dahlia.additional-opportunities',{
-      url: '/additional-opportunities'
+    .state('dahlia.additional-resources',{
+      url: '/additional-resources'
       views:
         'container@':
-          templateUrl: 'pages/templates/additional-opportunities.html'
+          templateUrl: 'pages/templates/additional-resources.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
