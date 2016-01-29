@@ -8,15 +8,15 @@ header.lead-header.bg-attention-tint
 section.row
   .medium-8.columns
     header.section-header.margin-top--2x
-      h2.t-gamma.no-margin Featured Resources {{ scope.resources().length }}
-    ul.resources-list.block-list ng-repeat="resource in resources"
+      h2.t-gamma.no-margin Featured Resources
+    ul.resources-list.block-list ng-repeat="counselor in housing_counselors"
       li.block-item
         h3.t-delta.t-sans.margin-bottom--half
           a.a-oil
-            | {{ resource.name }}
-        p.t-tiny.c-steel ng-if="resource.languages"
+            | {{ counselor.name }}
+        p.t-tiny.c-steel ng-if="counselor.languages"
           | Language Services:
-          span ng-repeat="language in resource.languages"
+          span ng-repeat="language in counselor.languages"
             span.label.radius.secondary
               | {{ language }}
         .has-icon-left.d-block
@@ -24,17 +24,17 @@ section.row
             svg
               use xlink:href="#i-map" /
           p.offset-icon.margin-bottom--half
-            | {{ resource.address }},
+            | {{ counselor.address }},
             br
-            | {{ resource.citystate }}
+            | {{ counselor.citystate }}
         p
-          a.button-on-small href="tel:+1{{resource.phone}}"
+          a.button-on-small href="tel:+1{{counselor.phone}}"
             span.ui-icon.ui-medium
               svg
                 use xlink:href="#i-phone" /
-            | Call {{ resource.phone }}
-          a.button-on-small target="_blank" href="{{resource.website}}"
+            | Call {{ counselor.phone }}
+          a.button-on-small target="_blank" href="{{counselor.website}}"
             span.ui-icon.ui-medium
               svg
                 use xlink:href="#i-link"
-            | Visit {{ resource.name}}
+            | Visit {{ counselor.name}}
