@@ -32,7 +32,9 @@ accordion-heading.lead.accordion-header
       h3.t-delta.t-sans.c-steel
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
       p.c-steel.t-small ng-if="!lotteryResultsAvailable(listing)"
-        | Lottery results will be posted within two weeks of the lottery date.
+        ' Complete lottery results will be posted here on
+        ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
+        ' by 5pm.
       ul.result-set.margin-bottom ng-if="lotteryResultsAvailable(listing)"
         span ng-if="listing.Lottery_Members.length <= 20"
           li
@@ -51,13 +53,15 @@ accordion-heading.lead.accordion-header
 
     .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold What to Expect
-      p.c-steel.t-small ng-if="listing.Lottery_Results_Date"
-        ' Complete lottery results will be posted here on
-        ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
-        ' by 5pm.
       p.c-steel.t-small Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
-      p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
-      p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+      div ng-show="whatToExpectOpen"
+        p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
+        p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+      a.toggler.toggle-more.t-small href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
+        ' read {{ whatToExpectOpen ? 'less' : 'more' }}
+        span.ui-icon.ui-tiny.i-primary
+          svg
+            use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
     .content-panel.padding-bottom
       h4.t-small.t-sans.t-bold Contact Property Manager
       a.margin-bottom--half ng-href="tel:{{listing.Contact_Phone | htmlTel}}"

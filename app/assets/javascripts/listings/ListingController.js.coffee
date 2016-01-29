@@ -14,6 +14,8 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  # for expanding the "read more/less" on What To Expect
+  $scope.whatToExpectOpen = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
