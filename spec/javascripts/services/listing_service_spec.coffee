@@ -8,9 +8,13 @@ do ->
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
     $localStorage = undefined
+    $modal = undefined
+    modalMock = undefined
     requestURL = undefined
 
-    beforeEach module('dahlia.services', ->
+    beforeEach module('dahlia.services', ($provide)->
+      $provide.value '$modal', modalMock
+      return
     )
 
     beforeEach inject((_$httpBackend_, _ListingService_, _$localStorage_) ->

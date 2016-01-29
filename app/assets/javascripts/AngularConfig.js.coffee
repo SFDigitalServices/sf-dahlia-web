@@ -93,6 +93,24 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/welcome.html'
     })
+    .state('dahlia.welcome-chinese', {
+      url: '/welcome-chinese'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/welcome-chinese.html'
+    })
+    .state('dahlia.welcome-spanish', {
+      url: '/welcome-spanish'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/welcome-spanish.html'
+    })
+    .state('dahlia.welcome-tagalog', {
+      url: '/welcome-tagalog'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/welcome-tagalog.html'
+    })
     .state('dahlia.disclaimer', {
       url: '/disclaimer'
       views:
