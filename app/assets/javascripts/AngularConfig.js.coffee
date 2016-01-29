@@ -35,6 +35,8 @@ angular.module('dahlia.controllers',[])
       url: ''
       abstract: true
       views:
+        'translate@':
+          templateUrl: 'shared/templates/translate.html'
         'version@':
           templateUrl: 'shared/templates/version.html'
         'nav@':
