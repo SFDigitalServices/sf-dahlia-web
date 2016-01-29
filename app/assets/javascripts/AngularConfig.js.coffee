@@ -171,6 +171,12 @@ angular.module('dahlia.controllers',[])
         'container@':
           templateUrl: 'pages/templates/get-assistance.html'
     })
+    .state('dahlia.additional-resources',{
+      url: '/additional-resources'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/additional-resources.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
