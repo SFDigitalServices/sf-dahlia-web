@@ -34,14 +34,16 @@ accordion-heading.lead.accordion-header
       p.c-steel.t-small ng-if="!lotteryResultsAvailable(listing)"
         | Lottery results will be posted within two weeks of the lottery date.
       ul.result-set.margin-bottom ng-if="lotteryResultsAvailable(listing)"
-        li
-          | Rank
-          span.right
-            | Ticket
-        li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
-          | {{ticket.Rank}}
-          span.right
-            | {{ticket.Lottery_Number}}
+        span ng-if="listing.Lottery_Members.length <= 20"
+          li
+            | Rank
+            span.right
+              | Ticket
+          li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+            | {{ticket.Rank}}
+            span.right
+              | {{ticket.Lottery_Number}}
+        a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
 
       p.c-steel.t-small ng-if="lotteryResultsAvailable(listing) && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."

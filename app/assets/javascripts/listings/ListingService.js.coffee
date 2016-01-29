@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage) ->
+ListingService = ($http, $localStorage, $modal) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -110,6 +110,12 @@ ListingService = ($http, $localStorage) ->
         })
     return incomeLevels
 
+  Service.openLotteryResultsModal = ->
+    modalInstance = $modal.open({
+      templateUrl: 'listings/templates/listing/_lottery_modal.html',
+      controller: 'ModalInstanceController'
+    })
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
@@ -206,7 +212,7 @@ ListingService = ($http, $localStorage) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage']
+ListingService.$inject = ['$http', '$localStorage', '$modal']
 
 angular
   .module('dahlia.services')
