@@ -104,13 +104,20 @@ accordion-heading
           span.t-small Application Fee
           p.t-delta.no-margin.t-bold
             | {{listing.Fee | currency:"$":0}}
-          span.content-label.t-small due post-lottery
+          span.content-label.t-small
+            | per applicant age 18 and over
+          span.t-tiny.d-block
+            | Due post lottery
         .small-6.columns
           span.t-small Deposit
           p.t-delta.no-margin.t-bold
             | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max">&ndash;</span>{{ listing.Deposit_Max }}
-          span.content-label.t-small based on credit score
-      .row.collapse
+          span.content-label.t-small
+            | or one month's rent
+          span.t-tiny.d-block
+            | May be higher for lower credit scores
+
+      .row.collapse ng-if="listing.Costs_Not_Included"
         .small-12.columns
           p
             | {{listing.Costs_Not_Included}}
