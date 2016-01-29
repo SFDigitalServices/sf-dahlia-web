@@ -44,12 +44,12 @@ angular.module('dahlia.controllers',[])
         'footer@':
           templateUrl: 'shared/templates/footer.html'
     })
-    .state('dahlia.resources',{
-      url: '/resources'
+    .state('dahlia.housing-counselors',{
+      url: '/housing-counselors'
       views:
         'container@':
-          templateUrl: 'pages/templates/resources.html',
-          controller: 'ResourcesController'
+          templateUrl: 'pages/templates/housing-counselors.html',
+          controller: 'HousingCounselorsController'
     })
     .state('dahlia.listings', {
       url: '/listings'
@@ -162,6 +162,12 @@ angular.module('dahlia.controllers',[])
       views:
         'container':
           templateUrl: 'income-calculator/templates/pages/summary.html'
+    })
+    .state('dahlia.get-assistance',{
+      url: '/get-assistance'
+      views:
+        'container@':
+          templateUrl: 'pages/templates/get-assistance.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
