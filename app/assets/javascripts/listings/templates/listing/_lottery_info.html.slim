@@ -62,15 +62,19 @@ accordion-heading.lead.accordion-header
         span.ui-icon.ui-tiny.i-primary
           svg
             use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-    .content-panel.padding-bottom
-      h4.t-small.t-sans.t-bold Contact Property Manager
-      a.margin-bottom--half ng-href="tel:{{listing.Contact_Phone | htmlTel}}"
+    .content-panel.padding-bottom ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+      h4.t-small.t-sans.t-bold Contact Leasing Agent
+      h3.t-delta.t-sans.no-margin
+        | {{ listing.Leasing_Agent_Name }}
+      p.c-steel
+        | {{ listing.Leasing_Agent_Title }}
+      a.margin-bottom--half ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-phone"
-        |  Call {{listing.Contact_Phone}}
-      p.t-small.c-steel Due to high call volume you may hear a recorded message.
-      a ng-href="mailto:{{listing.Contact_Email}}"
+        |  Call {{ listing.Leasing_Agent_Phone }}
+      p.t-small.c-steel Due to high call volume you may hear a message.
+      a ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-mail"
