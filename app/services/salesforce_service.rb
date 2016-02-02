@@ -91,6 +91,7 @@ class SalesforceService
   end
 
   def self.hash_massage(h)
+    return h['records'].map { |i| massage(i) } if h.include?('records')
     # massage each hash value
     h.each { |k, v| h[k] = massage(v) }
     # massage each hash key
