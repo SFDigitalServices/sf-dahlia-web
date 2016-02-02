@@ -71,13 +71,13 @@ ListingService = ($http, $localStorage, $modal) ->
     Service.eligibility_filters.household_size
 
   # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
-  Service.occupancyForUnitType = (unit_type) ->
+  Service.occupancyForUnitType = (unit_type = '') ->
     if unit_type == 'Studio'
       min = 1
       max = 2
     else
       # pull out the # of rooms e.g. 1 from "1 Bedroom"
-      rooms = parseInt(unit_type.substr(0,1))
+      rooms = parseInt(unit_type.substr(0,1)) || 1
       min = rooms
       max = (rooms * 2) + 1
     return [min, max]
