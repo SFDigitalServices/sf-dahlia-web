@@ -14,6 +14,7 @@ class SalesforceService
       authentication_retries: 0,
       oauth_token: oauth_token,
       instance_url: ENV['SALESFORCE_INSTANCE_URL'],
+      mashify: false,
     )
   end
 
