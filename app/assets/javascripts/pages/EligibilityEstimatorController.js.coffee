@@ -50,6 +50,9 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     ListingService.setEligibilityFilters($scope.filters)
     $state.go("dahlia.income-calculator.#{subsection}")
 
+  $scope.resetChildrenUnder6 = ->
+    $scope.filters.children_under_6 = "0"
+
 
 ############################################################################################
 ######################################## CONFIG ############################################
