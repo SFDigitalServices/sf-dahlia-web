@@ -8,7 +8,6 @@ do ->
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
     $localStorage = undefined
-    $modal = undefined
     modalMock = undefined
     requestURL = undefined
 
@@ -28,6 +27,10 @@ do ->
     describe 'Service setup', ->
       it 'initializes defaults', ->
         expect(ListingService.listings).toEqual []
+        return
+      return
+      it 'initializes defaults', ->
+        expect(ListingService.openListings).toEqual []
         return
       return
 
