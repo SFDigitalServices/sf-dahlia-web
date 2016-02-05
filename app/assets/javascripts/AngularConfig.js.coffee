@@ -181,7 +181,7 @@ angular.module('dahlia.controllers',[])
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
   if !!(window.history && history.pushState)
-    $locationProvider.html5Mode(true)
+    $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
