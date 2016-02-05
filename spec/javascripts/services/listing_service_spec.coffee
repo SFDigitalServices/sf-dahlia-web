@@ -122,6 +122,23 @@ do ->
           expect(ListingService.favorites).toEqual [1]
           return
         return
+      describe 'When a favorite is not found', ->
+        beforeEach ->
+          ListingService.favorites = $localStorage.favorites = []
+        afterEach ->
+          httpBackend.verifyNoOutstandingExpectation()
+          httpBackend.verifyNoOutstandingRequest()
+        it 'removes it from favorites', ->
+          # this listing does not exist
+          ListingService.toggleFavoriteListing '123xyz'
+          expect(ListingService.favorites).toEqual ['123xyz']
+          stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+          # this should remove the non-existent favorite
+          ListingService.getFavoriteListings()
+          httpBackend.flush()
+          expect(ListingService.favorites).toEqual []
+          return
+        return
       return
 
     describe 'Service.setEligibilityFilters', ->

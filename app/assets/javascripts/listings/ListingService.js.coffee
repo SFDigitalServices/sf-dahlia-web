@@ -29,7 +29,17 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.eligibility_filters = $localStorage.eligibility_filters
 
   Service.getFavoriteListings = () ->
-    Service.getListingsByIds(Service.favorites)
+    Service.getListingsByIds(Service.favorites, true)
+
+  # Service.checkFavorites makes sure that Service.listings contains our favorited listings
+  # if not, it means the listing doesn't exist and we should remove it from favorites
+  Service.checkFavorites = () ->
+    listing_ids = []
+    Service.listings.forEach (listing) -> listing_ids.push(listing['Id'])
+    Service.favorites.forEach (favorite_id) ->
+      if listing_ids.indexOf(favorite_id) == -1
+        Service.toggleFavoriteListing(favorite_id)
+
 
   Service.toggleFavoriteListing = (listing_id) ->
     # toggle the value for listing_id
@@ -48,7 +58,9 @@ ListingService = ($http, $localStorage, $modal) ->
     angular.copy(filters, Service.eligibility_filters)
 
   Service.hasEligibilityFilters = ->
-    ! angular.equals(Service.eligibility_filter_defaults, Service.eligibility_filters)
+    !! (Service.eligibility_filters.income_total &&
+        Service.eligibility_filters.income_timeframe &&
+        Service.eligibility_filters.household_size)
 
   Service.eligibilityYearlyIncome = ->
     if Service.eligibility_filters.income_timeframe == 'per_month'
@@ -174,12 +186,13 @@ ListingService = ($http, $localStorage, $modal) ->
           Service.closedListings.push(listing)
 
   # retrieves only the listings specified by the passed in array of ids
-  Service.getListingsByIds = (ids) ->
+  Service.getListingsByIds = (ids, checkFavorites = false) ->
     angular.copy([], Service.listings)
     params = {params: {ids: ids.join(',') }}
     $http.get("/api/v1/listings.json", params).success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
       angular.copy(listings, Service.listings)
+      Service.checkFavorites() if checkFavorites
     ).error( (data, status, headers, config) ->
       # console.log data
     )
