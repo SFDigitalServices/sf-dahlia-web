@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -134,7 +134,7 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', 'SharedService', 'ListingService']
 
 angular
   .module('dahlia.controllers')

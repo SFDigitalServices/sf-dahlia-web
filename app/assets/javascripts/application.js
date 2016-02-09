@@ -16,6 +16,7 @@
 //= require angular-rails-templates
 //= require angular-pageslide-directive
 //= require ngstorage
+//= require angular-sanitize
 //= require angular-pageslide-directive
 //= require angular-clipboard
 //= require angular-filter
