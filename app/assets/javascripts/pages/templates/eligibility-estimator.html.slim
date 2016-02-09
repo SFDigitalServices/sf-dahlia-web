@@ -21,7 +21,7 @@ section.row.shift--top
             header.margin-bottom
               h3.t-sans.gamma.margin-bottom--half
                 | How many people are you applying to live with?
-                span.small-info.tooltipped.tooltipped-sw aria-label="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children."
+                span.small-info.tooltipped.tooltipped-multiline.tooltipped-s.i-block aria-label="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children."
                   span.ui-icon.ui-static.ui-medium.i-primary
                     svg
                       use xlink:href="#i-info"
@@ -69,20 +69,20 @@ section.row.shift--top
           h3.t-sans.gamma
             | Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
 
-          label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            span.eligibility-form_header Household Income
+          .form-group ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+            label.form-label.t-caps Household Income
             input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
               | Edit
           / <input type="text" placeholder="Total all of your income sources" />
           / <a href="" class="input-editor button tiny secondary">Edit</a>
           small.error ng-show="inputInvalid('income_total')"
-            | Please enter an income amount
-          .radio-group
-            p.d-inline-block.no-margin
+              | Please enter an income amount
+          .radio-group-inline ng-class="{ error: inputInvalid('income_timeframe') }"
+            p.radio-inline
               input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
               label for="per_month" per month
-            p.d-inline-block.no-margin
+            p.radio-inline
               input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
               label for="per_year" per year
             small.error ng-show="inputInvalid('income_timeframe')"
@@ -93,12 +93,11 @@ section.row.shift--top
             p.t-tiny.no-margin
               ' Note: Your total should include all income sources for each person you plan to live with. If you need help calculating your total, please use the
               a.a-deep ng-click="goToIncomeCalculator('intro')" Household Income Calculator
-
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
           input.button.expand.radius type="submit" value="View Matching Properties"
         .small-12.medium-6.medium-pull-6.columns
-          a.button.blank.expand.radius ng-click="clearForm()"
+          a.button.ghost-white.expand.radius ng-click="clearForm()"
             | Reset
 
 
