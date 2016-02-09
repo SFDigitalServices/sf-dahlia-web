@@ -7,6 +7,7 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
+    fakeAMI = getJSONFixture('/ami.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -72,6 +73,30 @@ do ->
         return
       return
 
+    describe 'Service.getListingAMI', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.AMI with the AMI results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        ListingService.getListingAMI()
+        httpBackend.flush()
+        expect(ListingService.AMI).toEqual fakeAMI.ami
+        return
+      return
+
+    describe 'Service.maxIncomeLevelsFor', ->
+      it 'returns incomeLevels with occupancy, yearly, monthly values', ->
+        listing = fakeListing.listing
+        ami = fakeAMI.ami
+        incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
+        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
+        expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
+        expect(incomeLevels.length).toEqual 2
+        return
+      return
+
     describe 'Service.toggleFavoriteListing', ->
       describe 'When a listing is favorited', ->
         expectedResult = [1]
@@ -86,7 +111,7 @@ do ->
           expect($localStorage.favorites).toEqual expectedResult
           expect($localStorage.favorites).toEqual ListingService.favorites
           return
-        it 'should updated Service.favorites', ->
+        it 'should update Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
           return
         return
