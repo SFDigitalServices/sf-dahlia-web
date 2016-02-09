@@ -101,21 +101,21 @@ accordion-heading.lead
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation ng-if="listing.Credit_Rating"
         accordion-heading.accordion-header
-          | Credit Rating
+          | Credit History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-a.content
           p
             | {{listing.Credit_Rating}}
       accordion-group.accordion-navigation ng-if="listing.Eviction_History"
         accordion-heading.accordion-header
-          | Renter's History
+          | Rental History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-b.content
           p
             | {{listing.Eviction_History}}
       accordion-group.accordion-navigation ng-if="listing.Criminal_History"
         accordion-heading.accordion-header
-          | Criminal History
+          | Criminal Background
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-c.content
           p
