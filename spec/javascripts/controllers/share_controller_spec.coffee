@@ -5,8 +5,10 @@ do ->
     scope = undefined
     state = undefined
     fakeSharedService = undefined
+    fakeHref = undefined
 
     beforeEach module('dahlia.controllers', ($provide) ->
+      $provide.value 'SharedService', fakeSharedService
       return
     )
 
@@ -15,7 +17,7 @@ do ->
       $controller 'ShareController',
         $scope: scope
         $state: state
-        SharedService: fakeSharedService
+        href = fakeHref
       return
     )
 
@@ -27,5 +29,4 @@ do ->
         return
       return
 
-    return
   return
