@@ -21,13 +21,12 @@ section.section-full
           p.alert-body
             | You copied this listing. Go ahead and share it by pasting into an email or text message.
           a.close ng-click="closeShareSuccess()" &times;
-        span.ui-icon.ui-link
-          svg
-            use xlink:href="#i-link"
-        | Get Shareable Link
-        .row
-          .large-12.columns
-            label
-              input placeholder="Link" onclick="this.focus();this.select()" readonly="readonly" type="text" ng-model="textToCopy"
-            button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+        .form-group
+          label
+            span.ui-icon.ui-link.ui-medium
+              svg
+                use xlink:href="#i-link"
+            | Get Shareable Link
+          input placeholder="Link" onclick="this.focus();this.select()" readonly="readonly" type="text" ng-model="textToCopy"
+          button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
               | Copy Link
