@@ -104,19 +104,16 @@ accordion-heading.lead
           | Credit Rating
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-a.content
-          p
-            | {{listing.Credit_Rating}}
+          p ng-bind-html="listing.Credit_Rating | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Eviction_History"
         accordion-heading.accordion-header
           | Renter's History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-b.content
-          p
-            | {{listing.Eviction_History}}
+          p ng-bind-html="listing.Eviction_History | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Criminal_History"
         accordion-heading.accordion-header
           | Criminal History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-c.content
-          p
-           | {{listing.Criminal_History}}
+          p ng-bind-html="listing.Criminal_History | nl2br"
