@@ -64,10 +64,8 @@ section.row.shift--top
           label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             span.eligibility-form_header Household Income
             input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
+            a.button.input-editor.button.tiny.secondary ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
               | Edit
-          / <input type="text" placeholder="Total all of your income sources" />
-          / <a href="" class="input-editor button tiny secondary">Edit</a>
           small.error ng-show="inputInvalid('income_total')"
             | Please enter an income amount
           .radio-group
@@ -84,7 +82,7 @@ section.row.shift--top
           .note.bg-tint.padding.margin-bottom--2x ng-show="!hasCalculatedIncome()"
             p.t-tiny.no-margin
               ' Note: Your total should include all income sources for each person you plan to live with. If you need help calculating your total, please use the
-              a.a-deep ng-click="goToIncomeCalculator('intro')" Household Income Calculator
+              a.a-deep ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
 
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
@@ -92,14 +90,3 @@ section.row.shift--top
         .small-12.medium-6.medium-pull-6.columns
           a.button.blank.expand.radius ng-click="clearForm()"
             | Reset
-
-
-
-/ -- TBD -- for another story...
-/ hr.hr-5
-/ section.row
-/   .medium-5.medium-centered.columns.text-center
-/     .notification-block.block.text-center
-/       h3 Get Notified By Email
-/       p We'll send you an email when the next property that matches you becomes available
-/       button.button.secondary.a-center Get Notified by Email
