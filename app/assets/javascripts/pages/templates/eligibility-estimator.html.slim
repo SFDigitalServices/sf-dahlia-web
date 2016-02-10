@@ -69,13 +69,16 @@ section.row.shift--top
           h3.t-sans.gamma
             | Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
 
-          label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            span.eligibility-form_header Household Income
-            input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
-              | Edit
-          / <input type="text" placeholder="Total all of your income sources" />
-          / <a href="" class="input-editor button tiny secondary">Edit</a>
+          .form-group
+            label.form-label.t-caps ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              | Household Income
+            .form-income
+              span.label-dollar $
+              input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              /input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
+                | Edit
+
           small.error ng-show="inputInvalid('income_total')"
             | Please enter an income amount
           .radio-group
