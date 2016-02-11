@@ -5,8 +5,10 @@ nav.top-bar role="navigation"
         h1.name-logo.t-alt-sans
           a ui-sref="dahlia.welcome" SF Affordable Housing Portal
       li.toggle-topbar.menu-icon
-        button ng-click="toggleNavMobile()" aria-label="Open Menu"
-          span
-            | Menu
+        button.button-link.t-caps.t-bold ng-click="toggleNavMobile()" aria-label="Open Menu"
+          | Menu
+          span.ui-icon.ui-static.ui-large.i-primary
+            svg
+              use xlink:href="#i-menu"
     section.top-bar-section
       ul.nav-menu.right ng-include="'shared/templates/nav/_nav_items.html'"
