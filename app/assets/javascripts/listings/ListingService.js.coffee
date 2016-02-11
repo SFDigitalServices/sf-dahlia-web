@@ -107,11 +107,11 @@ ListingService = ($http, $localStorage, $modal) ->
           minMax = [Math.min(minMax[0], unitMinMax[0]), Math.max(minMax[1], unitMinMax[1])]
     return minMax
 
-  Service.maxIncomeLevelsFor = (listing) ->
+  Service.maxIncomeLevelsFor = (listing, ami) ->
     # TODO: this should come from the listing object itself (from SF), not our function
     occupancyMinMax = Service.occupancyMinMax(listing)
     incomeLevels = []
-    Service.AMI.forEach (amiLevel) ->
+    ami.forEach (amiLevel) ->
       occupancy = parseInt(amiLevel.numOfHousehold)
       # only grab the incomeLevels that fit within our listing's occupancyMinMax
       if occupancy >= occupancyMinMax[0] && occupancy <= occupancyMinMax[1]
@@ -213,7 +213,7 @@ ListingService = ($http, $localStorage, $modal) ->
     $http.get("/api/v1/ami.json?percent=#{percent}").success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(data.ami, Service.AMI)
-        angular.copy(Service.maxIncomeLevelsFor(Service.listing), Service.maxIncomeLevels)
+        angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
     ).error( (data, status, headers, config) ->
       # console.log data
     )
