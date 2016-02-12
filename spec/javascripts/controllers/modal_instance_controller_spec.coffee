@@ -27,7 +27,7 @@ do ->
       return
     )
 
-    describe 'scope.closeModal', ->
+    describe '$scope.closeModal', ->
       describe 'expects ModalInstance.close to be called', ->
         it 'calls the modalInstance to close', ->
           scope.closeModal()
