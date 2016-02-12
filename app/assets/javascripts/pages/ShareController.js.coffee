@@ -19,10 +19,6 @@ ShareController = ($scope, $state, $window, SharedService) ->
   $scope.closeShareSuccess = ->
     $scope.showShareSuccess = false
 
-  $scope.emailShare = ->
-    $window.alert("Email sent.")
-    $scope.email = ''
-
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
