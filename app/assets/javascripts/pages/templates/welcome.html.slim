@@ -4,7 +4,7 @@ section.splash-header.bg-image
       h1.hero-title.c-white.t-shadow Browse Affordable Housing Opportunities
       .row
         .medium-9.medium-centered.columns
-          p.delta.t-sans.t-shadow.c-white All applications are currently closed but you can view past lottery results.
+          p.delta.t-sans.t-shadow.c-white ng-if="openListings.length == 0" All applications are currently closed, but you can view closed listings.
           a.button.radius.shadow ui-sref="dahlia.listings" See Listings
 
 section.splash-message
