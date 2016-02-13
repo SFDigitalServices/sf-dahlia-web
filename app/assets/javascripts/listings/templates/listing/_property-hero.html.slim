@@ -1,7 +1,8 @@
 .property-hero
   figure.property-hero_figure
     div.property-hero_container
-      img.property-hero_thumb src="{{imageURL(listing)}}"
+      .orbit(data-orbit data-options="navigation_arrows: true; bullets: false; slide_number: false; timer: false;")
+        img.property-hero_thumb(reflow-after-load ng-repeat="image in ::listing.images track by $index" ng-src="{{image}}")
       a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg

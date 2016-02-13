@@ -17,6 +17,14 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
+  # TODO: replace with actual listing images
+  # testing multiple listing images
+  $scope.listing.images = [
+    $scope.listing.Building_URL,
+    $scope.listing.Building_URL,
+    $scope.listing.Building_URL,
+  ]
+
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
 
