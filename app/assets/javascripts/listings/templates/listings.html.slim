@@ -30,7 +30,7 @@ section.row ng-if="!openListings.length"
       figure.block-icon
         img src="/images/icon-home.png"
       p.t-delta.t-serif.c-oil.no-margin
-        | No properties currently have open applications.
+        | No listings currently have open applications.
 
 / Listings:
 /   * Open (doesn't have a header)
@@ -51,7 +51,7 @@ section.row ng-if="!openListings.length"
       .large-12.columns
         header.section-header.margin-top--2x
           h2.gamma.no-margin No Matches
-          p.margin-bottom--half Based on information you entered, you don't match any current properties.
+          p.margin-bottom--half Based on information you entered, you don't match any current listings.
           p.t-small.c-steel.no-margin
             | Currently this site only includes Below Market Rate rentals. <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
     ng-include src="'listings/templates/_housing-counselor.html'"
@@ -82,7 +82,7 @@ section.row ng-if="!openListings.length"
       .large-12.columns
         header.section-header.margin-top--2x
           h2.gamma.no-margin Not Matched
-          p.margin-bottom--half The remaining properties don't appear to match based on your input.
+          p.margin-bottom--half The remaining listings don't appear to match based on your input.
           p.t-small.c-steel.no-margin Currently this site only includes Below Market Rate rentals. <a class="lined" ui-sref="dahlia.housing-counselors">Click here</a> for other rental and ownership affordable housing opportunities.
     ng-include src="'listings/templates/_housing-counselor.html'"
 
