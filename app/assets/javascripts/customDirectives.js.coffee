@@ -5,7 +5,12 @@ angular.module('customDirectives', [])
     elem.bind 'click', ->
       $window.history.back()
 ]
-.directive 'reflowAfterLoad', ->
+.directive 'adjustCarouselHeight', ['$window', ($window) ->
   link: (scope, elem, attrs) ->
     elem.bind 'load', ->
-      $(document).foundation('orbit', 'reflow');
+      scope.adjustCarouselHeight(elem)
+
+    # to support resize of the carousel after you resize your window
+    angular.element($window).bind 'resize', ->
+      scope.adjustCarouselHeight(elem)
+]

@@ -10,8 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery2
-//= require_tree ../../../vendor/assets/javascripts
 //= require angular
 //= require angular-foundation
 //= require angular-ui-router
@@ -24,5 +22,7 @@
 //= require angular-filter
 //= require angulartics
 //= require angulartics-google-analytics
+//= require lifely-angular-carousel
+//= require hammerjs
 //= require ng-currency
 //= require_tree .

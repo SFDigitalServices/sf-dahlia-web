@@ -15,11 +15,12 @@
   'angular.filter',
   'angulartics',
   'angulartics.google.analytics',
+  'angular-carousel',
 ]
 
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
-angular.module('dahlia.controllers',['ngSanitize'])
+angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
 
 # allow trailing slashes and don't force case sensitivity on routes
 @dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->

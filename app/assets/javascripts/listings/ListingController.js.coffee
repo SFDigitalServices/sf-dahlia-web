@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, Carousel, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -17,6 +17,12 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
+
+  # --- Carousel ---
+  $scope.carouselHeight = 200
+  $scope.adjustCarouselHeight = (elem) ->
+    $scope.carouselHeight = elem[0].offsetHeight
+  $scope.Carousel = Carousel
   # TODO: replace with actual listing images
   # testing multiple listing images
   $scope.listing.images = [
@@ -142,7 +148,7 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', 'Carousel', 'SharedService', 'ListingService']
 
 angular
   .module('dahlia.controllers')
