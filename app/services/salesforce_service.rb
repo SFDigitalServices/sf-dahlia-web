@@ -30,6 +30,11 @@ class SalesforceService
     api_get('/services/apexrest/Listings', params)
   end
 
+  def self.listings_d(ids = nil)
+    params = ids.present? ? { ids: ids } : nil
+    api_get('/services/apexrest/ListingDetails', params)
+  end
+
   # get listings with eligibility matches applied
   # filters:
   #  householdsize: n
