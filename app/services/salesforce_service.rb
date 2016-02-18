@@ -27,11 +27,6 @@ class SalesforceService
   # `ids` is a comma-separated list of ids
   def self.listings(ids = nil)
     params = ids.present? ? { ids: ids } : nil
-    api_get('/services/apexrest/Listings', params)
-  end
-
-  def self.listings_d(ids = nil)
-    params = ids.present? ? { ids: ids } : nil
     api_get('/services/apexrest/ListingDetails', params)
   end
 
@@ -41,7 +36,7 @@ class SalesforceService
   #  incomelevel: n
   #  childrenUnder6: n
   def self.eligible_listings(filters)
-    results = api_get('/services/apexrest/Listings', filters)
+    results = api_get('/services/apexrest/ListingDetails', filters)
     # sort the matched listings to the top of the list
     # TODO: replace with sorting on the JS side
     results.partition { |i| i['Does_Match'] }.flatten
@@ -49,7 +44,7 @@ class SalesforceService
 
   # get one detailed listing result by id
   def self.listing(id)
-    api_get("/services/apexrest/Listings/#{id}").first
+    api_get("/services/apexrest/ListingDetails/#{id}").first
   end
 
   # get AMI
@@ -60,7 +55,7 @@ class SalesforceService
 
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
-    massage(response.body)
+    massage(flatten_response(response.body))
   rescue Restforce::UnauthorizedError
     if @retries > 0
       @retries -= 1
@@ -80,6 +75,20 @@ class SalesforceService
       auth = client.authenticate!
       auth.access_token
     end
+  end
+
+  # move all listing attributes to the root level of the hash
+  # this is partly to not have to totally refactor our JS code
+  # after Salesforce changes w/ ListingDetails
+  def self.flatten_response(body)
+    flattened = []
+    body.each do |listing|
+      if listing['listing'] and listing['listing']['Id']
+        listing.merge!(listing['listing']).delete('listing')
+        flattened << listing
+      end
+    end
+    flattened
   end
 
   # recursively remove "__c" and "__r" from all keys
