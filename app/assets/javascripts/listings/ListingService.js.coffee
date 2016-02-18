@@ -14,6 +14,7 @@ ListingService = ($http, $localStorage, $modal) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
+  Service.lotteryPreferences = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -214,6 +215,15 @@ ListingService = ($http, $localStorage, $modal) ->
       if data && data.ami
         angular.copy(data.ami, Service.AMI)
         angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
+  Service.getLotteryPreferences = ->
+    angular.copy([], Service.lotteryPreferences)
+    $http.get('/api/v1/lottery-preferences.json').success((data, status, headers, config) ->
+      if data && data.lottery_preferences
+        angular.copy(data.lottery_preferences, Service.lotteryPreferences)
     ).error( (data, status, headers, config) ->
       # console.log data
     )

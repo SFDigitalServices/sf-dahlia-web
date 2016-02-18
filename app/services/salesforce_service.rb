@@ -53,6 +53,12 @@ class SalesforceService
     results.sort_by { |i| i['numOfHousehold'] }
   end
 
+  # get LotteryPreferences
+  def self.lottery_preferences
+    # TODO: cache?
+    api_get('/services/apexrest/LotteryPreference')
+  end
+
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
     massage(flatten_response(response.body))
