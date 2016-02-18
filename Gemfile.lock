@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/davidakachaos/dotenv-heroku.git
+  revision: b05fd1bd977c861c26f01fb24dd087bc4bc4832a
+  specs:
+    dotenv-heroku (0.0.1)
+      rake
+
+GIT
   remote: git://github.com/pivotal/jasmine-gem.git
   revision: 60d9df749bcefd4da0b525e0098673d1b47b56ae
   specs:
@@ -296,6 +303,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   dalli
+  dotenv-heroku!
   dotenv-rails
   facets
   factory_girl_rails
