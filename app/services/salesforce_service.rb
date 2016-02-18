@@ -81,14 +81,9 @@ class SalesforceService
   # this is partly to not have to totally refactor our JS code
   # after Salesforce changes w/ ListingDetails
   def self.flatten_response(body)
-    flattened = []
-    body.each do |listing|
-      if listing['listing'] and listing['listing']['Id']
-        listing.merge!(listing['listing']).delete('listing')
-        flattened << listing
-      end
+    body.collect do |listing|
+      listing.merge(listing['listing'] || {}).except('listing')
     end
-    flattened
   end
 
   # recursively remove "__c" and "__r" from all keys
