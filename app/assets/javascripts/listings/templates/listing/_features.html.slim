@@ -33,29 +33,29 @@ accordion-heading
           | {{listing.Accessibility}}
   .content-panel.wide
     h5.t-sans.content-label.t-small Unit Features
-    .unit-features.stats-card.stats-toggle.toggler ng-repeat="summary in listing.unitSummary" ng-click="toggleTable(summary.unitType)" ng-class="isActiveTable(summary.unitType)"
+    .unit-features.stats-card.stats-toggle.toggler ng-repeat="unit_summary in listing.unitSummary" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
       ul.unit-stats.stats-list.double.medium-quad.has-toggle
         li
           span.stats-list_value
-            | {{summary.unitType}}
+            | {{unit_summary.unitType}}
         li
           span.stats-list_value.highlight
-            | {{summary.totalUnits}}
+            | {{unit_summary.totalUnits}}
             span.value-label
-              ng-pluralize count="summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+              ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
         li
           span.t-small
             | Accessible
         li
           span.stats-list_value.highlight
-            | {{unitAreaRange(summary)}}
+            | {{unitAreaRange(unit_summary)}}
             span.value-label
               |  square feet
         span.ui-control.ui-icon.ui-small
           svg
             use xlink:href="#i-arrow-down"
-      .stats-table--stack ng-show="isActiveTable(summary.unitType)"
-        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(summary.unitType)" ng-repeat="unit in unitsByType(summary.unitType)"
+      .stats-table--stack ng-show="isActiveTable(unit_summary.unitType)"
+        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
           li ng-if="unit.Unit_Number"
             span.stats-list_label.bottom Unit Number
             .stats-list_value

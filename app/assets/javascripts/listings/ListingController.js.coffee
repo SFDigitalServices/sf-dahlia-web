@@ -31,11 +31,11 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, SharedService, Li
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (summary) ->
-    if summary.minSquareFt != summary.maxSquareFt
-      "#{summary.minSquareFt} - #{summary.maxSquareFt}"
+  $scope.unitAreaRange = (unit_summary) ->
+    if unit_summary.minSquareFt != unit_summary.maxSquareFt
+      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
     else
-      summary.minSquareFt
+      unit_summary.minSquareFt
 
   $scope.unitsByType = (unit_type) ->
     $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
