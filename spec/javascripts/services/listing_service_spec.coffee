@@ -8,6 +8,7 @@ do ->
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
     fakeAMI = getJSONFixture('/ami.json')
+    fakeUnits = getJSONFixture('/listings/units.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -192,6 +193,21 @@ do ->
           ListingService.setEligibilityFilters(fakeFilters)
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
           return
+        return
+      return
+
+    describe 'Service.getListingUnits', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.Units with the Unit results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+        ListingService.getListingUnits()
+        httpBackend.flush()
+        expect(ListingService.listing.Units).toEqual fakeUnits.units
         return
       return
 

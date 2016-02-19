@@ -49,7 +49,7 @@ class SalesforceService
 
   # get all units for a given listing
   def self.units(listing_id)
-    api_get("/services/apexrest//Listing/Units/#{listing_id}")
+    api_get("/services/apexrest/Listing/Units/#{listing_id}")
   end
 
   # get AMI
