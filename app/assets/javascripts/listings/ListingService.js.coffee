@@ -218,6 +218,17 @@ ListingService = ($http, $localStorage, $modal) ->
       # console.log data
     )
 
+  Service.getListingUnits = ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+      if data && data.units
+        console.log(data.units, Service.listing.Units)
+        angular.copy(data.units, Service.listing.Units)
+        # angular.copy(data.ami, Service.AMI)
+        # angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
+    ).error( (data, status, headers, config) ->
+      # console.log data
+    )
+
   return Service
 
 
