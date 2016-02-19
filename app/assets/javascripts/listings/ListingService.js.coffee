@@ -223,10 +223,8 @@ ListingService = ($http, $localStorage, $modal) ->
       if data && data.units
         console.log(data.units, Service.listing.Units)
         angular.copy(data.units, Service.listing.Units)
-        # angular.copy(data.ami, Service.AMI)
-        # angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   return Service
