@@ -82,33 +82,14 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.eligibilityHouseholdSize = ->
     Service.eligibility_filters.household_size
 
-  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
-  Service.occupancyForUnitType = (unit_type = '') ->
-    if unit_type == 'Studio'
-      min = 1
-      max = 2
-    else
-      # pull out the # of rooms e.g. 1 from "1 Bedroom"
-      rooms = parseInt(unit_type.substr(0,1)) || 1
-      min = rooms
-      max = (rooms * 2) + 1
-    return [min, max]
-
-  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
   Service.occupancyMinMax = (listing) ->
-    minMax = []
-    if listing.Units
-      listing.Units.forEach (unit) ->
-        unitMinMax = Service.occupancyForUnitType(unit.Unit_Type)
-        if minMax.length == 0
-          # initialize by using the first unit's values
-          minMax = unitMinMax
-        else
-          minMax = [Math.min(minMax[0], unitMinMax[0]), Math.max(minMax[1], unitMinMax[1])]
+    minMax = [1,1]
+    if listing.unitSummary
+      listing.unitSummary.forEach (unit_summary) ->
+        minMax = [Math.min(minMax[0], unit_summary.minOccupancy), Math.max(minMax[1], unit_summary.maxOccupancy)]
     return minMax
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
-    # TODO: this should come from the listing object itself (from SF), not our function
     occupancyMinMax = Service.occupancyMinMax(listing)
     incomeLevels = []
     ami.forEach (amiLevel) ->
@@ -221,7 +202,6 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.getListingUnits = ->
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        console.log(data.units, Service.listing.Units)
         angular.copy(data.units, Service.listing.Units)
     ).error( (data, status, headers, config) ->
       return
