@@ -13,6 +13,11 @@ class Api::V1::ListingsController < ApiController
     render json: { listing: @listing }
   end
 
+  def units
+    @units = SalesforceService.units(params[:id])
+    render json: { units: @units }
+  end
+
   def eligibility
     e = params[:eligibility]
     # have to massage params into number values

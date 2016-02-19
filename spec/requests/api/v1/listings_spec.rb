@@ -52,4 +52,34 @@ describe 'Listings API' do
     # check to make sure the Eligibility_Match param is present
     expect(json['listings'].first['Does_Match']).not_to be_nil
   end
+
+  it 'gets AMI results' do
+    VCR.use_cassette('listings/ami') do
+      get '/api/v1/ami.json'
+    end
+
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+
+    # check to make sure the right amount of AMI results are returned
+    # (based on VCR cassette with 9 results)
+    expect(json['ami'].length).to eq(9)
+  end
+
+  it 'gets Unit results for a Listing' do
+    VCR.use_cassette('listings/units') do
+      get '/api/v1/listings/a0X210000004afdEAA/units.json'
+    end
+
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+
+    # check to make sure the right amount of Unit results are returned
+    # (based on VCR listing with 3 units)
+    expect(json['units'].length).to eq(3)
+  end
 end

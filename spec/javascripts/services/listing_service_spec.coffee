@@ -9,6 +9,7 @@ do ->
     fakeListing = getJSONFixture('/listings/0.json')
     fakeAMI = getJSONFixture('/ami.json')
     fakeLotteryPreferences = getJSONFixture('/lottery_preferences.json')
+    fakeUnits = getJSONFixture('/listings/units.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -206,6 +207,17 @@ do ->
         ListingService.getLotteryPreferences()
         httpBackend.flush()
         expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
+        return
+      return
+
+    describe 'Service.getListingUnits', ->
+      it 'assigns Service.listing.Units with the Unit results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+        ListingService.getListingUnits()
+        httpBackend.flush()
+        expect(ListingService.listing.Units).toEqual fakeUnits.units
         return
       return
 

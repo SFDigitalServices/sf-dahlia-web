@@ -47,6 +47,11 @@ class SalesforceService
     api_get("/services/apexrest/ListingDetails/#{id}").first
   end
 
+  # get all units for a given listing
+  def self.units(listing_id)
+    api_get("/services/apexrest/Listing/Units/#{listing_id}")
+  end
+
   # get AMI
   def self.ami(percent = 100)
     results = api_get("/services/apexrest/ami?percent=#{percent}")
