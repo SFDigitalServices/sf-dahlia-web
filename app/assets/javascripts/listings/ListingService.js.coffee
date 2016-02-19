@@ -231,7 +231,6 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.getListingUnits = ->
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        console.log(data.units, Service.listing.Units)
         angular.copy(data.units, Service.listing.Units)
     ).error( (data, status, headers, config) ->
       return
