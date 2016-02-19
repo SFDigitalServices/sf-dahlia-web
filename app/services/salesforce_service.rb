@@ -27,7 +27,7 @@ class SalesforceService
   # `ids` is a comma-separated list of ids
   def self.listings(ids = nil)
     params = ids.present? ? { ids: ids } : nil
-    api_get('/services/apexrest/Listings', params)
+    api_get('/services/apexrest/ListingDetails', params)
   end
 
   # get listings with eligibility matches applied
@@ -36,7 +36,7 @@ class SalesforceService
   #  incomelevel: n
   #  childrenUnder6: n
   def self.eligible_listings(filters)
-    results = api_get('/services/apexrest/Listings', filters)
+    results = api_get('/services/apexrest/ListingDetails', filters)
     # sort the matched listings to the top of the list
     # TODO: replace with sorting on the JS side
     results.partition { |i| i['Does_Match'] }.flatten
@@ -44,7 +44,7 @@ class SalesforceService
 
   # get one detailed listing result by id
   def self.listing(id)
-    api_get("/services/apexrest/Listings/#{id}").first
+    api_get("/services/apexrest/ListingDetails/#{id}").first
   end
 
   # get AMI
@@ -53,9 +53,15 @@ class SalesforceService
     results.sort_by { |i| i['numOfHousehold'] }
   end
 
+  # get LotteryPreferences
+  def self.lottery_preferences
+    # TODO: cache?
+    api_get('/services/apexrest/LotteryPreference')
+  end
+
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
-    massage(response.body)
+    massage(flatten_response(response.body))
   rescue Restforce::UnauthorizedError
     if @retries > 0
       @retries -= 1
@@ -74,6 +80,15 @@ class SalesforceService
     Rails.cache.fetch('salesforce_oauth_token', force: force) do
       auth = client.authenticate!
       auth.access_token
+    end
+  end
+
+  # move all listing attributes to the root level of the hash
+  # this is partly to not have to totally refactor our JS code
+  # after Salesforce changes w/ ListingDetails
+  def self.flatten_response(body)
+    body.collect do |listing|
+      listing.merge(listing['listing'] || {}).except('listing')
     end
   end
 

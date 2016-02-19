@@ -30,4 +30,9 @@ class Api::V1::ListingsController < ApiController
     @ami = SalesforceService.ami(percent)
     render json: { ami: @ami }
   end
+
+  def lottery_preferences
+    @lottery_preferences = SalesforceService.lottery_preferences
+    render json: { lottery_preferences: @lottery_preferences }
+  end
 end

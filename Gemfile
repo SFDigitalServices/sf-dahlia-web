@@ -52,6 +52,7 @@ group :development do
   gem 'spring'
   gem 'better_errors'
   gem 'rack-mini-profiler'
+  gem 'dotenv-heroku', github: 'davidakachaos/dotenv-heroku'
 end
 
 group :development, :test do

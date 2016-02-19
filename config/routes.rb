@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :listings, only: [:index, :show]
       get 'ami' => 'listings#ami'
+      get 'lottery-preferences' => 'listings#lottery_preferences'
       post 'listings-eligibility' => 'listings#eligibility'
     end
   end

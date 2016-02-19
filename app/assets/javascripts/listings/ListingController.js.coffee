@@ -14,6 +14,7 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  $scope.lotteryPreferences = ListingService.lotteryPreferences
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
@@ -129,6 +130,12 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
     $scope.closedListings.indexOf(listing) > -1
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
+
+  $scope.lotteryPreferenceDescription = (name) ->
+    found = ''
+    angular.forEach $scope.lotteryPreferences, (pref) ->
+      found = pref.Description if pref.Name == name
+    found
 
 ############################################################################################
 ######################################## CONFIG ############################################
