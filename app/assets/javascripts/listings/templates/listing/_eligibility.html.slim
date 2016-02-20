@@ -39,8 +39,11 @@ accordion-heading.lead
           .stats-list_value
             | {{unit_summary.unitType}}
         li
-          .stats-list_value
-            | {{unit_summary.minOccupancy}}&mdash;{{unit_summary.maxOccupancy}}
+          .stats-list_value ng-if="unit_summary.unitType == 'Flex'"
+            ' Flex
+            span.value-label people
+          .stats-list_value ng-if="unit_summary.unitType != 'Flex'"
+            ' {{unit_summary.minOccupancy}}&mdash;{{unit_summary.maxOccupancy}}
             span.value-label  people
 
 
