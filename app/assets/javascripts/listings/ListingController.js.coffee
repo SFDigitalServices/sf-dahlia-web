@@ -17,20 +17,6 @@ ListingController = ($scope, $state, $sce, $sanitize, Carousel, SharedService, L
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
-
-  # --- Carousel ---
-  $scope.carouselHeight = 200
-  $scope.adjustCarouselHeight = (elem) ->
-    $scope.carouselHeight = elem[0].offsetHeight
-  $scope.Carousel = Carousel
-  # TODO: replace with actual listing images
-  # testing multiple listing images
-  $scope.listing.images = [
-    $scope.listing.Building_URL,
-    $scope.listing.Building_URL,
-    $scope.listing.Building_URL,
-  ]
-
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
 
@@ -143,6 +129,19 @@ ListingController = ($scope, $state, $sce, $sanitize, Carousel, SharedService, L
     $scope.closedListings.indexOf(listing) > -1
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
+
+  # --- Carousel ---
+  $scope.carouselHeight = 300
+  $scope.Carousel = Carousel
+  $scope.adjustCarouselHeight = (elem) ->
+    $scope.$apply ->
+      $scope.carouselHeight = elem[0].offsetHeight
+
+  $scope.listingImages = (listing) ->
+    # TODO: update when we are getting multiple images from Salesforce
+    # right now it's just an array of one
+    [$scope.imageURL(listing)]
+
 
 ############################################################################################
 ######################################## CONFIG ############################################
