@@ -14,6 +14,7 @@ ListingService = ($http, $localStorage, $modal) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
+  Service.lotteryPreferences = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -137,7 +138,7 @@ ListingService = ($http, $localStorage, $modal) ->
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.getListings = () ->
@@ -153,7 +154,7 @@ ListingService = ($http, $localStorage, $modal) ->
       listings = if data and data.listings then data.listings else []
       Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.getListingsWithEligibility = ->
@@ -167,7 +168,7 @@ ListingService = ($http, $localStorage, $modal) ->
       listings = (if data and data.listings then data.listings else [])
       Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.groupListings = (listings) ->
@@ -196,7 +197,7 @@ ListingService = ($http, $localStorage, $modal) ->
       angular.copy(listings, Service.listings)
       Service.checkFavorites() if checkFavorites
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   # Business logic for determining if a listing is open
@@ -217,7 +218,24 @@ ListingService = ($http, $localStorage, $modal) ->
         angular.copy(data.ami, Service.AMI)
         angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
+    )
+
+  Service.getLotteryPreferences = ->
+    angular.copy([], Service.lotteryPreferences)
+    $http.get('/api/v1/lottery-preferences.json').success((data, status, headers, config) ->
+      if data && data.lottery_preferences
+        angular.copy(data.lottery_preferences, Service.lotteryPreferences)
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getListingUnits = ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+      if data && data.units
+        angular.copy(data.units, Service.listing.Units)
+    ).error( (data, status, headers, config) ->
+      return
     )
 
   return Service

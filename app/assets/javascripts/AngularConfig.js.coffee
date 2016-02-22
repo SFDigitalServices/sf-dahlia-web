@@ -75,7 +75,8 @@ angular.module('dahlia.controllers',['ngSanitize'])
           ListingService.getListing($stateParams.id).then ->
             # trigger this asynchronously, allowing the listing page to load first
             setTimeout(ListingService.getListingAMI)
-
+            setTimeout(ListingService.getLotteryPreferences)
+            setTimeout(ListingService.getListingUnits)
         ]
     })
     .state('dahlia.favorites', {
