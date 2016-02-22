@@ -156,13 +156,8 @@ do ->
 
       describe 'goToIncomeCalculator', ->
         it 'calls function to store current filters into ListingService',->
-          scope.goToIncomeCalculator('subsection')
+          scope.goToIncomeCalculator()
           expect(fakeListingService.setEligibilityFilters).toHaveBeenCalledWith(scope.filters)
-          return
-
-        it 'changes state to dahlia.income-calculator.{subsection}', ->
-          scope.goToIncomeCalculator('subsection')
-          expect(state.go).toHaveBeenCalledWith('dahlia.income-calculator.subsection')
           return
         return
   return
