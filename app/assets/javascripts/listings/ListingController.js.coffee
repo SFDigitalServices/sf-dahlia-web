@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, $filter, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -32,10 +32,14 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (units) ->
-    # TODO: actually find min/max
-    # if units.length == 1
-    units[0].Unit_Square_Footage
+  $scope.unitAreaRange = (unit_summary) ->
+    if unit_summary.minSquareFt != unit_summary.maxSquareFt
+      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
+    else
+      unit_summary.minSquareFt
+
+  $scope.unitsByType = (unit_type) ->
+    $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
 
   $scope.unitBMRMinMonthlyRange = (units) ->
     # TODO: actually find min/max
@@ -92,6 +96,9 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   $scope.eligibilityIncomeTotal = ->
     ListingService.eligibilityIncomeTotal()
 
+  $scope.eligibilityChildrenUnder6 = ->
+    ListingService.eligibilityChildrenUnder6()
+
   $scope.listingApplicationClosed = (listing) ->
     today = new Date
     appDueDate = new Date(listing.Application_Due_Date)
@@ -141,7 +148,7 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'SharedService', 'ListingService']
 
 angular
   .module('dahlia.controllers')

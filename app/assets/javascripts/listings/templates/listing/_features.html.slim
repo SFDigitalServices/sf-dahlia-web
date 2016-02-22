@@ -8,74 +8,74 @@ accordion-heading
 .content.content-section.clearfix
   .content-panel.wide
     .row.collapse.padding-top
-      .small-6.columns
-        span.content-label.t-small Neighborhood
+      .small-6.columns ng-if="listing.Neighborhood"
+        span.content-label.t-small
+          | Neighborhood
         p
           | {{listing.Neighborhood}}
-      .small-6.columns
-        span.content-label.t-small.c-steel Built
+      .small-6.columns ng-if="listing.Year_Built"
+        span.content-label.t-small.c-steel
+          | Built
         p
           | {{listing.Year_Built}}
-    .row.collapse.margin-bottom
+    .row.collapse.margin-bottom ng-if="listing.Amenities"
       .small-12.columns
-        span.content-label.t-small Property Amenities
+        span.content-label.t-small
+          | Property Amenities
       .row.collapse
         p ng-bind-html="listing.Amenities | nl2br"
-    .row.collapse
+    .row.collapse ng-if="listing.Accessibility"
       .small-12.columns
-        span.content-label.t-small Accessibility
+        span.content-label.t-small
+          | Accessibility
       .row.collapse
         p ng-bind-html="listing.Accessibility | nl2br"
           | {{listing.Accessibility}}
   .content-panel.wide
     h5.t-sans.content-label.t-small Unit Features
-    div ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
-      .unit-features.stats-card.stats-toggle.toggler ng-click="toggleTable(unit_type)" ng-class="isActiveTable(unit_type)"
-        ul.unit-stats.stats-list.double.medium-quad.has-toggle
-          li
-            span.stats-list_value
-              | {{unit_type}}
-          li
-            span.stats-list_value.highlight
-              | {{units.length}}
-              span.value-label
-                ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          li
-            span.t-small
-              | Accessible
-          li
-            span.stats-list_value.highlight
-              | {{unitAreaRange(units)}}
-              span.value-label
-                |  square feet
-          span.ui-control.ui-icon.ui-small
-            svg
-              use xlink:href="#i-arrow-down"
-        .stats-table--stack ng-show="isActiveTable(unit_type)"
-          ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(unit_type)" ng-repeat="unit in units"
-            li
-              span.stats-list_label.bottom Unit Number
-              .stats-list_value
-                | {{unit.Unit_Number}}
-            li
-              span.stats-list_label.bottom Area
-              .stats-list_value
-                | {{unit.Unit_Square_Footage}} square feet
-            li
-              span.stats-list_label.bottom Bathrooms
-              .stats-list_value
-                | {{unit.Number_of_Bathrooms}}
-            li
-              span.stats-list_label.bottom Floor
-              .stats-list_value
-                | {{unit.Unit_Floor}}
-            / li
-            /   span.stats-list_label.bottom Building
-            /   .stats-list_value South Tower
-            li.stat-full
-              span.stats-list_label.bottom Acccessibilty
-              .stats-list_value
-                | {{unit.Other_Accessibility_Information}}
+    .unit-features.stats-card.stats-toggle.toggler ng-repeat="unit_summary in listing.unitSummary" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
+      ul.unit-stats.stats-list.double.medium-quad.has-toggle
+        li
+          span.stats-list_value
+            | {{unit_summary.unitType}}
+        li
+          span.stats-list_value.highlight
+            | {{unit_summary.totalUnits}}
+            span.value-label
+              ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+        li
+          span.t-small
+            | Accessible
+        li
+          span.stats-list_value.highlight
+            | {{unitAreaRange(unit_summary)}}
+            span.value-label
+              |  square feet
+        span.ui-control.ui-icon.ui-small
+          svg
+            use xlink:href="#i-arrow-down"
+      .stats-table--stack ng-show="isActiveTable(unit_summary.unitType)"
+        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
+          li ng-if="unit.Unit_Number"
+            span.stats-list_label.bottom Unit Number
+            .stats-list_value
+              | {{unit.Unit_Number}}
+          li ng-if="unit.Unit_Square_Footage"
+            span.stats-list_label.bottom Area
+            .stats-list_value
+              | {{unit.Unit_Square_Footage}} square feet
+          li ng-if="unit.Number_of_Bathrooms"
+            span.stats-list_label.bottom Bathrooms
+            .stats-list_value
+              | {{unit.Number_of_Bathrooms}}
+          li ng-if="unit.Unit_Floor"
+            span.stats-list_label.bottom Floor
+            .stats-list_value
+              | {{unit.Unit_Floor}}
+          li.stat-full ng-if="unit.Other_Accessibility_Information"
+            span.stats-list_label.bottom Acccessibilty
+            .stats-list_value
+              | {{unit.Other_Accessibility_Information}}
 
   .content-panel.wide
     .content-panel--expanded.bg-dust

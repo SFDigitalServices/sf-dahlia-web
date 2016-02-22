@@ -94,7 +94,12 @@ angular.module('dahlia.controllers',['ngSanitize'])
       url: '/'
       views:
         'container@':
+          controller: 'ListingController'
           templateUrl: 'pages/templates/welcome.html'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListings()
+        ]
     })
     .state('dahlia.welcome-chinese', {
       url: '/welcome-chinese'

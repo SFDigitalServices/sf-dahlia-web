@@ -1,7 +1,10 @@
 .property-card
   figure.property-card_figure
     .property-card_container
-      img.property-card_thumb ng-src="{{imageURL(listing)}}"
+      a ui-sref="dahlia.listing({id: listing.Id})"
+        img.property-card_thumb alt="Listing Name:{{listing.Building_Name}},
+          Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="
+            link"
       a.property-card_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
