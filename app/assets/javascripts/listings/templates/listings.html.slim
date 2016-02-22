@@ -12,16 +12,21 @@ header.lead-header.bg-attention-tint
 section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
   .row
     .medium-12.columns
-      p.no-margin
-        ' Showing Matches for
+      p.t-micro.c-charcoal.no-margin
+        | Showing matches for
+      p
         strong
           ' {{eligibilityHouseholdSize()}}
-          ' {{eligibilityHouseholdSize() == 1 ? 'person' : 'people'}}*
-        ' and
+          ' {{eligibilityHouseholdSize() == 1 ? 'person' : 'people'}}
+        span ng-if="eligibilityChildrenUnder6() && eligibilityChildrenUnder6() > 0"
+          ' (including
+          strong
+            ' {{eligibilityChildrenUnder6()}}
+            ' {{eligibilityChildrenUnder6() == 1 ? 'child' : 'children'}}
+          ' under 6)
+        ' at
         strong
-          ' {{eligibilityIncomeTotal() | currency : $ : 0}}/{{eligibilityIncomeTimeframe()}}
-      p.t-micro.c-charcoal
-        | * Occupancy shown does not include children under 6.
+          ' {{eligibilityIncomeTotal() | currency : $ : 0}} a {{eligibilityIncomeTimeframe()}}
 
 / Notification: No listings with Open Applications
 section.row ng-if="!openListings.length"

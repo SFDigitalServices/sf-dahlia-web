@@ -101,4 +101,10 @@ accordion-heading.lead
           | Criminal Background
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-c.content
+          p
+            | Qualified applicants with criminal history will be considered for
+              housing in compliance with
+            a.no-padding href="http://sf-hrc.org/sites/sf-hrc.org/files/
+              Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf" Article 49
+            |  of the San Francisco Police Code: Fair Chance Ordinance.
           p ng-bind-html="listing.Criminal_History | nl2br"

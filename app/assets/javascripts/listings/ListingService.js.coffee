@@ -78,9 +78,11 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.eligibilityIncomeTotal = ->
     parseFloat(Service.eligibility_filters.income_total)
 
-
   Service.eligibilityHouseholdSize = ->
     Service.eligibility_filters.household_size
+
+  Service.eligibilityChildrenUnder6 = ->
+    Service.eligibility_filters.children_under_6
 
   Service.occupancyMinMax = (listing) ->
     minMax = [1,1]
