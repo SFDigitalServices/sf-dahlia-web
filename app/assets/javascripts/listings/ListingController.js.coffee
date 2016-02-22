@@ -91,6 +91,9 @@ ListingController = ($scope, $state, $sce, $sanitize, SharedService, ListingServ
   $scope.eligibilityIncomeTotal = ->
     ListingService.eligibilityIncomeTotal()
 
+  $scope.eligibilityChildrenUnder6 = ->
+    ListingService.eligibilityChildrenUnder6()
+
   $scope.listingApplicationClosed = (listing) ->
     today = new Date
     appDueDate = new Date(listing.Application_Due_Date)

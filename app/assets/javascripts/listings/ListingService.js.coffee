@@ -78,9 +78,11 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.eligibilityIncomeTotal = ->
     parseFloat(Service.eligibility_filters.income_total)
 
-
   Service.eligibilityHouseholdSize = ->
     Service.eligibility_filters.household_size
+
+  Service.eligibilityChildrenUnder6 = ->
+    Service.eligibility_filters.children_under_6
 
   # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
   Service.occupancyForUnitType = (unit_type = '') ->
