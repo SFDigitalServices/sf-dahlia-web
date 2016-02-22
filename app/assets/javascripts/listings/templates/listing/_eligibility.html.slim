@@ -33,34 +33,19 @@ accordion-heading.lead
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
       p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+    .stats-card ng-repeat="unit_summary in listing.unitSummary"
+      ul.stats-list.tall.double
+        li
+          .stats-list_value
+            | {{unit_summary.unitType}}
+        li
+          .stats-list_value ng-if="unit_summary.unitType == 'Flex'"
+            ' Flex
+            span.value-label people
+          .stats-list_value ng-if="unit_summary.unitType != 'Flex'"
+            ' {{unit_summary.minOccupancy}}&mdash;{{unit_summary.maxOccupancy}}
+            span.value-label  people
 
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | Studio
-        li
-          .stats-list_value
-            | 1&mdash;2
-            span.value-label  people
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | 1 Bedroom
-        li
-          .stats-list_value
-            | 1&mdash;3
-            span.value-label  people
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | 2 Bedroom
-        li
-          .stats-list_value
-            | 2&mdash;5
-            span.value-label  people
 
   .content-panel.wide.lined
     header.margin-bottom
@@ -118,7 +103,7 @@ accordion-heading.lead
         #panel2a-c.content
           p
             | Qualified applicants with criminal history will be considered for
-              housing in compliance with 
+              housing in compliance with
             a.no-padding href="http://sf-hrc.org/sites/sf-hrc.org/files/
               Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf" Article 49
             |  of the San Francisco Police Code: Fair Chance Ordinance.

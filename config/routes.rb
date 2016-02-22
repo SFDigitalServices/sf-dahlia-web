@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   ## --- API namespacing
   namespace :api do
     namespace :v1 do
-      resources :listings, only: [:index, :show]
+      resources :listings, only: [:index, :show] do
+        member do
+          get 'units'
+        end
+      end
       get 'ami' => 'listings#ami'
       post 'listings-eligibility' => 'listings#eligibility'
     end

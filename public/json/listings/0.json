@@ -1,5 +1,14 @@
 {
   "listing": {
+    "unitSummary": [{
+      "unitType": "Studio",
+      "totalUnits": 1,
+      "minSquareFt": 700,
+      "minOccupancy": 1,
+      "maxSquareFt": 700,
+      "maxOccupancy": 2,
+      "listingID": "a0X210000004amREAQ"
+    }],
     "attributes": {
       "type": "Listing",
       "url": "/services/data/v35.0/sobjects/Listing/a0X210000004amREAQ"
