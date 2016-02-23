@@ -162,8 +162,7 @@ ListingService = ($http, $localStorage, $modal) ->
         else
           Service.openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing.Application_Due_Date)
-        # TODO: checking w/ MSol / Patrick if this is a valid check for lotteryResults
-        if listing.Lottery_Summary
+        if listing.Lottery_Results
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)

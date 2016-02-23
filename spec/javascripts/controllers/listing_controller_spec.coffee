@@ -55,10 +55,4 @@ do ->
         return
       return
 
-    describe '$scope.lotteryResultsAvailable', ->
-      it 'checks that lottery results are available', ->
-        # fakeListing has lottery results
-        expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
-        return
-      return
   return
