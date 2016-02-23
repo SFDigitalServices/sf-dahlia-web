@@ -82,4 +82,19 @@ describe 'Listings API' do
     # (based on VCR listing with 3 units)
     expect(json['units'].length).to eq(3)
   end
+
+  it 'gets Lottery Results for a Listing' do
+    VCR.use_cassette('listings/lottery_results') do
+      get '/api/v1/listings/a0X210000000IMLEA2/lottery_results.json'
+    end
+
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+
+    # check to make sure the right amount of Lottery results are returned
+    # (based on VCR listing with 20 results)
+    expect(json['lottery_results'].length).to eq(20)
+  end
 end

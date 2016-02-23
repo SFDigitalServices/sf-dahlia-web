@@ -1016,6 +1016,7 @@
     "Application_Due_Date": "2015-11-25",
     "Property_URL": "http://i.imgur.com/rXTkV4i.jpg",
     "Id": "a0WU000000BmpBdMAJ",
+    "Lottery_Summary": "the lottery happened.",
     "Lottery_Members": [{
       "attributes": {
         "type": "Lottery_Member",

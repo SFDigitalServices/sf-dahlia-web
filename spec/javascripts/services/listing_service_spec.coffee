@@ -8,8 +8,8 @@ do ->
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
     fakeAMI = getJSONFixture('/ami.json')
-    fakeLotteryPreferences = getJSONFixture('/lottery_preferences.json')
-    fakeUnits = getJSONFixture('/listings/units.json')
+    fakeUnits = getJSONFixture('/listings/0_units.json')
+    fakeLotteryResults = getJSONFixture('/listings/0_lottery_results.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -197,20 +197,11 @@ do ->
         return
       return
 
-    describe 'Service.getLotteryPreferences', ->
+    describe 'Service.getListingUnits', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
         return
-      it 'assigns Service.lotteryPreferences with the results', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryPreferences
-        ListingService.getLotteryPreferences()
-        httpBackend.flush()
-        expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
-        return
-      return
-
-    describe 'Service.getListingUnits', ->
       it 'assigns Service.listing.Units with the Unit results', ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
@@ -218,6 +209,21 @@ do ->
         ListingService.getListingUnits()
         httpBackend.flush()
         expect(ListingService.listing.Units).toEqual fakeUnits.units
+        return
+      return
+
+    describe 'Service.getLotteryResults', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.Lottery_Members with the Lottery Member results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryResults
+        ListingService.getLotteryResults()
+        httpBackend.flush()
+        expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
         return
       return
 

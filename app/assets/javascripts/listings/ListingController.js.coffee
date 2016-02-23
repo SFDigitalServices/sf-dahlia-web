@@ -110,7 +110,8 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, SharedService, Li
     lotteryDate <= today
 
   $scope.lotteryResultsAvailable = (listing) ->
-    listing.Lottery_Members && listing.Lottery_Members.length > 0
+    # TODO: checking w/ MSol / Patrick if this is a valid check for lotteryResults
+    !! listing.Lottery_Summary
 
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()

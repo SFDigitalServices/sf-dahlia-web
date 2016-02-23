@@ -77,6 +77,7 @@ angular.module('dahlia.controllers',['ngSanitize'])
             setTimeout(ListingService.getListingAMI)
             setTimeout(ListingService.getLotteryPreferences)
             setTimeout(ListingService.getListingUnits)
+            setTimeout(ListingService.getLotteryResults)
         ]
     })
     .state('dahlia.favorites', {

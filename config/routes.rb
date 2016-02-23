@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :listings, only: [:index, :show] do
         member do
           get 'units'
+          get 'lottery_results'
         end
       end
       get 'ami' => 'listings#ami'

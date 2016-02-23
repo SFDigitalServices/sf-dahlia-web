@@ -64,6 +64,11 @@ class SalesforceService
     api_get('/services/apexrest/LotteryPreference')
   end
 
+  # get Lottery Results (aka Lottery_Members)
+  def self.lottery_results(listing_id)
+    api_get("/services/apexrest/LotteryMember/#{listing_id}")
+  end
+
   def self.api_get(endpoint, params = nil)
     response = oauth_client.get(endpoint, params)
     massage(flatten_response(response.body))

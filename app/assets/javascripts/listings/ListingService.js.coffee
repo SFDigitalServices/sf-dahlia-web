@@ -162,9 +162,8 @@ ListingService = ($http, $localStorage, $modal) ->
         else
           Service.openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing.Application_Due_Date)
-        # TODO: check if this is the right field once we're getting it from Salesforce in
-        # the /listings endpoint
-        if listing.Lottery_Members
+        # TODO: checking w/ MSol / Patrick if this is a valid check for lotteryResults
+        if listing.Lottery_Summary
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
@@ -212,9 +211,18 @@ ListingService = ($http, $localStorage, $modal) ->
     )
 
   Service.getListingUnits = ->
+    # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        angular.copy(data.units, Service.listing.Units)
+        Service.listing.Units = data.units
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getLotteryResults = ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_results").success((data, status, headers, config) ->
+      if data && data.lottery_results
+        Service.listing.Lottery_Members = data.lottery_results
     ).error( (data, status, headers, config) ->
       return
     )
