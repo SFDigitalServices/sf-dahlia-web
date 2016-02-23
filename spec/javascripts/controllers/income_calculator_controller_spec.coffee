@@ -2,7 +2,6 @@ do ->
   'use strict'
   describe 'IncomeCalculatorController', ->
 
-    jasmine.getJSONFixtures().fixturesPath = '/public/json'
     scope = undefined
     state = undefined
     fakeIncomeCalculatorService = undefined

@@ -2,14 +2,13 @@ do ->
   'use strict'
   describe 'ListingService', ->
 
-    jasmine.getJSONFixtures().fixturesPath = '/public/json'
     ListingService = undefined
     httpBackend = undefined
-    fakeListings = getJSONFixture('/listings.json')
-    fakeListing = getJSONFixture('/listings/0.json')
-    fakeAMI = getJSONFixture('/ami.json')
-    fakeUnits = getJSONFixture('/listings/0_units.json')
-    fakeLotteryResults = getJSONFixture('/listings/0_lottery_results.json')
+    fakeListings = getJSONFixture('listings-api-index.json')
+    fakeListing = getJSONFixture('listings-api-show.json')
+    fakeAMI = getJSONFixture('listings-api-ami.json')
+    fakeUnits = getJSONFixture('listings-api-units.json')
+    fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -42,23 +41,20 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
         return
-      it 'assigns Service.openListings with an array of all listings', ->
+      it 'assigns ListingService listing buckets with grouped arrays of listings', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
         ListingService.getListings()
         httpBackend.flush()
-        expect(ListingService.openListings.length).toEqual 1
-        return
-      it 'assigns Service.closedListings with an array of all listings', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
-        expect(ListingService.closedListings.length).toEqual 2
-        return
-      it 'assigns Service.lotteryResultsListings with an array of all listings', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
-        expect(ListingService.lotteryResultsListings.length).toEqual 1
+        combinedLength =
+          ListingService.openListings.length +
+          ListingService.closedListings.length +
+          ListingService.lotteryResultsListings.length;
+        expect(combinedLength).toEqual fakeListings.listings.length
+
+        openLength =
+          ListingService.openMatchListings.length +
+          ListingService.openNotMatchListings.length +
+        expect(openLength).toEqual ListingService.openListings.length
         return
       return
 
