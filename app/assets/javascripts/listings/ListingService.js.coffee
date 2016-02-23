@@ -123,11 +123,6 @@ ListingService = ($http, $localStorage, $modal) ->
     )
 
   Service.getListings = () ->
-    angular.copy([], Service.openListings)
-    angular.copy([], Service.openMatchListings)
-    angular.copy([], Service.openNotMatchListings)
-    angular.copy([], Service.closedListings)
-    angular.copy([], Service.lotteryResultsListings)
     # check for default state
     if Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
@@ -153,6 +148,11 @@ ListingService = ($http, $localStorage, $modal) ->
     )
 
   Service.groupListings = (listings) ->
+    angular.copy([], Service.openListings)
+    angular.copy([], Service.openMatchListings)
+    angular.copy([], Service.openNotMatchListings)
+    angular.copy([], Service.closedListings)
+    angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
       if Service.listingIsOpen(listing.Application_Due_Date)
         # All Open Listings Array
