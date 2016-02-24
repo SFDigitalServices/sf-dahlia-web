@@ -1,7 +1,20 @@
 .property-hero
   figure.property-hero_figure
     div.property-hero_container
-      img.property-hero_thumb src="{{imageURL(listing)}}"
+      ng-carousel ng-carousel-name="hero-carousel" ng-style="{height: carouselHeight + 'px'}"
+        slidecontainer
+          slide ng-repeat="image in ::listingImages(listing) track by $index"
+            img.property-hero_thumb(adjust-carousel-height ng-src="{{image}}")
+        .carousel-arrow.carousel-arrow-left
+          button ng-click="Carousel.get('hero-carousel').previous()"
+            span.ui-icon.ui-static.ui-large.i-white
+              svg
+                use xlink:href="#i-left"
+        .carousel-arrow.carousel-arrow-right
+          button ng-click="Carousel.get('hero-carousel').next()"
+            span.ui-icon.ui-static.ui-large.i-white
+              svg
+                use xlink:href="#i-right"
       a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
