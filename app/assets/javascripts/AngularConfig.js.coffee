@@ -15,11 +15,12 @@
   'angular.filter',
   'angulartics',
   'angulartics.google.analytics',
+  'angular-carousel',
 ]
 
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
-angular.module('dahlia.controllers',[])
+angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
 
 # allow trailing slashes and don't force case sensitivity on routes
 @dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
@@ -75,7 +76,9 @@ angular.module('dahlia.controllers',[])
           ListingService.getListing($stateParams.id).then ->
             # trigger this asynchronously, allowing the listing page to load first
             setTimeout(ListingService.getListingAMI)
-
+            setTimeout(ListingService.getLotteryPreferences)
+            setTimeout(ListingService.getListingUnits)
+            setTimeout(ListingService.getLotteryResults)
         ]
     })
     .state('dahlia.favorites', {
@@ -93,7 +96,12 @@ angular.module('dahlia.controllers',[])
       url: '/'
       views:
         'container@':
+          controller: 'ListingController'
           templateUrl: 'pages/templates/welcome.html'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListings()
+        ]
     })
     .state('dahlia.welcome-chinese', {
       url: '/welcome-chinese'
@@ -181,7 +189,7 @@ angular.module('dahlia.controllers',[])
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
   if !!(window.history && history.pushState)
-    $locationProvider.html5Mode(true)
+    $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->

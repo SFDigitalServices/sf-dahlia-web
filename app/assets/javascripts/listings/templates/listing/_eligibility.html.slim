@@ -33,34 +33,19 @@ accordion-heading.lead
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
       p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+    .stats-card ng-repeat="unit_summary in listing.unitSummary"
+      ul.stats-list.tall.double
+        li
+          .stats-list_value
+            | {{unit_summary.unitType}}
+        li
+          .stats-list_value ng-if="unit_summary.unitType == 'Flex'"
+            ' Flex
+            span.value-label people
+          .stats-list_value ng-if="unit_summary.unitType != 'Flex'"
+            ' {{unit_summary.minOccupancy}}&mdash;{{unit_summary.maxOccupancy}}
+            span.value-label  people
 
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | Studio
-        li
-          .stats-list_value
-            | 1&mdash;2
-            span.value-label  people
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | 1 Bedroom
-        li
-          .stats-list_value
-            | 1&mdash;3
-            span.value-label  people
-    .stats-card
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | 2 Bedroom
-        li
-          .stats-list_value
-            | 2&mdash;5
-            span.value-label  people
 
   .content-panel.wide.lined
     header.margin-bottom
@@ -69,24 +54,15 @@ accordion-heading.lead
       p.t-small.c-steel
         | Preference holders will be given highest ranking in the lottery process.
     accordion.accordion-nested.accordion.trigger-left
-      accordion-group.accordion-navigation
+      accordion-group.accordion-navigation ng-repeat="preference in listing.Listing_Lottery_Preferences"
         accordion-heading.accordion-header
-          | Certificate of Preference
+          | {{preference.Lottery_Preference.Name}}
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel1a-a.content
-          p Certificate of Preference holders are primarily households displaced by Agency action in Redevelopment Project Areas during the 1960s and 1970s, but may also include other persons displaced by Agency action.
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Displaced Tenants Housing Preference (Ellis Act)
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel1a-b.content
-          p Ellis Act Housing Preference holders are primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013.
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Live/Work Preference
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel1a-c.content
-          p Households that live or work in San Francisco will be given third highest preference in the lottery ranking process.
+          p
+            / Look up lotteryPreferenceDescription from Service.lotteryPreferences
+            | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
+
   .content-panel.wide.lined
     header.panel-header data-equalizer-watch=""
       h4.t-epsilon.t-sans.margin-bottom--half
@@ -101,22 +77,25 @@ accordion-heading.lead
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation ng-if="listing.Credit_Rating"
         accordion-heading.accordion-header
-          | Credit Rating
+          | Credit History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-a.content
-          p
-            | {{listing.Credit_Rating}}
+          p ng-bind-html="listing.Credit_Rating | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Eviction_History"
         accordion-heading.accordion-header
-          | Renter's History
+          | Rental History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-b.content
-          p
-            | {{listing.Eviction_History}}
+          p ng-bind-html="listing.Eviction_History | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Criminal_History"
         accordion-heading.accordion-header
-          | Criminal History
+          | Criminal Background
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-c.content
           p
-           | {{listing.Criminal_History}}
+            | Qualified applicants with criminal history will be considered for
+              housing in compliance with
+            a.no-padding href="http://sf-hrc.org/sites/sf-hrc.org/files/
+              Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf" Article 49
+            |  of the San Francisco Police Code: Fair Chance Ordinance.
+          p ng-bind-html="listing.Criminal_History | nl2br"

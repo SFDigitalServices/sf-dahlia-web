@@ -12,7 +12,7 @@ class Tests < Thor
     'rspec' => 'bundle exec rspec',
     'coffeelint' => 'coffeelint .',
     'jasmine' => 'SKIP_FIXTURES=true rake jasmine:ci',
-  }
+  }.freeze
 
   desc :check, 'run all CI tasks'
   def check
@@ -37,6 +37,6 @@ class Tests < Thor
   end
 
   def run_command(command)
-    Open3.pipeline("#{command}").first.success?
+    Open3.pipeline(command.to_s).first.success?
   end
 end

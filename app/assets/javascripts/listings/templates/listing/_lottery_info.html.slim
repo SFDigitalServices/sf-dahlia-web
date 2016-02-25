@@ -12,7 +12,7 @@ accordion-heading.lead.accordion-header
         p.post-dealine_alert.margin-top--half
           span.label.alert Applications Closed
 
-    .content-panel.padding-bottom.no-margin.border-bottom ng-if="!lotteryDatePassed(listing)"
+    .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold Public Lottery
       span ng-if="lotteryDateVenueAvailable(listing)"
         h3.t-delta.t-sans.c-steel.no-margin
@@ -23,7 +23,10 @@ accordion-heading.lead.accordion-header
           | {{ listing.Lottery_Venue }}
         p.c-steel
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-        p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+        p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
+          | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+        p.c-steel.t-small ng-if="lotteryDatePassed(listing)"
+          | An open lottery was held on the above date to draw numbers to determine selection.
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
@@ -31,11 +34,11 @@ accordion-heading.lead.accordion-header
       h4.t-small.t-sans.t-bold Lottery Results
       h3.t-delta.t-sans.c-steel
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-      p.c-steel.t-small ng-if="!lotteryResultsAvailable(listing)"
+      p.c-steel.t-small ng-if="!listing.Lottery_Results"
         ' Complete lottery results will be posted here on
         ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
         ' by 5pm.
-      ul.result-set.margin-bottom ng-if="lotteryResultsAvailable(listing)"
+      ul.result-set.margin-bottom ng-if="listing.Lottery_Results"
         span ng-if="listing.Lottery_Members.length <= 20"
           li
             | Rank
@@ -47,7 +50,7 @@ accordion-heading.lead.accordion-header
               | {{ticket.Lottery_Number}}
         a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
 
-      p.c-steel.t-small ng-if="lotteryResultsAvailable(listing) && listing.Lottery_Summary"
+      p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
         | {{listing.Lottery_Summary}}
 

@@ -13,6 +13,16 @@ class Api::V1::ListingsController < ApiController
     render json: { listing: @listing }
   end
 
+  def units
+    @units = SalesforceService.units(params[:id])
+    render json: { units: @units }
+  end
+
+  def lottery_results
+    @lottery_results = SalesforceService.lottery_results(params[:id])
+    render json: { lottery_results: @lottery_results }
+  end
+
   def eligibility
     e = params[:eligibility]
     # have to massage params into number values
@@ -29,5 +39,10 @@ class Api::V1::ListingsController < ApiController
     percent = params[:percent].presence || 100
     @ami = SalesforceService.ami(percent)
     render json: { ami: @ami }
+  end
+
+  def lottery_preferences
+    @lottery_preferences = SalesforceService.lottery_preferences
+    render json: { lottery_preferences: @lottery_preferences }
   end
 end

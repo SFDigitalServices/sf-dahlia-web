@@ -16,10 +16,13 @@
 //= require angular-rails-templates
 //= require angular-pageslide-directive
 //= require ngstorage
+//= require angular-sanitize
 //= require angular-pageslide-directive
 //= require angular-clipboard
 //= require angular-filter
 //= require angulartics
 //= require angulartics-google-analytics
+//= require lifely-angular-carousel
+//= require hammerjs
 //= require ng-currency
 //= require_tree .

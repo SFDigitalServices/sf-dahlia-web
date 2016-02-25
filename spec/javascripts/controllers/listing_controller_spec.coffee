@@ -2,13 +2,12 @@ do ->
   'use strict'
   describe 'ListingController', ->
 
-    jasmine.getJSONFixtures().fixturesPath = '/public/json'
     scope = undefined
     state = undefined
     fakeListingService = undefined
     fakeSharedService = undefined
-    fakeListings = getJSONFixture('/listings.json').listings
-    fakeListing = getJSONFixture('/listings/0.json').listing
+    fakeListings = getJSONFixture('listings-api-index.json').listings
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
@@ -37,7 +36,7 @@ do ->
         return
       return
 
-    describe '$scope.listings', ->
+    describe '$scope.listing', ->
       it 'populates scope with a single listing', ->
         expect(scope.listing).toEqual fakeListing
         return
@@ -55,21 +54,5 @@ do ->
         expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
         return
       return
-
-    describe '$scope.lotteryDatePassed', ->
-      it 'checks for dates that have passed', ->
-        # fakeListing lottery date has passed
-        expect(scope.lotteryDatePassed(fakeListing)).toEqual true
-        return
-      return
-
-    describe '$scope.lotteryResultsAvailable', ->
-      it 'checks that lottery results are available', ->
-        # fakeListing has lottery results
-        expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
-        return
-      return
-
-
 
   return
