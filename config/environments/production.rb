@@ -79,7 +79,9 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security,
   # and use secure cookies.
-  # config.force_ssl = true
+  if ENV['FORCE_SSL']
+    config.force_ssl = true
+  end
 
   if ENV['FORCE_HOUSING_SFGOV_DOMAIN']
     config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
