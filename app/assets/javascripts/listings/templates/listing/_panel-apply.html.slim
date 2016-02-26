@@ -6,19 +6,20 @@
     p.no-margin
       | {{listing.Application_Organization}}
     p.c-steel
-      | {{ listing.Building_Street_Address }},
+      | {{ listing.Application_Street_Address }},
       br
-      | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-    a.t-small.d-block.ui-link.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
+    a.t-small.d-block.ui-link.margin-bottom target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
       span.ui-icon
         svg
           use xlink:href="#i-map"
       | Get Directions
-    p.no-margin Office Hours
-    p.c-steel
-      | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+    div ng-if="listing.Office_Open"
+      p.no-margin Office Hours
+      p.c-steel
+        | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
-    a.button.small.has-icon ng-href="http://www.sfmohcd.org/index.aspx?page=133"
+    a.button.small.has-icon target="_blank" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
       span.ui-icon.ui-link.i-white
         svg
           use xlink:href="#i-download"
