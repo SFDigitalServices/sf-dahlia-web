@@ -15,3 +15,8 @@ angular.module('customFilters', [])
     return '' unless input
     input.toString().trim().replace(/\D/g,'')
   ]
+.filter 'nl2br', ['$filter', ($filter) ->
+  (input) ->
+    return '' unless input
+    input.trim().replace(/\n/g,'<br>')
+  ]

@@ -81,6 +81,17 @@
       "Start_Time": "11:00 AM",
       "End_Time": "1:00 PM"
     }],
+    "Units": [{
+      "attributes": {
+        "type": "Unit",
+        "url": "/services/data/v35.0/sobjects/Unit/a0bU0000018fyJwIAI"
+      },
+      "Listing": "a0WU000000BmpBOMAZ",
+      "Id": "a0bU0000018fyJwIAI",
+      "Unit_Type": "Studio",
+      "BMR_Rent_Monthly": 1030.0,
+      "BMR_Rental_Minimum_Monthly_Income_Needed": 2575.0
+    }],
     "Image_URL": "https://placehold.it/474x316"
   }
 }

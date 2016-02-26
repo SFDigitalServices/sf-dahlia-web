@@ -3,7 +3,7 @@ header.lead-header.shift-offset--bottom.bg-attention-tint
     .large-12.columns
       h1.lead-title.t-beta Estimate Your Eligibility
       .medium-8.columns.no-padding.show-for-medium-up
-        p.t-gamma.t-light Enter details about your household size and income and we'll highlight properties for which you may be eligible.
+        p.t-gamma.t-light Enter details about your household size and income and we'll highlight listings for which you may be eligible.
 
 section.row.shift--top
   .medium-8.columns
@@ -18,63 +18,70 @@ section.row.shift--top
       .row
         .medium-12.columns.margin-bottom
           .border-bottom.padding-bottom
-            h3.t-sans.gamma.margin-bottom--half
-              | How many people are you applying to live with?
-            p.show-for-medium-up.c-steel.margin-bottom--2x Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
-            .form-group.p-relative
-              label ng-class="{ error: inputInvalid('household_size') }"
-                span.eligibility-form_header Household Size
-                select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
-                  option value="" Enter number of people
-                  option value="1" 1 person
-                  option value="2" 2 people
-                  option value="3" 3 people
-                  option value="4" 4 people
-                  option value="5" 5 people
-                  option value="6" 6 people
+            header.margin-bottom
+              h3.t-sans.gamma.margin-bottom--half
+                | How many people are you applying to live with?
+                span.small-info.has-tip.i-block tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="bottom" aria-haspopup="true"
+                  span.ui-icon.ui-medium.i-primary
+                    svg
+                      use xlink:href="#i-info"
+
+              p.show-for-medium-up.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
+
+            .form-group
+              label.form-label.t-caps ng-class="{ error: inputInvalid('household_size') }"
+                | Household Size
+              select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
+                option value="" Enter number of people
+                option value="1" 1 person
+                option value="2" 2 people
+                option value="3" 3 people
+                option value="4" 4 people
+                option value="5" 5 people
+                option value="6" 6 people
               small.error ng-show="inputInvalid('household_size')"
                 | Please enter a household size
-              input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6"
-              label for="include_children_under_6" Yes, this includes children under 6
-              .household-children ng-show="filters.include_children_under_6"
-                label.p-relative ng-class="{ error: inputInvalid('children_under_6') }"
-                  select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
-                    option value="" How many children?
-                    option value="1" 1 child
-                    option value="2" 2 children
-                    option value="3" 3 children
-                    option value="4" 4 children
-                    option value="5" 5 children
-                    option value="6" 6 children
-                    option value="7" 7 children
-                    option value="8" 8 children
-                    option value="9" 9 children
-                    option value="10" 10 children
-                small.error.no-margin ng-show="inputInvalid('children_under_6')"
-                  | Please enter number of children
-              span.show-for-small-only.has-tip.tip-top-right tooltip="Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children over 6 years old" tooltip-trigger="click" tooltip-placement="left" aria-haspopup="true"
-                span.ui-icon.ui-medium.i-primary
-                  svg
-                    use xlink:href="#i-info"
+
+            .form-group.padding-bottom--half
+              .checkbox
+                input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6" ng-change="resetChildrenUnder6()"
+                label for="include_children_under_6" Yes, this includes children under 6
+
+            .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
+              label.sr-only How many children?
+              select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
+                option value="0" How many children?
+                option value="1" 1 child
+                option value="2" 2 children
+                option value="3" 3 children
+                option value="4" 4 children
+                option value="5" 5 children
+                option value="6" 6 children
+                option value="7" 7 children
+                option value="8" 8 children
+                option value="9" 9 children
+                option value="10" 10 children
+              small.error.no-margin ng-show="inputInvalid('children_under_6')"
+                | Please enter number of children
 
       .row.margin-bottom
         .medium-12.columns.padding-top.padding-bottom
           h3.t-sans.gamma
             | Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
-          label.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            span.eligibility-form_header Household Income
-            input name="income_total" ng-model="filters.income_total" ng-currency="" currency-symbol="$" placeholder="Total all of your income sources" type="text" required="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
-              | Edit
-          / <input type="text" placeholder="Total all of your income sources" />
-          / <a href="" class="input-editor button tiny secondary">Edit</a>
+          .form-group.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+            label.form-label.t-caps Household Income
+            .form-income
+              span.label-dollar $
+              input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              a.button.input-editor.tiny.secondary ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
+                | Edit
           small.error ng-show="inputInvalid('income_total')"
-            | Please enter an income amount
-          .radio-group
-            p.d-inline-block.no-margin
+              | Please enter an income amount
+          .radio-group-inline ng-class="{ error: inputInvalid('income_timeframe') }"
+            p.radio-inline
               input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
               label for="per_month" per month
-            p.d-inline-block.no-margin
+            p.radio-inline
               input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
               label for="per_year" per year
             small.error ng-show="inputInvalid('income_timeframe')"
@@ -83,23 +90,11 @@ section.row.shift--top
         .medium-12.columns
           .note.bg-tint.padding.margin-bottom--2x ng-show="!hasCalculatedIncome()"
             p.t-tiny.no-margin
-              ' Note: Your total should include all income sources for each person you plan to live with. If you need help calculating your total, please use the
-              a.a-deep ng-click="goToIncomeCalculator('intro')" Household Income Calculator
-
+              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the
+              a.a-deep ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
-          input.button.expand.radius type="submit" value="View Matching Properties"
+          input.button.expand.radius type="submit" value="View Matching Listings"
         .small-12.medium-6.medium-pull-6.columns
-          a.button.blank.expand.radius ng-click="clearForm()"
+          a.button.ghost-white.expand.radius ng-click="clearForm()"
             | Reset
-
-
-
-/ -- TBD -- for another story...
-/ hr.hr-5
-/ section.row
-/   .medium-5.medium-centered.columns.text-center
-/     .notification-block.block.text-center
-/       h3 Get Notified By Email
-/       p We'll send you an email when the next property that matches you becomes available
-/       button.button.secondary.a-center Get Notified by Email

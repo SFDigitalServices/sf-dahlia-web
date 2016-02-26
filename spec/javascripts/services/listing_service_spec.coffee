@@ -7,8 +7,8 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('/listings.json')
     fakeListing = getJSONFixture('/listings/0.json')
+    fakeAMI = getJSONFixture('/ami.json')
     $localStorage = undefined
-    $modal = undefined
     modalMock = undefined
     requestURL = undefined
 
@@ -28,6 +28,10 @@ do ->
     describe 'Service setup', ->
       it 'initializes defaults', ->
         expect(ListingService.listings).toEqual []
+        return
+      return
+      it 'initializes defaults', ->
+        expect(ListingService.openListings).toEqual []
         return
       return
 
@@ -69,6 +73,30 @@ do ->
         return
       return
 
+    describe 'Service.getListingAMI', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.AMI with the AMI results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        ListingService.getListingAMI()
+        httpBackend.flush()
+        expect(ListingService.AMI).toEqual fakeAMI.ami
+        return
+      return
+
+    describe 'Service.maxIncomeLevelsFor', ->
+      it 'returns incomeLevels with occupancy, yearly, monthly values', ->
+        listing = fakeListing.listing
+        ami = fakeAMI.ami
+        incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
+        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
+        expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
+        expect(incomeLevels.length).toEqual 2
+        return
+      return
+
     describe 'Service.toggleFavoriteListing', ->
       describe 'When a listing is favorited', ->
         expectedResult = [1]
@@ -83,7 +111,7 @@ do ->
           expect($localStorage.favorites).toEqual expectedResult
           expect($localStorage.favorites).toEqual ListingService.favorites
           return
-        it 'should updated Service.favorites', ->
+        it 'should update Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
           return
         return
@@ -117,6 +145,23 @@ do ->
         it 'updates Service.favorites with appropriate data', ->
           ListingService.toggleFavoriteListing 1
           expect(ListingService.favorites).toEqual [1]
+          return
+        return
+      describe 'When a favorite is not found', ->
+        beforeEach ->
+          ListingService.favorites = $localStorage.favorites = []
+        afterEach ->
+          httpBackend.verifyNoOutstandingExpectation()
+          httpBackend.verifyNoOutstandingRequest()
+        it 'removes it from favorites', ->
+          # this listing does not exist
+          ListingService.toggleFavoriteListing '123xyz'
+          expect(ListingService.favorites).toEqual ['123xyz']
+          stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+          # this should remove the non-existent favorite
+          ListingService.getFavoriteListings()
+          httpBackend.flush()
+          expect(ListingService.favorites).toEqual []
           return
         return
       return

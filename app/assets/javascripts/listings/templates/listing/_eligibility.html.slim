@@ -101,22 +101,23 @@ accordion-heading.lead
     accordion.accordion-nested.accordion.trigger-left
       accordion-group.accordion-navigation ng-if="listing.Credit_Rating"
         accordion-heading.accordion-header
-          | Credit Rating
+          | Credit History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-a.content
-          p
-            | {{listing.Credit_Rating}}
+          p ng-bind-html="listing.Credit_Rating | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Eviction_History"
         accordion-heading.accordion-header
-          | Renter's History
+          | Rental History
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-b.content
-          p
-            | {{listing.Eviction_History}}
+          p ng-bind-html="listing.Eviction_History | nl2br"
       accordion-group.accordion-navigation ng-if="listing.Criminal_History"
         accordion-heading.accordion-header
-          | Criminal History
+          | Criminal Background
           ng-include src="'shared/templates/_arrow-down.html'"
         #panel2a-c.content
           p
-           | {{listing.Criminal_History}}
+            | Qualified applicants with criminal history will be considered for
+              housing in compliance with <a class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
+            |  of the San Francisco Police Code: Fair Chance Ordinance.
+          p ng-bind-html="listing.Criminal_History | nl2br"

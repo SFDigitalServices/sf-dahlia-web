@@ -37,7 +37,7 @@ do ->
         return
       return
 
-    describe '$scope.listings', ->
+    describe '$scope.listing', ->
       it 'populates scope with a single listing', ->
         expect(scope.listing).toEqual fakeListing
         return
@@ -69,7 +69,4 @@ do ->
         expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
         return
       return
-
-
-
   return

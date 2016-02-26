@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, Carousel, SharedService, ListingService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -117,6 +117,9 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.eligibilityIncomeTotal = ->
     ListingService.eligibilityIncomeTotal()
 
+  $scope.eligibilityChildrenUnder6 = ->
+    ListingService.eligibilityChildrenUnder6()
+
   $scope.listingApplicationClosed = (listing) ->
     today = new Date
     appDueDate = new Date(listing.Application_Due_Date)
@@ -156,11 +159,24 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
 
+  # --- Carousel ---
+  $scope.carouselHeight = 300
+  $scope.Carousel = Carousel
+  $scope.adjustCarouselHeight = (elem) ->
+    $scope.$apply ->
+      $scope.carouselHeight = elem[0].offsetHeight
+
+  $scope.listingImages = (listing) ->
+    # TODO: update when we are getting multiple images from Salesforce
+    # right now it's just an array of one
+    [$scope.imageURL(listing)]
+
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', 'Carousel', 'SharedService', 'ListingService']
 
 angular
   .module('dahlia.controllers')
