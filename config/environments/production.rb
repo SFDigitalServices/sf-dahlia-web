@@ -84,7 +84,7 @@ Rails.application.configure do
   end
 
   if ENV['FORCE_HOUSING_SFGOV_DOMAIN']
-    config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 %r{.*}, '//housing.sfgov.org$&', if: Proc.new { |rack_env|
         rack_env['SERVER_NAME'] != 'housing.sfgov.org'
       }
