@@ -12,7 +12,7 @@ accordion-heading.lead.accordion-header
         p.post-dealine_alert.margin-top--half
           span.label.alert Applications Closed
 
-    .content-panel.padding-bottom.no-margin.border-bottom ng-if="!lotteryDatePassed(listing)"
+    .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold Public Lottery
       span ng-if="lotteryDateVenueAvailable(listing)"
         h3.t-delta.t-sans.c-steel.no-margin
@@ -23,7 +23,10 @@ accordion-heading.lead.accordion-header
           | {{ listing.Lottery_Venue }}
         p.c-steel
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-        p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+        p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
+          | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+        p.c-steel.t-small ng-if="lotteryDatePassed(listing)"
+          | An open lottery was held on the above date to draw numbers to determine selection.
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 

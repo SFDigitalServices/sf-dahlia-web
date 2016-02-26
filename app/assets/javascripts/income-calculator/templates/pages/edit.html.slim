@@ -11,7 +11,7 @@ section.row.shift--top
         .row.margin-bottom
           .large-12.columns
             button.button.expand.has-icon style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="{secondary: !additionalIncome, tertiary:additionalIncome}"
-              span.ui-icon.ui-link
+              span.ui-icon.ui-link.i-deep
                 svg
                   use xlink:href="#i-plus"
               | Add additional income source
@@ -22,4 +22,4 @@ section.row.shift--top
           .small-12.medium-6.medium-push-6.columns
             button.button.expand ui-sref="dahlia.income-calculator.summary" Done
           .small-12.medium-6.medium-pull-6.columns
-            button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
+            button.button.ghost-white.expand ui-sref="dahlia.eligibility-estimator" Cancel

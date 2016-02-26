@@ -1,7 +1,10 @@
 .property-card
   figure.property-card_figure
     .property-card_container
-      img.property-card_thumb ng-src="{{imageURL(listing)}}"
+      a ui-sref="dahlia.listing({id: listing.Id})"
+        img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, 
+          Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="
+            link" 
       a.property-card_like ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
@@ -32,10 +35,10 @@
           | Application Due {{listing.Application_Due_Date | dateSuffix}}
         p.t-small.c-alert ng-if="isClosedListing(listing)"
           | Applications Closed {{listing.Application_Due_Date | dateSuffix}}
-        p.t-small.c-steel ng-if="isClosedListing(listing) && listing.Lottery_Date"
-          | Lottery Results posted {{listing.Lottery_Date | dateSuffix}}
-        p.c-success ng-if="isLotteryResultsListing(listing) && listing.Lottery_Date"
-          | Lottery Results posted {{listing.Lottery_Date | dateSuffix}}
+        p.t-small.c-steel ng-if="isClosedListing(listing) && listing.Lottery_Results_Date"
+          | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
+        p.c-success ng-if="isLotteryResultsListing(listing) && listing.Lottery_Results_Date"
+          | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
       .property-card_action
         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
           | See Details
