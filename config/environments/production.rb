@@ -41,10 +41,6 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
-  # Force all access to the app over SSL, use Strict-Transport-Security,
-  # and use secure cookies.
-  # config.force_ssl = true
-
   # Set to :debug to see everything in the log.
   config.log_level = :info
 
@@ -80,4 +76,18 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   # config.active_record.dump_schema_after_migration = false
+
+  # Force all access to the app over SSL, use Strict-Transport-Security,
+  # and use secure cookies.
+  if ENV['FORCE_SSL']
+    config.force_ssl = true
+  end
+
+  if ENV['FORCE_HOUSING_SFGOV_DOMAIN']
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      r301 %r{.*}, '//housing.sfgov.org$&', if: Proc.new { |rack_env|
+        rack_env['SERVER_NAME'] != 'housing.sfgov.org'
+      }
+    end
+  end
 end

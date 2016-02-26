@@ -78,6 +78,32 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     "#{Building_Street_Address}#{Building_City} " +
     "#{Building_State}#{Building_Zip_Code}"
 
+  # TODO: refactor with the above function!
+  $scope.formattedApplicationAddress = (listing) ->
+    # If Street address is undefined, then return false for display and google map lookup
+    if listing.Application_Street_Address == undefined
+      return
+    # If other fields are undefined, proceed, with special string formatting
+    if listing.Application_Street_Address != undefined
+      Application_Street_Address = listing.Application_Street_Address + ', '
+    else
+      Application_Street_Address = ''
+    if listing.Application_City != undefined
+      Application_City = listing.Application_City
+    else
+      Application_City = ''
+    if listing.Application_State != undefined
+      Application_State = listing.Application_State + ', '
+    else
+      Application_State = ''
+    if listing.Application_Postal_Code != undefined
+      Application_Postal_Code = listing.Application_Postal_Code
+    else
+      Application_Postal_Code = ''
+    "#{Application_Street_Address}#{Application_City} " +
+    "#{Application_State}#{Application_Postal_Code}"
+
+
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
     api_key = 'AIzaSyCW_oXspwGsSlthw-MrPxjNvdH56El1pjM'

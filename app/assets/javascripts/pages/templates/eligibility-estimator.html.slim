@@ -73,7 +73,7 @@ section.row.shift--top
             .form-income
               span.label-dollar $
               input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-              button.input-editor.button.tiny.secondary ng-click="goToIncomeCalculator('edit')" ng-show="hasCalculatedIncome()"
+              a.button.input-editor.tiny.secondary ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
                 | Edit
           small.error ng-show="inputInvalid('income_total')"
               | Please enter an income amount
@@ -91,7 +91,7 @@ section.row.shift--top
           .note.bg-tint.padding.margin-bottom--2x ng-show="!hasCalculatedIncome()"
             p.t-tiny.no-margin
               ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the
-              a.a-deep ng-click="goToIncomeCalculator('intro')" Household Income Calculator
+              a.a-deep ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
       .row.text-center
         .small-12.medium-6.medium-push-6.columns
           input.button.expand.radius type="submit" value="View Matching Listings"
