@@ -37,6 +37,9 @@ gem 'restforce', require: false
 # handy ruby extensions
 gem "facets", require: false
 
+# for redirecting
+gem 'rack-rewrite', '~> 1.5.0'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
