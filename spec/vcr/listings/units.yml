@@ -1,0 +1,91 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://test.salesforce.com/services/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40mohcd.com.full&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Feb 2016 18:13:33 GMT
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      Set-Cookie:
+      - BrowserId=tNeaBEamR22-nF8w_02fkA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        19-Apr-2016 18:13:33 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"00D210000000OEp!AQMAQIgmn.UUVT2mti6p3Mf6.EOyqHHJ6fMzO9y8OC5MS4ghCPobNtNZYsyE3EIGOT8yj7Rdpt.nA52KXaIqUVdX29huqHcg","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1455905613454","signature":"RfgAJ6ElnJt6mn7kBdTtBtD06fXLmsiwCmdtdQnIrOs="}'
+    http_version:
+  recorded_at: Fri, 19 Feb 2016 18:13:33 GMT
+- request:
+    method: get
+    uri: https://cs26.salesforce.com/services/apexrest/Listing/Units/a0X210000004afdEAA
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00D210000000OEp!AQMAQIgmn.UUVT2mti6p3Mf6.EOyqHHJ6fMzO9y8OC5MS4ghCPobNtNZYsyE3EIGOT8yj7Rdpt.nA52KXaIqUVdX29huqHcg
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 19 Feb 2016 18:13:33 GMT
+      Set-Cookie:
+      - BrowserId=2XFiX16pSV6vdYgS1xuXfg;Path=/;Domain=.salesforce.com;Expires=Tue,
+        19-Apr-2016 18:13:33 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Unit_Type__c":"1
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":"985","Unit_Number__c":"500","Unit_Floor__c":"5","Other_Accessibility_Information__c":"accessibility
+        information","Number_of_Bathrooms__c":1.00,"Id":"a0W21000000DWmGEAW"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Unit_Type__c":"2
+        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50,"Unit_Square_Footage__c":"787","Unit_Number__c":"Unit
+        302","Unit_Floor__c":"3","Other_Accessibility_Information__c":"oipoi","Number_of_Bathrooms__c":2.00,"Id":"a0W21000000DWmLEAW"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":"1212","Unit_Number__c":"Test
+        Nov30","Unit_Floor__c":"3","Other_Accessibility_Information__c":"accessibility","Number_of_Bathrooms__c":2.00,"Id":"a0W21000000DYdKEAW"}]'
+    http_version:
+  recorded_at: Fri, 19 Feb 2016 18:13:34 GMT
+recorded_with: VCR 3.0.1

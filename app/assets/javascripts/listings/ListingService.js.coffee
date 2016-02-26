@@ -14,6 +14,7 @@ ListingService = ($http, $localStorage, $modal) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
+  Service.lotteryPreferences = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -84,33 +85,14 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.eligibilityChildrenUnder6 = ->
     Service.eligibility_filters.children_under_6
 
-  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
-  Service.occupancyForUnitType = (unit_type = '') ->
-    if unit_type == 'Studio'
-      min = 1
-      max = 2
-    else
-      # pull out the # of rooms e.g. 1 from "1 Bedroom"
-      rooms = parseInt(unit_type.substr(0,1)) || 1
-      min = rooms
-      max = (rooms * 2) + 1
-    return [min, max]
-
-  # TODO: would be ideal to replace this with a reliable value from Salesforce rather than computing here
   Service.occupancyMinMax = (listing) ->
-    minMax = []
-    if listing.Units
-      listing.Units.forEach (unit) ->
-        unitMinMax = Service.occupancyForUnitType(unit.Unit_Type)
-        if minMax.length == 0
-          # initialize by using the first unit's values
-          minMax = unitMinMax
-        else
-          minMax = [Math.min(minMax[0], unitMinMax[0]), Math.max(minMax[1], unitMinMax[1])]
+    minMax = [1,1]
+    if listing.unitSummary
+      listing.unitSummary.forEach (unit_summary) ->
+        minMax = [Math.min(minMax[0], unit_summary.minOccupancy), Math.max(minMax[1], unit_summary.maxOccupancy)]
     return minMax
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
-    # TODO: this should come from the listing object itself (from SF), not our function
     occupancyMinMax = Service.occupancyMinMax(listing)
     incomeLevels = []
     ami.forEach (amiLevel) ->
@@ -137,15 +119,10 @@ ListingService = ($http, $localStorage, $modal) ->
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.getListings = () ->
-    angular.copy([], Service.openListings)
-    angular.copy([], Service.openMatchListings)
-    angular.copy([], Service.openNotMatchListings)
-    angular.copy([], Service.closedListings)
-    angular.copy([], Service.lotteryResultsListings)
     # check for default state
     if Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
@@ -153,7 +130,7 @@ ListingService = ($http, $localStorage, $modal) ->
       listings = if data and data.listings then data.listings else []
       Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.getListingsWithEligibility = ->
@@ -167,10 +144,15 @@ ListingService = ($http, $localStorage, $modal) ->
       listings = (if data and data.listings then data.listings else [])
       Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   Service.groupListings = (listings) ->
+    angular.copy([], Service.openListings)
+    angular.copy([], Service.openMatchListings)
+    angular.copy([], Service.openNotMatchListings)
+    angular.copy([], Service.closedListings)
+    angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
       if Service.listingIsOpen(listing.Application_Due_Date)
         # All Open Listings Array
@@ -180,9 +162,7 @@ ListingService = ($http, $localStorage, $modal) ->
         else
           Service.openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing.Application_Due_Date)
-        # TODO: check if this is the right field once we're getting it from Salesforce in
-        # the /listings endpoint
-        if listing.Lottery_Members
+        if listing.Lottery_Results
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
@@ -196,7 +176,7 @@ ListingService = ($http, $localStorage, $modal) ->
       angular.copy(listings, Service.listings)
       Service.checkFavorites() if checkFavorites
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
     )
 
   # Business logic for determining if a listing is open
@@ -217,7 +197,33 @@ ListingService = ($http, $localStorage, $modal) ->
         angular.copy(data.ami, Service.AMI)
         angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
     ).error( (data, status, headers, config) ->
-      # console.log data
+      return
+    )
+
+  Service.getLotteryPreferences = ->
+    angular.copy([], Service.lotteryPreferences)
+    $http.get('/api/v1/lottery-preferences.json').success((data, status, headers, config) ->
+      if data && data.lottery_preferences
+        angular.copy(data.lottery_preferences, Service.lotteryPreferences)
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getListingUnits = ->
+    # angular.copy([], Service.listing.Units)
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+      if data && data.units
+        Service.listing.Units = data.units
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getLotteryResults = ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_results").success((data, status, headers, config) ->
+      if data && data.lottery_results
+        Service.listing.Lottery_Members = data.lottery_results
+    ).error( (data, status, headers, config) ->
+      return
     )
 
   return Service
