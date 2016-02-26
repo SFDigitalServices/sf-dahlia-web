@@ -2,8 +2,8 @@ require_relative './save_jasmine_fixture'
 
 # Build jasmine fixtures in the rspec classes (like 'describe' blocks)
 module JasmineMacros
-  EXAMPLE_NAME      = 'generate fixture'
-  FIXTURE_DIRECTORY = 'spec/javascripts/fixtures/json'
+  EXAMPLE_NAME      = 'generate fixture'.freeze
+  FIXTURE_DIRECTORY = 'spec/javascripts/fixtures/json'.freeze
 
   def save_fixture(&block)
     it EXAMPLE_NAME do

@@ -10,7 +10,7 @@ AllCops:
     - 'bin/**/*'
     - 'vendor/bundle/**/*'
     - 'node_modules/**/*'
-  RunRailsCops: true
+    - 'config/environments/production.rb'
 
 # We don't care about method length, since we check method cyclomatic
 # complexity.
@@ -21,7 +21,9 @@ Metrics/ClassLength:
 
 # Trailing commas make for clearer diffs because the last line won't appear
 # to have been changed, as it would if it lacked a comma and had one added.
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 
 # Cop supports --auto-correct.
