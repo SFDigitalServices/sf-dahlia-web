@@ -30,6 +30,7 @@ do ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       fakeListingService.setEligibilityFilters = jasmine.createSpy()
+      fakeListingService.resetEligibilityFilters = jasmine.createSpy()
 
       $controller 'EligibilityEstimatorController',
         $scope: scope
@@ -122,9 +123,9 @@ do ->
           expect(scope.filters).toEqual(eligibilityFilterDefaults)
           return
 
-        it 'calls function to store on filters in ListingService', ->
-          expect(fakeListingService.setEligibilityFilters)
-            .toHaveBeenCalledWith(scope.filters)
+        it 'calls function to reset filters in ListingService', ->
+          expect(fakeListingService.resetEligibilityFilters)
+            .toHaveBeenCalled()
           return
 
         it 'calls IncomeCalc Service to reset income sources', ->
