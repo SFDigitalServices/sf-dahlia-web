@@ -55,54 +55,10 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     ListingService.isFavorited(listing_id)
 
   $scope.formattedAddress = (listing) ->
-    # If Street address is undefined, then return false for display and google map lookup
-    if listing.Building_Street_Address == undefined
-      return
-    # If other fields are undefined, proceed, with special string formatting
-    if listing.Building_Street_Address != undefined
-      Building_Street_Address = listing.Building_Street_Address + ', '
-    else
-      Building_Street_Address = ''
-    if listing.Building_City != undefined
-      Building_City = listing.Building_City
-    else
-      Building_City = ''
-    if listing.Building_State != undefined
-      Building_State = listing.Building_State + ', '
-    else
-      Building_State = ''
-    if listing.Building_Zip_Code != undefined
-      Building_Zip_Code = listing.Building_Zip_Code
-    else
-      Building_Zip_Code = ''
-    "#{Building_Street_Address}#{Building_City} " +
-    "#{Building_State}#{Building_Zip_Code}"
+    ListingService.formattedAddress(listing)
 
-  # TODO: refactor with the above function!
   $scope.formattedApplicationAddress = (listing) ->
-    # If Street address is undefined, then return false for display and google map lookup
-    if listing.Application_Street_Address == undefined
-      return
-    # If other fields are undefined, proceed, with special string formatting
-    if listing.Application_Street_Address != undefined
-      Application_Street_Address = listing.Application_Street_Address + ', '
-    else
-      Application_Street_Address = ''
-    if listing.Application_City != undefined
-      Application_City = listing.Application_City
-    else
-      Application_City = ''
-    if listing.Application_State != undefined
-      Application_State = listing.Application_State + ', '
-    else
-      Application_State = ''
-    if listing.Application_Postal_Code != undefined
-      Application_Postal_Code = listing.Application_Postal_Code
-    else
-      Application_Postal_Code = ''
-    "#{Application_Street_Address}#{Application_City} " +
-    "#{Application_State}#{Application_Postal_Code}"
-
+    ListingService.formattedAddress(listing, 'Application')
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
