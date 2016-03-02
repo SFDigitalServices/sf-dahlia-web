@@ -1,4 +1,4 @@
-h2.application-title.t-gamma.padding-bottom Let’s get started on your application for
+h2.application-title.t-gamma.padding-bottom Let's get started on your application for
 .form-group.margin-bottom--2x
   .property-card
     img.property-thumb alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
@@ -10,7 +10,7 @@ h2.application-title.t-gamma.padding-bottom Let’s get started on your applicat
       | {{listing.Developer}}
     p
       ' Application Due
-      | {{listing.Application_Due_Date | dateSuffix}}
+      | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
 
-a.button.expand-small href='#'
+a.button.expand-small ui-sref="dahlia.short-form-application.overview({listing_id: listing.Id})"
   | Get Started

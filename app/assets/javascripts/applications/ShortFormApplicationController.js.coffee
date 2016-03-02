@@ -2,19 +2,25 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShortFormApplicationController = ($scope, ListingService) ->
+ShortFormApplicationController = ($scope, $state, ListingService) ->
   # initialization
   $scope.listing = ListingService.listing
-  console.log($scope.listing)
+  $scope.sections = ['You', 'Household', 'Status', 'Income', 'Review']
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
+
+  $scope.hasNav = ->
+    $state.current.name != 'dahlia.short-form-application.intro'
+
+  $scope.isActiveSection = (section) ->
+    false
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationController.$inject = ['$scope', 'ListingService']
+ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService']
 
 angular
   .module('dahlia.controllers')

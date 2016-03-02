@@ -5,5 +5,10 @@ header.application-header.lead-header.shift-offset--bottom.bg-deep
         | Application: {{listing.Building_Name}}
 section.row.shift--top
   .medium-8.columns
-    form.application-form.form-card
+    form.application-form.form-card ng-class="{'has-nav': hasNav()}"
+      dl.application-form_nav.sub-nav ng-if="hasNav()"
+        dd ng-repeat="section in sections" ng-class="{active: isActiveSection(section)}"
+          a href="#"
+            | {{section}}
+
       div(ui-view="container")
