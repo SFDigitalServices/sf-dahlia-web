@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal) ->
+ListingService = ($http, $localStorage, $modal, $q) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -143,6 +143,9 @@ ListingService = ($http, $localStorage, $modal) ->
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
+    if Service.listing && Service.listing.Id == _id
+      # return a resolved promise if we already have the listing
+      return $q.when(Service.listing)
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
@@ -261,7 +264,7 @@ ListingService = ($http, $localStorage, $modal) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q']
 
 angular
   .module('dahlia.services')
