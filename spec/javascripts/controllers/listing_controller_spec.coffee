@@ -55,4 +55,24 @@ do ->
         return
       return
 
+    describe '$scope.lotteryDatePassed', ->
+      it 'checks for dates that have passed', ->
+        # fakeListing lottery date has passed
+        expect(scope.lotteryDatePassed(fakeListing)).toEqual true
+        return
+      return
+
+    describe '$scope.lotteryResultsAvailable', ->
+      it 'checks that lottery results are available', ->
+        # fakeListing has lottery results
+        expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
+        return
+      return
+
+    describe '$scope.toggleApplicationOptions', ->
+      it 'toggles showApplicationOptions', ->
+        scope.toggleApplicationOptions
+        expect(scope.showApplicationOptions).toEqual true
+        return
+      return
   return
