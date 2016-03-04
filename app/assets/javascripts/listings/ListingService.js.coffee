@@ -69,22 +69,6 @@ ListingService = ($http, $localStorage, $modal) ->
     else
       parseFloat(Service.eligibility_filters.income_total)
 
-  Service.eligibilityIncomeTimeframe = ->
-    # just return 'month' or 'year' and get rid of the 'per_'
-    if Service.eligibility_filters.income_timeframe
-      Service.eligibility_filters.income_timeframe.split('per_')[1]
-    else
-      ''
-
-  Service.eligibilityIncomeTotal = ->
-    parseFloat(Service.eligibility_filters.income_total)
-
-  Service.eligibilityHouseholdSize = ->
-    Service.eligibility_filters.household_size
-
-  Service.eligibilityChildrenUnder6 = ->
-    Service.eligibility_filters.children_under_6
-
   Service.occupancyMinMax = (listing) ->
     minMax = [1,1]
     if listing.unitSummary

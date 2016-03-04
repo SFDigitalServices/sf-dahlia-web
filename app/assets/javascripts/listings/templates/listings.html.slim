@@ -16,17 +16,17 @@ section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
         | Showing matches for
       p
         strong
-          ' {{eligibilityHouseholdSize()}}
-          ' {{eligibilityHouseholdSize() == 1 ? 'person' : 'people'}}
-        span ng-if="eligibilityChildrenUnder6() && eligibilityChildrenUnder6() > 0"
+          ' {{eligibilityFilters.household_size}}
+          ' {{eligibilityFilters.household_size == 1 ? 'person' : 'people'}}
+        span ng-if="eligibilityFilters.children_under_6 && eligibilityFilters.children_under_6 > 0"
           ' (including
           strong
-            ' {{eligibilityChildrenUnder6()}}
-            ' {{eligibilityChildrenUnder6() == 1 ? 'child' : 'children'}}
+            ' {{eligibilityFilters.children_under_6}}
+            ' {{eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
           ' under 6)
         ' at
         strong
-          ' {{eligibilityIncomeTotal() | currency : $ : 0}} a {{eligibilityIncomeTimeframe()}}
+          ' {{ eligibilityFilters.income_total | currency : $ : 0}} a {{ eligibilityFilters.income_timeframe | incomeTimeframe }}
 
 / Notification: No listings with Open Applications
 section.row ng-if="!openListings.length"

@@ -18,10 +18,6 @@ do ->
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
       fakeListingService.hasEligibilityFilters = jasmine.createSpy()
-      fakeListingService.eligibilityHouseholdSize = jasmine.createSpy()
-      fakeListingService.eligibilityIncomeTimeframe = jasmine.createSpy()
-      fakeListingService.eligibilityIncomeTotal = jasmine.createSpy()
-      fakeListingService.eligibilityChildrenUnder6 = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       return
     )
@@ -88,26 +84,4 @@ do ->
         expect(fakeListingService.hasEligibilityFilters).toHaveBeenCalled()
         return
       return
-
-    describe '$scope.eligibilityHouseholdSize', ->
-      it 'expects ListingService.eligibilityHouseholdSize to be called', ->
-        scope.eligibilityHouseholdSize()
-        expect(fakeListingService.eligibilityHouseholdSize).toHaveBeenCalled()
-        return
-      return
-
-    describe '$scope.eligibilityIncomeTimeframe', ->
-      it 'expects ListingService.eligibilityIncomeTimeframe to be called', ->
-        scope.eligibilityIncomeTimeframe()
-        expect(fakeListingService.eligibilityIncomeTimeframe).toHaveBeenCalled()
-        return
-      return
-
-    describe '$scope.eligibilityIncomeTimeframe', ->
-      it 'expects ListingService.eligibilityIncomeTimeframe to be called', ->
-        scope.eligibilityIncomeTimeframe()
-        expect(fakeListingService.eligibilityIncomeTimeframe).toHaveBeenCalled()
-        return
-      return
-
   return
