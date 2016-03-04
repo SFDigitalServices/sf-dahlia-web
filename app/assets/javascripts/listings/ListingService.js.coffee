@@ -58,6 +58,9 @@ ListingService = ($http, $localStorage, $modal) ->
   Service.setEligibilityFilters = (filters) ->
     angular.copy(filters, Service.eligibility_filters)
 
+  Service.resetEligibilityFilters = ->
+    angular.copy(Service.eligibility_filter_defaults, Service.eligibility_filters)
+
   Service.hasEligibilityFilters = ->
     !! (Service.eligibility_filters.income_total &&
         Service.eligibility_filters.income_timeframe &&

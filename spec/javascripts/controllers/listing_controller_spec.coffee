@@ -4,8 +4,9 @@ do ->
 
     scope = undefined
     state = undefined
-    fakeListingService = undefined
-    fakeSharedService = undefined
+    fakeListingService = {}
+    fakeIncomeCalculatorService = {}
+    fakeSharedService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -17,7 +18,10 @@ do ->
         favorites: fakeListingFavorites
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
+      fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
+      fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
+      $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
 
@@ -49,9 +53,20 @@ do ->
       return
 
     describe '$scope.toggleFavoriteListing', ->
-      it 'expect ListingService.function to be called', ->
+      it 'expects ListingService.function to be called', ->
         scope.toggleFavoriteListing 1
         expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.clearEligibilityFilters', ->
+      it 'expects ListingService.function to be called', ->
+        scope.clearEligibilityFilters()
+        expect(fakeListingService.resetEligibilityFilters).toHaveBeenCalled()
+        return
+      it 'expects IncomeCalculatorService.function to be called', ->
+        scope.clearEligibilityFilters()
+        expect(fakeIncomeCalculatorService.resetIncomeSources).toHaveBeenCalled()
         return
       return
 
