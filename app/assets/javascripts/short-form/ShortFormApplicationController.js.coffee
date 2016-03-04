@@ -14,7 +14,13 @@ ShortFormApplicationController = ($scope, $state, ListingService) ->
     $state.current.name != 'dahlia.short-form-application.intro'
 
   $scope.isActiveSection = (section) ->
-    false
+    switch $state.current.name
+      when 'dahlia.short-form-application.name'
+      # when 'dahlia.short-form-application.name'
+      # when 'dahlia.short-form-application.name'
+        section == 'You'
+      else
+        false
 
 ############################################################################################
 ######################################## CONFIG ############################################

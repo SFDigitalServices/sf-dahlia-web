@@ -1,0 +1,27 @@
+.form-count
+  | 1 of 5
+h2.application-title.t-gamma.padding-bottom
+  | We'll get started by getting some information about you. First, what's your name?
+.form-group
+  h3.form-label Your Name
+  label.sr-only for="textInput"  First Name
+  input#textInput name="textInput" placeholder="First Name" type="text"
+  label.sr-only for="textInput"  Last Name
+  input#textInput name="textInput" placeholder="Last Name" type="text"
+.form-group.margin-bottom--2x
+  h3.form-label Your Date of Birth
+  .form-date-of-birth.row.collapse
+    .form-group-month.large-2.columns
+      label.sr-only for="date_of_birth_1"  Month
+      input max="12" min="1" name="date_of_birth_1" placeholder="MM" type="number"
+    .form-group-day.large-2.columns
+      label.sr-only for="date_of_birth_2"  Day
+      input max="31" min="1" name="date_of_birth_2" placeholder="DD" type="number"
+    .form-group-year.large-2.columns.end
+      label.sr-only for="date_of_birth_3"  Year
+      input max="2016" min="1900" name="date_of_birth_3" placeholder="YYYY" type="number"
+.button-stack--paginate.text-center.row.padding-top
+  .small-12.medium-6.medium-push-6.columns
+    button.button.expand Next
+  .small-12.medium-6.medium-pull-6.columns
+    button.button.ghost-white.expand Save and finish later
