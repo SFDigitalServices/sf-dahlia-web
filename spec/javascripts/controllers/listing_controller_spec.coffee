@@ -17,6 +17,11 @@ do ->
         favorites: fakeListingFavorites
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
+      fakeListingService.hasEligibilityFilters = jasmine.createSpy()
+      fakeListingService.eligibilityHouseholdSize = jasmine.createSpy()
+      fakeListingService.eligibilityIncomeTimeframe = jasmine.createSpy()
+      fakeListingService.eligibilityIncomeTotal = jasmine.createSpy()
+      fakeListingService.eligibilityChildrenUnder6 = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       return
     )
@@ -62,17 +67,47 @@ do ->
         return
       return
 
-    describe '$scope.lotteryResultsAvailable', ->
-      it 'checks that lottery results are available', ->
-        # fakeListing has lottery results
-        expect(scope.lotteryResultsAvailable(fakeListing)).toEqual true
-        return
-      return
-
     describe '$scope.toggleApplicationOptions', ->
       it 'toggles showApplicationOptions', ->
-        scope.toggleApplicationOptions
+        scope.showApplicationOptions = false
+        scope.toggleApplicationOptions()
         expect(scope.showApplicationOptions).toEqual true
         return
       return
+
+    describe '$scope.isFavorited', ->
+      it 'expects ListingService.isFavorited to be called', ->
+        scope.isFavorited(fakeListing)
+        expect(fakeListingService.isFavorited).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.hasEligibilityFilters', ->
+      it 'expects ListingService.hasEligibilityFilters to be called', ->
+        scope.hasEligibilityFilters()
+        expect(fakeListingService.hasEligibilityFilters).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.eligibilityHouseholdSize', ->
+      it 'expects ListingService.eligibilityHouseholdSize to be called', ->
+        scope.eligibilityHouseholdSize()
+        expect(fakeListingService.eligibilityHouseholdSize).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.eligibilityIncomeTimeframe', ->
+      it 'expects ListingService.eligibilityIncomeTimeframe to be called', ->
+        scope.eligibilityIncomeTimeframe()
+        expect(fakeListingService.eligibilityIncomeTimeframe).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.eligibilityIncomeTimeframe', ->
+      it 'expects ListingService.eligibilityIncomeTimeframe to be called', ->
+        scope.eligibilityIncomeTimeframe()
+        expect(fakeListingService.eligibilityIncomeTimeframe).toHaveBeenCalled()
+        return
+      return
+
   return
