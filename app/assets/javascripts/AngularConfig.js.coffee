@@ -193,7 +193,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       abstract: true
       views:
         'container@':
-          templateUrl: 'applications/templates/short-form-layout.html'
+          templateUrl: 'short-form/templates/layout.html'
           controller: 'ShortFormApplicationController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
@@ -204,13 +204,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       url: '/intro'
       views:
         'container':
-          templateUrl: 'applications/templates/short-form-1-intro.html'
+          templateUrl: 'short-form/templates/a1-intro.html'
     })
     .state('dahlia.short-form-application.overview', {
       url: '/overview'
       views:
         'container':
-          templateUrl: 'applications/templates/short-form-2-overview.html'
+          templateUrl: 'short-form/templates/a2-overview.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
