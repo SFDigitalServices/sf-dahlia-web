@@ -3,9 +3,14 @@ do ->
   describe 'ListingController', ->
 
     scope = undefined
-    state = undefined
+    state = {current: {name: undefined}}
     fakeListingService = undefined
     fakeSharedService = undefined
+    listing = undefined
+    yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -15,6 +20,7 @@ do ->
       'income_total': ''
       'include_children_under_6': false
       'children_under_6': ''
+    hasFilters = false
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -28,9 +34,11 @@ do ->
         favorites: fakeListingFavorites
         maxIncomeLevels: []
         lotteryPreferences: []
+        hasEligibilityFilters: () ->
+          undefined
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
-      fakeListingService.hasEligibilityFilters = jasmine.createSpy()
+      fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       $provide.value 'ListingService', fakeListingService
       return
@@ -114,13 +122,6 @@ do ->
         return
       return
 
-    describe '$scope.lotteryDatePassed', ->
-      it 'checks for dates that have passed', ->
-        # fakeListing lottery date has passed
-        expect(scope.lotteryDatePassed(fakeListing)).toEqual true
-        return
-      return
-
     describe '$scope.isFavorited', ->
       it 'expects ListingService.isFavorited to be called', ->
         scope.isFavorited(fakeListing)
@@ -128,10 +129,174 @@ do ->
         return
       return
 
-    describe '$scope.hasEligibilityFilters', ->
+    describe '$scope.igibilityFilters', ->
       it 'expects ListingService.hasEligibilityFilters to be called', ->
+        fakeListingService.hasEligibilityFilters = jasmine.createSpy()
         scope.hasEligibilityFilters()
         expect(fakeListingService.hasEligibilityFilters).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.listingApplicationClosed', ->
+      describe 'closed listing', ->
+        it 'returns true', ->
+          closedListing = fakeListing
+          closedListing.Application_Due_Date = yesterday
+          expect(scope.listingApplicationClosed(closedListing)).toEqual true
+          return
+        return
+
+      describe 'open listing', ->
+        it 'returns false', ->
+          openListing = fakeListing
+          openListing.Application_Due_Date = tomorrow
+          expect(scope.listingApplicationClosed(openListing)).toEqual false
+          return
+        return
+      return
+
+    describe '$scope.lotteryDatePassed', ->
+      describe 'passed lottery date', ->
+        it 'returns true', ->
+          passedLotListing = fakeListing
+          passedLotListing.Lottery_Date = yesterday
+          expect(scope.lotteryDatePassed(passedLotListing)).toEqual true
+          return
+        return
+
+      describe 'lottery date today', ->
+        it 'returns true', ->
+          todayLotListing = fakeListing
+          todayLotListing.Lottery_Date = new Date()
+          expect(scope.lotteryDatePassed(todayLotListing)).toEqual true
+          return
+        return
+
+      describe 'lottery date tomorrow', ->
+        it 'returns false', ->
+          futureLotListing = fakeListing
+          futureLotListing.Lottery_Date = tomorrow
+          expect(scope.lotteryDatePassed(futureLotListing)).toEqual false
+          return
+        return
+
+    describe '$scope.openLotteryResultsModal', ->
+      it 'expect ListingService.openLotteryResultsModal to be called', ->
+        scope.openLotteryResultsModal()
+        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.lotteryDateVenueAvailable', ->
+      beforeEach ->
+        listing = fakeListing
+        listing.Lottery_Date = new Date()
+        listing.Lottery_Venue = "Exygy"
+        listing.Lottery_Street_Address = "312 Deetz, Shasta"
+
+      describe 'listing lottery date, venue and lottery address all have values', ->
+        it 'returns true', ->
+          expect(scope.lotteryDateVenueAvailable(listing)).toEqual true
+          return
+        return
+
+      describe 'listing lottery date missing', ->
+        it 'returns false', ->
+          listing.Lottery_Date = undefined
+          expect(scope.lotteryDateVenueAvailable(listing)).toEqual false
+          return
+        return
+
+      describe 'listing venue missing', ->
+        it 'returns false', ->
+          listing.Lottery_Venue = undefined
+          expect(scope.lotteryDateVenueAvailable(listing)).toEqual false
+          return
+        return
+
+      describe 'listing lottery address missing', ->
+        it 'returns false', ->
+          listing.Lottery_Street_Address = undefined
+          expect(scope.lotteryDateVenueAvailable(listing)).toEqual false
+          return
+        return
+      return
+
+    describe '$scope.showMatches', ->
+      describe 'dahlia.listings state with filters available', ->
+        it 'returns true', ->
+          state.current.name = 'dahlia.listings'
+          spyOn(fakeListingService, 'hasEligibilityFilters').and.returnValue(true)
+          expect(scope.showMatches()).toEqual true
+          return
+        return
+
+      describe 'filters unavailable', ->
+        it 'returns false', ->
+          state.current.name = 'dahlia.listings'
+          spyOn(fakeListingService, 'hasEligibilityFilters').and.returnValue(false)
+          expect(scope.showMatches()).toEqual false
+          return
+        return
+
+      describe 'state is not dahlia.listings', ->
+        it 'returns false', ->
+          state.current.name = 'dahlia.home'
+          spyOn(fakeListingService, 'hasEligibilityFilters').and.returnValue(true)
+          expect(scope.showMatches()).toEqual false
+          return
+        return
+      return
+
+    describe '$scope.isOpenListing', ->
+      describe 'open listing', ->
+        it 'returns true',->
+          scope.openListings = [fakeListing]
+          expect(scope.isOpenListing(fakeListing)).toEqual true
+          return
+        return
+
+      describe 'closed listing', ->
+        it 'returns false',->
+          scope.openListings = []
+          expect(scope.isOpenListing(fakeListing)).toEqual false
+          return
+        return
+      return
+
+    describe '$scope.isOpenMatchListing', ->
+      describe 'open matched listing', ->
+        it 'returns true',->
+          scope.openMatchListings = [fakeListing]
+          expect(scope.isOpenMatchListing(fakeListing)).toEqual true
+          return
+        return
+      return
+
+    describe '$scope.isOpenNotMatchListing', ->
+      describe 'open not matched listing', ->
+        it 'returns true',->
+          scope.openNotMatchListings = [fakeListing]
+          expect(scope.isOpenNotMatchListing(fakeListing)).toEqual true
+          return
+        return
+      return
+
+    describe '$scope.isClosedListing', ->
+      describe 'closed listing', ->
+        it 'returns true',->
+          scope.closedListings = [fakeListing]
+          expect(scope.isClosedListing(fakeListing)).toEqual true
+          return
+        return
+      return
+
+    describe '$scope.isLotteryResultsListing', ->
+      describe 'lottery results listing', ->
+        it 'returns true',->
+          scope.lotteryResultsListings = [fakeListing]
+          expect(scope.isLotteryResultsListing(fakeListing)).toEqual true
+          return
         return
       return
   return
