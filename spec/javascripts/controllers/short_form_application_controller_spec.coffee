@@ -4,6 +4,7 @@ do ->
     scope = undefined
     state = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeShortFormApplicationService = { application: applicant: {} }
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -20,6 +21,7 @@ do ->
       $controller 'ShortFormApplicationController',
         $scope: scope
         $state: state
+        ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
 
