@@ -4,16 +4,13 @@ do ->
 
     scope = undefined
     state = {current: {name: undefined}}
-    fakeListingService = undefined
-    fakeIncomeCalculatorService = {}
-    fakeSharedService = undefined
     listing = undefined
     yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
-    state = undefined
     fakeListingService = {}
+    fakeIncomeCalculatorService = {}
     fakeSharedService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
