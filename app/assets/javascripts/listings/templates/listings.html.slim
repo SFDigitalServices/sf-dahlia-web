@@ -4,29 +4,37 @@ header.lead-header.bg-attention-tint
       h1.lead-title.t-beta Below Market Rate Rentals
       .medium-8.columns.no-padding
         p.t-gamma.t-light.show-for-medium-up Units in new developments priced at a “below market rate” are affordable to lower or middle income households.
-        p.no-margin
-          a.button.small ui-sref="dahlia.eligibility-estimator"
-            | {{ hasEligibilityFilters() ? 'Edit Eligibility' : 'Estimate Eligibility' }}
 
 /// Matches results bar
-section.results-bar.bg-mist.padding-top ng-if="hasEligibilityFilters()"
+section.results-bar.bg-mist.padding-top.padding-bottom
   .row
-    .medium-12.columns
-      p.t-micro.c-charcoal.no-margin
-        | Showing matches for
-      p
-        strong
-          ' {{eligibilityFilters.household_size}}
-          ' {{eligibilityFilters.household_size == 1 ? 'person' : 'people'}}
-        span ng-if="eligibilityFilters.children_under_6 && eligibilityFilters.children_under_6 > 0"
-          ' (including
-          strong
-            ' {{eligibilityFilters.children_under_6}}
-            ' {{eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
-          ' under 6)
-        ' at
-        strong
-          ' {{ eligibilityFilters.income_total | currency : $ : 0}} a {{ eligibilityFilters.income_timeframe | incomeTimeframe }}
+    .medium-12.columns ng-if="!hasEligibilityFilters()"
+      a.button.small ui-sref="dahlia.eligibility-estimator"
+        | Estimate Eligibility
+    .medium-12.columns ng-if="hasEligibilityFilters()"
+      .results-wrap
+        .left
+          span.t-small.t-steel
+            | Showing matches for
+          br
+          p.no-margin
+            strong
+              ' {{eligibilityHouseholdSize()}}
+              ' {{eligibilityHouseholdSize() == 1 ? 'person' : 'people'}}
+            span ng-if="eligibilityChildrenUnder6() && eligibilityChildrenUnder6() > 0"
+              ' (including
+              strong
+                ' {{eligibilityChildrenUnder6()}}
+                ' {{eligibilityChildrenUnder6() == 1 ? 'child' : 'children'}}
+              ' under 6)
+            ' at
+            strong
+              ' {{eligibilityIncomeTotal() | currency : $ : 0}} a {{eligibilityIncomeTimeframe()}}
+        .button-set
+          a.button.tiny ui-sref="dahlia.eligibility-estimator"
+            | Edit Eligibility
+          a.button.ghost-white.tiny ng-click="clearEligibilityFilters()"
+            | Clear
 
 / Notification: No listings with Open Applications
 section.row ng-if="!openListings.length"

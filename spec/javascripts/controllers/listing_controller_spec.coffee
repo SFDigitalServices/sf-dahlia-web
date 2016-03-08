@@ -5,12 +5,16 @@ do ->
     scope = undefined
     state = {current: {name: undefined}}
     fakeListingService = undefined
+    fakeIncomeCalculatorService = {}
     fakeSharedService = undefined
     listing = undefined
     yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
+    state = undefined
+    fakeListingService = {}
+    fakeSharedService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -40,7 +44,10 @@ do ->
       fakeListingService.isFavorited = jasmine.createSpy()
       fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
+      fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
+      fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
+      $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
 
@@ -108,7 +115,7 @@ do ->
       return
 
     describe '$scope.toggleFavoriteListing', ->
-      it 'expect ListingService.function to be called', ->
+      it 'expects ListingService.function to be called', ->
         scope.toggleFavoriteListing 1
         expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
         return
@@ -299,4 +306,16 @@ do ->
           return
         return
       return
+
+    describe '$scope.clearEligibilityFilters', ->
+      it 'expects ListingService.function to be called', ->
+        scope.clearEligibilityFilters()
+        expect(fakeListingService.resetEligibilityFilters).toHaveBeenCalled()
+        return
+      it 'expects IncomeCalculatorService.function to be called', ->
+        scope.clearEligibilityFilters()
+        expect(fakeIncomeCalculatorService.resetIncomeSources).toHaveBeenCalled()
+        return
+      return
+
   return

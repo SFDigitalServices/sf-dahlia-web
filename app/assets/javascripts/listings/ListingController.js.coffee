@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedService, ListingService, IncomeCalculatorService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -114,6 +114,22 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.hasEligibilityFilters = ->
     ListingService.hasEligibilityFilters()
 
+  $scope.eligibilityHouseholdSize = ->
+    ListingService.eligibilityHouseholdSize()
+
+  $scope.eligibilityIncomeTimeframe = ->
+    ListingService.eligibilityIncomeTimeframe()
+
+  $scope.eligibilityIncomeTotal = ->
+    ListingService.eligibilityIncomeTotal()
+
+  $scope.eligibilityChildrenUnder6 = ->
+    ListingService.eligibilityChildrenUnder6()
+
+  $scope.clearEligibilityFilters = ->
+    ListingService.resetEligibilityFilters()
+    IncomeCalculatorService.resetIncomeSources()
+
   $scope.listingApplicationClosed = (listing) ->
     today = new Date
     appDueDate = new Date(listing.Application_Due_Date)
@@ -173,7 +189,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'Carousel', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'Carousel', 'SharedService', 'ListingService', 'IncomeCalculatorService']
 
 angular
   .module('dahlia.controllers')
