@@ -15,7 +15,7 @@ h2.application-title.t-gamma.padding-bottom
  label.form-label.no-margin Your address
  p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
 
- ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'homeAddress'"
+ ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'"
 
  .padding-bottom
    .checkbox ng-click="checkSeparateAddress()"
@@ -25,7 +25,7 @@ h2.application-title.t-gamma.padding-bottom
  label.form-label.no-margin Mailing address
  p.form-note.margin-bottom Provide an address where you can receive updates and materials about your application.
 
- ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailingAddress'"
+ ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'"
 
 .form-group
  label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?
@@ -34,8 +34,7 @@ h2.application-title.t-gamma.padding-bottom
    option value="Tagalog"  Tagalog
    option value="Chinese"  Chinese
 .button-stack--paginate.text-center.row.padding-top
- / .small-12.medium-6.medium-push-6.columns ui-sref="dahlia.short-form-application.alternate-contact"
- .small-12.medium-6.medium-push-6.columns ng-click="determineAlternateContactRequired()"
+ .small-12.medium-6.medium-push-6.columns ng-click="checkIfMailingAddressNeeded();determineAlternateContactRequired()"
    button.button.expand Next
  .small-12.medium-6.medium-pull-6.columns
    button.button.ghost-white.expand Save and finish later

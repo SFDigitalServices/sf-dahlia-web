@@ -6,9 +6,11 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
 
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
+  $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.listing = ListingService.listing
   $scope.sections = [
-    { name: 'You', pages:[ 'name', 'contact', 'alternate-contact', 'alternate-contact-required']},
+    { name: 'You', pages:[
+      'name', 'contact', 'alternate-contact-required','alternate-contact-type', 'alternate-contact-name']},
     { name: 'Household', pages: ['intro'] },
     { name: 'Status', pages: ['intro'] },
     { name: 'Income', pages: ['intro'] },
@@ -37,12 +39,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
 
   $scope.checkSeparateAddress = () ->
     #reset mailing address
-    $scope.applicant.mailingAddress = {}
+    $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
 
   $scope.determineAlternateContactRequired = () ->
     if $scope.applicantHasPhoneAndAddress()
-      $state.go('dahlia.short-form-application.alternate-contact')
+      $state.go('dahlia.short-form-application.alternate-contact-type')
     else
       $state.go('dahlia.short-form-application.alternate-contact-required')
 

@@ -1,21 +1,28 @@
 ShortFormApplicationService = ($localStorage) ->
   Service = {}
   Service.applicationDefaults = {
-    applicant: { language: "English" }
+    applicant: {
+      primary_language: "English",
+      phone_number: null,
+      home_address: { address1: null, city: null, state: null, zip: null },
+      mailing_address: { address1: null, city: null, state: null, zip: null }
+    },
+    alternateContact: {}
   }
 
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
   Service.applicant = Service.application.applicant
+  Service.alternateContact = Service.application.alternateContact
 
   Service.copyHomeToMailingAddress = () ->
-    angular.copy(Service.applicant.homeAddress, Service.applicant.mailingAddress)
+    angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
 
   Service.validMailingAddress = () ->
-    Service.applicant.mailingAddress.address1 &&
-    Service.applicant.mailingAddress.city &&
-    Service.applicant.mailingAddress.state &&
-    Service.applicant.mailingAddress.zip
+    Service.applicant.mailing_address.address1 &&
+    Service.applicant.mailing_address.city &&
+    Service.applicant.mailing_address.state &&
+    Service.applicant.mailing_address.zip
 
   Service.missingPrimaryContactInfo = () ->
     missingInfo = []

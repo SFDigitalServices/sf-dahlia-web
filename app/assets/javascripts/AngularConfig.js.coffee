@@ -228,13 +228,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       url: '/alternate-contact-required'
       views:
         'container':
-          templateUrl: 'short-form/templates/b2a-alternate-contact.html'
+          templateUrl: 'short-form/templates/b2a-alternate-contact-required.html'
     })
-    .state('dahlia.short-form-application.alternate-contact', {
-      url: '/alternate-contact'
+    .state('dahlia.short-form-application.alternate-contact-type', {
+      url: '/alternate-contact-type'
       views:
         'container':
-          templateUrl: 'short-form/templates/b3-alternate-contact.html'
+          templateUrl: 'short-form/templates/b3-alternate-contact-type.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
