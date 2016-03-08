@@ -2,13 +2,14 @@ do ->
   'use strict'
   describe 'ListingService', ->
 
-    jasmine.getJSONFixtures().fixturesPath = '/public/json'
     ListingService = undefined
     httpBackend = undefined
-    fakeListings = getJSONFixture('/listings.json')
-    fakeListing = getJSONFixture('/listings/0.json')
+    fakeListings = getJSONFixture('listings-api-index.json')
+    fakeListing = getJSONFixture('listings-api-show.json')
+    fakeAMI = getJSONFixture('listings-api-ami.json')
+    fakeUnits = getJSONFixture('listings-api-units.json')
+    fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     $localStorage = undefined
-    $modal = undefined
     modalMock = undefined
     requestURL = undefined
 
@@ -30,29 +31,30 @@ do ->
         expect(ListingService.listings).toEqual []
         return
       return
+      it 'initializes defaults', ->
+        expect(ListingService.openListings).toEqual []
+        return
+      return
 
     describe 'Service.getListings', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
         return
-      it 'assigns Service.openListings with an array of all listings', ->
+      it 'assigns ListingService listing buckets with grouped arrays of listings', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
         ListingService.getListings()
         httpBackend.flush()
-        expect(ListingService.openListings.length).toEqual 1
-        return
-      it 'assigns Service.closedListings with an array of all listings', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
-        expect(ListingService.closedListings.length).toEqual 2
-        return
-      it 'assigns Service.lotteryResultsListings with an array of all listings', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
-        expect(ListingService.lotteryResultsListings.length).toEqual 1
+        combinedLength =
+          ListingService.openListings.length +
+          ListingService.closedListings.length +
+          ListingService.lotteryResultsListings.length;
+        expect(combinedLength).toEqual fakeListings.listings.length
+
+        openLength =
+          ListingService.openMatchListings.length +
+          ListingService.openNotMatchListings.length +
+        expect(openLength).toEqual ListingService.openListings.length
         return
       return
 
@@ -66,6 +68,30 @@ do ->
         ListingService.getListing 0
         httpBackend.flush()
         expect(ListingService.listing).toEqual fakeListing.listing
+        return
+      return
+
+    describe 'Service.getListingAMI', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.AMI with the AMI results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        ListingService.getListingAMI()
+        httpBackend.flush()
+        expect(ListingService.AMI).toEqual fakeAMI.ami
+        return
+      return
+
+    describe 'Service.maxIncomeLevelsFor', ->
+      it 'returns incomeLevels with occupancy, yearly, monthly values', ->
+        listing = fakeListing.listing
+        ami = fakeAMI.ami
+        incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
+        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
+        expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
+        expect(incomeLevels.length).toEqual 2
         return
       return
 
@@ -83,7 +109,7 @@ do ->
           expect($localStorage.favorites).toEqual expectedResult
           expect($localStorage.favorites).toEqual ListingService.favorites
           return
-        it 'should updated Service.favorites', ->
+        it 'should update Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
           return
         return
@@ -119,6 +145,23 @@ do ->
           expect(ListingService.favorites).toEqual [1]
           return
         return
+      describe 'When a favorite is not found', ->
+        beforeEach ->
+          ListingService.favorites = $localStorage.favorites = []
+        afterEach ->
+          httpBackend.verifyNoOutstandingExpectation()
+          httpBackend.verifyNoOutstandingRequest()
+        it 'removes it from favorites', ->
+          # this listing does not exist
+          ListingService.toggleFavoriteListing '123xyz'
+          expect(ListingService.favorites).toEqual ['123xyz']
+          stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+          # this should remove the non-existent favorite
+          ListingService.getFavoriteListings()
+          httpBackend.flush()
+          expect(ListingService.favorites).toEqual []
+          return
+        return
       return
 
     describe 'Service.setEligibilityFilters', ->
@@ -147,6 +190,36 @@ do ->
           ListingService.setEligibilityFilters(fakeFilters)
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
           return
+        return
+      return
+
+    describe 'Service.getListingUnits', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.Units with the Unit results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
+        ListingService.getListingUnits()
+        httpBackend.flush()
+        expect(ListingService.listing.Units).toEqual fakeUnits.units
+        return
+      return
+
+    describe 'Service.getLotteryResults', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.Lottery_Members with the Lottery Member results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryResults
+        ListingService.getLotteryResults()
+        httpBackend.flush()
+        expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
         return
       return
 

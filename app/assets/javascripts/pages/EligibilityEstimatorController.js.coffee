@@ -27,7 +27,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     $scope.eligibilityForm.$setPristine()
     $scope.hideAlert = false
     angular.copy($scope.filter_defaults, $scope.filters)
-    ListingService.setEligibilityFilters($scope.filters)
+    ListingService.resetEligibilityFilters()
     IncomeCalculatorService.resetIncomeSources()
 
   $scope.inputInvalid = (name) ->
@@ -45,10 +45,12 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
   $scope.hasCalculatedIncome = ->
     IncomeCalculatorService.calculateTotalYearlyIncome() > 0
 
-  $scope.goToIncomeCalculator = (subsection) ->
+  $scope.goToIncomeCalculator = () ->
     # save our currently entered filters before we move on!
     ListingService.setEligibilityFilters($scope.filters)
-    $state.go("dahlia.income-calculator.#{subsection}")
+
+  $scope.resetChildrenUnder6 = ->
+    $scope.filters.children_under_6 = "0"
 
 
 ############################################################################################

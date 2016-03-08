@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
+ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedService, ListingService, IncomeCalculatorService) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -14,6 +14,8 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  $scope.lotteryPreferences = ListingService.lotteryPreferences
+  $scope.eligibilityFilters = ListingService.eligibility_filters
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
@@ -31,10 +33,14 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (units) ->
-    # TODO: actually find min/max
-    # if units.length == 1
-    units[0].Unit_Square_Footage
+  $scope.unitAreaRange = (unit_summary) ->
+    if unit_summary.minSquareFt != unit_summary.maxSquareFt
+      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
+    else
+      unit_summary.minSquareFt
+
+  $scope.unitsByType = (unit_type) ->
+    $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
 
   $scope.unitBMRMinMonthlyRange = (units) ->
     # TODO: actually find min/max
@@ -117,6 +123,13 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.eligibilityIncomeTotal = ->
     ListingService.eligibilityIncomeTotal()
 
+  $scope.eligibilityChildrenUnder6 = ->
+    ListingService.eligibilityChildrenUnder6()
+
+  $scope.clearEligibilityFilters = ->
+    ListingService.resetEligibilityFilters()
+    IncomeCalculatorService.resetIncomeSources()
+
   $scope.listingApplicationClosed = (listing) ->
     today = new Date
     appDueDate = new Date(listing.Application_Due_Date)
@@ -126,9 +139,6 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
     today = new Date
     lotteryDate = new Date(listing.Lottery_Date)
     lotteryDate <= today
-
-  $scope.lotteryResultsAvailable = (listing) ->
-    listing.Lottery_Members && listing.Lottery_Members.length > 0
 
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
@@ -156,11 +166,30 @@ ListingController = ($scope, $state, $sce, SharedService, ListingService) ->
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
 
+  $scope.lotteryPreferenceDescription = (name) ->
+    found = ''
+    angular.forEach $scope.lotteryPreferences, (pref) ->
+      found = pref.Description if pref.Name == name
+    found
+
+  # --- Carousel ---
+  $scope.carouselHeight = 300
+  $scope.Carousel = Carousel
+  $scope.adjustCarouselHeight = (elem) ->
+    $scope.$apply ->
+      $scope.carouselHeight = elem[0].offsetHeight
+
+  $scope.listingImages = (listing) ->
+    # TODO: update when we are getting multiple images from Salesforce
+    # right now it's just an array of one
+    [$scope.imageURL(listing)]
+
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', 'SharedService', 'ListingService']
+ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'Carousel', 'SharedService', 'ListingService', 'IncomeCalculatorService']
 
 angular
   .module('dahlia.controllers')

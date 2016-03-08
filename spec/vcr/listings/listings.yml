@@ -21,10 +21,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 10 Dec 2015 01:16:00 GMT
+      - Thu, 18 Feb 2016 02:37:59 GMT
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=lvkYJl_9Q6KJQXcCa3lqKA;Path=/;Domain=.salesforce.com;Expires=Mon,
-        08-Feb-2016 01:16:00 GMT
+      - BrowserId=zmh4WBs-Sbu3CHAwK_tOsg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        18-Apr-2016 02:37:59 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -37,12 +43,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQHnzTLtnR.0nWREN6EIhYvnpOTrK6n5yX5tLnM_EL5TRTcvFOHIZDf6e5ynIobqlA0kzHiapGfwLpI8BRuSU7dZIRnG.","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1449710160922","signature":"70nPgTGXhh2VM3nBtuYQ/IFBJx5Ab+BRL0GYWJ4A9dw="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQJEdZazrDIGxCfFtoT.xjWFa8aP4Y3nH_dnNe_KpRI4BOeTzeq5ZtUw8DunP4poPOwFP7rAp7ITb70kp8FAQ_hGG1792","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1455763079995","signature":"e8hB8+GUqksnrW/Vd/YZ4x4GcXc8OchDkYJtrDbTE3o="}'
     http_version:
-  recorded_at: Thu, 10 Dec 2015 01:16:02 GMT
+  recorded_at: Thu, 18 Feb 2016 02:38:00 GMT
 - request:
     method: get
-    uri: https://cs26.salesforce.com/services/apexrest/Listings
+    uri: https://cs26.salesforce.com/services/apexrest/ListingDetails
     body:
       encoding: US-ASCII
       string: ''
@@ -50,7 +56,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQHnzTLtnR.0nWREN6EIhYvnpOTrK6n5yX5tLnM_EL5TRTcvFOHIZDf6e5ynIobqlA0kzHiapGfwLpI8BRuSU7dZIRnG.
+      - OAuth 00D210000000OEp!AQMAQJEdZazrDIGxCfFtoT.xjWFa8aP4Y3nH_dnNe_KpRI4BOeTzeq5ZtUw8DunP4poPOwFP7rAp7ITb70kp8FAQ_hGG1792
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -61,10 +67,10 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 10 Dec 2015 01:16:02 GMT
+      - Thu, 18 Feb 2016 02:38:01 GMT
       Set-Cookie:
-      - BrowserId=cn8BvGruQy2hPIwC7bSRZw;Path=/;Domain=.salesforce.com;Expires=Mon,
-        08-Feb-2016 01:16:02 GMT
+      - BrowserId=d5yAEHYiRpOFGIudsLsdwg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        18-Apr-2016 02:38:01 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -73,25 +79,74 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004amREAQ"},"Property_Name__c":"1010
-        16th Street","Property_Street_Address__c":"1010 16th Street","Property_City__c":"San
-        Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94107","Application_Due_Date__c":"2015-11-23","Application_Phone__c":"(866)
-        276-4191","Id":"a0X210000004amREAQ"},{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004aqQEAQ"},"Property_Name__c":"Stevenson
-        Lofts","Property_Street_Address__c":"529 Stevenson Street and 550 Jessie Street","Property_City__c":"San
-        Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94103","Application_Due_Date__c":"2015-10-21","Application_Phone__c":"(415)
-        689-4217","Id":"a0X210000004aqQEAQ","Units__r":{"totalSize":9,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzQEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzQEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzLEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzLEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzGEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzGEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYyrEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYyrEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzBEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzBEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYz6EAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYz6EAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYymEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYymEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYz1EAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYz1EAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYywEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYywEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50}]}},{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004aqaEAA"},"Property_Name__c":"The
-        Gantry","Property_Street_Address__c":"2121 Third Street","Property_City__c":"San
-        Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94107","Id":"a0X210000004aqaEAA","Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzfEAG"},"Listing__c":"a0X210000004aqaEAA","Id":"a0W21000000DYzfEAG","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50}]}},{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Property_Name__c":"Kaplan
-        Tower","Property_Street_Address__c":"501 Gough Street","Property_City__c":"San
-        Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94010","Developer__c":"Big
-        Developer Company","Application_Due_Date__c":"2015-12-08","Property_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Application_Phone__c":"(650)
-        987-2564","Id":"a0X210000004afdEAA","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
-        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
-        BR","BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004asgEAA"},"Property_Name__c":"77
-        Bluxome Street","Property_Street_Address__c":"77 Bluxome Street","Property_City__c":"San
-        Francisco","Property_State__c":"CA","Property_Zip_Code__c":"94107","Application_Due_Date__c":"2015-12-08","Application_Phone__c":"77
-        Bluxome Street, Unit 416","Id":"a0X210000004asgEAA","Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzzEAG"},"Listing__c":"a0X210000004asgEAA","Id":"a0W21000000DYzzEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":1030.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2575.00}]}}]'
+      string: '[{"unitType":"a0X210000000HWrEAM","totalUnits":1,"minSquareFt":null,"minOccupancy":1,"maxSquareFt":null,"maxOccupancy":4,"listingID":"a0X210000000HWrEAM","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000000HWrEAM"},"Building_Name__c":"Test
+        Building","Building_City__c":"San Francisco","Building_State__c":"CA","Developer__c":"Test
+        Developer","Id":"a0X210000000HWrEAM","Lottery_Date__c":"2016-02-15T20:00:00.000+0000","Listing_Lottery_Preferences__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0q21000000CgrLAAS"},"Listing__c":"a0X210000000HWrEAM","Id":"a0q21000000CgrLAAS","Lottery_Preference__c":"a0m21000000DFJ9AAO","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFJ9AAO"},"Id":"a0m21000000DFJ9AAO","Name":"Move-in"}},{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0q21000000CgrQAAS"},"Listing__c":"a0X210000000HWrEAM","Id":"a0q21000000CgrQAAS","Lottery_Preference__c":"a0m21000000DFIuAAO","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIuAAO"},"Id":"a0m21000000DFIuAAO","Name":"Certificate
+        of Preference"}},{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0q21000000CgrVAAS"},"Listing__c":"a0X210000000HWrEAM","Id":"a0q21000000CgrVAAS","Lottery_Preference__c":"a0m21000000DFIzAAO","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIzAAO"},"Id":"a0m21000000DFIzAAO","Name":"Elliss
+        Act"}}]},"Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W210000002LnmEAE"},"Listing__c":"a0X210000000HWrEAM","Id":"a0W210000002LnmEAE","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":250.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":411,"minOccupancy":1,"maxSquareFt":411,"maxOccupancy":2,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
+        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
+        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
+        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
+        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
+        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":787,"minOccupancy":2,"maxSquareFt":787,"maxOccupancy":4,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
+        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
+        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
+        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
+        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
+        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":1121,"minOccupancy":3,"maxSquareFt":1121,"maxOccupancy":6,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
+        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
+        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
+        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
+        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
+        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004aqQEAQ","totalUnits":9,"minSquareFt":254,"minOccupancy":1,"maxSquareFt":623,"maxOccupancy":2,"listingID":"a0X210000004aqQEAQ","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004aqQEAQ"},"Building_Name__c":"Stevenson
+        Lofts","Building_Street_Address__c":"529 Stevenson Street and 550 Jessie Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94103","Application_Due_Date__c":"2015-10-23","Id":"a0X210000004aqQEAQ","Application_Phone__c":"(415)
+        689-4217","AMI_Percentage__c":55.00,"Units__r":{"totalSize":9,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzQEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzQEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzLEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzLEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYz1EAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYz1EAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYywEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYywEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYymEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYymEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYz6EAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYz6EAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzBEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzBEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYyrEAG"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYyrEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzGEAW"},"Listing__c":"a0X210000004aqQEAQ","Id":"a0W21000000DYzGEAW","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":941.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2352.50}]}},"doesMatch":null},{"unitType":"a0X210000004asgEAA","totalUnits":2,"minSquareFt":11,"minOccupancy":1,"maxSquareFt":228,"maxOccupancy":2,"listingID":"a0X210000004asgEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004asgEAA"},"Building_Name__c":"72
+        Bluxome Street","Building_Street_Address__c":"77 Bluxome Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94107","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2015-12-08","Id":"a0X210000004asgEAA","Application_Phone__c":"77
+        Bluxome Street, Unit 416","Lottery_Summary__c":"Out of 260 applications received,
+        20 lottery numbers were pulled. 85 units are available.","Lottery_Results_Date__c":"2015-12-17","Lottery_Date__c":"2015-12-11T02:02:00.000+0000","AMI_Percentage__c":60.00,"Credit_Rating__c":"Etiam
+        gravida, tellus id ullamcorper interdum, purus tortor pulvinar mi, in aliquam
+        tortor nibh vel risus.","Criminal_History__c":"Aenean et dignissim mi, pellentesque
+        luctus eros. Maecenas viverra porttitor lectus id dapibus. Integer magna sapien,
+        malesuada eget leo a, gravida elementum velit. Suspendisse sed vehicula lectus.","Eviction_History__c":"Etiam
+        interdum augue eu mauris tempus lacinia. Etiam gravida, tellus id ullamcorper
+        interdum, purus tortor pulvinar mi, in aliquam tortor nibh vel risus. Aliquam
+        aliquam auctor arcu ac aliquet. Praesent velit lectus, elementum ac velit
+        vel, consequat fringilla nisi.","Units__r":{"totalSize":2,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYzzEAG"},"Listing__c":"a0X210000004asgEAA","Id":"a0W21000000DYzzEAG","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":1030.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2575.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W210000002KivEAE"},"Listing__c":"a0X210000004asgEAA","Id":"a0W210000002KivEAE","Unit_Type__c":"Studio","BMR_Rent_Monthly__c":1030.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X21000000HNymEAG","totalUnits":1,"minSquareFt":787,"minOccupancy":1,"maxSquareFt":787,"maxOccupancy":4,"listingID":"a0X21000000HNymEAG","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X21000000HNymEAG"},"Building_Name__c":"Kaplan
+        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2017-01-15","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X21000000HNymEAG","Application_Phone__c":"(243)
+        546-5789","AMI_Percentage__c":20.00,"Leasing_Agent_Name__c":"Jon Jon","Leasing_Agent_Title__c":"Sales
+        Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
+        555-1212","Listing_Lottery_Preferences__r":{"totalSize":2,"done":true,"records":[{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0q21000000CgsdAAC"},"Listing__c":"a0X21000000HNymEAG","Id":"a0q21000000CgsdAAC","Lottery_Preference__c":"a0m21000000DFIuAAO","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIuAAO"},"Id":"a0m21000000DFIuAAO","Name":"Certificate
+        of Preference"}},{"attributes":{"type":"Listing_Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Listing_Lottery_Preference__c/a0q21000000CgsiAAC"},"Listing__c":"a0X21000000HNymEAG","Id":"a0q21000000CgsiAAC","Lottery_Preference__c":"a0m21000000DFIzAAO","Lottery_Preference__r":{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIzAAO"},"Id":"a0m21000000DFIzAAO","Name":"Elliss
+        Act"}}]},"Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W210000002KaCEAU"},"Listing__c":"a0X21000000HNymEAG","Id":"a0W210000002KaCEAU","Unit_Type__c":"1
+        BR","BMR_Rent_Monthly__c":950.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":2375.00}]}},"doesMatch":null},{"unitType":"a0X21000000HNyrEAG","totalUnits":1,"minSquareFt":999,"minOccupancy":3,"maxSquareFt":999,"maxOccupancy":6,"listingID":"a0X21000000HNyrEAG","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X21000000HNyrEAG"},"Building_Name__c":"Matching
+        Open","Building_Street_Address__c":"123 Street","Building_City__c":"San Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94110","Developer__c":"EQR","Application_Due_Date__c":"2017-01-15","Id":"a0X21000000HNyrEAG","Application_Phone__c":"(243)
+        546-5789","AMI_Percentage__c":55.00,"Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W210000002KgpEAE"},"Listing__c":"a0X21000000HNyrEAG","Id":"a0W210000002KgpEAE","Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":2000.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":4000.00}]}},"doesMatch":null},{"unitType":"a0X21000000HNz6EAG","totalUnits":1,"minSquareFt":999,"minOccupancy":3,"maxSquareFt":999,"maxOccupancy":6,"listingID":"a0X21000000HNz6EAG","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X21000000HNz6EAG"},"Building_Name__c":"Kaplan
+        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
+        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Application_Due_Date__c":"2016-01-29","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X21000000HNz6EAG","Lottery_Date__c":"2016-01-30T21:57:00.000+0000","AMI_Percentage__c":55.00,"Preference_Detail__c":"preference
+        notes","Credit_Rating__c":"credit rating test","Criminal_History__c":"criminal
+        history test","Eviction_History__c":"eviction history test","Leasing_Agent_Name__c":"Jon
+        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
+        555-1212","Units__r":{"totalSize":1,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W210000002KguEAE"},"Listing__c":"a0X21000000HNz6EAG","Id":"a0W210000002KguEAE","Unit_Type__c":"3
+        BR","BMR_Rent_Monthly__c":2000.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":4000.00}]}},"doesMatch":null}]'
     http_version:
-  recorded_at: Thu, 10 Dec 2015 01:16:02 GMT
-recorded_with: VCR 3.0.0
+  recorded_at: Thu, 18 Feb 2016 02:38:01 GMT
+recorded_with: VCR 3.0.1

@@ -15,8 +15,7 @@ accordion-heading
               svg
                 use xlink:href="#i-arrow-down"
           #panel1a-b.content
-            p
-              | {{listing.Required_Documents}}
+            p ng-bind-html="listing.Required_Documents | nl2br"
         accordion-group.accordion-navigation
           accordion-heading.accordion-header
             | Important Program Rules
@@ -24,8 +23,7 @@ accordion-heading
               svg
                 use xlink:href="#i-arrow-down"
           #panel1a-c.content
-            p
-              | {{listing.Legal_Disclaimers}}
+            p ng-bind-html="listing.Legal_Disclaimers | nl2br"
         accordion-group.accordion-navigation
           accordion-heading.accordion-header
             | Smoking Policy
@@ -33,8 +31,7 @@ accordion-heading
               svg
                 use xlink:href="#i-arrow-down"
           #panel1a-d.content
-            p
-              | {{listing.Smoking_Policy}}
+            p ng-bind-html="listing.Smoking_Policy | nl2br"
         accordion-group.accordion-navigation
           accordion-heading.accordion-header
             | Pets Policy
@@ -42,5 +39,4 @@ accordion-heading
               svg
                 use xlink:href="#i-arrow-down"
           #panel1a-e.content
-            p
-              | {{listing.Pet_Policy}}
+            p ng-bind-html="listing.Pet_Policy | nl2br"
