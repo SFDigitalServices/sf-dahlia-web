@@ -20,3 +20,9 @@ angular.module('customFilters', [])
     return '' unless input
     input.trim().replace(/\n/g,'<br>')
   ]
+.filter 'incomeTimeframe', ['$filter', ($filter) ->
+  (input) ->
+    # just return 'month' or 'year' and get rid of the 'per_'
+    return '' unless input
+    input.split('per_')[1]
+  ]

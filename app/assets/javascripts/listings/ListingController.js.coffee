@@ -15,6 +15,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
   $scope.lotteryPreferences = ListingService.lotteryPreferences
+  $scope.eligibilityFilters = ListingService.eligibility_filters
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
 
