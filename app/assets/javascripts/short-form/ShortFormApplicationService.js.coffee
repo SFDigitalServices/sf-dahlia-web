@@ -6,7 +6,6 @@ ShortFormApplicationService = ($localStorage) ->
 
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
-
   Service.applicant = Service.application.applicant
 
   Service.copyHomeToMailingAddress = () ->
@@ -18,7 +17,13 @@ ShortFormApplicationService = ($localStorage) ->
     Service.applicant.mailingAddress.state &&
     Service.applicant.mailingAddress.zip
 
-
+  Service.missingPrimaryContactInfo = () ->
+    missingInfo = []
+    if !Service.applicant.phone_number
+      missingInfo.push("Phone Number")
+    if !Service.validMailingAddress()
+      missingInfo.push("Mailing Address")
+    return missingInfo
 
   return Service
 

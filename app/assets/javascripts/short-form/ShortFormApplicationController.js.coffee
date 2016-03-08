@@ -8,7 +8,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.listing = ListingService.listing
   $scope.sections = [
-    { name: 'You', pages: ['name', 'contact', 'alternate-contact'] },
+    { name: 'You', pages:[ 'name', 'contact', 'alternate-contact', 'alternate-contact-required']},
     { name: 'Household', pages: ['intro'] },
     { name: 'Status', pages: ['intro'] },
     { name: 'Income', pages: ['intro'] },
@@ -28,13 +28,23 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.applicantHasPhoneAndAddress = () ->
     $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
 
+  $scope.missingPrimaryContactInfo = () ->
+    ShortFormApplicationService.missingPrimaryContactInfo()
+
   $scope.checkIfMailingAddressNeeded = () ->
     if !$scope.applicant.separateAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.checkSeparateAddress = () ->
-    $scope.applicant.mailingAddress = {} #reset mailing address
+    #reset mailing address
+    $scope.applicant.mailingAddress = {}
     $scope.checkIfMailingAddressNeeded()
+
+  $scope.determineAlternateContactRequired = () ->
+    if $scope.applicantHasPhoneAndAddress()
+      $state.go('dahlia.short-form-application.alternate-contact')
+    else
+      $state.go('dahlia.short-form-application.alternate-contact-required')
 
 
 angular
