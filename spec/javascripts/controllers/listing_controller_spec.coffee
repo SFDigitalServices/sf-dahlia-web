@@ -133,7 +133,7 @@ do ->
         return
       return
 
-    describe '$scope.igibilityFilters', ->
+    describe '$scope.hasEligibilityFilters', ->
       it 'expects ListingService.hasEligibilityFilters to be called', ->
         fakeListingService.hasEligibilityFilters = jasmine.createSpy()
         scope.hasEligibilityFilters()
