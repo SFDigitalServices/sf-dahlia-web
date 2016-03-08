@@ -1,16 +1,20 @@
 .form-address.row
   .form-group-street.large-12.columns
     label for="applicant_{{addressType}}_address1"
-    input id="applicant_{{addressType}}_address1" ng-model="applicant[addressType].address1" name="address1" placeholder=("Street Address") type="text"
-  .form-group-apt.large-12.columns
+    input(id="applicant_{{addressType}}_address1" ng-model="applicant[addressType].address1"
+      ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text" )
+  .form-group-apt.large-12.column
     label for="applicant_{{addressType}}_address2"  Address 2
-    input id="applicant_{{addressType}}_address2" ng-model="applicant[addressType].address2" name="address2" placeholder=("Apt or Unit #") type="text"
+    input(id="applicant_{{addressType}}_address2" ng-model="applicant[addressType].address2"
+      ng-change="checkIfMailingAddressNeeded()" name="address2" placeholder=("Apt or Unit #") type="text")
   .small-7.large-5.columns
     label for="applicant_{{addressType}}_city"  City
-    input id="applicant_{{addressType}}_city" ng-model="applicant[addressType].city" name="city" placeholder=("City Name") type="text"
+    input(id="applicant_{{addressType}}_city" ng-model="applicant[addressType].city"
+      ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text")
   .small-5.large-3.columns
     label for="applicant_{{addressType}}_state"  State
-    select id="applicant_{{addressType}}_state" ng-model="applicant[addressType].state" data-width="auto" name="state"
+    select(id="applicant_{{addressType}}_state" ng-model="applicant[addressType].state"
+      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state")
       option value=""  Select
       option value="alabama"  Alabama
       option value="alaska"  Alaska
@@ -65,4 +69,5 @@
       option value="wyoming"  Wyoming
   .small-12.large-4.columns
     label for="applicant_{{addressType}}_zip"  Zip
-    input id="applicant_{{addressType}}_zip" ng-model="applicant[addressType].zip" name="zip" placeholder=("Zip Code") type="text"
+    input(id="applicant_{{addressType}}_zip" ng-model="applicant[addressType].zip"
+      ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text")

@@ -5,7 +5,7 @@
 ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService) ->
 
   $scope.application = ShortFormApplicationService.application
-  $scope.applicant = $scope.application.applicant
+  $scope.applicant = ShortFormApplicationService.applicant
   $scope.listing = ListingService.listing
   $scope.sections = [
     { name: 'You', pages: ['name', 'contact', 'alternate-contact'] },
@@ -25,12 +25,17 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     stateName = $state.current.name.replace('dahlia.short-form-application.', "")
     section.pages.indexOf(stateName) > -1
 
+  $scope.applicantHasPhoneAndAddress = () ->
+    $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
 
-############################################################################################
-######################################## CONFIG ############################################
-############################################################################################
+  $scope.checkIfMailingAddressNeeded = () ->
+    if !$scope.applicant.separateAddress
+      ShortFormApplicationService.copyHomeToMailingAddress()
 
-ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService']
+  $scope.checkSeparateAddress = () ->
+    $scope.applicant.mailingAddress = {} #reset mailing address
+    $scope.checkIfMailingAddressNeeded()
+
 
 angular
   .module('dahlia.controllers')

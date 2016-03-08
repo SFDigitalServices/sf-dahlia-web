@@ -15,10 +15,10 @@ h2.application-title.t-gamma.padding-bottom
  label.form-label.no-margin Your address
  p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
 
- ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'regularAddress'"
+ ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'homeAddress'"
 
  .padding-bottom
-   .checkbox ng-click="applicant.mailingAddress = {}"
+   .checkbox ng-click="checkSeparateAddress()"
      input#applicant_separate_address ng-model="applicant.separateAddress" name="separate_address" type="checkbox"
      label for="applicant_separate_address"  I have a separate mailing address
 .form-group ng-if="applicant.separateAddress"

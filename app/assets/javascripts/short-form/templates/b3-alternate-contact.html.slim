@@ -12,7 +12,7 @@ h2.application-title.t-gamma Is there someone else you'd like us to contact if w
     p.radio-block
       input#alternate_contact_social_worker ng-model="applicant.alternate_contact" name="alternate_contact" type="radio" value="Social worker or housing counselor"
       label.radio-block_label for="alternate_contact_social_worker"  Social worker or housing counselor
-    p.radio-block
+    p.radio-block ng-if="applicantHasPhoneAndAddress()"
       input#alternate_contact_none ng-model="applicant.alternate_contact" name="alternate_contact" type="radio" value="None"
       label.radio-block_label for="alternate_contact_none"
        | I don't have an alternate contact
