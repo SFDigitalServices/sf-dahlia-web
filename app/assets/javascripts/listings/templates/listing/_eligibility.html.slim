@@ -12,7 +12,7 @@ accordion-heading.lead
       /! Each unit type available has its own requirements based on household size.
       p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit.
     .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
-      ul.stats-list.stats-toggle.double.toggler.has-toggle.active ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
+      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
         li
           .stats-list_value.highlight
             span.value-label
@@ -33,19 +33,19 @@ accordion-heading.lead
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
       p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
-    .stats-card ng-repeat="unit_summary in listing.unitSummary"
-      ul.stats-list.tall.double
-        li
-          .stats-list_value
-            | {{unit_summary.unitType}}
-        li
-          .stats-list_value ng-if="unit_summary.unitType == 'Flex'"
-            ' Flex
-            span.value-label people
-          .stats-list_value ng-if="unit_summary.unitType != 'Flex'"
-            ' {{unit_summary.minOccupancy}}&mdash;{{unit_summary.maxOccupancy}}
-            span.value-label  people
 
+    table role="grid"
+      thead
+        tr
+          th scope="col"  Unit Type
+          th scope="col"  Occupancy
+      tbody
+        tr ng-repeat="unit_summary in listing.unitSummary"
+          td scope="row"  {{unit_summary.unitType}}
+          td ng-if="unit_summary.unitType == 'Flex'"
+            | Flex people
+          td ng-if="unit_summary.unitType != 'Flex'"
+            | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
 
   .content-panel.wide.lined
     header.margin-bottom
