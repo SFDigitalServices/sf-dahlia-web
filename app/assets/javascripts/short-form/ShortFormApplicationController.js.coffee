@@ -27,26 +27,33 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     stateName = $state.current.name.replace('dahlia.short-form-application.', "")
     section.pages.indexOf(stateName) > -1
 
-  $scope.applicantHasPhoneAndAddress = () ->
+  $scope.applicantHasPhoneAndAddress = ->
     $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
 
-  $scope.missingPrimaryContactInfo = () ->
+  $scope.missingPrimaryContactInfo = ->
     ShortFormApplicationService.missingPrimaryContactInfo()
 
-  $scope.checkIfMailingAddressNeeded = () ->
+  $scope.checkIfMailingAddressNeeded = ->
     if !$scope.applicant.separateAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 
-  $scope.checkSeparateAddress = () ->
+  $scope.checkSeparateAddress = ->
     #reset mailing address
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
 
-  $scope.determineAlternateContactRequired = () ->
+  $scope.checkIfAlternateContactRequired = ->
     if $scope.applicantHasPhoneAndAddress()
       $state.go('dahlia.short-form-application.alternate-contact-type')
     else
       $state.go('dahlia.short-form-application.alternate-contact-required')
+
+  $scope.checkIfAlternateContactInfoNeeded = ->
+    if $scope.alternateContact.type == 'None'
+      # skip ahead if they aren't filling out an alt. contact
+      $state.go('dahlia.short-form-application.optional-info')
+    else
+      $state.go('dahlia.short-form-application.alternate-contact-name')
 
 
 angular

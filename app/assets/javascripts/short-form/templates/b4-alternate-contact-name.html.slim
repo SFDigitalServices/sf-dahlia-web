@@ -3,17 +3,18 @@ h2.application-title.t-gamma.no-margin Who is your alternate contact?
 p A good alternate contact is a person who will know how to reach you.
 .form-group.margin-bottom--2x
   h3.form-label Name of alternate contact
-  label.sr-only for="alternateContactFirstName" First Name
-  input#alternateContactFirstName ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text"
-  label.sr-only for="alternateContactLastName"  Last Name
-  input#alternateContactLastName ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text"
+  label.sr-only for="alternate_first_name" First Name
+  input#alternate_first_name ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text"
+  label.sr-only for="alternate_last_name"  Last Name
+  input#alternate_last_name ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text"
 .form-group.margin-bottom--2x ng-if="alternateContact.type == 'Social worker or housing counselor'"
   h3.form-label What agency does your social worker or counselor work at?
-  label.sr-only for="alternateContactCounselorOrganization"
-  input#alternateContactCounselorOrganization ng-model="alternateContact.agency" name="agency" placeholder="Agency" type="text"
+  label.sr-only for="alternate_agency"
+  input#alternate_agency ng-model="alternateContact.agency" name="agency" placeholder="Agency" type="text"
 
 .button-stack--paginate.text-center.row.padding-top
-  .small-12.medium-6.medium-push-6.columns ui-sref="dahlia.short-form-application.alternate-contact-phone-address"
-    button.button.expand Next
+  .small-12.medium-6.medium-push-6.columns
+    button.button.expand ui-sref="dahlia.short-form-application.alternate-contact-phone-address"
+      | Next
   .small-12.medium-6.medium-pull-6.columns
     button.button.ghost-white.expand Save and finish later
