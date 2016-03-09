@@ -7,50 +7,52 @@ accordion-heading
 
 .content-section
   .apply-content.content-wrap
-    .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
+    .content-group.no-padding
+      .label.label--flag.secondary
+        | Application Deadline {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+    .show-for-medium-up ng-hide="listingApplicationClosed(listing)"
       ng-include src="'listings/templates/listing/_panel-apply.html'"
-    .content-panel.padding-bottom.border-bottom
-      h4.t-small.t-sans.t-bold Application Deadline
-      h3.t-delta.t-sans.c-steel
-        | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
 
-    .content-panel.padding-bottom.border-bottom
-      h4.t-small.t-sans.t-bold Information Sessions
+    .content-group
+      h4.content-group_title Information Sessions
       ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
         li
-          h3.t-delta.t-sans.c-steel.no-margin
-            | {{session.Date | dateSuffix}}
-          p.c-steel
-            | {{session.Start_Time}}&mdash;{{session.End_Time}}
-          p.no-margin
+          p.content-group_date
+            span.content-group_day
+              | {{session.Date | dateSuffix}}
+            span.content-group_time
+              | {{session.Start_Time}}&mdash;{{session.End_Time}}
+          p.content-group_address.no-margin
             | {{session.Venue}}
-          p.c-steel
+          p.content-group_address.c-steel
             | {{session.Street_Address}}, {{session.City}}
-      p.c-steel ng-if="!listing.Information_Sessions"
+      p.t-small.c-steel ng-if="!listing.Information_Sessions"
        | No information sessions scheduled yet.
 
-    .content-panel.padding-bottom.border-bottom
-      h4.t-small.t-sans.t-bold Open Houses
+    .content-group
+      h4.content-group_title Open Houses
       ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
         li
-          h3.t-delta.t-sans.c-steel.no-margin
-            | {{session.Date | dateSuffix}}
-          span.c-steel
-            | {{session.Start_Time}}&mdash;{{session.End_Time}}
-      p.c-steel ng-if="!listing.Open_Houses"
+          p.content-group_date
+            span.content-group_day
+              | {{session.Date | dateSuffix}}
+            span.content-group_time
+              | {{session.Start_Time}}&mdash;{{session.End_Time}}
+      p.t-small.c-steel ng-if="!listing.Open_Houses"
         | No open houses scheduled yet.
 
-    .content-panel.padding-bottom
-      h4.t-small.t-sans.t-bold Public Lottery
+    .content-group
+      h4.h-caps-lined Public Lottery
       ul ng-if="lotteryDateVenueAvailable(listing)"
         li
-          h3.t-delta.t-sans.c-steel.no-margin
-            | {{ listing.Lottery_Date | date : 'longDate' }}
-          p.c-steel
-            | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
-          p.no-margin
+          p.content-group_date
+            span.content-group_day
+              | {{ listing.Lottery_Date | date : 'longDate' }}
+            span.content-group_time
+              | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
+          p.content-group_address.no-margin
             |  {{ listing.Lottery_Venue }}
-          p.c-steel
+          p.content-group_address.c-steel
             | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-      p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
+      p.t-small.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.

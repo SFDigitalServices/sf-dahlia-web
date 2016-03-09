@@ -1,32 +1,33 @@
-.application-options.content-lead
-  h2.gamma How to Apply
-  .option-group
-    h3.t-sans.t-base.t-bold.no-margin
+.content-column
+  .content-group.has-divider
+    h2.h-caps-lined How to Apply
+    h3.content-group_title
       | Pickup and turn in application
-    p.no-margin
+    p.content-group_address.no-margin
       | {{listing.Application_Organization}}
-    p.c-steel
+    p.content-group_address
       | {{ listing.Application_Street_Address }},
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
     a.t-small.d-block.ui-link.margin-bottom target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
-      span.ui-icon
-        svg
-          use xlink:href="#i-map"
-      | Get Directions
-    div ng-if="listing.Office_Open"
-      p.no-margin Office Hours
-      p.c-steel
+      / span.ui-icon
+      /   svg
+      /     use xlink:href="#i-map"
+      | View Map
+    p.content-group_hours ng-if="listing.Office_Open"
+      span.content-group_title Office Hours
+      span.content-group_time
         | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
-    a.button.small.has-icon target="_blank" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
-      span.ui-icon.ui-link.i-white
-        svg
-          use xlink:href="#i-download"
+  .content-group
+    a.button.primary.small.expand.no-margin target="_blank" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
+      / span.ui-icon.ui-link.i-white
+      /   svg
+      /     use xlink:href="#i-download"
       | Download Application
 
-  .option-group
-    h3.t-sans.t-base.t-bold.no-margin Call Building
+  .content-group
+    h3.h-caps-lined Call Building
     p.margin-bottom--half
       a href="tel: {{listing.Application_Phone}}"
         | {{listing.Application_Phone}}

@@ -7,13 +7,12 @@ accordion-heading.lead.accordion-header
 
 .content-section
   .lottery-content.content-wrap.bg-white
-    .content-lead.content-panel
-      .show-for-medium-up.margin-bottom
-        p.post-dealine_alert.margin-top--half
-          span.label.alert Applications Closed
+    .content-group.no-padding.show-for-medium-up
+      .label.label--flag.alert
+        | Applications Closed
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold Public Lottery
+    .content-group
+      h4.h-caps-lined Public Lottery
       span ng-if="lotteryDateVenueAvailable(listing)"
         h3.t-delta.t-sans.c-steel.no-margin
           | {{ listing.Lottery_Date | date : 'longDate' }}
@@ -30,8 +29,8 @@ accordion-heading.lead.accordion-header
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold Lottery Results
+    .content-group
+      h4.h-caps-lined Lottery Results
       h3.t-delta.t-sans.c-steel
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
       p.c-steel.t-small ng-if="!listing.Lottery_Results"
@@ -54,8 +53,8 @@ accordion-heading.lead.accordion-header
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
         | {{listing.Lottery_Summary}}
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold What to Expect
+    .content-group
+      h4.h-caps-lined What to Expect
       p.c-steel.t-small Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
       div ng-show="whatToExpectOpen"
         p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
@@ -65,8 +64,8 @@ accordion-heading.lead.accordion-header
         span.ui-icon.ui-tiny.i-primary
           svg
             use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-    .content-panel.padding-bottom ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
-      h4.t-small.t-sans.t-bold Contact Leasing Agent
+    .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+      h4.h-caps-lined Contact Leasing Agent
       h3.t-delta.t-sans.no-margin
         | {{ listing.Leasing_Agent_Name }}
       p.c-steel
@@ -77,23 +76,25 @@ accordion-heading.lead.accordion-header
             use xlink:href="#i-phone"
         |  Call {{ listing.Leasing_Agent_Phone }}
       p.t-small.c-steel Due to high call volume you may hear a message.
-      a ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
-        span.ui-icon.ui-medium.i-primary
-          svg
-            use xlink:href="#i-mail"
-        |  Email
+      p
+        a ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
+          span.ui-icon.ui-medium.i-primary
+            svg
+              use xlink:href="#i-mail"
+          |  Email
 
-      p.no-margin
+      p.content-group_address.no-margin
         | {{listing.Application_Organization}}
-      p.c-steel
+      p.content-group_address
         | {{ listing.Building_Street_Address }},
         br
         | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-      a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
-        span.ui-icon
-          svg
-            use xlink:href="#i-map"
-        | Get Directions
+      p
+        a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+        / span.ui-icon
+        /   svg
+        /     use xlink:href="#i-map"
+        | View Map
       span ng-if="listing.Office_Open && listing.Office_Closed"
         p.no-margin Office Hours
         p.c-steel
