@@ -74,26 +74,17 @@ accordion-heading.lead
     header.margin-bottom
       h4.t-epsilon.t-sans.margin-bottom--half Additional Eligibility Rules
       p.t-small.c-steel Applicants must also qualify under the rules of the building.
-    accordion.accordion-nested.accordion.trigger-left
-      accordion-group.accordion-navigation ng-if="listing.Credit_Rating"
-        accordion-heading.accordion-header
-          | Credit History
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel2a-a.content
-          p ng-bind-html="listing.Credit_Rating | nl2br"
-      accordion-group.accordion-navigation ng-if="listing.Eviction_History"
-        accordion-heading.accordion-header
-          | Rental History
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel2a-b.content
-          p ng-bind-html="listing.Eviction_History | nl2br"
-      accordion-group.accordion-navigation
-        accordion-heading.accordion-header
-          | Criminal Background
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel2a-c.content
-          p
-            ' Qualified applicants with criminal history will be considered for
-              housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
-            | of the San Francisco Police Code: Fair Chance Ordinance.
-          p ng-bind-html="listing.Criminal_History | nl2br"
+
+    .content-card ng-if="listing.Credit_Rating"
+      h4.content-card_title Credit History
+      p ng-bind-html="listing.Credit_Rating | nl2br"
+    .content-card ng-if="listing.Eviction_History"
+      h4.content-card_title Rental History
+      p ng-bind-html="listing.Eviction_History | nl2br"
+    .content-card
+      h4.content-card_title Criminal Background
+      p
+        ' Qualified applicants with criminal history will be considered for
+          housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
+        | of the San Francisco Police Code: Fair Chance Ordinance.
+      p ng-bind-html="listing.Criminal_History | nl2br"
