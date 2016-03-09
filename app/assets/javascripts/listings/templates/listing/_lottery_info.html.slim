@@ -99,3 +99,7 @@ accordion-heading.lead.accordion-header
         p.no-margin Office Hours
         p.c-steel
           | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+
+    .content-group
+      p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
+

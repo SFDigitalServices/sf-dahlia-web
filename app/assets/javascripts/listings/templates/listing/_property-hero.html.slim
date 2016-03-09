@@ -47,16 +47,8 @@
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .property-hero_action.text-center
-    .hide-for-medium-up
-      p.t-small
-        | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
-      .text-center ng-hide="listingApplicationClosed(listing)"
-        ng-include src="'listings/templates/listing/_panel-apply.html'"
-    hr.hr-5.tall.show-for-small-only/
-    .action-group.row
-      .medium-6.columns
-        / replace with salesforce value
-        p.date.t-small
-          | Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
-      .medium-6.columns
+  .property-hero_action.text-center.hide-for-medium-up
+    p.t-small
+      | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+    .text-center ng-hide="listingApplicationClosed(listing)"
+      ng-include src="'listings/templates/listing/_panel-apply.html'"

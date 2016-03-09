@@ -56,3 +56,6 @@ accordion-heading
             | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
       p.t-small.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
+
+    .content-group
+      p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
