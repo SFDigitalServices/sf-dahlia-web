@@ -10,16 +10,16 @@ accordion-heading
     .content-card
       h4.content-card_title
         | Required Documents
-      p ng-bind-html="listing.Required_Documents | nl2br"
+      p ng-bind-html="listing.Required_Documents | nl2br" ng-tt-words-threshold="60"
     .content-card
       h4.content-card_title
         | Important Program Rules
-      p ng-bind-html="listing.Legal_Disclaimers | nl2br"
+      p ng-bind-html="listing.Legal_Disclaimers | nl2br" ng-tt-words-threshold="60"
     .content-card
       h4.content-card_title
         | Smoking Policy
-      p ng-bind-html="listing.Smoking_Policy | nl2br"
+      p ng-bind-html="listing.Smoking_Policy | nl2br" ng-tt-words-threshold="60"
     .content-card
       h4.content-card_title
         | Pets Policy
-      p ng-bind-html="listing.Pet_Policy | nl2br"
+      p ng-bind-html="listing.Pet_Policy | nl2br" ng-tt-words-threshold="60"

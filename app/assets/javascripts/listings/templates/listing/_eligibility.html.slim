@@ -37,11 +37,11 @@ accordion-heading.lead
     table role="grid"
       thead
         tr
-          th scope="col"  Unit Type
-          th scope="col"  Occupancy
+          th scope="col" Unit Type
+          th scope="col" Occupancy
       tbody
         tr ng-repeat="unit_summary in listing.unitSummary"
-          td scope="row"  {{unit_summary.unitType}}
+          td scope="row" {{unit_summary.unitType}}
           td ng-if="unit_summary.unitType == 'Flex'"
             | Flex people
           td ng-if="unit_summary.unitType != 'Flex'"
