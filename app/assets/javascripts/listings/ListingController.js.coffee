@@ -114,18 +114,6 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.hasEligibilityFilters = ->
     ListingService.hasEligibilityFilters()
 
-  $scope.eligibilityHouseholdSize = ->
-    ListingService.eligibilityHouseholdSize()
-
-  $scope.eligibilityIncomeTimeframe = ->
-    ListingService.eligibilityIncomeTimeframe()
-
-  $scope.eligibilityIncomeTotal = ->
-    ListingService.eligibilityIncomeTotal()
-
-  $scope.eligibilityChildrenUnder6 = ->
-    ListingService.eligibilityChildrenUnder6()
-
   $scope.clearEligibilityFilters = ->
     ListingService.resetEligibilityFilters()
     IncomeCalculatorService.resetIncomeSources()
