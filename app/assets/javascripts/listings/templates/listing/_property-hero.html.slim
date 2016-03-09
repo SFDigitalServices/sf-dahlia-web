@@ -20,20 +20,23 @@
           svg
             use xlink:href="#i-like"
             use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
+    h1.property-hero_title.offset
+      | {{listing.Building_Name}}
 
   header.property-hero_content
-    h1.property-hero_title.beta
+    / h1.property-hero_title.beta
       /need to replace with salesforce property site site
-      | {{listing.Building_Name}}
-    p
-      | {{formattedAddress(listing)}}
-    p.c-steel
-      | {{listing.Developer}}
-    a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
-      span.ui-icon
-        svg
-          use xlink:href="#i-map"
-      | View on Map
+      / | {{listing.Building_Name}}
+    hgroup.clearfix
+      p.property-hero_address
+        | {{formattedAddress(listing)}}
+        br
+        | {{listing.Developer}}
+      a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+        / span.ui-icon
+        /   svg
+        /     use xlink:href="#i-map"
+        | View on Map
 
     p.post-dealine_alert.show-for-small-only.margin-top--half.margin-bottom ng-if="listingApplicationClosed(listing)"
       span.label.alert Applications Closed
