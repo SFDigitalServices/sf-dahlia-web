@@ -13,14 +13,14 @@ accordion-heading.lead.accordion-header
 
     .content-group
       h4.h-caps-lined Public Lottery
-      span ng-if="lotteryDateVenueAvailable(listing)"
-        h3.t-delta.t-sans.c-steel.no-margin
+      p.content-group_date ng-if="lotteryDateVenueAvailable(listing)"
+        span.content-group_day
           | {{ listing.Lottery_Date | date : 'longDate' }}
-        p.c-steel
+        span.content-group_time
           | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
-        p.no-margin
+        p.content-group_address.no-margin
           | {{ listing.Lottery_Venue }}
-        p.c-steel
+        p.content-group_address
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
         p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
           | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
@@ -31,8 +31,9 @@ accordion-heading.lead.accordion-header
 
     .content-group
       h4.h-caps-lined Lottery Results
-      h3.t-delta.t-sans.c-steel
-        | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
+      p.content-group_date
+        span.content-group_day
+          | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
       p.c-steel.t-small ng-if="!listing.Lottery_Results"
         ' Complete lottery results will be posted here on
         ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
@@ -91,13 +92,10 @@ accordion-heading.lead.accordion-header
         | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
       p
         a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
-        / span.ui-icon
-        /   svg
-        /     use xlink:href="#i-map"
-        | View Map
-      span ng-if="listing.Office_Open && listing.Office_Closed"
-        p.no-margin Office Hours
-        p.c-steel
+          | View Map
+      p.content-group_date ng-if="listing.Office_Open && listing.Office_Closed"
+        span.content-group_title Office Hours
+        span.content-group_time
           | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
     .content-group

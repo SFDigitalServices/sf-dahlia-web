@@ -54,28 +54,27 @@ accordion-heading
         span.ui-control.ui-icon.ui-small
           svg
             use xlink:href="#i-arrow-down"
-      .stats-table--stack ng-show="isActiveTable(unit_summary.unitType)"
-        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
-          li ng-if="unit.Unit_Number"
-            span.stats-list_label.bottom Unit Number
-            .stats-list_value
-              | {{unit.Unit_Number}}
-          li ng-if="unit.Unit_Square_Footage"
-            span.stats-list_label.bottom Area
-            .stats-list_value
-              | {{unit.Unit_Square_Footage}} square feet
-          li ng-if="unit.Number_of_Bathrooms"
-            span.stats-list_label.bottom Bathrooms
-            .stats-list_value
-              | {{unit.Number_of_Bathrooms}}
-          li ng-if="unit.Unit_Floor"
-            span.stats-list_label.bottom Floor
-            .stats-list_value
-              | {{unit.Unit_Floor}}
-          li.stat-full ng-if="unit.Other_Accessibility_Information"
-            span.stats-list_label.bottom Acccessibilty
-            .stats-list_value
-              | {{unit.Other_Accessibility_Information}}
+      .stats ng-show="isActiveTable(unit_summary.unitType)"
+        table role="grid"
+          thead
+            tr
+              th scope="col" Unit
+              th scope="col" Area
+              th scope="col" Baths
+              th scope="col" Floor
+              th scope="col" Accessibility
+          tbody
+            tr ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
+              td scope="row"
+                | {{unit.Unit_Number}}
+              td
+                | {{unit.Unit_Square_Footage}} <small>sqft</small>
+              td
+                | {{unit.Number_of_Bathrooms}}
+              td
+                | {{unit.Unit_Floor}}
+              td
+                | {{unit.Other_Accessibility_Information}}
 
   .content-panel.wide
     .content-panel--expanded.bg-dust
