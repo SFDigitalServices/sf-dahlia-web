@@ -53,15 +53,12 @@ accordion-heading.lead
         | Lottery Preferences
       p.t-small.c-steel
         | Preference holders will be given highest ranking in the lottery process.
-    accordion.accordion-nested.accordion.trigger-left
-      accordion-group.accordion-navigation ng-repeat="preference in listing.Listing_Lottery_Preferences"
-        accordion-heading.accordion-header
-          | {{preference.Lottery_Preference.Name}}
-          ng-include src="'shared/templates/_arrow-down.html'"
-        #panel1a-a.content
-          p
-            / Look up lotteryPreferenceDescription from Service.lotteryPreferences
-            | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
+    .content-card ng-repeat="preference in listing.Listing_Lottery_Preferences"
+      h4.content-card_title
+        | {{preference.Lottery_Preference.Name}}
+      p
+        / Look up lotteryPreferenceDescription from Service.lotteryPreferences
+        | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
 
   .content-panel.wide.lined
     header.panel-header data-equalizer-watch=""
