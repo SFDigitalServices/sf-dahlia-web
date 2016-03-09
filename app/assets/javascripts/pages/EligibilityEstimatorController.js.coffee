@@ -27,7 +27,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     $scope.eligibilityForm.$setPristine()
     $scope.hideAlert = false
     angular.copy($scope.filter_defaults, $scope.filters)
-    ListingService.setEligibilityFilters($scope.filters)
+    ListingService.resetEligibilityFilters()
     IncomeCalculatorService.resetIncomeSources()
 
   $scope.inputInvalid = (name) ->

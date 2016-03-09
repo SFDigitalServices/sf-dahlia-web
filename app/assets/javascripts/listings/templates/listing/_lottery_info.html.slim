@@ -82,3 +82,19 @@ accordion-heading.lead.accordion-header
           svg
             use xlink:href="#i-mail"
         |  Email
+
+      p.no-margin
+        | {{listing.Application_Organization}}
+      p.c-steel
+        | {{ listing.Building_Street_Address }},
+        br
+        | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
+      a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+        span.ui-icon
+          svg
+            use xlink:href="#i-map"
+        | Get Directions
+      span ng-if="listing.Office_Open && listing.Office_Closed"
+        p.no-margin Office Hours
+        p.c-steel
+          | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
