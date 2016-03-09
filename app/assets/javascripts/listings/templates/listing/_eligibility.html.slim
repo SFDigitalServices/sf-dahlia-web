@@ -77,14 +77,15 @@ accordion-heading.lead
 
     .content-card ng-if="listing.Credit_Rating"
       h4.content-card_title Credit History
-      p ng-bind-html="listing.Credit_Rating | nl2br"
+      p ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60"
     .content-card ng-if="listing.Eviction_History"
       h4.content-card_title Rental History
-      p ng-bind-html="listing.Eviction_History | nl2br"
+      p ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60"
+
     .content-card
       h4.content-card_title Criminal Background
       p
         ' Qualified applicants with criminal history will be considered for
-          housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
-        | of the San Francisco Police Code: Fair Chance Ordinance.
-      p ng-bind-html="listing.Criminal_History | nl2br"
+            housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
+          | of the San Francisco Police Code: Fair Chance Ordinance.
+      p ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20"
