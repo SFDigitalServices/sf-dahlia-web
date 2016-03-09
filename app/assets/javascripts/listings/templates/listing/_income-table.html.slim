@@ -1,22 +1,14 @@
-table.stats-table
-  tbody
-  tfoot
+table role="grid"
+  thead
     tr
       th scope="col"  household size
       th scope="col"  maximum income/month
       th scope="col"  maximum income/year
-    tr.stat-row ng-repeat="incomeLevel in maxIncomeLevels"
+  tbody
+    tr ng-repeat="incomeLevel in maxIncomeLevels"
       td scope="row"
-        span.stats-table_value
-          | {{incomeLevel.occupancy}}
-          span.value-label  person
+        | {{incomeLevel.occupancy}} <small>person</small>
       td
-        span.stats-table_value
-          | {{incomeLevel.monthly | currency : $ : 0}}
-          span.value-label
-            | /month
+        | {{incomeLevel.monthly | currency : $ : 0}}<small>/month</small>
       td
-        span.stats-table_value
-          | {{incomeLevel.yearly | currency : $ : 0}}
-          span.value-label
-            | /year
+        | {{incomeLevel.yearly | currency : $ : 0}}<small>/year</small>
