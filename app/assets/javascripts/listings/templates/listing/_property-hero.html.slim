@@ -15,15 +15,11 @@
             span.ui-icon.ui-static.ui-large.i-white
               svg
                 use xlink:href="#i-right"
-      a.property-hero_like ng-click="toggleFavoriteListing(listing.Id);"
-        span.ui-icon
-          svg
-            use xlink:href="#i-like"
-            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
+
     h1.property-hero_title.offset
       | {{listing.Building_Name}}
 
-  header.property-hero_content
+  header.property-hero_content.p-relative
     hgroup.clearfix
       p.property-hero_address
         | {{formattedAddress(listing)}}
@@ -31,6 +27,20 @@
         | {{listing.Developer}}
       a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
         | View on Map
+
+    .property-hero_favorite
+      button.button.round-icon.i-block ng-click="toggleFavoriteListing(listing.Id);"
+        span.ui-icon
+          svg
+            use xlink:href="#i-like"
+            use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
+        span.sr-only Favorite
+      a.button.round-icon.i-block ui-sref="dahlia.share({id: listing.Id})"
+        span.ui-icon
+          svg
+            use xlink:href="#i-forward"
+            use style="display:none" xlink:href="#i-forward-fill"
+        span.sr-only Share
 
     p.post-dealine_alert.show-for-small-only.margin-top--half.margin-bottom ng-if="listingApplicationClosed(listing)"
       span.label.alert Applications Closed
@@ -50,8 +60,3 @@
         p.date.t-small
           | Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
       .medium-6.columns
-        a.button.small ui-sref="dahlia.share({id: listing.Id})"
-          span.ui-icon.ui-link.i-white
-            svg
-              use xlink:href="#i-forward"
-          |  Share this Listing
