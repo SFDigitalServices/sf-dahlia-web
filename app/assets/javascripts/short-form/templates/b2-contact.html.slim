@@ -15,7 +15,7 @@ h2.application-title.t-gamma.padding-bottom
   label.form-label.no-margin Your address
   p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
 
-  ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'"
+  ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'"
 
   .padding-bottom
     .checkbox ng-click="checkSeparateAddress()"
@@ -25,7 +25,7 @@ h2.application-title.t-gamma.padding-bottom
   label.form-label.no-margin Mailing address
   p.form-note.margin-bottom Provide an address where you can receive updates and materials about your application.
 
-  ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'"
+  ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'"
 
 .form-group
   label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?

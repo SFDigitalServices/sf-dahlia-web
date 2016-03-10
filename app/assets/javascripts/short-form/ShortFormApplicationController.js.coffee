@@ -9,13 +9,22 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.listing = ListingService.listing
   $scope.sections = [
-    { name: 'You', pages:[
-      'name', 'contact', 'alternate-contact-required','alternate-contact-type', 'alternate-contact-name']},
+    { name: 'You', pages: [
+        'name',
+        'contact',
+        'alternate-contact-required',
+        'alternate-contact-type',
+        'alternate-contact-name',
+        'alternate-contact-phone-address',
+        'optional-info'
+      ]
+    },
     { name: 'Household', pages: ['intro'] },
     { name: 'Status', pages: ['intro'] },
     { name: 'Income', pages: ['intro'] },
     { name: 'Review', pages: ['intro'] }
   ]
+  $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
