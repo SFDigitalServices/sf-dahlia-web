@@ -21,10 +21,10 @@ ShortFormApplicationService = ($localStorage) ->
     angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
 
   Service.validMailingAddress = () ->
-    Service.applicant.mailing_address.address1 &&
-    Service.applicant.mailing_address.city &&
-    Service.applicant.mailing_address.state &&
-    Service.applicant.mailing_address.zip
+    !! (Service.applicant.mailing_address.address1 &&
+        Service.applicant.mailing_address.city &&
+        Service.applicant.mailing_address.state &&
+        Service.applicant.mailing_address.zip)
 
   Service.missingPrimaryContactInfo = () ->
     missingInfo = []
