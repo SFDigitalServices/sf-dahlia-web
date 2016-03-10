@@ -7,7 +7,9 @@ ShortFormApplicationService = ($localStorage) ->
       home_address: { address1: null, city: null, state: null, zip: null },
       mailing_address: { address1: null, city: null, state: null, zip: null }
     },
-    alternateContact: {}
+    alternateContact: {
+      primary_language: "English"
+    }
   }
 
   $localStorage.application ?= Service.applicationDefaults
