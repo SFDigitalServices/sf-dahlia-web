@@ -4,6 +4,7 @@
 
 ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService) ->
 
+  $scope.form = {}
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.alternateContact = ShortFormApplicationService.alternateContact
@@ -25,6 +26,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     { name: 'Review', pages: ['intro'] }
   ]
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+
+  $scope.inputInvalid = (name) ->
+    form = $scope.form.applicationForm
+    form[name].$invalid && (form[name].$touched || form.$submitted)
+
+  $scope.inputValid = (name) ->
+    form = $scope.form.applicationForm
+    form[name].$valid
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
