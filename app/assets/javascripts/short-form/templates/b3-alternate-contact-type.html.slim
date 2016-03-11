@@ -1,21 +1,21 @@
 .form-count 1 of 5
 h2.application-title.t-gamma Is there someone else you'd like us to contact if we can't get ahold of you?
-ng-form name="form.applicationForm" novalidate=""
-  .form-group.margin-bottom--2x
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})"
+  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"
     p.t-bold ng-if="applicantHasPhoneAndAddress()" Alternate contact
     p.t-bold ng-if="!applicantHasPhoneAndAddress()" Alternate contact (required)
     .radio-group
       p.radio-block
         input#alternate_contact_family(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Family member" ng-required="!applicantHasPhoneAndAddress()")
+          value="Family member" ng-required="!applicantHasPhoneAndAddress()" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_family"  Family member
       p.radio-block
         input#alternate_contact_friend(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Friend" ng-required='!applicantHasPhoneAndAddress()')
+          value="Friend" ng-required='!applicantHasPhoneAndAddress()' ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_friend"  Friend
       p.radio-block
         input#alternate_contact_counselor(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Social worker or housing counselor" ng-required='!applicantHasPhoneAndAddress()')
+          value="Social worker or housing counselor" ng-required='!applicantHasPhoneAndAddress()' ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_counselor"  Social worker or housing counselor
       p.radio-block ng-if="applicantHasPhoneAndAddress()"
         / this option to bypass alternate contact is only available
@@ -23,9 +23,10 @@ ng-form name="form.applicationForm" novalidate=""
         input#alternate_contact_none ng-model="alternateContact.type" name="alternate_contact" type="radio" value="None"
         label.radio-block_label for="alternate_contact_none"
          | I don't have an alternate contact
+    small.error ng-show="inputInvalid('alternate_contact')"
+      | Please select an alternate contact
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
-      button.button.expand ng-click="checkIfAlternateContactInfoNeeded()" ng-disabled="!inputValid('alternate_contact')"
-        | Next
+      input.button.expand.radius type="submit" value="Next"
     .small-12.medium-6.medium-pull-6.columns
       button.button.ghost-white.expand Save and finish later

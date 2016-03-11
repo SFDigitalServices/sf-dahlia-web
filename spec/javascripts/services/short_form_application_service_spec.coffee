@@ -58,11 +58,12 @@ do ->
 
     describe 'missingPrimaryContactInfo', ->
       it 'informs if phone_number and mailing_address are missing', ->
-        expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual ['Phone Number', 'Mailing Address']
+        expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual ['Phone Number', 'Email', 'Mailing Address']
         return
       it 'informs if phone_number and mailing_address are not missing', ->
         ShortFormApplicationService.applicant.mailing_address = fakeAddress
         ShortFormApplicationService.applicant.phone_number = '123-123123'
+        ShortFormApplicationService.applicant.email = 'email@email.com'
         expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual []
         return
       return

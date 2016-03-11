@@ -27,6 +27,15 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   ]
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
 
+  $scope.submitForm = (options) ->
+    form = $scope.form.applicationForm
+    if (form.$valid)
+      # submit
+      if options.callback && $scope[options.callback]
+        $scope[options.callback]()
+      if options.path
+        $state.go(options.path)
+
   $scope.inputInvalid = (name) ->
     form = $scope.form.applicationForm
     form[name].$invalid && (form[name].$touched || form.$submitted)
@@ -34,6 +43,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.inputValid = (name) ->
     form = $scope.form.applicationForm
     form[name].$valid
+
+  $scope.addressInputInvalid = ->
+    form = $scope.form.applicationForm
+    if form['address1']
+      $scope.inputInvalid('address1') ||
+      $scope.inputInvalid('city') ||
+      $scope.inputInvalid('state') ||
+      $scope.inputInvalid('zip')
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
@@ -50,6 +67,9 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
 
   $scope.missingPrimaryContactInfo = ->
     ShortFormApplicationService.missingPrimaryContactInfo()
+
+  $scope.isMissingPrimaryContactInfo = (info) ->
+    ShortFormApplicationService.missingPrimaryContactInfo().indexOf(info) > -1
 
   $scope.checkIfMailingAddressNeeded = ->
     if !$scope.applicant.separateAddress

@@ -2,7 +2,11 @@
   .form-group-street.large-12.columns
     label for="{{model}}_{{addressType}}_address1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
-      ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text" )
+      ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text"
+      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('address1') }")
+    small.error ng-show="isRequired && inputInvalid('address1')"
+      | Please enter an address
+
   .form-group-apt.large-12.column
     label for="{{model}}_{{addressType}}_address2"  Address 2
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
@@ -10,11 +14,15 @@
   .small-7.large-5.columns
     label for="{{model}}_{{addressType}}_city"  City
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
-      ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text")
+      ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text"
+      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('city') }")
+    small.error ng-show="isRequired && inputInvalid('city')"
+      | Please enter a city
   .small-5.large-3.columns
     label for="{{model}}_{{addressType}}_state"  State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
-      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state")
+      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state"
+      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('state') }")
       option value=""  Select
       option value="alabama"  Alabama
       option value="alaska"  Alaska
@@ -67,7 +75,13 @@
       option value="west-virginia"  West Virginia
       option value="wisconsin"  Wisconsin
       option value="wyoming"  Wyoming
+
+    small.error ng-show="isRequired && inputInvalid('state')"
+      | Please enter a state
   .small-12.large-4.columns
     label for="{{model}}_{{addressType}}_zip"  Zip
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text")
+      ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text"
+      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('zip') }")
+    small.error ng-show="isRequired && inputInvalid('zip')"
+      | Please enter a zipcode
