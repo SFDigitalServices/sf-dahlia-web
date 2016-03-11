@@ -93,6 +93,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
+ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.controllers')
