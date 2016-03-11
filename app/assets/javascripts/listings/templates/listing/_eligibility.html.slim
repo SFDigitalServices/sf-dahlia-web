@@ -1,12 +1,13 @@
 accordion-heading.lead
-  | Eligibility
+  h3.accordion-name
+    | Eligibility
   span.accordion-subheader Income, occupancy, preferences, and subsidies
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
 
-.content.content-section.clearfix
-  .content-panel.wide
+.content-section
+  .content-tile
     header.padding-top.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Household Maximum Income
       /! Each unit type available has its own requirements based on household size.
@@ -29,7 +30,7 @@ accordion-heading.lead
       .toggled ng-show="isActiveTable('Income')"
         ng-include src="'listings/templates/listing/_income-table.html'"
 
-  .content-panel.wide.lined
+  .content-tile
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half Occupancy
       p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
@@ -47,7 +48,7 @@ accordion-heading.lead
           td ng-if="unit_summary.unitType != 'Flex'"
             | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
 
-  .content-panel.wide.lined
+  .content-tile
     header.margin-bottom
       h4.t-base.t-sans.margin-bottom--half
         | Lottery Preferences
@@ -60,14 +61,15 @@ accordion-heading.lead
         / Look up lotteryPreferenceDescription from Service.lotteryPreferences
         | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
 
-  .content-panel.wide.lined
+  .content-tile
     header.panel-header data-equalizer-watch=""
       h4.t-epsilon.t-sans.margin-bottom--half
         | Rental Assistance
       p.t-small.c-steel
         | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
       p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
-  .content-panel.wide ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
+
+  .content-tile ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
     header.margin-bottom
       h4.t-epsilon.t-sans.margin-bottom--half Additional Eligibility Rules
       p.t-small.c-steel Applicants must also qualify under the rules of the building.

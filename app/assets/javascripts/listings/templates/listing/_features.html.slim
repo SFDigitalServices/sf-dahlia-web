@@ -1,12 +1,13 @@
 accordion-heading
-  | Features
+  h3.accordion-name
+    | Features
   span.accordion-subheader Amenities, unit details and additional fees
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
 
-.content.content-section.clearfix
-  .content-panel.wide
+.content-section
+  .content-tile
     .row.collapse.padding-top
       .small-6.columns ng-if="listing.Neighborhood"
         span.content-label.t-small
@@ -31,7 +32,8 @@ accordion-heading
       .row.collapse
         p ng-bind-html="listing.Accessibility | nl2br"
           | {{listing.Accessibility}}
-  .content-panel.wide
+
+  .content-tile
     h5.t-sans.content-label.t-small Unit Features
     .unit-features.stats-card.stats-toggle.toggler ng-repeat="unit_summary in listing.unitSummary" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
       ul.unit-stats.stats-list.double.medium-quad.has-toggle
@@ -76,7 +78,7 @@ accordion-heading
               td
                 | {{unit.Other_Accessibility_Information}}
 
-  .content-panel.wide
+  .content-tile
     .content-panel--expanded.bg-dust
       h5.t-sans.content-label.t-small Additional Fees
       .row.collapse.margin-bottom

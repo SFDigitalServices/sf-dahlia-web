@@ -1,44 +1,42 @@
-div.section-head
-section.section-hero.row.margin-bottom
-  .accordion-container.medium-8.columns.margin-top--2x
+.page-accordion-container.p-relative
+  section.section-hero
+    .accordion-offset.accordion-offset--hero
+      ng-include src="'listings/templates/listing/_property-hero.html'"
 
-    ng-include src="'listings/templates/listing/_property-hero.html'"
-
-    accordion.property-accordion.accordion
-
-      accordion-group.accordion-navigation.accordion-process ng-if="listingApplicationClosed(listing)"
+    accordion.page-accordion
+      accordion-group.medium-right-column ng-if="listingApplicationClosed(listing)"
         ng-include src="'listings/templates/listing/_lottery_info.html'"
 
-      accordion-group.accordion-navigation
-        header.content-header.show-for-medium-up.text-center
-          span.content-header_name.t-serif
+      accordion-group.bg-dust
+        header.listing-header.show-for-medium-up
+          h3.listing-header_name
             | Eligibility
-          span.content-header_subheader
+          span.listing-header_subheader
             | Income, occupancy, preferences, and subsidies
         ng-include src="'listings/templates/listing/_eligibility.html'"
 
-      accordion-group.accordion-navigation.accordion-process ng-hide="listingApplicationClosed(listing)"
+      accordion-group.medium-right-column ng-hide="listingApplicationClosed(listing)"
         ng-include src="'listings/templates/listing/_process.html'"
 
-      accordion-group.accordion-navigation
-        header.content-header.show-for-medium-up.text-center
-          span.content-header_name.t-serif
+      accordion-group.bg-white
+        header.listing-header.show-for-medium-up
+          h3.listing-header_name
             | Features
-          span.content-header_subheader
+          span.listing-header_subheader
             | Amenities, unit details and additional fees
         ng-include src="'listings/templates/listing/_features.html'"
 
-      accordion-group.accordion-navigation ng-if="formattedAddress(listing)"
-        header.content-header.show-for-medium-up.text-center
-          span.content-header_name.t-serif
+      accordion-group ng-if="formattedAddress(listing)"
+        header.listing-header.show-for-medium-up
+          h3.listing-header_name
             | Neighborhood
-          span.content-header_subheader
+          span.listing-header_subheader
             | Location and transportation
         ng-include src="'listings/templates/listing/_neighborhood.html'"
 
-      accordion-group.accordion-navigation
-        header.content-header.show-for-medium-up.text-center
-          span.content-header_name.t-serif
+      accordion-group.bg-white
+        header.listing-header.show-for-medium-up
+          h3.listing-header_name
             | Additional Information
           / span.content-header_subheader
           /   | Required documents and selection criteria
@@ -53,4 +51,4 @@ section.section-hero.row.margin-bottom
               span.content-label.t-small Monitored by the Mayor's Office of Housing & Community Development
             .medium-3.columns
               img.right alt=("Equal Housing Opportunity Logo") src="../images/logo-equal.png" /
-ng-include src="'pages/templates/_email-updates.html'"
+  ng-include src="'pages/templates/_email-updates.html'"
