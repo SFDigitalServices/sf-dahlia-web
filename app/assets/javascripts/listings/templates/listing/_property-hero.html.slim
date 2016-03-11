@@ -19,7 +19,7 @@
     h1.property-hero_title.offset
       | {{listing.Building_Name}}
 
-  header.property-hero_content.p-relative
+  header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
       p.property-hero_address
         | {{formattedAddress(listing)}}
@@ -42,7 +42,7 @@
             use style="display:none" xlink:href="#i-forward-fill"
         span.sr-only Share
 
-    p.post-dealine_alert.show-for-small-only.margin-top--half.margin-bottom ng-if="listingApplicationClosed(listing)"
+    p.post-dealine_alert.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
       span.label.label--flag.alert Applications Closed
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"

@@ -26,7 +26,7 @@
           | Amenities, unit details and additional fees
       ng-include src="'listings/templates/listing/_features.html'"
 
-    accordion-group ng-if="formattedAddress(listing)"
+    accordion-group.bg-dust ng-if="formattedAddress(listing)"
       header.listing-header.show-for-medium-up
         h3.listing-header_name
           | Neighborhood
@@ -43,12 +43,12 @@
       ng-include src="'listings/templates/listing/_legal.html'"
 
     .content-panel.accordion-offset.margin-bottom--2x
-      .padding.bg-mist.clearfix
+      .content-card
         .row
           .medium-9.columns
-            h5.content-label.t-sans.t-small Related Programs
-            p.no-margin Inclusionary Housing Below Market Rate Rental
-            span.content-label.t-small Monitored by the Mayor's Office of Housing & Community Development
+            h4.content-card_title Related Programs
+            p.t-base.t-serif Inclusionary Housing Below Market Rate Rental
+            p.t-small Monitored by the Mayor's Office of Housing & Community Development
           .medium-3.columns
             img.right alt=("Equal Housing Opportunity Logo") src="../images/logo-equal.png" /
 

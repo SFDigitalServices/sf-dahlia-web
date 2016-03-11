@@ -7,84 +7,91 @@ accordion-heading.lead
       use xlink:href="#i-arrow-down"
 
 .content-section
-  .content-tile
-    header.padding-top.margin-bottom
-      h4.t-base.t-sans.margin-bottom--half Household Maximum Income
-      /! Each unit type available has its own requirements based on household size.
-      p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit.
-    .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
-      ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
-        li
-          .stats-list_value.highlight
-            span.value-label
-              ' Starts at
-            | {{maxIncomeLevels[0].monthly | currency : $ : 0}}
-            span.value-label
-              | /month
-          span.stats-list_label based on household size
+  ol.custom-counter
+    li.custom-counter_item
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title Household Maximum Income
+          /! Each unit type available has its own requirements based on household size.
+          p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit.
+        .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
+          ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
+            li
+              .stats-list_value.highlight
+                span.value-label
+                  ' Starts at
+                | {{maxIncomeLevels[0].monthly | currency : $ : 0}}
+                span.value-label
+                  | /month
+              span.stats-list_label based on household size
 
-        span.ui-control.ui-icon.ui-small
-          svg
-            use xlink:href="#i-arrow-down"
+            span.ui-control.ui-icon.ui-small
+              svg
+                use xlink:href="#i-arrow-down"
 
-      .toggled ng-show="isActiveTable('Income')"
-        ng-include src="'listings/templates/listing/_income-table.html'"
+          .toggled ng-show="isActiveTable('Income')"
+            ng-include src="'listings/templates/listing/_income-table.html'"
 
-  .content-tile
-    header.margin-bottom
-      h4.t-base.t-sans.margin-bottom--half Occupancy
-      p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+    li.custom-counter_item
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title Occupancy
+          p.t-small.c-steel Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
 
-    table role="grid"
-      thead
-        tr
-          th scope="col" Unit Type
-          th scope="col" Occupancy
-      tbody
-        tr ng-repeat="unit_summary in listing.unitSummary"
-          td scope="row" {{unit_summary.unitType}}
-          td ng-if="unit_summary.unitType == 'Flex'"
-            | Flex people
-          td ng-if="unit_summary.unitType != 'Flex'"
-            | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
+        table role="grid"
+          thead
+            tr
+              th scope="col" Unit Type
+              th scope="col" Occupancy
+          tbody
+            tr ng-repeat="unit_summary in listing.unitSummary"
+              td scope="row" {{unit_summary.unitType}}
+              td ng-if="unit_summary.unitType == 'Flex'"
+                | Flex people
+              td ng-if="unit_summary.unitType != 'Flex'"
+                | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
 
-  .content-tile
-    header.margin-bottom
-      h4.t-base.t-sans.margin-bottom--half
-        | Lottery Preferences
-      p.t-small.c-steel
-        | Preference holders will be given highest ranking in the lottery process.
-    .content-card ng-repeat="preference in listing.Listing_Lottery_Preferences"
-      h4.content-card_title
-        | {{preference.Lottery_Preference.Name}}
-      p
-        / Look up lotteryPreferenceDescription from Service.lotteryPreferences
-        | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
+    li.custom-counter_item
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | Lottery Preferences
+          p.t-small.c-steel
+            | Preference holders will be given highest ranking in the lottery process.
+        .content-card ng-repeat="preference in listing.Listing_Lottery_Preferences"
+          h4.content-card_title
+            | {{preference.Lottery_Preference.Name}}
+          p
+            / Look up lotteryPreferenceDescription from Service.lotteryPreferences
+            | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
 
-  .content-tile
-    header.panel-header data-equalizer-watch=""
-      h4.t-epsilon.t-sans.margin-bottom--half
-        | Rental Assistance
-      p.t-small.c-steel
-        | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
-      p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+    li.custom-counter_item
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | Rental Assistance
+          p.t-small.c-steel
+            | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
+          p.t-small.c-steel In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
 
-  .content-tile ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
-    header.margin-bottom
-      h4.t-epsilon.t-sans.margin-bottom--half Additional Eligibility Rules
-      p.t-small.c-steel Applicants must also qualify under the rules of the building.
+    li.custom-counter_item ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title Additional Eligibility Rules
+          p.t-small.c-steel Applicants must also qualify under the rules of the building.
 
-    .content-card ng-if="listing.Credit_Rating"
-      h4.content-card_title Credit History
-      p ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60"
-    .content-card ng-if="listing.Eviction_History"
-      h4.content-card_title Rental History
-      p ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60"
+        .content-card ng-if="listing.Credit_Rating"
+          h4.content-card_title Credit History
+          p ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60"
 
-    .content-card
-      h4.content-card_title Criminal Background
-      p
-        ' Qualified applicants with criminal history will be considered for
-            housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
-          | of the San Francisco Police Code: Fair Chance Ordinance.
-      p ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20"
+        .content-card ng-if="listing.Eviction_History"
+          h4.content-card_title Rental History
+          p ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60"
+
+        .content-card
+          h4.content-card_title Criminal Background
+          p
+            ' Qualified applicants with criminal history will be considered for
+                housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
+              | of the San Francisco Police Code: Fair Chance Ordinance.
+          p ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20"
