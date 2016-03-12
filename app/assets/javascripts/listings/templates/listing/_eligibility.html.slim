@@ -15,21 +15,20 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.t-small.c-steel For income calculations, household size includes everyone (all ages) living in the unit.
         .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
-          ul.stats-list.stats-toggle.double.toggler.has-toggle ng-click="toggleTable('Income')" ng-class="isActiveTable('Income')"
-            li
-              .stats-list_value.highlight
-                span.value-label
-                  ' Starts at
-                | {{maxIncomeLevels[0].monthly | currency : $ : 0}}
-                span.value-label
-                  | /month
-              span.stats-list_label based on household size
+          .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
+            .stats-list_value.highlight
+              span.value-label
+                ' Starts at
+              | {{maxIncomeLevels[0].monthly | currency : $ : 0}}
+              span.value-label
+                | /month
+            span.stats-list_label based on household size
 
             span.ui-control.ui-icon.ui-small
               svg
                 use xlink:href="#i-arrow-down"
 
-          .toggled ng-show="isActiveTable('Income')"
+          .toggled ng-class="[activeIncomeClass, smallDisplayClass]"
             ng-include src="'listings/templates/listing/_income-table.html'"
 
     li.custom-counter_item
