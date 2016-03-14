@@ -185,6 +185,33 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container@':
           templateUrl: 'pages/templates/additional-resources.html'
     })
+    ##########################
+    # Short form application #
+    ##########################
+    .state('dahlia.short-form-application', {
+      url: '/listings/:id/apply'
+      abstract: true
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListing($stateParams.id)
+        ]
+    })
+    .state('dahlia.short-form-application.intro', {
+      url: '/intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a1-intro.html'
+    })
+    .state('dahlia.short-form-application.overview', {
+      url: '/overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a2-overview.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)

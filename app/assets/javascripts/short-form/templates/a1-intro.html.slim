@@ -1,0 +1,16 @@
+h2.application-title.t-gamma.padding-bottom Let's get started on your application for
+.form-group.margin-bottom--2x
+  .property-card
+    img.property-thumb alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
+    h3.property-title.t-serif.gamma.margin-top
+      | {{listing.Building_Name}}
+    p
+      | {{formattedAddress(listing)}}
+    p.c-steel.margin-bottom--half
+      | {{listing.Developer}}
+    p
+      ' Application Due
+      | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+
+a.button.expand-small ui-sref="dahlia.short-form-application.overview({listing_id: listing.Id})"
+  | Get Started
