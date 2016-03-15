@@ -26,6 +26,17 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     { name: 'Review', pages: ['intro'] }
   ]
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  # hideAlert tracks if the user has manually closed the alert "X"
+  $scope.hideAlert = false
+  $scope.alertText = "You'll need to resolve any errors before moving on."
+
+  $scope.showAlert = ->
+    form = $scope.form.applicationForm
+    if form
+      # show alert if we've submitted an invalid form, and we haven't manually hidden it
+      form.$submitted && form.$invalid && $scope.hideAlert == false
+    else
+      false
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -35,9 +46,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
         $scope[options.callback]()
       if options.path
         $state.go(options.path)
+    else
+      $scope.hideAlert = false
 
   $scope.inputInvalid = (name) ->
     form = $scope.form.applicationForm
+    # console.log(form, name, form[name])
     form[name].$invalid && (form[name].$touched || form.$submitted)
 
   $scope.inputValid = (name) ->

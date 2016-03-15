@@ -1,5 +1,5 @@
 .form-address.row
-  .form-group-street.large-12.columns
+  .form-group-street.form-item.large-12.columns ng-class="{ error: isRequired && inputInvalid('address1') }"
     label for="{{model}}_{{addressType}}_address1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
       ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text"
@@ -11,14 +11,14 @@
     label for="{{model}}_{{addressType}}_address2"  Address 2
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
       ng-change="checkIfMailingAddressNeeded()" name="address2" placeholder=("Apt or Unit #") type="text")
-  .small-7.large-5.columns
+  .form-group-city.form-item.small-7.large-5.columns ng-class="{ error: isRequired && inputInvalid('city') }"
     label for="{{model}}_{{addressType}}_city"  City
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text"
       ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('city') }")
     small.error ng-show="isRequired && inputInvalid('city')"
       | Please enter a city
-  .small-5.large-3.columns
+  .form-group-state.form-item.small-5.large-3.columns ng-class="{ error: isRequired && inputInvalid('state') }"
     label for="{{model}}_{{addressType}}_state"  State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
       ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state"
@@ -78,7 +78,7 @@
 
     small.error ng-show="isRequired && inputInvalid('state')"
       | Please enter a state
-  .small-12.large-4.columns
+  .form-group-zip.form-item.small-12.large-4.columns ng-class="{ error: isRequired && inputInvalid('zip') }"
     label for="{{model}}_{{addressType}}_zip"  Zip
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
       ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text"

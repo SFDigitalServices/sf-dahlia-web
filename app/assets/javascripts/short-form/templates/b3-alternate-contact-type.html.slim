@@ -2,8 +2,9 @@
 h2.application-title.t-gamma Is there someone else you'd like us to contact if we can't get ahold of you?
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})"
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"
-    p.t-bold ng-if="applicantHasPhoneAndAddress()" Alternate contact
-    p.t-bold ng-if="!applicantHasPhoneAndAddress()" Alternate contact (required)
+    label.form-label Alternate contact
+    p.form-note.margin-bottom ng-if="!applicantHasPhoneAndAddress()"
+      | Please select one.
     .radio-group
       p.radio-block
         input#alternate_contact_family(ng-model="alternateContact.type" name="alternate_contact" type="radio"
