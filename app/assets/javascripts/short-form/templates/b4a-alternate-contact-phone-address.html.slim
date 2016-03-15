@@ -4,7 +4,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group ng-class="{ error: inputInvalid('phone_number') }"
     .form-tel
       label for="alternate_phone" Contact phone number
-      input#alternate_phone ng-model="alternateContact.phone_number" name="phone_number" placeholder="555-555-5555" type="tel" ng-required="isMissingPrimaryContactInfo('Phone Number')" ng-class="{ error: inputInvalid('phone_number') }"
+      input#alternate_phone ng-model="alternateContact.phone_number" name="phone_number" placeholder="555-555-5555" type="tel" ng-required="isMissingPrimaryContactInfo('Phone')" ng-class="{ error: inputInvalid('phone_number') }"
     small.error ng-show="inputInvalid('phone_number')"
       | Please enter a phone number
 
@@ -20,7 +20,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group
     label.form-label.no-margin Contact mailing address
     p.form-note.margin-bottom Choose an address where they can receive updates and materials about your application.
-    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingPrimaryContactInfo('Mailing Address')"
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingPrimaryContactInfo('Address')"
 
   .form-group
     label.form-label.margin-bottom--half for="alternate_primary_language" What is their primary language?

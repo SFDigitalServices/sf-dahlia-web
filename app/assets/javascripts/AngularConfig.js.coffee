@@ -224,12 +224,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
     })
-    .state('dahlia.short-form-application.alternate-contact-required', {
-      url: '/alternate-contact-required'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/b2a-alternate-contact-required.html'
-    })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
       views:

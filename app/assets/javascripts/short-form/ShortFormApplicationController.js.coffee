@@ -28,7 +28,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
-  $scope.alertText = "You'll need to resolve any errors before moving on."
 
   $scope.showAlert = ->
     form = $scope.form.applicationForm
@@ -38,9 +37,15 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     else
       false
 
+  $scope.alertText = ->
+    if $state.current.name == 'dahlia.short-form-application.alternate-contact-type'
+      "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information."
+    else
+      "You'll need to resolve any errors before moving on."
+
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
-    if (form.$valid)
+    if form.$valid
       # submit
       if options.callback && $scope[options.callback]
         $scope[options.callback]()
@@ -93,12 +98,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     #reset mailing address
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
-
-  $scope.checkIfAlternateContactRequired = ->
-    if $scope.applicantHasPhoneAndAddress()
-      $state.go('dahlia.short-form-application.alternate-contact-type')
-    else
-      $state.go('dahlia.short-form-application.alternate-contact-required')
 
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
