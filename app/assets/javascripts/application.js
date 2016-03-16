@@ -25,4 +25,5 @@
 //= require lifely-angular-carousel
 //= require hammerjs
 //= require ng-currency
+//= require ng-text-truncate/ng-text-truncate.js
 //= require_tree .

@@ -7,6 +7,7 @@
   # directives
   'customDirectives',
   'pageslide-directive',
+  'ngTextTruncate',
   # dependencies
   'ui.router',
   'angular-clipboard',
