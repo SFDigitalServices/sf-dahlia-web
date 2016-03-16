@@ -1,32 +1,20 @@
-.property-hero_stats ng-repeat="unit_summary in listing.unitSummary"
-  .stats-card
-    ul.stats-list.triple.medium-quad
-      li
-        .stats-list_value
+.property-hero_stats
+  table.pricing-table.table-flex
+    thead
+      tr
+        th Unit Type
+        th Minimum Income
+        th Rent
+        th Availabililty
+    tr ng-repeat="unit_summary in listing.unitSummary"
+      td.tr data-th="Unit Type"
+        span.h-small
           | {{unit_summary.unitType}}
-        span.stats-list_label unit type
-      li
-        .stats-list_value
-          | {{unit_summary.minRentalMinIncome | currency:"$":0}}
-          span.value-label
-            | /month
-        span.stats-list_label minimum income
-      li
-        .stats-list_value
-          | {{unit_summary.minMonthlyRent | currency:"$":0}}
-          span.value-label
-            | /month
-        span.stats-list_label rent
-      li.show-for-medium-up
-        .stats-list_value
-          | {{unit_summary.totalUnits}}
-          span.value-label
-            ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-        span.stats-list_label available
-    ul.stats-list.double.bg-ghost.medium-full.labels-inline.hide-for-medium-up
-      li
-        span.stats-list_label Availability
-        .stats-list_value
-          | {{unit_summary.totalUnits}}
-          span.value-label
-            ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+      td data-th=("Min. Income")
+        | {{unit_summary.minRentalMinIncome | currency:"$":0}}<small>/month</small>
+      td data-th="Rent"
+        | {{unit_summary.minMonthlyRent | currency:"$":0}}<small>/month</small>
+      td data-th="Availabililty"
+        | {{unit_summary.totalUnits}}
+        small
+          ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"

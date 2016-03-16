@@ -18,6 +18,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.eligibilityFilters = ListingService.eligibility_filters
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
+  $scope.smallDisplayClass = "small-display-none"
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -29,6 +30,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 
   $scope.toggleTable = (table) ->
     $scope["active#{table}Class"] = if $scope["active#{table}Class"] then '' else 'active'
+    $scope.smallDisplayClass = if $scope.smallDisplayClass then '' else 'small-display-none'
 
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
@@ -167,7 +169,17 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'Carousel', 'SharedService', 'ListingService', 'IncomeCalculatorService']
+ListingController.$inject = [
+  '$scope',
+  '$state',
+  '$sce',
+  '$sanitize',
+  '$filter',
+  'Carousel',
+  'SharedService',
+  'ListingService',
+  'IncomeCalculatorService'
+]
 
 angular
   .module('dahlia.controllers')
