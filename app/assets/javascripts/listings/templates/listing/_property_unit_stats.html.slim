@@ -1,4 +1,4 @@
-div.property-hero_stats
+.property-hero_stats
   table.pricing-table.table-flex
     thead
       tr
@@ -6,15 +6,15 @@ div.property-hero_stats
         th Minimum Income
         th Rent
         th Availabililty
-    tr ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
-      td.tr data-th=("Unit Type")
+    tr ng-repeat="unit_summary in listing.unitSummary"
+      td.tr data-th="Unit Type"
         span.h-small
-          | {{unit_type == 'undefined' ? 'N/A' : unit_type}}
+          | {{unit_summary.unitType}}
       td data-th=("Min. Income")
-        | {{unitBMRMinMonthlyRange(units) | currency:"$":0}}<small>/month</small>
+        | {{unit_summary.minRentalMinIncome | currency:"$":0}}<small>/month</small>
       td data-th="Rent"
-        | {{unitBMRRentMonthlyRange(units) | currency:"$":0}}<small>/month</small>
+        | {{unit_summary.minMonthlyRent | currency:"$":0}}<small>/month</small>
       td data-th="Availabililty"
-        | {{units.length}}
+        | {{unit_summary.totalUnits}}
         small
-          ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"

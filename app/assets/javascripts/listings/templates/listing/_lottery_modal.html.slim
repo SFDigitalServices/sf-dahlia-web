@@ -6,8 +6,8 @@ span ng-controller="ListingController"
         h2#modalTitle
           | {{listing.Building_Name}}
         ul.t-small.margin-bottom
-            li ng-repeat="(unit_type, units) in listing.Units | groupBy: 'Unit_Type'"
-               | {{unit_type || 'N/A'}} {{units.length}} unit(s)
+          li ng-repeat="unit_summary in listing.unitSummary"
+            | {{unit_summary.unitType || 'N/A'}} {{unit_summary.totalUnits}} unit(s)
         p.t-small.t-bold
           | {{listing.Lottery_Summary}}
 
@@ -24,4 +24,3 @@ span ng-controller="ListingController"
                 | {{ticket.Lottery_Number}}
 
   a.close-reveal-modal aria-label="Close" ng-click="closeModal()"  ×
-
