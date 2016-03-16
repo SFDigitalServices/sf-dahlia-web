@@ -26,14 +26,50 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     { name: 'Review', pages: ['intro'] }
   ]
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  # hideAlert tracks if the user has manually closed the alert "X"
+  $scope.hideAlert = false
+
+  $scope.showAlert = ->
+    form = $scope.form.applicationForm
+    if form
+      # show alert if we've submitted an invalid form, and we haven't manually hidden it
+      form.$submitted && form.$invalid && $scope.hideAlert == false
+    else
+      false
+
+  $scope.alertText = ->
+    if $state.current.name == 'dahlia.short-form-application.alternate-contact-type'
+      "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information."
+    else
+      "You'll need to resolve any errors before moving on."
+
+  $scope.submitForm = (options) ->
+    form = $scope.form.applicationForm
+    if form.$valid
+      # submit
+      if options.callback && $scope[options.callback]
+        $scope[options.callback]()
+      if options.path
+        $state.go(options.path)
+    else
+      $scope.hideAlert = false
 
   $scope.inputInvalid = (name) ->
     form = $scope.form.applicationForm
+    # console.log(form, name, form[name])
     form[name].$invalid && (form[name].$touched || form.$submitted)
 
   $scope.inputValid = (name) ->
     form = $scope.form.applicationForm
     form[name].$valid
+
+  $scope.addressInputInvalid = ->
+    form = $scope.form.applicationForm
+    if form['address1']
+      $scope.inputInvalid('address1') ||
+      $scope.inputInvalid('city') ||
+      $scope.inputInvalid('state') ||
+      $scope.inputInvalid('zip')
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
@@ -51,6 +87,9 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.missingPrimaryContactInfo = ->
     ShortFormApplicationService.missingPrimaryContactInfo()
 
+  $scope.isMissingPrimaryContactInfo = (info) ->
+    ShortFormApplicationService.missingPrimaryContactInfo().indexOf(info) > -1
+
   $scope.checkIfMailingAddressNeeded = ->
     if !$scope.applicant.separateAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
@@ -59,12 +98,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     #reset mailing address
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
-
-  $scope.checkIfAlternateContactRequired = ->
-    if $scope.applicantHasPhoneAndAddress()
-      $state.go('dahlia.short-form-application.alternate-contact-type')
-    else
-      $state.go('dahlia.short-form-application.alternate-contact-required')
 
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'

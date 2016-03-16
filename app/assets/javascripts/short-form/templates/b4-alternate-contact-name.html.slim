@@ -1,13 +1,17 @@
 .form-count 1 of 5
 h2.application-title.t-gamma.no-margin Who is your alternate contact?
 p A good alternate contact is a person who will know how to reach you.
-ng-form name="form.applicationForm" novalidate=""
-  .form-group.margin-bottom--2x
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-phone-address'})"
+  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
     h3.form-label Name of alternate contact
     label.sr-only for="alternate_first_name" First Name
-    input#alternate_first_name ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text"
+    input#alternate_first_name ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('first_name') }"
+    small.error ng-show="inputInvalid('first_name')"
+      | Please enter a First Name
     label.sr-only for="alternate_last_name"  Last Name
-    input#alternate_last_name ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text"
+    input#alternate_last_name ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('last_name') }"
+    small.error ng-show="inputInvalid('last_name')"
+      | Please enter a Last Name
   .form-group.margin-bottom--2x ng-if="alternateContact.type == 'Social worker or housing counselor'"
     h3.form-label What agency does your social worker or counselor work at?
     label.sr-only for="alternate_agency"
@@ -15,7 +19,6 @@ ng-form name="form.applicationForm" novalidate=""
 
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
-      button.button.expand ui-sref="dahlia.short-form-application.alternate-contact-phone-address"
-        | Next
+      input.button.expand.radius type="submit" value="Next"
     .small-12.medium-6.medium-pull-6.columns
       button.button.ghost-white.expand Save and finish later

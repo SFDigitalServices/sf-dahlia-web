@@ -43,23 +43,6 @@ do ->
         return
       return
 
-    describe '$scope.checkIfAlternateContactRequired', ->
-      describe 'Applicant has phone and address', ->
-        it 'Routes user to alternate contact type page', ->
-          scope.applicant.phone_number = "2022869353"
-          scope.checkIfAlternateContactRequired()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
-          return
-        return
-
-      describe 'Applicant does not have both phone and address', ->
-        it 'Routes user to a page with required alt contact message', ->
-          scope.applicant.phone_number = null
-          scope.checkIfAlternateContactRequired()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-required')
-          return
-        return
-
     describe '$scope.checkIfAlternateContactInfoNeeded', ->
       describe 'No alternate contact indicated', ->
         it 'navigates ahead to optional info', ->

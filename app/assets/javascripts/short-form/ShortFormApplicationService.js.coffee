@@ -29,9 +29,11 @@ ShortFormApplicationService = ($localStorage) ->
   Service.missingPrimaryContactInfo = () ->
     missingInfo = []
     if !Service.applicant.phone_number
-      missingInfo.push("Phone Number")
+      missingInfo.push("Phone")
+    if !Service.applicant.email
+      missingInfo.push("Email")
     if !Service.validMailingAddress()
-      missingInfo.push("Mailing Address")
+      missingInfo.push("Address")
     return missingInfo
 
   return Service
