@@ -1,47 +1,89 @@
 .property-card
+  h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
+    a ui-sref="dahlia.listing({id: listing.Id})" {{listing.Building_Name}}
   figure.property-card_figure
-    .property-card_container
-      a ui-sref="dahlia.listing({id: listing.Id})"
-        img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
-      a.property-card_like ng-click="toggleFavoriteListing(listing.Id);"
-        span.ui-icon
-          svg
-            use xlink:href="#i-like"
-            use xlink:href="#i-like-fill" ng-if="isFavorited(listing.Id)"
+    a.property-card_overlay href="/listings/id"
+      img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
+      span.application-label.label.label--flag.primary Application Deadline: Nov 21, 2015 at 5PM
+    figcaption.property-card_info
+      h1.property-card_title.show-for-medium-up
+        a ui-sref="dahlia.listing({id: listing.Id})" {{listing.Building_Name}}
+      p.property-card_address
+        | {{formattedAddress(listing, 'street')}}
+        br.show-for-small-only
+        | {{formattedAddress(listing, 'city-state-zip')}}
+  .property-card_content
+    .property-card_stats
+      table role="grid"
+        thead
+          tr
+            th scope="col" Unit Type
+            th scope="col" Minimum Income
+            th.text-right scope="col" Rent
+        tbody
+          tr
+            td scope="row" Table Cell 1
+            td Table Cell 2
+            td.text-right Table Cell 3
+          tr
+            td scope="row" Table Cell 1
+            td Table Cell 2
+            td.text-right Table Cell 3
 
-    figcaption.property-card_stats.hide-for-medium-up
-      .stats-card.bottom
-        ng-include src="'listings/templates/_stats-list.html'"
+          .property-card_action
+            button.button.round-icon
+              span.ui-icon
+                svg
+                  use xlink:href="#i-like"
+                  use style="display:none" xlink:href="#i-like-fill"
+              span.label.inline
+                | Favorite
+            a.button.ghost-white.right.no-margin href="/pages/property-grid.html" See Details
 
-    span.status-label.label.success ng-if="showMatches() && isOpenMatchListing(listing)"
-      | Matched
-    span.status-label.label.negative ng-if="showMatches() && isOpenNotMatchListing(listing)"
-      | Not a Match
+/ .property-card
+/   figure.property-card_figure
+/     .property-card_container
+/       a ui-sref="dahlia.listing({id: listing.Id})"
+/         img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
+/       a.property-card_like ng-click="toggleFavoriteListing(listing.Id);"
+/         span.ui-icon
+/           svg
+/             use xlink:href="#i-like"
+/             use xlink:href="#i-like-fill" ng-if="isFavorited(listing.Id)"
 
-  header.property-card_content
-    hgroup.property-card_info
-      .property-card_meta
-        h1.property-card_title.gamma
-          a ui-sref="dahlia.listing({id: listing.Id})"
-            | {{listing.Building_Name}}
+/     figcaption.property-card_stats.hide-for-medium-up
+/       .stats-card.bottom
+/         ng-include src="'listings/templates/_stats-list.html'"
 
-        p
-          | {{formattedAddress(listing)}}
-        p.c-steel.margin-bottom--half
-          | {{listing.Developer}}
-        p.t-semi ng-if="isOpenListing(listing)"
-          | Application Due {{listing.Application_Due_Date | dateSuffix}}
-        p.t-small.c-alert ng-if="isClosedListing(listing)"
-          | Applications Closed {{listing.Application_Due_Date | dateSuffix}}
-        p.t-small.c-steel ng-if="isClosedListing(listing) && listing.Lottery_Results_Date"
-          | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
-        p.c-success ng-if="isLotteryResultsListing(listing) && listing.Lottery_Results_Date"
-          | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
-      .property-card_action
-        a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
-          | See Details
-    .property-card_stats.show-for-medium-up
-      .stats-card.bottom.bg-mist
-        ng-include src="'listings/templates/_stats-list.html'"
-    button.button.small.secondary ng-show="shared.showSharing()" ui-sref="dahlia.share({id: listing.Id})"
-      | Share Listing
+/     span.status-label.label.success ng-if="showMatches() && isOpenMatchListing(listing)"
+/       | Matched
+/     span.status-label.label.negative ng-if="showMatches() && isOpenNotMatchListing(listing)"
+/       | Not a Match
+
+/   header.property-card_content
+/     hgroup.property-card_info
+/       .property-card_meta
+/         h1.property-card_title.gamma
+/           a ui-sref="dahlia.listing({id: listing.Id})"
+/             | {{listing.Building_Name}}
+
+/         p
+/           | {{formattedAddress(listing)}}
+/         p.c-steel.margin-bottom--half
+/           | {{listing.Developer}}
+/         p.t-semi ng-if="isOpenListing(listing)"
+/           | Application Due {{listing.Application_Due_Date | dateSuffix}}
+/         p.t-small.c-alert ng-if="isClosedListing(listing)"
+/           | Applications Closed {{listing.Application_Due_Date | dateSuffix}}
+/         p.t-small.c-steel ng-if="isClosedListing(listing) && listing.Lottery_Results_Date"
+/           | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
+/         p.c-success ng-if="isLotteryResultsListing(listing) && listing.Lottery_Results_Date"
+/           | Lottery Results posted {{listing.Lottery_Results_Date | dateSuffix}}
+/       .property-card_action
+/         a.button.tiny.secondary ui-sref="dahlia.listing({id: listing.Id})"
+/           | See Details
+/     .property-card_stats.show-for-medium-up
+/       .stats-card.bottom.bg-mist
+/         ng-include src="'listings/templates/_stats-list.html'"
+/     button.button.small.secondary ng-show="shared.showSharing()" ui-sref="dahlia.share({id: listing.Id})"
+/       | Share Listing

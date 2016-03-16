@@ -1,16 +1,14 @@
-header.lead-header.bg-attention-tint
+header.lead-header.bg-dust ng-if="!hasEligibilityFilters()"
   .row
-    .large-12.columns
-      h1.lead-title.t-beta Below Market Rate Rentals
-      .medium-8.columns.no-padding
-        p.t-gamma.t-light.show-for-medium-up Units in new developments priced at a “below market rate” are affordable to lower or middle income households.
+    .medium-12.columns
+      .results-header
+        h1.results-header_values Tell us your household size and income and we'll highlight listings that might be a fit.
+        .results-header_actions
+          a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator" Estimate Your Eligibility
 
 /// Matches results bar
 section.results-bar.bg-mist.padding-top.padding-bottom
   .row
-    .medium-12.columns ng-if="!hasEligibilityFilters()"
-      a.button.small ui-sref="dahlia.eligibility-estimator"
-        | Estimate Eligibility
     .medium-12.columns ng-if="hasEligibilityFilters()"
       .results-wrap
         .left

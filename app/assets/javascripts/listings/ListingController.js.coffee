@@ -47,7 +47,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
-  $scope.formattedAddress = (listing) ->
+  $scope.formattedAddress = (listing, type) ->
     # If Street address is undefined, then return false for display and google map lookup
     if listing.Building_Street_Address == undefined
       return
@@ -57,7 +57,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     else
       Building_Street_Address = ''
     if listing.Building_City != undefined
-      Building_City = listing.Building_City
+      Building_City = listing.Building_City + ' '
     else
       Building_City = ''
     if listing.Building_State != undefined
@@ -68,6 +68,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
       Building_Zip_Code = listing.Building_Zip_Code
     else
       Building_Zip_Code = ''
+
     "#{Building_Street_Address}#{Building_City} " +
     "#{Building_State}#{Building_Zip_Code}"
 
