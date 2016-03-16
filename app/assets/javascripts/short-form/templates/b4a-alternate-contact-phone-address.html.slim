@@ -1,0 +1,35 @@
+.form-count 1 of 5
+h2 Let us know how to reach your alternate contact.
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.optional-info'})"
+  .form-group ng-class="{ error: inputInvalid('phone_number') }"
+    .form-tel
+      label for="alternate_phone" Contact phone number
+      input#alternate_phone ng-model="alternateContact.phone_number" name="phone_number" placeholder="555-555-5555" type="tel" ng-required="isMissingPrimaryContactInfo('Phone')" ng-class="{ error: inputInvalid('phone_number') }"
+    small.error ng-show="inputInvalid('phone_number')"
+      | Please enter a phone number
+
+  .form-group ng-class="{ error: inputInvalid('email') }"
+    label.form-label.no-margin Contact email address
+    p.form-note.margin-bottom We will only use this email address to contact your contact about your application.
+    .form-email
+      label.sr-only for="alternate_email"  Email Address
+      input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-required="isMissingPrimaryContactInfo('Email')" ng-class="{ error: inputInvalid('email') }"
+    small.error ng-show="inputInvalid('email')"
+      | Please enter an email address
+
+  .form-group
+    label.form-label.no-margin Contact mailing address
+    p.form-note.margin-bottom Choose an address where they can receive updates and materials about your application.
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingPrimaryContactInfo('Address')"
+
+  .form-group
+    label.form-label.margin-bottom--half for="alternate_primary_language" What is their primary language?
+    select#alternate_primary_language ng-model="alternateContact.primary_language" data-width="auto" name="primary_language"
+     option value="English"  English
+     option value="Tagalog"  Tagalog
+     option value="Chinese"  Chinese
+  .button-stack--paginate.text-center.row.padding-top
+   .small-12.medium-6.medium-push-6.columns
+     input.button.expand.radius type="submit" value="Next"
+   .small-12.medium-6.medium-pull-6.columns
+     button.button.ghost-white.expand Save and finish later
