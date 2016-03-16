@@ -44,16 +44,6 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.unitsByType = (unit_type) ->
     $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
 
-  $scope.unitBMRMinMonthlyRange = (units) ->
-    # TODO: actually find min/max
-    # if units.length == 1
-    units[0].BMR_Rental_Minimum_Monthly_Income_Needed
-
-  $scope.unitBMRRentMonthlyRange = (units) ->
-    # TODO: actually find min/max
-    # if units.length == 1
-    units[0].BMR_Rent_Monthly
-
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
