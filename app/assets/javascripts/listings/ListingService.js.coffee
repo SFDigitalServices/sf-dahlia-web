@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal) ->
+ListingService = ($http, $localStorage, $modal, $q) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -99,9 +99,46 @@ ListingService = ($http, $localStorage, $modal) ->
       controller: 'ModalInstanceController'
     })
 
+  Service.formattedAddress = (listing, type='Building', display='full') ->
+    # If Street address is undefined, then return false for display and google map lookup
+    if listing["#{type}_Street_Address"] == undefined
+      return
+    # If other fields are undefined, proceed, with special string formatting
+    if listing["#{type}_Street_Address"] != undefined
+      Street_Address = listing["#{type}_Street_Address"] + ', '
+    else
+      Street_Address = ''
+    if listing["#{type}_City"] != undefined
+      City = listing["#{type}_City"]
+    else
+      City = ''
+    if listing["#{type}_State"] != undefined
+      State = listing["#{type}_State"] + ', '
+    else
+      State = ''
+    if type == 'Application'
+      zip_code_field == "#{type}_Postal_Code"
+    else
+      zip_code_field = "#{type}_Zip_Code"
+    if listing[zip_code_field] != undefined
+      Zip_Code = listing[zip_code_field]
+    else
+      Zip_Code = ''
+
+    if display == 'street'
+      return "#{Building_Street_Address}"
+    else if display == 'city-state-zip'
+      return "#{Building_City}#{Building_State}#{Building_Zip_Code}"
+    else
+      "#{Street_Address}#{City} " +
+      "#{State}#{Zip_Code}"
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
+    if Service.listing && Service.listing.Id == _id
+      # return a resolved promise if we already have the listing
+      return $q.when(Service.listing)
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
@@ -220,7 +257,7 @@ ListingService = ($http, $localStorage, $modal) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q']
 
 angular
   .module('dahlia.services')

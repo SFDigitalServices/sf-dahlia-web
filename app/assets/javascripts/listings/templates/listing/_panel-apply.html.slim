@@ -1,6 +1,11 @@
 .content-column
   .content-group.has-divider
     h2.h-caps-lined How to Apply
+    button.button.primary.expand.no-margin type="button" ui-sref="dahlia.short-form-application.intro({id: listing.Id})"
+      | Apply Online
+    .option-divider
+      span.or or
+  .content-group.has-divider
     h3.content-group_title
       | Pickup and turn in application
     p.content-group_address.no-margin
@@ -15,6 +20,9 @@
       span.content-group_title Office Hours
       span.content-group_time
         | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+    .option-divider
+      span.or or
+
 
   .content-group
     a.button.primary.small.expand.no-margin target="_blank" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
