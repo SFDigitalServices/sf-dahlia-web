@@ -10,9 +10,6 @@
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
     a.t-small.d-block.ui-link.margin-bottom target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
-      / span.ui-icon
-      /   svg
-      /     use xlink:href="#i-map"
       | View Map
     p.content-group_hours ng-if="listing.Office_Open"
       span.content-group_title Office Hours
@@ -21,9 +18,6 @@
 
   .content-group
     a.button.primary.small.expand.no-margin target="_blank" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
-      / span.ui-icon.ui-link.i-white
-      /   svg
-      /     use xlink:href="#i-download"
       | Download Application
 
   .content-group
