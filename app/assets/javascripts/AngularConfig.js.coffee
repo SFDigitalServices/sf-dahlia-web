@@ -213,6 +213,48 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/a2-overview.html'
     })
+    .state('dahlia.short-form-application.name', {
+      url: '/name'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b1-name.html'
+    })
+    .state('dahlia.short-form-application.contact', {
+      url: '/contact'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2-contact.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-required', {
+      url: '/alternate-contact-required'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2a-alternate-contact-required.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-type', {
+      url: '/alternate-contact-type'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b3-alternate-contact-type.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-name', {
+      url: '/alternate-contact-name'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b4-alternate-contact-name.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-phone-address', {
+      url: '/alternate-contact-phone-address'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b4a-alternate-contact-phone-address.html'
+    })
+    .state('dahlia.short-form-application.optional-info', {
+      url: '/optional-info'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b5-optional-info.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)

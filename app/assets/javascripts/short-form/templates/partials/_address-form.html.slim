@@ -1,0 +1,73 @@
+.form-address.row
+  .form-group-street.large-12.columns
+    label for="{{model}}_{{addressType}}_address1"
+    input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
+      ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text" )
+  .form-group-apt.large-12.column
+    label for="{{model}}_{{addressType}}_address2"  Address 2
+    input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
+      ng-change="checkIfMailingAddressNeeded()" name="address2" placeholder=("Apt or Unit #") type="text")
+  .small-7.large-5.columns
+    label for="{{model}}_{{addressType}}_city"  City
+    input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
+      ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text")
+  .small-5.large-3.columns
+    label for="{{model}}_{{addressType}}_state"  State
+    select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
+      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state")
+      option value=""  Select
+      option value="alabama"  Alabama
+      option value="alaska"  Alaska
+      option value="arizona"  Arizona
+      option value="arkansas"  Arkansas
+      option value="california"  California
+      option value="colorado"  Colorado
+      option value="connecticut"  Connecticut
+      option value="delaware"  Delaware
+      option value="district-of-columbia"  District Of Columbia
+      option value="florida"  Florida
+      option value="georgia"  Georgia
+      option value="hawaii"  Hawaii
+      option value="idaho"  Idaho
+      option value="illinois"  Illinois
+      option value="indiana"  Indiana
+      option value="iowa"  Iowa
+      option value="kansas"  Kansas
+      option value="kentucky"  Kentucky
+      option value="louisiana"  Louisiana
+      option value="maine"  Maine
+      option value="maryland"  Maryland
+      option value="massachusetts"  Massachusetts
+      option value="michigan"  Michigan
+      option value="minnesota"  Minnesota
+      option value="mississippi"  Mississippi
+      option value="missouri"  Missouri
+      option value="montana"  Montana
+      option value="nebraska"  Nebraska
+      option value="nevada"  Nevada
+      option value="new-hampshire"  New Hampshire
+      option value="new-jersey"  New Jersey
+      option value="new-mexico"  New Mexico
+      option value="new-york"  New York
+      option value="north-carolina"  North Carolina
+      option value="north-dakota"  North Dakota
+      option value="ohio"  Ohio
+      option value="oklahoma"  Oklahoma
+      option value="oregon"  Oregon
+      option value="pennsylvania"  Pennsylvania
+      option value="rhode-island"  Rhode Island
+      option value="south-carolina"  South Carolina
+      option value="south-dakota"  South Dakota
+      option value="tennessee"  Tennessee
+      option value="texas"  Texas
+      option value="utah"  Utah
+      option value="vermont"  Vermont
+      option value="virginia"  Virginia
+      option value="washington"  Washington
+      option value="west-virginia"  West Virginia
+      option value="wisconsin"  Wisconsin
+      option value="wyoming"  Wyoming
+  .small-12.large-4.columns
+    label for="{{model}}_{{addressType}}_zip"  Zip
+    input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
+      ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text")
