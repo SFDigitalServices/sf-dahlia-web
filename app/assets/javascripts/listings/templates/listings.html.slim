@@ -46,9 +46,13 @@ section.row ng-if="!openListings.length"
 / Listings:
 /   * Open (doesn't have a header)
 /   * Before Eligibility filter
-.no-eligibility-filters ng-if="!hasEligibilityFilters()"
-  ul.padding-top--2x ng-if="openListings.length"
-    li.margin-bottom--2x ng-repeat="listing in openListings"
+/ .no-eligibility-filters ng-if="!hasEligibilityFilters()"
+/   ul.padding-top--2x ng-if="openListings.length"
+/     li.margin-bottom--2x ng-repeat="listing in openListings"
+/       ng-include src="'listings/templates/_property-card.html'"
+.results-section ng-if="!hasEligibilityFilters()"
+  .row ng-if="openListings.length"
+    .large-12.columns ng-repeat="listing in openListings"
       ng-include src="'listings/templates/_property-card.html'"
 
 / Listings:
