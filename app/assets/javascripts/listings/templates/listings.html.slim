@@ -124,13 +124,21 @@ section.results-section.border-top ng-if="closedListings.length"
       ng-include src="'listings/templates/_property-card.html'"
 
 / Listings: Lottery Results
-.row ng-if="lotteryResultsListings.length"
-  .large-12.columns
-    header.section-header.margin-top--2x
-      h2.gamma.no-margin Lottery Results
-ul.padding-top--2x ng-if="lotteryResultsListings.length"
-  li.margin-bottom--2x ng-repeat="listing in lotteryResultsListings"
-    ng-include src="'listings/templates/_property-card.html'"
+section.results-section.border-top ng-if="lotteryResultsListings.length"
+  .row
+    .large-12.columns
+      header.status-header.status--closed
+        .status-header_icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-check"
+        hgroup.status-header_group
+          h2.status-header_title.gamma
+            | Lottery Results
+          p.no-margin The remaining properties are no longer taking applications but can be used to check lottery results.
+  .row ng-if="lotteryResultsListings.length"
+    .large-12.columns ng-repeat="listing in lotteryResultsListings"
+      ng-include src="'listings/templates/_property-card.html'"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"
