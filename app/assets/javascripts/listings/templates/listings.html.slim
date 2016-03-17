@@ -7,32 +7,34 @@ header.lead-header.bg-dust ng-if="!hasEligibilityFilters()"
           a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator" Estimate Your Eligibility
 
 /// Matches results bar
-section.results-bar.bg-mist.padding-top.padding-bottom
+header.lead-header
   .row
     .medium-12.columns ng-if="hasEligibilityFilters()"
-      .results-wrap
-        .left
-          span.t-small.t-steel
-            | Showing matches for
-          br
-          p.no-margin
+      h1.lead-header_title Showing matches for
+      .results-header
+        p.results-header_values
+          strong
+            ' {{eligibilityFilters.household_size}}
+          ' {{eligibilityFilters.household_size == 1 ? 'person ' : 'people '}}
+          span ng-if="eligibilityFilters.children_under_6 && eligibilityFilters.children_under_6 > 0"
+            ' (including
             strong
-              ' {{eligibilityFilters.household_size}}
-              ' {{eligibilityFilters.household_size == 1 ? 'person' : 'people'}}
-            span ng-if="eligibilityFilters.children_under_6 && eligibilityFilters.children_under_6 > 0"
-              ' (including
-              strong
-                ' {{eligibilityFilters.children_under_6}}
-                ' {{eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
-              ' under 6)
-            ' at
-            strong
-              ' {{ eligibilityFilters.income_total | currency : $ : 0}} a {{ eligibilityFilters.income_timeframe | incomeTimeframe }}
-        .button-set
-          a.button.tiny ui-sref="dahlia.eligibility-estimator"
+              ' {{eligibilityFilters.children_under_6}}
+              ' {{eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
+            ' under 6)
+          ' at <strong>{{ eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ eligibilityFilters.income_timeframe | incomeTimeframe }}
+        .results-header_actions
+          a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator"
             | Edit Eligibility
-          a.button.ghost-white.tiny ng-click="clearEligibilityFilters()"
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-arrow-down"
+
+          a.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="clearEligibilityFilters()"
             | Clear
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-close"
 
 / Notification: No listings with Open Applications
 section.row ng-if="!openListings.length"
