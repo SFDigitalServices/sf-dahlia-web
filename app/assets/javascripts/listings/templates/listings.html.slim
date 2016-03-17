@@ -46,10 +46,6 @@ section.row ng-if="!openListings.length"
 / Listings:
 /   * Open (doesn't have a header)
 /   * Before Eligibility filter
-/ .no-eligibility-filters ng-if="!hasEligibilityFilters()"
-/   ul.padding-top--2x ng-if="openListings.length"
-/     li.margin-bottom--2x ng-repeat="listing in openListings"
-/       ng-include src="'listings/templates/_property-card.html'"
 .results-section ng-if="!hasEligibilityFilters()"
   .row ng-if="openListings.length"
     .large-12.columns ng-repeat="listing in openListings"
@@ -111,13 +107,21 @@ section.row ng-if="!openListings.length"
     ng-include src="'listings/templates/_housing-counselor.html'"
 
 / Listings: Closed
-.row ng-if="closedListings.length"
-  .large-12.columns
-    header.section-header.margin-top--2x
-      h2.gamma.no-margin Closed Listings
-ul.padding-top--2x ng-if="closedListings.length"
-  li.margin-bottom--2x ng-repeat="listing in closedListings"
-    ng-include src="'listings/templates/_property-card.html'"
+section.results-section.border-top ng-if="closedListings.length"
+  .row
+    .large-12.columns
+      header.status-header.status--closed
+        .status-header_icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-check"
+        hgroup.status-header_group
+          h2.status-header_title.gamma
+            | Closed Listings
+          p.no-margin The remaining properties are no longer taking applications but will post lottery results soon.
+  .row ng-if="closedListings.length"
+    .large-12.columns ng-repeat="listing in closedListings"
+      ng-include src="'listings/templates/_property-card.html'"
 
 / Listings: Lottery Results
 .row ng-if="lotteryResultsListings.length"
