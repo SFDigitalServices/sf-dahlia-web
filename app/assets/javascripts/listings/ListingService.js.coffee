@@ -126,9 +126,9 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       Zip_Code = ''
 
     if display == 'street'
-      return "#{Building_Street_Address}"
+      return "#{Street_Address}"
     else if display == 'city-state-zip'
-      return "#{Building_City}#{Building_State}#{Building_Zip_Code}"
+      return "#{City}#{State}#{Zip_Code}"
     else
       "#{Street_Address}#{City} " +
       "#{State}#{Zip_Code}"
