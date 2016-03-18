@@ -13,6 +13,21 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.sections = [
+      { name: 'You', pages: [
+          'name',
+          'contact',
+          'alternate-contact-type',
+          'alternate-contact-name',
+          'alternate-contact-phone-address',
+          'optional-info'
+        ]
+      },
+      { name: 'Household', pages: ['intro'] },
+      { name: 'Status', pages: ['intro'] },
+      { name: 'Income', pages: ['intro'] },
+      { name: 'Review', pages: ['intro'] }
+    ]
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm

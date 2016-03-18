@@ -5,6 +5,7 @@ angular.module('dahlia.directives')
   scope:
     stateName: '='
     show: '&'
+    isPreviousSection: '&'
   link: (scope, elem, attrs) ->
     scope.sections = [
       { name: 'You', pages: [
@@ -25,5 +26,12 @@ angular.module('dahlia.directives')
     scope.isActiveSection = (section) ->
       stateName = scope.stateName.replace('dahlia.short-form-application.', "")
       section.pages.indexOf(stateName) > -1
+
+    # scope.isPreviousSection = (section) ->
+    #   sectionNames = scope._sectionNames()
+    #   indexOfActiveSection = sectionNames.indexOf(scope.activeSection().name)
+    #   indexofSection = sectionNames.indexOf(section.name)
+    #   indexofSection < indexOfActiveSection
+
 
   templateUrl: 'short-form/directives/short-form-nav.html'
