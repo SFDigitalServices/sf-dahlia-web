@@ -8,7 +8,8 @@ section.row.shift--top
     .application-form.form-card ng-class="{'has-nav': hasNav()}"
       dl.application-form_nav.sub-nav ng-if="hasNav()"
         dd ng-repeat="section in sections" ng-class="{active: isActiveSection(section)}"
-          a ui-sref="dahlia.short-form-application.{{ section.pages[0] }}"
+
+          button ui-sref="dahlia.short-form-application.{{ section.pages[0] }}" ng-disabled="!(isActiveSection(section) || isPreviousSection(section))"
             | {{section.name}}
 
       .alert-box.alert alert="" close="hideAlert = true" ng-show="showAlert()"
