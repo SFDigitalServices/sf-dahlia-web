@@ -1,4 +1,5 @@
-accordion-heading.lead
+accordion-heading
+  img.accordion-icon src="/images/listing-units.svg" alt="neighborhood-building"
   h3.accordion-name
     | Lottery
   span.accordion-subheader Lottery selection, important dates and contact
@@ -8,7 +9,7 @@ accordion-heading.lead
 
 .lottery-content.content-wrap.bg-white
   .content-group.no-padding.show-for-medium-up
-    .label.label--flag.alert
+    .label.label--flag.alert-tint
       | Applications Closed
 
   .content-group
@@ -29,30 +30,37 @@ accordion-heading.lead
     p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
       | Lottery date, time and venue to be scheduled.
 
-  .content-group
-    h4.h-caps-lined Lottery Results
-    p.content-group_date
+  .content-group.expand.text-center
+    h4.t-gamma.t-serif Lottery Results
+    p.content-group_date.margin-bottom
       span.content-group_day
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
     p.c-steel.t-small ng-if="!listing.Lottery_Results"
       ' Complete lottery results will be posted here on
       ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
       ' by 5pm.
-    ul.result-set.margin-bottom ng-if="listing.Lottery_Results"
-      span ng-if="listing.Lottery_Members.length <= 20"
-        li
-          | Rank
-          span.right
-            | Ticket
-        li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
-          | {{ticket.Rank}}
-          span.right
-            | {{ticket.Lottery_Number}}
+
+    div ng-if="listing.Lottery_Results"
+      table.table-small.table-results.text-center  ng-if="listing.Lottery_Members.length <= 20"
+        thead
+          tr
+            th scope="col"
+              | Rank
+            th scope="col"
+              | Ticket
+        tbody
+          tr ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+            td scope="row"
+              | {{ticket.Rank}}
+            td
+              | {{ticket.Lottery_Number}}
+
       a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
 
-    p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
-      / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
-      | {{listing.Lottery_Summary}}
+    .padding.bg-dust
+      p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
+        / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
+        | {{listing.Lottery_Summary}}
 
   .content-group
     h4.h-caps-lined What to Expect
@@ -71,14 +79,15 @@ accordion-heading.lead
       | {{ listing.Leasing_Agent_Name }}
     p.c-steel
       | {{ listing.Leasing_Agent_Title }}
-    a.margin-bottom--half ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
-      span.ui-icon.ui-medium.i-primary
-        svg
-          use xlink:href="#i-phone"
-      |  Call {{ listing.Leasing_Agent_Phone }}
+    p.margin-bottom--half
+      a.has-icon ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
+        span.ui-icon.ui-medium.i-primary
+          svg
+            use xlink:href="#i-phone"
+        |  Call {{ listing.Leasing_Agent_Phone }}
     p.t-small.c-steel Due to high call volume you may hear a message.
     p
-      a ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
+      a.has-icon ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-mail"
@@ -91,7 +100,10 @@ accordion-heading.lead
       br
       | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
     p
-      a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      a.has-icon href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+        span.ui-icon.ui-medium.i-primary
+          svg
+            use xlink:href="#i-map"
         | View Map
     p.content-group_date ng-if="listing.Office_Open && listing.Office_Closed"
       span.content-group_title Office Hours

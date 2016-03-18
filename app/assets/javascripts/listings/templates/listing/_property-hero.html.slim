@@ -43,12 +43,12 @@
         span.sr-only Share
 
     p.post-dealine_alert.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
-      span.label.label--flag.alert Applications Closed
+      span.label.label--flag.alert-tint Applications Closed
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .property-hero_action.text-center.hide-for-medium-up
-    p.t-small
-      | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
-    .text-center ng-hide="listingApplicationClosed(listing)"
+  .property-hero_action.hide-for-medium-up
+    div ng-hide="listingApplicationClosed(listing)"
+      span.label.label--flag.primary-tint
+        | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
       ng-include src="'listings/templates/listing/_panel-apply.html'"
