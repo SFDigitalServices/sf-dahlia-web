@@ -1,4 +1,4 @@
-angular.module('customDirectives', [])
+angular.module('dahlia.directives')
 .directive 'backButton', ['$window', ($window) ->
   restrict: 'A'
   link: (scope, elem, attrs) ->
