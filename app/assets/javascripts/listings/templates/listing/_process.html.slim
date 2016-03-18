@@ -8,7 +8,7 @@ accordion-heading
       use xlink:href="#i-arrow-down"
 
 .content-wrap
-  .content-group.no-padding
+  .content-group.no-padding.hide-for-small-only
     .label.label--flag.secondary
       | Application Deadline {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
   .show-for-medium-up ng-hide="listingApplicationClosed(listing)"

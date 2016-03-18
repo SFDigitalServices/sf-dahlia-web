@@ -11,8 +11,9 @@ section.row ng-show="!favorites.length"
       p.t-delta.t-serif.c-oil It looks like you haven’t favorited any listings yet.
       a.button ui-sref="dahlia.listings" Browse Listings
 
-ul.padding-top--2x
-  li.margin-bottom--2x ng-repeat="listing in listings"
-    ng-include src="'listings/templates/_property-card.html'" ng-show="isFavorited(listing.Id)"
+.results-section
+  .row
+    .large-12.columns
+      ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listings" ng-show="isFavorited(listing.Id)"
 
 ng-include src="'pages/templates/_email-updates.html'"
