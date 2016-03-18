@@ -13,7 +13,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     { name: 'You', pages: [
         'name',
         'contact',
-        'alternate-contact-required',
         'alternate-contact-type',
         'alternate-contact-name',
         'alternate-contact-phone-address',
@@ -78,8 +77,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     $state.current.name != 'dahlia.short-form-application.intro'
 
   $scope.isActiveSection = (section) ->
-    stateName = $state.current.name.replace('dahlia.short-form-application.', "")
-    section.pages.indexOf(stateName) > -1
+    section.pages.indexOf($scope._currentSectionPage()) > -1
 
   $scope.applicantHasPhoneAndAddress = ->
     $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
@@ -105,6 +103,25 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
       $state.go('dahlia.short-form-application.optional-info')
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
+
+  $scope.currentIndexofSection = () ->
+    $scope.activeSection().pages.indexOf($scope._currentSectionPage()) + 1
+
+  $scope.totalIndexofSection = () ->
+    $scope.activeSection().pages.length
+
+  $scope._currentSectionPage = () ->
+    $state.current.name.replace('dahlia.short-form-application.', "")
+
+  $scope.activeSection = () ->
+    $scope._sectionOfPage($scope._currentSectionPage())
+
+  $scope._sectionOfPage = (stateName) ->
+    currentSection = null
+    $scope.sections.forEach (section) ->
+      if section.pages.indexOf(stateName) > -1
+        currentSection = section
+    return currentSection
 
 ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService']
 

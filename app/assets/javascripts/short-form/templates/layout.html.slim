@@ -19,4 +19,6 @@ section.row.shift--top
         p.alert-body
           | {{alertText()}}
 
+      span ng-if="activeSection()"
+        span page-count=""
       div(ui-view="container")

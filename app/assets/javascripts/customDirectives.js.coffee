@@ -14,3 +14,10 @@ angular.module('customDirectives', [])
     angular.element($window).bind 'resize', ->
       scope.adjustCarouselHeight(elem)
 ]
+
+angular.module('dahlia.controllers')
+  .directive 'pageCount', () ->
+    {
+      scope: true
+      templateUrl: 'short-form/templates/partials/_page-count.html'
+    }
