@@ -20,7 +20,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group
     label.form-label.no-margin Contact mailing address
     p.form-note.margin-bottom Choose an address where they can receive updates and materials about your application.
-    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingPrimaryContactInfo('Address')"
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingAddress"
 
   .form-group
     label.form-label.margin-bottom--half for="alternate_primary_language" What is their primary language?

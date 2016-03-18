@@ -5,43 +5,14 @@
 ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService) ->
 
   $scope.form = {}
+  $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.listing = ListingService.listing
-  $scope.sections = [
-    { name: 'You', pages: [
-        'name',
-        'contact',
-        'alternate-contact-required',
-        'alternate-contact-type',
-        'alternate-contact-name',
-        'alternate-contact-phone-address',
-        'optional-info'
-      ]
-    },
-    { name: 'Household', pages: ['intro'] },
-    { name: 'Status', pages: ['intro'] },
-    { name: 'Income', pages: ['intro'] },
-    { name: 'Review', pages: ['intro'] }
-  ]
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
-
-  $scope.showAlert = ->
-    form = $scope.form.applicationForm
-    if form
-      # show alert if we've submitted an invalid form, and we haven't manually hidden it
-      form.$submitted && form.$invalid && $scope.hideAlert == false
-    else
-      false
-
-  $scope.alertText = ->
-    if $state.current.name == 'dahlia.short-form-application.alternate-contact-type'
-      "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information."
-    else
-      "You'll need to resolve any errors before moving on."
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -54,32 +25,27 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     else
       $scope.hideAlert = false
 
-  $scope.inputInvalid = (name) ->
+  $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.applicationForm
-    # console.log(form, name, form[name])
-    form[name].$invalid && (form[name].$touched || form.$submitted)
+    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
+    field = form[fieldName]
+    if form && field
+      field.$invalid && (field.$touched || form.$submitted)
 
-  $scope.inputValid = (name) ->
+  $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
-    form[name].$valid
+    field = form[fieldName]
+    field.$valid if form && field
 
-  $scope.addressInputInvalid = ->
+  $scope.blankIfInvalid = (fieldName) ->
     form = $scope.form.applicationForm
-    if form['address1']
-      $scope.inputInvalid('address1') ||
-      $scope.inputInvalid('city') ||
-      $scope.inputInvalid('state') ||
-      $scope.inputInvalid('zip')
+    $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
 
   $scope.hasNav = ->
     $state.current.name != 'dahlia.short-form-application.intro'
-
-  $scope.isActiveSection = (section) ->
-    stateName = $state.current.name.replace('dahlia.short-form-application.', "")
-    section.pages.indexOf(stateName) > -1
 
   $scope.applicantHasPhoneAndAddress = ->
     $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
@@ -90,11 +56,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.isMissingPrimaryContactInfo = (info) ->
     ShortFormApplicationService.missingPrimaryContactInfo().indexOf(info) > -1
 
+  $scope.isMissingAddress = ->
+    $scope.isMissingPrimaryContactInfo('Address')
+
   $scope.checkIfMailingAddressNeeded = ->
-    if !$scope.applicant.separateAddress
+    unless $scope.applicant.separateAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 
-  $scope.checkSeparateAddress = ->
+  $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
@@ -105,6 +74,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
       $state.go('dahlia.short-form-application.optional-info')
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
+
+  $scope.homeAddressRequired = ->
+    !($scope.applicant.noAddress || $scope.applicant.separateAddress)
+
+  $scope.truth = ->
+    # wrap true value in a function a la function(){return true;}
+    # used by isRequired() in _address_form
+    true
 
 ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService']
 

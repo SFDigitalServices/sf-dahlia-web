@@ -1,0 +1,12 @@
+.alert-box.alert alert="" close="hideAlert = true" ng-show="showAlert()"
+  span.alert-icon
+    span.ui-icon.ui-static.ui-medium.i-oil
+      svg
+        use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
+  p.alert-body
+    | {{alertText()}}
+
+hgroup.entry-panel_group ng-show="showAlert() && altContactTypePage()"
+  span.entry-panel_label Required
+  h4.entry-panel_content.c-alert ng-repeat="contactType in missingInfo()"
+    | Your {{ contactType }} or Alternate {{ contactType }}
