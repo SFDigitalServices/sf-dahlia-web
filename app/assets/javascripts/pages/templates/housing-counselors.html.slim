@@ -1,16 +1,17 @@
-header.lead-header.bg-attention-tint
+header.lead-header.bg-dark.bg-gradient
   .row
     .large-12.columns
-      h1.lead-title.t-beta Housing Counselor Resources
-      .medium-8.columns.no-padding
-        p.t-gamma.t-light.show-for-medium-up Talk with a local housing counselor specific to your needs.
+      hgroup.lead-header_group
+        h1.lead-header_title.c-white Housing Counselor Resources
+        .medium-8.columns.no-padding
+          p.t-epsilon.t-serif.c-white Talk with a local housing counselor specific to your needs.
 
 section.row
-  .medium-8.columns
-    header.section-header.margin-top--2x
-      h2.t-gamma.no-margin Featured Resources
-    ul.resources-list.block-list ng-repeat="counselor in housing_counselors"
-      li.block-item
+  .medium-8.columns.margin-top--2x
+    header.padding-top--2x
+      h2.h-caps-lined Featured Resources
+    ul.resources-list.block-list
+      li.block-item ng-repeat="counselor in housing_counselors"
         h3.t-delta.t-sans.margin-bottom--half
           a.a-oil
             | {{ counselor.name }}
