@@ -10,7 +10,13 @@ ShortFormNavigationService = ($state) ->
         'optional-info'
       ]
     },
-    { name: 'Household', pages: [''] },
+    { name: 'Household', pages: [
+      'household-intro',
+      'household-overview',
+      'household-members',
+      'household-member-form'
+      ]
+    },
     { name: 'Status', pages: [''] },
     { name: 'Income', pages: [''] },
     { name: 'Review', pages: [''] }
@@ -51,7 +57,6 @@ ShortFormNavigationService = ($state) ->
   Service.sectionNames = () ->
     Service.sections.map (section) ->
       return section.name
-
 
   return Service
 

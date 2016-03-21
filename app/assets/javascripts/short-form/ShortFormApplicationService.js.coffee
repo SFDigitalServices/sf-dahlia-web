@@ -10,15 +10,20 @@ ShortFormApplicationService = ($localStorage) ->
     alternateContact: {
       primary_language: "English"
     }
+    householdMembers: []
   }
 
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
+  Service.householdMembers = Service.application.householdMembers
 
   Service.copyHomeToMailingAddress = () ->
     angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
+
+  Service.addHouseholdMember = (householdMember) ->
+    Service.householdMembers.push(householdMember)
 
   Service.validMailingAddress = () ->
     !! (Service.applicant.mailing_address.address1 &&

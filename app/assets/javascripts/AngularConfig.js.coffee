@@ -248,17 +248,29 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b5-optional-info.html'
     })
-    .state('dahlia.short-form-application.application-others', {
-      url: '/application-others'
+    .state('dahlia.short-form-application.household-intro', {
+      url: '/household-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/c1-application-others.html'
+          templateUrl: 'short-form/templates/c1-household-intro.html'
     })
     .state('dahlia.short-form-application.household-overview', {
       url: '/household-overview'
       views:
         'container':
           templateUrl: 'short-form/templates/c1a-household-overview.html'
+    })
+    .state('dahlia.short-form-application.household-members', {
+      url: '/household-members'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c2-household-members.html'
+    })
+    .state('dahlia.short-form-application.household-member-form', {
+      url: '/household-member-form'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c3-household-member-form.html'
     })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 

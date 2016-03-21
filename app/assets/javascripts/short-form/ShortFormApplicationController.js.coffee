@@ -8,7 +8,9 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
+  $scope.householdMember = {}
   $scope.alternateContact = ShortFormApplicationService.alternateContact
+  $scope.householdMembers = ShortFormNavigationService.householdMembers
   $scope.listing = ListingService.listing
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
@@ -86,6 +88,11 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     # wrap true value in a function a la function(){return true;}
     # used by isRequired() in _address_form
     true
+
+  ###### Household Section ########
+
+  $scope.addHouseholdMember = () ->
+    ShortFormApplicationService.addHouseholdMember($scope.householdMember)
 
 ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService']
 

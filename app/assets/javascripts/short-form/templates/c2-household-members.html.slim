@@ -1,0 +1,29 @@
+h2.application-title.t-gamma.padding-bottom Tell us about your household.
+.form-group.min-height--4x.margin-bottom--2x
+  .user-item
+    p.user-item_name
+      strong
+        | {{ applicant.first_name }} {{ applicant.last_name }}
+      br/
+      span.t-tiny Primary User
+    a.small.button.right ui-sref="dahlia.short-form-application.name"  Edit
+
+  span ng-repeat="member in householdMembers"
+    .user-item
+      p.user-item_name
+        strong
+          | {{ applicant.first_name }} {{ applicant.last_name }}
+        br/
+        span.t-tiny Primary User
+      a.small.button.right ui-sref="dahlia.short-form-application.household-member-form""  Edit
+
+  a.button.has-icon.expand.tint ui-sref="dahlia.short-form-application.household-member-form"
+    span.ui-icon.ui-medium
+      svg
+        use xlink:href="#i-plus"
+    | Add household member
+.button-stack--paginate.text-center.row.padding-top
+  .small-12.medium-6.medium-push-6.columns
+    button.button.expand Done adding people
+  .small-12.medium-6.medium-pull-6.columns
+    button.button.ghost-white.expand Save and finish later
