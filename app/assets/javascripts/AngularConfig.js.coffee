@@ -248,6 +248,18 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b5-optional-info.html'
     })
+    .state('dahlia.short-form-application.application-others', {
+      url: '/application-others'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c1-application-others.html'
+    })
+    .state('dahlia.short-form-application.household-overview', {
+      url: '/household-overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c1a-household-overview.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
