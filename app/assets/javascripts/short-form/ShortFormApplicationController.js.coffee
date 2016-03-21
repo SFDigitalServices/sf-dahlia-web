@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService) ->
+ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -13,21 +13,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
-  $scope.sections = [
-      { name: 'You', pages: [
-          'name',
-          'contact',
-          'alternate-contact-type',
-          'alternate-contact-name',
-          'alternate-contact-phone-address',
-          'optional-info'
-        ]
-      },
-      { name: 'Household', pages: ['intro'] },
-      { name: 'Status', pages: ['intro'] },
-      { name: 'Income', pages: ['intro'] },
-      { name: 'Review', pages: ['intro'] }
-    ]
+  $scope.navService = ShortFormNavigationService
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -59,9 +45,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
 
-  $scope.hasNav = ->
-    $state.current.name != 'dahlia.short-form-application.intro'
-
   $scope.applicantHasPhoneAndAddress = ->
     $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
 
@@ -90,39 +73,11 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
-  # <<<<<<< HEAD
-  $scope.isActiveSection = (section) ->
-    section.pages.indexOf($scope._currentPage()) > -1
-
-  $scope.isPreviousSection = (section) ->
-    sectionNames = $scope._sectionNames()
-    indexOfActiveSection = sectionNames.indexOf($scope.activeSection().name)
-    indexofSection = sectionNames.indexOf(section.name)
-    indexofSection < indexOfActiveSection
-
-  $scope.currentIndexofSection = () ->
-    $scope.activeSection().pages.indexOf($scope._currentPage()) + 1
-
-  $scope.totalIndexofSection = () ->
-    $scope.activeSection().pages.length
-
-  $scope._currentPage = () ->
-    $state.current.name.replace('dahlia.short-form-application.', "")
+  $scope.hasNav = ->
+    ShortFormNavigationService.hasNav()
 
   $scope.activeSection = () ->
-    $scope._sectionOfPage($scope._currentPage())
-
-  $scope._sectionOfPage = (stateName) ->
-    currentSection = null
-    $scope.sections.forEach (section) ->
-      if section.pages.indexOf(stateName) > -1
-        currentSection = section
-    return currentSection
-
-  $scope._sectionNames = () ->
-    $scope.sections.map (section) ->
-      return section.name
-  # =======
+    ShortFormNavigationService.activeSection()
 
   $scope.homeAddressRequired = ->
     !($scope.applicant.noAddress || $scope.applicant.separateAddress)
@@ -132,7 +87,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     # used by isRequired() in _address_form
     true
 
-ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService']
+ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService']
 
 angular
   .module('dahlia.controllers')

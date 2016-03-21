@@ -6,6 +6,8 @@ angular.module('dahlia.directives')
     stateName: '='
     hideAlert: '='
     missingInfo: '='
+  templateUrl: 'directives/alertBox/alert-box.html'
+
   link: (scope, elem, attrs) ->
     scope.showAlert = ->
       form = scope.formObject
@@ -23,5 +25,3 @@ angular.module('dahlia.directives')
 
     scope.altContactTypePage = ->
       scope.stateName == 'dahlia.short-form-application.alternate-contact-type'
-
-  templateUrl: 'directives/alertBox/alert-box.html'

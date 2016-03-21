@@ -7,10 +7,9 @@ section.row.shift--top
   .medium-8.columns
     .application-form.form-card ng-class="{'has-nav': hasNav()}"
 
-      short-form-nav(state-name="$state.current.name" show="hasNav()" isPreviousSection="isPreviousSection()")
+      short-form-nav
+      alert-box(state-name="$state.current.name" form-object="form.applicationForm"
+        hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
-      alert-box(state-name="$state.current.name" form-object="form.applicationForm" hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
-
-      span ng-if="activeSection()"
-        span page-count=""
+      page-count ng-if="activeSection()"
       div(ui-view="container")
