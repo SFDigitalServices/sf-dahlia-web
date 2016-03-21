@@ -1,13 +1,10 @@
 @dahlia = angular.module 'dahlia', [
+  'dahlia.directives',
   'dahlia.controllers',
   'dahlia.services',
   # filters
   'customFilters',
   'ng-currency',
-  # directives
-  'customDirectives',
-  'pageslide-directive',
-  'ngTextTruncate',
   # dependencies
   'ui.router',
   'angular-clipboard',
@@ -19,6 +16,8 @@
   'angular-carousel',
 ]
 
+# Custom Directives
+angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])

@@ -6,17 +6,10 @@ header.application-header.lead-header.shift-offset--bottom.bg-deep
 section.row.shift--top
   .medium-8.columns
     .application-form.form-card ng-class="{'has-nav': hasNav()}"
-      dl.application-form_nav.sub-nav ng-if="hasNav()"
-        dd ng-repeat="section in sections" ng-class="{active: isActiveSection(section)}"
-          a ui-sref="dahlia.short-form-application.{{ section.pages[0] }}"
-            | {{section.name}}
 
-      .alert-box.alert alert="" close="hideAlert = true" ng-show="showAlert()"
-        span.alert-icon
-          span.ui-icon.ui-static.ui-medium.i-oil
-            svg
-              use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
-        p.alert-body
-          | {{alertText()}}
+      short-form-nav
+      alert-box(state-name="$state.current.name" form-object="form.applicationForm"
+        hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
+      page-count ng-if="activeSection()"
       div(ui-view="container")
