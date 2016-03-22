@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require lodash/lodash
 //= require angular
 //= require angular-foundation
 //= require angular-ui-router

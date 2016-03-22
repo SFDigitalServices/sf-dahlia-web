@@ -1,7 +1,7 @@
 h2.application-title.t-gamma.padding-bottom
   | Tell us about this person
 p You'll have the opportunity to add more household members on the next screen.
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember()'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember', path: 'dahlia.short-form-application.household-members'})" ng-init="getHouseholdMember()"
   .form-group ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
     h3.form-label Household Member's Name
     label.sr-only for="housholdMemberFirstName"
@@ -66,6 +66,11 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
-      input.button.expand.radius type="submit" value="Add Household Member"
+      input.button.expand.radius type="submit" value="Update Household Member" ng-if="householdMember.id"
+      input.button.expand.radius type="submit" value="Add Household Member" ng-if="!householdMember.id"
     .small-12.medium-6.medium-pull-6.columns
-      button.button.ghost-white.expand Save and finish later
+      a.button.ghost-white.expand ng-click="cancelHouseholdMember()"
+        span ng-if="!householdMember.id"
+          | Cancel adding this person
+        span ng-if="householdMember.id"
+          | Remove this person

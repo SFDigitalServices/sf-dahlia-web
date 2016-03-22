@@ -8,9 +8,9 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
-  $scope.householdMember = {}
   $scope.alternateContact = ShortFormApplicationService.alternateContact
-  $scope.householdMembers = ShortFormNavigationService.householdMembers
+  $scope.householdMember = ShortFormApplicationService.householdMember
+  $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
   # hideAlert tracks if the user has manually closed the alert "X"
@@ -78,7 +78,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
-  $scope.activeSection = () ->
+  $scope.activeSection = ->
     ShortFormNavigationService.activeSection()
 
   $scope.homeAddressRequired = ->
@@ -90,9 +90,15 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     true
 
   ###### Household Section ########
+  $scope.getHouseholdMember = ->
+    $scope.householdMember = ShortFormApplicationService.householdMember
 
-  $scope.addHouseholdMember = () ->
+  $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
+
+  $scope.cancelHouseholdMember = ->
+    ShortFormApplicationService.cancelHouseholdMember()
+    $state.go('dahlia.short-form-application.household-members')
 
 ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService']
 

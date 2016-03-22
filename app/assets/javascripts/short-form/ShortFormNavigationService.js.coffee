@@ -14,7 +14,8 @@ ShortFormNavigationService = ($state) ->
       'household-intro',
       'household-overview',
       'household-members',
-      'household-member-form'
+      'household-member-form',
+      'household-member-form-edit'
       ]
     },
     { name: 'Status', pages: [''] },

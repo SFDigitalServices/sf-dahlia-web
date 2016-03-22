@@ -4,18 +4,22 @@ h2.application-title.t-gamma.padding-bottom Tell us about your household.
     p.user-item_name
       strong
         | {{ applicant.first_name }} {{ applicant.last_name }}
-      br/
-      span.t-tiny Primary User
-    a.small.button.right ui-sref="dahlia.short-form-application.name"  Edit
+      br
+      span.t-tiny
+        | Primary User
+    a.small.button.right ui-sref="dahlia.short-form-application.name"
+      | Edit
 
   span ng-repeat="member in householdMembers"
     .user-item
       p.user-item_name
         strong
-          | {{ applicant.first_name }} {{ applicant.last_name }}
-        br/
-        span.t-tiny Primary User
-      a.small.button.right ui-sref="dahlia.short-form-application.household-member-form""  Edit
+          | {{ member.first_name }} {{ member.last_name }}
+        br
+        span.t-tiny
+          | {{ member.relationship }}
+      a.small.button.right ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
+        | Edit
 
   a.button.has-icon.expand.tint ui-sref="dahlia.short-form-application.household-member-form"
     span.ui-icon.ui-medium
