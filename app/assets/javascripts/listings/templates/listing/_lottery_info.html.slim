@@ -55,7 +55,8 @@ accordion-heading
             td
               | {{ticket.Lottery_Number}}
 
-      a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
+      .padding
+        a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
 
     .padding.bg-dust
       p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
