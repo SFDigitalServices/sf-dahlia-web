@@ -3,7 +3,7 @@
     .accordion-offset.accordion-offset--hero
       ng-include src="'listings/templates/listing/_property-hero.html'"
 
-  accordion.page-accordion
+  accordion.page-accordion close-others="false"
     accordion-group.medium-right-column ng-if="listingApplicationClosed(listing)"
       ng-include src="'listings/templates/listing/_lottery_info.html'"
 
