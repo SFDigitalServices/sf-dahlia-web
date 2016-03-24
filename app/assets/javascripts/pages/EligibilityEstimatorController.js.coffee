@@ -34,11 +34,6 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     form = $scope.eligibilityForm
     form[name].$invalid && (form[name].$touched || form.$submitted)
 
-  $scope.showAlert = ->
-    form = $scope.eligibilityForm
-    # show alert if we've submitted an invalid form, and we haven't manually hidden it
-    form.$submitted && form.$invalid && $scope.hideAlert == false
-
   $scope.isDefaultForm = ->
     angular.equals($scope.filter_defaults, $scope.filters)
 

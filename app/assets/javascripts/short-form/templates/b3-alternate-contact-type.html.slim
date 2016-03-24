@@ -1,9 +1,3 @@
-hgroup.entry-panel_group ng-if="showAlert()"
-  span.entry-panel_label Required
-  h4.entry-panel_content.c-alert ng-repeat="contactType in missingPrimaryContactInfo()"
-    | Your {{ contactType }} or Alternate {{ contactType }}
-
-.form-count 1 of 5
 h2.application-title.t-gamma Is there someone else you'd like us to contact if we can't get ahold of you?
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})"
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"

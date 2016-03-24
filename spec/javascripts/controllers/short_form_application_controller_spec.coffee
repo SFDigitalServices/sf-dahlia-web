@@ -11,6 +11,9 @@ do ->
       copyHomeToMailingAddress: jasmine.createSpy()
       validMailingAddress: ->
         true
+    fakeShortFormNavigationService =
+      sections: []
+      hasNav: jasmine.createSpy()
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -28,6 +31,7 @@ do ->
         $scope: scope
         $state: state
         ShortFormApplicationService: fakeShortFormApplicationService
+        ShortFormNavigationService: fakeShortFormNavigationService
       return
     )
 
@@ -38,8 +42,9 @@ do ->
       return
 
     describe '$scope.hasNav', ->
-      it 'shows navigation if current state is not intro', ->
-        expect(scope.hasNav()).toEqual true
+      it 'calls function on navService', ->
+        scope.hasNav()
+        expect(fakeShortFormNavigationService.hasNav).toHaveBeenCalled()
         return
       return
 

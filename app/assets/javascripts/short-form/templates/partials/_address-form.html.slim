@@ -1,28 +1,28 @@
 .form-address.row
-  .form-group-street.form-item.large-12.columns ng-class="{ error: isRequired && inputInvalid('address1') }"
+  .form-group-street.form-item.large-12.columns ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }"
     label for="{{model}}_{{addressType}}_address1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
-      ng-change="checkIfMailingAddressNeeded()" name="address1" placeholder=("Street Address") type="text"
-      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('address1') }")
-    small.error ng-show="isRequired && inputInvalid('address1')"
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_address1" placeholder=("Street Address") type="text"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }")
+    small.error ng-show="isRequired() && inputInvalid('address1', addressType)"
       | Please enter an address
 
   .form-group-apt.large-12.column
     label for="{{model}}_{{addressType}}_address2"  Address 2
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
-      ng-change="checkIfMailingAddressNeeded()" name="address2" placeholder=("Apt or Unit #") type="text")
-  .form-group-city.form-item.small-7.large-5.columns ng-class="{ error: isRequired && inputInvalid('city') }"
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_address2" placeholder=("Apt or Unit #") type="text")
+  .form-group-city.form-item.small-7.large-5.columns ng-class="{ error: isRequired() && inputInvalid('city', addressType) }"
     label for="{{model}}_{{addressType}}_city"  City
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
-      ng-change="checkIfMailingAddressNeeded()" name="city" placeholder=("City Name") type="text"
-      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('city') }")
-    small.error ng-show="isRequired && inputInvalid('city')"
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_city" placeholder=("City Name") type="text"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }")
+    small.error ng-show="isRequired() && inputInvalid('city', addressType)"
       | Please enter a city
-  .form-group-state.form-item.small-5.large-3.columns ng-class="{ error: isRequired && inputInvalid('state') }"
+  .form-group-state.form-item.small-5.large-3.columns ng-class="{ error: isRequired() && inputInvalid('state', addressType) }"
     label for="{{model}}_{{addressType}}_state"  State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
-      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="state"
-      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('state') }")
+      ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="{{addressType}}_state"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('state', addressType) }")
       option value=""  Select
       option value="alabama"  Alabama
       option value="alaska"  Alaska
@@ -76,12 +76,12 @@
       option value="wisconsin"  Wisconsin
       option value="wyoming"  Wyoming
 
-    small.error ng-show="isRequired && inputInvalid('state')"
+    small.error ng-show="isRequired() && inputInvalid('state', addressType)"
       | Please enter a state
-  .form-group-zip.form-item.small-12.large-4.columns ng-class="{ error: isRequired && inputInvalid('zip') }"
+  .form-group-zip.form-item.small-12.large-4.columns ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }"
     label for="{{model}}_{{addressType}}_zip"  Zip
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="checkIfMailingAddressNeeded()" name="zip" placeholder=("Zip Code") type="text"
-      ng-required="isRequired" ng-class="{ error: isRequired && inputInvalid('zip') }")
-    small.error ng-show="isRequired && inputInvalid('zip')"
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder=("Zip Code") type="text"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
+    small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
       | Please enter a zipcode
