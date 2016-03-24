@@ -27,35 +27,35 @@ ShortFormNavigationService = ($state) ->
     $state.current.name != 'dahlia.short-form-application.intro'
 
   Service.isActiveSection = (section) ->
-    section.pages.indexOf(Service.currentPage()) > -1
+    section.pages.indexOf(Service._currentPage()) > -1
 
   Service.isPreviousSection = (section) ->
-    sectionNames = Service.sectionNames()
+    _sectionNames = Service._sectionNames()
     if Service.activeSection()
-      indexOfActiveSection = sectionNames.indexOf(Service.activeSection().name)
-      indexofSection = sectionNames.indexOf(section.name)
+      indexOfActiveSection = _sectionNames.indexOf(Service.activeSection().name)
+      indexofSection = _sectionNames.indexOf(section.name)
       indexofSection < indexOfActiveSection
 
   Service.currentIndexofSection = () ->
-    Service.activeSection().pages.indexOf(Service.currentPage()) + 1
+    Service.activeSection().pages.indexOf(Service._currentPage()) + 1
 
   Service.totalIndexofSection = () ->
     Service.activeSection().pages.length
 
-  Service.currentPage = () ->
+  Service._currentPage = () ->
     $state.current.name.replace('dahlia.short-form-application.', "")
 
   Service.activeSection = () ->
-    Service.sectionOfPage(Service.currentPage())
+    Service._sectionOfPage(Service._currentPage())
 
-  Service.sectionOfPage = (stateName) ->
+  Service._sectionOfPage = (stateName) ->
     currentSection = null
     Service.sections.forEach (section) ->
       if section.pages.indexOf(stateName) > -1
         currentSection = section
     return currentSection
 
-  Service.sectionNames = () ->
+  Service._sectionNames = () ->
     Service.sections.map (section) ->
       return section.name
 
