@@ -13,6 +13,24 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  $scope.relationship_options = [
+      'Spouse',
+      'Registered Domestic Partner',
+      'Parent',
+      'Child',
+      'Sibling',
+      'Cousin',
+      'Aunt',
+      'Uncle',
+      'Nephew',
+      'Niece',
+      'Grandparent',
+      'Great Grandparent',
+      'In-Law',
+      'Friend',
+      'Other'
+    ]
+
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.navService = ShortFormNavigationService

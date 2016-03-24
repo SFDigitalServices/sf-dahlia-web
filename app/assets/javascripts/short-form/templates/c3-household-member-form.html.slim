@@ -37,9 +37,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     label.form-label.no-margin for="householdMemberRelationship"
       | What is your relationship to them?
     select#householdMemberRelationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
-     option value="Family"  Family
-     option value="Friend"  Friend
-     option value="Enemy"  Enemy
+      option ng-repeat="relationship in relationship_options" value="{{relationship}}"
+        | {{ relationship }}
     small.error ng-show="inputInvalid('relationship')"
      | Please select your relationship to the household member
 
