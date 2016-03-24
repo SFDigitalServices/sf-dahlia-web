@@ -14,8 +14,7 @@ ShortFormApplicationService = ($localStorage) ->
   }
   Service.current_id = 0
 
-  # override defaults with any application data stored in $localStorage
-  $localStorage.application = angular.copy($localStorage.application || {}, Service.applicationDefaults)
+  $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
