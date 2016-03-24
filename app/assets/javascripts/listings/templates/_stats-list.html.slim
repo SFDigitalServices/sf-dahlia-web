@@ -1,18 +1,18 @@
-ul.stats-list.triple ng-repeat="unit_summary in listing.unitSummary"
-  li
-    .stats-list_value
-      | {{unit_summary.unitType}}
-    span.stats-list_label unit type
-  / NOTE: these currently don't show a "range" since BMR has a single rental/AMI per unit type
-  li
-    .stats-list_value
-      | {{unit_summary.minRentalMinIncome | currency:"$":0}}
-      span.value-label
-        | /month
-    span.stats-list_label minimum income
-  li
-    .stats-list_value
-      | {{unit_summary.minMonthlyRent | currency:"$":0}}
-      span.value-label
-        | /month
-    span.stats-list_label rent
+table role="grid"
+  thead
+    tr
+      th scope="col" Unit Type
+      th scope="col" Minimum Income
+      th.text-right scope="col" Rent
+  tbody
+    tr ng-repeat="unit_summary in listing.unitSummary"
+      td scope="row"
+        | {{unit_summary.unitType}}
+      td
+        | {{unit_summary.minRentalMinIncome | currency:"$":0}}
+        span.value-label
+          | /month
+      td.text-right
+        | {{unit_summary.minMonthlyRent | currency:"$":0}}
+        span.value-label
+          | /month

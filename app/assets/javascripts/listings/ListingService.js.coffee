@@ -99,7 +99,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       controller: 'ModalInstanceController'
     })
 
-  Service.formattedAddress = (listing, type='Building') ->
+  Service.formattedAddress = (listing, type='Building', display='full') ->
     # If Street address is undefined, then return false for display and google map lookup
     if listing["#{type}_Street_Address"] == undefined
       return
@@ -124,8 +124,14 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       Zip_Code = listing[zip_code_field]
     else
       Zip_Code = ''
-    "#{Street_Address}#{City} " +
-    "#{State}#{Zip_Code}"
+
+    if display == 'street'
+      return "#{Street_Address}"
+    else if display == 'city-state-zip'
+      return "#{City}#{State}#{Zip_Code}"
+    else
+      "#{Street_Address}#{City} " +
+      "#{State}#{Zip_Code}"
 
   ###################################### Salesforce API Calls ###################################
 
