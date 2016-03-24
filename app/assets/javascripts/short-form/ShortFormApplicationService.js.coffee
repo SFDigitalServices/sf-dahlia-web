@@ -40,7 +40,7 @@ ShortFormApplicationService = ($localStorage) ->
       missingInfo.push("Address")
     return missingInfo
 
-  Service.nextId = ->
+  Service._nextId = ->
     if Service.householdMembers.length > 0
       max_id = _.maxBy(Service.householdMembers, 'id').id
     else
@@ -49,7 +49,7 @@ ShortFormApplicationService = ($localStorage) ->
 
   Service.addHouseholdMember = (householdMember) ->
     if !householdMember.id
-      householdMember.id = Service.nextId()
+      householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
     Service.householdMember = {}
 
