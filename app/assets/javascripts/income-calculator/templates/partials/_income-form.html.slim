@@ -25,7 +25,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     input placeholder="$" type="text" ng-model="income.value" ng-currency="" currency-symbol="$" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
     small.error ng-show="inputInvalid(income.id, 'value')"
         | Please enter an income amount
-    .radio-group-inline
+    .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       p.radio-inline
         / `::$id` is a "one-time binding" of $id
         / see: https://docs.angularjs.org/guide/expression
@@ -52,8 +52,8 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Save Income Source
 
   / show these buttons if we're iterating over income list (better way to check?)
-  .small-6.medium-push-6.columns ng-if="$index != undefined"
+  .small-6.medium-6.columns ng-if="$index != undefined"
+    button.button-link.button-lined.expand-small type="button" ng-click="deleteIncome(income)" Delete
+  .small-6.medium-6.columns ng-if="$index != undefined"
     button.button.right.expand-small type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
       | Save
-  .small-6.medium-6.medium-pull-6.columns ng-if="$index != undefined"
-    button.button-link.button-lined.small-only-text-center.expand-small type="button" ng-click="deleteIncome(income)" Delete
