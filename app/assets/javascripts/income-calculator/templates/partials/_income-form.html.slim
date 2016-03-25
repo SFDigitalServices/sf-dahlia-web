@@ -10,6 +10,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     label.form-label ng-class="{ error: inputInvalid(income.id, 'source') }"
       | Where is this income from?
     select ng-model="income.source" name="source" required="" ng-class="{ error: inputInvalid(income.id, 'source') }"
+      option disabled="" selected="" value=""  Please select one
       option value="Wages"  Wages
       option value="Social Security"  Social Security
       option value="Disability"  Disability
@@ -19,12 +20,14 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     small.error ng-show="inputInvalid(income.id, 'source')"
       | Please enter an income source
 
-  .form-group.margin-bottom--2x
+  .form-group
     label.form-label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       | How much is the income of this source?
-    input placeholder="$" type="text" ng-model="income.value" ng-currency="" currency-symbol="$" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
-    small.error ng-show="inputInvalid(income.id, 'value')"
-        | Please enter an income amount
+    .form-income
+      span.label-dollar $
+      input.form-income_input placeholder="Total of all income sources" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+      small.error ng-show="inputInvalid(income.id, 'value')"
+          | Please enter an income amount
     .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       p.radio-inline
         / `::$id` is a "one-time binding" of $id
@@ -48,7 +51,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
 
   / show this button if we're on the additional income form
   .form-group.text-center.border-top.padding-top ng-if="$index == undefined && hasIncomeSources()"
-    button.button.expand-small ng-click="addAdditionalIncome()"
+    button.button.expand-small.no-margin ng-click="addAdditionalIncome()"
       | Save Income Source
 
   / show these buttons if we're iterating over income list (better way to check?)

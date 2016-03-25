@@ -11,50 +11,50 @@ header.lead-header.bg-dark.bg-gradient
 section.row.margin-bottom--2x
   form.medium-10.medium-centered.columns name="eligibilityForm" ng-submit="submitForm()" novalidate=""
     .form-card.margin-bottom--2x
-      alert-box(form-object="eligibilityForm" hide-alert="hideAlert")
+      .form-card_header
+        alert-box(form-object="eligibilityForm" hide-alert="hideAlert")
 
-      .row
+      .row.padding-top
         .medium-6.columns.padding-left--2x.padding-top.padding-bottom
-          .margin-bottom
-            header.margin-bottom
-              h3.t-serif.gamma Household Size
-              p.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
+          header.margin-bottom
+            h3.t-serif.gamma Household Size
+            p.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
 
-            .form-group ng-class="{ error: inputInvalid('household_size') }"
-              label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
-                | Household Size
-              select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
-                option value="" Enter number of people
-                option value="1" 1 person
-                option value="2" 2 people
-                option value="3" 3 people
-                option value="4" 4 people
-                option value="5" 5 people
-                option value="6" 6 people
-              small.error ng-show="inputInvalid('household_size')"
-                | Please enter a household size
+          .form-group ng-class="{ error: inputInvalid('household_size') }"
+            label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
+              | Household Size
+            select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
+              option value="" Enter number of people
+              option value="1" 1 person
+              option value="2" 2 people
+              option value="3" 3 people
+              option value="4" 4 people
+              option value="5" 5 people
+              option value="6" 6 people
+            small.error ng-show="inputInvalid('household_size')"
+              | Please enter a household size
 
-            .form-group.padding-bottom--half
-              .checkbox
-                input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6" ng-change="resetChildrenUnder6()"
-                label for="include_children_under_6" Yes, this includes children under 6
+          .form-group.padding-bottom--half
+            .checkbox
+              input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6" ng-change="resetChildrenUnder6()"
+              label for="include_children_under_6" Yes, this includes children under 6
 
-            .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
-              label.sr-only How many children?
-              select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
-                option value="0" How many children?
-                option value="1" 1 child
-                option value="2" 2 children
-                option value="3" 3 children
-                option value="4" 4 children
-                option value="5" 5 children
-                option value="6" 6 children
-                option value="7" 7 children
-                option value="8" 8 children
-                option value="9" 9 children
-                option value="10" 10 children
-              small.error.no-margin ng-show="inputInvalid('children_under_6')"
-                | Please enter number of children
+          .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
+            label.sr-only How many children?
+            select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
+              option value="0" How many children?
+              option value="1" 1 child
+              option value="2" 2 children
+              option value="3" 3 children
+              option value="4" 4 children
+              option value="5" 5 children
+              option value="6" 6 children
+              option value="7" 7 children
+              option value="8" 8 children
+              option value="9" 9 children
+              option value="10" 10 children
+            small.error.no-margin ng-show="inputInvalid('children_under_6')"
+              | Please enter number of children
 
         .medium-6.columns.padding-top.padding-bottom
           h3.t-serif.gamma Household Income

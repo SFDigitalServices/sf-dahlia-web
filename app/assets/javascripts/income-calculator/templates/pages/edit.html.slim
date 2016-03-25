@@ -11,8 +11,8 @@ section.row.margin-bottom--2x
 
         .income-source ng-if="incomeSources.length < 30 && incomeSources.length > 0"
           .income-source_item.add-item.clearfix
-            span.income-source_add.t-caps.t-alt-sans.t-bold style="margin:0;" ng-click="toggleAdditionalIncomeForm()" ng-class="{secondary: !additionalIncome, tertiary:additionalIncome}"
-              span.ui-icon.ui-link.ui-medium.i-deep
+            button.button-link.t-caps.expand ng-click="toggleAdditionalIncomeForm()"
+              span.ui-icon.ui-link.ui-medium
                 svg
                   use xlink:href="#i-plus"
               | Add additional income source
