@@ -24,7 +24,7 @@ section.row.margin-bottom--2x
             label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
               | Household Size
             select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
-              option value="" Enter number of people
+              option disabled="" selected="" value="" Enter number of people
               option value="1" 1 person
               option value="2" 2 people
               option value="3" 3 people
@@ -42,7 +42,8 @@ section.row.margin-bottom--2x
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
             label.sr-only How many children?
             select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
-              option value="0" How many children?
+              option selected="" value=""
+               | How many children?
               option value="1" 1 child
               option value="2" 2 children
               option value="3" 3 children

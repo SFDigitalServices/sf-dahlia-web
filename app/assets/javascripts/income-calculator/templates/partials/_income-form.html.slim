@@ -25,7 +25,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | How much is the income of this source?
     .form-income
       span.label-dollar $
-      input.form-income_input placeholder="Total of all income sources" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+      input.form-income_input placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       small.error ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
     .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"

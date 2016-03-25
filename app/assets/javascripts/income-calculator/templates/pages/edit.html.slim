@@ -10,8 +10,8 @@ section.row.margin-bottom--2x
         ng-include src="'income-calculator/templates/partials/_income-list.html'"
 
         .income-source ng-if="incomeSources.length < 30 && incomeSources.length > 0"
-          .income-source_item.add-item.clearfix
-            button.button-link.t-caps.expand ng-click="toggleAdditionalIncomeForm()"
+          .income-source_item.padding-bottom-none.clearfix
+            button.button-link.t-caps.t-bold.t-base.t-alt-sans ng-click="toggleAdditionalIncomeForm()"
               span.ui-icon.ui-link.ui-medium
                 svg
                   use xlink:href="#i-plus"
