@@ -9,8 +9,8 @@ header.lead-header.bg-dark.bg-gradient
 .row.margin-top--2x.show-for-medium-up
 
 section.row.margin-bottom--2x
-  .medium-10.medium-centered.columns
-    form.form-card.margin-bottom--2x name="eligibilityForm" ng-submit="submitForm()" novalidate=""
+  form.medium-10.medium-centered.columns name="eligibilityForm" ng-submit="submitForm()" novalidate=""
+    .form-card.margin-bottom--2x
       alert-box(form-object="eligibilityForm" hide-alert="hideAlert")
 
       .row
@@ -20,8 +20,8 @@ section.row.margin-bottom--2x
               h3.t-serif.gamma Household Size
               p.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
 
-            .form-group
-              label.form-label.t-caps ng-class="{ error: inputInvalid('household_size') }"
+            .form-group ng-class="{ error: inputInvalid('household_size') }"
+              label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
                 | Household Size
               select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
                 option value="" Enter number of people
@@ -61,7 +61,7 @@ section.row.margin-bottom--2x
 
           p.c-steel Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
           .form-group.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            label.form-label.t-caps Household Income
+            label.form-label.t-caps.sr-only Household Income
             .form-income
               span.label-dollar $
               input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
@@ -80,13 +80,16 @@ section.row.margin-bottom--2x
               | Please enter an income timeframe
 
       .form-card_footer
-        .note.bg-tint.padding ng-show="!hasCalculatedIncome()"
-          p.t-tiny.no-margin
-            ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the
-            a.a-deep ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
+        .row.note.bg-tint.padding.padding-left--2x.padding-right--2x ng-show="!hasCalculatedIncome()"
+          .medium-7.columns
+            p.t-tiny
+              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the
+          .medium-5.columns
+            a.button.ghost-white.small.no-margin.expand-small ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
+
     .button-stack--paginate.row
       .small-12.medium-6.medium-push-6.columns
-        input.button.primary.expand.right type="submit" value="View Matching Listings"
+        input.button.primary.expand.right.radius type="submit" value="View Matching Listings"
       .small-12.medium-6.medium-pull-6.columns
         a.button.button-link.button-lined.small-only-text-center.expand-small.d-block ng-click="clearForm()"
           | Reset
