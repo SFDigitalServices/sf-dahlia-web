@@ -42,21 +42,22 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
 
 .button-stack--paginate.row
   / show this button for the initial form (we don't have income sources)
-  .small-12.medium-6.medium-push-6.columns ng-if="noIncomeSources()"
-    button.button.primary.right.expand-small.no-margin ng-click="addAdditionalIncome()"
-      | Save
-  .small-12.medium-6.medium-pull-6.columns ng-if="noIncomeSources()"
-    button.button-link.button-lined.small-only-text-center.expand-small ui-sref="dahlia.eligibility-estimator"
+  .row.padding-top--2x.show-for-small-only ng-if="noIncomeSources()"
+  .small-6.columns ng-if="noIncomeSources()"
+    button.button-link.button-lined ui-sref="dahlia.eligibility-estimator"
       | Cancel
+  .small-6.columns ng-if="noIncomeSources()"
+    button.primary.right.no-margin ng-click="addAdditionalIncome()"
+      | Save
 
   / show this button if we're on the additional income form
   .form-group.text-center.border-top.padding-top ng-if="$index == undefined && hasIncomeSources()"
-    button.button.expand-small.no-margin ng-click="addAdditionalIncome()"
+    button.ghost-white.expand-small.no-margin ng-click="addAdditionalIncome()"
       | Save Income Source
 
   / show these buttons if we're iterating over income list (better way to check?)
   .small-6.medium-6.columns ng-if="$index != undefined"
-    button.button-link.button-lined.expand-small type="button" ng-click="deleteIncome(income)" Delete
+    button.button-link.button-lined type="button" ng-click="deleteIncome(income)" Delete
   .small-6.medium-6.columns ng-if="$index != undefined"
-    button.button.right.expand-small type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
+    button.ghost-white.right type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
       | Save

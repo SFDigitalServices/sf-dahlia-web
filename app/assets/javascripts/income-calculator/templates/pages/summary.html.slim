@@ -1,6 +1,6 @@
 .row.margin-top--2x.show-for-medium-up
 
-section.row
+section.row.margin-bottom--2x
   .medium-6.medium-centered.columns
     .form-card
       form.no-margin
@@ -22,11 +22,14 @@ section.row
               | Total Household Income
               span.t-bold.right
                 | {{ totalHouseholdIncome() | currency : $ : 2 }}/year
+
+    .row.padding-top--2x.show-for-small-only
+
     .button-stack--paginate.row.padding-top
-      .small-12.medium-6.medium-push-6.columns
-        button.primary.right.expand-small ui-sref="dahlia.eligibility-estimator" Finish
-      .small-12.medium-6.medium-pull-6.columns
+      .small-6.columns
         / should cancel also clear out incomeSources?? otherwise these 2 buttons are the same
         / but, if cancel does clear things out -- might accidentally delete a lot of work
         / -- perhaps better: could be a "back" to take you back to edit
-        button.button-link.button-lined.small-only-text-center.expand-small ui-sref="dahlia.eligibility-estimator" Cancel
+        button.button-link.button-lined ui-sref="dahlia.eligibility-estimator" Cancel
+      .small-6.columns
+        button.primary.right ui-sref="dahlia.eligibility-estimator" Finish

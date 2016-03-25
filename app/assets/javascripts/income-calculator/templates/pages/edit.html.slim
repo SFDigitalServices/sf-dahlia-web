@@ -19,8 +19,10 @@ section.row.margin-bottom--2x
             .income-source_nested.margin-top.padding-bottom.bg-mist ng-show="additionalIncome"
               ng-include src="'income-calculator/templates/partials/_income-form.html'"
 
+    .row.padding-top--2x.show-for-small-only ng-if="incomeSources.length < 30 && incomeSources.length > 0"
+
     .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
-      .small-12.medium-6.medium-push-6.columns
-        button.button.primary.right.expand-small ui-sref="dahlia.income-calculator.summary" Done
-      .small-12.medium-6.medium-pull-6.columns
-        button.button-link.button-lined.small-only-text-center.expand-small  ui-sref="dahlia.eligibility-estimator" Cancel
+      .small-6.columns
+        button.button-link.button-lined  ui-sref="dahlia.eligibility-estimator" Cancel
+      .small-6.columns
+        button.button.primary.right ui-sref="dahlia.income-calculator.summary" Done
