@@ -42,8 +42,7 @@ section.row.margin-bottom--2x
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
             label.sr-only How many children?
             select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
-              option selected="" value=""
-               | How many children?
+              option disabled="" selected="" value="0" How many children?
               option value="1" 1 child
               option value="2" 2 children
               option value="3" 3 children
