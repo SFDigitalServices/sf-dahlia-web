@@ -9,7 +9,7 @@ header.lead-header.bg-dark.bg-gradient
 .row.margin-top--2x.show-for-medium-up
 
 section.row.margin-bottom--2x
-  form.medium-10.medium-centered.columns.no-margin name="eligibilityForm" ng-submit="submitForm()" novalidate=""
+  form.medium-10.medium-centered.columns.margin-bottom-none name="eligibilityForm" ng-submit="submitForm()" novalidate=""
     .form-card.margin-bottom
       .form-card_header
         alert-box(form-object="eligibilityForm" hide-alert="hideAlert")
@@ -18,7 +18,7 @@ section.row.margin-bottom--2x
         .medium-6.columns.padding-left--2x.padding-top.padding-bottom
           header.margin-bottom
             h3.t-serif.gamma Household Size
-            p.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
+            p.c-steel.t-tall Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
 
           .form-group ng-class="{ error: inputInvalid('household_size') }"
             label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
@@ -59,7 +59,7 @@ section.row.margin-bottom--2x
         .medium-6.columns.padding-top.padding-bottom
           h3.t-serif.gamma Household Income
 
-          p.c-steel Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
+          p.c-steel.t-tall Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
           .form-group.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             label.form-label.t-caps.sr-only Household Income
             .form-income
@@ -83,9 +83,11 @@ section.row.margin-bottom--2x
         .row.note.bg-tint.padding.padding-left--2x.padding-right--2x ng-show="!hasCalculatedIncome()"
           .medium-7.columns
             p.t-tiny
-              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the
+              ' Note: Your total should include all income sources for each person you plan to live with over the age of 18. If you need help calculating your total, please use the Household Income Calculator:
           .medium-5.columns
             a.button.ghost-white.small.no-margin.expand-small ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
+
+    .row.margin-top--2x.show-for-medium-up
 
     .button-stack--paginate.row
       .small-12.medium-6.medium-push-6.columns
