@@ -10,12 +10,16 @@ ShortFormApplicationService = ($localStorage) ->
     alternateContact: {
       primary_language: "English"
     }
+    householdMembers: []
   }
+  Service.current_id = 0
 
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
+  Service.householdMember = {}
+  Service.householdMembers = Service.application.householdMembers
 
   Service.copyHomeToMailingAddress = () ->
     angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
@@ -36,7 +40,35 @@ ShortFormApplicationService = ($localStorage) ->
       missingInfo.push("Address")
     return missingInfo
 
+  Service._nextId = ->
+    if Service.householdMembers.length > 0
+      max_id = _.maxBy(Service.householdMembers, 'id').id
+    else
+      max_id = Service.current_id
+    Service.current_id = max_id + 1
+
+  Service.addHouseholdMember = (householdMember) ->
+    if !householdMember.id
+      householdMember.id = Service._nextId()
+      Service.householdMembers.push(angular.copy(householdMember))
+    Service.householdMember = {}
+
+  Service.getHouseholdMember = (id) ->
+    Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
+
+  Service.cancelHouseholdMember = ->
+    householdMembers = Service.householdMembers.filter (m) ->
+      (m != Service.householdMember && m.id != Service.householdMember.id)
+    # persist the changes to Service.householdMembers / $localStorage
+    Service.householdMember = {}
+    angular.copy(householdMembers, Service.householdMembers)
+
+
   return Service
+
+############################################################################################
+######################################## CONFIG ############################################
+############################################################################################
 
 ShortFormApplicationService.$inject = ['$localStorage']
 

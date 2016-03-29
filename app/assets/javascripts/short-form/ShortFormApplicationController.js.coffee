@@ -9,8 +9,28 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.alternateContact = ShortFormApplicationService.alternateContact
+  $scope.householdMember = ShortFormApplicationService.householdMember
+  $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
   $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  $scope.relationship_options = [
+      'Spouse',
+      'Registered Domestic Partner',
+      'Parent',
+      'Child',
+      'Sibling',
+      'Cousin',
+      'Aunt',
+      'Uncle',
+      'Nephew',
+      'Niece',
+      'Grandparent',
+      'Great Grandparent',
+      'In-Law',
+      'Friend',
+      'Other'
+    ]
+
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.navService = ShortFormNavigationService
@@ -87,7 +107,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
-  $scope.activeSection = () ->
+  $scope.activeSection = ->
     ShortFormNavigationService.activeSection()
 
   $scope.homeAddressRequired = ->
@@ -97,6 +117,17 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     # wrap true value in a function a la function(){return true;}
     # used by isRequired() in _address_form
     true
+
+  ###### Household Section ########
+  $scope.getHouseholdMember = ->
+    $scope.householdMember = ShortFormApplicationService.householdMember
+
+  $scope.addHouseholdMember = ->
+    ShortFormApplicationService.addHouseholdMember($scope.householdMember)
+
+  $scope.cancelHouseholdMember = ->
+    ShortFormApplicationService.cancelHouseholdMember()
+    $state.go('dahlia.short-form-application.household-members')
 
 ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService']
 
