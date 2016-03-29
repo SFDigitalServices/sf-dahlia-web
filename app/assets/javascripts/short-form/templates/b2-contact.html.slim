@@ -32,7 +32,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       small.highlight ng-if="applicant.noEmail"
         | We'll require an alternate contact email adddress on a later screen
 
-  .form-group.has-option
+  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
     label.form-label.no-margin Your address
     p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
 
@@ -41,7 +41,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
       .checkbox ng-click="resetAndCheckMailingAddress(); applicant.separateAddress = false;"
-        input#applicant_no_address ng-model="applicant.noAddress" name="separate_address" type="checkbox"
+        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress"
         label for="applicant_no_address"
           | I don't have an address
       small.highlight.padding-bottom ng-if="applicant.noAddress"

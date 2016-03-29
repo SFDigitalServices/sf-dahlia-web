@@ -8,7 +8,12 @@ do ->
       applicant: {}
       application: {}
       alternateContact: {}
+      householdMember: {
+        first_name: "Oberon"
+      }
       copyHomeToMailingAddress: jasmine.createSpy()
+      addHouseholdMember: jasmine.createSpy()
+      cancelHouseholdMember: jasmine.createSpy()
       validMailingAddress: ->
         true
     fakeShortFormNavigationService =
@@ -73,4 +78,29 @@ do ->
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
           return
         return
+
+    describe '$scope.getHouseholdMember', ->
+      it 'assigns $scope.householdMember with ShortFormApplicationService value', ->
+        scope.householdMember = {}
+        scope.getHouseholdMember()
+        expect(scope.householdMember).toEqual(fakeShortFormApplicationService.householdMember)
+        return
+
+    describe '$scope.addHouseholdMember', ->
+      it 'calls addHouseholdMember in ShortFormApplicationService', ->
+        scope.addHouseholdMember()
+        expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
+        return
+
+    describe '$cancelHouseholdMember', ->
+      it 'calls cancelHouseholdMember in ShortFormApplicationService', ->
+        scope.cancelHouseholdMember()
+        expect(fakeShortFormApplicationService.cancelHouseholdMember).toHaveBeenCalled()
+        return
+
+      it 'navigates to household members index', ->
+        scope.cancelHouseholdMember()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-members')
+        return
+
   return
