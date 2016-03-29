@@ -65,8 +65,13 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.formattedAddress = (listing) ->
     ListingService.formattedAddress(listing)
 
-  $scope.applicantHasPhoneAndAddress = ->
-    $scope.applicant.phone_number && ShortFormApplicationService.validMailingAddress()
+  $scope.applicantHasPhoneEmailAndAddress = ->
+    $scope.applicant.phone_number &&
+      $scope.applicant.email &&
+      ShortFormApplicationService.validMailingAddress()
+
+  $scope.validMailingAddress = ->
+    ShortFormApplicationService.validMailingAddress()
 
   $scope.missingPrimaryContactInfo = ->
     ShortFormApplicationService.missingPrimaryContactInfo()
@@ -77,7 +82,13 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.isMissingAddress = ->
     $scope.isMissingPrimaryContactInfo('Address')
 
+  $scope.unsetNoAddressAndCheckMailingAddress = ->
+    # $scope.applicant.noAddress = false
+    $scope.checkIfMailingAddressNeeded()
+
   $scope.checkIfMailingAddressNeeded = ->
+    if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
+      $scope.applicant.noAddress = false
     unless $scope.applicant.separateAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 

@@ -2,25 +2,25 @@ h2.application-title.t-gamma Is there someone else you'd like us to contact if w
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})"
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"
     label.form-label Alternate contact
-    p.form-note.margin-bottom ng-if="!applicantHasPhoneAndAddress()"
+    p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
       | Please select one.
     .radio-group
       p.radio-block
-        input#alternate_contact_family(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Family member" ng-required="!applicantHasPhoneAndAddress()" ng-class="{ error: inputInvalid('alternate_contact')}")
+        input#alternate_contact_family(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
+          value="Family member" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_family"  Family member
       p.radio-block
-        input#alternate_contact_friend(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Friend" ng-required='!applicantHasPhoneAndAddress()' ng-class="{ error: inputInvalid('alternate_contact')}")
+        input#alternate_contact_friend(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
+          value="Friend" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_friend"  Friend
       p.radio-block
-        input#alternate_contact_counselor(ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Social worker or housing counselor" ng-required='!applicantHasPhoneAndAddress()' ng-class="{ error: inputInvalid('alternate_contact')}")
+        input#alternate_contact_counselor(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
+          value="Social worker or housing counselor" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_counselor"  Social worker or housing counselor
-      p.radio-block ng-if="applicantHasPhoneAndAddress()"
+      p.radio-block ng-if="applicantHasPhoneEmailAndAddress()"
         / this option to bypass alternate contact is only available
         / if the applicant has entered phone and address
-        input#alternate_contact_none ng-model="alternateContact.type" name="alternate_contact" type="radio" value="None"
+        input#alternate_contact_none(ng-model="alternateContact.type" name="alternate_contact" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_none"
          | I don't have an alternate contact
     small.error ng-show="inputInvalid('alternate_contact')"
