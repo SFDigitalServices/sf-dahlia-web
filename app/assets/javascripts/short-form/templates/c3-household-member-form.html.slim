@@ -45,23 +45,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
   h2 These questions are optional and won't affect your eligibility for housing.
   .form-group
     p Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.
-  .form-group.margin-bottom--2x
-     label.form-label.no-margin What best describes their gender?
-     p.form-note.margin-bottom Optional
-     .radio-group
-       p.radio-block ng-repeat="gender in ::gender_options track by $index"
-         input id="household_member_gender_{{$index}}" ng-model="householdMember.gender" name="household_member_gender" type="radio" ng-value="gender"
-         label.radio-block_label for="household_member_gender_{{$index}}"
-           | {{gender}}
 
-  .form-group
-     label.form-label.no-margin for="householdMemberEthnicity"
-       | What best describes their race or ethnicity?
-     p.form-note.margin-bottom--half Optional
-     select#householdMemberEthnicity ng-model="householdMember.ethnicity" data-width="auto" name="ethnicity"
-      option value="English"  English
-      option value="Tagalog"  Tagalog
-      option value="Chinese"  Chinese
+  gender-form user='householdMember' pronoun='their'
+  race-ethnicity-form user='householdMember' pronoun='their'
 
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns

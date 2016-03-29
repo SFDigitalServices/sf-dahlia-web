@@ -1,23 +1,9 @@
 h2 These questions are optional and won't affect your eligibility for housing.
 .form-group
   p Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.
-.form-group.margin-bottom--2x
-  label.form-label.no-margin What best describes your gender?
-  p.form-note.margin-bottom Optional
-  .radio-group
-    p.radio-block ng-repeat="gender in ::gender_options track by $index"
-      input id="applicant_gender_{{$index}}" ng-model="applicant.gender" name="applicant_gender" type="radio" ng-value="gender"
-      label.radio-block_label for="applicant_gender_{{$index}}"
-        | {{gender}}
 
-.form-group
-  label.form-label.no-margin for="applicant_ethnicity"
-    | What best describes your race or ethnicity?
-  p.form-note.margin-bottom--half Optional
-  select#applicant_ethnicity ng-model="applicant.ethnicity" data-width="auto" name="ethnicity"
-   option value="English"  English
-   option value="Tagalog"  Tagalog
-   option value="Chinese"  Chinese
+gender-form user='applicant' pronoun='your'
+race-ethnicity-form user='applicant' pronoun='your'
 
 .button-stack--paginate.text-center.row.padding-top
  .small-12.medium-6.medium-push-6.columns

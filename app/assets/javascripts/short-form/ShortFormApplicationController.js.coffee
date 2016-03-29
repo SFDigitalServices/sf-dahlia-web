@@ -30,6 +30,23 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
       'Friend',
       'Other'
     ]
+  $scope.ethnicity_options = [
+    'Hispanic/Latino',
+    'Not Hispanic/Latino'
+  ]
+  $scope.race_options = [
+    'American Indian/Alaskan Native',
+    'Asian',
+    'Black/African American',
+    'Native Hawaiian/Other Pacific Islander',
+    'White',
+    'American Indian/Alaskan Native and Black/African American',
+    'American Indian/Alaskan Native and White',
+    'Asian and White',
+    'Black/African American and White',
+    'Other/Multiracial'
+  ]
+
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
