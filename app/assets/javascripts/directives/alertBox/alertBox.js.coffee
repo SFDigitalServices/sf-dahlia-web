@@ -17,11 +17,15 @@ angular.module('dahlia.directives')
       form.$submitted && form.$invalid && scope.hideAlert == false
 
     scope.alertText = ->
-      if scope.altContactTypePage()
+      if scope.altContactTypeError()
         "Since you are not able to provide some of the required contact information,
         we'll need you to provide alternate contact information."
       else
         "You'll need to resolve any errors before moving on."
 
-    scope.altContactTypePage = ->
-      scope.stateName == 'dahlia.short-form-application.alternate-contact-type'
+    scope.altContactTypeError = ->
+      scope.stateName == 'dahlia.short-form-application.alternate-contact-type' &&
+        scope.missingInfo && scope.missingInfo().length > 0
+
+    scope.showAltContactMessage = ->
+      scope.showAlert() && scope.altContactTypeError()
