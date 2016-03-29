@@ -35,7 +35,7 @@ accordion-heading
     p.content-group_date.margin-bottom
       span.content-group_day
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-    p.c-steel.t-small ng-if="!listing.Lottery_Results"
+    p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
       ' Complete lottery results will be posted here on
       ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
       ' by 5pm.
@@ -55,10 +55,10 @@ accordion-heading
             td
               | {{ticket.Lottery_Number}}
 
-      .padding
-        a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
+      .padding ng-if="listing.Lottery_Members.length > 20"
+        a.button.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
 
-    .padding.bg-dust
+    .padding.bg-dust ng-if="listing.Lottery_Results"
       p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
         | {{listing.Lottery_Summary}}
@@ -111,6 +111,6 @@ accordion-heading
       span.content-group_time
         | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
-  .content-group
+  .content-group.bg-mist
     p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
 
