@@ -1,32 +1,30 @@
-section.sub-bar.bg-mist.show-for-small-only
+header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
-      a.button.tiny(back-button)
-        | Back
-header.lead-header.shift-offset--bottom.bg-attention-tint
-  .row
-    .large-12.columns
-      h1.lead-title.t-beta Share this Listing
-      .medium-8.columns.no-padding
-        p.t-gamma.t-light Send a link to a housing counselor, family member or friend.
-section.section-full
-  .row.shift--top
-    .medium-8.columns
-      form.form-card
-        .alert-box.success ng-show="showShareSuccess"
-          span.alert-icon
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-check"
-          p.alert-body
-            | You copied this listing. Go ahead and share it by pasting into an email or text message.
-          a.close ng-click="closeShareSuccess()" &times;
-        .form-group
-          label
-            span.ui-icon.ui-link.ui-medium
-              svg
-                use xlink:href="#i-link"
-            | Get Shareable Link
-          input placeholder="Link" onclick="this.focus();this.select()" readonly="readonly" type="text" ng-model="textToCopy"
-          button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
-              | Copy Link
+      hgroup.lead-header_group
+        h1.lead-header_title.c-white Share this Listing
+        .medium-8.columns.no-padding.show-for-medium-up
+          p.t-epsilon.t-serif.c-white Send a link to a housing counselor, family member or friend.
+
+.row.margin-top--2x.show-for-medium-up
+
+section.section-full.row
+  .medium-8.medium-centered.columns
+    form.form-card
+      .alert-box.success ng-show="showShareSuccess"
+        span.alert-icon
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-check"
+        p.alert-body
+          | You copied this listing. Go ahead and share it by pasting into an email or text message.
+        a.close ng-click="closeShareSuccess()" &times;
+      .form-group
+        label
+          span.ui-icon.ui-link.ui-medium
+            svg
+              use xlink:href="#i-link"
+          | Get Shareable Link
+        input placeholder="Link" onclick="this.focus();this.select()" readonly="readonly" type="text" ng-model="textToCopy"
+        button.button.small(clipboard text="clipboardLink()" on-copied="clipboardSuccess()")
+            | Copy Link
