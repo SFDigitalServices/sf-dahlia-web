@@ -1,4 +1,5 @@
 accordion-heading
+  img.accordion-icon src="/images/listing-features.svg" alt="features-options"
   h3.accordion-name
     | Neighborhood
   span.accordion-subheader Location and transportation
@@ -7,13 +8,12 @@ accordion-heading
       use xlink:href="#i-arrow-down"
 
 .content-section
-  .content-tile
-    .property-map.map-panel
-      figure.property-map_figure.p-relative
-        iframe ng-src="{{googleMapSrc(listing)}}" width="640" height="450" frameborder="0" style="border:0"
+  .property-map.map-panel
+    figure.property-map_figure.p-relative
+      iframe ng-src="{{googleMapSrc(listing)}}" width="640" height="450" frameborder="0" style="border:0"
 
-      a.map-link.ui-link href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
-        span.ui-icon.ui-small.i-deep
-          svg
-            use xlink:href="#i-map"
-        | Get Directions
+    a.map-link.ui-link href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      span.ui-icon.ui-small.i-deep
+        svg
+          use xlink:href="#i-map"
+      | Get Directions
