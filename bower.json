@@ -37,6 +37,7 @@
     "angular-sanitize": "~1.5.0",
     "lifely-angular-carousel": "~1.1.0",
     "ng-text-truncate": "*",
+    "angular-ui-mask": "~1.8.2",
     "lodash": "^4.6.1"
   },
   "resolutions": {
