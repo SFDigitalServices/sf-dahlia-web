@@ -5,7 +5,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group ng-class="{ error: inputInvalid('phone_number'), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone }"
     .form-tel
       label for="applicant_phone" Your phone number
-      input#applicant_phone ng-model="applicant.phone_number" name="phone_number" placeholder="555-555-5555" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false"
+      input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-show="inputInvalid('phone_number')"
       | Please enter a phone number
     .form-item.padding-bottom

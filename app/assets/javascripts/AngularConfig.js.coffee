@@ -14,6 +14,7 @@
   'angulartics',
   'angulartics.google.analytics',
   'angular-carousel',
+  'ui.mask',
 ]
 
 # Custom Directives
@@ -307,4 +308,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
     return (promise) ->
       promise.then success, error
   ]
+]
+
+@dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
+  uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
