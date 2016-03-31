@@ -311,5 +311,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
 ]
 
 @dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
+  uiMaskConfigProvider.clearOnBlur(false)
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
