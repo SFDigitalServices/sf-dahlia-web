@@ -26,3 +26,6 @@ lib/assets/bower_components
 
 # Ignore .env, can store protected information
 .env
+
+ssl.sh
+certs
