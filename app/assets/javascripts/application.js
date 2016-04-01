@@ -24,6 +24,7 @@
 //= require angulartics
 //= require angulartics-google-analytics
 //= require lifely-angular-carousel
+//= require angular-ui-mask
 //= require hammerjs
 //= require ng-currency
 //= require ng-text-truncate/ng-text-truncate.js
