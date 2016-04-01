@@ -81,7 +81,6 @@
   .form-group-zip.form-item.small-12.large-4.columns ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }"
     label for="{{model}}_{{addressType}}_zip"  Zip
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder=("Zip Code") type="text"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder=("Zip Code") type="text" ui-mask="99999" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
     small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
       | Please enter a zipcode
