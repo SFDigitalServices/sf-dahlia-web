@@ -38,7 +38,7 @@
     .property-card_stats
       ng-include src="'listings/templates/_stats-list.html'"
 
-      .property-card_action
+      .property-card_action.small-only-text-center
         button.button.round-icon.has-label ng-click="toggleFavoriteListing(listing.Id);"
           span.ui-icon
             svg
@@ -54,4 +54,4 @@
               use style="display:none" xlink:href="#i-forward-fill"
           span.inline Share
 
-        a.button.ghost-white.right.no-margin ui-sref="dahlia.listing({id: listing.Id})" See Details
+        a.button.ghost-white.right.expand-small.no-margin ui-sref="dahlia.listing({id: listing.Id})" See Details

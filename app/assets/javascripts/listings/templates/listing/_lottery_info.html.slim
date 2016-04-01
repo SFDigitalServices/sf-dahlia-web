@@ -35,7 +35,7 @@ accordion-heading
     p.content-group_date.margin-bottom
       span.content-group_day
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-    p.c-steel.t-small ng-if="!listing.Lottery_Results"
+    p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
       ' Complete lottery results will be posted here on
       ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
       ' by 5pm.
@@ -55,17 +55,17 @@ accordion-heading
             td
               | {{ticket.Lottery_Number}}
 
-      .padding
-        a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
+      .padding ng-if="listing.Lottery_Members.length > 20"
+        a.button.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
 
-    .padding.bg-dust
+    .padding.bg-dust ng-if="listing.Lottery_Results"
       p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
         | {{listing.Lottery_Summary}}
 
   .content-group
     h4.h-caps-lined What to Expect
-    p.c-steel.t-small Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
+    p.c-steel.t-small.margin-bottom Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
     div ng-show="whatToExpectOpen"
       p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
       p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
@@ -111,6 +111,6 @@ accordion-heading
       span.content-group_time
         | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
 
-  .content-group
+  .content-group.bg-mist.small-only-text-center
     p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
 
