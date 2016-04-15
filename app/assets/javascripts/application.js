@@ -25,4 +25,6 @@
 //= require lifely-angular-carousel
 //= require hammerjs
 //= require ng-currency
+//= require moment
+//= require moment-timezone
 //= require_tree .
