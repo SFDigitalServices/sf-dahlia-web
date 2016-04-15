@@ -96,6 +96,16 @@ do ->
         return
       return
 
+    describe 'Service.listingIsOpen', ->
+      it 'checks if listing application due date has passed', ->
+        listing = fakeListing.listing
+        tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        listing.Application_Due_Date = tomorrow.toString()
+        expect(ListingService.listingIsOpen(listing.Application_Due_Date)).toEqual true
+        return
+      return
+
     describe 'Service.toggleFavoriteListing', ->
       describe 'When a listing is favorited', ->
         expectedResult = [1]
@@ -223,6 +233,7 @@ do ->
         expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
         return
       return
+
 
     return
   return

@@ -205,13 +205,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 
   # Business logic for determining if a listing is open
   Service.listingIsOpen = (due_date) ->
-    now = new Date()
-    today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    due_date = new Date(due_date)
-    if due_date > today
-      true
-    else
-      false
+    now = moment()
+    # set deadline to 6PM pacific time on the due date
+    deadline = moment(due_date).tz('America/Los_Angeles').hour(18)
+    # listing is open if deadline is in the future
+    return deadline > now
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)

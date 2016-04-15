@@ -28,4 +28,6 @@
 //= require hammerjs
 //= require ng-currency
 //= require ng-text-truncate/ng-text-truncate.js
+//= require moment
+//= require moment-timezone
 //= require_tree .
