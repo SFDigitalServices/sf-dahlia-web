@@ -119,9 +119,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     IncomeCalculatorService.resetIncomeSources()
 
   $scope.listingApplicationClosed = (listing) ->
-    today = new Date
-    appDueDate = new Date(listing.Application_Due_Date)
-    appDueDate < today
+    ! ListingService.listingIsOpen(listing.Application_Due_Date)
 
   $scope.lotteryDatePassed = (listing) ->
     today = new Date
@@ -177,7 +175,17 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingController.$inject = ['$scope', '$state', '$sce', '$sanitize', '$filter', 'Carousel', 'SharedService', 'ListingService', 'IncomeCalculatorService']
+ListingController.$inject = [
+  '$scope',
+  '$state',
+  '$sce',
+  '$sanitize',
+  '$filter',
+  'Carousel',
+  'SharedService',
+  'ListingService',
+  'IncomeCalculatorService'
+]
 
 angular
   .module('dahlia.controllers')
