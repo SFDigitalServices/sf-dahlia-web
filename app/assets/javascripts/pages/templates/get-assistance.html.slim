@@ -1,36 +1,42 @@
-header.lead-header.bg-attention
+header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
-      h1.lead-title.c-white Get Assistance
-      .medium-8.columns.no-padding.show-for-medium-up
-        p.c-white.t-gamma.t-light Whether you’re looking for assistance from a housing counselor, language support or additional housing listings, you've come to the right place.
-section.row
-  .medium-8.columns
-    .property-block.block--icon.text-center
+      hgroup.lead-header_group
+        h1.lead-header_title.c-white Get Assistance
+        .medium-8.columns.no-padding.show-for-medium-up
+          p.t-epsilon.t-serif.c-white Whether you’re looking for assistance from a housing counselor, language support or additional housing listings, you've come to the right place.
+
+section.row.p-relative
+  .medium-8.columns.no-padding
+    .block--icon
       figure.block-icon
         img alt="Phone Icon" src="/images/icon-phone.png"
-      h2.delta.t-serif.c-oil For more help, we suggest talking with a housing counselor to explore your options.
-      a.button.radius ui-sref="dahlia.housing-counselors"  Find a Housing Counselor
-    hr.hr.hr-5
-    .block--icon.text-center.bg-dust
-      figure.block-icon
-        img alt="Translation Icon" src="/images/icon-trans.png"
-      h2.delta.t-serif.c-oil Download translations in multiple languages, and quickly contact counselors providing language support.
-      section.language-actions
-        ul.button-group.radius.even-3
-          li
-            a.button.blank ui-sref="dahlia.welcome-spanish"
-              | Español
-          li
-            a.button.blank ui-sref="dahlia.welcome-chinese"
-              | 中文
-          li
-            a.button.blank ui-sref="dahlia.welcome-tagalog"
-              | Tagalog
-    hr.hr.hr-5
-    .property-block.block--icon.text-center
+
+      h2.t-gamma.margin-bottom--2x Housing Counselors
+
+      p.t-base.t-sans.c-oil.margin-bottom--2x For more help, we suggest talking with a housing counselor to explore your options.
+
+      a.button.large.ghost-white ui-sref="dahlia.housing-counselors" Find a Housing Counselor
+
+    section.section--wide.bg-dust
+      .block--icon.text-center.bg-dust
+        figure.block-icon
+          img alt="Translation Icon" src="/images/icon-trans.png"
+
+        h2.t-gamma.margin-bottom--2x Language Support
+        p.t-base.t-sans.c-oil.margin-bottom--2x Download translations in multiple languages, and quickly contact counselors providing language support.
+
+        <a title="Español" class="button large ghost-white expand-small" ui-sref="dahlia.welcome-spanish">Español</a> <a title="中国" class="button large ghost-white expand-small t-ch" ui-sref="dahlia.welcome-chinese">中国</a> <a title="Tagalog" class="button large ghost-white expand-small" ui-sref="dahlia.welcome-tagalog">Tagalog</a>
+
+    .block--icon
       figure.block-icon
         img alt="Home Icon" src="/images/icon-home.png"
-      h2.delta.t-serif.c-oil See more rental and ownership affordable housing opportunities.
-      a.button.radius ui-sref="dahlia.additional-resources"  View Additional Opportunities
-  ng-include src="'pages/templates/_contact-mayors-office.html'"
+
+      h2.t-gamma.margin-bottom--2x Additional Opportunites
+
+      p.t-base.t-sans.c-oil.margin-bottom--2x See more rental and ownership affordable housing opportunities.
+
+      a.button.large.ghost-white ui-sref="dahlia.additional-resources" View Additional Housing Opportunities
+
+  .medium-4.columns.box-shadow.full-height.bg-white.no-padding
+    ng-include src="'pages/templates/_contact-mayors-office.html'"

@@ -53,7 +53,7 @@ do ->
 
         openLength =
           ListingService.openMatchListings.length +
-          ListingService.openNotMatchListings.length +
+          ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
       return
@@ -87,6 +87,7 @@ do ->
     describe 'Service.maxIncomeLevelsFor', ->
       it 'returns incomeLevels with occupancy, yearly, monthly values', ->
         listing = fakeListing.listing
+        listing.unitSummary = [{unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}]
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
         # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)

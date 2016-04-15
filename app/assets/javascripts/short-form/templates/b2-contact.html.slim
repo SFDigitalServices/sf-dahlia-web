@@ -1,0 +1,75 @@
+h2.application-title.t-gamma.padding-bottom
+  | Thanks{{ applicant.first_name ? ", " + applicant.first_name : "" }}. Now we need to know how to contact you about your application.
+
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
+  .form-group ng-class="{ error: inputInvalid('phone_number'), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone }"
+    .form-tel
+      label for="applicant_phone" Your phone number
+      input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+    small.error ng-show="inputInvalid('phone_number')"
+      | Please enter a phone number
+    .form-item.padding-bottom
+      .checkbox
+        input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone_number.$valid && !applicant.noPhone" ng-click="blankIfInvalid('phone_number')"
+        label for="applicant_no_phone"
+          | I don't have a telephone number
+      small.highlight ng-if="applicant.noPhone"
+        | We'll require an alternate contact phone number on a later screen
+
+  .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
+    label.form-label.no-margin Your email address
+    p.form-note.margin-bottom We will only use your email address to contact you about your application.
+    .form-email
+      label.sr-only for="applicant_email"  Email Address
+      input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
+    small.error ng-show="inputInvalid('email')"
+      | Please enter an email address
+    .form-item.padding-bottom
+      .checkbox
+        input#applicant_no_email name="applicant_no_email" type="checkbox" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
+        label for="applicant_no_email"
+          | I don't have an email address
+      small.highlight ng-if="applicant.noEmail"
+        | We'll require an alternate contact email adddress on a later screen
+
+  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
+    label.form-label.no-margin Your address
+    p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
+
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
+
+    .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
+      / this checkbox unchecks the other checkbox; only one can be selected
+      .checkbox ng-click="resetAndCheckMailingAddress(); applicant.separateAddress = false;"
+        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress"
+        label for="applicant_no_address"
+          | I don't have an address
+      small.highlight.padding-bottom ng-if="applicant.noAddress"
+        | We'll require an alternate mailing address on a later screen
+
+    .form-item.padding-bottom
+      / this checkbox unchecks the other checkbox; only one can be selected
+      .checkbox ng-click="resetAndCheckMailingAddress(); applicant.noAddress = false;"
+        input#applicant_separate_address ng-model="applicant.separateAddress" name="separate_address" type="checkbox"
+        label for="applicant_separate_address"
+          | I have a separate mailing address
+
+  .form-group ng-if="applicant.separateAddress"
+    label.form-label.no-margin Mailing address
+    p.form-note.margin-bottom Provide an address where you can receive updates and materials about your application.
+
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
+
+
+  .form-group
+    label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?
+    select#applicant_primary_language ng-model="applicant.primary_language" data-width="auto" name="primary_language"
+     option value="English"  English
+     option value="Tagalog"  Tagalog
+     option value="Chinese"  Chinese
+
+  .button-stack--paginate.text-center.row.padding-top
+    .small-12.medium-6.medium-push-6.columns
+      input.button.expand.radius type="submit" value="Next"
+    .small-12.medium-6.medium-pull-6.columns
+      button.button.ghost-white.expand Save and finish later

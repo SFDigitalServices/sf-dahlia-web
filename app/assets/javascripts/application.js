@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require lodash/lodash
 //= require angular
 //= require angular-foundation
 //= require angular-ui-router
@@ -23,8 +24,10 @@
 //= require angulartics
 //= require angulartics-google-analytics
 //= require lifely-angular-carousel
+//= require angular-ui-mask
 //= require hammerjs
 //= require ng-currency
+//= require ng-text-truncate/ng-text-truncate.js
 //= require moment
 //= require moment-timezone
 //= require_tree .

@@ -1,42 +1,50 @@
-header.lead-header.bg-attention
+header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
-      h1.lead-title.c-white Additional Housing Opportunities
-      .medium-8.columns.no-padding.show-for-medium-up
-        p.c-white.t-gamma.t-light We encourage you to browse other affordable housing resources.
-section.row
-  .medium-8.columns.padding-top--2x
-    header.block-list_header
-      h3.t-tiny.t-caps.t-bold.t-sans Open Waitlists
-      p.t-gamma.c-steel These lists are developed each month by community nonprofit agencies.
-    ul.block-list
-      li
-        h4.block-list_title
-          a href="http://www.sfmohcd.org/sites/default/files/Documents/MOH/March%202016%20%28complete%29.pdf" target="_blank"  Episcopal Community Services
-        p
-          | Individual and Family Housing
-          br
-          | San Francisco Bay Area
-      li
-        h4.block-list_title
-          a href="http://www.sfmohcd.org/sites/default/files/Documents/MOH/One%20Home%20Listings%20March%202016.pdf" target="_blank"  One Home
-        p
-          | Family Housing
-          br
-          | San Francisco Bay Area and Beyond
-      li
-        h4.block-list_title
-          a href="https://www.mercyhousing.org/california-properties#San%20Fran%20Properties" target="_blank"  Mercy Housing
-        p
-          | Multi-Family, Senior and Special Needs Housing
-          br
-          | San Francisco Bay Area
-    header.block-list_header
-      h3.t-tiny.t-caps.t-bold.t-sans Ownership
-      p.t-gamma.c-steel The following will show any available units for sale. They are priced at a "below market rate" and affordable to lower or middle income households.
-    ul.block-list
-      li
-        h4.block-list_title
-          a href="http://sf-moh.org/index.aspx?page=299" target="_blank"  Below Market Rate Ownership Units
-        p San Francisco Bay Area
-  ng-include src="'pages/templates/_contact-mayors-office.html'"
+      hgroup.lead-header_group
+        h1.lead-header_title.c-white Additional Housing Opportunities
+        .medium-8.columns.no-padding.show-for-medium-up
+          p.t-epsilon.t-serif.c-white We encourage you to browse other affordable housing resources.
+
+section.row.p-relative
+  .medium-8.columns.margin-top--2x
+    header.content-stack_header.padding-top--2x.padding-bottom
+      h3.h-caps-lined Open Waitlists
+      p.t-base.t-serif These lists are developed each month by community nonprofit agencies.
+    ul.content-grid.margin-bottom--2x
+      li.content-item
+        .content-card.bg-dust
+          h4.t-sans.t-base.t-bold.margin-bottom--half
+            a href="http://www.sfmohcd.org/sites/default/files/Documents/MOH/March%202016%20%28complete%29.pdf" target="_blank"  Episcopal Community Services
+          p
+            | Individual and Family Housing
+            br
+            | San Francisco Bay Area
+      li.content-item
+        .content-card.bg-dust
+          h4.t-sans.t-base.t-bold.margin-bottom--half
+            a href="http://www.sfmohcd.org/sites/default/files/Documents/MOH/One%20Home%20Listings%20March%202016.pdf" target="_blank" Compass One Home
+          p
+            | Family Housing
+            br
+            | San Francisco Bay Area and Beyond
+      li.content-item
+        .content-card.bg-dust
+          h4.t-sans.t-base.t-bold.margin-bottom--half
+            a href="https://www.mercyhousing.org/california-properties#San%20Fran%20Properties" target="_blank" Mercy Housing
+          p
+            | Multi-Family, Senior and Special Needs Housing
+            br
+            | San Francisco Bay Area
+    header.content-stack_header.padding-top--2x.padding-bottom
+      h3.h-caps-lined Ownership
+      p.t-base.t-serif The following will show any available units for sale. They are priced at a “below market rate” and affordable to lower or middle income households.
+    ul.content-grid.padding-bottom--2x.margin-bottom--2x
+      li.content-item
+        .content-card.bg-dust
+          h4.t-sans.t-base.t-bold.margin-bottom--half
+            a href="http://sf-moh.org/index.aspx?page=299" target="_blank" Below Market Rate Ownership Units
+          p San Francisco Bay Area
+
+  .medium-4.columns.box-shadow.full-height.bg-white.no-padding
+    ng-include src="'pages/templates/_contact-mayors-office.html'"
