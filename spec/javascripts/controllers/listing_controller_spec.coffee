@@ -142,20 +142,10 @@ do ->
       return
 
     describe '$scope.listingApplicationClosed', ->
-      describe 'closed listing', ->
-        it 'returns true', ->
-          closedListing = fakeListing
-          closedListing.Application_Due_Date = yesterday
-          expect(scope.listingApplicationClosed(closedListing)).toEqual true
-          return
-        return
-
-      describe 'open listing', ->
-        it 'returns false', ->
-          openListing = fakeListing
-          openListing.Application_Due_Date = tomorrow
-          expect(scope.listingApplicationClosed(openListing)).toEqual false
-          return
+      it 'expects ListingService.listingIsOpen to be called', ->
+        fakeListingService.listingIsOpen = jasmine.createSpy()
+        scope.listingApplicationClosed(fakeListing)
+        expect(fakeListingService.listingIsOpen).toHaveBeenCalled()
         return
       return
 
@@ -196,7 +186,7 @@ do ->
         listing = fakeListing
         listing.Lottery_Date = new Date()
         listing.Lottery_Venue = "Exygy"
-        listing.Lottery_Street_Address = "312 Deetz, Shasta"
+        listing.Lottery_Street_Address = "123 Main St., San Francisco"
 
       describe 'listing lottery date, venue and lottery address all have values', ->
         it 'returns true', ->

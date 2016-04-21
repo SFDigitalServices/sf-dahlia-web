@@ -1,12 +1,10 @@
 @dahlia = angular.module 'dahlia', [
+  'dahlia.directives',
   'dahlia.controllers',
   'dahlia.services',
   # filters
   'customFilters',
   'ng-currency',
-  # directives
-  'customDirectives',
-  'pageslide-directive',
   # dependencies
   'ui.router',
   'angular-clipboard',
@@ -16,8 +14,11 @@
   'angulartics',
   'angulartics.google.analytics',
   'angular-carousel',
+  'ui.mask',
 ]
 
+# Custom Directives
+angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
@@ -185,6 +186,103 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container@':
           templateUrl: 'pages/templates/additional-resources.html'
     })
+    ##########################
+    # Short form application #
+    ##########################
+    .state('dahlia.short-form-application', {
+      url: '/listings/:id/apply'
+      abstract: true
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListing($stateParams.id)
+        ]
+    })
+    .state('dahlia.short-form-application.intro', {
+      url: '/intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a1-intro.html'
+    })
+    .state('dahlia.short-form-application.overview', {
+      url: '/overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a2-overview.html'
+    })
+    .state('dahlia.short-form-application.name', {
+      url: '/name'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b1-name.html'
+    })
+    .state('dahlia.short-form-application.contact', {
+      url: '/contact'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2-contact.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-type', {
+      url: '/alternate-contact-type'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b3-alternate-contact-type.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-name', {
+      url: '/alternate-contact-name'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b4-alternate-contact-name.html'
+    })
+    .state('dahlia.short-form-application.alternate-contact-phone-address', {
+      url: '/alternate-contact-phone-address'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b4a-alternate-contact-phone-address.html'
+    })
+    .state('dahlia.short-form-application.optional-info', {
+      url: '/optional-info'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b5-optional-info.html'
+    })
+    .state('dahlia.short-form-application.household-intro', {
+      url: '/household-intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c1-household-intro.html'
+    })
+    .state('dahlia.short-form-application.household-overview', {
+      url: '/household-overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c1a-household-overview.html'
+    })
+    .state('dahlia.short-form-application.household-members', {
+      url: '/household-members'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c2-household-members.html'
+    })
+    .state('dahlia.short-form-application.household-member-form', {
+      url: '/household-member-form'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c3-household-member-form.html'
+    })
+    .state('dahlia.short-form-application.household-member-form-edit', {
+      url: '/household-member-form/:member_id'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c3-household-member-form.html'
+      resolve:
+        householdMember: ['$stateParams', 'ShortFormApplicationService', ($stateParams, ShortFormApplicationService) ->
+          ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
+        ]
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
@@ -210,4 +308,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
     return (promise) ->
       promise.then success, error
   ]
+]
+
+@dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
+  uiMaskConfigProvider.clearOnBlur(false)
+  uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
