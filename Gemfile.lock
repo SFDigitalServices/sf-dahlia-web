@@ -130,6 +130,7 @@ GEM
     minitest (5.8.4)
     multi_json (1.11.2)
     multipart-post (2.0.0)
+    newrelic_rpm (3.9.9.275)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     overcommit (0.29.1)
@@ -307,6 +308,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   memcachier
+  newrelic_rpm
   overcommit
   pry
   pry-rails
