@@ -75,6 +75,7 @@ group :development, :test do
 end
 
 group :production do
+  gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
   gem 'rails_12factor'
