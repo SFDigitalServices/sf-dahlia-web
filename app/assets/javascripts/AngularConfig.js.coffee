@@ -283,6 +283,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
         ]
     })
+    .state('dahlia.short-form-application.review', {
+      url: '/review'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f1-review.html'
+    })
   $urlRouterProvider.otherwise('/') # default to welcome screen
 
   # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)

@@ -23,7 +23,10 @@ do ->
       },
       { name: 'Status', pages: [''] },
       { name: 'Income', pages: [''] },
-      { name: 'Review', pages: [''] }
+      { name: 'Review', pages: [
+          'review'
+        ]
+      }
     ]
 
     beforeEach module('ui.router')
