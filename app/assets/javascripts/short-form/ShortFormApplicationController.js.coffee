@@ -12,7 +12,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
-  $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  $scope.gender_options = [
+    'Male',
+    'Female',
+    'Trans Male',
+    'Trans Female',
+    'Not Listed (Please Specify)',
+    'Decline to State'
+  ]
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',
