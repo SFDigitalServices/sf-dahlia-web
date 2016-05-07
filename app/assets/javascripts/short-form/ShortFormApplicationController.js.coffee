@@ -17,8 +17,6 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     'Female',
     'Trans Male',
     'Trans Female',
-    'Not Listed (Please Specify)',
-    'Decline to State'
   ]
   $scope.relationship_options = [
       'Spouse',
