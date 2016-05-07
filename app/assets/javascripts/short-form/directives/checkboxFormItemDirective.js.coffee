@@ -6,6 +6,8 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.name = attrs.name
-    scope.option_name = attrs.label || attrs.option
+    scope.option = attrs.option
+    scope.label = attrs.label || attrs.option
     scope.user = scope[attrs.user || 'applicant']
+    scope.isDisabled = scope[attrs.isDisabled]
     scope.id = "#{attrs.name}_#{_.kebabCase(attrs.option)}"
