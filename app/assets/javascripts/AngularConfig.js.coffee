@@ -243,12 +243,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b4a-alternate-contact-phone-address.html'
     })
-    .state('dahlia.short-form-application.optional-info', {
-      url: '/optional-info'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/b5-optional-info.html'
-    })
     .state('dahlia.short-form-application.household-intro', {
       url: '/household-intro'
       views:

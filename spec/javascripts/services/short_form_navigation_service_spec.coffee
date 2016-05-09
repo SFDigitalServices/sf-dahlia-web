@@ -9,8 +9,7 @@ do ->
           'contact',
           'alternate-contact-type',
           'alternate-contact-name',
-          'alternate-contact-phone-address',
-          'optional-info'
+          'alternate-contact-phone-address'
         ]
       },
       { name: 'Household', pages: [

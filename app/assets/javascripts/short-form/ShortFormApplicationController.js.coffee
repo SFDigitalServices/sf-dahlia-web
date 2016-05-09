@@ -122,7 +122,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
-      $state.go('dahlia.short-form-application.optional-info')
+      $state.go('dahlia.short-form-application.household-intro')
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 

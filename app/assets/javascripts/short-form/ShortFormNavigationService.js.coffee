@@ -7,7 +7,6 @@ ShortFormNavigationService = ($state) ->
         'alternate-contact-type',
         'alternate-contact-name',
         'alternate-contact-phone-address',
-        'optional-info'
       ]
     },
     { name: 'Household', pages: [
