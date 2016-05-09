@@ -126,6 +126,11 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
+  $scope.checkIfAlternateContactNeedsReset = ->
+    # blank out alternateContact.type if it was previously set to 'None' but that is no longer valid
+    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.type == 'None')
+      $scope.alternateContact.type = null
+
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
