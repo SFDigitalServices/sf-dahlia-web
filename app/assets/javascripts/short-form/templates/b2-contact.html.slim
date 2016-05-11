@@ -8,11 +8,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-show="inputInvalid('phone_number')"
       | Please enter a phone number
-    select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-show="!applicant.noPhone"
+    select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-show="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
      option value=""  What type of number is this?
      option value="Home"  Home
      option value="Work"  Work
      option value="Cell"  Cell
+    small.error ng-show="inputInvalid('phone_number_type')"
+      | Please select a phone number type
 
     .form-item.padding-bottom
       .checkbox
