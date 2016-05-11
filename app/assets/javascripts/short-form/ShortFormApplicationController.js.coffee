@@ -37,7 +37,8 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     ]
   $scope.ethnicity_options = [
     'Hispanic/Latino',
-    'Not Hispanic/Latino'
+    'Not Hispanic/Latino',
+    'Decline to state'
   ]
   $scope.race_options = [
     'American Indian/Alaskan Native',
@@ -49,7 +50,8 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     'American Indian/Alaskan Native and White',
     'Asian and White',
     'Black/African American and White',
-    'Other/Multiracial'
+    'Other/Multiracial',
+    'Decline to state'
   ]
 
 
