@@ -63,6 +63,11 @@ ShortFormApplicationService = ($localStorage) ->
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
 
+  Service.resetGenderOptions = (user, option) ->
+    toggle = !user.gender[option]
+    user.gender = {}
+    user.gender_not_listed = null
+    user.gender[option] = toggle
 
   return Service
 

@@ -7,7 +7,6 @@ ShortFormNavigationService = ($state) ->
         'alternate-contact-type',
         'alternate-contact-name',
         'alternate-contact-phone-address',
-        'optional-info'
       ]
     },
     { name: 'Household', pages: [
@@ -20,7 +19,10 @@ ShortFormNavigationService = ($state) ->
     },
     { name: 'Status', pages: [''] },
     { name: 'Income', pages: [''] },
-    { name: 'Review', pages: [''] }
+    { name: 'Review', pages: [
+        'review'
+      ]
+    }
   ]
 
   Service.hasNav = ->
