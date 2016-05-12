@@ -8,6 +8,12 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-show="inputInvalid('phone_number')"
       | Please enter a phone number
+    select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-show="!applicant.noPhone"
+     option value=""  What type of number is this?
+     option value="Home"  Home
+     option value="Work"  Work
+     option value="Cell"  Cell
+
     .form-item.padding-bottom
       .checkbox
         input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone_number.$valid && !applicant.noPhone" ng-click="blankIfInvalid('phone_number')"
@@ -15,6 +21,24 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
           | I don't have a telephone number
       small.highlight ng-if="applicant.noPhone"
         | We'll require an alternate contact phone number on a later screen
+
+    .form-item.padding-bottom ng-show="!applicant.noPhone"
+      .checkbox
+       input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone"
+       label for="applicant_additional_phone"
+         | I have an additional phone number
+
+    div ng-show="!applicant.noPhone && applicant.additionalPhone"
+      .form-tel
+        label for="applicant_second_phone" Your second phone number
+        input#applicant_second_phone(ng-model="applicant.second_phone_number" name="second_phone_number" type="tel" ng-class="{ error: inputInvalid('second_phone_number') }" ng-pattern="/[^a-zA-Z]/" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+      small.error ng-show="inputInvalid('second_phone_number')"
+        | Please enter a phone number
+      select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type"
+       option value=""  What type of number is this?
+       option value="Home"  Home
+       option value="Work"  Work
+       option value="Cell"  Cell
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
     label.form-label.no-margin Your email address
@@ -61,12 +85,17 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
 
-  .form-group
+  .form-group ng-class="{ error: inputInvalid('other_language') }"
     label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?
     select#applicant_primary_language ng-model="applicant.primary_language" data-width="auto" name="primary_language"
      option value="English"  English
      option value="Tagalog"  Tagalog
      option value="Chinese"  Chinese
+     option value="Other"  Other
+
+    input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="Enter your language" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
+    small.error ng-show="inputInvalid('other_language')"
+      | Please enter a language
 
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
