@@ -12,7 +12,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
-  $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  $scope.gender_options = [
+    'Male',
+    'Female',
+    'Trans Male',
+    'Trans Female',
+  ]
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',
@@ -32,7 +37,8 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     ]
   $scope.ethnicity_options = [
     'Hispanic/Latino',
-    'Not Hispanic/Latino'
+    'Not Hispanic/Latino',
+    'Decline to state'
   ]
   $scope.race_options = [
     'American Indian/Alaskan Native',
@@ -44,7 +50,8 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     'American Indian/Alaskan Native and White',
     'Asian and White',
     'Black/African American and White',
-    'Other/Multiracial'
+    'Other/Multiracial',
+    'Decline to state'
   ]
 
 
@@ -117,9 +124,14 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
-      $state.go('dahlia.short-form-application.optional-info')
+      $state.go('dahlia.short-form-application.household-intro')
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
+
+  $scope.checkIfAlternateContactNeedsReset = ->
+    # blank out alternateContact.type if it was previously set to 'None' but that is no longer valid
+    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.type == 'None')
+      $scope.alternateContact.type = null
 
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
@@ -134,6 +146,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     # wrap true value in a function a la function(){return true;}
     # used by isRequired() in _address_form
     true
+
+  $scope.resetGenderOptions = (user, option) ->
+    ShortFormApplicationService.resetGenderOptions(user, option)
+
+  $scope.genderOtherOptionSelected = (user) ->
+    user.gender['Not Listed'] || user.gender['Decline to State']
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
