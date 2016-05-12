@@ -58,7 +58,7 @@ do ->
         it 'navigates ahead to optional info', ->
           scope.alternateContact.type = 'None'
           scope.checkIfAlternateContactInfoNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.optional-info')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
           return
         return
 

@@ -1,14 +1,27 @@
-h2.application-title.t-gamma.padding-bottom
-  | Take a moment to review your information before submitting your application.
-.form-group.margin-bottom--2x
-  section.entry-panel
-    p How did you hear about this listing?
+h2 These questions are optional and won't affect your eligibility for housing.
+.form-group
+  p Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.
 
-    checkbox-form-item name='referral' option='Newspaper'
-    checkbox-form-item name='referral' option='MOHCD Website'
-    checkbox-form-item name='referral' option='Developer Website'
-    checkbox-form-item name='referral' option='Flyer'
-    checkbox-form-item name='referral' option='Email Alert'
-    checkbox-form-item name='referral' option='Friend'
-    checkbox-form-item name='referral' option='Housing Counselor'
-    checkbox-form-item name='referral' option='Other'
+gender-form user='applicant' pronoun='your'
+race-ethnicity-form user='applicant' pronoun='your'
+
+.form-group.margin-bottom--2x
+  label.form-label.no-margin
+    | How did you hear about this listing?
+  p.form-note.margin-bottom Optional
+
+  checkbox-form-item name='referral' option='Newspaper'
+  checkbox-form-item name='referral' option='MOHCD Website'
+  checkbox-form-item name='referral' option='Developer Website'
+  checkbox-form-item name='referral' option='Flyer'
+  checkbox-form-item name='referral' option='Email Alert'
+  checkbox-form-item name='referral' option='Friend'
+  checkbox-form-item name='referral' option='Housing Counselor'
+  checkbox-form-item name='referral' option='Other'
+
+.button-stack--paginate.text-center.row.padding-top
+ .small-12.medium-6.medium-push-6.columns
+   button.button.expand
+     | Next
+ .small-12.medium-6.medium-pull-6.columns
+   button.button.ghost-white.expand Save and finish later
