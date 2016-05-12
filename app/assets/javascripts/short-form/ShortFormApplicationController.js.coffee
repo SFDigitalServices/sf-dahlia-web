@@ -12,7 +12,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
-  $scope.gender_options = ['Male', 'Female', 'Trans Male', 'Trans Female', 'Not listed', 'Decline to state']
+  $scope.gender_options = [
+    'Male',
+    'Female',
+    'Trans Male',
+    'Trans Female',
+  ]
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',
@@ -134,6 +139,12 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     # wrap true value in a function a la function(){return true;}
     # used by isRequired() in _address_form
     true
+
+  $scope.resetGenderOptions = (user, option) ->
+    ShortFormApplicationService.resetGenderOptions(user, option)
+
+  $scope.genderOtherOptionSelected = (user) ->
+    user.gender['Not Listed'] || user.gender['Decline to State']
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
