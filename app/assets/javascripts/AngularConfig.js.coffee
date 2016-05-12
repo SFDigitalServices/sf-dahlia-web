@@ -139,11 +139,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
     })
-    .state('dahlia.welcome-tagalog', {
-      url: '/welcome-tagalog'
+    .state('dahlia.welcome-filipino', {
+      url: '/welcome-filipino'
       views:
         'container@':
-          templateUrl: 'pages/templates/welcome-tagalog.html'
+          templateUrl: 'pages/templates/welcome-filipino.html'
     })
     .state('dahlia.disclaimer', {
       url: '/disclaimer'
