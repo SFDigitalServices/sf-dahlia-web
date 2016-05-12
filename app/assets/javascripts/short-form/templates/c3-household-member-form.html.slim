@@ -45,13 +45,6 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     small.error ng-show="inputInvalid('relationship')"
      | Please select your relationship to the household member
 
-  h2 These questions are optional and won't affect your eligibility for housing.
-  .form-group
-    p Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.
-
-  gender-form user='householdMember' pronoun='their'
-  race-ethnicity-form user='householdMember' pronoun='their'
-
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
       input.button.expand.radius type="submit" value="Update Household Member" ng-if="householdMember.id"
