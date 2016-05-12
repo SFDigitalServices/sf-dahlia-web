@@ -8,6 +8,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     input#applicantFirstName ng-model="applicant.first_name" name="first_name" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('first_name') }"
     small.error ng-show="inputInvalid('first_name')"
       | Please enter a First Name
+    label.sr-only for="applicantMiddleName"
+      | Middle Name (optional)
+    input#applicantMiddleName ng-model="applicant.middle_name" name="middle_name" placeholder="Middle Name (optional)" type="text"
     label.sr-only for="applicantLastName"
       | Last Name
     input#applicantLastName ng-model="applicant.last_name" name="last_name" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('last_name') }"

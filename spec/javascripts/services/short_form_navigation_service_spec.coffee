@@ -9,8 +9,7 @@ do ->
           'contact',
           'alternate-contact-type',
           'alternate-contact-name',
-          'alternate-contact-phone-address',
-          'optional-info'
+          'alternate-contact-phone-address'
         ]
       },
       { name: 'Household', pages: [
@@ -23,7 +22,10 @@ do ->
       },
       { name: 'Status', pages: [''] },
       { name: 'Income', pages: [''] },
-      { name: 'Review', pages: [''] }
+      { name: 'Review', pages: [
+          'review'
+        ]
+      }
     ]
 
     beforeEach module('ui.router')

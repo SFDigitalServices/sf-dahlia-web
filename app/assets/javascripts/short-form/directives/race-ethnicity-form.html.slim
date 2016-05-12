@@ -2,15 +2,15 @@
   label.form-label.no-margin
     | What best describes {{pronoun}} race or ethnicity?
   p.form-note.margin-bottom--half Optional
-  label.form-label.no-margin for="user_ethnicity"
-    | Ethnicity (select one):
+  label.form-label.margin-bottom--half for="user_ethnicity"
+    | Ethnicity:
   select#user_ethnicity ng-model="user.ethnicity" data-width="auto" name="ethnicity"
-    option value="" Decline to state
+    option disabled="" selected="" value="" Select one
     option ng-repeat="option in ethnicity_options" value="{{option}}"
       | {{option}}
-  label.form-label.no-margin for="user_race"
-    | Race (select one):
+  label.form-label.margin-bottom--half for="user_race"
+    | Race:
   select#user_race ng-model="user.race" data-width="auto" name="race"
-    option value="" Decline to state
+    option disabled="" selected="" value="" Select one
     option ng-repeat="option in race_options" value="{{option}}"
       | {{option}}
