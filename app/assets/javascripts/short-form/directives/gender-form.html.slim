@@ -3,7 +3,10 @@
     | What best describes {{pronoun}} gender?
   p.form-note.margin-bottom Optional
   .radio-group
-    p.radio-block ng-repeat="gender in ::gender_options track by $index"
-      input id="user_gender_{{$index}}" ng-model="user.gender" name="user_gender" type="radio" ng-value="gender"
-      label.radio-block_label for="user_gender_{{$index}}"
-        | {{gender}}
+    checkbox-form-item user='applicant' name='gender' option='{{gender}}' ng-repeat="gender in ::gender_options track by $index" is-disabled="genderOtherOptionSelected"
+
+    checkbox-form-item user='applicant' name='gender' option='Not Listed' label='Not Listed (Please Specify)' ng-click="resetGenderOptions(user, 'Not Listed')"
+    p.radio-block ng-if="user.gender['Not Listed']"
+      input ng-model="user.gender_not_listed" name="gender_not_listed" placeholder="Your gender" type="text"
+
+    checkbox-form-item user='applicant' name='gender' option='Decline to State' ng-click="resetGenderOptions(user, 'Decline to State')"
