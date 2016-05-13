@@ -38,12 +38,6 @@ ShortFormNavigationService = ($state) ->
       indexofSection = _sectionNames.indexOf(section.name)
       indexofSection < indexOfActiveSection
 
-  Service.currentIndexofSection = () ->
-    Service.activeSection().pages.indexOf(Service._currentPage()) + 1
-
-  Service.totalIndexofSection = () ->
-    Service.activeSection().pages.length
-
   Service._currentPage = () ->
     $state.current.name.replace('dahlia.short-form-application.', "")
 

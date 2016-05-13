@@ -11,5 +11,7 @@ section.row.shift--top
       alert-box(state-name="$state.current.name" form-object="form.applicationForm"
         hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
-      page-count ng-if="activeSection()"
+      .form-count ng-if="activeSection()"
+        a.lined.margin-right back-button="" Back
+
       div(ui-view="container")
