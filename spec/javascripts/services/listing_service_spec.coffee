@@ -53,7 +53,7 @@ do ->
 
         openLength =
           ListingService.openMatchListings.length +
-          ListingService.openNotMatchListings.length +
+          ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
       return
@@ -87,11 +87,22 @@ do ->
     describe 'Service.maxIncomeLevelsFor', ->
       it 'returns incomeLevels with occupancy, yearly, monthly values', ->
         listing = fakeListing.listing
+        listing.unitSummary = [{unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}]
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
         # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
         expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
         expect(incomeLevels.length).toEqual 2
+        return
+      return
+
+    describe 'Service.listingIsOpen', ->
+      it 'checks if listing application due date has passed', ->
+        listing = fakeListing.listing
+        tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        listing.Application_Due_Date = tomorrow.toString()
+        expect(ListingService.listingIsOpen(listing.Application_Due_Date)).toEqual true
         return
       return
 
@@ -222,6 +233,7 @@ do ->
         expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
         return
       return
+
 
     return
   return

@@ -21,12 +21,13 @@ html lang="en"
       ga('create', "#{ENV['GOOGLE_ANALYTICS_KEY']}", 'auto');
 
   body ng-app="dahlia" id="ng-app" ng-controller="NavController"
-    div(ui-view="translate")
-    div(ui-view="version")
-    div(ui-view="nav")
-    div(ui-view="container")
-    div(ui-view="nav-mobile")
-    div(ui-view="footer")
+    .site-container
+      section(ui-view="translate")
+      section(ui-view="version")
+      section(ui-view="nav")
+      section(ui-view="container")
+      section(ui-view="nav-mobile")
+    .footer-section(ui-view="footer")
 
     / icon collection
     ng-include src="'shared/templates/icons.html'"

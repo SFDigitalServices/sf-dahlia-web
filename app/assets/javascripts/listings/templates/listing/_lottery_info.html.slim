@@ -1,100 +1,116 @@
-accordion-heading.lead.accordion-header
-  | Lottery
+accordion-heading
+  img.accordion-icon src="/images/listing-units.svg" alt="neighborhood-building"
+  h3.accordion-name
+    | Lottery
   span.accordion-subheader Lottery selection, important dates and contact
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
 
-.content-section
-  .lottery-content.content-wrap.bg-white
-    .content-lead.content-panel
-      .show-for-medium-up.margin-bottom
-        p.post-dealine_alert.margin-top--half
-          span.label.alert Applications Closed
+.lottery-content.content-wrap.bg-white
+  .content-group.no-padding.show-for-medium-up
+    .label.label--flag.alert-tint
+      | Applications Closed
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold Public Lottery
-      span ng-if="lotteryDateVenueAvailable(listing)"
-        h3.t-delta.t-sans.c-steel.no-margin
-          | {{ listing.Lottery_Date | date : 'longDate' }}
-        p.c-steel
-          | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
-        p.no-margin
-          | {{ listing.Lottery_Venue }}
-        p.c-steel
-          | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-        p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
-          | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
-        p.c-steel.t-small ng-if="lotteryDatePassed(listing)"
-          | An open lottery was held on the above date to draw numbers to determine selection.
-      p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
-        | Lottery date, time and venue to be scheduled.
+  .content-group
+    h4.h-caps-lined Public Lottery
+    p.content-group_date ng-if="lotteryDateVenueAvailable(listing)"
+      span.content-group_day
+        | {{ listing.Lottery_Date | date : 'longDate' }}
+      span.content-group_time
+        | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
+      p.content-group_address.no-margin
+        | {{ listing.Lottery_Venue }}
+      p.content-group_address
+        | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
+      p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
+        | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+      p.c-steel.t-small ng-if="lotteryDatePassed(listing)"
+        | An open lottery was held on the above date to draw numbers to determine selection.
+    p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
+      | Lottery date, time and venue to be scheduled.
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold Lottery Results
-      h3.t-delta.t-sans.c-steel
+  .content-group.expand.text-center
+    h4.t-gamma.t-serif Lottery Results
+    p.content-group_date.margin-bottom
+      span.content-group_day
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-      p.c-steel.t-small ng-if="!listing.Lottery_Results"
-        ' Complete lottery results will be posted here on
-        ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
-        ' by 5pm.
-      ul.result-set.margin-bottom ng-if="listing.Lottery_Results"
-        span ng-if="listing.Lottery_Members.length <= 20"
-          li
-            | Rank
-            span.right
-              | Ticket
-          li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
-            | {{ticket.Rank}}
-            span.right
-              | {{ticket.Lottery_Number}}
-        a.button.expand.no-margin ng-if="listing.Lottery_Members.length > 20" ng-click="openLotteryResultsModal()" View Lottery Results
+    p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
+      ' Complete lottery results will be posted here on
+      ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
+      ' by 5pm.
 
+    div ng-if="listing.Lottery_Results"
+      table.table-small.table-results.text-center  ng-if="listing.Lottery_Members.length <= 20"
+        thead
+          tr
+            th scope="col"
+              | Rank
+            th scope="col"
+              | Ticket
+        tbody
+          tr ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+            td scope="row"
+              | {{ticket.Rank}}
+            td
+              | {{ticket.Lottery_Number}}
+
+      .padding ng-if="listing.Lottery_Members.length > 20"
+        a.button.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
+
+    .padding.bg-dust ng-if="listing.Lottery_Results"
       p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
         / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
         | {{listing.Lottery_Summary}}
 
-    .content-panel.padding-bottom.no-margin.border-bottom
-      h4.t-small.t-sans.t-bold What to Expect
-      p.c-steel.t-small Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
-      div ng-show="whatToExpectOpen"
-        p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
-        p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
-      a.toggler.toggle-more.t-small href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
-        ' read {{ whatToExpectOpen ? 'less' : 'more' }}
-        span.ui-icon.ui-tiny.i-primary
-          svg
-            use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-    .content-panel.padding-bottom ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
-      h4.t-small.t-sans.t-bold Contact Leasing Agent
-      h3.t-delta.t-sans.no-margin
-        | {{ listing.Leasing_Agent_Name }}
-      p.c-steel
-        | {{ listing.Leasing_Agent_Title }}
-      a.margin-bottom--half ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
+  .content-group
+    h4.h-caps-lined What to Expect
+    p.c-steel.t-small.margin-bottom Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
+    div ng-show="whatToExpectOpen"
+      p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
+      p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+    a.toggler.toggle-more.t-small href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
+      ' read {{ whatToExpectOpen ? 'less' : 'more' }}
+      span.ui-icon.ui-tiny.i-primary
+        svg
+          use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
+  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+    h4.h-caps-lined Contact Leasing Agent
+    h3.t-delta.t-sans.no-margin
+      | {{ listing.Leasing_Agent_Name }}
+    p.c-steel
+      | {{ listing.Leasing_Agent_Title }}
+    p.margin-bottom--half
+      a.has-icon ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-phone"
         |  Call {{ listing.Leasing_Agent_Phone }}
-      p.t-small.c-steel Due to high call volume you may hear a message.
-      a ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
+    p.t-small.c-steel Due to high call volume you may hear a message.
+    p
+      a.has-icon ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-mail"
         |  Email
 
-      p.no-margin
-        | {{listing.Application_Organization}}
-      p.c-steel
-        | {{ listing.Building_Street_Address }},
-        br
-        | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-      a.d-block.margin-bottom href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
-        span.ui-icon
+    p.content-group_address.no-margin
+      | {{listing.Application_Organization}}
+    p.content-group_address
+      | {{ listing.Building_Street_Address }},
+      br
+      | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
+    p
+      a.has-icon href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+        span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-map"
-        | Get Directions
-      span ng-if="listing.Office_Open && listing.Office_Closed"
-        p.no-margin Office Hours
-        p.c-steel
-          | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+        | View Map
+    p.content-group_date ng-if="listing.Office_Open && listing.Office_Closed"
+      span.content-group_title Office Hours
+      span.content-group_time
+        | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+
+  .content-group.bg-mist.small-only-text-center
+    p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
+

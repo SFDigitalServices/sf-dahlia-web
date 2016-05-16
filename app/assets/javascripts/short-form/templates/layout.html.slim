@@ -1,0 +1,17 @@
+header.application-header.lead-header.shift-offset--bottom.bg-deep
+  .row
+    .large-12.columns
+      h1.lead-title.t-beta.c-white
+        | Application: {{listing.Building_Name}}
+section.row.shift--top
+  .medium-8.columns
+    .application-form.form-card ng-class="{'has-nav': hasNav()}"
+
+      short-form-nav
+      alert-box(state-name="$state.current.name" form-object="form.applicationForm"
+        hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
+
+      .form-count ng-if="activeSection()"
+        a.lined.margin-right back-button="" Back
+
+      div(ui-view="container")

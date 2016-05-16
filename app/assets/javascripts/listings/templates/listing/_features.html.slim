@@ -1,87 +1,91 @@
 accordion-heading
-  | Features
+  img.accordion-icon src="/images/listing-features.svg" alt="features-options"
+  h3.accordion-name
+    | Features
   span.accordion-subheader Amenities, unit details and additional fees
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
 
-.content.content-section.clearfix
-  .content-panel.wide
-    .row.collapse.padding-top
-      .small-6.columns ng-if="listing.Neighborhood"
-        span.content-label.t-small
+.content-section
+  .content-tile.feature-tile
+    .feature-row.row.collapse
+      .medium-3.columns ng-if="listing.Neighborhood"
+        h4.feature-title
           | Neighborhood
+      .medium-9.columns
         p
           | {{listing.Neighborhood}}
-      .small-6.columns ng-if="listing.Year_Built"
-        span.content-label.t-small.c-steel
+    .feature-row.row.collapse
+      .medium-3.columns ng-if="listing.Year_Built"
+        h4.feature-title
           | Built
+      .medium-9.columns
         p
           | {{listing.Year_Built}}
-    .row.collapse.margin-bottom ng-if="listing.Amenities"
-      .small-12.columns
-        span.content-label.t-small
+    .feature-row.row.collapse ng-if="listing.Amenities"
+      .medium-3.columns
+        h4.feature-title
           | Property Amenities
-      .row.collapse
-        p ng-bind-html="listing.Amenities | nl2br"
-    .row.collapse ng-if="listing.Accessibility"
-      .small-12.columns
-        span.content-label.t-small
+      .medium-9.columns
+        div ng-bind-html="listing.Amenities | nl2br"
+    .feature-row.row.collapse ng-if="listing.Accessibility"
+      .medium-3.columns
+        h4.feature-title
           | Accessibility
-      .row.collapse
-        p ng-bind-html="listing.Accessibility | nl2br"
+      .medium-9.columns
+        div ng-bind-html="listing.Accessibility | nl2br"
           | {{listing.Accessibility}}
-  .content-panel.wide
-    h5.t-sans.content-label.t-small Unit Features
-    .unit-features.stats-card.stats-toggle.toggler ng-repeat="unit_summary in listing.unitSummary" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
-      ul.unit-stats.stats-list.double.medium-quad.has-toggle
-        li
-          span.stats-list_value
-            | {{unit_summary.unitType}}
-        li
-          span.stats-list_value.highlight
-            | {{unit_summary.totalUnits}}
-            span.value-label
-              ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-        li
-          span.t-small
-            | Accessible
-        li
-          span.stats-list_value.highlight
-            | {{unitAreaRange(unit_summary)}}
-            span.value-label
-              |  square feet
-        span.ui-control.ui-icon.ui-small
-          svg
-            use xlink:href="#i-arrow-down"
-      .stats-table--stack ng-show="isActiveTable(unit_summary.unitType)"
-        ul.stat-row.stats-list.double.medium-triple.bg-mist.has-toggle ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
-          li ng-if="unit.Unit_Number"
-            span.stats-list_label.bottom Unit Number
-            .stats-list_value
-              | {{unit.Unit_Number}}
-          li ng-if="unit.Unit_Square_Footage"
-            span.stats-list_label.bottom Area
-            .stats-list_value
-              | {{unit.Unit_Square_Footage}} square feet
-          li ng-if="unit.Number_of_Bathrooms"
-            span.stats-list_label.bottom Bathrooms
-            .stats-list_value
-              | {{unit.Number_of_Bathrooms}}
-          li ng-if="unit.Unit_Floor"
-            span.stats-list_label.bottom Floor
-            .stats-list_value
-              | {{unit.Unit_Floor}}
-          li.stat-full ng-if="unit.Other_Accessibility_Information"
-            span.stats-list_label.bottom Acccessibilty
-            .stats-list_value
-              | {{unit.Other_Accessibility_Information}}
 
-  .content-panel.wide
-    .content-panel--expanded.bg-dust
-      h5.t-sans.content-label.t-small Additional Fees
+  .content-tile.feature-tile
+    h4.feature-title.margin-bottom Unit Features
+
+    .stats-toggle.margin-bottom ng-repeat="unit_summary in listing.unitSummary" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
+      .toggle-box.toggler.has-toggle
+        .toggle-box_label
+          strong
+            | {{unit_summary.unitType}}:
+          span
+            |  {{unit_summary.totalUnits}}
+            span
+              ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          span
+            | ,  {{unitAreaRange(unit_summary)}}
+            span
+              |  square feet,
+          span
+            |  Accessible units
+          span.ui-control.ui-icon.ui-small
+            svg
+              use xlink:href="#i-arrow-down"
+
+      .stats ng-show="isActiveTable(unit_summary.unitType)"
+        table role="grid"
+          thead
+            tr
+              th scope="col" Unit
+              th scope="col" Area
+              th scope="col" Baths
+              th scope="col" Floor
+              th scope="col" Accessibility
+          tbody
+            tr ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
+              td scope="row"
+                | {{unit.Unit_Number}}
+              td
+                | {{unit.Unit_Square_Footage}} <small>sqft</small>
+              td
+                | {{unit.Number_of_Bathrooms}}
+              td
+                | {{unit.Unit_Floor}}
+              td
+                | {{unit.Other_Accessibility_Information}}
+
+  .content-tile.feature-tile
+    .content-card.bg-dust
+      h5.content-card_title Additional Fees
       .row.collapse.margin-bottom
-        .small-6.columns
+        .small-6.columns.padding-right.padding-bottom
           span.t-small Application Fee
           p.t-delta.no-margin.t-bold
             | {{listing.Fee | currency:"$":0}}
@@ -89,7 +93,7 @@ accordion-heading
             | per applicant age 18 and over
           span.t-tiny.d-block
             | Due post lottery
-        .small-6.columns
+        .small-6.columns.padding-bottom
           span.t-small Deposit
           p.t-delta.no-margin.t-bold
             | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max">&ndash;</span>{{ listing.Deposit_Max }}
@@ -100,5 +104,5 @@ accordion-heading
 
       .row.collapse ng-if="listing.Costs_Not_Included"
         .small-12.columns
-          p
+          p.t-small.margin-top
             | {{listing.Costs_Not_Included}}
