@@ -248,6 +248,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       views:
         'container':
           templateUrl: 'short-form/templates/c1-household-intro.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('You')
+        ]
     })
     .state('dahlia.short-form-application.household-overview', {
       url: '/household-overview'

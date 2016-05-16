@@ -11,5 +11,5 @@ angular.module('dahlia.directives')
     scope.isActiveSection = (section) ->
       scope.navService.isActiveSection(section)
 
-    scope.isPreviousSection = (section) ->
-      scope.navService.isPreviousSection(section)
+    scope.sectionDisabled = (section) ->
+      !(scope.isActiveSection(section) || scope.appService.userCanAccessSection(section.name))
