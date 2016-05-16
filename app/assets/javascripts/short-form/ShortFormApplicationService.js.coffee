@@ -33,7 +33,7 @@ ShortFormApplicationService = ($localStorage) ->
   Service.userCanAccessSection = (section) ->
     Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
-    switch section
+    switch section.name
       when 'You' then true
       when 'Household'
         completed.You
