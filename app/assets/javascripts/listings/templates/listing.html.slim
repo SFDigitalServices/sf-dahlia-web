@@ -30,7 +30,7 @@
             | Amenities, unit details and additional fees
       ng-include src="'listings/templates/listing/_features.html'"
 
-    accordion-group.bg-dust ng-if="formattedAddress(listing)"
+    accordion-group.bg-dust ng-if="formattedBuildingAddress(listing)"
       header.listing-header.show-for-medium-up
         img.listing-header_icon src="/images/listing-neighborhood.svg" alt="neighborhood-building"
         hgroup.listing-header_group
