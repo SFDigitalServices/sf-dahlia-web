@@ -3,7 +3,7 @@
     a ui-sref="dahlia.listing({id: listing.Id})" {{listing.Building_Name}}
   figure.property-card_figure
     a.property-card_overlay ui-sref="dahlia.listing({id: listing.Id})"
-      img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
+      img.property-card_thumb alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
 
       / Matched & Not Matched Labels
       span.status-label.label.label--flag.success ng-if="showMatches() && isOpenMatchListing(listing)"
@@ -31,9 +31,9 @@
       h1.property-card_title.show-for-medium-up
         a ui-sref="dahlia.listing({id: listing.Id})" {{listing.Building_Name}}
       p.property-card_address
-        | {{formattedAddress(listing, 'street')}}
+        | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
-        | {{formattedAddress(listing, 'city-state-zip')}}
+        | {{formattedBuildingAddress(listing, 'city-state-zip')}}
   .property-card_content
     .property-card_stats
       ng-include src="'listings/templates/_stats-list.html'"
