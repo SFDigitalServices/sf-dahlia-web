@@ -14,6 +14,7 @@
   'angulartics',
   'angulartics.google.analytics',
   'angular-carousel',
+  'pascalprecht.translate',
   'ui.mask',
 ]
 
@@ -29,13 +30,30 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
   $urlMatcherFactoryProvider.strictMode(false)
 ]
 
-# This routing directive tells Angular about the default route for our  The term "otherwise" here
-# might seem somewhat awkward, but it will make more sense as we add more routes to our application
-@dahlia.config ['$stateProvider', '$urlRouterProvider', '$locationProvider', ($stateProvider, $urlRouterProvider, $locationProvider) ->
-  $stateProvider
+@dahlia.factory 'yamlTranslationLoader', ['$http', '$q', ($http, $q) ->
+  (options) ->
+    deferred = $q.defer()
+    url = "#{options.path}#{options.key}#{options.extension}"
+    $http.get(url).success((data, status) ->
+      deferred.resolve(jsyaml.load(data))
+    ).error( (data, status) ->
+      deferred.reject(options.key)
+    )
+    return deferred.promise
+]
+
+# Angular UI-router setup
+@dahlia.config [
+  '$stateProvider',
+  '$urlRouterProvider',
+  '$locationProvider',
+  '$translateProvider',
+  ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider) ->
+    $stateProvider
     .state('dahlia', {
-      url: ''
+      url: '/{lang:(?:en|es|tl|zh)}'
       abstract: true
+      params: { lang: { squash: true, value: 'en' } }
       views:
         'translate@':
           templateUrl: 'shared/templates/translate.html'
@@ -47,8 +65,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           templateUrl: 'shared/templates/nav/nav-mobile.html'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
+      resolve:
+        translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
+          # this should happen after preferredLanguage is initially set
+          $translate.use($stateParams.lang)
+        ]
     })
-    .state('dahlia.housing-counselors',{
+    .state('dahlia.housing-counselors', {
       url: '/housing-counselors'
       views:
         'container@':
@@ -283,11 +306,20 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/f1-review.html'
     })
-  $urlRouterProvider.otherwise('/') # default to welcome screen
 
-  # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
-  if !!(window.history && history.pushState)
-    $locationProvider.html5Mode({enabled: true, requireBase: false})
+    $translateProvider.preferredLanguage('en')
+      .fallbackLanguage('en')
+      .useSanitizeValueStrategy('escapeParameters')
+      .useLoader('yamlTranslationLoader',
+        path: '/translations/locale-'
+        extension: '.yml'
+      )
+
+    $urlRouterProvider.otherwise('/') # default to welcome screen
+
+    # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
+    if !!(window.history && history.pushState)
+      $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
