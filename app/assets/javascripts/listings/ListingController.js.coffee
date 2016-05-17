@@ -47,7 +47,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
-  $scope.formattedAddress = (listing, display) ->
+  $scope.formattedBuildingAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Building', display)
 
   $scope.formattedApplicationAddress = (listing, display) ->
@@ -56,7 +56,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
     api_key = 'AIzaSyCW_oXspwGsSlthw-MrPxjNvdH56El1pjM'
-    url = "https://www.google.com/maps/embed/v1/place?key=#{api_key}&q=#{$scope.formattedAddress(listing)}"
+    url = "https://www.google.com/maps/embed/v1/place?key=#{api_key}&q=#{$scope.formattedBuildingAddress(listing)}"
     $sce.trustAsResourceUrl(url)
 
   $scope.hasEligibilityFilters = ->
