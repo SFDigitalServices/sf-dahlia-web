@@ -101,7 +101,7 @@ accordion-heading
       br
       | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
     p
-      a.has-icon href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      a.has-icon href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-map"

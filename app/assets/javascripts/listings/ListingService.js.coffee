@@ -113,11 +113,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     else
       City = ''
     if listing["#{type}_State"] != undefined
-      State = listing["#{type}_State"] + ', '
+      State = listing["#{type}_State"]
     else
       State = ''
     if type == 'Application'
-      zip_code_field == "#{type}_Postal_Code"
+      zip_code_field = "#{type}_Postal_Code"
     else
       zip_code_field = "#{type}_Zip_Code"
     if listing[zip_code_field] != undefined
@@ -128,10 +128,9 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     if display == 'street'
       return "#{Street_Address}"
     else if display == 'city-state-zip'
-      return "#{City}#{State}#{Zip_Code}"
+      return "#{City} #{State}, #{Zip_Code}"
     else
-      "#{Street_Address}#{City} " +
-      "#{State}#{Zip_Code}"
+      "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   ###################################### Salesforce API Calls ###################################
 
