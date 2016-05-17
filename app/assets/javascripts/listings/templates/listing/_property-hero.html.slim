@@ -50,5 +50,5 @@
   .property-hero_apply.hide-for-medium-up
     div ng-hide="listingApplicationClosed(listing)"
       span.label.label--flag.primary-tint
-        | Application Due {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+        | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
       ng-include src="'listings/templates/listing/_panel-apply.html'"
