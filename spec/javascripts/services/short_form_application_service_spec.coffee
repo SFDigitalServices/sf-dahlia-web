@@ -39,6 +39,19 @@ do ->
         return
       return
 
+    describe 'userCanAccessSection', ->
+      it 'initializes completedSections defaults', ->
+        expectedDefault = ShortFormApplicationService.applicationDefaults.completedSections
+        ShortFormApplicationService.userCanAccessSection({})
+        expect(ShortFormApplicationService.application.completedSections).toEqual expectedDefault
+        return
+
+      it 'does not initially allow access to later sections', ->
+        expect(ShortFormApplicationService.userCanAccessSection({name: 'Income'})).toEqual false
+        return
+      return
+
+
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
         ShortFormApplicationService.applicant.home_address = fakeAddress

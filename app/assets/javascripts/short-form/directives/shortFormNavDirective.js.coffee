@@ -11,5 +11,15 @@ angular.module('dahlia.directives')
     scope.isActiveSection = (section) ->
       scope.navService.isActiveSection(section)
 
-    scope.isPreviousSection = (section) ->
-      scope.navService.isPreviousSection(section)
+    # Section nav is disabled if:
+    # 1. It is not the currently active section AND
+    # 2. User can't access (e.g. have not made it that far)
+    #  -- OR --
+    # 3a. The form is invalid AND
+    # 3b. It's not a previous section
+    scope.sectionDisabled = (section, index) ->
+      !scope.isActiveSection(section) &&
+      (
+        !scope.appService.userCanAccessSection(section) ||
+        (scope.form.applicationForm.$invalid && !scope.navService.isPreviousSection(section))
+      )

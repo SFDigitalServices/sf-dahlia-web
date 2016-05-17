@@ -2,7 +2,8 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShortFormApplicationController = ($scope, $state, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
+ShortFormApplicationController =
+($scope, $state, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -58,6 +59,7 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.navService = ShortFormNavigationService
+  $scope.appService = ShortFormApplicationService
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -170,7 +172,9 @@ ShortFormApplicationController = ($scope, $state, ListingService, ShortFormAppli
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
-ShortFormApplicationController.$inject = ['$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService']
+ShortFormApplicationController.$inject = [
+  '$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService'
+]
 
 angular
   .module('dahlia.controllers')
