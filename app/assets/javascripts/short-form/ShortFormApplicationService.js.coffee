@@ -11,6 +11,7 @@ ShortFormApplicationService = ($localStorage) ->
       primary_language: "English"
     }
     completedSections: {
+      Intro: false,
       You: false,
       Household: false,
       Status: false,
@@ -34,16 +35,26 @@ ShortFormApplicationService = ($localStorage) ->
     Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
     switch section.name
-      when 'You' then true
+      when 'You'
+        completed.Intro
       when 'Household'
+        completed.Intro &&
         completed.You
       when 'Status'
+        completed.Intro &&
         completed.You &&
         completed.Household
       when 'Income'
+        completed.Intro &&
         completed.You &&
         completed.Household &&
         completed.Status
+      when 'Review'
+        completed.Intro &&
+        completed.You &&
+        completed.Household &&
+        completed.Status &&
+        completed.Income
       else
         false
 

@@ -218,6 +218,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Intro')
+        ]
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
