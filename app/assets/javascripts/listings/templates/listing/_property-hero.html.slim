@@ -22,10 +22,10 @@
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
       p.property-hero_address
-        | {{formattedAddress(listing)}}
+        | {{formattedBuildingAddress(listing)}}
         br
         | {{listing.Developer}}
-      a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedAddress(listing)}}"
+      a.ui-link.t-micro href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
         | View on Map
 
     .property-hero_favorite
