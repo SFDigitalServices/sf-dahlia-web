@@ -10,14 +10,17 @@ ShortFormNavigationService = ($state) ->
       ]
     },
     { name: 'Household', pages: [
-      'household-intro',
-      'household-overview',
-      'household-members',
-      'household-member-form',
-      'household-member-form-edit'
+        'household-intro',
+        'household-overview',
+        'household-members',
+        'household-member-form',
+        'household-member-form-edit'
       ]
     },
-    { name: 'Status', pages: [''] },
+    { name: 'Status', pages: [
+        'status-programs'
+      ]
+    },
     { name: 'Income', pages: [
         'income'
       ]

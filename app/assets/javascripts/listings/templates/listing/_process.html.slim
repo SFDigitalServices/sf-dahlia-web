@@ -10,7 +10,10 @@ accordion-heading
 .content-wrap
   .content-group.no-padding.hide-for-small-only
     .label.label--flag.secondary
-      | Application Deadline {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+      span.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-clock"
+      | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
   .show-for-medium-up ng-hide="listingApplicationClosed(listing)"
     ng-include src="'listings/templates/listing/_panel-apply.html'"
 

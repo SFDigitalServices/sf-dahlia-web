@@ -236,11 +236,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/a2-overview.html'
     })
+    # Short form: "You" section
     .state('dahlia.short-form-application.name', {
       url: '/name'
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Intro')
+        ]
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
@@ -266,11 +271,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b4a-alternate-contact-phone-address.html'
     })
+    # Short form: "Household" section
     .state('dahlia.short-form-application.household-intro', {
       url: '/household-intro'
       views:
         'container':
           templateUrl: 'short-form/templates/c1-household-intro.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('You')
+        ]
     })
     .state('dahlia.short-form-application.household-overview', {
       url: '/household-overview'
@@ -300,12 +310,25 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
         ]
     })
+    # Short form: "Income" section
     .state('dahlia.short-form-application.income', {
       url: '/income'
       views:
         'container':
           templateUrl: 'short-form/templates/e1-income.html'
     })
+    # Short form: "Status" section
+    .state('dahlia.short-form-application.status-programs', {
+      url: '/status-programs'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d1-status-programs.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    # Short form: "Review" section
     .state('dahlia.short-form-application.review', {
       url: '/review'
       views:
