@@ -1,22 +1,39 @@
 h2.application-title.t-gamma
   | There are some special programs we'd like to ask you about. Do you have any of the following?
-  / checkbox-form-item name='referral' option='Displaced Tenants Preference'
-  / checkbox-form-item name='referral' option='MOHCD Website'
 p.form-note.margin-bottom Optional
 
 .checkbox-group
   p.checkbox-block
-    input#preferences-displaced name="preferences" type="checkbox" value="preferences-displaced"
+    input#preferences-displaced name="preferences" ng-model="applicant.preferences.displaced" type="checkbox"
     label.checkbox-block_label for="preferences-displaced"
       strong Displaced Tenants Preference
       span.checkbox-block_note Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)
+
+    .form-group ng-class="{ error: inputInvalid('other_language') }"
+      label.form-label.margin-bottom--half for="displaced_household_member"
+        | Which household member has this preference?
+      select#displaced_household_member ng-model="applicant.preferences.displaced_household_member" data-width="auto" name="displaced_household_member"
+        option value=""
+          | Select One
+        option value="{{ applicant.first_name }} {{ applicant.last_name }}"
+          | {{ applicant.first_name }} {{ applicant.last_name }}
+        option ng-repeat="member in householdMembers" value="{{ member.first_name }} {{ member.last_name }}"
+          | {{ member.first_name }} {{ member.last_name }}
+
   p.checkbox-block
-    input#preferences-cop name="preferences" type="checkbox" value="preferences-cop"
-    label.checkbox-block_label for="preferences-cop"
+    input#preferences-cert-of-preference name="preferences" ng-model="applicant.preferences.cert_of_preference" type="checkbox"
+    label.checkbox-block_label for="preferences-cert-of-preference"
       strong Certificate of Preference
       span.checkbox-block_note Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.
 
-
+.form-group
+  p.t-small.c-steel
+    ' If you have not heard of these preferences, you most likely do not have one.
+    ' Please
+    a href="tel:415-701-5613"
+      | call 415-701-5613
+    '
+    ' to see if you have a Certificate.
 
 .form-group
   .button-stack--paginate.text-center.row.padding-top
