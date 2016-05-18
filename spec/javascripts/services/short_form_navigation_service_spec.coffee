@@ -20,7 +20,10 @@ do ->
         'household-member-form-edit'
         ]
       },
-      { name: 'Status', pages: [''] },
+      { name: 'Status', pages: [
+          'status-programs'
+        ]
+      },
       { name: 'Income', pages: [''] },
       { name: 'Review', pages: [
           'review'
