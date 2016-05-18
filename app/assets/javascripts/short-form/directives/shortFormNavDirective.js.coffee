@@ -21,5 +21,5 @@ angular.module('dahlia.directives')
       !scope.isActiveSection(section) &&
       (
         !scope.appService.userCanAccessSection(section) ||
-        (scope.form.applicationForm.$invalid && !scope.navService.isPreviousSection(section))
+        (scope.form.applicationForm && scope.form.applicationForm.$invalid && !scope.navService.isPreviousSection(section))
       )

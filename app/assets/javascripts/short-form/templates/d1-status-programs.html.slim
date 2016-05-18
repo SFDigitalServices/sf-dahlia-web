@@ -1,0 +1,26 @@
+h2.application-title.t-gamma
+  | There are some special programs we'd like to ask you about. Do you have any of the following?
+  / checkbox-form-item name='referral' option='Displaced Tenants Preference'
+  / checkbox-form-item name='referral' option='MOHCD Website'
+p.form-note.margin-bottom Optional
+
+.checkbox-group
+  p.checkbox-block
+    input#preferences-displaced name="preferences" type="checkbox" value="preferences-displaced"
+    label.checkbox-block_label for="preferences-displaced"
+      strong Displaced Tenants Preference
+      span.checkbox-block_note Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)
+  p.checkbox-block
+    input#preferences-cop name="preferences" type="checkbox" value="preferences-cop"
+    label.checkbox-block_label for="preferences-cop"
+      strong Certificate of Preference
+      span.checkbox-block_note Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.
+
+
+
+.form-group
+  .button-stack--paginate.text-center.row.padding-top
+   .small-12.medium-6.medium-push-6.columns
+     input.button.expand.radius type="submit" value="Next"
+   .small-12.medium-6.medium-pull-6.columns
+     button.button.ghost-white.expand Save and finish later
