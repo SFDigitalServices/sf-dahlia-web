@@ -94,10 +94,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group ng-class="{ error: inputInvalid('other_language') }"
     label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?
     select#applicant_primary_language ng-model="applicant.primary_language" data-width="auto" name="primary_language"
-     option value="English"  English
-     option value="Tagalog"  Tagalog
-     option value="Chinese"  Chinese
-     option value="Other"  Other
+      option ng-repeat="language in language_options" value="{{language}}"
+        | {{ language }}
 
     input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="Enter your language" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
     small.error ng-show="inputInvalid('other_language')"
