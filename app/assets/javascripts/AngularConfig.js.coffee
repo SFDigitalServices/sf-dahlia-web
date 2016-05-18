@@ -300,6 +300,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
         ]
     })
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e1-income.html'
+    })
     .state('dahlia.short-form-application.review', {
       url: '/review'
       views:
