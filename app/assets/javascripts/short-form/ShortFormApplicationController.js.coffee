@@ -19,6 +19,16 @@ ShortFormApplicationController =
     'Trans Male',
     'Trans Female',
   ]
+  $scope.language_options = [
+    'English',
+    'Cantonese Chinese',
+    'Mandarin Chinese',
+    'Spanish',
+    'Filipino',
+    'Vietnamese',
+    'Russian',
+    'Other'
+  ]
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',

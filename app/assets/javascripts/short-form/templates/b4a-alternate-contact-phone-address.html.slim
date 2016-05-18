@@ -24,9 +24,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group
     label.form-label.margin-bottom--half for="alternate_primary_language" What is their primary language?
     select#alternate_primary_language ng-model="alternateContact.primary_language" data-width="auto" name="primary_language"
-     option value="English"  English
-     option value="Tagalog"  Tagalog
-     option value="Chinese"  Chinese
+      option ng-repeat="language in language_options" value="{{language}}"
+        | {{ language }}
+
+    input#alternateOtherLanguage ng-model="alternateContact.other_language" name="other_language" placeholder="Enter your language" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="alternateContact.primary_language == 'Other'" ng-show="alternateContact.primary_language == 'Other'"
+    small.error ng-show="inputInvalid('other_language')"
+      | Please enter a language
+
   .button-stack--paginate.text-center.row.padding-top
    .small-12.medium-6.medium-push-6.columns
      input.button.expand.radius type="submit" value="Next"
