@@ -9,17 +9,17 @@ h2 Let's move onto the final topic: income.
   .form-income
     label.sr-only for="income"  Income
     span.label-dollar $
-    input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+    input.form-income_input name="income_total" ng-model="applicant.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
     small.error ng-show="inputInvalid('income_total')"
         | Please enter an income amount
 
   .radio-group ng-class="{ error: inputInvalid('income_timeframe') }"
     p.radio-block
-      input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
+      input#per_month name="income_timeframe" ng-model="applicant.income_timeframe" type="radio" value="per_month" required=""
       label.radio-block_label for="per_month"
         | per month
     p.radio-block
-      input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
+      input#per_year name="income_timeframe" ng-model="applicant.income_timeframe" type="radio" value="per_year" required=""
       label.radio-block_label for="per_year"
         | per year
     small.error ng-show="inputInvalid('income_timeframe')"

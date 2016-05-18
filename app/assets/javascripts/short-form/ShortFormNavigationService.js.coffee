@@ -18,7 +18,10 @@ ShortFormNavigationService = ($state) ->
       ]
     },
     { name: 'Status', pages: [''] },
-    { name: 'Income', pages: [''] },
+    { name: 'Income', pages: [
+        'income'
+      ]
+    },
     { name: 'Review', pages: [
         'review'
       ]
