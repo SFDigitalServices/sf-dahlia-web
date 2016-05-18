@@ -1,0 +1,32 @@
+h2 Let's move onto the final topic: income.
+
+.form-group
+  p Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
+  p You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery.
+
+.form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('income_total') || inputInvalid('income_timeframe')) }"
+  label.form-label.margin-bottom--half What is your household total pre-tax income?
+  .form-income
+    label.sr-only for="income"  Income
+    span.label-dollar $
+    input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+    small.error ng-show="inputInvalid('income_total')"
+        | Please enter an income amount
+
+  .radio-group ng-class="{ error: inputInvalid('income_timeframe') }"
+    p.radio-block
+      input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
+      label.radio-block_label for="per_month"
+        | per month
+    p.radio-block
+      input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
+      label.radio-block_label for="per_year"
+        | per year
+    small.error ng-show="inputInvalid('income_timeframe')"
+      | Please enter an income timeframe
+
+.button-stack--paginate.text-center.row.padding-top
+  .small-12.medium-6.medium-push-6.columns
+    input.button.expand.radius type="submit" value="Next"
+  .small-12.medium-6.medium-pull-6.columns
+    button.button.ghost-white.expand Save and finish later

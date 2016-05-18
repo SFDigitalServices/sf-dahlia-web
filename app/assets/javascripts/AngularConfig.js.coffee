@@ -321,6 +321,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    # Short form: "Income" section
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e1-income.html'
+    })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review', {
       url: '/review'
