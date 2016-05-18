@@ -310,13 +310,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
         ]
     })
-    # Short form: "Income" section
-    .state('dahlia.short-form-application.income', {
-      url: '/income'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/e1-income.html'
-    })
     # Short form: "Status" section
     .state('dahlia.short-form-application.status-programs', {
       url: '/status-programs'
@@ -328,12 +321,27 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    # Short form: "Income" section
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e1-income.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Status')
+        ]
+    })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review', {
       url: '/review'
       views:
         'container':
           templateUrl: 'short-form/templates/f1-review.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Income')
+        ]
     })
 
     $translateProvider.preferredLanguage('en')
