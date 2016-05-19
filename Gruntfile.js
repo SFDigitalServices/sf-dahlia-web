@@ -54,7 +54,7 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.html',
         'app/assets/javascripts/**/*.html.slim'
       ],
-      lang:     ['locale-en'],
+      lang:     ['locale-en', 'locale-zh', 'locale-es', 'locale-tl'],
       dest:     'public/translations'
     }
   },
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     'replace'
   ]);
 
-  grunt.registerTask('translate', [
+  grunt.registerTask('translations', [
     'i18nextract'
   ]);
 
