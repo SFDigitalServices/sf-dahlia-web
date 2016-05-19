@@ -1,27 +1,31 @@
 h2.application-title.t-gamma.padding-bottom
-  | Thanks{{ applicant.first_name ? ", " + applicant.first_name : "" }}. Now we need to know how to contact you about your application.
-
+  | {{'B2_CONTACT_TITLE' | translate:applicantFirstName()}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
-      label for="applicant_phone" Your phone number
+      label for="applicant_phone"
+        | {{'YOUR_PHONE_NUMBER' | translate}}
       input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-show="inputInvalid('phone_number')"
-      | Please enter a phone number
+      | {{'PHONE_NUMBER_MISSING' | translate}}
     select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
-     option value=""  What type of number is this?
-     option value="Home"  Home
-     option value="Work"  Work
-     option value="Cell"  Cell
+      option value=""
+        | {{'WHAT_TYPE_OF_NUMBER' | translate}}
+      option value="{{'PHONE_HOME' | translate}}"
+        | {{'PHONE_HOME' | translate}}
+      option value="{{'PHONE_WORK' | translate}}"
+        | {{'PHONE_WORK' | translate}}
+      option value="{{'PHONE_CELL' | translate}}"
+        | {{'PHONE_CELL' | translate}}
     small.error ng-show="inputInvalid('phone_number_type')"
-      | Please select a phone number type
+      | {{'PHONE_NUMBER_TYPE_MISSING' | translate}}
 
     div
       .form-item.padding-bottom
         .checkbox ng-click="applicant.additionalPhone = false;"
           input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone_number'); blankIfInvalid('second_phone_number')"
           label for="applicant_no_phone"
-            | I don't have a telephone number
+            | {{'NO_TELEPHONE_NUMBER' | translate}}
         small.highlight ng-if="applicant.noPhone"
           | We'll require an alternate contact phone number on a later screen
 
@@ -34,17 +38,22 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     div ng-if="applicant.additionalPhone && !applicant.noPhone"
       .form-tel
-        label for="applicant_second_phone" Your second phone number
+        label for="applicant_second_phone"
+          | {{'YOUR_SECOND_PHONE_NUMBER' | translate}}
         input#applicant_second_phone(ng-model="applicant.second_phone_number" name="second_phone_number" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-show="inputInvalid('second_phone_number')"
-        | Please enter a phone number
+        | {{'PHONE_NUMBER_MISSING' | translate}}
       select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number_type') }"
-       option value=""  What type of number is this?
-       option value="Home"  Home
-       option value="Work"  Work
-       option value="Cell"  Cell
+        option value=""
+          | {{'WHAT_TYPE_OF_NUMBER' | translate}}
+        option value="{{'PHONE_HOME' | translate}}"
+          | {{'PHONE_HOME' | translate}}
+        option value="{{'PHONE_WORK' | translate}}"
+          | {{'PHONE_WORK' | translate}}
+        option value="{{'PHONE_CELL' | translate}}"
+          | {{'PHONE_CELL' | translate}}
       small.error ng-show="inputInvalid('second_phone_number_type')"
-        | Please select a phone number type
+        | {{'PHONE_NUMBER_TYPE_MISSING' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
     label.form-label.no-margin Your email address
@@ -101,8 +110,4 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     small.error ng-show="inputInvalid('other_language')"
       | Please enter a language
 
-  .button-stack--paginate.text-center.row.padding-top
-    .small-12.medium-6.medium-push-6.columns
-      input.button.expand.radius type="submit" value="Next"
-    .small-12.medium-6.medium-pull-6.columns
-      button.button.ghost-white.expand Save and finish later
+  short-form-save-and-submit

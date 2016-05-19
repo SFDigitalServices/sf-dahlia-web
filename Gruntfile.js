@@ -54,6 +54,7 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.html',
         'app/assets/javascripts/**/*.html.slim'
       ],
+      customRegex: [ '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}' ],
       lang:     ['locale-en'],
       dest:     'public/translations'
     }
@@ -75,7 +76,7 @@ module.exports = function(grunt) {
     'replace'
   ]);
 
-  grunt.registerTask('translate', [
+  grunt.registerTask('translations', [
     'i18nextract'
   ]);
 
