@@ -46,18 +46,37 @@ module.exports = function(grunt) {
     }
   },
 
+  i18nextract: {
+    default_options: {
+      src: [
+        'app/assets/javascripts/**/*.js',
+        'app/assets/javascripts/**/*.js.coffee',
+        'app/assets/javascripts/**/*.html',
+        'app/assets/javascripts/**/*.html.slim'
+      ],
+      lang:     ['locale-en'],
+      dest:     'public/translations'
+    }
+  },
+
 });
 
   // load tasks
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-angular-translate');
+
 
   // register task
   grunt.registerTask('default', [
     'clean',
     'copy',
     'replace'
+  ]);
+
+  grunt.registerTask('translate', [
+    'i18nextract'
   ]);
 
   grunt.registerTask('deploy', [
