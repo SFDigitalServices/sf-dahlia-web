@@ -6,9 +6,16 @@ ShortFormApplicationService = ($localStorage) ->
       phone_number: null,
       home_address: { address1: null, city: null, state: null, zip: null },
       mailing_address: { address1: null, city: null, state: null, zip: null }
-    },
+    }
     alternateContact: {
       primary_language: "English"
+    }
+    completedSections: {
+      Intro: false,
+      You: false,
+      Household: false,
+      Status: false,
+      Income: false
     }
     householdMembers: []
   }
@@ -20,6 +27,36 @@ ShortFormApplicationService = ($localStorage) ->
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
   Service.householdMembers = Service.application.householdMembers
+
+  Service.completeSection = (section) ->
+    Service.application.completedSections[section] = true
+
+  Service.userCanAccessSection = (section) ->
+    Service.application.completedSections ?= Service.applicationDefaults.completedSections
+    completed = Service.application.completedSections
+    switch section.name
+      when 'You'
+        completed.Intro
+      when 'Household'
+        completed.Intro &&
+        completed.You
+      when 'Status'
+        completed.Intro &&
+        completed.You &&
+        completed.Household
+      when 'Income'
+        completed.Intro &&
+        completed.You &&
+        completed.Household &&
+        completed.Status
+      when 'Review'
+        completed.Intro &&
+        completed.You &&
+        completed.Household &&
+        completed.Status &&
+        completed.Income
+      else
+        false
 
   Service.copyHomeToMailingAddress = () ->
     angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
