@@ -9,19 +9,20 @@ do ->
           'contact',
           'alternate-contact-type',
           'alternate-contact-name',
-          'alternate-contact-phone-address'
+          'alternate-contact-phone-address',
         ]
       },
       { name: 'Household', pages: [
-        'household-intro',
-        'household-overview',
-        'household-members',
-        'household-member-form',
-        'household-member-form-edit'
+          'household-intro',
+          'household-overview',
+          'household-members',
+          'household-member-form',
+          'household-member-form-edit'
         ]
       },
       { name: 'Status', pages: [
-          'status-programs'
+          'status-programs',
+          'status-vouchers'
         ]
       },
       { name: 'Income', pages: [''] },
