@@ -5,7 +5,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     p Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
     p You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery.
 
-  .form-group.margin-bottom--2x
+  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('income_total') || inputInvalid('income_timeframe')) }"
     label.form-label.margin-bottom--half What is your household total pre-tax income?
     .form-income
       label.sr-only for="income_total"  Income
