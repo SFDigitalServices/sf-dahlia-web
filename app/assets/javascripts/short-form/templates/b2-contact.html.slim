@@ -1,75 +1,72 @@
 h2.application-title.t-gamma.padding-bottom
-  | {{'B2_CONTACT_TITLE' | translate:applicantFirstName()}}
+  | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"
-        | {{'YOUR_PHONE_NUMBER' | translate}}
+        | {{'LABEL.APPLICANT_PHONE' | translate}}
+
       input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-show="inputInvalid('phone_number')"
-      | {{'PHONE_NUMBER_MISSING' | translate}}
+      | {{'ERROR.PHONE_NUMBER' | translate}}
     select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
-      option value=""
-        | {{'WHAT_TYPE_OF_NUMBER' | translate}}
-      option value="{{'PHONE_HOME' | translate}}"
-        | {{'PHONE_HOME' | translate}}
-      option value="{{'PHONE_WORK' | translate}}"
-        | {{'PHONE_WORK' | translate}}
-      option value="{{'PHONE_CELL' | translate}}"
-        | {{'PHONE_CELL' | translate}}
+      option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+      option translate-value="LABEL.PHONE_HOME" translate="LABEL.PHONE_HOME"
+      option translate-value="LABEL.PHONE_WORK" translate="LABEL.PHONE_WORK"
+      option translate-value="LABEL.PHONE_CELL" translate="LABEL.PHONE_CELL"
+
     small.error ng-show="inputInvalid('phone_number_type')"
-      | {{'PHONE_NUMBER_TYPE_MISSING' | translate}}
+      | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
     div
       .form-item.padding-bottom
         .checkbox ng-click="applicant.additionalPhone = false;"
           input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone_number'); blankIfInvalid('second_phone_number')"
           label for="applicant_no_phone"
-            | {{'NO_TELEPHONE_NUMBER' | translate}}
+            | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
         small.highlight ng-if="applicant.noPhone"
-          | We'll require an alternate contact phone number on a later screen
+          | {{'B2_CONTACT.ALTERNATE_PHONE_REQUIRED' | translate}}
 
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
         .checkbox ng-click="applicant.noPhone = false;"
          input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone"
          label for="applicant_additional_phone"
-           | I have an additional phone number
+          | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}
 
     div ng-if="applicant.additionalPhone && !applicant.noPhone"
       .form-tel
         label for="applicant_second_phone"
-          | {{'YOUR_SECOND_PHONE_NUMBER' | translate}}
+          | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
         input#applicant_second_phone(ng-model="applicant.second_phone_number" name="second_phone_number" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-show="inputInvalid('second_phone_number')"
-        | {{'PHONE_NUMBER_MISSING' | translate}}
+        | {{'ERROR.PHONE_NUMBER' | translate}}
       select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number_type') }"
-        option value=""
-          | {{'WHAT_TYPE_OF_NUMBER' | translate}}
-        option value="{{'PHONE_HOME' | translate}}"
-          | {{'PHONE_HOME' | translate}}
-        option value="{{'PHONE_WORK' | translate}}"
-          | {{'PHONE_WORK' | translate}}
-        option value="{{'PHONE_CELL' | translate}}"
-          | {{'PHONE_CELL' | translate}}
-      small.error ng-show="inputInvalid('second_phone_number_type')"
-        | {{'PHONE_NUMBER_TYPE_MISSING' | translate}}
+        option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+        option translate-value="LABEL.PHONE_HOME" translate="LABEL.PHONE_HOME"
+        option translate-value="LABEL.PHONE_WORK" translate="LABEL.PHONE_WORK"
+        option translate-value="LABEL.PHONE_CELL" translate="LABEL.PHONE_CELL"
+      small.error ng-show="inputInvalid('phone_number_type')"
+        | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
-    label.form-label.no-margin Your email address
-    p.form-note.margin-bottom We will only use your email address to contact you about your application.
+    label.form-label.no-margin
+      | {{'LABEL.APPLICANT_EMAIL' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
     .form-email
       label.sr-only for="applicant_email"  Email Address
       input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
     small.error ng-show="inputInvalid('email')"
-      | Please enter an email address
+      | {{'ERROR.EMAIL' | translate}}
     .form-item.padding-bottom
       .checkbox
         input#applicant_no_email name="applicant_no_email" type="checkbox" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
         label for="applicant_no_email"
-          | I don't have an email address
+          | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
+
       small.highlight ng-if="applicant.noEmail"
-        | We'll require an alternate contact email adddress on a later screen
+        | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
   .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
     label.form-label.no-margin Your address
@@ -82,20 +79,22 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       .checkbox ng-click="resetAndCheckMailingAddress(); applicant.separateAddress = false;"
         input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress"
         label for="applicant_no_address"
-          | I don't have an address
+          | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
       small.highlight.padding-bottom ng-if="applicant.noAddress"
-        | We'll require an alternate mailing address on a later screen
+        | {{'B2_CONTACT.REQUIRE_ALTERNATE_ADDRESS' | translate}}
 
     .form-item.padding-bottom
       / this checkbox unchecks the other checkbox; only one can be selected
       .checkbox ng-click="resetAndCheckMailingAddress(); applicant.noAddress = false;"
         input#applicant_separate_address ng-model="applicant.separateAddress" name="separate_address" type="checkbox"
         label for="applicant_separate_address"
-          | I have a separate mailing address
+          | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
 
   .form-group ng-if="applicant.separateAddress"
-    label.form-label.no-margin Mailing address
-    p.form-note.margin-bottom Provide an address where you can receive updates and materials about your application.
+    label.form-label.no-margin
+      | {{'LABEL.APPLICANT_MAILING_ADDRESS' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.PROVIDE_AN_ADDRESS' | translate}}
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
@@ -108,6 +107,6 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="Enter your language" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
     small.error ng-show="inputInvalid('other_language')"
-      | Please enter a language
+      | {{'ERROR.LANGUAGE' | translate}}
 
   short-form-save-and-submit

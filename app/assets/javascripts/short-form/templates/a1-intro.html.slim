@@ -1,5 +1,5 @@
 h2.application-title.t-gamma.padding-bottom
-  | {{'A1_INTRO_TITLE' | translate}}
+  | {{'A1_INTRO.TITLE' | translate}}
 .form-group.margin-bottom--2x
   .property-card
     img.property-thumb alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
@@ -10,8 +10,8 @@ h2.application-title.t-gamma.padding-bottom
     p.c-steel.margin-bottom--half
       | {{listing.Developer}}
     p
-      ' {{'APPLICATION_DUE' | translate}}
+      ' {{'T.APPLICATION_DUE' | translate}}
       | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
 
 a.button.expand-small ui-sref="dahlia.short-form-application.overview"
-  | {{'GET_STARTED' | translate}}
+  | {{'T.GET_STARTED' | translate}}
