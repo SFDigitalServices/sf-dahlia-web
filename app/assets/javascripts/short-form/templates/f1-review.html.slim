@@ -1,17 +1,19 @@
 h2.application-title.t-gamma
-  | These questions are optional and won't affect your eligibility for housing.
+  | {{'F1_REVIEW.TITLE' | translate}}
 
 form
   .form-group
-    p Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.
+    p
+      | {{'F1_REVIEW.P1' | translate}}
 
-  gender-form user='applicant' pronoun='your'
-  race-ethnicity-form user='applicant' pronoun='your'
+  gender-form user='applicant'
+  race-ethnicity-form user='applicant'
 
   .form-group
     label.form-label.no-margin
-      | How did you hear about this listing?
-    p.form-note.margin-bottom Optional
+      | {{'LABEL.HOW_DID_YOU_HEAR_ABOUT_THIS' | translate}}
+    p.form-note.margin-bottom
+      | {{'T.OPTIONAL' | translate}}
 
     checkbox-form-item name='referral' option='Newspaper'
     checkbox-form-item name='referral' option='MOHCD Website'

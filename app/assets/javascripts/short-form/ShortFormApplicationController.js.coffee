@@ -182,6 +182,7 @@ ShortFormApplicationController =
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
+  ## translation helpers
   $scope.applicantFirstName = ->
     name = $scope.applicant.first_name
     { name: if name then ', ' + name else '' }

@@ -11,9 +11,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       | {{'ERROR.PHONE_NUMBER' | translate}}
     select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
       option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      option translate-value="LABEL.PHONE_HOME" translate="LABEL.PHONE_HOME"
-      option translate-value="LABEL.PHONE_WORK" translate="LABEL.PHONE_WORK"
-      option translate-value="LABEL.PHONE_CELL" translate="LABEL.PHONE_CELL"
+      option value="Home" translate="LABEL.PHONE_HOME"
+      option value="Work" translate="LABEL.PHONE_WORK"
+      option value="Cell" translate="LABEL.PHONE_CELL"
 
     small.error ng-show="inputInvalid('phone_number_type')"
       | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
@@ -43,10 +43,10 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         | {{'ERROR.PHONE_NUMBER' | translate}}
       select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number_type') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-        option translate-value="LABEL.PHONE_HOME" translate="LABEL.PHONE_HOME"
-        option translate-value="LABEL.PHONE_WORK" translate="LABEL.PHONE_WORK"
-        option translate-value="LABEL.PHONE_CELL" translate="LABEL.PHONE_CELL"
-      small.error ng-show="inputInvalid('phone_number_type')"
+        option value="Home" translate="LABEL.PHONE_HOME"
+        option value="Work" translate="LABEL.PHONE_WORK"
+        option value="Cell" translate="LABEL.PHONE_CELL"
+      small.error ng-show="inputInvalid('second_phone_number_type')"
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
@@ -100,12 +100,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"
-    label.form-label.margin-bottom--half for="applicant_primary_language" What is your primary language?
+    label.form-label.margin-bottom--half for="applicant_primary_language"
+      | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
     select#applicant_primary_language ng-model="applicant.primary_language" data-width="auto" name="primary_language"
       option ng-repeat="language in language_options" value="{{language}}"
         | {{ language }}
 
-    input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="Enter your language" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
+    input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
     small.error ng-show="inputInvalid('other_language')"
       | {{'ERROR.LANGUAGE' | translate}}
 

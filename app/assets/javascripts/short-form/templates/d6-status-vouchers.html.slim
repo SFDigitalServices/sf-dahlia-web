@@ -1,6 +1,7 @@
 h2.application-title.t-gamma
-  | Does anyone in your household receive any housing vouchers or subsidies?
-p.form-note.margin-bottom For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.
+  | {{'D6_STATUS_VOUCHERS.TITLE' | translate}}
+p.form-note.margin-bottom
+  | {{'D6_STATUS_VOUCHERS.P1' | translate}}
 
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
@@ -9,10 +10,10 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       p.radio-block
         input#household_vouchers_subsidies_yes(ng-required="true" ng-model="applicant.household_vouchers_subsidies" name="household_vouchers_subsidies" type="radio" value="Yes" ng-class="{ error: inputInvalid('household_vouchers_subsidies')}")
         label.radio-block_label for="household_vouchers_subsidies_yes"
-          | Yes
+          | {{'T.YES' | translate}}
       p.radio-block
         input#household_vouchers_subsidies_no(ng-required="true" ng-model="applicant.household_vouchers_subsidies" name="household_vouchers_subsidies" type="radio" value="No" ng-class="{ error: inputInvalid('household_vouchers_subsidies')}")
         label.radio-block_label for="household_vouchers_subsidies_no"
-          | No
+          | {{'T.NO' | translate}}
 
   short-form-save-and-submit

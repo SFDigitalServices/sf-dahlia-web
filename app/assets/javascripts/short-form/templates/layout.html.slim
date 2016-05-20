@@ -12,6 +12,7 @@ section.row.shift--top
         hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
       .form-count ng-if="activeSection()"
-        a.lined.margin-right back-button="" Back
+        a.lined.margin-right back-button=""
+          | {{'T.BACK' | translate}}
 
       div(ui-view="container")
