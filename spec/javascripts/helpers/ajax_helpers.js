@@ -36,6 +36,7 @@ var stubAjaxRequest = function(requestURL, fixturePath) {
 
 var stubAngularAjaxRequest = function(httpBackend, requestURL, responseData) {
   httpBackend.when('GET', requestURL).respond(responseData);
+  httpBackend.when('POST', requestURL).respond(responseData);
 };
 
 /*
