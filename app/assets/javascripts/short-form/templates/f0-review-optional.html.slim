@@ -1,7 +1,6 @@
 h2.application-title.t-gamma
   | {{'F0_REVIEW_OPTIONAL.TITLE' | translate}}
-
-form
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary'})"
   .form-group
     p
       | {{'F0_REVIEW_OPTIONAL.P1' | translate}}

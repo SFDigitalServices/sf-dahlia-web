@@ -1,0 +1,19 @@
+h2.application-title.t-gamma.padding-bottom
+  | {{'F1_REVIEW_SUMMARY.TITLE' | translate}}
+
+form
+  .form-group.margin-bottom--2x
+    section.entry-panel
+      h3.entry-panel_header
+        | {{'T.YOU' | translate}}
+      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.name"
+        | {{'T.EDIT' | translate}}
+
+      review-summary-item label="{{'LABEL.NAME' | translate}}"
+        | {{applicant.first_name}} {{applicant.last_name}}
+      review-summary-item label="{{'LABEL.DOB' | translate}}"
+        | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+
+
+
+  short-form-save-and-submit

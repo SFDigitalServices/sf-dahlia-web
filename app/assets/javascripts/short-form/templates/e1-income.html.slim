@@ -14,7 +14,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       label.sr-only for="income_total"
         | {{'LABEL.INCOME' | translate}}
       span.label-dollar $
-      input#applicantIncomeTotal.form-income_input ng-model="applicant.income_total" name="income_total" required="" placeholder="{{'ERROR.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') }"
+      input#applicantIncomeTotal.form-income_input ng-model="applicant.income_total" name="income_total" required="" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') }"
       small.error ng-show="inputInvalid('income_total')"
           | {{'ERROR.INCOME' | translate}}
 
