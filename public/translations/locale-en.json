@@ -76,7 +76,12 @@
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
-        "APPLICANT_GENDER": "What best describes your gender?"
+        "APPLICANT_GENDER": "What best describes your gender?",
+        "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
+        "INCOME_PLACEHOLDER": "Total all of your income sources",
+        "INCOME": "Income",
+        "PER_MONTH": "per month",
+        "PER_YEAR": "per year"
     },
     "ERROR": {
         "FIRST_NAME": "Please enter a First Name",
@@ -88,7 +93,9 @@
         "LANGUAGE": "Please enter a language",
         "RELATIONSHIP": "Please enter a relationship",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
-        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member"
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
+        "INCOME": "Please enter an income amount",
+        "INCOME_TIMEFRAME": "Please enter an income timeframe"
     },
     "B2_CONTACT": {
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
@@ -134,6 +141,11 @@
     "D6_STATUS_VOUCHERS": {
         "TITLE": "Does anyone in your household receive any housing vouchers or subsidies?",
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc."
+    },
+    "E1_INCOME": {
+        "TITLE": "Let's move onto the final topic: income.",
+        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
+        "P2": "You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery."
     },
     "F1_REVIEW": {
         "TITLE": "These questions are optional and won't affect your eligibility for housing.",
