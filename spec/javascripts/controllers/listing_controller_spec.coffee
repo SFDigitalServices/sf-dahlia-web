@@ -42,6 +42,8 @@ do ->
       fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
+      fakeListingService.formattedAddress = jasmine.createSpy()
+      fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -305,4 +307,43 @@ do ->
         return
       return
 
+    describe '$scope.formattedBuildingAddress', ->
+      it 'expects ListingService.function to be called', ->
+        display = 'full'
+        scope.formattedBuildingAddress(fakeListing, display)
+        expect(fakeListingService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
+        return
+      return
+
+    describe '$scope.formattedApplicationAddress', ->
+      it 'expects ListingService.function to be called', ->
+        display = 'full'
+        scope.formattedApplicationAddress(fakeListing, display)
+        expect(fakeListingService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Application', display)
+        return
+      return
+
+    describe '$scope.lotteryDatePassed', ->
+      describe 'passed lottery date', ->
+        it 'returns true', ->
+          expect(scope.lotteryDatePassed(fakeListing)).toEqual(true)
+        return
+
+      describe 'not passed lottery date', ->
+        it 'returns false', ->
+          listing = fakeListing
+          today = new Date()
+          tomorrow = new Date()
+          tomorrow.setDate(today.getDate()+1)
+          listing.Lottery_Date = tomorrow
+          expect(scope.lotteryDatePassed(fakeListing)).toEqual(false)
+        return
+      return
+
+    describe '$scope.openLotteryResultsModal', ->
+      it 'expects ListingService.function to be called', ->
+        scope.openLotteryResultsModal()
+        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
+        return
+      return
   return
