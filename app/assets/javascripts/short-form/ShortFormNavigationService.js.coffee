@@ -22,7 +22,10 @@ ShortFormNavigationService = ($state) ->
         'status-vouchers'
       ]
     },
-    { name: 'Income', pages: [''] },
+    { name: 'Income', pages: [
+        'income'
+      ]
+    },
     { name: 'Review', pages: [
         'review'
       ]
