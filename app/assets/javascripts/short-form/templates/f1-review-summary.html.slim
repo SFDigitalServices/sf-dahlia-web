@@ -15,5 +15,24 @@ form
         | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
 
 
+      review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone"
+        | {{applicant.phone_number | tel}}
+
+      review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" ng-if="applicant.additionalPhone"
+        | {{applicant.second_phone_number | tel}}
+
+      review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"
+        | {{applicant.email}}
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}"
+        | {{applicant.mailing_address.address1}}
+        br
+        ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
+        | {{applicant.mailing_address.zip}}
+      review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}"
+        span ng-if="applicant.primary_language != 'Other'"
+          | {{applicant.primary_language}}
+        span ng-if="applicant.primary_language == 'Other'"
+          | {{applicant.other_language}}
+
 
   short-form-save-and-submit

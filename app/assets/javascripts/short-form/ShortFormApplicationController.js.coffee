@@ -90,9 +90,11 @@ ShortFormApplicationController =
       field.$invalid && (field.$touched || form.$submitted)
 
   $scope.checkInvalidPhones = () ->
-    invalid = false
-    if $scope.inputInvalid('phone_number') || $scope.inputInvalid('additional_phone_number')
-      true
+    $scope.inputInvalid('phone_number') ||
+    $scope.inputInvalid('phone_number_type') ||
+    $scope.inputInvalid('second_phone_number') ||
+    $scope.inputInvalid('second_phone_number_type')
+
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -101,7 +103,7 @@ ShortFormApplicationController =
 
   $scope.blankIfInvalid = (fieldName) ->
     form = $scope.form.applicationForm
-    if typeof form.fieldName != 'undefined'
+    if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
   $scope.formattedAddress = (listing) ->

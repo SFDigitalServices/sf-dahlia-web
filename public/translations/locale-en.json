@@ -1,6 +1,10 @@
 {
     "LABEL": {
+        "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
+        "SELECT_ONE": "Select One",
         "APPLICANT_GENDER": "What best describes your gender?",
+        "ETHNICITY": "Ethnicity",
+        "RACE": "Race",
         "APPLICANT_NAME": "Your Name",
         "FIRST_NAME": "First Name",
         "MIDDLE_NAME": "Middle Name",
@@ -17,7 +21,7 @@
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
-        "APPLICANT_MAILING_ADDRESS": "Mailing address",
+        "MAILING_ADDRESS": "Mailing address",
         "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
@@ -56,7 +60,15 @@
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
-        "NAME": "Name"
+        "NAME": "Name",
+        "PHONE": "Phone",
+        "ADDITIONAL_PHONE": "Additional Phone",
+        "PRIMARY_LANGUAGE": "Primary Language",
+        "ADDRESS_1": "Street Address",
+        "ADDRESS_2": "Apt or Unit #",
+        "CITY": "City Name",
+        "ZIP": "Zip",
+        "ZIPCODE": "Zipcode"
     },
     "T": {
         "OPTIONAL": "Optional",
@@ -97,7 +109,11 @@
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
         "INCOME": "Please enter an income amount",
-        "INCOME_TIMEFRAME": "Please enter an income timeframe"
+        "INCOME_TIMEFRAME": "Please enter an income timeframe",
+        "ADDRESS": "Please enter an address",
+        "CITY": "Please enter a city",
+        "STATE": "Please enter a state",
+        "ZIP": "Please enter a zipcode"
     },
     "B2_CONTACT": {
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
