@@ -27,7 +27,7 @@ ShortFormNavigationService = ($state) ->
       ]
     },
     { name: 'Review', pages: [
-        'review'
+        'review-optional'
       ]
     }
   ]

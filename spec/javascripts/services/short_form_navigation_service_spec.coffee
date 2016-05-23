@@ -30,7 +30,7 @@ do ->
         ]
       },
       { name: 'Review', pages: [
-          'review'
+          'review-optional'
         ]
       }
     ]

@@ -147,7 +147,7 @@
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery."
     },
-    "F1_REVIEW": {
+    "F0_REVIEW_OPTIONAL": {
         "TITLE": "These questions are optional and won't affect your eligibility for housing.",
         "P1": "Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private."
     }
