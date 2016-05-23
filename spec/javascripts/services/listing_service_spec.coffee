@@ -9,6 +9,8 @@ do ->
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
+    fakeEligibilityListings = getJSONFixture('listings-api-eligbility-listings.json')
+    fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -235,5 +237,56 @@ do ->
       return
 
 
-    return
+    describe 'Service.getLotteryPreferences', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.lotteryPreferences with the Lottery Preference data', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryPreferences
+        ListingService.getLotteryPreferences()
+        httpBackend.flush()
+        expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
+        return
+      return
+
+
+    describe 'Service.getListingsByIds', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listings with the returned listing results', ->
+        ListingService.listings = [fakeListing]
+        listingIds = fakeListings.listings.map((listing) ->
+          return listing.id
+        )
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListingsByIds(listingIds)
+        httpBackend.flush()
+        expect(ListingService.listings).toEqual fakeListings.listings
+        return
+      return
+
+    describe 'Service.getListingsWithEligibility', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+
+      it 'calls groupListings function with returned listings', ->
+        ListingService.groupListings = jasmine.createSpy()
+        fakeFilters =
+          household_size: 2
+          income_timeframe: 'per_month'
+          income_total: 3500
+          include_children_under_6: true
+          children_under_6: 1
+        ListingService.setEligibilityFilters(fakeFilters)
+        stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
+        ListingService.getListingsWithEligibility()
+        httpBackend.flush()
+        expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
+        return
+      return
   return
