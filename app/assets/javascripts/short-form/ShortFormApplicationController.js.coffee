@@ -3,7 +3,7 @@
 ############################################################################################
 
 ShortFormApplicationController =
-($scope, $state, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
+($scope, $state, $window, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -70,6 +70,14 @@ ShortFormApplicationController =
   $scope.hideAlert = false
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
+
+  $scope.onExit = ->
+    "Are you sure you would like to navigate away from this page?
+    You will lose all information you've entered into the application
+    for this listing. If you'd like to save your information to finish
+    the application at a later time, please click the 'Save and Finish later' button."
+
+  $window.onbeforeunload = $scope.onExit
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -188,7 +196,7 @@ ShortFormApplicationController =
     { name: if name then ', ' + name else '' }
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService'
+  '$scope', '$state', '$window', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService'
 ]
 
 angular
