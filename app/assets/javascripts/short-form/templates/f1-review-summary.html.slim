@@ -42,6 +42,10 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     / Household Members
     review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" ui-sref="dahlia.short-form-application.household-members"
 
+      hgroup.entry-panel_group ng-if="!householdMembers || householdMembers.length == 0"
+        h4.entry-panel_content
+          | {{'T.NONE' | translate}}
+
       div ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
           | {{member.first_name}} {{member.last_name}}
