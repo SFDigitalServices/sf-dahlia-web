@@ -1,5 +1,6 @@
 {
     "LABEL": {
+        "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "SELECT_ONE": "Select One",
         "APPLICANT_GENDER": "What best describes your gender?",
@@ -34,7 +35,6 @@
         "FRIEND": "Friend",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
         "OTHER": "Other",
-        "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
         "AGENCY": "Agency",
@@ -64,6 +64,12 @@
         "PHONE": "Phone",
         "ADDITIONAL_PHONE": "Additional Phone",
         "PRIMARY_LANGUAGE": "Primary Language",
+        "RELATIONSHIP": "Relationship",
+        "HOUSEHOLD_MEMBERS": "Household Members",
+        "SELF_DECLARED_STATUS": "Self-declared status",
+        "VOUCHERS_AND_SUBSIDIES": "Vouchers and Subsidies",
+        "YOU_HAVE_CLAIMED": "You have claimed",
+        "FOR_USER": "for {{user}}",
         "ADDRESS_1": "Street Address",
         "ADDRESS_2": "Apt or Unit #",
         "CITY": "City Name",
@@ -71,16 +77,21 @@
         "ZIPCODE": "Zipcode"
     },
     "T": {
-        "OPTIONAL": "Optional",
+        "YES": "Yes",
+        "NONE": "None",
+        "PER_MONTH": "per month",
+        "PER_YEAR": "per year",
         "NEXT": "Next",
+        "OPTIONAL": "Optional",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "APPLICATION_DUE": "Application Due",
         "GET_STARTED": "Get Started",
         "EDIT": "Edit",
         "CALL": "Call",
-        "YES": "Yes",
         "NO": "No",
         "YOU": "You",
+        "CONFIRM": "Confirm",
+        "SUBMIT": "Submit",
         "APPLICATION": "Application",
         "BACK": "Back"
     },
@@ -151,7 +162,9 @@
     },
     "D1_STATUS_PROGRAMS": {
         "TITLE": "There are some special programs we'd like to ask you about. Do you have any of the following?",
+        "DISPLACED": "Displaced Tenants Preference",
         "DISPLACED_TENANTS_DESC": "Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)",
+        "CERT_OF_PREFERENCE": "Certificate of Preference",
         "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
         "PLEASE_CALL_P1": "If you have not heard of these preferences, you most likely do not have one. Please",
         "PLEASE_CALL_P2": "to see if you have a Certificate."
@@ -171,5 +184,12 @@
     },
     "F1_REVIEW_SUMMARY": {
         "TITLE": "Take a moment to review your information before submitting your application."
+    },
+    "F2_REVIEW_TERMS": {
+        "TITLE": "Terms",
+        "P1": "This application must be...",
+        "P2": "",
+        "P3": "",
+        "P4": ""
     }
 }

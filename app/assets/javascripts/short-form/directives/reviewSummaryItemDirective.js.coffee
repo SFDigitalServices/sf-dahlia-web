@@ -7,3 +7,4 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.label = attrs.label
+    scope.subLabel = attrs.subLabel

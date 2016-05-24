@@ -3,7 +3,7 @@
 ############################################################################################
 
 ShortFormApplicationController =
-($scope, $state, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
+($scope, $state, $translate, ListingService, ShortFormApplicationService, ShortFormNavigationService, ShortFormHelperService) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -29,6 +29,7 @@ ShortFormApplicationController =
     'Russian',
     'Other'
   ]
+
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',
@@ -184,13 +185,28 @@ ShortFormApplicationController =
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
+  ## helpers
+  $scope.alternateContactRelationship = ->
+    ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
+
+  $scope.applicantPrimaryLanguage = ->
+    ShortFormHelperService.applicantPrimaryLanguage($scope.applicant)
+
+  $scope.applicantVouchersSubsidies = ->
+    ShortFormHelperService.applicantVouchersSubsidies($scope.applicant)
+
+  $scope.applicantIncomeAmount = ->
+    ShortFormHelperService.applicantIncomeAmount($scope.applicant)
+
   ## translation helpers
   $scope.applicantFirstName = ->
-    name = $scope.applicant.first_name
-    { name: if name then ', ' + name else '' }
+    ShortFormHelperService.applicantFirstName($scope.applicant)
+
+  $scope.householdMemberForProgram = (pref_type) ->
+    ShortFormHelperService.householdMemberForProgram($scope.applicant, pref_type)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService'
+  '$scope', '$state', '$translate', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService'
 ]
 
 angular

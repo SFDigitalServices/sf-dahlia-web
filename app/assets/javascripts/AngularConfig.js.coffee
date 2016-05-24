@@ -343,6 +343,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/f1-review-summary.html'
     })
+    .state('dahlia.short-form-application.review-terms', {
+      url: '/review-terms'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f2-review-terms.html'
+    })
 
     $translateProvider
       .preferredLanguage('en')

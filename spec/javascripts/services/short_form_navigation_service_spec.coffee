@@ -32,6 +32,7 @@ do ->
       { name: 'Review', pages: [
           'review-optional',
           'review-summary',
+          'review-terms'
         ]
       }
     ]
