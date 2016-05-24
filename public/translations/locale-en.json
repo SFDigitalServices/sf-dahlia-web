@@ -187,9 +187,10 @@
     },
     "F2_REVIEW_TERMS": {
         "TITLE": "Terms",
-        "P1": "This application must be...",
-        "P2": "",
-        "P3": "",
-        "P4": ""
+        "P1": "This application must be physically received (by mail or in person) by the listing due date. Please see the San Francisco Housing Portal website (housing.sfgov.org) for deadlines and location to submit the application.",
+        "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled.",
+        "P3": "All of the information that you have provided will be verified and your eligibility confirmed. Any fraudulent statements will cause your application to be removed from the lottery. You will also be removed from the lottery if we cannot verify your housing lottery preference, or if a household member appears on more than one application for this listing.",
+        "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents. For more information, please contact the property directly using the contact information posted in the property announcement.",
+        "P5": "I declare that the foregoing is true and accurate, and I acknowledge that any material misstatement fraudulently or negligently made on this application will result in removal from the lottery."
     }
 }
