@@ -9,5 +9,8 @@ angular.module('dahlia.directives')
     scope.option = attrs.option
     scope.label = attrs.label || attrs.option
     scope.user = scope[attrs.user || 'applicant']
-    scope.isDisabled = scope[attrs.isDisabled]
+    scope.isDisabled = scope[attrs.isDisabled] || () -> false
+    scope.error = attrs.error
+    scope.isRequired = () ->
+      attrs.ngRequired || false
     scope.id = "#{attrs.name}_#{_.kebabCase(attrs.option)}"

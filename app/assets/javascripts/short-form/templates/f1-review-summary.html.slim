@@ -1,14 +1,11 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'F1_REVIEW_SUMMARY.TITLE' | translate}}
 
-form
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-terms'})"
   .form-group.margin-bottom--2x
-    section.entry-panel
-      h3.entry-panel_header
-        | {{'T.YOU' | translate}}
-      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.name"
-        | {{'T.EDIT' | translate}}
 
+    / You
+    review-summary-section header="{{'T.YOU' | translate}}" ui-sref="dahlia.short-form-application.name"
       review-summary-item label="{{'LABEL.NAME' | translate}}"
         | {{applicant.first_name}} {{applicant.last_name}}
       review-summary-item label="{{'LABEL.DOB' | translate}}"
@@ -27,11 +24,9 @@ form
       review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}"
         | {{applicantPrimaryLanguage()}}
 
-    section.entry-panel
-      h3.entry-panel_header
-        | {{'LABEL.ALTERNATE_CONTACT' | translate}}
-      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.alternate-contact-type"
-        | {{'T.EDIT' | translate}}
+
+    / Alternate Contact
+    review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" ui-sref="dahlia.short-form-application.alternate-contact-type"
 
       review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
         | {{alternateContactRelationship()}}
@@ -44,26 +39,19 @@ form
         review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" ng-if="alternateContact.email"
           | {{alternateContact.email}}
 
+    / Household Members
+    review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" ui-sref="dahlia.short-form-application.household-members"
 
-    section.entry-panel
-      h3.entry-panel_header
-        | {{'LABEL.HOUSEHOLD_MEMBERS' | translate}}
-      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.household-members"
-        | {{'T.EDIT' | translate}}
+      div ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
+        review-summary-item label="{{'LABEL.NAME' | translate}}"
+          | {{member.first_name}} {{member.last_name}}
+        review-summary-item label="{{'LABEL.DOB' | translate}}"
+          | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
+        review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
+          | {{member.relationship}}
 
-    section.entry-panel ng-repeat="member in householdMembers"
-      review-summary-item label="{{'LABEL.NAME' | translate}}"
-        | {{member.first_name}} {{member.last_name}}
-      review-summary-item label="{{'LABEL.DOB' | translate}}"
-        | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
-      review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
-        | {{member.relationship}}
-
-    section.entry-panel
-      h3.entry-panel_header
-        | {{'LABEL.SELF_DECLARED_STATUS' | translate}}
-      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.status-programs"
-        | {{'T.EDIT' | translate}}
+    / Self-declared status
+    review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" ui-sref="dahlia.short-form-application.status-programs"
 
       review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
         | {{applicantVouchersSubsidies()}}
@@ -74,17 +62,11 @@ form
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="applicant.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForProgram('displaced') }}"
         | {{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}
 
-    section.entry-panel
-      h3.entry-panel_header
-        | {{'LABEL.INCOME' | translate}}
-      a.entry-panel_edit.button.tiny ui-sref="dahlia.short-form-application.income"
-        ' {{ 'T.EDIT' | translate}}
-
+    / Income
+    review-summary-section header="{{'LABEL.INCOME' | translate}}" ui-sref="dahlia.short-form-application.income"
       hgroup.entry-panel_group
         h4.entry-panel_content
           | {{ applicantIncomeAmount() }}
-          | {{'T.CONFIRM' | translate}}
-
 
 
   short-form-save-and-submit submit-value="{{'T.CONFIRM' | translate}}"
