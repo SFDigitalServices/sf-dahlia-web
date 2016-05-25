@@ -39,15 +39,24 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     small.error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
       | {{'ERROR.DOB' | translate}}
 
+  .form-group ng-class="{ error: inputInvalid('same_address') }"
+    label.form-label.no-margin
+      | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
+    .radio-group.padding-top--half
+      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='householdMember' name='same_address' ng-required='true'
+      radio-block-item value='No' label="{{'T.NO' | translate}}" user='householdMember' name='same_address' ng-required='true'
+
   .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
     label.form-label.no-margin
       | {{'LABEL.MEMBER_WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
-
     .radio-group
       radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='householdMember' name='work_in_san_francisco' ng-required='true'
       radio-block-item value='No' label="{{'T.NO' | translate}}" user='householdMember' name='work_in_san_francisco' ng-required='true'
+
+    small.highlight ng-if="householdMember.work_in_san_francisco == 'Yes'"
+      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('relationship') }"

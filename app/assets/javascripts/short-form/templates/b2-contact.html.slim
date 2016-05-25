@@ -108,6 +108,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
       radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
 
+    small.highlight ng-if="applicant.work_in_san_francisco == 'Yes'"
+      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
+
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"
     label.form-label.margin-bottom--half for="applicant_primary_language"
