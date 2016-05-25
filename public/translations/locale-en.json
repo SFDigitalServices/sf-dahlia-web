@@ -23,6 +23,7 @@
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "MAILING_ADDRESS": "Mailing address",
+        "WORK_IN_SF": "Do you work in San Francisco?",
         "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
@@ -51,6 +52,7 @@
         "DONE_ADDING_PEOPLE": "Done adding people",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "DOB": "Date of Birth",
+        "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
@@ -87,8 +89,8 @@
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "APPLICATION_DUE": "Application Due",
         "GET_STARTED": "Get Started",
-        "CALL": "Call",
         "NO": "No",
+        "CALL": "Call",
         "YOU": "You",
         "CONFIRM": "Confirm",
         "I_AGREE": "I agree",
@@ -134,7 +136,8 @@
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
-        "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application."
+        "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
+        "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"
@@ -160,7 +163,8 @@
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
         "TITLE": "Tell us about this person",
-        "P1": "You'll have the opportunity to add more household members on the next screen."
+        "P1": "You'll have the opportunity to add more household members on the next screen.",
+        "WORK_IN_SF_DESC": "This means they work in San Francisco at least 75% of their working hours."
     },
     "D1_STATUS_PROGRAMS": {
         "TITLE": "There are some special programs we'd like to ask you about. Do you have any of the following?",
