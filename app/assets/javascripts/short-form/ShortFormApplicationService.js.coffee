@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage) ->
+ShortFormApplicationService = () ->
   Service = {}
   Service.applicationDefaults = {
     applicant: {
@@ -21,8 +21,7 @@ ShortFormApplicationService = ($localStorage) ->
   }
   Service.current_id = 0
 
-  $localStorage.application ?= Service.applicationDefaults
-  Service.application = $localStorage.application
+  Service.application = Service.applicationDefaults
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
@@ -112,7 +111,7 @@ ShortFormApplicationService = ($localStorage) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage']
+ShortFormApplicationService.$inject = []
 
 angular
   .module('dahlia.services')
