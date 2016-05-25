@@ -4,16 +4,9 @@ p.form-note.margin-bottom
   | {{'D6_STATUS_VOUCHERS.P1' | translate}}
 
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
-  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
-    label.form-label
-    .radio-group
-      p.radio-block
-        input#household_vouchers_subsidies_yes(ng-required="true" ng-model="applicant.household_vouchers_subsidies" name="household_vouchers_subsidies" type="radio" value="Yes" ng-class="{ error: inputInvalid('household_vouchers_subsidies')}")
-        label.radio-block_label for="household_vouchers_subsidies_yes"
-          | {{'T.YES' | translate}}
-      p.radio-block
-        input#household_vouchers_subsidies_no(ng-required="true" ng-model="applicant.household_vouchers_subsidies" name="household_vouchers_subsidies" type="radio" value="No" ng-class="{ error: inputInvalid('household_vouchers_subsidies')}")
-        label.radio-block_label for="household_vouchers_subsidies_no"
-          | {{'T.NO' | translate}}
+  .form-group ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
+    .radio-group.padding-top--half
+      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
+      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
 
   short-form-save-and-submit

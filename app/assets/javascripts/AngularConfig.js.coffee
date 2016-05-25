@@ -327,15 +327,27 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         ]
     })
     # Short form: "Review" section
-    .state('dahlia.short-form-application.review', {
-      url: '/review'
+    .state('dahlia.short-form-application.review-optional', {
+      url: '/review-optional'
       views:
         'container':
-          templateUrl: 'short-form/templates/f1-review.html'
+          templateUrl: 'short-form/templates/f0-review-optional.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Income')
         ]
+    })
+    .state('dahlia.short-form-application.review-summary', {
+      url: '/review-summary'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f1-review-summary.html'
+    })
+    .state('dahlia.short-form-application.review-terms', {
+      url: '/review-terms'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f2-review-terms.html'
     })
 
     $translateProvider

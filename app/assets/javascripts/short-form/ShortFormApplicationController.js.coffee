@@ -3,7 +3,7 @@
 ############################################################################################
 
 ShortFormApplicationController =
-($scope, $state, $window, ListingService, ShortFormApplicationService, ShortFormNavigationService) ->
+($scope, $state, $window, $translate, ListingService, ShortFormApplicationService, ShortFormNavigationService, ShortFormHelperService) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -29,6 +29,7 @@ ShortFormApplicationController =
     'Russian',
     'Other'
   ]
+
   $scope.relationship_options = [
       'Spouse',
       'Registered Domestic Partner',
@@ -98,9 +99,11 @@ ShortFormApplicationController =
       field.$invalid && (field.$touched || form.$submitted)
 
   $scope.checkInvalidPhones = () ->
-    invalid = false
-    if $scope.inputInvalid('phone_number') || $scope.inputInvalid('additional_phone_number')
-      true
+    $scope.inputInvalid('phone_number') ||
+    $scope.inputInvalid('phone_number_type') ||
+    $scope.inputInvalid('second_phone_number') ||
+    $scope.inputInvalid('second_phone_number_type')
+
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -109,7 +112,7 @@ ShortFormApplicationController =
 
   $scope.blankIfInvalid = (fieldName) ->
     form = $scope.form.applicationForm
-    if typeof form.fieldName != 'undefined'
+    if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
   $scope.formattedAddress = (listing) ->
@@ -190,13 +193,29 @@ ShortFormApplicationController =
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
+  ## helpers
+  $scope.alternateContactRelationship = ->
+    ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
+
+  $scope.applicantPrimaryLanguage = ->
+    ShortFormHelperService.applicantPrimaryLanguage($scope.applicant)
+
+  $scope.applicantVouchersSubsidies = ->
+    ShortFormHelperService.applicantVouchersSubsidies($scope.applicant)
+
+  $scope.applicantIncomeAmount = ->
+    ShortFormHelperService.applicantIncomeAmount($scope.applicant)
+
   ## translation helpers
   $scope.applicantFirstName = ->
-    name = $scope.applicant.first_name
-    { name: if name then ', ' + name else '' }
+    ShortFormHelperService.applicantFirstName($scope.applicant)
+
+  $scope.householdMemberForProgram = (pref_type) ->
+    ShortFormHelperService.householdMemberForProgram($scope.applicant, pref_type)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', 'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService'
+  '$scope', '$state', '$window', '$translate',
+  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService'
 ]
 
 angular

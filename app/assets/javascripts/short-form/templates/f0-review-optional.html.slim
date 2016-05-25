@@ -1,10 +1,9 @@
 h2.application-title.t-gamma
-  | {{'F1_REVIEW.TITLE' | translate}}
-
-form
+  | {{'F0_REVIEW_OPTIONAL.TITLE' | translate}}
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary'})"
   .form-group
     p
-      | {{'F1_REVIEW.P1' | translate}}
+      | {{'F0_REVIEW_OPTIONAL.P1' | translate}}
 
   gender-form user='applicant'
   race-ethnicity-form user='applicant'

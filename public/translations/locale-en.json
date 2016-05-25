@@ -1,31 +1,11 @@
 {
-    "T": {
-        "NEXT": "Next",
-        "BACK": "Back",
-        "SAVE_AND_FINISH_LATER": "Save and finish later",
-        "APPLICATION_DUE": "Application Due",
-        "GET_STARTED": "Get Started",
-        "OPTIONAL": "Optional",
-        "EDIT": "Edit",
-        "CALL": "Call",
-        "YES": "Yes",
-        "NO": "No",
-        "APPLICATION": "Application"
-    },
-    "A1_INTRO": {
-        "TITLE": "Let's get started on your application for"
-    },
-    "A2_OVERVIEW": {
-        "TITLE": "Here's what to expect for this application.",
-        "P1": "First we'll ask about you and the people you live with.",
-        "P2": "Then we'll talk about your household's status and income.",
-        "P3": "You'll get a chance to review before you submit your application.",
-        "WARNING": "Warning: Only apply once per lottery, duplicate applications will be disqualified."
-    },
-    "B1_NAME": {
-        "TITLE": "We'll get started by getting some information about you. First, what's your name?"
-    },
     "LABEL": {
+        "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
+        "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
+        "SELECT_ONE": "Select One",
+        "APPLICANT_GENDER": "What best describes your gender?",
+        "ETHNICITY": "Ethnicity",
+        "RACE": "Race",
         "APPLICANT_NAME": "Your Name",
         "FIRST_NAME": "First Name",
         "MIDDLE_NAME": "Middle Name",
@@ -42,7 +22,8 @@
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
-        "APPLICANT_MAILING_ADDRESS": "Mailing address",
+        "MAILING_ADDRESS": "Mailing address",
+        "WORK_IN_SF": "Do you work in San Francisco?",
         "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
@@ -55,7 +36,6 @@
         "FRIEND": "Friend",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
         "OTHER": "Other",
-        "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
         "AGENCY": "Agency",
@@ -72,16 +52,64 @@
         "DONE_ADDING_PEOPLE": "Done adding people",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "DOB": "Date of Birth",
+        "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
-        "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
-        "APPLICANT_GENDER": "What best describes your gender?",
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
-        "INCOME_PLACEHOLDER": "Total all of your income sources",
         "INCOME": "Income",
+        "INCOME_PLACEHOLDER": "Total all of your income sources",
         "PER_MONTH": "per month",
-        "PER_YEAR": "per year"
+        "PER_YEAR": "per year",
+        "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
+        "NAME": "Name",
+        "PHONE": "Phone",
+        "ADDITIONAL_PHONE": "Additional Phone",
+        "PRIMARY_LANGUAGE": "Primary Language",
+        "RELATIONSHIP": "Relationship",
+        "HOUSEHOLD_MEMBERS": "Household Members",
+        "SELF_DECLARED_STATUS": "Self-declared status",
+        "VOUCHERS_AND_SUBSIDIES": "Vouchers and Subsidies",
+        "YOU_HAVE_CLAIMED": "You have claimed",
+        "FOR_USER": "for {{user}}",
+        "ADDRESS_1": "Street Address",
+        "ADDRESS_2": "Apt or Unit #",
+        "CITY": "City Name",
+        "ZIP": "Zip",
+        "ZIPCODE": "Zipcode"
+    },
+    "T": {
+        "YES": "Yes",
+        "NONE": "None",
+        "PER_MONTH": "per month",
+        "PER_YEAR": "per year",
+        "NEXT": "Next",
+        "OPTIONAL": "Optional",
+        "EDIT": "Edit",
+        "SAVE_AND_FINISH_LATER": "Save and finish later",
+        "APPLICATION_DUE": "Application Due",
+        "GET_STARTED": "Get Started",
+        "NO": "No",
+        "CALL": "Call",
+        "YOU": "You",
+        "CONFIRM": "Confirm",
+        "I_AGREE": "I agree",
+        "SUBMIT": "Submit",
+        "APPLICATION": "Application",
+        "BACK": "Back"
+    },
+    "A1_INTRO": {
+        "TITLE": "Let's get started on your application for"
+    },
+    "A2_OVERVIEW": {
+        "TITLE": "Here's what to expect for this application.",
+        "P1": "First we'll ask about you and the people you live with.",
+        "P2": "Then we'll talk about your household's status and income.",
+        "P3": "You'll get a chance to review before you submit your application.",
+        "WARNING": "Warning: Only apply once per lottery, duplicate applications will be disqualified."
+    },
+    "B1_NAME": {
+        "TITLE": "We'll get started by getting some information about you. First, what's your name?"
     },
     "ERROR": {
         "FIRST_NAME": "Please enter a First Name",
@@ -95,7 +123,12 @@
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
         "INCOME": "Please enter an income amount",
-        "INCOME_TIMEFRAME": "Please enter an income timeframe"
+        "INCOME_TIMEFRAME": "Please enter an income timeframe",
+        "TERMS": "You must agree to the terms in order to continue",
+        "ADDRESS": "Please enter an address",
+        "CITY": "Please enter a city",
+        "STATE": "Please enter a state",
+        "ZIP": "Please enter a zipcode"
     },
     "B2_CONTACT": {
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
@@ -103,7 +136,8 @@
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
-        "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application."
+        "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
+        "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"
@@ -129,11 +163,14 @@
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
         "TITLE": "Tell us about this person",
-        "P1": "You'll have the opportunity to add more household members on the next screen."
+        "P1": "You'll have the opportunity to add more household members on the next screen.",
+        "WORK_IN_SF_DESC": "This means they work in San Francisco at least 75% of their working hours."
     },
     "D1_STATUS_PROGRAMS": {
         "TITLE": "There are some special programs we'd like to ask you about. Do you have any of the following?",
+        "DISPLACED": "Displaced Tenants Preference",
         "DISPLACED_TENANTS_DESC": "Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)",
+        "CERT_OF_PREFERENCE": "Certificate of Preference",
         "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
         "PLEASE_CALL_P1": "If you have not heard of these preferences, you most likely do not have one. Please",
         "PLEASE_CALL_P2": "to see if you have a Certificate."
@@ -147,8 +184,19 @@
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery."
     },
-    "F1_REVIEW": {
+    "F0_REVIEW_OPTIONAL": {
         "TITLE": "These questions are optional and won't affect your eligibility for housing.",
         "P1": "Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private."
+    },
+    "F1_REVIEW_SUMMARY": {
+        "TITLE": "Take a moment to review your information before submitting your application."
+    },
+    "F2_REVIEW_TERMS": {
+        "TITLE": "Terms",
+        "P1": "This application must be physically received (by mail or in person) by the listing due date. Please see the San Francisco Housing Portal website (housing.sfgov.org) for deadlines and location to submit the application.",
+        "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled.",
+        "P3": "All of the information that you have provided will be verified and your eligibility confirmed. Any fraudulent statements will cause your application to be removed from the lottery. You will also be removed from the lottery if we cannot verify your housing lottery preference, or if a household member appears on more than one application for this listing.",
+        "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents. For more information, please contact the property directly using the contact information posted in the property announcement.",
+        "P5": "I declare that the foregoing is true and accurate, and I acknowledge that any material misstatement fraudulently or negligently made on this application will result in removal from the lottery."
     }
 }

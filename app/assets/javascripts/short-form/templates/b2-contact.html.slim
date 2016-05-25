@@ -92,11 +92,21 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
   .form-group ng-if="applicant.separateAddress"
     label.form-label.no-margin
-      | {{'LABEL.APPLICANT_MAILING_ADDRESS' | translate}}
+      | {{'LABEL.MAILING_ADDRESS' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.PROVIDE_AN_ADDRESS' | translate}}
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
+
+  .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
+    label.form-label.no-margin
+      | {{'LABEL.WORK_IN_SF' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
+
+    .radio-group
+      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
+      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
 
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"

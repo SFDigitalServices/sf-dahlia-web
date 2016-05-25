@@ -19,6 +19,7 @@ do ->
     fakeShortFormNavigationService =
       sections: []
       hasNav: jasmine.createSpy()
+    fakeShortFormHelperService = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -31,12 +32,15 @@ do ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       state.current = {name: 'dahlia.short-form-application.overview'}
+      translate = {}
 
       $controller 'ShortFormApplicationController',
         $scope: scope
         $state: state
+        $translate: translate
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
+        ShortFormHelperService: fakeShortFormHelperService
       return
     )
 

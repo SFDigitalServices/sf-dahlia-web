@@ -5,9 +5,9 @@ p.form-note.margin-bottom
 
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
   .checkbox-group
-    checkbox-preference-item title="Displaced Tenants Preference" type="displaced"
+    checkbox-preference-item title="{{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}" type="displaced"
       | {{'D1_STATUS_PROGRAMS.DISPLACED_TENANTS_DESC' | translate}}
-    checkbox-preference-item title="Certificate of Preference" type="cert_of_preference"
+    checkbox-preference-item title="{{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" type="cert_of_preference"
       | {{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE_DESC' | translate}}
 
   .form-group

@@ -1,0 +1,4 @@
+p.radio-block
+  input(id="{{id}}" ng-required="ngRequired" ng-model="user[name]" name="{{name}}" type="radio" value="{{value}}" ng-class="{ error: inputInvalid(name)}")
+  label.radio-block_label for="{{id}}"
+    | {{label}}
