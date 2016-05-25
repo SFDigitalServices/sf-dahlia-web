@@ -6,4 +6,3 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.user = scope[attrs.user] if attrs.user
-    scope.pronoun = attrs.pronoun
