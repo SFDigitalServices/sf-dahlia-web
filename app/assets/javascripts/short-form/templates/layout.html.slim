@@ -2,7 +2,7 @@ header.application-header.lead-header.shift-offset--bottom.bg-deep
   .row
     .large-12.columns
       h1.lead-title.t-beta.c-white
-        | {{'APPLICATION' | translate}}: {{listing.Building_Name}}
+        | {{'T.APPLICATION' | translate}}: {{listing.Building_Name}}
 section.row.shift--top
   .medium-8.columns
     .application-form.form-card ng-class="{'has-nav': hasNav()}"
@@ -12,6 +12,7 @@ section.row.shift--top
         hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
       .form-count ng-if="activeSection()"
-        a.lined.margin-right back-button="" Back
+        a.lined.margin-right back-button=""
+          | {{'T.BACK' | translate}}
 
       div(ui-view="container")

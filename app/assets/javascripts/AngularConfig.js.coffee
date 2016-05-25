@@ -30,18 +30,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
   $urlMatcherFactoryProvider.strictMode(false)
 ]
 
-@dahlia.factory 'yamlTranslationLoader', ['$http', '$q', ($http, $q) ->
-  (options) ->
-    deferred = $q.defer()
-    url = "#{options.path}#{options.key}#{options.extension}"
-    $http.get(url).success((data, status) ->
-      deferred.resolve(jsyaml.load(data))
-    ).error( (data, status) ->
-      deferred.reject(options.key)
-    )
-    return deferred.promise
-]
-
 # Angular UI-router setup
 @dahlia.config [
   '$stateProvider',
@@ -327,20 +315,36 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/d6-status-vouchers.html'
     })
+    # Short form: "Income" section
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e1-income.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Status')
+        ]
+    })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review', {
       url: '/review'
       views:
         'container':
           templateUrl: 'short-form/templates/f1-review.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Income')
+        ]
     })
 
-    $translateProvider.preferredLanguage('en')
+    $translateProvider
+      .preferredLanguage('en')
       .fallbackLanguage('en')
       .useSanitizeValueStrategy('escapeParameters')
-      .useLoader('yamlTranslationLoader',
-        path: '/translations/locale-'
-        extension: '.yml'
+      .useStaticFilesLoader(
+        prefix: '/translations/locale-'
+        suffix: '.json'
       )
 
     $urlRouterProvider.otherwise('/') # default to welcome screen

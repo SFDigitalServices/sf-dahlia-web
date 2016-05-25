@@ -1,11 +1,13 @@
 h2.application-title.t-gamma.padding-bottom
-  | Next, we’ll get some info about any people who would live with you in the unit.
+  | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
 .form-group.padding-bottom--2x
   .button-stack.text-center.row.padding-top
     .small-12.medium-6.columns
       button.button.tertiary.t-caps.t-bold.expand.tall ui-sref="dahlia.short-form-application.status-programs"
-        | I will live alone
+        | {{'LABEL.LIVE_ALONE' | translate}}
     .small-12.medium-6.columns
       button.button.tertiary.t-caps.t-bold.expand.tall ui-sref="dahlia.short-form-application.household-overview"
-       | Other people will live with me
-button.button.ghost-white.expand type="button"  Save and finish later
+       | {{'LABEL.OTHER_PEOPLE' | translate}}
+
+button.button.ghost-white.expand type="button"
+  | {{'T.SAVE_AND_FINISH_LATER' | translate}}

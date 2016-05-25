@@ -1,0 +1,33 @@
+h2.application-title.t-gamma
+  | {{'E1_INCOME.TITLE' | translate}}
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review'})"
+  .form-group
+    p
+      | {{'E1_INCOME.P1' | translate}}
+    p
+      | {{'E1_INCOME.P2' | translate}}
+
+  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('income_total') || inputInvalid('income_timeframe')) }"
+    label.form-label.margin-bottom--half
+      | {{'LABEL.APPLICANT_INCOME_TOTAL' | translate}}
+    .form-income
+      label.sr-only for="income_total"
+        | {{'LABEL.INCOME' | translate}}
+      span.label-dollar $
+      input#applicantIncomeTotal.form-income_input ng-model="applicant.income_total" name="income_total" required="" placeholder="{{'ERROR.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') }"
+      small.error ng-show="inputInvalid('income_total')"
+          | {{'ERROR.INCOME' | translate}}
+
+    .radio-group ng-class="{ error: inputInvalid('income_timeframe') }"
+      p.radio-block
+        input#per_month name="income_timeframe" ng-model="applicant.income_timeframe" type="radio" value="per_month" required=""
+        label.radio-block_label for="per_month"
+          | {{'LABEL.PER_MONTH' | translate}}
+      p.radio-block
+        input#per_year name="income_timeframe" ng-model="applicant.income_timeframe" type="radio" value="per_year" required=""
+        label.radio-block_label for="per_year"
+          | {{'LABEL.PER_YEAR' | translate}}
+      small.error ng-show="inputInvalid('income_timeframe')"
+        | {{'ERROR.INCOME_TIMEFRAME' | translate}}
+
+  short-form-save-and-submit

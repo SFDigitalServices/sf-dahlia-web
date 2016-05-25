@@ -1,0 +1,154 @@
+{
+    "T": {
+        "NEXT": "Next",
+        "BACK": "Back",
+        "SAVE_AND_FINISH_LATER": "Save and finish later",
+        "APPLICATION_DUE": "Application Due",
+        "GET_STARTED": "Get Started",
+        "OPTIONAL": "Optional",
+        "EDIT": "Edit",
+        "CALL": "Call",
+        "YES": "Yes",
+        "NO": "No",
+        "APPLICATION": "Application"
+    },
+    "A1_INTRO": {
+        "TITLE": "Let's get started on your application for"
+    },
+    "A2_OVERVIEW": {
+        "TITLE": "Here's what to expect for this application.",
+        "P1": "First we'll ask about you and the people you live with.",
+        "P2": "Then we'll talk about your household's status and income.",
+        "P3": "You'll get a chance to review before you submit your application.",
+        "WARNING": "Warning: Only apply once per lottery, duplicate applications will be disqualified."
+    },
+    "B1_NAME": {
+        "TITLE": "We'll get started by getting some information about you. First, what's your name?"
+    },
+    "LABEL": {
+        "APPLICANT_NAME": "Your Name",
+        "FIRST_NAME": "First Name",
+        "MIDDLE_NAME": "Middle Name",
+        "LAST_NAME": "Last Name",
+        "APPLICANT_DOB": "Your Date of Birth",
+        "DOB_MONTH": "Month",
+        "DOB_DAY": "Day",
+        "DOB_YEAR": "Year",
+        "APPLICANT_PHONE": "Your Phone Number",
+        "APPLICANT_NO_PHONE": "I don't have a telephone number",
+        "APPLICANT_ADDITIONAL_PHONE": "I have an additional phone number",
+        "APPLICANT_SECOND_PHONE": "Your second phone number",
+        "APPLICANT_EMAIL": "Your email address",
+        "APPLICANT_NO_EMAIL": "I don't have an email address",
+        "APPLICANT_NO_ADDRESS": "I don't have an address",
+        "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
+        "APPLICANT_MAILING_ADDRESS": "Mailing address",
+        "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
+        "ENTER_YOUR_LANGUAGE": "Enter your language",
+        "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
+        "PHONE_HOME": "Home",
+        "PHONE_WORK": "Work",
+        "PHONE_CELL": "Cell",
+        "ALTERNATE_CONTACT": "Alternate contact",
+        "PLEASE_SELECT_ONE": "Please select one.",
+        "FAMILY_MEMBER": "Family member",
+        "FRIEND": "Friend",
+        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
+        "OTHER": "Other",
+        "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
+        "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
+        "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
+        "AGENCY": "Agency",
+        "CONTACT_PHONE_NUMBER": "Contact phone number",
+        "CONTACT_EMAIL": "Contact email address",
+        "EMAIL_ADDRESS": "Email Address",
+        "CONTACT_MAILING_ADDRESS": "Contact mailing address",
+        "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
+        "LIVE_ALONE": "I will live alone",
+        "OTHER_PEOPLE": "Other people will live with me",
+        "PRIMARY_USER": "Primary User",
+        "HOUSEHOLD_MEMBER": "Household Member",
+        "ADD_HOUSEHOLD_MEMBER": "Add household member",
+        "DONE_ADDING_PEOPLE": "Done adding people",
+        "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
+        "DOB": "Date of Birth",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
+        "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
+        "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
+        "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
+        "APPLICANT_GENDER": "What best describes your gender?",
+        "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
+        "INCOME_PLACEHOLDER": "Total all of your income sources",
+        "INCOME": "Income",
+        "PER_MONTH": "per month",
+        "PER_YEAR": "per year"
+    },
+    "ERROR": {
+        "FIRST_NAME": "Please enter a First Name",
+        "LAST_NAME": "Please enter a Last Name",
+        "DOB": "Please enter a valid Date of Birth",
+        "PHONE_NUMBER": "Please enter a phone number",
+        "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "EMAIL": "Please enter an email address",
+        "LANGUAGE": "Please enter a language",
+        "RELATIONSHIP": "Please enter a relationship",
+        "ALTERNATE_CONTACT": "Please select an alternate contact",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
+        "INCOME": "Please enter an income amount",
+        "INCOME_TIMEFRAME": "Please enter an income timeframe"
+    },
+    "B2_CONTACT": {
+        "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
+        "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
+        "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
+        "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
+        "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
+        "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application."
+    },
+    "B3_ALTERNATE_CONTACT_TYPE": {
+        "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"
+    },
+    "B4_ALTERNATE_CONTACT_NAME": {
+        "TITLE": "Who is your alternate contact?",
+        "P1": "A good alternate contact is a person who will know how to reach you."
+    },
+    "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
+        "TITLE": "Let us know how to reach your alternate contact.",
+        "ONLY_USE_EMAIL": "We will only use this email address to contact your contact about your application.",
+        "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application."
+    },
+    "C1_HOUSEHOLD_INTRO": {
+        "TITLE": "Next, we'll get some info about any people who would live with you in the unit."
+    },
+    "C1A_HOUSEHOLD_OVERVIEW": {
+        "TITLE1": "Before adding other people, confirm that they have not applied in another application.",
+        "TITLE2": "If you include someone who has already applied, all of your applications will be disqualified."
+    },
+    "C2_HOUSEHOLD_MEMBERS": {
+        "TITLE": "Tell us about your household."
+    },
+    "C3_HOUSEHOLD_MEMBER_FORM": {
+        "TITLE": "Tell us about this person",
+        "P1": "You'll have the opportunity to add more household members on the next screen."
+    },
+    "D1_STATUS_PROGRAMS": {
+        "TITLE": "There are some special programs we'd like to ask you about. Do you have any of the following?",
+        "DISPLACED_TENANTS_DESC": "Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)",
+        "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
+        "PLEASE_CALL_P1": "If you have not heard of these preferences, you most likely do not have one. Please",
+        "PLEASE_CALL_P2": "to see if you have a Certificate."
+    },
+    "D6_STATUS_VOUCHERS": {
+        "TITLE": "Does anyone in your household receive any housing vouchers or subsidies?",
+        "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc."
+    },
+    "E1_INCOME": {
+        "TITLE": "Let's move onto the final topic: income.",
+        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
+        "P2": "You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery."
+    },
+    "F1_REVIEW": {
+        "TITLE": "These questions are optional and won't affect your eligibility for housing.",
+        "P1": "Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private."
+    }
+}

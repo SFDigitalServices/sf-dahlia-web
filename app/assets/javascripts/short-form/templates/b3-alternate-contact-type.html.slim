@@ -1,45 +1,42 @@
-h2.application-title.t-gamma Is there someone else you'd like us to contact if we can't get ahold of you?
+h2.application-title.t-gamma
+  | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})" ng-init="checkIfAlternateContactNeedsReset()"
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact') || inputInvalid('other_relationship')}"
-    label.form-label Alternate contact
+    label.form-label
+      | {{'LABEL.ALTERNATE_CONTACT' | translate}}
     p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
-      | Please select one.
+      | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
     .radio-group
       p.radio-block
-        input#alternate_contact_family(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Family member" ng-class="{ error: inputInvalid('alternate_contact')}")
-        label.radio-block_label for="alternate_contact_family"  Family member
+        input#alternate_contact_family(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio" value="Family member" ng-class="{ error: inputInvalid('alternate_contact')}")
+        label.radio-block_label for="alternate_contact_family"
+          | {{'LABEL.FAMILY_MEMBER' | translate}}
       p.radio-block
-        input#alternate_contact_friend(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Friend" ng-class="{ error: inputInvalid('alternate_contact')}")
-        label.radio-block_label for="alternate_contact_friend"  Friend
+        input#alternate_contact_friend(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio" value="Friend" ng-class="{ error: inputInvalid('alternate_contact')}")
+        label.radio-block_label for="alternate_contact_friend"
+          | {{'LABEL.FRIEND' | translate}}
       p.radio-block
-        input#alternate_contact_counselor(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio"
-          value="Social worker or housing counselor" ng-class="{ error: inputInvalid('alternate_contact')}")
-        label.radio-block_label for="alternate_contact_counselor"  Social worker or housing counselor
+        input#alternate_contact_counselor(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio" value="Social worker or housing counselor" ng-class="{ error: inputInvalid('alternate_contact')}")
+        label.radio-block_label for="alternate_contact_counselor"
+          | {{'LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR' | translate}}
       p.radio-block
         input#alternate_contact_other(ng-required="true" ng-model="alternateContact.type" name="alternate_contact" type="radio" value="Other" ng-class="{ error: inputInvalid('alternate_contact')}")
-        label.radio-block_label for="alternate_contact_other" Other
+        label.radio-block_label for="alternate_contact_other"
+          | {{'LABEL.OTHER' | translate}}
 
       p.radio-block ng-show="alternateContact.type == 'Other'"
         input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="other_relationship" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.type == 'Other'"
         small.error ng-show="inputInvalid('other_relationship')"
-          | Please enter a relationship
+          | {{'ERROR.RELATIONSHIP' | translate}}
 
       p.radio-block ng-if="applicantHasPhoneEmailAndAddress()"
         / this option to bypass alternate contact is only available
         / if the applicant has entered phone and address
         input#alternate_contact_none(ng-model="alternateContact.type" name="alternate_contact" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternate_contact')}")
         label.radio-block_label for="alternate_contact_none"
-         | I don't have an alternate contact
-
-
-
+         | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
 
     small.error ng-show="inputInvalid('alternate_contact')"
-      | Please select an alternate contact
-  .button-stack--paginate.text-center.row.padding-top
-    .small-12.medium-6.medium-push-6.columns
-      input.button.expand.radius type="submit" value="Next"
-    .small-12.medium-6.medium-pull-6.columns
-      button.button.ghost-white.expand Save and finish later
+      | {{'ERROR.ALTERNATE_CONTACT' | translate}}
+
+  short-form-save-and-submit

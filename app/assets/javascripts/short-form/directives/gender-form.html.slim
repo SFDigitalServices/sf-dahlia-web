@@ -1,7 +1,8 @@
 .form-group.margin-bottom--2x
   label.form-label.no-margin
-    | What best describes {{pronoun}} gender?
-  p.form-note.margin-bottom Optional
+    | {{'LABEL.APPLICANT_GENDER' | translate}}
+  p.form-note.margin-bottom
+    | {{'T.OPTIONAL' | translate}}
   .radio-group
     checkbox-form-item user='applicant' name='gender' option='{{gender}}' ng-repeat="gender in ::gender_options track by $index" is-disabled="genderOtherOptionSelected"
 

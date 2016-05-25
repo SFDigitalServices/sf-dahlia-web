@@ -1,49 +1,52 @@
-h2.application-title.t-gamma.padding-bottom
-  | Tell us about this person
-p You'll have the opportunity to add more household members on the next screen.
+h2.application-title.t-gamma
+  | {{'C3_HOUSEHOLD_MEMBER_FORM.TITLE' | translate}}
+p
+  | {{'C3_HOUSEHOLD_MEMBER_FORM.P1' | translate}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember', path: 'dahlia.short-form-application.household-members'})" ng-init="getHouseholdMember()"
   .form-group ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
-    h3.form-label Household Member's Name
+    h3.form-label
+      | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
     label.sr-only for="housholdMemberFirstName"
-      | First Name
-    input#housholdMemberFirstName ng-model="householdMember.first_name" name="first_name" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('first_name') }"
+      | {{'LABEL.FIRST_NAME' | translate}}
+    input#housholdMemberFirstName ng-model="householdMember.first_name" name="first_name" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('first_name') }"
     small.error ng-show="inputInvalid('first_name')"
-      | Please enter a First Name
+      | {{'ERROR.FIRST_NAME' | translate}}
     label.sr-only for="householdMemberMiddleName"
-      | Middle Name (optional)
-    input#householdMemberMiddleName ng-model="householdMember.middle_name" name="middle_name" placeholder="Middle Name (optional)" type="text"
+      | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
+    input#householdMemberMiddleName ng-model="householdMember.middle_name" name="middle_name" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
     label.sr-only for="householdMemberLastName"
-      | Last Name
-    input#householdMemberLastName ng-model="householdMember.last_name" name="last_name" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('last_name') }"
+      | {{'LABEL.LAST_NAME' | translate}}
+    input#householdMemberLastName ng-model="householdMember.last_name" name="last_name" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('last_name') }"
     small.error ng-show="inputInvalid('last_name')"
-      | Please enter a Last Name
+      | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
-    h3.form-label Date of Birth
+    h3.form-label
+      | {{'LABEL.DOB' | translate}}
     .form-date-of-birth.row.collapse
       .form-group-month.large-2.columns
         label.sr-only for="date_of_birth_month"
-          | Month
+          | {{'LABEL.DOB_MONTH' | translate}}
         input#date_of_birth_month.no-margin ng-model="householdMember.dob_month" max="12" min="1" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="number"
 
       .form-group-day.large-2.columns
         label.sr-only for="date_of_birth_day"
-          | Day
+          | {{'LABEL.DOB_DAY' | translate}}
         input#date_of_birth_day.no-margin ng-model="householdMember.dob_day" max="31" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number"  ng-class="{ error: inputInvalid('date_of_birth_day') }"
       .form-group-year.large-2.columns.end
         label.sr-only for="date_of_birth_year"
-          | Year
+          | {{'LABEL.DOB_YEAR' | translate}}
         input#date_of_birth_year.no-margin ng-model="householdMember.dob_year" max="2016" min="1900" name="date_of_birth_year" required="" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }"
     small.error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
-      | Please enter a valid Date of Birth
+      | {{'ERROR.DOB' | translate}}
 
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('relationship') }"
     label.form-label.no-margin for="householdMemberRelationship"
-      | What is your relationship to them?
+      | {{'LABEL.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
     select#householdMemberRelationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
       option ng-repeat="relationship in relationship_options" value="{{relationship}}"
         | {{ relationship }}
     small.error ng-show="inputInvalid('relationship')"
-     | Please select your relationship to the household member
+     | {{'ERROR.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
 
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
@@ -52,6 +55,6 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     .small-12.medium-6.medium-pull-6.columns
       a.button.ghost-white.expand ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
-          | Cancel adding this person
+          | {{'LABEL.HOUSEHOLD_MEMBER_CANCEL' | translate}}
         span ng-if="householdMember.id"
-          | Delete this person
+          | {{'LABEL.HOUSEHOLD_MEMBER_DELETE' | translate}}
