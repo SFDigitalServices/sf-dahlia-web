@@ -3,8 +3,7 @@ h2.application-title.t-gamma.padding-bottom
 
 img.property-thumb.margin-bottom--2x alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
 
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.welcome'})"
-
+form
   label
     | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
   h2
@@ -15,13 +14,6 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
     | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
     | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
-
-  label
-    | {{'G1_CONFIRMATION.RECEIVE_UPDATES_OPTIONS' | translate}}
-
-  checkbox-form-item user='applicant' name='application_updates' option='Email' label="{{'G1_CONFIRMATION.EMAIL' | translate}}"
-  checkbox-form-item user='applicant' name='application_updates' option='Mail' label="{{'G1_CONFIRMATION.MAIL' | translate}}"
-
   label
     | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
   p.review-summary-item
@@ -33,6 +25,6 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         button.button.ghost-white.expand
           | {{'G1_CONFIRMATION.CREATE_ACCOUNT' | translate}}
       .small-12.medium-6.medium-pull-6.columns
-        button.button.ghost-white.expand type="submit"
+        button.button.ghost-white.expand ui-sref="dahlia.welcome"
           | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
 
