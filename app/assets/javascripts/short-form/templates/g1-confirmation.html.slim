@@ -1,0 +1,37 @@
+h2.application-title.t-gamma.padding-bottom
+  | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Building_Name}}
+
+label
+  | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
+h2
+  | #98AU18
+label
+  | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
+p.review-summary-item
+  | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
+  | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
+  | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
+
+label
+  | {{'G1_CONFIRMATION.RECEIVE_UPDATES_OPTIONS' | translate}}
+
+
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.welcome'})"
+
+  checkbox-form-item user='applicant' name='application_updates' option='Email' label="{{'G1_CONFIRMATION.EMAIL' | translate}}"
+  checkbox-form-item user='applicant' name='application_updates' option='Mail' label="{{'G1_CONFIRMATION.MAIL' | translate}}"
+
+  label
+    | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
+  p.review-summary-item
+    | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
+
+  .form-group
+    .button-stack--paginate.text-center.row.padding-top
+      .small-12.medium-6.medium-push-6.columns
+        button.button.ghost-white.expand
+          | {{'G1_CONFIRMATION.CREATE_ACCOUNT' | translate}}
+      .small-12.medium-6.medium-pull-6.columns
+        button.button.ghost-white.expand type="submit"
+          | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
+
