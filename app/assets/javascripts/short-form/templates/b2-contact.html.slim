@@ -1,6 +1,6 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.verify-address'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"

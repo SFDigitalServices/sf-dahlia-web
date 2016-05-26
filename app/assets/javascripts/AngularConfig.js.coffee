@@ -241,6 +241,20 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
     })
+    .state('dahlia.short-form-application.verify-address', {
+      url: '/verify-address'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2a-verify-address.html'
+      resolve:
+        address_validation: [
+          'AddressValidationService',
+          'ShortFormApplicationService',
+          (AddressValidationService, ShortFormApplicationService) ->
+            address = ShortFormApplicationService.applicant.mailing_address
+            AddressValidationService.validate(address, 'mailing')
+        ]
+    })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
       views:

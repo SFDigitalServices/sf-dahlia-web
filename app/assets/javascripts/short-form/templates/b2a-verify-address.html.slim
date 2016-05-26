@@ -1,0 +1,13 @@
+h2.application-title.t-gamma.padding-bottom
+  | {{'B2A_VERIFY_ADDRESS.TITLE' | translate}}
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
+  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"
+    label.form-label
+      | {{'LABEL.ADDRESS_OPTIONS' | translate}}
+    p.form-note.margin-bottom
+      | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+    .radio-group
+
+
+
+  short-form-save-and-submit

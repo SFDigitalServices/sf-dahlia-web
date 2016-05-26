@@ -2,8 +2,17 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShortFormApplicationController =
-($scope, $state, $window, $translate, ListingService, ShortFormApplicationService, ShortFormNavigationService, ShortFormHelperService) ->
+ShortFormApplicationController = (
+  $scope,
+  $state,
+  $window,
+  $translate,
+  ListingService,
+  ShortFormApplicationService,
+  ShortFormNavigationService,
+  ShortFormHelperService,
+  AddressValidationService
+) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -13,6 +22,11 @@ ShortFormApplicationController =
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
+  $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
+  $scope.validated_home_address = AddressValidationService.validated_home_address
+
+  ## form options
+  $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
   $scope.gender_options = [
     'Male',
     'Female',
@@ -215,7 +229,7 @@ ShortFormApplicationController =
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$translate',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService'
+  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
 angular

@@ -1,5 +1,9 @@
 {
     "LABEL": {
+        "FAMILY_MEMBER": "Family member",
+        "FRIEND": "Friend",
+        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
+        "OTHER": "Other",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "SELECT_ONE": "Select One",
@@ -32,10 +36,6 @@
         "PHONE_CELL": "Cell",
         "ALTERNATE_CONTACT": "Alternate contact",
         "PLEASE_SELECT_ONE": "Please select one.",
-        "FAMILY_MEMBER": "Family member",
-        "FRIEND": "Friend",
-        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
-        "OTHER": "Other",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
         "AGENCY": "Agency",
@@ -140,6 +140,9 @@
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
         "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen."
+    },
+    "B2A_VERIFY_ADDRESS": {
+        "TITLE": "Choose which version of the address you want to use."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"
