@@ -1,23 +1,23 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Building_Name}}
 
-label
-  | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
-h2
-  | #98AU18
-label
-  | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
-p.review-summary-item
-  | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
-  | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
-  | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
 img.property-thumb.margin-bottom--2x alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
 
-label
-  | {{'G1_CONFIRMATION.RECEIVE_UPDATES_OPTIONS' | translate}}
-
-
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.welcome'})"
+
+  label
+    | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
+  h2
+    | #98AU18
+  label
+    | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
+  p.review-summary-item
+    | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
+    | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
+    | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
+
+  label
+    | {{'G1_CONFIRMATION.RECEIVE_UPDATES_OPTIONS' | translate}}
 
   checkbox-form-item user='applicant' name='application_updates' option='Email' label="{{'G1_CONFIRMATION.EMAIL' | translate}}"
   checkbox-form-item user='applicant' name='application_updates' option='Mail' label="{{'G1_CONFIRMATION.MAIL' | translate}}"
