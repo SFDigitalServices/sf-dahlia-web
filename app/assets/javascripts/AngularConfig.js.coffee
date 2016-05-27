@@ -325,6 +325,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    .state('dahlia.short-form-application.live-work-preference', {
+      url: '/live-work-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-live-work-preference.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.status-vouchers', {
       url: '/status-vouchers'
       views:
