@@ -20,7 +20,7 @@ div
           | {{ member.first_name }} {{ member.last_name }}
 
     / checkbox for proof options for this preference
-    .form-group ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(applicant)"
+    .form-group.border-bottom ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(applicant)"
       label.form-label.margin-bottom--half for="{{pref_type_proof_option}}"
         | {{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}
       select id="{{pref_type_proof_option}}" ng-model="applicant.preferences[pref_type_proof_option]" data-width="auto" name="{{pref_type_proof_option}}" ng-required="applicant.preferences[pref_type]"
@@ -29,11 +29,11 @@ div
         option ng-repeat="option in preference_proof_options" value="{{option}}"
           | {{ option }}
 
-    .form-group.text-center ng-if="show_preferences_options(applicant)"
-      button.button.ghost-white.expand
-        | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
-      p.form-note
-        | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
-      p.form-note.margin-bottom
-        | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
+      .form-group.text-center ng-if="show_preferences_options(applicant)"
+        button.button.ghost-white.expand
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
+        p.form-note
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
+        p.form-note.margin-bottom
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
 
