@@ -30,7 +30,7 @@ div
           | {{ option }}
 
       .form-group.text-center ng-if="show_preferences_options(applicant)"
-        button.button.ghost-white.expand
+        div.button.ghost-white.expand ngf-select="" name="file" ng-model="applicant.preferences[pref_type_proof_option].file" ngf-max-size="20MB"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}

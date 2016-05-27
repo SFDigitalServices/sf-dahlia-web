@@ -22,7 +22,7 @@
 angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
-angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
+angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUpload'])
 
 # allow trailing slashes and don't force case sensitivity on routes
 @dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
