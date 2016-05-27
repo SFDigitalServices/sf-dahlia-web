@@ -40,8 +40,6 @@ ShortFormHelperService = ($translate, $filter) ->
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
 
-
-
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
     name = applicant.first_name

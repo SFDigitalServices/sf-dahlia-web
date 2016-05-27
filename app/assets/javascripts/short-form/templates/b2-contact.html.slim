@@ -1,6 +1,6 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.verify-address'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"
@@ -98,17 +98,19 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
-  .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
+  .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
     label.form-label.no-margin
       | {{'LABEL.WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
     .radio-group
-      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
-      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
+      radio-block-item value='Yes' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.NO' | translate}}
 
-    small.highlight ng-if="applicant.work_in_san_francisco == 'Yes'"
+    small.highlight ng-if="applicant.work_in_sf == 'Yes'"
       | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 

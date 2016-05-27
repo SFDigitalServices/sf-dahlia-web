@@ -8,7 +8,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
     .radio-group
 
-      radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' label='{{option[1]}}' user='alternateContact' name='type' ng-required='true'
+      radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='type' ng-required='true'
+        | {{option[1]}}
 
       p.radio-block ng-show="alternateContact.type == 'Other'"
         input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="other_relationship" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.type == 'Other'"

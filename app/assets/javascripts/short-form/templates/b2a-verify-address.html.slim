@@ -1,13 +1,45 @@
+/ .alert-box.alert alert="" ng-if="!validated_home_address.verifications.delivery.success"
+/   span.alert-icon
+/     span.ui-icon.ui-static.ui-medium.i-oil
+/       svg
+/         use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
+/   p.alert-body
+/     | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+
 h2.application-title.t-gamma.padding-bottom
   | {{'B2A_VERIFY_ADDRESS.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
-  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternate_contact')}"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkValidatedAddressSelection'})" ng-init="applicant.validated_address = null"
+  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('validated_address')}"
     label.form-label
       | {{'LABEL.ADDRESS_OPTIONS' | translate}}
     p.form-note.margin-bottom
       | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
     .radio-group
+      radio-block-item value='use_suggested' user='applicant' name='validated_address' ng-required='true'
+        p.margin-bottom--half
+          | {{'LABEL.SUGGESTED_ADDRESS' | translate}}:
+        p.margin-bottom-none.t-base
+          | {{validated_home_address.street1}}
+        p.margin-bottom-none.t-base ng-if="validated_home_address.street2"
+          | {{validated_home_address.street2}}
+        p.margin-bottom-none.t-base
+          ' {{validated_home_address.city}},
+          ' {{validated_home_address.state}}
+          ' {{validated_home_address.zip}}
 
+        small.error
+          | {{'B2A_VERIFY_ADDRESS.SUGGESTED_ADDRESS_DESC' | translate}}
 
+      radio-block-item value='use_original' user='applicant' name='validated_address' ng-required='true'
+        p.margin-bottom--half
+          | {{'LABEL.ORIGINAL_ADDRESS' | translate}}:
+        p.margin-bottom-none.t-base
+          | {{applicant.home_address.address1}}
+        p.margin-bottom-none.t-base ng-if="applicant.home_address.address2"
+          | {{applicant.home_address.address2}}
+        p.t-base
+          ' {{applicant.home_address.city}},
+          ' {{applicant.home_address.state}}
+          ' {{applicant.home_address.zip}}
 
   short-form-save-and-submit

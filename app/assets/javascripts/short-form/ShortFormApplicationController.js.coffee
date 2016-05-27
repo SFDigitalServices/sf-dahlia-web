@@ -129,9 +129,6 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
-  $scope.formattedAddress = (listing) ->
-    ListingService.formattedAddress(listing)
-
   $scope.applicantHasPhoneEmailAndAddress = ->
     $scope.applicant.phone_number &&
       $scope.applicant.email &&
@@ -163,6 +160,16 @@ ShortFormApplicationController = (
     #reset mailing address
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
+
+  $scope.checkIfAddressVerificationNeeded = ->
+    if $scope.applicant.noAddress
+      # skip ahead if they aren't filling out an address
+      $state.go('dahlia.short-form-application.alternate-contact-type')
+    else
+      $state.go('dahlia.short-form-application.verify-address')
+
+  $scope.checkValidatedAddressSelection = ->
+    $state.go('dahlia.short-form-application.alternate-contact-type')
 
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
