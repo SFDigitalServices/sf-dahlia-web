@@ -68,11 +68,16 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       small.highlight ng-if="applicant.noEmail"
         | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
-  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
-    label.form-label.no-margin Your address
-    p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
+  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress, error: homeAddressRequired && addressInputInvalid('home_address')}"
+    label.form-label.no-margin
+      | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
+
+    small.error ng-if="addressFailedValidation('home_address')"
+      | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
@@ -90,7 +95,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
         label for="applicant_separate_address"
           | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
 
-  .form-group ng-if="applicant.separateAddress"
+  .form-group ng-if="applicant.separateAddress" ng-class="{ error: addressInputInvalid('mailing_address')}"
     label.form-label.no-margin
       | {{'LABEL.MAILING_ADDRESS' | translate}}
     p.form-note.margin-bottom

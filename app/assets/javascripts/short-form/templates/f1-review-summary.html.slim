@@ -16,7 +16,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         | {{applicant.second_phone_number | tel}}
       review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
         | {{applicant.email}}
-      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+      review-summary-item label="{{'LABEL.APPLICANT_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+        | {{applicant.home_address.address1}}
+        br
+        ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
+        | {{applicant.home_address.zip}}
+
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.separateAddress"
         | {{applicant.mailing_address.address1}}
         br
         ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}

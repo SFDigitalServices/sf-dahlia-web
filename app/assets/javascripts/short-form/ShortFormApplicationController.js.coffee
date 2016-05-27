@@ -112,6 +112,18 @@ ShortFormApplicationController = (
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
 
+  $scope.addressInputInvalid = (identifier = '') ->
+    if $scope.addressFailedValidation(identifier)
+      return true
+    $scope.inputInvalid('address1', identifier) ||
+    $scope.inputInvalid('city', identifier) ||
+    $scope.inputInvalid('state', identifier) ||
+    $scope.inputInvalid('zip', identifier)
+
+  $scope.addressFailedValidation = (identifier = '') ->
+    validated = $scope["validated_#{identifier}"]
+    return !_.isEmpty(validated) && !AddressValidationService.isDeliverable(validated)
+
   $scope.checkInvalidPhones = () ->
     $scope.inputInvalid('phone_number') ||
     $scope.inputInvalid('phone_number_type') ||
@@ -162,8 +174,11 @@ ShortFormApplicationController = (
     $scope.checkIfMailingAddressNeeded()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.noAddress
+    if ($scope.applicant.noAddress ||
+        ($scope.applicant.confirmed_home_address &&
+        AddressValidationService.isConfirmed($scope.applicant.home_address, 'home')))
       # skip ahead if they aren't filling out an address
+      # or their current address has already been confirmed
       $state.go('dahlia.short-form-application.alternate-contact-type')
     else
       $state.go('dahlia.short-form-application.verify-address')

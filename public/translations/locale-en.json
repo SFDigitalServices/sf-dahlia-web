@@ -18,12 +18,13 @@
         "DOB_MONTH": "Month",
         "DOB_DAY": "Day",
         "DOB_YEAR": "Year",
-        "APPLICANT_PHONE": "Your Phone Number",
+        "APPLICANT_PHONE": "Your phone number",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_ADDITIONAL_PHONE": "I have an additional phone number",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_EMAIL": "Your email address",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
+        "APPLICANT_ADDRESS": "Your address",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "MAILING_ADDRESS": "Mailing address",
@@ -34,11 +35,9 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PHONE_CELL": "Cell",
-        "ADDRESS_OPTIONS": "Address Options",
-        "PLEASE_SELECT_ONE": "Please select one.",
         "SUGGESTED_ADDRESS": "Suggested Address",
-        "ORIGINAL_ADDRESS": "Original Address",
         "ALTERNATE_CONTACT": "Alternate contact",
+        "PLEASE_SELECT_ONE": "Please select one.",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
         "AGENCY": "Agency",
@@ -103,7 +102,6 @@
         "BACK": "Back"
     },
     "ERROR": {
-        "ADDRESS_VALIDATION": "There's a problem with the address you provided.",
         "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
         "FIRST_NAME": "Please enter a First Name",
@@ -112,7 +110,9 @@
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "EMAIL": "Please enter an email address",
+        "ADDRESS_VALIDATION": "There's a problem with the address you provided.",
         "LANGUAGE": "Please enter a language",
+        "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
         "RELATIONSHIP": "Please enter a relationship",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
@@ -142,14 +142,14 @@
         "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
+        "APPLICANT_ADDRESS_DESC": "Ideally this is an address where we can send updates about your application.",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
         "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen."
     },
     "B2A_VERIFY_ADDRESS": {
-        "TITLE": "Choose which version of the address you want to use.",
-        "SUGGESTED_ADDRESS_DESC": "We suggest the above changes."
+        "TITLE": "We have located the following address, please confirm that it is correct."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"

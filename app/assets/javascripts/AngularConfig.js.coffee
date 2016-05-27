@@ -254,7 +254,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
             AddressValidationService.validate(
               address: ShortFormApplicationService.applicant.home_address
               type: 'home'
-              returnPath: 'dahlia.short-form-application.contact'
             )
         ]
     })
