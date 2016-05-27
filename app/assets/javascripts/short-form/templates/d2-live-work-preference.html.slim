@@ -1,0 +1,16 @@
+h2.application-title.t-gamma
+  | {{'D2_LIVE_WORK_PREFERENCE.TITLE' | translate}}
+p.form-note.margin-bottom
+  | {{'T.OPTIONAL' | translate}}
+p.form-note.margin-bottom
+  | {{'D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS' | translate}}
+
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
+  .checkbox-group
+    checkbox-preference-item title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}" type="live_in_sf" upload_proof="true"
+    checkbox-preference-item title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORDHOOD_RESIDENCE.TITLE' | translate}}" type="neighborhood_residence" upload_proof="true"
+      | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORDHOOD_RESIDENCE.DESCRIPTION' | translate}}
+    checkbox-preference-item title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" type="work_in_sf" upload_proof="true"
+      | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION' | translate}}
+
+  short-form-save-and-submit
