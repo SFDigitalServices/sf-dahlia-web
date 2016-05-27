@@ -29,11 +29,22 @@ div
         option ng-repeat="option in preference_proof_options" value="{{option}}"
           | {{ option }}
 
-      .form-group.text-center ng-if="show_preferences_options(applicant)"
-        div.button.ghost-white.expand ngf-select="" name="file" ng-model="applicant.preferences[pref_type_proof_option].file" ngf-max-size="20MB"
+      .form-group.text-center ng-if="show_preferences_options(applicant)" ng-hide="applicant.preferences[pref_type_proof_file]"
+        div.button.ghost-white.expand ngf-select="" name="file" ng-model="applicant.preferences[pref_type_proof_file]" ngf-max-size="20MB"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
         p.form-note.margin-bottom
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
+          | article class="attachment media"
+
+      article.attachment.media.margin-bottom ng-if="applicant.preferences[pref_type_proof_file]"
+        figure.media-img
+          img src="http://placehold.it/100x100" /
+        .media-body
+          strong Proof of address
+          br
+            | Uploaded: April 24th, 2016
+          a.attachment-action.a-alert hre="#"  Delete
+
 
