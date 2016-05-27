@@ -210,5 +210,19 @@
         "P3": "All of the information that you have provided will be verified and your eligibility confirmed. Any fraudulent statements will cause your application to be removed from the lottery. You will also be removed from the lottery if we cannot verify your housing lottery preference, or if a household member appears on more than one application for this listing.",
         "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents. For more information, please contact the property directly using the contact information posted in the property announcement.",
         "P5": "I declare that the foregoing is true and accurate, and I acknowledge that any material misstatement fraudulently or negligently made on this application will result in removal from the lottery."
+    },
+    "G1_CONFIRMATION": {
+        "TITLE": "Thanks for applying. We're processing your application for",
+        "LOTTERY_NUMBER": "Here's your lottery number",
+        "NEXT_STEPS_TITLE": "What to expect next",
+        "NEXT_STEPS_BODY1": "The lottery will be held on",
+        "NEXT_STEPS_BODY2": "You will be updated on your application status within three weeks.",
+        "RECEIVE_UPDATES_OPTIONS": "How would you like to receive updates about your application?",
+        "EMAIL": "Email",
+        "MAIL": "Mail",
+        "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
+        "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
+        "CREATE_ACCOUNT": "Create an account",
+        "NO_THANKS_IM_DONE": "No thanks, I'm done."
     }
 }

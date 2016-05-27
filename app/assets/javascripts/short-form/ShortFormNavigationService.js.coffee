@@ -36,7 +36,8 @@ ShortFormNavigationService = ($state) ->
   ]
 
   Service.hasNav = ->
-    $state.current.name != 'dahlia.short-form-application.intro'
+    hideNav = ['dahlia.short-form-application.intro', 'dahlia.short-form-application.confirmation']
+    hideNav.indexOf($state.current.name) < 0
 
   Service.isActiveSection = (section) ->
     section.pages.indexOf(Service._currentPage()) > -1

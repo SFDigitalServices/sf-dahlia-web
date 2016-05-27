@@ -12,9 +12,7 @@ p
 p
   | {{'F2_REVIEW_TERMS.P5' | translate}}
 
-
-/ TODO: currently just submits to the same page again just to test form validation
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-terms'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.confirmation'})"
 
   checkbox-form-item user='applicant' name='terms' option='yes' label="{{'T.I_AGREE' | translate}}" ng-required='true' error="{{'ERROR.TERMS' | translate}}"
 
