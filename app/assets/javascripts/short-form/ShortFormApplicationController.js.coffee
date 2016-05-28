@@ -92,7 +92,8 @@ ShortFormApplicationController = (
     for this listing. If you'd like to save your information to finish
     the application at a later time, please click the 'Save and Finish later' button."
 
-  $window.onbeforeunload = $scope.onExit
+  unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
+    $window.onbeforeunload = $scope.onExit
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm

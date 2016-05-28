@@ -9,7 +9,7 @@ AddressValidationService = ($http) ->
 
   Service.validate = (opts) ->
     address = opts.address || {}
-    type = opts.type || 'mailing'
+    type = opts.type || 'home'
     validated = Service["validated_#{type}_address"]
     angular.copy({}, validated)
     params =

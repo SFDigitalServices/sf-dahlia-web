@@ -9,6 +9,7 @@ VCR.configure do |config|
     SALESFORCE_SECURITY_TOKEN
     SALESFORCE_CLIENT_SECRET
     SALESFORCE_CLIENT_ID
+    EASYPOST_API_KEY
   ].each do |val|
     config.filter_sensitive_data("<<#{val}>>") do
       ENV[val]
