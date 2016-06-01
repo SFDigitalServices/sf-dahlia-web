@@ -4,6 +4,7 @@ ShortFormNavigationService = ($state) ->
     { name: 'You', pages: [
         'name',
         'contact',
+        'verify-address',
         'alternate-contact-type',
         'alternate-contact-name',
         'alternate-contact-phone-address',
@@ -19,7 +20,8 @@ ShortFormNavigationService = ($state) ->
     },
     { name: 'Status', pages: [
         'status-programs',
-        'status-vouchers'
+        'status-vouchers',
+        'live-work-preference'
       ]
     },
     { name: 'Income', pages: [
