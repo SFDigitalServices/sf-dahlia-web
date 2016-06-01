@@ -1,5 +1,5 @@
 angular.module('dahlia.directives')
-.directive 'reviewSummarySection', ->
+.directive 'reviewSummarySection', ['$state', ($state) ->
   replace: true
   scope: true
   transclude: true
@@ -7,4 +7,5 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.header = attrs.header
-    scope.uiSref = attrs.uiSref
+    scope.ngHref = $state.href(attrs.ngHref)
+]
