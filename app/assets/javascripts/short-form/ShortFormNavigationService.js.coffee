@@ -60,15 +60,10 @@ ShortFormNavigationService = ($state) ->
       indexofSection = _sectionNames.indexOf(section.name)
       indexofSection < indexOfActiveSection
 
-  Service._currentPage = () ->
-    $state.current.name.replace('dahlia.short-form-application.', "")
-
   Service.activeSection = () ->
     Service._sectionOfPage(Service._currentPage())
 
   Service.backPageState = (application) ->
-    applicant = application.applicant
-    alternateContact = application.alternateContact
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
       when 'contact'
@@ -84,7 +79,7 @@ ShortFormNavigationService = ($state) ->
           Service._getPreviousPage()
       # -- Household
       when 'household-intro'
-        if alternateContact.type == 'None'
+        if application.alternateContact.type == 'None'
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
@@ -98,6 +93,9 @@ ShortFormNavigationService = ($state) ->
       else
         'intro'
     $state.href("dahlia.short-form-application.#{page}")
+
+  Service._currentPage = () ->
+    $state.current.name.replace('dahlia.short-form-application.', "")
 
   Service._getPreviousPage = () ->
     pages = _.flatten _.map(Service.sections, (section) -> section.pages)
