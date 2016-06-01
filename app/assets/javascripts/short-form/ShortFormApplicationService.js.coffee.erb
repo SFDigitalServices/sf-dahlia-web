@@ -1,4 +1,4 @@
-ShortFormApplicationService = () ->
+ShortFormApplicationService = ($localStorage) ->
   Service = {}
   Service.applicationDefaults = {
     applicant: {
@@ -21,7 +21,12 @@ ShortFormApplicationService = () ->
   }
   Service.current_id = 0
 
+  <% if Rails.env.development? %>
+  $localStorage.application ?= Service.applicationDefaults
+  Service.application = $localStorage.application
+  <% else %>
   Service.application = Service.applicationDefaults
+  <% end %>
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
@@ -111,7 +116,7 @@ ShortFormApplicationService = () ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = []
+ShortFormApplicationService.$inject = ['$localStorage']
 
 angular
   .module('dahlia.services')
