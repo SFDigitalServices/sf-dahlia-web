@@ -141,7 +141,6 @@ ShortFormApplicationController = (
     $scope.inputInvalid('second_phone_number') ||
     $scope.inputInvalid('second_phone_number_type')
 
-
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
     field = form[fieldName]
@@ -231,6 +230,11 @@ ShortFormApplicationController = (
 
   $scope.genderOtherOptionSelected = (user) ->
     user.gender['Not Listed'] || user.gender['Decline to State']
+
+  ###### Proof of Preferences Logic ########
+  $scope.checkLiveWorkEligibility = () ->
+    ShortFormApplicationService.livesInSf()
+    ShortFormApplicationService.worksInSf()
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
