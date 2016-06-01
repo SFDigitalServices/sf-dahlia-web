@@ -22,10 +22,10 @@ ShortFormApplicationService = ($localStorage) ->
   Service.current_id = 0
 
   <% if Rails.env.development? %>
-    $localStorage.application ?= Service.applicationDefaults
-    Service.application = $localStorage.application
+  $localStorage.application ?= Service.applicationDefaults
+  Service.application = $localStorage.application
   <% else %>
-    Service.application = Service.applicationDefaults
+  Service.application = Service.applicationDefaults
   <% end %>
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
