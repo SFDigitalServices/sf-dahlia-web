@@ -7,5 +7,5 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.header = attrs.header
-    scope.ngHref = $state.href(attrs.ngHref)
+    scope.ngHref = $state.href(attrs.to)
 ]
