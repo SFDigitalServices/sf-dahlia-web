@@ -45,6 +45,7 @@ ShortFormNavigationService = ($state) ->
       'intro',
       'overview',
       'name',
+      'verify-address',
       'household-members',
       'household-member-form',
       'household-member-form-edit',
