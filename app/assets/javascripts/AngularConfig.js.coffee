@@ -16,6 +16,7 @@
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',
+  'ngAria',
 ]
 
 # Custom Directives

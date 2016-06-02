@@ -24,8 +24,8 @@ do ->
       },
       { name: 'Status', pages: [
           'status-programs',
-          'status-vouchers',
-          'live-work-preference'
+          'live-work-preference',
+          'status-vouchers'
         ]
       },
       { name: 'Income', pages: [

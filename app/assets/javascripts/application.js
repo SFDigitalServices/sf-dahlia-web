@@ -34,4 +34,5 @@
 //= require moment-timezone
 //= require js-yaml
 //= require ng-file-upload
+//= require angular-aria
 //= require_tree .
