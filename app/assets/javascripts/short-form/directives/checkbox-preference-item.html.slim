@@ -1,6 +1,6 @@
 div
   p.checkbox-block
-    input id="preferences-{{pref_type}}" name="preferences" ng-model="applicant.preferences[pref_type]" type="checkbox"
+    input id="preferences-{{pref_type}}" name="preferences" ng-model="applicant.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}"
     label.checkbox-block_label for="preferences-{{pref_type}}"
       strong
         | {{title}}
@@ -40,11 +40,9 @@ div
 
       article.attachment.media.margin-bottom ng-if="applicant.preferences[pref_type_proof_file]"
         figure.media-img
-          img src="http://placehold.it/100x100" /
+          img src="http://placehold.it/100x100" alt="placeholder"
         .media-body
           strong Proof of address
           br
             | Uploaded: April 24th, 2016
           a.attachment-action.a-alert hre="#"  Delete
-
-

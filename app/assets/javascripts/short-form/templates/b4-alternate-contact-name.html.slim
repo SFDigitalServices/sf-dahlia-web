@@ -6,20 +6,18 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
     h3.form-label
       | {{'LABEL.ALTERNATE_CONTACT_NAME' | translate}}
-    label.sr-only for="alternate_first_name"
-      | {{'LABEL.FIRST_NAME' | translate}}
+    label.sr-only for="alternate_first_name" translate="LABEL.FIRST_NAME"
     input#alternate_first_name ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('first_name') }"
     small.error ng-show="inputInvalid('first_name')"
       | {{'ERROR.FIRST_NAME' | translate}}
-    label.sr-only for="alternate_last_name"
-      | {{'LABEL.LAST_NAME' | translate}}
+    label.sr-only for="alternate_last_name" translate="LABEL.LAST_NAME"
     input#alternate_last_name ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('last_name') }"
     small.error ng-show="inputInvalid('last_name')"
       | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-if="alternateContact.type == 'Social worker or housing counselor'"
     h3.form-label
       | {{'LABEL.ALTERNATE_CONTACT_AGENCY' | translate}}
-    label.sr-only for="alternate_agency"
+    label.sr-only for="alternate_agency" translate="LABEL.ALTERNATE_CONTACT_AGENCY"
     input#alternate_agency ng-model="alternateContact.agency" name="agency" placeholder="{{'LABEL.AGENCY' | translate}}" type="text"
 
   short-form-save-and-submit

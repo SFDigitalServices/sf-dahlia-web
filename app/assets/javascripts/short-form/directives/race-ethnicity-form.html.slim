@@ -1,5 +1,5 @@
 .form-group
-  label.form-label.no-margin
+  label.form-label.no-margin for="user_ethnicity"
     | {{'LABEL.APPLICANT_ETHNICITY' | translate}}
   p.form-note.margin-bottom--half Optional
 
@@ -9,7 +9,7 @@
     option ng-repeat="option in ethnicity_options" value="{{option}}"
       | {{option}}
 
-  label.form-label.no-margin
+  label.form-label.no-margin for="user_race"
     | {{'LABEL.APPLICANT_RACE' | translate}}
   p.form-note.margin-bottom--half Optional
   select#user_race ng-model="user.race" data-width="auto" name="race"
