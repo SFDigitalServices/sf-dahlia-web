@@ -50,12 +50,11 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
-    label.form-label.no-margin
+    label.form-label.no-margin for="applicant_email"
       | {{'LABEL.APPLICANT_EMAIL' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
     .form-email
-      label.sr-only for="applicant_email"  Email Address
       input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
     small.error ng-if="inputInvalid('email')"
       | {{'ERROR.EMAIL' | translate}}
@@ -126,6 +125,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       option ng-repeat="language in language_options" value="{{language}}"
         | {{ language }}
 
+    label.sr-only for="applicantOtherLanguage"
+      | {{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}
     input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-if="applicant.primary_language == 'Other'"
     small.error ng-if="inputInvalid('other_language')"
       | {{'ERROR.LANGUAGE' | translate}}
