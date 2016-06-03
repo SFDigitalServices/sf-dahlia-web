@@ -19,14 +19,14 @@ span ng-controller="ListingController"
                 label.sr-only for="lottery_search_number" Enter Your Lottery Number
                 input#lottery_search_number placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
               .small-2.columns
-                button.icon-input-button.button.postfix ng-if="!lotterySearchNumber"
+                button.primary.icon-input-button.button.postfix ng-if="!lotterySearchNumber"
                   span.sr-only
                     | Search
                   span.ui-icon.ui-static.ui-medium.i-white
                     svg
                       use xlink:href="#i-right"
 
-                button.icon-input-button.button.postfix ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
+                button.primary.icon-input-button.button.postfix ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
                   span.sr-only
                     | Clear
                   span.ui-icon.ui-static.ui-medium.i-white
