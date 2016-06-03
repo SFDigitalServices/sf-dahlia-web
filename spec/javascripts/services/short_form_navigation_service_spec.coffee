@@ -2,7 +2,8 @@ do ->
   'use strict'
   describe 'ShortFormNavigationService', ->
     ShortFormNavigationService = undefined
-    $state = {current: {name: undefined}}
+    $state = undefined
+    application = {}
     sections = [
       { name: 'You', pages: [
           'name',
@@ -43,7 +44,8 @@ do ->
       return
     )
 
-    beforeEach inject((_ShortFormNavigationService_) ->
+    beforeEach inject((_ShortFormNavigationService_, _$state_) ->
+      $state = _$state_
       ShortFormNavigationService = _ShortFormNavigationService_
       return
     )
@@ -51,4 +53,42 @@ do ->
     describe 'Service setup', ->
       it 'initializes defaults', ->
         expect(ShortFormNavigationService.sections).toEqual sections
+        return
+
+    describe 'hasNav', ->
+      it 'checks if section does not have nav enabled', ->
+        $state.current.name = 'dahlia.short-form-application.intro'
+        hasNav = ShortFormNavigationService.hasNav()
+        expect(hasNav).toEqual false
+        return
+      it 'checks if section has nav enabled', ->
+        $state.current.name = 'dahlia.short-form-application.name'
+        hasNav = ShortFormNavigationService.hasNav()
+        expect(hasNav).toEqual true
+        return
+
+    describe 'hasBackButton', ->
+      it 'checks if section does not have back button enabled', ->
+        $state.current.name = 'dahlia.short-form-application.intro'
+        hasNav = ShortFormNavigationService.hasBackButton()
+        expect(hasNav).toEqual false
+        return
+      it 'checks if section has back button enabled', ->
+        $state.current.name = 'dahlia.short-form-application.contact'
+        hasNav = ShortFormNavigationService.hasBackButton()
+        expect(hasNav).toEqual true
+        return
+
+    describe 'activeSection', ->
+      it 'gets the active section of the current page', ->
+        $state.current.name = 'dahlia.short-form-application.status-programs'
+        activeSection = ShortFormNavigationService.activeSection()
+        expect(activeSection.name).toEqual 'Status'
+        return
+
+    describe 'backPageState', ->
+      it 'gets the previous page to be used by the back button', ->
+        $state.current.name = 'dahlia.short-form-application.contact'
+        previousState = ShortFormNavigationService.backPageState(application)
+        expect(previousState).toEqual $state.href('dahlia.short-form-application.name')
         return
