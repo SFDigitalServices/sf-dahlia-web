@@ -45,8 +45,8 @@ ShortFormHelperService = ($translate, $filter) ->
     name = applicant.first_name
     { name: if name then ', ' + name else '' }
 
-  Service.householdMemberForProgram = (applicant, pref_type) ->
-    { user: applicant.preferences["#{pref_type}_household_member"] }
+  Service.householdMemberForPreference = (application, pref_type) ->
+    { user: application.preferences["#{pref_type}_household_member"] }
 
 
   return Service

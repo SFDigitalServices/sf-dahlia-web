@@ -1,7 +1,6 @@
 div
   p.checkbox-block
-<<<<<<< HEAD
-    input id="preferences-{{pref_type}}" name="preferences" ng-model="applicant.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}"  ng-init="checkLiveWorkEligibility()"
+    input id="preferences-{{pref_type}}" name="preferences" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-init="checkLiveWorkEligibility()"
     label.checkbox-block_label for="preferences-{{pref_type}}"
       strong
         | {{title}}
@@ -10,10 +9,10 @@ div
 
 
     / checkbox for household member that has the preference
-    .form-group ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-show="applicant.preferences[pref_type]"
+    .form-group ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-show="application.preferences[pref_type]"
       label.form-label.margin-bottom--half for="{{pref_type_household_member}}"
         | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
-      select id="{{pref_type_household_member}}" ng-model="applicant.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="applicant.preferences[pref_type]"
+      select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
         option value="{{ applicant.first_name }} {{ applicant.last_name }}"
@@ -22,17 +21,17 @@ div
           | {{ member.first_name }} {{ member.last_name }}
 
     / checkbox for proof options for this preference
-    .form-group.border-bottom ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(applicant)"
+    .form-group.border-bottom ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(application)"
       label.form-label.margin-bottom--half for="{{pref_type_proof_option}}"
         | {{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}
-      select id="{{pref_type_proof_option}}" ng-model="applicant.preferences[pref_type_proof_option]" data-width="auto" name="{{pref_type_proof_option}}" ng-required="applicant.preferences[pref_type]"
+      select id="{{pref_type_proof_option}}" ng-model="application.preferences[pref_type_proof_option]" data-width="auto" name="{{pref_type_proof_option}}" ng-required="application.preferences[pref_type]"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
         option ng-repeat="option in preference_proof_options" value="{{option}}"
           | {{ option }}
 
-      .form-group.text-center ng-if="show_preferences_options(applicant)" ng-hide="applicant.preferences[pref_type_proof_file]"
-        div.button.ghost-white.expand ngf-select="" name="file" ng-model="applicant.preferences[pref_type_proof_file]" ngf-max-size="20MB"
+      .form-group.text-center ng-if="show_preferences_options(application)" ng-hide="application.preferences[pref_type_proof_file]"
+        div.button.ghost-white.expand ngf-select="" name="file" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="20MB"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
@@ -40,7 +39,7 @@ div
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
           | article class="attachment media"
 
-      article.attachment.media.margin-bottom ng-if="applicant.preferences[pref_type_proof_file]"
+      article.attachment.media.margin-bottom ng-if="application.preferences[pref_type_proof_file]"
         figure.media-img
           img src="http://placehold.it/100x100" alt="placeholder"
         .media-body
