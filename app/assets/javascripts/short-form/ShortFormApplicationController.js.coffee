@@ -165,8 +165,11 @@ ShortFormApplicationController =
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
-  $scope.activeSection = ->
-    ShortFormNavigationService.activeSection()
+  $scope.hasBackButton = ->
+    ShortFormNavigationService.hasBackButton()
+
+  $scope.backPageState = ->
+    ShortFormNavigationService.backPageState($scope.application)
 
   $scope.homeAddressRequired = ->
     !($scope.applicant.noAddress || $scope.applicant.separateAddress)
