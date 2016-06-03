@@ -1,0 +1,12 @@
+h2.application-title.t-gamma
+  | {{'D6_STATUS_VOUCHERS.TITLE' | translate}}
+p.form-note.margin-bottom
+  | {{'D6_STATUS_VOUCHERS.P1' | translate}}
+
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
+  .form-group ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
+    .radio-group.padding-top--half
+      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
+      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
+
+  short-form-save-and-submit

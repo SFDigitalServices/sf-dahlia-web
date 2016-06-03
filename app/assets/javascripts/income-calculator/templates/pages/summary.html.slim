@@ -1,32 +1,35 @@
-section.row.shift--top
-  .medium-8.columns
+.row.margin-top--2x.show-for-medium-up
+
+section.row.margin-bottom--2x
+  .medium-6.medium-centered.columns
     .form-card
-      form
-        header.margin-bottom--2x
-          h1.gamma.t-sans Here's your total annual income:
+      form.no-margin
+        header.padding.text-center
+          h2.t-base.t-alt-sans.t-caps.t-black Here's your total annual income:
 
-      section.row
-        .large-12.columns
-          .income-source ng-repeat="income in incomeSources"
-            .income-source_item.margin-bottom
-              span.income-source_name
-                | {{ income.source }}: {{ income.value | currency : $ : 2 }}/{{ income.frequency }}
+        .form-section.expand.border-top
+          .form-group.border-bottom ng-repeat="income in incomeSources"
+            .income-source
+              .income-source_item
+                span.income-source_name.no-padding
+                  | {{ income.source }}
+                  span.income-source_value
+                    | {{ income.value | currency : $ : 2 }}/{{ income.frequency }}
 
-      hr.hr-5.margin-top
+        footer.form-card_footer
+          .padding.padding-top--2x.padding-bottom--2x.bg-dust.border-top--primary
+            p.t-base.t-alt-sans.t-caps.t-black.no-margin
+              | Total Household Income
+              span.t-bold.right
+                | {{ totalHouseholdIncome() | currency : $ : 2 }}/year
 
-      section.row.margin-top--2x
-        .medium-12.columns
-          .row
-            .large-12.columns
-              p
-                | Total Household Income
-                span.t-bold.right
-                  | {{ totalHouseholdIncome() | currency : $ : 2 }}/year
-          .button-stack--paginate.text-center.row.padding-top
-            .small-12.medium-6.medium-push-6.columns
-              button.button.expand ui-sref="dahlia.eligibility-estimator" Finish
-            .small-12.medium-6.medium-pull-6.columns
-              / should cancel also clear out incomeSources?? otherwise these 2 buttons are the same
-              / but, if cancel does clear things out -- might accidentally delete a lot of work
-              / -- perhaps better: could be a "back" to take you back to edit
-              button.button.blank.expand ui-sref="dahlia.eligibility-estimator" Cancel
+    .row.padding-top--2x.show-for-small-only
+
+    .button-stack--paginate.row.padding-top
+      .small-6.columns
+        / should cancel also clear out incomeSources?? otherwise these 2 buttons are the same
+        / but, if cancel does clear things out -- might accidentally delete a lot of work
+        / -- perhaps better: could be a "back" to take you back to edit
+        button.button-link.button-lined ui-sref="dahlia.eligibility-estimator" Cancel
+      .small-6.columns
+        button.primary.right ui-sref="dahlia.eligibility-estimator" Finish

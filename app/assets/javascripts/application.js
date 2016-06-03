@@ -21,11 +21,16 @@
 //= require angular-pageslide-directive
 //= require angular-clipboard
 //= require angular-filter
+//= require angular-translate
+//= require angular-translate-loader-static-files
 //= require angulartics
 //= require angulartics-google-analytics
 //= require lifely-angular-carousel
+//= require angular-ui-mask
 //= require hammerjs
 //= require ng-currency
+//= require ng-text-truncate/ng-text-truncate.js
 //= require moment
 //= require moment-timezone
+//= require js-yaml
 //= require_tree .

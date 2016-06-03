@@ -1,0 +1,19 @@
+div
+  p.checkbox-block
+    input id="preferences-{{pref_type}}" name="preferences" ng-model="applicant.preferences[pref_type]" type="checkbox"
+    label.checkbox-block_label for="preferences-{{pref_type}}"
+      strong
+        | {{title}}
+      / ng-transclude tells it to yield the body of the directive
+      span.checkbox-block_note ng-transclude=""
+
+    .form-group ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-show="applicant.preferences[pref_type]"
+      label.form-label.margin-bottom--half for="{{pref_type_household_member}}"
+        | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
+      select id="{{pref_type_household_member}}" ng-model="applicant.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="applicant.preferences[pref_type]"
+        option value=""
+          | {{'LABEL.SELECT_ONE' | translate}}
+        option value="{{ applicant.first_name }} {{ applicant.last_name }}"
+          | {{ applicant.first_name }} {{ applicant.last_name }}
+        option ng-repeat="member in householdMembers" value="{{ member.first_name }} {{ member.last_name }}"
+          | {{ member.first_name }} {{ member.last_name }}

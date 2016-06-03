@@ -9,6 +9,8 @@ do ->
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
+    fakeEligibilityListings = getJSONFixture('listings-api-eligbility-listings.json')
+    fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
     modalMock = undefined
     requestURL = undefined
@@ -53,7 +55,7 @@ do ->
 
         openLength =
           ListingService.openMatchListings.length +
-          ListingService.openNotMatchListings.length +
+          ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
       return
@@ -87,11 +89,22 @@ do ->
     describe 'Service.maxIncomeLevelsFor', ->
       it 'returns incomeLevels with occupancy, yearly, monthly values', ->
         listing = fakeListing.listing
+        listing.unitSummary = [{unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}]
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
         # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
         expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
         expect(incomeLevels.length).toEqual 2
+        return
+      return
+
+    describe 'Service.listingIsOpen', ->
+      it 'checks if listing application due date has passed', ->
+        listing = fakeListing.listing
+        tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        listing.Application_Due_Date = tomorrow.toString()
+        expect(ListingService.listingIsOpen(listing.Application_Due_Date)).toEqual true
         return
       return
 
@@ -223,5 +236,57 @@ do ->
         return
       return
 
-    return
+
+    describe 'Service.getLotteryPreferences', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.lotteryPreferences with the Lottery Preference data', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryPreferences
+        ListingService.getLotteryPreferences()
+        httpBackend.flush()
+        expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
+        return
+      return
+
+
+    describe 'Service.getListingsByIds', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listings with the returned listing results', ->
+        ListingService.listings = [fakeListing]
+        listingIds = fakeListings.listings.map((listing) ->
+          return listing.id
+        )
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListingsByIds(listingIds)
+        httpBackend.flush()
+        expect(ListingService.listings).toEqual fakeListings.listings
+        return
+      return
+
+    describe 'Service.getListingsWithEligibility', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+
+      it 'calls groupListings function with returned listings', ->
+        ListingService.groupListings = jasmine.createSpy()
+        fakeFilters =
+          household_size: 2
+          income_timeframe: 'per_month'
+          income_total: 3500
+          include_children_under_6: true
+          children_under_6: 1
+        ListingService.setEligibilityFilters(fakeFilters)
+        stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
+        ListingService.getListingsWithEligibility()
+        httpBackend.flush()
+        expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
+        return
+      return
   return

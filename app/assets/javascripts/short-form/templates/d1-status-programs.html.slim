@@ -1,0 +1,21 @@
+h2.application-title.t-gamma
+  | {{'D1_STATUS_PROGRAMS.TITLE' | translate}}
+p.form-note.margin-bottom
+  | {{'T.OPTIONAL' | translate}}
+
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
+  .checkbox-group
+    checkbox-preference-item title="{{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}" type="displaced"
+      | {{'D1_STATUS_PROGRAMS.DISPLACED_TENANTS_DESC' | translate}}
+    checkbox-preference-item title="{{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" type="cert_of_preference"
+      | {{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE_DESC' | translate}}
+
+  .form-group
+    p.t-small.c-steel
+      ' {{'D1_STATUS_PROGRAMS.PLEASE_CALL_P1' | translate}}
+      a href="tel:415-701-5613"
+        | {{'T.CALL' | translate | lowercase}} 415-701-5613
+      '
+      ' {{'D1_STATUS_PROGRAMS.PLEASE_CALL_P2' | translate}}
+
+  short-form-save-and-submit

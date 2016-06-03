@@ -1,0 +1,19 @@
+.form-group
+  label.form-label.no-margin
+    | {{'LABEL.APPLICANT_ETHNICITY' | translate}}
+  p.form-note.margin-bottom--half Optional
+
+  select#user_ethnicity ng-model="user.ethnicity" data-width="auto" name="ethnicity"
+    option disabled="" selected="" value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="option in ethnicity_options" value="{{option}}"
+      | {{option}}
+
+  label.form-label.no-margin
+    | {{'LABEL.APPLICANT_RACE' | translate}}
+  p.form-note.margin-bottom--half Optional
+  select#user_race ng-model="user.race" data-width="auto" name="race"
+    option disabled="" selected="" value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="option in race_options" value="{{option}}"
+      | {{option}}

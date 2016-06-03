@@ -47,6 +47,20 @@ describe 'Listings API' do
       end
     end
   end
+  describe 'eligbility listings' do
+    save_fixture do
+      VCR.use_cassette('listings/eligibility') do
+        params = {
+          eligibility: {
+            householdsize: 2,
+            incomelevel: 20_000,
+            childrenUnder6: 1,
+          },
+        }
+        post '/api/v1/listings-eligibility.json', params
+      end
+    end
+  end
   # ---- end Jasmine fixtures
 
   it 'sends a list of listings' do
