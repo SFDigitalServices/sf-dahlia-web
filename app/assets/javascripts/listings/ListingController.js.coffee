@@ -179,7 +179,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.lotteryMembers = ->
     return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
     _.filter $scope.listing.Lottery_Members, (ticket) ->
-      ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) > -1
+      ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
 
 
 ############################################################################################
