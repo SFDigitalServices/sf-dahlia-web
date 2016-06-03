@@ -10,6 +10,8 @@ ShortFormApplicationService = ($localStorage) ->
     alternateContact: {
       primary_language: "English"
     }
+    householdMembers: []
+    preferences: {}
     completedSections: {
       Intro: false,
       You: false,
@@ -17,7 +19,6 @@ ShortFormApplicationService = ($localStorage) ->
       Status: false,
       Income: false
     }
-    householdMembers: []
   }
   Service.current_id = 0
 

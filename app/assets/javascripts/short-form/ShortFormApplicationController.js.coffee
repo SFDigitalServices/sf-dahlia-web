@@ -260,8 +260,8 @@ ShortFormApplicationController = (
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
 
-  $scope.householdMemberForProgram = (pref_type) ->
-    ShortFormHelperService.householdMemberForProgram($scope.applicant, pref_type)
+  $scope.householdMemberForPreference = (pref_type) ->
+    ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$translate',
