@@ -241,6 +241,22 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
     })
+    .state('dahlia.short-form-application.verify-address', {
+      url: '/verify-address'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2a-verify-address.html'
+      resolve:
+        address_validation: [
+          'AddressValidationService',
+          'ShortFormApplicationService',
+          (AddressValidationService, ShortFormApplicationService) ->
+            AddressValidationService.validate(
+              address: ShortFormApplicationService.applicant.home_address
+              type: 'home'
+            )
+        ]
+    })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
       views:
@@ -370,6 +386,15 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
     if !!(window.history && history.pushState)
       $locationProvider.html5Mode({enabled: true, requireBase: false})
+]
+
+@dahlia.run ['$rootScope', '$state', ($rootScope, $state) ->
+  $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+    e.preventDefault()
+    if toState.name == 'dahlia.short-form-application.verify-address'
+      return $state.go('dahlia.short-form-application.contact', toParams)
+    else
+      return $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->

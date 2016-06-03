@@ -40,6 +40,9 @@ gem "facets", require: false
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
 
+# address validation
+gem 'easypost'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'

@@ -8,6 +8,7 @@ do ->
       { name: 'You', pages: [
           'name',
           'contact',
+          'verify-address',
           'alternate-contact-type',
           'alternate-contact-name',
           'alternate-contact-phone-address',

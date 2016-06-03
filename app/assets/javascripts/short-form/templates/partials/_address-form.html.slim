@@ -83,6 +83,6 @@
     label for="{{model}}_{{addressType}}_zip"
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="99999" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
     small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
       | {{'ERROR.ZIP' | translate}}

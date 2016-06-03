@@ -1,6 +1,6 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"
@@ -68,11 +68,16 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       small.highlight ng-if="applicant.noEmail"
         | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
-  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
-    label.form-label.no-margin Your address
-    p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
+  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress, error: homeAddressRequired && addressInputInvalid('home_address')}"
+    label.form-label.no-margin
+      | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
+
+    small.error ng-if="addressFailedValidation('home_address')"
+      | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
@@ -90,7 +95,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         label for="applicant_separate_address"
           | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
 
-  .form-group ng-if="applicant.separateAddress"
+  .form-group ng-if="applicant.separateAddress" ng-class="{ error: addressInputInvalid('mailing_address')}"
     label.form-label.no-margin
       | {{'LABEL.MAILING_ADDRESS' | translate}}
     p.form-note.margin-bottom
@@ -98,15 +103,20 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
-  .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
+  .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
     label.form-label.no-margin
       | {{'LABEL.WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
     .radio-group
-      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
-      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
+      radio-block-item value='Yes' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.NO' | translate}}
+
+    small.highlight ng-if="applicant.work_in_sf == 'Yes'"
+      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"
