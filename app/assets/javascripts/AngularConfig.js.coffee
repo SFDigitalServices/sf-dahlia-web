@@ -16,13 +16,14 @@
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',
+  'ngAria',
 ]
 
 # Custom Directives
 angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
-angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
+angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUpload'])
 
 # allow trailing slashes and don't force case sensitivity on routes
 @dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
@@ -320,6 +321,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
       views:
         'container':
           templateUrl: 'short-form/templates/d1-status-programs.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    .state('dahlia.short-form-application.live-work-preference', {
+      url: '/live-work-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-live-work-preference.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')

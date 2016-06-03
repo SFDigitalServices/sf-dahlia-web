@@ -5,7 +5,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('confirmed_home_address')}"
     label.form-label.margin-bottom
       | {{'LABEL.SUGGESTED_ADDRESS' | translate}}:
-    .radio-group.left
+    .radio-group.left role="radiogroup" aria-label="{{'LABEL.SUGGESTED_ADDRESS' | translate}}"
       radio-block-item value='Yes' user='applicant' name='confirmed_home_address' ng-required='true'
         p.margin-bottom-none.t-base
           | {{validated_home_address.street1}}

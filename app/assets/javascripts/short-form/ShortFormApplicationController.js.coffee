@@ -79,7 +79,17 @@ ShortFormApplicationController = (
     'Other/Multiracial',
     'Decline to state'
   ]
-
+  $scope.preference_proof_options = [
+    'Telephone bill (land line only)',
+    'Cable and internet bill',
+    'Gas bill',
+    'Electric bill',
+    'Garbage bill',
+    'Water bill',
+    'Paystub (listing home address)',
+    'Public benefits record',
+    'School record'
+  ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false

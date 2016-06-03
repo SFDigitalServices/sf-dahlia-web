@@ -20,6 +20,7 @@ ShortFormNavigationService = ($state) ->
     },
     { name: 'Status', pages: [
         'status-programs',
+        'live-work-preference',
         'status-vouchers'
       ]
     },
@@ -44,6 +45,7 @@ ShortFormNavigationService = ($state) ->
       'intro',
       'overview',
       'name',
+      'verify-address',
       'household-members',
       'household-member-form',
       'household-member-form-edit',
@@ -77,6 +79,7 @@ ShortFormNavigationService = ($state) ->
         ,'review-optional'
         ,'review-summary'
         ,'review-terms'
+        ,'live-work-preference'
           Service._getPreviousPage()
       # -- Household
       when 'household-intro'

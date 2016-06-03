@@ -6,20 +6,20 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       | {{'LABEL.ALTERNATE_CONTACT' | translate}}
     p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
       | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
-    .radio-group
+    .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
 
       radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='type' ng-required='true'
         | {{option[1]}}
 
-      p.radio-block ng-show="alternateContact.type == 'Other'"
-        input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="other_relationship" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.type == 'Other'"
+      .radio-block ng-show="alternateContact.type == 'Other'"
+        input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="type" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.type == 'Other'"
         small.error ng-show="inputInvalid('other_relationship')"
           | {{'ERROR.RELATIONSHIP' | translate}}
 
-      p.radio-block ng-if="applicantHasPhoneEmailAndAddress()"
+      .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
         / this option to bypass alternate contact is only available
         / if the applicant has entered phone and address
-        input#alternate_contact_none(ng-model="alternateContact.type" name="alternate_contact" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('type')}")
+        input#alternate_contact_none(ng-model="alternateContact.type" name="type" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('type')}")
         label.radio-block_label for="alternate_contact_none"
          | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
 

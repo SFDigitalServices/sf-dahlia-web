@@ -7,7 +7,9 @@
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "SELECT_ONE": "Select One",
+        "PREFERENCE_PROOF_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
         "APPLICANT_GENDER": "What best describes your gender?",
+        "YOUR_GENDER": "Your gender",
         "APPLICANT_ETHNICITY": "What best describes your ethnicity?",
         "APPLICANT_RACE": "What best describes your race?",
         "APPLICANT_NAME": "Your Name",
@@ -79,7 +81,9 @@
         "ADDRESS_2": "Apt or Unit #",
         "CITY": "City Name",
         "ZIP": "Zip",
-        "ZIPCODE": "Zipcode"
+        "ZIPCODE": "Zipcode",
+        "ADDITIONAL_PREFERENCES": "Additional Preferences",
+        "SPECIAL_PROGRAMS": "Special Programs"
     },
     "T": {
         "YES": "Yes",
@@ -100,6 +104,22 @@
         "SUBMIT": "Submit",
         "APPLICATION": "Application",
         "BACK": "Back"
+    },
+    "D2_LIVE_WORK_PREFERENCE": {
+        "UPLOAD_PROOF": "Upload proof of preference",
+        "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Max file size is 2MB. Supported file types: pdf, jpg,png.",
+        "TITLE": "Based on the address details you entered, it sounds like your household may qualify for additional preferences.",
+        "INSTRUCTIONS": "Upload any supporting documentation off instructed. If eligibility for a preference cannot be verified, your household will not receive the preference for which you indicate eligibility (you will not be otherwise penalized).",
+        "LIVE_SF_PREFERENCE": "Live in San Francisco Preference",
+        "NEIGHBORHOOD_RESIDENCE": {
+            "TITLE": "Neighborhood Residence Housing Preference",
+            "DESCRIPTION": "At least one household member must live within the same Supervisorial District are within a 1/2 mile buffer of the project."
+        },
+        "WORK_SF_PREFERENCE": {
+            "TITLE": "Work in San Francisco Preference",
+            "DESCRIPTION": "At least one household member must work in San Francisco at least 75% of their working hours."
+        }
     },
     "ERROR": {
         "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
