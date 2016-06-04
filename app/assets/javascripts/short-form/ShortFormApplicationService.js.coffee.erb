@@ -103,6 +103,19 @@ ShortFormApplicationService = ($localStorage) ->
   Service.cancelHouseholdMember = ->
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
+    # clear out preferences where this householdMember was selected
+    full_name = "#{Service.householdMember.first_name} #{Service.householdMember.last_name}"
+    # search through all xxx_household_member items in preferences matching the full name
+    _.each Service.application.preferences, (v,k) ->
+      if k.indexOf('_household_member') > 0 and v == full_name
+        preference = k.split('_household_member')[0]
+        Service.application.preferences[preference] = false
+        Service.application.preferences[k] = null
+        if Service.application.preferences["#{preference}_proof_option"]
+          Service.application.preferences["#{preference}_proof_option"] = null
+        if Service.application.preferences["#{preference}_proof_file"]
+          Service.application.preferences["#{preference}_proof_file"] = null
+
     # persist the changes to Service.householdMembers / $localStorage
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
