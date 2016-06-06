@@ -15,7 +15,8 @@
       "angular-sanitize": "~1.5.0",
       "lifely-angular-carousel": "~1.1.0",
       "moment": "^2.12.0",
-      "moment-timezone": "^0.5.3"
+      "moment-timezone": "^0.5.3",
+      "lodash": "^4.6.1"
     }
   },
   "vendor": {
@@ -37,7 +38,8 @@
     "angular-sanitize": "~1.5.0",
     "lifely-angular-carousel": "~1.1.0",
     "moment": "^2.12.0",
-    "moment-timezone": "^0.5.3"
+    "moment-timezone": "^0.5.3",
+    "lodash": "^4.6.1"
   },
   "resolutions": {
     "angular": "~1.4.7"

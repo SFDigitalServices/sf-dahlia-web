@@ -18,6 +18,8 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.eligibilityFilters = ListingService.eligibility_filters
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
+  # for searching lottery number
+  $scope.lotterySearchNumber = ''
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -169,6 +171,15 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     # TODO: update when we are getting multiple images from Salesforce
     # right now it's just an array of one
     [$scope.imageURL(listing)]
+
+  # lottery search
+  $scope.clearLotterySearchNumber = ->
+    $scope.lotterySearchNumber = ''
+
+  $scope.lotteryMembers = ->
+    return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
+    _.filter $scope.listing.Lottery_Members, (ticket) ->
+      ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
 
 
 ############################################################################################
