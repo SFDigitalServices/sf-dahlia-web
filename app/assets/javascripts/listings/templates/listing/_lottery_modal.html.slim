@@ -11,16 +11,49 @@ span ng-controller="ListingController"
         p.t-small.t-bold
           | {{listing.Lottery_Summary}}
 
+      .padding-left--2x.padding-right--2x
+        .icon-input.row.collapse
+          .large-12.columns
+            .row.collapse
+              .small-10.columns
+                label.sr-only for="lottery_search_number" Enter Your Lottery Number
+                input#lottery_search_number placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
+              .small-2.columns
+                button.primary.icon-input-button.button.postfix ng-if="!lotterySearchNumber"
+                  span.sr-only
+                    | Search
+                  span.ui-icon.ui-static.ui-medium.i-white
+                    svg
+                      use xlink:href="#i-right"
+
+                button.primary.icon-input-button.button.postfix ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
+                  span.sr-only
+                    | Clear
+                  span.ui-icon.ui-static.ui-medium.i-white
+                    svg
+                      use xlink:href="#i-close"
+
     .medium-6.medium-pull-6.columns
       .overflow-panel
         header.overflow-panel_header
           span.header.left.small-6 Rank
           span.header.right.small-6 Ticket
         .overflow-panel_scroll
-          ul.result-set.margin-bottom
-            li ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+          ul.result-set
+            li ng-repeat="ticket in lotteryMembers() | orderBy : 'Rank'"
               | {{ticket.Rank}}
               span.right
                 | {{ticket.Lottery_Number}}
+            li ng-if="lotteryMembers().length == 0"
+              | The number you entered was not drawn.
 
-  a.close-reveal-modal aria-label="Close" ng-click="closeModal()"  ×
+      hgroup.padding ng-if="lotteryMembers().length == 0"
+        p.t-small
+          | Review the number you entered to make sure it is correct.
+        p.t-small
+          | If you were not selected, we encourage you to keep applying for listings.
+
+  a.close-reveal-modal aria-label="Close" ng-click="closeModal()"
+    span.ui-icon.ui-static.ui-medium.i-primary
+      svg
+        use xlink:href="#i-close"
