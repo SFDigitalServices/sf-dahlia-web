@@ -1,9 +1,15 @@
 {
     "LABEL": {
+        "FAMILY_MEMBER": "Family member",
+        "FRIEND": "Friend",
+        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
+        "OTHER": "Other",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "SELECT_ONE": "Select One",
+        "PREFERENCE_PROOF_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
         "APPLICANT_GENDER": "What best describes your gender?",
+        "YOUR_GENDER": "Your gender",
         "APPLICANT_ETHNICITY": "What best describes your ethnicity?",
         "APPLICANT_RACE": "What best describes your race?",
         "APPLICANT_NAME": "Your Name",
@@ -14,12 +20,13 @@
         "DOB_MONTH": "Month",
         "DOB_DAY": "Day",
         "DOB_YEAR": "Year",
-        "APPLICANT_PHONE": "Your Phone Number",
+        "APPLICANT_PHONE": "Your phone number",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_ADDITIONAL_PHONE": "I have an additional phone number",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_EMAIL": "Your email address",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
+        "APPLICANT_ADDRESS": "Your address",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "MAILING_ADDRESS": "Mailing address",
@@ -30,12 +37,9 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PHONE_CELL": "Cell",
+        "SUGGESTED_ADDRESS": "Suggested Address",
         "ALTERNATE_CONTACT": "Alternate contact",
         "PLEASE_SELECT_ONE": "Please select one.",
-        "FAMILY_MEMBER": "Family member",
-        "FRIEND": "Friend",
-        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
-        "OTHER": "Other",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
         "AGENCY": "Agency",
@@ -52,6 +56,7 @@
         "DONE_ADDING_PEOPLE": "Done adding people",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "DOB": "Date of Birth",
+        "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
@@ -76,7 +81,9 @@
         "ADDRESS_2": "Apt or Unit #",
         "CITY": "City Name",
         "ZIP": "Zip",
-        "ZIPCODE": "Zipcode"
+        "ZIPCODE": "Zipcode",
+        "ADDITIONAL_PREFERENCES": "Additional Preferences",
+        "SPECIAL_PROGRAMS": "Special Programs"
     },
     "T": {
         "YES": "Yes",
@@ -98,6 +105,45 @@
         "APPLICATION": "Application",
         "BACK": "Back"
     },
+    "D2_LIVE_WORK_PREFERENCE": {
+        "UPLOAD_PROOF": "Upload proof of preference",
+        "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Max file size is 2MB. Supported file types: pdf, jpg,png.",
+        "TITLE": "Based on the address details you entered, it sounds like your household may qualify for additional preferences.",
+        "INSTRUCTIONS": "Upload any supporting documentation off instructed. If eligibility for a preference cannot be verified, your household will not receive the preference for which you indicate eligibility (you will not be otherwise penalized).",
+        "LIVE_SF_PREFERENCE": "Live in San Francisco Preference",
+        "NEIGHBORHOOD_RESIDENCE": {
+            "TITLE": "Neighborhood Residence Housing Preference",
+            "DESCRIPTION": "At least one household member must live within the same Supervisorial District are within a 1/2 mile buffer of the project."
+        },
+        "WORK_SF_PREFERENCE": {
+            "TITLE": "Work in San Francisco Preference",
+            "DESCRIPTION": "At least one household member must work in San Francisco at least 75% of their working hours."
+        }
+    },
+    "ERROR": {
+        "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
+        "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
+        "FIRST_NAME": "Please enter a First Name",
+        "LAST_NAME": "Please enter a Last Name",
+        "DOB": "Please enter a valid Date of Birth",
+        "PHONE_NUMBER": "Please enter a phone number",
+        "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "EMAIL": "Please enter an email address",
+        "ADDRESS_VALIDATION": "There's a problem with the address you provided.",
+        "LANGUAGE": "Please enter a language",
+        "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
+        "RELATIONSHIP": "Please enter a relationship",
+        "ALTERNATE_CONTACT": "Please select an alternate contact",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
+        "INCOME": "Please enter an income amount",
+        "INCOME_TIMEFRAME": "Please enter an income timeframe",
+        "TERMS": "You must agree to the terms in order to continue",
+        "ADDRESS": "Please enter an address",
+        "CITY": "Please enter a city",
+        "STATE": "Please enter a state",
+        "ZIP": "Please enter a zipcode"
+    },
     "A1_INTRO": {
         "TITLE": "Let's get started on your application for"
     },
@@ -111,33 +157,19 @@
     "B1_NAME": {
         "TITLE": "We'll get started by getting some information about you. First, what's your name?"
     },
-    "ERROR": {
-        "FIRST_NAME": "Please enter a First Name",
-        "LAST_NAME": "Please enter a Last Name",
-        "DOB": "Please enter a valid Date of Birth",
-        "PHONE_NUMBER": "Please enter a phone number",
-        "PHONE_NUMBER_TYPE": "Please select a phone number type",
-        "EMAIL": "Please enter an email address",
-        "LANGUAGE": "Please enter a language",
-        "RELATIONSHIP": "Please enter a relationship",
-        "ALTERNATE_CONTACT": "Please select an alternate contact",
-        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "INCOME": "Please enter an income amount",
-        "INCOME_TIMEFRAME": "Please enter an income timeframe",
-        "TERMS": "You must agree to the terms in order to continue",
-        "ADDRESS": "Please enter an address",
-        "CITY": "Please enter a city",
-        "STATE": "Please enter a state",
-        "ZIP": "Please enter a zipcode"
-    },
     "B2_CONTACT": {
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
         "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
+        "APPLICANT_ADDRESS_DESC": "Ideally this is an address where we can send updates about your application.",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
-        "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours."
+        "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours.",
+        "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen."
+    },
+    "B2A_VERIFY_ADDRESS": {
+        "TITLE": "We have located the following address, please confirm that it is correct."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
         "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"

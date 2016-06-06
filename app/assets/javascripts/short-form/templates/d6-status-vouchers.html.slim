@@ -5,8 +5,10 @@ p.form-note.margin-bottom
 
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
   .form-group ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
-    .radio-group.padding-top--half
-      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
-      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='household_vouchers_subsidies' ng-required='true'
+    .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_STATUS_VOUCHERS.TITLE' | translate}}"
+      radio-block-item value='Yes' user='applicant' name='household_vouchers_subsidies' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='household_vouchers_subsidies' ng-required='true'
+        | {{'T.NO' | translate}}
 
   short-form-save-and-submit

@@ -16,13 +16,14 @@
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',
+  'ngAria',
 ]
 
 # Custom Directives
 angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
-angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
+angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUpload'])
 
 # allow trailing slashes and don't force case sensitivity on routes
 @dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
@@ -241,6 +242,22 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
     })
+    .state('dahlia.short-form-application.verify-address', {
+      url: '/verify-address'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b2a-verify-address.html'
+      resolve:
+        address_validation: [
+          'AddressValidationService',
+          'ShortFormApplicationService',
+          (AddressValidationService, ShortFormApplicationService) ->
+            AddressValidationService.validate(
+              address: ShortFormApplicationService.applicant.home_address
+              type: 'home'
+            )
+        ]
+    })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
       views:
@@ -309,6 +326,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    .state('dahlia.short-form-application.live-work-preference', {
+      url: '/live-work-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-live-work-preference.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.status-vouchers', {
       url: '/status-vouchers'
       views:
@@ -370,6 +397,15 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel'])
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
     if !!(window.history && history.pushState)
       $locationProvider.html5Mode({enabled: true, requireBase: false})
+]
+
+@dahlia.run ['$rootScope', '$state', ($rootScope, $state) ->
+  $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+    e.preventDefault()
+    if toState.name == 'dahlia.short-form-application.verify-address'
+      return $state.go('dahlia.short-form-application.contact', toParams)
+    else
+      return $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->

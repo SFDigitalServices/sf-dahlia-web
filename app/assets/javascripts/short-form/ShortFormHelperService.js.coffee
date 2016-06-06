@@ -1,6 +1,13 @@
 ShortFormHelperService = ($translate, $filter) ->
   Service = {}
 
+  Service.alternate_contact_options = [
+    ['Family member', $translate.instant('LABEL.FAMILY_MEMBER')]
+    ['Friend', $translate.instant('LABEL.FRIEND')]
+    ['Social worker or housing counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
+    ['Other', $translate.instant('LABEL.OTHER')]
+  ]
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.type == 'None'
@@ -32,8 +39,6 @@ ShortFormHelperService = ($translate, $filter) ->
 
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
-
-
 
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->

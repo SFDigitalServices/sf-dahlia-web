@@ -39,19 +39,34 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     small.error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
       | {{'ERROR.DOB' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
-    label.form-label.no-margin
+  .form-group ng-class="{ error: inputInvalid('same_address') }"
+    label.form-label.no-margin id="same_address_label"
+      | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
+    .radio-group.padding-top--half role="radiogroup" aria-labelledby="same_address_label"
+      radio-block-item value='Yes' user='householdMember' name='same_address' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='householdMember' name='same_address' ng-required='true'
+        | {{'T.NO' | translate}}
+
+  ng-include ng-if="householdMember.same_address == 'No'" src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'householdMember'; isRequired = truth"
+
+  .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
+    label.form-label.no-margin id="work_in_sf_label"
       | {{'LABEL.MEMBER_WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
+    .radio-group role="radiogroup" aria-labelledby="work_in_sf_label"
+      radio-block-item value='Yes' user='householdMember' name='work_in_sf' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='householdMember' name='work_in_sf' ng-required='true'
+        | {{'T.NO' | translate}}
 
-    .radio-group
-      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='householdMember' name='work_in_san_francisco' ng-required='true'
-      radio-block-item value='No' label="{{'T.NO' | translate}}" user='householdMember' name='work_in_san_francisco' ng-required='true'
+    small.highlight ng-if="householdMember.work_in_sf == 'Yes'"
+      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('relationship') }"
-    label.form-label.no-margin for="householdMemberRelationship"
+    label.form-label.margin-bottom--half for="householdMemberRelationship"
       | {{'LABEL.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
     select#householdMemberRelationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
       option ng-repeat="relationship in relationship_options" value="{{relationship}}"
@@ -64,7 +79,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       input.button.expand.radius type="submit" value="Update Household Member" ng-if="householdMember.id"
       input.button.expand.radius type="submit" value="Add Household Member" ng-if="!householdMember.id"
     .small-12.medium-6.medium-pull-6.columns
-      a.button.ghost-white.expand ng-click="cancelHouseholdMember()"
+      button.button.ghost-white.expand ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
           | {{'LABEL.HOUSEHOLD_MEMBER_CANCEL' | translate}}
         span ng-if="householdMember.id"

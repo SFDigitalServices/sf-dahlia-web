@@ -1,12 +1,12 @@
 angular.module('dahlia.directives')
-.directive 'alertBox', ->
+.directive 'alertBox', ['$translate', ($translate) ->
   restrict: 'E'
   scope:
     formObject: '='
     stateName: '='
     hideAlert: '='
     missingInfo: '='
-  templateUrl: 'directives/alertBox/alert-box.html'
+  templateUrl: 'short-form/directives/alert-box.html'
 
   link: (scope, elem, attrs) ->
     scope.showAlert = ->
@@ -18,10 +18,9 @@ angular.module('dahlia.directives')
 
     scope.alertText = ->
       if scope.altContactTypeError()
-        "Since you are not able to provide some of the required contact information,
-        we'll need you to provide alternate contact information."
+        $translate.instant("ERROR.ALT_CONTACT_TYPE")
       else
-        "You'll need to resolve any errors before moving on."
+        $translate.instant("ERROR.FORM_SUBMISSION")
 
     scope.altContactTypeError = ->
       scope.stateName == 'dahlia.short-form-application.alternate-contact-type' &&
@@ -29,3 +28,4 @@ angular.module('dahlia.directives')
 
     scope.showAltContactMessage = ->
       scope.showAlert() && scope.altContactTypeError()
+]

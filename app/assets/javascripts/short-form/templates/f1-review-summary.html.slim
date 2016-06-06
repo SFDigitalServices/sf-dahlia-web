@@ -5,7 +5,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
   .form-group.margin-bottom--2x
 
     / You
-    review-summary-section header="{{'T.YOU' | translate}}" ui-sref="dahlia.short-form-application.name"
+    review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
       review-summary-item label="{{'LABEL.NAME' | translate}}"
         | {{applicant.first_name}} {{applicant.last_name}}
       review-summary-item label="{{'LABEL.DOB' | translate}}"
@@ -16,7 +16,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         | {{applicant.second_phone_number | tel}}
       review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
         | {{applicant.email}}
-      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+      review-summary-item label="{{'LABEL.APPLICANT_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+        | {{applicant.home_address.address1}}
+        br
+        ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
+        | {{applicant.home_address.zip}}
+
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.separateAddress"
         | {{applicant.mailing_address.address1}}
         br
         ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
@@ -26,7 +32,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
 
     / Alternate Contact
-    review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" ui-sref="dahlia.short-form-application.alternate-contact-type"
+    review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" to="dahlia.short-form-application.alternate-contact-type"
 
       review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
         | {{alternateContactRelationship()}}
@@ -40,7 +46,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
           | {{alternateContact.email}}
 
     / Household Members
-    review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" ui-sref="dahlia.short-form-application.household-members"
+    review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.household-members"
 
       hgroup.entry-panel_group ng-if="!householdMembers || householdMembers.length == 0"
         h4.entry-panel_content
@@ -55,7 +61,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
           | {{member.relationship}}
 
     / Self-declared status
-    review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" ui-sref="dahlia.short-form-application.status-programs"
+    review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to="dahlia.short-form-application.status-programs"
 
       review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
         | {{applicantVouchersSubsidies()}}
@@ -67,7 +73,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         | {{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}
 
     / Income
-    review-summary-section header="{{'LABEL.INCOME' | translate}}" ui-sref="dahlia.short-form-application.income"
+    review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income"
       hgroup.entry-panel_group
         h4.entry-panel_content
           | {{ applicantIncomeAmount() }}

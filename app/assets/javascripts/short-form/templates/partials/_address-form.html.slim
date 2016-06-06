@@ -1,6 +1,6 @@
 .form-address.row
   .form-group-street.form-item.large-12.columns ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }"
-    label for="{{model}}_{{addressType}}_address1"
+    label.sr-only for="{{model}}_{{addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
       ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
       ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }")
@@ -8,11 +8,11 @@
       | {{'ERROR.ADDRESS' | translate}}
 
   .form-group-apt.large-12.column
-    label for="{{model}}_{{addressType}}_address2" Address 2
+    label for="{{model}}_{{addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
       ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
   .form-group-city.form-item.small-7.large-5.columns ng-class="{ error: isRequired() && inputInvalid('city', addressType) }"
-    label for="{{model}}_{{addressType}}_city" City
+    label for="{{model}}_{{addressType}}_city" translate="LABEL.CITY"
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
       ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }")
@@ -83,6 +83,6 @@
     label for="{{model}}_{{addressType}}_zip"
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="99999" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
+      ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
     small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
       | {{'ERROR.ZIP' | translate}}

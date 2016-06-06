@@ -1,21 +1,22 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-type'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
   .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"
         | {{'LABEL.APPLICANT_PHONE' | translate}}
 
       input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-    small.error ng-show="inputInvalid('phone_number')"
+    small.error ng-if="inputInvalid('phone_number')"
       | {{'ERROR.PHONE_NUMBER' | translate}}
+    label.sr-only for="applicant_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
     select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
       option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
       option value="Home" translate="LABEL.PHONE_HOME"
       option value="Work" translate="LABEL.PHONE_WORK"
       option value="Cell" translate="LABEL.PHONE_CELL"
 
-    small.error ng-show="inputInvalid('phone_number_type')"
+    small.error ng-if="inputInvalid('phone_number_type')"
       | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
     div
@@ -39,25 +40,25 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         label for="applicant_second_phone"
           | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
         input#applicant_second_phone(ng-model="applicant.second_phone_number" name="second_phone_number" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-      small.error ng-show="inputInvalid('second_phone_number')"
+      small.error ng-if="inputInvalid('second_phone_number')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
+      label.sr-only for="applicant_second_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
       select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number_type') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
         option value="Home" translate="LABEL.PHONE_HOME"
         option value="Work" translate="LABEL.PHONE_WORK"
         option value="Cell" translate="LABEL.PHONE_CELL"
-      small.error ng-show="inputInvalid('second_phone_number_type')"
+      small.error ng-if="inputInvalid('second_phone_number_type')"
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
-    label.form-label.no-margin
+    label.form-label.no-margin for="applicant_email"
       | {{'LABEL.APPLICANT_EMAIL' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
     .form-email
-      label.sr-only for="applicant_email"  Email Address
       input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
-    small.error ng-show="inputInvalid('email')"
+    small.error ng-if="inputInvalid('email')"
       | {{'ERROR.EMAIL' | translate}}
     .form-item.padding-bottom
       .checkbox
@@ -68,11 +69,16 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       small.highlight ng-if="applicant.noEmail"
         | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
-  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress }"
-    label.form-label.no-margin Your address
-    p.form-note.margin-bottom Ideally this is an address where we can send updates about your application.
+  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress, error: homeAddressRequired && addressInputInvalid('home_address')}"
+    label.form-label.no-margin
+      | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+    p.form-note.margin-bottom
+      | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
+
+    small.error ng-if="addressFailedValidation('home_address')"
+      | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
@@ -90,7 +96,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         label for="applicant_separate_address"
           | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
 
-  .form-group ng-if="applicant.separateAddress"
+  .form-group ng-if="applicant.separateAddress" ng-class="{ error: addressInputInvalid('mailing_address')}"
     label.form-label.no-margin
       | {{'LABEL.MAILING_ADDRESS' | translate}}
     p.form-note.margin-bottom
@@ -98,15 +104,20 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
-  .form-group ng-class="{ error: inputInvalid('work_in_san_francisco') }"
+  .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
     label.form-label.no-margin
       | {{'LABEL.WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
-    .radio-group
-      radio-block-item value='Yes' label="{{'T.YES' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
-      radio-block-item value='No' label="{{'T.NO' | translate}}" user='applicant' name='work_in_san_francisco' ng-required='true'
+    .radio-group role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
+      radio-block-item value='Yes' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='work_in_sf' ng-required='true'
+        | {{'T.NO' | translate}}
+
+    small.highlight ng-if="applicant.work_in_sf == 'Yes'"
+      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"
@@ -116,8 +127,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       option ng-repeat="language in language_options" value="{{language}}"
         | {{ language }}
 
-    input#applicantOtherLanguage ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-show="applicant.primary_language == 'Other'"
-    small.error ng-show="inputInvalid('other_language')"
+    label.sr-only for="applicant_other_language" translate="LABEL.ENTER_YOUR_LANGUAGE"
+    input#applicant_other_language ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-if="applicant.primary_language == 'Other'"
+    small.error ng-if="inputInvalid('other_language')"
       | {{'ERROR.LANGUAGE' | translate}}
 
   short-form-save-and-submit

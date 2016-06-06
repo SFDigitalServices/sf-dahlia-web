@@ -2,8 +2,17 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ShortFormApplicationController =
-($scope, $state, $window, $translate, ListingService, ShortFormApplicationService, ShortFormNavigationService, ShortFormHelperService) ->
+ShortFormApplicationController = (
+  $scope,
+  $state,
+  $window,
+  $translate,
+  ListingService,
+  ShortFormApplicationService,
+  ShortFormNavigationService,
+  ShortFormHelperService,
+  AddressValidationService
+) ->
 
   $scope.form = {}
   $scope.$state = $state
@@ -13,6 +22,11 @@ ShortFormApplicationController =
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ListingService.listing
+  $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
+  $scope.validated_home_address = AddressValidationService.validated_home_address
+
+  ## form options
+  $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
   $scope.gender_options = [
     'Male',
     'Female',
@@ -65,7 +79,17 @@ ShortFormApplicationController =
     'Other/Multiracial',
     'Decline to state'
   ]
-
+  $scope.preference_proof_options = [
+    'Telephone bill (land line only)',
+    'Cable and internet bill',
+    'Gas bill',
+    'Electric bill',
+    'Garbage bill',
+    'Water bill',
+    'Paystub (listing home address)',
+    'Public benefits record',
+    'School record'
+  ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -78,7 +102,8 @@ ShortFormApplicationController =
     for this listing. If you'd like to save your information to finish
     the application at a later time, please click the 'Save and Finish later' button."
 
-  $window.onbeforeunload = $scope.onExit
+  unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
+    $window.onbeforeunload = $scope.onExit
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -98,6 +123,18 @@ ShortFormApplicationController =
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
 
+  $scope.addressInputInvalid = (identifier = '') ->
+    if $scope.addressFailedValidation(identifier)
+      return true
+    $scope.inputInvalid('address1', identifier) ||
+    $scope.inputInvalid('city', identifier) ||
+    $scope.inputInvalid('state', identifier) ||
+    $scope.inputInvalid('zip', identifier)
+
+  $scope.addressFailedValidation = (identifier = '') ->
+    validated = $scope["validated_#{identifier}"]
+    return !_.isEmpty(validated) && !AddressValidationService.isDeliverable(validated)
+
   $scope.checkInvalidPhones = () ->
     $scope.inputInvalid('phone_number') ||
     $scope.inputInvalid('phone_number_type') ||
@@ -114,9 +151,6 @@ ShortFormApplicationController =
     form = $scope.form.applicationForm
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
-
-  $scope.formattedAddress = (listing) ->
-    ListingService.formattedAddress(listing)
 
   $scope.applicantHasPhoneEmailAndAddress = ->
     $scope.applicant.phone_number &&
@@ -150,6 +184,19 @@ ShortFormApplicationController =
     $scope.applicant.mailing_address = {}
     $scope.checkIfMailingAddressNeeded()
 
+  $scope.checkIfAddressVerificationNeeded = ->
+    if ($scope.applicant.noAddress ||
+        ($scope.applicant.confirmed_home_address &&
+        AddressValidationService.isConfirmed($scope.applicant.home_address, 'home')))
+      # skip ahead if they aren't filling out an address
+      # or their current address has already been confirmed
+      $state.go('dahlia.short-form-application.alternate-contact-type')
+    else
+      $state.go('dahlia.short-form-application.verify-address')
+
+  $scope.checkValidatedAddressSelection = ->
+    $state.go('dahlia.short-form-application.alternate-contact-type')
+
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
@@ -165,8 +212,11 @@ ShortFormApplicationController =
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
-  $scope.activeSection = ->
-    ShortFormNavigationService.activeSection()
+  $scope.hasBackButton = ->
+    ShortFormNavigationService.hasBackButton()
+
+  $scope.backPageState = ->
+    ShortFormNavigationService.backPageState($scope.application)
 
   $scope.homeAddressRequired = ->
     !($scope.applicant.noAddress || $scope.applicant.separateAddress)
@@ -215,7 +265,7 @@ ShortFormApplicationController =
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$translate',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService'
+  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
 angular
