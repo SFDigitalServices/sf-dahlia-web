@@ -13,7 +13,10 @@ class Api::V1::AddressValidationController < ApiController
     #   verify_strict: %w[delivery zip4],
     # )
     @validation = EasyPost::Address.create(address_params)
-    status = @validation.verifications.delivery.success ? 200 : 422
+    status = 200 # default to success
+    invalid = !@validation.verifications.delivery.success ||
+              @validation.street1.include?('PO BOX')
+    status = 422 if invalid
     render json: { address: @validation }, status: status
   end
 
