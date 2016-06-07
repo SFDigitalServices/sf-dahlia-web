@@ -186,7 +186,7 @@ do ->
 
         it 'should assign work_in_sf preference', ->
           ShortFormApplicationService.worksInSf()
-          expect(ShortFormApplicationService.applicant.preferences.work_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
           return
         return
 
@@ -206,7 +206,7 @@ do ->
 
         it 'should not be assigned work_in_sf preference', ->
           ShortFormApplicationService.worksInSf()
-          expect(ShortFormApplicationService.applicant.preferences.work_in_sf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(false)
           return
         return
 
@@ -234,7 +234,7 @@ do ->
 
         it 'should not be assigned work_in_sf preference', ->
           ShortFormApplicationService.worksInSf()
-          expect(ShortFormApplicationService.applicant.preferences.work_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
           return
         return
 
@@ -259,7 +259,7 @@ do ->
 
         it 'should be assigned live_in_sf preference', ->
           ShortFormApplicationService.livesInSf()
-          expect(ShortFormApplicationService.applicant.preferences.live_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(true)
           return
         return
 
@@ -283,7 +283,7 @@ do ->
 
         it 'should not be assigned live_in_sf preference', ->
           ShortFormApplicationService.livesInSf()
-          expect(ShortFormApplicationService.applicant.preferences.live_in_sf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(false)
           return
         return
 
