@@ -133,16 +133,18 @@ ShortFormApplicationService = ($localStorage) ->
     Service._updatePreference("work_in_sf", Service.workInSfMembers())
 
   Service.liveInSfMembers = () ->
+    applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
       if member.home_address
         _.lowerCase(member.home_address.city) == 'san francisco'
-    applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
+      else if (member.same_address == "Yes" && applicantLivesInSf)
+        true
     liveInSfMembers.push(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
   Service.workInSfMembers = () ->
     workInSfMembers = Service.application.householdMembers.filter (member) ->
-      member.work_in_sf == 'Yes'
+      member.work_in_sf == "Yes"
     applicantWorksInSf = Service.applicant.work_in_sf == "Yes"
     workInSfMembers.push(Service.applicant) if applicantWorksInSf
     return workInSfMembers
