@@ -22,17 +22,24 @@ ShortFormApplicationService = ($localStorage) ->
   }
   Service.current_id = 0
 
+  Service.resetUserData = () ->
+    Service.application = angular.copy(Service.applicationDefaults)
+    Service.applicant = Service.application.applicant
+    Service.alternateContact = Service.application.alternateContact
+    Service.householdMember = {}
+    Service.householdMembers = Service.application.householdMembers
+
   <% if Rails.env.development? %>
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
-  <% else %>
-  Service.application = Service.applicationDefaults
-  <% end %>
-
   Service.applicant = Service.application.applicant
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
   Service.householdMembers = Service.application.householdMembers
+  <% else %>
+  # initialize the user application data
+  Service.resetUserData()
+  <% end %>
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true

@@ -399,20 +399,28 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
-@dahlia.run ['$rootScope', '$state', '$window', ($rootScope, $state, $window) ->
-  $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-    if fromState.name.indexOf('short-form-application') >= 0 &&
-      toState.name.indexOf('short-form-application') == -1
-        unless $window.confirm("Are you sure?")
-          e.preventDefault()
-          return false
+@dahlia.run [
+  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService',
+  ($rootScope, $state, $window, $translate, ShortFormApplicationService) ->
+    $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      if fromState.name.indexOf('short-form-application') >= 0 &&
+        toState.name.indexOf('short-form-application') == -1
+          if $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE'))
+            # disable the onbeforeunload so that you are no longer bothered if you
+            # try to reload the listings page, for example
+            $window.onbeforeunload = null
+            ShortFormApplicationService.resetUserData()
+          else
+            # prevent page transition if user did not confirm
+            e.preventDefault()
+            return false
 
-  $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-    e.preventDefault()
-    if toState.name == 'dahlia.short-form-application.verify-address'
-      return $state.go('dahlia.short-form-application.contact', toParams)
-    else
-      return $state.go('dahlia.welcome')
+    $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+      e.preventDefault()
+      if toState.name == 'dahlia.short-form-application.verify-address'
+        return $state.go('dahlia.short-form-application.contact', toParams)
+      else
+        return $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->

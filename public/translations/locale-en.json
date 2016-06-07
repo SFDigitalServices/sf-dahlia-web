@@ -103,7 +103,8 @@
         "I_AGREE": "I agree",
         "SUBMIT": "Submit",
         "APPLICATION": "Application",
-        "BACK": "Back"
+        "BACK": "Back",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button."
     },
     "D2_LIVE_WORK_PREFERENCE": {
         "UPLOAD_PROOF": "Upload proof of preference",

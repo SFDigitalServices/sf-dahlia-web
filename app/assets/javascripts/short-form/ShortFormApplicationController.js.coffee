@@ -97,10 +97,7 @@ ShortFormApplicationController = (
   $scope.appService = ShortFormApplicationService
 
   $scope.onExit = ->
-    "Are you sure you would like to navigate away from this page?
-    You will lose all information you've entered into the application
-    for this listing. If you'd like to save your information to finish
-    the application at a later time, please click the 'Save and Finish later' button."
+    $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
     $window.onbeforeunload = $scope.onExit
