@@ -69,9 +69,20 @@ class SalesforceService
     api_get("/services/apexrest/LotteryMember/#{listing_id}")
   end
 
-  def self.api_get(endpoint, params = nil)
+  def self.check_household_eligibility(listing_id, household_size, income_level)
+    endpoint = "/services/apexrest/EligibilityCheck/#{listing_id}"
+    params = { householdsize: household_size, incomelevel: income_level }
+    # binding.pry
+    api_get(endpoint, params, false)
+  end
+
+  def self.api_get(endpoint, params = nil, parse_response = true)
     response = oauth_client.get(endpoint, params)
-    massage(flatten_response(response.body))
+    if parse_response
+      massage(flatten_response(response.body))
+    else
+      response.body
+    end
   rescue Restforce::UnauthorizedError
     if @retries > 0
       @retries -= 1
