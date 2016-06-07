@@ -9,6 +9,19 @@ do ->
       city: 'San Francisco'
       state: 'CA'
       zip: '94109'
+    fakeApplicant =
+      first_name: 'Bob'
+      last_name: 'Williams'
+      dob_month: '07'
+      dob_day: '05'
+      dob_year: '2015'
+      relationship: 'Cousin'
+      work_in_sf: 'Yes'
+      preferences: {live_in_sf: false, work_in_sf: false}
+      home_address:
+        address1: "312 Delaware RD"
+        address2: ""
+        city: "SAN FRANCISCO"
 
     beforeEach module('dahlia.services', ($provide)->
       return
@@ -169,58 +182,32 @@ do ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
         return
 
-    describe 'worksInSf', ->
+    describe 'refreshLiveWorkPreferences', ->
       describe 'applicant works in SF', ->
         beforeEach ->
-          fakeApplicant =
-            first_name: 'Bob'
-            last_name: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            work_in_sf: 'Yes'
-            preferences: {live_in_sf: false, work_in_sf: false}
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
-
+          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
         it 'should assign work_in_sf preference', ->
-          ShortFormApplicationService.worksInSf()
+          ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
           return
         return
 
       describe 'applicant does not work in SF', ->
         beforeEach ->
-          fakeApplicant =
-            first_name: 'Bob'
-            last_name: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            work_in_sf: 'No'
-            preferences: {live_in_sf: false, work_in_sf: false}
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.work_in_sf = 'No'
 
         it 'should not be assigned work_in_sf preference', ->
-          ShortFormApplicationService.worksInSf()
+          ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(false)
           return
         return
 
       describe 'household member works in SF', ->
         beforeEach ->
-          fakeApplicant =
-            first_name: 'Bob'
-            last_name: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            work_in_sf: 'No'
-            preferences: {live_in_sf: false, work_in_sf: false}
           fakeHouseholdMember =
             first_name: 'Bob'
             last_name: 'Williams'
@@ -231,61 +218,42 @@ do ->
             work_in_sf: 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
           ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.work_in_sf = 'No'
 
         it 'should not be assigned work_in_sf preference', ->
-          ShortFormApplicationService.worksInSf()
+          ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
           return
         return
 
-    describe 'livesInSf', ->
       describe 'applicant lives in SF', ->
         beforeEach ->
-          fakeApplicant =
-            first_name: 'Bob'
-            last_name: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            work_in_sf: 'Yes'
-            preferences: {live_in_sf: false, work_in_sf: false}
-            home_address:
-              address1: "312 Delaware RD"
-              address2: ""
-              city: "SAN FRANCISCO"
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
 
         it 'should be assigned live_in_sf preference', ->
-          ShortFormApplicationService.livesInSf()
+          ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(true)
           return
         return
 
       describe 'applicant does not live in SF', ->
         beforeEach ->
-          fakeApplicant =
-            first_name: 'Bob'
-            last_name: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            work_in_sf: 'No'
-            preferences: {live_in_sf: false, work_in_sf: false}
-            home_address:
-              address1: "312 Delaware RD"
-              address2: ""
-              city: "Mount Shasta"
+          home_address = {
+            address1: "312 Delaware RD"
+            address2: ""
+            city: "Mount Shasta"
+          }
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.home_address = home_address
 
         it 'should not be assigned live_in_sf preference', ->
-          ShortFormApplicationService.livesInSf()
+          ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(false)
           return
         return
+      return
 
         # to write: test for household who lives in SF.
 
