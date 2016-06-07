@@ -18,10 +18,7 @@ do ->
       relationship: 'Cousin'
       work_in_sf: 'Yes'
       preferences: {live_in_sf: false, work_in_sf: false}
-      home_address:
-        address1: "312 Delaware RD"
-        address2: ""
-        city: "SAN FRANCISCO"
+      home_address: fakeAddress
 
     beforeEach module('dahlia.services', ($provide)->
       return
@@ -253,7 +250,55 @@ do ->
           expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(false)
           return
         return
+
+      describe 'household member lives in sf', ->
+        beforeEach ->
+          home_address = {
+            address1: "312 Delaware RD"
+            address2: ""
+            city: "Mount Shasta"
+          }
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.home_address = home_address
+          fakeHouseholdMember =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'Yes'
+            home_address: fakeAddress
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+
+        it 'should be assigned live_in_sf preference', ->
+          ShortFormApplicationService.refreshLiveWorkPreferences()
+          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(true)
+          return
+        return
       return
 
-        # to write: test for household who lives in SF.
-
+    describe 'liveInSfMembers', ->
+      beforeEach ->
+        home_address = {
+          address1: "312 Delaware RD"
+          address2: ""
+          city: "San Francisco"
+        }
+        ShortFormApplicationService.applicant = fakeApplicant
+        ShortFormApplicationService.applicant.home_address = home_address
+        fakeHouseholdMember =
+          first_name: 'Bob'
+          last_name: 'Williams'
+          dob_month: '07'
+          dob_day: '05'
+          dob_year: '2015'
+          relationship: 'Cousin'
+          work_in_sf: 'Yes'
+          home_address: fakeAddress
+        ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+      it 'should return array of only the members who live in SF', ->
+        expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(2)
+        return
+    #write tests covering same_address == 'yes'
+    #write test for work in SF
