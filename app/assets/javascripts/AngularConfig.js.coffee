@@ -399,7 +399,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
-@dahlia.run ['$rootScope', '$state', ($rootScope, $state) ->
+@dahlia.run ['$rootScope', '$state', '$window', ($rootScope, $state, $window) ->
+  $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+    if fromState.name.indexOf('short-form-application') >= 0 &&
+      toState.name.indexOf('short-form-application') == -1
+        unless $window.confirm("Are you sure?")
+          e.preventDefault()
+          return false
+
   $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     e.preventDefault()
     if toState.name == 'dahlia.short-form-application.verify-address'
