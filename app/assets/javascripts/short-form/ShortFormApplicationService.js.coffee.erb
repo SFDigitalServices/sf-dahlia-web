@@ -96,6 +96,9 @@ ShortFormApplicationService = ($localStorage) ->
       Service.householdMembers.push(angular.copy(householdMember))
     Service.householdMember = {}
 
+  Service.resetHouseholdmember = () ->
+    Service.householdMember = {}
+
   Service.getHouseholdMember = (id) ->
     Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
 

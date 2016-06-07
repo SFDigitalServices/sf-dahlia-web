@@ -304,6 +304,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/c3-household-member-form.html'
+      resolve:
+        householdMember: [
+          'ShortFormApplicationService',
+          (ShortFormApplicationService) ->
+            ShortFormApplicationService.resetHouseholdmember()
+        ]
     })
     .state('dahlia.short-form-application.household-member-form-edit', {
       url: '/household-member-form/:member_id'
