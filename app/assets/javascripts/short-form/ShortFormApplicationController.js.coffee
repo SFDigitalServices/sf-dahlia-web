@@ -18,6 +18,7 @@ ShortFormApplicationController = (
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
+  $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers

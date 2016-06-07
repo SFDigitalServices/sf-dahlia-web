@@ -6,13 +6,12 @@ ShortFormApplicationService = ($localStorage) ->
       phone_number: null,
       home_address: { address1: null, city: null, state: null, zip: null },
       mailing_address: { address1: null, city: null, state: null, zip: null },
-      preferences: {live_in_sf: false, work_in_sf: false}
     }
     alternateContact: {
       primary_language: "English"
     }
     householdMembers: []
-    preferences: {}
+    preferences: {live_in_sf: false, work_in_sf: false}
     completedSections: {
       Intro: false,
       You: false,
@@ -31,6 +30,7 @@ ShortFormApplicationService = ($localStorage) ->
   <% end %>
 
   Service.applicant = Service.application.applicant
+  Service.preferences = Service.application.preferences
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
   Service.householdMembers = Service.application.householdMembers
@@ -132,17 +132,17 @@ ShortFormApplicationService = ($localStorage) ->
         _.lowerCase(member.home_address.city) == 'san francisco'
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     if membersLiveInSf.length > 0 || applicantLivesInSf
-      Service.applicant.preferences.live_in_sf = true
+      Service.preferences.live_in_sf = true
     else
-      Service.applicant.preferences.live_in_sf = false
+      Service.preferences.live_in_sf = false
 
   Service.worksInSf = () ->
     membersWorkInSf = Service.application.householdMembers.filter (member) ->
       member.work_in_sf == 'Yes'
     if (membersWorkInSf.length > 0) || (Service.applicant.work_in_sf == "Yes")
-      Service.applicant.preferences.work_in_sf = true
+      Service.preferences.work_in_sf = true
     else
-      Service.applicant.preferences.work_in_sf = false
+      Service.preferences.work_in_sf = false
 
   return Service
 

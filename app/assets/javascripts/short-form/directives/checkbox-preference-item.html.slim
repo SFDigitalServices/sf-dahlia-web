@@ -1,12 +1,11 @@
 div
   p.checkbox-block
-    input id="preferences-{{pref_type}}" name="preferences" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-init="checkLiveWorkEligibility()"
+    input id="preferences-{{pref_type}}" name="preferences" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}"
     label.checkbox-block_label for="preferences-{{pref_type}}"
       strong
         | {{title}}
       / ng-transclude tells it to yield the body of the directive
       span.checkbox-block_note ng-transclude=""
-
 
     / checkbox for household member that has the preference
     .form-group ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-show="application.preferences[pref_type]"
