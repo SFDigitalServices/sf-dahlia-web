@@ -16,3 +16,12 @@ angular.module('dahlia.directives')
     scope.show_preferences_options = (application) ->
       return false if !application.preferences
       application.preferences[scope.pref_type] && attrs.uploadProof
+
+    scope.eligible_members = () ->
+      if attrs.type == "live_in_sf"
+        scope.liveInSfMembers()
+      else if attrs.type == "work_in_sf"
+        scope.workInSfMembers()
+      else
+        scope.householdMembers
+

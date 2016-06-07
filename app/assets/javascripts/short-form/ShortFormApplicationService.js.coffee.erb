@@ -126,23 +126,32 @@ ShortFormApplicationService = ($localStorage) ->
     user.gender_not_listed = null
     user.gender[option] = toggle
 
-  Service.livesInSf = () ->
-    membersLiveInSf = Service.application.householdMembers.filter (member) ->
+  ### Proof of Preferences ###
+
+  Service.refreshLiveWorkPreferences = () ->
+    Service._updatePreference("live_in_sf", Service.liveInSfMembers())
+    Service._updatePreference("work_in_sf", Service.workInSfMembers())
+
+  Service.liveInSfMembers = () ->
+    liveInSfMembers = Service.application.householdMembers.filter (member) ->
       if member.home_address
         _.lowerCase(member.home_address.city) == 'san francisco'
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
-    if membersLiveInSf.length > 0 || applicantLivesInSf
-      Service.preferences.live_in_sf = true
-    else
-      Service.preferences.live_in_sf = false
+    liveInSfMembers.push(Service.applicant) if applicantLivesInSf
+    return liveInSfMembers
 
-  Service.worksInSf = () ->
-    membersWorkInSf = Service.application.householdMembers.filter (member) ->
+  Service.workInSfMembers = () ->
+    workInSfMembers = Service.application.householdMembers.filter (member) ->
       member.work_in_sf == 'Yes'
-    if (membersWorkInSf.length > 0) || (Service.applicant.work_in_sf == "Yes")
-      Service.preferences.work_in_sf = true
+    applicantWorksInSf = Service.applicant.work_in_sf == "Yes"
+    workInSfMembers.push(Service.applicant) if applicantWorksInSf
+    return workInSfMembers
+
+  Service._updatePreference = (preference, eligibleMembers) ->
+    if eligibleMembers.length > 0
+      Service.preferences[preference] = true
     else
-      Service.preferences.work_in_sf = false
+      Service.preferences[preference] = false
 
   return Service
 
