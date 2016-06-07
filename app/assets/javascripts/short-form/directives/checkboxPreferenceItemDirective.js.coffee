@@ -25,3 +25,5 @@ angular.module('dahlia.directives')
       else
         scope.householdMembers
 
+    scope.only_applicant_eligible = () ->
+      (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
