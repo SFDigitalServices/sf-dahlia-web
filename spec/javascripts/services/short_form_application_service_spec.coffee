@@ -260,7 +260,7 @@ do ->
           }
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMember =
+          fakeHouseholdMemberWithSeparateAddress =
             first_name: 'Bob'
             last_name: 'Williams'
             dob_month: '07'
@@ -268,8 +268,9 @@ do ->
             dob_year: '2015'
             relationship: 'Cousin'
             work_in_sf: 'Yes'
+            same_address: 'No'
             home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithSeparateAddress)
 
         it 'should be assigned live_in_sf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
@@ -279,26 +280,112 @@ do ->
       return
 
     describe 'liveInSfMembers', ->
-      beforeEach ->
-        home_address = {
-          address1: "312 Delaware RD"
-          address2: ""
-          city: "San Francisco"
-        }
-        ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.applicant.home_address = home_address
-        fakeHouseholdMember =
-          first_name: 'Bob'
-          last_name: 'Williams'
-          dob_month: '07'
-          dob_day: '05'
-          dob_year: '2015'
-          relationship: 'Cousin'
-          work_in_sf: 'Yes'
-          home_address: fakeAddress
-        ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-      it 'should return array of only the members who live in SF', ->
-        expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(2)
+      describe 'household member has separate sf address', ->
+        beforeEach ->
+          home_address = {
+            address1: "312 Delaware RD"
+            address2: ""
+            city: "Mount Shasta"
+          }
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.home_address = home_address
+          fakeHouseholdMemberWithSeparateAddress =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'Yes'
+            same_address: 'No'
+            home_address: fakeAddress
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithSeparateAddress)
+        it 'should return array of household member who lives in SF', ->
+          expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(1)
+          return
         return
-    #write tests covering same_address == 'yes'
-    #write test for work in SF
+
+      describe 'household member has the same sf address as the applicant', ->
+        beforeEach ->
+          home_address = {
+            address1: "312 Delaware RD"
+            address2: ""
+            city: "San Francisco"
+          }
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.applicant.home_address = home_address
+          fakeHouseholdMember =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'Yes'
+            same_address: 'Yes'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+        it 'should return an array of both applicant and household member', ->
+          expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(2)
+          return
+        return
+      return
+
+    describe 'workInSfMembers', ->
+      describe 'only applicant works in SF', ->
+        beforeEach ->
+          fakeHouseholdMember =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'No'
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
+        it 'should return array with applicant', ->
+          expect(ShortFormApplicationService.workInSfMembers()).toEqual([ShortFormApplicationService.applicant])
+          return
+        return
+
+      describe 'only household member works in SF', ->
+        beforeEach ->
+          fakeHouseholdMember =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'Yes'
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          ShortFormApplicationService.applicant.work_in_sf = 'No'
+        it 'should return array with applicant', ->
+          expect(ShortFormApplicationService.workInSfMembers()).toEqual([fakeHouseholdMember])
+          return
+        return
+
+      describe 'both applicant and household member work in SF', ->
+        beforeEach ->
+          fakeHouseholdMember =
+            first_name: 'Bob'
+            last_name: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+            work_in_sf: 'Yes'
+          ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
+        it 'should return array with applicant', ->
+          expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
+          return
+        return
+      return
+
+
+
+

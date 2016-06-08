@@ -135,10 +135,10 @@ ShortFormApplicationService = ($localStorage) ->
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
-      if member.home_address
+      if member.same_address == "No"
         _.lowerCase(member.home_address.city) == 'san francisco'
-      else if (member.same_address == "Yes" && applicantLivesInSf)
-        true
+      else
+        member.same_address == "Yes" && applicantLivesInSf
     liveInSfMembers.push(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
