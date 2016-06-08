@@ -94,6 +94,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getLotteryResults)
         ]
     })
+    .state('dahlia.create-account', {
+      url: '/create-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/create-account.html'
+    })
     .state('dahlia.favorites', {
       url: '/favorites'
       views:
