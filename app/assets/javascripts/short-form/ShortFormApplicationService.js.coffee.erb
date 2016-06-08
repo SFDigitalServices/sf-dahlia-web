@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage) ->
+ShortFormApplicationService = ($localStorage, $translate) ->
   Service = {}
   Service.applicationDefaults = {
     applicant: {
@@ -137,13 +137,16 @@ ShortFormApplicationService = ($localStorage) ->
     else
       Service.applicant.preferences.work_in_sf = false
 
+  Service.onExit = (e) ->
+    e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+
   return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage']
+ShortFormApplicationService.$inject = ['$localStorage', '$translate']
 
 angular
   .module('dahlia.services')

@@ -17,6 +17,7 @@
   'pascalprecht.translate',
   'ui.mask',
   'ngAria',
+  'ngIdle',
 ]
 
 # Custom Directives
@@ -80,6 +81,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.listing', {
       url: '/listings/:id',
+      params:
+        timeout:
+          squash: true
       views:
         'container@':
           templateUrl: 'listings/templates/listing.html'
@@ -403,12 +407,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-      if fromState.name.indexOf('short-form-application') >= 0 &&
-        toState.name.indexOf('short-form-application') == -1
-          if $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE'))
+      if (fromState.name.indexOf('short-form-application') >= 0 &&
+        toState.name.indexOf('short-form-application') == -1)
+          # timeout from inactivity means that we don't need to ALSO ask for confirmation
+          if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example
-            $window.onbeforeunload = null
+            $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
             ShortFormApplicationService.resetUserData()
           else
             # prevent page transition if user did not confirm
@@ -446,4 +451,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.config ['uiMask.ConfigProvider', (uiMaskConfigProvider) ->
   uiMaskConfigProvider.clearOnBlur(false)
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
+]
+
+@dahlia.config ['IdleProvider', (IdleProvider) ->
+  IdleProvider.idle(5)
+  IdleProvider.timeout(5)
 ]

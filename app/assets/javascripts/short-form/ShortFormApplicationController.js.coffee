@@ -7,6 +7,8 @@ ShortFormApplicationController = (
   $state,
   $window,
   $translate,
+  Idle,
+  Title,
   ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -96,11 +98,8 @@ ShortFormApplicationController = (
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
 
-  $scope.onExit = ->
-    $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
-
   unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
-    $window.onbeforeunload = $scope.onExit
+    $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -264,8 +263,28 @@ ShortFormApplicationController = (
   $scope.householdMemberForProgram = (pref_type) ->
     ShortFormHelperService.householdMemberForProgram($scope.applicant, pref_type)
 
+
+  ## idle timeout functions
+  Idle.watch()
+
+  $scope.$on 'IdleStart', ->
+    # user has now been idle for x period of time, warn them of logout!
+    alert($translate.instant('T.SESSION_INACTIVITY'))
+
+  # $scope.$on 'IdleEnd', ->
+  #   # they're back!
+  #   console.log('nice save')
+
+  $scope.$on 'IdleTimeout', ->
+    # they ran out of time
+    ShortFormApplicationService.resetUserData()
+    $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
+    Title.restore()
+    $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
+
+
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$translate',
+  '$scope', '$state', '$window', '$translate', 'Idle', 'Title',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 

@@ -35,4 +35,5 @@
 //= require js-yaml
 //= require ng-file-upload
 //= require angular-aria
+//= require ng-idle
 //= require_tree .
