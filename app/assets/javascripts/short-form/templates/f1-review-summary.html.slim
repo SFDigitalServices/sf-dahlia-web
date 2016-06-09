@@ -66,11 +66,20 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
         | {{applicantVouchersSubsidies()}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="applicant.preferences.cert_of_preference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForProgram('cert_of_preference')}}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.cert_of_preference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('cert_of_preference')}}"
         | {{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="applicant.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForProgram('displaced') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
         | {{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}
+
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.live_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('live_in_sf') }}"
+        | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}
+
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhood_residence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhood_residence') }}"
+        | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}
+
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.work_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('work_in_sf') }}"
+        | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
     / Income
     review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income"
