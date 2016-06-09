@@ -269,11 +269,7 @@ ShortFormApplicationController = (
 
   $scope.$on 'IdleStart', ->
     # user has now been idle for x period of time, warn them of logout!
-    alert($translate.instant('T.SESSION_INACTIVITY'))
-
-  # $scope.$on 'IdleEnd', ->
-  #   # they're back!
-  #   console.log('nice save')
+    $window.alert($translate.instant('T.SESSION_INACTIVITY'))
 
   $scope.$on 'IdleTimeout', ->
     # they ran out of time

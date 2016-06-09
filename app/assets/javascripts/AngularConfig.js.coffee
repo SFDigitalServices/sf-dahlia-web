@@ -407,8 +407,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-      if (fromState.name.indexOf('short-form-application') >= 0 &&
-        toState.name.indexOf('short-form-application') == -1)
+      if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
           if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
@@ -454,6 +453,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.config ['IdleProvider', (IdleProvider) ->
-  IdleProvider.idle(5)
-  IdleProvider.timeout(5)
+  IdleProvider.idle(10)
+  IdleProvider.timeout(10)
 ]

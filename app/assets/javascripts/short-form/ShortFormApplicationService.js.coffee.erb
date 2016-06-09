@@ -154,6 +154,13 @@ ShortFormApplicationService = ($localStorage, $translate) ->
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
+  Service.isLeavingShortForm = (toState, fromState) ->
+    return false if fromState.name.match(/short-form-application\.(intro|overview)/)
+    onShortForm = fromState.name.indexOf('short-form-application') >= 0
+    leaving = toState.name.indexOf('short-form-application') == -1 &&
+          toState.name.indexOf('create-account') == -1
+    onShortForm && leaving
+
   return Service
 
 ############################################################################################
