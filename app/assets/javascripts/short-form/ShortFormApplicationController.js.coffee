@@ -129,7 +129,7 @@ ShortFormApplicationController = (
 
   $scope.addressFailedValidation = (identifier = '') ->
     validated = $scope["validated_#{identifier}"]
-    return !_.isEmpty(validated) && !AddressValidationService.isDeliverable(validated)
+    return AddressValidationService.failedValidation(validated)
 
   $scope.checkInvalidPhones = () ->
     $scope.inputInvalid('phone_number') ||
@@ -260,8 +260,8 @@ ShortFormApplicationController = (
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
 
-  $scope.householdMemberForProgram = (pref_type) ->
-    ShortFormHelperService.householdMemberForProgram($scope.applicant, pref_type)
+  $scope.householdMemberForPreference = (pref_type) ->
+    ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
 
   ## idle timeout functions
