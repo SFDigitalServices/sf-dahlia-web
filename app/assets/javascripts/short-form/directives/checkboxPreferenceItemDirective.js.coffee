@@ -13,6 +13,6 @@ angular.module('dahlia.directives')
     scope.pref_type_proof_option = "#{scope.pref_type}_proof_option"
     scope.pref_type_proof_file = "#{scope.pref_type}_proof_file"
     scope.labelledby = attrs.labelledby
-    scope.show_preferences_options = (applicant) ->
-      return false if !applicant.preferences
-      applicant.preferences[scope.pref_type] && attrs.uploadProof
+    scope.show_preferences_options = (application) ->
+      return false if !application.preferences
+      application.preferences[scope.pref_type] && attrs.uploadProof
