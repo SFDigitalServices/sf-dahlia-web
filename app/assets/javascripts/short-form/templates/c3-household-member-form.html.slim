@@ -48,7 +48,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       radio-block-item value='No' user='householdMember' name='same_address' ng-required='true'
         | {{'T.NO' | translate}}
 
-  ng-include ng-if="householdMember.same_address == 'No'" src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'householdMember'; isRequired = truth"
+  ng-include ng-if="householdMember.same_address == 'No'" src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
 
   .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
     label.form-label.no-margin id="work_in_sf_label"
