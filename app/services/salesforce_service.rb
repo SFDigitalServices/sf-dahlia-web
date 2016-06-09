@@ -71,8 +71,9 @@ class SalesforceService
 
   def self.check_household_eligibility(listing_id, household_size, income_level)
     endpoint = "/services/apexrest/EligibilityCheck/#{listing_id}"
-    params = { householdsize: household_size, incomelevel: income_level }
-    # binding.pry
+    params = {}
+    params[:householdsize] = household_size.to_i if household_size
+    params[:incomelevel] = income_level.to_f if income_level
     api_get(endpoint, params, false)
   end
 
