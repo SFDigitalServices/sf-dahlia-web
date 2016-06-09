@@ -99,6 +99,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container@':
           templateUrl: 'account/templates/create-account.html'
+          controller: 'AccountController'
     })
     .state('dahlia.favorites', {
       url: '/favorites'
@@ -405,13 +406,18 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       $locationProvider.html5Mode({enabled: true, requireBase: false})
 ]
 
-@dahlia.run ['$rootScope', '$state', ($rootScope, $state) ->
-  $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-    e.preventDefault()
-    if toState.name == 'dahlia.short-form-application.verify-address'
-      return $state.go('dahlia.short-form-application.contact', toParams)
-    else
-      return $state.go('dahlia.welcome')
+@dahlia.run [
+  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService',
+  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService) ->
+    $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
+        AccountService.rememberState(fromState.name, fromParams)
+    $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+      e.preventDefault()
+      if toState.name == 'dahlia.short-form-application.verify-address'
+        return $state.go('dahlia.short-form-application.contact', toParams)
+      else
+        return $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
