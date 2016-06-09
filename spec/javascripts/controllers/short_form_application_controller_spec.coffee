@@ -3,6 +3,8 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    fakeIdle = undefined
+    fakeTitle = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeShortFormApplicationService =
       applicant: {}
@@ -33,6 +35,8 @@ do ->
     beforeEach inject(($rootScope, $controller) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
+      fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
+      fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-application.overview'}
       translate = {}
 
@@ -40,6 +44,8 @@ do ->
         $scope: scope
         $state: state
         $translate: translate
+        Idle: fakeIdle
+        Title: fakeTitle
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -141,6 +147,10 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.verify-address')
           return
         return
+
+    describe 'Idle.watch()', ->
+      it 'expects Idle.watch() to be called on initialization', ->
+        expect(fakeIdle.watch).toHaveBeenCalled()
 
 
   return

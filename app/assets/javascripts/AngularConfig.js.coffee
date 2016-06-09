@@ -453,6 +453,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.config ['IdleProvider', (IdleProvider) ->
+  # TODO: update these values after the story has been tested
   IdleProvider.idle(10)
   IdleProvider.timeout(10)
 ]
