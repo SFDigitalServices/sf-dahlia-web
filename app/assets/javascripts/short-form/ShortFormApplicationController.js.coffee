@@ -133,7 +133,7 @@ ShortFormApplicationController = (
 
   $scope.addressFailedValidation = (identifier = '') ->
     validated = $scope["validated_#{identifier}"]
-    return !_.isEmpty(validated) && !AddressValidationService.isDeliverable(validated)
+    return AddressValidationService.failedValidation(validated)
 
   $scope.checkInvalidPhones = () ->
     $scope.inputInvalid('phone_number') ||

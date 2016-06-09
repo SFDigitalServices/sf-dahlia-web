@@ -23,7 +23,10 @@ AddressValidationService = ($http) ->
       Service.copy(validated, address)
     ).error( (data, status, headers, config) ->
       # still grab the data for capturing the verifications/errors
-      angular.copy((if data and data.address then data.address else {}), validated)
+      validated_with_errors = (if data and data.address then data.address else {})
+      # add invalid flag to indicate validation error
+      validated_with_errors.invalid = true
+      angular.copy(validated_with_errors, validated)
     )
 
   Service.copy = (validated, copyTo) ->
@@ -41,6 +44,9 @@ AddressValidationService = ($http) ->
       address.city == validated.city &&
       address.state == validated.state &&
       address.zip == validated.zip
+
+  Service.failedValidation = (validated_address) ->
+    !_.isEmpty(validated_address) && validated_address.invalid
 
   Service.isDeliverable = (validated_address) ->
     !_.isEmpty(validated_address) && validated_address.verifications.delivery.success
