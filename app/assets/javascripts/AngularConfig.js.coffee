@@ -205,6 +205,32 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     ##########################
     # Short form application #
     ##########################
+    ## -- Initial Welcome Pages -- ##
+    .state('dahlia.short-form-welcome', {
+      url: '/listings/:id/apply-welcome'
+      abstract: true
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListing($stateParams.id)
+        ]
+    })
+    .state('dahlia.short-form-welcome.intro', {
+      url: '/intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a1-intro.html'
+    })
+    .state('dahlia.short-form-welcome.overview', {
+      url: '/overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a2-overview.html'
+    })
+    ## -- Short Form Application pages -- ##
     .state('dahlia.short-form-application', {
       url: '/listings/:id/apply'
       abstract: true
@@ -216,18 +242,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id)
         ]
-    })
-    .state('dahlia.short-form-application.intro', {
-      url: '/intro'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/a1-intro.html'
-    })
-    .state('dahlia.short-form-application.overview', {
-      url: '/overview'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/a2-overview.html'
     })
     # Short form: "You" section
     .state('dahlia.short-form-application.name', {

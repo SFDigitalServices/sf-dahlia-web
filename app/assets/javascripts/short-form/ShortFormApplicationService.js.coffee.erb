@@ -45,7 +45,9 @@ ShortFormApplicationService = ($localStorage, $translate) ->
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
 
-  Service.userCanAccessSection = (section) ->
+  Service.userCanAccessSection = (section, state = null) ->
+    # user can't access later sections yet when on the welcome page
+    return false if state and Service.isWelcomePage(state)
     Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
     switch section.name
@@ -154,8 +156,10 @@ ShortFormApplicationService = ($localStorage, $translate) ->
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
+  Service.isWelcomePage = (state) ->
+    !!state.name.match(/short-form-welcome/)
+
   Service.isLeavingShortForm = (toState, fromState) ->
-    return false if fromState.name.match(/short-form-application\.(intro|overview)/)
     onShortForm = fromState.name.indexOf('short-form-application') >= 0
     leaving = toState.name.indexOf('short-form-application') == -1 &&
           toState.name.indexOf('create-account') == -1

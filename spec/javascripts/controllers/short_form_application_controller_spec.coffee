@@ -13,6 +13,7 @@ do ->
       householdMember: {
         first_name: "Oberon"
       }
+      isWelcomePage: jasmine.createSpy()
       copyHomeToMailingAddress: jasmine.createSpy()
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
@@ -37,7 +38,7 @@ do ->
       state = jasmine.createSpyObj('$state', ['go'])
       fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
-      state.current = {name: 'dahlia.short-form-application.overview'}
+      state.current = {name: 'dahlia.short-form-welcome.overview'}
       translate = {}
 
       $controller 'ShortFormApplicationController',

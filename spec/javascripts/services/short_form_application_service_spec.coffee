@@ -303,10 +303,10 @@ do ->
 
       it 'should not trigger if you\'re on the short form intro page', ->
         toState = {name: 'dahlia.listings'}
-        fromState = {name: 'dahlia.short-form-application.intro'}
+        fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
       it 'should not trigger if you\'re going to save and finish later', ->
         toState = {name: 'dahlia.create-account'}
-        fromState = {name: 'dahlia.short-form-application.intro'}
+        fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)

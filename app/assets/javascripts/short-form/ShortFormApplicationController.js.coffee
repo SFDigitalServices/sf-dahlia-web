@@ -98,7 +98,8 @@ ShortFormApplicationController = (
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
 
-  unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
+  unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
+    # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
   $scope.submitForm = (options) ->
@@ -265,7 +266,8 @@ ShortFormApplicationController = (
 
 
   ## idle timeout functions
-  Idle.watch()
+  unless ShortFormApplicationService.isWelcomePage($state.current)
+    Idle.watch()
 
   $scope.$on 'IdleStart', ->
     # user has now been idle for x period of time, warn them of logout!
@@ -277,7 +279,6 @@ ShortFormApplicationController = (
     $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
     Title.restore()
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
-
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$translate', 'Idle', 'Title',

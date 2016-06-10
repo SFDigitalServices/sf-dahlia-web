@@ -1,5 +1,5 @@
 angular.module('dahlia.directives')
-.directive 'shortFormNav', ->
+.directive 'shortFormNav', ['$state', ($state)->
   restrict: 'E'
   replace: true
   scope: true
@@ -20,6 +20,8 @@ angular.module('dahlia.directives')
     scope.sectionDisabled = (section, index) ->
       !scope.isActiveSection(section) &&
       (
-        !scope.appService.userCanAccessSection(section) ||
+        !scope.appService.userCanAccessSection(section, $state.current) ||
         (scope.form.applicationForm && scope.form.applicationForm.$invalid && !scope.navService.isPreviousSection(section))
       )
+
+]
