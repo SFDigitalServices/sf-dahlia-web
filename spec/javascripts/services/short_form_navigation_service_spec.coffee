@@ -3,7 +3,8 @@ do ->
   describe 'ShortFormNavigationService', ->
     ShortFormNavigationService = undefined
     $state = undefined
-    application = {}
+    application =
+      householdMembers: []
     sections = [
       { name: 'You', pages: [
           'name',
@@ -92,4 +93,22 @@ do ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousState = ShortFormNavigationService.backPageState(application)
         expect(previousState).toEqual $state.href('dahlia.short-form-application.name')
+        return
+
+    describe 'getLandingPage', ->
+      it 'gets the first page of the section if it\'s not Household', ->
+        section = ShortFormNavigationService.sections[0]
+        page = ShortFormNavigationService.getLandingPage(section, application)
+        expect(page).toEqual section.pages[0]
+        return
+      it 'gets household intro page if no householdMembers', ->
+        householdSection = ShortFormNavigationService.sections[1]
+        page = ShortFormNavigationService.getLandingPage(householdSection, application)
+        expect(page).toEqual 'household-intro'
+        return
+      it 'gets household members page if householdMembers', ->
+        householdSection = ShortFormNavigationService.sections[1]
+        application.householdMembers = [{first_name: 'Joe'}]
+        page = ShortFormNavigationService.getLandingPage(householdSection, application)
+        expect(page).toEqual 'household-members'
         return
