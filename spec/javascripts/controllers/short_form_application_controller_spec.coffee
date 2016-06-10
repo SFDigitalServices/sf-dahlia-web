@@ -24,7 +24,7 @@ do ->
       hasNav: jasmine.createSpy()
     fakeShortFormHelperService = {}
     fakeAddressValidationService =
-      isDeliverable: jasmine.createSpy()
+      failedValidation: jasmine.createSpy()
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -114,17 +114,18 @@ do ->
         return
 
     describe '$scope.addressFailedValidation', ->
-      it 'calls isDeliverable in AddressValidationService', ->
+      it 'calls failedValidation in AddressValidationService', ->
         scope.validated_home_address = {street1: 'x'}
         scope.addressFailedValidation('home_address')
-        expect(fakeAddressValidationService.isDeliverable).toHaveBeenCalled()
+        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
 
     describe '$scope.addressInputInvalid', ->
-      it 'calls isDeliverable in AddressValidationService', ->
+      it 'calls failedValidation in AddressValidationService', ->
+        scope.form = {applicationForm: {}}
         scope.validated_home_address = {street1: 'x'}
         scope.addressInputInvalid('home_address')
-        expect(fakeAddressValidationService.isDeliverable).toHaveBeenCalled()
+        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
 
     describe '$scope.checkIfAddressVerificationNeeded', ->

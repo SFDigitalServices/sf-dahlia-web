@@ -1,33 +1,33 @@
 ShortFormApplicationService = ($localStorage) ->
   Service = {}
-  Service.applicationDefaults = {
-    applicant: {
-      primary_language: "English",
-      phone_number: null,
-      home_address: { address1: null, city: null, state: null, zip: null },
-      mailing_address: { address1: null, city: null, state: null, zip: null },
-    }
-    alternateContact: {
+  Service.applicationDefaults =
+    applicant:
       primary_language: "English"
-    }
+      phone_number: null
+      home_address: { address1: null, city: null, state: null, zip: null }
+      mailing_address: { address1: null, city: null, state: null, zip: null }
+    alternateContact:
+      primary_language: "English"
     householdMembers: []
-    preferences: {live_in_sf: false, work_in_sf: false}
-    completedSections: {
-      Intro: false,
-      You: false,
-      Household: false,
-      Status: false,
+    preferences:
+      live_in_sf: false
+      work_in_sf: false
+    completedSections:
+      Intro: false
+      You: false
+      Household: false
+      Status: false
       Income: false
-    }
-  }
+
   Service.current_id = 0
 
-  <% if Rails.env.development? %>
+  # even though this looks commented out, it still has an effect in ERB land
+  #<% if Rails.env.development? %>
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
-  <% else %>
+  #<% else %>
   Service.application = Service.applicationDefaults
-  <% end %>
+  #<% end %>
 
   Service.applicant = Service.application.applicant
   Service.preferences = Service.application.preferences
