@@ -266,7 +266,7 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligbility = (match, callbackUrl) ->
     $scope.clearHouseholdErrorMessage()
     form = $scope.form.applicationForm
-    ShortFormApplicationService.refreshHouseholdEligiblity($scope.listing)
+    ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
         if eligibility[match]

@@ -133,7 +133,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
 
-  Service.refreshHouseholdEligiblity = (listing) ->
+  Service.checkHouseholdEligiblity = (listing) ->
     params =
       params:
         listing_id: listing.listingID
