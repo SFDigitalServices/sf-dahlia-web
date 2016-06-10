@@ -11,7 +11,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}"
       type="live_in_sf" upload_proof="true"  labelledby="additional_preferences_label"
-      ng-if="preferences.live_in_sf")
+      ng-if="liveInSfMembers().length > 0")
 
     checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}"
       type="neighborhood_residence" upload_proof="true" labelledby="additional_preferences_label")
@@ -19,7 +19,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
     checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}"
       type="work_in_sf" upload_proof="true" labelledby="additional_preferences_label"
-      ng-if="preferences.work_in_sf")
+      ng-if="workInSfMembers().length > 0")
         | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION' | translate}}
 
   short-form-save-and-submit

@@ -10,8 +10,8 @@ ShortFormApplicationService = ($localStorage) ->
       primary_language: "English"
     householdMembers: []
     preferences:
-      live_in_sf: false
-      work_in_sf: false
+      live_in_sf: null
+      work_in_sf: null
     completedSections:
       Intro: false
       You: false
@@ -150,6 +150,8 @@ ShortFormApplicationService = ($localStorage) ->
     return workInSfMembers
 
   Service._updatePreference = (preference, eligibleMembers) ->
+    # only need to manually update if the preference hasn't been set yet
+    return unless Service.preferences[preference] == null
     if eligibleMembers.length > 0
       Service.preferences[preference] = true
     else
