@@ -266,7 +266,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container':
           templateUrl: 'short-form/templates/b2a-verify-address.html'
       resolve:
-        address_validation: [
+        addressValidation: [
           'AddressValidationService',
           'ShortFormApplicationService',
           (AddressValidationService, ShortFormApplicationService) ->
@@ -322,6 +322,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/c3-household-member-form.html'
+      resolve:
+        householdMember: [
+          'ShortFormApplicationService',
+          (ShortFormApplicationService) ->
+            ShortFormApplicationService.resetHouseholdmember()
+        ]
     })
     .state('dahlia.short-form-application.household-member-form-edit', {
       url: '/household-member-form/:member_id'
@@ -329,8 +335,33 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container':
           templateUrl: 'short-form/templates/c3-household-member-form.html'
       resolve:
-        householdMember: ['$stateParams', 'ShortFormApplicationService', ($stateParams, ShortFormApplicationService) ->
-          ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
+        householdMember: [
+          '$stateParams',
+          'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
+        ]
+    })
+    .state('dahlia.short-form-application.household-member-verify-address', {
+      url: '/household-member-verify-address/:member_id'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
+      resolve:
+        householdMember: [
+          '$stateParams',
+          'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
+        ]
+        addressValidation: [
+          'AddressValidationService',
+          'ShortFormApplicationService',
+          (AddressValidationService, ShortFormApplicationService) ->
+            AddressValidationService.validate(
+              address: ShortFormApplicationService.householdMember.home_address
+              type: 'home'
+            )
         ]
     })
     # Short form: "Status" section
@@ -431,14 +462,17 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           else
             # prevent page transition if user did not confirm
             e.preventDefault()
-            return false
+            false
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       e.preventDefault()
+      # capture errors when trying to verify address and send them back to the appropriate page
       if toState.name == 'dahlia.short-form-application.verify-address'
-        return $state.go('dahlia.short-form-application.contact', toParams)
+        $state.go('dahlia.short-form-application.contact', toParams)
+      else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
+        $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
       else
-        return $state.go('dahlia.welcome')
+        $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
