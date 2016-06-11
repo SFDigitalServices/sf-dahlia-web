@@ -2,7 +2,7 @@ h2.application-title.t-gamma
   | {{'C3_HOUSEHOLD_MEMBER_FORM.TITLE' | translate}}
 p
   | {{'C3_HOUSEHOLD_MEMBER_FORM.P1' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember', path: 'dahlia.short-form-application.household-members'})" ng-init="getHouseholdMember()"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember'})" ng-init="getHouseholdMember()"
   .form-group ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
     h3.form-label
       | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
@@ -48,7 +48,12 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       radio-block-item value='No' user='householdMember' name='same_address' ng-required='true'
         | {{'T.NO' | translate}}
 
-  ng-include ng-if="householdMember.same_address == 'No'" src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
+  .form-group ng-if="householdMember.same_address == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
+    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
+
+    small.error ng-if="addressFailedValidation('home_address')"
+      | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+
 
   .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
     label.form-label.no-margin id="work_in_sf_label"
