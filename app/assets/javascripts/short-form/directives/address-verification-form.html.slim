@@ -1,0 +1,24 @@
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: submitPath})"
+  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('confirmed_home_address')}"
+    label.form-label.margin-bottom
+      | {{'LABEL.SUGGESTED_ADDRESS' | translate}}:
+    .radio-group.left role="radiogroup" aria-label="{{'LABEL.SUGGESTED_ADDRESS' | translate}}"
+      radio-block-item value='Yes' user='user' name='confirmed_home_address' ng-required='true'
+        p.margin-bottom-none.t-base
+          | {{validated_home_address.street1}}
+        p.margin-bottom-none.t-base ng-if="validated_home_address.street2"
+          | {{validated_home_address.street2}}
+        p.margin-bottom-none.t-base
+          ' {{validated_home_address.city}},
+          ' {{validated_home_address.state}}
+          ' {{validated_home_address.zip}}
+
+        small.error ng-if="inputInvalid('confirmed_home_address')"
+          | {{'ERROR.CONFIRMED_ADDRESS' | translate}}
+
+    a.small.button.right ng-href="{{ngHref}}"
+      | {{'T.EDIT' | translate}}
+
+
+
+  short-form-save-and-submit

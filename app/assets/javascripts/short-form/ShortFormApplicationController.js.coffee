@@ -193,9 +193,6 @@ ShortFormApplicationController = (
     else
       $state.go('dahlia.short-form-application.verify-address')
 
-  $scope.checkValidatedAddressSelection = ->
-    $state.go('dahlia.short-form-application.alternate-contact-type')
-
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
@@ -242,6 +239,14 @@ ShortFormApplicationController = (
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
+    if ($scope.householdMember.same_address == 'Yes' ||
+        ($scope.householdMember.confirmed_home_address &&
+        AddressValidationService.isConfirmed($scope.householdMember.home_address, 'home')))
+      # skip ahead if they aren't filling out an address
+      # or their current address has already been confirmed
+      $state.go('dahlia.short-form-application.household-members')
+    else
+      $state.go('dahlia.short-form-application.household-member-verify-address', {member_id: $scope.householdMember.id})
 
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
