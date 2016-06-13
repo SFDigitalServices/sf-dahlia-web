@@ -510,7 +510,19 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.config ['IdleProvider', (IdleProvider) ->
-  # TODO: update these values after the story has been tested
-  IdleProvider.idle(10)
-  IdleProvider.timeout(10)
+  # TODO: remove this window query parsing after the browser inactivity story has been tested
+  window.idleTime = parseQuery('idle', window.location.search) || 120
+  window.idleTimeoutTime = parseQuery('timeout', window.location.search) || 60
+  IdleProvider.idle(idleTime)
+  IdleProvider.timeout(idleTimeoutTime)
 ]
+
+# TODO: remove this after the browser inactivity story has been tested
+parseQuery = (val, search) ->
+  result = null
+  tmp = []
+  search.substr(1).split('&').forEach (item) ->
+    tmp = item.split('=')
+    if tmp[0] == val
+      result = parseInt(decodeURIComponent(tmp[1]))
+  result
