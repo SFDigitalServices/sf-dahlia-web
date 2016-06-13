@@ -18,6 +18,7 @@ ShortFormApplicationController = (
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
+  $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
@@ -230,8 +231,13 @@ ShortFormApplicationController = (
 
   ###### Proof of Preferences Logic ########
   $scope.checkLiveWorkEligibility = () ->
-    ShortFormApplicationService.livesInSf()
-    ShortFormApplicationService.worksInSf()
+    ShortFormApplicationService.refreshLiveWorkPreferences()
+
+  $scope.liveInSfMembers = ->
+    ShortFormApplicationService.liveInSfMembers()
+
+  $scope.workInSfMembers = ->
+    ShortFormApplicationService.workInSfMembers()
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
