@@ -1,0 +1,37 @@
+.dash-container.tall
+  section.row.collapse
+    .medium-6.medium-centered.columns
+      .back-link-container.small-only-text-center
+        a.back-link href="#" ng-click="continueApplication()"
+          span.ui-icon.ui-static.ui-medium.i-primary
+            svg
+              use xlink:href="#i-left"
+          | Continue with Application
+      form.dash-card
+        header.dash-header
+          h1.dash-title Create an Account
+          p.t-small.c-steel You'll use this information to log in to your account, so make sure you can remember it.
+
+        .dash-card-inner.border-bottom
+          .form-group
+            h3.form-label Email Address
+            label.sr-only for="email_address"  Email address
+            input name="email_address" placeholder="example@web.com" type="email"
+            label.label-secondary for="email_address_confirm"  Re-enter email address
+            input name="email_address_confirm" placeholder="example@web.com" type="text"
+
+        .dash-card-inner.border-bottom
+          .form-group
+            h3.form-label Password
+            p.form-note.margin-bottom Must be at least 8 characters and include 1 numeric character.
+            label.sr-only for="password"  password
+            input name="password" placeholder="Must be 8 characters" type="password"
+            label.label-secondary for="password_confirm" Re-enter your password to confirm
+            input name="password_confirm" placeholder="Must be 8 characters" type="password"
+          .form-group
+            p.t-small.c-steel.text-center.padding-top
+              button.primary.no-margin type="button" Create Account
+        / footer.dash-header
+        /   h2.dash-title.t-gamma Already have an account?
+        /   p.t-small.c-steel
+        /     button.no-margin type="button" Sign In
