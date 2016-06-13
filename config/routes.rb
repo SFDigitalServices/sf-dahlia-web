@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
       # address validation
       post 'validate-address' => 'address_validation#validate'
+      # address geocoding
+      post 'geocode-address' => 'geocoding#geocode'
     end
   end
 
