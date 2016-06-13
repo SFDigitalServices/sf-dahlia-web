@@ -6,7 +6,6 @@ angular.module('dahlia.directives')
   templateUrl: 'short-form/directives/checkbox-preference-item.html'
 
   link: (scope, elem, attrs) ->
-    # TODO: check if currently selected householdMember no longer exists...
     scope.title = attrs.title
     scope.pref_type = attrs.type
     scope.pref_type_household_member = "#{scope.pref_type}_household_member"
@@ -16,3 +15,14 @@ angular.module('dahlia.directives')
     scope.show_preferences_options = (application) ->
       return false if !application.preferences
       application.preferences[scope.pref_type] && attrs.uploadProof
+
+    scope.eligible_members = () ->
+      if attrs.type == "live_in_sf"
+        scope.liveInSfMembers()
+      else if attrs.type == "work_in_sf"
+        scope.workInSfMembers()
+      else
+        scope.householdMembers
+
+    scope.only_applicant_eligible = () ->
+      (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)

@@ -1,36 +1,36 @@
 ShortFormApplicationService = ($localStorage) ->
   Service = {}
-  Service.applicationDefaults = {
-    applicant: {
-      primary_language: "English",
-      phone_number: null,
-      home_address: { address1: null, city: null, state: null, zip: null },
-      mailing_address: { address1: null, city: null, state: null, zip: null },
-      preferences: {live_in_sf: false, work_in_sf: false}
-    }
-    alternateContact: {
+  Service.applicationDefaults =
+    applicant:
       primary_language: "English"
-    }
+      phone_number: null
+      home_address: { address1: null, city: null, state: null, zip: null }
+      mailing_address: { address1: null, city: null, state: null, zip: null }
+    alternateContact:
+      primary_language: "English"
     householdMembers: []
-    preferences: {}
-    completedSections: {
-      Intro: false,
-      You: false,
-      Household: false,
-      Status: false,
+    preferences:
+      live_in_sf: null
+      work_in_sf: null
+    completedSections:
+      Intro: false
+      You: false
+      Household: false
+      Status: false
       Income: false
-    }
-  }
+
   Service.current_id = 0
 
-  <% if Rails.env.development? %>
+  # even though this looks commented out, it still has an effect in ERB land
+  #<% if Rails.env.development? %>
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
-  <% else %>
+  #<% else %>
   Service.application = Service.applicationDefaults
-  <% end %>
+  #<% end %>
 
   Service.applicant = Service.application.applicant
+  Service.preferences = Service.application.preferences
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
   Service.householdMembers = Service.application.householdMembers
@@ -97,6 +97,9 @@ ShortFormApplicationService = ($localStorage) ->
       Service.householdMembers.push(angular.copy(householdMember))
     Service.householdMember = {}
 
+  Service.resetHouseholdmember = () ->
+    Service.householdMember = {}
+
   Service.getHouseholdMember = (id) ->
     Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
 
@@ -126,23 +129,36 @@ ShortFormApplicationService = ($localStorage) ->
     user.gender_not_listed = null
     user.gender[option] = toggle
 
-  Service.livesInSf = () ->
-    membersLiveInSf = Service.application.householdMembers.filter (member) ->
-      if member.home_address
-        _.lowerCase(member.home_address.city) == 'san francisco'
-    applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
-    if membersLiveInSf.length > 0 || applicantLivesInSf
-      Service.applicant.preferences.live_in_sf = true
-    else
-      Service.applicant.preferences.live_in_sf = false
+  ### Proof of Preferences ###
 
-  Service.worksInSf = () ->
-    membersWorkInSf = Service.application.householdMembers.filter (member) ->
-      member.work_in_sf == 'Yes'
-    if (membersWorkInSf.length > 0) || (Service.applicant.work_in_sf == "Yes")
-      Service.applicant.preferences.work_in_sf = true
+  Service.refreshLiveWorkPreferences = () ->
+    Service._updatePreference("live_in_sf", Service.liveInSfMembers())
+    Service._updatePreference("work_in_sf", Service.workInSfMembers())
+
+  Service.liveInSfMembers = () ->
+    applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
+    liveInSfMembers = Service.application.householdMembers.filter (member) ->
+      if member.same_address == "No"
+        _.lowerCase(member.home_address.city) == 'san francisco'
+      else
+        member.same_address == "Yes" && applicantLivesInSf
+    liveInSfMembers.push(Service.applicant) if applicantLivesInSf
+    return liveInSfMembers
+
+  Service.workInSfMembers = () ->
+    workInSfMembers = Service.application.householdMembers.filter (member) ->
+      member.work_in_sf == "Yes"
+    applicantWorksInSf = Service.applicant.work_in_sf == "Yes"
+    workInSfMembers.push(Service.applicant) if applicantWorksInSf
+    return workInSfMembers
+
+  Service._updatePreference = (preference, eligibleMembers) ->
+    # only need to manually update if the preference hasn't been set yet
+    return unless Service.preferences[preference] == null
+    if eligibleMembers.length > 0
+      Service.preferences[preference] = true
     else
-      Service.applicant.preferences.work_in_sf = false
+      Service.preferences[preference] = false
 
   return Service
 
