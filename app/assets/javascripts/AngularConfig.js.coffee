@@ -98,6 +98,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getLotteryResults)
         ]
     })
+    .state('dahlia.create-account', {
+      url: '/create-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/create-account.html'
+          controller: 'AccountController'
+    })
     .state('dahlia.favorites', {
       url: '/favorites'
       views:
@@ -449,8 +456,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService',
-  ($rootScope, $state, $window, $translate, ShortFormApplicationService) ->
+  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService',
+  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
@@ -463,7 +470,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             # prevent page transition if user did not confirm
             e.preventDefault()
             false
-
+    $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
+        AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       e.preventDefault()
       # capture errors when trying to verify address and send them back to the appropriate page

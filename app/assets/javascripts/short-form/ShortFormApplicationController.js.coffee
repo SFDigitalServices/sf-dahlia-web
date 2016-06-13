@@ -20,6 +20,7 @@ ShortFormApplicationController = (
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
+  $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
@@ -193,7 +194,7 @@ ShortFormApplicationController = (
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
-      $state.go('dahlia.short-form-application.household-intro')
+      $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
@@ -225,10 +226,21 @@ ShortFormApplicationController = (
   $scope.genderOtherOptionSelected = (user) ->
     user.gender['Not Listed'] || user.gender['Decline to State']
 
+  $scope.getLandingPage = (section) ->
+    ShortFormNavigationService.getLandingPage(section, $scope.application)
+
+  $scope.getHouseholdLandingPage = (section) ->
+    $scope.getLandingPage({name: 'Household'})
+
   ###### Proof of Preferences Logic ########
   $scope.checkLiveWorkEligibility = () ->
-    ShortFormApplicationService.livesInSf()
-    ShortFormApplicationService.worksInSf()
+    ShortFormApplicationService.refreshLiveWorkPreferences()
+
+  $scope.liveInSfMembers = ->
+    ShortFormApplicationService.liveInSfMembers()
+
+  $scope.workInSfMembers = ->
+    ShortFormApplicationService.workInSfMembers()
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->

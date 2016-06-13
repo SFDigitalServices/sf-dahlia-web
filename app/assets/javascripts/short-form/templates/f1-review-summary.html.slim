@@ -46,7 +46,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
           | {{alternateContact.email}}
 
     / Household Members
-    review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.household-members"
+    review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getHouseholdLandingPage()}}"
 
       hgroup.entry-panel_group ng-if="!householdMembers || householdMembers.length == 0"
         h4.entry-panel_content

@@ -1,6 +1,6 @@
 dl.application-form_nav.sub-nav ng-show="hasNav()"
   dt.sr-only Section Navigation
   dd ng-repeat="section in sections track by $index" ng-class="{active: isActiveSection(section)}"
-    a(ui-sref="dahlia.short-form-application.{{ section.pages[0] }}"
+    a(ng-href="{{ngHref(section)}}"
     ng-class="{disabled: sectionDisabled(section, $index)}" ng-disabled="sectionDisabled(section, $index)")
       | {{section.name}}

@@ -36,6 +36,16 @@ ShortFormNavigationService = ($state) ->
     }
   ]
 
+  Service.getLandingPage = (section, application) ->
+    if section.name == 'Household'
+      if application.householdMembers.length
+        'household-members'
+      else
+        'household-intro'
+    else
+      section.pages[0]
+
+
   Service.hasNav = ->
     hideNav = ['intro', 'confirmation']
     hideNav.indexOf(Service._currentPage()) < 0
