@@ -197,7 +197,7 @@ ShortFormApplicationController = (
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.type == 'None'
       # skip ahead if they aren't filling out an alt. contact
-      $state.go('dahlia.short-form-application.household-intro')
+      $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
@@ -228,6 +228,12 @@ ShortFormApplicationController = (
 
   $scope.genderOtherOptionSelected = (user) ->
     user.gender['Not Listed'] || user.gender['Decline to State']
+
+  $scope.getLandingPage = (section) ->
+    ShortFormNavigationService.getLandingPage(section, $scope.application)
+
+  $scope.getHouseholdLandingPage = (section) ->
+    $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
   $scope.checkLiveWorkEligibility = () ->

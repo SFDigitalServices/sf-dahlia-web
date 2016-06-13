@@ -1,6 +1,6 @@
 h2.application-title.t-gamma
   | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.household-intro'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.' + getHouseholdLandingPage()})"
   .form-group ng-class="{ error: inputInvalid('phone_number') }"
     .form-tel
       label for="alternate_phone"

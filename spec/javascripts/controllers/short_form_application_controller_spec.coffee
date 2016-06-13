@@ -19,9 +19,10 @@ do ->
       workInSfMembers: jasmine.createSpy()
       validMailingAddress: ->
         true
-    fakeShortFormNavigationService =
-      sections: []
-      hasNav: jasmine.createSpy()
+    fakeFunctions =
+      fakeGetLandingPage: (section, application) ->
+        'household-intro'
+    fakeShortFormNavigationService = {}
     fakeShortFormHelperService = {}
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
@@ -29,6 +30,11 @@ do ->
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
         listing: fakeListing
+      fakeShortFormNavigationService =
+        sections: []
+        hasNav: jasmine.createSpy()
+        getLandingPage: spyOn(fakeFunctions, 'fakeGetLandingPage').and.callThrough()
+
       $provide.value 'ListingService', fakeListingService
       return
     )
@@ -144,6 +150,13 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.verify-address')
           return
         return
+
+    describe '$scope.getLandingPage', ->
+      it 'calls getLandingPage in ShortFormNavigationService', ->
+        scope.getLandingPage({name: 'Household'})
+        expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalled()
+        return
+      return
 
     describe '$scope.checkLiveWorkEligibility', ->
       it 'calls refreshLiveWorkPreferences in ShortFormApplicationService', ->
