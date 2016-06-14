@@ -17,6 +17,7 @@
   'pascalprecht.translate',
   'ui.mask',
   'ngAria',
+  'duScroll',
 ]
 
 # Custom Directives

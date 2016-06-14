@@ -6,6 +6,7 @@ ShortFormApplicationController = (
   $scope,
   $state,
   $window,
+  $document,
   $translate,
   ListingService,
   ShortFormApplicationService,
@@ -115,7 +116,14 @@ ShortFormApplicationController = (
       if options.path
         $state.go(options.path)
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
+
+  $scope.handleErrorState = ->
+    # show error alert
+    $scope.hideAlert = false
+    el = angular.element(document.getElementById('short-form-wrapper'))
+    # uses duScroll aka 'angular-scroll' module
+    $document.scrollToElement(el, 0, 400)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.applicationForm
@@ -285,7 +293,7 @@ ShortFormApplicationController = (
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$translate',
+  '$scope', '$state', '$window', '$document', '$translate',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
