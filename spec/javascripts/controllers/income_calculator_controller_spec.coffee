@@ -29,7 +29,9 @@ do ->
       fakeIncomeCalculatorService.addIncomeSource = jasmine.createSpy()
       fakeIncomeCalculatorService.calculateTotalYearlyIncome = jasmine.createSpy()
       fakeIncomeCalculatorService.deleteIncome = jasmine.createSpy()
-      fakeIncomeCalculatorService.newIncomeSource = jasmine.createSpy()
+      fakeIncomeCalculatorService.nextId = jasmine.createSpy()
+      fakeIncomeCalculatorService.newIncomeSource = () ->
+        return
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
@@ -91,6 +93,7 @@ do ->
 
     describe '$scope.addAdditionalIncome', ->
       beforeEach ->
+        spyOn(fakeIncomeCalculatorService, 'newIncomeSource')
         scope.income = fakeIncomeSource
         scope.addAdditionalIncome()
 
@@ -116,5 +119,36 @@ do ->
         expect(fakeIncomeCalculatorService.deleteIncome).toHaveBeenCalled()
         return
       return
-    return
+
+    describe '$scope.resetIncomeSource', ->
+      beforeEach ->
+        spyOn(fakeIncomeCalculatorService, 'newIncomeSource').and.returnValue(defaultIncomeSource)
+        scope.resetIncomeSource()
+
+      it 'called newIncomeSource function in IncomeCalculatorService', ->
+        expect(fakeIncomeCalculatorService.newIncomeSource).toHaveBeenCalled()
+        return
+
+      it 'assigns scope.income to default income values', ->
+        expect(scope.income).toEqual(defaultIncomeSource)
+        return
+      return
+
+    describe '$scope.closeAdditionalIncomeForm', ->
+      it 'assigns scope.additionalIncome to false', ->
+        scope.additionalIncome = true
+        scope.closeAdditionalIncomeForm()
+        expect(scope.additionalIncome).toEqual(false)
+        return
+      return
+
+    describe 'scope.nextId', ->
+      it 'calls nextId from IncomeCalculatorService', ->
+        scope.nextId()
+        expect(fakeIncomeCalculatorService.nextId).toHaveBeenCalled()
+        return
+      return
   return
+
+#nextID
+
