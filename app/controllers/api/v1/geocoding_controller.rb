@@ -1,11 +1,12 @@
 # RESTful JSON API to query for address geocoding
 class Api::V1::GeocodingController < ApiController
   def geocode
-    puts address_params
     service = GeocodingService.new(address_params)
     # could be nil if no results found
     @geocoding_data = service.geocode
-    render json: { geocoding_data: @geocoding_data }
+    status = 200 # default to success
+    status = 422 if @geocoding_data.nil?
+    render json: { geocoding_data: @geocoding_data }, status: status
   end
 
   private
