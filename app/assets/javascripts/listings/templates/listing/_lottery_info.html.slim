@@ -81,7 +81,7 @@ accordion-heading
     p.c-steel
       | {{ listing.Leasing_Agent_Title }}
     p.margin-bottom--half
-      a.has-icon ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
+      a.has-icon title="Call {{ listing.Leasing_Agent_Phone }}" ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
         span.ui-icon.ui-medium.i-primary
           svg
             use xlink:href="#i-phone"
