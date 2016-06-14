@@ -14,7 +14,7 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title Household Maximum Income
           /! Each unit type available has its own requirements based on household size.
-          p.t-small.c-charcoal For income calculations, household size includes everyone (all ages) living in the unit.
+          p.custom-counter_text For income calculations, household size includes everyone (all ages) living in the unit.
         .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
           .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
             .stats-list_value.highlight
@@ -36,7 +36,7 @@ accordion-heading.lead
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title Occupancy
-          p.t-small.c-charcoal Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+          p.custom-counter_text Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
 
         table role="grid"
           thead
@@ -56,7 +56,7 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Lottery Preferences
-          p.t-small.c-charcoal
+          p.custom-counter_text
             | Preference holders will be given highest ranking in the lottery process.
         .content-card ng-repeat="preference in listing.Listing_Lottery_Preferences"
           h4.content-card_title
@@ -70,15 +70,15 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Rental Assistance
-          p.t-small.c-charcoal
+          p.custom-counter_text
             | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
-          p.t-small.c-charcoal In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
+          p.custom-counter_text In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
 
     li.custom-counter_item ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title Additional Eligibility Rules
-          p.t-small.c-charcoal Applicants must also qualify under the rules of the building.
+          p.custom-counter_text Applicants must also qualify under the rules of the building.
 
         .content-card ng-if="listing.Credit_Rating"
           h4.content-card_title Credit History
