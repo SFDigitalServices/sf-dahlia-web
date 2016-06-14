@@ -268,20 +268,23 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
-        eligibility = response.data
-        if eligibility[match]
-          $scope.householdEligibilityErrorMessage = null
-          $state.go(callbackUrl)
-        else
-          $scope.determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
-          $scope.determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
-          $scope.hideAlert = false
+        $scope._respondToHouseholdEligibilityResults(response, match, callbackUrl)
       )
+
+  $scope._respondToHouseholdEligibilityResults = (response, match, callbackUrl) ->
+    eligibility = response.data
+    if eligibility[match]
+      $scope.householdEligibilityErrorMessage = null
+      $state.go(callbackUrl)
+    else
+      $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
+      $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
+      $scope.hideAlert = false
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null
 
-  $scope.determineHouseholdErrorMessage= (eligibility, errorResult) ->
+  $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
     error = eligibility[errorResult]
     message = null
     if error == 'too big'

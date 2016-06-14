@@ -18,7 +18,7 @@ do ->
       dob_year: '2015'
       relationship: 'Cousin'
       work_in_sf: 'Yes'
-      preferences: {live_in_sf: false, work_in_sf: false}
+      preferences: {live_in_sf: null, work_in_sf: null}
       home_address: fakeAddress
 
     beforeEach module('dahlia.services', ($provide)->
