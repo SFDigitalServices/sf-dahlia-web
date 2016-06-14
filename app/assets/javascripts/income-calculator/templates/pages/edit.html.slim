@@ -11,7 +11,7 @@ section.row.margin-bottom--2x
 
         .income-source ng-if="incomeSources.length < 30 && incomeSources.length > 0"
           .income-source_item.padding-bottom-none.clearfix
-            button.button-link.t-caps.t-bold.t-base.t-alt-sans ng-click="toggleAdditionalIncomeForm()"
+            button.button-link.t-caps.t-bold.t-base.t-alt-sans title="Add additional income source" ng-click="toggleAdditionalIncomeForm()"
               span.ui-icon.ui-link.ui-medium
                 svg
                   use xlink:href="#i-plus"
@@ -23,6 +23,6 @@ section.row.margin-bottom--2x
 
     .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
       .small-6.columns
-        button.button-link.button-lined  ui-sref="dahlia.eligibility-estimator" Cancel
+        button.button-link.button-lined  ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
       .small-6.columns
-        button.button.primary.right ui-sref="dahlia.income-calculator.summary" Done
+        button.button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done
