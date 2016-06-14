@@ -8,6 +8,8 @@ do ->
     eligibilityResponse = undefined
     callbackUrl = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
+    invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
       applicant: {}
       application: {}
@@ -218,12 +220,7 @@ do ->
         #replace with a jasmine fixture
         beforeEach ->
           eligibilityResponse =
-            data:
-              householdEligibilityResult: "Match"
-              householdMatch: true
-              incomeEligibilityResult: "Match"
-              incomeMatch: true
-              listingId: "a0X210000000IMMEA2"
+            data: validHousehold
           callbackUrl = 'someUrl'
           return
 
@@ -242,12 +239,7 @@ do ->
       describe 'not matched', ->
         beforeEach ->
           eligibilityResponse =
-            data:
-              householdEligibilityResult: "too small"
-              householdMatch: false
-              incomeEligibilityResult: "too low"
-              incomeMatch: false
-              listingId: "a0X210000000IMMEA2"
+            data: invalidHousehold
           callbackUrl = 'someUrl'
           return
 
