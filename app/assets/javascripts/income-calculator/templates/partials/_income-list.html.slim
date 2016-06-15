@@ -1,16 +1,15 @@
 span ng-if="hasIncomeSources()"
-  form.no-margin
-    header.padding.border-bottom.text-center
-      h2.t-base.t-alt-sans.t-caps.t-black
-        | Here's the income you've added so far:
+  header.padding.border-bottom.text-center
+    h2.t-base.t-alt-sans.t-caps.t-black
+      | Here's the income you've added so far:
 
-    .form-group.border-bottom ng-repeat="income in incomeSources track by $index"
-      .income-source
-        .income-source_item
-          span.income-source_name
-            | {{ income.source }}
-            span.income-source_value
-              | {{ parsedValue(income.value) | currency : $ : 2 }}/{{ income.frequency }}
-          a.income-source_link ng-click="toggleIncomeEditForm(income)" ng-hide="income.editing" Edit
-          .income-source_nested.margin-top.bg-mist ng-show="income.editing"
-            ng-include src="'income-calculator/templates/partials/_income-form.html'"
+  .form-group.border-bottom ng-repeat="income in incomeSources track by $index"
+    .income-source
+      .income-source_item
+        span.income-source_name
+          | {{ income.source }}
+          span.income-source_value
+            | {{ parsedValue(income.value) | currency : $ : 2 }}/{{ income.frequency }}
+        a.income-source_link ng-click="toggleIncomeEditForm(income)" ng-hide="income.editing" Edit
+        .income-source_nested.margin-top.bg-mist ng-show="income.editing"
+          ng-include src="'income-calculator/templates/partials/_income-form.html'"

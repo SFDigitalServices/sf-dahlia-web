@@ -48,12 +48,11 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
     button.button-link.button-lined title="Cancel" ui-sref="dahlia.eligibility-estimator"
       | Cancel
   .small-6.columns ng-if="noIncomeSources()"
-    button.primary.right.no-margin title="Save" ng-click="addAdditionalIncome()"
-      | Save
+    button.primary.right.no-margin title="Save" ng-click="addAdditionalIncome()" Save
 
   / show this button if we're on the additional income form
   .form-group.text-center.border-top.padding-top ng-if="$index == undefined && hasIncomeSources()"
-    input.button.ghost-white.expand-small.no-margin title="Save Income Source" type="submit" value="Save Income Source" ng-click="addAdditionalIncome()"
+    button.ghost-white.expand-small.no-margin title="Save Income Source" ng-click="addAdditionalIncome()" Save Income Source
 
   / show these buttons if we're iterating over income list (better way to check?)
   .small-6.medium-6.columns ng-if="$index != undefined"
