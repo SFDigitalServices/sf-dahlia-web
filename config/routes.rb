@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   ## --- API namespacing
   namespace :api do
     namespace :v1 do
+      devise_for :users, controllers: {
+        sessions: 'api/v1/sessions',
+        registrations: 'api/v1/registrations',
+      }
+
       # listings
       resources :listings, only: [:index, :show] do
         member do

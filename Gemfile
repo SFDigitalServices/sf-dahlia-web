@@ -43,6 +43,17 @@ gem 'rack-rewrite', '~> 1.5.0'
 # address validation
 gem 'easypost'
 
+# JSON optimization
+gem 'oj'
+gem 'oj_mimic_json'
+
+# user authentication
+gem 'devise', '~> 4.1.1'
+gem 'ng-rails-csrf'
+
+# postgresql database
+gem 'pg'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
