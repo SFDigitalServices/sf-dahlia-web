@@ -1,7 +1,7 @@
 # here so builds don't fail even after we remove PG on this branch
 namespace :db do
-  desc 'fake db:create to work on semaphoreci'
-  task create: :environment do
-    puts 'creating database (j/k)!'
+  desc 'fake db tasks to work on semaphoreci when ActiveRecord is not used'
+  rule '' do |t|
+    puts "pretending to run #{t.name}..."
   end
 end
