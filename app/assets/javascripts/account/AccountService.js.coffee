@@ -2,8 +2,9 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state) ->
+AccountService = ($state, $auth) ->
   Service = {}
+  Service.userAuth = {}
   Service.rememberedState = null
   Service.rememberedStateParams = null
 
@@ -14,6 +15,19 @@ AccountService = ($state) ->
   Service.returnToRememberedState = () ->
     $state.go(Service.rememberedState, Service.rememberedStateParams)
 
+
+  Service.createAccount = ->
+    # userAuth = _.filter(Service.userAuth, (v,k) -> k != 'email_confirmation')
+    $auth.submitRegistration(Service.userAuth)
+      .then((response) ->
+        # handle success response
+        alert('OK!')
+      ).catch((response) ->
+        # handle error response
+        # console.warn(response)
+        alert("Error: #{response.data.errors.full_messages[0]}")
+      )
+
   return Service
 
 
@@ -21,7 +35,7 @@ AccountService = ($state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state']
+AccountService.$inject = ['$state', '$auth']
 
 angular
   .module('dahlia.services')

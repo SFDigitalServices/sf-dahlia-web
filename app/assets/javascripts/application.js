@@ -36,4 +36,7 @@
 //= require ng-file-upload
 //= require angular-aria
 //= require ng-idle
+//= require angular-cookie
+//= require ng-token-auth
+//= require angular-ui-validate
 //= require_tree .

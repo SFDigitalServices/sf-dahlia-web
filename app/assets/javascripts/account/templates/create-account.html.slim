@@ -1,36 +1,56 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns
-      .back-link-container.small-only-text-center
+      .back-link-container.small-only-text-center ng-if="rememberedState"
         a.back-link href="#" ng-click="continueApplication()"
           span.ui-icon.ui-static.ui-medium.i-primary
             svg
               use xlink:href="#i-left"
-          | Continue with Application
-      form.dash-card
+          | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
+
+      form.dash-card novalidate="" name="form.accountForm" ng-submit="createAccount()"
         header.dash-header
-          h1.dash-title Create an Account
-          p.t-small.c-steel You'll use this information to log in to your account, so make sure you can remember it.
+          alert-box(form-object="form.accountForm" hide-alert="hideAlert")
+          h1.dash-title
+            | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
+          p.t-small.c-steel
+            | {{'CREATE_ACCOUNT.P1' | translate}}
 
         .dash-card-inner.border-bottom
-          .form-group
-            h3.form-label Email Address
-            label.sr-only for="email_address"  Email address
-            input name="email_address" placeholder="example@web.com" type="email"
-            label.label-secondary for="email_address_confirm"  Re-enter email address
-            input name="email_address_confirm" placeholder="example@web.com" type="text"
+          .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
+
+            h3.form-label for="auth_email"
+              | {{'LABEL.EMAIL_ADDRESS' | translate}}
+            label.sr-only for="auth_email"
+              | {{'LABEL.EMAIL_ADDRESS' | translate}}
+            input#auth_email.margin-bottom ng-model="userAuth.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email') }"
+            label.label-secondary for="auth_email_confirmation"
+              | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
+            input#auth_email_confirmation ng-model="userAuth.email_confirmation" name="email_confirmation" required="" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.email'" ui-validate-watch="'userAuth.email'"
+
+            small.error ng-if="inputInvalid('email_confirmation')"
+              | error!
 
         .dash-card-inner.border-bottom
-          .form-group
-            h3.form-label Password
-            p.form-note.margin-bottom Must be at least 8 characters and include 1 numeric character.
-            label.sr-only for="password"  password
-            input name="password" placeholder="Must be 8 characters" type="password"
-            label.label-secondary for="password_confirm" Re-enter your password to confirm
-            input name="password_confirm" placeholder="Must be 8 characters" type="password"
+          .form-group ng-class="{ error: inputInvalid('password') || inputInvalid('password_confirmation') }"
+            h3.form-label for="password"
+              | {{'LABEL.PASSWORD' | translate}}
+            p.form-note.margin-bottom
+              | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
+            label.sr-only for="password"
+              | {{'LABEL.PASSWORD' | translate}}
+            input#auth_password.margin-bottom ng-model="userAuth.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password') }"
+            label.label-secondary for="auth_password_confirmation"
+              | {{'LABEL.RE_ENTER_PASSWORD' | translate}}
+            input#auth_password_confirmation ng-model="userAuth.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.password'" ui-validate-watch="'userAuth.password'"
+
+            small.error ng-if="inputInvalid('password_confirmation')"
+              | error!
+
           .form-group
             p.t-small.c-steel.text-center.padding-top
-              button.primary.no-margin type="button" Create Account
+              input.button.primary.no-margin type="submit" value="{{'LABEL.CREATE_ACCOUNT' | translate}}"
+
         / footer.dash-header
         /   h2.dash-title.t-gamma Already have an account?
         /   p.t-small.c-steel

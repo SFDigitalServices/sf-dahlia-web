@@ -18,6 +18,8 @@
   'ui.mask',
   'ngAria',
   'ngIdle',
+  'ui.validate',
+  'ng-token-auth'
 ]
 
 # Custom Directives
@@ -474,14 +476,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
         AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-      e.preventDefault()
       # capture errors when trying to verify address and send them back to the appropriate page
       if toState.name == 'dahlia.short-form-application.verify-address'
-        $state.go('dahlia.short-form-application.contact', toParams)
+        e.preventDefault()
+        return $state.go('dahlia.short-form-application.contact', toParams)
       else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
-        $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
-      else
-        $state.go('dahlia.welcome')
+        e.preventDefault()
+        return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
@@ -510,19 +511,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.config ['IdleProvider', (IdleProvider) ->
-  # TODO: remove this window query parsing after the browser inactivity story has been tested
-  window.idleTime = parseQuery('idle', window.location.search) || 120
-  window.idleTimeoutTime = parseQuery('timeout', window.location.search) || 60
-  IdleProvider.idle(idleTime)
-  IdleProvider.timeout(idleTimeoutTime)
+  IdleProvider.idle(120)
+  IdleProvider.timeout(60)
 ]
 
-# TODO: remove this after the browser inactivity story has been tested
-parseQuery = (val, search) ->
-  result = null
-  tmp = []
-  search.substr(1).split('&').forEach (item) ->
-    tmp = item.split('=')
-    if tmp[0] == val
-      result = parseInt(decodeURIComponent(tmp[1]))
-  result
+@dahlia.config ['$authProvider', ($authProvider) ->
+  $authProvider.configure(
+    apiUrl: '/api/v1'
+    storage: 'sessionStorage'
+  )
+]

@@ -82,12 +82,15 @@ GEM
       safe_yaml (~> 1.0.0)
     dalli (2.7.5)
     debug_inspector (0.0.2)
-    devise (4.1.1)
+    devise (4.0.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise_token_auth (0.1.37)
+      devise (> 3.5.2, < 4.1)
+      rails (< 6)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.20160310)
@@ -144,7 +147,6 @@ GEM
     multipart-post (2.0.0)
     netrc (0.11.0)
     newrelic_rpm (3.9.9.275)
-    ng-rails-csrf (0.1.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oj (2.14.2)
@@ -327,7 +329,8 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   dalli
-  devise (~> 4.1.1)
+  devise (~> 4.0.3)
+  devise_token_auth (~> 0.1.37)
   dotenv-rails
   easypost
   facets
@@ -338,7 +341,6 @@ DEPENDENCIES
   jquery-rails
   memcachier
   newrelic_rpm
-  ng-rails-csrf
   oj
   oj_mimic_json
   overcommit

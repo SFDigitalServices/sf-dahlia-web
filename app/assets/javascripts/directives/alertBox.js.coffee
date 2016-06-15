@@ -6,7 +6,7 @@ angular.module('dahlia.directives')
     stateName: '='
     hideAlert: '='
     missingInfo: '='
-  templateUrl: 'short-form/directives/alert-box.html'
+  templateUrl: 'directives/alert-box.html'
 
   link: (scope, elem, attrs) ->
     scope.showAlert = ->

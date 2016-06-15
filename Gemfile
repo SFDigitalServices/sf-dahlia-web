@@ -48,8 +48,8 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.1.1'
-gem 'ng-rails-csrf'
+gem 'devise', '~> 4.0.3'
+gem 'devise_token_auth', '~> 0.1.37'
 
 # postgresql database
 gem 'pg'
