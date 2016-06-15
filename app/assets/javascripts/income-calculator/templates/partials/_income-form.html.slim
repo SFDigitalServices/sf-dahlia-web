@@ -7,9 +7,9 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Add an income source:
 
   .form-group.padding-top--2x
-    label.form-label ng-class="{ error: inputInvalid(income.id, 'source') }"
+    label.form-label for="source_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'source') }"
       | Where is this income from?
-    select ng-model="income.source" name="source" required="" ng-class="{ error: inputInvalid(income.id, 'source') }"
+    select id="source_{{income.id}}" ng-model="income.source" name="source" required="" ng-class="{ error: inputInvalid(income.id, 'source') }"
       option disabled="" selected="" value=""  Please select one
       option value="Wages"  Wages
       option value="Social Security"  Social Security
@@ -21,11 +21,11 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Please enter an income source
 
   .form-group
-    label.form-label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+    label.form-label for="value_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       | How much is the income of this source?
     .form-income
       span.label-dollar $
-      input.form-income_input placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       small.error ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
     .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'frequency_'+income.id) }"
@@ -44,20 +44,20 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
   / show this button for the initial form (we don't have income sources)
   .row.padding-top--2x.show-for-small-only ng-if="noIncomeSources()"
   .small-6.columns ng-if="noIncomeSources()"
-    button.button-link.button-lined ui-sref="dahlia.eligibility-estimator"
+    button.button-link.button-lined title="Cancel" ui-sref="dahlia.eligibility-estimator"
       | Cancel
   .small-6.columns ng-if="noIncomeSources()"
-    button.primary.right.no-margin ng-click="addAdditionalIncome()"
+    button.primary.right.no-margin title="Save" ng-click="addAdditionalIncome()"
       | Save
 
   / show this button if we're on the additional income form
   .form-group.text-center.border-top.padding-top ng-if="$index == undefined && hasIncomeSources()"
-    button.ghost-white.expand-small.no-margin ng-click="addAdditionalIncome()"
+    button.ghost-white.expand-small.no-margin title="Save Income Source" ng-click="addAdditionalIncome()"
       | Save Income Source
 
   / show these buttons if we're iterating over income list (better way to check?)
   .small-6.medium-6.columns ng-if="$index != undefined"
-    button.button-link.button-lined type="button" ng-click="deleteIncome(income)" Delete
+    button.button-link.button-lined title="Delete" type="button" ng-click="deleteIncome(income)" Delete
   .small-6.medium-6.columns ng-if="$index != undefined"
-    button.ghost-white.right type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
+    button.ghost-white.right title="Save" type="button" ng-click="cleanValue(income);toggleIncomeEditForm(income);" ng-disabled="form(income.id).$invalid"
       | Save
