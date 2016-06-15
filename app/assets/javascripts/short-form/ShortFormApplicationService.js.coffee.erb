@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage) ->
+ShortFormApplicationService = ($localStorage, $translate) ->
   Service = {}
   Service.applicationDefaults =
     applicant:
@@ -21,24 +21,33 @@ ShortFormApplicationService = ($localStorage) ->
 
   Service.current_id = 0
 
+  Service.resetUserData = () ->
+    Service.application = angular.copy(Service.applicationDefaults)
+    Service.applicant = Service.application.applicant
+    Service.alternateContact = Service.application.alternateContact
+    Service.householdMember = {}
+    Service.householdMembers = Service.application.householdMembers
+
   # even though this looks commented out, it still has an effect in ERB land
-  #<% if Rails.env.development? %>
+  # <% if Rails.env.development? %> # -------------
   $localStorage.application ?= Service.applicationDefaults
   Service.application = $localStorage.application
-  #<% else %>
-  Service.application = Service.applicationDefaults
-  #<% end %>
-
   Service.applicant = Service.application.applicant
   Service.preferences = Service.application.preferences
   Service.alternateContact = Service.application.alternateContact
   Service.householdMember = {}
   Service.householdMembers = Service.application.householdMembers
+  # <% else %> # -------------
+  # initialize the user application data
+  Service.resetUserData()
+  # <% end %> # -------------
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
 
-  Service.userCanAccessSection = (section) ->
+  Service.userCanAccessSection = (section, state = null) ->
+    # user can't access later sections yet when on the welcome page
+    return false if state and Service.isWelcomePage(state)
     Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
     switch section.name
@@ -160,13 +169,25 @@ ShortFormApplicationService = ($localStorage) ->
     else
       Service.preferences[preference] = false
 
+  Service.onExit = (e) ->
+    e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+
+  Service.isWelcomePage = (state) ->
+    !!state.name.match(/short-form-welcome/)
+
+  Service.isLeavingShortForm = (toState, fromState) ->
+    onShortForm = fromState.name.indexOf('short-form-application') >= 0
+    leaving = toState.name.indexOf('short-form-application') == -1 &&
+          toState.name.indexOf('create-account') == -1
+    onShortForm && leaving
+
   return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage']
+ShortFormApplicationService.$inject = ['$localStorage', '$translate']
 
 angular
   .module('dahlia.services')

@@ -109,7 +109,7 @@ ShortFormNavigationService = ($state) ->
     $state.href("dahlia.short-form-application.#{page}")
 
   Service._currentPage = () ->
-    $state.current.name.replace('dahlia.short-form-application.', "")
+    $state.current.name.replace(/dahlia.short-form-(welcome|application)\./, "")
 
   Service._getPreviousPage = () ->
     pages = _.flatten _.map(Service.sections, (section) -> section.pages)
