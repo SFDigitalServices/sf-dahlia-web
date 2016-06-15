@@ -123,7 +123,9 @@ ShortFormApplicationController = (
     $scope.hideAlert = false
     el = angular.element(document.getElementById('short-form-wrapper'))
     # uses duScroll aka 'angular-scroll' module
-    $document.scrollToElement(el, 0, 400)
+    topOffset = 0
+    duration = 400 # animation speed in ms
+    $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.applicationForm
