@@ -37,6 +37,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       p.radio-inline
         input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" required=""
         label for="income_frequency_year_{{income.id}}"  per year
+
       small.error ng-show="inputInvalid(income.id, 'frequency_'+income.id)"
           | Please enter an income frequency
 
@@ -52,8 +53,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
 
   / show this button if we're on the additional income form
   .form-group.text-center.border-top.padding-top ng-if="$index == undefined && hasIncomeSources()"
-    button.ghost-white.expand-small.no-margin title="Save Income Source" ng-click="addAdditionalIncome()"
-      | Save Income Source
+    input.button.ghost-white.expand-small.no-margin title="Save Income Source" type="submit" value="Save Income Source" ng-click="addAdditionalIncome()"
 
   / show these buttons if we're iterating over income list (better way to check?)
   .small-6.medium-6.columns ng-if="$index != undefined"
