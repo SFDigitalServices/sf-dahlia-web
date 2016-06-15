@@ -59,7 +59,7 @@ do ->
 
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->
-        $state.current.name = 'dahlia.short-form-application.intro'
+        $state.current.name = 'dahlia.short-form-welcome.intro'
         hasNav = ShortFormNavigationService.hasNav()
         expect(hasNav).toEqual false
         return
@@ -71,7 +71,7 @@ do ->
 
     describe 'hasBackButton', ->
       it 'checks if section does not have back button enabled', ->
-        $state.current.name = 'dahlia.short-form-application.intro'
+        $state.current.name = 'dahlia.short-form-welcome.intro'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual false
         return

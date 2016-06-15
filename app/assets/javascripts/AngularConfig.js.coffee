@@ -18,6 +18,7 @@
   'ui.mask',
   'ngAria',
   'duScroll',
+  'ngIdle',
 ]
 
 # Custom Directives
@@ -81,6 +82,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.listing', {
       url: '/listings/:id',
+      params:
+        timeout:
+          squash: true
       views:
         'container@':
           templateUrl: 'listings/templates/listing.html'
@@ -209,6 +213,32 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     ##########################
     # Short form application #
     ##########################
+    ## -- Initial Welcome Pages -- ##
+    .state('dahlia.short-form-welcome', {
+      url: '/listings/:id/apply-welcome'
+      abstract: true
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListing($stateParams.id)
+        ]
+    })
+    .state('dahlia.short-form-welcome.intro', {
+      url: '/intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a1-intro.html'
+    })
+    .state('dahlia.short-form-welcome.overview', {
+      url: '/overview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/a2-overview.html'
+    })
+    ## -- Short Form Application pages -- ##
     .state('dahlia.short-form-application', {
       url: '/listings/:id/apply'
       abstract: true
@@ -220,18 +250,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id)
         ]
-    })
-    .state('dahlia.short-form-application.intro', {
-      url: '/intro'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/a1-intro.html'
-    })
-    .state('dahlia.short-form-application.overview', {
-      url: '/overview'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/a2-overview.html'
     })
     # Short form: "You" section
     .state('dahlia.short-form-application.name', {
@@ -441,17 +459,30 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService) ->
+    $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+          # timeout from inactivity means that we don't need to ALSO ask for confirmation
+          if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
+            # disable the onbeforeunload so that you are no longer bothered if you
+            # try to reload the listings page, for example
+            $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
+            ShortFormApplicationService.resetUserData()
+          else
+            # prevent page transition if user did not confirm
+            e.preventDefault()
+            false
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
         AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       e.preventDefault()
+      # capture errors when trying to verify address and send them back to the appropriate page
       if toState.name == 'dahlia.short-form-application.verify-address'
-        return $state.go('dahlia.short-form-application.contact', toParams)
+        $state.go('dahlia.short-form-application.contact', toParams)
       else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
-        return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
+        $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
       else
-        return $state.go('dahlia.welcome')
+        $state.go('dahlia.welcome')
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
@@ -478,3 +509,21 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   uiMaskConfigProvider.clearOnBlur(false)
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
+
+@dahlia.config ['IdleProvider', (IdleProvider) ->
+  # TODO: remove this window query parsing after the browser inactivity story has been tested
+  window.idleTime = parseQuery('idle', window.location.search) || 120
+  window.idleTimeoutTime = parseQuery('timeout', window.location.search) || 60
+  IdleProvider.idle(idleTime)
+  IdleProvider.timeout(idleTimeoutTime)
+]
+
+# TODO: remove this after the browser inactivity story has been tested
+parseQuery = (val, search) ->
+  result = null
+  tmp = []
+  search.substr(1).split('&').forEach (item) ->
+    tmp = item.split('=')
+    if tmp[0] == val
+      result = parseInt(decodeURIComponent(tmp[1]))
+  result

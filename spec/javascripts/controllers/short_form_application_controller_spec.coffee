@@ -3,6 +3,8 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    fakeIdle = undefined
+    fakeTitle = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeShortFormApplicationService =
       applicant: {}
@@ -11,6 +13,7 @@ do ->
       householdMember: {
         first_name: "Oberon"
       }
+      isWelcomePage: jasmine.createSpy()
       copyHomeToMailingAddress: jasmine.createSpy()
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
@@ -42,13 +45,17 @@ do ->
     beforeEach inject(($rootScope, $controller) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
-      state.current = {name: 'dahlia.short-form-application.overview'}
+      fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
+      fakeTitle = jasmine.createSpyObj('Title', ['restore'])
+      state.current = {name: 'dahlia.short-form-welcome.overview'}
       translate = {}
 
       $controller 'ShortFormApplicationController',
         $scope: scope
         $state: state
         $translate: translate
+        Idle: fakeIdle
+        Title: fakeTitle
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -150,6 +157,10 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.verify-address')
           return
         return
+
+    describe 'Idle.watch()', ->
+      it 'expects Idle.watch() to be called on initialization', ->
+        expect(fakeIdle.watch).toHaveBeenCalled()
 
     describe '$scope.getLandingPage', ->
       it 'calls getLandingPage in ShortFormNavigationService', ->

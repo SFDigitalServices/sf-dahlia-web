@@ -36,4 +36,5 @@
 //= require ng-file-upload
 //= require angular-aria
 //= require angular-scroll
+//= require ng-idle
 //= require_tree .

@@ -8,6 +8,8 @@ ShortFormApplicationController = (
   $window,
   $document,
   $translate,
+  Idle,
+  Title,
   ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -98,14 +100,9 @@ ShortFormApplicationController = (
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
 
-  $scope.onExit = ->
-    "Are you sure you would like to navigate away from this page?
-    You will lose all information you've entered into the application
-    for this listing. If you'd like to save your information to finish
-    the application at a later time, please click the 'Save and Finish later' button."
-
-  unless $window.jasmine # don't add this onbeforeunload inside of jasmine tests
-    $window.onbeforeunload = $scope.onExit
+  unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
+    # don't add this onbeforeunload inside of jasmine tests
+    $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
   $scope.submitForm = (options) ->
     form = $scope.form.applicationForm
@@ -294,8 +291,24 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
+
+  ## idle timeout functions
+  unless ShortFormApplicationService.isWelcomePage($state.current)
+    Idle.watch()
+
+  $scope.$on 'IdleStart', ->
+    # user has now been idle for x period of time, warn them of logout!
+    $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+
+  $scope.$on 'IdleTimeout', ->
+    # they ran out of time
+    ShortFormApplicationService.resetUserData()
+    $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
+    Title.restore()
+    $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
+
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
