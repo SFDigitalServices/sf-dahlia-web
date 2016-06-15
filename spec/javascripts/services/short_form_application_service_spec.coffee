@@ -3,6 +3,7 @@ do ->
   describe 'ShortFormApplicationService', ->
     ShortFormApplicationService = undefined
     $localStorage = undefined
+    $translate = {}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -21,6 +22,7 @@ do ->
       home_address: fakeAddress
 
     beforeEach module('dahlia.services', ($provide)->
+      $provide.value '$translate', $translate
       return
     )
 
@@ -384,8 +386,26 @@ do ->
           expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
           return
         return
+        # TODO: write test for household who lives in SF.
+
+    describe 'isLeavingShortForm', ->
+      it 'should know if you\'re not leaving short form', ->
+        toState = {name: 'dahlia.short-form-application.contact'}
+        fromState = {name: 'dahlia.short-form-application.name'}
+        expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
+
+      it 'should know if you\'re leaving short form', ->
+        toState = {name: 'dahlia.listings'}
+        fromState = {name: 'dahlia.short-form-application.name'}
+        expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(true)
+
+      it 'should not trigger if you\'re on the short form intro page', ->
+        toState = {name: 'dahlia.listings'}
+        fromState = {name: 'dahlia.short-form-welcome.intro'}
+        expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
+
+      it 'should not trigger if you\'re going to save and finish later', ->
+        toState = {name: 'dahlia.create-account'}
+        fromState = {name: 'dahlia.short-form-welcome.intro'}
+        expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
       return
-
-
-
-
