@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NP_Composite_001/GeocodeServer/findAddressCandidates?City=San%20Francisco&Street=4053%2018th%20St&f=pjson
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 05:15:02 GMT
+      Server:
+      - ''
+      Cache-Control:
+      - max-age=0,must-revalidate
+      Etag:
+      - 26f51bb2
+      Content-Type:
+      - text/plain;charset=utf-8
+      Content-Length:
+      - '264'
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
+        3857\n },\n \"candidates\": [\n  {\n   \"address\": \"4053 18TH ST, San Francisco\",\n
+        \  \"location\": {\n    \"x\": -13629293.11924395,\n    \"y\": 4545683.8914925382\n
+        \  },\n   \"score\": 100,\n   \"attributes\": {\n    \n   }\n  },\n  {\n   \"address\":
+        \"4053 18TH ST, San Francisco\",\n   \"location\": {\n    \"x\": -13629289.140881428,\n
+        \   \"y\": 4545703.8986498807\n   },\n   \"score\": 100,\n   \"attributes\":
+        {\n    \n   }\n  },\n  {\n   \"address\": \"4054 18TH ST, San Francisco\",\n
+        \  \"location\": {\n    \"x\": -13629295.084645359,\n    \"y\": 4545718.9589669053\n
+        \  },\n   \"score\": 79,\n   \"attributes\": {\n    \n   }\n  }\n ]\n}"
+    http_version:
+  recorded_at: Tue, 14 Jun 2016 05:17:13 GMT
+recorded_with: VCR 3.0.1

@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NP_Composite_001/GeocodeServer/findAddressCandidates?City=San%20Francisco&Street=1299191%20Blahblah%20St&f=pjson
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 05:15:02 GMT
+      Server:
+      - ''
+      Cache-Control:
+      - max-age=0,must-revalidate
+      Etag:
+      - 222e5f3e
+      Content-Type:
+      - text/plain;charset=utf-8
+      Content-Length:
+      - '99'
+    body:
+      encoding: ASCII-8BIT
+      string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
+        3857\n },\n \"candidates\": [\n  \n ]\n}"
+    http_version:
+  recorded_at: Tue, 14 Jun 2016 05:17:13 GMT
+recorded_with: VCR 3.0.1
