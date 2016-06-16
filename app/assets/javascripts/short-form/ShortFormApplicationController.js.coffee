@@ -271,6 +271,42 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
+  $scope.householdEligibilityErrorMessage = null
+
+  $scope.validateHouseholdEligbility = (match, callbackUrl) ->
+    $scope.clearHouseholdErrorMessage()
+    form = $scope.form.applicationForm
+    ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
+      .then( (response) ->
+        $scope._respondToHouseholdEligibilityResults(response, match, callbackUrl)
+      )
+
+  $scope._respondToHouseholdEligibilityResults = (response, match, callbackUrl) ->
+    eligibility = response.data
+    if eligibility[match]
+      $scope.householdEligibilityErrorMessage = null
+      $state.go(callbackUrl)
+    else
+      $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
+      $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
+      $scope.hideAlert = false
+
+  $scope.clearHouseholdErrorMessage = () ->
+    $scope.householdEligibilityErrorMessage = null
+
+  $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
+    error = eligibility[errorResult]
+    message = null
+    if error == 'too big'
+      message = $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
+    else if error == 'too small'
+      message = $translate.instant("ERROR.HOUSEHOLD_TOO_SMALL")
+    else if error == 'too low'
+      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+    else if error == 'too high'
+      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
+    $scope.householdEligibilityErrorMessage = message
+
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)

@@ -42,6 +42,7 @@ gem 'rack-rewrite', '~> 1.5.0'
 
 # address validation
 gem 'easypost'
+gem 'StreetAddress', require: 'street_address'
 
 group :test do
   gem 'codeclimate-test-reporter'

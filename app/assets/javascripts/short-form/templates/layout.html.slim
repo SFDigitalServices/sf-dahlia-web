@@ -12,7 +12,7 @@ section.row.shift--top id="short-form-wrapper"
         hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
 
       .form-count ng-if="hasBackButton()"
-        a.lined.margin-right ng-href="{{backPageState()}}"
+        a.lined.margin-right ng-href="{{backPageState()}}" ng-click="clearHouseholdErrorMessage()"
           | {{'T.BACK' | translate}}
 
       div(ui-view="container")

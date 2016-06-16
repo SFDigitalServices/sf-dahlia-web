@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.easypost.com/v2/addresses?verify%5B%5D=delivery&verify%5B%5D=zip4
+    body:
+      encoding: US-ASCII
+      string: address[street1]=4053%2018th%20St.&address[city]=San%20Francisco&address[state]=CA&address[zip]=94114
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - EasyPost/v2 RubyClient/2.1.11
+      Authorization:
+      - Bearer <<EASYPOST_API_KEY>>
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Content-Length:
+      - '101'
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Location:
+      - "/api/v2/addresses/adr_39df60db46b54cb788e695e9de25fac9"
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"ca17fca4c9569d5f542ac75cb639f626"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4ab515c3-02a5-4c1d-819d-5c231ceb9e7b
+      X-Runtime:
+      - '0.627203'
+      Content-Encoding:
+      - gzip
+      Transfer-Encoding:
+      - chunked
+      X-Node:
+      - 86bd419ee8
+      - easypost
+      - web11sj
+      X-Backend:
+      - easypost
+      X-Proxied:
+      - lb5sj, c145510c89
+      Strict-Transport-Security:
+      - max-age=15768000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4RQy07DMBD8lcrnVorzosktqoTgUiRSLiAUOfZGGDl2tHYQ
+        peq/sy4KBw70tjM7s485Ma1YzYTCLqvUUCaqz8u+yGV/s91CWRVQKUiLQciK
+        rZnr30EG0jdKIXhPlEQQAVQnIp0mvNwk5YZnhzStk6zO+DNp5kld1VgxAqvt
+        bAzNdOMk7HGBPiBA4OTNkyJb8e3hbtUe2NJIqREP0YEcrG32q9vHZr+7b3cP
+        Fw2tJn7XEPjSE5VVznm+SYusiDY324DR+dQSnN6c/b0DRqHNAkan4pwAPkSb
+        QNSAHQWjzWXzj4pS0Qps0IKMgzAe1mwABShMF8RnF9NevqLD/nAfgHrQUgTt
+        rGf1iSkwmshjrP0sZcy8DjjTVEB0SOjl9Xx5LP9fcz5/AwAA//8DAJFL0ITr
+        AQAA
+    http_version:
+  recorded_at: Mon, 13 Jun 2016 22:03:32 GMT
+recorded_with: VCR 3.0.1
