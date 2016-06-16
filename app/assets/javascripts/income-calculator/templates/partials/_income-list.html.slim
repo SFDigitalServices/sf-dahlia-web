@@ -10,6 +10,6 @@ span ng-if="hasIncomeSources()"
           | {{ income.source }}
           span.income-source_value
             | {{ parsedValue(income.value) | currency : $ : 2 }}/{{ income.frequency }}
-        a.income-source_link ng-click="toggleIncomeEditForm(income)" ng-hide="income.editing" Edit
+        button.button-link.income-source_link.t-caps ng-click="toggleIncomeEditForm(income)" ng-hide="income.editing" Edit
         .income-source_nested.margin-top.bg-mist ng-show="income.editing"
           ng-include src="'income-calculator/templates/partials/_income-form.html'"
