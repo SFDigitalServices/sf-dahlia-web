@@ -7,9 +7,9 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Add an income source:
 
   .form-group.padding-top--2x
-    label.form-label ng-class="{ error: inputInvalid(income.id, 'source') }"
+    label.form-label for="source_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'source') }"
       | Where is this income from?
-    select id="source_{{income.id}}" ng-model="income.source" name="source" required="" ng-class="{ error: inputInvalid(income.id, 'source') }"
+    select id="source_{{income.id}}" ng-model="income.source" name="source_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'source') }"
       option disabled="" selected="" value=""  Please select one
       option value="Wages"  Wages
       option value="Social Security"  Social Security
@@ -21,11 +21,11 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Please enter an income source
 
   .form-group
-    label.form-label ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+    label.form-label for="value_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       | How much is the income of this source?
     .form-income
       span.label-dollar $
-      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
       small.error ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
     .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'frequency_'+income.id) }"
