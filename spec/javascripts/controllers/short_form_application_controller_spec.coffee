@@ -5,7 +5,11 @@ do ->
     state = undefined
     fakeIdle = undefined
     fakeTitle = undefined
+    eligibilityResponse = undefined
+    callbackUrl = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
+    validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
+    invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
       applicant: {}
       application: {}
@@ -20,12 +24,17 @@ do ->
       refreshLiveWorkPreferences: jasmine.createSpy()
       liveInSfMembers: jasmine.createSpy()
       workInSfMembers: jasmine.createSpy()
+      checkHouseholdEligiblity: (listing) ->
+        return
       validMailingAddress: ->
         true
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
     fakeShortFormNavigationService = {}
+    fakeShortFormNavigationService =
+      sections: []
+      hasNav: jasmine.createSpy()
     fakeShortFormHelperService = {}
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
@@ -42,20 +51,27 @@ do ->
       return
     )
 
-    beforeEach inject(($rootScope, $controller) ->
+    beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-welcome.overview'}
-      translate = {}
+
+      $translate = {
+        instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
+      }
+
+      deferred = $q.defer()
+      deferred.resolve('resolveData')
+      spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
 
       $controller 'ShortFormApplicationController',
         $scope: scope
         $state: state
-        $translate: translate
         Idle: fakeIdle
         Title: fakeTitle
+        $translate: $translate
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -186,4 +202,88 @@ do ->
         scope.workInSfMembers()
         expect(fakeShortFormApplicationService.workInSfMembers).toHaveBeenCalled()
         return
+
+    describe 'validateHouseholdEligbility', ->
+      it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
+
+        match = 'householdMatch'
+        callbackUrl = 'someUrl'
+        scope.listing = fakeListing
+
+        scope.validateHouseholdEligbility(match, callbackUrl)
+        expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+        return
+      return
+
+    describe '_respondToHouseholdEligibilityResults', ->
+      describe 'matched', ->
+        #replace with a jasmine fixture
+        beforeEach ->
+          eligibilityResponse =
+            data: validHousehold
+          callbackUrl = 'someUrl'
+          return
+
+        it 'reset the eligibility error message', ->
+          scope.householdEligibilityErrorMessage = 'Error'
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(scope.householdEligibilityErrorMessage).toEqual(null)
+          return
+
+        it 'navigates to the given callback url', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(state.go).toHaveBeenCalledWith(callbackUrl)
+          return
+        return
+
+      describe 'not matched', ->
+        beforeEach ->
+          eligibilityResponse =
+            data: invalidHousehold
+          callbackUrl = 'someUrl'
+          return
+
+        it 'updates the scope that shows the alert', ->
+          scope.hideAlert = true
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(scope.hideAlert).toEqual(false)
+          return
+
+        it 'assigns an error message function', ->
+          scope.householdEligibilityErrorMessage  = null
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(scope.householdEligibilityErrorMessage).toEqual('newmessage')
+          return
+        return
+      return
+
+    describe 'clearHouseholdErrorMessage', ->
+      it 'assigns scope.householdEligibilityErrorMessage to null', ->
+        scope.householdEligibilityErrorMessage = 'some error message'
+        scope.clearHouseholdErrorMessage()
+        expect(scope.householdEligibilityErrorMessage).toEqual(null)
+        return
+      return
   return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

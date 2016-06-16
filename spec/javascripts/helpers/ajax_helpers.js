@@ -39,6 +39,11 @@ var stubAngularAjaxRequest = function(httpBackend, requestURL, responseData) {
   httpBackend.when('POST', requestURL).respond(responseData);
 };
 
+var stubAngularAjaxErrorRequest = function(httpBackend, requestURL, responseData) {
+  httpBackend.when('GET', requestURL).respond(422, responseData);
+  httpBackend.when('POST', requestURL).respond(422, responseData);
+};
+
 /*
 jQuery's AJAX handler normally fires the callback in a setTimeout
 in order to make it occur in the next tick of the event loop. This
