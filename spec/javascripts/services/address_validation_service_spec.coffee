@@ -9,11 +9,14 @@ do ->
       city: 'San Francisco'
       state: 'CA'
       zip: '94114'
-    # fakeListings = getJSONFixture('listings-api-index.json')
-    # TODO: create actual json fixture
-    fakeValidation =
-      address:
-        street1: 'fake'
+    fakeInvalidAddress =
+      address1: '123123 Blah'
+      city: 'San Francisco'
+      state: 'CA'
+      zip: '12345'
+    fakeValidResult = getJSONFixture('address-validation-api-valid-address.json')
+    fakeInvalidResult = getJSONFixture('address-validation-api-invalid-address.json')
+
     requestURL = undefined
 
     beforeEach module('dahlia.services', ->
@@ -42,13 +45,33 @@ do ->
         httpBackend.verifyNoOutstandingRequest()
         return
       it 'assigns validated address with results from validation service', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeValidation
+        stubAngularAjaxRequest httpBackend, requestURL, fakeValidResult
         AddressValidationService.validate({
           address: fakeAddress
           type: 'home'
         })
         httpBackend.flush()
-        expect(AddressValidationService.validated_home_address).toEqual fakeValidation.address
+        expect(AddressValidationService.validated_home_address).toEqual fakeValidResult.address
+        return
+      it 'determines if valid address is deliverable', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeValidResult
+        AddressValidationService.validate({
+          address: fakeAddress
+          type: 'home'
+        })
+        httpBackend.flush()
+        result = AddressValidationService.isDeliverable(AddressValidationService.validated_home_address)
+        expect(result).toEqual true
+        return
+      it 'determines if invalid address failed validation', ->
+        stubAngularAjaxErrorRequest httpBackend, requestURL, fakeInvalidResult
+        AddressValidationService.validate({
+          address: fakeInvalidAddress
+          type: 'home'
+        })
+        httpBackend.flush()
+        result = AddressValidationService.failedValidation(AddressValidationService.validated_home_address)
+        expect(result).toEqual true
         return
       return
 
