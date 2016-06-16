@@ -2,7 +2,7 @@
 
 section.row.margin-bottom--2x
   .medium-6.medium-centered.columns
-    form.no-margin
+    form.no-margin novalidate=""
       .form-card.margin-bottom
         / this is the initial form when none have been entered yet
         ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-if="noIncomeSources()"
@@ -24,6 +24,6 @@ section.row.margin-bottom--2x
 
       .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
         .small-6.columns
-          button.button-link.button-lined  ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
+          a.button.button-link.button-lined ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
         .small-6.columns
-          button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done
+          a.button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done
