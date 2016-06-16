@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://test.salesforce.com/services/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40mohcd.com.full&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 20:33:10 GMT
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      Set-Cookie:
+      - BrowserId=Otof1E9GS5mMLM3v5HtKHQ;Path=/;Domain=.salesforce.com;Expires=Sat,
+        13-Aug-2016 20:33:10 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"00D210000000OEp!AQMAQKR831US31L5ToOchEZJlVtHjdjGRyDvEmOQ0n2IEdVaYoELdzHCYGkhERBYKhKGqHnxRjq48qeC2UTbZLHTpF5iLOFs","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1465936390509","signature":"e7b1ZWuYUIyNAT5yrd76o76pTPJNLKx4Pm3ZKtHOUN8="}'
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 20:33:10 GMT
+- request:
+    method: get
+    uri: https://cs26.salesforce.com/services/apexrest/EligibilityCheck/a0X210000000IMMEA2?householdsize=2&incomelevel=40000.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00D210000000OEp!AQMAQKR831US31L5ToOchEZJlVtHjdjGRyDvEmOQ0n2IEdVaYoELdzHCYGkhERBYKhKGqHnxRjq48qeC2UTbZLHTpF5iLOFs
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 14 Jun 2016 20:33:10 GMT
+      Set-Cookie:
+      - BrowserId=xj0WsB2wSVioxlqmIZdD7g;Path=/;Domain=.salesforce.com;Expires=Sat,
+        13-Aug-2016 20:33:10 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"listingId":"a0X210000000IMMEA2","incomeMatch":true,"incomeEligibilityResult":"Match","householdMatch":true,"householdEligibilityResult":"Match"}'
+    http_version: 
+  recorded_at: Tue, 14 Jun 2016 20:33:11 GMT
+recorded_with: VCR 3.0.1
