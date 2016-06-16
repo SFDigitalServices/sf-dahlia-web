@@ -21,9 +21,9 @@ section.row.margin-bottom--2x
             p.c-steel.t-tall Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
 
           .form-group ng-class="{ error: inputInvalid('household_size') }"
-            label.form-label.t-caps.sr-only ng-class="{ error: inputInvalid('household_size') }"
+            label.form-label.t-caps.sr-only for="household_size" ng-class="{ error: inputInvalid('household_size') }"
               | Household Size
-            select name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
+            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
               option disabled="" selected="" value="" Enter number of people
               option value="1" 1 person
               option value="2" 2 people
@@ -40,8 +40,8 @@ section.row.margin-bottom--2x
               label for="include_children_under_6" Yes, this includes children under 6
 
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
-            label.sr-only How many children?
-            select name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
+            label.sr-only for="children_under_6" How many children?
+            select#children_under_6 name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
               option disabled="" selected="" value="0" How many children?
               option value="1" 1 child
               option value="2" 2 children
@@ -61,11 +61,11 @@ section.row.margin-bottom--2x
 
           p.c-steel.t-tall Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
           .form-group.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-            label.form-label.t-caps.sr-only Household Income
+            label.form-label.t-caps.sr-only for="income_total" Household Income
             .form-income
               span.label-dollar $
-              input.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
-              a.button.input-editor.tiny.secondary ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
+              input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              a.button.input-editor.tiny.secondary title="Edit" ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
                 | Edit
           small.error ng-show="inputInvalid('income_total')"
               | Please enter an income amount
@@ -85,7 +85,7 @@ section.row.margin-bottom--2x
             p.t-tiny.c-charcoal.medium-margin-top
               ' If you need help calculating your total, please use this tool:
           .medium-6.columns
-            a.button.ghost-white.small.no-margin.expand ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
+            a.button.ghost-white.small.no-margin.expand title="Household Income Calculator" ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
 
     .row.margin-top--2x.show-for-medium-up
 
@@ -93,5 +93,5 @@ section.row.margin-bottom--2x
       .small-12.medium-6.medium-push-6.columns
         input.button.primary.expand.right.radius type="submit" value="View Matching Listings"
       .small-12.medium-6.medium-pull-6.columns
-        a.button.button-link.button-lined.small-only-text-center.expand-small.d-block ng-click="clearForm()"
+        a.button.button-link.button-lined.small-only-text-center.expand-small.d-block title="Reset" href="#" ng-click="clearForm()"
           | Reset
