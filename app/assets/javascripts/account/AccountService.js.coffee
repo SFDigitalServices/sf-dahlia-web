@@ -15,16 +15,13 @@ AccountService = ($state, $auth) ->
   Service.returnToRememberedState = () ->
     $state.go(Service.rememberedState, Service.rememberedStateParams)
 
-
   Service.createAccount = ->
-    # userAuth = _.filter(Service.userAuth, (v,k) -> k != 'email_confirmation')
     $auth.submitRegistration(Service.userAuth)
       .then((response) ->
         # handle success response
         alert('OK!')
       ).catch((response) ->
         # handle error response
-        # console.warn(response)
         alert("Error: #{response.data.errors.full_messages[0]}")
       )
 
