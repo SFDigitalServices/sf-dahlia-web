@@ -47,7 +47,7 @@ describe 'Listings API' do
       end
     end
   end
-  describe 'eligbility listings' do
+  describe 'eligibility listings' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
         params = {

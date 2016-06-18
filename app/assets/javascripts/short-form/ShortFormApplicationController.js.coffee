@@ -263,7 +263,7 @@ ShortFormApplicationController = (
 
   $scope.householdEligibilityErrorMessage = null
 
-  $scope.validateHouseholdEligbility = (match, callbackUrl) ->
+  $scope.validateHouseholdEligibility = (match, callbackUrl) ->
     $scope.clearHouseholdErrorMessage()
     form = $scope.form.applicationForm
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
