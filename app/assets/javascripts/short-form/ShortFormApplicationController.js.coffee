@@ -285,7 +285,7 @@ ShortFormApplicationController = (
     $scope.householdEligibilityErrorMessage = null
 
   $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
-    error = eligibility[errorResult]
+    error = eligibility[errorResult].toLowerCase()
     message = null
     if error == 'too big'
       message = $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")

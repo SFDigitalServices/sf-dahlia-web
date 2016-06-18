@@ -2,8 +2,8 @@
     "ERROR": {
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
-        "HOUSEHOLD_INCOME_TOO_LOW": "Your houshold income is too low.",
-        "HOUSEHOLD_INCOME_TOO_HIGH": "Your houshold income is too high.",
+        "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
+        "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
         "NOT_ELIGIBLE": "Unfortunately it appears you did not qualify for this property listing.",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",

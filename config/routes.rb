@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       get 'ami' => 'listings#ami'
       get 'lottery-preferences' => 'listings#lottery_preferences'
       post 'listings-eligibility' => 'listings#eligibility'
-      get 'validate-household' => 'short_form#validate_household'
+      post 'validate-household' => 'short_form#validate_household'
       # address validation
       post 'validate-address' => 'address_validation#validate'
       # address geocoding
