@@ -7,7 +7,7 @@ angular.module('dahlia.directives')
     hideAlert: '='
     missingInfo: '='
     householdEligibilityErrorMessage: '='
-  templateUrl: 'short-form/directives/alert-box.html'
+  templateUrl: 'directives/alert-box.html'
 
   link: (scope, elem, attrs) ->
     scope.showAlert = ->
