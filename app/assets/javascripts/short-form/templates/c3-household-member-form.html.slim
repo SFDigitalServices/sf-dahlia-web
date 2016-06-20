@@ -74,6 +74,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     label.form-label.margin-bottom--half for="householdMemberRelationship"
       | {{'LABEL.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
     select#householdMemberRelationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
+      option value=""
+        | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="relationship in relationship_options" value="{{relationship}}"
         | {{ relationship }}
     small.error ng-show="inputInvalid('relationship')"

@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Jun 2016 20:39:21 GMT
+      - Sat, 18 Jun 2016 00:10:22 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,8 +29,8 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=BoOVTak0S3mn5bFZojztiQ;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-Aug-2016 20:39:21 GMT
+      - BrowserId=wXwjkX7qSIauCiB7kmghTw;Path=/;Domain=.salesforce.com;Expires=Wed,
+        17-Aug-2016 00:10:22 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -45,12 +45,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQKR831US31L5ToOchEZJlVtHjdjGRyDvEmOQ0n2IEdVaYoELdzHCYGkhERBYKhKGqHnxRjq48qeC2UTbZLHTpF5iLOFs","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1465936762367","signature":"AIGWI+UpM7nvViZxWr+nRSfzznnatoPp6sBeOnhhs7U="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1466208623066","signature":"O3lDgqNT43gMUMZOKr5aIJzou/RRQwpFptQYDsN+7HY="}'
     http_version:
-  recorded_at: Tue, 14 Jun 2016 20:39:22 GMT
+  recorded_at: Sat, 18 Jun 2016 00:10:23 GMT
 - request:
     method: get
-    uri: https://cs26.salesforce.com/services/apexrest/EligibilityCheck/a0X210000000IMMEA2?householdsize=10&incomelevel=10000.0
+    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0X210000000IMMEA2?householdsize=10&incomelevel=10000
     body:
       encoding: US-ASCII
       string: ''
@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQKR831US31L5ToOchEZJlVtHjdjGRyDvEmOQ0n2IEdVaYoELdzHCYGkhERBYKhKGqHnxRjq48qeC2UTbZLHTpF5iLOFs
+      - OAuth 00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,10 +69,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Jun 2016 20:39:22 GMT
+      - Sat, 18 Jun 2016 00:10:23 GMT
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=pEfshTzXRMeXIfXsVtjSag;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-Aug-2016 20:39:22 GMT
+      - BrowserId=JV7T7Gx4TMG8rc9QTsOVnQ;Path=/;Domain=.salesforce.com;Expires=Wed,
+        17-Aug-2016 00:10:23 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -81,8 +87,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"listingId":"a0X210000000IMMEA2","incomeMatch":false,"incomeEligibilityResult":"too
-        low","householdMatch":false,"householdEligibilityResult":"too big"}'
+      string: '{"listingId":"a0X210000000IMMEA2","incomeMatch":false,"incomeEligibilityResult":"Too
+        Low","householdMatch":false,"householdEligibilityResult":"Too Big"}'
     http_version:
-  recorded_at: Tue, 14 Jun 2016 20:39:22 GMT
+  recorded_at: Sat, 18 Jun 2016 00:10:23 GMT
 recorded_with: VCR 3.0.1
