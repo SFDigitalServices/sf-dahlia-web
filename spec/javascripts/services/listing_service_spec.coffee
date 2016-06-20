@@ -9,7 +9,7 @@ do ->
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
-    fakeEligibilityListings = getJSONFixture('listings-api-eligbility-listings.json')
+    fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
     modalMock = undefined

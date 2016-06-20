@@ -203,14 +203,14 @@ do ->
         expect(fakeShortFormApplicationService.workInSfMembers).toHaveBeenCalled()
         return
 
-    describe 'validateHouseholdEligbility', ->
+    describe 'validateHouseholdEligibility', ->
       it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
 
         match = 'householdMatch'
         callbackUrl = 'someUrl'
         scope.listing = fakeListing
 
-        scope.validateHouseholdEligbility(match, callbackUrl)
+        scope.validateHouseholdEligibility(match, callbackUrl)
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
         return
       return
