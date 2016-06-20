@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'home#index'
 
+  mount_devise_token_auth_for 'User',
+                              at: 'api/v1/auth', skip: [:omniauth_callbacks]
+
   ## --- API namespacing
   namespace :api do
     namespace :v1 do
@@ -14,9 +17,11 @@ Rails.application.routes.draw do
       get 'ami' => 'listings#ami'
       get 'lottery-preferences' => 'listings#lottery_preferences'
       post 'listings-eligibility' => 'listings#eligibility'
-
+      post 'validate-household' => 'short_form#validate_household'
       # address validation
       post 'validate-address' => 'address_validation#validate'
+      # address geocoding
+      post 'geocode-address' => 'geocoding#geocode'
     end
   end
 

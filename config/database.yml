@@ -1,0 +1,13 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: sf_dahlia
+
+test:
+  <<: *default
+  database: sf_dahlia_test

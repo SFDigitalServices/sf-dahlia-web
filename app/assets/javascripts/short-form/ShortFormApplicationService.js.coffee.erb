@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate) ->
+ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service = {}
   Service.applicationDefaults =
     applicant:
@@ -12,6 +12,7 @@ ShortFormApplicationService = ($localStorage, $translate) ->
     preferences:
       live_in_sf: null
       work_in_sf: null
+    householdIncome: { income_total: 0, income_timeframe: 'per_year' }
     completedSections:
       Intro: false
       You: false
@@ -132,6 +133,25 @@ ShortFormApplicationService = ($localStorage, $translate) ->
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
 
+  Service.checkHouseholdEligiblity = (listing) ->
+    params =
+      listing_id: listing.Id,
+      eligibility:
+        householdsize: Service.application.householdMembers.length + 1
+        incomelevel: Service._calculateHouseholdIncome()
+    $http.post("/api/v1/validate-household", params).success((data, status, headers, config) ->
+      data
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service._calculateHouseholdIncome = () ->
+    income = Service.application.householdIncome
+    if income.income_timeframe == 'per_year'
+      income.income_total
+    else if income.income_timeframe == 'per_month'
+      income.income_total * 12
+
   Service.resetGenderOptions = (user, option) ->
     toggle = !user.gender[option]
     user.gender = {}
@@ -187,7 +207,7 @@ ShortFormApplicationService = ($localStorage, $translate) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage', '$translate']
+ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http']
 
 angular
   .module('dahlia.services')

@@ -20,7 +20,7 @@ html lang="en"
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
       ga('create', "#{ENV['GOOGLE_ANALYTICS_KEY']}", 'auto');
 
-  body ng-app="dahlia" id="ng-app" ng-controller="NavController"
+  body ng-app="dahlia" id="ng-app" ng-controller="NavController" ng-strict-di=""
     .site-container
       section(ui-view="translate")
       section(ui-view="version")
