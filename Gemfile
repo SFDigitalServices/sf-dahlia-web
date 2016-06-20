@@ -44,6 +44,17 @@ gem 'rack-rewrite', '~> 1.5.0'
 gem 'easypost'
 gem 'StreetAddress', require: 'street_address'
 
+# JSON optimization
+gem 'oj'
+gem 'oj_mimic_json'
+
+# user authentication
+gem 'devise', '~> 4.0.3'
+gem 'devise_token_auth', '~> 0.1.37'
+
+# postgresql database
+gem 'pg'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
