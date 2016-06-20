@@ -111,12 +111,19 @@ ShortFormNavigationService = ($state) ->
     $state.href("dahlia.short-form-application.#{page}")
 
   Service._currentPage = () ->
-    $state.current.name.replace(/dahlia.short-form-(welcome|application)\./, "")
+    Service._getSuffix($state.current.name)
+
+  Service._getSuffix = (stateName) ->
+    stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
 
   Service._getPreviousPage = () ->
     pages = _.flatten _.map(Service.sections, (section) -> section.pages)
     index = pages.indexOf(Service._currentPage())
     return pages[index - 1]
+
+  Service.getShortFormSectionFromState = (state) ->
+    return false unless state.name.match(/dahlia.short-form-(welcome|application)\./)
+    Service._sectionOfPage(Service._getSuffix(state.name))
 
   Service._sectionOfPage = (stateName) ->
     currentSection = null

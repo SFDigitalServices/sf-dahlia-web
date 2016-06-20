@@ -53,7 +53,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     completed = Service.application.completedSections
     switch name
       when 'You'
-        completed.Intro
+        true
       when 'Household'
         completed.Intro &&
         completed.You
@@ -196,9 +196,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     !!state.name.match(/short-form-welcome/)
 
   Service.isLeavingShortForm = (toState, fromState) ->
-    onShortForm = fromState.name.indexOf('short-form-application') >= 0
-    leaving = toState.name.indexOf('short-form-application') == -1 &&
-          toState.name.indexOf('create-account') == -1
+    onShortForm = fromState.name.match(/short-form-application/)
+    leaving = !toState.name.match(/short-form-application/) &&
+          !toState.name.match(/create-account/)
     onShortForm && leaving
 
   return Service

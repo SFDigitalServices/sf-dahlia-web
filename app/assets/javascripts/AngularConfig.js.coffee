@@ -459,9 +459,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService',
-  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService) ->
+  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      # check if we're on short form and trying to access a later section
+      shortFormSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
+      if (shortFormSection && !ShortFormApplicationService.userCanAccessSection(shortFormSection.name))
+        e.preventDefault()
+        return $state.go('dahlia.short-form-application.name', toParams)
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
           if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
@@ -474,6 +479,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             e.preventDefault()
             false
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+      # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
         AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
