@@ -21,14 +21,14 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | Please enter an income source
 
   .form-group
-    label.form-label for="value_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+    label.form-label for="value_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency') }"
       | How much is the income of this source?
     .form-income
       span.label-dollar $
-      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }"
+      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency') }"
       small.error ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
-    .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'frequency_'+income.id) }"
+    .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'frequency') }"
       p.radio-inline
         / `::$id` is a "one-time binding" of $id
         / see: https://docs.angularjs.org/guide/expression
@@ -38,7 +38,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
         input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" required=""
         label for="income_frequency_year_{{income.id}}"  per year
 
-      small.error ng-show="inputInvalid(income.id, 'frequency_'+income.id)"
+      small.error ng-show="inputInvalid(income.id, 'frequency')"
           | Please enter an income frequency
 
 .button-stack--paginate.row
