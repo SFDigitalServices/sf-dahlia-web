@@ -1,11 +1,14 @@
 {
   "name":"sf-dahlia-web",
   "description":"",
-  "scripts":{},
+  "scripts":{
+    "postdeploy": "rake db:setup && rake db:migrate"
+  },
   "addons":[
     "newrelic",
     "papertrail",
-    "memcachier"
+    "memcachier",
+    "heroku-postgresql"
   ],
   "buildpacks": [
     {

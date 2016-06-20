@@ -13,6 +13,9 @@
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "EMAIL": "Please enter an email address",
+        "EMAIL_CONFIRMATION": "Email confirmation does not match",
+        "PASSWORD": "Please enter a valid password",
+        "PASSWORD_CONFIRMATION": "Password confirmation does not match",
         "ADDRESS_VALIDATION": "There's a problem with the address you provided.",
         "LANGUAGE": "Please enter a language",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
@@ -76,6 +79,9 @@
         "CONTACT_PHONE_NUMBER": "Contact phone number",
         "CONTACT_EMAIL": "Contact email address",
         "EMAIL_ADDRESS": "Email Address",
+        "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
+        "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
+        "PASSWORD": "Password",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
         "LIVE_ALONE": "I will live alone",
@@ -113,7 +119,10 @@
         "ADDRESS_2": "Apt or Unit #",
         "CITY": "City Name",
         "ZIP": "Zip",
-        "ZIPCODE": "Zipcode"
+        "ZIPCODE": "Zipcode",
+        "ADDITIONAL_PREFERENCES": "Additional Preferences",
+        "SPECIAL_PROGRAMS": "Special Programs",
+        "CREATE_ACCOUNT": "Create Account"
     },
     "T": {
         "YES": "Yes",
@@ -250,5 +259,12 @@
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
         "CREATE_ACCOUNT": "Create an account",
         "NO_THANKS_IM_DONE": "No thanks, I'm done."
+    },
+    "CREATE_ACCOUNT": {
+        "CONTINUE_WITH_APPLICATION": "Continue with Application",
+        "CREATE_AN_ACCOUNT": "Create an Account",
+        "P1": "You'll use this information to log in to your account, so make sure you can remember it.",
+        "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
+        "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     }
 }
