@@ -54,12 +54,12 @@ do ->
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.completedSections
-        ShortFormApplicationService.userCanAccessSection({})
+        ShortFormApplicationService.userCanAccessSection('')
         expect(ShortFormApplicationService.application.completedSections).toEqual expectedDefault
         return
 
       it 'does not initially allow access to later sections', ->
-        expect(ShortFormApplicationService.userCanAccessSection({name: 'Income'})).toEqual false
+        expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
         return
       return
 

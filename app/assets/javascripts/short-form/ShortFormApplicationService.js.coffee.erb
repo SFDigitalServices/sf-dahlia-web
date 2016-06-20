@@ -46,12 +46,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
 
-  Service.userCanAccessSection = (section, state = null) ->
+  Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
     return false if state and Service.isWelcomePage(state)
     Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
-    switch section.name
+    switch name
       when 'You'
         completed.Intro
       when 'Household'
