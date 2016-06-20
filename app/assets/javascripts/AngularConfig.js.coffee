@@ -17,6 +17,7 @@
   'pascalprecht.translate',
   'ui.mask',
   'ngAria',
+  'duScroll',
   'ngIdle',
   'ui.validate',
   'ng-token-auth'
