@@ -11,10 +11,12 @@ describe 'ShortForm API' do
         VCR.use_cassette('shortform/validate_household_match') do
           params = {
             listing_id: 'a0X210000000IMMEA2',
-            householdsize: '2',
-            incomelevel: 40_000,
+            eligibility: {
+              householdsize: '2',
+              incomelevel: 40_000,
+            },
           }
-          get '/api/v1/validate-household', params
+          post '/api/v1/validate-household', params
         end
       end
     end
@@ -23,10 +25,12 @@ describe 'ShortForm API' do
         VCR.use_cassette('shortform/validate_household_not_match') do
           params = {
             listing_id: 'a0X210000000IMMEA2',
-            householdsize: '10',
-            incomelevel: 10_000,
+            eligibility: {
+              householdsize: '10',
+              incomelevel: 10_000,
+            },
           }
-          get '/api/v1/validate-household', params
+          post '/api/v1/validate-household', params
         end
       end
     end
@@ -38,10 +42,12 @@ describe 'ShortForm API' do
     VCR.use_cassette('shortform/validate_household_match') do
       params = {
         listing_id: 'a0X210000000IMMEA2',
-        householdsize: '2',
-        incomelevel: 40_000,
+        eligibility: {
+          householdsize: '2',
+          incomelevel: 40_000,
+        },
       }
-      get '/api/v1/validate-household', params
+      post '/api/v1/validate-household', params
     end
     json = JSON.parse(response.body)
 

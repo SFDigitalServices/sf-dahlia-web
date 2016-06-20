@@ -47,7 +47,7 @@ describe 'Listings API' do
       end
     end
   end
-  describe 'eligbility listings' do
+  describe 'eligibility listings' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
         params = {
@@ -74,8 +74,8 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of listings are returned
-    # (based on VCR cassette with 9 listings)
-    expect(json['listings'].length).to eq(9)
+    # (based on VCR cassette with 10 listings)
+    expect(json['listings'].length).to eq(10)
   end
 
   it 'sends an individual listing' do
@@ -139,8 +139,8 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of lottery preferences are returned
-    # (based on VCR cassette with 4 results)
-    expect(json['lottery_preferences'].length).to eq(4)
+    # (based on VCR cassette with 5 results)
+    expect(json['lottery_preferences'].length).to eq(5)
   end
 
   it 'gets Unit results for a Listing' do
@@ -154,8 +154,8 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of Unit results are returned
-    # (based on VCR listing with 3 units)
-    expect(json['units'].length).to eq(3)
+    # (based on VCR listing with 2 units)
+    expect(json['units'].length).to eq(2)
   end
 
   it 'gets Lottery Results for a Listing' do
