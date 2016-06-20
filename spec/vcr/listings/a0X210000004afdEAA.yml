@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 18 Feb 2016 02:38:02 GMT
+      - Fri, 17 Jun 2016 23:39:58 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,26 +29,28 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=_kpLTkLxQ-eZKa9LKBet3A;Path=/;Domain=.salesforce.com;Expires=Mon,
-        18-Apr-2016 02:38:02 GMT
+      - BrowserId=JT26U714SW635cRBc8Vpfg;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:39:58 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQJEdZazrDIGxCfFtoT.xjWFa8aP4Y3nH_dnNe_KpRI4BOeTzeq5ZtUw8DunP4poPOwFP7rAp7ITb70kp8FAQ_hGG1792","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1455763082702","signature":"7V8UQRvaa3m6sQmkYti3ryXFYmxV2cCMtY3oiB2lLi0="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1466206798381","signature":"cy7vWxTX5ebHnMF58NrhDWBYe+gFMfzjixnX0i7uVn4="}'
     http_version:
-  recorded_at: Thu, 18 Feb 2016 02:38:03 GMT
+  recorded_at: Fri, 17 Jun 2016 23:39:59 GMT
 - request:
     method: get
-    uri: https://cs26.salesforce.com/services/apexrest/ListingDetails/a0X210000004afdEAA
+    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/ListingDetails/a0X210000004afdEAA
     body:
       encoding: US-ASCII
       string: ''
@@ -56,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQJEdZazrDIGxCfFtoT.xjWFa8aP4Y3nH_dnNe_KpRI4BOeTzeq5ZtUw8DunP4poPOwFP7rAp7ITb70kp8FAQ_hGG1792
+      - OAuth 00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -67,10 +69,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 18 Feb 2016 02:38:04 GMT
+      - Fri, 17 Jun 2016 23:39:59 GMT
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=3yNwtA8QTzWT1fhu5WaOoQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        18-Apr-2016 02:38:04 GMT
+      - BrowserId=yOJ9Znn_SluLQ4Q6Z7O7aA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:39:59 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -79,34 +87,25 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":411,"minOccupancy":1,"maxSquareFt":411,"maxOccupancy":2,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
-        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
-        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
-        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
-        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
+      string: '[{"unitSummary":[{"unitType":"2 BR","totalUnits":1,"minSquareFt":787,"minRentalMinIncome":3807.50,"minOccupancy":2,"minMonthlyRent":1523.00,"maxSquareFt":787,"maxRentalMinIncome":3807.50,"maxOccupancy":4,"maxMonthlyRent":1523.00,"listingID":"a0X210000004afdEAA"},{"unitType":"3
+        BR","totalUnits":1,"minSquareFt":1212,"minRentalMinIncome":0.00,"minOccupancy":3,"minMonthlyRent":985.00,"maxSquareFt":1212,"maxRentalMinIncome":0.00,"maxOccupancy":6,"maxMonthlyRent":985.00,"listingID":"a0X210000004afdEAA"}],"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Name":"Closed
+        Application","Building_Name__c":"Kaplan Tower","Building_Street_Address__c":"501
+        Gough Street","Building_City__c":"San Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
+        Developer Company","Description__c":"property description notes here","Neighborhood__c":"Presidio
+        Heights","Year_Built__c":2015,"LastModifiedDate":"2016-05-18T00:53:04.000+0000","Application_Due_Date__c":"2016-09-01T21:00:00.000+0000","Building_URL__c":"http://sfmohcd.org/sites/default/files/Documents/MOH/Housing%20Listing%20Photos/388Beale.jpg","Legal_Disclaimers__c":"uphold
+        the law.","Application_Organization__c":"Test Test Name","Application_Phone__c":"(650)
+        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2016-05-27","Lottery_End__c":"2015-12-25T18:11:00.000+0000","Lottery_Start_Time__c":"4:00","Lottery_End_Time__c":"6:00","Lottery_Venue__c":"Exygy","Lottery_Street_Address__c":"4053
+        18th St.","Lottery_City__c":"San Francisco","Lottery_Date__c":"2016-04-29T22:59:00.000+0000","Lottery_Preferences__c":"Ellis
+        Act","Lottery_Results__c":false,"Lottery_Winners__c":0,"Leasing_Agent_Name__c":"Jon
         Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
-        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
-        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":787,"minOccupancy":2,"maxSquareFt":787,"maxOccupancy":4,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
-        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
-        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
-        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
-        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
-        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
-        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
-        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null},{"unitType":"a0X210000004afdEAA","totalUnits":1,"minSquareFt":1121,"minOccupancy":3,"maxSquareFt":1121,"maxOccupancy":6,"listingID":"a0X210000004afdEAA","listing":{"attributes":{"type":"Listing__c","url":"/services/data/v35.0/sobjects/Listing__c/a0X210000004afdEAA"},"Building_Name__c":"Kaplan
-        Tower","Building_Street_Address__c":"501 Gough Street","Building_City__c":"San
-        Francisco","Building_State__c":"CA","Building_Zip_Code__c":"94010","Developer__c":"Big
-        Developer Company","Application_Due_Date__c":"2015-12-08","Building_URL__c":"http://detroit1701.org/Dime%20Bldg.html#.Vk5zvXarTIU","Id":"a0X210000004afdEAA","Application_Phone__c":"(650)
-        987-2564","Lottery_Summary__c":"out of blank, we pulled blank","Lottery_Results_Date__c":"2015-12-25","Lottery_Date__c":"2015-12-31T18:11:00.000+0000","Leasing_Agent_Name__c":"Jon
-        Jon","Leasing_Agent_Title__c":"Sales Manager","Leasing_Agent_Email__c":"info@salesforce.com","Leasing_Agent_Phone__c":"(905)
-        555-1212","Units__r":{"totalSize":3,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmGEAW","Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
+        555-1212","Download_URL__c":"http://test.com","Fee__c":95.00,"Deposit_Min__c":200.00,"Deposit_Max__c":250.00,"Costs_Not_Included__c":"renter
+        responsible for having the skills to pay the bills","Rental_Assistance__c":"Subsidies
+        and Vouchers","Amenities__c":"this is just text","Accessibility__c":"accessibility
+        info here","Building_Selection_Criteria__c":"selection goes here","Required_Documents__c":"passport,
+        ID, others","Smoking_Policy__c":"We hate smokers!","Pet_Policy__c":"We love
+        pets!","Id":"a0X210000004afdEAA","Units__r":{"totalSize":2,"done":true,"records":[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DWmLEAW","Unit_Type__c":"2
         BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Listing__c":"a0X210000004afdEAA","Id":"a0W21000000DYdKEAW","Unit_Type__c":"3
         BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00}]}},"doesMatch":null}]'
     http_version:
-  recorded_at: Thu, 18 Feb 2016 02:38:04 GMT
+  recorded_at: Fri, 17 Jun 2016 23:40:00 GMT
 recorded_with: VCR 3.0.1
