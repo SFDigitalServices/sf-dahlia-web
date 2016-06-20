@@ -11,6 +11,7 @@ AllCops:
     - 'vendor/bundle/**/*'
     - 'node_modules/**/*'
     - 'config/environments/production.rb'
+    - 'config/initializers/devise.rb'
 
 # We don't care about method length, since we check method cyclomatic
 # complexity.

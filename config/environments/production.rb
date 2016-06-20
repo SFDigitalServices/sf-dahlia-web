@@ -61,6 +61,9 @@ Rails.application.configure do
   # raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  # required for devise
+  config.action_mailer.default_url_options = { host: 'housing.sfgov.org' }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
@@ -75,7 +78,7 @@ Rails.application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
-  # config.active_record.dump_schema_after_migration = false
+  config.active_record.dump_schema_after_migration = false
 
   # Force all access to the app over SSL, use Strict-Transport-Security,
   # and use secure cookies.
