@@ -28,7 +28,7 @@ div
           | {{ option }}
 
       .form-group.text-center ng-if="show_preferences_options(application)" ng-hide="application.preferences[pref_type_proof_file]"
-        div.button.ghost-white.expand ngf-select="" name="file" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="20MB"
+        div.button.ghost-white.expand ngf-select="uploadProof($file)" name="file" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="20MB"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
