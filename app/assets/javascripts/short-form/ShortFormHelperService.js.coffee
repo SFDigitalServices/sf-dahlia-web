@@ -19,7 +19,7 @@ ShortFormHelperService = ($translate, $filter) ->
 
   Service.applicantLanguage = (applicant) ->
     if applicant.language == 'Other'
-      applicant.other_language
+      applicant.languageOther
     else
       applicant.language
 
