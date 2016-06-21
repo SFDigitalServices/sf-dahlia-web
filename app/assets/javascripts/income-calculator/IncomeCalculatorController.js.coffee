@@ -23,6 +23,7 @@ IncomeCalculatorController = ($scope, IncomeCalculatorService) ->
 
   $scope.inputInvalid = (formId, name) ->
     if form = $scope.form(formId)
+      name = "#{name}_#{formId}"
       if form[name]
         form[name].$invalid && (form[name].$touched || form.$submitted)
 
