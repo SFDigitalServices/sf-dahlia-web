@@ -1,28 +1,28 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
-  .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone_number.$invalid || applicant.noPhone || applicant.additionalPhone }"
+  .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone.$invalid || applicant.noPhone || applicant.additionalPhone }"
     .form-tel
       label for="applicant_phone"
         | {{'LABEL.APPLICANT_PHONE' | translate}}
 
-      input#applicant_phone(ng-model="applicant.phone_number" name="phone_number" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-    small.error ng-if="inputInvalid('phone_number')"
+      input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+    small.error ng-if="inputInvalid('phone')"
       | {{'ERROR.PHONE_NUMBER' | translate}}
     label.sr-only for="applicant_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-    select#applicant_phone_number_type ng-model="applicant.phone_number_type" data-width="auto" name="phone_number_type" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone_number_type') }"
+    select#applicant_phone_number_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
       option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
       option value="Home" translate="LABEL.PHONE_HOME"
       option value="Work" translate="LABEL.PHONE_WORK"
       option value="Cell" translate="LABEL.PHONE_CELL"
 
-    small.error ng-if="inputInvalid('phone_number_type')"
+    small.error ng-if="inputInvalid('phoneType')"
       | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
     div
       .form-item.padding-bottom
         .checkbox ng-click="applicant.additionalPhone = false;"
-          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone_number'); blankIfInvalid('second_phone_number')"
+          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone')"
           label for="applicant_no_phone"
             | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
         small.highlight ng-if="applicant.noPhone"
@@ -39,16 +39,16 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       .form-tel
         label for="applicant_second_phone"
           | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
-        input#applicant_second_phone(ng-model="applicant.second_phone_number" name="second_phone_number" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-      small.error ng-if="inputInvalid('second_phone_number')"
+        input#applicant_second_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+      small.error ng-if="inputInvalid('alternatePhone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
       label.sr-only for="applicant_second_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      select#applicant_second_phone_number_type ng-model="applicant.second_phone_number_type" data-width="auto" name="second_phone_number_type" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('second_phone_number_type') }"
+      select#applicant_second_phone_number_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
         option value="Home" translate="LABEL.PHONE_HOME"
         option value="Work" translate="LABEL.PHONE_WORK"
         option value="Cell" translate="LABEL.PHONE_CELL"
-      small.error ng-if="inputInvalid('second_phone_number_type')"
+      small.error ng-if="inputInvalid('alternatePhoneType')"
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
@@ -121,14 +121,14 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
 
   .form-group ng-class="{ error: inputInvalid('other_language') }"
-    label.form-label.margin-bottom--half for="applicant_primary_language"
+    label.form-label.margin-bottom--half for="applicant_language"
       | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
-    select#applicant_primary_language ng-model="applicant.primary_language" data-width="auto" name="primary_language"
+    select#applicant_language ng-model="applicant.language" data-width="auto" name="language"
       option ng-repeat="language in language_options" value="{{language}}"
         | {{ language }}
 
     label.sr-only for="applicant_other_language" translate="LABEL.ENTER_YOUR_LANGUAGE"
-    input#applicant_other_language ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.primary_language == 'Other'" ng-if="applicant.primary_language == 'Other'"
+    input#applicant_other_language ng-model="applicant.other_language" name="other_language" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('other_language') }" ng-required="applicant.language == 'Other'" ng-if="applicant.language == 'Other'"
     small.error ng-if="inputInvalid('other_language')"
       | {{'ERROR.LANGUAGE' | translate}}
 

@@ -144,10 +144,10 @@ ShortFormApplicationController = (
     return AddressValidationService.failedValidation(validated)
 
   $scope.checkInvalidPhones = () ->
-    $scope.inputInvalid('phone_number') ||
-    $scope.inputInvalid('phone_number_type') ||
-    $scope.inputInvalid('second_phone_number') ||
-    $scope.inputInvalid('second_phone_number_type')
+    $scope.inputInvalid('phone') ||
+    $scope.inputInvalid('phoneType') ||
+    $scope.inputInvalid('alternatePhone') ||
+    $scope.inputInvalid('alternatePhoneType')
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -160,7 +160,7 @@ ShortFormApplicationController = (
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
   $scope.applicantHasPhoneEmailAndAddress = ->
-    $scope.applicant.phone_number &&
+    $scope.applicant.phone &&
       $scope.applicant.email &&
       ShortFormApplicationService.validMailingAddress()
 

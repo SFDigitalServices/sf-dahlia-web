@@ -7,13 +7,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     / You
     review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
       review-summary-item label="{{'LABEL.NAME' | translate}}"
-        | {{applicant.first_name}} {{applicant.last_name}}
+        | {{applicant.firstName}} {{applicant.lastName}}
       review-summary-item label="{{'LABEL.DOB' | translate}}"
         | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
       review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone"
-        | {{applicant.phone_number | tel}}
+        | {{applicant.phone | tel}}
       review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
-        | {{applicant.second_phone_number | tel}}
+        | {{applicant.alternatePhone | tel}}
       review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
         | {{applicant.email}}
       review-summary-item label="{{'LABEL.APPLICANT_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
@@ -39,9 +39,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
       div ng-if="alternateContact.type != 'None'"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
-          | {{alternateContact.first_name}} {{alternateContact.last_name}}
-        review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone_number"
-          | {{alternateContact.phone_number | tel}}
+          | {{alternateContact.firstName}} {{alternateContact.lastName}}
+        review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone"
+          | {{alternateContact.phone | tel}}
         review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" ng-if="alternateContact.email"
           | {{alternateContact.email}}
 
@@ -54,7 +54,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
       div ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
-          | {{member.first_name}} {{member.last_name}}
+          | {{member.firstName}} {{member.lastName}}
         review-summary-item label="{{'LABEL.DOB' | translate}}"
           | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
         review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"

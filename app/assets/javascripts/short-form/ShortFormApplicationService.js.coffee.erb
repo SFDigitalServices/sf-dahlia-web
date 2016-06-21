@@ -2,12 +2,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service = {}
   Service.applicationDefaults =
     applicant:
-      primary_language: "English"
-      phone_number: null
       home_address: { address1: null, city: null, state: null, zip: null }
+      language: "English"
+      phone: null
       mailing_address: { address1: null, city: null, state: null, zip: null }
     alternateContact:
-      primary_language: "English"
+      language: "English"
     householdMembers: []
     preferences:
       live_in_sf: null
@@ -86,7 +86,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 
   Service.missingPrimaryContactInfo = () ->
     missingInfo = []
-    if !Service.applicant.phone_number
+    if !Service.applicant.phone
       missingInfo.push("Phone")
     if !Service.applicant.email
       missingInfo.push("Email")
@@ -117,7 +117,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
     # clear out preferences where this householdMember was selected
-    full_name = "#{Service.householdMember.first_name} #{Service.householdMember.last_name}"
+    full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
     # search through all xxx_household_member items in preferences matching the full name
     _.each Service.application.preferences, (v,k) ->
       if k.indexOf('_household_member') > 0 and v == full_name

@@ -15,7 +15,7 @@ do ->
       application: {}
       alternateContact: {}
       householdMember: {
-        first_name: "Oberon"
+        firstName: "Oberon"
       }
       isWelcomePage: jasmine.createSpy()
       copyHomeToMailingAddress: jasmine.createSpy()

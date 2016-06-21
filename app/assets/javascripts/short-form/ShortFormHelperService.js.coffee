@@ -17,11 +17,11 @@ ShortFormHelperService = ($translate, $filter) ->
     else
       alternateContact.type
 
-  Service.applicantPrimaryLanguage = (applicant) ->
-    if applicant.primary_language == 'Other'
+  Service.applicantLanguage = (applicant) ->
+    if applicant.language == 'Other'
       applicant.other_language
     else
-      applicant.primary_language
+      applicant.language
 
   Service.applicantVouchersSubsidies = (applicant) ->
     if applicant.household_vouchers_subsidies == 'Yes'
@@ -42,7 +42,7 @@ ShortFormHelperService = ($translate, $filter) ->
 
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
-    name = applicant.first_name
+    name = applicant.firstName
     { name: if name then ', ' + name else '' }
 
   Service.householdMemberForPreference = (application, pref_type) ->

@@ -11,8 +11,8 @@ do ->
       state: 'CA'
       zip: '94109'
     fakeApplicant =
-      first_name: 'Bob'
-      last_name: 'Williams'
+      firstName: 'Bob'
+      lastName: 'Williams'
       dob_month: '07'
       dob_day: '05'
       dob_year: '2015'
@@ -83,13 +83,13 @@ do ->
       return
 
     describe 'missingPrimaryContactInfo', ->
-      it 'informs if phone_number and mailing_address are missing', ->
+      it 'informs if phone and mailing_address are missing', ->
         expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual ['Phone', 'Email', 'Address']
         return
 
-      it 'informs if phone_number and mailing_address are not missing', ->
+      it 'informs if phone and mailing_address are not missing', ->
         ShortFormApplicationService.applicant.mailing_address = fakeAddress
-        ShortFormApplicationService.applicant.phone_number = '123-123123'
+        ShortFormApplicationService.applicant.phone = '123-123123'
         ShortFormApplicationService.applicant.email = 'email@email.com'
         expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual []
         return
@@ -98,8 +98,8 @@ do ->
     describe 'getHouseholdMember', ->
       beforeEach ->
         fakeHouseholdMember =
-          first_name: 'Bob'
-          last_name: 'Williams'
+          firstName: 'Bob'
+          lastName: 'Williams'
           dob_month: '07'
           dob_day: '05'
           dob_year: '2015'
@@ -120,8 +120,8 @@ do ->
     describe 'addHouseholdMember', ->
       beforeEach ->
         fakeHouseholdMember =
-          first_name: 'Bob'
-          last_name: 'Williams'
+          firstName: 'Bob'
+          lastName: 'Williams'
           dob_month: '07'
           dob_day: '05'
           dob_year: '2015'
@@ -162,8 +162,8 @@ do ->
     describe 'cancelHouseholdMember', ->
       beforeEach ->
         fakeHouseholdMember =
-          first_name: 'Bob'
-          last_name: 'Williams'
+          firstName: 'Bob'
+          lastName: 'Williams'
           dob_month: '07'
           dob_day: '05'
           dob_year: '2015'
@@ -208,8 +208,8 @@ do ->
       describe 'household member works in SF', ->
         beforeEach ->
           fakeHouseholdMember =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -263,8 +263,8 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
           fakeHouseholdMemberWithSeparateAddress =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -292,8 +292,8 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
           fakeHouseholdMemberWithSeparateAddress =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -317,8 +317,8 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
           fakeHouseholdMember =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -336,8 +336,8 @@ do ->
       describe 'only applicant works in SF', ->
         beforeEach ->
           fakeHouseholdMember =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -354,8 +354,8 @@ do ->
       describe 'only household member works in SF', ->
         beforeEach ->
           fakeHouseholdMember =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
@@ -372,8 +372,8 @@ do ->
       describe 'both applicant and household member work in SF', ->
         beforeEach ->
           fakeHouseholdMember =
-            first_name: 'Bob'
-            last_name: 'Williams'
+            firstName: 'Bob'
+            lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
