@@ -1,5 +1,6 @@
-ShortFormApplicationService = ($localStorage, $translate, $http) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNavigationService) ->
   Service = {}
+  Service.form = {}
   Service.applicationDefaults =
     applicant:
       primary_language: "English"
@@ -19,6 +20,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       Household: false
       Status: false
       Income: false
+    validatedForms:
+      You: {}
+      Household: {}
+      Status: {}
+      Income: {}
 
   Service.current_id = 0
 
@@ -198,13 +204,26 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)
 
-  Service.isJumpingAhead = (toState, fromState) ->
-    return false unless toState && fromState
-    # they're jumping ahead if they're starting from '' (meaning new browser window)
-    # and they're on a short form section ahead of "name" (1st page)
-    !! (Service.isShortFormPage(toState) &&
-      fromState.name == '' &&
-      toState.name != 'dahlia.short-form-application.name')
+  Service.checkFormState = (stateName, section) ->
+    if Service.form.applicationForm
+      stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
+      Service.application.validatedForms[section.name][stateName] = Service.form.applicationForm.$valid
+
+  Service.authorizedToProceed = (toState, fromState, toSection) ->
+    return true unless toState && fromState
+    return false unless Service.userCanAccessSection(toSection.name)
+    # if Service.form.applicationForm && Service.form.applicationForm.$invalid
+    #   if
+    # they're "jumping ahead" if they're not coming from a short form page or create-account
+    # and they're trying to go to a short form section ahead of "name" (1st page)
+    jumpAhead = (Service.isShortFormPage(toState) &&
+        toState.name != 'dahlia.short-form-application.name') &&
+        !(
+          Service.isShortFormPage(fromState) ||
+          fromState.name.match(/create-account/)
+        )
+    return !jumpAhead
+
 
   Service.isLeavingShortForm = (toState, fromState) ->
     onShortForm = Service.isShortFormPage(fromState)
@@ -218,7 +237,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http']
+ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http', 'ShortFormNavigationService']
 
 angular
   .module('dahlia.services')

@@ -463,9 +463,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # check if we're on short form and trying to access a later section than the first section
-      if (ShortFormApplicationService.isJumpingAhead(toState, fromState))
-        e.preventDefault()
-        return $state.go('dahlia.short-form-application.name', toParams)
+      toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
+      if toSection
+        # we're in shortForm
+        fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
+        ShortFormApplicationService.checkFormState(fromState.name, fromSection)
+        if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          e.preventDefault()
+          return $state.go('dahlia.short-form-application.name', toParams)
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
           if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))

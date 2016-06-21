@@ -16,7 +16,7 @@ ShortFormApplicationController = (
   AddressValidationService
 ) ->
 
-  $scope.form = {}
+  $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
