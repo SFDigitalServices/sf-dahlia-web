@@ -20,6 +20,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
       Household: false
       Status: false
       Income: false
+    # as you proceed through each page, validatedForms will store:
+    #  [pagename]: T/F
+    # to indicate if that form was left valid or invalid
     validatedForms:
       You: {}
       Household: {}
@@ -64,18 +67,22 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
       when 'Household'
         completed.Intro &&
         completed.You &&
+        # make sure all validatedForms in previous section == true
         _.every(validated['You'], (i) -> i)
       when 'Status'
         Service.userCanAccessSection('Household') &&
         completed.Household &&
+        # make sure all validatedForms in previous section == true
         _.every(validated['Household'], (i) -> i)
       when 'Income'
         Service.userCanAccessSection('Status') &&
         completed.Status &&
+        # make sure all validatedForms in previous section == true
         _.every(validated['Status'], (i) -> i)
       when 'Review'
         Service.userCanAccessSection('Income') &&
         completed.Income &&
+        # make sure all validatedForms in previous section == true
         _.every(validated['Income'], (i) -> i)
       else
         false
