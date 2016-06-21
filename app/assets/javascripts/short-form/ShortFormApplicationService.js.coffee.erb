@@ -211,7 +211,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
     !!state.name.match(/short-form-welcome\./)
 
   Service.isShortFormPage = (state) ->
-    !!state.name.match(/short-form-application\./)
+    !!state.name.match(/short-form-application\.|create-account/)
 
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
@@ -223,24 +223,17 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
-    # if Service.form.applicationForm && Service.form.applicationForm.$invalid
-    #   if
     # they're "jumping ahead" if they're not coming from a short form page or create-account
     # and they're trying to go to a short form section ahead of "name" (1st page)
-    jumpAhead = (Service.isShortFormPage(toState) &&
-        toState.name != 'dahlia.short-form-application.name') &&
-        !(
-          Service.isShortFormPage(fromState) ||
-          fromState.name.match(/create-account/)
-        )
+    jumpAhead = Service.isShortFormPage(toState) &&
+                !Service.isShortFormPage(fromState) &&
+                toState.name != 'dahlia.short-form-application.name'
     return !jumpAhead
 
 
   Service.isLeavingShortForm = (toState, fromState) ->
-    onShortForm = Service.isShortFormPage(fromState)
-    # leaving means we're not going to another short form page or to create account
-    leaving = !(Service.isShortFormPage(toState) || toState.name.match(/create-account/))
-    onShortForm && leaving
+    # leaving means we're going from short form to a non-short form page
+    Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
 
   return Service
 
