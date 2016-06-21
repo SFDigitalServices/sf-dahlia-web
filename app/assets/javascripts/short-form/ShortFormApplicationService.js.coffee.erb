@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNavigationService) ->
+ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service = {}
   Service.form = {}
   Service.applicationDefaults =
@@ -241,7 +241,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http', 'ShortFormNavigationService']
+ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http']
 
 angular
   .module('dahlia.services')
