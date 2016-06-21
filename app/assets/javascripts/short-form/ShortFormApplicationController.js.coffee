@@ -253,7 +253,8 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
-    $scope.householdMember = ShortFormApplicationService.householdMember
+    # we just edit a copy, and then put it back in place after saving in addHouseholdMember
+    $scope.householdMember = angular.copy(ShortFormApplicationService.householdMember)
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)

@@ -55,29 +55,27 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
     return false if state and Service.isWelcomePage(state)
-    Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
+    validated = Service.application.validatedForms
     switch name
       when 'You'
         true
       when 'Household'
         completed.Intro &&
-        completed.You
+        completed.You &&
+        _.every(validated['You'], (i) -> i)
       when 'Status'
-        completed.Intro &&
-        completed.You &&
-        completed.Household
+        Service.userCanAccessSection('Household') &&
+        completed.Household &&
+        _.every(validated['Household'], (i) -> i)
       when 'Income'
-        completed.Intro &&
-        completed.You &&
-        completed.Household &&
-        completed.Status
-      when 'Review'
-        completed.Intro &&
-        completed.You &&
-        completed.Household &&
+        Service.userCanAccessSection('Status') &&
         completed.Status &&
-        completed.Income
+        _.every(validated['Status'], (i) -> i)
+      when 'Review'
+        Service.userCanAccessSection('Income') &&
+        completed.Income &&
+        _.every(validated['Income'], (i) -> i)
       else
         false
 
@@ -111,6 +109,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
+    else
+      # update existing householdMember
+      angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
 
   Service.resetHouseholdmember = () ->
@@ -207,6 +208,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, ShortFormNaviga
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
+      # special case for household-member-form
+      return if stateName.match(/household-member-form/)
       Service.application.validatedForms[section.name][stateName] = Service.form.applicationForm.$valid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
