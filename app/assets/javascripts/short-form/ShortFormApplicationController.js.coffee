@@ -14,8 +14,7 @@ ShortFormApplicationController = (
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
-  AddressValidationService,
-  GeocodingService
+  AddressValidationService
 ) ->
 
   $scope.form = {}
@@ -346,8 +345,7 @@ ShortFormApplicationController = (
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'AddressValidationService', 'GeocodingService'
+  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
 angular
