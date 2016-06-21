@@ -19,7 +19,7 @@ angular.module('dahlia.directives')
     scope.eligible_members = () ->
       if attrs.type == "live_in_sf"
         scope.liveInSfMembers()
-      else if attrs.type == "work_in_sf"
+      else if attrs.type == "workInSf"
         scope.workInSfMembers()
       else
         scope.householdMembers

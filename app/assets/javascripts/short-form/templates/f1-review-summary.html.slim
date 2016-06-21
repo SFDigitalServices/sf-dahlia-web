@@ -22,7 +22,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
         | {{applicant.home_address.zip}}
 
-      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.separateAddress"
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.hasAltMailingAddress"
         | {{applicant.mailing_address.address1}}
         br
         ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
@@ -78,7 +78,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhood_residence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhood_residence') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.work_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('work_in_sf') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
     / Income

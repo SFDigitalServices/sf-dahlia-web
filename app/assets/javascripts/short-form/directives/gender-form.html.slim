@@ -8,7 +8,7 @@
 
     checkbox-form-item user='applicant' name='gender' option='Not Listed' label='Not Listed (Please Specify)' ng-click="resetGenderOptions(user, 'Not Listed')" labelledby="gender_form_label"
     .radio-block ng-if="user.gender['Not Listed']"
-      label.sr-only for="gender_not_listed" translate="LABEL.YOUR_GENDER"
-      input#gender_not_listed ng-model="user.gender_not_listed" name="gender_not_listed" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
+      label.sr-only for="genderOther" translate="LABEL.YOUR_GENDER"
+      input#genderOther ng-model="user.genderOther" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
 
     checkbox-form-item user='applicant' name='gender' option='Decline to State' labelledby="gender_form_label" ng-click="resetGenderOptions(user, 'Decline to State')"

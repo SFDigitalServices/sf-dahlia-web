@@ -183,7 +183,7 @@ ShortFormApplicationController = (
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
       $scope.applicant.noAddress = false
-    unless $scope.applicant.separateAddress
+    unless $scope.applicant.hasAltMailingAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetAndCheckMailingAddress = ->
@@ -223,7 +223,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.backPageState($scope.application)
 
   $scope.homeAddressRequired = ->
-    !($scope.applicant.noAddress || $scope.applicant.separateAddress)
+    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress)
 
   $scope.truth = ->
     # wrap true value in a function a la function(){return true;}

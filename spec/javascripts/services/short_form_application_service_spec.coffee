@@ -17,8 +17,8 @@ do ->
       dob_day: '05'
       dob_year: '2015'
       relationship: 'Cousin'
-      work_in_sf: 'Yes'
-      preferences: {live_in_sf: null, work_in_sf: null}
+      workInSf: 'Yes'
+      preferences: {live_in_sf: null, workInSf: null}
       home_address: fakeAddress
 
     beforeEach module('dahlia.services', ($provide)->
@@ -186,10 +186,10 @@ do ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
-        it 'should assign work_in_sf preference', ->
+          ShortFormApplicationService.applicant.workInSf = 'Yes'
+        it 'should assign workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
           return
         return
 
@@ -197,11 +197,11 @@ do ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.work_in_sf = 'No'
+          ShortFormApplicationService.applicant.workInSf = 'No'
 
-        it 'should not be assigned work_in_sf preference', ->
+        it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(false)
           return
         return
 
@@ -214,14 +214,14 @@ do ->
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.work_in_sf = 'No'
+          ShortFormApplicationService.applicant.workInSf = 'No'
 
-        it 'should not be assigned work_in_sf preference', ->
+        it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.work_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
           return
         return
 
@@ -262,17 +262,17 @@ do ->
           }
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMemberWithSeparateAddress =
+          fakeHouseholdMemberWithAltMailingAddress =
             firstName: 'Bob'
             lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
             same_address: 'No'
             home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithSeparateAddress)
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
 
         it 'should be assigned live_in_sf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
@@ -291,17 +291,17 @@ do ->
           }
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMemberWithSeparateAddress =
+          fakeHouseholdMemberWithAltMailingAddress =
             firstName: 'Bob'
             lastName: 'Williams'
             dob_month: '07'
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
             same_address: 'No'
             home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithSeparateAddress)
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
         it 'should return array of household member who lives in SF', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(1)
           return
@@ -323,7 +323,7 @@ do ->
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
             same_address: 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
         it 'should return an array of both applicant and household member', ->
@@ -342,10 +342,10 @@ do ->
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'No'
+            workInSf: 'No'
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
+          ShortFormApplicationService.applicant.workInSf = 'Yes'
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers()).toEqual([ShortFormApplicationService.applicant])
           return
@@ -360,10 +360,10 @@ do ->
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.work_in_sf = 'No'
+          ShortFormApplicationService.applicant.workInSf = 'No'
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers()).toEqual([fakeHouseholdMember])
           return
@@ -378,10 +378,10 @@ do ->
             dob_day: '05'
             dob_year: '2015'
             relationship: 'Cousin'
-            work_in_sf: 'Yes'
+            workInSf: 'Yes'
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.work_in_sf = 'Yes'
+          ShortFormApplicationService.applicant.workInSf = 'Yes'
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
           return

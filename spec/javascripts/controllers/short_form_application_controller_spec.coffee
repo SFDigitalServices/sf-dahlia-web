@@ -110,9 +110,9 @@ do ->
         return
 
     describe '$scope.checkIfMailingAddressNeeded', ->
-      describe 'separateAddress unchecked', ->
+      describe 'hasAltMailingAddress unchecked', ->
         it 'calls Service function to copy home address to mailing', ->
-          scope.applicant.separateAddress = false
+          scope.applicant.hasAltMailingAddress = false
           scope.checkIfMailingAddressNeeded()
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
           return
