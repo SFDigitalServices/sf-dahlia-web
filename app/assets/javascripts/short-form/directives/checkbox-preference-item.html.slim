@@ -7,7 +7,8 @@ div
       / ng-transclude tells it to yield the body of the directive
       span.checkbox-block_note ng-transclude=""
 
-    / checkbox for household member that has the preference
+    / select for household member that has the preference
+    / not shown if it is only the applicant eligible
     .form-group ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[pref_type]" ng-hide="only_applicant_eligible()"
       label.form-label.margin-bottom--half for="{{pref_type_household_member}}"
         | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}

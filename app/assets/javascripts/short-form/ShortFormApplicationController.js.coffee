@@ -6,6 +6,7 @@ ShortFormApplicationController = (
   $scope,
   $state,
   $window,
+  $document,
   $translate,
   Idle,
   Title,
@@ -112,7 +113,16 @@ ShortFormApplicationController = (
       if options.path
         $state.go(options.path)
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
+
+  $scope.handleErrorState = ->
+    # show error alert
+    $scope.hideAlert = false
+    el = angular.element(document.getElementById('short-form-wrapper'))
+    # uses duScroll aka 'angular-scroll' module
+    topOffset = 0
+    duration = 400 # animation speed in ms
+    $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.applicationForm
@@ -337,7 +347,7 @@ ShortFormApplicationController = (
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$translate', 'Idle', 'Title',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
