@@ -159,11 +159,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     user.gender[option] = toggle
 
   ### Proof of Preferences ###
-
-  Service.refreshLiveWorkPreferences = () ->
-    Service._updatePreference("live_in_sf", Service.liveInSfMembers())
-    Service._updatePreference("work_in_sf", Service.workInSfMembers())
-
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
@@ -180,14 +175,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     applicantWorksInSf = Service.applicant.work_in_sf == "Yes"
     workInSfMembers.push(Service.applicant) if applicantWorksInSf
     return workInSfMembers
-
-  Service._updatePreference = (preference, eligibleMembers) ->
-    # only need to manually update if the preference hasn't been set yet
-    return unless Service.preferences[preference] == null
-    if eligibleMembers.length > 0
-      Service.preferences[preference] = true
-    else
-      Service.preferences[preference] = false
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')

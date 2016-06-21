@@ -243,9 +243,6 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
-  $scope.checkLiveWorkEligibility = () ->
-    ShortFormApplicationService.refreshLiveWorkPreferences()
-
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
