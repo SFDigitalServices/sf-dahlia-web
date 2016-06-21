@@ -122,7 +122,7 @@ ShortFormNavigationService = ($state) ->
     return pages[index - 1]
 
   Service.getShortFormSectionFromState = (state) ->
-    return false unless state.name.match(/dahlia.short-form-(welcome|application)\./)
+    return false unless state.name.match(/dahlia.short-form-application\./)
     Service._sectionOfPage(Service._getSuffix(state.name))
 
   Service._sectionOfPage = (stateName) ->

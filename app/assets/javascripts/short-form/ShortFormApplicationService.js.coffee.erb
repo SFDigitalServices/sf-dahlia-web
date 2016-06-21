@@ -193,12 +193,23 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
-    !!state.name.match(/short-form-welcome/)
+    !!state.name.match(/short-form-welcome\./)
+
+  Service.isShortFormPage = (state) ->
+    !!state.name.match(/short-form-application\./)
+
+  Service.isJumpingAhead = (toState, fromState) ->
+    return false unless toState && fromState
+    # they're jumping ahead if they're starting from '' (meaning new browser window)
+    # and they're on a short form section ahead of "name" (1st page)
+    !! (Service.isShortFormPage(toState) &&
+      fromState.name == '' &&
+      toState.name != 'dahlia.short-form-application.name')
 
   Service.isLeavingShortForm = (toState, fromState) ->
-    onShortForm = fromState.name.match(/short-form-application/)
-    leaving = !toState.name.match(/short-form-application/) &&
-          !toState.name.match(/create-account/)
+    onShortForm = Service.isShortFormPage(fromState)
+    # leaving means we're not going to another short form page or to create account
+    leaving = !(Service.isShortFormPage(toState) || toState.name.match(/create-account/))
     onShortForm && leaving
 
   return Service

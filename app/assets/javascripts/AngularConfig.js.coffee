@@ -462,9 +462,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-      # check if we're on short form and trying to access a later section
-      shortFormSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
-      if (shortFormSection && !ShortFormApplicationService.userCanAccessSection(shortFormSection.name))
+      # check if we're on short form and trying to access a later section than the first section
+      if (ShortFormApplicationService.isJumpingAhead(toState, fromState))
         e.preventDefault()
         return $state.go('dahlia.short-form-application.name', toParams)
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
@@ -517,7 +516,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
 
-@dahlia.config ['IdleProvider', (IdleProvider) ->
+# ng-idle configuration
+@dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
+  # don't override the title with timeout countdowns/warnings
+  TitleProvider.enabled(false)
   IdleProvider.idle(120)
   IdleProvider.timeout(60)
 ]

@@ -9,7 +9,6 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  Title,
   ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -340,11 +339,10 @@ ShortFormApplicationController = (
     # they ran out of time
     ShortFormApplicationService.resetUserData()
     $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-    Title.restore()
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 
