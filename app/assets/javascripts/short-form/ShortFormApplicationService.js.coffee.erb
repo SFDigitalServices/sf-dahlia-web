@@ -182,12 +182,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     return workInSfMembers
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only need to manually update if the preference hasn't been set yet
-    return unless Service.preferences[preference] == null
-    if eligibleMembers.length > 0
-      Service.preferences[preference] = true
-    else
-      Service.preferences[preference] = false
+    # only need to update if nobody is eligible
+    Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
