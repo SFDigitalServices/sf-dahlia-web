@@ -11,6 +11,7 @@ do ->
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
+      form: {}
       applicant: {}
       application: {}
       alternateContact: {}
@@ -265,25 +266,3 @@ do ->
         return
       return
   return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
