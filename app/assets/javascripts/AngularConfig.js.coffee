@@ -488,6 +488,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # capture errors when trying to verify address and send them back to the appropriate page
+      f = ShortFormApplicationService.form.applicationForm
+      f.$submitted = true
+      f.$invalid = true
+      f.$valid = false
       if toState.name == 'dahlia.short-form-application.verify-address'
         e.preventDefault()
         return $state.go('dahlia.short-form-application.contact', toParams)
