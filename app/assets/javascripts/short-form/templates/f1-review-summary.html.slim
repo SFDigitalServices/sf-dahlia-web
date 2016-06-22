@@ -7,13 +7,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     / You
     review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
       review-summary-item label="{{'LABEL.NAME' | translate}}"
-        | {{applicant.first_name}} {{applicant.last_name}}
+        | {{applicant.firstName}} {{applicant.lastName}}
       review-summary-item label="{{'LABEL.DOB' | translate}}"
         | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
       review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone"
-        | {{applicant.phone_number | tel}}
+        | {{applicant.phone | tel}}
       review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
-        | {{applicant.second_phone_number | tel}}
+        | {{applicant.alternatePhone | tel}}
       review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
         | {{applicant.email}}
       review-summary-item label="{{'LABEL.APPLICANT_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
@@ -22,13 +22,13 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
         | {{applicant.home_address.zip}}
 
-      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.separateAddress"
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.hasAltMailingAddress"
         | {{applicant.mailing_address.address1}}
         br
         ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
         | {{applicant.mailing_address.zip}}
       review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}"
-        | {{applicantPrimaryLanguage()}}
+        | {{applicantLanguage()}}
 
 
     / Alternate Contact
@@ -37,11 +37,11 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
         | {{alternateContactRelationship()}}
 
-      div ng-if="alternateContact.type != 'None'"
+      div ng-if="alternateContact.alternateContactType != 'None'"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
-          | {{alternateContact.first_name}} {{alternateContact.last_name}}
-        review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone_number"
-          | {{alternateContact.phone_number | tel}}
+          | {{alternateContact.firstName}} {{alternateContact.lastName}}
+        review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone"
+          | {{alternateContact.phone | tel}}
         review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" ng-if="alternateContact.email"
           | {{alternateContact.email}}
 
@@ -54,7 +54,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
 
       div ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
-          | {{member.first_name}} {{member.last_name}}
+          | {{member.firstName}} {{member.lastName}}
         review-summary-item label="{{'LABEL.DOB' | translate}}"
           | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
         review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
@@ -64,21 +64,21 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to="dahlia.short-form-application.status-programs"
 
       review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
-        | {{applicantVouchersSubsidies()}}
+        | {{applicationVouchersSubsidies()}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.cert_of_preference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('cert_of_preference')}}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
         | {{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
         | {{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.live_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('live_in_sf') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhood_residence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhood_residence') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.work_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('work_in_sf') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
     / Income
