@@ -30,7 +30,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
-        .checkbox ng-click="applicant.noPhone = false;"
+        .checkbox ng-click="clearAlternatePhoneData()"
          input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone"
          label for="applicant_additional_phone"
           | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}

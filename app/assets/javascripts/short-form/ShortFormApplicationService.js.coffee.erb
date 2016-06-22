@@ -94,6 +94,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       missingInfo.push("Address")
     return missingInfo
 
+  Service.clearAlternatePhoneData = ->
+    Service.applicant.noPhone = false
+    if Service.applicant.additionalPhone
+      Service.applicant.alternatePhone = null
+      Service.applicant.alternatePhoneType = null
+
   Service._nextId = ->
     if Service.householdMembers.length > 0
       max_id = _.maxBy(Service.householdMembers, 'id').id

@@ -159,6 +159,9 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
+  $scope.clearAlternatePhoneData = ->
+    ShortFormApplicationService.clearAlternatePhoneData()
+
   $scope.applicantHasPhoneEmailAndAddress = ->
     $scope.applicant.phone &&
       $scope.applicant.email &&
