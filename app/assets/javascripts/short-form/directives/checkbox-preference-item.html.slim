@@ -15,8 +15,8 @@ div
       select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
-        option ng-repeat="member in eligible_members() track by $index" value="{{ member.first_name }} {{ member.last_name }}"
-          | {{ member.first_name }} {{ member.last_name }}
+        option ng-repeat="member in eligible_members() track by $index" value="{{ member.firstName }} {{ member.lastName }}"
+          | {{ member.firstName }} {{ member.lastName }}
 
     / checkbox for proof options for this preference
     .form-group.border-bottom ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(application)"

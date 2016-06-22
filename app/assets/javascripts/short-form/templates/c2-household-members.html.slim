@@ -12,7 +12,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     .user-item
       p.user-item_name
         strong
-          | {{ applicant.first_name }} {{ applicant.last_name }}
+          | {{ applicant.firstName }} {{ applicant.lastName }}
         br
         span.t-tiny
           | {{'LABEL.PRIMARY_USER' | translate}}
@@ -23,7 +23,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       .user-item
         p.user-item_name
           strong
-            | {{ member.first_name }} {{ member.last_name }}
+            | {{ member.firstName }} {{ member.lastName }}
           br
           span.t-tiny
             | {{'LABEL.HOUSEHOLD_MEMBER' | translate}}
