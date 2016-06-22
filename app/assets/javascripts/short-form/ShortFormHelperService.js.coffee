@@ -13,7 +13,7 @@ ShortFormHelperService = ($translate, $filter) ->
     if alternateContact.alternateContactType == 'None'
       $translate.instant('LABEL.NO_ALTERNATE_CONTACT')
     else if alternateContact.alternateContactType == 'Other'
-      alternateContact.other_relationship
+      alternateContact.alternateContactTypeOther
     else
       alternateContact.alternateContactType
 

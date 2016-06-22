@@ -270,7 +270,7 @@ do ->
             dob_year: '2015'
             relationship: 'Cousin'
             workInSf: 'Yes'
-            same_address: 'No'
+            hasSameAddressAsApplicant: 'No'
             home_address: fakeAddress
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
 
@@ -299,7 +299,7 @@ do ->
             dob_year: '2015'
             relationship: 'Cousin'
             workInSf: 'Yes'
-            same_address: 'No'
+            hasSameAddressAsApplicant: 'No'
             home_address: fakeAddress
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
         it 'should return array of household member who lives in SF', ->
@@ -324,7 +324,7 @@ do ->
             dob_year: '2015'
             relationship: 'Cousin'
             workInSf: 'Yes'
-            same_address: 'Yes'
+            hasSameAddressAsApplicant: 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
         it 'should return an array of both applicant and household member', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(2)

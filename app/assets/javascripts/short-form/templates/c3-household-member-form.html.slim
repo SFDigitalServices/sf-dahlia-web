@@ -39,16 +39,16 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     small.error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
       | {{'ERROR.DOB' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('same_address') }"
-    label.form-label.no-margin id="same_address_label"
-      | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
-    .radio-group.padding-top--half role="radiogroup" aria-labelledby="same_address_label"
-      radio-block-item value='Yes' user='householdMember' name='same_address' ng-required='true'
+  .form-group ng-class="{ error: inputInvalid('hasSameAddressAsApplicant') }"
+    label.form-label.no-margin id="hasSameAddressAsApplicant_label"
+      | {{'LABEL.MEMBER_hasSameAddressAsApplicant' | translate}}
+    .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
+      radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.YES' | translate}}
-      radio-block-item value='No' user='householdMember' name='same_address' ng-required='true'
+      radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.NO' | translate}}
 
-  .form-group ng-if="householdMember.same_address == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
+  .form-group ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
 
     small.error ng-if="addressFailedValidation('home_address')"

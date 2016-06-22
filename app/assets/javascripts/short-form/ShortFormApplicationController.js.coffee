@@ -258,7 +258,7 @@ ShortFormApplicationController = (
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
-    if ($scope.householdMember.same_address == 'Yes' ||
+    if ($scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
         ($scope.householdMember.confirmed_home_address &&
         AddressValidationService.isConfirmed($scope.householdMember.home_address, 'home')))
       # skip ahead if they aren't filling out an address
