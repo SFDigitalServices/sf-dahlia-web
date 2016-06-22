@@ -16,7 +16,7 @@ do ->
       application: {}
       alternateContact: {}
       householdMember: {
-        first_name: "Oberon"
+        firstName: "Oberon"
       }
       isWelcomePage: jasmine.createSpy()
       copyHomeToMailingAddress: jasmine.createSpy()
@@ -25,6 +25,7 @@ do ->
       refreshLiveWorkPreferences: jasmine.createSpy()
       liveInSfMembers: jasmine.createSpy()
       workInSfMembers: jasmine.createSpy()
+      clearAlternateContactDetails: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
       validMailingAddress: ->
@@ -96,24 +97,30 @@ do ->
     describe '$scope.checkIfAlternateContactInfoNeeded', ->
       describe 'No alternate contact indicated', ->
         it 'navigates ahead to optional info', ->
-          scope.alternateContact.type = 'None'
+          scope.alternateContact.alternateContactType = 'None'
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
+          return
+
+        it 'calls clearAlternateContactDetails from ShortFormApplicationService', ->
+          scope.alternateContact.alternateContactType = 'None'
+          scope.checkIfAlternateContactInfoNeeded()
+          expect(fakeShortFormApplicationService.clearAlternateContactDetails).toHaveBeenCalled()
           return
         return
 
       describe 'Alternate contact type indicated', ->
         it 'navigates ahead to alt contact name page', ->
-          scope.alternateContact.type = 'Friend'
+          scope.alternateContact.alternateContactType = 'Friend'
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
           return
         return
 
     describe '$scope.checkIfMailingAddressNeeded', ->
-      describe 'separateAddress unchecked', ->
+      describe 'hasAltMailingAddress unchecked', ->
         it 'calls Service function to copy home address to mailing', ->
-          scope.applicant.separateAddress = false
+          scope.applicant.hasAltMailingAddress = false
           scope.checkIfMailingAddressNeeded()
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
           return

@@ -95,7 +95,7 @@ ShortFormNavigationService = ($state) ->
         'contact'
       # -- Household
       when 'household-intro'
-        if application.alternateContact.type == 'None'
+        if application.alternateContact.alternateContactType == 'None'
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'

@@ -3,17 +3,17 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service.form = {}
   Service.applicationDefaults =
     applicant:
-      primary_language: "English"
-      phone_number: null
       home_address: { address1: null, city: null, state: null, zip: null }
+      language: "English"
+      phone: null
       mailing_address: { address1: null, city: null, state: null, zip: null }
     alternateContact:
-      primary_language: "English"
+      language: "English"
     householdMembers: []
     preferences:
-      live_in_sf: null
-      work_in_sf: null
-    householdIncome: { income_total: 0, income_timeframe: 'per_year' }
+      liveInSf: null
+      workInSf: null
+    householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
       You: false
@@ -98,13 +98,23 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 
   Service.missingPrimaryContactInfo = () ->
     missingInfo = []
-    if !Service.applicant.phone_number
+    if !Service.applicant.phone
       missingInfo.push("Phone")
     if !Service.applicant.email
       missingInfo.push("Email")
     if !Service.validMailingAddress()
       missingInfo.push("Address")
     return missingInfo
+
+  Service.clearAlternatePhoneData = ->
+    Service.applicant.noPhone = false
+    if Service.applicant.additionalPhone
+      Service.applicant.alternatePhone = null
+      Service.applicant.alternatePhoneType = null
+
+  Service.clearAlternateContactDetails = ->
+    clearedData = { alternateContactType: 'None' }
+    angular.copy(clearedData, Service.application.alternateContact)
 
   Service._nextId = ->
     if Service.householdMembers.length > 0
@@ -132,7 +142,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
     # clear out preferences where this householdMember was selected
-    full_name = "#{Service.householdMember.first_name} #{Service.householdMember.last_name}"
+    full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
     # search through all xxx_household_member items in preferences matching the full name
     _.each Service.application.preferences, (v,k) ->
       if k.indexOf('_household_member') > 0 and v == full_name
@@ -162,37 +172,37 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 
   Service._calculateHouseholdIncome = () ->
     income = Service.application.householdIncome
-    if income.income_timeframe == 'per_year'
-      income.income_total
-    else if income.income_timeframe == 'per_month'
-      income.income_total * 12
+    if income.incomeTimeframe == 'per_year'
+      income.incomeTotal
+    else if income.incomeTimeframe == 'per_month'
+      income.incomeTotal * 12
 
   Service.resetGenderOptions = (user, option) ->
     toggle = !user.gender[option]
     user.gender = {}
-    user.gender_not_listed = null
+    user.genderOther = null
     user.gender[option] = toggle
 
   ### Proof of Preferences ###
 
   Service.refreshLiveWorkPreferences = () ->
-    Service._updatePreference("live_in_sf", Service.liveInSfMembers())
-    Service._updatePreference("work_in_sf", Service.workInSfMembers())
+    Service._updatePreference("liveInSf", Service.liveInSfMembers())
+    Service._updatePreference("workInSf", Service.workInSfMembers())
 
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
-      if member.same_address == "No"
+      if member.hasSameAddressAsApplicant == "No"
         _.lowerCase(member.home_address.city) == 'san francisco'
       else
-        member.same_address == "Yes" && applicantLivesInSf
+        member.hasSameAddressAsApplicant == "Yes" && applicantLivesInSf
     liveInSfMembers.push(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
   Service.workInSfMembers = () ->
     workInSfMembers = Service.application.householdMembers.filter (member) ->
-      member.work_in_sf == "Yes"
-    applicantWorksInSf = Service.applicant.work_in_sf == "Yes"
+      member.workInSf == "Yes"
+    applicantWorksInSf = Service.applicant.workInSf == "Yes"
     workInSfMembers.push(Service.applicant) if applicantWorksInSf
     return workInSfMembers
 

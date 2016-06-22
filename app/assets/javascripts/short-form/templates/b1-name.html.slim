@@ -1,21 +1,21 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B1_NAME.TITLE' | translate}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.contact'})"
-  .form-group ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
+  .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
     h3.form-label
       | {{'LABEL.APPLICANT_NAME' | translate}}
     label.sr-only for="applicantFirstName"
       | {{'LABEL.FIRST_NAME' | translate}}
-    input#applicantFirstName ng-model="applicant.first_name" name="first_name" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('first_name') }"
-    small.error ng-if="inputInvalid('first_name')"
+    input#applicantFirstName ng-model="applicant.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+    small.error ng-if="inputInvalid('firstName')"
       | {{'ERROR.FIRST_NAME' | translate}}
     label.sr-only for="applicantMiddleName"
       | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
     input#applicantMiddleName ng-model="applicant.middle_name" name="middle_name" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
     label.sr-only for="applicantLastName"
       | {{'LABEL.LAST_NAME' | translate}}
-    input#applicantLastName ng-model="applicant.last_name" name="last_name" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('last_name') }"
-    small.error ng-if="inputInvalid('last_name')"
+    input#applicantLastName ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+    small.error ng-if="inputInvalid('lastName')"
       | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
     h3.form-label

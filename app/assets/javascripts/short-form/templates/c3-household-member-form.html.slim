@@ -3,21 +3,21 @@ h2.application-title.t-gamma
 p
   | {{'C3_HOUSEHOLD_MEMBER_FORM.P1' | translate}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember'})" ng-init="getHouseholdMember()"
-  .form-group ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
+  .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
     h3.form-label
       | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
     label.sr-only for="housholdMemberFirstName"
       | {{'LABEL.FIRST_NAME' | translate}}
-    input#housholdMemberFirstName ng-model="householdMember.first_name" name="first_name" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('first_name') }"
-    small.error ng-show="inputInvalid('first_name')"
+    input#housholdMemberFirstName ng-model="householdMember.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+    small.error ng-show="inputInvalid('firstName')"
       | {{'ERROR.FIRST_NAME' | translate}}
     label.sr-only for="householdMemberMiddleName"
       | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
     input#householdMemberMiddleName ng-model="householdMember.middle_name" name="middle_name" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
     label.sr-only for="householdMemberLastName"
       | {{'LABEL.LAST_NAME' | translate}}
-    input#householdMemberLastName ng-model="householdMember.last_name" name="last_name" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('last_name') }"
-    small.error ng-show="inputInvalid('last_name')"
+    input#householdMemberLastName ng-model="householdMember.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+    small.error ng-show="inputInvalid('lastName')"
       | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
     h3.form-label
@@ -39,34 +39,34 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     small.error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
       | {{'ERROR.DOB' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('same_address') }"
-    label.form-label.no-margin id="same_address_label"
+  .form-group ng-class="{ error: inputInvalid('hasSameAddressAsApplicant') }"
+    label.form-label.no-margin id="hasSameAddressAsApplicant_label"
       | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
-    .radio-group.padding-top--half role="radiogroup" aria-labelledby="same_address_label"
-      radio-block-item value='Yes' user='householdMember' name='same_address' ng-required='true'
+    .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
+      radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.YES' | translate}}
-      radio-block-item value='No' user='householdMember' name='same_address' ng-required='true'
+      radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.NO' | translate}}
 
-  .form-group ng-if="householdMember.same_address == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
+  .form-group ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
     ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
 
     small.error ng-if="addressFailedValidation('home_address')"
       | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
 
-  .form-group ng-class="{ error: inputInvalid('work_in_sf') }"
-    label.form-label.no-margin id="work_in_sf_label"
+  .form-group ng-class="{ error: inputInvalid('workInSf') }"
+    label.form-label.no-margin id="workInSf_label"
       | {{'LABEL.MEMBER_WORK_IN_SF' | translate}}
     p.form-note.margin-bottom
       | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
-    .radio-group role="radiogroup" aria-labelledby="work_in_sf_label"
-      radio-block-item value='Yes' user='householdMember' name='work_in_sf' ng-required='true'
+    .radio-group role="radiogroup" aria-labelledby="workInSf_label"
+      radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true'
         | {{'T.YES' | translate}}
-      radio-block-item value='No' user='householdMember' name='work_in_sf' ng-required='true'
+      radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true'
         | {{'T.NO' | translate}}
 
-    small.highlight ng-if="householdMember.work_in_sf == 'Yes'"
+    small.highlight ng-if="householdMember.workInSf == 'Yes'"
       | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
 

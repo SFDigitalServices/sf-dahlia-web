@@ -143,10 +143,10 @@ ShortFormApplicationController = (
     return AddressValidationService.failedValidation(validated)
 
   $scope.checkInvalidPhones = () ->
-    $scope.inputInvalid('phone_number') ||
-    $scope.inputInvalid('phone_number_type') ||
-    $scope.inputInvalid('second_phone_number') ||
-    $scope.inputInvalid('second_phone_number_type')
+    $scope.inputInvalid('phone') ||
+    $scope.inputInvalid('phoneType') ||
+    $scope.inputInvalid('alternatePhone') ||
+    $scope.inputInvalid('alternatePhoneType')
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -158,8 +158,11 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
+  $scope.clearAlternatePhoneData = ->
+    ShortFormApplicationService.clearAlternatePhoneData()
+
   $scope.applicantHasPhoneEmailAndAddress = ->
-    $scope.applicant.phone_number &&
+    $scope.applicant.phone &&
       $scope.applicant.email &&
       ShortFormApplicationService.validMailingAddress()
 
@@ -182,7 +185,7 @@ ShortFormApplicationController = (
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
       $scope.applicant.noAddress = false
-    unless $scope.applicant.separateAddress
+    unless $scope.applicant.hasAltMailingAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetAndCheckMailingAddress = ->
@@ -201,16 +204,19 @@ ShortFormApplicationController = (
       $state.go('dahlia.short-form-application.verify-address')
 
   $scope.checkIfAlternateContactInfoNeeded = ->
-    if $scope.alternateContact.type == 'None'
+    if $scope.alternateContact.alternateContactType == 'None'
+      ShortFormApplicationService.clearAlternateContactDetails()
       # skip ahead if they aren't filling out an alt. contact
       $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
     else
+      if $scope.alternateContact.alternateContactType != 'Social worker or housing counselor'
+        $scope.alternateContact.agency = null
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
   $scope.checkIfAlternateContactNeedsReset = ->
-    # blank out alternateContact.type if it was previously set to 'None' but that is no longer valid
-    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.type == 'None')
-      $scope.alternateContact.type = null
+    # blank out alternateContact.alternateContactType if it was previously set to 'None' but that is no longer valid
+    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.alternateContactType == 'None')
+      $scope.alternateContact.alternateContactType = null
 
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
@@ -222,7 +228,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.backPageState($scope.application)
 
   $scope.homeAddressRequired = ->
-    !($scope.applicant.noAddress || $scope.applicant.separateAddress)
+    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress)
 
   $scope.truth = ->
     # wrap true value in a function a la function(){return true;}
@@ -258,7 +264,7 @@ ShortFormApplicationController = (
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
-    if ($scope.householdMember.same_address == 'Yes' ||
+    if ($scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
         ($scope.householdMember.confirmed_home_address &&
         AddressValidationService.isConfirmed($scope.householdMember.home_address, 'home')))
       # skip ahead if they aren't filling out an address
@@ -311,11 +317,11 @@ ShortFormApplicationController = (
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 
-  $scope.applicantPrimaryLanguage = ->
-    ShortFormHelperService.applicantPrimaryLanguage($scope.applicant)
+  $scope.applicantLanguage = ->
+    ShortFormHelperService.applicantLanguage($scope.applicant)
 
-  $scope.applicantVouchersSubsidies = ->
-    ShortFormHelperService.applicantVouchersSubsidies($scope.applicant)
+  $scope.applicationVouchersSubsidies = ->
+    ShortFormHelperService.applicationVouchersSubsidies($scope.application)
 
   $scope.applicantIncomeAmount = ->
     ShortFormHelperService.applicantIncomeAmount($scope.applicant)

@@ -10,29 +10,29 @@ ShortFormHelperService = ($translate, $filter) ->
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
-    if alternateContact.type == 'None'
+    if alternateContact.alternateContactType == 'None'
       $translate.instant('LABEL.NO_ALTERNATE_CONTACT')
-    else if alternateContact.type == 'Other'
-      alternateContact.other_relationship
+    else if alternateContact.alternateContactType == 'Other'
+      alternateContact.alternateContactTypeOther
     else
-      alternateContact.type
+      alternateContact.alternateContactType
 
-  Service.applicantPrimaryLanguage = (applicant) ->
-    if applicant.primary_language == 'Other'
-      applicant.other_language
+  Service.applicantLanguage = (applicant) ->
+    if applicant.language == 'Other'
+      applicant.languageOther
     else
-      applicant.primary_language
+      applicant.language
 
-  Service.applicantVouchersSubsidies = (applicant) ->
-    if applicant.household_vouchers_subsidies == 'Yes'
+  Service.applicationVouchersSubsidies = (application) ->
+    if application.householdVouchersSubsidies == 'Yes'
       $translate.instant('T.YES')
     else
       $translate.instant('T.NONE')
 
   Service.applicantIncomeAmount = (applicant) ->
-    # applicant.income_timeframe
-    income = parseFloat(applicant.income_total)
-    if applicant.income_timeframe == 'per_month'
+    # applicant.incomeTimeframe
+    income = parseFloat(applicant.incomeTotal)
+    if applicant.incomeTimeframe == 'per_month'
       phrase = $translate.instant('T.PER_MONTH')
     else
       phrase = $translate.instant('T.PER_YEAR')
@@ -42,7 +42,7 @@ ShortFormHelperService = ($translate, $filter) ->
 
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
-    name = applicant.first_name
+    name = applicant.firstName
     { name: if name then ', ' + name else '' }
 
   Service.householdMemberForPreference = (application, pref_type) ->
