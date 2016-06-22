@@ -100,6 +100,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       Service.applicant.alternatePhone = null
       Service.applicant.alternatePhoneType = null
 
+  Service.clearAlternateContactDetails = ->
+    clearedData = { alternateContactType: 'None' }
+    angular.copy(clearedData, Service.application.alternateContact)
+
   Service._nextId = ->
     if Service.householdMembers.length > 0
       max_id = _.maxBy(Service.householdMembers, 'id').id
