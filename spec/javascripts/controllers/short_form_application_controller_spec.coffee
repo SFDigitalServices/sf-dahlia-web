@@ -24,6 +24,7 @@ do ->
       refreshLiveWorkPreferences: jasmine.createSpy()
       liveInSfMembers: jasmine.createSpy()
       workInSfMembers: jasmine.createSpy()
+      clearAlternateContactDetails: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
       validMailingAddress: ->
@@ -98,6 +99,12 @@ do ->
           scope.alternateContact.alternateContactType = 'None'
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
+          return
+
+        it 'calls clearAlternateContactDetails from ShortFormApplicationService', ->
+          scope.alternateContact.alternateContactType = 'None'
+          scope.checkIfAlternateContactInfoNeeded()
+          expect(fakeShortFormApplicationService.clearAlternateContactDetails).toHaveBeenCalled()
           return
         return
 

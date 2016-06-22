@@ -41,7 +41,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
   .form-group ng-class="{ error: inputInvalid('hasSameAddressAsApplicant') }"
     label.form-label.no-margin id="hasSameAddressAsApplicant_label"
-      | {{'LABEL.MEMBER_hasSameAddressAsApplicant' | translate}}
+      | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
     .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
       radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.YES' | translate}}
