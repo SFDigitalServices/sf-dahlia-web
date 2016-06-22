@@ -10,9 +10,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       language: "English"
     householdMembers: []
     preferences:
-      live_in_sf: null
+      liveInSf: null
       workInSf: null
-    householdIncome: { income_total: 0, income_timeframe: 'per_year' }
+    householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
       You: false
@@ -147,10 +147,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 
   Service._calculateHouseholdIncome = () ->
     income = Service.application.householdIncome
-    if income.income_timeframe == 'per_year'
-      income.income_total
-    else if income.income_timeframe == 'per_month'
-      income.income_total * 12
+    if income.incomeTimeframe == 'per_year'
+      income.incomeTotal
+    else if income.incomeTimeframe == 'per_month'
+      income.incomeTotal * 12
 
   Service.resetGenderOptions = (user, option) ->
     toggle = !user.gender[option]
@@ -161,7 +161,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   ### Proof of Preferences ###
 
   Service.refreshLiveWorkPreferences = () ->
-    Service._updatePreference("live_in_sf", Service.liveInSfMembers())
+    Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
 
   Service.liveInSfMembers = () ->

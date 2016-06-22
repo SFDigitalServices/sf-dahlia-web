@@ -11,15 +11,15 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='type' ng-required='true'
         | {{option[1]}}
 
-      .radio-block ng-show="alternateContact.type == 'Other'"
-        input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="type" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.type == 'Other'"
+      .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
+        input#alternateContactRelationship ng-model="alternateContact.other_relationship" name="type" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('other_relationship') }" ng-required="alternateContact.alternateContactType == 'Other'"
         small.error ng-show="inputInvalid('other_relationship')"
           | {{'ERROR.RELATIONSHIP' | translate}}
 
       .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
         / this option to bypass alternate contact is only available
         / if the applicant has entered phone and address
-        input#alternate_contact_none(ng-model="alternateContact.type" name="type" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('type')}")
+        input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="type" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('type')}")
         label.radio-block_label for="alternate_contact_none"
          | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
 

@@ -18,7 +18,7 @@ do ->
       dob_year: '2015'
       relationship: 'Cousin'
       workInSf: 'Yes'
-      preferences: {live_in_sf: null, workInSf: null}
+      preferences: {liveInSf: null, workInSf: null}
       home_address: fakeAddress
 
     beforeEach module('dahlia.services', ($provide)->
@@ -230,9 +230,9 @@ do ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
 
-        it 'should be assigned live_in_sf preference', ->
+        it 'should be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
           return
         return
 
@@ -247,9 +247,9 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.home_address = home_address
 
-        it 'should not be assigned live_in_sf preference', ->
+        it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
           return
         return
 
@@ -274,9 +274,9 @@ do ->
             home_address: fakeAddress
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
 
-        it 'should be assigned live_in_sf preference', ->
+        it 'should be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.live_in_sf).toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
           return
         return
       return

@@ -9,8 +9,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
     small.error ng-if="inputInvalid('phone')"
       | {{'ERROR.PHONE_NUMBER' | translate}}
-    label.sr-only for="applicant_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-    select#applicant_phone_number_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
+    label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+    select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
       option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
       option value="Home" translate="LABEL.PHONE_HOME"
       option value="Work" translate="LABEL.PHONE_WORK"
@@ -42,8 +42,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
         input#applicant_second_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-if="inputInvalid('alternatePhone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
-      label.sr-only for="applicant_second_phone_number_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      select#applicant_second_phone_number_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }"
+      label.sr-only for="applicant_second_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+      select#applicant_second_phone_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
         option value="Home" translate="LABEL.PHONE_HOME"
         option value="Work" translate="LABEL.PHONE_WORK"

@@ -202,16 +202,16 @@ ShortFormApplicationController = (
       $state.go('dahlia.short-form-application.verify-address')
 
   $scope.checkIfAlternateContactInfoNeeded = ->
-    if $scope.alternateContact.type == 'None'
+    if $scope.alternateContact.alternateContactType == 'None'
       # skip ahead if they aren't filling out an alt. contact
       $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
     else
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
   $scope.checkIfAlternateContactNeedsReset = ->
-    # blank out alternateContact.type if it was previously set to 'None' but that is no longer valid
-    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.type == 'None')
-      $scope.alternateContact.type = null
+    # blank out alternateContact.alternateContactType if it was previously set to 'None' but that is no longer valid
+    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.alternateContactType == 'None')
+      $scope.alternateContact.alternateContactType = null
 
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()

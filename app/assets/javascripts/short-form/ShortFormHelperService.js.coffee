@@ -10,12 +10,12 @@ ShortFormHelperService = ($translate, $filter) ->
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
-    if alternateContact.type == 'None'
+    if alternateContact.alternateContactType == 'None'
       $translate.instant('LABEL.NO_ALTERNATE_CONTACT')
-    else if alternateContact.type == 'Other'
+    else if alternateContact.alternateContactType == 'Other'
       alternateContact.other_relationship
     else
-      alternateContact.type
+      alternateContact.alternateContactType
 
   Service.applicantLanguage = (applicant) ->
     if applicant.language == 'Other'
@@ -30,9 +30,9 @@ ShortFormHelperService = ($translate, $filter) ->
       $translate.instant('T.NONE')
 
   Service.applicantIncomeAmount = (applicant) ->
-    # applicant.income_timeframe
-    income = parseFloat(applicant.income_total)
-    if applicant.income_timeframe == 'per_month'
+    # applicant.incomeTimeframe
+    income = parseFloat(applicant.incomeTotal)
+    if applicant.incomeTimeframe == 'per_month'
       phrase = $translate.instant('T.PER_MONTH')
     else
       phrase = $translate.instant('T.PER_YEAR')

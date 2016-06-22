@@ -95,7 +95,7 @@ do ->
     describe '$scope.checkIfAlternateContactInfoNeeded', ->
       describe 'No alternate contact indicated', ->
         it 'navigates ahead to optional info', ->
-          scope.alternateContact.type = 'None'
+          scope.alternateContact.alternateContactType = 'None'
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
           return
@@ -103,7 +103,7 @@ do ->
 
       describe 'Alternate contact type indicated', ->
         it 'navigates ahead to alt contact name page', ->
-          scope.alternateContact.type = 'Friend'
+          scope.alternateContact.alternateContactType = 'Friend'
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
           return

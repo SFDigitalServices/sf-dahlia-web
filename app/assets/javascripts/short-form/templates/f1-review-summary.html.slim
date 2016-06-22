@@ -37,7 +37,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.RELATIONSHIP' | translate}}"
         | {{alternateContactRelationship()}}
 
-      div ng-if="alternateContact.type != 'None'"
+      div ng-if="alternateContact.alternateContactType != 'None'"
         review-summary-item label="{{'LABEL.NAME' | translate}}"
           | {{alternateContact.firstName}} {{alternateContact.lastName}}
         review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone"
@@ -72,7 +72,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
         | {{'D1_STATUS_PROGRAMS.DISPLACED' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.live_in_sf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('live_in_sf') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}
 
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhood_residence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhood_residence') }}"
