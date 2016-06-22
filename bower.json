@@ -19,7 +19,7 @@
     "lifely-angular-carousel": "~1.1.0",
     "moment": "~2.12.0",
     "moment-timezone": "~0.5.3",
-    "ng-text-truncate": "*",
+    "ng-text-truncate": "liuruting/ng-text-truncate#patch-1",
     "angular-ui-mask": "~1.8.2",
     "lodash": "~4.6.1",
     "angular-translate": "~2.11.0",
@@ -28,6 +28,7 @@
     "ng-file-upload": "~12.0.4",
     "ng-idle": "~1.2.2",
     "angular-aria": "~1.5.6",
+    "angular-scroll": "1.0.0",
     "ng-token-auth": "~0.0.29",
     "angular-cookie": "~4.1.0",
     "angular-ui-validate": "~1.2.2"

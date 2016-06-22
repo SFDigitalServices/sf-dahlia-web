@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 19 Feb 2016 18:13:33 GMT
+      - Fri, 17 Jun 2016 23:40:03 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,26 +29,28 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=tNeaBEamR22-nF8w_02fkA;Path=/;Domain=.salesforce.com;Expires=Tue,
-        19-Apr-2016 18:13:33 GMT
+      - BrowserId=e_KXhzH8SMmB1IUBZ1l2qA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:40:03 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQIgmn.UUVT2mti6p3Mf6.EOyqHHJ6fMzO9y8OC5MS4ghCPobNtNZYsyE3EIGOT8yj7Rdpt.nA52KXaIqUVdX29huqHcg","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1455905613454","signature":"RfgAJ6ElnJt6mn7kBdTtBtD06fXLmsiwCmdtdQnIrOs="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1466206804268","signature":"3ZeG6C2otypG7kPZnV1VDzOkOaf2IARiZppgwl6PF2Y="}'
     http_version:
-  recorded_at: Fri, 19 Feb 2016 18:13:33 GMT
+  recorded_at: Fri, 17 Jun 2016 23:40:04 GMT
 - request:
     method: get
-    uri: https://cs26.salesforce.com/services/apexrest/Listing/Units/a0X210000004afdEAA
+    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/Listing/Units/a0X210000004afdEAA
     body:
       encoding: US-ASCII
       string: ''
@@ -56,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQIgmn.UUVT2mti6p3Mf6.EOyqHHJ6fMzO9y8OC5MS4ghCPobNtNZYsyE3EIGOT8yj7Rdpt.nA52KXaIqUVdX29huqHcg
+      - OAuth 00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -67,10 +69,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 19 Feb 2016 18:13:33 GMT
+      - Fri, 17 Jun 2016 23:40:04 GMT
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=2XFiX16pSV6vdYgS1xuXfg;Path=/;Domain=.salesforce.com;Expires=Tue,
-        19-Apr-2016 18:13:33 GMT
+      - BrowserId=0Y7pBA2MRD6SF97wkCWAWg;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:40:04 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -79,13 +87,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmGEAW"},"Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":"985","Unit_Number__c":"500","Unit_Floor__c":"5","Other_Accessibility_Information__c":"accessibility
-        information","Number_of_Bathrooms__c":1.00,"Id":"a0W21000000DWmGEAW"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Unit_Type__c":"2
-        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50,"Unit_Square_Footage__c":"787","Unit_Number__c":"Unit
+      string: '[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DWmLEAW"},"Unit_Type__c":"2
+        BR","BMR_Rent_Monthly__c":1523.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":3807.50,"Unit_Square_Footage__c":787,"Unit_Number__c":"Unit
         302","Unit_Floor__c":"3","Other_Accessibility_Information__c":"oipoi","Number_of_Bathrooms__c":2.00,"Id":"a0W21000000DWmLEAW"},{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0W21000000DYdKEAW"},"Unit_Type__c":"3
-        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":"1212","Unit_Number__c":"Test
+        BR","BMR_Rent_Monthly__c":985.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":0.00,"Unit_Square_Footage__c":1212,"Unit_Number__c":"Test
         Nov30","Unit_Floor__c":"3","Other_Accessibility_Information__c":"accessibility","Number_of_Bathrooms__c":2.00,"Id":"a0W21000000DYdKEAW"}]'
     http_version:
-  recorded_at: Fri, 19 Feb 2016 18:13:34 GMT
+  recorded_at: Fri, 17 Jun 2016 23:40:04 GMT
 recorded_with: VCR 3.0.1

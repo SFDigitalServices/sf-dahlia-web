@@ -4,13 +4,14 @@
 
 GeocodingService = ($http) ->
   Service = {}
-  Service.geocoding_data = {}
 
   Service.geocode = (params) ->
     $http.post('/api/v1/geocode-address.json', params).success((data, status, headers, config) ->
-      angular.copy(data.geocoding_data, Service.geocoding_data)
+      # append geocoding_data to address
+      params.address.geocoding_data = data.geocoding_data
     ).error( (data, status, headers, config) ->
       # error
+      params.address.geocoding_data = null
     )
 
   return Service

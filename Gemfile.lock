@@ -82,6 +82,7 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     dalli (2.7.5)
+    database_cleaner (1.5.1)
     debug_inspector (0.0.2)
     devise (4.0.3)
       bcrypt (~> 3.0)
@@ -331,6 +332,7 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   dalli
+  database_cleaner
   devise (~> 4.0.3)
   devise_token_auth (~> 0.1.37)
   dotenv-rails

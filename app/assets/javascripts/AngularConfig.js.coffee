@@ -17,6 +17,7 @@
   'pascalprecht.translate',
   'ui.mask',
   'ngAria',
+  'duScroll',
   'ngIdle',
   'ui.validate',
   'ng-token-auth'
@@ -278,11 +279,15 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         addressValidation: [
           'AddressValidationService',
           'ShortFormApplicationService',
-          (AddressValidationService, ShortFormApplicationService) ->
+          'GeocodingService',
+          (AddressValidationService, ShortFormApplicationService, GeocodingService) ->
             AddressValidationService.validate(
               address: ShortFormApplicationService.applicant.home_address
               type: 'home'
-            )
+            ).then ->
+              GeocodingService.geocode(
+                address: ShortFormApplicationService.applicant.home_address
+              )
         ]
     })
     .state('dahlia.short-form-application.alternate-contact-type', {
@@ -366,11 +371,15 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         addressValidation: [
           'AddressValidationService',
           'ShortFormApplicationService',
-          (AddressValidationService, ShortFormApplicationService) ->
+          'GeocodingService',
+          (AddressValidationService, ShortFormApplicationService, GeocodingService) ->
             AddressValidationService.validate(
               address: ShortFormApplicationService.householdMember.home_address
               type: 'home'
-            )
+            ).then ->
+              GeocodingService.geocode(
+                address: ShortFormApplicationService.householdMember.home_address
+              )
         ]
     })
     # Short form: "Status" section

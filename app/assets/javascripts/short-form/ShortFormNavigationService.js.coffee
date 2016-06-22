@@ -80,7 +80,6 @@ ShortFormNavigationService = ($state) ->
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
       when 'contact'
-        ,'alternate-contact-type'
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
@@ -91,9 +90,12 @@ ShortFormNavigationService = ($state) ->
         ,'review-terms'
         ,'live-work-preference'
           Service._getPreviousPage()
+      # -- Alt Contact
+      when 'alternate-contact-type'
+        'contact'
       # -- Household
       when 'household-intro'
-        if application.alternateContact.type == 'None'
+        if application.alternateContact.alternateContactType == 'None'
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'

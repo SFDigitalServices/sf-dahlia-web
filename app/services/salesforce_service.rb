@@ -69,11 +69,11 @@ class SalesforceService
     api_get("/services/apexrest/LotteryMember/#{listing_id}")
   end
 
-  def self.check_household_eligibility(listing_id, household_size, income_level)
-    endpoint = "/services/apexrest/EligibilityCheck/#{listing_id}"
-    params = {}
-    params[:householdsize] = household_size.to_i if household_size
-    params[:incomelevel] = income_level.to_f if income_level
+  def self.check_household_eligibility(listing_id, params)
+    endpoint = "/services/apexrest/Listing/EligibilityCheck/#{listing_id}"
+    %i(household_size incomelevel).each do |k|
+      params[k] = params[k].to_i if params[k].present?
+    end
     api_get(endpoint, params, false)
   end
 

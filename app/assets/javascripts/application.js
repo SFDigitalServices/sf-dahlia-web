@@ -35,6 +35,7 @@
 //= require js-yaml
 //= require ng-file-upload
 //= require angular-aria
+//= require angular-scroll
 //= require ng-idle
 //= require angular-cookie
 //= require ng-token-auth

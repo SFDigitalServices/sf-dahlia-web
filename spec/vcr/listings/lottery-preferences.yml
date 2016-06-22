@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 23 Feb 2016 00:33:10 GMT
+      - Fri, 17 Jun 2016 23:40:02 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,26 +29,28 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=3vzcIDkETNiZSThVp-JUlA;Path=/;Domain=.salesforce.com;Expires=Sat,
-        23-Apr-2016 00:33:10 GMT
+      - BrowserId=hvDyHAsvQaWlswURBvnUkw;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:40:02 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
       Content-Type:
       - application/json;charset=UTF-8
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQKu2gSWa70wfD4JBBVVvmcSZgmnq8Kw8cppXx.I9ZkqQ3foLtbYjyKmjukpYDOgHGCbQKao6oIl1SUIf0JgAmQih2XmA","instance_url":"https://cs26.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1456187590787","signature":"5lktNs1Y8i5qbB/rsyJbG62hUsNl/PYtOeuijPL5J5w="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1466206803093","signature":"uC0Y8ftqwY7L8bovXgSJsnHZhdlXt3Edpt9sBxMowAQ="}'
     http_version:
-  recorded_at: Tue, 23 Feb 2016 00:33:10 GMT
+  recorded_at: Fri, 17 Jun 2016 23:40:03 GMT
 - request:
     method: get
-    uri: https://cs26.salesforce.com/services/apexrest/LotteryPreference
+    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/LotteryPreference
     body:
       encoding: US-ASCII
       string: ''
@@ -56,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQKu2gSWa70wfD4JBBVVvmcSZgmnq8Kw8cppXx.I9ZkqQ3foLtbYjyKmjukpYDOgHGCbQKao6oIl1SUIf0JgAmQih2XmA
+      - OAuth 00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -67,10 +69,16 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 23 Feb 2016 00:33:11 GMT
+      - Fri, 17 Jun 2016 23:40:03 GMT
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=PZIuV8TvTWq0BPkaA88Yag;Path=/;Domain=.salesforce.com;Expires=Sat,
-        23-Apr-2016 00:33:11 GMT
+      - BrowserId=DFD9p4WaTZqiS3zPMh_uRA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        16-Aug-2016 23:40:03 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -79,11 +87,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIuAAO"},"Id":"a0m21000000DFIuAAO","Name":"Certificate
+      string: '[{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m210000004l2cAAA"},"Id":"a0m210000004l2cAAA","Name":"Live/Work","Description__c":"Lives
+        near location"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIuAAO"},"Id":"a0m21000000DFIuAAO","Name":"Certificate
         of Preference","Description__c":"Certificate of Preference (COP)"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIzAAO"},"Id":"a0m21000000DFIzAAO","Name":"Displaced
         Tenants Housing Preference","Description__c":"DTHP program"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFJ4AAO"},"Id":"a0m21000000DFJ4AAO","Name":"Live/Work","Description__c":"Lives
         for works close to property"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFJ9AAO"},"Id":"a0m21000000DFJ9AAO","Name":"Live/Work
         in SF","Description__c":"Live or work in San Francisco"}]'
     http_version:
-  recorded_at: Tue, 23 Feb 2016 00:33:11 GMT
+  recorded_at: Fri, 17 Jun 2016 23:40:03 GMT
 recorded_with: VCR 3.0.1

@@ -1,6 +1,6 @@
 h2.application-title.t-gamma
   | {{'E1_INCOME.TITLE' | translate}}
-form novalidate="" name="form.applicationForm"  ng-submit="submitForm({callback: validateHouseholdEligbility('incomeMatch', 'dahlia.short-form-application.review-optional')})"
+form novalidate="" name="form.applicationForm"  ng-submit="submitForm({callback: validateHouseholdEligibility('incomeMatch', 'dahlia.short-form-application.review-optional')})"
   alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
 
   header.aside-header.alert ng-show="householdEligibilityErrorMessage"
@@ -14,27 +14,27 @@ form novalidate="" name="form.applicationForm"  ng-submit="submitForm({callback:
     p
       | {{'E1_INCOME.P2' | translate}}
 
-  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('income_total') || inputInvalid('income_timeframe')) }"
+  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"
     label.form-label.margin-bottom--half
       | {{'LABEL.APPLICANT_INCOME_TOTAL' | translate}}
     .form-income
-      label.sr-only for="income_total"
+      label.sr-only for="incomeTotal"
         | {{'LABEL.INCOME' | translate}}
       span.label-dollar $
-      input#income_total.form-income_input ng-model="application.householdIncome.income_total" name="income_total" required="" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') }"
-      small.error ng-show="inputInvalid('income_total')"
+      input#incomeTotal.form-income_input ng-model="application.householdIncome.incomeTotal" name="incomeTotal" required="" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('incomeTotal') }"
+      small.error ng-show="inputInvalid('incomeTotal')"
           | {{'ERROR.INCOME' | translate}}
 
-    .radio-group ng-class="{ error: inputInvalid('income_timeframe') }" role="radiogroup" aria-label="{{'LABEL.INCOME' | translate}}"
+    .radio-group ng-class="{ error: inputInvalid('incomeTimeframe') }" role="radiogroup" aria-label="{{'LABEL.INCOME' | translate}}"
       p.radio-block
-        input#per_month name="income_timeframe" ng-model="application.householdIncome.income_timeframe" type="radio" value="per_month" required=""
+        input#per_month name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_month" required=""
         label.radio-block_label for="per_month"
           | {{'LABEL.PER_MONTH' | translate}}
       p.radio-block
-        input#per_year name="income_timeframe" ng-model="application.householdIncome.income_timeframe" type="radio" value="per_year" required=""
+        input#per_year name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_year" required=""
         label.radio-block_label for="per_year"
           | {{'LABEL.PER_YEAR' | translate}}
-      small.error ng-show="inputInvalid('income_timeframe')"
+      small.error ng-show="inputInvalid('incomeTimeframe')"
         | {{'ERROR.INCOME_TIMEFRAME' | translate}}
 
   short-form-save-and-submit

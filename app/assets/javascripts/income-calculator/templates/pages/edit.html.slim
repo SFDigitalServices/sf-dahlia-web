@@ -2,27 +2,28 @@
 
 section.row.margin-bottom--2x
   .medium-6.medium-centered.columns
-    .form-card.margin-bottom
-      / this is the initial form when none have been entered yet
-      ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-if="noIncomeSources()"
+    form.no-margin novalidate=""
+      .form-card.margin-bottom
+        / this is the initial form when none have been entered yet
+        ng-include src="'income-calculator/templates/partials/_income-form.html'" ng-if="noIncomeSources()"
 
-      .form-section.expand
-        ng-include src="'income-calculator/templates/partials/_income-list.html'"
+        .form-section.expand
+          ng-include src="'income-calculator/templates/partials/_income-list.html'"
 
-        .income-source ng-if="incomeSources.length < 30 && incomeSources.length > 0"
-          .income-source_item.padding-bottom-none.clearfix
-            button.button-link.t-caps.t-bold.t-base.t-alt-sans title="Add additional income source" ng-click="toggleAdditionalIncomeForm()"
-              span.ui-icon.ui-link.ui-medium
-                svg
-                  use xlink:href="#i-plus"
-              | Add additional income source
-            .income-source_nested.margin-top.padding-bottom.bg-mist ng-show="additionalIncome"
-              ng-include src="'income-calculator/templates/partials/_income-form.html'"
+          .income-source ng-if="incomeSources.length < 30 && incomeSources.length > 0"
+            .income-source_item.padding-bottom-none.clearfix
+              button.button-link.t-caps.t-bold.t-base.t-alt-sans title="Add additional income source" ng-click="toggleAdditionalIncomeForm()"
+                span.ui-icon.ui-link.ui-medium
+                  svg
+                    use xlink:href="#i-plus"
+                | Add additional income source
+              .income-source_nested.margin-top.padding-bottom.bg-mist ng-show="additionalIncome"
+                ng-include src="'income-calculator/templates/partials/_income-form.html'"
 
-    .row.padding-top--2x.show-for-small-only ng-if="incomeSources.length < 30 && incomeSources.length > 0"
+      .row.padding-top--2x.show-for-small-only ng-if="incomeSources.length < 30 && incomeSources.length > 0"
 
-    .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
-      .small-6.columns
-        button.button-link.button-lined  ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
-      .small-6.columns
-        button.button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done
+      .button-stack--paginate.row ng-if="incomeSources.length < 30 && incomeSources.length > 0"
+        .small-6.columns
+          a.button.button-link.button-lined ui-sref="dahlia.eligibility-estimator" title="Cancel" Cancel
+        .small-6.columns
+          a.button.primary.right ui-sref="dahlia.income-calculator.summary" title="Done" Done

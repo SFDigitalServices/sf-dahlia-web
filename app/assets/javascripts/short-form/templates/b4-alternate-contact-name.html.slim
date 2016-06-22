@@ -3,18 +3,18 @@ h2.application-title.t-gamma.no-margin
 p
   | {{'B4_ALTERNATE_CONTACT_NAME.P1' | translate}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.alternate-contact-phone-address'})"
-  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('first_name') || inputInvalid('last_name')) }"
+  .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
     h3.form-label
       | {{'LABEL.ALTERNATE_CONTACT_NAME' | translate}}
-    label.sr-only for="alternate_first_name" translate="LABEL.FIRST_NAME"
-    input#alternate_first_name ng-model="alternateContact.first_name" name="first_name" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('first_name') }"
-    small.error ng-show="inputInvalid('first_name')"
+    label.sr-only for="alternate_firstName" translate="LABEL.FIRST_NAME"
+    input#alternate_firstName ng-model="alternateContact.firstName" name="firstName" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('firstName') }"
+    small.error ng-show="inputInvalid('firstName')"
       | {{'ERROR.FIRST_NAME' | translate}}
-    label.sr-only for="alternate_last_name" translate="LABEL.LAST_NAME"
-    input#alternate_last_name ng-model="alternateContact.last_name" name="last_name" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('last_name') }"
-    small.error ng-show="inputInvalid('last_name')"
+    label.sr-only for="alternate_lastName" translate="LABEL.LAST_NAME"
+    input#alternate_lastName ng-model="alternateContact.lastName" name="lastName" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }"
+    small.error ng-show="inputInvalid('lastName')"
       | {{'ERROR.LAST_NAME' | translate}}
-  .form-group.margin-bottom--2x ng-if="alternateContact.type == 'Social worker or housing counselor'"
+  .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social worker or housing counselor'"
     h3.form-label
       | {{'LABEL.ALTERNATE_CONTACT_AGENCY' | translate}}
     label.sr-only for="alternate_agency" translate="LABEL.ALTERNATE_CONTACT_AGENCY"

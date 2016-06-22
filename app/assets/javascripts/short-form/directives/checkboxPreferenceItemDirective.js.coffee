@@ -17,12 +17,16 @@ angular.module('dahlia.directives')
       application.preferences[scope.pref_type] && attrs.uploadProof
 
     scope.eligible_members = () ->
-      if attrs.type == "live_in_sf"
+      if attrs.type == "liveInSf"
         scope.liveInSfMembers()
-      else if attrs.type == "work_in_sf"
+      else if attrs.type == "workInSf"
         scope.workInSfMembers()
       else
         scope.householdMembers
 
     scope.only_applicant_eligible = () ->
-      (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
+      applicant_only = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
+      if applicant_only
+        # even though the form input is hidden we automatically set the value to the applicant
+        scope.application.preferences[scope.pref_type_household_member] = "#{scope.applicant.firstName} #{scope.applicant.lastName}"
+      applicant_only
