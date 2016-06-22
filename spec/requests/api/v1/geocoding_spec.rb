@@ -52,7 +52,7 @@ describe 'Geocoding API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the delivery verification == 'success'
+    # check to make sure the geocoding_data comes back with valid results
     expect(json['geocoding_data']['score']).to eq(100)
   end
 
@@ -70,10 +70,10 @@ describe 'Geocoding API' do
 
     json = JSON.parse(response.body)
 
-    # test for the 422 error status
-    expect(response.status).to eq(422)
+    # still gets a 200 status, but with nil results
+    expect(response).to be_success
 
-    # check to make sure the delivery verification == 'success'
+    # check to make sure geocoding_data is nil for a bad address
     expect(json['geocoding_data']).to eq(nil)
   end
 end
