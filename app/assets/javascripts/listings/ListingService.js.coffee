@@ -96,7 +96,8 @@ ListingService = ($http, $localStorage, $modal, $q) ->
   Service.openLotteryResultsModal = ->
     modalInstance = $modal.open({
       templateUrl: 'listings/templates/listing/_lottery_modal.html',
-      controller: 'ModalInstanceController'
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
     })
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
