@@ -108,7 +108,7 @@ do ->
         return
       it 'gets household members page if householdMembers', ->
         householdSection = ShortFormNavigationService.sections[1]
-        application.householdMembers = [{first_name: 'Joe'}]
+        application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getLandingPage(householdSection, application)
         expect(page).toEqual 'household-members'
         return
