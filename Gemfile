@@ -86,6 +86,7 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'binding_of_caller'
   gem 'thor-rails'
+  gem 'database_cleaner'
 end
 
 group :production do
