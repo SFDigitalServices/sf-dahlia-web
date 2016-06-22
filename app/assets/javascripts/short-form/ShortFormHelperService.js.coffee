@@ -23,8 +23,8 @@ ShortFormHelperService = ($translate, $filter) ->
     else
       applicant.language
 
-  Service.applicantVouchersSubsidies = (applicant) ->
-    if applicant.household_vouchers_subsidies == 'Yes'
+  Service.applicationVouchersSubsidies = (application) ->
+    if application.householdVouchersSubsidies == 'Yes'
       $translate.instant('T.YES')
     else
       $translate.instant('T.NONE')

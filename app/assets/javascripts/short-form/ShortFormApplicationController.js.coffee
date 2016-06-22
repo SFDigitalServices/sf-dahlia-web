@@ -311,11 +311,11 @@ ShortFormApplicationController = (
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 
-  $scope.applicantPrimaryLanguage = ->
-    ShortFormHelperService.applicantPrimaryLanguage($scope.applicant)
+  $scope.applicantLanguage = ->
+    ShortFormHelperService.applicantLanguage($scope.applicant)
 
-  $scope.applicantVouchersSubsidies = ->
-    ShortFormHelperService.applicantVouchersSubsidies($scope.applicant)
+  $scope.applicationVouchersSubsidies = ->
+    ShortFormHelperService.applicationVouchersSubsidies($scope.application)
 
   $scope.applicantIncomeAmount = ->
     ShortFormHelperService.applicantIncomeAmount($scope.applicant)

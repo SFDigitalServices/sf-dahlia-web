@@ -28,7 +28,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
         | {{applicant.mailing_address.zip}}
       review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}"
-        | {{applicantPrimaryLanguage()}}
+        | {{applicantLanguage()}}
 
 
     / Alternate Contact
@@ -64,9 +64,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to="dahlia.short-form-application.status-programs"
 
       review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
-        | {{applicantVouchersSubsidies()}}
+        | {{applicationVouchersSubsidies()}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.cert_of_preference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('cert_of_preference')}}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
         | {{'D1_STATUS_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
@@ -75,7 +75,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}
 
-      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhood_residence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhood_residence') }}"
+      review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}"
         | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}
 
       review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="application.preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}"
