@@ -4,11 +4,11 @@ p.form-note.margin-bottom
   | {{'D6_STATUS_VOUCHERS.P1' | translate}}
 
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
-  .form-group ng-class="{ error: inputInvalid('household_vouchers_subsidies') }"
+  .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
     .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_STATUS_VOUCHERS.TITLE' | translate}}"
-      radio-block-item value='Yes' user='applicant' name='household_vouchers_subsidies' ng-required='true'
+      radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
         | {{'T.YES' | translate}}
-      radio-block-item value='No' user='applicant' name='household_vouchers_subsidies' ng-required='true'
+      radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true'
         | {{'T.NO' | translate}}
 
   short-form-save-and-submit
