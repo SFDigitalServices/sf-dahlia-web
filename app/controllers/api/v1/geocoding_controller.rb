@@ -4,9 +4,7 @@ class Api::V1::GeocodingController < ApiController
     service = GeocodingService.new(address_params)
     # could be nil if no results found
     @geocoding_data = service.geocode
-    status = 200 # default to success
-    status = 422 if @geocoding_data.nil?
-    render json: { geocoding_data: @geocoding_data }, status: status
+    render json: { geocoding_data: @geocoding_data }
   end
 
   private

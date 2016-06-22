@@ -18,6 +18,9 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'database_cleaner'
+DatabaseCleaner[:active_record].strategy = :truncation
+
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
@@ -50,6 +53,7 @@ RSpec.configure do |config|
 
   # clear cache before each test
   config.before(:each) do
+    DatabaseCleaner.clean
     Rails.cache.clear
   end
 
