@@ -373,7 +373,6 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
-
   ## idle timeout functions
   unless ShortFormApplicationService.isWelcomePage($state.current)
     Idle.watch()
