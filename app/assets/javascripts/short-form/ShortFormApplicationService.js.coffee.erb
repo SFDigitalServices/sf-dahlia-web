@@ -256,10 +256,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 
   Service.uploadProof = (file, prefType) ->
     fileType = "#{prefType}_proof_file"
-    Service.preferences["#{fileType}_loading"] = true
     if (!file)
       Service.preferences["#{fileType}_error"] = true
       return
+    Service.preferences["#{fileType}_loading"] = true
     Upload.upload(
       url: '/api/v1/short-form/proof'
       method: 'POST'
