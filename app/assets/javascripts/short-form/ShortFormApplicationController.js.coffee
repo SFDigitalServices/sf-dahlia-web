@@ -282,6 +282,9 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match, callbackUrl) ->
     $scope.clearHouseholdErrorMessage()
     form = $scope.form.applicationForm
+    # skip the check if we're doing an incomeMatch and the applicant has vouchers
+    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
+      $state.go(callbackUrl)
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         $scope._respondToHouseholdEligibilityResults(response, match, callbackUrl)
