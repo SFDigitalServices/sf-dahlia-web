@@ -270,6 +270,9 @@ ShortFormApplicationController = (
   $scope.preferenceFileError = (fileType) ->
     ShortFormApplicationService.preferenceFileError(fileType)
 
+  $scope.preferenceFileIsLoading = (fileType) ->
+    ShortFormApplicationService.preferenceFileIsLoading(fileType)
+
   ###### Household Section ########
   $scope.getHouseholdMember = ->
     $scope.householdMember = ShortFormApplicationService.householdMember

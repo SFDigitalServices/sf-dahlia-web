@@ -147,7 +147,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       eligibility:
         householdsize: Service.application.householdMembers.length + 1
         incomelevel: Service._calculateHouseholdIncome()
-    $http.post("/api/v1/validate-household", params).success((data, status, headers, config) ->
+    $http.post("/api/v1/short-form/validate-household", params).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
       return
@@ -210,8 +210,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     onShortForm && leaving
 
   Service.hasPreferenceFile = (fileType) ->
-    # !_.isEmpty(Service.preferences[fileType])
-    Service.preferences[fileType]
+    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
 
   Service.deletePreferenceFile = (fileType) ->
     # for now it just fake deletes the fake file
@@ -220,12 +219,16 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.preferenceFileError = (fileType) ->
     !! Service.preferences["#{fileType}_error"]
 
+  Service.preferenceFileIsLoading = (fileType) ->
+    !! Service.preferences["#{fileType}_loading"]
+
   Service.uploadProof = (file, fileType) ->
+    Service.preferences["#{fileType}_loading"] = true
     if (!file)
       Service.preferences["#{fileType}_error"] = true
       return
     Upload.upload(
-      url: '/api/v1/upload-proof'
+      url: '/api/v1//short-form/upload-proof'
       method: 'POST'
       data:
         uploaded_file:
@@ -233,10 +236,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
           session_uid: Service.session_uid
           userkey: Service.userkey
     ).then( ((resp) ->
+      Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = false
       Service.preferences["#{fileType}"] = resp.data
-      # console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data)
     ), ((resp) ->
+      # error handler
+      Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = true
     ))
 

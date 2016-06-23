@@ -22,7 +22,7 @@ describe 'Listings API' do
   describe 'AMI' do
     save_fixture do
       VCR.use_cassette('listings/ami') do
-        get '/api/v1/ami.json'
+        get '/api/v1/listings/ami.json'
       end
     end
   end
@@ -43,7 +43,7 @@ describe 'Listings API' do
   describe 'lottery preferences' do
     save_fixture do
       VCR.use_cassette('listings/lottery-preferences') do
-        get '/api/v1/lottery-preferences.json'
+        get '/api/v1/listings/lottery-preferences.json'
       end
     end
   end
@@ -57,7 +57,7 @@ describe 'Listings API' do
             childrenUnder6: 1,
           },
         }
-        post '/api/v1/listings-eligibility.json', params
+        post '/api/v1/listings/eligibility.json', params
       end
     end
   end
@@ -101,7 +101,7 @@ describe 'Listings API' do
           childrenUnder6: 1,
         },
       }
-      post '/api/v1/listings-eligibility.json', params
+      post '/api/v1/listings/eligibility.json', params
     end
 
     json = JSON.parse(response.body)
@@ -115,7 +115,7 @@ describe 'Listings API' do
 
   it 'gets AMI results' do
     VCR.use_cassette('listings/ami') do
-      get '/api/v1/ami.json'
+      get '/api/v1/listings/ami.json'
     end
 
     json = JSON.parse(response.body)
@@ -130,7 +130,7 @@ describe 'Listings API' do
 
   it 'gets Lottery Preferences' do
     VCR.use_cassette('listings/lottery-preferences') do
-      get '/api/v1/lottery-preferences.json'
+      get '/api/v1/listings/lottery-preferences.json'
     end
 
     json = JSON.parse(response.body)

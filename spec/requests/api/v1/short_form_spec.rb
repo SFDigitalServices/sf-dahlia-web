@@ -16,7 +16,7 @@ describe 'ShortForm API' do
               incomelevel: 40_000,
             },
           }
-          post '/api/v1/validate-household', params
+          post '/api/v1/short-form/validate-household', params
         end
       end
     end
@@ -30,7 +30,7 @@ describe 'ShortForm API' do
               incomelevel: 10_000,
             },
           }
-          post '/api/v1/validate-household', params
+          post '/api/v1/short-form/validate-household', params
         end
       end
     end
@@ -47,7 +47,7 @@ describe 'ShortForm API' do
           incomelevel: 40_000,
         },
       }
-      post '/api/v1/validate-household', params
+      post '/api/v1/short-form/validate-household', params
     end
     json = JSON.parse(response.body)
 

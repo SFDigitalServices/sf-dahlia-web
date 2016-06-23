@@ -164,7 +164,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
         incomelevel: Service.eligibilityYearlyIncome()
         includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
         childrenUnder6: Service.eligibility_filters.children_under_6
-    $http.post("/api/v1/listings-eligibility.json", params).success((data, status, headers, config) ->
+    $http.post("/api/v1/listings/eligibility.json", params).success((data, status, headers, config) ->
       listings = (if data and data.listings then data.listings else [])
       Service.groupListings(listings)
     ).error( (data, status, headers, config) ->
@@ -214,7 +214,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
     percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
-    $http.get("/api/v1/ami.json?percent=#{percent}").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings/ami.json?percent=#{percent}").success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(data.ami, Service.AMI)
         angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
@@ -224,7 +224,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 
   Service.getLotteryPreferences = ->
     angular.copy([], Service.lotteryPreferences)
-    $http.get('/api/v1/lottery-preferences.json').success((data, status, headers, config) ->
+    $http.get('/api/v1/listings/lottery-preferences.json').success((data, status, headers, config) ->
       if data && data.lottery_preferences
         angular.copy(data.lottery_preferences, Service.lotteryPreferences)
     ).error( (data, status, headers, config) ->

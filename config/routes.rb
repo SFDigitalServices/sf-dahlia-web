@@ -13,16 +13,22 @@ Rails.application.routes.draw do
           get 'units'
           get 'lottery_results'
         end
+        collection do
+          get 'ami' => 'listings#ami'
+          get 'lottery-preferences' => 'listings#lottery_preferences'
+          post 'eligibility' => 'listings#eligibility'
+        end
       end
-      get 'ami' => 'listings#ami'
-      get 'lottery-preferences' => 'listings#lottery_preferences'
-      post 'listings-eligibility' => 'listings#eligibility'
-      post 'validate-household' => 'short_form#validate_household'
-      post 'upload-proof' => 'short_form#upload_proof'
-      # address validation
-      post 'validate-address' => 'address_validation#validate'
-      # address geocoding
-      post 'geocode-address' => 'geocoding#geocode'
+      scope '/short-form' do
+        post 'validate-household' => 'short_form#validate_household'
+        post 'upload-proof' => 'short_form#upload_proof'
+      end
+      scope '/addresses' do
+        # address validation
+        post 'validate' => 'address_validation#validate'
+        # address geocoding
+        post 'geocode' => 'geocoding#geocode'
+      end
     end
   end
 

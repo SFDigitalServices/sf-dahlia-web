@@ -125,7 +125,9 @@
         "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "SPECIAL_PROGRAMS": "Special Programs",
         "CREATE_ACCOUNT": "Create Account",
-        "UPLOADED": "Uploaded"
+        "PROOF_OF_ADDRESS": "Proof of address",
+        "UPLOADED": "Uploaded",
+        "UPLOADING": "Uploading"
     },
     "T": {
         "YES": "Yes",
