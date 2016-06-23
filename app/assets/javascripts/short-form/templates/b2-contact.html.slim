@@ -21,8 +21,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
     div
       .form-item.padding-bottom
-        .checkbox ng-click="applicant.additionalPhone = false;"
-          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone')"
+        .checkbox
+          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
           label for="applicant_no_phone"
             | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
         small.highlight ng-if="applicant.noPhone"
@@ -30,8 +30,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
-        .checkbox ng-click="clearAlternatePhoneData()"
-         input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone"
+        .checkbox
+         input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone" ng-disabled="applicant.noPhone" ng-click="clearPhoneData('alternate')"
          label for="applicant_additional_phone"
           | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}
 
