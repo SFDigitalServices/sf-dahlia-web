@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614231510) do
+ActiveRecord::Schema.define(version: 20160623013934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "uploaded_files", force: :cascade do |t|
+    t.binary   "file"
+    t.string   "name"
+    t.string   "content_type"
+    t.string   "session_uid"
+    t.string   "userkey"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "uploaded_files", ["session_uid", "userkey"], name: "index_uploaded_files_on_session_uid_and_userkey", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",      null: false

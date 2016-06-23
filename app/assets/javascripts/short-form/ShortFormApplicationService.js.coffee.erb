@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate, $http) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) ->
   Service = {}
   Service.applicationDefaults =
     applicant:
@@ -12,6 +12,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     preferences:
       liveInSf: null
       workInSf: null
+      neighborhoodResidence: null
     householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
@@ -21,27 +22,24 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       Income: false
 
   Service.current_id = 0
+  Service.session_uid = uuid.v4()
+  Service.userkey = uuid.v4()
 
   Service.resetUserData = () ->
+    # even though this looks commented out, it still has an effect in ERB land
+    # <% if Rails.env.development? %> # -------------
+    $localStorage.application ?= Service.applicationDefaults
+    Service.application = $localStorage.application
+    # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
+    # <% end %> # -------------
     Service.applicant = Service.application.applicant
+    Service.preferences = Service.application.preferences
     Service.alternateContact = Service.application.alternateContact
     Service.householdMember = {}
     Service.householdMembers = Service.application.householdMembers
 
-  # even though this looks commented out, it still has an effect in ERB land
-  # <% if Rails.env.development? %> # -------------
-  $localStorage.application ?= Service.applicationDefaults
-  Service.application = $localStorage.application
-  Service.applicant = Service.application.applicant
-  Service.preferences = Service.application.preferences
-  Service.alternateContact = Service.application.alternateContact
-  Service.householdMember = {}
-  Service.householdMembers = Service.application.householdMembers
-  # <% else %> # -------------
-  # initialize the user application data
   Service.resetUserData()
-  # <% end %> # -------------
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
@@ -129,15 +127,15 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     # clear out preferences where this householdMember was selected
     full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
     # search through all xxx_household_member items in preferences matching the full name
-    _.each Service.application.preferences, (v,k) ->
+    _.each Service.preferences, (v,k) ->
       if k.indexOf('_household_member') > 0 and v == full_name
         preference = k.split('_household_member')[0]
-        Service.application.preferences[preference] = false
-        Service.application.preferences[k] = null
-        if Service.application.preferences["#{preference}_proof_option"]
-          Service.application.preferences["#{preference}_proof_option"] = null
-        if Service.application.preferences["#{preference}_proof_file"]
-          Service.application.preferences["#{preference}_proof_file"] = null
+        Service.preferences[preference] = false
+        Service.preferences[k] = null
+        if Service.preferences["#{preference}_proof_option"]
+          Service.preferences["#{preference}_proof_option"] = null
+        if Service.hasPreferenceFile("#{preference}_proof_file")
+          Service.deletePreferenceFile("#{preference}_proof_file")
 
     # persist the changes to Service.householdMembers / $localStorage
     Service.householdMember = {}
@@ -211,13 +209,46 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
           toState.name.indexOf('create-account') == -1
     onShortForm && leaving
 
+  Service.hasPreferenceFile = (fileType) ->
+    # !_.isEmpty(Service.preferences[fileType])
+    Service.preferences[fileType]
+
+  Service.deletePreferenceFile = (fileType) ->
+    # for now it just fake deletes the fake file
+    Service.preferences[fileType] = null
+
+  Service.preferenceFileError = (fileType) ->
+    !! Service.preferences["#{fileType}_error"]
+
+  Service.uploadProof = (file, fileType) ->
+    if (!file)
+      Service.preferences["#{fileType}_error"] = true
+      return
+    Upload.upload(
+      url: '/api/v1/upload-proof'
+      method: 'POST'
+      data:
+        uploaded_file:
+          file: file
+          session_uid: Service.session_uid
+          userkey: Service.userkey
+    ).then( ((resp) ->
+      Service.preferences["#{fileType}_error"] = false
+      Service.preferences["#{fileType}"] = resp.data
+      # console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data)
+    ), ((resp) ->
+      Service.preferences["#{fileType}_error"] = true
+    ))
+
   return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ShortFormApplicationService.$inject = ['$localStorage', '$translate', '$http']
+ShortFormApplicationService.$inject = [
+  '$localStorage', '$translate', '$http', 'Upload', 'uuid'
+]
 
 angular
   .module('dahlia.services')

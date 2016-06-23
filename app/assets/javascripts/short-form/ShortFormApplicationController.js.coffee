@@ -10,7 +10,6 @@ ShortFormApplicationController = (
   $translate,
   Idle,
   Title,
-  Upload,
   ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -259,23 +258,18 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.uploadProof = (file) ->
-    Upload.upload(
-      url: 'https://angular-file-upload.s3.amazonaws.com/'
-      method: 'POST'
-      data:
-        key: file.name
-        AWSAccessKeyId: $scope.AWSCreds.accessKey
-        acl: 'private'
-        policy: $scope.AWSCreds.policy
-        signature: $scope.AWSCreds.signature
-        'Content-Type': if file.type != '' then file.type else 'application/octet-stream'
-        filename: file.name
-        file: file
-    ).then( (resp) ->
-      # console.log(resp)
-      # console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data)
-    )
+  $scope.uploadProof = (file, fileType) ->
+    ShortFormApplicationService.uploadProof(file, fileType)
+
+  $scope.hasPreferenceFile = (fileType) ->
+    ShortFormApplicationService.hasPreferenceFile(fileType)
+
+  $scope.deletePreferenceFile = (fileType) ->
+    ShortFormApplicationService.deletePreferenceFile(fileType)
+
+  $scope.preferenceFileError = (fileType) ->
+    ShortFormApplicationService.preferenceFileError(fileType)
+
   ###### Household Section ########
   $scope.getHouseholdMember = ->
     $scope.householdMember = ShortFormApplicationService.householdMember
@@ -368,7 +362,7 @@ ShortFormApplicationController = (
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title', 'Upload',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 

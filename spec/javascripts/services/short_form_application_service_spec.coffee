@@ -4,6 +4,8 @@ do ->
     ShortFormApplicationService = undefined
     $localStorage = undefined
     $translate = {}
+    Upload = {}
+    uuid = {v4: jasmine.createSpy()}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -23,6 +25,8 @@ do ->
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
+      $provide.value 'Upload', Upload
+      $provide.value 'uuid', uuid
       return
     )
 

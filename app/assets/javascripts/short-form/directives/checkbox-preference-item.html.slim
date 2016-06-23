@@ -28,20 +28,25 @@ div
         option ng-repeat="option in preference_proof_options" value="{{option}}"
           | {{ option }}
 
-      .form-group.text-center ng-if="show_preferences_options(application)" ng-hide="application.preferences[pref_type_proof_file]"
-        div.button.ghost-white.expand ngf-select="uploadProof($file)" name="file" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="20MB"
+      .form-group.text-center ng-if="show_preferences_options(application) && !hasPreferenceFile(pref_type_proof_file)"
+        div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type_proof_file)" ngf-accept="'image/*, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
+        small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_MISSING' | translate}}
+        small.error ng-if="preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_UPLOAD' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
         p.form-note.margin-bottom
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
-          | article class="attachment media"
 
-      article.attachment.media.margin-bottom ng-if="application.preferences[pref_type_proof_file]"
+      article.attachment.media.margin-bottom ng-if="hasPreferenceFile(pref_type_proof_file)"
         figure.media-img
-          img src="http://placehold.it/100x100" alt="placeholder"
+          img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
         .media-body
-          strong Proof of address
+          strong
+            | {{application.preferences[pref_type_proof_file].name}}
           br
-            | Uploaded: April 24th, 2016
-          a.attachment-action.a-alert hre="#"  Delete
+            ' {{'LABEL.UPLOADED' | translate}}:
+            | {{application.preferences[pref_type_proof_file].created_at | dateSuffix}}
+          button.button-link.attachment-action.a-alert type="button" ng-click="deletePreferenceFile(pref_type_proof_file)"  Delete

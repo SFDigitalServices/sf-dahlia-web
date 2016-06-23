@@ -30,7 +30,9 @@
         "ADDRESS": "Please enter an address",
         "CITY": "Please enter a city",
         "STATE": "Please enter a state",
-        "ZIP": "Please enter a zipcode"
+        "ZIP": "Please enter a zipcode",
+        "FILE_MISSING": "Please upload your proof of preference",
+        "FILE_UPLOAD": "The file is too large or not a supported file type"
     },
     "LABEL": {
         "FAMILY_MEMBER": "Family member",
@@ -122,7 +124,8 @@
         "ZIPCODE": "Zipcode",
         "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "SPECIAL_PROGRAMS": "Special Programs",
-        "CREATE_ACCOUNT": "Create Account"
+        "CREATE_ACCOUNT": "Create Account",
+        "UPLOADED": "Uploaded"
     },
     "T": {
         "YES": "Yes",
