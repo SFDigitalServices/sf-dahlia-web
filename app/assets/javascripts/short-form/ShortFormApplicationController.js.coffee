@@ -267,8 +267,8 @@ ShortFormApplicationController = (
   $scope.hasPreferenceFile = (fileType) ->
     ShortFormApplicationService.hasPreferenceFile(fileType)
 
-  $scope.deletePreferenceFile = (fileType) ->
-    ShortFormApplicationService.deletePreferenceFile(fileType)
+  $scope.deletePreferenceFile = (prefType) ->
+    ShortFormApplicationService.deletePreferenceFile(prefType)
 
   $scope.preferenceFileError = (fileType) ->
     ShortFormApplicationService.preferenceFileError(fileType)

@@ -22,7 +22,9 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def delete_proof
-    @uploaded_file = UploadedFile.find_by(uploaded_file_params)
+    file_params = uploaded_file_params
+    preference = file_params.delete(:preference)
+    @uploaded_file = UploadedFile.send(preference).find_by(file_params)
     if @uploaded_file
       @uploaded_file.destroy
       render json: { success: true }

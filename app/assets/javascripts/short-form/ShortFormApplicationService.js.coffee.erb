@@ -13,6 +13,15 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       liveInSf: null
       workInSf: null
       neighborhoodResidence: null
+      liveInSf_file: null
+      workInSf_file: null
+      neighborhoodResidence_file: null
+      liveInSf_file_loading: null
+      workInSf_file_loading: null
+      neighborhoodResidence_file_loading: null
+      liveInSf_file_error: null
+      workInSf_file_error: null
+      neighborhoodResidence_file_error: null
     householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
@@ -30,6 +39,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     # <% if Rails.env.development? %> # -------------
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
+    Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -218,9 +228,25 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
 
-  Service.deletePreferenceFile = (fileType) ->
-    # for now it just fake deletes the fake file
-    Service.preferences[fileType] = null
+  Service.deletePreferenceFile = (prefType) ->
+    fileType = "#{prefType}_proof_file"
+    params =
+      uploaded_file:
+        session_uid: Service.session_uid
+        userkey: Service.userkey
+        preference: prefType
+    $http.delete('/api/v1/short-form/proof', {
+      data: params,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).success((data, status, headers, config) ->
+      Service.preferences[fileType] = null
+      # console.log(data)
+    ).error( (data, status, headers, config) ->
+      # console.warn('error')
+      return
+    )
 
   Service.preferenceFileError = (fileType) ->
     !! Service.preferences["#{fileType}_error"]
@@ -252,18 +278,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = true
     ))
-
-  Service.deleteProof = (fileType) ->
-    params =
-      uploaded_file:
-        session_uid: Service.session_uid
-        userkey: Service.userkey
-    $http.delete('/api/v1/short-form/proof', params).success((data, status, headers, config) ->
-      data
-    ).error( (data, status, headers, config) ->
-      return
-    )
-
 
   return Service
 
