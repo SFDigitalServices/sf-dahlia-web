@@ -258,8 +258,11 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.uploadProof = (file, fileType) ->
-    ShortFormApplicationService.uploadProof(file, fileType)
+  $scope.neighborhoodResidenceMembers = ->
+    ShortFormApplicationService.neighborhoodResidenceMembers()
+
+  $scope.uploadProof = (file, prefType) ->
+    ShortFormApplicationService.uploadProof(file, prefType)
 
   $scope.hasPreferenceFile = (fileType) ->
     ShortFormApplicationService.hasPreferenceFile(fileType)

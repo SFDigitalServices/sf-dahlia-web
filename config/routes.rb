@@ -21,7 +21,8 @@ Rails.application.routes.draw do
       end
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
-        post 'upload-proof' => 'short_form#upload_proof'
+        post 'proof' => 'short_form#upload_proof'
+        delete 'proof' => 'short_form#delete_proof'
       end
       scope '/addresses' do
         # address validation

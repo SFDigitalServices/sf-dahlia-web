@@ -6,10 +6,13 @@ class CreateUploadedFiles < ActiveRecord::Migration
       t.string :content_type
       t.string :session_uid
       t.string :userkey
+      t.integer :preference
 
       t.timestamps null: false
     end
 
-    add_index :uploaded_files, [:session_uid, :userkey]
+    add_index :uploaded_files, [:session_uid, :userkey, :preference],
+                               unique: true,
+                               name: 'composite_uid'
   end
 end

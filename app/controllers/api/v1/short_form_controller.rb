@@ -21,6 +21,16 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  def delete_proof
+    @uploaded_file = UploadedFile.find_by(uploaded_file_params)
+    if @uploaded_file
+      @uploaded_file.destroy
+      render json: { success: true }
+    else
+      render json: { success: false, errors: 'not found' }
+    end
+  end
+
   private
 
   def eligibility_params
@@ -30,13 +40,14 @@ class Api::V1::ShortFormController < ApiController
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(:file, :session_uid, :userkey)
+          .permit(:file, :session_uid, :userkey, :preference)
   end
 
   def uploaded_file_attrs
     {
       session_uid: uploaded_file_params[:session_uid],
       userkey: uploaded_file_params[:userkey],
+      preference: uploaded_file_params[:preference],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
