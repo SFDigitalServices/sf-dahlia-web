@@ -326,8 +326,10 @@ ShortFormApplicationController = (
     message = null
     if error == 'too big'
       message = $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
+      ShortFormApplicationService.invalidateHouseholdForm()
     else if error == 'too small'
       message = $translate.instant("ERROR.HOUSEHOLD_TOO_SMALL")
+      ShortFormApplicationService.invalidateHouseholdForm()
     else if error == 'too low'
       message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
       ShortFormApplicationService.invalidateIncomeForm()

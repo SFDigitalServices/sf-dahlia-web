@@ -140,6 +140,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       # update existing householdMember
       angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
+    Service.invalidateHouseholdForm()
 
   Service.resetHouseholdmember = () ->
     Service.householdMember = {}
@@ -166,6 +167,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     # persist the changes to Service.householdMembers / $localStorage
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
+    Service.invalidateHouseholdForm()
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -258,6 +260,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.invalidateIncomeForm = ->
     Service.application.completedSections['Income'] = false
     Service.application.validatedForms['Income']['income'] = false
+
+  Service.invalidateHouseholdForm = ->
+    Service.application.completedSections['Household'] = false
+    Service.application.completedSections['Status'] = false
+    Service.application.completedSections['Income'] = false
 
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
