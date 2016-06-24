@@ -1,5 +1,6 @@
 ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service = {}
+  Service.form = {}
   Service.applicationDefaults =
     applicant:
       home_address: { address1: null, city: null, state: null, zip: null }
@@ -19,6 +20,15 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
       Household: false
       Status: false
       Income: false
+    # as you proceed through each page, validatedForms will store:
+    #  [pagename]: T/F
+    # to indicate if that form was left valid or invalid
+    validatedForms:
+      You: {}
+      Household: {}
+      Status: {}
+      Income: {}
+      Review: {}
 
   Service.current_id = 0
 
@@ -46,32 +56,34 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
 
-  Service.userCanAccessSection = (section, state = null) ->
+  Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
     return false if state and Service.isWelcomePage(state)
-    Service.application.completedSections ?= Service.applicationDefaults.completedSections
     completed = Service.application.completedSections
-    switch section.name
+    validated = Service.application.validatedForms
+    switch name
       when 'You'
-        completed.Intro
+        true
       when 'Household'
         completed.Intro &&
-        completed.You
+        completed.You &&
+        # make sure all validatedForms in previous section == true
+        _.every(validated['You'], (i) -> i)
       when 'Status'
-        completed.Intro &&
-        completed.You &&
-        completed.Household
+        Service.userCanAccessSection('Household') &&
+        completed.Household &&
+        # make sure all validatedForms in previous section == true
+        _.every(validated['Household'], (i) -> i)
       when 'Income'
-        completed.Intro &&
-        completed.You &&
-        completed.Household &&
-        completed.Status
-      when 'Review'
-        completed.Intro &&
-        completed.You &&
-        completed.Household &&
+        Service.userCanAccessSection('Status') &&
         completed.Status &&
-        completed.Income
+        # make sure all validatedForms in previous section == true
+        _.every(validated['Status'], (i) -> i)
+      when 'Review'
+        Service.userCanAccessSection('Income') &&
+        completed.Income &&
+        # make sure all validatedForms in previous section == true
+        _.every(validated['Income'], (i) -> i)
       else
         false
 
@@ -115,6 +127,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
+    else
+      # update existing householdMember
+      angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
 
   Service.resetHouseholdmember = () ->
@@ -203,13 +218,32 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
-    !!state.name.match(/short-form-welcome/)
+    !!state.name.match(/short-form-welcome\./)
+
+  Service.isShortFormPage = (state) ->
+    !!state.name.match(/short-form-application\.|create-account/)
+
+  Service.checkFormState = (stateName, section) ->
+    if Service.form.applicationForm
+      stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
+      # special case for household-member-form
+      return if stateName.match(/household-member-form/)
+      Service.application.validatedForms[section.name][stateName] = Service.form.applicationForm.$valid
+
+  Service.authorizedToProceed = (toState, fromState, toSection) ->
+    return true unless toState && fromState
+    return false unless Service.userCanAccessSection(toSection.name)
+    # they're "jumping ahead" if they're not coming from a short form page or create-account
+    # and they're trying to go to a short form section ahead of "name" (1st page)
+    jumpAhead = Service.isShortFormPage(toState) &&
+                !Service.isShortFormPage(fromState) &&
+                toState.name != 'dahlia.short-form-application.name'
+    return !jumpAhead
+
 
   Service.isLeavingShortForm = (toState, fromState) ->
-    onShortForm = fromState.name.indexOf('short-form-application') >= 0
-    leaving = toState.name.indexOf('short-form-application') == -1 &&
-          toState.name.indexOf('create-account') == -1
-    onShortForm && leaving
+    # leaving means we're going from short form to a non-short form page
+    Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
 
   return Service
 
