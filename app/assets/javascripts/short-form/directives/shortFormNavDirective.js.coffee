@@ -23,7 +23,7 @@ angular.module('dahlia.directives')
     scope.sectionDisabled = (section, index) ->
       !scope.isActiveSection(section) &&
       (
-        !scope.appService.userCanAccessSection(section, $state.current) ||
+        !scope.appService.userCanAccessSection(section.name, $state.current) ||
         (scope.form.applicationForm && scope.form.applicationForm.$invalid && !scope.navService.isPreviousSection(section))
       )
 ]
