@@ -359,3 +359,20 @@ do ->
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
       return
+
+    describe 'checkSurveyComplete', ->
+      it 'should check if survey is incomplete', ->
+        ShortFormApplicationService.applicant = fakeApplicant
+        ShortFormApplicationService.applicant.gender = {Female: true}
+        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual false
+
+      it 'should check if survey is complete', ->
+        ShortFormApplicationService.applicant = fakeApplicant
+        ShortFormApplicationService.applicant.gender = {Fake: true}
+        ShortFormApplicationService.applicant.lgbt = 'Fake'
+        ShortFormApplicationService.applicant.ethnicity = 'Fake'
+        ShortFormApplicationService.applicant.race = 'Fake'
+        ShortFormApplicationService.applicant.hiv = 'Fake'
+        ShortFormApplicationService.applicant.referral = {Fake: true}
+        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
+      return
