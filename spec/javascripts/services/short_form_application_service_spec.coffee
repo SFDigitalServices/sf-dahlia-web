@@ -54,12 +54,12 @@ do ->
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.completedSections
-        ShortFormApplicationService.userCanAccessSection({})
+        ShortFormApplicationService.userCanAccessSection('')
         expect(ShortFormApplicationService.application.completedSections).toEqual expectedDefault
         return
 
       it 'does not initially allow access to later sections', ->
-        expect(ShortFormApplicationService.userCanAccessSection({name: 'Income'})).toEqual false
+        expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
         return
       return
 
@@ -152,6 +152,7 @@ do ->
       describe 'old household member', ->
         beforeEach ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
 
         it 'does not add the member', ->
@@ -387,6 +388,21 @@ do ->
           return
         return
         # TODO: write test for household who lives in SF.
+
+    describe 'authorizedToProceed', ->
+      it 'always allows you to access first page of You section', ->
+        toState = {name: 'dahlia.short-form-application.name'}
+        fromState = {name: ''}
+        toSection = {name: 'You'}
+        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+        expect(authorized).toEqual true
+
+      it 'does not allow you to jump ahead', ->
+        toState = {name: 'dahlia.short-form-application.household-intro'}
+        fromState = {name: ''}
+        toSection = {name: 'Household'}
+        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+        expect(authorized).toEqual false
 
     describe 'isLeavingShortForm', ->
       it 'should know if you\'re not leaving short form', ->
