@@ -58,12 +58,12 @@ do ->
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.completedSections
-        ShortFormApplicationService.userCanAccessSection({})
+        ShortFormApplicationService.userCanAccessSection('')
         expect(ShortFormApplicationService.application.completedSections).toEqual expectedDefault
         return
 
       it 'does not initially allow access to later sections', ->
-        expect(ShortFormApplicationService.userCanAccessSection({name: 'Income'})).toEqual false
+        expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
         return
       return
 
@@ -156,6 +156,7 @@ do ->
       describe 'old household member', ->
         beforeEach ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
 
         it 'does not add the member', ->
@@ -186,17 +187,6 @@ do ->
         return
 
     describe 'refreshLiveWorkPreferences', ->
-      describe 'applicant works in SF', ->
-        beforeEach ->
-          ShortFormApplicationService.householdMembers = []
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.workInSf = 'Yes'
-        it 'should assign workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
-          return
-        return
-
       describe 'applicant does not work in SF', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
@@ -206,37 +196,6 @@ do ->
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(false)
-          return
-        return
-
-      describe 'household member works in SF', ->
-        beforeEach ->
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.workInSf = 'No'
-
-        it 'should not be assigned workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
-          return
-        return
-
-      describe 'applicant lives in SF', ->
-        beforeEach ->
-          ShortFormApplicationService.householdMembers = []
-          ShortFormApplicationService.applicant = fakeApplicant
-
-        it 'should be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
           return
         return
 
@@ -256,34 +215,6 @@ do ->
           expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
           return
         return
-
-      describe 'household member lives in sf', ->
-        beforeEach ->
-          home_address = {
-            address1: "312 Delaware RD"
-            address2: ""
-            city: "Mount Shasta"
-          }
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMemberWithAltMailingAddress =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-            hasSameAddressAsApplicant: 'No'
-            home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
-
-        it 'should be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
-          return
-        return
-      return
 
     describe 'liveInSfMembers', ->
       describe 'household member has separate sf address', ->
@@ -391,6 +322,21 @@ do ->
           return
         return
         # TODO: write test for household who lives in SF.
+
+    describe 'authorizedToProceed', ->
+      it 'always allows you to access first page of You section', ->
+        toState = {name: 'dahlia.short-form-application.name'}
+        fromState = {name: ''}
+        toSection = {name: 'You'}
+        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+        expect(authorized).toEqual true
+
+      it 'does not allow you to jump ahead', ->
+        toState = {name: 'dahlia.short-form-application.household-intro'}
+        fromState = {name: ''}
+        toSection = {name: 'Household'}
+        authorized = ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+        expect(authorized).toEqual false
 
     describe 'isLeavingShortForm', ->
       it 'should know if you\'re not leaving short form', ->

@@ -9,7 +9,6 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  Title,
   ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -17,7 +16,7 @@ ShortFormApplicationController = (
   AddressValidationService
 ) ->
 
-  $scope.form = {}
+  $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
   $scope.applicant = ShortFormApplicationService.applicant
@@ -278,7 +277,8 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
-    $scope.householdMember = ShortFormApplicationService.householdMember
+    # we just edit a copy, and then put it back in place after saving in addHouseholdMember
+    $scope.householdMember = angular.copy(ShortFormApplicationService.householdMember)
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
@@ -367,11 +367,10 @@ ShortFormApplicationController = (
     # they ran out of time
     ShortFormApplicationService.resetUserData()
     $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-    Title.restore()
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'Title',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
 ]
 

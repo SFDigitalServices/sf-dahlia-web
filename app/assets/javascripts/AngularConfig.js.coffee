@@ -468,8 +468,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService',
-  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService) ->
+  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
@@ -483,10 +483,24 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             e.preventDefault()
             false
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+      # check if we're on short form and trying to access a later section than the first section
+      toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
+      if toSection
+        # we're in shortForm
+        fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
+        ShortFormApplicationService.checkFormState(fromState.name, fromSection)
+        if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
+          e.preventDefault()
+          return $state.go('dahlia.short-form-application.name', toParams)
+      # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
         AccountService.rememberState(fromState.name, fromParams)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # capture errors when trying to verify address and send them back to the appropriate page
+      f = ShortFormApplicationService.form.applicationForm
+      f.$submitted = true
+      f.$invalid = true
+      f.$valid = false
       if toState.name == 'dahlia.short-form-application.verify-address'
         e.preventDefault()
         return $state.go('dahlia.short-form-application.contact', toParams)
@@ -520,7 +534,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   uiMaskConfigProvider.clearOnBlurPlaceholder(true)
 ]
 
-@dahlia.config ['IdleProvider', (IdleProvider) ->
+# ng-idle configuration
+@dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
+  # don't override the title with timeout countdowns/warnings
+  TitleProvider.enabled(false)
   IdleProvider.idle(120)
   IdleProvider.timeout(60)
 ]
