@@ -40,6 +40,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Status: {}
       Income: {}
       Review: {}
+    surveyComplete: false
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -319,6 +320,18 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = true
     ))
+
+  Service.checkSurveyComplete = ->
+    app = Service.applicant
+    responses = [
+      _.some(app.gender),
+      app.lgbt,
+      app.ethnicity,
+      app.race,
+      app.hiv,
+      _.some(app.referral),
+    ]
+    Service.application.surveyComplete = _.every(responses)
 
   return Service
 
