@@ -15,7 +15,7 @@ describe 'Geocoding API' do
             zip: '94114',
           },
         }
-        post '/api/v1/geocode-address.json', params
+        post '/api/v1/addresses/geocode.json', params
       end
     end
   end
@@ -29,7 +29,7 @@ describe 'Geocoding API' do
             zip: '12345',
           },
         }
-        post '/api/v1/geocode-address.json', params
+        post '/api/v1/addresses/geocode.json', params
       end
     end
   end
@@ -44,7 +44,7 @@ describe 'Geocoding API' do
           zip: '94114',
         },
       }
-      post '/api/v1/geocode-address.json', params
+      post '/api/v1/addresses/geocode.json', params
     end
 
     json = JSON.parse(response.body)
@@ -65,7 +65,7 @@ describe 'Geocoding API' do
           zip: '12345',
         },
       }
-      post '/api/v1/geocode-address.json', params
+      post '/api/v1/addresses/geocode.json', params
     end
 
     json = JSON.parse(response.body)

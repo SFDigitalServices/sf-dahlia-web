@@ -16,7 +16,7 @@ describe 'Address Validation API' do
             zip: '94114',
           },
         }
-        post '/api/v1/validate-address.json', params
+        post '/api/v1/addresses/validate.json', params
       end
     end
   end
@@ -31,7 +31,7 @@ describe 'Address Validation API' do
             zip: '12345',
           },
         }
-        post '/api/v1/validate-address.json', params
+        post '/api/v1/addresses/validate.json', params
       end
     end
   end
@@ -47,7 +47,7 @@ describe 'Address Validation API' do
           zip: '94114',
         },
       }
-      post '/api/v1/validate-address.json', params
+      post '/api/v1/addresses/validate.json', params
     end
 
     json = JSON.parse(response.body)
@@ -69,7 +69,7 @@ describe 'Address Validation API' do
           zip: '12345',
         },
       }
-      post '/api/v1/validate-address.json', params
+      post '/api/v1/addresses/validate.json', params
     end
 
     json = JSON.parse(response.body)

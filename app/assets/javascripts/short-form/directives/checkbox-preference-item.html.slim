@@ -28,20 +28,47 @@ div
         option ng-repeat="option in preference_proof_options" value="{{option}}"
           | {{ option }}
 
-      .form-group.text-center ng-if="show_preferences_options(application)" ng-hide="application.preferences[pref_type_proof_file]"
-        div.button.ghost-white.expand ngf-select="" name="file" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="20MB"
+      .form-group.text-center ng-if="show_preference_uploader(application)"
+        div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
+        small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_MISSING' | translate}}
+        small.error ng-if="preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_UPLOAD' | translate}}
         p.form-note
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
         p.form-note.margin-bottom
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
-          | article class="attachment media"
 
-      article.attachment.media.margin-bottom ng-if="application.preferences[pref_type_proof_file]"
-        figure.media-img
-          img src="http://placehold.it/100x100" alt="placeholder"
+      article.attachment.is-loading.media ng-if="preferenceFileIsLoading(pref_type_proof_file)"
+        figure.attachment-img.media-img
+          .spinner.sk-fading-circle
+            .sk-circle1.sk-circle
+            .sk-circle2.sk-circle
+            .sk-circle3.sk-circle
+            .sk-circle4.sk-circle
+            .sk-circle5.sk-circle
+            .sk-circle6.sk-circle
+            .sk-circle7.sk-circle
+            .sk-circle8.sk-circle
+            .sk-circle9.sk-circle
+            .sk-circle10.sk-circle
+            .sk-circle11.sk-circle
+            .sk-circle12.sk-circle
         .media-body
-          strong Proof of address
+          strong
+            | {{'LABEL.PROOF_OF_ADDRESS' | translate}}
           br
-            | Uploaded: April 24th, 2016
-          a.attachment-action.a-alert hre="#"  Delete
+          span
+            | {{'LABEL.UPLOADING' | translate}}...
+
+      article.attachment.media.margin-bottom ng-if="hasPreferenceFile(pref_type_proof_file)"
+        figure.media-img
+          img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
+        .media-body
+          strong
+            | {{application.preferences[pref_type_proof_file].name}}
+          br
+            ' {{'LABEL.UPLOADED' | translate}}:
+            | {{application.preferences[pref_type_proof_file].created_at | dateSuffix}}
+          button.button-link.attachment-action.a-alert type="button" ng-click="deletePreferenceFile(pref_type)"  Delete
