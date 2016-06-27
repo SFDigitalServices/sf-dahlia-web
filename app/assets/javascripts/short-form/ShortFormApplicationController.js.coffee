@@ -345,7 +345,7 @@ ShortFormApplicationController = (
     ShortFormHelperService.applicationVouchersSubsidies($scope.application)
 
   $scope.applicantIncomeAmount = ->
-    ShortFormHelperService.applicantIncomeAmount($scope.applicant)
+    ShortFormHelperService.applicantIncomeAmount($scope.application)
 
   ## translation helpers
   $scope.applicantFirstName = ->
