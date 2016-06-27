@@ -309,6 +309,18 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_error"] = true
     ))
 
+  Service.submitApplication = ->
+    application = Service.application
+    application = Service._formatDOB(application)
+
+  Service._formatDOB = (application) ->
+    month = application.applicant.dob_month
+    day = application.applicant.dob_day
+    year = application.applicant.dob_year
+    formattedDOB = moment(year + ' ' + month + ' ' + day, "YYYY MM DD").format()
+    application.applicant.DOB = formattedDOB
+    return application
+
   return Service
 
 ############################################################################################
