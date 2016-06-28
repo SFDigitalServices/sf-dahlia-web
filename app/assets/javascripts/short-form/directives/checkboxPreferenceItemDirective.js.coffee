@@ -29,6 +29,10 @@ angular.module('dahlia.directives')
         scope.workInSfMembers()
       else if attrs.type == "neighborhoodResidence"
         scope.neighborhoodResidenceMembers()
+      else
+        members = scope.householdMembers.slice()
+        members.push(scope.applicant)
+        return members
 
     scope.only_applicant_eligible = () ->
       applicant_only = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
