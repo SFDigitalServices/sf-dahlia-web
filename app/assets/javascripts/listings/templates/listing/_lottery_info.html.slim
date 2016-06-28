@@ -30,15 +30,28 @@ accordion-heading
     p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
       | Lottery date, time and venue to be scheduled.
 
-  .content-group.expand.text-center
+  / neighborhood preference list
+  .content-group ng-if="listing.NeighborHoodPreferenceUrl"
+    h4.h-caps-lined
+      | Confirmed Neighborhood Resident Housing Preference List
+    a.button.primary.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"
+      | View Preference List
+    p.c-steel.t-small
+      / | 1200 applications qualify for this preference and will be given a higher priority in the lottery.
+      | Applications that qualify for this preference will be given a higher priority in the lottery.
+
+  .content-group.text-center ng-class="{expand: listing.Lottery_Results}"
     h4.t-gamma.t-serif Lottery Results
     p.content-group_date.margin-bottom
       span.content-group_day
         | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
     p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
-      ' Complete lottery results will be posted here on
-      ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
-      ' by 5pm.
+      span ng-if="listing.Lottery_Results_Date"
+        ' Complete lottery results will be posted here on
+        ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
+        ' by 5pm.
+      span ng-if="!listing.Lottery_Results_Date"
+        ' Complete lottery results will be posted here as soon as they are available.
 
     div ng-if="listing.Lottery_Results"
       table.table-small.table-results.text-center  ng-if="listing.Lottery_Members.length <= 20"
@@ -64,53 +77,10 @@ accordion-heading
         | {{listing.Lottery_Summary}}
 
   .content-group
-    h4.h-caps-lined What to Expect
-    p.c-steel.t-small.margin-bottom Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
-    div ng-show="whatToExpectOpen"
-      p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
-      p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
-    a.toggler.toggle-more.t-small title="read {{ whatToExpectOpen ? 'less' : 'more' }}" href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
-      ' read {{ whatToExpectOpen ? 'less' : 'more' }}
-      span.ui-icon.ui-tiny.i-primary
-        svg
-          use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
-    h4.h-caps-lined Contact Leasing Agent
-    h3.t-delta.t-sans.no-margin
-      | {{ listing.Leasing_Agent_Name }}
-    p.c-steel
-      | {{ listing.Leasing_Agent_Title }}
-    p.margin-bottom--half
-      a.has-icon title="Call {{ listing.Leasing_Agent_Phone }}" ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
-        span.ui-icon.ui-medium.i-primary
-          svg
-            use xlink:href="#i-phone"
-        |  Call {{ listing.Leasing_Agent_Phone }}
-    p.t-small.c-steel Due to high call volume you may hear a message.
-    p
-      a.has-icon title="Email {{listing.Leasing_Agent_Email}}" ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
-        span.ui-icon.ui-medium.i-primary
-          svg
-            use xlink:href="#i-mail"
-        |  Email
+    ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
-    p.content-group_address.no-margin
-      | {{listing.Application_Organization}}
-    p.content-group_address
-      | {{ listing.Building_Street_Address }},
-      br
-      | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-    p
-      a.has-icon title="View Map: {{formattedBuildingAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
-        span.ui-icon.ui-medium.i-primary
-          svg
-            use xlink:href="#i-map"
-        | View Map
-    p.content-group_date ng-if="listing.Office_Open && listing.Office_Closed"
-      span.content-group_title Office Hours
-      span.content-group_time
-        | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+    ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
 
   .content-group.bg-mist.small-only-text-center
     p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
-
