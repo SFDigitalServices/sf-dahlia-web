@@ -321,6 +321,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatMemberAddress(application)
     application = Service._formatMemberDOB(application)
     application = Service._formatPreferences(application)
+    delete application.completedSections
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
