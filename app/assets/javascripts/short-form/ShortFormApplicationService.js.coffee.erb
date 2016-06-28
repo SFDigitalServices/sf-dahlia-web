@@ -318,6 +318,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
     application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
+    application = Service._formatMemberAddress(application)
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
@@ -346,6 +347,19 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       application[person].mailingAddress = application[person][addressType].address1 + " " + application[person][addressType].address2
 
     delete application[person][addressType]
+    return application
+
+  Service._formatMemberAddress = (application) ->
+    application.householdMembers.forEach( (member) ->
+      console.log(member, 'this is a member')
+      _.forEach member.home_address, (value, key) ->
+        if !(key == 'address1' || key == 'address2')
+          member[key] = value
+        return
+      member.address = member.home_address.address1 + member.home_address.address2
+      delete member.home_address
+      delete member.confirmed_home_address
+    )
     return application
 
   return Service
