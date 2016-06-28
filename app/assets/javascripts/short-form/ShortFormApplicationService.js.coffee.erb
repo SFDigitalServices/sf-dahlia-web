@@ -324,8 +324,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatGenderOptions(application)
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
+    application = Service._formatIncome(application)
     delete application.completedSections
-    # console.log(application)
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
@@ -443,6 +443,14 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     delete application.applicant.terms
     return application
 
+  Service._formatIncome = (application) ->
+    incomeTimeframe = application.householdIncome.incomeTimeframe
+    if incomeTimeframe == 'per_year'
+      application.annualIncome = application.householdIncome.incomeTotal
+    else if incomeTimeframe == 'per_month'
+      application.monthlyIncome = application.householdIncome.incomeTotal
+    delete application.householdIncome
+    return application
 
   return Service
 
