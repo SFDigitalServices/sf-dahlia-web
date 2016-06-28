@@ -322,8 +322,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatMemberDOB(application)
     application = Service._formatPreferences(application)
     application = Service._formatGenderOptions(application)
+    application = Service._formatReferrals(application)
+    application = Service._formatTerms(application)
     delete application.completedSections
-    debugger
+    # console.log(application)
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
@@ -423,6 +425,24 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       return
     application.applicant.gender = allGenders
     return application
+
+  Service._formatReferrals = (application) ->
+    referrals = ""
+    _.forEach application.applicant.referral, (value, key) ->
+      referrals += (key + ";") if value
+      return
+    application.referral = referrals
+    delete application.applicant.referral
+    return application
+
+  Service._formatTerms = (application) ->
+    if application.applicant.terms.yes
+      application.agreeToTerms = true
+    else
+      application.agreeToTerms = false
+    delete application.applicant.terms
+    return application
+
 
   return Service
 
