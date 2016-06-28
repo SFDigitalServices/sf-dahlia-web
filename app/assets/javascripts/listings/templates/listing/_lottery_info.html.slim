@@ -30,14 +30,15 @@ accordion-heading.lead.accordion-header
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
-    / neighborhood preference list (TODO: ng-if...)
-    .content-panel.padding-bottom.no-margin.border-bottom
+    / neighborhood preference list
+    .content-panel.padding-bottom.no-margin.border-bottom ng-if="listing.NeighborHoodPreferenceUrl"
       h4.t-small.t-sans.t-bold
         | Confirmed Neighborhood Resident Housing Preference List
-      a.button.expand href="http://google.com/?q=pdf" target="_blank"
+      a.button.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"
         | View Preference List
       p.c-steel.t-small
-        | 1200 applications qualify for this preference...
+        / | 1200 applications qualify for this preference and will be given a higher priority in the lottery.
+        | Applications that qualify for this preference will be given a higher priority in the lottery.
 
     .content-panel.padding-bottom.no-margin.border-bottom
       h4.t-small.t-sans.t-bold Lottery Results
