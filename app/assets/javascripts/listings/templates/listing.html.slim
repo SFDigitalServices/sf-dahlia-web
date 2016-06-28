@@ -6,6 +6,7 @@ section.section-hero.row.margin-bottom
 
     accordion.property-accordion.accordion
 
+      / sidebar for closed listing
       accordion-group.accordion-navigation.accordion-process ng-if="listingApplicationClosed(listing)"
         ng-include src="'listings/templates/listing/_lottery_info.html'"
 
@@ -17,7 +18,8 @@ section.section-hero.row.margin-bottom
             | Income, occupancy, preferences, and subsidies
         ng-include src="'listings/templates/listing/_eligibility.html'"
 
-      accordion-group.accordion-navigation.accordion-process ng-hide="listingApplicationClosed(listing)"
+      / sidebar for open listing
+      accordion-group.accordion-navigation.accordion-process ng-if="!listingApplicationClosed(listing)"
         ng-include src="'listings/templates/listing/_process.html'"
 
       accordion-group.accordion-navigation

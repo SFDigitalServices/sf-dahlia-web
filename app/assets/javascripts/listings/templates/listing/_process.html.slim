@@ -6,15 +6,8 @@ accordion-heading
       use xlink:href="#i-arrow-down"
 
 .content-section
-  .apply-content.content-wrap
-    .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
-      ng-include src="'listings/templates/listing/_panel-apply.html'"
-    .content-panel.padding-bottom.border-bottom
-      h4.t-small.t-sans.t-bold Application Deadline
-      h3.t-delta.t-sans.c-steel
-        | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
-
-    .content-panel.padding-bottom.border-bottom
+  .apply-content.content-wrap.content-lead
+    .content-panel.padding-bottom.border-bottom ng-if="listing.Information_Sessions"
       h4.t-small.t-sans.t-bold Information Sessions
       ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
         li
@@ -26,10 +19,8 @@ accordion-heading
             | {{session.Venue}}
           p.c-steel
             | {{session.Street_Address}}, {{session.City}}
-      p.c-steel ng-if="!listing.Information_Sessions"
-       | No information sessions scheduled yet.
 
-    .content-panel.padding-bottom.border-bottom
+    .content-panel.padding-bottom.border-bottom ng-if="listing.Open_Houses"
       h4.t-small.t-sans.t-bold Open Houses
       ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
         li
@@ -37,10 +28,16 @@ accordion-heading
             | {{session.Date | dateSuffix}}
           span.c-steel
             | {{session.Start_Time}}&mdash;{{session.End_Time}}
-      p.c-steel ng-if="!listing.Open_Houses"
-        | No open houses scheduled yet.
 
-    .content-panel.padding-bottom
+    .show-for-medium-up.text-center.margin-bottom ng-hide="listingApplicationClosed(listing)"
+      ng-include src="'listings/templates/listing/_panel-apply.html'"
+    .content-panel.padding-bottom.border-bottom
+      h4.t-small.t-sans.t-bold Application Deadline
+      h3.t-delta.t-sans.c-steel
+        | {{listing.Application_Due_Date | date : 'MMMM d, yyyy'}}
+
+
+    .content-panel.padding-bottom.border-bottom
       h4.t-small.t-sans.t-bold Public Lottery
       ul ng-if="lotteryDateVenueAvailable(listing)"
         li
@@ -54,3 +51,6 @@ accordion-heading
             | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
+
+    .content-panel.padding-bottom.no-margin
+      ng-include src="'listings/templates/listing/_what_to_expect.html'"
