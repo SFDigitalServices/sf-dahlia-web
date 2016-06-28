@@ -313,7 +313,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.submitApplication = (listingId)->
     applicationParams = Service._formatApplication(listingId)
     console.log(applicationParams)
-    $http.post("/api/v1/submit-application", applicationParams).success((data, status, headers, config) ->
+    $http.post('/api/v1/short-form/submit-application', applicationParams).success((data, status, headers, config) ->
       console.log('success')
       data
     ).error( (data, status, headers, config) ->
@@ -335,6 +335,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
     delete application.completedSections
+    delete application.validatedForms
     return application
 
   Service._formatDOB = (application) ->
@@ -382,6 +383,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       application[person].mailingAddress = application[person][addressType].address1 + " " + application[person][addressType].address2
 
     delete application[person][addressType]
+    delete application[person].geocoding_data
     return application
 
   Service._formatMemberAddress = (application) ->
@@ -393,6 +395,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       member.address = member.home_address.address1 + member.home_address.address2
       delete member.home_address
       delete member.confirmed_home_address
+      delete member.geocoding_data
     )
     return application
 
