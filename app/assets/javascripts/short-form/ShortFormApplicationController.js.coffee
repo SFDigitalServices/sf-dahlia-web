@@ -19,6 +19,7 @@ ShortFormApplicationController = (
   $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
+  $scope.formattedApplication = ShortFormApplicationService.formattedApplication
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact

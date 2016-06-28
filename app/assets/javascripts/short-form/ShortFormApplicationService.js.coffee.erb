@@ -3,12 +3,13 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.form = {}
   Service.applicationDefaults =
     applicant:
-      home_address: { address1: null, city: null, state: null, zip: null }
+      home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       language: "English"
       phone: null
-      mailing_address: { address1: null, city: null, state: null, zip: null }
+      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
     alternateContact:
       language: "English"
+      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
     householdMembers: []
     preferences:
       liveInSf: null
@@ -39,6 +40,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Status: {}
       Income: {}
       Review: {}
+
+  Service.formattedApplication = angular.copy(Service.applicationDefaults)
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -310,8 +313,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     ))
 
   Service.submitApplication = ->
-    application = Service.application
+    application = angular.copy(Service.application)
     application = Service._formatDOB(application)
+    application = Service._formatAddress(application, 'applicant', 'home_address')
+    application = Service._formatAddress(application, 'applicant', 'mailing_address')
+    application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
+    # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
     month = application.applicant.dob_month
@@ -319,6 +326,26 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     year = application.applicant.dob_year
     formattedDOB = moment(year + ' ' + month + ' ' + day, "YYYY MM DD").format()
     application.applicant.DOB = formattedDOB
+    return application
+
+  Service._formatAddress = (application, person, addressType) ->
+    if addressType == 'home_address'
+      _.forEach application[person][addressType], (value, key) ->
+        if !(key == 'address1' || key == 'address2')
+          application[person][key] = value
+        return
+      application[person].address = application[person][addressType].address1 + application[person][addressType].address2
+      delete application[person].confirmed_home_address
+
+    else if addressType == 'mailing_address'
+      _.forEach application[person][addressType], (value, key) ->
+        if !(key == 'address1' || key == 'address2')
+          newKey = 'mailing' + _.capitalize(key)
+          application[person][newKey] = value
+        return
+      application[person].mailingAddress = application[person][addressType].address1 + " " + application[person][addressType].address2
+
+    delete application[person][addressType]
     return application
 
   return Service
