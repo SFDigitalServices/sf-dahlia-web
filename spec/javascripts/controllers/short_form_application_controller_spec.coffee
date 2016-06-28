@@ -28,6 +28,8 @@ do ->
       clearAlternateContactDetails: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
+      submitApplication: (listing) ->
+        return
       validMailingAddress: ->
         true
     fakeFunctions =
@@ -67,6 +69,7 @@ do ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
 
       $controller 'ShortFormApplicationController',
         $scope: scope
@@ -272,4 +275,28 @@ do ->
         expect(scope.householdEligibilityErrorMessage).toEqual(null)
         return
       return
+
+    describe 'submitApplication', ->
+      it 'calls submitApplication ShortFormApplicationService', ->
+        scope.listing = fakeListing
+        scope.submitApplication(scope.listing.Id)
+        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(fakeListing.Id)
+        return
+      return
   return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> [#108846424] - Shortform - wrote submit application test
