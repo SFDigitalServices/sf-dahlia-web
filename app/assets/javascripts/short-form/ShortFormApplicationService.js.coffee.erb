@@ -334,8 +334,14 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
+    application = Service._renameApplicant(application)
     delete application.completedSections
     delete application.validatedForms
+    return application
+
+  Service._renameApplicant = (application) ->
+    application.primaryApplicant = Object.assign({}, application.applicant)
+    delete application.applicant
     return application
 
   Service._formatDOB = (application) ->
