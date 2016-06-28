@@ -321,7 +321,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatMemberAddress(application)
     application = Service._formatMemberDOB(application)
     application = Service._formatPreferences(application)
+    application = Service._formatGenderOptions(application)
     delete application.completedSections
+    debugger
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
@@ -373,7 +375,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 
   Service._formatMemberAddress = (application) ->
     application.householdMembers.forEach( (member) ->
-      console.log(member, 'this is a member')
       _.forEach member.home_address, (value, key) ->
         if !(key == 'address1' || key == 'address2')
           member[key] = value
@@ -413,6 +414,14 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       application.householdVouchersSubsidies = false
     delete application.householdVouchersSubsidies
     delete application.preferences
+    return application
+
+  Service._formatGenderOptions = (application) ->
+    allGenders = ""
+    _.forEach application.applicant.gender, (value, key) ->
+      allGenders += (key + ";") if value
+      return
+    application.applicant.gender = allGenders
     return application
 
   return Service
