@@ -11,7 +11,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       | {{'ERROR.FIRST_NAME' | translate}}
     label.sr-only for="applicantMiddleName"
       | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-    input#applicantMiddleName ng-model="applicant.middle_name" name="middle_name" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+    input#applicantMiddleName ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
     label.sr-only for="applicantLastName"
       | {{'LABEL.LAST_NAME' | translate}}
     input#applicantLastName ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
