@@ -324,7 +324,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     month = application.applicant.dob_month
     day = application.applicant.dob_day
     year = application.applicant.dob_year
-    formattedDOB = moment(year + ' ' + month + ' ' + day, "YYYY MM DD").format()
+    formattedDOB = month + '/' + day + '/' + year
     application.applicant.DOB = formattedDOB
     return application
 
