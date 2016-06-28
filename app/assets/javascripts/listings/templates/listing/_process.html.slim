@@ -52,5 +52,8 @@ accordion-heading
       p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
         | Lottery date, time and venue to be scheduled.
 
-    .content-panel.padding-bottom.no-margin
+    .content-panel.padding-bottom.no-margin ng-class="{'border-bottom': listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email}"
       ng-include src="'listings/templates/listing/_what_to_expect.html'"
+
+    .content-panel.padding-bottom ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+      ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
