@@ -77,6 +77,11 @@ class SalesforceService
     api_get(endpoint, params, false)
   end
 
+  def self.submit_application(params)
+    endpoint = '/services/apexrest/shortForm'
+    p api_get(endpoint, params)
+  end
+
   def self.api_get(endpoint, params = nil, parse_response = true)
     response = oauth_client.get(endpoint, params)
     if parse_response

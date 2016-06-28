@@ -41,8 +41,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Income: {}
       Review: {}
 
-  Service.formattedApplication = angular.copy(Service.applicationDefaults)
-
   Service.current_id = 0
   Service.session_uid = uuid.v4()
   Service.userkey = uuid.v4()
@@ -312,8 +310,19 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_error"] = true
     ))
 
-  Service.submitApplication = ->
+  Service.submitApplication = (listingId)->
+    applicationParams = Service._formatApplication(listingId)
+    console.log(applicationParams)
+    $http.post("/api/v1/submit-application", applicationParams).success((data, status, headers, config) ->
+      console.log('success')
+      data
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service._formatApplication = (listingId) ->
     application = angular.copy(Service.application)
+    application.listingID = listingId
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
@@ -326,7 +335,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
     delete application.completedSections
-    # angular.copy(application, Service.formattedApplication)
+    return application
 
   Service._formatDOB = (application) ->
     month = application.applicant.dob_month

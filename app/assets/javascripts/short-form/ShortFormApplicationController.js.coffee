@@ -356,10 +356,10 @@ ShortFormApplicationController = (
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
   $scope.submitApplication = ->
-    console.log('submit application')
-    ShortFormApplicationService.submitApplication()
+    # console.log('submit application')
+    ShortFormApplicationService.submitApplication($scope.listing.Id)
       .then( (response) ->
-        console.log('done', response)
+        # console.log('done', response)
         $state.go('dahlia.short-form-application.confirmation')
       )
 
