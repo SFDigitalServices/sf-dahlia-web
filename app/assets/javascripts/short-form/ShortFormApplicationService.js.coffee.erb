@@ -320,6 +320,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
     application = Service._formatMemberAddress(application)
     application = Service._formatMemberDOB(application)
+    application = Service._formatPreferences(application)
     # angular.copy(application, Service.formattedApplication)
 
   Service._formatDOB = (application) ->
@@ -379,6 +380,37 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       delete member.home_address
       delete member.confirmed_home_address
     )
+    return application
+
+  Service._formatPreferences = (application) ->
+    preferences = [
+        'displaced',
+        'certOfPreference',
+        'liveInSf',
+        'workInSf',
+        'neighborhoodResidence'
+    ]
+
+    allMembers = angular.copy(application.householdMembers)
+    allMembers.push(application.applicant)
+
+    preferences.forEach( (preference) ->
+      memberName = application.preferences[preference + '_household_member']
+      member = _.find(allMembers, (m) ->
+        return memberName == (m.firstName + ' ' + m.lastName)
+      )
+      return unless member
+      memberDOB = member.DOB.replace(/\//g, '.')
+      application[preference] = member.firstName + ',' + member.lastName + ',' + memberDOB
+      delete application.preferences[preference + '_household_member']
+    )
+
+    if application.householdVouchersSubsidies == 'Yes'
+      application.householdVouchersSubsidies = true
+    else
+      application.householdVouchersSubsidies = false
+    delete application.householdVouchersSubsidies
+    delete application.preferences
     return application
 
   return Service
