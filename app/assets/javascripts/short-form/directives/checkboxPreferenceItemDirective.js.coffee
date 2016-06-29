@@ -12,17 +12,27 @@ angular.module('dahlia.directives')
     scope.pref_type_proof_option = "#{scope.pref_type}_proof_option"
     scope.pref_type_proof_file = "#{scope.pref_type}_proof_file"
     scope.labelledby = attrs.labelledby
+
     scope.show_preferences_options = (application) ->
       return false if !application.preferences
       application.preferences[scope.pref_type] && attrs.uploadProof
+
+    scope.show_preference_uploader = (application) ->
+      scope.show_preferences_options(application) &&
+        !scope.preferenceFileIsLoading(scope.pref_type_proof_file) &&
+        !scope.hasPreferenceFile(scope.pref_type_proof_file)
 
     scope.eligible_members = () ->
       if attrs.type == "liveInSf"
         scope.liveInSfMembers()
       else if attrs.type == "workInSf"
         scope.workInSfMembers()
+      else if attrs.type == "neighborhoodResidence"
+        scope.neighborhoodResidenceMembers()
       else
-        scope.householdMembers
+        members = scope.householdMembers.slice()
+        members.push(scope.applicant)
+        return members
 
     scope.only_applicant_eligible = () ->
       applicant_only = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)

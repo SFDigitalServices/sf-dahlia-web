@@ -20,7 +20,8 @@
   'duScroll',
   'ngIdle',
   'ui.validate',
-  'ng-token-auth'
+  'ng-token-auth',
+  'angular-uuid',
 ]
 
 # Custom Directives

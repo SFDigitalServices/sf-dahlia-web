@@ -257,6 +257,24 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
+  $scope.neighborhoodResidenceMembers = ->
+    ShortFormApplicationService.neighborhoodResidenceMembers()
+
+  $scope.uploadProof = (file, prefType) ->
+    ShortFormApplicationService.uploadProof(file, prefType)
+
+  $scope.hasPreferenceFile = (fileType) ->
+    ShortFormApplicationService.hasPreferenceFile(fileType)
+
+  $scope.deletePreferenceFile = (prefType) ->
+    ShortFormApplicationService.deletePreferenceFile(prefType)
+
+  $scope.preferenceFileError = (fileType) ->
+    ShortFormApplicationService.preferenceFileError(fileType)
+
+  $scope.preferenceFileIsLoading = (fileType) ->
+    ShortFormApplicationService.preferenceFileIsLoading(fileType)
+
   ###### Household Section ########
   $scope.getHouseholdMember = ->
     # we just edit a copy, and then put it back in place after saving in addHouseholdMember

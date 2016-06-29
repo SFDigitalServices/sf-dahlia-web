@@ -40,4 +40,5 @@
 //= require angular-cookie
 //= require ng-token-auth
 //= require angular-ui-validate
+//= require angular-uuids
 //= require_tree .

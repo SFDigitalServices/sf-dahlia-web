@@ -4,6 +4,8 @@ do ->
     ShortFormApplicationService = undefined
     $localStorage = undefined
     $translate = {}
+    Upload = {}
+    uuid = {v4: jasmine.createSpy()}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -23,6 +25,8 @@ do ->
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
+      $provide.value 'Upload', Upload
+      $provide.value 'uuid', uuid
       return
     )
 
@@ -183,17 +187,6 @@ do ->
         return
 
     describe 'refreshLiveWorkPreferences', ->
-      describe 'applicant works in SF', ->
-        beforeEach ->
-          ShortFormApplicationService.householdMembers = []
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.workInSf = 'Yes'
-        it 'should assign workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
-          return
-        return
-
       describe 'applicant does not work in SF', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
@@ -203,37 +196,6 @@ do ->
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(false)
-          return
-        return
-
-      describe 'household member works in SF', ->
-        beforeEach ->
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.workInSf = 'No'
-
-        it 'should not be assigned workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(true)
-          return
-        return
-
-      describe 'applicant lives in SF', ->
-        beforeEach ->
-          ShortFormApplicationService.householdMembers = []
-          ShortFormApplicationService.applicant = fakeApplicant
-
-        it 'should be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
           return
         return
 
@@ -253,34 +215,6 @@ do ->
           expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
           return
         return
-
-      describe 'household member lives in sf', ->
-        beforeEach ->
-          home_address = {
-            address1: "312 Delaware RD"
-            address2: ""
-            city: "Mount Shasta"
-          }
-          ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMemberWithAltMailingAddress =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-            hasSameAddressAsApplicant: 'No'
-            home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
-
-        it 'should be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(true)
-          return
-        return
-      return
 
     describe 'liveInSfMembers', ->
       describe 'household member has separate sf address', ->
