@@ -95,7 +95,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     return missingInfo
 
   Service.clearPhoneData = (type) ->
-    console.log(type)
     if type == 'alternate'
       Service.applicant.noPhone = false
       if Service.applicant.additionalPhone
