@@ -79,14 +79,6 @@ section.row.margin-bottom--2x
             small.error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe
 
-      .form-card_footer
-        .row.note.bg-vapor.padding.padding-left--2x.padding-right--2x ng-show="!hasCalculatedIncome()"
-          .medium-6.columns
-            p.t-tiny.c-charcoal.medium-margin-top
-              ' If you need help calculating your total, please use this tool:
-          .medium-6.columns
-            a.button.ghost-white.small.no-margin.expand title="Household Income Calculator" ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
-
     .row.margin-top--2x.show-for-medium-up
 
     .button-stack--paginate.row
@@ -95,3 +87,9 @@ section.row.margin-bottom--2x
       .small-12.medium-6.medium-pull-6.columns
         a.button.button-link.button-lined.small-only-text-center.expand-small.d-block title="Reset" href="#" ng-click="clearForm()"
           | Reset
+
+    .note.text-center.bg-vapor.padding.margin-top ng-if="!hasCalculatedIncome()"
+      p.t-small.no-margin
+        ' If you need help calculating your total, please use this tool:
+        button.button-link.t-small ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()"
+          | Household Income Calculator
