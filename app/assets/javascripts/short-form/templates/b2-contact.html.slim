@@ -82,8 +82,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
-      .checkbox ng-click="resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
-        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress"
+      .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
+        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
         label for="applicant_no_address"
           | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
       small.highlight.padding-bottom ng-if="applicant.noAddress"
