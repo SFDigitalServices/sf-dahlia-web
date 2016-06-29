@@ -53,7 +53,7 @@ do ->
 
         openLength =
           ListingService.openMatchListings.length +
-          ListingService.openNotMatchListings.length +
+          ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
       return
@@ -89,9 +89,8 @@ do ->
         listing = fakeListing.listing
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
-        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
-        expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
-        expect(incomeLevels.length).toEqual 2
+        expect(ListingService.occupancyMinMax(listing)).toEqual [1,1]
+        expect(incomeLevels.length).toEqual 1
         return
       return
 
@@ -220,6 +219,33 @@ do ->
         ListingService.getLotteryResults()
         httpBackend.flush()
         expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
+        return
+      return
+
+    describe 'Service.showNeighborhoodPreferences', ->
+      it 'returns true if URL is available and <9 and >2 days from lottery', ->
+        # have to populate listing first
+        listing = fakeListing.listing
+        listing.Lottery_Date = moment().add(4, 'days').toString()
+        listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
+        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
+        return
+      return
+
+      it 'returns false if URL is unavailable', ->
+        # have to populate listing first
+        listing = fakeListing.listing
+        listing.NeighborHoodPreferenceUrl = null
+        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
+        return
+      return
+
+      it 'returns false if URL is available but <2 days from lottery', ->
+        # have to populate listing first
+        listing = fakeListing.listing
+        listing.Lottery_Date = moment().add(1, 'days').toString()
+        listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
+        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
         return
       return
 

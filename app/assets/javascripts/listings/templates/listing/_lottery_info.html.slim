@@ -31,7 +31,7 @@ accordion-heading.lead.accordion-header
         | Lottery date, time and venue to be scheduled.
 
     / neighborhood preference list
-    .content-panel.padding-bottom.no-margin.border-bottom ng-if="listing.NeighborHoodPreferenceUrl"
+    .content-panel.padding-bottom.no-margin.border-bottom ng-if="showNeighborhoodPreferences()"
       h4.t-small.t-sans.t-bold
         | Confirmed Neighborhood Resident Housing Preference List
       a.button.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"

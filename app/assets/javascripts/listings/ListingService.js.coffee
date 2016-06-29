@@ -99,6 +99,15 @@ ListingService = ($http, $localStorage, $modal) ->
       controller: 'ModalInstanceController'
     })
 
+  Service.showNeighborhoodPreferences = (listing) ->
+    return false unless listing.NeighborHoodPreferenceUrl
+    now = moment()
+    lotteryDate = moment(listing.Lottery_Date)
+    begin = lotteryDate.clone().subtract(9, 'days')
+    end = lotteryDate.clone().subtract(2, 'days')
+    return now > begin && now < end
+
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
@@ -168,6 +177,7 @@ ListingService = ($http, $localStorage, $modal) ->
 
   # Business logic for determining if a listing is open
   Service.listingIsOpen = (due_date) ->
+    return false unless due_date
     now = moment()
     # set deadline to 5PM pacific time on the due date
     deadline = moment("#{due_date} 17:00").tz('America/Los_Angeles')
