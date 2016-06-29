@@ -8,7 +8,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
     .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_STATUS_VOUCHERS.TITLE' | translate}}"
       radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
         | {{'T.YES' | translate}}
-      radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true'
+      radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' ng-click="invalidateIncomeForm()"
         | {{'T.NO' | translate}}
 
   short-form-save-and-submit
