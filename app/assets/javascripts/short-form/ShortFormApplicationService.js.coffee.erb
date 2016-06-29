@@ -7,6 +7,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       language: "English"
       phone: null
       mailing_address: { address1: null, city: null, state: null, zip: null }
+      gender: {}
     alternateContact:
       language: "English"
     householdMembers: []
@@ -250,10 +251,13 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
                 toState.name != 'dahlia.short-form-application.name'
     return !jumpAhead
 
-
   Service.isLeavingShortForm = (toState, fromState) ->
     # leaving means we're going from short form to a non-short form page
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.invalidateIncomeForm = ->
+    Service.application.completedSections['Income'] = false
+    Service.application.validatedForms['Income']['income'] = false
 
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)

@@ -302,7 +302,7 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      $state.go(callbackUrl)
+      return $state.go(callbackUrl)
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         $scope._respondToHouseholdEligibilityResults(response, match, callbackUrl)
@@ -330,9 +330,14 @@ ShortFormApplicationController = (
       message = $translate.instant("ERROR.HOUSEHOLD_TOO_SMALL")
     else if error == 'too low'
       message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+      ShortFormApplicationService.invalidateIncomeForm()
     else if error == 'too high'
       message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
+      ShortFormApplicationService.invalidateIncomeForm()
     $scope.householdEligibilityErrorMessage = message
+
+  $scope.invalidateIncomeForm = ->
+    ShortFormApplicationService.invalidateIncomeForm()
 
   ## helpers
   $scope.alternateContactRelationship = ->
