@@ -19,7 +19,6 @@ ShortFormApplicationController = (
   $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
-  $scope.formattedApplication = ShortFormApplicationService.formattedApplication
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
@@ -373,6 +372,7 @@ ShortFormApplicationController = (
   $scope.submitApplication = ->
     ShortFormApplicationService.submitApplication($scope.listing.Id)
       .then( (response) ->
+        console.log(response, 'success submit')
         if response.data.id
           $scope.application.id = response.data.id
           $state.go('dahlia.short-form-application.confirmation')
