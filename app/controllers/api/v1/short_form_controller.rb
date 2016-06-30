@@ -35,8 +35,6 @@ class Api::V1::ShortFormController < ApiController
 
   def submit_application
     response = SalesforceService.submit_application(params)
-    p response
-    p 'response above'
     render json: response
   end
 
