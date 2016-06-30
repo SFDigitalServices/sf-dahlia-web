@@ -90,7 +90,6 @@ ShortFormNavigationService = ($state) ->
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
-        ,'status-vouchers'
         ,'income'
         ,'review-optional'
         ,'review-summary'
@@ -113,6 +112,9 @@ ShortFormNavigationService = ($state) ->
         else
           'household-intro'
       when 'general-lottery-notice'
+        'status-programs'
+      when 'status-vouchers'
+        # TODO: figure out way to back to live-work if appCtrl.checkIfPreferencesApply
         'status-programs'
       # -- catch all
       else
