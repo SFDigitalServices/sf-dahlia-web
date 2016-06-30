@@ -127,7 +127,9 @@
         "CREATE_ACCOUNT": "Create Account",
         "PROOF_OF_ADDRESS": "Proof of address",
         "UPLOADED": "Uploaded",
-        "UPLOADING": "Uploading"
+        "UPLOADING": "Uploading",
+        "IDENTIFY_AS_LGBT": "Do you identify as Lesbian/Gay/Bisexual?",
+        "LIVING_WITH_HIV_AIDS": "Are you living with HIV/AIDS?"
     },
     "T": {
         "YES": "Yes",

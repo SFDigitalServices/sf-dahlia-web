@@ -7,6 +7,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       language: "English"
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      gender: {}
     alternateContact:
       language: "English"
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -40,6 +41,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Status: {}
       Income: {}
       Review: {}
+    surveyComplete: false
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -140,6 +142,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       # update existing householdMember
       angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
+    Service.invalidateHouseholdForm()
 
   Service.resetHouseholdmember = () ->
     Service.householdMember = {}
@@ -166,6 +169,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     # persist the changes to Service.householdMembers / $localStorage
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
+    Service.invalidateHouseholdForm()
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -251,10 +255,18 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
                 toState.name != 'dahlia.short-form-application.name'
     return !jumpAhead
 
-
   Service.isLeavingShortForm = (toState, fromState) ->
     # leaving means we're going from short form to a non-short form page
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.invalidateIncomeForm = ->
+    Service.application.completedSections['Income'] = false
+    Service.application.validatedForms['Income']['income'] = false
+
+  Service.invalidateHouseholdForm = ->
+    Service.application.completedSections['Household'] = false
+    Service.application.completedSections['Status'] = false
+    Service.application.completedSections['Income'] = false
 
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
@@ -490,6 +502,18 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
         member.workInSf = false
     )
     return application
+
+  Service.checkSurveyComplete = ->
+    app = Service.applicant
+    responses = [
+      _.some(app.gender),
+      app.lgbt,
+      app.ethnicity,
+      app.race,
+      app.hiv,
+      _.some(app.referral),
+    ]
+    Service.application.surveyComplete = _.every(responses)
 
   return Service
 

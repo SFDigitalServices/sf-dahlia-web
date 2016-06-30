@@ -1,6 +1,6 @@
 h2.application-title.t-gamma
   | {{'E1_INCOME.TITLE' | translate}}
-form novalidate="" name="form.applicationForm"  ng-submit="submitForm({callback: validateHouseholdEligibility('incomeMatch', 'dahlia.short-form-application.review-optional')})"
+form novalidate="" name="form.applicationForm"  ng-submit="submitForm({callback: validateHouseholdEligibility('incomeMatch')})"
   alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
 
   header.aside-header.alert ng-show="householdEligibilityErrorMessage"

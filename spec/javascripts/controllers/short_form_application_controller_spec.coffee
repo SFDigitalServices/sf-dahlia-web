@@ -26,6 +26,8 @@ do ->
       liveInSfMembers: jasmine.createSpy()
       workInSfMembers: jasmine.createSpy()
       clearAlternateContactDetails: jasmine.createSpy()
+      invalidateHouseholdForm: jasmine.createSpy()
+      invalidateIncomeForm: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
       submitApplication: (listing) ->
@@ -218,10 +220,9 @@ do ->
       it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
 
         match = 'householdMatch'
-        callbackUrl = 'someUrl'
         scope.listing = fakeListing
 
-        scope.validateHouseholdEligibility(match, callbackUrl)
+        scope.validateHouseholdEligibility(match)
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
         return
       return
@@ -232,18 +233,17 @@ do ->
         beforeEach ->
           eligibilityResponse =
             data: validHousehold
-          callbackUrl = 'someUrl'
           return
 
         it 'reset the eligibility error message', ->
           scope.householdEligibilityErrorMessage = 'Error'
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(scope.householdEligibilityErrorMessage).toEqual(null)
           return
 
         it 'navigates to the given callback url', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
-          expect(state.go).toHaveBeenCalledWith(callbackUrl)
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.status-programs')
           return
         return
 
@@ -251,18 +251,22 @@ do ->
         beforeEach ->
           eligibilityResponse =
             data: invalidHousehold
-          callbackUrl = 'someUrl'
           return
 
         it 'updates the scope that shows the alert', ->
           scope.hideAlert = true
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(scope.hideAlert).toEqual(false)
+          return
+
+        it 'expects household section to be invalidated', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
           return
 
         it 'assigns an error message function', ->
           scope.householdEligibilityErrorMessage  = null
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(scope.householdEligibilityErrorMessage).toEqual('newmessage')
           return
         return
@@ -283,20 +287,4 @@ do ->
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(fakeListing.Id)
         return
       return
-  return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> [#108846424] - Shortform - wrote submit application test
+return
