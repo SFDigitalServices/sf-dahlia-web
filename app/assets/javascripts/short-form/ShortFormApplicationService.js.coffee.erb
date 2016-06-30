@@ -314,7 +314,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     applicationParams = Service._formatApplication(listingId)
     console.log(applicationParams)
     $http.post('/api/v1/short-form/submit-application', applicationParams).success((data, status, headers, config) ->
-      console.log('success')
       data
     ).error( (data, status, headers, config) ->
       return
@@ -334,6 +333,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
+    application = Service._formatWorkInSf(application)
     application = Service._renameApplicant(application)
     delete application.completedSections
     delete application.validatedForms
@@ -348,7 +348,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     month = application.applicant.dob_month
     day = application.applicant.dob_day
     year = application.applicant.dob_year
-    formattedDOB = month + '/' + day + '/' + year
+    formattedDOB = year + '-' + month + '-' + day
     application.applicant.DOB = formattedDOB
     delete application.applicant.dob_month
     delete application.applicant.dob_day
@@ -360,7 +360,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       month = member.dob_month
       day = member.dob_day
       year = member.dob_year
-      formattedDOB = month + '/' + day + '/' + year
+      formattedDOB = year + '-' + month + '-' + day
       member.DOB = formattedDOB
       delete member.dob_day
       delete member.dob_month
@@ -399,6 +399,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
           member[key] = value
         return
       member.address = member.home_address.address1 + member.home_address.address2
+
+      if member.hasSameAddressAsApplicant == 'Yes'
+        member.hasSameAddressAsApplicant = true
+      else
+        member.hasSameAddressAsApplicant = false
+
       delete member.home_address
       delete member.confirmed_home_address
       delete member.geocoding_data
@@ -424,6 +430,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       )
       return unless member
       memberDOB = member.DOB.replace(/\//g, '.')
+      preference = preference + 'PreferenceNatKey'
       application[preference] = member.firstName + ',' + member.lastName + ',' + memberDOB
       delete application.preferences[preference + '_household_member']
     )
@@ -468,6 +475,20 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     else if incomeTimeframe == 'per_month'
       application.monthlyIncome = application.householdIncome.incomeTotal
     delete application.householdIncome
+    return application
+
+  Service._formatWorkInSf = (application) ->
+    if application.applicant.workInSf == 'Yes'
+      application.applicant.workInSf = true
+    else
+      application.applicant.workInSf = false
+
+    application.householdMembers.forEach( (member) ->
+      if member.workInSf == 'Yes'
+        member.workInSf = true
+      else
+        member.workInSf = false
+    )
     return application
 
   return Service
