@@ -1,12 +1,36 @@
 h2.application-title.t-gamma
   | {{'F0_REVIEW_OPTIONAL.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary'})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary', callback: 'checkSurveyComplete'})"
   .form-group
     p
       | {{'F0_REVIEW_OPTIONAL.P1' | translate}}
 
   gender-form user='applicant'
+
+  .form-group
+    label.form-label.no-margin
+      | {{'LABEL.IDENTIFY_AS_LGBT' | translate}}
+    p.form-note.margin-bottom
+      | {{'T.OPTIONAL' | translate}}
+    .radio-group role="radiogroup" aria-label="{{'LABEL.IDENTIFY_AS_LGBT' | translate}}"
+      radio-block-item value='Yes' user='applicant' name='lgbt'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='lgbt'
+        | {{'T.NO' | translate}}
+
   race-ethnicity-form user='applicant'
+
+  .form-group
+    label.form-label.no-margin
+      | {{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}
+    p.form-note.margin-bottom
+      | {{'T.OPTIONAL' | translate}}
+    .radio-group role="radiogroup" aria-label="{{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}"
+      radio-block-item value='Yes' user='applicant' name='hiv'
+        | {{'T.YES' | translate}}
+      radio-block-item value='No' user='applicant' name='hiv'
+        | {{'T.NO' | translate}}
+
 
   .form-group
     label.form-label.no-margin id="referral_label"
