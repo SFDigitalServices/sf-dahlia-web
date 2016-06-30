@@ -43,7 +43,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
     label.form-label.no-margin id="hasSameAddressAsApplicant_label"
       | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
     .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-      radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
+      radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' ng-click="resetHouseholdMemberAddress()"
         | {{'T.YES' | translate}}
       radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
         | {{'T.NO' | translate}}
