@@ -297,22 +297,27 @@ ShortFormApplicationController = (
 
   $scope.householdEligibilityErrorMessage = null
 
-  $scope.validateHouseholdEligibility = (match, callbackUrl) ->
+  $scope.validateHouseholdEligibility = (match) ->
     $scope.clearHouseholdErrorMessage()
     form = $scope.form.applicationForm
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      return $state.go(callbackUrl)
+      page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
+      $state.go("dahlia.short-form-application.#{page}")
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
-        $scope._respondToHouseholdEligibilityResults(response, match, callbackUrl)
+        $scope._respondToHouseholdEligibilityResults(response, match)
       )
 
-  $scope._respondToHouseholdEligibilityResults = (response, match, callbackUrl) ->
+  $scope._respondToHouseholdEligibilityResults = (response, match) ->
     eligibility = response.data
     if eligibility[match]
       $scope.householdEligibilityErrorMessage = null
-      $state.go(callbackUrl)
+      if match == 'incomeMatch'
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
+        $state.go("dahlia.short-form-application.#{page}")
+      else
+        $state.go('dahlia.short-form-application.status-programs')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
@@ -341,6 +346,9 @@ ShortFormApplicationController = (
   $scope.invalidateIncomeForm = ->
     ShortFormApplicationService.invalidateIncomeForm()
 
+  $scope.checkSurveyComplete = ->
+    ShortFormApplicationService.checkSurveyComplete()
+
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
@@ -351,8 +359,8 @@ ShortFormApplicationController = (
   $scope.applicationVouchersSubsidies = ->
     ShortFormHelperService.applicationVouchersSubsidies($scope.application)
 
-  $scope.applicantIncomeAmount = ->
-    ShortFormHelperService.applicantIncomeAmount($scope.applicant)
+  $scope.applicationIncomeAmount = ->
+    ShortFormHelperService.applicationIncomeAmount($scope.application)
 
   ## translation helpers
   $scope.applicantFirstName = ->
