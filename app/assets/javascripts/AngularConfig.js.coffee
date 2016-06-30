@@ -109,6 +109,15 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
     })
+    .state('dahlia.short-form-application.create-account', {
+      # duplicated from above but to differentiate state for "Save and finish later"
+      # will be accessed at '/listings/{id}/apply/create-account'
+      url: '/create-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/create-account.html'
+          controller: 'AccountController'
+    })
     .state('dahlia.favorites', {
       url: '/favorites'
       views:
@@ -493,8 +502,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
       # remember which page of short form we're on when we go to create account
-      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
-        AccountService.rememberState(fromState.name, fromParams)
+      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.short-form-application.create-account')
+        AccountService.rememberState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # capture errors when trying to verify address and send them back to the appropriate page
       f = ShortFormApplicationService.form.applicationForm
@@ -542,9 +551,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   IdleProvider.timeout(60)
 ]
 
-@dahlia.config ['$authProvider', ($authProvider) ->
-  $authProvider.configure(
-    apiUrl: '/api/v1'
-    storage: 'sessionStorage'
-  )
+@dahlia.config [
+  '$authProvider', 'AccountConfirmationServiceProvider',
+  ($authProvider, AccountConfirmationServiceProvider) ->
+    # this creates a new AccountConfirmationService,
+    # which can tap into AccountService to provide the appropriate confirmationSuccessUrl
+    conf = AccountConfirmationServiceProvider.$get()
+    $authProvider.configure
+      apiUrl: '/api/v1'
+      storage: 'sessionStorage'
+      confirmationSuccessUrl: conf.confirmationSuccessUrl
 ]

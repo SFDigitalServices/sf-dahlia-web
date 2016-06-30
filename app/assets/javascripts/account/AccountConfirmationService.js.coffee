@@ -2,33 +2,25 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth) ->
+AccountConfirmationService = ($location, AccountService) ->
   Service = {}
-  Service.userAuth = {}
-  Service.rememberedState = null
 
-  Service.rememberState = (name, params) ->
-    Service.rememberedState = name
+  Service.baseUrl = ->
+    port = if $location.port() == 80 then '' else  ":#{$location.port()}"
+    "#{$location.protocol()}://#{$location.host()}#{port}"
 
-  Service.createAccount = ->
-    $auth.submitRegistration(Service.userAuth)
-      .then((response) ->
-        # handle success response
-        alert('OK!')
-      ).catch((response) ->
-        # handle error response
-        alert("Error: #{response.data.errors.full_messages[0]}")
-      )
+  Service.confirmationSuccessUrl = ->
+    # TODO: update this logic using AccountService
+    "#{Service.baseUrl()}/?yippee"
 
   return Service
-
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth']
+AccountConfirmationService.$inject = ['$location', 'AccountService']
 
 angular
   .module('dahlia.services')
-  .service('AccountService', AccountService)
+  .service('AccountConfirmationService', AccountConfirmationService)

@@ -5,9 +5,6 @@ AccountController = ($scope, AccountService) ->
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
 
-  $scope.continueApplication = ->
-    AccountService.returnToRememberedState()
-
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
