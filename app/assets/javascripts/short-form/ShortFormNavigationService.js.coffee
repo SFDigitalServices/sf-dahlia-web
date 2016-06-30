@@ -21,6 +21,7 @@ ShortFormNavigationService = ($state) ->
     { name: 'Status', pages: [
         'status-programs',
         'live-work-preference',
+        'general-lottery-notice',
         'status-vouchers'
       ]
     },

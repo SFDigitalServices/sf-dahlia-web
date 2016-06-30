@@ -471,6 +471,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    .state('dahlia.short-form-application.general-lottery-notice', {
+      url: '/general-lottery-notice'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2f-general-lottery-notice.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.live-work-preference', {
       url: '/live-work-preference'
       views:
