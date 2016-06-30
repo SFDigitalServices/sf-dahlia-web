@@ -1,9 +1,16 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
 .form-group.padding-bottom--2x
+  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
+
+  header.aside-header.alert ng-show="householdEligibilityErrorMessage"
+    hgroup.aside-header_group
+      p.c-steel
+        | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+
   .button-stack.text-center.row.padding-top
     .small-12.medium-6.columns
-      button.button.tertiary.t-caps.t-bold.expand.tall ui-sref="dahlia.short-form-application.status-programs"
+      button.button.tertiary.t-caps.t-bold.expand.tall ng-click="validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.status-programs')"
         | {{'LABEL.LIVE_ALONE' | translate}}
     .small-12.medium-6.columns
       button.button.tertiary.t-caps.t-bold.expand.tall ui-sref="dahlia.short-form-application.household-overview"

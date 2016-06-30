@@ -26,6 +26,8 @@ do ->
       liveInSfMembers: jasmine.createSpy()
       workInSfMembers: jasmine.createSpy()
       clearAlternateContactDetails: jasmine.createSpy()
+      invalidateHouseholdForm: jasmine.createSpy()
+      invalidateIncomeForm: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
       validMailingAddress: ->
@@ -255,6 +257,11 @@ do ->
           scope.hideAlert = true
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
           expect(scope.hideAlert).toEqual(false)
+          return
+
+        it 'expects household section to be invalidated', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
+          expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
           return
 
         it 'assigns an error message function', ->
