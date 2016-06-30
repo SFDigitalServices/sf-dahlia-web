@@ -1,1 +1,64 @@
-h1 Eligibility Settings
+.dash-container
+  section.row.collapse
+    .medium-10.medium-centered.columns
+      form.dash-card.margin-bottom
+        header.dash-header.text-center.margin-bottom
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-eligibility"
+          h1.dash-title.no-margin My Eligibility
+        .row
+          .medium-6.columns.padding-left--2x.padding-top.padding-bottom
+            header.margin-bottom
+              h3.t-serif.gamma Household Size
+              p.c-steel Household is defined as anyone living with you in the residence, including spouse, roommates, parents and children.
+            .form-group
+              label.form-label.sr-only Household Size
+              select#people data-width="auto" name="people"
+                option value=""  Enter number of people
+                option value="1"  1
+                option value="2"  2
+                option value="3"  3
+                option value="4"  4
+                option value="5"  5
+                option value="6"  6
+            .form-group.padding-bottom--half
+              .checkbox
+                input#peach-pie name="peach-pie" type="checkbox"
+                label for="peach-pie"  Yes, this includes children under 6
+            .form-group
+              select#children data-width="auto" name="children"
+                option value=""  How many children?
+                option value="1"  1
+                option value="2"  2
+                option value="3"  3
+                option value="4"  4
+                option value="5"  5
+                option value="6"  6
+          .medium-6.columns.padding-right--2x.padding-top.padding-bottom
+            header.margin-bottom
+              h3.t-serif.gamma Household Pre-Tax Income
+              p.c-steel Next add up your gross (pre-tax) household income from wages, benefits and other sources from household members.
+            .form-group
+              label.form-label.sr-only Household Income
+              .form-income
+                label.sr-only aria-label="Income" for="income"  Income
+                input#income.form-income_input name="income" placeholder=("Total all of your income sources") type="text"
+                span.label-dollar $
+            .radio-group-inline
+              p.radio-inline
+                input#income-month name="income" type="radio" value="income-month"
+                label.radio-inline_label for="income-month"  per month
+              p.radio-inline
+                input#income-year name="income" type="radio" value="income-year"
+                label.radio-inline_label for="income-year"  per year
+      .button-stack--paginate.row
+        .small-12.medium-6.medium-push-6.columns
+          button.button.right.primary.expand-small View Matching Properties
+        .small-12.medium-6.medium-pull-6.columns
+          button.button.button-link.button-lined.small-text-center.expand-small Reset Filters
+      .note.text-center.bg-white.padding
+        p.t-tiny.no-margin
+          | If you need help calculating your total, please use this tool:
+          button.button-link.t-tiny Household Income Calculator
