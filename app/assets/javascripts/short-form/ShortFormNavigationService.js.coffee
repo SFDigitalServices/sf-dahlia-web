@@ -112,6 +112,8 @@ ShortFormNavigationService = ($state) ->
           'household-members'
         else
           'household-intro'
+      when 'general-lottery-notice'
+        'status-programs'
       # -- catch all
       else
         'intro'
