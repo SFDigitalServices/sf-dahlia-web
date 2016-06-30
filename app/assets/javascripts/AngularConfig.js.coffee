@@ -102,12 +102,48 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getLotteryResults)
         ]
     })
+    .state('dahlia.account-settings', {
+      url: '/account-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/account-settings.html'
+    })
     .state('dahlia.create-account', {
       url: '/create-account'
       views:
         'container@':
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
+    })
+    .state('dahlia.eligibility-settings', {
+      url: '/eligibility-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/eligibility-settings.html'
+    })
+    .state('dahlia.my-account', {
+      url: '/my-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-account.html'
+    })
+    .state('dahlia.my-applications', {
+      url: '/my-applications'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-applications.html'
+    })
+    .state('dahlia.my-favorites', {
+      url: '/my-favorites'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-favorites.html'
+    })
+    .state('dahlia.signin', {
+      url: '/signin'
+      views:
+        'container@':
+          templateUrl: 'account/templates/signin.html'
     })
     .state('dahlia.favorites', {
       url: '/favorites'
