@@ -1,7 +1,47 @@
 pageslide ps-open="showNavMobile" ps-side="right" ps-size="{{ '300px' }}" ps-cloak="false"
-  button.nav-mobile_menu-icon.i-white.button-link title="Close Menu" ng-click="toggleNavMobile()" aria-label="Close Menu"
-    span.ui-icon.ui-large.i-white
-      svg
-        use xlink:href="#i-menu"
+  header.nav-mobile_header
+    button.nav-mobile_menu-icon.i-white.button-link title="Close Menu" ng-click="toggleNavMobile()" aria-label="Close Menu"
+      span.ui-icon.ui-medium.i-white
+        svg
+          use xlink:href="#i-right"
 
-  ul.nav-mobile ng-click="toggleNavMobile()" ng-include="'shared/templates/nav/_nav_items.html'"
+  ul.nav-mobile ng-click="toggleNavMobile()"
+    li.has-icon
+      a ui-sref="dahlia.listings"
+        span.ui-icon
+          svg
+            use xlink:href="#i-browse"
+        | Browse Listings
+    li.has-icon
+      a ui-sref="dahlia.favorites"
+        span.ui-icon
+          svg
+            use xlink:href="#i-favorite"
+        | My Favorites
+    li.has-icon
+      a ui-sref="dahlia.get-assistance"
+        span.ui-icon
+          svg
+            use xlink:href="#i-assistance"
+        | Get Assistance
+    li.has-icon
+      a ui-sref="dahlia.my-applications"
+        span.ui-icon
+          svg
+            use xlink:href="#i-application"
+        | My Applications
+    li.has-icon
+      a ui-sref="dahlia.eligibility-settings"
+        span.ui-icon
+          svg
+            use xlink:href="#i-eligibility"
+        | Eligibility Settings
+    li.has-icon
+      a ui-sref="dahlia.accounts-settings"
+        span.ui-icon
+          svg
+            use xlink:href="#i-settings"
+        | Account Settings
+    li.has-icon
+      a ui-sref="#"
+        | Sign Out
