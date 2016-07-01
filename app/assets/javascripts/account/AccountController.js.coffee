@@ -18,6 +18,8 @@ AccountController = ($scope, AccountService) ->
     if form.$valid
       # AccountService.userAuth will have been modified by form inputs
       AccountService.createAccount().then ->
+        # reset the form
+        form.$setUntouched()
         form.$setPristine()
     else
       $scope.hideAlert = false
