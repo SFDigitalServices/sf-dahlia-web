@@ -55,8 +55,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'shared/templates/version.html'
         'nav@':
           templateUrl: 'shared/templates/nav/nav.html'
+          controller: 'NavController'
         'nav-mobile@':
           templateUrl: 'shared/templates/nav/nav-mobile.html'
+          controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
       resolve:
@@ -479,6 +481,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+    # check if user is logged in
+    AccountService.validateUser()
+
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
@@ -497,25 +502,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if toSection
         # we're in shortForm
         fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
-        ShortFormApplicationService.checkFormState(fromState.name, fromSection)
+        ShortFormApplicationService.checkFormState(fromState.name, fromSection) if fromSection
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.short-form-application.create-account')
         AccountService.rememberState(fromState.name)
-    $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-      # capture errors when trying to verify address and send them back to the appropriate page
-      f = ShortFormApplicationService.form.applicationForm
-      f.$submitted = true
-      f.$invalid = true
-      f.$valid = false
-      if toState.name == 'dahlia.short-form-application.verify-address'
-        e.preventDefault()
-        return $state.go('dahlia.short-form-application.contact', toParams)
-      else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
-        e.preventDefault()
-        return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->

@@ -10,8 +10,9 @@ AccountConfirmationService = ($location, AccountService) ->
     "#{$location.protocol()}://#{$location.host()}#{port}"
 
   Service.confirmationSuccessUrl = ->
-    # TODO: update this logic using AccountService
-    "#{Service.baseUrl()}/?yippee"
+    # TODO: update this logic using AccountService once we are ready
+    #       to set up confirmation success pages + modals
+    "#{Service.baseUrl()}/?redirected"
 
   return Service
 
