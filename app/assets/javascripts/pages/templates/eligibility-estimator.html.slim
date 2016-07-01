@@ -57,9 +57,11 @@ section.row.margin-bottom--2x
               | Please enter number of children
 
         .medium-6.columns.padding-top.padding-bottom.padding-right--2x
-          h3.t-serif.gamma Household Income
+          h3.t-serif.gamma
+            | Household Pre-Tax Income
 
-          p.c-steel.t-tall Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
+          p.c-steel.t-tall
+            | Next add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.
           .form-group.p-relative ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
             label.form-label.t-caps.sr-only for="income_total" Household Income
             .form-income
@@ -79,14 +81,6 @@ section.row.margin-bottom--2x
             small.error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe
 
-      .form-card_footer
-        .row.note.bg-vapor.padding.padding-left--2x.padding-right--2x ng-show="!hasCalculatedIncome()"
-          .medium-6.columns
-            p.t-tiny.c-charcoal.medium-margin-top
-              ' If you need help calculating your total, please use this tool:
-          .medium-6.columns
-            a.button.ghost-white.small.no-margin.expand title="Household Income Calculator" ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()" Household Income Calculator
-
     .row.margin-top--2x.show-for-medium-up
 
     .button-stack--paginate.row
@@ -95,3 +89,9 @@ section.row.margin-bottom--2x
       .small-12.medium-6.medium-pull-6.columns
         a.button.button-link.button-lined.small-only-text-center.expand-small.d-block title="Reset" href="#" ng-click="clearForm()"
           | Reset
+
+    .note.text-center.bg-vapor.padding.margin-top ng-if="!hasCalculatedIncome()"
+      p.t-small.no-margin
+        ' If you need help calculating your total, please use this tool:
+        button.button-link.t-small ui-sref="dahlia.income-calculator.intro" ng-click="goToIncomeCalculator()"
+          | Household Income Calculator

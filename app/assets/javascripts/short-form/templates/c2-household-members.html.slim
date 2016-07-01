@@ -1,6 +1,6 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'C2_HOUSEHOLD_MEMBERS.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.status-programs')})"
+form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: validateHouseholdEligibility('householdMatch')})"
   alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
 
   header.aside-header.alert ng-show="householdEligibilityErrorMessage"

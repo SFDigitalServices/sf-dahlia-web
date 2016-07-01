@@ -12,14 +12,14 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
         | {{option[1]}}
 
       .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
-        input#alternateContactRelationship ng-model="alternateContact.alternateContactTypeOther" name="type" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
+        input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactType" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
         small.error ng-show="inputInvalid('alternateContactTypeOther')"
           | {{'ERROR.RELATIONSHIP' | translate}}
 
       .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
         / this option to bypass alternate contact is only available
         / if the applicant has entered phone and address
-        input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="type" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
+        input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="alternateContactType" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
         label.radio-block_label for="alternate_contact_none"
          | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
 

@@ -37,13 +37,19 @@ ShortFormNavigationService = ($state) ->
   ]
 
   Service.getLandingPage = (section, application) ->
-    if section.name == 'Household'
-      if application.householdMembers.length
-        'household-members'
+    switch section.name
+      when 'Household'
+        if application.householdMembers.length
+          'household-members'
+        else
+          'household-intro'
+      when 'Review'
+        if application.surveyComplete
+          'review-summary'
+        else
+          'review-optional'
       else
-        'household-intro'
-    else
-      section.pages[0]
+        section.pages[0]
 
 
   Service.hasNav = ->
