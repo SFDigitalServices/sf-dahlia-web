@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountConfirmationService = ($location, AccountService) ->
+AccountConfirmationService = ($state, $location, AccountService) ->
   Service = {}
 
   Service.baseUrl = ->
@@ -12,7 +12,7 @@ AccountConfirmationService = ($location, AccountService) ->
   Service.confirmationSuccessUrl = ->
     # TODO: update this logic using AccountService once we are ready
     #       to set up confirmation success pages + modals
-    "#{Service.baseUrl()}/?redirected"
+    $state.href('dahlia.my-account', {}, {absolute: true})
 
   return Service
 
@@ -20,7 +20,7 @@ AccountConfirmationService = ($location, AccountService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountConfirmationService.$inject = ['$location', 'AccountService']
+AccountConfirmationService.$inject = ['$state', '$location', 'AccountService']
 
 angular
   .module('dahlia.services')

@@ -104,6 +104,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getLotteryResults)
         ]
     })
+    ##########################
+    # < Account/Login pages >
+    ##########################
     .state('dahlia.create-account', {
       url: '/create-account'
       views:
@@ -120,6 +123,69 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
     })
+    .state('dahlia.signin', {
+      url: '/signin'
+      views:
+        'container@':
+          templateUrl: 'account/templates/signin.html'
+    })
+    ############
+    # TODO: refactor "my account" pages to be under the same namespace/controller
+    # once these pages become functional
+    ############
+    .state('dahlia.account-settings', {
+      url: '/account-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/account-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.eligibility-settings', {
+      url: '/eligibility-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/eligibility-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-account', {
+      url: '/my-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-account.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-applications', {
+      url: '/my-applications'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-applications.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-favorites', {
+      url: '/my-favorites'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-favorites.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    ##########################
+    # </ End Account/Login >
+    ##########################
     .state('dahlia.favorites', {
       url: '/favorites'
       views:
@@ -509,6 +575,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.short-form-application.create-account')
         AccountService.rememberState(fromState.name)
+    $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+      if fromState.name == ''
+        return $state.go('dahlia.welcome')
+
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
