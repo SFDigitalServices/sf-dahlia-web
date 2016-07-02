@@ -160,7 +160,7 @@ GEM
     parser (2.3.1.2)
       ast (~> 2.2)
     pg (0.18.4)
-    phantomjs (2.1.1.0)
+    phantomjs (1.9.8.0)
     pkg-config (1.1.7)
     powerpack (0.1.1)
     pry (0.10.3)
