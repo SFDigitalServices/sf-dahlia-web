@@ -23,33 +23,33 @@
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps
-              | Your Name
+              | {{'LABEL.YOUR_NAME' | translate}}
             label.sr-only for="textInput"
-              | Email address
-            input#textInput name="textInput" placeholder=("First Name") type="text"
+              | {{'LABEL.FIRST_NAME' | translate}}
+            input#textInput name="textInput" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text"
             label.sr-only for="textInput"
-              | Middle Name (optional)
-            input#textInput name="textInput" placeholder=("Middle Name (optional)") type="text"
+              | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
+            input#textInput name="textInput" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
             label.sr-only for="textInput"
-              | Last Name
-            input#textInput name="textInput" placeholder=("Last Name") type="text"
+              | {{'LABEL.LAST_NAME' | translate}}
+            input#textInput name="textInput" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text"
 
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps
-              | Your Date of Birth
+              | {{'LABEL.YOUR_DOB' | translate}}
             .form-date-of-birth.row.collapse
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_1"
-                  | Month
+                  | {{'LABEL.DOB_MONTH' | translate}}
                 input max="12" min="1" name="date_of_birth_1" placeholder="MM" type="number"
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_2"
-                  | Day
+                  | {{'LABEL.DOB_DAY' | translate}}
                 input max="31" min="1" name="date_of_birth_2" placeholder="DD" type="number"
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_3"
-                  | Year
+                  | {{'LABEL.DOB_YEAR' | translate}}
                 input max="2016" min="1900" name="date_of_birth_3" placeholder="YYYY" type="number"
 
         .dash-card-inner.inset.border-bottom
