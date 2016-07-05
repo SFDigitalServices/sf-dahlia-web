@@ -235,7 +235,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     !!state.name.match(/short-form-welcome\./)
 
   Service.isShortFormPage = (state) ->
-    !!state.name.match(/short-form-application\.|create-account/)
+    !!state.name.match(/short-form-application\./)
 
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
