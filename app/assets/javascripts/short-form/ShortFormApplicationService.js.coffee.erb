@@ -323,9 +323,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     ))
 
   Service.submitApplication = (listingId)->
-    applicationParams = Service._formatApplication(listingId)
-    # console.log(applicationParams)
-    $http.post('/api/v1/short-form/submit-application', applicationParams).success((data, status, headers, config) ->
+    params =
+      application: Service._formatApplication(listingId)
+    # console.log(params)
+    $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
       return
@@ -444,7 +445,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
         return memberName == (m.firstName + ' ' + m.lastName)
       )
       return unless member
-      memberDOB = member.DOB.replace(/\//g, '.')
+      memberDOB = member.dob.replace(/\//g, '.')
       preference = preference + 'PreferenceNatKey'
       application[preference] = member.firstName + ',' + member.lastName + ',' + memberDOB
       delete application.preferences[preference + '_household_member']

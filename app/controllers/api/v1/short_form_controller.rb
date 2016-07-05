@@ -34,7 +34,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = SalesforceService.submit_application(params)
+    response = SalesforceService.submit_application(application_params)
     render json: response
   end
 
@@ -48,6 +48,87 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(:file, :session_uid, :userkey, :preference)
+  end
+
+  def application_params
+    params.require(:application)
+          .permit(
+            :id,
+            {
+              primaryApplicant: %i(
+                language
+                phone
+                firstName
+                lastName
+                middleName
+                noPhone
+                phoneType
+                additionalPhone
+                alternatePhone
+                alternatePhoneType
+                email
+                noEmail
+                noAddress
+                hasAltMailingAddress
+                workInSf
+                languageOther
+                gender
+                genderOther
+                ethnicity
+                race
+                lgbt
+                hiv
+                dob
+                address
+                city
+                state
+                zip
+                mailingAddress
+                mailingCity
+                mailingState
+                mailingZip
+              ),
+            },
+            {
+              alternateContact: %i(
+                language
+                alternateContactType
+                firstName
+                lastName
+                agency
+                phone
+                email
+                languageOther
+                mailingAddress
+                mailingCity
+                mailingState
+                mailingZip
+              ),
+            },
+            {
+              householdMembers: %i(
+                firstName
+                lastName
+                hasSameAddressAsApplicant
+                workInSf
+                relationship
+                dob
+                address
+                city
+                state
+                zip
+              ),
+            },
+            :listingID,
+            :displacedPreferenceNatKey,
+            :certOfPreferencePreferenceNatKey,
+            :liveInSfPreferenceNatKey,
+            :workInSfPreferenceNatKey,
+            :neighborhoodResidencePreferenceNatKey,
+            :referral,
+            :annualIncome,
+            :agreeToTerms,
+          )
   end
 
   def uploaded_file_attrs
