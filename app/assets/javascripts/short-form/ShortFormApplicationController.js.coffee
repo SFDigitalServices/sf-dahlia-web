@@ -303,7 +303,7 @@ ShortFormApplicationController = (
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
-      $state.go("dahlia.short-form-application.#{page}")
+      return $state.go("dahlia.short-form-application.#{page}")
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         $scope._respondToHouseholdEligibilityResults(response, match)
