@@ -393,6 +393,20 @@ ShortFormApplicationController = (
     $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
 
+  $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+    # capture errors when trying to verify address and send them back to the appropriate page
+    f = ShortFormApplicationService.form.applicationForm
+    f.$submitted = true
+    f.$invalid = true
+    f.$valid = false
+    if toState.name == 'dahlia.short-form-application.verify-address'
+      e.preventDefault()
+      return $state.go('dahlia.short-form-application.contact', toParams)
+    else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
+      e.preventDefault()
+      return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
+
+
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'

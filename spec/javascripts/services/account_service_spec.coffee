@@ -5,7 +5,6 @@ do ->
     $state = undefined
     $auth = undefined
     fakeState = 'dahlia.short-form-application.contact'
-    fakeParams = null
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
 
     beforeEach module('ui.router')
@@ -28,16 +27,8 @@ do ->
 
     describe 'rememberState', ->
       it 'saves rememberedState', ->
-        AccountService.rememberState(fakeState, fakeParams)
+        AccountService.rememberState(fakeState)
         expect(AccountService.rememberedState).toEqual fakeState
-        return
-      return
-
-    describe 'returnToRememberedState', ->
-      it 'calls $state.go with rememberedState', ->
-        AccountService.rememberState(fakeState, fakeParams)
-        AccountService.returnToRememberedState()
-        expect($state.go).toHaveBeenCalledWith fakeState, fakeParams
         return
       return
 
