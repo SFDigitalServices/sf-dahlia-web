@@ -337,7 +337,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
-    application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
+    if application.alternateContact.alternateContactType != 'None'
+      application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
     application = Service._formatMemberAddress(application)
     application = Service._formatMemberDOB(application)
     application = Service._formatPreferences(application)
@@ -349,6 +350,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._renameApplicant(application)
     delete application.completedSections
     delete application.validatedForms
+    delete application.surveyComplete
     return application
 
   Service._renameApplicant = (application) ->
@@ -361,7 +363,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     day = application.applicant.dob_day
     year = application.applicant.dob_year
     formattedDOB = year + '-' + month + '-' + day
-    application.applicant.DOB = formattedDOB
+    application.applicant.dob = formattedDOB
     delete application.applicant.dob_month
     delete application.applicant.dob_day
     delete application.applicant.dob_year
@@ -373,7 +375,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       day = member.dob_day
       year = member.dob_year
       formattedDOB = year + '-' + month + '-' + day
-      member.DOB = formattedDOB
+      member.dob = formattedDOB
       delete member.dob_day
       delete member.dob_month
       delete member.dob_year
@@ -406,11 +408,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 
   Service._formatMemberAddress = (application) ->
     application.householdMembers.forEach( (member) ->
-      _.forEach member.home_address, (value, key) ->
-        if !(key == 'address1' || key == 'address2')
-          member[key] = value
-        return
-      member.address = member.home_address.address1 + member.home_address.address2
+      if member.home_address
+        _.forEach member.home_address, (value, key) ->
+          if !(key == 'address1' || key == 'address2')
+            member[key] = value
+          return
+        member.address = member.home_address.address1 + member.home_address.address2
 
       if member.hasSameAddressAsApplicant == 'Yes'
         member.hasSameAddressAsApplicant = true

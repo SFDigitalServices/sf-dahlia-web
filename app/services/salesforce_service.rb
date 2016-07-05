@@ -98,8 +98,8 @@ class SalesforceService
       # p "UH OH -- Restforce error"
       []
     end
-  rescue StandardError
-    # p "UH OH -- StandardError #{e.message}"
+  rescue StandardError => e
+    p "UH OH -- StandardError #{e.message}"
     []
   end
 
