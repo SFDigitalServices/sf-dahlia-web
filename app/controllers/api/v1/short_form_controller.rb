@@ -121,12 +121,13 @@ class Api::V1::ShortFormController < ApiController
             },
             :listingID,
             :displacedPreferenceNatKey,
-            :certOfPreferencePreferenceNatKey,
+            :certOfPreferenceNatKey,
             :liveInSfPreferenceNatKey,
             :workInSfPreferenceNatKey,
             :neighborhoodResidencePreferenceNatKey,
             :referral,
             :annualIncome,
+            :monthlyIncome,
             :agreeToTerms,
           )
   end

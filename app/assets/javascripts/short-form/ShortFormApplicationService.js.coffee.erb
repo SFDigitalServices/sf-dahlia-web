@@ -349,6 +349,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatIncome(application)
     application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
+    delete application.householdMembers if _.isEmpty(application.householdMembers)
+    delete application.primaryApplicant.mailingGeocoding_data
     delete application.completedSections
     delete application.validatedForms
     delete application.surveyComplete
@@ -446,8 +448,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       )
       return unless member
       memberDOB = member.dob.replace(/\//g, '.')
-      preference = preference + 'PreferenceNatKey'
-      application[preference] = member.firstName + ',' + member.lastName + ',' + memberDOB
+      if preference == 'certOfPreference'
+        preferenceName = preference + 'NatKey'
+      else
+        preferenceName = preference + 'PreferenceNatKey'
+      application[preferenceName] = member.firstName + ',' + member.lastName + ',' + memberDOB
       delete application.preferences[preference + '_household_member']
     )
 
