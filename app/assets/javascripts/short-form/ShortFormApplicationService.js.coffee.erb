@@ -324,7 +324,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 
   Service.submitApplication = (listingId)->
     applicationParams = Service._formatApplication(listingId)
-    console.log(applicationParams)
+    # console.log(applicationParams)
     $http.post('/api/v1/short-form/submit-application', applicationParams).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
@@ -346,7 +346,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
-    application = Service._formatWorkInSf(application)
+    application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
     delete application.completedSections
     delete application.validatedForms
@@ -492,11 +492,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     delete application.householdIncome
     return application
 
-  Service._formatWorkInSf = (application) ->
-    if application.applicant.workInSf == 'Yes'
-      application.applicant.workInSf = true
-    else
-      application.applicant.workInSf = false
+  Service._formatBooleans = (application) ->
+    ['workInSf', 'lgbt', 'hiv'].forEach (field) ->
+      if application.applicant[field] == 'Yes'
+        application.applicant[field] = true
+      else
+        application.applicant[field] = false
 
     application.householdMembers.forEach( (member) ->
       if member.workInSf == 'Yes'
