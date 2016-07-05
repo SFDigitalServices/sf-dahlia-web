@@ -6,17 +6,17 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
   .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
     h3.form-label
       | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
-    label.sr-only for="housholdMemberFirstName"
+    label.sr-only for="houshold_member_first_name"
       | {{'LABEL.FIRST_NAME' | translate}}
-    input#housholdMemberFirstName ng-model="householdMember.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+    input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
     small.error ng-show="inputInvalid('firstName')"
       | {{'ERROR.FIRST_NAME' | translate}}
-    label.sr-only for="householdMemberMiddleName"
+    label.sr-only for="household_member_middle_name"
       | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-    input#householdMemberMiddleName ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
-    label.sr-only for="householdMemberLastName"
+    input#household_member_middle_name ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+    label.sr-only for="household_member_last_name"
       | {{'LABEL.LAST_NAME' | translate}}
-    input#householdMemberLastName ng-model="householdMember.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+    input#household_member_last_name ng-model="householdMember.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
     small.error ng-show="inputInvalid('lastName')"
       | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
@@ -71,9 +71,9 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
 
   .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('relationship') }"
-    label.form-label.margin-bottom--half for="householdMemberRelationship"
+    label.form-label.margin-bottom--half for="household_member_relationship"
       | {{'LABEL.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
-    select#householdMemberRelationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
+    select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }"
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="relationship in relationship_options" value="{{relationship}}"

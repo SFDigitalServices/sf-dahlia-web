@@ -6,15 +6,15 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
       | {{'LABEL.APPLICANT_NAME' | translate}}
     label.sr-only for="applicantFirstName"
       | {{'LABEL.FIRST_NAME' | translate}}
-    input#applicantFirstName ng-model="applicant.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+    input#applicant_first_name ng-model="applicant.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
     small.error ng-if="inputInvalid('firstName')"
       | {{'ERROR.FIRST_NAME' | translate}}
     label.sr-only for="applicantMiddleName"
       | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-    input#applicantMiddleName ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+    input#applicant_middle_name ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
     label.sr-only for="applicantLastName"
       | {{'LABEL.LAST_NAME' | translate}}
-    input#applicantLastName ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+    input#applicant_last_name ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
     small.error ng-if="inputInvalid('lastName')"
       | {{'ERROR.LAST_NAME' | translate}}
   .form-group.margin-bottom--2x ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
