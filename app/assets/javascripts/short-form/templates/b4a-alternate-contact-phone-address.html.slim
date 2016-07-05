@@ -36,7 +36,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dah
         | {{ language }}
 
     label.sr-only for="alternate_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
-    input#alternate_languageOther ng-model="alternateContact.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="alternateContact.language == 'Other'" ng-show="alternateContact.language == 'Other'"
+    input#alternate_language_other ng-model="alternateContact.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="alternateContact.language == 'Other'" ng-show="alternateContact.language == 'Other'"
     small.error ng-show="inputInvalid('languageOther')"
       | {{'ERROR.LANGUAGE' | translate}}
 
