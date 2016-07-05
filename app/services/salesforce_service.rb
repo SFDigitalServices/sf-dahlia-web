@@ -82,8 +82,8 @@ class SalesforceService
     api_post(endpoint, params)
   end
 
-  def self.api_get(endpoint, params = nil, parse_response = true)
-    response = oauth_client.get(endpoint, params)
+  def self.api_call(method = :get, endpoint, params, parse_response)
+    response = oauth_client.send(method, endpoint, params)
     if parse_response
       massage(flatten_response(response.body))
     else
@@ -103,21 +103,12 @@ class SalesforceService
     []
   end
 
+  def self.api_get(endpoint, params = nil, parse_response = true)
+    api_call(:get, endpoint, params, parse_response)
+  end
+
   def self.api_post(endpoint, params = nil)
-    response = oauth_client.post(endpoint, params)
-    response.body
-  rescue Restforce::UnauthorizedError
-    if @retries > 0
-      @retries -= 1
-      oauth_token(true)
-      retry
-    else
-      # p "UH OH -- Restforce error"
-      []
-    end
-  rescue StandardError
-    # p "UH OH -- StandardError #{e.message}"
-    []
+    api_call(:post, endpoint, params, false)
   end
 
   def self.oauth_token(force = false)
