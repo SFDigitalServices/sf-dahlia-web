@@ -129,6 +129,8 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     _.filter $scope.listing.Lottery_Members, (ticket) ->
       ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
 
+  $scope.showNeighborhoodPreferences = ->
+    ListingService.showNeighborhoodPreferences($scope.listing)
 
 ############################################################################################
 ######################################## CONFIG ############################################
