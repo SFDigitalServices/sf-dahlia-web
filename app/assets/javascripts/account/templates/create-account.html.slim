@@ -10,16 +10,52 @@
 
       form.dash-card novalidate="" name="form.accountForm" ng-submit="createAccount()"
         header.dash-header
-          alert-box(form-object="form.accountForm" hide-alert="hideAlert")
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile"
           h1.dash-title
             | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
-          p.t-small.c-steel
+          p.dash-summary
             | {{'CREATE_ACCOUNT.P1' | translate}}
+        alert-box(form-object="form.accountForm" hide-alert="hideAlert")
 
-        .dash-card-inner.border-bottom
+        .dash-card-inner.inset.border-bottom
+          .form-group
+            h2.form-label.caps
+              | {{'LABEL.YOUR_NAME' | translate}}
+            label.sr-only for="textInput"
+              | {{'LABEL.FIRST_NAME' | translate}}
+            input#textInput name="textInput" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text"
+            label.sr-only for="textInput"
+              | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
+            input#textInput name="textInput" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+            label.sr-only for="textInput"
+              | {{'LABEL.LAST_NAME' | translate}}
+            input#textInput name="textInput" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text"
+
+        .dash-card-inner.inset.border-bottom
+          .form-group
+            h2.form-label.caps
+              | {{'LABEL.YOUR_DOB' | translate}}
+            .form-date-of-birth.row.collapse
+              .form-group-month.large-2.columns
+                label.sr-only for="date_of_birth_1"
+                  | {{'LABEL.DOB_MONTH' | translate}}
+                input max="12" min="1" name="date_of_birth_1" placeholder="MM" type="number"
+              .form-group-day.large-2.columns
+                label.sr-only for="date_of_birth_2"
+                  | {{'LABEL.DOB_DAY' | translate}}
+                input max="31" min="1" name="date_of_birth_2" placeholder="DD" type="number"
+              .form-group-year.large-2.columns.end
+                label.sr-only for="date_of_birth_3"
+                  | {{'LABEL.DOB_YEAR' | translate}}
+                input max="2016" min="1900" name="date_of_birth_3" placeholder="YYYY" type="number"
+
+        .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
 
-            h3.form-label for="auth_email"
+            h2.form-label.caps for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
@@ -34,9 +70,9 @@
             small.error ng-if="inputInvalid('email_confirmation')"
               | {{'ERROR.EMAIL_CONFIRMATION' | translate}}
 
-        .dash-card-inner.border-bottom
+        .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('password') || inputInvalid('password_confirmation') }"
-            h3.form-label for="password"
+            h2.form-label.caps for="password"
               | {{'LABEL.PASSWORD' | translate}}
             p.form-note.margin-bottom
               | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
