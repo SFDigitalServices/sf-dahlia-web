@@ -4,6 +4,7 @@
       ng-include src="'listings/templates/listing/_property-hero.html'"
 
   accordion.page-accordion close-others="false"
+    / sidebar for closed listing
     accordion-group.medium-right-column ng-if="listingApplicationClosed(listing)"
       ng-include src="'listings/templates/listing/_lottery_info.html'"
 
@@ -17,7 +18,8 @@
             | Income, occupancy, preferences, and subsidies
       ng-include src="'listings/templates/listing/_eligibility.html'"
 
-    accordion-group.medium-right-column ng-hide="listingApplicationClosed(listing)"
+    / sidebar for open listing
+    accordion-group.medium-right-column ng-if="!listingApplicationClosed(listing)"
       ng-include src="'listings/templates/listing/_process.html'"
 
     accordion-group.bg-white

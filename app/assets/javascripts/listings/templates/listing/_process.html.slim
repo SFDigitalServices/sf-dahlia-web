@@ -14,10 +14,8 @@ accordion-heading
         svg
           use xlink:href="#i-clock"
       | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
-  .show-for-medium-up ng-hide="listingApplicationClosed(listing)"
-    ng-include src="'listings/templates/listing/_panel-apply.html'"
 
-  .content-group
+  .content-group ng-if="listing.Information_Sessions"
     h4.content-group_title Information Sessions
     ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
       li
@@ -30,10 +28,8 @@ accordion-heading
           | {{session.Venue}}
         p.content-group_address.c-steel
           | {{session.Street_Address}}, {{session.City}}
-    p.t-small.c-steel ng-if="!listing.Information_Sessions"
-     | No information sessions scheduled yet.
 
-  .content-group
+  .content-group ng-if="listing.Open_Houses"
     h4.content-group_title Open Houses
     ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
       li
@@ -42,8 +38,10 @@ accordion-heading
             | {{session.Date | dateSuffix}}
           span.content-group_time
             | {{session.Start_Time}}&mdash;{{session.End_Time}}
-    p.t-small.c-steel ng-if="!listing.Open_Houses"
-      | No open houses scheduled yet.
+
+
+  .show-for-medium-up
+    ng-include src="'listings/templates/listing/_panel-apply.html'"
 
   .content-group
     h4.h-caps-lined Public Lottery
@@ -60,6 +58,12 @@ accordion-heading
           | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
     p.t-small.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
       | Lottery date, time and venue to be scheduled.
+
+  .content-group
+    ng-include src="'listings/templates/listing/_what_to_expect.html'"
+
+  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+    ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
 
   .content-group
     p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
