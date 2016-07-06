@@ -61,8 +61,11 @@ Rails.application.configure do
   # raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  host ||= ENV['MAILER_DOMAIN']
+  host ||= ENV['HEROKU_APP_NAME'] ? "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" : nil
+  host ||= 'housing.sfgov.org'
   # required for devise
-  config.action_mailer.default_url_options = { host: 'housing.sfgov.org' }
+  config.action_mailer.default_url_options = { host: host }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -79,6 +82,17 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # SMTP / Sendgrid settings
+  ActionMailer::Base.smtp_settings = {
+    address:        'smtp.sendgrid.net',
+    port:           '587',
+    authentication: :plain,
+    user_name:      ENV['SENDGRID_USERNAME'],
+    password:       ENV['SENDGRID_PASSWORD'],
+    domain:         'heroku.com',
+    enable_starttls_auto: true,
+  }
 
   # Force all access to the app over SSL, use Strict-Transport-Security,
   # and use secure cookies.

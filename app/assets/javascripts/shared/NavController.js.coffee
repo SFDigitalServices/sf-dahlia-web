@@ -2,7 +2,8 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-NavController = ($document, $rootScope, $scope, $state) ->
+NavController = ($document, $rootScope, $scope, $state, AccountService) ->
+  $scope.loggedIn = AccountService.loggedIn
 
   # Utility function to scroll to top of page when state changes.
   $rootScope.$on '$stateChangeSuccess', ->
@@ -16,7 +17,9 @@ NavController = ($document, $rootScope, $scope, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-NavController.$inject = ['$document', '$rootScope', '$scope', '$state']
+NavController.$inject = [
+  '$document', '$rootScope', '$scope', '$state', 'AccountService'
+]
 
 angular
   .module('dahlia.controllers')

@@ -55,8 +55,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'shared/templates/version.html'
         'nav@':
           templateUrl: 'shared/templates/nav/nav.html'
+          controller: 'NavController'
         'nav-mobile@':
           templateUrl: 'shared/templates/nav/nav-mobile.html'
+          controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
       resolve:
@@ -102,6 +104,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getLotteryResults)
         ]
     })
+    ##########################
+    # < Account/Login pages >
+    ##########################
     .state('dahlia.create-account', {
       url: '/create-account'
       views:
@@ -109,6 +114,78 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
     })
+    .state('dahlia.short-form-application.create-account', {
+      # duplicated from above but to differentiate state for "Save and finish later"
+      # will be accessed at '/listings/{id}/apply/create-account'
+      url: '/create-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/create-account.html'
+          controller: 'AccountController'
+    })
+    .state('dahlia.signin', {
+      url: '/signin'
+      views:
+        'container@':
+          templateUrl: 'account/templates/signin.html'
+    })
+    ############
+    # TODO: refactor "my account" pages to be under the same namespace/controller
+    # once these pages become functional
+    ############
+    .state('dahlia.account-settings', {
+      url: '/account-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/account-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.eligibility-settings', {
+      url: '/eligibility-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/eligibility-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-account', {
+      url: '/my-account'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-account.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-applications', {
+      url: '/my-applications'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-applications.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    .state('dahlia.my-favorites', {
+      url: '/my-favorites'
+      views:
+        'container@':
+          templateUrl: 'account/templates/my-favorites.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    ##########################
+    # </ End Account/Login >
+    ##########################
     .state('dahlia.favorites', {
       url: '/favorites'
       views:
@@ -437,6 +514,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/f1-review-summary.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Income')
+        ]
     })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms'
@@ -470,6 +551,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+    # check if user is logged in
+    AccountService.validateUser()
+
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
@@ -488,25 +572,17 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if toSection
         # we're in shortForm
         fromSection = ShortFormNavigationService.getShortFormSectionFromState(fromState)
-        ShortFormApplicationService.checkFormState(fromState.name, fromSection)
+        ShortFormApplicationService.checkFormState(fromState.name, fromSection) if fromSection
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
       # remember which page of short form we're on when we go to create account
-      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.create-account')
-        AccountService.rememberState(fromState.name, fromParams)
+      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.short-form-application.create-account')
+        AccountService.rememberState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-      # capture errors when trying to verify address and send them back to the appropriate page
-      f = ShortFormApplicationService.form.applicationForm
-      f.$submitted = true
-      f.$invalid = true
-      f.$valid = false
-      if toState.name == 'dahlia.short-form-application.verify-address'
-        e.preventDefault()
-        return $state.go('dahlia.short-form-application.contact', toParams)
-      else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
-        e.preventDefault()
-        return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
+      if fromState.name == ''
+        return $state.go('dahlia.welcome')
+
 ]
 
 @dahlia.config ['$httpProvider', ($httpProvider) ->
@@ -542,9 +618,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
   IdleProvider.timeout(60)
 ]
 
-@dahlia.config ['$authProvider', ($authProvider) ->
-  $authProvider.configure(
-    apiUrl: '/api/v1'
-    storage: 'sessionStorage'
-  )
+@dahlia.config [
+  '$authProvider', 'AccountConfirmationServiceProvider',
+  ($authProvider, AccountConfirmationServiceProvider) ->
+    # this creates a new AccountConfirmationService,
+    # which can tap into AccountService to provide the appropriate confirmationSuccessUrl
+    conf = AccountConfirmationServiceProvider.$get()
+    $authProvider.configure
+      apiUrl: '/api/v1'
+      storage: 'sessionStorage'
+      confirmationSuccessUrl: conf.confirmationSuccessUrl
 ]

@@ -35,9 +35,10 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
         svg
           use xlink:href="#i-plus"
       | {{'LABEL.ADD_HOUSEHOLD_MEMBER' | translate}}
+
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
       input.button.expand type="submit" value="{{'LABEL.DONE_ADDING_PEOPLE' | translate}}"
     .small-12.medium-6.medium-pull-6.columns
-      button.button.ghost-white.expand ng-click="clearHouseholdErrorMessage()"
+      a.button.ghost-white.expand ui-sref="dahlia.short-form-application.create-account" ng-click="clearHouseholdErrorMessage()"
         | {{'T.SAVE_AND_FINISH_LATER' | translate}}

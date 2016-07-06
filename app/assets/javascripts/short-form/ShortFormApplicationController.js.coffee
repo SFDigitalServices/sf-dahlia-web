@@ -311,7 +311,7 @@ ShortFormApplicationController = (
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
-      $state.go("dahlia.short-form-application.#{page}")
+      return $state.go("dahlia.short-form-application.#{page}")
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         $scope._respondToHouseholdEligibilityResults(response, match)
@@ -390,6 +390,20 @@ ShortFormApplicationController = (
     ShortFormApplicationService.resetUserData()
     $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
     $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
+
+  $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+    # capture errors when trying to verify address and send them back to the appropriate page
+    f = ShortFormApplicationService.form.applicationForm
+    f.$submitted = true
+    f.$invalid = true
+    f.$valid = false
+    if toState.name == 'dahlia.short-form-application.verify-address'
+      e.preventDefault()
+      return $state.go('dahlia.short-form-application.contact', toParams)
+    else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
+      e.preventDefault()
+      return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
+
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',

@@ -1,12 +1,10 @@
 AccountController = ($scope, AccountService) ->
   $scope.rememberedState = AccountService.rememberedState
   $scope.form = {}
+  # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
-
-  $scope.continueApplication = ->
-    AccountService.returnToRememberedState()
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
@@ -18,7 +16,11 @@ AccountController = ($scope, AccountService) ->
   $scope.createAccount = ->
     form = $scope.form.accountForm
     if form.$valid
-      AccountService.createAccount()
+      # AccountService.userAuth will have been modified by form inputs
+      AccountService.createAccount().then ->
+        # reset the form
+        form.$setUntouched()
+        form.$setPristine()
     else
       $scope.hideAlert = false
 
