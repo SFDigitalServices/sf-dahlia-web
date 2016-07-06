@@ -42,4 +42,13 @@ angular.module('dahlia.directives')
       applicant_only
 
     scope.reset_preference_data = (pref_type) ->
+      preferencesProofNeeded = [
+           'liveInSf',
+           'workInSf',
+           'neighborhoodResidence'
+       ]
       scope.application.preferences[pref_type + '_household_member'] = null
+
+      if _.includes(preferencesProofNeeded, pref_type)
+        scope.application.preferences[pref_type + '_proof_option'] = null
+        scope.deletePreferenceFile(pref_type)
