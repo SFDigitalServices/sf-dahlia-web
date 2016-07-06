@@ -193,8 +193,7 @@ ShortFormApplicationController = (
     $scope.applicant.home_address = {}
 
   $scope.resetHouseholdMemberAddress = ->
-    #reset home address
-    $scope.applicant.householdMember_address = {}
+    delete $scope.householdMember.home_address
 
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
