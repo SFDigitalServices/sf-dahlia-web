@@ -58,6 +58,9 @@ gem 'pg'
 gem 'actionmailer-text'
 gem 'hashie'
 
+# http requests made easy
+gem 'http', require: false
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
