@@ -40,3 +40,6 @@ angular.module('dahlia.directives')
         # even though the form input is hidden we automatically set the value to the applicant
         scope.application.preferences[scope.pref_type_household_member] = "#{scope.applicant.firstName} #{scope.applicant.lastName}"
       applicant_only
+
+    scope.reset_preference_data = (pref_type) ->
+      scope.application.preferences[pref_type + '_household_member'] = null
