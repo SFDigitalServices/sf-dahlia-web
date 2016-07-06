@@ -119,9 +119,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.clearPhoneData = (type) ->
     if type == 'alternate'
       Service.applicant.noPhone = false
-      if Service.applicant.additionalPhone
-        Service.applicant.alternatePhone = null
-        Service.applicant.alternatePhoneType = null
+      Service.applicant.alternatePhone = null
+      Service.applicant.alternatePhoneType = null
     else if type == 'phone'
       Service.applicant.additionalPhone = false
       Service.applicant.phone = null
