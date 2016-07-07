@@ -12,7 +12,14 @@ do ->
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
       form: {}
-      applicant: {}
+      applicant:
+        home_address: { address1: null, city: null, state: null, zip: null }
+        language: "English"
+        phone: null
+        mailing_address: { address1: null, city: null, state: null, zip: null }
+        gender: {}
+      householdMembers: []
+      preferences: {}
       application: {}
       alternateContact: {}
       householdMember: {
@@ -23,8 +30,12 @@ do ->
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
       refreshLiveWorkPreferences: jasmine.createSpy()
-      liveInSfMembers: jasmine.createSpy()
-      workInSfMembers: jasmine.createSpy()
+      liveInSfMembers: () ->
+        return
+      workInSfMembers: () ->
+        return
+      neighborhoodResidenceMembers: () ->
+        return
       clearAlternateContactDetails: jasmine.createSpy()
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
@@ -206,12 +217,14 @@ do ->
 
     describe '$scope.liveInSfMembers', ->
       it 'calls liveInSfMembers in ShortFormApplicationService', ->
+        spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([])
         scope.liveInSfMembers()
         expect(fakeShortFormApplicationService.liveInSfMembers).toHaveBeenCalled()
         return
 
     describe '$scope.workInSfMembers', ->
-      it 'calls liveInSfMembers in ShortFormApplicationService', ->
+      it 'calls workInSfMembers in ShortFormApplicationService', ->
+        spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
         scope.workInSfMembers()
         expect(fakeShortFormApplicationService.workInSfMembers).toHaveBeenCalled()
         return
@@ -287,4 +300,31 @@ do ->
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(fakeListing.Id)
         return
       return
-return
+
+    describe 'checkIfPreferencesApply', ->
+      describe 'preferences applies to household',->
+        it 'assigns routes user to live-work preference page', ->
+          members = ['somemembers']
+          spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue(members)
+          spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue(members)
+          spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
+          fakeShortFormApplicationService.preferencesApplyForHousehold = jasmine.createSpy().and.returnValue(true)
+          scope.checkIfPreferencesApply()
+          path = 'dahlia.short-form-application.live-work-preference'
+          expect(state.go).toHaveBeenCalledWith(path)
+          return
+        return
+
+      describe 'preferences do not apply to household',->
+        it 'assigns routes user to general lottery notice page', ->
+          spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([])
+          spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
+          spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
+          fakeShortFormApplicationService.preferencesApplyForHousehold = jasmine.createSpy().and.returnValue(false)
+          scope.checkIfPreferencesApply()
+          path = 'dahlia.short-form-application.general-lottery-notice'
+          expect(state.go).toHaveBeenCalledWith(path)
+          return
+        return
+      return
+  return

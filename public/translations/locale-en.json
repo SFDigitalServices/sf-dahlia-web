@@ -158,7 +158,7 @@
         "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
         "UPLOAD_PROOF_INSTRUCTIONS_2": "Max file size is 2MB. Supported file types: pdf, jpg, png.",
         "TITLE": "Based on the address details you entered, it sounds like your household may qualify for additional preferences.",
-        "INSTRUCTIONS": "Upload any supporting documentation off instructed. If eligibility for a preference cannot be verified, your household will not receive the preference for which you indicate eligibility (you will not be otherwise penalized).",
+        "INSTRUCTIONS": "Upload any supporting documentation as instructed. If eligibility for a preference cannot be verified, your household will not receive the preference for which you indicate eligibility (you will not be otherwise penalized).",
         "LIVE_SF_PREFERENCE": "Live in San Francisco Preference",
         "NEIGHBORHOOD_RESIDENCE": {
             "TITLE": "Neighborhood Residence Housing Preference",

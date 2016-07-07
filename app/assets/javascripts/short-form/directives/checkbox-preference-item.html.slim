@@ -1,6 +1,6 @@
 div
   p.checkbox-block
-    input id="preferences-{{pref_type}}" name="preferences" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}"
+    input id="preferences-{{pref_type}}" name="preferences" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click='reset_preference_data(pref_type)'
     label.checkbox-block_label for="preferences-{{pref_type}}"
       strong
         | {{title}}

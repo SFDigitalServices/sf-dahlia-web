@@ -1,7 +1,7 @@
 h2.application-title.t-gamma.padding-bottom
   | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
-  .form-group ng-class="{ error: checkInvalidPhones(), 'has-option': form.applicationForm.phone.$invalid || applicant.noPhone || applicant.additionalPhone }"
+  .form-group.has-option ng-class="{ error: checkInvalidPhones() }"
     .form-tel
       label for="applicant_phone"
         | {{'LABEL.APPLICANT_PHONE' | translate}}
@@ -21,8 +21,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
     div
       .form-item.padding-bottom
-        .checkbox ng-click="applicant.additionalPhone = false;"
-          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone')"
+        .checkbox
+          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
           label for="applicant_no_phone"
             | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
         small.highlight ng-if="applicant.noPhone"
@@ -30,8 +30,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
-        .checkbox ng-click="clearAlternatePhoneData()"
-         input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone"
+        .checkbox
+         input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone" ng-disabled="applicant.noPhone" ng-click="clearPhoneData('alternate')"
          label for="applicant_additional_phone"
           | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}
 
@@ -51,7 +51,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       small.error ng-if="inputInvalid('alternatePhoneType')"
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('email'), 'has-option': form.applicationForm.email.$invalid || applicant.noEmail  }"
+  .form-group.has-option ng-class="{ error: inputInvalid('email') }"
     label.form-label.no-margin for="applicant_email"
       | {{'LABEL.APPLICANT_EMAIL' | translate}}
     p.form-note.margin-bottom
@@ -69,7 +69,7 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
       small.highlight ng-if="applicant.noEmail"
         | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
-  .form-group ng-class="{ 'has-option': !validMailingAddress || applicant.noAddress, error: homeAddressRequired && addressInputInvalid('home_address')}"
+  .form-group.has-option
     label.form-label.no-margin
       | {{'LABEL.APPLICANT_ADDRESS' | translate}}
     p.form-note.margin-bottom
@@ -82,8 +82,8 @@ form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 
 
     .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
       / this checkbox unchecks the other checkbox; only one can be selected
-      .checkbox ng-click="resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
-        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress"
+      .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
+        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
         label for="applicant_no_address"
           | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
       small.highlight.padding-bottom ng-if="applicant.noAddress"

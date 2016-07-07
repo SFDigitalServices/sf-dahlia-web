@@ -158,8 +158,8 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
-  $scope.clearAlternatePhoneData = ->
-    ShortFormApplicationService.clearAlternatePhoneData()
+  $scope.clearPhoneData = (type) ->
+    ShortFormApplicationService.clearPhoneData(type)
 
   $scope.applicantHasPhoneEmailAndAddress = ->
     $scope.applicant.phone &&
@@ -187,6 +187,13 @@ ShortFormApplicationController = (
       $scope.applicant.noAddress = false
     unless $scope.applicant.hasAltMailingAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
+
+  $scope.resetHomeAddress = ->
+    #reset home address
+    $scope.applicant.home_address = {}
+
+  $scope.resetHouseholdMemberAddress = ->
+    delete $scope.householdMember.home_address
 
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
@@ -248,6 +255,15 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
+  $scope.checkIfPreferencesApply = () ->
+    if $scope._preferencesApplyForHousehold()
+      $state.go('dahlia.short-form-application.live-work-preference')
+    else
+      $state.go('dahlia.short-form-application.general-lottery-notice')
+
+  $scope._preferencesApplyForHousehold = () ->
+    ShortFormApplicationService.preferencesApplyForHousehold()
+
   $scope.checkLiveWorkEligibility = () ->
     ShortFormApplicationService.refreshLiveWorkPreferences()
 
