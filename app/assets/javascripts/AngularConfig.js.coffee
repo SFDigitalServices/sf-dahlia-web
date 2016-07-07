@@ -303,18 +303,28 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           ListingService.getListing($stateParams.id)
         ]
     })
+    # .state('dahlia.short-form-welcome.intro', {
+    #   url: '/intro'
+    #   views:
+    #     'container':
+    #       templateUrl: 'short-form/templates/a1-intro.html'
+    # })
+
     .state('dahlia.short-form-welcome.intro', {
       url: '/intro'
       views:
-        'container':
+        'container@':
           templateUrl: 'short-form/templates/a1-intro.html'
+          controller: 'ShortFormApplicationController'
     })
+
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
         'container':
           templateUrl: 'short-form/templates/a2-overview.html'
     })
+
     ## -- Short Form Application pages -- ##
     .state('dahlia.short-form-application', {
       url: '/listings/:id/apply'
