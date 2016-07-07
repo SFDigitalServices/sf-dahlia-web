@@ -41,6 +41,8 @@ do ->
       invalidateIncomeForm: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
+      submitApplication: (listing) ->
+        return
       validMailingAddress: ->
         true
     fakeFunctions =
@@ -80,6 +82,7 @@ do ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
 
       $controller 'ShortFormApplicationController',
         $scope: scope
@@ -287,6 +290,14 @@ do ->
         scope.householdEligibilityErrorMessage = 'some error message'
         scope.clearHouseholdErrorMessage()
         expect(scope.householdEligibilityErrorMessage).toEqual(null)
+        return
+      return
+
+    describe 'submitApplication', ->
+      it 'calls submitApplication ShortFormApplicationService', ->
+        scope.listing = fakeListing
+        scope.submitApplication(scope.listing.Id)
+        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(fakeListing.Id)
         return
       return
 
