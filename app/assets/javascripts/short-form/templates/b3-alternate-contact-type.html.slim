@@ -5,7 +5,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
-      label.form-label
+      label.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT' | translate}}
       p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
         | {{'LABEL.PLEASE_SELECT_ONE' | translate}}

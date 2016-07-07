@@ -1,7 +1,11 @@
-.form-group
-  h2.application-title.t-gamma
-    | {{'C1A_HOUSEHOLD_OVERVIEW.TITLE1' | translate}}
-  h2.application-title.t-gamma.padding-bottom
-    | {{'C1A_HOUSEHOLD_OVERVIEW.TITLE2' | translate}}
-  button.button.expand-small ui-sref="dahlia.short-form-application.household-members"
-    | {{'T.NEXT' | translate}}
+.app-card.form-card
+  .app-inner.leader
+    h2.app-card_question
+      | {{'C1A_HOUSEHOLD_OVERVIEW.TITLE1' | translate}}
+    h2.app-card_question
+      | {{'C1A_HOUSEHOLD_OVERVIEW.TITLE2' | translate}}
+
+  .button-pager
+    .button-pager_row.primary
+      button.button.primary.expand-small ui-sref="dahlia.short-form-application.household-members"
+        | {{'T.NEXT' | translate}}
