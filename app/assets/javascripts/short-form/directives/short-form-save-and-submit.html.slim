@@ -1,7 +1,6 @@
-.form-group
-  .button-stack--paginate.text-center.row.padding-top
-    .small-12.medium-6.medium-push-6.columns
-      input.button.expand.radius type="submit" value="{{submitValue}}"
-    .small-12.medium-6.medium-pull-6.columns
-      a.button.ghost-white.expand ui-sref="dahlia.short-form-application.create-account"
-        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+.button-pager
+  .button-pager_row.primary
+    input.button.primary type="submit" value="{{submitValue}}"
+  .button-pager_row
+    button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.short-form-application.create-account"
+      | {{'T.SAVE_AND_FINISH_LATER' | translate}}
