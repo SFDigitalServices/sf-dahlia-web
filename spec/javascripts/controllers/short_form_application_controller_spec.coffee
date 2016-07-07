@@ -297,6 +297,7 @@ do ->
           spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue(members)
           spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue(members)
           spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
+          fakeShortFormApplicationService.preferencesApplyForHousehold = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
@@ -308,7 +309,7 @@ do ->
           spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([])
           spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
           spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
-          scope.checkIfPreferencesApply()
+          fakeShortFormApplicationService.preferencesApplyForHousehold = jasmine.createSpy().and.returnValue(false)
           scope.checkIfPreferencesApply()
           path = 'dahlia.short-form-application.general-lottery-notice'
           expect(state.go).toHaveBeenCalledWith(path)

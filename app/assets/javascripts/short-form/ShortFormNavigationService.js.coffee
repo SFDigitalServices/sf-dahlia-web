@@ -1,4 +1,4 @@
-ShortFormNavigationService = ($state) ->
+ShortFormNavigationService = ($state, ShortFormApplicationService) ->
   Service = {}
   Service.sections = [
     { name: 'You', pages: [
@@ -114,8 +114,10 @@ ShortFormNavigationService = ($state) ->
       when 'general-lottery-notice'
         'status-programs'
       when 'status-vouchers'
-        # TODO: figure out way to back to live-work if appCtrl.checkIfPreferencesApply
-        'status-programs'
+        if ShortFormApplicationService.preferencesApplyForHousehold()
+          'live-work-preference'
+        else
+          'status-programs'
       # -- catch all
       else
         'intro'
@@ -149,7 +151,7 @@ ShortFormNavigationService = ($state) ->
 
   return Service
 
-ShortFormNavigationService.$inject = ['$state']
+ShortFormNavigationService.$inject = ['$state', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.services')

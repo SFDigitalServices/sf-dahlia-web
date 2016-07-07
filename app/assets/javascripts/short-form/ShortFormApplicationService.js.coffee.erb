@@ -229,6 +229,13 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     # return household
     return []
 
+  Service.preferencesApplyForHousehold = ->
+    liveInSfEligible = Service.liveInSfMembers().length > 0
+    workInSfEligible = Service.workInSfMembers().length > 0
+    neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
+    displacedOrCertOfPreference = Service.preferences.displaced || Service.preferences.certOfPreference
+    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
+
   Service._updatePreference = (preference, eligibleMembers) ->
     # only need to update if nobody is eligible
     Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
