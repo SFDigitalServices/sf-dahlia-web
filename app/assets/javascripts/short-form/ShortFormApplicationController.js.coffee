@@ -255,6 +255,15 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
+  $scope.checkIfPreferencesApply = () ->
+    if $scope._preferencesApplyForHousehold()
+      $state.go('dahlia.short-form-application.live-work-preference')
+    else
+      $state.go('dahlia.short-form-application.general-lottery-notice')
+
+  $scope._preferencesApplyForHousehold = () ->
+    ShortFormApplicationService.preferencesApplyForHousehold()
+
   $scope.checkLiveWorkEligibility = () ->
     ShortFormApplicationService.refreshLiveWorkPreferences()
 
