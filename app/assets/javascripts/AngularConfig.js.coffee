@@ -53,11 +53,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'shared/templates/translate.html'
         'version@':
           templateUrl: 'shared/templates/version.html'
-        'nav@':
-          templateUrl: 'shared/templates/nav/nav.html'
-          controller: 'NavController'
-        'nav-mobile@':
-          templateUrl: 'shared/templates/nav/nav-mobile.html'
+        'navigation@':
+          templateUrl: 'shared/templates/nav/navigation.html'
           controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
