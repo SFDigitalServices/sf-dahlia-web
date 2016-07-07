@@ -50,7 +50,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
   Service.resetUserData = () ->
     # even though this looks commented out, it still has an effect in ERB land
     # <% if Rails.env.development? %> # -------------
-    $localStorage.application ?= Service.applicationDefaults
+    $localStorage.application = Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
     # <% else %> # -------------
