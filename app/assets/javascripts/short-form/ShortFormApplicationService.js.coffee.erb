@@ -116,11 +116,15 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       missingInfo.push("Address")
     return missingInfo
 
-  Service.clearAlternatePhoneData = ->
-    Service.applicant.noPhone = false
-    if Service.applicant.additionalPhone
+  Service.clearPhoneData = (type) ->
+    if type == 'alternate'
+      Service.applicant.noPhone = false
       Service.applicant.alternatePhone = null
       Service.applicant.alternatePhoneType = null
+    else if type == 'phone'
+      Service.applicant.additionalPhone = false
+      Service.applicant.phone = null
+      Service.applicant.phoneType = null
 
   Service.clearAlternateContactDetails = ->
     clearedData = { alternateContactType: 'None' }
@@ -196,7 +200,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     user.gender[option] = toggle
 
   ### Proof of Preferences ###
-
   Service.refreshLiveWorkPreferences = () ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())

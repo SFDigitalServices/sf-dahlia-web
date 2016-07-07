@@ -158,8 +158,8 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
-  $scope.clearAlternatePhoneData = ->
-    ShortFormApplicationService.clearAlternatePhoneData()
+  $scope.clearPhoneData = (type) ->
+    ShortFormApplicationService.clearPhoneData(type)
 
   $scope.applicantHasPhoneEmailAndAddress = ->
     $scope.applicant.phone &&
@@ -187,6 +187,13 @@ ShortFormApplicationController = (
       $scope.applicant.noAddress = false
     unless $scope.applicant.hasAltMailingAddress
       ShortFormApplicationService.copyHomeToMailingAddress()
+
+  $scope.resetHomeAddress = ->
+    #reset home address
+    $scope.applicant.home_address = {}
+
+  $scope.resetHouseholdMemberAddress = ->
+    delete $scope.householdMember.home_address
 
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
@@ -368,7 +375,6 @@ ShortFormApplicationController = (
 
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
-
 
   ## idle timeout functions
   unless ShortFormApplicationService.isWelcomePage($state.current)
