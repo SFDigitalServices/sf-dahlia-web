@@ -88,9 +88,13 @@ class SalesforceService
     api_get(endpoint, params, false)
   end
 
-  def self.api_get(endpoint, params = nil, parse_response = true)
+  def self.submit_application(params)
+    api_post('/shortForm', params)
+  end
+
+  def self.api_call(method = :get, endpoint, params, parse_response)
     endpoint = "/services/apexrest#{endpoint}"
-    response = oauth_client.get(endpoint, params)
+    response = oauth_client.send(method, endpoint, params)
     if parse_response
       massage(flatten_response(response.body))
     else
@@ -105,9 +109,17 @@ class SalesforceService
       # p "UH OH -- Restforce error"
       []
     end
-  rescue StandardError
-    # p "UH OH -- StandardError #{e.message}"
+  rescue StandardError => e
+    p "UH OH -- StandardError #{e.message}"
     []
+  end
+
+  def self.api_get(endpoint, params = nil, parse_response = true)
+    api_call(:get, endpoint, params, parse_response)
+  end
+
+  def self.api_post(endpoint, params = nil)
+    api_call(:post, endpoint, params, false)
   end
 
   def self.oauth_token(force = false)

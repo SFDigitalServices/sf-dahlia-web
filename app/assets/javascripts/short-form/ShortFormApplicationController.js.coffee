@@ -385,6 +385,16 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
+  $scope.submitApplication = ->
+    ShortFormApplicationService.submitApplication($scope.listing.Id)
+      .then( (response) ->
+        # console.log(response, 'success submit')
+        if response.data.id
+          $scope.application.id = response.data.id
+          $state.go('dahlia.short-form-application.confirmation')
+        else
+      )
+
   ## idle timeout functions
   unless ShortFormApplicationService.isWelcomePage($state.current)
     Idle.watch()

@@ -30,7 +30,6 @@ ShortFormHelperService = ($translate, $filter) ->
       $translate.instant('T.NONE')
 
   Service.applicationIncomeAmount = (application) ->
-    # applicant.incomeTimeframe
     income = parseFloat(application.householdIncome.incomeTotal)
     if application.householdIncome.incomeTimeframe == 'per_month'
       phrase = $translate.instant('T.PER_MONTH')
