@@ -117,7 +117,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
       p.form-note.margin-bottom
         | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
-      .radio-group role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
+      .radio-group-inline.double role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
         radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true'
           | {{'T.YES' | translate}}
         radio-block-item value='No' user='applicant' name='workInSf' ng-required='true'
