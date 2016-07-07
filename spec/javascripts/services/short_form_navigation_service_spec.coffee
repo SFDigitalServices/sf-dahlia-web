@@ -2,6 +2,9 @@ do ->
   'use strict'
   describe 'ShortFormNavigationService', ->
     ShortFormNavigationService = undefined
+    $translate = {}
+    Upload = {}
+    uuid = {v4: jasmine.createSpy()}
     $state = undefined
     application =
       householdMembers: []
@@ -26,6 +29,7 @@ do ->
       { name: 'Status', pages: [
           'status-programs',
           'live-work-preference',
+          'general-lottery-notice',
           'status-vouchers'
         ]
       },
@@ -43,12 +47,16 @@ do ->
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
+      $provide.value '$translate', $translate
+      $provide.value 'Upload', Upload
+      $provide.value 'uuid', uuid
       return
     )
 
-    beforeEach inject((_ShortFormNavigationService_, _$state_) ->
+    beforeEach inject((_ShortFormNavigationService_, _$state_, _ShortFormApplicationService_) ->
       $state = _$state_
       ShortFormNavigationService = _ShortFormNavigationService_
+      ShortFormApplicationService = _ShortFormApplicationService_
       return
     )
 
