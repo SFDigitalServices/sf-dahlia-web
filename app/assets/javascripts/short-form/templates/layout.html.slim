@@ -1,21 +1,14 @@
-section.app-container id="short-form-wrapper"
+section.app-container
   .row.collapse
     .medium-6.medium-centered.columns
-      / short-form-nav
-      .app-header.app-card.form-card
-        header.app-card_header
-          h1.app-card_title
-            | {{'T.APPLICATION' | translate}}: {{listing.Building_Name}}
-        .app-card_nav
-          ol.progress-nav
-            li.progress-nav_item
-              a href="#"  You
-            li.progress-nav_item
-              a href="#"  Household
-            li.progress-nav_item.active
-              a href="#"  Status
-            li.progress-nav_item.disabled
-              a href="#"  Income
-            li.progress-nav_item.disabled
-              a href="#"  Review
-      .app-card.form-card ui-view="container"
+
+      short-form-nav
+
+      / alert-box(state-name="$state.current.name" form-object="form.applicationForm"
+      /   hide-alert="hideAlert" missing-info="missingPrimaryContactInfo")
+
+      / .form-count ng-if="hasBackButton()"
+      /   a.lined.margin-right ng-href="{{backPageState()}}" ng-click="clearHouseholdErrorMessage()"
+      /     | {{'T.BACK' | translate}}
+
+      div(ui-view="container")
