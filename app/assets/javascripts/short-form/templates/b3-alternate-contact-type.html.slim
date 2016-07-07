@@ -1,29 +1,32 @@
-h2.application-title.t-gamma
-  | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})" ng-init="checkIfAlternateContactNeedsReset()"
-  .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
-    label.form-label
-      | {{'LABEL.ALTERNATE_CONTACT' | translate}}
-    p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
-      | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
-    .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})" ng-init="checkIfAlternateContactNeedsReset()"
+  .app-inner.leader.border-bottom
+    h2.app-card_question
+      | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
 
-      radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true'
-        | {{option[1]}}
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
+      label.form-label
+        | {{'LABEL.ALTERNATE_CONTACT' | translate}}
+      p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
+        | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+      .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
 
-      .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
-        input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactType" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
-        small.error ng-show="inputInvalid('alternateContactTypeOther')"
-          | {{'ERROR.RELATIONSHIP' | translate}}
+        radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true'
+          | {{option[1]}}
 
-      .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
-        / this option to bypass alternate contact is only available
-        / if the applicant has entered phone and address
-        input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="alternateContactType" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
-        label.radio-block_label for="alternate_contact_none"
-         | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
+        .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
+          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactType" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
+          small.error ng-show="inputInvalid('alternateContactTypeOther')"
+            | {{'ERROR.RELATIONSHIP' | translate}}
 
-    small.error ng-show="inputInvalid('alternateContactType')"
-      | {{'ERROR.ALTERNATE_CONTACT' | translate}}
+        .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
+          / this option to bypass alternate contact is only available
+          / if the applicant has entered phone and address
+          input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="alternateContactType" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
+          label.radio-block_label for="alternate_contact_none"
+           | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
+
+      small.error ng-show="inputInvalid('alternateContactType')"
+        | {{'ERROR.ALTERNATE_CONTACT' | translate}}
 
   short-form-save-and-submit
