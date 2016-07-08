@@ -1,7 +1,10 @@
 # RESTful JSON API to query for address validation
 class Api::V1::ShortFormController < ApiController
+  ### alias
+  ShortFormService = SalesforceService::ShortFormService
+
   def validate_household
-    response = SalesforceService.check_household_eligibility(
+    response = ShortFormService.check_household_eligibility(
       params[:listing_id],
       eligibility_params,
     )
@@ -34,7 +37,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = SalesforceService.submit_application(application_params)
+    response = ShortFormService.create(application_params)
     render json: response
   end
 

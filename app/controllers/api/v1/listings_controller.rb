@@ -1,25 +1,28 @@
 # RESTful JSON API to query for listings
 class Api::V1::ListingsController < ApiController
+  ### alias
+  ListingService = SalesforceService::ListingService
+
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
     params[:ids] = params[:ids] if params[:ids].present?
-    @listings = SalesforceService.listings(params[:ids])
+    @listings = ListingService.listings(params[:ids])
     render json: { listings: @listings }
   end
 
   def show
-    @listing = SalesforceService.listing(params[:id])
+    @listing = ListingService.listing(params[:id])
     render json: { listing: @listing }
   end
 
   def units
-    @units = SalesforceService.units(params[:id])
+    @units = ListingService.units(params[:id])
     render json: { units: @units }
   end
 
   def lottery_results
-    @lottery_results = SalesforceService.lottery_results(params[:id])
+    @lottery_results = ListingService.lottery_results(params[:id])
     render json: { lottery_results: @lottery_results }
   end
 
@@ -31,18 +34,18 @@ class Api::V1::ListingsController < ApiController
       incomelevel: e[:incomelevel].to_f,
       childrenUnder6: e[:childrenUnder6].to_i,
     }
-    @listings = SalesforceService.eligible_listings(filters)
+    @listings = ListingService.eligible_listings(filters)
     render json: { listings: @listings }
   end
 
   def ami
     percent = params[:percent].presence || 100
-    @ami = SalesforceService.ami(percent)
+    @ami = ListingService.ami(percent)
     render json: { ami: @ami }
   end
 
   def lottery_preferences
-    @lottery_preferences = SalesforceService.lottery_preferences
+    @lottery_preferences = ListingService.lottery_preferences
     render json: { lottery_preferences: @lottery_preferences }
   end
 end
