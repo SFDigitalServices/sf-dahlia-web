@@ -1,7 +1,7 @@
-hgroup.entry-panel_group
-  span.entry-panel_label
+.info-item.margin-bottom
+  h4.info-item_value.margin-bottom
     | {{label}}
   / ng-transclude tells it to yield the body of the directive
-  h4.entry-panel_content ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
-  .entry-panel_label.margin-bottom--2x ng-if="subLabel"
+  p.info-item_name ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
+  span.info-item_note ng-if="subLabel"
     | {{subLabel}}
