@@ -5,8 +5,9 @@ require "#{Rails.root}/lib/faraday_custom_headers.rb"
 module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
-    @retries = 1
-    @headers = nil
+    class_attribute :retries
+    class_attribute :headers
+    self.retries = 1
 
     Faraday::Middleware.register_middleware(
       custom_headers: CustomHeaders,
@@ -23,7 +24,7 @@ module SalesforceService
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
       )
-      client.middleware.use :custom_headers, @headers if @headers.present?
+      client.middleware.use :custom_headers, headers if headers.present?
       client
     end
 
@@ -41,8 +42,8 @@ module SalesforceService
         response.body
       end
     rescue Restforce::UnauthorizedError
-      if @retries > 0
-        @retries -= 1
+      if retries > 0
+        retries -= 1
         oauth_token(true)
         retry
       else

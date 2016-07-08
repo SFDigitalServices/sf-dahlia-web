@@ -1,9 +1,6 @@
 module SalesforceService
   # encapsulate all Salesforce Listing querying functions
   class ListingService < SalesforceService::Base
-    @retries = 1
-    @headers = nil
-
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     def self.listings(ids = nil)
