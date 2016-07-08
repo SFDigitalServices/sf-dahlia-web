@@ -1,30 +1,37 @@
-h2.application-title.t-gamma.padding-bottom
-  | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Building_Name}}
+form.app-card.form-card
+  header.app-inner.leader.border-bottom
+    h2.app-card_question
+      | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Building_Name}}
 
-img.property-thumb.margin-bottom--2x alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
+  figure.full-figure
+    img.property-thumb alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
 
-form
-  label
-    | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
-  h2
-    | #98AU18
-  label
-    | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
-  p.review-summary-item
-    | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
-    | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
-    | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
-  label
-    | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
-  p.review-summary-item
-    | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
+  .app-inner.inset.border-bottom
+    .form-group.text-center
+      label.form-label.caps
+        | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
+      p.beta.t-serif.no-margin
+        | #98AU18
 
-  .form-group
-    .button-stack--paginate.text-center.row.padding-top
-      .small-12.medium-6.medium-push-6.columns
-        a.button.ghost-white.expand ui-sref="dahlia.create-account"
-          | {{'G1_CONFIRMATION.CREATE_ACCOUNT' | translate}}
-      .small-12.medium-6.medium-pull-6.columns
-        button.button.ghost-white.expand ui-sref="dahlia.welcome"
-          | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
+  .app-inner.inset.border-bottom
+    label.form-label.caps
+      | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
+    p.form-note
+      | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
+      | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
+      | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
+
+  .app-inner.inset
+    label.form-label.caps
+      | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
+    p.form-note
+      | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
+
+  .button-pager
+    .button-pager_row.primary
+      a.button.primary.radius ui-sref="dahlia.create-account"
+        | {{'G1_CONFIRMATION.CREATE_ACCOUNT' | translate}}
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
+        | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
 
