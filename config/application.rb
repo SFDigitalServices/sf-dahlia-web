@@ -13,5 +13,8 @@ module SfDahliaWeb
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # http://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails
+    config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
   end
 end
