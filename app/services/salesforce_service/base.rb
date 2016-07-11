@@ -43,7 +43,7 @@ module SalesforceService
       end
     rescue Restforce::UnauthorizedError
       if retries > 0
-        retries -= 1
+        retries = retries.to_i - 1
         oauth_token(true)
         retry
       else
