@@ -1,7 +1,7 @@
 .form-group
   .button-stack--paginate.text-center.row.padding-top
     .small-12.medium-6.medium-push-6.columns
-      input.button.expand.radius type="submit" value="{{submitValue}}"
+      input.button.expand.radius type="submit" value="{{submitValue}}" ng-disabled="submitDisabled"
     .small-12.medium-6.medium-pull-6.columns
       a.button.ghost-white.expand ui-sref="dahlia.short-form-application.create-account"
         | {{'T.SAVE_AND_FINISH_LATER' | translate}}
