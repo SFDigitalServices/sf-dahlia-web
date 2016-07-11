@@ -120,11 +120,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
     })
-    .state('dahlia.signin', {
-      url: '/signin'
+    .state('dahlia.sign-in', {
+      url: '/sign-in'
       views:
         'container@':
-          templateUrl: 'account/templates/signin.html'
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
     })
     ############
     # TODO: refactor "my account" pages to be under the same namespace/controller
