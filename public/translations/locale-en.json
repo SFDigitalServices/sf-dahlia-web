@@ -64,7 +64,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_EMAIL": "Your email address",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
-        "APPLICANT_ADDRESS": "Your address",
+        "ADDRESS": "Address",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "MAILING_ADDRESS": "Mailing address",

@@ -18,7 +18,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
       | {{applicant.alternatePhone | tel}}
     review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
       | {{applicant.email}}
-    review-summary-item label="{{'LABEL.APPLICANT_ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+    review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="!applicant.noAddress"
       | {{applicant.home_address.address1}}
       br
       ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
