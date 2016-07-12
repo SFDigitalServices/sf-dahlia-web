@@ -7,6 +7,8 @@ angular.module('dahlia.directives')
     hideAlert: '='
     missingInfo: '='
     householdEligibilityErrorMessage: '='
+    invert: '='
+
   templateUrl: 'directives/alert-box.html'
 
   link: (scope, elem, attrs) ->
@@ -34,4 +36,13 @@ angular.module('dahlia.directives')
 
     scope.showAltContactMessage = ->
       scope.showAlert() && scope.altContactTypeError()
+
+    scope.isInverted = ->
+      if scope.invert
+        return 'invert no-margin'
+
+    scope.isIconInverted = ->
+      if !scope.invert
+        return 'i-oil'
+
 ]
