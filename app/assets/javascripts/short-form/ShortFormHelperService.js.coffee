@@ -15,11 +15,11 @@ ShortFormHelperService = ($translate, $filter) ->
     else
       alternateContact.alternateContactType
 
-  Service.applicantLanguage = (applicant) ->
-    if applicant.language == 'Other'
-      applicant.languageOther
+  Service.returnLanguage = (person) ->
+    if person.language == 'Other'
+      person.languageOther
     else
-      applicant.language
+      person.language
 
   Service.applicationVouchersSubsidies = (application) ->
     if application.householdVouchersSubsidies == 'Yes'
