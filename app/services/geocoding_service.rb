@@ -1,5 +1,5 @@
 require 'street_address'
-require 'open-uri'
+require 'http'
 
 # encapsulate all geocoding methods
 class GeocodingService
@@ -31,9 +31,8 @@ class GeocodingService
       Street: @address[:street],
       City: @address[:city],
       f: 'pjson',
-      outSR: 4326, # this means give lat/long instead of x/y
     }
-    open(API_URL + "?#{query_params.to_query}").read
+    HTTP.get(API_URL + "?#{query_params.to_query}").to_s
   end
 
   def json_data
