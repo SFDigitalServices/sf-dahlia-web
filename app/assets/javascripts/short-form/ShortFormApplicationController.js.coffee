@@ -93,6 +93,15 @@ ShortFormApplicationController = (
     'Public benefits record',
     'School record'
   ]
+  $scope.sexual_orientation_options = [
+    'Straight/Heterosexual',
+    'Gay',
+    'Lesbian',
+    'Bisexual',
+    'Questioning/Unsure',
+    'Not Listed',
+    'Decline to state'
+  ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false

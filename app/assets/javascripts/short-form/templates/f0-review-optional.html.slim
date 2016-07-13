@@ -10,16 +10,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
     gender-form user='applicant'
 
   .app-inner.inset.border-bottom
-    .form-group
-      label.form-label.caps
-        | {{'LABEL.IDENTIFY_AS_LGBT' | translate}}
-      p.form-note.margin-bottom
-        | {{'T.OPTIONAL' | translate}}
-      .radio-group role="radiogroup" aria-label="{{'LABEL.IDENTIFY_AS_LGBT' | translate}}"
-        radio-block-item value='Yes' user='applicant' name='lgbt'
-          | {{'T.YES' | translate}}
-        radio-block-item value='No' user='applicant' name='lgbt'
-          | {{'T.NO' | translate}}
+    sexual-orientation-form user='applicant'
 
   .app-inner.inset.border-bottom
     race-ethnicity-form user='applicant'
