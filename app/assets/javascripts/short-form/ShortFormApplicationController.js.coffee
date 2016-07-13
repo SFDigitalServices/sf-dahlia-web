@@ -380,8 +380,8 @@ ShortFormApplicationController = (
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 
-  $scope.applicantLanguage = ->
-    ShortFormHelperService.applicantLanguage($scope.applicant)
+  $scope.returnLanguage = (person) ->
+    ShortFormHelperService.returnLanguage(person)
 
   $scope.applicationVouchersSubsidies = ->
     ShortFormHelperService.applicationVouchersSubsidies($scope.application)
