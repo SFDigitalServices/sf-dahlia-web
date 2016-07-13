@@ -5,3 +5,5 @@
   p.info-item_name ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
   span.info-item_note ng-if="subLabel"
     | {{subLabel}}
+  span.info-item_note ng-if="!!boldSubLabel"
+    | {{boldSubLabel}}
