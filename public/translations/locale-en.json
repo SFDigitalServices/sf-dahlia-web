@@ -16,7 +16,7 @@
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
-        "ADDRESS_VALIDATION": "There's a problem with the address you provided.",
+        "ADDRESS_VALIDATION": "The address you provided doesn't seem to exist. Please double check the information you have entered.",
         "LANGUAGE": "Please enter a language",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
         "RELATIONSHIP": "Please enter a relationship",
@@ -99,6 +99,8 @@
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
+        "HOUSEHOLD_MEMBER_ADD": "Add Household Member",
+        "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
         "SPECIAL_PROGRAMS": "Special Programs",
         "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
@@ -129,7 +131,8 @@
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "IDENTIFY_AS_LGBT": "Do you identify as Lesbian/Gay/Bisexual?",
-        "LIVING_WITH_HIV_AIDS": "Are you living with HIV/AIDS?"
+        "LIVING_WITH_HIV_AIDS": "Are you living with HIV/AIDS?",
+        "YOUR_OR_ALTERNATE": "Your {{ contactType }} or Alternate {{ contactType }}"
     },
     "T": {
         "YES": "Yes",
@@ -150,6 +153,7 @@
         "SUBMIT": "Submit",
         "APPLICATION": "Application",
         "BACK": "Back",
+        "REQUIRED": "Required",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond."
     },

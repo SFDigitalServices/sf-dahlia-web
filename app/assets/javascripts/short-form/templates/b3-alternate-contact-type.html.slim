@@ -1,8 +1,10 @@
 form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})" ng-init="checkIfAlternateContactNeedsReset()"
-  header.app-inner.leader.border-bottom
+  / because this page has some custom errors we don't include the usual 'short-form-header'
+  header.app-inner.leader ng-class="hasBorderBottom"
     short-form-back
     h2.app-card_question
       | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
+  alert-box short-form="true" missing-info="missingPrimaryContactInfo"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
@@ -16,7 +18,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
           | {{option[1]}}
 
         .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
-          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactType" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
+          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="What is your relationship?" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'"
           small.error ng-show="inputInvalid('alternateContactTypeOther')"
             | {{'ERROR.RELATIONSHIP' | translate}}
 
