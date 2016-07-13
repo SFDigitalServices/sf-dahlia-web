@@ -1,6 +1,13 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns
+      .back-link-container.small-only-text-center ng-if="rememberedState"
+        a.back-link ui-sref="{{rememberedState}}"
+          span.ui-icon.ui-static.ui-medium.i-primary
+            svg
+              use xlink:href="#i-left"
+          | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
+
       form.dash-card novalidate="" name="form.accountForm" ng-submit="signIn()"
         header.dash-header
           span.header-badge
@@ -9,27 +16,33 @@
                 use xlink:href="#i-profile"
           h1.dash-title.no-margin Sign In
         .dash-card-inner.inset.border-bottom
-          .form-group
+          .form-group ng-class="{ error: inputInvalid('email') }"
             h3.form-label.caps
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
-            input#auth_email ng-model="userAuth.email" name="email" placeholder="example@web.com" type="text"
-          .form-group
+            input#auth_email ng-model="userAuth.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }"
+            small.error ng-if="inputInvalid('email')"
+              | {{'ERROR.EMAIL' | translate}}
+          .form-group ng-class="{ error: inputInvalid('password') }"
             h3.form-label.caps
               | {{'LABEL.PASSWORD' | translate}}
             label.sr-only for="auth_password"
               | {{'LABEL.PASSWORD' | translate}}
-            input#auth_password ng-model="userAuth.password" name="password" placeholder="Must be 6 characters" type="password"
+            input#auth_password ng-model="userAuth.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password') }" ng-minlength="8"
+            small.error ng-if="inputInvalid('password')"
+              | {{'ERROR.PASSWORD' | translate}}
             small.form-note.shift-up
               a href="#"
-                | Forgot Password?
+                | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
           .form-group
             p.t-small.c-steel.text-center.padding-top.no-margin
               input.button.no-margin.primary type="submit" value="Sign In"
         footer.dash-header
           h2.dash-title
-            | Don't have an account?
+            | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
           p.t-small.c-steel
-            button.button.no-margin type="button"
-              | Create Account
+            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" ng-if="rememberedState"
+              | {{'LABEL.CREATE_ACCOUNT' | translate}}
+            a.button.no-margin ui-sref="dahlia.create-account" ng-if="!rememberedState"
+              | {{'LABEL.CREATE_ACCOUNT' | translate}}

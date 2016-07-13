@@ -29,7 +29,8 @@ AccountController = ($scope, $state, AccountService) ->
     if form.$valid
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then ->
-        return $state.go('dahlia.my-account')
+        if AccountService.loggedIn()
+          return $state.go('dahlia.my-account')
     else
       $scope.hideAlert = false
 

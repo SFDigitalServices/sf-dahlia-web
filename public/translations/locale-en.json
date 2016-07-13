@@ -125,6 +125,7 @@
         "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "SPECIAL_PROGRAMS": "Special Programs",
         "CREATE_ACCOUNT": "Create Account",
+        "SIGN_IN": "Sign In",
         "PROOF_OF_ADDRESS": "Proof of address",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
@@ -271,7 +272,12 @@
         "CONTINUE_WITH_APPLICATION": "Continue with Application",
         "CREATE_AN_ACCOUNT": "Create an Account",
         "P1": "You'll use this information to log in to your account, so make sure you can remember it.",
+        "ALREADY_HAVE_ACCOUNT": "Already have an account?",
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
+    },
+    "SIGN_IN": {
+      "FORGOT_PASSWORD": "Forgot password?",
+      "DONT_HAVE_ACCOUNT": "Don't have an account?"
     }
 }
