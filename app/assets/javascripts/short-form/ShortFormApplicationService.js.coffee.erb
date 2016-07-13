@@ -350,7 +350,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
-    if application.alternateContact.alternateContactType != 'None'
+    if application.alternateContact.alternateContactType == 'None'
+      delete application.alternateContact
+    else
       application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
     application = Service._formatMemberAddress(application)
     application = Service._formatMemberDOB(application)
@@ -400,6 +402,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 
 
   Service._formatAddress = (application, person, addressType) ->
+    delete application[person].geocoding_data
+    return application unless application[person][addressType]
+
     if addressType == 'home_address'
       _.forEach application[person][addressType], (value, key) ->
         if !(key == 'address1' || key == 'address2')
@@ -419,7 +424,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       application[person].mailingAddress += " " + address2 if address2
 
     delete application[person][addressType]
-    delete application[person].geocoding_data
     return application
 
   Service._formatMemberAddress = (application) ->
