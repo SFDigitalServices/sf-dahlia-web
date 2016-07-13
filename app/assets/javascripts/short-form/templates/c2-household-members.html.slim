@@ -1,44 +1,44 @@
-h2.application-title.t-gamma.padding-bottom
-  | {{'C2_HOUSEHOLD_MEMBERS.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: validateHouseholdEligibility('householdMatch')})"
-  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: validateHouseholdEligibility('householdMatch')})"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'C2_HOUSEHOLD_MEMBERS.TITLE' | translate}}
 
-  header.aside-header.alert ng-show="householdEligibilityErrorMessage"
-    hgroup.aside-header_group
-      p.c-steel
-        | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage" invert="true")
 
-  .form-group.min-height--4x.margin-bottom--2x
-    .user-item
-      p.user-item_name
-        strong
+  .alert-notice.alert ng-show="householdEligibilityErrorMessage"
+    p.c-steel
+      | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+
+  .app-inner.short
+    .form-group
+      .info-item.tall.border-bottom
+        p.info-item_name
           | {{ applicant.firstName }} {{ applicant.lastName }}
-        br
-        span.t-tiny
+        p.info-item_value
           | {{'LABEL.PRIMARY_USER' | translate}}
-      a.small.button.right ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.name"
-        | {{'T.EDIT' | translate}}
-
-    span ng-repeat="member in householdMembers"
-      .user-item
-        p.user-item_name
-          strong
-            | {{ member.firstName }} {{ member.lastName }}
-          br
-          span.t-tiny
-            | {{'LABEL.HOUSEHOLD_MEMBER' | translate}}
-        a.small.button.right ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
+        a.edit-link.info-item_link ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.name"
           | {{'T.EDIT' | translate}}
 
-    button.button.has-icon.expand.tint ui-sref="dahlia.short-form-application.household-member-form" ng-click="clearHouseholdErrorMessage()"
-      span.ui-icon.ui-medium
-        svg
-          use xlink:href="#i-plus"
-      | {{'LABEL.ADD_HOUSEHOLD_MEMBER' | translate}}
+      span ng-repeat="member in householdMembers"
+        .info-item.tall.border-bottom
+          p.info-item_name
+            | {{ member.firstName }} {{ member.lastName }}
+          p.info-item_value
+            | {{'LABEL.HOUSEHOLD_MEMBER' | translate}}
+          a.edit-link.info-item_link ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
+            | {{'T.EDIT' | translate}}
 
-  .button-stack--paginate.text-center.row.padding-top
-    .small-12.medium-6.medium-push-6.columns
-      input.button.expand type="submit" value="{{'LABEL.DONE_ADDING_PEOPLE' | translate}}"
-    .small-12.medium-6.medium-pull-6.columns
-      a.button.ghost-white.expand ui-sref="dahlia.short-form-application.create-account" ng-click="clearHouseholdErrorMessage()"
+      .text-center.padding--2x
+        button.has-icon.no-margin ui-sref="dahlia.short-form-application.household-member-form" ng-click="clearHouseholdErrorMessage()"
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-plus"
+          | {{'LABEL.ADD_HOUSEHOLD_MEMBER' | translate}}
+
+  .button-pager
+    .button-pager_row.primary
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.DONE_ADDING_PEOPLE' | translate}}"
+    .button-pager_row
+      a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.short-form-application.create-account" ng-click="clearHouseholdErrorMessage()"
         | {{'T.SAVE_AND_FINISH_LATER' | translate}}

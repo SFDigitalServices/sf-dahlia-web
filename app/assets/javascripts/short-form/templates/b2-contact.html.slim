@@ -1,135 +1,143 @@
-h2.application-title.t-gamma.padding-bottom
-  | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
-  .form-group.has-option ng-class="{ error: checkInvalidPhones() }"
-    .form-tel
-      label for="applicant_phone"
-        | {{'LABEL.APPLICANT_PHONE' | translate}}
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 
-      input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-    small.error ng-if="inputInvalid('phone')"
-      | {{'ERROR.PHONE_NUMBER' | translate}}
-    label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-    select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
-      option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      option value="Home" translate="LABEL.PHONE_HOME"
-      option value="Work" translate="LABEL.PHONE_WORK"
-      option value="Cell" translate="LABEL.PHONE_CELL"
-
-    small.error ng-if="inputInvalid('phoneType')"
-      | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
-
-    div
-      .form-item.padding-bottom
-        .checkbox
-          input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
-          label for="applicant_no_phone"
-            | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
-        small.highlight ng-if="applicant.noPhone"
-          | {{'B2_CONTACT.ALTERNATE_PHONE_REQUIRED' | translate}}
-
-      .form-item.padding-bottom
-        / this checkbox unchecks the other checkbox; only one can be selected
-        .checkbox
-         input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone" ng-disabled="applicant.noPhone" ng-click="clearPhoneData('alternate')"
-         label for="applicant_additional_phone"
-          | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}
-
-    div ng-if="applicant.additionalPhone && !applicant.noPhone"
+  .app-inner.inset.border-bottom
+    .form-group.has-option ng-class="{ error: checkInvalidPhones() }"
       .form-tel
-        label for="applicant_alternate_phone"
-          | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
-        input#applicant_alternate_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-      small.error ng-if="inputInvalid('alternatePhone')"
+        label.caps for="applicant_phone"
+          | {{'LABEL.APPLICANT_PHONE' | translate}}
+
+        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+      small.error ng-if="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
-      label.sr-only for="applicant_alternate_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      select#applicant_alternate_phone_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }"
+      label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+      select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
         option value="Home" translate="LABEL.PHONE_HOME"
         option value="Work" translate="LABEL.PHONE_WORK"
         option value="Cell" translate="LABEL.PHONE_CELL"
-      small.error ng-if="inputInvalid('alternatePhoneType')"
+
+      small.error ng-if="inputInvalid('phoneType')"
         | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
-  .form-group.has-option ng-class="{ error: inputInvalid('email') }"
-    label.form-label.no-margin for="applicant_email"
-      | {{'LABEL.APPLICANT_EMAIL' | translate}}
-    p.form-note.margin-bottom
-      | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
-    .form-email
-      input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
-    small.error ng-if="inputInvalid('email')"
-      | {{'ERROR.EMAIL' | translate}}
-    .form-item.padding-bottom
-      .checkbox
-        input#applicant_no_email name="applicant_no_email" type="checkbox" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
-        label for="applicant_no_email"
-          | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
+      div
+        .form-item.padding-bottom
+          .checkbox
+            input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
+            label for="applicant_no_phone"
+              | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
+          small.highlight ng-if="applicant.noPhone"
+            | {{'B2_CONTACT.ALTERNATE_PHONE_REQUIRED' | translate}}
 
-      small.highlight ng-if="applicant.noEmail"
-        | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
+        .form-item.padding-bottom
+          / this checkbox unchecks the other checkbox; only one can be selected
+          .checkbox
+           input#applicant_additional_phone name="applicant_additional_phone" type="checkbox" ng-model="applicant.additionalPhone" ng-disabled="applicant.noPhone" ng-click="clearPhoneData('alternate')"
+           label for="applicant_additional_phone"
+            | {{'LABEL.APPLICANT_ADDITIONAL_PHONE' | translate}}
 
-  .form-group.has-option
-    label.form-label.no-margin
-      | {{'LABEL.APPLICANT_ADDRESS' | translate}}
-    p.form-note.margin-bottom
-      | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
+      div ng-if="applicant.additionalPhone && !applicant.noPhone"
+        .form-tel
+          label.caps for="applicant_alternate_phone"
+            | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
+          input#applicant_alternate_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+        small.error ng-if="inputInvalid('alternatePhone')"
+          | {{'ERROR.PHONE_NUMBER' | translate}}
+        label.sr-only for="applicant_alternate_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+        select#applicant_alternate_phone_type ng-model="applicant.alternatePhoneType" data-width="auto" name="alternatePhoneType" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhoneType') }"
+          option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
+          option value="Home" translate="LABEL.PHONE_HOME"
+          option value="Work" translate="LABEL.PHONE_WORK"
+          option value="Cell" translate="LABEL.PHONE_CELL"
+        small.error ng-if="inputInvalid('alternatePhoneType')"
+          | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
-    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
+  .app-inner.inset.border-bottom
+    .form-group.has-option ng-class="{ error: inputInvalid('email') }"
+      label.form-label.caps for="applicant_email"
+        | {{'LABEL.APPLICANT_EMAIL' | translate}}
+      p.form-note.margin-bottom
+        | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
+      .form-email
+        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
+      small.error ng-if="inputInvalid('email')"
+        | {{'ERROR.EMAIL' | translate}}
+      .form-item.padding-bottom
+        .checkbox
+          input#applicant_no_email name="applicant_no_email" type="checkbox" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
+          label for="applicant_no_email"
+            | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
 
-    small.error ng-if="addressFailedValidation('home_address')"
-      | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+        small.highlight ng-if="applicant.noEmail"
+          | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
-    .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
-      / this checkbox unchecks the other checkbox; only one can be selected
-      .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
-        input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
-        label for="applicant_no_address"
-          | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
-      small.highlight.padding-bottom ng-if="applicant.noAddress"
-        | {{'B2_CONTACT.REQUIRE_ALTERNATE_ADDRESS' | translate}}
+  .app-inner.inset.border-bottom
+    .form-group.row.has-option
+      label.form-label.caps
+        | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+      p.form-note.margin-bottom
+        | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
-    .form-item.padding-bottom
-      / this checkbox unchecks the other checkbox; only one can be selected
-      .checkbox ng-click="resetAndCheckMailingAddress(); applicant.noAddress = false;"
-        input#applicant_separate_address ng-model="applicant.hasAltMailingAddress" name="separate_address" type="checkbox"
-        label for="applicant_separate_address"
-          | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
+      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'; isRequired = homeAddressRequired"
 
-  .form-group ng-if="applicant.hasAltMailingAddress" ng-class="{ error: addressInputInvalid('mailing_address')}"
-    label.form-label.no-margin
-      | {{'LABEL.MAILING_ADDRESS' | translate}}
-    p.form-note.margin-bottom
-      | {{'B2_CONTACT.PROVIDE_AN_ADDRESS' | translate}}
+      small.error ng-if="addressFailedValidation('home_address')"
+        | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
-    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
+      .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
+        / this checkbox unchecks the other checkbox; only one can be selected
+        .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
+          input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
+          label for="applicant_no_address"
+            | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
+        small.highlight.padding-bottom ng-if="applicant.noAddress"
+          | {{'B2_CONTACT.REQUIRE_ALTERNATE_ADDRESS' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('workInSf') }"
-    label.form-label.no-margin
-      | {{'LABEL.WORK_IN_SF' | translate}}
-    p.form-note.margin-bottom
-      | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
+      .form-item.padding-bottom
+        / this checkbox unchecks the other checkbox; only one can be selected
+        .checkbox ng-click="resetAndCheckMailingAddress(); applicant.noAddress = false;"
+          input#applicant_separate_address ng-model="applicant.hasAltMailingAddress" name="separate_address" type="checkbox"
+          label for="applicant_separate_address"
+            | {{'LABEL.APPLICANT_SEPARATE_ADDRESS' | translate}}
 
-    .radio-group role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
-      radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true'
-        | {{'T.YES' | translate}}
-      radio-block-item value='No' user='applicant' name='workInSf' ng-required='true'
-        | {{'T.NO' | translate}}
+  .app-inner.inset.border-bottom ng-if="applicant.hasAltMailingAddress"
+    .form-group.row ng-class="{ error: addressInputInvalid('mailing_address')}"
+      label.form-label.caps
+        | {{'LABEL.MAILING_ADDRESS' | translate}}
+      p.form-note.margin-bottom
+        | {{'B2_CONTACT.PROVIDE_AN_ADDRESS' | translate}}
 
-    small.highlight ng-if="applicant.workInSf == 'Yes'"
-      | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
+      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'; isRequired = truth"
 
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('workInSf') }"
+      label.form-label.caps
+        | {{'LABEL.WORK_IN_SF' | translate}}
+      p.form-note.margin-bottom
+        | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('languageOther') }"
-    label.form-label.margin-bottom--half for="applicant_language"
-      | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
-    select#applicant_language ng-model="applicant.language" data-width="auto" name="language"
-      option ng-repeat="language in language_options" value="{{language}}"
-        | {{ language }}
+      .radio-group-inline.double role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
+        radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true'
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true'
+          | {{'T.NO' | translate}}
 
-    label.sr-only for="applicant_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
-    input#applicant_language_other ng-model="applicant.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="applicant.language == 'Other'" ng-if="applicant.language == 'Other'"
-    small.error ng-if="inputInvalid('languageOther')"
-      | {{'ERROR.LANGUAGE' | translate}}
+      small.highlight ng-if="applicant.workInSf == 'Yes'"
+        | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('languageOther') }"
+      label.form-label.caps for="applicant_language"
+        | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
+      select#applicant_language ng-model="applicant.language" data-width="auto" name="language"
+        option ng-repeat="language in language_options" value="{{language}}"
+          | {{ language }}
+
+      label.sr-only for="applicant_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
+      input#applicant_language_other ng-model="applicant.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="applicant.language == 'Other'" ng-if="applicant.language == 'Other'"
+      small.error ng-if="inputInvalid('languageOther')"
+        | {{'ERROR.LANGUAGE' | translate}}
 
   short-form-save-and-submit
