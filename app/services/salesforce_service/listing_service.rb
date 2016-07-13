@@ -49,13 +49,13 @@ module SalesforceService
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
-      api_get("/Listing/LotteryResult/Bucket/#{listing_id}")
+      api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
     end
 
     # get Individual Lottery Result with rankings
     def self.lottery_result(listing_id, lottery_number)
       endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
-      api_get(endpoint)
+      api_get(endpoint, nil, false)
     end
 
     def self.check_household_eligibility(listing_id, params)
@@ -63,7 +63,7 @@ module SalesforceService
       %i(household_size incomelevel).each do |k|
         params[k] = params[k].to_i if params[k].present?
       end
-      api_get(endpoint, params)
+      api_get(endpoint, params, nil, false)
     end
 
     ## override to parse_response default = true which we use for Listings
