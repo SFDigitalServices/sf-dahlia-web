@@ -14,7 +14,7 @@ class Emailer < ActionMailer::Base
       email: short_form.primaryApplicant.email,
       listing: listing,
       listing_url: "#{base_url}/listings/#{listing.Id}",
-      lottery_number: short_form.lottery_number,
+      lottery_number: short_form.lotteryNumber,
     )
   end
 
