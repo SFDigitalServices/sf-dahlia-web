@@ -76,7 +76,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
   .app-inner.inset.border-bottom
     .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
-        | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+        | {{'LABEL.ADDRESS' | translate}}
       p.form-note.margin-bottom
         | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
@@ -130,7 +130,7 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
     .form-group ng-class="{ error: inputInvalid('languageOther') }"
       label.form-label.caps for="applicant_language"
         | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
-      select#applicant_language ng-model="applicant.language" data-width="auto" name="language"
+      select#applicant_language ng-model="applicant.language" data-width="auto" name="language" ng-change="applicant.languageOther = null"
         option ng-repeat="language in language_options" value="{{language}}"
           | {{ language }}
 
