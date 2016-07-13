@@ -398,8 +398,8 @@ ShortFormApplicationController = (
     ShortFormApplicationService.submitApplication($scope.listing.Id)
       .then( (response) ->
         # console.log(response, 'success submit')
-        if response.data.id
-          $scope.application.id = response.data.id
+        if response.data.lotteryNumber
+          $scope.application.lotteryNumber = response.data.lotteryNumber
           $state.go('dahlia.short-form-application.confirmation')
         else
       )
