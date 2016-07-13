@@ -1,7 +1,9 @@
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
-  h3
-    | Based on the information you have entered, your household does not qualify for any lottery preferences.
-  .form-group
-    | You will be in the general lottery.
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})"
+  header.app-inner.leader
+    short-form-back
+    h2.app-card_question
+      | Based on the information you have entered, your household does not qualify for any lottery preferences.
+    p.form-note.margin-bottom
+      | You will be in the general lottery.
 
   short-form-save-and-submit

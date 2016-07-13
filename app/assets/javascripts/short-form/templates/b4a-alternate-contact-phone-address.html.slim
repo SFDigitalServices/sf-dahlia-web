@@ -1,43 +1,50 @@
-h2.application-title.t-gamma
-  | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.' + getHouseholdLandingPage()})"
-  .form-group ng-class="{ error: inputInvalid('phone') }"
-    .form-tel
-      label for="alternate_phone"
-        | {{'LABEL.CONTACT_PHONE_NUMBER' | translate}}
-      input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-required="isMissingPrimaryContactInfo('Phone')" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-    small.error ng-show="inputInvalid('phone')"
-      | {{'ERROR.PHONE_NUMBER' | translate}}
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.' + getHouseholdLandingPage()})"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.TITLE' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('email') }"
-    label.form-label.no-margin
-      | {{'LABEL.CONTACT_EMAIL' | translate}}
-    p.form-note.margin-bottom
-      | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.ONLY_USE_EMAIL' | translate}}
-    .form-email
-      label.sr-only for="alternate_email"
-        | {{'LABEL.EMAIL_ADDRESS' | translate}}
-      input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-required="isMissingPrimaryContactInfo('Email')" ng-class="{ error: inputInvalid('email') }"
-    small.error ng-show="inputInvalid('email')"
-      | {{'ERROR.EMAIL' | translate}}
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('phone') }"
+      .form-tel
+        label.caps for="alternate_phone"
+          | {{'LABEL.CONTACT_PHONE_NUMBER' | translate}}
+        input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-required="isMissingPrimaryContactInfo('Phone')" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+      small.error ng-show="inputInvalid('phone')"
+        | {{'ERROR.PHONE_NUMBER' | translate}}
 
-  .form-group
-    label.form-label.no-margin
-      | {{'LABEL.CONTACT_MAILING_ADDRESS' | translate}}
-    p.form-note.margin-bottom
-      | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.CHOOSE_AN_ADDRESS' | translate}}
-    ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingAddress"
+  .app-inner.inset.border-bottom
+    .form-group ng-class="{ error: inputInvalid('email') }"
+      label.form-label.caps
+        | {{'LABEL.CONTACT_EMAIL' | translate}}
+      p.form-note.margin-bottom
+        | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.ONLY_USE_EMAIL' | translate}}
+      .form-email
+        label.sr-only for="alternate_email"
+          | {{'LABEL.EMAIL_ADDRESS' | translate}}
+        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-required="isMissingPrimaryContactInfo('Email')" ng-class="{ error: inputInvalid('email') }"
+      small.error ng-show="inputInvalid('email')"
+        | {{'ERROR.EMAIL' | translate}}
 
-  .form-group ng-class="{ error: inputInvalid('languageOther') }"
-    label.form-label.margin-bottom--half for="alternate_language"
-      | {{'LABEL.CONTACT_PRIMARY_LANGUAGE' | translate}}
-    select#alternate_language ng-model="alternateContact.language" data-width="auto" name="language"
-      option ng-repeat="language in language_options" value="{{language}}"
-        | {{ language }}
+  .app-inner.inset.border-bottom
+    .form-group.row
+      label.form-label.caps
+        | {{'LABEL.CONTACT_MAILING_ADDRESS' | translate}}
+      p.form-note.margin-bottom
+        | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.CHOOSE_AN_ADDRESS' | translate}}
+      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingAddress"
 
-    label.sr-only for="alternate_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
-    input#alternate_language_other ng-model="alternateContact.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="alternateContact.language == 'Other'" ng-show="alternateContact.language == 'Other'"
-    small.error ng-show="inputInvalid('languageOther')"
-      | {{'ERROR.LANGUAGE' | translate}}
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('languageOther') }"
+      label.form-label.caps for="alternate_language"
+        | {{'LABEL.CONTACT_PRIMARY_LANGUAGE' | translate}}
+      select#alternate_language ng-model="alternateContact.language" data-width="auto" name="language"
+        option ng-repeat="language in language_options" value="{{language}}"
+          | {{ language }}
+
+      label.sr-only for="alternate_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
+      input#alternate_language_other ng-model="alternateContact.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="alternateContact.language == 'Other'" ng-show="alternateContact.language == 'Other'"
+      small.error ng-show="inputInvalid('languageOther')"
+        | {{'ERROR.LANGUAGE' | translate}}
 
   short-form-save-and-submit

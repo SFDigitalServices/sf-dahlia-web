@@ -1,14 +1,17 @@
-h2.application-title.t-gamma
-  | {{'D6_STATUS_VOUCHERS.TITLE' | translate}}
-p.form-note.margin-bottom
-  | {{'D6_STATUS_VOUCHERS.P1' | translate}}
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'D6_STATUS_VOUCHERS.TITLE' | translate}}
+    p.form-note.margin-bottom
+      | {{'D6_STATUS_VOUCHERS.P1' | translate}}
 
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.income'})"
-  .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
-    .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_STATUS_VOUCHERS.TITLE' | translate}}"
-      radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
-        | {{'T.YES' | translate}}
-      radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' ng-click="invalidateIncomeForm()"
-        | {{'T.NO' | translate}}
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
+      .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_STATUS_VOUCHERS.TITLE' | translate}}"
+        radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' ng-click="invalidateIncomeForm()"
+          | {{'T.NO' | translate}}
 
   short-form-save-and-submit

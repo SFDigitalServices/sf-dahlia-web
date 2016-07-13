@@ -414,7 +414,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
           newKey = 'mailing' + _.capitalize(key)
           application[person][newKey] = value
         return
-      application[person].mailingAddress = application[person][addressType].address1 + " " + application[person][addressType].address2
+      application[person].mailingAddress = application[person][addressType].address1
+      address2 = application[person][addressType].address2
+      application[person].mailingAddress += " " + address2 if address2
 
     delete application[person][addressType]
     delete application[person].geocoding_data

@@ -1,6 +1,6 @@
-.alert-box.alert alert="" close="hideAlert = true" ng-show="showAlert()"
+.alert-box.alert alert="" close="hideAlert = true" ng-show="showAlert()" ng-class="isInverted"
   span.alert-icon
-    span.ui-icon.ui-static.ui-medium.i-oil
+    span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
       svg
         use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
   p.alert-body
