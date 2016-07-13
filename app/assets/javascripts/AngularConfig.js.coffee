@@ -316,8 +316,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.short-form-welcome.intro', {
       url: '/intro'
       views:
-        'container':
+        'container@':
           templateUrl: 'short-form/templates/a1-intro.html'
+          controller: 'ShortFormApplicationController'
     })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'

@@ -1,4 +1,4 @@
-.form-address.row
+.form-address.row.expand
   .form-group-street.form-item.large-12.columns ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }"
     label.sr-only for="{{model}}_{{addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
@@ -11,14 +11,14 @@
     label for="{{model}}_{{addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
       ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
-  .form-group-city.form-item.small-7.large-5.columns ng-class="{ error: isRequired() && inputInvalid('city', addressType) }"
+  .form-group-city.form-item.small-7.columns ng-class="{ error: isRequired() && inputInvalid('city', addressType) }"
     label for="{{model}}_{{addressType}}_city" translate="LABEL.CITY"
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="checkIfMailingAddressNeeded()" name="{{addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
       ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }")
     small.error ng-show="isRequired() && inputInvalid('city', addressType)"
       | {{'ERROR.CITY' | translate}}
-  .form-group-state.form-item.small-5.large-3.columns ng-class="{ error: isRequired() && inputInvalid('state', addressType) }"
+  .form-group-state.form-item.small-5.columns ng-class="{ error: isRequired() && inputInvalid('state', addressType) }"
     label for="{{model}}_{{addressType}}_state" State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
       ng-change="checkIfMailingAddressNeeded()" data-width="auto" name="{{addressType}}_state"
@@ -79,7 +79,7 @@
 
     small.error ng-show="isRequired() && inputInvalid('state', addressType)"
       | {{'ERROR.STATE' | translate}}
-  .form-group-zip.form-item.small-12.large-4.columns ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }"
+  .form-group-zip.form-item.small-12.columns ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }"
     label for="{{model}}_{{addressType}}_zip"
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"

@@ -1,25 +1,29 @@
-h2.application-title.t-gamma
-  | {{'D2_LIVE_WORK_PREFERENCE.TITLE' | translate}}
-p.form-note.margin-bottom
-  | {{'T.OPTIONAL' | translate}}
-p.form-note.margin-bottom
-  | {{'D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS' | translate}}
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})" ng-init="checkLiveWorkEligibility()"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'D2_LIVE_WORK_PREFERENCE.TITLE' | translate}}
+    p.form-note.margin-bottom
+      | {{'T.OPTIONAL' | translate}}
+    p.form-note.margin-bottom
+      | {{'D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS' | translate}}
 
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.status-vouchers'})" ng-init="checkLiveWorkEligibility()"
-  label.sr-only id="additional_preferences_label" translate="LABEL.ADDITIONAL_PREFERENCES"
-  .checkbox-group role="group"
+  .app-inner
+    .form-group
+      label.sr-only id="additional_preferences_label" translate="LABEL.ADDITIONAL_PREFERENCES"
+      .checkbox-group role="group"
 
-    checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}"
-      type="liveInSf" upload_proof="true"  labelledby="additional_preferences_label"
-      ng-if="liveInSfMembers().length > 0")
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE' | translate}}"
+          type="liveInSf" upload_proof="true"  labelledby="additional_preferences_label"
+          ng-if="liveInSfMembers().length > 0")
 
-    checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}"
-      type="neighborhoodResidence" upload_proof="true" labelledby="additional_preferences_label")
-        | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION' | translate}}
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}"
+          type="neighborhoodResidence" upload_proof="true" labelledby="additional_preferences_label")
+            | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION' | translate}}
 
-    checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}"
-      type="workInSf" upload_proof="true" labelledby="additional_preferences_label"
-      ng-if="workInSfMembers().length > 0")
-        | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION' | translate}}
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}"
+          type="workInSf" upload_proof="true" labelledby="additional_preferences_label"
+          ng-if="workInSfMembers().length > 0")
+            | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION' | translate}}
 
   short-form-save-and-submit

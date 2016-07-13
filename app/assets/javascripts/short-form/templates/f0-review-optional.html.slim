@@ -1,51 +1,56 @@
-h2.application-title.t-gamma
-  | {{'F0_REVIEW_OPTIONAL.TITLE' | translate}}
-form novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary', callback: 'checkSurveyComplete'})"
-  .form-group
-    p
+form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.review-summary', callback: 'checkSurveyComplete'})"
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'F0_REVIEW_OPTIONAL.TITLE' | translate}}
+    p.form-note.margin-bottom
       | {{'F0_REVIEW_OPTIONAL.P1' | translate}}
 
-  gender-form user='applicant'
+  .app-inner.inset.border-bottom
+    gender-form user='applicant'
 
-  .form-group
-    label.form-label.no-margin
-      | {{'LABEL.IDENTIFY_AS_LGBT' | translate}}
-    p.form-note.margin-bottom
-      | {{'T.OPTIONAL' | translate}}
-    .radio-group role="radiogroup" aria-label="{{'LABEL.IDENTIFY_AS_LGBT' | translate}}"
-      radio-block-item value='Yes' user='applicant' name='lgbt'
-        | {{'T.YES' | translate}}
-      radio-block-item value='No' user='applicant' name='lgbt'
-        | {{'T.NO' | translate}}
+  .app-inner.inset.border-bottom
+    .form-group
+      label.form-label.caps
+        | {{'LABEL.IDENTIFY_AS_LGBT' | translate}}
+      p.form-note.margin-bottom
+        | {{'T.OPTIONAL' | translate}}
+      .radio-group role="radiogroup" aria-label="{{'LABEL.IDENTIFY_AS_LGBT' | translate}}"
+        radio-block-item value='Yes' user='applicant' name='lgbt'
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='applicant' name='lgbt'
+          | {{'T.NO' | translate}}
 
-  race-ethnicity-form user='applicant'
+  .app-inner.inset.border-bottom
+    race-ethnicity-form user='applicant'
 
-  .form-group
-    label.form-label.no-margin
-      | {{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}
-    p.form-note.margin-bottom
-      | {{'T.OPTIONAL' | translate}}
-    .radio-group role="radiogroup" aria-label="{{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}"
-      radio-block-item value='Yes' user='applicant' name='hiv'
-        | {{'T.YES' | translate}}
-      radio-block-item value='No' user='applicant' name='hiv'
-        | {{'T.NO' | translate}}
+  .app-inner.inset.border-bottom
+    .form-group
+      label.form-label.caps
+        | {{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}
+      p.form-note.margin-bottom
+        | {{'T.OPTIONAL' | translate}}
+      .radio-group role="radiogroup" aria-label="{{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}"
+        radio-block-item value='Yes' user='applicant' name='hiv'
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='applicant' name='hiv'
+          | {{'T.NO' | translate}}
 
+  .app-inner.inset
+    .form-group
+      label.form-label.caps id="referral_label"
+        | {{'LABEL.HOW_DID_YOU_HEAR_ABOUT_THIS' | translate}}
+      p.form-note.margin-bottom
+        | {{'T.OPTIONAL' | translate}}
 
-  .form-group
-    label.form-label.no-margin id="referral_label"
-      | {{'LABEL.HOW_DID_YOU_HEAR_ABOUT_THIS' | translate}}
-    p.form-note.margin-bottom
-      | {{'T.OPTIONAL' | translate}}
-
-    .checkbox-group role="group"
-      checkbox-form-item name='referral' option='Newspaper' labelledby="referral_label"
-      checkbox-form-item name='referral' option='MOHCD Website' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Developer Website' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Flyer' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Email Alert' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Friend' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Housing Counselor' labelledby="referral_label"
-      checkbox-form-item name='referral' option='Other' labelledby="referral_label"
+      .checkbox-group role="group"
+        checkbox-form-item name='referral' option='Newspaper' labelledby="referral_label"
+        checkbox-form-item name='referral' option='MOHCD Website' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Developer Website' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Flyer' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Email Alert' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Friend' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Housing Counselor' labelledby="referral_label"
+        checkbox-form-item name='referral' option='Other' labelledby="referral_label"
 
   short-form-save-and-submit

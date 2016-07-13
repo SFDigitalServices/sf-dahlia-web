@@ -1,20 +1,23 @@
-h2.application-title.t-gamma.padding-bottom
-  | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
-.form-group.padding-bottom--2x
-  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage")
+.app-card.form-card
+  header.app-inner.leader.border-bottom
+    short-form-back
+    h2.app-card_question
+      | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
 
-  header.aside-header.alert ng-show="householdEligibilityErrorMessage"
-    hgroup.aside-header_group
-      p.c-steel
-        | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage" invert="true")
 
-  .button-stack.text-center.row.padding-top
-    .small-12.medium-6.columns
-      button.button.tertiary.t-caps.t-bold.expand.tall ng-click="validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.status-programs')"
+  .alert-notice.alert ng-show="householdEligibilityErrorMessage"
+    p.c-steel
+      | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+
+  .app-inner.inset.border-bottom
+    .form-group
+      button.button.expand.tall ng-click="validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.status-programs')"
         | {{'LABEL.LIVE_ALONE' | translate}}
-    .small-12.medium-6.columns
-      button.button.tertiary.t-caps.t-bold.expand.tall ui-sref="dahlia.short-form-application.household-overview"
+      button.button.expand.tall ui-sref="dahlia.short-form-application.household-overview"
        | {{'LABEL.OTHER_PEOPLE' | translate}}
 
-a.button.ghost-white.expand ui-sref="dahlia.create-account"
-  | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+  .button-pager
+    .button-pager_row
+      button.button-link.button-lined.small-text-center ui-sref="dahlia.create-account"
+        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
