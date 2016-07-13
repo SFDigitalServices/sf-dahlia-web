@@ -82,7 +82,8 @@ class Api::V1::ShortFormController < ApiController
                 genderOther
                 ethnicity
                 race
-                lgbt
+                sexualOrientation
+                sexualOrientationOther
                 hiv
                 dob
                 address
@@ -135,6 +136,7 @@ class Api::V1::ShortFormController < ApiController
             :annualIncome,
             :monthlyIncome,
             :agreeToTerms,
+            :surveyComplete,
           )
   end
 

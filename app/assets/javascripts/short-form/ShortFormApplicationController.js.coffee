@@ -93,6 +93,15 @@ ShortFormApplicationController = (
     'Public benefits record',
     'School record'
   ]
+  $scope.sexual_orientation_options = [
+    'Straight/Heterosexual',
+    'Gay',
+    'Lesbian',
+    'Bisexual',
+    'Questioning/Unsure',
+    'Not Listed',
+    'Decline to state'
+  ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -391,9 +400,8 @@ ShortFormApplicationController = (
     $scope.submitDisabled = true
     ShortFormApplicationService.submitApplication($scope.listing.Id)
       .then( (response) ->
-        # console.log(response, 'success submit')
-        if response.data.id
-          $scope.application.id = response.data.id
+        if response.data.lotteryNumber
+          $scope.application.lotteryNumber = response.data.lotteryNumber
           $scope.submitDisabled = false
           $state.go('dahlia.short-form-application.confirmation')
       )

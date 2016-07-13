@@ -1,0 +1,16 @@
+.form-group
+  label.form-label.no-margin id="sexual_orientation_form_label"
+    | {{'LABEL.APPLICANT_SEXUAL_ORIENTATION' | translate}}
+  p.form-note.margin-bottom
+    | {{'T.OPTIONAL' | translate}}
+
+  select#user_sexual_orientation ng-model="user.sexualOrientation" data-width="auto" name="sexualOrientation" ng-change="user.sexualOrientationOther = null"
+    option disabled="" selected="" value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="orientation in sexual_orientation_options" value="{{orientation}}"
+      | {{ orientation }}
+
+  label.sr-only for="user_sexual_orientation_other" translate="LABEL.YOUR_SEXUAL_ORIENTATION"
+  input#user_sexual_orientation_other ng-model="user.sexualOrientationOther" name="sexualOrientationOther" placeholder="{{'LABEL.YOUR_SEXUAL_ORIENTATION' | translate}}" type="text" ng-class="{ error: inputInvalid('sexualOrientationOther') }" ng-required="user.sexualOrientation == 'Not Listed'" ng-if="user.sexualOrientation == 'Not Listed'"
+  small.error ng-if="inputInvalid('sexualOrientationOther')"
+    | {{'ERROR.SEXUAL_ORIENTATION' | translate}}
