@@ -373,7 +373,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     return application
 
   Service._renameApplicant = (application) ->
-    application.primaryApplicant = Object.assign({}, application.applicant)
+    application.primaryApplicant = angular.copy(application.applicant)
     delete application.applicant
     return application
 
