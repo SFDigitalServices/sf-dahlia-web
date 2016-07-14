@@ -39,7 +39,7 @@ class Api::V1::ShortFormController < ApiController
       Emailer.submission_confirmation(
         listing_id: application_params[:listingID],
         short_form_id: response['id'],
-      ).deliver
+      ).deliver_now
     end
     render json: response
   end

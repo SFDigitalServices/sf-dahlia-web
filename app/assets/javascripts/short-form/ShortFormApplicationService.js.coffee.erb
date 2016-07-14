@@ -53,6 +53,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
+    Service.application.id = null
+    Service.application.lotteryNumber = null
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
