@@ -66,6 +66,7 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
       'household-members',
       'household-member-form',
       'household-member-form-edit',
+      'household-member-verify-address',
       'review-summary',
     ]
     hideBackButton.indexOf(Service._currentPage()) < 0

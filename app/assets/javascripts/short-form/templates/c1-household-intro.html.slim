@@ -1,10 +1,9 @@
 .app-card.form-card
-  header.app-inner.leader.border-bottom
-    short-form-back
+  short-form-header
     h2.app-card_question
       | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
 
-  alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage" invert="true")
+  alert-box(short-form="true" household-eligibility-error-message="householdEligibilityErrorMessage")
 
   .alert-notice.alert ng-show="householdEligibilityErrorMessage"
     p.c-steel

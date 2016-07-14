@@ -1,0 +1,9 @@
+/ all directives require an outermost div, shouldn't affect the layout at all
+div
+  header.app-inner.leader ng-class="hasBorderBottom"
+    / back button
+    short-form-back
+
+    / stuff inside the header e.g. "h2" titles get inserted in the transclude
+    ng-transclude
+  alert-box short-form="true"

@@ -68,12 +68,13 @@ do ->
       return
     )
 
-    beforeEach inject(($rootScope, $controller, $q) ->
+    beforeEach inject(($rootScope, $controller, $q, _$document_) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-welcome.overview'}
+      state.params = {}
 
       $translate = {
         instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
@@ -84,9 +85,12 @@ do ->
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
 
+      _$document_.scrollToElement = jasmine.createSpy()
+
       $controller 'ShortFormApplicationController',
         $scope: scope
         $state: state
+        $document: _$document_
         Idle: fakeIdle
         Title: fakeTitle
         $translate: $translate
@@ -169,6 +173,7 @@ do ->
     describe '$scope.addressFailedValidation', ->
       it 'calls failedValidation in AddressValidationService', ->
         scope.validated_home_address = {street1: 'x'}
+        state.params.error = true
         scope.addressFailedValidation('home_address')
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
@@ -177,6 +182,7 @@ do ->
       it 'calls failedValidation in AddressValidationService', ->
         scope.form = {applicationForm: {}}
         scope.validated_home_address = {street1: 'x'}
+        state.params.error = true
         scope.addressInputInvalid('home_address')
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
