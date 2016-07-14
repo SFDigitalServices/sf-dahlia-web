@@ -1,31 +1,23 @@
 require 'restforce'
 require 'facets/hash/rekey'
-require "#{Rails.root}/lib/faraday_custom_headers.rb"
 
 module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
-    class_attribute :headers
     self.retries = 1
-
-    Faraday::Middleware.register_middleware(
-      custom_headers: CustomHeaders,
-    )
 
     def self.client
       Restforce.new
     end
 
     def self.oauth_client
-      client = Restforce.new(
+      Restforce.new(
         authentication_retries: 0,
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
       )
-      client.middleware.use :custom_headers, headers if headers.present?
-      client
     end
 
     # run a Salesforce SOQL query
@@ -61,6 +53,18 @@ module SalesforceService
 
     def self.api_post(endpoint, params = nil, parse_response = false)
       api_call(:post, endpoint, params, parse_response)
+    end
+
+    # NOTE: Have to use custom Faraday connection to send headers.
+    def self.api_post_with_headers(endpoint, body = '', headers = {})
+      conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
+      conn.post "/services/apexrest#{endpoint}" do |req|
+        headers.each do |k, v|
+          req.headers[k] = v
+        end
+        req.headers['Authorization'] = "OAuth #{oauth_token}"
+        req.body = body
+      end
     end
 
     def self.oauth_token(force = false)
