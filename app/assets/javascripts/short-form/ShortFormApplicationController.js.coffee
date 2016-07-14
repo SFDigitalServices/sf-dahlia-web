@@ -148,6 +148,7 @@ ShortFormApplicationController = (
     $scope.inputInvalid('zip', identifier)
 
   $scope.addressFailedValidation = (identifier = '') ->
+    return false unless $state.params.error
     validated = $scope["validated_#{identifier}"]
     return AddressValidationService.failedValidation(validated)
 
@@ -346,7 +347,7 @@ ShortFormApplicationController = (
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
-      $scope.hideAlert = false
+      $scope.handleErrorState()
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null
@@ -378,8 +379,8 @@ ShortFormApplicationController = (
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
 
-  $scope.applicantLanguage = ->
-    ShortFormHelperService.applicantLanguage($scope.applicant)
+  $scope.returnLanguage = (person) ->
+    ShortFormHelperService.returnLanguage(person)
 
   $scope.applicationVouchersSubsidies = ->
     ShortFormHelperService.applicationVouchersSubsidies($scope.application)
@@ -420,17 +421,18 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # capture errors when trying to verify address and send them back to the appropriate page
-    f = ShortFormApplicationService.form.applicationForm
-    f.$submitted = true
-    f.$invalid = true
-    f.$valid = false
+    params = angular.copy(toParams)
+    params.error = true
+    $scope.handleErrorState()
     if toState.name == 'dahlia.short-form-application.verify-address'
       e.preventDefault()
-      return $state.go('dahlia.short-form-application.contact', toParams)
+      return $state.go('dahlia.short-form-application.contact', params)
     else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
       e.preventDefault()
-      return $state.go('dahlia.short-form-application.household-member-form-edit', toParams)
+      return $state.go('dahlia.short-form-application.household-member-form-edit', params)
 
+  $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+    $scope.handleErrorState() if $state.params.error
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',

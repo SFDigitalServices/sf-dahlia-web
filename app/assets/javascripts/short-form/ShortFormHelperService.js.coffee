@@ -10,18 +10,16 @@ ShortFormHelperService = ($translate, $filter) ->
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
-    if alternateContact.alternateContactType == 'None'
-      $translate.instant('LABEL.NO_ALTERNATE_CONTACT')
-    else if alternateContact.alternateContactType == 'Other'
+    if alternateContact.alternateContactType == 'Other'
       alternateContact.alternateContactTypeOther
     else
       alternateContact.alternateContactType
 
-  Service.applicantLanguage = (applicant) ->
-    if applicant.language == 'Other'
-      applicant.languageOther
+  Service.returnLanguage = (person) ->
+    if person.language == 'Other'
+      person.languageOther
     else
-      applicant.language
+      person.language
 
   Service.applicationVouchersSubsidies = (application) ->
     if application.householdVouchersSubsidies == 'Yes'

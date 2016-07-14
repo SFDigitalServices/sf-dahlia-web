@@ -357,6 +357,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
+      params:
+        error: null
       views:
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
@@ -436,6 +438,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.short-form-application.household-member-form-edit', {
       url: '/household-member-form/:member_id'
+      params:
+        error: null
       views:
         'container':
           templateUrl: 'short-form/templates/c3-household-member-form.html'

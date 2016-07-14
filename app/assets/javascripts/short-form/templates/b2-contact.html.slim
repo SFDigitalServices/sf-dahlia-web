@@ -1,6 +1,5 @@
 form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAddressVerificationNeeded'})"
-  header.app-inner.leader.border-bottom
-    short-form-back
+  short-form-header
     h2.app-card_question
       | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 
@@ -75,9 +74,9 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
           | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group.row.has-option
+    .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
       label.form-label.caps
-        | {{'LABEL.APPLICANT_ADDRESS' | translate}}
+        | {{'LABEL.ADDRESS' | translate}}
       p.form-note.margin-bottom
         | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
