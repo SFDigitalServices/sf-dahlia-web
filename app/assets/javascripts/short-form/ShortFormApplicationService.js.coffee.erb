@@ -516,7 +516,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     return application
 
   Service._formatBooleans = (application) ->
-    ['workInSf', 'lgbt', 'hiv'].forEach (field) ->
+    ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
       else
@@ -534,7 +534,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     app = Service.applicant
     responses = [
       _.some(app.gender),
-      app.lgbt,
       app.ethnicity,
       app.race,
       app.hiv,

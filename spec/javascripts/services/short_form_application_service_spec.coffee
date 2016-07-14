@@ -369,7 +369,6 @@ do ->
       it 'should check if survey is complete', ->
         ShortFormApplicationService.applicant = fakeApplicant
         ShortFormApplicationService.applicant.gender = {Fake: true}
-        ShortFormApplicationService.applicant.lgbt = 'Fake'
         ShortFormApplicationService.applicant.ethnicity = 'Fake'
         ShortFormApplicationService.applicant.race = 'Fake'
         ShortFormApplicationService.applicant.hiv = 'Fake'
