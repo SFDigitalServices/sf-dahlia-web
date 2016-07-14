@@ -9,14 +9,15 @@ div
 
     / select for household member that has the preference
     / not shown if it is only the applicant eligible
-    .form-group.input-inset ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[pref_type]" ng-hide="only_applicant_eligible()"
-      label.form-label.caps for="{{pref_type_household_member}}"
-        | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
-      select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
-        option value=""
-          | {{'LABEL.SELECT_ONE' | translate}}
-        option ng-repeat="member in eligible_members() track by $index" value="{{ member.firstName }} {{ member.lastName }}"
-          | {{ member.firstName }} {{ member.lastName }}
+    .form-group.input-inset ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[pref_type]" ng-hide="only_applicant_eligible() && !show_preferences_options(application) && !show_preference_uploader(application)"
+      div ng-hide="only_applicant_eligible()"
+        label.form-label.caps for="{{pref_type_household_member}}"
+          | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
+        select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
+          option value=""
+            | {{'LABEL.SELECT_ONE' | translate}}
+          option ng-repeat="member in eligible_members() track by $index" value="{{ member.firstName }} {{ member.lastName }}"
+            | {{ member.firstName }} {{ member.lastName }}
 
       / checkbox for proof options for this preference
       .form-group ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(application)"
@@ -28,47 +29,47 @@ div
           option ng-repeat="option in preference_proof_options" value="{{option}}"
             | {{ option }}
 
-        .form-group.text-center ng-if="show_preference_uploader(application)"
-          div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
-            | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
-          small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
-            | {{'ERROR.FILE_MISSING' | translate}}
-          small.error ng-if="preferenceFileError(pref_type_proof_file)"
-            | {{'ERROR.FILE_UPLOAD' | translate}}
-          p.form-note.input-inset
-            | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
-          p.form-note.input-inset.margin-bottom
-            | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
+      .form-group.text-center ng-if="show_preference_uploader(application)"
+        div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
+        small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_MISSING' | translate}}
+        small.error ng-if="preferenceFileError(pref_type_proof_file)"
+          | {{'ERROR.FILE_UPLOAD' | translate}}
+        p.form-note.input-inset
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
+        p.form-note.input-inset.margin-bottom
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
 
-        article.attachment.is-loading.media ng-if="preferenceFileIsLoading(pref_type_proof_file)"
-          figure.attachment-img.media-img
-            .spinner.sk-fading-circle
-              .sk-circle1.sk-circle
-              .sk-circle2.sk-circle
-              .sk-circle3.sk-circle
-              .sk-circle4.sk-circle
-              .sk-circle5.sk-circle
-              .sk-circle6.sk-circle
-              .sk-circle7.sk-circle
-              .sk-circle8.sk-circle
-              .sk-circle9.sk-circle
-              .sk-circle10.sk-circle
-              .sk-circle11.sk-circle
-              .sk-circle12.sk-circle
-          .media-body
-            strong
-              | {{'LABEL.PROOF_OF_ADDRESS' | translate}}
-            br
-            span
-              | {{'LABEL.UPLOADING' | translate}}...
+      article.attachment.is-loading.media ng-if="preferenceFileIsLoading(pref_type_proof_file)"
+        figure.attachment-img.media-img
+          .spinner.sk-fading-circle
+            .sk-circle1.sk-circle
+            .sk-circle2.sk-circle
+            .sk-circle3.sk-circle
+            .sk-circle4.sk-circle
+            .sk-circle5.sk-circle
+            .sk-circle6.sk-circle
+            .sk-circle7.sk-circle
+            .sk-circle8.sk-circle
+            .sk-circle9.sk-circle
+            .sk-circle10.sk-circle
+            .sk-circle11.sk-circle
+            .sk-circle12.sk-circle
+        .media-body
+          strong
+            | {{'LABEL.PROOF_OF_ADDRESS' | translate}}
+          br
+          span
+            | {{'LABEL.UPLOADING' | translate}}...
 
-        article.attachment.media.margin-bottom ng-if="hasPreferenceFile(pref_type_proof_file)"
-          figure.media-img
-            img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
-          .media-body
-            strong
-              | {{application.preferences[pref_type_proof_file].name}}
-            br
-              ' {{'LABEL.UPLOADED' | translate}}:
-              | {{application.preferences[pref_type_proof_file].created_at | dateSuffix}}
-            button.button-link.attachment-action.a-alert-dark type="button" ng-click="deletePreferenceFile(pref_type)"  Delete
+      article.attachment.media.margin-bottom ng-if="hasPreferenceFile(pref_type_proof_file)"
+        figure.media-img
+          img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
+        .media-body
+          strong
+            | {{application.preferences[pref_type_proof_file].name}}
+          br
+            ' {{'LABEL.UPLOADED' | translate}}:
+            | {{application.preferences[pref_type_proof_file].created_at | dateSuffix}}
+          button.button-link.attachment-action.a-alert-dark type="button" ng-click="deletePreferenceFile(pref_type)"  Delete
