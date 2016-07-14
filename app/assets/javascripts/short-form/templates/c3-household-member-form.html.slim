@@ -1,6 +1,5 @@
 form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'addHouseholdMember'})" ng-init="getHouseholdMember()"
-  header.app-inner.leader.border-bottom
-    short-form-back
+  short-form-header
     h2.app-card_question
       | {{'C3_HOUSEHOLD_MEMBER_FORM.TITLE' | translate}}
     p.form-note.margin-bottom
@@ -90,8 +89,8 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
 
   .button-pager
     .button-pager_row.primary
-      input.button.primary.radius.expand-small type="submit" value="Update Household Member" ng-if="householdMember.id"
-      input.button.primary.radius.expand-small type="submit" value="Add Household Member" ng-if="!householdMember.id"
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_ADD' | translate}}" ng-if="!householdMember.id"
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
