@@ -55,6 +55,7 @@ do ->
     fakeShortFormHelperService = {}
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
+    fakeFileUploadService = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeListingService =
@@ -97,6 +98,7 @@ do ->
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
+        FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
       return
     )

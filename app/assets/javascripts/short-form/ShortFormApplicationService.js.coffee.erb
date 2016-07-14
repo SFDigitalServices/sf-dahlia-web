@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) ->
+ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service = {}
   Service.form = {}
   Service.applicationDefaults =
@@ -44,8 +44,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     surveyComplete: false
 
   Service.current_id = 0
-  Service.session_uid = uuid.v4()
-  Service.userkey = uuid.v4()
 
   Service.resetUserData = () ->
     # even though this looks commented out, it still has an effect in ERB land
@@ -280,60 +278,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     Service.application.completedSections['Status'] = false
     Service.application.completedSections['Income'] = false
 
-  Service.hasPreferenceFile = (fileType) ->
-    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
-
-  Service.deletePreferenceFile = (prefType) ->
-    fileType = "#{prefType}_proof_file"
-    params =
-      uploaded_file:
-        session_uid: Service.session_uid
-        userkey: Service.userkey
-        preference: prefType
-    $http.delete('/api/v1/short-form/proof', {
-      data: params,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).success((data, status, headers, config) ->
-      Service.preferences[fileType] = null
-      # console.log(data)
-    ).error( (data, status, headers, config) ->
-      # console.warn('error')
-      return
-    )
-
-  Service.preferenceFileError = (fileType) ->
-    !! Service.preferences["#{fileType}_error"]
-
-  Service.preferenceFileIsLoading = (fileType) ->
-    !! Service.preferences["#{fileType}_loading"]
-
-  Service.uploadProof = (file, prefType) ->
-    fileType = "#{prefType}_proof_file"
-    if (!file)
-      Service.preferences["#{fileType}_error"] = true
-      return
-    Service.preferences["#{fileType}_loading"] = true
-    Upload.upload(
-      url: '/api/v1/short-form/proof'
-      method: 'POST'
-      data:
-        uploaded_file:
-          file: file
-          session_uid: Service.session_uid
-          userkey: Service.userkey
-          preference: prefType
-    ).then( ((resp) ->
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = false
-      Service.preferences["#{fileType}"] = resp.data
-    ), ((resp) ->
-      # error handler
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = true
-    ))
-
   Service.submitApplication = (listingId)->
     params =
       application: Service._formatApplication(listingId)
@@ -549,7 +493,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'Upload', 'uuid'
+  '$localStorage', '$translate', '$http'
 ]
 
 angular
