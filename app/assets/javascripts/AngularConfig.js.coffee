@@ -94,6 +94,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id).then ->
+            if _.isEmpty(ListingService.listing)
+              # kick them out unless there's a real listing
+              return $state.go('dahlia.welcome')
             # trigger this asynchronously, allowing the listing page to load first
             setTimeout(ListingService.getListingAMI)
             setTimeout(ListingService.getLotteryPreferences)
