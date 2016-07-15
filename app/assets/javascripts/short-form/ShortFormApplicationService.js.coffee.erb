@@ -293,6 +293,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
+      alert("Error with submission: #{data.error}")
       return
     )
 

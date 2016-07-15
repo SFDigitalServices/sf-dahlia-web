@@ -37,16 +37,20 @@ class Api::V1::ShortFormController < ApiController
 
   def submit_application
     response = ShortFormService.create(application_params)
-    files = UploadedFile.where(uploaded_file_params)
-    ShortFormService.attach_files(response['id'], files)
-    if application_params[:primaryApplicant][:email].present?
-      Emailer.submission_confirmation(
-        email: application_params[:primaryApplicant][:email],
-        listing_id: application_params[:listingID],
-        lottery_number: response['lotteryNumber'],
-      ).deliver_now
+    if response.present?
+      files = UploadedFile.where(uploaded_file_params)
+      ShortFormService.attach_files(response['id'], files)
+      if application_params[:primaryApplicant][:email].present?
+        Emailer.submission_confirmation(
+          email: application_params[:primaryApplicant][:email],
+          listing_id: application_params[:listingID],
+          lottery_number: response['lotteryNumber'],
+        ).deliver_now
+      end
+      render json: response
+    else
+      render json: { error: ShortFormService.error }, status: 422
     end
-    render json: response
   end
 
   private

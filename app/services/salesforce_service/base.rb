@@ -5,6 +5,7 @@ module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
+    class_attribute :error
     self.retries = 1
 
     def self.client
@@ -26,6 +27,7 @@ module SalesforceService
     end
 
     def self.api_call(method = :get, endpoint, params, parse_response)
+      self.error = nil
       endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, endpoint, params)
       if parse_response
@@ -40,10 +42,12 @@ module SalesforceService
         retry
       else
         p 'UH OH -- Restforce error'
+        self.error = 'Restforce::UnauthorizedError'
         []
       end
     rescue StandardError => e
       p "UH OH -- StandardError #{e.message}"
+      self.error = e.message
       []
     end
 
