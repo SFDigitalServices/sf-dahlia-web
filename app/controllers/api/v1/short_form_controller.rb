@@ -35,13 +35,17 @@ class Api::V1::ShortFormController < ApiController
 
   def submit_application
     response = ShortFormService.create(application_params)
-    if application_params[:primaryApplicant][:email].present?
-      Emailer.submission_confirmation(
-        listing_id: application_params[:listingID],
-        short_form_id: response['id'],
-      ).deliver_now
+    if response.present?
+      if application_params[:primaryApplicant][:email].present?
+        Emailer.submission_confirmation(
+          listing_id: application_params[:listingID],
+          short_form_id: response['id'],
+        ).deliver_now
+      end
+      render json: response
+    else
+      render json: { error: ShortFormService.error }, status: 422
     end
-    render json: response
   end
 
   private
