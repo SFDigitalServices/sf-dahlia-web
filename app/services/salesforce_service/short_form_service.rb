@@ -22,5 +22,13 @@ module SalesforceService
       endpoint = "/shortForm/file/#{application_id}"
       api_post_with_headers(endpoint, file.file, headers)
     end
+
+    def self.attach_files(application_id, files)
+      files.each do |file|
+        attach_file(application_id, file, file.descriptive_name)
+      end
+      # now that files are saved in SF, remove temp uploads
+      files.destroy_all
+    end
   end
 end

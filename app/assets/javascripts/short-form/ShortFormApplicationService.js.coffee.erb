@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate, $http) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
   Service = {}
   Service.form = {}
   Service.applicationDefaults =
@@ -44,6 +44,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     surveyComplete: false
 
   Service.current_id = 0
+  Service.session_uid = uuid.v4()
+  Service.userkey = uuid.v4()
 
   Service.resetUserData = () ->
     # even though this looks commented out, it still has an effect in ERB land
@@ -51,8 +53,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
-    Service.application.id = null
-    Service.application.lotteryNumber = null
+    delete Service.application.id
+    delete Service.application.lotteryNumber
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -283,6 +285,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
   Service.submitApplication = (listingId)->
     params =
       application: Service._formatApplication(listingId)
+      uploaded_file:
+        session_uid: Service.session_uid
+        userkey: Service.userkey
+
     # console.log(params)
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
@@ -495,7 +501,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http) ->
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http'
+  '$localStorage', '$translate', '$http', 'uuid'
 ]
 
 angular

@@ -30,7 +30,7 @@ div
             | {{ option }}
 
       .form-group.text-center ng-if="show_preference_uploader(application)"
-        div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
+        div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type, application.preferences[pref_type_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
           | {{'ERROR.FILE_MISSING' | translate}}

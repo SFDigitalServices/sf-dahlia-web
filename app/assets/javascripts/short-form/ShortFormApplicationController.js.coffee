@@ -290,14 +290,14 @@ ShortFormApplicationController = (
     ShortFormApplicationService.neighborhoodResidenceMembers()
 
   ###### Attachment File Uploads ########
-  $scope.uploadProof = (file, prefType) ->
-    FileUploadService.uploadProof(file, prefType)
+  $scope.uploadProof = (file, prefType, docType) ->
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
 
   $scope.hasPreferenceFile = (fileType) ->
     FileUploadService.hasPreferenceFile(fileType)
 
   $scope.deletePreferenceFile = (prefType) ->
-    FileUploadService.deletePreferenceFile(prefType)
+    FileUploadService.deletePreferenceFile(prefType, $scope.listing.Id)
 
   $scope.preferenceFileError = (fileType) ->
     FileUploadService.preferenceFileError(fileType)

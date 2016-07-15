@@ -21,9 +21,11 @@ do ->
       workInSf: 'Yes'
       preferences: {liveInSf: null, workInSf: null}
       home_address: fakeAddress
+    uuid = {v4: jasmine.createSpy()}
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
+      $provide.value 'uuid', uuid
       return
     )
 
