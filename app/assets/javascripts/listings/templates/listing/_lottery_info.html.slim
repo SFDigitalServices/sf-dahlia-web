@@ -7,28 +7,20 @@ accordion-heading
     svg
       use xlink:href="#i-arrow-down"
 
-.lottery-content.content-wrap.bg-white
-  .content-group.no-padding.show-for-medium-up
-    .label.label--flag.alert-tint
-      | Applications Closed
+section.content-wrap
+  .content-group.no-padding
+    p.post-dealine_alert
+      span.label.flag-label.alert-tint
+        span.ui-icon.ui-static.ui-medium.i-color
+          svg
+            use xlink:href="#i-clock"
+        | Applications Closed
+
+  .content-group.expand.text-center ng-if="lotteryDateVenueAvailable(listing)"
+    ng-include src="'listings/templates/listing/_lottery_results.html'"
 
   .content-group
-    h4.h-caps-lined Public Lottery
-    p.content-group_date ng-if="lotteryDateVenueAvailable(listing)"
-      span.content-group_day
-        | {{ listing.Lottery_Date | date : 'longDate' }}
-      span.content-group_time
-        | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
-      p.content-group_address.no-margin
-        | {{ listing.Lottery_Venue }}
-      p.content-group_address
-        | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-      p.c-steel.t-small ng-if="!lotteryDatePassed(listing)"
-        | An open lottery will be held to draw numbers to determine selection. Attendence is optional.
-      p.c-steel.t-small ng-if="lotteryDatePassed(listing)"
-        | An open lottery was held on the above date to draw numbers to determine selection.
-    p.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
-      | Lottery date, time and venue to be scheduled.
+    ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
   / neighborhood preference list
   .content-group ng-if="showNeighborhoodPreferences()"
@@ -40,47 +32,44 @@ accordion-heading
       / | 1200 applications qualify for this preference and will be given a higher priority in the lottery.
       | Applications that qualify for this preference will be given a higher priority in the lottery.
 
-  .content-group.text-center ng-class="{expand: listing.Lottery_Results}"
-    h4.t-gamma.t-serif Lottery Results
-    p.content-group_date.margin-bottom
-      span.content-group_day
-        | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
-    p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
-      span ng-if="listing.Lottery_Results_Date"
-        ' Complete lottery results will be posted here on
-        ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
-        ' by 5pm.
-      span ng-if="!listing.Lottery_Results_Date"
-        ' Complete lottery results will be posted here as soon as they are available.
+  /.content-group.text-center ng-class="{expand: listing.Lottery_Results}"
+    / h4.t-gamma.t-serif Lottery Results
+    / p.content-group_date.margin-bottom
+    /   span.content-group_day
+    /     | {{ listing.Lottery_Results_Date ? (listing.Lottery_Results_Date | date : 'longDate') : "Coming soon" }}
+    / p.c-steel.t-small.margin-bottom ng-if="!listing.Lottery_Results"
+    /   span ng-if="listing.Lottery_Results_Date"
+    /     ' Complete lottery results will be posted here on
+    /     ' {{ listing.Lottery_Results_Date | date : 'longDate' }}
+    /     ' by 5pm.
+    /   span ng-if="!listing.Lottery_Results_Date"
+    /     ' Complete lottery results will be posted here as soon as they are available.
 
-    div ng-if="listing.Lottery_Results"
-      table.table-small.table-results.text-center  ng-if="listing.Lottery_Members.length <= 20"
-        thead
-          tr
-            th scope="col"
-              | Rank
-            th scope="col"
-              | Ticket
-        tbody
-          tr ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
-            td scope="row"
-              | {{ticket.Rank}}
-            td
-              | {{ticket.Lottery_Number}}
+    / div ng-if="listing.Lottery_Results"
+    /   table.table-small.table-results.text-center  ng-if="listing.Lottery_Members.length <= 20"
+    /     thead
+    /       tr
+    /         th scope="col"
+    /           | Rank
+    /         th scope="col"
+    /           | Ticket
+    /     tbody
+    /       tr ng-repeat="ticket in listing.Lottery_Members | orderBy : 'Rank'"
+    /         td scope="row"
+    /           | {{ticket.Rank}}
+    /         td
+    /           | {{ticket.Lottery_Number}}
 
-      .padding ng-if="listing.Lottery_Members.length > 20"
-        a.button.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
+    /   .padding ng-if="listing.Lottery_Members.length > 20"
+    /     a.button.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
 
-    .padding.bg-dust ng-if="listing.Lottery_Results"
-      p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
-        / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
-        | {{listing.Lottery_Summary}}
-
-  .content-group
-    ng-include src="'listings/templates/listing/_what_to_expect.html'"
+    / .padding.bg-dust ng-if="listing.Lottery_Results"
+    /   p.c-steel.t-small ng-if="listing.Lottery_Results && listing.Lottery_Summary"
+    /     / will show text e.g. "Out of 50 applications, 20 numbers were pulled."
+    /     | {{listing.Lottery_Summary}}
 
   .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
 
-  .content-group.bg-mist.small-only-text-center
-    p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
+  / .content-group.bg-mist.small-only-text-center
+  /   p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
