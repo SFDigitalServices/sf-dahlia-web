@@ -3,33 +3,29 @@ h3.t-delta.t-sans.no-margin
   | {{ listing.Leasing_Agent_Name }}
 p.c-steel
   | {{ listing.Leasing_Agent_Title }}
-p.margin-bottom--half
-  a.has-icon title="Call {{ listing.Leasing_Agent_Phone }}" ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
-    span.ui-icon.ui-medium.i-primary
-      svg
-        use xlink:href="#i-phone"
-    |  Call {{ listing.Leasing_Agent_Phone }}
+a.margin-bottom--half title="Call {{ listing.Leasing_Agent_Phone }}" ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
+  span.ui-icon.ui-static.ui-medium.i-primary
+    svg
+      use xlink:href="#i-phone"
+  | Call {{ listing.Leasing_Agent_Phone }}
 p.t-small.c-steel Due to high call volume you may hear a message.
-p
-  a.has-icon title="Email {{listing.Leasing_Agent_Email}}" ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
-    span.ui-icon.ui-medium.i-primary
-      svg
-        use xlink:href="#i-mail"
-    |  Email
-
+a.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
+  span.ui-icon.ui-static.ui-medium.i-primary
+    svg
+      use xlink:href="#i-mail"
+  | Email
 p.content-group_address.no-margin
   | {{listing.Application_Organization}}
-p.content-group_address
+p.c-steel
   | {{ listing.Building_Street_Address }},
   br
   | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-p
-  a.has-icon title="View Map: {{formattedBuildingAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
-    span.ui-icon.ui-medium.i-primary
-      svg
-        use xlink:href="#i-map"
-    | View Map
-p.content-group_date ng-if="listing.Office_Open && listing.Office_Closed"
-  span.content-group_title Office Hours
-  span.content-group_time
-    | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+a.d-block.margin-bottom title="View Map: {{formattedBuildingAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
+  span.ui-icon.ui-static.ui-medium.i-primary
+    svg
+      use xlink:href="#i-map"
+  | Get Directions
+p.no-margin ng-if="listing.Office_Open && listing.Office_Closed"
+  | Office Hours
+p.c-steel
+  | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
