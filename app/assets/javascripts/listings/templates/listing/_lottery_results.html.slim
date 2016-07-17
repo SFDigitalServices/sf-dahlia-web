@@ -4,7 +4,4 @@ p.content-group_day.margin-bottom
 .padding.bg-dust
   p.c-steel.t-small.margin-bottom ng-if="listing.Lottery_Summary"
     | {{listing.Lottery_Summary}}
-  button.primary.expand.no-margin ng-click="openModal('results-modal--small.html', 'modal-small')" View Lottery Results
-  / This button for Demo only
-  .padding-bottom
-  button.expand.no-margin ng-click="openModal('results-modal--small-search.html', 'modal-small')" Demo Results
+  button.primary.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
