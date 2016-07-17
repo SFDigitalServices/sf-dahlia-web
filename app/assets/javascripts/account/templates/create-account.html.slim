@@ -24,33 +24,45 @@
           .form-group
             h2.form-label.caps
               | {{'LABEL.YOUR_NAME' | translate}}
-            label.sr-only for="textInput"
+            label.sr-only for="firstName"
               | {{'LABEL.FIRST_NAME' | translate}}
-            input#textInput name="textInput" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text"
-            label.sr-only for="textInput"
+            input#firstName ng-model="userAuth.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+            small.error ng-if="inputInvalid('firstName')"
+              | {{'ERROR.FIRST_NAME' | translate}}
+
+            label.sr-only for="middleName"
               | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-            input#textInput name="textInput" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
-            label.sr-only for="textInput"
+            input#middleName name="middleName" ng-model="userAuth.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+
+            label.sr-only for="lastName"
               | {{'LABEL.LAST_NAME' | translate}}
-            input#textInput name="textInput" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text"
+            input#lastName required="" ng-model="userAuth.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+            small.error ng-if="inputInvalid('lastName')"
+              | {{'ERROR.LAST_NAME' | translate}}
 
         .dash-card-inner.inset.border-bottom
-          .form-group
+          .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
             h2.form-label.caps
               | {{'LABEL.YOUR_DOB' | translate}}
             .form-date-of-birth.row.collapse
+
               .form-group-month.large-2.columns
-                label.sr-only for="date_of_birth_1"
+                label.sr-only for="date_of_birth_month"
                   | {{'LABEL.DOB_MONTH' | translate}}
-                input max="12" min="1" name="date_of_birth_1" placeholder="MM" type="number"
+                input ng-model="userAuth.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }"
+
               .form-group-day.large-2.columns
-                label.sr-only for="date_of_birth_2"
+                label.sr-only for="date_of_birth_day"
                   | {{'LABEL.DOB_DAY' | translate}}
-                input max="31" min="1" name="date_of_birth_2" placeholder="DD" type="number"
+                input ng-model="userAuth.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }"
+
               .form-group-year.large-2.columns.end
-                label.sr-only for="date_of_birth_3"
+                label.sr-only for="date_of_birth_year"
                   | {{'LABEL.DOB_YEAR' | translate}}
-                input max="2016" min="1900" name="date_of_birth_3" placeholder="YYYY" type="number"
+                input ng-model="userAuth.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }"
+
+          small.error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+            | {{'ERROR.DOB' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
