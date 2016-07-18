@@ -21,7 +21,7 @@
         alert-box(form-object="form.accountForm" hide-alert="hideAlert")
 
         .dash-card-inner.inset.border-bottom
-          .form-group
+          .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
             h2.form-label.caps
               | {{'LABEL.YOUR_NAME' | translate}}
             label.sr-only for="firstName"
