@@ -104,6 +104,7 @@ class Api::V1::ShortFormController < ApiController
               alternateContact: %i(
                 language
                 alternateContactType
+                alternateContactTypeOther
                 firstName
                 lastName
                 agency
