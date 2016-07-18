@@ -1,4 +1,4 @@
-AccountController = ($scope, AccountService) ->
+AccountController = ($scope, $state, AccountService) ->
   $scope.rememberedState = AccountService.rememberedState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
@@ -24,7 +24,17 @@ AccountController = ($scope, AccountService) ->
     else
       $scope.hideAlert = false
 
-AccountController.$inject = ['$scope', 'AccountService']
+  $scope.signIn = ->
+    form = $scope.form.accountForm
+    if form.$valid
+      # AccountService.userAuth will have been modified by form inputs
+      AccountService.signIn().then ->
+        if AccountService.loggedIn()
+          return $state.go('dahlia.my-account')
+    else
+      $scope.hideAlert = false
+
+AccountController.$inject = ['$scope', '$state', 'AccountService']
 
 angular
   .module('dahlia.controllers')
