@@ -42,6 +42,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Income: {}
       Review: {}
     surveyComplete: false
+    applicationSubmissionType: "Electronic"
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -337,6 +338,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     ))
 
   Service.submitApplication = (listingId)->
+    Service.application.status ='submitted'
+    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     params =
       application: Service._formatApplication(listingId)
     # console.log(params)
@@ -373,7 +376,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     return application
 
   Service._renameApplicant = (application) ->
-    application.primaryApplicant = Object.assign({}, application.applicant)
+    application.primaryApplicant = angular.copy(application.applicant)
     delete application.applicant
     return application
 
@@ -519,7 +522,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     return application
 
   Service._formatBooleans = (application) ->
-    ['workInSf', 'lgbt', 'hiv'].forEach (field) ->
+    ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
       else
@@ -537,7 +540,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     app = Service.applicant
     responses = [
       _.some(app.gender),
-      app.lgbt,
       app.ethnicity,
       app.race,
       app.hiv,

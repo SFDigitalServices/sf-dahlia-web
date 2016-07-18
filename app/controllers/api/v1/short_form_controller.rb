@@ -141,6 +141,9 @@ class Api::V1::ShortFormController < ApiController
             :monthlyIncome,
             :agreeToTerms,
             :surveyComplete,
+            :applicationSubmissionType,
+            :applicationSubmittedDate,
+            :status,
           )
   end
 
