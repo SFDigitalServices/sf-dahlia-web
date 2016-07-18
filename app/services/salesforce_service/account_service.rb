@@ -1,7 +1,7 @@
 module SalesforceService
   # encapsulate all Salesforce Account/Person querying functions
   class AccountService < SalesforceService::Base
-    def self.create(params)
+    def self.create_or_update(params)
       api_post('/Person', params)
     end
 
