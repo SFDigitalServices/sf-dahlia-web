@@ -4,6 +4,7 @@ do ->
     scope = undefined
     fakeAccountService =
       createAccount: -> null
+      signIn: -> null
 
     beforeEach module('dahlia.controllers', () ->
       return
@@ -12,7 +13,12 @@ do ->
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
       scope.form = {accountForm: {}}
+      state = jasmine.createSpyObj('$state', ['go'])
       spyOn(fakeAccountService, 'createAccount').and.callFake ->
+        deferred = $q.defer()
+        deferred.resolve('Remote call result')
+        return deferred.promise
+      spyOn(fakeAccountService, 'signIn').and.callFake ->
         deferred = $q.defer()
         deferred.resolve('Remote call result')
         return deferred.promise
@@ -20,6 +26,7 @@ do ->
 
       $controller 'AccountController',
         $scope: scope
+        $state: state
         AccountService: fakeAccountService
       return
     )
@@ -29,6 +36,14 @@ do ->
         scope.form.accountForm = {$valid: true}
         scope.createAccount()
         expect(fakeAccountService.createAccount).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.signIn', ->
+      it 'calls function on AccountService', ->
+        scope.form.accountForm = {$valid: true}
+        scope.signIn()
+        expect(fakeAccountService.signIn).toHaveBeenCalled()
         return
       return
 
