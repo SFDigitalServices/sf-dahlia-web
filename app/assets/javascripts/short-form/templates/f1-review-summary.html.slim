@@ -28,8 +28,6 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
       br
       ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
       | {{applicant.mailing_address.zip}}
-      review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}"
-        | {{  returnLanguage(applicant) }}
 
   / Alternate Contact
   span ng-hide="alternateContact.alternateContactType == 'None'"
@@ -47,8 +45,6 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
         br
         ' {{alternateContact.mailing_address.city}}, {{alternateContact.mailing_address.state}}
         | {{alternateContact.mailing_address.zip}}
-      review-summary-item label="{{'LABEL.PRIMARY_LANGUAGE' | translate}}" ng-if="alternateContact.language"
-        | {{  returnLanguage(alternateContact) }}
 
   / Household Members
   review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getHouseholdLandingPage()}}"
