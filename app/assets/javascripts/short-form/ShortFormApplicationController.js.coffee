@@ -107,6 +107,8 @@ ShortFormApplicationController = (
   $scope.hideAlert = false
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
+  # allows us to temporarily disable "next / submit" button if needed (e.g. during a request)
+  $scope.submitDisabled = false
 
   unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
@@ -396,13 +398,13 @@ ShortFormApplicationController = (
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
   $scope.submitApplication = ->
+    $scope.submitDisabled = true
     ShortFormApplicationService.submitApplication($scope.listing.Id)
       .then( (response) ->
-        # console.log(response, 'success submit')
         if response.data.lotteryNumber
           $scope.application.lotteryNumber = response.data.lotteryNumber
+          $scope.submitDisabled = false
           $state.go('dahlia.short-form-application.confirmation')
-        else
       )
 
   ## idle timeout functions

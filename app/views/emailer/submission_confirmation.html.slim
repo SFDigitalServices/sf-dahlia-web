@@ -1,0 +1,38 @@
+p
+  ' Thanks for applying. We have received your application for
+  = link_to @listing_name, @listing_url
+  | .
+p
+  | Here is your lottery number: #{@lottery_number}
+p
+  | What to expect next:
+  br
+  ' The lottery will be held on #{@lottery_date}. Please return to
+  => link_to 'the listing', @listing_url
+  | to check lottery results after this date. Applicants will be contacted in order of lottery rank to fill out a full long-form application.
+p
+  | See below for contact information for the Leasing Agent for this listing.
+
+p
+  = @listing.Leasing_Agent_Name
+  - if @listing.Leasing_Agent_Title
+    br
+    = @listing.Leasing_Agent_Title
+  br
+  = @listing.Leasing_Agent_Phone
+  br
+  = @listing.Leasing_Agent_Email
+p
+  = @listing.Application_Organization
+  br
+  = @listing.Building_Street_Address + ','
+  br
+  | #{@listing.Building_City} #{@listing.Building_State} #{@listing.Building_Zip_Code}
+- if @listing.Office_Open && @listing.Office_Closed
+  p
+    | Office Hours
+    br
+    | #{@listing.Office_Open} &mdash; #{@listing.Office_Closed}
+
+p
+  | The DAHLIA Team

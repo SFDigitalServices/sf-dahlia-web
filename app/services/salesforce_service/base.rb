@@ -7,6 +7,7 @@ module SalesforceService
   class Base
     class_attribute :retries
     class_attribute :headers
+    class_attribute :error
     self.retries = 1
 
     Faraday::Middleware.register_middleware(
@@ -34,6 +35,7 @@ module SalesforceService
     end
 
     def self.api_call(method = :get, endpoint, params, parse_response)
+      self.error = nil
       endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, endpoint, params)
       if parse_response
@@ -48,10 +50,12 @@ module SalesforceService
         retry
       else
         p 'UH OH -- Restforce error'
+        self.error = 'Restforce::UnauthorizedError'
         []
       end
     rescue StandardError => e
       p "UH OH -- StandardError #{e.message}"
+      self.error = e.message
       []
     end
 

@@ -55,6 +55,9 @@ gem 'devise_token_auth', '~> 0.1.37'
 # postgresql database
 gem 'pg'
 
+gem 'actionmailer-text'
+gem 'hashie'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'

@@ -18,6 +18,9 @@ GEM
       activejob (= 4.2.6)
       mail (~> 2.5, >= 2.5.4)
       rails-dom-testing (~> 1.0, >= 1.0.5)
+    actionmailer-text (0.1.1)
+      actionmailer
+      htmlentities
     actionpack (4.2.6)
       actionview (= 4.2.6)
       activesupport (= 4.2.6)
@@ -121,6 +124,7 @@ GEM
     hashdiff (0.3.0)
     hashie (3.4.4)
     hike (1.2.3)
+    htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
@@ -321,6 +325,7 @@ PLATFORMS
 
 DEPENDENCIES
   StreetAddress
+  actionmailer-text
   angular-rails-templates
   awesome_print
   better_errors
@@ -336,6 +341,7 @@ DEPENDENCIES
   easypost
   facets
   factory_girl_rails
+  hashie
   jasmine!
   jasmine-jquery-rails
   jbuilder (~> 2.0)
