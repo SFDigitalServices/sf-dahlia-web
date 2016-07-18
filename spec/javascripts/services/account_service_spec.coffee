@@ -21,6 +21,14 @@ do ->
         deferred = $q.defer()
         deferred.resolve 'Remote call result'
         deferred.promise
+      spyOn($auth, 'submitLogin').and.callFake ->
+        deferred = $q.defer()
+        deferred.resolve 'Remote call result'
+        deferred.promise
+      spyOn($auth, 'validateUser').and.callFake ->
+        deferred = $q.defer()
+        deferred.resolve 'Remote call result'
+        deferred.promise
       AccountService = _AccountService_
       return
     )
@@ -37,6 +45,21 @@ do ->
         AccountService.userAuth = fakeUserAuth
         AccountService.createAccount()
         expect($auth.submitRegistration).toHaveBeenCalledWith fakeUserAuth
+        return
+      return
+
+    describe 'signIn', ->
+      it 'calls $auth.submitLogin with userAuth params', ->
+        AccountService.userAuth = fakeUserAuth
+        AccountService.signIn()
+        expect($auth.submitLogin).toHaveBeenCalledWith fakeUserAuth
+        return
+      return
+
+    describe 'validateUser', ->
+      it 'calls $auth.validateUser', ->
+        AccountService.validateUser()
+        expect($auth.validateUser).toHaveBeenCalled()
         return
       return
 

@@ -24,24 +24,27 @@ pageslide ps-open="showNavMobile" ps-side="right" ps-size="{{ '300px' }}" ps-clo
           svg
             use xlink:href="#i-assistance"
         | Get Assistance
-    li.has-icon
+    li.has-icon ng-if="!loggedIn()"
+      a ui-sref="dahlia.sign-in"
+        | Sign In
+    li.has-icon ng-if="loggedIn()"
       a ui-sref="dahlia.my-applications"
         span.ui-icon
           svg
             use xlink:href="#i-application"
         | My Applications
-    li.has-icon
+    li.has-icon ng-if="loggedIn()"
       a ui-sref="dahlia.eligibility-settings"
         span.ui-icon
           svg
             use xlink:href="#i-eligibility"
         | Eligibility Settings
-    li.has-icon
+    li.has-icon ng-if="loggedIn()"
       a ui-sref="dahlia.account-settings"
         span.ui-icon
           svg
             use xlink:href="#i-settings"
         | Account Settings
-    li.has-icon
+    li.has-icon ng-if="loggedIn()"
       a ui-sref="#"
         | Sign Out

@@ -94,6 +94,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id).then ->
+            if _.isEmpty(ListingService.listing)
+              # kick them out unless there's a real listing
+              return $state.go('dahlia.welcome')
             # trigger this asynchronously, allowing the listing page to load first
             setTimeout(ListingService.getListingAMI)
             setTimeout(ListingService.getLotteryPreferences)
@@ -120,11 +123,21 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
     })
-    .state('dahlia.signin', {
-      url: '/signin'
+    .state('dahlia.sign-in', {
+      url: '/sign-in'
       views:
         'container@':
-          templateUrl: 'account/templates/signin.html'
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
+    })
+    .state('dahlia.short-form-application.sign-in', {
+      # duplicated from above but to differentiate state for "Save and finish later"
+      # will be accessed at '/listings/{id}/apply/sign-in'
+      url: '/sign-in'
+      views:
+        'container@':
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
     })
     ############
     # TODO: refactor "my account" pages to be under the same namespace/controller
@@ -325,8 +338,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'short-form/templates/layout.html'
           controller: 'ShortFormApplicationController'
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id)
+        listing: [
+          '$stateParams', '$state', 'ListingService',
+          ($stateParams, $state, ListingService) ->
+            ListingService.getListing($stateParams.id).then ->
+              if _.isEmpty(ListingService.listing)
+                # kick them out unless there's a real listing
+                $state.go('dahlia.welcome')
         ]
     })
     # Short form: "You" section
@@ -589,8 +607,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
       # remember which page of short form we're on when we go to create account
-      if (fromState.name.indexOf('short-form-application') >= 0 && toState.name == 'dahlia.short-form-application.create-account')
-        AccountService.rememberState(fromState.name)
+      if (fromState.name.indexOf('short-form-application') >= 0 &&
+        toState.name == 'dahlia.short-form-application.create-account' &&
+        fromState.name != 'dahlia.short-form-application.sign-in')
+          AccountService.rememberState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       if fromState.name == ''
         return $state.go('dahlia.welcome')

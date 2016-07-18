@@ -76,6 +76,7 @@
         "PASSWORD": "Password",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
         "CREATE_ACCOUNT": "Create Account",
+        "SIGN_IN": "Sign In",
         "YOUR_OR_ALTERNATE": "Your {{ contactType }} or Alternate {{ contactType }}",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
@@ -161,7 +162,12 @@
         "CREATE_AN_ACCOUNT": "Create an Account",
         "P1": "You'll use this information to log in to your account, so make sure you can remember it.",
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
-        "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
+        "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters",
+        "ALREADY_HAVE_ACCOUNT": "Already have an account?"
+    },
+    "SIGN_IN": {
+        "FORGOT_PASSWORD": "Forgot password?",
+        "DONT_HAVE_ACCOUNT": "Don't have an account?"
     },
     "D2_LIVE_WORK_PREFERENCE": {
         "UPLOAD_PROOF": "Upload proof of preference",

@@ -7,6 +7,9 @@ li
 li
   a ui-sref="dahlia.get-assistance"
     | Get Assistance
+li ng-if="!loggedIn()"
+  a ui-sref="dahlia.sign-in"
+    | Sign In
 li.has-dropdown ng-if="loggedIn()"
   a ui-sref="dahlia.my-account"
     | My Account

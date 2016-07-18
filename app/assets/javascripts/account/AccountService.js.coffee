@@ -17,18 +17,20 @@ AccountService = ($state, $auth) ->
       .then((response) ->
         # handle success response
         alert('OK!')
-        email = Service.userAuth.email
-        password = Service.userAuth.password
         # reset userAuth object
         angular.copy({}, Service.userAuth)
-        # $auth.submitLogin(email: email, password: password)
-        #   .then((response) ->
-        #     if response.signedIn
-        #       angular.copy(response, Service.loggedInUser)
-        #   )
       ).catch((response) ->
         # handle submitRegistration error response
         alert("Error: #{response.data.errors.full_messages[0]}")
+      )
+
+  Service.signIn = ->
+    $auth.submitLogin(Service.userAuth)
+      .then((response) ->
+        if response.signedIn
+          angular.copy(response, Service.loggedInUser)
+      ).catch((response) ->
+        alert("Error: #{response.errors[0]}")
       )
 
   # this runs on init of the app to check if we're logged upon arrival
