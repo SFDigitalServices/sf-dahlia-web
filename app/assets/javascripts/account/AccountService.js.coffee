@@ -20,9 +20,11 @@ AccountService = ($state, $auth) ->
         alert('OK!')
         # reset userAuth object
         angular.copy({}, Service.userAuth)
+        return true
       ).catch((response) ->
         # handle submitRegistration error response
         alert("Error: #{response.data.errors.full_messages[0]}")
+        return false
       )
 
   Service.signIn = ->

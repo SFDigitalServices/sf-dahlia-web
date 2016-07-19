@@ -25,7 +25,7 @@ ShortFormApplicationController = (
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
-  $scope.listing = ListingService.listing
+  $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
 
@@ -400,7 +400,7 @@ ShortFormApplicationController = (
 
   $scope.submitApplication = ->
     $scope.submitDisabled = true
-    ShortFormApplicationService.submitApplication($scope.listing.Id, {draft: false})
+    ShortFormApplicationService.submitApplication({draft: false})
       .then(  ->
         $scope.submitDisabled = false
         $state.go('dahlia.short-form-application.confirmation')
@@ -409,7 +409,7 @@ ShortFormApplicationController = (
   ## Save and finish later
   $scope.saveAndFinishLater = ->
     if AccountService.loggedIn()
-      ShortFormApplicationService.submitApplication($scope.listing.Id, {draft: true}).then(
+      ShortFormApplicationService.submitApplication({draft: true}).then(
         $state.go('dahlia.my-applications')
       )
     else

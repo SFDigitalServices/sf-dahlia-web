@@ -1,5 +1,6 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, ListingService) ->
   Service = {}
+  Service.listing = ListingService.listing
   Service.form = {}
   Service.applicationDefaults =
     applicant:
@@ -339,7 +340,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_error"] = true
     ))
 
-  Service.submitApplication = (listingId, options={}) ->
+  Service.submitApplication = (options={}) ->
     if options.draft
       Service.application.status = 'draft'
     else
@@ -347,7 +348,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
 
     params =
-      application: Service._formatApplication(listingId)
+      application: Service._formatApplication(Service.listing.Id)
     # console.log(params)
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       if data.lotteryNumber
@@ -562,7 +563,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'Upload', 'uuid'
+  '$localStorage', '$translate', '$http', 'Upload', 'uuid', 'ListingService'
 ]
 
 angular

@@ -1,4 +1,4 @@
-AccountController = ($scope, $state, AccountService) ->
+AccountController = ($scope, $state, AccountService, ShortFormApplicationService) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
@@ -17,10 +17,12 @@ AccountController = ($scope, $state, AccountService) ->
     form = $scope.form.accountForm
     if form.$valid
       # AccountService.userAuth will have been modified by form inputs
-      AccountService.createAccount().then ->
-        # reset the form
-        form.$setUntouched()
-        form.$setPristine()
+      AccountService.createAccount().then( (success) ->
+        if success
+          form.$setUntouched()
+          form.$setPristine()
+          $scope._redirect()
+      )
     else
       $scope.hideAlert = false
 
@@ -34,7 +36,15 @@ AccountController = ($scope, $state, AccountService) ->
     else
       $scope.hideAlert = false
 
-AccountController.$inject = ['$scope', '$state', 'AccountService']
+  $scope._redirect = ->
+    # send to sign in state if user created account from saving application
+    if $state.current.name == 'dahlia.short-form-application.create-account'
+      ShortFormApplicationService.submitApplication({draft: true}).then(
+        $state.go('dahlia.sign-in')
+      )
+
+
+AccountController.$inject = ['$scope', '$state', 'AccountService', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.controllers')
