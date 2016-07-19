@@ -1,4 +1,4 @@
-AccountController = ($scope, $state, $document, AccountService) ->
+AccountController = ($scope, $state, $document, $translate, AccountService) ->
   $scope.rememberedState = AccountService.rememberedState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
@@ -6,6 +6,7 @@ AccountController = ($scope, $state, $document, AccountService) ->
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.submitDisabled = false
+  $scope.hideMessage = false
 
   $scope.handleErrorState = ->
     # show error alert
@@ -51,7 +52,12 @@ AccountController = ($scope, $state, $document, AccountService) ->
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
-AccountController.$inject = ['$scope', '$state', '$document', 'AccountService']
+  $scope.emailConfirmInstructions = ->
+    $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
+
+AccountController.$inject = [
+  '$scope', '$state', '$document', '$translate', 'AccountService'
+]
 
 angular
   .module('dahlia.controllers')

@@ -20,6 +20,8 @@
             | {{'CREATE_ACCOUNT.P1' | translate}}
         alert-box(form-object="form.accountForm" hide-alert="hideAlert")
 
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="emailConfirmInstructions()" ng-if="isLocked('email') && (userAuth.email !== userAuth.email_confirmation)")
+
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
             h2.form-label.caps
