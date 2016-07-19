@@ -283,15 +283,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     Service.application.completedSections['Status'] = false
     Service.application.completedSections['Income'] = false
 
-  Service.submitApplication = (listingId)->
-    params =
-      application: Service._formatApplication(listingId)
-      uploaded_file:
-        session_uid: Service.session_uid
-        userkey: Service.userkey
-
-<<<<<<< HEAD
-=======
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
@@ -325,8 +316,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     params =
       application: Service._formatApplication(listingId)
->>>>>>> master
-    # console.log(params)
+      uploaded_file:
+        session_uid: Service.session_uid
+        userkey: Service.userkey
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
