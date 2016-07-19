@@ -1,5 +1,5 @@
 AccountController = ($scope, $state, AccountService) ->
-  $scope.rememberedState = AccountService.rememberedState
+  $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth

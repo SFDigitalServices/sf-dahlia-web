@@ -7,10 +7,10 @@ AccountService = ($state, $auth) ->
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
-  Service.rememberedState = null
+  Service.rememberedShortFormState = null
 
-  Service.rememberState = (name, params) ->
-    Service.rememberedState = name
+  Service.rememberShortFormState = (name, params) ->
+    Service.rememberedShortFormState = name
 
   Service.createAccount = ->
     Service._formatDOB()

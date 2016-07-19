@@ -33,10 +33,10 @@ do ->
       return
     )
 
-    describe 'rememberState', ->
-      it 'saves rememberedState', ->
-        AccountService.rememberState(fakeState)
-        expect(AccountService.rememberedState).toEqual fakeState
+    describe 'rememberShortFormState', ->
+      it 'saves rememberedShortFormState', ->
+        AccountService.rememberShortFormState(fakeState)
+        expect(AccountService.rememberedShortFormState).toEqual fakeState
         return
       return
 

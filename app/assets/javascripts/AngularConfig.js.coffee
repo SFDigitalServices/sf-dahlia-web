@@ -592,6 +592,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             # try to reload the listings page, for example
             $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
             ShortFormApplicationService.resetUserData()
+            AccountService.rememberShortFormState(null)
           else
             # prevent page transition if user did not confirm
             e.preventDefault()
@@ -610,7 +611,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
-          AccountService.rememberState(fromState.name)
+          AccountService.rememberShortFormState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       if fromState.name == ''
         return $state.go('dahlia.welcome')
