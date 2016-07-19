@@ -55,7 +55,7 @@ class Api::V1::ShortFormController < ApiController
   private
 
   def authenticate_for_existing_application
-    return true if application_params[:id].empty?
+    return true unless application_params[:id].present?
     authenticate_user!
     contact_id = current_user.salesforce_contact_id
     ShortFormService.ownership?(contact_id, application_params[:id])
