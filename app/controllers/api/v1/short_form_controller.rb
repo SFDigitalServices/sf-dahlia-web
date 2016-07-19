@@ -1,5 +1,8 @@
 # RESTful JSON API to query for address validation
 class Api::V1::ShortFormController < ApiController
+  before_action :authenticate_for_existing_application,
+                only: [:submit_application]
+
   def validate_household
     response = ShortFormService.check_household_eligibility(
       params[:listing_id],
@@ -34,9 +37,10 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = ShortFormService.create(application_params)
+    response = ShortFormService.create_or_update(application_params)
     if response.present?
-      if application_params[:primaryApplicant][:email].present?
+      if application_params[:primaryApplicant][:email].present? &&
+         application_params[:status] == 'submitted'
         Emailer.submission_confirmation(
           listing_id: application_params[:listingID],
           short_form_id: response['id'],
@@ -49,6 +53,13 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def authenticate_for_existing_application
+    return true if application_params[:id].empty?
+    authenticate_user!
+    contact_id = current_user.salesforce_contact_id
+    ShortFormService.ownership?(contact_id, application_params[:id])
+  end
 
   def eligibility_params
     params.require(:eligibility)

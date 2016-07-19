@@ -56,6 +56,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
     Service.application.id = null
     Service.application.lotteryNumber = null
+    Service.application.status = null
+    Service.application.applicationSubmittedDate = null
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -337,14 +339,20 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
       Service.preferences["#{fileType}_error"] = true
     ))
 
-  Service.submitApplication = (listingId)->
-    Service.application.status ='submitted'
-    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+  Service.submitApplication = (listingId, options={}) ->
+    if options.draft
+      Service.application.status = 'draft'
+    else
+      Service.application.status ='submitted'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+
     params =
       application: Service._formatApplication(listingId)
     # console.log(params)
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
-      data
+      if data.lotteryNumber
+        Service.application.lotteryNumber = data.lotteryNumber
+        Service.application.id = data.id
     ).error( (data, status, headers, config) ->
       alert("Error with submission: #{data.error}")
       return

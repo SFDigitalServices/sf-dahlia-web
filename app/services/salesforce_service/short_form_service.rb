@@ -9,7 +9,7 @@ module SalesforceService
       api_get(endpoint, params)
     end
 
-    def self.create(params)
+    def self.create_or_update(params)
       api_post('/shortForm', params)
     end
 
@@ -20,6 +20,11 @@ module SalesforceService
     def self.attach_file(application_id, file)
       self.headers = { Name: file.name, ContentType: file.content_type }
       api_post("/shortForm/file/#{application_id}", file.file)
+    end
+
+    def self.ownership?(contact_id, application_id)
+      application = get(application_id)
+      contact_id == application['primaryApplicant']['contactId']
     end
   end
 end

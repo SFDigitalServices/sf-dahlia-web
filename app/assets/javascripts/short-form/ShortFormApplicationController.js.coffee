@@ -13,7 +13,8 @@ ShortFormApplicationController = (
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
-  AddressValidationService
+  AddressValidationService,
+  AccountService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -399,13 +400,20 @@ ShortFormApplicationController = (
 
   $scope.submitApplication = ->
     $scope.submitDisabled = true
-    ShortFormApplicationService.submitApplication($scope.listing.Id)
-      .then( (response) ->
-        if response.data.lotteryNumber
-          $scope.application.lotteryNumber = response.data.lotteryNumber
-          $scope.submitDisabled = false
-          $state.go('dahlia.short-form-application.confirmation')
+    ShortFormApplicationService.submitApplication($scope.listing.Id, {draft: false})
+      .then(  ->
+        $scope.submitDisabled = false
+        $state.go('dahlia.short-form-application.confirmation')
       )
+
+  ## Save and finish later
+  $scope.saveAndFinishLater = ->
+    if AccountService.loggedIn()
+      ShortFormApplicationService.submitApplication($scope.listing.Id, {draft: true}).then(
+        $state.go('dahlia.my-applications')
+      )
+    else
+      $state.go('dahlia.short-form-application.create-account')
 
   ## idle timeout functions
   unless ShortFormApplicationService.isWelcomePage($state.current)
@@ -438,7 +446,8 @@ ShortFormApplicationController = (
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService'
+  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService',
+  'AccountService'
 ]
 
 angular
