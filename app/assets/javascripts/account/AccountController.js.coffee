@@ -17,6 +17,15 @@ AccountController = ($scope, $state, $document, $translate, AccountService) ->
     duration = 400 # animation speed in ms
     $document.scrollToElement(el, topOffset, duration)
 
+  $scope.handleErrorState = ->
+    # show error alert
+    $scope.hideAlert = false
+    el = angular.element(document.getElementById('form-wrapper'))
+    # uses duScroll aka 'angular-scroll' module
+    topOffset = 0
+    duration = 400 # animation speed in ms
+    $document.scrollToElement(el, topOffset, duration)
+
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
@@ -54,6 +63,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService) ->
 
   $scope.emailConfirmInstructions = ->
     $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
+
+############################################################################################
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate', 'AccountService'
