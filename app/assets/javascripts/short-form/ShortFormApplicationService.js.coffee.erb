@@ -2,6 +2,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
   Service = {}
   Service.form = {}
   Service.applicationDefaults =
+    id: null
+    lotteryNumber: null
     applicant:
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       language: "English"

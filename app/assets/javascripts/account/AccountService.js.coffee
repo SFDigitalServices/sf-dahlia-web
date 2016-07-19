@@ -59,8 +59,8 @@ AccountService = ($state, $auth, ShortFormApplicationService) ->
   Service.lockCompletedFields = ->
     a = ShortFormApplicationService.applicant
     Service.lockedFields =
-      name: a.firstName && a.lastName
-      dob: a.dob_day && a.dob_month && a.dob_year
+      name: !! (a.firstName && a.lastName)
+      dob: !! (a.dob_day && a.dob_month && a.dob_year)
       email: !! a.email
 
   Service.unlockFields = ->
