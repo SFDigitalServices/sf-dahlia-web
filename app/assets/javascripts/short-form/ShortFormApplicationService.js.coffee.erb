@@ -42,6 +42,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
       Income: {}
       Review: {}
     surveyComplete: false
+    applicationSubmissionType: "Electronic"
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -289,6 +290,42 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
         session_uid: Service.session_uid
         userkey: Service.userkey
 
+<<<<<<< HEAD
+=======
+  Service.preferenceFileIsLoading = (fileType) ->
+    !! Service.preferences["#{fileType}_loading"]
+
+  Service.uploadProof = (file, prefType) ->
+    fileType = "#{prefType}_proof_file"
+    if (!file)
+      Service.preferences["#{fileType}_error"] = true
+      return
+    Service.preferences["#{fileType}_loading"] = true
+    Upload.upload(
+      url: '/api/v1/short-form/proof'
+      method: 'POST'
+      data:
+        uploaded_file:
+          file: file
+          session_uid: Service.session_uid
+          userkey: Service.userkey
+          preference: prefType
+    ).then( ((resp) ->
+      Service.preferences["#{fileType}_loading"] = false
+      Service.preferences["#{fileType}_error"] = false
+      Service.preferences["#{fileType}"] = resp.data
+    ), ((resp) ->
+      # error handler
+      Service.preferences["#{fileType}_loading"] = false
+      Service.preferences["#{fileType}_error"] = true
+    ))
+
+  Service.submitApplication = (listingId)->
+    Service.application.status ='submitted'
+    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+    params =
+      application: Service._formatApplication(listingId)
+>>>>>>> master
     # console.log(params)
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
@@ -323,7 +360,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     return application
 
   Service._renameApplicant = (application) ->
-    application.primaryApplicant = Object.assign({}, application.applicant)
+    application.primaryApplicant = angular.copy(application.applicant)
     delete application.applicant
     return application
 
@@ -469,7 +506,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     return application
 
   Service._formatBooleans = (application) ->
-    ['workInSf', 'lgbt', 'hiv'].forEach (field) ->
+    ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
       else
@@ -487,7 +524,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     app = Service.applicant
     responses = [
       _.some(app.gender),
-      app.lgbt,
       app.ethnicity,
       app.race,
       app.hiv,

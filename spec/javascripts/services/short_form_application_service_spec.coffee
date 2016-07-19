@@ -3,6 +3,8 @@ do ->
   describe 'ShortFormApplicationService', ->
     ShortFormApplicationService = undefined
     $localStorage = undefined
+    fakeListing = undefined
+    fakeShortForm = getJSONFixture('short-form-example.json')
     $translate = {}
     Upload = {}
     fakeHouseholdMember = undefined
@@ -368,10 +370,27 @@ do ->
       it 'should check if survey is complete', ->
         ShortFormApplicationService.applicant = fakeApplicant
         ShortFormApplicationService.applicant.gender = {Fake: true}
-        ShortFormApplicationService.applicant.lgbt = 'Fake'
         ShortFormApplicationService.applicant.ethnicity = 'Fake'
         ShortFormApplicationService.applicant.race = 'Fake'
         ShortFormApplicationService.applicant.hiv = 'Fake'
         ShortFormApplicationService.applicant.referral = {Fake: true}
         expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
       return
+
+    describe 'submitApplication', ->
+      beforeEach ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
+        ShortFormApplicationService.application = fakeShortForm
+
+      it 'should indicate app status as submitted', ->
+        ShortFormApplicationService.submitApplication(fakeListing.id)
+        expect(ShortFormApplicationService.application.status).toEqual('submitted')
+        return
+
+      it 'should indicate app date submitted to be date today', ->
+        dateToday = moment().format('YYYY-MM-DD')
+        ShortFormApplicationService.submitApplication(fakeListing.id)
+        expect(ShortFormApplicationService.application.applicationSubmittedDate).toEqual(dateToday)
+        return
+      return
+    return

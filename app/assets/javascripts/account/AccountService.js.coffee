@@ -13,6 +13,7 @@ AccountService = ($state, $auth) ->
     Service.rememberedState = name
 
   Service.createAccount = ->
+    Service._formatDOB()
     $auth.submitRegistration(Service.userAuth)
       .then((response) ->
         # handle success response
@@ -32,6 +33,13 @@ AccountService = ($state, $auth) ->
       ).catch((response) ->
         alert("Error: #{response.errors[0]}")
       )
+
+  Service._formatDOB = ->
+    month = Service.userAuth.dob_month
+    day = Service.userAuth.dob_day
+    year = Service.userAuth.dob_year
+    formattedDOB = year + '-' + month + '-' + day
+    Service.userAuth.DOB = formattedDOB
 
   # this runs on init of the app to check if we're logged upon arrival
   Service.validateUser = ->
