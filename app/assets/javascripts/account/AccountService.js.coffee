@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth) ->
+AccountService = ($state, $auth, ShortFormApplicationService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
@@ -51,6 +51,26 @@ AccountService = ($state, $auth) ->
   Service.loggedIn = ->
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
+  Service.copyApplicantFields = ->
+    applicant = _.pick ShortFormApplicationService.applicant,
+      ['firstName', 'lastName', 'dob_day', 'dob_month', 'dob_year', 'email']
+    angular.copy(applicant, Service.userAuth)
+
+  Service.lockCompletedFields = ->
+    a = ShortFormApplicationService.applicant
+    Service.lockedFields =
+      name: a.firstName && a.lastName
+      dob: a.dob_day && a.dob_month && a.dob_year
+      email: !! a.email
+
+  Service.unlockFields = ->
+    Service.lockedFields =
+      name: false
+      dob: false
+      email: false
+
+  Service.unlockFields()
+
   return Service
 
 
@@ -58,7 +78,7 @@ AccountService = ($state, $auth) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth']
+AccountService.$inject = ['$state', '$auth', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.services')

@@ -1,4 +1,4 @@
-AccountController = ($scope, $state, AccountService) ->
+AccountController = ($scope, $state, $document, AccountService) ->
   $scope.rememberedState = AccountService.rememberedState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
@@ -6,6 +6,15 @@ AccountController = ($scope, $state, AccountService) ->
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.submitDisabled = false
+
+  $scope.handleErrorState = ->
+    # show error alert
+    $scope.hideAlert = false
+    el = angular.element(document.getElementById('form-wrapper'))
+    # uses duScroll aka 'angular-scroll' module
+    topOffset = 0
+    duration = 400 # animation speed in ms
+    $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
@@ -25,7 +34,7 @@ AccountController = ($scope, $state, AccountService) ->
         form.$setUntouched()
         form.$setPristine()
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
 
   $scope.signIn = ->
     form = $scope.form.accountForm
@@ -37,9 +46,12 @@ AccountController = ($scope, $state, AccountService) ->
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
 
-AccountController.$inject = ['$scope', '$state', 'AccountService']
+  $scope.isLocked = (field) ->
+    AccountService.lockedFields[field]
+
+AccountController.$inject = ['$scope', '$state', '$document', 'AccountService']
 
 angular
   .module('dahlia.controllers')
