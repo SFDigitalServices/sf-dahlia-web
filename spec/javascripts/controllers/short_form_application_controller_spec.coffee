@@ -12,6 +12,7 @@ do ->
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
       form: {}
+      listing: fakeListing
       applicant:
         home_address: { address1: null, city: null, state: null, zip: null }
         language: "English"
@@ -41,7 +42,7 @@ do ->
       invalidateIncomeForm: jasmine.createSpy()
       checkHouseholdEligiblity: (listing) ->
         return
-      submitApplication: (listing) ->
+      submitApplication: (options={}) ->
         return
       validMailingAddress: ->
         true
@@ -53,18 +54,18 @@ do ->
       sections: []
       hasNav: jasmine.createSpy()
     fakeShortFormHelperService = {}
+    fakeAccountService = {}
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
 
     beforeEach module('dahlia.controllers', ($provide) ->
-      fakeListingService =
-        listing: fakeListing
+      # fakeListingService =
+        # listing: fakeListing
       fakeShortFormNavigationService =
         sections: []
         hasNav: jasmine.createSpy()
         getLandingPage: spyOn(fakeFunctions, 'fakeGetLandingPage').and.callThrough()
-
-      $provide.value 'ListingService', fakeListingService
+      # $provide.value 'ListingService', fakeListingService
       return
     )
 
@@ -98,6 +99,7 @@ do ->
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
         AddressValidationService: fakeAddressValidationService
+        AccountService: fakeAccountService
       return
     )
 
@@ -303,7 +305,7 @@ do ->
       it 'calls submitApplication ShortFormApplicationService', ->
         scope.listing = fakeListing
         scope.submitApplication(scope.listing.Id)
-        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(fakeListing.Id)
+        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: false})
         return
       return
 

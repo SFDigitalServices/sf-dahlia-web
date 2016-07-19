@@ -9,7 +9,6 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
@@ -446,7 +445,7 @@ ShortFormApplicationController = (
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService',
+  'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService',
   'AccountService'
 ]
 

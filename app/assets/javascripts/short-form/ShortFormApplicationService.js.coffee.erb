@@ -3,6 +3,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
   Service.listing = ListingService.listing
   Service.form = {}
   Service.applicationDefaults =
+    id: null
+    lotteryNumber: null
+    status: null
+    applicationSubmittedDate: null
+    surveyComplete: false
+    applicationSubmissionType: "Electronic"
     applicant:
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       language: "English"
@@ -42,8 +48,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
       Status: {}
       Income: {}
       Review: {}
-    surveyComplete: false
-    applicationSubmissionType: "Electronic"
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()

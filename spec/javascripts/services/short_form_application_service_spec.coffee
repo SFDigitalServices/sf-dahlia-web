@@ -24,11 +24,17 @@ do ->
       workInSf: 'Yes'
       preferences: {liveInSf: null, workInSf: null}
       home_address: fakeAddress
+    fakeListingService =  {
+      listing: {
+        Id: ''
+      }
+    }
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value 'ListingService', fakeListingService
       return
     )
 

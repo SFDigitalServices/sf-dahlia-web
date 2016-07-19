@@ -5,6 +5,8 @@ do ->
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
+    fakeShortFormApplicationService =
+      submitApplication: (options={}) -> null
 
     beforeEach module('dahlia.controllers', () ->
       return
@@ -28,6 +30,7 @@ do ->
         $scope: scope
         $state: state
         AccountService: fakeAccountService
+        ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
 
