@@ -361,10 +361,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+      onEnter: [
+        'ShortFormApplicationService', 'AccountService',
+        (ShortFormApplicationService, AccountService) ->
           ShortFormApplicationService.completeSection('Intro')
-        ]
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+      ]
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'

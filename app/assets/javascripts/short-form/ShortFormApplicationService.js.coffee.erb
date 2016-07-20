@@ -525,6 +525,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     ]
     Service.application.surveyComplete = _.every(responses)
 
+  Service.importUserData = (loggedInUser) ->
+    userData = _.pick loggedInUser, [
+      'email', 'firstName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+    ]
+    _.merge Service.applicant, userData
+
   return Service
 
 ############################################################################################
