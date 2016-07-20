@@ -12,8 +12,10 @@ AccountService = ($state, $auth) ->
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
 
-  Service.createAccount = ->
+  Service.createAccount = (shortFormSession) ->
     Service._formatDOB()
+    if shortFormSession
+      Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
     $auth.submitRegistration(Service.userAuth)
       .then((response) ->
         # handle success response

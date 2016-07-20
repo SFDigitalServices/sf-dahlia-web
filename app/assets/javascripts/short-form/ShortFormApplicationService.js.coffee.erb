@@ -353,7 +353,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
 
     params =
       application: Service._formatApplication(Service.listing.Id)
-    # console.log(params)
+    if options.attachToAccount
+      params.temp_session_id = Service.session_uid + Service.userkey
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber

@@ -9,7 +9,8 @@ module SalesforceService
       api_get(endpoint, params)
     end
 
-    def self.create_or_update(params)
+    def self.create_or_update(params, contact_id = nil)
+      params[:primaryApplicant][:contactId] = contact_id if contact_id.present?
       api_post('/shortForm', params)
     end
 

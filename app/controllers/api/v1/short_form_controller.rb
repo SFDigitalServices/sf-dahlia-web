@@ -1,5 +1,6 @@
 # RESTful JSON API to query for address validation
 class Api::V1::ShortFormController < ApiController
+  ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_for_existing_application,
                 only: [:submit_application]
 
@@ -37,7 +38,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = ShortFormService.create_or_update(application_params)
+    response = ShortFormService.create_or_update(application_params, contact_id)
     if response.present?
       if application_params[:primaryApplicant][:email].present? &&
          application_params[:status] == 'submitted'
@@ -59,6 +60,27 @@ class Api::V1::ShortFormController < ApiController
     authenticate_user!
     contact_id = current_user.salesforce_contact_id
     ShortFormService.ownership?(contact_id, application_params[:id])
+  end
+
+  def contact_id
+    if current_user
+      current_user.salesforce_contact_id
+    elsif submitting_application_for_unconfirmed_user
+      unconfirmed_user_salesforce_contact_id
+    end
+  end
+
+  def submitting_application_for_unconfirmed_user
+    params[:temp_session_id].present?
+  end
+
+  def unconfirmed_user_salesforce_contact_id
+    u = User.find_by_temp_session_id(params[:temp_session_id])
+    if u
+      params.delete :temp_session_id
+      u.update(temp_session_id: nil)
+      return u.salesforce_contact_id
+    end
   end
 
   def eligibility_params
