@@ -53,7 +53,7 @@ AccountService = ($state, $auth, ShortFormApplicationService) ->
 
   Service.copyApplicantFields = ->
     applicant = _.pick ShortFormApplicationService.applicant,
-      ['firstName', 'lastName', 'dob_day', 'dob_month', 'dob_year', 'email']
+      ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year', 'email']
     angular.copy(applicant, Service.userAuth)
 
   Service.lockCompletedFields = ->
