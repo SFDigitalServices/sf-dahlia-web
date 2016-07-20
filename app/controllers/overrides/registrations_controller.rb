@@ -7,6 +7,7 @@ module Overrides
     private
 
     def sync_with_salesforce
+      return false if @resource.errors.any?
       salesforce_contact = AccountService.create_or_update(account_params)
       if salesforce_contact['contactId']
         @resource.update_attributes(
