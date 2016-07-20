@@ -10,6 +10,7 @@
         "WARNING": "Warning: Only apply once per lottery, duplicate applications will be disqualified."
     },
     "B1_NAME": {
+        "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
         "TITLE": "We'll get started by getting some information about you. First, what's your name?"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -19,6 +20,7 @@
         "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "APPLICANT_ADDRESS_DESC": "Ideally this is an address where we can send updates about your application.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
+        "EMAIL_EDITABLE_VIA_ACCOUNT": "Your email address is editable via your account settings",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",

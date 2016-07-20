@@ -57,11 +57,12 @@ form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="sub
   .app-inner.inset.border-bottom
     .form-group.has-option ng-class="{ error: inputInvalid('email') }"
       label.form-label.caps for="applicant_email"
-        | {{'LABEL.APPLICANT_EMAIL' | translate}}
+        ' {{'LABEL.APPLICANT_EMAIL' | translate}}
+        lock-icon ng-if="loggedIn()"
       p.form-note.margin-bottom
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
-        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false"
+        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
