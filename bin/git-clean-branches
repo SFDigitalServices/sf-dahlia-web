@@ -1,2 +1,2 @@
 #!/bin/sh
-git branch --merged master | egrep -v 'master|demo|staging|production' | xargs -n 1 git branch -d
+git branch --merged master | egrep -v 'master|demo|staging|production|translations' | xargs -n 1 git branch -d

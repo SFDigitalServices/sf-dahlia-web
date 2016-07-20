@@ -1,10 +1,10 @@
 {
-    "T": {
-        "APPLICATION_DUE": "Fecha de Vencimiento",
-        "GET_STARTED": "Empezar",
-        "APPLICATION": "Aplicación"
-    },
     "A1_INTRO": {
         "TITLE": "Vamos a empezar en la aplicación:"
+    },
+    "T": {
+        "APPLICATION": "Aplicación",
+        "APPLICATION_DUE": "Fecha de Vencimiento",
+        "GET_STARTED": "Empezar"
     }
 }
