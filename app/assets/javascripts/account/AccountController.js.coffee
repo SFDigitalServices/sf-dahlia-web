@@ -5,6 +5,7 @@ AccountController = ($scope, $state, AccountService) ->
   $scope.userAuth = AccountService.userAuth
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.submitDisabled = false
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
@@ -16,8 +17,10 @@ AccountController = ($scope, $state, AccountService) ->
   $scope.createAccount = ->
     form = $scope.form.accountForm
     if form.$valid
+      $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.createAccount().then ->
+        $scope.submitDisabled = false
         # reset the form
         form.$setUntouched()
         form.$setPristine()
@@ -27,8 +30,10 @@ AccountController = ($scope, $state, AccountService) ->
   $scope.signIn = ->
     form = $scope.form.accountForm
     if form.$valid
+      $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then ->
+        $scope.submitDisabled = false
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
     else
