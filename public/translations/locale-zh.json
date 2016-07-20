@@ -1,10 +1,10 @@
 {
-    "T": {
-      "APPLICATION_DUE": "由于应用",
-      "GET_STARTED": "上手",
-      "APPLICATION": "应用"
-    },
     "A1_INTRO": {
-      "TITLE": "让我们开始对您的应用程序"
+        "TITLE": "让我们开始对您的应用程序"
+    },
+    "T": {
+        "APPLICATION": "应用",
+        "APPLICATION_DUE": "由于应用",
+        "GET_STARTED": "上手"
     }
 }

@@ -60,7 +60,17 @@ module.exports = function(grunt) {
       dest:     'public/translations'
     }
   },
-
+  sortJSON: {
+    src: [
+      'public/translations/locale-en.json',
+      'public/translations/locale-es.json',
+      'public/translations/locale-tl.json',
+      'public/translations/locale-zh.json'
+    ],
+    // options: {
+    //   spacing: 2
+    // }
+  }
 });
 
   // load tasks
@@ -68,6 +78,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-angular-translate');
+  grunt.loadNpmTasks('grunt-sort-json');
 
 
   // register task
@@ -78,7 +89,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('translations', [
-    'i18nextract'
+    'i18nextract',
+    'sortJSON'
   ]);
 
   grunt.registerTask('deploy', [
