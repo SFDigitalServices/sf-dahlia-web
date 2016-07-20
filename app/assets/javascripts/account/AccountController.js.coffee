@@ -30,8 +30,10 @@ AccountController = ($scope, $state, AccountService) ->
   $scope.signIn = ->
     form = $scope.form.accountForm
     if form.$valid
+      $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then ->
+        $scope.submitDisabled = false
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
     else
