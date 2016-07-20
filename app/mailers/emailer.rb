@@ -6,15 +6,13 @@ class Emailer < ActionMailer::Base
 
   ### service external methods
   def submission_confirmation(params)
-    # expects :listing_id, :short_form_id
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    short_form = Hashie::Mash.new(ShortFormService.get(params[:short_form_id]))
-    return false unless listing.present? && short_form.present?
+    return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
-      email: short_form.primaryApplicant.email,
+      email: params[:email],
       listing: listing,
       listing_url: "#{base_url}/listings/#{listing.Id}",
-      lottery_number: short_form.lotteryNumber,
+      lottery_number: params[:lottery_number],
     )
   end
 

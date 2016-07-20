@@ -1,5 +1,7 @@
 # RESTful JSON API to query for address validation
 class Api::V1::ShortFormController < ApiController
+  ShortFormService = SalesforceService::ShortFormService
+
   def validate_household
     response = ShortFormService.check_household_eligibility(
       params[:listing_id],
@@ -36,10 +38,13 @@ class Api::V1::ShortFormController < ApiController
   def submit_application
     response = ShortFormService.create(application_params)
     if response.present?
+      files = UploadedFile.where(uploaded_file_params)
+      ShortFormService.attach_files(response['id'], files)
       if application_params[:primaryApplicant][:email].present?
         Emailer.submission_confirmation(
+          email: application_params[:primaryApplicant][:email],
           listing_id: application_params[:listingID],
-          short_form_id: response['id'],
+          lottery_number: response['lotteryNumber'],
         ).deliver_now
       end
       render json: response
@@ -52,12 +57,13 @@ class Api::V1::ShortFormController < ApiController
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(:householdsize, :incomelevel)
+          .permit(%i(householdsize incomelevel))
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(:file, :session_uid, :userkey, :preference)
+          .permit(%i(file session_uid userkey listing_id
+                     document_type preference))
   end
 
   def application_params
@@ -151,8 +157,10 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_attrs
     {
       session_uid: uploaded_file_params[:session_uid],
+      listing_id: uploaded_file_params[:listing_id],
       userkey: uploaded_file_params[:userkey],
       preference: uploaded_file_params[:preference],
+      document_type: uploaded_file_params[:document_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,

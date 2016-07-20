@@ -1,5 +1,7 @@
 # RESTful JSON API to query for listings
 class Api::V1::ListingsController < ApiController
+  ListingService = SalesforceService::ListingService
+
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids

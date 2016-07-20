@@ -1,4 +1,4 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
   Service = {}
   Service.form = {}
   Service.applicationDefaults =
@@ -54,8 +54,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
-    Service.application.id = null
-    Service.application.lotteryNumber = null
+    delete Service.application.id
+    delete Service.application.lotteryNumber
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -283,32 +283,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     Service.application.completedSections['Status'] = false
     Service.application.completedSections['Income'] = false
 
-  Service.hasPreferenceFile = (fileType) ->
-    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
-
-  Service.deletePreferenceFile = (prefType) ->
-    fileType = "#{prefType}_proof_file"
-    params =
-      uploaded_file:
-        session_uid: Service.session_uid
-        userkey: Service.userkey
-        preference: prefType
-    $http.delete('/api/v1/short-form/proof', {
-      data: params,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    }).success((data, status, headers, config) ->
-      Service.preferences[fileType] = null
-      # console.log(data)
-    ).error( (data, status, headers, config) ->
-      # console.warn('error')
-      return
-    )
-
-  Service.preferenceFileError = (fileType) ->
-    !! Service.preferences["#{fileType}_error"]
-
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
@@ -342,7 +316,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
     Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     params =
       application: Service._formatApplication(listingId)
-    # console.log(params)
+      uploaded_file:
+        session_uid: Service.session_uid
+        userkey: Service.userkey
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
       data
     ).error( (data, status, headers, config) ->
@@ -554,7 +530,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid) -
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'Upload', 'uuid'
+  '$localStorage', '$translate', '$http', 'uuid'
 ]
 
 angular
