@@ -2,11 +2,13 @@ do ->
   'use strict'
   describe 'AccountController', ->
     scope = undefined
+    $translate = {}
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
 
-    beforeEach module('dahlia.controllers', () ->
+    beforeEach module('dahlia.controllers', ($provide) ->
+      $provide.value '$translate', $translate
       return
     )
 
