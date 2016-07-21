@@ -527,7 +527,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
 
   Service.importUserData = (loggedInUser) ->
     userData = _.pick loggedInUser, [
-      'email', 'firstName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
     _.merge Service.applicant, userData
 
