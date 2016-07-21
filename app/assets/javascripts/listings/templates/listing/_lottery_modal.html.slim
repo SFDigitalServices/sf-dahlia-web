@@ -66,8 +66,7 @@
       h1.t-gamma.margin-bottom--half Lottery Results
       h2#modalTitle.t-caps.t-small.t-alt-sans.t-bold
         | Potrero 1010
-      p.t-small A total of 900 tickets were drawn in this lottery.
-      p.t-small.margin-bottom Studio 20 units, 1 Bedroom 20 units, 2 Bedrooms 20 units
+      p.t-small.c-steel.t-semi.padding-horizontal--3halves 3000 applications were submitted for 50 avaiable units
     .modal-inner.bg-dust
       .icon-input.row.collapse
         .large-12.columns
@@ -85,10 +84,10 @@
       p.t-small Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.
     .modal-overflow
       div ng-controller="AccordionSampleController"
-        header.modal-inner.padding-bottom-none
+        header.modal-inner
           h2.h-caps-lined Housing Preferences
           p.t-small.c-steel.no-margin Ranking in these lists is considered in the order shown here.
-        section.modal-inner
+        section
           accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
             accordion-group
               accordion-heading
@@ -97,14 +96,14 @@
                 span.ui-icon.ui-control.ui-small.i-color
                   svg
                     use xlink:href="#i-arrow-down"
-              .padding
+              .margin-bottom-last-child.padding.padding-horizontal--3halves
                 p.t-small 10 applicants qualified for this preference
               .overflow-panel
                 table.table-small.table-results role="grid"
                   thead
                     tr
-                      th scope="col"  Rank
-                      th scope="col"  Ticket
+                      th scope="col" Rank
+                      th scope="col" Ticket
                   tbody
                     tr
                       td scope="row" 1
@@ -173,7 +172,7 @@
                 span.ui-icon.ui-control.ui-small.i-color
                   svg
                     use xlink:href="#i-arrow-down"
-              .padding
+              .margin-bottom-last-child.padding.padding-horizontal--3halves
                 p.t-small 15 applicants qualified for this preference
               .overflow-panel
                 table.table-small.table-results role="grid"
@@ -249,7 +248,7 @@
                 span.ui-icon.ui-control.ui-small.i-color
                   svg
                     use xlink:href="#i-arrow-down"
-              .padding
+              .margin-bottom-last-child.padding.padding-horizontal--3halves
                 p.t-small 1200 applicants qualified for this preference. Showing first 1000 applicants.
                 p.t-small.no-margin
                   a href="#"  Download Full Preference List
@@ -327,7 +326,7 @@
                 span.ui-icon.ui-control.ui-small.i-color
                   svg
                     use xlink:href="#i-arrow-down"
-              .padding
+              .margin-bottom-last-child.padding.padding-horizontal--3halves
                 p.t-small 2800 applicants qualified for this preference. Showing first 1000 applicants.
                 p.t-small.no-margin
                   a href="#"  Download Full Preference List
@@ -398,9 +397,9 @@
                     tr
                       td scope="row" 20
                       td 671065
-        header.modal-inner.padding-bottom-none
+        header.modal-inner
           h2.h-caps-lined.no-margin General List
-        section.modal-inner
+        section
           accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
             accordion-group
               accordion-heading
@@ -409,7 +408,7 @@
                 span.ui-icon.ui-control.ui-small.i-color
                   svg
                     use xlink:href="#i-arrow-down"
-              .padding
+              .padding.padding-horizontal--3halves
                 p.t-small 200 applicants are in this list
                 p.t-small.no-margin Please note, all preference holders will be considered for units first.
               .overflow-panel
@@ -479,12 +478,13 @@
                     tr
                       td scope="row" 20
                       td 671065
-      p.text-center.t-small.padding--2x.no-margin
-        a href="#"  Download Unsorted Results
-    footer.modal-footer.text-center.padding-top
+    p.text-center.t-small.padding--3halves.no-margin.bg-dust
+      | For Full Preference & Unsorted Rankings:
+      br
+      a.a-dark href="#" Download Lottery Results
+    footer.modal-footer.text-center.padding--3halves
       p.t-small.c-steel.no-margin Results Updated: February 21, 2016
 a.close-reveal-modal aria-label="Close" ng-click="closeModal()"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-close"
-
