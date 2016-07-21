@@ -6,7 +6,7 @@ span ng-controller="AccountController"
     | Please click on the link in that message to confirm your email address.
 
   p
-    button.button ng-click="resendConfirmationEmail(createdAccount.email)"
+    button.button.margin-top--2x ng-click="resendConfirmationEmail()"
       | Resend the email
 
   a.close-reveal-modal aria-label="Close" ng-click="clearCreatedAccount();closeModal()"

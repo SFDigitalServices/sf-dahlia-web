@@ -45,7 +45,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
       $scope.hideAlert = false
 
   $scope.resendConfirmationEmail = ->
-    ShortFormApplicationService.resendConfirmationEmail()
+    AccountService.resendConfirmationEmail()
 
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application

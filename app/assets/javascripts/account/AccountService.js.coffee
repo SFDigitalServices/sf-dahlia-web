@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, $modal) ->
+AccountService = ($state, $auth, $modal, $http) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
@@ -69,6 +69,17 @@ AccountService = ($state, $auth, $modal) ->
   Service._accountJustCreated = ->
     Service.createdAccount.email && !Service.createdAccount.confirmed_at
 
+  Service.resendConfirmationEmail = ->
+    params =
+      email: Service.createdAccount.email
+
+    # TO DO: Write create controller method in rails endpoint
+    $http.post("api/v1/auth/confirmation", params).success((data, status, headers, config) ->
+      data
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
   return Service
 
 
@@ -76,7 +87,7 @@ AccountService = ($state, $auth, $modal) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth', '$modal']
+AccountService.$inject = ['$state', '$auth', '$modal', '$http']
 
 angular
   .module('dahlia.services')
