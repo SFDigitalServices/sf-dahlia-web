@@ -7,6 +7,15 @@ module Overrides
 
     private
 
+    def render_create_success
+      resource = @resource.as_json
+      resource['confirmed_at'] = @resource.confirmed_at
+      render json: {
+        status: 'success',
+        data:   resource,
+      }
+    end
+
     def sync_with_salesforce
       salesforce_contact = AccountService.create_or_update(account_params)
       if salesforce_contact['contactId']

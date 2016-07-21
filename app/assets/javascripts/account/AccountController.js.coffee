@@ -3,6 +3,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
+  $scope.createdAccount = AccountService.createdAccount
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.accountError = AccountService.accountError
@@ -43,15 +44,23 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
     else
       $scope.hideAlert = false
 
+  $scope.resendConfirmationEmail = ->
+    ShortFormApplicationService.resendConfirmationEmail()
+
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
     if $scope._userInShortFormSession()
       ShortFormApplicationService.submitApplication({draft: true, attachToAccount: true}).then(
         $state.go('dahlia.sign-in', {skipConfirm: true})
       )
+    else
+      $state.go('dahlia.sign-in')
 
   $scope._userInShortFormSession = ->
     $state.current.name == 'dahlia.short-form-application.create-account'
+
+  $scope.clearCreatedAccount = ->
+    angular.copy({}, $scope.createdAccount)
 
 AccountController.$inject = ['$scope', '$state', 'AccountService', 'ShortFormApplicationService']
 

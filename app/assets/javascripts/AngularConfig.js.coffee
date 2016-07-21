@@ -132,6 +132,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.newAccountConfirmEmailModal()
+      ]
     })
     .state('dahlia.short-form-application.sign-in', {
       # duplicated from above but to differentiate state for "Save and finish later"
