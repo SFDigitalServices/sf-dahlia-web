@@ -74,8 +74,8 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of listings are returned
-    # (based on VCR cassette with 10 listings)
-    expect(json['listings'].length).to eq(10)
+    # (based on VCR cassette with 15 listings)
+    expect(json['listings'].length).to eq(15)
   end
 
   it 'sends an individual listing' do

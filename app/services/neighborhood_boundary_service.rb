@@ -28,9 +28,6 @@ class NeighborhoodBoundaryService
       returnCountOnly: true,
       f: 'pjson',
     }
-    puts query_params.to_json
-    puts query_params.inspect
-    puts "#{API_URL}?#{query_params.to_query}"
     HTTP.get("#{API_URL}?#{query_params.to_query}").to_s
   end
 

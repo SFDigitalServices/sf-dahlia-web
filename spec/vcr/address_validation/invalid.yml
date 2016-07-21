@@ -31,44 +31,43 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Location:
-      - "/api/v2/addresses/adr_52aab61fd63a49b6b3f00996dcfe0a74"
+      - "/api/v2/addresses/adr_e968f7a712d7457180d3788ee8202085"
       Content-Type:
       - application/json; charset=utf-8
       Etag:
-      - W/"b806bc2cf948a47817171259fa5c896c"
+      - W/"0a658c3badf42c2dfa709a21153824b7"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 350e7f3a-8cb5-4e5e-b441-8fccae93573e
+      - d18d2d5b-6659-4ebb-824f-7c157d61bada
       X-Runtime:
-      - '0.668702'
+      - '0.321199'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - 86bd419ee8
+      - 77c937474c
       - easypost
-      - web6sj
+      - web14sj
       X-Backend:
       - easypost
       X-Proxied:
-      - lb5sj, c145510c89
+      - lb5sj, c105967beb
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA6RRy27bMBD8FYFnx9DDUSHdnFpBArQ2YNk9tCiEFbl0WFCk
-        QVJBU8P/3pUCuWkOCdAeBGiXMzuzsyemBCsZCNdcpwBtnkiRZ7Ao2rzNZBwX
-        RS64xBg+LNiM2fYH8kD4pRAOvacWdwgBRQNDO42T/CrOr5Jsl6ZlnJVZ9pUw
-        /VG8izHQIStNrzXNtN0RzNNU+uAQQ0LcJC2KpEiiGw0PLX2RD3M2AdILXQXi
-        shpMdOvAcOW5HVFkgvofl1T8UsdxXra4HpawvQluIO1rKo8P1lzMYAdKT0Vn
-        xTAioA8DDZxT6BoJXOlR9BlF0SiBJii4ECUKdKCbAD+bIfFpM7L0qveITknF
-        IShrPCtPTKBW1Hwa/n3P+ZB7KUF7JHPOWUfltxPtMFqr5svValvV9Xy92TW3
-        m/16RU6lQv185+luvj8caAsSuexGD3DAP9eNjA2RpGgEO89eCNxt9nXVrPef
-        b6rt/H79Zfnp/qXGdK63Ne5s7zEyfdeii5SPlHkErV4p1bttVe3+WaMeUX9N
-        /34eb794J8y3spj9b9Rk4nz+DQAA//8DACziG4F5AwAA
+        H4sIAAAAAAAAA4SRTU/DMAyG/0qVM0xN6daut8HYcZMYXECoMok7gtJkSlIE
+        TP3vOEUd4kNwqFJbr+3Hrw9MSVYxkK7G+axsCih4Jot8WvAylWdFWSKWWZql
+        5ZSdMPvwhCKQfiGlQ+8pJRxCQFlDTGcpn52mxWnGr3lZTfMqy29J0+3lvxoD
+        LbLKdFpTT9vuwbyOoQ8OMXCq5dl8zuc8Odfw+EBf4sOEjYLsWK4C1bItmGTl
+        wAjlhR1UBEH5iwUFb2o/9DvL417Cdia4WHSzpXD/aM0RBltQegxaK2OLgD7E
+        MnBOoasbEEoPQz9UZI2SaIKCY2GDEh3oOsBLHR0fNyOkb7lndKpRAoKyxrPq
+        wCRqRcnX+O87IaLvVQPaI8E5Zx2FdwfaYUC7nCyWy6vL7Xay3lzXq83Nehl3
+        73Y7YqaWRyCF+uPy4yVbemCHn9dNjA1JQ9ZI1t+fEEcgJyJS3w8G5v8Q/Rz6
+        14jfkP7Y6QtR7N73/TsAAAD//wMA4wvq980CAAA=
     http_version:
-  recorded_at: Mon, 13 Jun 2016 22:03:33 GMT
-recorded_with: VCR 3.0.1
+  recorded_at: Thu, 21 Jul 2016 18:54:25 GMT
+recorded_with: VCR 3.0.3

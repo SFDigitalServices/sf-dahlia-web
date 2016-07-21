@@ -73,7 +73,7 @@ describe 'Geocoding API' do
     # still gets a 200 status, but with nil results
     expect(response).to be_success
 
-    # check to make sure geocoding_data is nil for a bad address
-    expect(json['geocoding_data']).to eq(nil)
+    # check to make sure boundary_match is false for a bad address
+    expect(json['geocoding_data']['boundary_match']).to eq(false)
   end
 end
