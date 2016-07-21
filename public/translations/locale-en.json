@@ -57,6 +57,7 @@
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
         "CONTINUE_WITH_APPLICATION": "Continue with Application",
         "CREATE_AN_ACCOUNT": "Create an Account",
+        "EMAIL_CONFIRM_INSTRUCTIONS": "Please re-enter your email address to confirm.",
         "P1": "You'll use this information to log in to your account, so make sure you can remember it.",
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"

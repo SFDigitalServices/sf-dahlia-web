@@ -2,17 +2,27 @@ do ->
   'use strict'
   describe 'AccountService', ->
     AccountService = undefined
+    ShortFormApplicationService = undefined
+    $translate = {}
+    Upload = {}
+    uuid = {v4: jasmine.createSpy()}
     $state = undefined
     $auth = undefined
     fakeState = 'dahlia.short-form-application.contact'
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
+    fakeApplicant =
+      firstName: 'Samantha'
+      lastName: 'Bee'
 
     beforeEach module('ui.router')
     beforeEach module('ng-token-auth')
     beforeEach module('dahlia.services', ($provide)->
+      $provide.value '$translate', $translate
+      $provide.value 'Upload', Upload
+      $provide.value 'uuid', uuid
       return
     )
-    beforeEach inject((_AccountService_, _$state_, _$auth_, _$q_) ->
+    beforeEach inject((_AccountService_, _ShortFormApplicationService_, _$state_, _$auth_, _$q_) ->
       $state = _$state_
       $state.go = jasmine.createSpy()
       $auth = _$auth_
@@ -30,8 +40,20 @@ do ->
         deferred.resolve 'Remote call result'
         deferred.promise
       AccountService = _AccountService_
+      ShortFormApplicationService = _ShortFormApplicationService_
+      ShortFormApplicationService.applicant = {}
       return
     )
+
+    describe 'Service setup', ->
+      it 'initializes lockedFields defaults', ->
+        expectedDefault =
+          name: false
+          dob: false
+          email: false
+        expect(AccountService.lockedFields).toEqual expectedDefault
+        return
+      return
 
     describe 'rememberState', ->
       it 'saves rememberedState', ->
@@ -63,5 +85,18 @@ do ->
         return
       return
 
+    describe 'lockCompletedFields', ->
+      it 'checks for lockedFields', ->
+        ShortFormApplicationService.applicant = fakeApplicant
+        AccountService.lockCompletedFields()
+        expect(AccountService.lockedFields.name).toEqual true
+        return
+
+      it 'checks for unlockedFields', ->
+        ShortFormApplicationService.applicant = fakeApplicant
+        AccountService.lockCompletedFields()
+        expect(AccountService.lockedFields.dob).toEqual false
+        return
+      return
 
   return

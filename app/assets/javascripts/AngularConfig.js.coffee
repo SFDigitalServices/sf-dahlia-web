@@ -113,6 +113,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.unlockFields()
+      ]
     })
     .state('dahlia.short-form-application.create-account', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -122,6 +125,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
+      ]
+
     })
     .state('dahlia.sign-in', {
       url: '/sign-in'
