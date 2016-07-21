@@ -424,9 +424,7 @@ ShortFormApplicationController = (
 
   $scope.$on 'IdleTimeout', ->
     # they ran out of time
-    ShortFormApplicationService.resetUserData()
-    $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-    $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
+    $state.go('dahlia.listing', {skipConfirm: true, id: $scope.listing.Id})
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # capture errors when trying to verify address and send them back to the appropriate page

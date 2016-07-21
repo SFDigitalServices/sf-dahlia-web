@@ -85,7 +85,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.listing', {
       url: '/listings/:id',
       params:
-        timeout:
+        skipConfirm:
           squash: true
       views:
         'container@':
@@ -125,6 +125,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.sign-in', {
       url: '/sign-in'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
@@ -587,7 +590,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
-          if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
+
+          if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example
             $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
