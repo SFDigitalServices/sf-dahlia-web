@@ -5,6 +5,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
   $scope.userAuth = AccountService.userAuth
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.accountError = AccountService.accountError
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
@@ -27,6 +28,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
           form.$setUntouched()
           form.$setPristine()
           $scope._createAccountRedirect()
+          $scope.hideAlert = false
       )
     else
       $scope.hideAlert = false

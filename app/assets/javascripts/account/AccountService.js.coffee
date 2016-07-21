@@ -8,6 +8,7 @@ AccountService = ($state, $auth) ->
   Service.userAuth = {}
   Service.loggedInUser = {}
   Service.rememberedShortFormState = null
+  Service.accountError = {message: null}
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -18,14 +19,11 @@ AccountService = ($state, $auth) ->
       Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
     $auth.submitRegistration(Service.userAuth)
       .then((response) ->
-        # handle success response
-        alert('OK!')
-        # reset userAuth object
         angular.copy({}, Service.userAuth)
+        Service.accountError.message = null
         return true
       ).catch((response) ->
-        # handle submitRegistration error response
-        alert("Error: #{response.data.errors.full_messages[0]}")
+        Service.accountError.message = response.data.errors.full_messages[0]
         return false
       )
 

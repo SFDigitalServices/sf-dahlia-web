@@ -8,6 +8,7 @@ angular.module('dahlia.directives')
     householdEligibilityErrorMessage: '=?'
     invert: '=?'
     shortForm: '=?'
+    accountError: '=?'
 
   templateUrl: 'directives/alert-box.html'
 
@@ -20,6 +21,8 @@ angular.module('dahlia.directives')
       # scope.addressFailedValidation = scope.$parent.addressFailedValidation
 
     scope.showAlert = ->
+      if scope.accountError && scope.accountError.message
+        return true
       if scope.householdEligibilityErrorMessage
         return true
       if $state.params.error
@@ -36,6 +39,8 @@ angular.module('dahlia.directives')
         $translate.instant("ERROR.ALT_CONTACT_TYPE")
       else if scope.householdEligibilityErrorMessage
         $translate.instant("ERROR.NOT_ELIGIBLE") + " " + scope.householdEligibilityErrorMessage
+      else if scope.accountError && (scope.accountError.message == 'Email already in use')
+        $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 
