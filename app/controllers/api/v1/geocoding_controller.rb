@@ -6,9 +6,11 @@ class Api::V1::GeocodingController < ApiController
     if @data
       x = @data['location']['x']
       y = @data['location']['y']
-      name = '55 Laguna' # TODO: remove hardcoded listing name
+      name = '2198 Market' # TODO: remove hardcoded listing name
       match = NeighborhoodBoundaryService.new(name, x, y).in_boundary?
       @data[:boundary_match] = match
+    else
+      @data = { boundary_match: false }
     end
     render json: { geocoding_data: @data }
   end

@@ -228,12 +228,17 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
-    # keeping this code here for now so that general-lottery-notice can be accessed for review
-    # TODO: Update this code when charlie's api is ready
-    # household = angular.copy(Service.application.householdMembers)
-    # household.push(Service.applicant)
-    # return household
-    return []
+    # find all household members that either have their own address and match
+    # -- OR -- same address as applicant, who also matches
+    household = Service.application.householdMembers.filter (member) ->
+      if (member.hasSameAddressAsApplicant == 'Yes')
+        return Service.applicant.home_address.boundary_match
+      else
+        member.home_address && member.home_address.boundary_match
+    # add applicant to the list if they match
+    if Service.applicant.home_address.boundary_match
+      household.push(Service.applicant)
+    household
 
   Service.preferencesApplyForHousehold = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
