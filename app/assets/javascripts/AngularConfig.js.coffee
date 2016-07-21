@@ -592,7 +592,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
-    # check if user is logged in
+    # check if user is logged in on page load
     AccountService.validateUser()
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
@@ -671,4 +671,5 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       apiUrl: '/api/v1'
       storage: 'sessionStorage'
       confirmationSuccessUrl: conf.confirmationSuccessUrl
+      validateOnPageLoad: false
 ]
