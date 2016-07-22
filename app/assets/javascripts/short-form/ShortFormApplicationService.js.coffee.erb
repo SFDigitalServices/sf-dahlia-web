@@ -15,6 +15,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
       gender: {}
+      terms: {}
     alternateContact:
       language: "English"
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -347,6 +348,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
   Service.submitApplication = (options={}) ->
     if options.draft
       Service.application.status = 'draft'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     else
       Service.application.status ='submitted'
       Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
