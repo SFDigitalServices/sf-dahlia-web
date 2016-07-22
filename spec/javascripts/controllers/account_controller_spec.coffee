@@ -2,6 +2,7 @@ do ->
   'use strict'
   describe 'AccountController', ->
     scope = undefined
+    state = {current: {name: undefined}}
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
@@ -15,7 +16,7 @@ do ->
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
       scope.form = {accountForm: {}}
-      state = jasmine.createSpyObj('$state', ['go'])
+      state.go = jasmine.createSpy()
       spyOn(fakeAccountService, 'createAccount').and.callFake ->
         deferred = $q.defer()
         deferred.resolve('Remote call result')

@@ -6,12 +6,19 @@ do ->
     $auth = undefined
     fakeState = 'dahlia.short-form-application.contact'
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
+    modalMock = undefined
 
     beforeEach module('ui.router')
     beforeEach module('ng-token-auth')
     beforeEach module('dahlia.services', ($provide)->
       return
     )
+
+    beforeEach module('dahlia.services', ($provide)->
+      $provide.value '$modal', modalMock
+      return
+    )
+
     beforeEach inject((_AccountService_, _$state_, _$auth_, _$q_) ->
       $state = _$state_
       $state.go = jasmine.createSpy()
