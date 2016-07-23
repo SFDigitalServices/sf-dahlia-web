@@ -1,0 +1,84 @@
+// Lottery Ranking
+header.modal-inner.padding-top--2x
+  h2.h-caps-lined Your Preference Ranking
+  p.t-small.c-steel.no-margin Ranking in these lists is considered in the order show here.
+
+.alert-box.primary.no-margin
+  span.alert-icon.ui-icon.ui-medium
+    svg
+      use xlink:href="#i-warning"
+  p.alert-body
+    | Please note, there are other preferences that will be considered for units first.
+  a.close href="#" &times;
+
+section
+  accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
+
+    // Certificate of Preference
+    accordion-group
+      accordion-heading
+        .accordion-stat
+          span.accordion-stat_label Rank
+          span.accordion-stat_value 10
+        h3.accordion-name.semi Certificate of Preference
+        span.accordion-subheader.tiny up to 50 units available
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .bg-vapor.padding.padding-horizontal--3halves
+        p.t-small.t-semi.c-charcoal Your ranking in this list is 10 out of of 10 qualified applicants.
+
+    // Displaced Tenants Housing Preference
+    accordion-group
+      accordion-heading
+        .accordion-stat
+          span.accordion-stat_label Rank
+          span.accordion-stat_value 15
+        h3.accordion-name.semi Displaced Tenants Housing Preference
+        span.accordion-subheader.tiny up to 10 units available
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .bg-vapor.padding.padding-horizontal--3halves
+        p.t-small.t-semi.c-charcoal Your ranking in this list is 15 out of of 15 qualified applicants.
+
+    // Neighborhood Resident Housing Preference
+    accordion-group
+      accordion-heading
+        .accordion-stat
+          span.accordion-stat_label Rank
+          span.accordion-stat_value 285
+        h3.accordion-name.semi Neighborhood Resident Housing Preference
+        span.accordion-subheader.tiny up to 20 units available
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .bg-vapor.padding.padding-horizontal--3halves
+        p.t-small.t-semi.c-charcoal Your ranking in this list is 285 out of of 1200 qualified applicants.
+
+    // Live/Work Preference
+    accordion-group
+      accordion-heading
+        .accordion-stat
+          span.accordion-stat_label Rank
+          span.accordion-stat_value 385
+        h3.accordion-name.semi Live/Work Preference
+        span.accordion-subheader.tiny at least 10 units available
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .bg-vapor.padding.padding-horizontal--3halves
+        p.t-small.t-semi.c-charcoal Your ranking in this list is 385 out of of 2800 qualified applicants.
+
+// What happens next?
+.t-small.padding--3halves
+  .toggled
+    a.a-dark.toggler.toggle-more.t-small href="#"
+      | What happens next?
+      span.ui-icon.ui-static.ui-tiny.i-dark
+        svg
+          use xlink:href="#i-arrow-down"
+    p.c-steel.t-small.margin-top Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.
+    p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+    p.c-steel.t-small If all vacancies are filled for a preference you will still be eligible for units in your following preference.
+

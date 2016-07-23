@@ -21,6 +21,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   # for searching lottery number
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
+  $scope.lotteryRanking = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -131,6 +132,10 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
+
+  # Temp function to display ranking markup
+  $scope.showLotteryRanking = ->
+    $scope.lotteryRanking = true
 
 ############################################################################################
 ######################################## CONFIG ############################################
