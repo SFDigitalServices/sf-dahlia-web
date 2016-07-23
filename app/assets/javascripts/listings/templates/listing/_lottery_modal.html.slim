@@ -7,9 +7,9 @@
 /           | {{listing.Building_Name}}
 /         ul.t-small.margin-bottom
 /           li ng-repeat="unit_summary in listing.unitSummary"
-/             | {{unit_summary.unitType || 'N/A'}} {{unit_summary.totalUnits}} unit(s)
+/             | unit summary: {{unit_summary.unitType || 'N/A'}} {{unit_summary.totalUnits}} unit(s)
 /         p.t-small.t-bold
-/           | {{listing.Lottery_Summary}}
+/           | Lottery_Summary: {{listing.Lottery_Summary}}
 
 /       .padding-left--2x.padding-right--2x
 /         .icon-input.row.collapse
@@ -53,202 +53,41 @@
 /         p.t-small
 /           | If you were not selected, we encourage you to keep applying for listings.
 
-/   a.close-reveal-modal aria-label="Close" ng-click="closeModal()"
-/     span.ui-icon.ui-static.ui-medium.i-primary
-/       svg
-/         use xlink:href="#i-close"
 
 /////////////////////////////////
 
 .lottery-modal aria-hidden="true" aria-labelledby="modalTitle" role="dialog" ng-controller="ListingController"
+
   section.results-container.row.collapse
     hgroup.modal-header.inset.text-center.padding-bottom
       h1.t-gamma.margin-bottom--half Lottery Results
       h2#modalTitle.t-caps.t-small.t-alt-sans.t-bold
-        | Potrero 1010
-      p.t-small.c-steel.t-semi.padding-horizontal--3halves 3000 applications were submitted for 50 avaiable units
+        | {{listing.Building_Name}}
+      p.t-small.c-steel.t-semi.padding-horizontal--3halves
+        | {{listing.Lottery_Summary}}
     .modal-inner.bg-dust
       .icon-input.row.collapse
         .large-12.columns
           .row.collapse
             .small-10.columns
-              input.icon-input-field.squared.no-margin placeholder=("Enter Your Lottery Number") type="text"
+              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text"
             .small-2.columns
-              a.icon-input-button.button.primary.postfix.squared.no-margin href="#"
+              button.icon-input-button.button.primary.postfix.squared.no-margin ng-click="showLotteryRanking()"
                 span.sr-only Search
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
                     use xlink:href="#i-right"
 
-    .modal-inner.padding-bottom-none
-      p.t-small Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.
+    // Lottery Results Buckets
+    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRanking"
 
-    .modal-overflow
-      div
-        header.modal-inner
-          h2.h-caps-lined Housing Preferences
-          p.t-small.c-steel.no-margin Ranking in these lists is considered in the order shown here.
-        section
-          accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
+    // Lottery Results Ranking
+    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRanking"
 
-            // Certificate of Preference
-            accordion-group
-              accordion-heading
-                h3.accordion-name.semi Certificate of Preference
-                span.accordion-subheader.tiny up to 50 units available
-                span.ui-icon.ui-control.ui-small.i-color
-                  svg
-                    use xlink:href="#i-arrow-down"
-              .margin-bottom-last-child.padding.padding-horizontal--3halves
-                p.t-small 10 applicants qualified for this preference
-              .overflow-panel
-                table.table-small.table-results role="grid"
-                  thead
-                    tr
-                      th scope="col" Rank
-                      th scope="col" Ticket
-                  tbody
-                    tr
-                      td scope="row" 1
-                      td 671086
-                    tr
-                      td scope="row" 2
-                      td 671030
-                    tr
-                      td scope="row" 3
-                      td 671027
-
-            // Displaced Tenants Housing Preference
-            accordion-group
-              accordion-heading
-                h3.accordion-name.semi Displaced Tenants Housing Preference
-                span.accordion-subheader.tiny up to 10 units available
-                span.ui-icon.ui-control.ui-small.i-color
-                  svg
-                    use xlink:href="#i-arrow-down"
-              .margin-bottom-last-child.padding.padding-horizontal--3halves
-                p.t-small 15 applicants qualified for this preference
-              .overflow-panel
-                table.table-small.table-results role="grid"
-                  thead
-                    tr
-                      th scope="col" Rank
-                      th scope="col" Ticket
-                  tbody
-                    tr
-                      td scope="row" 1
-                      td 671086
-                    tr
-                      td scope="row" 2
-                      td 671030
-                    tr
-                      td scope="row" 3
-                      td 671027
-
-            // Neighborhood Resident Housing Preference
-            accordion-group
-              accordion-heading
-                h3.accordion-name.semi Neighborhood Resident Housing Preference
-                span.accordion-subheader.tiny up to 20 units available
-                span.ui-icon.ui-control.ui-small.i-color
-                  svg
-                    use xlink:href="#i-arrow-down"
-              .margin-bottom-last-child.padding.padding-horizontal--3halves
-                p.t-small 1200 applicants qualified for this preference. Showing first 1000 applicants.
-                p.t-small.no-margin
-                  a href="#" Download Full Preference List
-              .overflow-panel
-                table.table-small.table-results role="grid"
-                  thead
-                    tr
-                      th scope="col" Rank
-                      th scope="col" Ticket
-                  tbody
-                    tr
-                      td scope="row" 1
-                      td 671086
-                    tr
-                      td scope="row" 2
-                      td 671030
-                    tr
-                      td scope="row" 3
-                      td 671027
-
-            // Live/Work Preference
-            accordion-group
-              accordion-heading
-                h3.accordion-name.semi Live/Work Preference
-                span.accordion-subheader.tiny at least 10 units available
-                span.ui-icon.ui-control.ui-small.i-color
-                  svg
-                    use xlink:href="#i-arrow-down"
-              .margin-bottom-last-child.padding.padding-horizontal--3halves
-                p.t-small 2800 applicants qualified for this preference. Showing first 1000 applicants.
-                p.t-small.no-margin
-                  a href="#" Download Full Preference List
-              .overflow-panel
-                table.table-small.table-results role="grid"
-                  thead
-                    tr
-                      th scope="col" Rank
-                      th scope="col" Ticket
-                  tbody
-                    tr
-                      td scope="row" 1
-                      td 671086
-                    tr
-                      td scope="row" 2
-                      td 671030
-                    tr
-                      td scope="row" 3
-                      td 671027
-
-        header.modal-inner
-          h2.h-caps-lined.no-margin General List
-
-        section
-          accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
-
-            // General Pool
-            accordion-group
-              accordion-heading
-                h3.accordion-name.semi General Pool
-                span.accordion-subheader.tiny any remaining units
-                span.ui-icon.ui-control.ui-small.i-color
-                  svg
-                    use xlink:href="#i-arrow-down"
-              .padding.padding-horizontal--3halves
-                p.t-small 200 applicants are in this list
-                p.t-small.no-margin Please note, all preference holders will be considered for units first.
-              .overflow-panel
-                table.table-small.table-results role="grid"
-                  thead
-                    tr
-                      th scope="col" Rank
-                      th scope="col" Ticket
-                  tbody
-                    tr
-                      td scope="row" 1
-                      td 671086
-                    tr
-                      td scope="row" 2
-                      td 671030
-                    tr
-                      td scope="row" 3
-                      td 671027
-
-    p.text-center.t-small.padding--3halves.no-margin.bg-dust
-      | For Full Preference & Unsorted Rankings:
-      br
-      a.a-dark href="#" Download Lottery Results
-
-    footer.modal-footer.text-center.padding--3halves
-      p.t-small.c-steel.no-margin Results Updated: February 21, 2016
+    // Lottery Footer
+    ng-include src="'listings/templates/listing/_lottery_modal_footer.html'"
 
   a.close-reveal-modal aria-label="Close" ng-click="closeModal()"
     span.ui-icon.ui-static.ui-medium.i-primary
       svg
         use xlink:href="#i-close"
-
-
-
