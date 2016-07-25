@@ -11,7 +11,7 @@ li ng-if="!loggedIn()"
   a ui-sref="dahlia.sign-in"
     | Sign In
 li(has-dropdown ng-if="loggedIn()")
-  a dropdown-toggle="#my-account-dropdown"
+  a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
     | My Account
   ul#my-account-dropdown.dropdown
     li.dropdown-item
