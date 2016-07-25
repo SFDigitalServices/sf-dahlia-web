@@ -54,7 +54,9 @@ do ->
       sections: []
       hasNav: jasmine.createSpy()
     fakeShortFormHelperService = {}
-    fakeAccountService = {}
+    fakeAccountService =
+      loggedIn: () ->
+        return
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
 
@@ -303,8 +305,7 @@ do ->
 
     describe 'submitApplication', ->
       it 'calls submitApplication ShortFormApplicationService', ->
-        scope.listing = fakeListing
-        scope.submitApplication(scope.listing.Id)
+        scope.submitApplication()
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: false})
         return
       return
@@ -332,6 +333,30 @@ do ->
           scope.checkIfPreferencesApply()
           path = 'dahlia.short-form-application.general-lottery-notice'
           expect(state.go).toHaveBeenCalledWith(path)
+          return
+        return
+      return
+
+    describe 'saveAndFinishLater', ->
+      describe 'logged in', ->
+        beforeEach ->
+          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
+          scope.saveAndFinishLater()
+
+        it 'submits application as a draft', ->
+          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: true})
+          return
+
+        it 'routes user to my applications', ->
+          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications')
+          return
+        return
+
+      describe 'not logged in', ->
+        it 'routes directly to create account', ->
+          spyOn(fakeAccountService, 'loggedIn').and.returnValue(false)
+          scope.saveAndFinishLater()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
           return
         return
       return

@@ -38,7 +38,7 @@ AccountService = ($state, $auth, $modal, $http) ->
         alert("Error: #{response.errors[0]}")
       )
 
-  Service.openConfirmEmailModal = ->
+  Service._openConfirmEmailModal = ->
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirm_email_modal.html',
       controller: 'ModalInstanceController',
@@ -64,7 +64,7 @@ AccountService = ($state, $auth, $modal, $http) ->
 
   Service.newAccountConfirmEmailModal = ->
     if Service._accountJustCreated()
-      Service.openConfirmEmailModal()
+      Service._openConfirmEmailModal()
 
   Service._accountJustCreated = ->
     Service.createdAccount.email && !Service.createdAccount.confirmed_at

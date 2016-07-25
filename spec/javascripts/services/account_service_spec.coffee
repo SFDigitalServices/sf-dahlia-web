@@ -6,7 +6,9 @@ do ->
     $auth = undefined
     fakeState = 'dahlia.short-form-application.contact'
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
-    modalMock = undefined
+    modalMock =
+      open: () ->
+        return
 
     beforeEach module('ui.router')
     beforeEach module('ng-token-auth')
@@ -70,5 +72,19 @@ do ->
         return
       return
 
+    describe 'newAccountConfirmEmailModal', ->
+      describe 'account just created', ->
+        it 'called modal to open', ->
+          spyOn(modalMock, 'open')
+          modalArgument =
+            templateUrl: 'account/templates/partials/_confirm_email_modal.html',
+            controller: 'ModalInstanceController',
+            windowClass: 'modal-large'
+          AccountService.createdAccount.email = 'some@email.com'
+          AccountService.createdAccount.confirmed_at = undefined
+          AccountService.newAccountConfirmEmailModal()
+          expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
+          return
+        return
 
   return
