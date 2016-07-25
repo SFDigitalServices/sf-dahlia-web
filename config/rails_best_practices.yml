@@ -22,9 +22,7 @@ ProtectMassAssignmentCheck: { }
 RemoveEmptyHelpersCheck: { }
 #RemoveTabCheck: { }
 RemoveTrailingWhitespaceCheck: { }
-RemoveUnusedMethodsInControllersCheck: {
-  except_methods: ['Overrides::RegistrationsController#render_create_success']
-}
+RemoveUnusedMethodsInControllersCheck: { except_methods: ['Overrides::SessionsController#render_create_success', 'Overrides::TokenValidationsController#render_validate_token_success', 'Overrides::RegistrationsController#render_create_success'] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: [] }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }

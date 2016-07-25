@@ -1,4 +1,4 @@
-AccountController = ($scope, $state, AccountService, ShortFormApplicationService) ->
+AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
@@ -6,7 +6,18 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
   $scope.createdAccount = AccountService.createdAccount
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.hideMessage = false
   $scope.accountError = AccountService.accountError
+  $scope.submitDisabled = false
+
+  $scope.handleErrorState = ->
+    # show error alert
+    $scope.hideAlert = false
+    el = angular.element(document.getElementById('form-wrapper'))
+    # uses duScroll aka 'angular-scroll' module
+    topOffset = 0
+    duration = 400 # animation speed in ms
+    $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.form.accountForm
@@ -18,6 +29,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
   $scope.createAccount = ->
     form = $scope.form.accountForm
     if form.$valid
+      $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       shortFormSession = null
       if $scope._userInShortFormSession()
@@ -25,6 +37,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
           uid: ShortFormApplicationService.session_uid
           userkey: ShortFormApplicationService.userkey
       AccountService.createAccount(shortFormSession).then( (success) ->
+        $scope.submitDisabled = false
         if success
           form.$setUntouched()
           form.$setPristine()
@@ -32,17 +45,25 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
           $scope.hideAlert = false
       )
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
 
   $scope.signIn = ->
     form = $scope.form.accountForm
     if form.$valid
+      $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then ->
+        $scope.submitDisabled = false
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
     else
-      $scope.hideAlert = false
+      $scope.handleErrorState()
+
+  $scope.isLocked = (field) ->
+    AccountService.lockedFields[field]
+
+  $scope.emailConfirmInstructions = ->
+    $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
 
   $scope.resendConfirmationEmail = ->
     AccountService.resendConfirmationEmail()
@@ -62,7 +83,7 @@ AccountController = ($scope, $state, AccountService, ShortFormApplicationService
   $scope.clearCreatedAccount = ->
     angular.copy({}, $scope.createdAccount)
 
-AccountController.$inject = ['$scope', '$state', 'AccountService', 'ShortFormApplicationService']
+AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.controllers')

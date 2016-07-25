@@ -6,7 +6,9 @@ angular.module('dahlia.directives')
     hideAlert: '=?'
     missingInfo: '=?'
     householdEligibilityErrorMessage: '=?'
+    customMessage: '=?'
     invert: '=?'
+    primary: '=?'
     shortForm: '=?'
     accountError: '=?'
 
@@ -18,13 +20,14 @@ angular.module('dahlia.directives')
       scope.formObject ?= scope.$parent.form.applicationForm
       scope.hideAlert ?= scope.$parent.hideAlert
       scope.invert ?= true
-      # scope.addressFailedValidation = scope.$parent.addressFailedValidation
 
     scope.showAlert = ->
       if scope.accountError && scope.accountError.message
         return true
       if scope.householdEligibilityErrorMessage
         return true
+      if scope.customMessage
+        return scope.hideAlert == false
       if $state.params.error
         return true
       else
@@ -35,7 +38,9 @@ angular.module('dahlia.directives')
         form.$submitted && form.$invalid && scope.hideAlert == false
 
     scope.alertText = ->
-      if scope.altContactTypeError()
+      if scope.customMessage
+        return scope.customMessage
+      else if scope.altContactTypeError()
         $translate.instant("ERROR.ALT_CONTACT_TYPE")
       else if scope.householdEligibilityErrorMessage
         $translate.instant("ERROR.NOT_ELIGIBLE") + " " + scope.householdEligibilityErrorMessage
@@ -54,9 +59,13 @@ angular.module('dahlia.directives')
     scope.contactTypeData = (contactType) ->
       {contactType: contactType}
 
-    scope.isInverted = ->
+    scope.getStyles = ->
+      styles = ''
       if scope.invert
-        return 'invert no-margin'
+        styles += 'invert no-margin '
+      if scope.primary
+        styles += 'primary no-icon '
+      styles
 
     scope.isIconInverted = ->
       if !scope.invert

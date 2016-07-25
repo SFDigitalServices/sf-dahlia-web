@@ -42,10 +42,8 @@ class Api::V1::ShortFormController < ApiController
     if response.present?
       if application_params[:primaryApplicant][:email].present? &&
          application_params[:status] == 'submitted'
-        Emailer.submission_confirmation(
-          listing_id: application_params[:listingID],
-          short_form_id: response['id'],
-        ).deliver_now
+        send_attached_files(response['id'])
+        send_submit_app_confirmation(response['lotteryNumber'])
       end
       render json: response
     else
@@ -54,6 +52,19 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def send_attached_files(application_id)
+    files = UploadedFile.where(uploaded_file_params)
+    ShortFormService.attach_files(application_id, files)
+  end
+
+  def send_submit_app_confirmation(lottery_number)
+    Emailer.submission_confirmation(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      lottery_number: lottery_number,
+    ).deliver_now
+  end
 
   def authenticate_for_existing_application
     return true unless application_params[:id].present?
@@ -85,12 +96,13 @@ class Api::V1::ShortFormController < ApiController
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(:householdsize, :incomelevel)
+          .permit(%i(householdsize incomelevel))
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(:file, :session_uid, :userkey, :preference)
+          .permit(%i(file session_uid userkey listing_id
+                     document_type preference))
   end
 
   def application_params
@@ -137,6 +149,7 @@ class Api::V1::ShortFormController < ApiController
               alternateContact: %i(
                 language
                 alternateContactType
+                alternateContactTypeOther
                 firstName
                 lastName
                 agency
@@ -183,8 +196,10 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_attrs
     {
       session_uid: uploaded_file_params[:session_uid],
+      listing_id: uploaded_file_params[:listing_id],
       userkey: uploaded_file_params[:userkey],
       preference: uploaded_file_params[:preference],
+      document_type: uploaded_file_params[:document_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,

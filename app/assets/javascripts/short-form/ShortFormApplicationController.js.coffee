@@ -12,6 +12,7 @@ ShortFormApplicationController = (
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
+  FileUploadService,
   AddressValidationService,
   AccountService
 ) ->
@@ -105,6 +106,7 @@ ShortFormApplicationController = (
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.hideMessage = false
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
   # allows us to temporarily disable "next / submit" button if needed (e.g. during a request)
@@ -288,20 +290,21 @@ ShortFormApplicationController = (
   $scope.neighborhoodResidenceMembers = ->
     ShortFormApplicationService.neighborhoodResidenceMembers()
 
-  $scope.uploadProof = (file, prefType) ->
-    ShortFormApplicationService.uploadProof(file, prefType)
+  ###### Attachment File Uploads ########
+  $scope.uploadProof = (file, prefType, docType) ->
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
 
   $scope.hasPreferenceFile = (fileType) ->
-    ShortFormApplicationService.hasPreferenceFile(fileType)
+    FileUploadService.hasPreferenceFile(fileType)
 
   $scope.deletePreferenceFile = (prefType) ->
-    ShortFormApplicationService.deletePreferenceFile(prefType)
+    FileUploadService.deletePreferenceFile(prefType, $scope.listing.Id)
 
   $scope.preferenceFileError = (fileType) ->
-    ShortFormApplicationService.preferenceFileError(fileType)
+    FileUploadService.preferenceFileError(fileType)
 
   $scope.preferenceFileIsLoading = (fileType) ->
-    ShortFormApplicationService.preferenceFileIsLoading(fileType)
+    FileUploadService.preferenceFileIsLoading(fileType)
 
   ###### Household Section ########
   $scope.getHouseholdMember = ->
@@ -390,6 +393,10 @@ ShortFormApplicationController = (
   $scope.applicationIncomeAmount = ->
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
+  ## account service
+  $scope.loggedIn = ->
+    AccountService.loggedIn()
+
   ## translation helpers
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
@@ -443,7 +450,9 @@ ShortFormApplicationController = (
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ShortFormApplicationService', 'ShortFormNavigationService', 'ShortFormHelperService', 'AddressValidationService',
+  'ShortFormApplicationService', 'ShortFormNavigationService',
+  'ShortFormHelperService', 'FileUploadService',
+  'AddressValidationService',
   'AccountService'
 ]
 

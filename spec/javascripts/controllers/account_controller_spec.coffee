@@ -3,13 +3,15 @@ do ->
   describe 'AccountController', ->
     scope = undefined
     state = {current: {name: undefined}}
+    $translate = {}
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
     fakeShortFormApplicationService =
       submitApplication: (options={}) -> null
 
-    beforeEach module('dahlia.controllers', () ->
+    beforeEach module('dahlia.controllers', ($provide) ->
+      $provide.value '$translate', $translate
       return
     )
 

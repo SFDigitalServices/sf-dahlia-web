@@ -8,7 +8,7 @@
               use xlink:href="#i-left"
           | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
 
-      form.dash-card novalidate="" name="form.accountForm" ng-submit="createAccount()"
+      form#form-wrapper.dash-card novalidate="" name="form.accountForm" ng-submit="createAccount()"
         header.dash-header
           span.header-badge
             span.ui-icon.ui-static.ui-medium.i-color
@@ -20,46 +20,51 @@
             | {{'CREATE_ACCOUNT.P1' | translate}}
         alert-box(form-object="form.accountForm" hide-alert="hideAlert" account-error="accountError")
 
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="emailConfirmInstructions()" ng-if="isLocked('email') && (userAuth.email !== userAuth.email_confirmation)")
+
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
             h2.form-label.caps
-              | {{'LABEL.YOUR_NAME' | translate}}
+              ' {{'LABEL.YOUR_NAME' | translate}}
+              lock-icon ng-if="isLocked('name')"
+
             label.sr-only for="firstName"
               | {{'LABEL.FIRST_NAME' | translate}}
-            input#firstName ng-model="userAuth.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+            input#firstName ng-model="userAuth.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')"
             small.error ng-if="inputInvalid('firstName')"
               | {{'ERROR.FIRST_NAME' | translate}}
 
             label.sr-only for="middleName"
               | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-            input#middleName name="middleName" ng-model="userAuth.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+            input#middleName name="middleName" ng-model="userAuth.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="isLocked('name')"
 
             label.sr-only for="lastName"
               | {{'LABEL.LAST_NAME' | translate}}
-            input#lastName required="" ng-model="userAuth.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+            input#lastName required="" ng-model="userAuth.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')"
             small.error ng-if="inputInvalid('lastName')"
               | {{'ERROR.LAST_NAME' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
             h2.form-label.caps
-              | {{'LABEL.YOUR_DOB' | translate}}
+              ' {{'LABEL.YOUR_DOB' | translate}}
+              lock-icon ng-if="isLocked('dob')"
             .form-date-of-birth.row.collapse
 
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_month"
                   | {{'LABEL.DOB_MONTH' | translate}}
-                input ng-model="userAuth.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }"
+                input ng-model="userAuth.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')"
 
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_day"
                   | {{'LABEL.DOB_DAY' | translate}}
-                input ng-model="userAuth.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }"
+                input ng-model="userAuth.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')"
 
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_year"
                   | {{'LABEL.DOB_YEAR' | translate}}
-                input ng-model="userAuth.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }"
+                input ng-model="userAuth.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')"
 
           small.error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
             | {{'ERROR.DOB' | translate}}
@@ -68,16 +73,17 @@
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
 
             h2.form-label.caps for="auth_email"
-              | {{'LABEL.EMAIL_ADDRESS' | translate}}
+              ' {{'LABEL.EMAIL_ADDRESS' | translate}}
+              lock-icon ng-if="isLocked('dob')"
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
-            input#auth_email ng-model="userAuth.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }"
+            input#auth_email ng-model="userAuth.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off"
             small.error ng-if="inputInvalid('email')"
               | {{'ERROR.EMAIL' | translate}}
 
             label.label-secondary for="auth_email_confirmation"
               | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
-            input#auth_email_confirmation ng-model="userAuth.email_confirmation" name="email_confirmation" required="" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.email'" ui-validate-watch="'userAuth.email'"
+            input#auth_email_confirmation ng-model="userAuth.email_confirmation" name="email_confirmation" required="" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.email'" ui-validate-watch="'userAuth.email'" ng-paste="$event.preventDefault()" autocomplete="off"
 
             small.error ng-if="inputInvalid('email_confirmation')"
               | {{'ERROR.EMAIL_CONFIRMATION' | translate}}
@@ -103,7 +109,7 @@
 
           .form-group
             p.t-small.c-steel.text-center.padding-top
-              input.button.primary.no-margin type="submit" value="{{'LABEL.CREATE_ACCOUNT' | translate}}"
+              input.button.primary.no-margin type="submit" value="{{'LABEL.CREATE_ACCOUNT' | translate}}"  ng-disabled="submitDisabled"
 
         footer.dash-header
           h2.dash-title.t-gamma

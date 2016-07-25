@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, $modal, $http) ->
+AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
@@ -34,6 +34,8 @@ AccountService = ($state, $auth, $modal, $http) ->
       .then((response) ->
         if response.signedIn
           angular.copy(response, Service.loggedInUser)
+          Service._reformatDOB()
+          ShortFormApplicationService.importUserData(Service.loggedInUser)
       ).catch((response) ->
         alert("Error: #{response.errors[0]}")
       )
@@ -52,11 +54,19 @@ AccountService = ($state, $auth, $modal, $http) ->
     formattedDOB = year + '-' + month + '-' + day
     Service.userAuth.DOB = formattedDOB
 
-  # this runs on init of the app to check if we're logged upon arrival
+  Service.signOut = ->
+    $auth.signOut()
+      .then((response) ->
+        angular.copy({}, Service.loggedInUser)
+      )
+
+  # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
     $auth.validateUser().then((response) ->
       # will only reach this state if user is logged in w/ a token
       angular.copy(response, Service.loggedInUser)
+      Service._reformatDOB()
+      ShortFormApplicationService.importUserData(Service.loggedInUser)
     )
 
   Service.loggedIn = ->
@@ -80,6 +90,43 @@ AccountService = ($state, $auth, $modal, $http) ->
       return
     )
 
+  #################### helper functions
+  Service._formatDOB = ->
+    month = Service.userAuth.dob_month
+    day = Service.userAuth.dob_day
+    year = Service.userAuth.dob_year
+    formattedDOB = year + '-' + month + '-' + day
+    Service.userAuth.DOB = formattedDOB
+
+  # reverse of the above function
+  Service._reformatDOB = ->
+    return false if _.isEmpty(Service.loggedInUser)
+    split = Service.loggedInUser.DOB.split('-')
+    Service.loggedInUser.dob_year = parseInt(split[0])
+    Service.loggedInUser.dob_month = parseInt(split[1])
+    Service.loggedInUser.dob_day = parseInt(split[2])
+
+  Service.copyApplicantFields = ->
+    applicant = _.pick ShortFormApplicationService.applicant,
+      ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year', 'email']
+    angular.copy(applicant, Service.userAuth)
+
+  Service.lockCompletedFields = ->
+    a = ShortFormApplicationService.applicant
+    Service.lockedFields =
+      name: !! (a.firstName && a.lastName)
+      dob: !! (a.dob_day && a.dob_month && a.dob_year)
+      email: !! a.email
+
+  Service.unlockFields = ->
+    Service.lockedFields =
+      name: false
+      dob: false
+      email: false
+
+  # run on page load
+  Service.unlockFields()
+
   return Service
 
 
@@ -87,7 +134,7 @@ AccountService = ($state, $auth, $modal, $http) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth', '$modal', '$http']
+AccountService.$inject = ['$state', '$auth', '$modal', '$http', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.services')
