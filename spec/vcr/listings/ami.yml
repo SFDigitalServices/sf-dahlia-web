@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 17 Jun 2016 23:40:01 GMT
+      - Thu, 21 Jul 2016 18:55:36 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,8 +29,8 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=p9fOH8j-RrqCUiGgWbVHMA;Path=/;Domain=.salesforce.com;Expires=Tue,
-        16-Aug-2016 23:40:01 GMT
+      - BrowserId=Wrcuey07TuKDo-QiZ5kbbg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        19-Sep-2016 18:55:36 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -45,9 +45,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1466206802021","signature":"LY1P2sxT47RVIlrBmtdfDfH1RkoDoylGe+Px5EEMfXo="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1469127336637","signature":"bNCfu0K3GXl0ZWwkkSrH5ekHVLvImOVLyUbQKHzWGqI="}'
     http_version:
-  recorded_at: Fri, 17 Jun 2016 23:40:02 GMT
+  recorded_at: Thu, 21 Jul 2016 18:55:36 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/ami?percent=100
@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQI26ULQ8nQQeJ25JkGk0kUnHtwi.e_lz6ndSwRNhE.qv0ownVoqP6tTfhCKJI7k.GTVB4qVp4fJEuDbyjI2DeeObINrx
+      - OAuth 00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,7 +69,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 17 Jun 2016 23:40:02 GMT
+      - Thu, 21 Jul 2016 18:55:36 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
@@ -77,8 +77,8 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=L5Ej6BoxTraW3jchGJxAQw;Path=/;Domain=.salesforce.com;Expires=Tue,
-        16-Aug-2016 23:40:02 GMT
+      - BrowserId=7VhYUmV1QqmYdcKFHUKCyg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        19-Sep-2016 18:55:36 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -89,5 +89,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '[{"percent":100,"numOfHousehold":1,"amount":75400.00},{"percent":100,"numOfHousehold":2,"amount":86150.00},{"percent":100,"numOfHousehold":3,"amount":96950.00},{"percent":100,"numOfHousehold":4,"amount":107700.00},{"percent":100,"numOfHousehold":5,"amount":116300.00},{"percent":100,"numOfHousehold":6,"amount":124950.00},{"percent":100,"numOfHousehold":7,"amount":133550.00},{"percent":100,"numOfHousehold":8,"amount":142150.00},{"percent":100,"numOfHousehold":9,"amount":146450.00}]'
     http_version:
-  recorded_at: Fri, 17 Jun 2016 23:40:02 GMT
-recorded_with: VCR 3.0.1
+  recorded_at: Thu, 21 Jul 2016 18:55:37 GMT
+recorded_with: VCR 3.0.3
