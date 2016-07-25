@@ -48,7 +48,7 @@ do ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
-    fakeShortFormNavigationService = {}
+    fakeAccountService = {}
     fakeShortFormNavigationService =
       sections: []
       hasNav: jasmine.createSpy()
@@ -100,6 +100,7 @@ do ->
         ShortFormHelperService: fakeShortFormHelperService
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
+        AccountService: fakeAccountService
       return
     )
 

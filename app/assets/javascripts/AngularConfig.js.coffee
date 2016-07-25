@@ -361,10 +361,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+      onEnter: [
+        'ShortFormApplicationService', 'AccountService',
+        (ShortFormApplicationService, AccountService) ->
           ShortFormApplicationService.completeSection('Intro')
-        ]
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+      ]
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
@@ -589,7 +592,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
-    # check if user is logged in
+    # check if user is logged in on page load
     AccountService.validateUser()
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
@@ -668,4 +671,5 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       apiUrl: '/api/v1'
       storage: 'sessionStorage'
       confirmationSuccessUrl: conf.confirmationSuccessUrl
+      validateOnPageLoad: false
 ]

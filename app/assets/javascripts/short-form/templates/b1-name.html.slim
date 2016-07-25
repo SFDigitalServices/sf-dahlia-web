@@ -1,41 +1,45 @@
 form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({path: 'dahlia.short-form-application.contact'})"
-  short-form-header
+  short-form-header logged-in-message="{{'B1_NAME.NAME_EDITABLE_VIA_ACCOUNT' | translate}}"
     h2.app-card_question
       | {{'B1_NAME.TITLE' | translate}}
 
   .app-inner.inset
     .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
       h3.form-label.caps
-        | {{'LABEL.YOUR_NAME' | translate}}
+        ' {{'LABEL.YOUR_NAME' | translate}}
+        lock-icon ng-if="loggedIn()"
+
       label.sr-only for="applicantFirstName"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#applicant_first_name ng-model="applicant.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+      input#applicant_first_name ng-model="applicant.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('firstName')"
         | {{'ERROR.FIRST_NAME' | translate}}
       label.sr-only for="applicantMiddleName"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#applicant_middle_name ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+      input#applicant_middle_name ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="loggedIn()"
       label.sr-only for="applicantLastName"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#applicant_last_name ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+      input#applicant_last_name ng-model="applicant.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
     .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
       h3.form-label.caps
-        | {{'LABEL.YOUR_DOB' | translate}}
+        ' {{'LABEL.YOUR_DOB' | translate}}
+        lock-icon ng-if="loggedIn()"
+
       .form-date-of-birth.row.collapse
         .form-group-month.large-2.columns
           label.sr-only for="date_of_birth_month"
             | {{'LABEL.DOB_MONTH' | translate}}
-          input#date_of_birth_month.no-margin ng-model="applicant.dob_month" max="12" min="1" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="number"
+          input#date_of_birth_month.no-margin ng-model="applicant.dob_month" max="12" min="1" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="number" ng-disabled="loggedIn()"
         .form-group-day.large-2.columns
           label.sr-only for="date_of_birth_day"
             | {{'LABEL.DOB_DAY' | translate}}
-          input#date_of_birth_day.no-margin ng-model="applicant.dob_day" max="31" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number"  ng-class="{ error: inputInvalid('date_of_birth_day') }"
+          input#date_of_birth_day.no-margin ng-model="applicant.dob_day" max="31" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="loggedIn()"
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin ng-model="applicant.dob_year" max="2016" min="1900" name="date_of_birth_year" required="" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }"
+          input#date_of_birth_year.no-margin ng-model="applicant.dob_year" max="2016" min="1900" name="date_of_birth_year" required="" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
         | {{'ERROR.DOB' | translate}}
 
