@@ -55,6 +55,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService) ->
   $scope.emailConfirmInstructions = ->
     $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
 
+############################################################################################
+
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate', 'AccountService'
 ]

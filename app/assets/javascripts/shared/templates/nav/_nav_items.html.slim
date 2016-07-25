@@ -39,5 +39,6 @@ li.has-dropdown ng-if="loggedIn()"
             use xlink:href="#i-settings"
         | Account Settings
     li.dropdown-item
-      a ui-sref="dahlia.signout"
+      / TODO: make into a button, properly styled
+      a ng-click="signOut()"
         | Sign Out

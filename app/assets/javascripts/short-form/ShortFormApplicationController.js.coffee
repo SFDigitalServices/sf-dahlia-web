@@ -14,7 +14,8 @@ ShortFormApplicationController = (
   ShortFormNavigationService,
   ShortFormHelperService,
   FileUploadService,
-  AddressValidationService
+  AddressValidationService,
+  AccountService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -106,6 +107,7 @@ ShortFormApplicationController = (
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.hideMessage = false
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
   # allows us to temporarily disable "next / submit" button if needed (e.g. during a request)
@@ -392,6 +394,10 @@ ShortFormApplicationController = (
   $scope.applicationIncomeAmount = ->
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
+  ## account service
+  $scope.loggedIn = ->
+    AccountService.loggedIn()
+
   ## translation helpers
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
@@ -441,7 +447,9 @@ ShortFormApplicationController = (
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'FileUploadService', 'AddressValidationService'
+  'ShortFormHelperService', 'FileUploadService',
+  'AddressValidationService',
+  'AccountService'
 ]
 
 angular
