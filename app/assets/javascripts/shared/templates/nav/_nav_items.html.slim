@@ -10,10 +10,13 @@ li
 li ng-if="!loggedIn()"
   a ui-sref="dahlia.sign-in"
     | Sign In
-li.has-dropdown ng-if="loggedIn()"
-  a ng-class="{'dropdown-active': showAccountDropdown}" ng-click="toggleAccountDropdown()"
+li(has-dropdown ng-if="loggedIn()")
+  a dropdown-toggle="#my-account-dropdown"
     | My Account
-  ul.dropdown
+  ul#my-account-dropdown.dropdown
+    li.dropdown-item
+      a ui-sref="dahlia.my-account"
+        | Dashboard
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
