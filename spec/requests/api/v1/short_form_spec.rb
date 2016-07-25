@@ -57,4 +57,17 @@ describe 'ShortForm API' do
     # check to make sure the response data is present
     expect(json).not_to be_nil
   end
+
+  it 'gets my applications' do
+    VCR.use_cassette('shortform/my_applications') do
+      get '/api/v1/short-form/my-applications'
+    end
+    json = JSON.parse(response.body)
+
+    # test for the 200 status-code
+    expect(response).to be_success
+
+    # check to make sure the response data is present
+    expect(json).not_to be_nil
+  end
 end
