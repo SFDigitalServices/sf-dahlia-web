@@ -1,6 +1,5 @@
-# RESTful JSON API to query for address validation
+# RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
-  before_action :authenticate_user!, only: [:my_applications]
   ShortFormService = SalesforceService::ShortFormService
 
   def validate_household
@@ -54,15 +53,7 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
-  def my_applications
-    render json: { applications: current_user_applications }
-  end
-
   private
-
-  def current_user_applications
-    ShortFormService.get_for_user(current_user.salesforce_contact_id)
-  end
 
   def eligibility_params
     params.require(:eligibility)

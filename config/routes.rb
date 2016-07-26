@@ -39,6 +39,9 @@ Rails.application.routes.draw do
         # address geocoding
         post 'geocode' => 'geocoding#geocode'
       end
+      scope '/account' do
+        get 'my-applications' => 'account#my_applications'
+      end
     end
   end
 
