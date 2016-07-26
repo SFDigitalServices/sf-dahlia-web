@@ -52,12 +52,22 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
-      AccountService.signIn().then ->
+      AccountService.signIn().then( ->
         $scope.submitDisabled = false
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
+      ).catch( ->
+        $scope.submitDisabled = false
+      )
     else
       $scope.handleErrorState()
+
+  $scope.$on 'auth:login-error', (ev, reason) ->
+    if (reason.error == 'bad_credentials')
+      $scope.accountError = {message: $translate.instant('SIGN_IN.BAD_CREDENTIALS')}
+      $scope.handleErrorState()
+    else if (reason.error == 'not_confirmed')
+      AccountService.openUnconfirmedLoginModal()
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]

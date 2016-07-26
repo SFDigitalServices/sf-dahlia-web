@@ -25,7 +25,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
         Service.accountError.message = null
         return true
       ).catch((response) ->
-        Service.accountError.message = response.data.errors.full_messages[0]
+        msg = response.data.errors.full_messages[0]
+        if msg == 'Email already in use'
+          Service.accountError.message = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
         return false
       )
 
@@ -36,9 +38,14 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
           ShortFormApplicationService.importUserData(Service.loggedInUser)
-      ).catch((response) ->
-        alert("Error: #{response.errors[0]}")
       )
+
+  Service.openUnconfirmedLoginModal = ->
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_confirm_email_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
 
   Service._openConfirmEmailModal = ->
     modalInstance = $modal.open({
