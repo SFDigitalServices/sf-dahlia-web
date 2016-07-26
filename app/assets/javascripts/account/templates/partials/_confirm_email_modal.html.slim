@@ -1,13 +1,15 @@
 span ng-controller="AccountController"
-  h1 Confirmation needed
+  h1
+    | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
+
   p
-    | An email has been sent to {{createdAccount.email}}.
+    | {{'CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO' | translate}} {{createdAccount.email}}.
   p
-    | Please click on the link in that message to confirm your email address.
+    | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}.
 
   p
     button.button.margin-top--2x ng-click="resendConfirmationEmail()"
-      | Resend the email
+      | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
 
   a.close-reveal-modal aria-label="Close" ng-click="clearCreatedAccount();closeModal()"
     span.ui-icon.ui-static.ui-medium.i-primary

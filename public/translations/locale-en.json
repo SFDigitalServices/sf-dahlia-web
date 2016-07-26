@@ -64,6 +64,12 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
+    "CONFIRM_ACCOUNT": {
+        "RESEND_EMAIL": "Resend the email",
+        "CONFIRMATION_NEEDED": "Confirmation needed",
+        "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to",
+        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address"
+        },
     "D1_STATUS_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
