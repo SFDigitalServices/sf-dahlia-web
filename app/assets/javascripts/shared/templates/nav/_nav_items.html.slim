@@ -14,9 +14,12 @@ li(has-dropdown ng-if="loggedIn()")
   a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
     | My Account
   ul#my-account-dropdown.dropdown
-    li.dropdown-item
+    li.dropdown-item.has-icon
       a ui-sref="dahlia.my-account"
-        | Dashboard
+        span.ui-icon.ui-static.ui-medium.i-color
+          svg
+            use xlink:href="#i-profile"
+        | My Dashboard
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
