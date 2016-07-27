@@ -6,6 +6,7 @@ do ->
     Upload = {}
     uuid = {v4: jasmine.createSpy()}
     $state = undefined
+    fakeShortFormApplicationService = {}
     application =
       householdMembers: []
     sections = [
@@ -50,13 +51,13 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       return
     )
 
     beforeEach inject((_ShortFormNavigationService_, _$state_, _ShortFormApplicationService_) ->
       $state = _$state_
       ShortFormNavigationService = _ShortFormNavigationService_
-      ShortFormApplicationService = _ShortFormApplicationService_
       return
     )
 

@@ -10,6 +10,9 @@ do ->
     $auth = undefined
     fakeState = 'dahlia.short-form-application.contact'
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
+    modalMock =
+      open: () ->
+        return
     fakeApplicant =
       firstName: 'Samantha'
       lastName: 'Bee'
@@ -20,8 +23,10 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value '$modal', modalMock
       return
     )
+
     beforeEach inject((_AccountService_, _ShortFormApplicationService_, _$state_, _$auth_, _$q_) ->
       $state = _$state_
       $state.go = jasmine.createSpy()
@@ -45,6 +50,13 @@ do ->
       return
     )
 
+    describe 'rememberShortFormState', ->
+      it 'saves rememberedShortFormState', ->
+        AccountService.rememberShortFormState(fakeState)
+        expect(AccountService.rememberedShortFormState).toEqual fakeState
+        return
+      return
+
     describe 'Service setup', ->
       it 'initializes lockedFields defaults', ->
         expectedDefault =
@@ -52,13 +64,6 @@ do ->
           dob: false
           email: false
         expect(AccountService.lockedFields).toEqual expectedDefault
-        return
-      return
-
-    describe 'rememberState', ->
-      it 'saves rememberedState', ->
-        AccountService.rememberState(fakeState)
-        expect(AccountService.rememberedState).toEqual fakeState
         return
       return
 
@@ -84,6 +89,21 @@ do ->
         expect($auth.validateUser).toHaveBeenCalled()
         return
       return
+
+    describe 'newAccountConfirmEmailModal', ->
+      describe 'account just created', ->
+        it 'called modal to open', ->
+          spyOn(modalMock, 'open')
+          modalArgument =
+            templateUrl: 'account/templates/partials/_confirm_email_modal.html',
+            controller: 'ModalInstanceController',
+            windowClass: 'modal-large'
+          AccountService.createdAccount.email = 'some@email.com'
+          AccountService.createdAccount.confirmed_at = undefined
+          AccountService.newAccountConfirmEmailModal()
+          expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
+          return
+        return
 
     describe 'lockCompletedFields', ->
       it 'checks for lockedFields', ->

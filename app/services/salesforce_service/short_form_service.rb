@@ -9,7 +9,8 @@ module SalesforceService
       api_get(endpoint, params)
     end
 
-    def self.create(params)
+    def self.create_or_update(params, contact_id = nil)
+      params[:primaryApplicant][:contactId] = contact_id if contact_id.present?
       api_post('/shortForm', params)
     end
 
@@ -33,6 +34,11 @@ module SalesforceService
       end
       # now that files are saved in SF, remove temp uploads
       files.destroy_all
+    end
+
+    def self.ownership?(contact_id, application_id)
+      application = get(application_id)
+      contact_id == application['primaryApplicant']['contactId']
     end
   end
 end
