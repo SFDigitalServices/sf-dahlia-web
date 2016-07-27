@@ -10,102 +10,13 @@
     section
       accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
 
-        // Certificate of Preference
-        accordion-group
-          accordion-heading
-            h3.accordion-name.semi Certificate of Preference
-            span.accordion-subheader.tiny up to 50 units available
-            span.ui-icon.ui-control.ui-small.i-color
-              svg
-                use xlink:href="#i-arrow-down"
-          .margin-bottom-last-child.padding.padding-horizontal--3halves
-            p.t-small 10 applicants qualified for this preference
-          .overflow-panel
-            table.table-small.table-results role="grid"
-              thead
-                tr
-                  th scope="col" Rank
-                  th scope="col" Ticket
-              tbody
-                tr ng-repeat="result in resultsByPreference('certOfPreference')"
-                  td scope="row"
-                    | {{ result.preferenceRank }}
-                  td
-                    | {{ result.lotteryNumber }}
+        lottery-results-bucket pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference" units_available='lotteryBuckets'
 
+        lottery-results-bucket pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
 
-        // Displaced Tenants Housing Preference
-        accordion-group
-          accordion-heading
-            h3.accordion-name.semi Displaced Tenants Housing Preference
-            span.accordion-subheader.tiny up to 10 units available
-            span.ui-icon.ui-control.ui-small.i-color
-              svg
-                use xlink:href="#i-arrow-down"
-          .margin-bottom-last-child.padding.padding-horizontal--3halves
-            p.t-small 15 applicants qualified for this preference
-          .overflow-panel
-            table.table-small.table-results role="grid"
-              thead
-                tr
-                  th scope="col" Rank
-                  th scope="col" Ticket
-              tbody
-                tr ng-repeat="result in resultsByPreference('displacedPreference')"
-                  td scope="row"
-                    | {{ result.preferenceRank }}
-                  td
-                    | {{ result.lotteryNumber }}
+        lottery-results-bucket pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
 
-        // Neighborhood Resident Housing Preference
-        accordion-group
-          accordion-heading
-            h3.accordion-name.semi Neighborhood Resident Housing Preference
-            span.accordion-subheader.tiny up to 20 units available
-            span.ui-icon.ui-control.ui-small.i-color
-              svg
-                use xlink:href="#i-arrow-down"
-          .margin-bottom-last-child.padding.padding-horizontal--3halves
-            p.t-small 1200 applicants qualified for this preference. Showing first 1000 applicants.
-            p.t-small.no-margin
-              a href="#" Download Full Preference List
-          .overflow-panel
-            table.table-small.table-results role="grid"
-              thead
-                tr
-                  th scope="col" Rank
-                  th scope="col" Ticket
-              tbody
-                tr ng-repeat="result in resultsByPreference('neighborhoodPreference')"
-                  td scope="row"
-                    | {{ result.preferenceRank }}
-                  td
-                    | {{ result.lotteryNumber }}
-
-        // Live/Work Preference
-        accordion-group
-          accordion-heading
-            h3.accordion-name.semi Live/Work Preference
-            span.accordion-subheader.tiny at least 10 units available
-            span.ui-icon.ui-control.ui-small.i-color
-              svg
-                use xlink:href="#i-arrow-down"
-          .margin-bottom-last-child.padding.padding-horizontal--3halves
-            p.t-small 2800 applicants qualified for this preference. Showing first 1000 applicants.
-            p.t-small.no-margin
-              a href="#" Download Full Preference List
-          .overflow-panel
-            table.table-small.table-results role="grid"
-              thead
-                tr
-                  th scope="col" Rank
-                  th scope="col" Ticket
-              tbody
-                tr ng-repeat="result in resultsByPreference('liveWorkPreference')"
-                  td scope="row"
-                    | {{ result.preferenceRank }}
-                  td
-                    | {{ result.lotteryNumber }}
+        lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
 
     header.modal-inner
       h2.h-caps-lined.no-margin General List

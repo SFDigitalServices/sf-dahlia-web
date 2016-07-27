@@ -129,7 +129,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     $scope.lotterySearchNumber = ''
 
   $scope.resultsByPreference = (preferenceName) ->
-    lotteryBucket = _.filter($scope.lotteryBuckets, {'preferenceName': preferenceName})[0]
+    lotteryBucket = _.filter($scope.lotteryBuckets.bucketResults, {'preferenceName': preferenceName})[0]
     return lotteryBucket.bucketResults
 
   $scope.lotteryMembers = ->

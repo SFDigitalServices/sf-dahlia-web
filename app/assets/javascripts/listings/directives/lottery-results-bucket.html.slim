@@ -1,0 +1,22 @@
+accordion-group
+  accordion-heading
+    h3.accordion-name.semi
+      | {{ pref_name }}
+    span.accordion-subheader.tiny up to 50 units available
+    span.ui-icon.ui-control.ui-small.i-color
+      svg
+        use xlink:href="#i-arrow-down"
+  .margin-bottom-last-child.padding.padding-horizontal--3halves
+    p.t-small 10 applicants qualified for this preference
+  .overflow-panel
+    table.table-small.table-results role="grid"
+      thead
+        tr
+          th scope="col" Rank
+          th scope="col" Ticket
+      tbody
+        tr ng-repeat="result in resultsByPreference(abrev_pref_name)"
+          td scope="row"
+            | {{ result.preferenceRank }}
+          td
+            | {{ result.lotteryNumber }}
