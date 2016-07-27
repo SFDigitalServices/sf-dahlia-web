@@ -281,6 +281,19 @@
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
         "SUBMIT": "Submit",
         "YES": "Yes",
-        "YOU": "You"
+        "YOU": "You",
+        "SEARCH": "Search",
+        "CLEAR": "Clear"
+    },
+    "LOTTERY": {
+        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "applicants qualified for this preference",
+        "RANK": "Rank",
+        "TICKET": "Ticket",
+        "UP_TO": "Up to",
+        "OUT_OF": "out of",
+        "QUALIFIED_APPLICANTS": "qualified applicants",
+        "UNITS_AVAILABLE": "units available",
+        "YOUR_RANKING_IN_THIS_LIST": "Your ranking in this list is",
+        "LOTTERY_RESULTS": "Lottery Results"
     }
 }
