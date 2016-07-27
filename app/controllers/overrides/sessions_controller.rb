@@ -22,6 +22,7 @@ module Overrides
       render json: {
         success: false,
         error: type,
+        email: @resource ? @resource.email : nil,
         errors: [error_message(type)],
       }, status: 401
     end

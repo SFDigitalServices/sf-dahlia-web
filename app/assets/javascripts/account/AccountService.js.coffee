@@ -40,14 +40,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
           ShortFormApplicationService.importUserData(Service.loggedInUser)
       )
 
-  Service.openUnconfirmedLoginModal = ->
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_confirm_email_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
-
-  Service._openConfirmEmailModal = ->
+  Service.openConfirmEmailModal = (email) ->
+    if email
+      Service.createdAccount.email = email
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirm_email_modal.html',
       controller: 'ModalInstanceController',
@@ -81,7 +76,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 
   Service.newAccountConfirmEmailModal = ->
     if Service._accountJustCreated()
-      Service._openConfirmEmailModal()
+      Service.openConfirmEmailModal()
 
   Service._accountJustCreated = ->
     Service.createdAccount.email && !Service.createdAccount.confirmed_at

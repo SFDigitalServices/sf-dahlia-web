@@ -63,11 +63,12 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $scope.handleErrorState()
 
   $scope.$on 'auth:login-error', (ev, reason) ->
-    if (reason.error == 'bad_credentials')
+    if (reason.error == 'not_confirmed')
+      AccountService.openConfirmEmailModal(reason.email)
+    else
+      # if (reason.error == 'bad_credentials')
       $scope.accountError = {message: $translate.instant('SIGN_IN.BAD_CREDENTIALS')}
       $scope.handleErrorState()
-    else if (reason.error == 'not_confirmed')
-      AccountService.openUnconfirmedLoginModal()
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
