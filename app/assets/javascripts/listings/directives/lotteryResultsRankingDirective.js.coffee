@@ -11,7 +11,11 @@ angular.module('dahlia.directives')
       scope.listing.Lottery_Ranking[abrevPrefName + 'UnitsAvailable']
 
     scope.rank_for_preference = (abrevPrefName) ->
-      scope.listing.Lottery_Ranking.applicationResults[0][abrevPrefName + 'Rank']
+      applicationResults = scope.listing.Lottery_Ranking.applicationResults[0]
+      if applicationResults
+        applicationResults[abrevPrefName + 'Rank']
+      else
+        undefined
 
     scope.total_applicants_qualified = (abrevPrefName) ->
       scope.listing.Lottery_Ranking[abrevPrefName + 'AppTotal']

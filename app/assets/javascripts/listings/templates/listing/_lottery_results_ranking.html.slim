@@ -3,24 +3,45 @@ header.modal-inner.padding-top--2x
   h2.h-caps-lined Your Preference Ranking
   p.t-small.c-steel.no-margin Ranking in these lists is considered in the order show here.
 
-.alert-box.primary.no-margin
-  span.alert-icon.ui-icon.ui-medium
-    svg
-      use xlink:href="#i-warning"
-  p.alert-body
-    | Please note, there are other preferences that will be considered for units first.
-  a.close href="#" &times;
+span ng-if="applicantSelectedForPreference()"
+  .alert-box.primary.no-margin
+    span.alert-icon.ui-icon.ui-medium
+      svg
+        use xlink:href="#i-warning"
+    p.alert-body
+      | Please note, there are other preferences that will be considered for units first.
+  section
+    accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
+      lottery-results-ranking pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference"
+      lottery-results-ranking pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
+      lottery-results-ranking pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
+      lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
 
-section
-  accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
+span ng-if="!applicantSelectedForPreference()"
+  span ng-if="listing.Lottery_Ranking.applicationResults[0]"
+    .alert-box.primary.no-margin.bg-alert-tint
+      span.alert-icon.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-warning"
+      p.alert-body
+        | Please note, preferences holders will be considered for all units first.
+    section
+        accordion.results-accordion.accordion-container.has-stat.expanded-content
+          lottery-results-ranking pref_name='General Pool' abrev_pref_name="lottery"
 
-    lottery-results-ranking pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference"
+  span ng-if="!listing.Lottery_Ranking.applicationResults[0]"
+    .alert-box.primary.no-margin
+      span.alert-icon.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-warning"
+      p.alert-body
+        | The number you entered was not found.
 
-    lottery-results-ranking pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
-
-    lottery-results-ranking pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
-
-    lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
+    section.modal-inner
+      p.t-small.c-steel
+          | Review the number you entered to make sure it is correct.
+      p.t-small.c-steel
+          | If you were not selected, we encourage you to apply for other listings.
 
 section
   accordion.results-accordion.accordion-container.expanded-content

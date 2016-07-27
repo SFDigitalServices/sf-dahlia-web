@@ -11,7 +11,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
-  $scope.lotteryBuckets = ListingService.listing.Lottery_Buckets
+  $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
+  # TO DO: debug why this isn't working
+  # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
@@ -134,6 +136,10 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
     _.filter $scope.listing.Lottery_Members, (ticket) ->
       ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
+
+  $scope.applicantSelectedForPreference = ->
+    applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
+    return _.includes(applicationResults, true)
 
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
