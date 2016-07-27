@@ -1,12 +1,14 @@
-AccountController = ($scope, $state, $document, $translate, AccountService) ->
-  $scope.rememberedState = AccountService.rememberedState
+AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
+  $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
+  $scope.createdAccount = AccountService.createdAccount
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
-  $scope.submitDisabled = false
   $scope.hideMessage = false
+  $scope.accountError = AccountService.accountError
+  $scope.submitDisabled = false
 
   $scope.handleErrorState = ->
     # show error alert
@@ -29,11 +31,19 @@ AccountController = ($scope, $state, $document, $translate, AccountService) ->
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
-      AccountService.createAccount().then ->
+      shortFormSession = null
+      if $scope._userInShortFormSession()
+        shortFormSession =
+          uid: ShortFormApplicationService.session_uid
+          userkey: ShortFormApplicationService.userkey
+      AccountService.createAccount(shortFormSession).then( (success) ->
         $scope.submitDisabled = false
-        # reset the form
-        form.$setUntouched()
-        form.$setPristine()
+        if success
+          form.$setUntouched()
+          form.$setPristine()
+          $scope._createAccountRedirect()
+          $scope.hideAlert = false
+      )
     else
       $scope.handleErrorState()
 
@@ -55,11 +65,25 @@ AccountController = ($scope, $state, $document, $translate, AccountService) ->
   $scope.emailConfirmInstructions = ->
     $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
 
-############################################################################################
+  $scope.resendConfirmationEmail = ->
+    AccountService.resendConfirmationEmail()
 
-AccountController.$inject = [
-  '$scope', '$state', '$document', '$translate', 'AccountService'
-]
+  $scope._createAccountRedirect = ->
+    # send to sign in state if user created account from saving application
+    if $scope._userInShortFormSession()
+      ShortFormApplicationService.submitApplication({draft: true, attachToAccount: true}).then(
+        $state.go('dahlia.sign-in', {skipConfirm: true})
+      )
+    else
+      $state.go('dahlia.sign-in')
+
+  $scope._userInShortFormSession = ->
+    $state.current.name == 'dahlia.short-form-application.create-account'
+
+  $scope.clearCreatedAccount = ->
+    angular.copy({}, $scope.createdAccount)
+
+AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.controllers')

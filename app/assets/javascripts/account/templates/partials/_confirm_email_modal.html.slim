@@ -1,0 +1,17 @@
+span ng-controller="AccountController"
+  h1
+    | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
+
+  p
+    | {{'CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO' | translate}} {{createdAccount.email}}.
+  p
+    | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}.
+
+  p
+    button.button.margin-top--2x ng-click="resendConfirmationEmail()"
+      | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+
+  a.close-reveal-modal aria-label="Close" ng-click="clearCreatedAccount();closeModal()"
+    span.ui-icon.ui-static.ui-medium.i-primary
+      svg
+        use xlink:href="#i-close"
