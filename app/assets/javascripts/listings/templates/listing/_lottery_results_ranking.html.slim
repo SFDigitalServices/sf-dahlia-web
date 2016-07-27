@@ -22,15 +22,17 @@ section
 
     lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
 
-// What happens next?
-.t-small.padding--3halves
-  .toggled
-    a.a-dark.toggler.toggle-more.t-small href="#"
-      | What happens next?
-      span.ui-icon.ui-static.ui-tiny.i-dark
-        svg
-          use xlink:href="#i-arrow-down"
-    p.c-steel.t-small.margin-top Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.
-    p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
-    p.c-steel.t-small If all vacancies are filled for a preference you will still be eligible for units in your following preference.
+section
+  accordion.results-accordion.accordion-container.expanded-content
+    accordion-group
+      accordion-heading
+        a.accordion-name.semi.a-dark
+          | What happens next?
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .t-small.padding--3halves
+        p.c-steel.t-small.margin-top Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.
+        p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+        p.c-steel.t-small If all vacancies are filled for a preference you will still be eligible for units in your following preference.
 
