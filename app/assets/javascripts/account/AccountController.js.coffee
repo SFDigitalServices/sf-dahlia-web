@@ -9,6 +9,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.hideMessage = false
   $scope.accountError = AccountService.accountError
   $scope.submitDisabled = false
+  $scope.resendDisabled = false
+  # track if user has re-sent confirmation inside the modal
+  $scope.resentConfirmationMessage = null
 
   $scope.handleErrorState = ->
     # show error alert
@@ -76,8 +79,19 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.emailConfirmInstructions = ->
     $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
 
+  $scope.confirmEmailSentMessage = ->
+    interpolate = { email: $scope.createdAccount.email }
+    $translate.instant('CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO', interpolate)
+
   $scope.resendConfirmationEmail = ->
-    AccountService.resendConfirmationEmail()
+    $scope.resendDisabled = true
+    $scope.resentConfirmationMessage = null
+    AccountService.resendConfirmationEmail().then( ->
+      $scope.resendDisabled = false
+      $scope.resentConfirmationMessage = $translate.instant('SIGN_IN.RESENT_CONFIRMATION_MESSAGE')
+    ).catch( ->
+      $scope.resendDisabled = false
+    )
 
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application

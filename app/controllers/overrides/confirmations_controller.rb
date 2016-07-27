@@ -1,6 +1,7 @@
 module Overrides
   # Overrides to DeviseTokenAuth
   class ConfirmationsController < DeviseTokenAuth::ConfirmationsController
+    # method copied from original gem; refactored to please Rubocop
     def show
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
@@ -24,6 +25,16 @@ module Overrides
         ))
       else
         raise ActionController::RoutingError, 'Not Found'
+      end
+    end
+
+    def create
+      @resource = resource_class.find_by_email(params[:email])
+      if @resource and @resource.id
+        @resource.resend_confirmation_instructions
+        render json: { success: true }
+      else
+        render json: { success: false }, status: 422
       end
     end
 

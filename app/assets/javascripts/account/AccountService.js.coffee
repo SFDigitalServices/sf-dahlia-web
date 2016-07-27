@@ -85,10 +85,10 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     params =
       email: Service.createdAccount.email
 
-    # TO DO: Write create controller method in rails endpoint
-    $http.post("api/v1/auth/confirmation", params).success((data, status, headers, config) ->
+    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
+      # $modal.close()
       data
-    ).error( (data, status, headers, config) ->
+    ).catch( (data, status, headers, config) ->
       return
     )
 
