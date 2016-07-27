@@ -10,13 +10,13 @@
     section
       accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
 
-        lottery-results-bucket pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference" units_available='lotteryBuckets'
+        lottery-results-bucket pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference" units_available='{{lotteryBuckets.certOfPreferenceUnitsAvailable}}'
 
-        lottery-results-bucket pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
+        lottery-results-bucket pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference" units_available='{{lotteryBuckets.displacedPreferenceUnitsAvailable}}'
 
-        lottery-results-bucket pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
+        lottery-results-bucket pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference" units_available='{{lotteryBuckets.neighborhoodPreferenceUnitsAvailable}}'
 
-        lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
+        lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
 
     header.modal-inner
       h2.h-caps-lined.no-margin General List
@@ -33,7 +33,8 @@
               svg
                 use xlink:href="#i-arrow-down"
           .padding.padding-horizontal--3halves
-            p.t-small 200 applicants are in this list
+            p.t-small
+              | {{lotteryMembers().length}} applicants are in this list
             p.t-small.no-margin Please note, all preference holders will be considered for units first.
           .overflow-panel
             table.table-small.table-results role="grid"

@@ -2,12 +2,14 @@ accordion-group
   accordion-heading
     h3.accordion-name.semi
       | {{ pref_name }}
-    span.accordion-subheader.tiny up to 50 units available
+    span.accordion-subheader.tiny
+      | up to {{ units_available }} units available
     span.ui-icon.ui-control.ui-small.i-color
       svg
         use xlink:href="#i-arrow-down"
   .margin-bottom-last-child.padding.padding-horizontal--3halves
-    p.t-small 10 applicants qualified for this preference
+    p.t-small
+      | {{ resultsByPreference(abrev_pref_name).length }} applicants qualified for this preference
   .overflow-panel
     table.table-small.table-results role="grid"
       thead

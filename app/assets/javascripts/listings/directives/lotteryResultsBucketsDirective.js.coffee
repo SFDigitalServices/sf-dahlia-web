@@ -6,3 +6,4 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     scope.pref_name = attrs.prefName
     scope.abrev_pref_name = attrs.abrevPrefName
+    scope.units_available = attrs.unitsAvailable
