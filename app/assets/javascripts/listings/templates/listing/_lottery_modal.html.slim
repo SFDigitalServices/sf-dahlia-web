@@ -13,7 +13,7 @@
         .large-12.columns
           .row.collapse
             .small-10.columns
-              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
+              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber" ng-disabled='lotteryRankingSubmitted'
 
             .small-2.columns
               button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="!lotteryRankingSubmitted" ng-click="showLotteryRanking()"
