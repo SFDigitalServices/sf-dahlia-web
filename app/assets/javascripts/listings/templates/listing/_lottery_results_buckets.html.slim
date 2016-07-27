@@ -27,15 +27,12 @@
                   th scope="col" Rank
                   th scope="col" Ticket
               tbody
-                tr
-                  td scope="row" 1
-                  td 671086
-                tr
-                  td scope="row" 2
-                  td 671030
-                tr
-                  td scope="row" 3
-                  td 671027
+                tr ng-repeat="result in resultsByPreference('certOfPreference')"
+                  td scope="row"
+                    | {{ result.preferenceRank }}
+                  td
+                    | {{ result.lotteryNumber }}
+
 
         // Displaced Tenants Housing Preference
         accordion-group
@@ -54,15 +51,11 @@
                   th scope="col" Rank
                   th scope="col" Ticket
               tbody
-                tr
-                  td scope="row" 1
-                  td 671086
-                tr
-                  td scope="row" 2
-                  td 671030
-                tr
-                  td scope="row" 3
-                  td 671027
+                tr ng-repeat="result in resultsByPreference('displacedPreference')"
+                  td scope="row"
+                    | {{ result.preferenceRank }}
+                  td
+                    | {{ result.lotteryNumber }}
 
         // Neighborhood Resident Housing Preference
         accordion-group
@@ -83,15 +76,11 @@
                   th scope="col" Rank
                   th scope="col" Ticket
               tbody
-                tr
-                  td scope="row" 1
-                  td 671086
-                tr
-                  td scope="row" 2
-                  td 671030
-                tr
-                  td scope="row" 3
-                  td 671027
+                tr ng-repeat="result in resultsByPreference('neighborhoodPreference')"
+                  td scope="row"
+                    | {{ result.preferenceRank }}
+                  td
+                    | {{ result.lotteryNumber }}
 
         // Live/Work Preference
         accordion-group
@@ -112,15 +101,11 @@
                   th scope="col" Rank
                   th scope="col" Ticket
               tbody
-                tr
-                  td scope="row" 1
-                  td 671086
-                tr
-                  td scope="row" 2
-                  td 671030
-                tr
-                  td scope="row" 3
-                  td 671027
+                tr ng-repeat="result in resultsByPreference('liveWorkPreference')"
+                  td scope="row"
+                    | {{ result.preferenceRank }}
+                  td
+                    | {{ result.lotteryNumber }}
 
     header.modal-inner
       h2.h-caps-lined.no-margin General List
@@ -146,12 +131,8 @@
                   th scope="col" Rank
                   th scope="col" Ticket
               tbody
-                tr
-                  td scope="row" 1
-                  td 671086
-                tr
-                  td scope="row" 2
-                  td 671030
-                tr
-                  td scope="row" 3
-                  td 671027
+                tr ng-repeat='lotteryMember in lotteryMembers()'
+                  td scope="row"
+                    | {{ lotteryMember.Rank }}
+                  td
+                    | {{ lotteryMember.Lottery_Number }}

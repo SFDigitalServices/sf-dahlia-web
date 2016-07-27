@@ -1,61 +1,3 @@
-/ span ng-controller="ListingController"
-/   section.results-container.row.collapse
-/     .medium-6.medium-push-6.columns
-/       hgroup.padding--2x
-/         span.t-small.t-bold Lottery Results
-/         h2#modalTitle
-/           | {{listing.Building_Name}}
-/         ul.t-small.margin-bottom
-/           li ng-repeat="unit_summary in listing.unitSummary"
-/             | unit summary: {{unit_summary.unitType || 'N/A'}} {{unit_summary.totalUnits}} unit(s)
-/         p.t-small.t-bold
-/           | Lottery_Summary: {{listing.Lottery_Summary}}
-
-/       .padding-left--2x.padding-right--2x
-/         .icon-input.row.collapse
-/           .large-12.columns
-/             .row.collapse
-/               .small-10.columns
-/                 label.sr-only for="lottery_search_number" Enter Your Lottery Number
-/                 input#lottery_search_number placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
-/               .small-2.columns
-/                 button.primary.icon-input-button.button.postfix ng-if="!lotterySearchNumber"
-/                   span.sr-only
-/                     | Search
-/                   span.ui-icon.ui-static.ui-medium.i-white
-/                     svg
-/                       use xlink:href="#i-right"
-
-/                 button.primary.icon-input-button.button.postfix ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
-/                   span.sr-only
-/                     | Clear
-/                   span.ui-icon.ui-static.ui-medium.i-white
-/                     svg
-/                       use xlink:href="#i-close"
-
-/     .medium-6.medium-pull-6.columns
-/       .overflow-panel
-/         header.overflow-panel_header
-/           span.header.left.small-6 Rank
-/           span.header.right.small-6 Ticket
-/         .overflow-panel_scroll
-/           ul.result-set
-/             li ng-repeat="ticket in lotteryMembers() | orderBy : 'Rank'"
-/               | {{ticket.Rank}}
-/               span.right
-/                 | {{ticket.Lottery_Number}}
-/             li ng-if="lotteryMembers().length == 0"
-/               | The number you entered was not drawn.
-
-/       hgroup.padding ng-if="lotteryMembers().length == 0"
-/         p.t-small
-/           | Review the number you entered to make sure it is correct.
-/         p.t-small
-/           | If you were not selected, we encourage you to keep applying for listings.
-
-
-/////////////////////////////////
-
 .lottery-modal aria-hidden="true" aria-labelledby="modalTitle" role="dialog" ng-controller="ListingController"
 
   section.results-container.row.collapse
@@ -65,15 +7,23 @@
         | {{listing.Building_Name}}
       p.t-small.c-steel.t-semi.padding-horizontal--3halves
         | {{listing.Lottery_Summary}}
+
     .modal-inner.bg-dust
       .icon-input.row.collapse
         .large-12.columns
           .row.collapse
             .small-10.columns
-              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text"
+              input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
+
             .small-2.columns
-              button.icon-input-button.button.primary.postfix.squared.no-margin ng-click="showLotteryRanking()"
+              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="!lotterySearchNumber" ng-click="showLotteryRanking()"
                 span.sr-only Search
+                span.ui-icon.ui-static.ui-medium.i-white
+                  svg
+                    use xlink:href="#i-right"
+
+              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
+                span.sr-only Clear
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
                     use xlink:href="#i-right"

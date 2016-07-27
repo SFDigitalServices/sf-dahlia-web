@@ -25,6 +25,11 @@ class Api::V1::ListingsController < ApiController
     render json: { lottery_results: @lottery_results }
   end
 
+  def lottery_buckets
+    @lottery_buckets = ListingService.lottery_buckets(params[:id])
+    render json: { lottery_buckets: @lottery_buckets }
+  end
+
   def eligibility
     e = params[:eligibility]
     # have to massage params into number values

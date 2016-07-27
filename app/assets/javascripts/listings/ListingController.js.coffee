@@ -11,6 +11,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
+  $scope.lotteryBuckets = ListingService.listing.Lottery_Buckets
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
@@ -78,7 +79,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
-    ListingService.openLotteryResultsModal()
+    ListingService.getLotteryBuckets().then( ->
+      ListingService.openLotteryResultsModal()
+    )
 
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
@@ -124,6 +127,10 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   # lottery search
   $scope.clearLotterySearchNumber = ->
     $scope.lotterySearchNumber = ''
+
+  $scope.resultsByPreference = (preferenceName) ->
+    lotteryBucket = _.filter($scope.lotteryBuckets, {'preferenceName': preferenceName})[0]
+    return lotteryBucket.bucketResults
 
   $scope.lotteryMembers = ->
     return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
