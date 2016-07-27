@@ -79,6 +79,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
+    ListingService.getLotteryResults()
     ListingService.getLotteryBuckets().then( ->
       ListingService.openLotteryResultsModal()
     )

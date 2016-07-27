@@ -101,7 +101,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             setTimeout(ListingService.getListingAMI)
             setTimeout(ListingService.getLotteryPreferences)
             setTimeout(ListingService.getListingUnits)
-            setTimeout(ListingService.getLotteryResults)
         ]
     })
     ##########################
