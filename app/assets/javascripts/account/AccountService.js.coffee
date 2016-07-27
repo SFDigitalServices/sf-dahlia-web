@@ -2,28 +2,31 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, ShortFormApplicationService) ->
+AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
-  Service.rememberedState = null
+  Service.createdAccount = {}
+  Service.rememberedShortFormState = null
+  Service.accountError = {message: null}
 
-  Service.rememberState = (name, params) ->
-    Service.rememberedState = name
+  Service.rememberShortFormState = (name, params) ->
+    Service.rememberedShortFormState = name
 
-  #################### $auth functions
-  Service.createAccount = ->
+  Service.createAccount = (shortFormSession) ->
     Service._formatDOB()
+    if shortFormSession
+      Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
     $auth.submitRegistration(Service.userAuth)
       .then((response) ->
-        # handle success response
-        alert('OK!')
-        # reset userAuth object
+        angular.copy(response.data.data, Service.createdAccount)
         angular.copy({}, Service.userAuth)
+        Service.accountError.message = null
+        return true
       ).catch((response) ->
-        # handle submitRegistration error response
-        alert("Error: #{response.data.errors.full_messages[0]}")
+        Service.accountError.message = response.data.errors.full_messages[0]
+        return false
       )
 
   Service.signIn = ->
@@ -38,6 +41,20 @@ AccountService = ($state, $auth, ShortFormApplicationService) ->
       ).catch((response) ->
         alert("Error: #{response.errors[0]}")
       )
+
+  Service._openConfirmEmailModal = ->
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_confirm_email_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
+
+  Service._formatDOB = ->
+    month = Service.userAuth.dob_month
+    day = Service.userAuth.dob_day
+    year = Service.userAuth.dob_year
+    formattedDOB = year + '-' + month + '-' + day
+    Service.userAuth.DOB = formattedDOB
 
   Service.signOut = ->
     $auth.signOut()
@@ -56,6 +73,24 @@ AccountService = ($state, $auth, ShortFormApplicationService) ->
 
   Service.loggedIn = ->
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
+
+  Service.newAccountConfirmEmailModal = ->
+    if Service._accountJustCreated()
+      Service._openConfirmEmailModal()
+
+  Service._accountJustCreated = ->
+    Service.createdAccount.email && !Service.createdAccount.confirmed_at
+
+  Service.resendConfirmationEmail = ->
+    params =
+      email: Service.createdAccount.email
+
+    # TO DO: Write create controller method in rails endpoint
+    $http.post("api/v1/auth/confirmation", params).success((data, status, headers, config) ->
+      data
+    ).error( (data, status, headers, config) ->
+      return
+    )
 
   #################### helper functions
   Service._formatDOB = ->
@@ -101,7 +136,7 @@ AccountService = ($state, $auth, ShortFormApplicationService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth', 'ShortFormApplicationService']
+AccountService.$inject = ['$state', '$auth', '$modal', '$http', 'ShortFormApplicationService']
 
 angular
   .module('dahlia.services')

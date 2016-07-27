@@ -6,7 +6,7 @@ do ->
     fakeListing = undefined
     fakeShortForm = getJSONFixture('short-form-example.json')
     $translate = {}
-    Upload = {}
+    fakeUpload = {}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -23,11 +23,18 @@ do ->
       workInSf: 'Yes'
       preferences: {liveInSf: null, workInSf: null}
       home_address: fakeAddress
+    fakeListingService =  {
+      listing: {
+        Id: ''
+      }
+    }
     uuid = {v4: jasmine.createSpy()}
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
+      $provide.value 'ListingService', fakeListingService
+      $provide.value 'Upload', fakeUpload
       return
     )
 
