@@ -16,6 +16,7 @@ Rails.application.routes.draw do
           get 'units'
           get 'lottery_results'
           get 'lottery_buckets'
+          get 'lottery_ranking'
         end
         collection do
           get 'ami' => 'listings#ami'

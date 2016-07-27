@@ -53,7 +53,7 @@ module SalesforceService
     end
 
     # get Individual Lottery Result with rankings
-    def self.lottery_result(listing_id, lottery_number)
+    def self.lottery_ranking(listing_id, lottery_number)
       endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
       api_get(endpoint, nil, false)
     end

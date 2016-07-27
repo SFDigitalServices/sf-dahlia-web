@@ -257,6 +257,17 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       return
     )
 
+  Service.getLotteryRanking = (lotteryNumber) ->
+    params =
+      params:
+        lottery_number: lotteryNumber
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
+      if data && data.lottery_ranking
+        Service.listing.Lottery_Ranking = data.lottery_ranking
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
   Service.getLotteryResults = ->
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_results").success((data, status, headers, config) ->
       if data && data.lottery_results
