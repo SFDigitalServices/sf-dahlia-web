@@ -85,7 +85,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.listing', {
       url: '/listings/:id',
       params:
-        timeout:
+        skipConfirm:
           squash: true
       views:
         'container@':
@@ -133,10 +133,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.sign-in', {
       url: '/sign-in'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.newAccountConfirmEmailModal()
+      ]
     })
     .state('dahlia.short-form-application.sign-in', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -598,11 +604,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
-          if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
+
+          if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example
             $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
             ShortFormApplicationService.resetUserData()
+            AccountService.rememberShortFormState(null)
           else
             # prevent page transition if user did not confirm
             e.preventDefault()
@@ -621,7 +629,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
-          AccountService.rememberState(fromState.name)
+          AccountService.rememberShortFormState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       if fromState.name == ''
         return $state.go('dahlia.welcome')

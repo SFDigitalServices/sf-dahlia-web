@@ -1,15 +1,21 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, ListingService) ->
   Service = {}
+  Service.listing = ListingService.listing
   Service.form = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
+    status: null
+    applicationSubmittedDate: null
+    surveyComplete: false
+    applicationSubmissionType: "Electronic"
     applicant:
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       language: "English"
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
       gender: {}
+      terms: {}
     alternateContact:
       language: "English"
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -43,8 +49,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
       Status: {}
       Income: {}
       Review: {}
-    surveyComplete: false
-    applicationSubmissionType: "Electronic"
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -56,8 +60,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
-    delete Service.application.id
-    delete Service.application.lotteryNumber
+    Service.application.id = null
+    Service.application.lotteryNumber = null
+    Service.application.status = null
+    Service.application.applicationSubmittedDate = null
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -318,16 +324,26 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
       Service.preferences["#{fileType}_error"] = true
     ))
 
-  Service.submitApplication = (listingId)->
-    Service.application.status ='submitted'
-    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+  Service.submitApplication = (options={}) ->
+    if options.draft
+      Service.application.status = 'draft'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+    else
+      Service.application.status ='submitted'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+
     params =
-      application: Service._formatApplication(listingId)
+      application: Service._formatApplication(Service.listing.Id)
       uploaded_file:
         session_uid: Service.session_uid
         userkey: Service.userkey
+    if options.attachToAccount
+      params.temp_session_id = Service.session_uid + Service.userkey
+
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
-      data
+      if data.lotteryNumber
+        Service.application.lotteryNumber = data.lotteryNumber
+        Service.application.id = data.id
     ).error( (data, status, headers, config) ->
       alert("Error with submission: #{data.error}")
       return
@@ -543,7 +559,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'uuid'
+  '$localStorage', '$translate', '$http', 'Upload', 'uuid', 'ListingService'
 ]
 
 angular
