@@ -1,6 +1,6 @@
 form.app-card.form-card novalidate="" name="form.applicationForm" ng-submit="submitForm({callback: 'checkIfAlternateContactInfoNeeded'})" ng-init="checkIfAlternateContactNeedsReset()"
   / because this page has some custom errors we don't include the usual 'short-form-header'
-  header.app-inner.leader ng-class="hasBorderBottom"
+  header.app-inner.leader.border-bottom
     short-form-back
     h2.app-card_question
       | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
