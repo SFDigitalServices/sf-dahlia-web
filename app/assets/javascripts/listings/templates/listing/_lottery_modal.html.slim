@@ -16,23 +16,23 @@
               input#lottery_search_number.icon-input-field.squared.no-margin placeholder="Enter Your Lottery Number" type="text" ng-model="lotterySearchNumber"
 
             .small-2.columns
-              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="!lotterySearchNumber" ng-click="showLotteryRanking()"
+              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="!lotteryRankingSubmitted" ng-click="showLotteryRanking()"
                 span.sr-only Search
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
                     use xlink:href="#i-right"
 
-              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="lotterySearchNumber" ng-click="clearLotterySearchNumber()"
+              button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="lotteryRankingSubmitted" ng-click="clearLotterySearchNumber()"
                 span.sr-only Clear
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
-                    use xlink:href="#i-right"
+                    use xlink:href="#i-close"
 
     // Lottery Results Buckets
-    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRanking"
+    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingSubmitted"
 
     // Lottery Results Ranking
-    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRanking"
+    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRankingSubmitted"
 
     // Lottery Footer
     ng-include src="'listings/templates/listing/_lottery_modal_footer.html'"

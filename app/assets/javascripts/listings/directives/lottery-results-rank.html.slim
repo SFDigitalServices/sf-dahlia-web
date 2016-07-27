@@ -1,0 +1,15 @@
+accordion-group
+  accordion-heading
+    .accordion-stat
+      span.accordion-stat_label Rank
+      span.accordion-stat_value
+        | {{ rank_for_preference(abrev_pref_name) }}
+    h3.accordion-name.semi
+      | {{ pref_name }}
+    span.accordion-subheader.tiny
+      | up to {{ units_available(abrev_pref_name) }} units available
+    span.ui-icon.ui-control.ui-small.i-color
+      svg
+        use xlink:href="#i-arrow-down"
+  .bg-vapor.padding.padding-horizontal--3halves
+    p.t-small.t-semi.c-charcoal Your ranking in this list is {{ rank_for_preference(abrev_pref_name) }} out of of {{ total_applicants_qualified(abrev_pref_name) }} qualified applicants.

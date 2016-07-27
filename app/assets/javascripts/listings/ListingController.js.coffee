@@ -22,7 +22,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   # for searching lottery number
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
-  $scope.lotteryRanking = false
+  $scope.lotteryRankingSubmitted = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -127,11 +127,8 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 
   # lottery search
   $scope.clearLotterySearchNumber = ->
+    $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
-
-  $scope.resultsByPreference = (preferenceName) ->
-    lotteryBucket = _.filter($scope.lotteryBuckets.bucketResults, {'preferenceName': preferenceName})[0]
-    return lotteryBucket.bucketResults
 
   $scope.lotteryMembers = ->
     return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
@@ -143,7 +140,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
-    $scope.lotteryRanking = true
+    ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
+      $scope.lotteryRankingSubmitted = true
+    )
 
 ############################################################################################
 ######################################## CONFIG ############################################

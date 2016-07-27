@@ -9,7 +9,7 @@ accordion-group
         use xlink:href="#i-arrow-down"
   .margin-bottom-last-child.padding.padding-horizontal--3halves
     p.t-small
-      | {{ resultsByPreference(abrev_pref_name).length }} applicants qualified for this preference
+      | {{ results_by_preference(abrev_pref_name).length }} applicants qualified for this preference
   .overflow-panel
     table.table-small.table-results role="grid"
       thead
@@ -17,7 +17,7 @@ accordion-group
           th scope="col" Rank
           th scope="col" Ticket
       tbody
-        tr ng-repeat="result in resultsByPreference(abrev_pref_name)"
+        tr ng-repeat="result in results_by_preference(abrev_pref_name)"
           td scope="row"
             | {{ result.preferenceRank }}
           td
