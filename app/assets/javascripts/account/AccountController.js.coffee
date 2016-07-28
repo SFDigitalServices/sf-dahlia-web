@@ -3,6 +3,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.form = {}
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
+  $scope.myApplications = AccountService.myApplications
   $scope.createdAccount = AccountService.createdAccount
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false

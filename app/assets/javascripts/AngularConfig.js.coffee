@@ -194,6 +194,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           squash: true
       views:
         'container@':
+          controller: 'AccountController'
           templateUrl: 'account/templates/my-applications.html'
       resolve:
         auth: ['$auth', ($auth) ->

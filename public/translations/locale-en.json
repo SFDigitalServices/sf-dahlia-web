@@ -55,6 +55,12 @@
         "TITLE": "Tell us about this person",
         "WORK_IN_SF_DESC": "This means they work in San Francisco at least 75% of their working hours."
     },
+    "CONFIRM_ACCOUNT": {
+        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address",
+        "CONFIRMATION_NEEDED": "Confirmation needed",
+        "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to",
+        "RESEND_EMAIL": "Resend the email"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
         "CONTINUE_WITH_APPLICATION": "Continue with Application",
@@ -64,12 +70,6 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "CONFIRM_ACCOUNT": {
-        "RESEND_EMAIL": "Resend the email",
-        "CONFIRMATION_NEEDED": "Confirmation needed",
-        "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to",
-        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address"
-        },
     "D1_STATUS_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
@@ -198,12 +198,14 @@
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PHONE_NUMBER": "Contact phone number",
         "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
+        "CONTINUE_APPLICATION": "Continue Application",
         "CREATE_ACCOUNT": "Create Account",
         "DOB": "Date of Birth",
         "DOB_DAY": "Day",
         "DOB_MONTH": "Month",
         "DOB_YEAR": "Year",
         "DONE_ADDING_PEOPLE": "Done adding people",
+        "EDITED": "Edited",
         "EMAIL_ADDRESS": "Email",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
@@ -245,6 +247,7 @@
         "PROOF_OF_ADDRESS": "Proof of address",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
+        "SEE_LISTING": "See Listing",
         "SELECT_ONE": "Select One",
         "SELF_DECLARED_STATUS": "Self-declared status",
         "SIGN_IN": "Sign In",
@@ -253,6 +256,7 @@
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
+        "VIEW_APPLICATION": "View Application",
         "VOUCHERS_AND_SUBSIDIES": "Vouchers and Subsidies",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
@@ -265,12 +269,16 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
+    "MY_APPLICATIONS": {
+        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
     "SIGN_IN": {
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?"
     },
     "T": {
         "APPLICATION": "Application",
+        "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "BACK": "Back",
@@ -278,6 +286,7 @@
         "CONFIRM": "Confirm",
         "EDIT": "Edit",
         "GET_STARTED": "Get Started",
+        "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
         "NEXT": "Next",
         "NO": "No",
@@ -288,7 +297,9 @@
         "REQUIRED": "Required",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
+        "STATUS": "Status",
         "SUBMIT": "Submit",
+        "SUBMITTED": "Submitted",
         "YES": "Yes",
         "YOU": "You"
     }

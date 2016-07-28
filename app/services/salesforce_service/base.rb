@@ -82,6 +82,7 @@ module SalesforceService
     # this is partly to not have to totally refactor our JS code
     # after Salesforce changes w/ ListingDetails
     def self.flatten_response(body)
+      return [] if body.blank?
       body.collect do |listing|
         listing.merge(listing['listing'] || {}).except('listing')
       end

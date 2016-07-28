@@ -28,6 +28,5 @@ describe 'Account API' do
 
     # check to make sure the response data is present
     expect(json['applications']).not_to be_nil
-    expect(json['listings']).not_to be_nil
   end
 end

@@ -6,10 +6,10 @@ class Api::V1::AccountController < ApiController
     applications = current_user_applications
     listing_ids = applications.collect { |a| a['listingID'] }.uniq
     listings = ListingService.listings(listing_ids.join(','))
-    render json: {
-      applications: applications,
-      listings: listings,
-    }
+    applications.each do |app|
+      app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }
+    end
+    render json: { applications: applications }
   end
 
   private
