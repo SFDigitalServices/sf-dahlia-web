@@ -3,33 +3,33 @@
         "TITLE": "Let's get started on your application:"
     },
     "A2_OVERVIEW": {
-        "P1": "First we'll ask about you and the people you live with.",
-        "P2": "Then we'll talk about your household's status and income.",
-        "P3": "You'll get a chance to review before you submit your application.",
+        "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
+        "P2": "You'll get a chance to review your application before you submit it.",
+        "P3": "Please be aware that each household member can only appear on one application. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
-        "WARNING": "Warning: Only apply once per lottery, duplicate applications will be disqualified."
+        "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
-        "TITLE": "We'll get started by getting some information about you. First, what's your name?"
+        "TITLE": "First, what's your name?"
     },
     "B2A_VERIFY_ADDRESS": {
-        "TITLE": "We have located the following address, please confirm that it is correct."
+        "TITLE": "We have located the following address. Please confirm it's correct."
     },
     "B2_CONTACT": {
         "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
-        "APPLICANT_ADDRESS_DESC": "Ideally this is an address where we can send updates about your application.",
+        "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
         "EMAIL_EDITABLE_VIA_ACCOUNT": "Your email address is editable via your account settings",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
         "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
-        "TITLE": "Thanks{{name}}. Now we need to know how to contact you about your application.",
-        "WORK_IN_SF_DESC": "This means you work in San Francisco at least 75% of your working hours."
+        "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
+        "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
-        "TITLE": "Is there someone else you'd like us to contact if we can't get ahold of you?"
+        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
@@ -41,19 +41,19 @@
         "TITLE": "Who is your alternate contact?"
     },
     "C1A_HOUSEHOLD_OVERVIEW": {
-        "TITLE1": "Before adding other people, confirm that they have not applied in another application.",
+        "TITLE1": "Before adding other people, make sure that they aren't named on any other application for this listing.",
         "TITLE2": "If you include someone who has already applied, all of your applications will be disqualified."
     },
     "C1_HOUSEHOLD_INTRO": {
-        "TITLE": "Next, we'll get some info about any people who would live with you in the unit."
+        "TITLE": "Next, we'd like to know about the others who will live with you in the unit."
     },
     "C2_HOUSEHOLD_MEMBERS": {
         "TITLE": "Tell us about your household."
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
         "P1": "You'll have the opportunity to add more household members on the next screen.",
-        "TITLE": "Tell us about this person",
-        "WORK_IN_SF_DESC": "This means they work in San Francisco at least 75% of their working hours."
+        "TITLE": "Tell us about this person.",
+        "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
@@ -61,7 +61,7 @@
         "CREATE_AN_ACCOUNT": "Create an Account",
         "EMAIL_CONFIRM_INSTRUCTIONS": "Please re-enter your email address to confirm.",
         "P1": "You'll use this information to log in to your account, so make sure you can remember it.",
-        "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include 1 numeric character.",
+        "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
     "CONFIRM_ACCOUNT": {
@@ -71,38 +71,38 @@
         "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address"
         },
     "D1_STATUS_PROGRAMS": {
-        "CERT_OF_PREFERENCE": "Certificate of Preference",
-        "CERT_OF_PREFERENCE_DESC": "Primarily households displaced by Agency action in Redevelopment Project Areas during the 1960's and 1970's, but may also include other persons displaced by Agency action.",
-        "DISPLACED": "Displaced Tenants Preference",
-        "DISPLACED_TENANTS_DESC": "Primarily households displaced by Ellis Act evictions as defined by The Ellis Act Displacement Emergency Assistance Ordinance passed into law on December 18, 2013. (Formerly Ellis Act Preference)",
+        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
+        "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
+        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
+        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move In Eviction in 2010 or later.",
         "PLEASE_CALL_P1": "If you have not heard of these preferences, you most likely do not have one. Please",
         "PLEASE_CALL_P2": "to see if you have a Certificate.",
-        "TITLE": "There are some special programs we'd like to ask you about. Do you have any of the following?"
+        "TITLE": "This listing is offered through a lottery. Some applicants get priority in the lottery through one of our preference programs. Please check all that apply to you: "
     },
     "D2_LIVE_WORK_PREFERENCE": {
-        "INSTRUCTIONS": "Upload any supporting documentation as instructed. If eligibility for a preference cannot be verified, your household will not receive the preference for which you indicate eligibility (you will not be otherwise penalized).",
+        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
         "LIVE_SF_PREFERENCE": "Live in San Francisco Preference",
         "NEIGHBORHOOD_RESIDENCE": {
-            "DESCRIPTION": "At least one household member must live within the same Supervisorial District are within a 1/2 mile buffer of the project.",
-            "TITLE": "Neighborhood Residence Housing Preference"
+            "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
+            "TITLE": "Neighborhood Resident Housing Preference"
         },
-        "TITLE": "Based on the address details you entered, it sounds like your household may qualify for additional preferences.",
+        "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
         "UPLOAD_PROOF": "Upload proof of preference",
         "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
-        "UPLOAD_PROOF_INSTRUCTIONS_2": "Max file size is 2MB. Supported file types: pdf, jpg, png.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB. Supported file types: PDF, JPG, PNG.",
         "WORK_SF_PREFERENCE": {
-            "DESCRIPTION": "At least one household member must work in San Francisco at least 75% of their working hours.",
+            "DESCRIPTION": "At least one household member must currently work in San Francisco at least 75% of their working hours.",
             "TITLE": "Work in San Francisco Preference"
         }
     },
     "D6_STATUS_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
-        "TITLE": "Does anyone in your household receive any housing vouchers or subsidies?"
+        "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
     },
     "E1_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
-        "P2": "You only need to provide an estimated total right now. Precise totals will be calculated, if you are selected in the lottery.",
-        "TITLE": "Let's move onto the final topic: income."
+        "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
+        "TITLE": "Let's move to income."
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
@@ -119,39 +119,39 @@
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
-        "HOUSEHOLD_INCOME_ERROR_CONTENT": "Please edit your income if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified. If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
+        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "HOUSEHOLD_SIZE_ERROR_CONTENT": "Please edit your household size if you believe you might have made a mistake. Be aware that if you falsify an information on your application you will be disqualified. If the information you entered is accurate, we encourage you to check back in the future of more properties become available.",
+        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
         "LANGUAGE": "Please enter a language",
         "LAST_NAME": "Please enter a Last Name",
-        "NOT_ELIGIBLE": "Unfortunately it appears you did not qualify for this property listing.",
+        "NOT_ELIGIBLE": "It appears that you wouldn't qualify for this listing due to household size.",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
-        "RELATIONSHIP": "Please enter a relationship",
+        "RELATIONSHIP": "Please enter a relationship.",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
         "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {
-        "P1": "Your responses will help us ensure we're meeting our goal to serve all people. Your answers will be kept private.",
-        "TITLE": "These questions are optional and won't affect your eligibility for housing."
+        "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
+        "TITLE": "Help us ensure we are meeting our goal to serve all people."
     },
     "F1_REVIEW_SUMMARY": {
         "TITLE": "Take a moment to review your information before submitting your application."
     },
     "F2_REVIEW_TERMS": {
-        "P1": "This application must be physically received (by mail or in person) by the listing due date. Please see the San Francisco Housing Portal website (housing.sfgov.org) for deadlines and location to submit the application.",
+        "P1": "This application must be submitted by the listing due date. ",
         "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled.",
-        "P3": "All of the information that you have provided will be verified and your eligibility confirmed. Any fraudulent statements will cause your application to be removed from the lottery. You will also be removed from the lottery if we cannot verify your housing lottery preference, or if a household member appears on more than one application for this listing.",
+        "P3": "All of the information that you have provided will be verified and your eligibility confirmed. Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.",
         "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents. For more information, please contact the property directly using the contact information posted in the property announcement.",
         "P5": "I declare that the foregoing is true and accurate, and I acknowledge that any material misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
@@ -162,10 +162,10 @@
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
         "LOTTERY_NUMBER": "Here's your lottery number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
-        "NEXT_STEPS_BODY2": "You will be updated on your application status within three weeks.",
+        "NEXT_STEPS_BODY2": "Results will be posted on the listing. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents. ",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
-        "TITLE": "Thanks for applying. We're processing your application for"
+        "TITLE": "Thanks. We have received your application for"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
@@ -176,12 +176,12 @@
         "ADD_HOUSEHOLD_MEMBER": "Add household member",
         "AGENCY": "Agency",
         "ALTERNATE_CONTACT": "Alternate contact",
-        "ALTERNATE_CONTACT_AGENCY": "What agency does your social worker or counselor work at?",
+        "ALTERNATE_CONTACT_AGENCY": "Where does your case manager or housing counselor work?",
         "ALTERNATE_CONTACT_NAME": "Name of alternate contact",
         "APPLICANT_ADDITIONAL_PHONE": "I have an additional phone number",
         "APPLICANT_EMAIL": "Your email address",
-        "APPLICANT_ETHNICITY": "What best describes your ethnicity?",
-        "APPLICANT_GENDER": "What best describes your gender?",
+        "APPLICANT_ETHNICITY": "Which best describes your ethnicity?",
+        "APPLICANT_GENDER": "Which best describes your gender?",
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
         "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
@@ -189,10 +189,10 @@
         "APPLICANT_PHONE": "Your phone number",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
-        "APPLICANT_RACE": "What best describes your race?",
+        "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
-        "APPLICANT_SEXUAL_ORIENTATION": "How do you describe your sexual orientation or sexual identity?",
+        "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation or sexual identity?",
         "CITY": "City Name",
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
@@ -211,12 +211,12 @@
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
         "HOUSEHOLD_MEMBER": "Household Member",
-        "HOUSEHOLD_MEMBERS": "Household Members",
+        "HOUSEHOLD_MEMBERS": "Household members",
         "HOUSEHOLD_MEMBER_ADD": "Add Household Member",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
-        "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is your relationship to them?",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
         "INCOME": "Income",
@@ -240,24 +240,24 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
-        "PREFERENCE_PROOF_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
-        "PRIMARY_USER": "Primary User",
+        "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
+        "PRIMARY_USER": "Primary Applicant",
         "PROOF_OF_ADDRESS": "Proof of address",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
         "SELECT_ONE": "Select One",
         "SELF_DECLARED_STATUS": "Self-declared status",
         "SIGN_IN": "Sign In",
-        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Social worker or housing counselor",
+        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPECIAL_PROGRAMS": "Special Programs",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
-        "VOUCHERS_AND_SUBSIDIES": "Vouchers and Subsidies",
+        "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
         "YOUR_DOB": "Your Date of Birth",
-        "YOUR_GENDER": "Your gender",
+        "YOUR_GENDER": "Please specify your gender",
         "YOUR_NAME": "Your Name",
         "YOUR_OR_ALTERNATE": "Your {{ contactType }} or Alternate {{ contactType }}",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
