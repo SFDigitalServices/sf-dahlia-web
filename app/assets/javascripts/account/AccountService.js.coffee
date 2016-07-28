@@ -94,9 +94,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     )
 
   Service.getMyApplications = ->
-    $http.get('/api/v1/account/my-applications').then((response) ->
-      if response.data.applications
-        angular.copy(response.data.applications, Service.myApplications)
+    $http.get('/api/v1/account/my-applications').success((data) ->
+      if data.applications
+        angular.copy(data.applications, Service.myApplications)
     )
 
   #################### helper functions
