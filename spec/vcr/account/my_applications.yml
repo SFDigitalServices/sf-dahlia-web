@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 26 Jul 2016 06:27:30 GMT
+      - Thu, 28 Jul 2016 01:00:32 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,8 +29,8 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=NIVWeykCQ22y9N8GpaQa9Q;Path=/;Domain=.salesforce.com;Expires=Sat,
-        24-Sep-2016 06:27:30 GMT
+      - BrowserId=URYhQHdQSvuppZr2aLLDWg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        26-Sep-2016 01:00:32 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -45,9 +45,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQBcWthmHrrDKhubbC7fOZpV2VCVfeJztWzar.98S4Bj310YKAuGwXAuz5.1WFYd2g9mObUVTQsdOUDbM340PrEQsPxY4","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1469514450478","signature":"X3wn+FFKWVfZ3AfWvhfPzZSB2qkBsRrIyXaLHbmP6Vw="}'
+      string: '{"access_token":"00D210000000OEp!AQMAQL0Lafrcf7TQw6GP2Pu9oFBE6FfkLSSH58is.3gixmlZoAJiWexF4.xoQvzDx41w4PX8dynXndNjoEo0tBB6BNA6LhU8","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1469667635474","signature":"Eml4OcEQVDskV4V4qTK+vawzee4XArprjwN4Xj5Iizw="}'
     http_version:
-  recorded_at: Tue, 26 Jul 2016 06:27:31 GMT
+  recorded_at: Thu, 28 Jul 2016 01:00:35 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/shortForm/list/
@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQBcWthmHrrDKhubbC7fOZpV2VCVfeJztWzar.98S4Bj310YKAuGwXAuz5.1WFYd2g9mObUVTQsdOUDbM340PrEQsPxY4
+      - OAuth 00D210000000OEp!AQMAQL0Lafrcf7TQw6GP2Pu9oFBE6FfkLSSH58is.3gixmlZoAJiWexF4.xoQvzDx41w4PX8dynXndNjoEo0tBB6BNA6LhU8
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,7 +69,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 26 Jul 2016 06:27:31 GMT
+      - Thu, 28 Jul 2016 01:00:36 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
@@ -77,8 +77,8 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=WrXSXRmuSkOtF1WcWtI3EQ;Path=/;Domain=.salesforce.com;Expires=Sat,
-        24-Sep-2016 06:27:32 GMT
+      - BrowserId=0wQJh0M8RGWgedx0BFma9w;Path=/;Domain=.salesforce.com;Expires=Mon,
+        26-Sep-2016 01:00:36 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Transfer-Encoding:
@@ -87,5 +87,47 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version:
-  recorded_at: Tue, 26 Jul 2016 06:27:32 GMT
+  recorded_at: Thu, 28 Jul 2016 01:00:38 GMT
+- request:
+    method: get
+    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/ListingDetails
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00D210000000OEp!AQMAQL0Lafrcf7TQw6GP2Pu9oFBE6FfkLSSH58is.3gixmlZoAJiWexF4.xoQvzDx41w4PX8dynXndNjoEo0tBB6BNA6LhU8
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 28 Jul 2016 01:00:38 GMT
+      Content-Security-Policy-Report-Only:
+      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
+        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
+        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Set-Cookie:
+      - BrowserId=BV1UrYmJRhOrqZc_Wp5K9A;Path=/;Domain=.salesforce.com;Expires=Mon,
+        26-Sep-2016 01:00:38 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Thu, 28 Jul 2016 01:00:40 GMT
 recorded_with: VCR 3.0.3

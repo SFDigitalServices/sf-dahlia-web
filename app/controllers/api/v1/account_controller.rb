@@ -1,10 +1,15 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
-  ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_user!
 
   def my_applications
-    render json: { applications: current_user_applications }
+    applications = current_user_applications
+    listing_ids = applications.collect { |a| a['listingID'] }.uniq
+    listings = ListingService.listings(listing_ids.join(','))
+    render json: {
+      applications: applications,
+      listings: listings,
+    }
   end
 
   private
