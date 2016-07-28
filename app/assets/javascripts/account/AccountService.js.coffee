@@ -32,6 +32,8 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   Service.signIn = ->
     $auth.submitLogin(Service.userAuth)
       .then((response) ->
+        # reset userAuth object
+        angular.copy({}, Service.userAuth)
         if response.signedIn
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()

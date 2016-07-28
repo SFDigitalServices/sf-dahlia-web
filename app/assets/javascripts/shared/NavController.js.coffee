@@ -10,8 +10,8 @@ NavController = ($document, $rootScope, $scope, $state, AccountService) ->
     $document.scrollTop(0)
 
   $scope.signOut = ->
-    AccountService.signOut().then ->
-      $state.go('dahlia.welcome')
+    $state.go('dahlia.welcome')
+    AccountService.signOut()
 
   $scope.showNavMobile = false
   $scope.toggleNavMobile = () ->
