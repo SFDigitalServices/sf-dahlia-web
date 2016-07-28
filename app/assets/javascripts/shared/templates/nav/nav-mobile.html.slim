@@ -34,17 +34,12 @@ pageslide ps-open="showNavMobile" ps-side="right" ps-size="{{ '300px' }}" ps-clo
             use xlink:href="#i-application"
         | My Applications
     li.has-icon ng-if="loggedIn()"
-      a ui-sref="dahlia.eligibility-settings"
-        span.ui-icon
-          svg
-            use xlink:href="#i-eligibility"
-        | Eligibility Settings
-    li.has-icon ng-if="loggedIn()"
       a ui-sref="dahlia.account-settings"
         span.ui-icon
           svg
             use xlink:href="#i-settings"
         | Account Settings
     li.has-icon ng-if="loggedIn()"
-      a ui-sref="#"
+      / TODO: make into a button, properly styled
+      a ng-click="signOut()"
         | Sign Out

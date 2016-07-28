@@ -1,8 +1,8 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns
-      .back-link-container.small-only-text-center ng-if="rememberedState"
-        a.back-link ui-sref="{{rememberedState}}"
+      .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
+        a.back-link ui-sref="{{rememberedShortFormState}}"
           span.ui-icon.ui-static.ui-medium.i-primary
             svg
               use xlink:href="#i-left"
@@ -42,7 +42,7 @@
           h2.dash-title
             | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
           p.t-small.c-steel
-            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" ng-if="rememberedState"
+            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" ng-if="rememberedShortFormState"
               | {{'LABEL.CREATE_ACCOUNT' | translate}}
-            a.button.no-margin ui-sref="dahlia.create-account" ng-if="!rememberedState"
+            a.button.no-margin ui-sref="dahlia.create-account" ng-if="!rememberedShortFormState"
               | {{'LABEL.CREATE_ACCOUNT' | translate}}

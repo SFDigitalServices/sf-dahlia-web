@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
   root to: 'home#index'
 
-  mount_devise_token_auth_for 'User',
-                              at: 'api/v1/auth', skip: [:omniauth_callbacks],
-                              controllers: {
-                                registrations:  'overrides/registrations',
-                              }
+  mount_devise_token_auth_for(
+    'User',
+    at: 'api/v1/auth',
+    skip: %i(omniauth_callbacks),
+    controllers: {
+      registrations: 'overrides/registrations',
+      sessions: 'overrides/sessions',
+      token_validations: 'overrides/token_validations',
+    },
+  )
 
   ## --- API namespacing
   namespace :api do

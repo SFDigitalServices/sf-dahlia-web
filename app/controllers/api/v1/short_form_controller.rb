@@ -1,6 +1,8 @@
 # RESTful JSON API to query for address validation
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
+  before_action :authenticate_for_existing_application,
+                only: [:submit_application]
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -36,16 +38,12 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = ShortFormService.create(application_params)
+    response = ShortFormService.create_or_update(application_params, contact_id)
     if response.present?
-      files = UploadedFile.where(uploaded_file_params)
-      ShortFormService.attach_files(response['id'], files)
-      if application_params[:primaryApplicant][:email].present?
-        Emailer.submission_confirmation(
-          email: application_params[:primaryApplicant][:email],
-          listing_id: application_params[:listingID],
-          lottery_number: response['lotteryNumber'],
-        ).deliver_now
+      if application_params[:primaryApplicant][:email].present? &&
+         application_params[:status] == 'submitted'
+        send_attached_files(response['id'])
+        send_submit_app_confirmation(response['lotteryNumber'])
       end
       render json: response
     else
@@ -54,6 +52,47 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def send_attached_files(application_id)
+    files = UploadedFile.where(uploaded_file_params)
+    ShortFormService.attach_files(application_id, files)
+  end
+
+  def send_submit_app_confirmation(lottery_number)
+    Emailer.submission_confirmation(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      lottery_number: lottery_number,
+    ).deliver_now
+  end
+
+  def authenticate_for_existing_application
+    return true unless application_params[:id].present?
+    authenticate_user!
+    contact_id = current_user.salesforce_contact_id
+    ShortFormService.ownership?(contact_id, application_params[:id])
+  end
+
+  def contact_id
+    if current_user
+      current_user.salesforce_contact_id
+    elsif submitting_application_for_unconfirmed_user
+      unconfirmed_user_salesforce_contact_id
+    end
+  end
+
+  def submitting_application_for_unconfirmed_user
+    params[:temp_session_id].present?
+  end
+
+  def unconfirmed_user_salesforce_contact_id
+    u = User.find_by_temp_session_id(params[:temp_session_id])
+    if u
+      params.delete :temp_session_id
+      u.update(temp_session_id: nil)
+      return u.salesforce_contact_id
+    end
+  end
 
   def eligibility_params
     params.require(:eligibility)

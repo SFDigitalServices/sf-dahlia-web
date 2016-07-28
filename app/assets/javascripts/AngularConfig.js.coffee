@@ -85,7 +85,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.listing', {
       url: '/listings/:id',
       params:
-        timeout:
+        skipConfirm:
           squash: true
       views:
         'container@':
@@ -132,10 +132,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.sign-in', {
       url: '/sign-in'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.newAccountConfirmEmailModal()
+      ]
     })
     .state('dahlia.short-form-application.sign-in', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -182,6 +188,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.my-applications', {
       url: '/my-applications'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/my-applications.html'
@@ -360,10 +369,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+      onEnter: [
+        'ShortFormApplicationService', 'AccountService',
+        (ShortFormApplicationService, AccountService) ->
           ShortFormApplicationService.completeSection('Intro')
-        ]
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+      ]
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
@@ -588,17 +600,19 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
-    # check if user is logged in
+    # check if user is logged in on page load
     AccountService.validateUser()
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
-          if (toParams.timeout || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
+
+          if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example
             $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
             ShortFormApplicationService.resetUserData()
+            AccountService.rememberShortFormState(null)
           else
             # prevent page transition if user did not confirm
             e.preventDefault()
@@ -617,7 +631,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
-          AccountService.rememberState(fromState.name)
+          AccountService.rememberShortFormState(fromState.name)
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       if fromState.name == ''
         return $state.go('dahlia.welcome')
@@ -667,4 +681,5 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       apiUrl: '/api/v1'
       storage: 'sessionStorage'
       confirmationSuccessUrl: conf.confirmationSuccessUrl
+      validateOnPageLoad: false
 ]

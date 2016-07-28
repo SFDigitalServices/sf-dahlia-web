@@ -10,10 +10,16 @@ li
 li ng-if="!loggedIn()"
   a ui-sref="dahlia.sign-in"
     | Sign In
-li.has-dropdown ng-if="loggedIn()"
-  a ui-sref="dahlia.my-account"
+li(has-dropdown ng-if="loggedIn()")
+  a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
     | My Account
-  ul.dropdown
+  ul#my-account-dropdown.dropdown
+    li.dropdown-item.has-icon
+      a ui-sref="dahlia.my-account"
+        span.ui-icon.ui-static.ui-medium.i-color
+          svg
+            use xlink:href="#i-profile"
+        | My Dashboard
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
@@ -21,23 +27,12 @@ li.has-dropdown ng-if="loggedIn()"
             use xlink:href="#i-application"
         | My Applications
     li.dropdown-item.has-icon
-      a ui-sref="dahlia.my-favorites"
-        span.ui-icon.ui-static.ui-medium.i-color
-          svg
-            use xlink:href="#i-favorite"
-        | My Favorites
-    li.dropdown-item.has-icon
-      a ui-sref="dahlia.eligibility-settings"
-        span.ui-icon.ui-static.ui-medium.i-color
-          svg
-            use xlink:href="#i-eligibility"
-        | Eligibility Settings
-    li.dropdown-item.has-icon
       a ui-sref="dahlia.account-settings"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-settings"
         | Account Settings
     li.dropdown-item
-      a ui-sref="dahlia.signout"
+      / TODO: make into a button, properly styled
+      a ng-click="signOut()"
         | Sign Out

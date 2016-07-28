@@ -2,5 +2,5 @@
   .button-pager_row.primary
     input.button.primary.radius type="submit" value="{{submitValue}}" ng-disabled="submitDisabled"
   .button-pager_row
-    button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.short-form-application.create-account"
+    button.button.button-link.button-lined.small-text-center.expand-small ng-click='saveAndFinishLater($event)'
       | {{'T.SAVE_AND_FINISH_LATER' | translate}}

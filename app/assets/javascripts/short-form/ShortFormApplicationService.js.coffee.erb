@@ -1,15 +1,21 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
+ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, ListingService) ->
   Service = {}
+  Service.listing = ListingService.listing
   Service.form = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
+    status: null
+    applicationSubmittedDate: null
+    surveyComplete: false
+    applicationSubmissionType: "Electronic"
     applicant:
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       language: "English"
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
       gender: {}
+      terms: {}
     alternateContact:
       language: "English"
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -43,8 +49,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
       Status: {}
       Income: {}
       Review: {}
-    surveyComplete: false
-    applicationSubmissionType: "Electronic"
 
   Service.current_id = 0
   Service.session_uid = uuid.v4()
@@ -56,8 +60,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     $localStorage.application ?= Service.applicationDefaults
     Service.application = $localStorage.application
     Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
-    delete Service.application.id
-    delete Service.application.lotteryNumber
+    Service.application.id = null
+    Service.application.lotteryNumber = null
+    Service.application.status = null
+    Service.application.applicationSubmittedDate = null
     # <% else %> # -------------
     Service.application = angular.copy(Service.applicationDefaults)
     # <% end %> # -------------
@@ -228,12 +234,17 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
-    # keeping this code here for now so that general-lottery-notice can be accessed for review
-    # TODO: Update this code when charlie's api is ready
-    # household = angular.copy(Service.application.householdMembers)
-    # household.push(Service.applicant)
-    # return household
-    return []
+    # find all household members that either have their own address and match
+    # -- OR -- same address as applicant, who also matches
+    household = Service.application.householdMembers.filter (member) ->
+      if (member.hasSameAddressAsApplicant == 'Yes')
+        return Service.applicant.home_address.boundary_match
+      else
+        member.home_address && member.home_address.boundary_match
+    # add applicant to the list if they match
+    if Service.applicant.home_address.boundary_match
+      household.push(Service.applicant)
+    household
 
   Service.preferencesApplyForHousehold = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
@@ -313,16 +324,26 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
       Service.preferences["#{fileType}_error"] = true
     ))
 
-  Service.submitApplication = (listingId)->
-    Service.application.status ='submitted'
-    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+  Service.submitApplication = (options={}) ->
+    if options.draft
+      Service.application.status = 'draft'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+    else
+      Service.application.status ='submitted'
+      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+
     params =
-      application: Service._formatApplication(listingId)
+      application: Service._formatApplication(Service.listing.Id)
       uploaded_file:
         session_uid: Service.session_uid
         userkey: Service.userkey
+    if options.attachToAccount
+      params.temp_session_id = Service.session_uid + Service.userkey
+
     $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
-      data
+      if data.lotteryNumber
+        Service.application.lotteryNumber = data.lotteryNumber
+        Service.application.id = data.id
     ).error( (data, status, headers, config) ->
       alert("Error with submission: #{data.error}")
       return
@@ -525,6 +546,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
     ]
     Service.application.surveyComplete = _.every(responses)
 
+  Service.importUserData = (loggedInUser) ->
+    userData = _.pick loggedInUser, [
+      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+    ]
+    _.merge Service.applicant, userData
+
   return Service
 
 ############################################################################################
@@ -532,7 +559,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, uuid) ->
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'uuid'
+  '$localStorage', '$translate', '$http', 'Upload', 'uuid', 'ListingService'
 ]
 
 angular

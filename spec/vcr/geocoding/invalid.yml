@@ -7,19 +7,19 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
+      Connection:
+      - close
+      Host:
+      - sfgis-svc.sfgov.org
       User-Agent:
-      - Ruby
+      - http.rb/2.0.2
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Tue, 14 Jun 2016 05:15:02 GMT
+      - Thu, 21 Jul 2016 18:54:18 GMT
       Server:
       - ''
       Cache-Control:
@@ -29,11 +29,13 @@ http_interactions:
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
-      - '99'
+      - '92'
+      Connection:
+      - close
     body:
-      encoding: ASCII-8BIT
+      encoding: UTF-8
       string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
         3857\n },\n \"candidates\": [\n  \n ]\n}"
     http_version:
-  recorded_at: Tue, 14 Jun 2016 05:17:13 GMT
-recorded_with: VCR 3.0.1
+  recorded_at: Thu, 21 Jul 2016 18:54:25 GMT
+recorded_with: VCR 3.0.3

@@ -2,10 +2,13 @@ do ->
   'use strict'
   describe 'AccountController', ->
     scope = undefined
+    state = {current: {name: undefined}}
     $translate = {}
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
+    fakeShortFormApplicationService =
+      submitApplication: (options={}) -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -15,7 +18,7 @@ do ->
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
       scope.form = {accountForm: {}}
-      state = jasmine.createSpyObj('$state', ['go'])
+      state.go = jasmine.createSpy()
       spyOn(fakeAccountService, 'createAccount').and.callFake ->
         deferred = $q.defer()
         deferred.resolve('Remote call result')
@@ -30,6 +33,7 @@ do ->
         $scope: scope
         $state: state
         AccountService: fakeAccountService
+        ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
 

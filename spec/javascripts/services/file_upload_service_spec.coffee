@@ -2,6 +2,8 @@ do ->
   'use strict'
   describe 'FileUploadService', ->
     FileUploadService = undefined
+    fakeShortFormApplicationService =
+      preferences: {}
     $translate = {}
     Upload =
       upload: ->
@@ -15,13 +17,14 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+
       return
     )
 
-    beforeEach inject((_$httpBackend_, _FileUploadService_, _ShortFormApplicationService_, _$q_) ->
+    beforeEach inject((_$httpBackend_, _FileUploadService_, _$q_) ->
       httpBackend = _$httpBackend_
       FileUploadService = _FileUploadService_
-      ShortFormApplicationService = _ShortFormApplicationService_
       $q = _$q_
       spyOn(Upload, 'upload').and.callFake ->
         deferred = $q.defer()

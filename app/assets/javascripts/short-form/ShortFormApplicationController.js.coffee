@@ -9,12 +9,12 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
   FileUploadService,
-  AddressValidationService
+  AddressValidationService,
+  AccountService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -25,7 +25,7 @@ ShortFormApplicationController = (
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
-  $scope.listing = ListingService.listing
+  $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
 
@@ -106,6 +106,7 @@ ShortFormApplicationController = (
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
+  $scope.hideMessage = false
   $scope.navService = ShortFormNavigationService
   $scope.appService = ShortFormApplicationService
   # allows us to temporarily disable "next / submit" button if needed (e.g. during a request)
@@ -392,6 +393,10 @@ ShortFormApplicationController = (
   $scope.applicationIncomeAmount = ->
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
+  ## account service
+  $scope.loggedIn = ->
+    AccountService.loggedIn()
+
   ## translation helpers
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
@@ -401,13 +406,22 @@ ShortFormApplicationController = (
 
   $scope.submitApplication = ->
     $scope.submitDisabled = true
-    ShortFormApplicationService.submitApplication($scope.listing.Id)
-      .then( (response) ->
-        if response.data.lotteryNumber
-          $scope.application.lotteryNumber = response.data.lotteryNumber
-          $scope.submitDisabled = false
-          $state.go('dahlia.short-form-application.confirmation')
+    ShortFormApplicationService.submitApplication({draft: false})
+      .then(  ->
+        $scope.submitDisabled = false
+        $state.go('dahlia.short-form-application.confirmation')
       )
+
+  ## Save and finish later
+  $scope.saveAndFinishLater = (ev) ->
+    # prevent normal short form page submit
+    ev.preventDefault()
+    if AccountService.loggedIn()
+      ShortFormApplicationService.submitApplication({draft: true}).then(
+        $state.go('dahlia.my-applications', {skipConfirm: true})
+      )
+    else
+      $state.go('dahlia.short-form-application.create-account')
 
   ## idle timeout functions
   unless ShortFormApplicationService.isWelcomePage($state.current)
@@ -419,9 +433,7 @@ ShortFormApplicationController = (
 
   $scope.$on 'IdleTimeout', ->
     # they ran out of time
-    ShortFormApplicationService.resetUserData()
-    $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-    $state.go('dahlia.listing', {timeout: true, id: $scope.listing.Id})
+    $state.go('dahlia.listing', {skipConfirm: true, id: $scope.listing.Id})
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # capture errors when trying to verify address and send them back to the appropriate page
@@ -440,8 +452,10 @@ ShortFormApplicationController = (
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
-  'ListingService', 'ShortFormApplicationService', 'ShortFormNavigationService',
-  'ShortFormHelperService', 'FileUploadService', 'AddressValidationService'
+  'ShortFormApplicationService', 'ShortFormNavigationService',
+  'ShortFormHelperService', 'FileUploadService',
+  'AddressValidationService',
+  'AccountService'
 ]
 
 angular

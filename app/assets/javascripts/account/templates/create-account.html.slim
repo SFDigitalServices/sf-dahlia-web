@@ -1,8 +1,8 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns
-      .back-link-container.small-only-text-center ng-if="rememberedState"
-        a.back-link ui-sref="{{rememberedState}}"
+      .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
+        a.back-link ui-sref="{{rememberedShortFormState}}"
           span.ui-icon.ui-static.ui-medium.i-primary
             svg
               use xlink:href="#i-left"
@@ -18,7 +18,7 @@
             | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
           p.dash-summary
             | {{'CREATE_ACCOUNT.P1' | translate}}
-        alert-box(form-object="form.accountForm" hide-alert="hideAlert")
+        alert-box(form-object="form.accountForm" hide-alert="hideAlert" account-error="accountError")
 
         alert-box(primary="true" hide-alert="hideMessage" custom-message="emailConfirmInstructions()" ng-if="isLocked('email') && (userAuth.email !== userAuth.email_confirmation)")
 
@@ -115,7 +115,7 @@
           h2.dash-title.t-gamma
             | {{'CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT' | translate}}
           p.t-small.c-steel
-            a.button.no-margin ui-sref="dahlia.short-form-application.sign-in" ng-if="rememberedState"
+            a.button.no-margin ui-sref="dahlia.short-form-application.sign-in" ng-if="rememberedShortFormState"
               | {{'LABEL.SIGN_IN' | translate}}
-            a.button.no-margin ui-sref="dahlia.sign-in" ng-if="!rememberedState"
+            a.button.no-margin ui-sref="dahlia.sign-in" ng-if="!rememberedShortFormState"
               | {{'LABEL.SIGN_IN' | translate}}
