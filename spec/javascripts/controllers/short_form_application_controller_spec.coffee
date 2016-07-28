@@ -89,7 +89,9 @@ do ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
+        state.go('dahlia.my-applications', {skipConfirm: true})
+        deferred.promise
 
       _$document_.scrollToElement = jasmine.createSpy()
 

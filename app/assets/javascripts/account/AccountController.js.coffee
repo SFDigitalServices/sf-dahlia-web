@@ -72,9 +72,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
     if $scope._userInShortFormSession()
-      ShortFormApplicationService.submitApplication({draft: true, attachToAccount: true}).then(
+      ShortFormApplicationService.submitApplication(
+        {draft: true, attachToAccount: true}
+      ).then ->
         $state.go('dahlia.sign-in', {skipConfirm: true})
-      )
     else
       $state.go('dahlia.sign-in')
 

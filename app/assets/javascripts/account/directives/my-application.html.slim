@@ -34,8 +34,8 @@ article.feed-item ng-class="applicationStyle()"
       .feed-item-links
         a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
           | {{'LABEL.SEE_LISTING' | translate}}
-        / a.feed-item-link.a-alert.lined href="#"
-        /   | Delete
+        a.feed-item-link.a-alert.lined href="#" ng-if="!isSubmitted()"
+          | Delete
       .feed-item-meta
         p.feed-item-date
           ' {{'LABEL.EDITED' | translate}}:
