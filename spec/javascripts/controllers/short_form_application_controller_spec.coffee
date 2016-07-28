@@ -60,6 +60,8 @@ do ->
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
     fakeFileUploadService = {}
+    fakeEvent =
+      preventDefault: -> return
 
     beforeEach module('dahlia.controllers', ($provide) ->
       # fakeListingService =
@@ -343,21 +345,21 @@ do ->
       describe 'logged in', ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          scope.saveAndFinishLater()
+          scope.saveAndFinishLater(fakeEvent)
 
         it 'submits application as a draft', ->
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: true})
           return
 
         it 'routes user to my applications', ->
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications')
+          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
           return
         return
 
       describe 'not logged in', ->
         it 'routes directly to create account', ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(false)
-          scope.saveAndFinishLater()
+          scope.saveAndFinishLater(fakeEvent)
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
           return
         return
