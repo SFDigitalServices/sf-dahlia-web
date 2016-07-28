@@ -22,6 +22,10 @@ module SalesforceService
       api_get("/shortForm/list/#{contact_id}")
     end
 
+    def self.delete(id)
+      api_post('/shortForm/delete/', id: id)
+    end
+
     def self.attach_file(application_id, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/file/#{application_id}"

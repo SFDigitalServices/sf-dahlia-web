@@ -29,7 +29,9 @@ Rails.application.routes.draw do
       end
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
-        post 'submit-application' => 'short_form#submit_application'
+        post 'application' => 'short_form#submit_application'
+        put 'application/:id' => 'short_form#update_application'
+        delete 'application/:id' => 'short_form#delete_application'
         post 'proof' => 'short_form#upload_proof'
         delete 'proof' => 'short_form#delete_proof'
       end

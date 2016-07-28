@@ -340,12 +340,28 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
     if options.attachToAccount
       params.temp_session_id = Service.session_uid + Service.userkey
 
-    $http.post('/api/v1/short-form/submit-application', params).success((data, status, headers, config) ->
+    if params.application.id
+      # update
+      id = params.application.id
+      appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+    else
+      # create
+      appSubmission = $http.post('/api/v1/short-form/application', params)
+
+    appSubmission.success((data, status, headers, config) ->
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber
         Service.application.id = data.id
     ).error( (data, status, headers, config) ->
       alert("Error with submission: #{data.error}")
+      return
+    )
+
+  Service.deleteApplication = (id) ->
+    $http.delete("/api/v1/short-form/application/#{id}").success((data, status) ->
+      console.log(data)
+    ).error( (data, status) ->
+      alert("Error deleting application.")
       return
     )
 

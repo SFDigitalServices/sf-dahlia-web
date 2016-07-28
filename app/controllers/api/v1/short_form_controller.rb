@@ -2,7 +2,7 @@
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_for_existing_application,
-                only: [:submit_application]
+                only: [:update_application, :delete_application]
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -51,6 +51,16 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  def update_application
+    # calls same underlying method, just has its own RESTful route
+    submit_application
+  end
+
+  def delete_application
+    result = ShortFormService.delete(params[:id])
+    render json: result
+  end
+
   private
 
   def send_attached_files(application_id)
@@ -67,10 +77,17 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def authenticate_for_existing_application
-    return true unless application_params[:id].present?
     authenticate_user!
     contact_id = current_user.salesforce_contact_id
-    ShortFormService.ownership?(contact_id, application_params[:id])
+    ShortFormService.ownership?(contact_id, application_id)
+  end
+
+  def application_id
+    if params[:action] == 'submit_application'
+      application_params[:id]
+    else
+      params[:id]
+    end
   end
 
   def contact_id

@@ -1,4 +1,4 @@
-article.feed-item ng-class="applicationStyle()"
+article.feed-item ng-class="applicationStyle()" ng-hide="isDeleted()"
   .feed-item-inner
     header.feed-item-header
       h3.feed-item-title
@@ -34,8 +34,8 @@ article.feed-item ng-class="applicationStyle()"
       .feed-item-links
         a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
           | {{'LABEL.SEE_LISTING' | translate}}
-        a.feed-item-link.a-alert.lined href="#" ng-if="!isSubmitted()"
-          | Delete
+        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)"
+          | {{'T.DELETE' | translate}}
       .feed-item-meta
         p.feed-item-date
           ' {{'LABEL.EDITED' | translate}}:
