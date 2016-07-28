@@ -2,7 +2,8 @@
 
   section.results-container.row.collapse
     hgroup.modal-header.inset.text-center.padding-bottom
-      h1.t-gamma.margin-bottom--half Lottery Results
+      h1.t-gamma.margin-bottom--half
+        | {{'LOTTERY.LOTTERY_RESULTS' | translate}}
       h2#modalTitle.t-caps.t-small.t-alt-sans.t-bold
         | {{listing.Building_Name}}
       p.t-small.c-steel.t-semi.padding-horizontal--3halves
@@ -17,13 +18,15 @@
 
             .small-2.columns
               button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="!lotteryRankingSubmitted" ng-click="showLotteryRanking()"
-                span.sr-only Search
+                span.sr-only
+                  | {{'T.SEARCH' | translate}}
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
                     use xlink:href="#i-right"
 
               button.icon-input-button.button.primary.postfix.squared.no-margin ng-if="lotteryRankingSubmitted" ng-click="clearLotterySearchNumber()"
-                span.sr-only Clear
+                span.sr-only
+                  | {{'T.CLEAR' | translate}}
                 span.ui-icon.ui-static.ui-medium.i-white
                   svg
                     use xlink:href="#i-close"

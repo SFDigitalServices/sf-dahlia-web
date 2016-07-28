@@ -144,6 +144,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
 
+  $scope.lotterNumberValid = ->
+    $scope.listing.Lottery_Ranking.applicationResults[0]
+
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
     ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->

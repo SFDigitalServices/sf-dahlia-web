@@ -1,12 +1,16 @@
 // Lottery Results
 .modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
-  p.t-small Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.
+  p.t-small
+    | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
 .modal-overflow ng-if="!lotteryRankingSubmitted"
   div
     header.modal-inner
-      h2.h-caps-lined Housing Preferences
-      p.t-small.c-steel.no-margin Ranking in these lists is considered in the order shown here.
+      h2.h-caps-lined
+        | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
+      p.t-small.c-steel.no-margin
+        | {{'LOTTERY.BUCKETS_RANKING_INFO' | translate}}
+
     section
       accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
 
@@ -19,7 +23,8 @@
         lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
 
     header.modal-inner
-      h2.h-caps-lined.no-margin General List
+      h2.h-caps-lined.no-margin
+        | {{'LOTTERY.GENERAL_LIST' | translate}}
 
     section
       accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
@@ -27,21 +32,26 @@
         // General Pool
         accordion-group
           accordion-heading
-            h3.accordion-name.semi General Pool
-            span.accordion-subheader.tiny any remaining units
+            h3.accordion-name.semi
+              | {{'LOTTERY.GENERAL_POOL' | translate}}
+            span.accordion-subheader.tiny
+              | {{'LOTTERY.ANY_REMAINING_UNITS' | translate}}
             span.ui-icon.ui-control.ui-small.i-color
               svg
                 use xlink:href="#i-arrow-down"
           .padding.padding-horizontal--3halves
             p.t-small
-              | {{lotteryMembers().length}} applicants are in this list
-            p.t-small.no-margin Please note, all preference holders will be considered for units first.
+              | {{lotteryMembers().length}} {{'LOTTERY.APPLICANTS_IN_LIST' | translate}}
+            p.t-small.no-margin
+              | {{'LOTTERY.PREFERENCES_HOLDERS_CONSIDERED_FIRST' | translate}}
           .overflow-panel
             table.table-small.table-results role="grid"
               thead
                 tr
-                  th scope="col" Rank
-                  th scope="col" Ticket
+                  th scope="col"
+                    | {{'LOTTERY.RANK' | translate}}
+                  th scope="col"
+                    | {{'LOTTERY.TICKET' | translate}}
               tbody
                 tr ng-repeat='lotteryMember in lotteryMembers()'
                   td scope="row"

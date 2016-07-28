@@ -1,7 +1,9 @@
 // Lottery Ranking
 header.modal-inner.padding-top--2x
-  h2.h-caps-lined Your Preference Ranking
-  p.t-small.c-steel.no-margin Ranking in these lists is considered in the order show here.
+  h2.h-caps-lined
+    | {{'LOTTERY.RANKING_TITLE' | translate}}
+  p.t-small.c-steel.no-margin
+    | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
 span ng-if="applicantSelectedForPreference()"
   .alert-box.primary.no-margin
@@ -9,7 +11,8 @@ span ng-if="applicantSelectedForPreference()"
       svg
         use xlink:href="#i-warning"
     p.alert-body
-      | Please note, there are other preferences that will be considered for units first.
+      | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
+
   section
     accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
       lottery-results-ranking pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference"
@@ -18,42 +21,44 @@ span ng-if="applicantSelectedForPreference()"
       lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
 
 span ng-if="!applicantSelectedForPreference()"
-  span ng-if="listing.Lottery_Ranking.applicationResults[0]"
+  span ng-if="lotterNumberValid()"
     .alert-box.primary.no-margin.bg-alert-tint
       span.alert-icon.ui-icon.ui-medium
         svg
           use xlink:href="#i-warning"
       p.alert-body
-        | Please note, preferences holders will be considered for all units first.
+        | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
     section
         accordion.results-accordion.accordion-container.has-stat.expanded-content
           lottery-results-ranking pref_name='General Pool' abrev_pref_name="lottery"
 
-  span ng-if="!listing.Lottery_Ranking.applicationResults[0]"
+  span ng-if="!lotterNumberValid()"
     .alert-box.primary.no-margin
       span.alert-icon.ui-icon.ui-medium
         svg
           use xlink:href="#i-warning"
       p.alert-body
-        | The number you entered was not found.
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P1' | translate}}
 
     section.modal-inner
       p.t-small.c-steel
-          | Review the number you entered to make sure it is correct.
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P2' | translate}}
       p.t-small.c-steel
-          | If you were not selected, we encourage you to apply for other listings.
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P3' | translate}}
 
-section
+section ng-if="lotterNumberValid()"
   accordion.results-accordion.accordion-container.expanded-content
     accordion-group
       accordion-heading
         a.accordion-name.semi.a-dark
-          | What happens next?
+          | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}
         span.ui-icon.ui-control.ui-small.i-color
           svg
             use xlink:href="#i-arrow-down"
       .t-small.padding--3halves
-        p.c-steel.t-small.margin-top Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.
-        p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
-        p.c-steel.t-small If all vacancies are filled for a preference you will still be eligible for units in your following preference.
-
+        p.c-steel.t-small.margin-top
+          | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
+        p.c-steel.t-small
+          | {{'LOTTERY.NEXT_STEPS_P2' | translate}}
+        p.c-steel.t-small
+          | {{'LOTTERY.NEXT_STEPS_P3' | translate}}
