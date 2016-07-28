@@ -196,6 +196,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
+        myApplications: ['AccountService', (AccountService) ->
+          AccountService.getMyApplications()
+        ]
     })
     .state('dahlia.my-favorites', {
       url: '/my-favorites'
