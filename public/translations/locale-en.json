@@ -128,6 +128,7 @@
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
+        "INVALID_EMAIL_CREDENTIALS": "Invalid credentials",
         "LANGUAGE": "Please enter a language",
         "LAST_NAME": "Please enter a Last Name",
         "NOT_ELIGIBLE": "It appears that you wouldn't qualify for this listing due to household size.",

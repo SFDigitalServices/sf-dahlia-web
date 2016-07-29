@@ -15,7 +15,11 @@
               svg
                 use xlink:href="#i-profile"
           h1.dash-title.no-margin Sign In
+
         .dash-card-inner.inset.border-bottom
+
+          alert-box(form-object="form.accountForm" hide-alert="hideAlert" account-error="accountError")
+
           .form-group ng-class="{ error: inputInvalid('email') }"
             h3.form-label.caps
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
