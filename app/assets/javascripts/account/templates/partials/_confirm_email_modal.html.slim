@@ -3,13 +3,16 @@ span ng-controller="AccountController"
     | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
 
   p
-    | {{'CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO' | translate}} {{createdAccount.email}}.
+    | {{confirmEmailSentMessage()}}
   p
     | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}.
 
-  p
-    button.button.margin-top--2x ng-click="resendConfirmationEmail()"
+  p ng-if="!resentConfirmationMessage"
+    button.button.margin-top--2x ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
       | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+
+  div ng-if="resentConfirmationMessage"
+    alert-box(primary="true" hide-alert="hideMessage" custom-message="resentConfirmationMessage")
 
   a.close-reveal-modal aria-label="Close" ng-click="clearCreatedAccount();closeModal()"
     span.ui-icon.ui-static.ui-medium.i-primary

@@ -8,13 +8,16 @@
               use xlink:href="#i-left"
           | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
 
-      form.dash-card novalidate="" name="form.accountForm" ng-submit="signIn()"
+      form#form-wrapper.dash-card novalidate="" name="form.accountForm" ng-submit="signIn()"
         header.dash-header
           span.header-badge
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-profile"
           h1.dash-title.no-margin Sign In
+
+        alert-box(form-object="form.accountForm" hide-alert="hideAlert" account-error="accountError")
+
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') }"
             h3.form-label.caps

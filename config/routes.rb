@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       registrations: 'overrides/registrations',
       sessions: 'overrides/sessions',
       token_validations: 'overrides/token_validations',
+      confirmations: 'overrides/confirmations',
     },
   )
 

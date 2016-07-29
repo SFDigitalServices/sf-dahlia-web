@@ -25,7 +25,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
         Service.accountError.message = null
         return true
       ).catch((response) ->
-        Service.accountError.message = response.data.errors.full_messages[0]
+        msg = response.data.errors.full_messages[0]
+        if msg == 'Email already in use'
+          Service.accountError.message = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
         return false
       )
 
@@ -38,11 +40,11 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
           ShortFormApplicationService.importUserData(Service.loggedInUser)
-      ).catch((response) ->
-        alert("Error: #{response.errors[0]}")
       )
 
-  Service._openConfirmEmailModal = ->
+  Service.openConfirmEmailModal = (email) ->
+    if email
+      Service.createdAccount.email = email
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirm_email_modal.html',
       controller: 'ModalInstanceController',
@@ -76,7 +78,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 
   Service.newAccountConfirmEmailModal = ->
     if Service._accountJustCreated()
-      Service._openConfirmEmailModal()
+      Service.openConfirmEmailModal()
 
   Service._accountJustCreated = ->
     Service.createdAccount.email && !Service.createdAccount.confirmed_at
@@ -85,10 +87,10 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     params =
       email: Service.createdAccount.email
 
-    # TO DO: Write create controller method in rails endpoint
-    $http.post("api/v1/auth/confirmation", params).success((data, status, headers, config) ->
+    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
+      # $modal.close()
       data
-    ).error( (data, status, headers, config) ->
+    ).catch( (data, status, headers, config) ->
       return
     )
 
