@@ -11,7 +11,10 @@ do ->
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeShortFormApplicationService =
-      form: {}
+      form:
+        applicationForm:
+          $valid: true
+          $setPristine: -> undefined
       listing: fakeListing
       applicant:
         home_address: { address1: null, city: null, state: null, zip: null }
@@ -49,10 +52,10 @@ do ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
+      fakeIsLoading: -> false
+      fakeSubmitOptionsForCurrentPage: -> {}
     fakeAccountService = {}
-    fakeShortFormNavigationService =
-      sections: []
-      hasNav: jasmine.createSpy()
+    fakeShortFormNavigationService = undefined
     fakeShortFormHelperService = {}
     fakeAccountService =
       loggedIn: () ->
@@ -64,13 +67,12 @@ do ->
       preventDefault: -> return
 
     beforeEach module('dahlia.controllers', ($provide) ->
-      # fakeListingService =
-        # listing: fakeListing
       fakeShortFormNavigationService =
         sections: []
         hasNav: jasmine.createSpy()
         getLandingPage: spyOn(fakeFunctions, 'fakeGetLandingPage').and.callThrough()
-      # $provide.value 'ListingService', fakeListingService
+        isLoading: spyOn(fakeFunctions, 'fakeIsLoading').and.callThrough()
+        submitOptionsForCurrentPage: spyOn(fakeFunctions, 'fakeSubmitOptionsForCurrentPage').and.callThrough()
       return
     )
 
@@ -121,6 +123,18 @@ do ->
       it 'calls function on navService', ->
         scope.hasNav()
         expect(fakeShortFormNavigationService.hasNav).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.submitForm', ->
+      it 'calls submitOptionsForCurrentPage function on navService if form is valid', ->
+        scope.submitForm()
+        expect(fakeShortFormNavigationService.submitOptionsForCurrentPage).toHaveBeenCalled()
+        return
+
+      it 'calls isLoading function on navService', ->
+        scope.submitForm()
+        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalled()
         return
       return
 

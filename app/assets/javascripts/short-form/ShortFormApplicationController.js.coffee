@@ -107,29 +107,32 @@ ShortFormApplicationController = (
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.hideMessage = false
-  $scope.navService = ShortFormNavigationService
-  $scope.appService = ShortFormApplicationService
-  # allows us to temporarily disable "next / submit" button if needed (e.g. during a request)
-  $scope.submitDisabled = false
 
   unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
-  $scope.submitForm = (options) ->
+  $scope.submitForm = ->
     form = $scope.form.applicationForm
+    ShortFormNavigationService.isLoading(true)
     if form.$valid
-      # submit
-      if options.callback && $scope[options.callback]
-        $scope[options.callback]()
-      if options.path
-        $state.go(options.path)
+      # reset page form state (i.e. reset error messages)
+      form.$setPristine()
+      $scope.handleFormSuccess()
     else
       $scope.handleErrorState()
+
+  $scope.handleFormSuccess = ->
+    options = ShortFormNavigationService.submitOptionsForCurrentPage()
+    if options.callback && $scope[options.callback]
+      $scope[options.callback](options.params)
+    if options.path
+      $state.go(options.path)
 
   $scope.handleErrorState = ->
     # show error alert
     $scope.hideAlert = false
+    ShortFormNavigationService.isLoading(false)
     el = angular.element(document.getElementById('short-form-wrapper'))
     # uses duScroll aka 'angular-scroll' module
     topOffset = 0
@@ -137,7 +140,9 @@ ShortFormApplicationController = (
     $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
+    # console.log($scope.form)
     form = $scope.form.applicationForm
+    return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
     if form && field
@@ -228,7 +233,7 @@ ShortFormApplicationController = (
     if $scope.alternateContact.alternateContactType == 'None'
       ShortFormApplicationService.clearAlternateContactDetails()
       # skip ahead if they aren't filling out an alt. contact
-      $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
+      $scope.goToHouseholdLandingPage()
     else
       if $scope.alternateContact.alternateContactType != 'Social worker or housing counselor'
         $scope.alternateContact.agency = null
@@ -246,7 +251,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.hasBackButton()
 
   $scope.backPageState = ->
-    ShortFormNavigationService.backPageState($scope.application)
+    ShortFormNavigationService.backPageState()
 
   $scope.homeAddressRequired = ->
     !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress)
@@ -263,7 +268,10 @@ ShortFormApplicationController = (
     user.gender['Not Listed'] || user.gender['Decline to State']
 
   $scope.getLandingPage = (section) ->
-    ShortFormNavigationService.getLandingPage(section, $scope.application)
+    ShortFormNavigationService.getLandingPage(section)
+
+  $scope.goToHouseholdLandingPage = ->
+    $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
 
   $scope.getHouseholdLandingPage = (section) ->
     $scope.getLandingPage({name: 'Household'})
@@ -333,7 +341,7 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
+      page = ShortFormNavigationService.getLandingPage({name: 'Review'})
       return $state.go("dahlia.short-form-application.#{page}")
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
@@ -345,7 +353,7 @@ ShortFormApplicationController = (
     if eligibility[match]
       $scope.householdEligibilityErrorMessage = null
       if match == 'incomeMatch'
-        page = ShortFormNavigationService.getLandingPage({name: 'Review'}, $scope.application)
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         $state.go("dahlia.short-form-application.#{page}")
       else
         $state.go('dahlia.short-form-application.status-programs')
@@ -404,11 +412,14 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
+  $scope.isLoading = ->
+    ShortFormNavigationService.isLoading()
+
   $scope.submitApplication = ->
-    $scope.submitDisabled = true
+    ShortFormNavigationService.isLoading(true)
     ShortFormApplicationService.submitApplication({draft: false})
       .then(  ->
-        $scope.submitDisabled = false
+        ShortFormNavigationService.isLoading(false)
         $state.go('dahlia.short-form-application.confirmation')
       )
 
@@ -449,6 +460,7 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.handleErrorState() if $state.params.error
+    ShortFormNavigationService.isLoading(false)
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
