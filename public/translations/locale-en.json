@@ -270,6 +270,7 @@
         "ZIPCODE": "Zipcode"
     },
     "MY_APPLICATIONS": {
+        "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
     "SIGN_IN": {
@@ -289,6 +290,7 @@
         "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
+        "NEVER_SUBMITTED": "Never Submitted",
         "NEXT": "Next",
         "NO": "No",
         "NONE": "None",

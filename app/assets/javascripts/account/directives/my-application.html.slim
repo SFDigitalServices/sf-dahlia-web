@@ -1,4 +1,4 @@
-article.feed-item ng-class="applicationStyle()" ng-hide="isDeleted()"
+article.feed-item.anim-fade-out ng-class="applicationStyle()" ng-hide="isDeleted()"
   .feed-item-inner
     header.feed-item-header
       h3.feed-item-title
@@ -23,12 +23,18 @@ article.feed-item ng-class="applicationStyle()" ng-hide="isDeleted()"
         a.button.small href="#"
           | {{'LABEL.VIEW_APPLICATION' | translate}}
 
-      .feed-item-action ng-if="!isSubmitted()"
+      .feed-item-action ng-if="!isSubmitted() && !isPastDue()"
         p.feed-item-status
           ' {{'T.STATUS' | translate}}:
           | {{'T.IN_PROGRESS' | translate}}
         a.button.small.primary href="#"
           | {{'LABEL.CONTINUE_APPLICATION' | translate}}
+
+      .feed-item-action ng-if="!isSubmitted() && isPastDue()"
+        p.feed-item-status
+          span.feed-item-label.is-past-due
+            ' {{'T.STATUS' | translate}}:
+            | {{'T.NEVER_SUBMITTED' | translate}}
 
     footer.feed-item-footer
       .feed-item-links

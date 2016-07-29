@@ -359,7 +359,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
 
   Service.deleteApplication = (id) ->
     $http.delete("/api/v1/short-form/application/#{id}").success((data, status) ->
-      console.log(data)
+      true
     ).error( (data, status) ->
       alert("Error deleting application.")
       return

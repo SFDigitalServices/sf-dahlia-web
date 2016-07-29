@@ -1,8 +1,10 @@
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
-  before_action :authenticate_for_existing_application,
-                only: [:update_application, :delete_application]
+  before_action :authenticate_user!,
+                only: %i(update_application delete_application)
+  before_action :check_application_ownership,
+                only: %i(update_application delete_application)
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -76,10 +78,10 @@ class Api::V1::ShortFormController < ApiController
     ).deliver_now
   end
 
-  def authenticate_for_existing_application
-    authenticate_user!
+  def check_application_ownership
     contact_id = current_user.salesforce_contact_id
-    ShortFormService.ownership?(contact_id, application_id)
+    access = ShortFormService.ownership?(contact_id, application_id)
+    render json: { error: 'unauthorized' }, status: 401 unless access
   end
 
   def application_id

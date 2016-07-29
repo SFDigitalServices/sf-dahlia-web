@@ -33,6 +33,9 @@ class GeocodingService
       f: 'pjson',
     }
     HTTP.get(API_URL + "?#{query_params.to_query}").to_s
+  rescue
+    puts 'GEOCODING ERROR!'
+    '{"candidates": []}'
   end
 
   def json_data

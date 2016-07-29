@@ -1,7 +1,7 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
-  '$translate', 'ShortFormApplicationService', 'ListingService',
-  ($translate, ShortFormApplicationService, ListingService) ->
+  '$translate', '$window', 'ShortFormApplicationService', 'ListingService',
+  ($translate, $window, ShortFormApplicationService, ListingService) ->
     replace: true
     scope:
       application: '=application'
@@ -25,17 +25,25 @@ angular.module('dahlia.directives')
         summary.join(', ')
 
       scope.deleteApplication = (id) ->
-        ShortFormApplicationService.deleteApplication(id).success ->
-          scope.deleted = true
+        if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
+          ShortFormApplicationService.deleteApplication(id).success ->
+            scope.deleted = true
 
       scope.formattedAddress = ->
         ListingService.formattedAddress(scope.listing, 'Building')
 
       scope.applicationStyle = ->
-        if scope.isSubmitted() then 'is-submitted' else 'is-editable'
+        {
+          'is-submitted': scope.isSubmitted()
+          'is-past-due': scope.isPastDue()
+          'is-editable': !scope.isSubmitted()
+        }
 
       scope.isSubmitted = ->
         scope.application.status == 'Submitted'
+
+      scope.isPastDue = ->
+        moment(scope.listing.Application_Due_Date) < moment()
 
       scope.lotteryNumber = ->
         { lotteryNumber: scope.application.lotteryNumber }
