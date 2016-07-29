@@ -40,9 +40,12 @@ module SalesforceService
       files.destroy_all
     end
 
-    def self.ownership?(contact_id, application_id)
-      application = get(application_id)
+    def self.ownership?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
+    end
+
+    def self.submitted?(application)
+      application['status'] == 'Submitted'
     end
   end
 end

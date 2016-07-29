@@ -3,8 +3,6 @@ class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_user!,
                 only: %i(update_application delete_application)
-  before_action :check_application_ownership,
-                only: %i(update_application delete_application)
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -54,11 +52,16 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def update_application
-    # calls same underlying method, just has its own RESTful route
+    @application = ShortFormService.get(application_params[:id])
+    return render_unauthorized_error unless user_can_modify(@application)
+    # calls same underlying method for submit
     submit_application
   end
 
   def delete_application
+    @application = ShortFormService.get(params[:id])
+    return render_unauthorized_error unless user_can_modify(@application)
+    return render_unauthorized_error if submitted?(@application)
     result = ShortFormService.delete(params[:id])
     render json: result
   end
@@ -78,18 +81,17 @@ class Api::V1::ShortFormController < ApiController
     ).deliver_now
   end
 
-  def check_application_ownership
+  def user_can_modify(application)
     contact_id = current_user.salesforce_contact_id
-    access = ShortFormService.ownership?(contact_id, application_id)
-    render json: { error: 'unauthorized' }, status: 401 unless access
+    ShortFormService.ownership?(contact_id, application)
   end
 
-  def application_id
-    if params[:action] == 'submit_application'
-      application_params[:id]
-    else
-      params[:id]
-    end
+  def submitted?(application)
+    ShortFormService.submitted?(application)
+  end
+
+  def render_unauthorized_error
+    render json: { error: 'unauthorized' }, status: 401
   end
 
   def contact_id
