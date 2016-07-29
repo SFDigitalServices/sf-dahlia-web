@@ -24,7 +24,10 @@ module Overrides
           salesforce_contact_id: salesforce_contact['contactId'],
         )
       else
-        @resource.destroy
+        # TODO: Fix this error handling.
+        # this doesn't totally work -- render gets called twice
+        # also if there was an error we've already sent them the email
+        @resource.destroy if params[:action] == 'create'
         render_create_error
       end
     end

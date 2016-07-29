@@ -10,6 +10,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.hideMessage = false
   $scope.accountError = AccountService.accountError
   $scope.submitDisabled = false
+  $scope.resendDisabled = false
+  # track if user has re-sent confirmation inside the modal
+  $scope.resentConfirmationMessage = null
 
   $scope.handleErrorState = ->
     # show error alert
@@ -53,11 +56,22 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
-      AccountService.signIn().then ->
+      AccountService.signIn().then( ->
         $scope.submitDisabled = false
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
+      ).catch( ->
+        $scope.submitDisabled = false
+      )
     else
+      $scope.handleErrorState()
+
+  $scope.$on 'auth:login-error', (ev, reason) ->
+    if (reason.error == 'not_confirmed')
+      AccountService.openConfirmEmailModal(reason.email)
+    else
+      # if (reason.error == 'bad_credentials')
+      $scope.accountError = {message: $translate.instant('SIGN_IN.BAD_CREDENTIALS')}
       $scope.handleErrorState()
 
   $scope.isLocked = (field) ->
@@ -66,8 +80,19 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.emailConfirmInstructions = ->
     $translate.instant('CREATE_ACCOUNT.EMAIL_CONFIRM_INSTRUCTIONS')
 
+  $scope.confirmEmailSentMessage = ->
+    interpolate = { email: $scope.createdAccount.email }
+    $translate.instant('CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO', interpolate)
+
   $scope.resendConfirmationEmail = ->
-    AccountService.resendConfirmationEmail()
+    $scope.resendDisabled = true
+    $scope.resentConfirmationMessage = null
+    AccountService.resendConfirmationEmail().then( ->
+      $scope.resendDisabled = false
+      $scope.resentConfirmationMessage = $translate.instant('SIGN_IN.RESENT_CONFIRMATION_MESSAGE')
+    ).catch( ->
+      $scope.resendDisabled = false
+    )
 
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
