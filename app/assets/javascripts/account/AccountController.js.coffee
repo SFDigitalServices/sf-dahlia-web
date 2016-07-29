@@ -83,7 +83,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $state.go('dahlia.sign-in', {skipConfirm: true})
       )
     else
-      $statee.go('dahlia.sign-in')
+      $state.go('dahlia.sign-in')
 
   $scope._userInShortFormSession = ->
     shortFormCreateAccountPath = 'dahlia.short-form-application.create-account'
