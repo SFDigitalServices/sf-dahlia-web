@@ -18,6 +18,14 @@ module SalesforceService
       api_get("/shortForm/#{id}")
     end
 
+    def self.get_for_user(contact_id)
+      api_get("/shortForm/list/#{contact_id}")
+    end
+
+    def self.delete(id)
+      api_post('/shortForm/delete/', id: id)
+    end
+
     def self.attach_file(application_id, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/file/#{application_id}"
@@ -32,9 +40,12 @@ module SalesforceService
       files.destroy_all
     end
 
-    def self.ownership?(contact_id, application_id)
-      application = get(application_id)
+    def self.ownership?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
+    end
+
+    def self.submitted?(application)
+      application['status'] == 'Submitted'
     end
   end
 end

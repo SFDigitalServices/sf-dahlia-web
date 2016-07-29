@@ -417,7 +417,7 @@ ShortFormApplicationController = (
     # prevent normal short form page submit
     ev.preventDefault()
     if AccountService.loggedIn()
-      ShortFormApplicationService.submitApplication({draft: true}).then(
+      ShortFormApplicationService.submitApplication({draft: true}).then((response) ->
         $state.go('dahlia.my-applications', {skipConfirm: true})
       )
     else

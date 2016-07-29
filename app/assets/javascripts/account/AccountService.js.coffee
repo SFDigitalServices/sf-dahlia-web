@@ -7,6 +7,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
+  Service.myApplications = []
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
@@ -92,6 +93,12 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
       data
     ).catch( (data, status, headers, config) ->
       return
+    )
+
+  Service.getMyApplications = ->
+    $http.get('/api/v1/account/my-applications').success((data) ->
+      if data.applications
+        angular.copy(data.applications, Service.myApplications)
     )
 
   #################### helper functions
