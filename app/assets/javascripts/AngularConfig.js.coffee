@@ -22,6 +22,7 @@
   'ui.validate',
   'ng-token-auth',
   'angular-uuid',
+  'ngAnimate'
 ]
 
 # Custom Directives
@@ -328,10 +329,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.short-form-welcome', {
       url: '/listings/:id/apply-welcome'
       abstract: true
-      views:
-        'container@':
-          templateUrl: 'short-form/templates/layout.html'
-          controller: 'ShortFormApplicationController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id)
@@ -347,8 +344,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
-        'container':
+        'container@':
           templateUrl: 'short-form/templates/a2-overview.html'
+          controller: 'ShortFormApplicationController'
     })
     ## -- Short Form Application pages -- ##
     .state('dahlia.short-form-application', {
