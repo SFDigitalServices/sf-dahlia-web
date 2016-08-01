@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
+AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplicationService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
@@ -20,15 +20,19 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     if shortFormSession
       Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
     $auth.submitRegistration(Service.userAuth)
-      .then((response) ->
-        angular.copy(response.data.data, Service.createdAccount)
+      .success((response) ->
+        angular.copy(response.data, Service.createdAccount)
         angular.copy({}, Service.userAuth)
         Service.accountError.message = null
         return true
-      ).catch((response) ->
-        msg = response.data.errors.full_messages[0]
+      ).error((response) ->
+        msg = response.errors.full_messages[0]
         if msg == 'Email already in use'
           Service.accountError.message = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+        else if msg == 'Salesforce contact can\'t be blank'
+          Service.accountError.message = $translate.instant("ERROR.CREATE_ACCOUNT")
+        else
+          Service.accountError.message = msg
         return false
       )
 
@@ -146,7 +150,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth', '$modal', '$http', 'ShortFormApplicationService']
+AccountService.$inject = [
+  '$state', '$auth', '$modal', '$http', '$translate', 'ShortFormApplicationService'
+]
 
 angular
   .module('dahlia.services')

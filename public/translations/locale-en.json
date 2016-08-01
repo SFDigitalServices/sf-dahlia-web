@@ -56,7 +56,7 @@
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
     "CONFIRM_ACCOUNT": {
-        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address",
+        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in the email we sent you in order to complete account creation.",
         "CONFIRMATION_NEEDED": "Confirmation needed",
         "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to {{email}}.",
         "RESEND_EMAIL": "Resend the email"
@@ -111,6 +111,7 @@
         "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
         "CITY": "Please enter a city",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
+        "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "DOB": "Please enter a valid Date of Birth",
         "EMAIL": "Please enter an email address",
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",

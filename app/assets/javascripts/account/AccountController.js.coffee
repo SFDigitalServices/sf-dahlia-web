@@ -14,6 +14,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   # track if user has re-sent confirmation inside the modal
   $scope.resentConfirmationMessage = null
 
+  $scope.accountForm = ->
+    # pick up which ever one is defined (the other will be undefined)
+    $scope.form.signIn || $scope.form.createAccount
+
   $scope.handleErrorState = ->
     # show error alert
     $scope.hideAlert = false
@@ -24,14 +28,15 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
-    form = $scope.form.accountForm
+    form = $scope.accountForm()
+    return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
 
   $scope.createAccount = ->
-    form = $scope.form.accountForm
+    form = $scope.accountForm()
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -47,12 +52,15 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
           form.$setPristine()
           $scope._createAccountRedirect()
           $scope.hideAlert = false
+      ).catch( ->
+        $scope.handleErrorState()
+        $scope.submitDisabled = false
       )
     else
       $scope.handleErrorState()
 
   $scope.signIn = ->
-    form = $scope.form.accountForm
+    form = $scope.accountForm()
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -61,6 +69,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         if AccountService.loggedIn()
           return $state.go('dahlia.my-account')
       ).catch( ->
+        $scope.handleErrorState()
         $scope.submitDisabled = false
       )
     else

@@ -5,7 +5,7 @@ span ng-controller="AccountController"
   p
     | {{confirmEmailSentMessage()}}
   p
-    | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}.
+    | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
 
   p ng-if="!resentConfirmationMessage"
     button.button.margin-top--2x ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"

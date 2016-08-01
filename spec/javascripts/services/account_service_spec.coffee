@@ -12,6 +12,7 @@ do ->
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
     fakeShortFormApplicationService =
       applicant: {}
+      importUserData: ->
     modalMock =
       open: () ->
         return
@@ -36,18 +37,15 @@ do ->
       $auth = _$auth_
       $q = _$q_
       httpBackend = _$httpBackend_
-      spyOn($auth, 'submitRegistration').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
-      spyOn($auth, 'submitLogin').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
-      spyOn($auth, 'validateUser').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
+      fakeHttp =
+        success: (callback) ->
+          callback({})
+          { error: -> return }
+        error: (callback) -> callback({})
+        then: (callback) -> callback({})
+      spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
+      spyOn($auth, 'submitLogin').and.callFake -> fakeHttp
+      spyOn($auth, 'validateUser').and.callFake -> fakeHttp
       AccountService = _AccountService_
       requestURL = AccountService.requestURL
       return
