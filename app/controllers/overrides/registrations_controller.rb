@@ -8,41 +8,6 @@ module Overrides
     # method copied from original gem; refactored to please Rubocop
     def create
       setup_resource_for_create
-      error_checks_for_create
-
-      begin
-        # override email confirmation, must be sent manually from ctrl
-        resource_class.set_callback('create',
-                                    :after,
-                                    :send_on_create_confirmation_instructions)
-        resource_class.skip_callback('create',
-                                     :after,
-                                     :send_on_create_confirmation_instructions)
-        if @resource.save
-          synced = sync_with_salesforce
-          unless synced
-            # undo user creation
-            @resource.destroy
-            return render_create_error
-          end
-
-          yield @resource if block_given?
-          handle_registration_success
-          render_create_success
-        else
-          clean_up_passwords @resource
-          render_create_error
-        end
-      rescue ActiveRecord::RecordNotUnique
-        clean_up_passwords @resource
-        render_create_error_email_already_exists
-      end
-    end
-
-    private
-
-    def error_checks_for_create
-      # success redirect url is required
       if resource_class.devise_modules.include?(:confirmable) && !@redirect_url
         return render_create_error_missing_confirm_success_url
       end
@@ -53,6 +18,26 @@ module Overrides
           return render_create_error_redirect_url_not_allowed
         end
       end
+
+      begin
+        # override email confirmation, must be sent manually from ctrl
+        resource_class.set_callback('create',
+                                    :after,
+                                    :send_on_create_confirmation_instructions)
+        resource_class.skip_callback('create',
+                                     :after,
+                                     :send_on_create_confirmation_instructions)
+        save_and_render_resource
+      rescue ActiveRecord::RecordNotUnique
+        clean_up_passwords @resource
+        render_create_error_email_already_exists
+      end
+    end
+
+    private
+
+    def error_checks_for_create
+      # success redirect url is required
     end
 
     def setup_resource_for_create
@@ -91,6 +76,24 @@ module Overrides
         }
         @resource.save!
         update_auth_header
+      end
+    end
+
+    def save_and_render_resource
+      if @resource.save
+        synced = sync_with_salesforce
+        unless synced
+          # undo user creation
+          @resource.destroy
+          return render_create_error
+        end
+
+        yield @resource if block_given?
+        handle_registration_success
+        render_create_success
+      else
+        clean_up_passwords @resource
+        render_create_error
       end
     end
 
