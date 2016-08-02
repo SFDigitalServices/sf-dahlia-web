@@ -56,9 +56,13 @@
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
     "CONFIRM_ACCOUNT": {
+        "ACCOUNT_ALREADY_CONFIRMED": "This account has already been confirmed",
         "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in the email we sent you in order to complete account creation.",
+        "CONFIRMATION_LINK_EXPIRED": "This link has expired",
         "CONFIRMATION_NEEDED": "Confirmation needed",
         "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to {{email}}.",
+        "EXPIRED_EMAIL_SENT_TO": "A confirmation email has been sent to {{email}}, but that email expired after 24 hours. We can resend an email to this same address.",
+        "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
     },
     "CREATE_ACCOUNT": {
@@ -299,6 +303,7 @@
         "NEXT": "Next",
         "NO": "No",
         "NONE": "None",
+        "OK": "OK",
         "OPTIONAL": "Optional",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",

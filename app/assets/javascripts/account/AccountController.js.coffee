@@ -46,7 +46,6 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
           uid: ShortFormApplicationService.session_uid
           userkey: ShortFormApplicationService.userkey
       AccountService.createAccount(shortFormSession).then( (success) ->
-        $scope.submitDisabled = false
         if success
           form.$setUntouched()
           form.$setPristine()
@@ -93,6 +92,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     interpolate = { email: $scope.createdAccount.email }
     $translate.instant('CONFIRM_ACCOUNT.EMAIL_HAS_BEEN_SENT_TO', interpolate)
 
+  $scope.confirmEmailExpiredMessage = ->
+    interpolate = { email: $scope.createdAccount.email }
+    $translate.instant('CONFIRM_ACCOUNT.EXPIRED_EMAIL_SENT_TO', interpolate)
+
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true
     $scope.resentConfirmationMessage = null
@@ -114,9 +117,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       ShortFormApplicationService.submitApplication(
         {draft: true, attachToAccount: true}
       ).then ->
-        $state.go('dahlia.sign-in', {skipConfirm: true})
+        $state.go('dahlia.sign-in', {skipConfirm: true, newAccount: true})
     else
-      $state.go('dahlia.sign-in')
+      $state.go('dahlia.sign-in', {newAccount: true})
 
   $scope._userInShortFormSession = ->
     $state.current.name == 'dahlia.short-form-application.create-account'

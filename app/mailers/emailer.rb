@@ -17,7 +17,12 @@ class Emailer < Devise::Mailer
   end
 
   def confirmation_instructions(record, token, opts = {})
-    @contact = AccountService.get(record.salesforce_contact_id)
+    contact = AccountService.get(record.salesforce_contact_id)
+    @name = if contact.present?
+              "#{contact['firstName']} #{contact['lastName']}"
+            else
+              record.email
+            end
     super
   end
 

@@ -5,26 +5,23 @@ module Overrides
     def show
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
-      if @resource and @resource.id
+      if @resource && @resource.id
+        return if check_for_link_expiration
         # create client id
-        client_id  = SecureRandom.urlsafe_base64(nil, false)
-        token      = SecureRandom.urlsafe_base64(nil, false)
-        token_hash = BCrypt::Password.create(token)
-        expiry     = (Time.now + DeviseTokenAuth.token_lifespan).to_i
-
-        add_resource_token(client_id, token_hash, expiry)
+        add_resource_token
 
         yield if block_given?
 
         redirect_to(@resource.build_auth_url(
-                      params[:redirect_url],
-                      token: token,
-                      client_id: client_id,
+                      redirect_url,
+                      token: @token,
+                      client_id: @client_id,
                       account_confirmation_success: true,
                       config: params[:config],
         ))
       else
-        raise ActionController::RoutingError, 'Not Found'
+        # raise ActionController::RoutingError, 'Not Found'
+        redirect_to root_url
       end
     end
 
@@ -40,10 +37,34 @@ module Overrides
 
     private
 
-    def add_resource_token(client_id, token_hash, expiry)
-      @resource.tokens[client_id] = {
-        token:  token_hash,
-        expiry: expiry,
+    def check_for_link_expiration
+      if @resource.errors[:salesforce_contact_id].present?
+        redirect_to "/sign-in?expiredUnconfirmed=#{@resource.email}"
+        true
+      end
+      if @resource.confirmed?
+        redirect_to "/sign-in?expiredConfirmed=#{@resource.email}"
+        true
+      end
+    end
+
+    def redirect_url
+      if params[:redirect_url].present?
+        params[:redirect_url]
+      else
+        root_url + 'my-account'
+      end
+    end
+
+    def add_resource_token
+      @client_id  = SecureRandom.urlsafe_base64(nil, false)
+      @token      = SecureRandom.urlsafe_base64(nil, false)
+      @token_hash = BCrypt::Password.create(@token)
+      @expiry     = (Time.now + DeviseTokenAuth.token_lifespan).to_i
+
+      @resource.tokens[@client_id] = {
+        token:  @token_hash,
+        expiry: @expiry,
       }
       @resource.save!
     end

@@ -10,6 +10,7 @@ AccountConfirmationService = ($state, $location, AccountService) ->
     "#{$location.protocol()}://#{$location.host()}#{port}"
 
   Service.confirmationSuccessUrl = ->
+    # give absolute (full) URL to provide to server for redirect
     # TODO: update this logic using AccountService once we are ready
     #       to set up confirmation success pages + modals
     $state.href('dahlia.my-account', {}, {absolute: true})

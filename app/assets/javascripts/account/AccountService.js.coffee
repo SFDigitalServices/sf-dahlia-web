@@ -56,6 +56,16 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       windowClass: 'modal-large'
     })
 
+  Service.openConfirmationExpiredModal = (email, confirmed = false) ->
+    Service.createdAccount.confirmed = confirmed
+    if email
+      Service.createdAccount.email = email
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
+
   Service._formatDOB = ->
     month = Service.userAuth.dob_month
     day = Service.userAuth.dob_day
@@ -81,13 +91,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.loggedIn = ->
     return false if !Service.loggedInUser
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
-
-  Service.newAccountConfirmEmailModal = ->
-    if Service._accountJustCreated()
-      Service.openConfirmEmailModal()
-
-  Service._accountJustCreated = ->
-    Service.createdAccount.email && !Service.createdAccount.confirmed_at
 
   Service.resendConfirmationEmail = ->
     params =
