@@ -122,7 +122,7 @@ module Overrides
     def sync_with_salesforce
       return false if @resource.errors.any?
       salesforce_contact = AccountService.create_or_update(account_params)
-      unless salesforce_contact['contactId'].present?
+      unless salesforce_contact && salesforce_contact['contactId'].present?
         @resource.errors.set(:salesforce_contact_id, ["can't be blank"])
         return false
       end
