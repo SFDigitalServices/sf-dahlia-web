@@ -34,6 +34,9 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active_model-errors_details (1.3.0)
+      activemodel (>= 3.2.13, < 5.0.0.beta1)
+      activesupport
     activejob (4.2.6)
       activesupport (= 4.2.6)
       globalid (>= 0.3.0)
@@ -333,6 +336,7 @@ PLATFORMS
 DEPENDENCIES
   StreetAddress
   actionmailer-text
+  active_model-errors_details
   angular-rails-templates
   awesome_print
   better_errors

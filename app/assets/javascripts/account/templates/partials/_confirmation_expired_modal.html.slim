@@ -1,0 +1,17 @@
+div ng-controller="AccountController"
+  h1 ng-if="createdAccount.confirmed"
+    | {{'CONFIRM_ACCOUNT.ACCOUNT_ALREADY_CONFIRMED' | translate}}
+  h1 ng-if="!createdAccount.confirmed"
+    | {{'CONFIRM_ACCOUNT.CONFIRMATION_LINK_EXPIRED' | translate}}
+  p ng-if="createdAccount.confirmed"
+    | {{'CONFIRM_ACCOUNT.PLEASE_LOGIN' | translate}}
+  p ng-if="!createdAccount.confirmed"
+    | {{confirmEmailExpiredMessage()}}
+
+  ng-include src="'account/templates/partials/_resend_confirmation_button.html'" ng-if="!createdAccount.confirmed"
+
+  p ng-if="createdAccount.confirmed"
+    button.button.margin-top--2x ng-click="closeModal()"
+      | {{'T.OK' | translate}}
+
+  ng-include src="'account/templates/partials/_modal_close.html'"

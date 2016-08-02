@@ -6,7 +6,7 @@ module Overrides
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
       if @resource && @resource.id
-        return if check_for_link_expiration
+        return redirect_for_link_expiration if @resource.errors[:email].present?
         # create client id
         add_resource_token
 
@@ -20,8 +20,11 @@ module Overrides
                       config: params[:config],
         ))
       else
-        # raise ActionController::RoutingError, 'Not Found'
-        redirect_to root_url
+        # no user was found with that confirmation token.
+        # provide a more helpful error than just redirecting them?
+        # although we can't determine their user/email, or if
+        # their account has already been confirmed or not.
+        redirect_to '/sign-in'
       end
     end
 
@@ -37,14 +40,12 @@ module Overrides
 
     private
 
-    def check_for_link_expiration
-      if @resource.errors[:salesforce_contact_id].present?
+    def redirect_for_link_expiration
+      error_details = @resource.error_details(:email)
+      if error_details.include?(:confirmation_period_expired)
         redirect_to "/sign-in?expiredUnconfirmed=#{@resource.email}"
-        true
-      end
-      if @resource.confirmed?
+      else
         redirect_to "/sign-in?expiredConfirmed=#{@resource.email}"
-        true
       end
     end
 
