@@ -7,7 +7,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
-  Service.myApplications = []
+  Service.myApplications = false
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
@@ -111,7 +111,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 
   # reverse of the above function
   Service._reformatDOB = ->
-    return false if _.isEmpty(Service.loggedInUser)
+    return false if _.isEmpty(Service.loggedInUser) || typeof Service.loggedInUser != 'undefined'
     split = Service.loggedInUser.DOB.split('-')
     Service.loggedInUser.dob_year = parseInt(split[0])
     Service.loggedInUser.dob_month = parseInt(split[1])

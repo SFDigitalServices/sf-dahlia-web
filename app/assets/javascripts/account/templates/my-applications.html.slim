@@ -8,4 +8,8 @@
               svg
                 use xlink:href="#i-application"
           h1.dash-title.no-margin My Applications
+        .block--short.bg-dust.dash-footer ng-if="!myApplications"
+          h2.t-delta.t-serif.c-oil
+            | It looks like you haven’t applied to any listings yet.
+          a.button.ghost-white ui-sref="dahlia.listings" Browse Properties
         my-application ng-repeat="application in myApplications" application="application"
