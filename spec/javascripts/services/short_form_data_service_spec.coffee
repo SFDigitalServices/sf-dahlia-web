@@ -7,6 +7,7 @@ do ->
     fakeListingId = 'a0WU000000CkiM3MAJ'
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
+    fakeListingId = 'a0WU000000CkiM3MAJ'
 
     beforeEach module('dahlia.services', ($provide) ->
       return
@@ -28,7 +29,6 @@ do ->
       it 'renames applicant to primaryApplicant', ->
         expect(formatted.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
         return
-
 
     describe 'reformatApplication', ->
       beforeEach ->

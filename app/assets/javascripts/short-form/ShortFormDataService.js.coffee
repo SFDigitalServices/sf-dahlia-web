@@ -8,8 +8,6 @@ ShortFormDataService = () ->
     'neighborhoodResidence'
   ]
 
-
-
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
     application.listingID = listingId
@@ -117,7 +115,6 @@ ShortFormDataService = () ->
   Service._formatPreferences = (application) ->
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-
     preferences = angular.copy(Service.preferences)
     preferences.forEach( (preference) ->
       memberName = application.preferences[preference + '_household_member']
@@ -138,6 +135,7 @@ ShortFormDataService = () ->
       application.householdVouchersSubsidies = true
     else if application.householdVouchersSubsidies == 'No'
       application.householdVouchersSubsidies = false
+    delete application.householdVouchersSubsidies
     delete application.preferences
     return application
 
@@ -189,7 +187,6 @@ ShortFormDataService = () ->
         member.workInSf = false
     )
     return application
-
 
   #############################################
   # Reverse formatting functions (Salesforce -> Web app)
@@ -322,7 +319,6 @@ ShortFormDataService = () ->
       'Yes'
     else if bool == false
       'No'
-
 
   return Service
 
