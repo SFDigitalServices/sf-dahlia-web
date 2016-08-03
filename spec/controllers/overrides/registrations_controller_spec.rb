@@ -8,12 +8,17 @@ describe Overrides::RegistrationsController do
   describe 'create' do
     let(:valid_user_params) do
       {
-        firstName: 'Jane',
-        lastName: 'Doe',
-        email: 'jane@doe.com',
-        DOB: '1985-07-23',
-        password: 'somepassword',
-        password_confirmation: 'somepassword',
+        user: {
+          email: 'jane@doe.com',
+          password: 'somepassword',
+          password_confirmation: 'somepassword',
+        },
+        contact: {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          DOB: '1985-07-23',
+          email: 'jane@doe.com',
+        },
         confirm_success_url: 'http://localhost/my-account',
       }
     end

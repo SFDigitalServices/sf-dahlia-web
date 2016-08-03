@@ -2,7 +2,7 @@ module Overrides
   # Overrides to DeviseTokenAuth
   class RegistrationsController < DeviseTokenAuth::RegistrationsController
     after_action :sync_with_salesforce, only: [:update]
-    before_action :configure_permitted_parameters, if: :devise_controller?
+    # before_action :configure_permitted_parameters, if: :devise_controller?
     AccountService = SalesforceService::AccountService
 
     # method copied from original gem; refactored to please Rubocop
@@ -132,12 +132,15 @@ module Overrides
     end
 
     def account_params
-      params.permit(:firstName, :middleName, :lastName, :DOB, :email)
+      params
+        .require(:contact)
+        .permit(:firstName, :middleName, :lastName, :DOB, :email)
     end
 
-    def configure_permitted_parameters
-      permitted = devise_parameter_sanitizer.instance_values['permitted']
-      permitted[:sign_up] << :temp_session_id
+    def sign_up_params
+      params
+        .require(:user)
+        .permit(:email, :password, :password_confirmation, :temp_session_id)
     end
   end
 end
