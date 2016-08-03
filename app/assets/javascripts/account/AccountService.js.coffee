@@ -2,10 +2,13 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplicationService) ->
+AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplicationService, ShortFormDataService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
-  Service.userAuth = {}
+  Service.userAuthDefaults =
+    user: {}
+    contact: {}
+  Service.userAuth = angular.copy(Service.userAuthDefaults)
   Service.loggedInUser = {}
   Service.myApplications = []
   Service.createdAccount = {}
@@ -15,14 +18,17 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
 
+  Service.loggedIn = ->
+    return false if !Service.loggedInUser
+    !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
+
   Service.createAccount = (shortFormSession) ->
-    Service._formatDOB()
     if shortFormSession
-      Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
-    $auth.submitRegistration(Service.userAuth)
+      Service.userAuth.user.temp_session_id = shortFormSession.uid + shortFormSession.userkey
+    $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
-        angular.copy({}, Service.userAuth)
+        angular.copy(Service.userAuthDefaults, Service.userAuth)
         Service.accountError.message = null
         return true
       ).error((response) ->
@@ -37,10 +43,10 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       )
 
   Service.signIn = ->
-    $auth.submitLogin(Service.userAuth)
+    $auth.submitLogin(Service.userAuth.user)
       .then((response) ->
         # reset userAuth object
-        angular.copy({}, Service.userAuth)
+        angular.copy(Service.userAuthDefaults, Service.userAuth)
         if response.signedIn
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
@@ -73,6 +79,39 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       Service.accountError.message = $translate.instant("ERROR.PASSWORD_UPDATE")
     return
 
+  Service.signOut = ->
+    $auth.signOut()
+      .then((response) ->
+        angular.copy({}, Service.loggedInUser)
+      )
+
+  # this gets run on init of the app in AngularConfig to check if we're logged in
+  Service.validateUser = ->
+    $auth.validateUser().then((response) ->
+      # will only reach this state if user is logged in w/ a token
+      angular.copy(response, Service.loggedInUser)
+      Service._reformatDOB()
+      ShortFormApplicationService.importUserData(Service.loggedInUser)
+    )
+
+  Service.resendConfirmationEmail = ->
+    params =
+      email: Service.createdAccount.email
+
+    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
+      # $modal.close()
+      data
+    ).catch( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getMyApplications = ->
+    $http.get('/api/v1/account/my-applications').success((data) ->
+      if data.applications
+        angular.copy(data.applications, Service.myApplications)
+    )
+
+  #################### modals
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
@@ -92,58 +131,17 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       windowClass: 'modal-large'
     })
 
-  Service._formatDOB = ->
-    month = Service.userAuth.dob_month
-    day = Service.userAuth.dob_day
-    year = Service.userAuth.dob_year
-    formattedDOB = year + '-' + month + '-' + day
-    Service.userAuth.DOB = formattedDOB
-
-  Service.signOut = ->
-    $auth.signOut()
-      .then((response) ->
-        angular.copy({}, Service.loggedInUser)
-      )
-
-  # this gets run on init of the app in AngularConfig to check if we're logged in
-  Service.validateUser = ->
-    $auth.validateUser().then((response) ->
-      # will only reach this state if user is logged in w/ a token
-      angular.copy(response, Service.loggedInUser)
-      Service._reformatDOB()
-      ShortFormApplicationService.importUserData(Service.loggedInUser)
-    )
-
-  Service.loggedIn = ->
-    return false if !Service.loggedInUser
-    !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
-
-  Service.resendConfirmationEmail = ->
-    params =
-      email: Service.createdAccount.email
-
-    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
-      # $modal.close()
-      data
-    ).catch( (data, status, headers, config) ->
-      return
-    )
-
-  Service.getMyApplications = ->
-    $http.get('/api/v1/account/my-applications').success((data) ->
-      if data.applications
-        angular.copy(data.applications, Service.myApplications)
-    )
 
   #################### helper functions
-  Service._formatDOB = ->
-    month = Service.userAuth.dob_month
-    day = Service.userAuth.dob_day
-    year = Service.userAuth.dob_year
-    formattedDOB = year + '-' + month + '-' + day
-    Service.userAuth.DOB = formattedDOB
+  Service._createAccountParams = ->
+    contact = _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
+    contact.DOB = ShortFormDataService.formatUserDOB(contact)
+    contact = ShortFormDataService.removeDOBFields(contact)
+    return {
+      user: _.omit(Service.userAuth.user, ['email_confirmation'])
+      contact: contact
+    }
 
-  # reverse of the above function
   Service._reformatDOB = ->
     return false if !Service.loggedIn()
     split = Service.loggedInUser.DOB.split('-')
@@ -183,7 +181,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 ############################################################################################
 
 AccountService.$inject = [
-  '$state', '$auth', '$modal', '$http', '$translate', 'ShortFormApplicationService'
+  '$state', '$auth', '$modal', '$http', '$translate', 'ShortFormApplicationService', 'ShortFormDataService'
 ]
 
 angular

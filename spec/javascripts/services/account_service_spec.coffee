@@ -9,7 +9,11 @@ do ->
     httpBackend = undefined
     requestURL = undefined
     fakeState = 'dahlia.short-form-application.contact'
-    fakeUserAuth = {email: 'a@b.c', password: '123123123'}
+    fakeUserAuth =
+      user:
+        email: 'a@b.c'
+        password: '123123123'
+      contact: {}
     fakeShortFormApplicationService =
       applicant: {}
       importUserData: ->
@@ -74,17 +78,18 @@ do ->
 
     describe 'createAccount', ->
       it 'calls $auth.submitRegistration with userAuth params', ->
-        AccountService.userAuth = fakeUserAuth
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        fakeParams = AccountService._createAccountParams()
         AccountService.createAccount()
-        expect($auth.submitRegistration).toHaveBeenCalledWith fakeUserAuth
+        expect($auth.submitRegistration).toHaveBeenCalledWith fakeParams
         return
       return
 
     describe 'signIn', ->
       it 'calls $auth.submitLogin with userAuth params', ->
-        AccountService.userAuth = fakeUserAuth
+        AccountService.userAuth = angular.copy(fakeUserAuth)
         AccountService.signIn()
-        expect($auth.submitLogin).toHaveBeenCalledWith fakeUserAuth
+        expect($auth.submitLogin).toHaveBeenCalledWith fakeUserAuth.user
         return
       return
 
