@@ -2,7 +2,7 @@
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_user!,
-                only: %i(update_application delete_application)
+                only: %i(show_application update_application delete_application)
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -12,6 +12,7 @@ class Api::V1::ShortFormController < ApiController
     render json: response
   end
 
+  ####### - File upload functions
   def upload_proof
     @uploaded_file = UploadedFile.create(uploaded_file_attrs)
     if @uploaded_file
@@ -37,6 +38,13 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  ####### - Short Form Application RESTful actions
+  def show_application
+    @application = ShortFormService.get(application_params[:id])
+    return render_unauthorized_error unless user_can_access(@application)
+    render json: { application: @application }
+  end
+
   def submit_application
     response = ShortFormService.create_or_update(application_params, contact_id)
     if response.present?
@@ -53,14 +61,15 @@ class Api::V1::ShortFormController < ApiController
 
   def update_application
     @application = ShortFormService.get(application_params[:id])
-    return render_unauthorized_error unless user_can_modify(@application)
+    return render_unauthorized_error unless user_can_access(@application)
+    return render_unauthorized_error if submitted?(@application)
     # calls same underlying method for submit
     submit_application
   end
 
   def delete_application
     @application = ShortFormService.get(params[:id])
-    return render_unauthorized_error unless user_can_modify(@application)
+    return render_unauthorized_error unless user_can_access(@application)
     return render_unauthorized_error if submitted?(@application)
     result = ShortFormService.delete(params[:id])
     render json: result
@@ -81,7 +90,7 @@ class Api::V1::ShortFormController < ApiController
     ).deliver_now
   end
 
-  def user_can_modify(application)
+  def user_can_access(application)
     contact_id = current_user.salesforce_contact_id
     ShortFormService.ownership?(contact_id, application)
   end
