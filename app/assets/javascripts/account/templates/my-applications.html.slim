@@ -9,7 +9,7 @@
                 use xlink:href="#i-application"
           h1.dash-title.no-margin
             | {{'MY_APPLICATIONS.TITLE' | translate}}
-        .block--short.bg-dust.dash-footer ng-if="!myApplications.length"
+        .block--short.bg-dust.dash-footer.animated-fade ng-if="!hasApplications()"
           h2.t-delta.t-serif.c-oil
             | {{'MY_APPLICATIONS.NO_APPLICATIONS' | translate}}
           a.button.ghost-white ui-sref="dahlia.listings" See Listings

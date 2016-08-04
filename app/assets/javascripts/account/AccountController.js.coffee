@@ -94,6 +94,11 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $scope.resendDisabled = false
     )
 
+  $scope.hasApplications = ->
+    return false if $scope.myApplications.length == 0
+    # as long as we have some where !deleted
+    _.some($scope.myApplications, {deleted: false})
+
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
     if $scope._userInShortFormSession()
