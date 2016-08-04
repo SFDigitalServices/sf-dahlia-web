@@ -3,56 +3,10 @@ do ->
   describe 'ShortFormDataService', ->
     ShortFormDataService = undefined
     formatted = undefined
+    reformatted = undefined
     fakeListingId = 'a0WU000000CkiM3MAJ'
-    # mostly copied from ShortFormApplicationService.applicationDefaults
-    fakeApplication =
-      id: null
-      lotteryNumber: null
-      status: null
-      applicationSubmittedDate: null
-      surveyComplete: false
-      applicationSubmissionType: "Electronic"
-      applicant:
-        firstName: 'Bernard'
-        lastName: 'Sanders'
-        home_address: { address1: null, address2: "", city: null, state: null, zip: null }
-        language: 'English'
-        phone: null
-        mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
-        gender: {}
-        terms: {}
-      alternateContact:
-        firstName: 'Elizabeth'
-        lastName: 'Warren'
-        language: 'English'
-        mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
-      householdMembers: []
-      preferences:
-        liveInSf: null
-        workInSf: null
-        neighborhoodResidence: null
-        liveInSf_file: null
-        workInSf_file: null
-        neighborhoodResidence_file: null
-        liveInSf_file_loading: null
-        workInSf_file_loading: null
-        neighborhoodResidence_file_loading: null
-        liveInSf_file_error: null
-        workInSf_file_error: null
-        neighborhoodResidence_file_error: null
-      householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
-      completedSections:
-        Intro: false
-        You: false
-        Household: false
-        Status: false
-        Income: false
-      validatedForms:
-        You: {}
-        Household: {}
-        Status: {}
-        Income: {}
-        Review: {}
+    fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
+    fakeApplication = getJSONFixture('sample-web-short-form.json')
 
     beforeEach module('dahlia.services', ($provide) ->
       return
@@ -73,4 +27,22 @@ do ->
 
       it 'renames applicant to primaryApplicant', ->
         expect(formatted.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
+        return
+
+
+    describe 'reformatApplication', ->
+      beforeEach ->
+        reformatted = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
+        return
+
+      it 'renames primaryApplicant to applicant', ->
+        expect(reformatted.applicant.firstName).toEqual(fakeSalesforceApplication.primaryApplicant.firstName)
+        return
+
+      it 'reformats multiselect to object with "true"', ->
+        expect(reformatted.applicant.gender).toEqual({Male: true})
+        return
+
+      it 'reformats mailing address', ->
+        expect(reformatted.applicant.mailing_address.address1).toEqual("4053 18TH ST")
         return

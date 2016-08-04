@@ -1,0 +1,140 @@
+{
+	"alternateContact": {
+		"agency": "Exygy",
+		"alternateContactType": "Social worker or housing counselor",
+		"email": "test@person.com",
+		"firstName": "Mister",
+		"language": "Cantonese Chinese",
+		"lastName": "Contact",
+		"mailing_address": {
+			"address1": null,
+			"address2": "",
+			"city": null,
+			"state": null,
+			"zip": ""
+		},
+		"phone": "5445646456"
+	},
+	"applicant": {
+		"confirmed_home_address": "Yes",
+		"dob_day": 2,
+		"dob_month": 1,
+		"dob_year": 2000,
+		"email": "bernie@hotmail.com",
+		"firstName": "Bernard",
+		"gender": {
+			"Male": true
+		},
+		"home_address": {
+			"address1": "4053 18TH ST",
+			"address2": "",
+			"boundary_match": true,
+			"city": "SAN FRANCISCO",
+			"state": "CA",
+			"zip": "94114-2535"
+		},
+		"language": "English",
+		"lastName": "Sanders",
+		"mailing_address": {
+			"address1": "4053 18TH ST",
+			"address2": "",
+			"boundary_match": true,
+			"city": "SAN FRANCISCO",
+			"state": "CA",
+			"zip": "94114-2535"
+		},
+		"middleName": null,
+		"noPhone": false,
+		"phone": "4122141414",
+		"phoneType": "Work",
+		"terms": {
+      "yes": true
+    },
+		"workInSf": "Yes"
+	},
+	"applicationSubmissionType": "Electronic",
+	"applicationSubmittedDate": null,
+	"completedSections": {
+		"Household": true,
+		"Income": true,
+		"Intro": true,
+		"Status": true,
+		"You": true
+	},
+	"householdIncome": {
+		"incomeTimeframe": "per_year",
+		"incomeTotal": 999
+	},
+	"householdMembers": [
+		{
+			"$$hashKey": "object:1315",
+			"dob_day": 2,
+			"dob_month": 10,
+			"dob_year": 2014,
+			"firstName": "Berkeley",
+			"hasSameAddressAsApplicant": "No",
+			"home_address": {
+				"address1": "316 SEA CLIFF LN",
+				"address2": "",
+				"boundary_match": false,
+				"city": "REDWOOD CITY",
+				"state": "CA",
+				"zip": "94065-1925"
+			},
+			"id": 1,
+			"lastName": "Lincoln",
+			"middleName": "J.",
+			"relationship": "Child",
+			"workInSf": "Yes"
+		}
+	],
+	"householdVouchersSubsidies": "Yes",
+	"id": null,
+	"lotteryNumber": null,
+	"preferences": {
+		"certOfPreference": true,
+		"certOfPreference_household_member": "Berkeley Lincoln",
+		"liveInSf": null,
+		"liveInSf_file": null,
+		"liveInSf_file_error": null,
+		"liveInSf_file_loading": null,
+		"neighborhoodResidence": null,
+		"neighborhoodResidence_file": null,
+		"neighborhoodResidence_file_error": null,
+		"neighborhoodResidence_file_loading": null,
+		"workInSf": null,
+		"workInSf_file": null,
+		"workInSf_file_error": null,
+		"workInSf_file_loading": null
+	},
+	"status": null,
+	"surveyComplete": false,
+	"validatedForms": {
+		"Household": {
+			"household-intro": true,
+			"household-members": true,
+			"household-overview": true
+		},
+		"Income": {
+			"income": true
+		},
+		"Review": {
+			"review-optional": true,
+			"review-summary": true,
+			"review-terms": false
+		},
+		"Status": {
+			"live-work-preference": true,
+			"status-programs": true,
+			"status-vouchers": true
+		},
+		"You": {
+			"alternate-contact-name": true,
+			"alternate-contact-phone-address": true,
+			"alternate-contact-type": true,
+			"contact": true,
+			"name": true,
+			"verify-address": true
+		}
+	}
+}
