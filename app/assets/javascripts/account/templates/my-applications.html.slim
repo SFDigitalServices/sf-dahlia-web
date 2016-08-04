@@ -7,9 +7,10 @@
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-application"
-          h1.dash-title.no-margin My Applications
-        .block--short.bg-dust.dash-footer ng-if="!myApplications"
+          h1.dash-title.no-margin
+            | {{'MY_APPLICATIONS.TITLE' | translate}}
+        .block--short.bg-dust.dash-footer ng-if="!myApplications.length"
           h2.t-delta.t-serif.c-oil
-            | It looks like you haven’t applied to any listings yet.
-          a.button.ghost-white ui-sref="dahlia.listings" Browse Properties
+            | {{'MY_APPLICATIONS.NO_APPLICATIONS' | translate}}
+          a.button.ghost-white ui-sref="dahlia.listings" See Listings
         my-application ng-repeat="application in myApplications" application="application"

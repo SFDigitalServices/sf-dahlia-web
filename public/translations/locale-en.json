@@ -271,6 +271,8 @@
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
+        "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
+        "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
     "SIGN_IN": {

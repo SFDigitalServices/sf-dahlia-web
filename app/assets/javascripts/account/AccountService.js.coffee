@@ -7,7 +7,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
-  Service.myApplications = false
+  Service.myApplications = []
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
