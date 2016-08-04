@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       end
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
+        get 'application/:id' => 'short_form#show_application'
         post 'application' => 'short_form#submit_application'
         put 'application/:id' => 'short_form#update_application'
         delete 'application/:id' => 'short_form#delete_application'
