@@ -195,9 +195,19 @@ ShortFormDataService = () ->
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant)
     return data
 
+  Service.reformatDOB = (dob = '') ->
+    return null unless dob
+    split = dob.split('-')
+    return {
+      dob_year: parseInt(split[0])
+      dob_month: parseInt(split[1])
+      dob_day: parseInt(split[2])
+    }
+
   Service._reformatAltContact = (alternateContact) ->
     whitelist = [
-      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone'
+      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone',
+      'alternateContactType', 'alternateContactTypeOther'
     ]
     contact = _.pick alternateContact, whitelist
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
@@ -212,8 +222,9 @@ ShortFormDataService = () ->
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.gender = Service._reformatMultiSelect(contact.gender)
-    applicant.dob = Service._reformatMultiSelect(contact.gender)
-    _.merge(applicant, Service._reformatDOB(contact.DOB))
+    applicant.workInSf = Service._reformatBoolean(contact.workInSf)
+    applicant.hiv = Service._reformatBoolean(contact.hiv)
+    _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
 
   Service._reformatMailingAddress = (contact) ->
@@ -236,16 +247,11 @@ ShortFormDataService = () ->
     keys = _.compact option.split(';')
     _.zipObject keys, _.fill(new Array(keys.length), true)
 
-  Service._reformatDOB = (dob = '') ->
-    return null unless dob
-    split = dob.split('-')
-    return {
-      dob_year: parseInt(split[0])
-      dob_month: parseInt(split[1])
-      dob_day: parseInt(split[2])
-    }
-
-
+  Service._reformatBoolean = (bool) ->
+    if bool == true
+      'Yes'
+    else if bool == false
+      'No'
 
 
   return Service

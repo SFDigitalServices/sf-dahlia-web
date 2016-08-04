@@ -49,3 +49,8 @@ Style/AndOr:
 Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/**/*'
+
+Metrics/LineLength:
+  Max: 80
+  Exclude:
+    - 'config/routes.rb'
