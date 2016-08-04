@@ -2,9 +2,9 @@ ShortFormHelperService = ($translate, $filter) ->
   Service = {}
 
   Service.alternate_contact_options = [
-    ['Family member', $translate.instant('LABEL.FAMILY_MEMBER')]
+    ['Family Member', $translate.instant('LABEL.FAMILY_MEMBER')]
     ['Friend', $translate.instant('LABEL.FRIEND')]
-    ['Social worker or housing counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
+    ['Social Worker or Housing Counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
     ['Other', $translate.instant('LABEL.OTHER')]
   ]
 

@@ -396,6 +396,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
                 # kick them out unless there's a real listing
                 $state.go('dahlia.welcome')
         ]
+        application: [
+          '$stateParams', 'AccountService', 'ShortFormApplicationService',
+          ($stateParams, AccountService, ShortFormApplicationService) ->
+            # it's ok if user is not logged in, we always check if they have an application
+            # this is because "loggedIn()" may not return true on initial load
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id)
+        ]
     })
     # Short form: "You" section
     .state('dahlia.short-form-application.name', {

@@ -235,7 +235,7 @@ ShortFormApplicationController = (
       # skip ahead if they aren't filling out an alt. contact
       $scope.goToHouseholdLandingPage()
     else
-      if $scope.alternateContact.alternateContactType != 'Social worker or housing counselor'
+      if $scope.alternateContact.alternateContactType != 'Social Worker or Housing Counselor'
         $scope.alternateContact.agency = null
       $state.go('dahlia.short-form-application.alternate-contact-name')
 

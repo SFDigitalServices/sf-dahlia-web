@@ -144,10 +144,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 
   Service._reformatDOB = ->
     return false if !Service.loggedIn()
-    split = Service.loggedInUser.DOB.split('-')
-    Service.loggedInUser.dob_year = parseInt(split[0])
-    Service.loggedInUser.dob_month = parseInt(split[1])
-    Service.loggedInUser.dob_day = parseInt(split[2])
+    _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
   Service.copyApplicantFields = ->
     applicant = _.pick ShortFormApplicationService.applicant,
@@ -181,7 +178,8 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 ############################################################################################
 
 AccountService.$inject = [
-  '$state', '$auth', '$modal', '$http', '$translate', 'ShortFormApplicationService', 'ShortFormDataService'
+  '$state', '$auth', '$modal', '$http', '$translate',
+  'ShortFormApplicationService', 'ShortFormDataService'
 ]
 
 angular

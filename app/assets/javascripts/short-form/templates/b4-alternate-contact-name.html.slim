@@ -17,7 +17,7 @@
       input#alternate_last_name ng-model="alternateContact.lastName" name="lastName" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }"
       small.error ng-show="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
-    .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social worker or housing counselor'"
+    .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social Worker or Housing Counselor'"
       h3.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT_AGENCY' | translate}}
       label.sr-only for="alternate_agency" translate="LABEL.ALTERNATE_CONTACT_AGENCY"

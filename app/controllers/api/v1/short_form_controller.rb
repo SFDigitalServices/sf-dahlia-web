@@ -2,7 +2,11 @@
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
   before_action :authenticate_user!,
-                only: %i(show_application update_application delete_application)
+                only: %i(
+                  show_application
+                  update_application
+                  delete_application
+                )
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -42,6 +46,12 @@ class Api::V1::ShortFormController < ApiController
   def show_application
     @application = ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access(@application)
+    render json: { application: @application }
+  end
+
+  def show_listing_application
+    return render json: { application: {} } unless current_user.present?
+    find_listing_application
     render json: { application: @application }
   end
 
@@ -88,6 +98,17 @@ class Api::V1::ShortFormController < ApiController
       listing_id: application_params[:listingID],
       lottery_number: lottery_number,
     ).deliver_now
+  end
+
+  def find_listing_application
+    @application = nil
+    contact_id = current_user.salesforce_contact_id
+    applications = ShortFormService.get_for_user(contact_id)
+    applications.each do |application|
+      if application['listingID'] == params[:listing_id]
+        @application = application
+      end
+    end
   end
 
   def user_can_access(application)
