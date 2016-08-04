@@ -2,7 +2,6 @@ module Overrides
   # Overrides to DeviseTokenAuth
   class RegistrationsController < DeviseTokenAuth::RegistrationsController
     after_action :sync_with_salesforce, only: [:update]
-    # before_action :configure_permitted_parameters, if: :devise_controller?
     AccountService = SalesforceService::AccountService
 
     # method copied from original gem; refactored to please Rubocop

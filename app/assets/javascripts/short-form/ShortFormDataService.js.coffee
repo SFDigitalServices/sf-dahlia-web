@@ -184,6 +184,70 @@ ShortFormDataService = () ->
     )
     return application
 
+
+  #############################################
+  # Reverse formatting functions (Salesforce -> Web app)
+  #############################################
+
+  Service.reformatApplication = (sfApp) ->
+    data = _.pick sfApp, ['id', 'listingID', 'status']
+    data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
+    data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant)
+    return data
+
+  Service._reformatAltContact = (alternateContact) ->
+    whitelist = [
+      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone'
+    ]
+    contact = _.pick alternateContact, whitelist
+    contact.mailing_address = Service._reformatMailingAddress(alternateContact)
+    return contact
+
+  Service._reformatPrimaryApplicant = (contact) ->
+    whitelist = [
+      'email', 'firstName', 'middleName', 'lastName', 'language', 'languageOther',
+      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType',
+    ]
+    applicant = _.pick contact, whitelist
+    applicant.mailing_address = Service._reformatMailingAddress(contact)
+    applicant.home_address = Service._reformatHomeAddress(contact)
+    applicant.gender = Service._reformatMultiSelect(contact.gender)
+    applicant.dob = Service._reformatMultiSelect(contact.gender)
+    _.merge(applicant, Service._reformatDOB(contact.DOB))
+    return applicant
+
+  Service._reformatMailingAddress = (contact) ->
+    return {
+      address1: contact.mailingAddress
+      city: contact.mailingCity
+      state: contact.mailingState
+      zip: contact.mailingZip
+    }
+
+  Service._reformatHomeAddress = (contact) ->
+    return {
+      address1: contact.address
+      city: contact.city
+      state: contact.state
+      zip: contact.zip
+    }
+
+  Service._reformatMultiSelect = (option = '') ->
+    keys = _.compact option.split(';')
+    _.zipObject keys, _.fill(new Array(keys.length), true)
+
+  Service._reformatDOB = (dob = '') ->
+    return null unless dob
+    split = dob.split('-')
+    return {
+      dob_year: parseInt(split[0])
+      dob_month: parseInt(split[1])
+      dob_day: parseInt(split[2])
+    }
+
+
+
+
   return Service
 
 #############################################
