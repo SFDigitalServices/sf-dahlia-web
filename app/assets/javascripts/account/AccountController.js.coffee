@@ -113,7 +113,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope._signInRedirect = ->
     if AccountService.loggedIn() && $scope._userInShortFormSession()
-      ShortFormApplicationService.submitApplication({draft: true}).then(
+      ShortFormApplicationService.submitApplication({draft: true}).then( ->
         $state.go('dahlia.my-account', {skipConfirm: true})
       )
     else if AccountService.loggedIn()
