@@ -50,7 +50,6 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
           form.$setUntouched()
           form.$setPristine()
           $scope._createAccountRedirect()
-          $scope.hideAlert = false
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -66,6 +65,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       AccountService.signIn().then( (success) ->
         $scope.submitDisabled = false
         if success
+          form.$setUntouched()
+          form.$setPristine()
           $scope._signInRedirect()
       ).catch( ->
         $scope.handleErrorState()
