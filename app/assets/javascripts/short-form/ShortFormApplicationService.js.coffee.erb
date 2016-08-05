@@ -229,14 +229,14 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         _.lowerCase(member.home_address.city) == 'san francisco'
       else
         member.hasSameAddressAsApplicant == 'Yes' && applicantLivesInSf
-    liveInSfMembers.push(Service.applicant) if applicantLivesInSf
+    liveInSfMembers.unshift(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
   Service.workInSfMembers = () ->
     workInSfMembers = Service.application.householdMembers.filter (member) ->
       member.workInSf == 'Yes'
     applicantWorksInSf = Service.applicant.workInSf == 'Yes'
-    workInSfMembers.push(Service.applicant) if applicantWorksInSf
+    workInSfMembers.unshift(Service.applicant) if applicantWorksInSf
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
@@ -249,7 +249,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         member.home_address && member.home_address.boundary_match
     # add applicant to the list if they match
     if Service.applicant.home_address.boundary_match
-      household.push(Service.applicant)
+      household.unshift(Service.applicant)
     household
 
   Service.preferencesApplyForHousehold = ->

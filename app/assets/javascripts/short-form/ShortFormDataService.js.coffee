@@ -1,5 +1,14 @@
 ShortFormDataService = () ->
   Service = {}
+  Service.preferences = [
+    'displaced',
+    'certOfPreference',
+    'liveInSf',
+    'workInSf',
+    'neighborhoodResidence'
+  ]
+
+
 
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
@@ -104,17 +113,10 @@ ShortFormDataService = () ->
     return application
 
   Service._formatPreferences = (application) ->
-    preferences = [
-        'displaced',
-        'certOfPreference',
-        'liveInSf',
-        'workInSf',
-        'neighborhoodResidence'
-    ]
-
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
 
+    preferences = angular.copy(Service.preferences)
     preferences.forEach( (preference) ->
       memberName = application.preferences[preference + '_household_member']
       member = _.find(allMembers, (m) ->
@@ -199,6 +201,7 @@ ShortFormDataService = () ->
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
+    data.preferences = Service._reformatPreferences(sfApp)
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -258,6 +261,19 @@ ShortFormDataService = () ->
     member.workInSf = Service._reformatBoolean(contact.workInSf)
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
+
+  Service._reformatPreferences = (sfApp) ->
+    preferences = {}
+    prefList = angular.copy(Service.preferences)
+    prefList.forEach( (preference) ->
+      preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
+      appMemberId = sfApp["#{preferenceName}ID"]
+      if appMemberId
+        member = _.find(sfApp.householdMembers, {appMemberId: appMemberId})
+        preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
+        preferences[preference] = true
+    )
+    preferences
 
 
   Service._reformatMailingAddress = (contact) ->

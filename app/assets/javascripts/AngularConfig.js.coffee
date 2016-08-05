@@ -475,9 +475,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/c1-household-intro.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('You')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('You')
+        ]
     })
     .state('dahlia.short-form-application.household-overview', {
       url: '/household-overview'
@@ -490,9 +491,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/c2-household-members.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('You')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('You')
+        ]
     })
     .state('dahlia.short-form-application.household-member-form', {
       url: '/household-member-form'
@@ -553,27 +555,30 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/d1-status-programs.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Household')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:
         'container':
           templateUrl: 'short-form/templates/d2f-general-lottery-notice.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Household')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
     })
     .state('dahlia.short-form-application.live-work-preference', {
       url: '/live-work-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/d2-live-work-preference.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Household')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
     })
     .state('dahlia.short-form-application.status-vouchers', {
       url: '/status-vouchers'
@@ -587,9 +592,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/e1-income.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Status')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Status')
+        ]
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
@@ -597,18 +603,20 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/f0-review-optional.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Income')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Income')
+        ]
     })
     .state('dahlia.short-form-application.review-summary', {
       url: '/review-summary'
       views:
         'container':
           templateUrl: 'short-form/templates/f1-review-summary.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.completeSection('Income')
-      ]
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Income')
+        ]
     })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms'

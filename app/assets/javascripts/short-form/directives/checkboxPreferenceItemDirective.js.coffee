@@ -31,7 +31,8 @@ angular.module('dahlia.directives')
         scope.neighborhoodResidenceMembers()
       else
         members = scope.householdMembers.slice()
-        members.push(scope.applicant)
+        # put applicant at the front
+        members.unshift(scope.applicant)
         return members
 
     scope.only_applicant_eligible = () ->
