@@ -64,7 +64,10 @@ ShortFormDataService = () ->
         if !_.includes(['address1', 'address2', 'boundary_match'], key)
           application[person][key] = value
         return
-      application[person].address = application[person][addressType].address1 + application[person][addressType].address2
+      if application[person][addressType].address1
+        application[person].address = application[person][addressType].address1
+        address2 = application[person][addressType].address2
+        application[person].address += ' ' + address2 if address2
       delete application[person].confirmed_home_address
 
     else if addressType == 'mailing_address'
@@ -75,7 +78,7 @@ ShortFormDataService = () ->
         return
       application[person].mailingAddress = application[person][addressType].address1
       address2 = application[person][addressType].address2
-      application[person].mailingAddress += " " + address2 if address2
+      application[person].mailingAddress += ' ' + address2 if address2
 
     delete application[person][addressType]
     return application
@@ -129,9 +132,8 @@ ShortFormDataService = () ->
 
     if application.householdVouchersSubsidies == 'Yes'
       application.householdVouchersSubsidies = true
-    else
+    else if application.householdVouchersSubsidies == 'No'
       application.householdVouchersSubsidies = false
-    delete application.householdVouchersSubsidies
     delete application.preferences
     return application
 
@@ -173,13 +175,13 @@ ShortFormDataService = () ->
     ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
-      else
+      else if application.applicant[field] == 'No'
         application.applicant[field] = false
 
     application.householdMembers.forEach( (member) ->
       if member.workInSf == 'Yes'
         member.workInSf = true
-      else
+      else if member.workInSf == 'No'
         member.workInSf = false
     )
     return application
@@ -193,6 +195,10 @@ ShortFormDataService = () ->
     data = _.pick sfApp, ['id', 'listingID', 'status']
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant)
+    data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
+    data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
+    data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
+    data.householdIncome = Service._reformatIncome(sfApp)
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -205,9 +211,10 @@ ShortFormDataService = () ->
     }
 
   Service._reformatAltContact = (alternateContact) ->
+    return { alternateContactType: 'None' } unless alternateContact
     whitelist = [
-      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone',
-      'alternateContactType', 'alternateContactTypeOther'
+      'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
+      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone'
     ]
     contact = _.pick alternateContact, whitelist
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
@@ -215,6 +222,7 @@ ShortFormDataService = () ->
 
   Service._reformatPrimaryApplicant = (contact) ->
     whitelist = [
+      'appMemberId', 'contactId',
       'email', 'firstName', 'middleName', 'lastName', 'language', 'languageOther',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType',
     ]
@@ -224,8 +232,33 @@ ShortFormDataService = () ->
     applicant.gender = Service._reformatMultiSelect(contact.gender)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.hiv = Service._reformatBoolean(contact.hiv)
+    applicant.additionalPhone = !! contact.alternatePhone
+    applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
+
+  Service._reformatHousehold = (contacts) ->
+    household = []
+    i = 0
+    contacts.forEach (contact) ->
+      i++
+      member = Service._reformatHouseholdMember(contact)
+      # still need these tempIds just to make the form work for editing
+      member.id = i
+      household.push(member)
+    household
+
+  Service._reformatHouseholdMember = (contact) ->
+    whitelist = [
+      'appMemberId', 'firstName', 'middleName', 'lastName', 'relationship'
+    ]
+    member = _.pick contact, whitelist
+    member.home_address = Service._reformatHomeAddress(contact)
+    member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
+    member.workInSf = Service._reformatBoolean(contact.workInSf)
+    _.merge(member, Service.reformatDOB(contact.DOB))
+    return member
+
 
   Service._reformatMailingAddress = (contact) ->
     return {
@@ -242,6 +275,18 @@ ShortFormDataService = () ->
       state: contact.state
       zip: contact.zip
     }
+
+  Service._reformatIncome = (sfApp) ->
+    if sfApp.monthlyIncome
+      return {
+        incomeTimeframe: 'per_month'
+        incomeTotal: sfApp.monthlyIncome
+      }
+    else
+      return {
+        incomeTimeframe: 'per_year'
+        incomeTotal: sfApp.annualIncome
+      }
 
   Service._reformatMultiSelect = (option = '') ->
     keys = _.compact option.split(';')
