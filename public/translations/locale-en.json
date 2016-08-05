@@ -61,7 +61,7 @@
         "CONFIRMATION_LINK_EXPIRED": "This link has expired",
         "CONFIRMATION_NEEDED": "Confirmation needed",
         "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to {{email}}.",
-        "EXPIRED_EMAIL_SENT_TO": "A confirmation email has been sent to {{email}}, but that email expired after 24 hours. We can resend an email to this same address.",
+        "EXPIRED_EMAIL_SENT_TO": "A confirmation link was sent to {{email}}, but that link expired after 24 hours. We can resend an email with a new confirmation link to this same email address.",
         "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
     },
