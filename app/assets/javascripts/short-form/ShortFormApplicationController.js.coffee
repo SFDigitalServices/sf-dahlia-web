@@ -140,7 +140,6 @@ ShortFormApplicationController = (
     $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
-    # console.log($scope.form)
     form = $scope.form.applicationForm
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
