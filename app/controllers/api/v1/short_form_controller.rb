@@ -117,7 +117,7 @@ class Api::V1::ShortFormController < ApiController
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(%i(householdsize incomelevel))
+          .permit(%i(householdsize incomelevel childrenUnder6))
   end
 
   def uploaded_file_params
