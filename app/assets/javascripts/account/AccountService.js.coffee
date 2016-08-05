@@ -75,6 +75,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     )
 
   Service.loggedIn = ->
+    return false if !Service.loggedInUser
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.newAccountConfirmEmailModal = ->
@@ -111,7 +112,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 
   # reverse of the above function
   Service._reformatDOB = ->
-    return false if _.isEmpty(Service.loggedInUser)
+    return false if !Service.loggedIn()
     split = Service.loggedInUser.DOB.split('-')
     Service.loggedInUser.dob_year = parseInt(split[0])
     Service.loggedInUser.dob_month = parseInt(split[1])

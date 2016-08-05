@@ -10,10 +10,10 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       # console.log(attrs)
       scope.listing = scope.application.listing
-      scope.deleted = false
+      scope.application.deleted = false
 
       scope.isDeleted = ->
-        scope.deleted
+        scope.application.deleted
 
       scope.unitSummary = ->
         return '' unless scope.listing.unitSummary
@@ -28,7 +28,7 @@ angular.module('dahlia.directives')
       scope.deleteApplication = (id) ->
         if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
           ShortFormApplicationService.deleteApplication(id).success ->
-            scope.deleted = true
+            scope.application.deleted = true
 
       scope.formattedAddress = ->
         ListingService.formattedAddress(scope.listing, 'Building')
