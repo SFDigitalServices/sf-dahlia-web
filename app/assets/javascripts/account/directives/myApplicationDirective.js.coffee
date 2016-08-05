@@ -16,6 +16,7 @@ angular.module('dahlia.directives')
         scope.deleted
 
       scope.unitSummary = ->
+        return '' unless scope.listing.unitSummary
         # Studio: 22 units, 1 Bedroom: 33 units 2 Bedroom: 38 units
         summary = []
         scope.listing.unitSummary.forEach (type) ->
