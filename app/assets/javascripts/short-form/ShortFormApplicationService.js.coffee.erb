@@ -140,6 +140,9 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
 
   Service.clearAlternateContactDetails = ->
     clearedData = { alternateContactType: 'None' }
+    validated = Service.application.validatedForms.You
+    delete validated['alternate-contact-name']
+    delete validated['alternate-contact-phone-address']
     angular.copy(clearedData, Service.application.alternateContact)
 
   Service._nextId = ->

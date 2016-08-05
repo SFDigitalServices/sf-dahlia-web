@@ -47,6 +47,7 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
     'alternate-contact-phone-address': {callback: 'goToHouseholdLandingPage'}
     'household-members': {callback: 'validateHouseholdEligibility', params: 'householdMatch'}
     'household-member-form': {callback: 'addHouseholdMember'}
+    'household-member-form-edit': {callback: 'addHouseholdMember'}
     'household-member-verify-address': {path: 'household-members'}
     'status-programs': {callback: 'checkIfPreferencesApply'}
     'live-work-preference': {path: 'status-vouchers'}
