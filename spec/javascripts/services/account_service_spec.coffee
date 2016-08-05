@@ -12,6 +12,7 @@ do ->
     fakeUserAuth = {email: 'a@b.c', password: '123123123'}
     fakeShortFormApplicationService =
       applicant: {}
+      importUserData: ->
     modalMock =
       open: () ->
         return
@@ -36,18 +37,15 @@ do ->
       $auth = _$auth_
       $q = _$q_
       httpBackend = _$httpBackend_
-      spyOn($auth, 'submitRegistration').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
-      spyOn($auth, 'submitLogin').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
-      spyOn($auth, 'validateUser').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve 'Remote call result'
-        deferred.promise
+      fakeHttp =
+        success: (callback) ->
+          callback({})
+          { error: -> return }
+        error: (callback) -> callback({})
+        then: (callback) -> callback({})
+      spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
+      spyOn($auth, 'submitLogin').and.callFake -> fakeHttp
+      spyOn($auth, 'validateUser').and.callFake -> fakeHttp
       AccountService = _AccountService_
       requestURL = AccountService.requestURL
       return
@@ -93,7 +91,7 @@ do ->
         return
       return
 
-    describe 'newAccountConfirmEmailModal', ->
+    describe 'openConfirmEmailModal', ->
       describe 'account just created', ->
         it 'called modal to open', ->
           spyOn(modalMock, 'open')
@@ -103,7 +101,21 @@ do ->
             windowClass: 'modal-large'
           AccountService.createdAccount.email = 'some@email.com'
           AccountService.createdAccount.confirmed_at = undefined
-          AccountService.newAccountConfirmEmailModal()
+          AccountService.openConfirmEmailModal()
+          expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
+          return
+        return
+
+    describe 'openConfirmationExpiredModal', ->
+      describe 'confirmation link expired', ->
+        it 'called modal to open', ->
+          spyOn(modalMock, 'open')
+          modalArgument =
+            templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
+            controller: 'ModalInstanceController',
+            windowClass: 'modal-large'
+          AccountService.createdAccount.email = 'some@email.com'
+          AccountService.openConfirmationExpiredModal()
           expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
           return
         return

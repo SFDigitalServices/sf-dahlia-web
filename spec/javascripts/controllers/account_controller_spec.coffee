@@ -17,7 +17,9 @@ do ->
 
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
-      scope.form = {accountForm: {}}
+      scope.form =
+        signIn: {}
+        createAccount: {}
       state.go = jasmine.createSpy()
       spyOn(fakeAccountService, 'createAccount').and.callFake ->
         deferred = $q.defer()
@@ -39,7 +41,7 @@ do ->
 
     describe '$scope.createAccount', ->
       it 'calls function on AccountService', ->
-        scope.form.accountForm = {$valid: true}
+        scope.form.createAccount = {$valid: true}
         scope.createAccount()
         expect(fakeAccountService.createAccount).toHaveBeenCalled()
         return
@@ -47,7 +49,7 @@ do ->
 
     describe '$scope.signIn', ->
       it 'calls function on AccountService', ->
-        scope.form.accountForm = {$valid: true}
+        scope.form.signIn = {$valid: true}
         scope.signIn()
         expect(fakeAccountService.signIn).toHaveBeenCalled()
         return

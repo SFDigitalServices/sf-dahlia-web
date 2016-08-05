@@ -5,26 +5,26 @@ module Overrides
     def show
       @resource = resource_class.confirm_by_token(params[:confirmation_token])
 
-      if @resource and @resource.id
+      if @resource && @resource.id
+        return redirect_for_link_expiration if @resource.errors[:email].present?
         # create client id
-        client_id  = SecureRandom.urlsafe_base64(nil, false)
-        token      = SecureRandom.urlsafe_base64(nil, false)
-        token_hash = BCrypt::Password.create(token)
-        expiry     = (Time.now + DeviseTokenAuth.token_lifespan).to_i
-
-        add_resource_token(client_id, token_hash, expiry)
+        add_resource_token
 
         yield if block_given?
 
         redirect_to(@resource.build_auth_url(
-                      params[:redirect_url],
-                      token: token,
-                      client_id: client_id,
+                      redirect_url,
+                      token: @token,
+                      client_id: @client_id,
                       account_confirmation_success: true,
                       config: params[:config],
         ))
       else
-        raise ActionController::RoutingError, 'Not Found'
+        # no user was found with that confirmation token.
+        # provide a more helpful error than just redirecting them?
+        # although we can't determine their user/email, or if
+        # their account has already been confirmed or not.
+        redirect_to '/sign-in'
       end
     end
 
@@ -40,10 +40,33 @@ module Overrides
 
     private
 
-    def add_resource_token(client_id, token_hash, expiry)
-      @resource.tokens[client_id] = {
-        token:  token_hash,
-        expiry: expiry,
+    def redirect_for_link_expiration
+      error_details = @resource.error_details(:email)
+      email = ERB::Util.url_encode(@resource.email)
+      if error_details.include?(:confirmation_period_expired)
+        redirect_to "/sign-in?expiredUnconfirmed=#{email}"
+      else
+        redirect_to "/sign-in?expiredConfirmed=#{email}"
+      end
+    end
+
+    def redirect_url
+      if params[:redirect_url].present?
+        params[:redirect_url]
+      else
+        root_url + 'my-account'
+      end
+    end
+
+    def add_resource_token
+      @client_id  = SecureRandom.urlsafe_base64(nil, false)
+      @token      = SecureRandom.urlsafe_base64(nil, false)
+      @token_hash = BCrypt::Password.create(@token)
+      @expiry     = (Time.now + DeviseTokenAuth.token_lifespan).to_i
+
+      @resource.tokens[@client_id] = {
+        token:  @token_hash,
+        expiry: @expiry,
       }
       @resource.save!
     end

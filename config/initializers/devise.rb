@@ -15,7 +15,7 @@ Devise.setup do |config|
   config.mailer_sender = 'dahlia@housing.sfgov.org'
 
   # Configure the class responsible to send e-mails.
-  # config.mailer = 'Devise::Mailer'
+  config.mailer = 'Emailer'
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'

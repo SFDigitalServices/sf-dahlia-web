@@ -1,0 +1,6 @@
+p ng-if="!resentConfirmationMessage"
+  button.button.margin-top--2x ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+    | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+
+div ng-if="resentConfirmationMessage"
+  alert-box(primary="true" hide-alert="hideMessage" custom-message="resentConfirmationMessage")

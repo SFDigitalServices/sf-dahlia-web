@@ -57,6 +57,8 @@ gem 'pg'
 
 gem 'actionmailer-text'
 gem 'hashie'
+gem 'active_model-errors_details'
+
 
 # http requests made easy
 gem 'http', require: false

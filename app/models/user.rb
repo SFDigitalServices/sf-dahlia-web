@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :timeoutable, :confirmable
   include DeviseTokenAuth::Concerns::User
+
+  def error_details(field)
+    errors.details[field].collect { |i| i[:error] }
+  end
 end
