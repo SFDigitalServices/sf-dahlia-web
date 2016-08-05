@@ -272,6 +272,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
     Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
 
   Service.onExit = (state) ->
+    # custom leave message when on confirmation screen
     if state.name == 'dahlia.short-form-application.confirmation'
       return $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
     else
