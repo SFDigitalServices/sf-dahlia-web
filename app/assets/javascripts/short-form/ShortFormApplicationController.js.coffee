@@ -440,7 +440,10 @@ ShortFormApplicationController = (
 
   $scope.$on 'IdleStart', ->
     # user has now been idle for x period of time, warn them of logout!
-    $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+    if $state.is('dahlia.short-form-application.confirmation')
+      $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+    else
+      $window.alert($translate.instant('T.SESSION_INACTIVITY'))
 
   $scope.$on 'IdleTimeout', ->
     # they ran out of time
