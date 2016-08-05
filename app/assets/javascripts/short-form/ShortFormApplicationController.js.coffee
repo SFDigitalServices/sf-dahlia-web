@@ -203,8 +203,7 @@ ShortFormApplicationController = (
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
       $scope.applicant.noAddress = false
-    unless $scope.applicant.hasAltMailingAddress
-      ShortFormApplicationService.copyHomeToMailingAddress()
+    ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetHomeAddress = ->
     #reset home address

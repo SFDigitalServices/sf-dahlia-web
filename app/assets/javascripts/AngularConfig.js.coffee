@@ -49,7 +49,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       abstract: true
       params:
         lang: { squash: true, value: 'en' }
-        skipConfirm: { squash: true }
       views:
         'translate@':
           templateUrl: 'shared/templates/translate.html'
@@ -86,6 +85,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.listing', {
       url: '/listings/:id',
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'listings/templates/listing.html'
@@ -133,6 +134,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       url: '/sign-in?expiredUnconfirmed&expiredConfirmed'
       params:
         newAccount: {squash: true}
+        skipConfirm: { squash: true, value: false }
         expiredUnconfirmed: null
         expiredConfirmed: null
       views:
@@ -224,6 +226,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.my-applications', {
       url: '/my-applications'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           controller: 'AccountController'
@@ -441,6 +445,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
               address: ShortFormApplicationService.applicant.home_address
               type: 'home'
             ).then ->
+              ShortFormApplicationService.copyHomeToMailingAddress()
               GeocodingService.geocode(
                 address: ShortFormApplicationService.applicant.home_address
               )
@@ -653,6 +658,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             # prevent page transition if user did not confirm
             e.preventDefault()
             false
+
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # check if we're on short form and trying to access a later section than the first section
       toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
@@ -668,6 +674,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)
+
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       if fromState.name == ''
         return $state.go('dahlia.welcome')
