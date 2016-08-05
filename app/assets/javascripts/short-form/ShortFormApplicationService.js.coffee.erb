@@ -101,7 +101,8 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         false
 
   Service.copyHomeToMailingAddress = () ->
-    angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
+    unless Service.applicant.hasAltMailingAddress
+      angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
 
   Service.validMailingAddress = () ->
     !! (Service.applicant.mailing_address.address1 &&
