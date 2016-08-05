@@ -52,6 +52,11 @@ RSpec.configure do |config|
   end
 
   # clear cache before each test
+  config.before(:suite) do
+    DatabaseCleaner.clean
+    Rails.cache.clear
+  end
+
   config.before(:each) do
     DatabaseCleaner.clean
     Rails.cache.clear

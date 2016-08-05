@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       registrations: 'overrides/registrations',
       sessions: 'overrides/sessions',
       token_validations: 'overrides/token_validations',
+      confirmations: 'overrides/confirmations',
     },
   )
 
@@ -29,7 +30,9 @@ Rails.application.routes.draw do
       end
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
-        post 'submit-application' => 'short_form#submit_application'
+        post 'application' => 'short_form#submit_application'
+        put 'application/:id' => 'short_form#update_application'
+        delete 'application/:id' => 'short_form#delete_application'
         post 'proof' => 'short_form#upload_proof'
         delete 'proof' => 'short_form#delete_proof'
       end
@@ -38,6 +41,9 @@ Rails.application.routes.draw do
         post 'validate' => 'address_validation#validate'
         # address geocoding
         post 'geocode' => 'geocoding#geocode'
+      end
+      scope '/account' do
+        get 'my-applications' => 'account#my_applications'
       end
     end
   end

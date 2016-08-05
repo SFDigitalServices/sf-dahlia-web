@@ -55,6 +55,16 @@
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
+    "CONFIRM_ACCOUNT": {
+        "ACCOUNT_ALREADY_CONFIRMED": "This account has already been confirmed",
+        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in the email we sent you in order to complete account creation.",
+        "CONFIRMATION_LINK_EXPIRED": "This link has expired",
+        "CONFIRMATION_NEEDED": "Confirmation needed",
+        "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to {{email}}.",
+        "EXPIRED_EMAIL_SENT_TO": "A confirmation link was sent to {{email}}, but that link expired after 24 hours. We can resend an email with a new confirmation link to this same email address.",
+        "PLEASE_LOGIN": "Please login to your account to continue.",
+        "RESEND_EMAIL": "Resend the email"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
         "CONTINUE_WITH_APPLICATION": "Continue with Application",
@@ -64,12 +74,6 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "CONFIRM_ACCOUNT": {
-        "RESEND_EMAIL": "Resend the email",
-        "CONFIRMATION_NEEDED": "Confirmation needed",
-        "EMAIL_HAS_BEEN_SENT_TO": "An email has been sent to",
-        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in that message to confirm your email address"
-        },
     "D1_STATUS_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
@@ -111,6 +115,7 @@
         "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
         "CITY": "Please enter a city",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
+        "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "DOB": "Please enter a valid Date of Birth",
         "EMAIL": "Please enter an email address",
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
@@ -199,12 +204,14 @@
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PHONE_NUMBER": "Contact phone number",
         "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
+        "CONTINUE_APPLICATION": "Continue Application",
         "CREATE_ACCOUNT": "Create Account",
         "DOB": "Date of Birth",
         "DOB_DAY": "Day",
         "DOB_MONTH": "Month",
         "DOB_YEAR": "Year",
         "DONE_ADDING_PEOPLE": "Done adding people",
+        "EDITED": "Edited",
         "EMAIL_ADDRESS": "Email",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
@@ -246,6 +253,7 @@
         "PROOF_OF_ADDRESS": "Proof of address",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
+        "SEE_LISTING": "See Listing",
         "SELECT_ONE": "Select One",
         "SELF_DECLARED_STATUS": "Self-declared status",
         "SIGN_IN": "Sign In",
@@ -254,6 +262,7 @@
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
+        "VIEW_APPLICATION": "View Application",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
@@ -266,30 +275,45 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
+    "MY_APPLICATIONS": {
+        "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
+        "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
+        "TITLE": "My Applications",
+        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
     "SIGN_IN": {
+        "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
-        "FORGOT_PASSWORD": "Forgot password?"
+        "FORGOT_PASSWORD": "Forgot password?",
+        "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox."
     },
     "T": {
         "APPLICATION": "Application",
+        "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "BACK": "Back",
         "CALL": "Call",
         "CONFIRM": "Confirm",
+        "DELETE": "Delete",
         "EDIT": "Edit",
         "GET_STARTED": "Get Started",
+        "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
+        "NEVER_SUBMITTED": "Never Submitted",
         "NEXT": "Next",
         "NO": "No",
         "NONE": "None",
+        "OK": "OK",
         "OPTIONAL": "Optional",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
         "REQUIRED": "Required",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
+        "STATUS": "Status",
         "SUBMIT": "Submit",
+        "SUBMITTED": "Submitted",
         "YES": "Yes",
         "YOU": "You"
     }

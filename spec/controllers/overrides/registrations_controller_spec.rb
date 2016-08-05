@@ -7,20 +7,25 @@ describe Overrides::RegistrationsController do
 
   describe 'create' do
     let(:valid_user_params) do
-      { firstName: 'Jane',
+      {
+        firstName: 'Jane',
         lastName: 'Doe',
         email: 'jane@doe.com',
         DOB: '1985-07-23',
         password: 'somepassword',
-        password_confirmation: 'somepassword' }
+        password_confirmation: 'somepassword',
+        confirm_success_url: 'http://localhost/my-account',
+      }
     end
 
     let(:salesforce_response) do
-      { 'firstName' => 'Test',
-        'lastName' => 'lastName',
-        'email' => 'test@test.com',
-        'DOB' => '1989-03-29',
-        'contactId' => '003f000000r2oseAAA' }
+      {
+        firstName: 'Test',
+        lastName: 'lastName',
+        email: 'test@test.com',
+        DOB: '1989-03-29',
+        contactId: '003f000000r2oseAAA',
+      }.as_json
     end
 
     it 'saves a salesforce contact id on user' do
@@ -28,7 +33,9 @@ describe Overrides::RegistrationsController do
         .to receive(:create_or_update)
         .and_return(salesforce_response)
 
-      post :create, valid_user_params
+      VCR.use_cassette('account/register') do
+        post :create, valid_user_params
+      end
       expect(assigns(:resource).salesforce_contact_id)
         .to eq('003f000000r2oseAAA')
     end

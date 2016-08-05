@@ -44,10 +44,13 @@ angular.module('dahlia.directives')
         $translate.instant("ERROR.ALT_CONTACT_TYPE")
       else if scope.householdEligibilityErrorMessage
         $translate.instant("ERROR.NOT_ELIGIBLE") + " " + scope.householdEligibilityErrorMessage
-      else if scope.accountError && (scope.accountError.message == 'Email already in use')
-        $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
-      else if scope.accountError && (scope.accountError.message == 'Invalid credentials')
-        $translate.instant("ERROR.INVALID_EMAIL_CREDENTIALS")
+      else if scope.accountError && scope.accountError.message
+        if scope.accountError.message == 'Email already in use'
+          $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+        if scope.accountError.message == 'Invalid credentials'
+          $translate.instant("ERROR.INVALID_EMAIL_CREDENTIALS")
+        else
+          scope.accountError.message
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 

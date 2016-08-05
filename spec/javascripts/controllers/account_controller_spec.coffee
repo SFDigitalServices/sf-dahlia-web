@@ -19,7 +19,9 @@ do ->
 
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
-      scope.form = {accountForm: {}}
+      scope.form =
+        signIn: {}
+        createAccount: {}
       state.go = jasmine.createSpy()
 
       deferred = $q.defer()
@@ -37,7 +39,7 @@ do ->
 
     describe '$scope.createAccount', ->
       beforeEach ->
-        scope.form.accountForm =
+        scope.form.createAccount =
           $valid: true
           $setUntouched: () ->
             return
@@ -72,14 +74,14 @@ do ->
         it 'routes user to sign-in', ->
           scope.createAccount()
           scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {skipConfirm: true})
+          expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {skipConfirm: true, newAccount: true})
           return
         return
       return
 
     describe '$scope.signIn', ->
       beforeEach ->
-        scope.form.accountForm =
+        scope.form.signIn =
           $valid: true
           $setUntouched: () ->
             return
@@ -87,7 +89,6 @@ do ->
             return
 
       it 'calls function on AccountService', ->
-        scope.form.accountForm = {$valid: true}
         scope.signIn()
         expect(fakeAccountService.signIn).toHaveBeenCalled()
         return

@@ -1,6 +1,6 @@
 .dash-container.tall
   section.row.collapse
-    .medium-6.medium-centered.columns
+    .medium-6.medium-centered.columns.fixed-width
       .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
         a.back-link ui-sref="{{rememberedShortFormState}}"
           span.ui-icon.ui-static.ui-medium.i-primary
@@ -8,13 +8,15 @@
               use xlink:href="#i-left"
           | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
 
-      form.dash-card novalidate="" name="form.accountForm" ng-submit="signIn()"
+      form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
         header.dash-header
           span.header-badge
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-profile"
           h1.dash-title.no-margin Sign In
+
+        alert-box(form-object="form.signIn" hide-alert="hideAlert" account-error="accountError")
 
         .dash-card-inner.inset.border-bottom
 

@@ -1,5 +1,6 @@
 ShortFormNavigationService = ($state, ShortFormApplicationService) ->
   Service = {}
+  Service.loading = false
   Service.sections = [
     { name: 'You', pages: [
         'name',
@@ -37,7 +38,32 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
     }
   ]
 
-  Service.getLandingPage = (section, application) ->
+  Service.submitActions =
+    'name': {path: 'contact'}
+    'contact': {callback: 'checkIfAddressVerificationNeeded'}
+    'verify-address': {path: 'alternate-contact-type'}
+    'alternate-contact-type': {callback: 'checkIfAlternateContactInfoNeeded'}
+    'alternate-contact-name': {path: 'alternate-contact-phone-address'}
+    'alternate-contact-phone-address': {callback: 'goToHouseholdLandingPage'}
+    'household-members': {callback: 'validateHouseholdEligibility', params: 'householdMatch'}
+    'household-member-form': {callback: 'addHouseholdMember'}
+    'household-member-verify-address': {path: 'household-members'}
+    'status-programs': {callback: 'checkIfPreferencesApply'}
+    'live-work-preference': {path: 'status-vouchers'}
+    'general-lottery-notice': {path: 'status-vouchers'}
+    'status-vouchers': {path: 'income'}
+    'income': {callback: 'validateHouseholdEligibility', params: 'incomeMatch'}
+    'review-optional': {path: 'review-summary', callback: 'checkSurveyComplete'}
+    'review-summary': {path: 'review-terms'}
+    'review-terms': {callback: 'submitApplication'}
+
+  Service.submitOptionsForCurrentPage = ->
+    options = angular.copy(Service.submitActions[Service._currentPage()] || {})
+    options.path = "dahlia.short-form-application.#{options.path}" if options.path
+    options
+
+  Service.getLandingPage = (section) ->
+    application = ShortFormApplicationService.application
     switch section.name
       when 'Household'
         if application.householdMembers.length
@@ -52,6 +78,11 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
       else
         section.pages[0]
 
+  Service.isLoading = (bool = null) ->
+    if bool == null
+      return Service.loading
+    else
+      Service.loading = bool
 
   Service.hasNav = ->
     hideNav = ['intro', 'confirmation']
@@ -84,7 +115,8 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
   Service.activeSection = () ->
     Service._sectionOfPage(Service._currentPage())
 
-  Service.backPageState = (application) ->
+  Service.backPageState = ->
+    application = ShortFormApplicationService.application
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
       when 'contact'
