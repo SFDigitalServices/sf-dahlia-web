@@ -272,7 +272,10 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
     Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
 
   Service.onExit = (e) ->
-    e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+    if state.name.match(/confirmation/)
+      e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+    else
+      e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
