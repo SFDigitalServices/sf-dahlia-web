@@ -41,8 +41,10 @@ do ->
         success: (callback) ->
           callback({})
           { error: -> return }
+        then: (callback) ->
+          callback({})
+          { catch: -> return }
         error: (callback) -> callback({})
-        then: (callback) -> callback({})
       spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
       spyOn($auth, 'submitLogin').and.callFake -> fakeHttp
       spyOn($auth, 'validateUser').and.callFake -> fakeHttp

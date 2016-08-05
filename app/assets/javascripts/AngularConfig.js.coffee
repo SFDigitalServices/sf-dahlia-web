@@ -185,6 +185,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.my-account', {
       url: '/my-account'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/my-account.html'

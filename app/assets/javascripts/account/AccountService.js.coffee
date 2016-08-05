@@ -45,6 +45,10 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
           ShortFormApplicationService.importUserData(Service.loggedInUser)
+          return true
+      ).catch((response) ->
+        Service.accountError.message = response.errors[0]
+        return false
       )
 
   Service.openConfirmEmailModal = (email) ->

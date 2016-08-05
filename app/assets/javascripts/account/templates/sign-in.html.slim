@@ -16,9 +16,10 @@
                 use xlink:href="#i-profile"
           h1.dash-title.no-margin Sign In
 
-        alert-box(form-object="form.accountForm" hide-alert="hideAlert" account-error="accountError")
+        alert-box(form-object="form.signIn" hide-alert="hideAlert" account-error="accountError")
 
         .dash-card-inner.inset.border-bottom
+
           .form-group ng-class="{ error: inputInvalid('email') }"
             h3.form-label.caps
               | {{'LABEL.EMAIL_ADDRESS' | translate}}

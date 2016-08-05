@@ -63,10 +63,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
-      AccountService.signIn().then( ->
+      AccountService.signIn().then( (success) ->
         $scope.submitDisabled = false
-        if AccountService.loggedIn()
-          return $state.go('dahlia.my-account')
+        if success
+          $scope._signInRedirect()
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -111,6 +111,14 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     # as long as we have some where !deleted
     _.some($scope.myApplications, {deleted: false})
 
+  $scope._signInRedirect = ->
+    if AccountService.loggedIn() && $scope._userInShortFormSession()
+      ShortFormApplicationService.submitApplication({draft: true}).then(
+        $state.go('dahlia.my-account', {skipConfirm: true})
+      )
+    else if AccountService.loggedIn()
+      $state.go('dahlia.my-account')
+
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
     if $scope._userInShortFormSession()
@@ -122,7 +130,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $state.go('dahlia.sign-in', {newAccount: true})
 
   $scope._userInShortFormSession = ->
-    $state.current.name == 'dahlia.short-form-application.create-account'
+    shortFormCreateAccountPath = 'dahlia.short-form-application.create-account'
+    shortFormSignInPath = 'dahlia.short-form-application.sign-in'
+    $state.current.name == shortFormCreateAccountPath ||  $state.current.name == shortFormSignInPath
+
 
   $scope.clearCreatedAccount = ->
     angular.copy({}, $scope.createdAccount)
