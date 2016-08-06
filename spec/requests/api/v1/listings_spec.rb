@@ -33,13 +33,6 @@ describe 'Listings API' do
       end
     end
   end
-  describe 'lottery results' do
-    save_fixture do
-      VCR.use_cassette('listings/lottery_results') do
-        get '/api/v1/listings/a0X210000000IMLEA2/lottery_results.json'
-      end
-    end
-  end
   describe 'lottery preferences' do
     save_fixture do
       VCR.use_cassette('listings/lottery-preferences') do

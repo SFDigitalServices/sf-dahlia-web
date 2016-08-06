@@ -42,11 +42,6 @@ module SalesforceService
       api_get('/LotteryPreference')
     end
 
-    # get Lottery Results (aka Lottery_Members)
-    def self.lottery_results(listing_id)
-      api_get("/LotteryMember/#{listing_id}")
-    end
-
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
       api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
