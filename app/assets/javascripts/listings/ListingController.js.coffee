@@ -81,7 +81,6 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
-    ListingService.getLotteryResults()
     ListingService.getLotteryBuckets().then( ->
       ListingService.openLotteryResultsModal()
     )
@@ -131,11 +130,6 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.clearLotterySearchNumber = ->
     $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
-
-  $scope.lotteryMembers = ->
-    return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
-    _.filter $scope.listing.Lottery_Members, (ticket) ->
-      ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
 
   $scope.applicantSelectedForPreference = ->
     applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]

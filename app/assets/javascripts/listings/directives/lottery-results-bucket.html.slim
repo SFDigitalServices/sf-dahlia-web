@@ -2,8 +2,10 @@ accordion-group
   accordion-heading
     h3.accordion-name.semi
       | {{ pref_name }}
-    span.accordion-subheader.tiny
+    span.accordion-subheader.tiny ng-if="abrev_pref_name != 'generalLottery"
       | {{'LOTTERY.UP_TO' | translate}} {{ units_available }} {{'LOTTERY.UNITS_AVAILABLE' | translate}}
+    span.accordion-subheader.tiny ng-if="abrev_pref_name == 'generalLottery"
+      | {{'LOTTERY.ANY_REMAINING_UNITS' | translate}}
     span.ui-icon.ui-control.ui-small.i-color
       svg
         use xlink:href="#i-arrow-down"

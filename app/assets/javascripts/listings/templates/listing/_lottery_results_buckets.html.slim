@@ -1,12 +1,12 @@
 // Lottery Results
 .modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
-  p.t-small
+  p.t-small.margin-top
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
 .modal-overflow ng-if="!lotteryRankingSubmitted"
   div
     header.modal-inner
-      h2.h-caps-lined
+      h2.h-caps-lined.margin-top
         | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
       p.t-small.c-steel.no-margin
         | {{'LOTTERY.BUCKETS_RANKING_INFO' | translate}}
@@ -23,38 +23,10 @@
         lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
 
     header.modal-inner
-      h2.h-caps-lined.no-margin
+      h2.h-caps-lined.margin-top--2x
         | {{'LOTTERY.GENERAL_LIST' | translate}}
 
     section
       accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
 
-        // General Pool
-        accordion-group
-          accordion-heading
-            h3.accordion-name.semi
-              | {{'LOTTERY.GENERAL_POOL' | translate}}
-            span.accordion-subheader.tiny
-              | {{'LOTTERY.ANY_REMAINING_UNITS' | translate}}
-            span.ui-icon.ui-control.ui-small.i-color
-              svg
-                use xlink:href="#i-arrow-down"
-          .padding.padding-horizontal--3halves
-            p.t-small
-              | {{lotteryMembers().length}} {{'LOTTERY.APPLICANTS_IN_LIST' | translate}}
-            p.t-small.no-margin
-              | {{'LOTTERY.PREFERENCES_HOLDERS_CONSIDERED_FIRST' | translate}}
-          .overflow-panel
-            table.table-small.table-results role="grid"
-              thead
-                tr
-                  th scope="col"
-                    | {{'LOTTERY.RANK' | translate}}
-                  th scope="col"
-                    | {{'LOTTERY.TICKET' | translate}}
-              tbody
-                tr ng-repeat='lotteryMember in lotteryMembers()'
-                  td scope="row"
-                    | {{ lotteryMember.Rank }}
-                  td
-                    | {{ lotteryMember.Lottery_Number }}
+        lottery-results-bucket pref_name='General Pool' abrev_pref_name="generalLottery"
