@@ -1,8 +1,8 @@
-# RESTful JSON API to query for address validation
+# RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
-  before_action :authenticate_for_existing_application,
-                only: [:submit_application]
+  before_action :authenticate_user!,
+                only: %i(update_application delete_application)
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -51,6 +51,21 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  def update_application
+    @application = ShortFormService.get(application_params[:id])
+    return render_unauthorized_error unless user_can_modify(@application)
+    # calls same underlying method for submit
+    submit_application
+  end
+
+  def delete_application
+    @application = ShortFormService.get(params[:id])
+    return render_unauthorized_error unless user_can_modify(@application)
+    return render_unauthorized_error if submitted?(@application)
+    result = ShortFormService.delete(params[:id])
+    render json: result
+  end
+
   private
 
   def send_attached_files(application_id)
@@ -66,11 +81,17 @@ class Api::V1::ShortFormController < ApiController
     ).deliver_now
   end
 
-  def authenticate_for_existing_application
-    return true unless application_params[:id].present?
-    authenticate_user!
+  def user_can_modify(application)
     contact_id = current_user.salesforce_contact_id
-    ShortFormService.ownership?(contact_id, application_params[:id])
+    ShortFormService.ownership?(contact_id, application)
+  end
+
+  def submitted?(application)
+    ShortFormService.submitted?(application)
+  end
+
+  def render_unauthorized_error
+    render json: { error: 'unauthorized' }, status: 401
   end
 
   def contact_id
@@ -96,7 +117,7 @@ class Api::V1::ShortFormController < ApiController
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(%i(householdsize incomelevel))
+          .permit(%i(householdsize incomelevel childrenUnder6))
   end
 
   def uploaded_file_params

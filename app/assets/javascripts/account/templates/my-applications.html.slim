@@ -1,51 +1,16 @@
 .dash-container
   section.row.collapse
-    .medium-8.medium-centered.columns
+    .medium-8.medium-centered.columns.fixed-width
       main.dash-card
         header.dash-header.text-center
           span.header-badge
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-application"
-          h1.dash-title.no-margin My Applications
-        article.feed-item.is-editable
-          .feed-item-inner
-            header.feed-item-header
-              h3.feed-item-title Potrero 1010
-              p.feed-item-due Application Deadline: January 12th 2016
-            section.feed-item-content
-              .feed-item-details
-                p.feed-item-address
-                  | 1010 16th Street
-                  br
-                  | Studio: 22 units, 1 Bedroom: 33 units 2 Bedroom: 38 units
-              .feed-item-action
-                p.feed-item-status Status: In Progress
-                a.button.small.primary href="#"  Continue Application
-            footer.feed-item-footer
-              .feed-item-links
-                a.feed-item-link.lined href="#"  See Listing
-                a.feed-item-link.a-alert.lined href="#"  Delete
-              .feed-item-meta
-                p.feed-item-date Edited: January 12th 2016
-        article.feed-item.is-submitted
-          .feed-item-inner
-            header.feed-item-header
-              h3.feed-item-title Potrero 1010
-              p.feed-item-due Application Deadline: January 12th 2016
-            section.feed-item-content
-              .feed-item-details
-                p.feed-item-address
-                  | 1010 16th Street
-                  br
-                  | Studio: 22 units, 1 Bedroom: 33 units 2 Bedroom: 38 units
-                p.feed-item-number Your lottery number is #98AU18
-              .feed-item-action
-                p.feed-item-status
-                  span.feed-item-label.is-submitted Status: Submitted
-                a.button.small href="#"  View Application
-            footer.feed-item-footer
-              .feed-item-links
-                a.feed-item-link.lined href="#"  See Listing
-              .feed-item-meta
-                p.feed-item-date Submitted: January 12th 2016
+          h1.dash-title.no-margin
+            | {{'MY_APPLICATIONS.TITLE' | translate}}
+        .block--short.bg-dust.dash-footer.animated-fade ng-if="!hasApplications()"
+          h2.t-delta.t-serif.c-oil
+            | {{'MY_APPLICATIONS.NO_APPLICATIONS' | translate}}
+          a.button.ghost-white ui-sref="dahlia.listings" See Listings
+        my-application ng-repeat="application in myApplications" application="application"

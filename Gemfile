@@ -57,6 +57,8 @@ gem 'pg'
 
 gem 'actionmailer-text'
 gem 'hashie'
+gem 'active_model-errors_details'
+
 
 # http requests made easy
 gem 'http', require: false
@@ -81,7 +83,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-core'
   gem 'shoulda-matchers'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_girl_rails'
   gem 'awesome_print'
   gem 'dotenv-rails'
   gem 'jquery-rails' # only needed for jasmine-jquery

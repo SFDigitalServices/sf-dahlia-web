@@ -2,11 +2,12 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
+AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplicationService) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
   Service.userAuth = {}
   Service.loggedInUser = {}
+  Service.myApplications = []
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
@@ -19,13 +20,19 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     if shortFormSession
       Service.userAuth.temp_session_id = shortFormSession.uid + shortFormSession.userkey
     $auth.submitRegistration(Service.userAuth)
-      .then((response) ->
-        angular.copy(response.data.data, Service.createdAccount)
+      .success((response) ->
+        angular.copy(response.data, Service.createdAccount)
         angular.copy({}, Service.userAuth)
         Service.accountError.message = null
         return true
-      ).catch((response) ->
-        Service.accountError.message = response.data.errors.full_messages[0]
+      ).error((response) ->
+        msg = response.errors.full_messages[0]
+        if msg == 'Email already in use'
+          Service.accountError.message = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+        else if msg == 'Salesforce contact can\'t be blank'
+          Service.accountError.message = $translate.instant("ERROR.CREATE_ACCOUNT")
+        else
+          Service.accountError.message = msg
         return false
       )
 
@@ -38,13 +45,27 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
           ShortFormApplicationService.importUserData(Service.loggedInUser)
+          return true
       ).catch((response) ->
-        alert("Error: #{response.errors[0]}")
+        Service.accountError.message = response.errors[0]
+        return false
       )
 
-  Service._openConfirmEmailModal = ->
+  Service.openConfirmEmailModal = (email) ->
+    if email
+      Service.createdAccount.email = email
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirm_email_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
+
+  Service.openConfirmationExpiredModal = (email, confirmed = false) ->
+    Service.createdAccount.confirmed = confirmed
+    if email
+      Service.createdAccount.email = email
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
     })
@@ -72,24 +93,24 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
     )
 
   Service.loggedIn = ->
+    return false if !Service.loggedInUser
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
-
-  Service.newAccountConfirmEmailModal = ->
-    if Service._accountJustCreated()
-      Service._openConfirmEmailModal()
-
-  Service._accountJustCreated = ->
-    Service.createdAccount.email && !Service.createdAccount.confirmed_at
 
   Service.resendConfirmationEmail = ->
     params =
       email: Service.createdAccount.email
 
-    # TO DO: Write create controller method in rails endpoint
-    $http.post("api/v1/auth/confirmation", params).success((data, status, headers, config) ->
+    $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
+      # $modal.close()
       data
-    ).error( (data, status, headers, config) ->
+    ).catch( (data, status, headers, config) ->
       return
+    )
+
+  Service.getMyApplications = ->
+    $http.get('/api/v1/account/my-applications').success((data) ->
+      if data.applications
+        angular.copy(data.applications, Service.myApplications)
     )
 
   #################### helper functions
@@ -102,7 +123,7 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 
   # reverse of the above function
   Service._reformatDOB = ->
-    return false if _.isEmpty(Service.loggedInUser)
+    return false if !Service.loggedIn()
     split = Service.loggedInUser.DOB.split('-')
     Service.loggedInUser.dob_year = parseInt(split[0])
     Service.loggedInUser.dob_month = parseInt(split[1])
@@ -136,7 +157,9 @@ AccountService = ($state, $auth, $modal, $http, ShortFormApplicationService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AccountService.$inject = ['$state', '$auth', '$modal', '$http', 'ShortFormApplicationService']
+AccountService.$inject = [
+  '$state', '$auth', '$modal', '$http', '$translate', 'ShortFormApplicationService'
+]
 
 angular
   .module('dahlia.services')

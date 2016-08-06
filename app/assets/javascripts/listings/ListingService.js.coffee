@@ -212,10 +212,10 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     )
 
   # Business logic for determining if a listing is open
+  # `due date` should be a datetime, to include precise hour of deadline
   Service.listingIsOpen = (due_date) ->
     return false unless due_date
     now = moment()
-    # set deadline to 6PM pacific time on the due date
     deadline = moment(due_date).tz('America/Los_Angeles')
     # listing is open if deadline is in the future
     return deadline > now

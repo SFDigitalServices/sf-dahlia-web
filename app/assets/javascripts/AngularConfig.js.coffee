@@ -22,6 +22,7 @@
   'ui.validate',
   'ng-token-auth',
   'angular-uuid',
+  'ngAnimate'
 ]
 
 # Custom Directives
@@ -47,7 +48,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
       abstract: true
-      params: { lang: { squash: true, value: 'en' } }
+      params:
+        lang: { squash: true, value: 'en' }
+        skipConfirm: { squash: true }
       views:
         'translate@':
           templateUrl: 'shared/templates/translate.html'
@@ -84,9 +87,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.listing', {
       url: '/listings/:id',
-      params:
-        skipConfirm:
-          squash: true
       views:
         'container@':
           templateUrl: 'listings/templates/listing.html'
@@ -131,16 +131,22 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 
     })
     .state('dahlia.sign-in', {
-      url: '/sign-in'
+      url: '/sign-in?expiredUnconfirmed&expiredConfirmed'
       params:
-        skipConfirm:
-          squash: true
+        newAccount: {squash: true}
+        expiredUnconfirmed: null
+        expiredConfirmed: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
-      onEnter: ['AccountService', (AccountService) ->
-        AccountService.newAccountConfirmEmailModal()
+      onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        if $stateParams.expiredUnconfirmed
+          AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
+        if $stateParams.expiredConfirmed
+          AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
+        if $stateParams.newAccount
+          AccountService.openConfirmEmailModal()
       ]
     })
     .state('dahlia.short-form-application.sign-in', {
@@ -178,6 +184,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.my-account', {
       url: '/my-account'
+      params:
+        skipConfirm:
+          squash: true
       views:
         'container@':
           templateUrl: 'account/templates/my-account.html'
@@ -188,15 +197,16 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     })
     .state('dahlia.my-applications', {
       url: '/my-applications'
-      params:
-        skipConfirm:
-          squash: true
       views:
         'container@':
+          controller: 'AccountController'
           templateUrl: 'account/templates/my-applications.html'
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
+        ]
+        myApplications: ['AccountService', (AccountService) ->
+          AccountService.getMyApplications()
         ]
     })
     .state('dahlia.my-favorites', {
@@ -323,10 +333,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.short-form-welcome', {
       url: '/listings/:id/apply-welcome'
       abstract: true
-      views:
-        'container@':
-          templateUrl: 'short-form/templates/layout.html'
-          controller: 'ShortFormApplicationController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListing($stateParams.id)
@@ -342,8 +348,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
-        'container':
+        'container@':
           templateUrl: 'short-form/templates/a2-overview.html'
+          controller: 'ShortFormApplicationController'
     })
     ## -- Short Form Application pages -- ##
     .state('dahlia.short-form-application', {
@@ -606,7 +613,6 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
-
           if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example

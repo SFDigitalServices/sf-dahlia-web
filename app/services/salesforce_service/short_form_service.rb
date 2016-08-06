@@ -3,7 +3,7 @@ module SalesforceService
   class ShortFormService < SalesforceService::Base
     def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(household_size incomelevel).each do |k|
+      %i(household_size incomelevel childrenUnder6).each do |k|
         params[k] = params[k].to_i if params[k].present?
       end
       api_get(endpoint, params)
@@ -16,6 +16,14 @@ module SalesforceService
 
     def self.get(id)
       api_get("/shortForm/#{id}")
+    end
+
+    def self.get_for_user(contact_id)
+      api_get("/shortForm/list/#{contact_id}")
+    end
+
+    def self.delete(id)
+      api_post('/shortForm/delete/', id: id)
     end
 
     def self.attach_file(application_id, file, filename)
@@ -32,9 +40,12 @@ module SalesforceService
       files.destroy_all
     end
 
-    def self.ownership?(contact_id, application_id)
-      application = get(application_id)
+    def self.ownership?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
+    end
+
+    def self.submitted?(application)
+      application['status'] == 'Submitted'
     end
   end
 end

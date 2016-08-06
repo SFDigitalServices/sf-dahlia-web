@@ -1,0 +1,48 @@
+article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted()"
+  .feed-item-inner
+    header.feed-item-header
+      h3.feed-item-title
+        | {{listing.Building_Name}}
+      p.feed-item-due
+        ' {{'T.APPLICATION_DEADLINE' | translate}}:
+        ' {{listing.Application_Due_Date | date : "MMM d, yyyy" }}
+    section.feed-item-content
+      .feed-item-details
+        p.feed-item-address
+          | {{formattedAddress()}}
+          br
+          | {{unitSummary()}}
+        p.feed-item-number ng-if="isSubmitted()"
+          | {{'MY_APPLICATIONS.YOUR_LOTTERY_NUMBER_IS' | translate: lotteryNumber()}}
+
+      .feed-item-action ng-if="isSubmitted()"
+        p.feed-item-status
+          span.feed-item-label.is-submitted
+            ' {{'T.STATUS' | translate}}:
+            | {{'T.SUBMITTED' | translate}}
+        a.button.small href="#"
+          | {{'LABEL.VIEW_APPLICATION' | translate}}
+
+      .feed-item-action ng-if="!isSubmitted() && !isPastDue()"
+        p.feed-item-status
+          ' {{'T.STATUS' | translate}}:
+          | {{'T.IN_PROGRESS' | translate}}
+        a.button.small.primary href="#"
+          | {{'LABEL.CONTINUE_APPLICATION' | translate}}
+
+      .feed-item-action ng-if="!isSubmitted() && isPastDue()"
+        p.feed-item-status
+          span.feed-item-label.is-past-due
+            ' {{'T.STATUS' | translate}}:
+            | {{'T.NEVER_SUBMITTED' | translate}}
+
+    footer.feed-item-footer
+      .feed-item-links
+        a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
+          | {{'LABEL.SEE_LISTING' | translate}}
+        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)"
+          | {{'T.DELETE' | translate}}
+      .feed-item-meta
+        p.feed-item-date
+          ' {{'LABEL.EDITED' | translate}}:
+          ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}

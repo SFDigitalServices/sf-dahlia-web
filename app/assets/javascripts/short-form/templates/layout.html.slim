@@ -1,7 +1,8 @@
 section.app-container
   .row.collapse
-    .medium-6.medium-centered.columns
+    .medium-6.medium-centered.columns.fixed-width
 
       short-form-nav
 
-      div#short-form-wrapper(ui-view="container")
+      form(novalidate="" name="form.applicationForm" ng-submit="submitForm()")
+        #short-form-wrapper.animated-fade(ui-view="container")

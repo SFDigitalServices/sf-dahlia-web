@@ -1,5 +1,5 @@
 # basic emailer class
-class Emailer < ActionMailer::Base
+class Emailer < Devise::Mailer
   include ActionMailer::Text
   default from: 'DAHLIA <dahlia@housing.sfgov.org>'
   layout 'email'
@@ -15,6 +15,18 @@ class Emailer < ActionMailer::Base
       lottery_number: params[:lottery_number],
     )
   end
+
+  def confirmation_instructions(record, token, opts = {})
+    contact = AccountService.get(record.salesforce_contact_id)
+    @name = if contact.present?
+              "#{contact['firstName']} #{contact['lastName']}"
+            else
+              record.email
+            end
+    super
+  end
+
+  private
 
   def _submission_confirmation_email(params)
     # expects :email, :listing, :listing_url, :lottery_number

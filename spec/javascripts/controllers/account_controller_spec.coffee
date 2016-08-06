@@ -3,12 +3,14 @@ do ->
   describe 'AccountController', ->
     scope = undefined
     state = {current: {name: undefined}}
+    deferred = undefined
     $translate = {}
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
+      loggedIn: -> null
     fakeShortFormApplicationService =
-      submitApplication: (options={}) -> null
+      submitApplication: () -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -17,17 +19,15 @@ do ->
 
     beforeEach inject(($rootScope, $controller, $q) ->
       scope = $rootScope.$new()
-      scope.form = {accountForm: {}}
+      scope.form =
+        signIn: {}
+        createAccount: {}
       state.go = jasmine.createSpy()
-      spyOn(fakeAccountService, 'createAccount').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve('Remote call result')
-        return deferred.promise
-      spyOn(fakeAccountService, 'signIn').and.callFake ->
-        deferred = $q.defer()
-        deferred.resolve('Remote call result')
-        return deferred.promise
 
+      deferred = $q.defer()
+      spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
+      spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
 
       $controller 'AccountController',
         $scope: scope
@@ -38,19 +38,79 @@ do ->
     )
 
     describe '$scope.createAccount', ->
+      beforeEach ->
+        scope.form.createAccount =
+          $valid: true
+          $setUntouched: () ->
+            return
+          $setPristine: () ->
+            return
+
       it 'calls function on AccountService', ->
-        scope.form.accountForm = {$valid: true}
         scope.createAccount()
         expect(fakeAccountService.createAccount).toHaveBeenCalled()
+        return
+
+      describe 'user in short form session', ->
+        beforeEach ->
+          fakeShortFormApplicationService.session_uid = 'someuid'
+          fakeShortFormApplicationService.userkey = 'someuserkey'
+          state.current.name = 'dahlia.short-form-application.create-account'
+          deferred.resolve(true)
+
+        it 'calls createAccount function on account service with shortFormSession data', ->
+          expectedArgument = {uid: 'someuid', userkey: 'someuserkey'}
+          scope.createAccount()
+          expect(fakeAccountService.createAccount).toHaveBeenCalledWith(expectedArgument)
+          return
+
+        it 'submits application as draft ', ->
+          scope.createAccount()
+          scope.$apply()
+          expectedArgument = {draft: true, attachToAccount: true}
+          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(expectedArgument)
+          return
+
+        it 'routes user to sign-in', ->
+          scope.createAccount()
+          scope.$apply()
+          expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {skipConfirm: true, newAccount: true})
+          return
         return
       return
 
     describe '$scope.signIn', ->
+      beforeEach ->
+        scope.form.signIn =
+          $valid: true
+          $setUntouched: () ->
+            return
+          $setPristine: () ->
+            return
+
       it 'calls function on AccountService', ->
-        scope.form.accountForm = {$valid: true}
         scope.signIn()
         expect(fakeAccountService.signIn).toHaveBeenCalled()
         return
-      return
 
+      describe 'user in short form session', ->
+        beforeEach ->
+          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
+          state.current.name = 'dahlia.short-form-application.sign-in'
+          deferred.resolve(true)
+
+        it 'submits draft application', ->
+          scope.signIn()
+          scope.$apply()
+          expectedArgument = {draft: true}
+          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(expectedArgument)
+          return
+
+        it 'routes user to my account', ->
+          scope.signIn()
+          scope.$apply()
+          expect(state.go).toHaveBeenCalledWith('dahlia.my-account', {skipConfirm: true})
+          return
+        return
+      return
   return
