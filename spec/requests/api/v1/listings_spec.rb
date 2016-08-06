@@ -54,6 +54,15 @@ describe 'Listings API' do
       end
     end
   end
+  # TO DO: Convert other listings specs to QA env so this test can pass locally
+  describe 'lottery buckets' do
+    save_fixture do
+      VCR.use_cassette('listings/lottery-buckets') do
+        get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
+      end
+    end
+  end
+
   # ---- end Jasmine fixtures
 
   it 'sends a list of listings' do
@@ -151,9 +160,10 @@ describe 'Listings API' do
     expect(json['units'].length).to eq(2)
   end
 
-  it 'gets Lottery Results for a Listing' do
-    VCR.use_cassette('listings/lottery_results') do
-      get '/api/v1/listings/a0X210000000IMLEA2/lottery_results.json'
+  # TO DO: Convert other listings specs to QA env so this test can pass locally
+  it 'gets lottery buckets for a Listing' do
+    VCR.use_cassette('listings/lottery-buckets') do
+      get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
     end
 
     json = JSON.parse(response.body)
@@ -163,6 +173,6 @@ describe 'Listings API' do
 
     # check to make sure the right amount of Lottery results are returned
     # (based on VCR listing with 20 results)
-    expect(json['lottery_results'].length).to eq(20)
+    expect(json['lottery_buckets']['bucketResults'].length).to eq(5)
   end
 end
