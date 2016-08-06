@@ -35,6 +35,8 @@ do ->
         favorites: fakeListingFavorites
         maxIncomeLevels: []
         lotteryPreferences: []
+        getLotteryBuckets: () ->
+          undefined
         hasEligibilityFilters: () ->
           undefined
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
@@ -43,14 +45,17 @@ do ->
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       fakeListingService.formattedAddress = jasmine.createSpy()
-      fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
 
-    beforeEach inject(($rootScope, $controller) ->
+    beforeEach inject(($rootScope, $controller, $q) ->
+      deferred = $q.defer()
+      deferred.resolve('resolveData')
+      spyOn(fakeListingService, 'getLotteryBuckets').and.returnValue(deferred.promise)
+
       scope = $rootScope.$new()
       $controller 'ListingController',
         $scope: scope
@@ -177,9 +182,9 @@ do ->
         return
 
     describe '$scope.openLotteryResultsModal', ->
-      it 'expect ListingService.openLotteryResultsModal to be called', ->
+      it 'expect ListingService.getLotteryBuckets to be called', ->
         scope.openLotteryResultsModal()
-        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
+        expect(fakeListingService.getLotteryBuckets).toHaveBeenCalled()
         return
       return
 
@@ -337,13 +342,6 @@ do ->
           tomorrow.setDate(today.getDate()+1)
           listing.Lottery_Date = tomorrow
           expect(scope.lotteryDatePassed(fakeListing)).toEqual(false)
-        return
-      return
-
-    describe '$scope.openLotteryResultsModal', ->
-      it 'expects ListingService.function to be called', ->
-        scope.openLotteryResultsModal()
-        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
         return
       return
   return

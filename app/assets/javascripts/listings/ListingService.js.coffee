@@ -268,14 +268,6 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       return
     )
 
-  Service.getLotteryResults = ->
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_results").success((data, status, headers, config) ->
-      if data && data.lottery_results
-        Service.listing.Lottery_Members = data.lottery_results
-    ).error( (data, status, headers, config) ->
-      return
-    )
-
   return Service
 
 
