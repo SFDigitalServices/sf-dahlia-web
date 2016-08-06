@@ -12,7 +12,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
   $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
-  # TO DO: debug why this isn't working
+  # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
@@ -138,8 +138,8 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
 
-  $scope.lotterNumberValid = ->
-    $scope.listing.Lottery_Ranking.applicationResults[0]
+  $scope.lotteryNumberValid = ->
+    !!$scope.listing.Lottery_Ranking.applicationResults[0]
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->

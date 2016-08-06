@@ -21,7 +21,7 @@ span ng-if="applicantSelectedForPreference()"
       lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
 
 span ng-if="!applicantSelectedForPreference()"
-  span ng-if="lotterNumberValid()"
+  span ng-if="lotteryNumberValid()"
     .alert-box.primary.no-margin.bg-alert-tint
       span.alert-icon.ui-icon.ui-medium
         svg
@@ -32,7 +32,7 @@ span ng-if="!applicantSelectedForPreference()"
         accordion.results-accordion.accordion-container.has-stat.expanded-content
           lottery-results-ranking pref_name='General Pool' abrev_pref_name="generalLottery"
 
-  span ng-if="!lotterNumberValid()"
+  span ng-if="!lotteryNumberValid()"
     .alert-box.primary.no-margin
       span.alert-icon.ui-icon.ui-medium
         svg
@@ -46,7 +46,7 @@ span ng-if="!applicantSelectedForPreference()"
       p.t-small.c-steel
         | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P3' | translate}}
 
-section ng-if="lotterNumberValid()"
+section ng-if="lotteryNumberValid()"
   accordion.results-accordion.accordion-container.expanded-content
     accordion-group
       accordion-heading

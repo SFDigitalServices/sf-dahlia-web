@@ -37,6 +37,8 @@ do ->
         lotteryPreferences: []
         getLotteryBuckets: () ->
           undefined
+        getLotteryRanking: () ->
+          undefined
         hasEligibilityFilters: () ->
           undefined
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
@@ -55,6 +57,7 @@ do ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeListingService, 'getLotteryBuckets').and.returnValue(deferred.promise)
+      spyOn(fakeListingService, 'getLotteryRanking').and.returnValue(deferred.promise)
 
       scope = $rootScope.$new()
       $controller 'ListingController',
@@ -342,6 +345,50 @@ do ->
           tomorrow.setDate(today.getDate()+1)
           listing.Lottery_Date = tomorrow
           expect(scope.lotteryDatePassed(fakeListing)).toEqual(false)
+        return
+      return
+
+    describe '$scope.applicantSelectedForPreference', ->
+      describe 'applicant is selected for lottery preference', ->
+        it 'returns true', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults:[{somePreference: true}]
+          expect(scope.applicantSelectedForPreference()).toEqual(true)
+          return
+        return
+
+      describe 'applicant was not selected for lottery preference', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults:[{somePreference: false}]
+          expect(scope.applicantSelectedForPreference()).toEqual(false)
+          return
+        return
+      return
+
+    describe '$scope.lotteryNumberValid', ->
+      describe 'invalid', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults: []
+          expect(scope.lotteryNumberValid()).toEqual(false)
+          return
+        return
+
+      describe 'valid', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults: [{somePreference: false}]
+          expect(scope.lotteryNumberValid()).toEqual(true)
+          return
+        return
+      return
+
+    describe 'showLotteryRanking', ->
+      it 'calls ListingService.getLotteryRanking', ->
+        scope.lotterySearchNumber = '22222'
+        scope.showLotteryRanking()
+        expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
         return
       return
   return
