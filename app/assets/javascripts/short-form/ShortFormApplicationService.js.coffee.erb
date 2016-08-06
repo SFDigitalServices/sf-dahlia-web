@@ -260,11 +260,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
     # only need to update if nobody is eligible
     Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
 
-  Service.onExit = (e) ->
-    if state.name.match(/confirmation/)
-      e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+  Service.onExit = (state) ->
+    if state.name == 'dahlia.short-form-application.confirmation'
+      return $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
     else
-      e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+      return $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
