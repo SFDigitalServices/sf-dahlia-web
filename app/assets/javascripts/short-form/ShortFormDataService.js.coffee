@@ -196,7 +196,7 @@ ShortFormDataService = () ->
   Service.reformatApplication = (sfApp, uploadedFiles) ->
     data = _.pick sfApp, ['id', 'listingID', 'status']
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
-    data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant)
+    data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
@@ -223,7 +223,7 @@ ShortFormDataService = () ->
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
     return contact
 
-  Service._reformatPrimaryApplicant = (contact) ->
+  Service._reformatPrimaryApplicant = (contact, altContact) ->
     whitelist = [
       'appMemberId', 'contactId',
       'email', 'firstName', 'middleName', 'lastName', 'language', 'languageOther',
@@ -235,6 +235,9 @@ ShortFormDataService = () ->
     applicant.gender = Service._reformatMultiSelect(contact.gender)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.hiv = Service._reformatBoolean(contact.hiv)
+    altContactType = !! (!_.isEmpty(altContact) && altContact.alternateContactType)
+    applicant.noPhone = !! (!contact.phone && altContactType)
+    applicant.noAddress = !! (!contact.address && altContactType)
     applicant.additionalPhone = !! contact.alternatePhone
     applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     _.merge(applicant, Service.reformatDOB(contact.DOB))
