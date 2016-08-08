@@ -52,8 +52,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       Review: {}
 
   Service.current_id = 0
-  Service.session_uid = uuid.v4()
-  Service.userkey = uuid.v4()
+  Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
 
   Service.resetUserData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
@@ -173,8 +172,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         Service.preferences[k] = null
         if Service.preferences["#{preference}_proof_option"]
           Service.preferences["#{preference}_proof_option"] = null
-        if Service.hasPreferenceFile("#{preference}_proof_file")
-          Service.deletePreferenceFile("#{preference}_proof_file")
+        # TODO: fix, these are no longer in this service
+        #       but we can't include FileUploadService because it would be circular dependency
+        # if Service.hasPreferenceFile("#{preference}_proof_file")
+        #   Service.deletePreferenceFile("#{preference}_proof_file")
 
     # persist the changes to Service.householdMembers
     Service.householdMember = {}
@@ -318,7 +319,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         uploaded_file:
           file: file
           session_uid: Service.session_uid
-          userkey: Service.userkey
           preference: prefType
     ).then( ((resp) ->
       Service.preferences["#{fileType}_loading"] = false
@@ -342,9 +342,8 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
-        userkey: Service.userkey
     if options.attachToAccount
-      params.temp_session_id = Service.session_uid + Service.userkey
+      params.temp_session_id = Service.session_uid
 
     if params.application.id
       # update
@@ -374,10 +373,8 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.getMyApplicationForListing = (listing_id) ->
     $http.get("/api/v1/short-form/listing-application/#{listing_id}").success((data, status) ->
       if data.application && !_.isEmpty(data.application)
-        console.log(data.application)
-        formattedApplication = ShortFormDataService.reformatApplication(data.application)
-        console.log(formattedApplication)
-        Service.resetUserData(formattedApplication)
+        formattedApp = ShortFormDataService.reformatApplication(data.application, data.files)
+        Service.resetUserData(formattedApp)
     ).error((data, status) ->
       return
     )

@@ -33,6 +33,10 @@ class Api::V1::ShortFormController < ApiController
   def delete_proof
     file_params = uploaded_file_params
     preference = file_params.delete(:preference)
+    if user_signed_in?
+      file_params.delete(:session_uid)
+      file_params[:user_id] = current_user.id
+    end
     @uploaded_file = UploadedFile.send(preference).find_by(file_params)
     if @uploaded_file
       @uploaded_file.destroy
@@ -49,20 +53,20 @@ class Api::V1::ShortFormController < ApiController
     render json: { application: @application }
   end
 
-  def show_listing_application
+  def show_listing_application_for_user
     return render json: { application: {} } unless current_user.present?
     find_listing_application
-    render json: { application: @application }
+    find_application_files
+    render json: {
+      application: @application,
+      files: @files,
+    }
   end
 
   def submit_application
     response = ShortFormService.create_or_update(application_params, contact_id)
     if response.present?
-      if application_params[:primaryApplicant][:email].present? &&
-         application_params[:status] == 'submitted'
-        send_attached_files(response['id'])
-        send_submit_app_confirmation(response['lotteryNumber'])
-      end
+      attach_files_and_send_confirmation(response)
       render json: response
     else
       render json: { error: ShortFormService.error }, status: 422
@@ -87,9 +91,24 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def attach_files_and_send_confirmation(response)
+    if application_params[:status] == 'draft' && user_signed_in?
+      attach_temp_files_to_user
+    elsif application_params[:primaryApplicant][:email].present? &&
+          application_params[:status] == 'submitted'
+      send_attached_files(response['id'])
+      send_submit_app_confirmation(response['lotteryNumber'])
+    end
+  end
+
   def send_attached_files(application_id)
     files = UploadedFile.where(uploaded_file_params)
     ShortFormService.attach_files(application_id, files)
+  end
+
+  def attach_temp_files_to_user
+    files = UploadedFile.where(uploaded_file_params)
+    files.update_all(user_id: current_user.id)
   end
 
   def send_submit_app_confirmation(lottery_number)
@@ -109,6 +128,13 @@ class Api::V1::ShortFormController < ApiController
         @application = application
       end
     end
+  end
+
+  def find_application_files
+    @files = UploadedFile.where(
+      user_id: current_user.id,
+      listing_id: params[:listing_id],
+    )
   end
 
   def user_can_access(application)
@@ -152,7 +178,7 @@ class Api::V1::ShortFormController < ApiController
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(%i(file session_uid userkey listing_id
+          .permit(%i(file session_uid listing_id
                      document_type preference))
   end
 
@@ -245,15 +271,16 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def uploaded_file_attrs
-    {
+    attrs = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      userkey: uploaded_file_params[:userkey],
       preference: uploaded_file_params[:preference],
       document_type: uploaded_file_params[:document_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
     }
+    attrs[:user_id] = current_user.id if user_signed_in?
+    attrs
   end
 end

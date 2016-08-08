@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720010507) do
+ActiveRecord::Schema.define(version: 20160808065918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,15 +21,16 @@ ActiveRecord::Schema.define(version: 20160720010507) do
     t.string   "name"
     t.string   "content_type"
     t.string   "session_uid"
-    t.string   "userkey"
     t.integer  "preference"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "listing_id"
     t.string   "document_type"
+    t.integer  "user_id"
   end
 
-  add_index "uploaded_files", ["session_uid", "userkey", "listing_id", "preference"], name: "composite_uid", unique: true, using: :btree
+  add_index "uploaded_files", ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree
+  add_index "uploaded_files", ["user_id"], name: "index_uploaded_files_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",      null: false

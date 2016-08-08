@@ -193,7 +193,7 @@ ShortFormDataService = () ->
   # Reverse formatting functions (Salesforce -> Web app)
   #############################################
 
-  Service.reformatApplication = (sfApp) ->
+  Service.reformatApplication = (sfApp, uploadedFiles) ->
     data = _.pick sfApp, ['id', 'listingID', 'status']
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant)
@@ -201,7 +201,7 @@ ShortFormDataService = () ->
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
-    data.preferences = Service._reformatPreferences(sfApp)
+    data.preferences = Service._reformatPreferences(sfApp, uploadedFiles)
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -262,7 +262,7 @@ ShortFormDataService = () ->
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
 
-  Service._reformatPreferences = (sfApp) ->
+  Service._reformatPreferences = (sfApp, files) ->
     preferences = {}
     prefList = angular.copy(Service.preferences)
     prefList.forEach( (preference) ->
@@ -272,6 +272,10 @@ ShortFormDataService = () ->
         member = _.find(sfApp.householdMembers, {appMemberId: appMemberId})
         preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
         preferences[preference] = true
+        file = _.find(files, {preference: preference})
+        if file
+          preferences["#{preference}_proof_option"] = file.document_type
+          preferences["#{preference}_proof_file"] = file
     )
     preferences
 

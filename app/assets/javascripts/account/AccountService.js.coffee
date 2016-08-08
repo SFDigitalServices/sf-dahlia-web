@@ -24,7 +24,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 
   Service.createAccount = (shortFormSession) ->
     if shortFormSession
-      Service.userAuth.user.temp_session_id = shortFormSession.uid + shortFormSession.userkey
+      Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
@@ -61,6 +61,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     $auth.signOut()
       .then((response) ->
         angular.copy({}, Service.loggedInUser)
+        ShortFormApplicationService.resetUserData()
       )
 
   # this gets run on init of the app in AngularConfig to check if we're logged in

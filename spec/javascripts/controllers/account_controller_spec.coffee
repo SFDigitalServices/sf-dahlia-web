@@ -54,12 +54,11 @@ do ->
       describe 'user in short form session', ->
         beforeEach ->
           fakeShortFormApplicationService.session_uid = 'someuid'
-          fakeShortFormApplicationService.userkey = 'someuserkey'
           state.current.name = 'dahlia.short-form-application.create-account'
           deferred.resolve(true)
 
         it 'calls createAccount function on account service with shortFormSession data', ->
-          expectedArgument = {uid: 'someuid', userkey: 'someuserkey'}
+          expectedArgument = {uid: 'someuid'}
           scope.createAccount()
           expect(fakeAccountService.createAccount).toHaveBeenCalledWith(expectedArgument)
           return

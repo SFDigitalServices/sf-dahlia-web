@@ -1,7 +1,6 @@
 FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
   Service = {}
   Service.session_uid = ShortFormApplicationService.session_uid
-  Service.userkey = ShortFormApplicationService.userkey
   Service.preferences = ShortFormApplicationService.preferences
 
   Service.hasPreferenceFile = (fileType) ->
@@ -13,7 +12,6 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
       uploaded_file:
         session_uid: Service.session_uid
         listing_id: listing_id
-        userkey: Service.userkey
         preference: prefType
     $http.delete('/api/v1/short-form/proof', {
       data: params,
@@ -49,7 +47,6 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
           session_uid: Service.session_uid
           listing_id: listing_id
           document_type: docType
-          userkey: Service.userkey
           preference: prefType
     ).then( ((resp) ->
       Service.preferences["#{fileType}_loading"] = false
