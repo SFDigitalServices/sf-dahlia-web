@@ -44,7 +44,6 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       if $scope._userInShortFormSession()
         shortFormSession =
           uid: ShortFormApplicationService.session_uid
-          userkey: ShortFormApplicationService.userkey
       AccountService.createAccount(shortFormSession).then( (success) ->
         if success
           form.$setUntouched()
