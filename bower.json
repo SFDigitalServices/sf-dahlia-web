@@ -32,7 +32,6 @@
     "ng-token-auth": "~0.0.29",
     "angular-cookie": "~4.1.0",
     "angular-ui-validate": "~1.2.2",
-    "angular-uuids": "0.0.3",
-    "angular-animate": "1.4.7"
+    "angular-uuids": "0.0.3"
   }
 }

@@ -41,5 +41,4 @@
 //= require ng-token-auth
 //= require angular-ui-validate
 //= require angular-uuids
-//= require angular-animate
 //= require_tree .
