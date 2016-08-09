@@ -9,8 +9,13 @@ do ->
       createAccount: -> null
       signIn: -> null
       loggedIn: -> null
+      userDataForContact: ->
+        firstName: 'X'
+        lastName: 'Y'
+        email: 'x@y.com'
     fakeShortFormApplicationService =
       submitApplication: () -> null
+      importUserData: () -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate

@@ -112,8 +112,11 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 
 
   #################### helper functions
+  Service.userDataForContact = ->
+    _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
+
   Service._createAccountParams = ->
-    contact = _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
+    contact = Service.userDataForContact()
     contact.DOB = ShortFormDataService.formatUserDOB(contact)
     contact = ShortFormDataService.removeDOBFields(contact)
     return {

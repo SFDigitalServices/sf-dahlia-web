@@ -13,6 +13,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.resendDisabled = false
   # track if user has re-sent confirmation inside the modal
   $scope.resentConfirmationMessage = null
+  $scope.userDataForContact = {}
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -44,11 +45,13 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       if $scope._userInShortFormSession()
         shortFormSession =
           uid: ShortFormApplicationService.session_uid
+      $scope.userDataForContact = AccountService.userDataForContact()
       AccountService.createAccount(shortFormSession).then( (success) ->
         if success
           form.$setUntouched()
           form.$setPristine()
           $scope._createAccountRedirect()
+          $scope.userDataForContact = {}
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -113,6 +116,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope._signInRedirect = ->
     if AccountService.loggedIn() && $scope._userInShortFormSession()
+      # make sure short form data inherits logged in user data
+      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       ShortFormApplicationService.submitApplication({draft: true}).then( ->
         $state.go('dahlia.my-account', {skipConfirm: true})
       )
@@ -122,6 +127,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application
     if $scope._userInShortFormSession()
+      # make sure short form data inherits created account user data
+      ShortFormApplicationService.importUserData($scope.userDataForContact)
       ShortFormApplicationService.submitApplication(
         {draft: true, attachToAccount: true}
       ).then ->
