@@ -23,6 +23,14 @@ do ->
     fakeApplicant =
       firstName: 'Samantha'
       lastName: 'Bee'
+    fakeApplicantFull =
+      firstName: 'Samantha'
+      middlename: 'X.'
+      lastName: 'Bee'
+      dob_day: '1'
+      dob_month: '12'
+      dob_year: '1970'
+      email: 'contact@info.com'
     fakeApplicationsData =
       applications: [{listingID: '123'}]
 
@@ -168,6 +176,21 @@ do ->
         return
       return
 
+    describe 'copyApplicantFields', ->
+      it 'copies fields from ShortFormApplicationService into userAuth.contact', ->
+        fakeShortFormApplicationService.applicant = fakeApplicantFull
+        AccountService.copyApplicantFields()
+        info = _.pick fakeApplicantFull, ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
+        expect(AccountService.userAuth.contact).toEqual info
+        return
+      it 'copies fields from ShortFormApplicationService into userAuth.user', ->
+        fakeShortFormApplicationService.applicant = fakeApplicantFull
+        AccountService.copyApplicantFields()
+        info = _.pick fakeApplicantFull, ['email']
+        expect(AccountService.userAuth.user).toEqual info
+        return
+      return
+
 
     describe 'getMyApplications', ->
       afterEach ->
@@ -179,7 +202,8 @@ do ->
         AccountService.getMyApplications()
         httpBackend.flush()
         expect(AccountService.myApplications).toEqual fakeApplicationsData.applications
-
+        return
+      return
 
 
   return

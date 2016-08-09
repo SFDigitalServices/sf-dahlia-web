@@ -148,9 +148,12 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
   Service.copyApplicantFields = ->
-    applicant = _.pick ShortFormApplicationService.applicant,
-      ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year', 'email']
-    angular.copy(applicant, Service.userAuth.contact)
+    applicant = ShortFormApplicationService.applicant
+    contactInfo = _.pick applicant,
+      ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
+    userInfo = _.pick applicant, ['email']
+    angular.copy(contactInfo, Service.userAuth.contact)
+    angular.copy(userInfo, Service.userAuth.user)
 
   Service.lockCompletedFields = ->
     a = ShortFormApplicationService.applicant
