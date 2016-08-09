@@ -611,8 +611,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+          if (fromState.name == 'dahlia.short-form-application.confirmation')
+            leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION'
+          else
+            leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE'
           # timeout from inactivity means that we don't need to ALSO ask for confirmation
-          if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
+          if (toParams.skipConfirm || $window.confirm($translate.instant(leaveMessage)))
             # disable the onbeforeunload so that you are no longer bothered if you
             # try to reload the listings page, for example
             $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
