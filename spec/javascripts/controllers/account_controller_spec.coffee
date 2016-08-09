@@ -30,7 +30,6 @@ do ->
         signIn: {}
         createAccount: {}
       state.go = jasmine.createSpy()
-
       deferred = $q.defer()
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
