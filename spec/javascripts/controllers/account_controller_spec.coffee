@@ -11,6 +11,7 @@ do ->
       loggedIn: -> null
       requestPasswordReset: jasmine.createSpy()
       updatePassword: jasmine.createSpy()
+      accountError: {message: ''}
       userDataForContact: ->
         firstName: 'X'
         lastName: 'Y'
