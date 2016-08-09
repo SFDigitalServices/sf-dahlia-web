@@ -9,6 +9,7 @@ do ->
       createAccount: -> null
       signIn: -> null
       loggedIn: -> null
+      accountError: {message: ''}
       userDataForContact: ->
         firstName: 'X'
         lastName: 'Y'

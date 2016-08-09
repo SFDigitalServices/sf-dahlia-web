@@ -20,6 +20,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     $scope.form.signIn || $scope.form.createAccount
 
   $scope.handleErrorState = ->
+    if !$scope.accountError.message
+      $scope.accountError.message = $translate.instant('ERROR.FORM_SUBMISSION')
     # show error alert
     $scope.hideAlert = false
     el = angular.element(document.getElementById('form-wrapper'))
@@ -39,6 +41,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
+      $scope.accountError.message = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       shortFormSession = null
@@ -82,7 +85,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       AccountService.openConfirmEmailModal(reason.email)
     else
       # if (reason.error == 'bad_credentials')
-      $scope.accountError = {message: $translate.instant('SIGN_IN.BAD_CREDENTIALS')}
+      $scope.accountError.message = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
   $scope.isLocked = (field) ->

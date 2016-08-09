@@ -614,8 +614,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           controller: 'ShortFormApplicationController'
       resolve:
         application: [
-          '$stateParams', 'ShortFormApplicationService',
-          ($stateParams, ShortFormApplicationService) ->
+          '$stateParams', '$state', 'ShortFormApplicationService',
+          ($stateParams, $state, ShortFormApplicationService) ->
             ShortFormApplicationService.getApplication($stateParams.id).then ->
               if ShortFormApplicationService.application.status != 'Submitted'
                 $state.go('dahlia.my-applications')

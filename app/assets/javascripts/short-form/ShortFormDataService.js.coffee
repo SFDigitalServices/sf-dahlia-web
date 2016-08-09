@@ -273,17 +273,21 @@ ShortFormDataService = () ->
   Service._reformatPreferences = (sfApp, files) ->
     preferences = {}
     prefList = angular.copy(Service.preferences)
+    allHousehold = sfApp.householdMembers
+    allHousehold.unshift(sfApp.primaryApplicant)
     prefList.forEach( (preference) ->
       preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
       appMemberId = sfApp["#{preferenceName}ID"]
       if appMemberId
-        member = _.find(sfApp.householdMembers, {appMemberId: appMemberId})
-        preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
-        preferences[preference] = true
-        file = _.find(files, {preference: preference})
-        if file
-          preferences["#{preference}_proof_option"] = file.document_type
-          preferences["#{preference}_proof_file"] = file
+        member = _.find(allHousehold, {appMemberId: appMemberId})
+        # if we don't find a household member matching the preference that's probably bad.
+        if member
+          preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
+          preferences[preference] = true
+          file = _.find(files, {preference: preference})
+          if file
+            preferences["#{preference}_proof_option"] = file.document_type
+            preferences["#{preference}_proof_file"] = file
     )
     preferences
 
