@@ -372,21 +372,24 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.getApplication = (id) ->
     $http.get("/api/v1/short-form/application/#{id}").success((data, status) ->
-      if data.application && !_.isEmpty(data.application)
-        formattedApp = ShortFormDataService.reformatApplication(data.application)
-        Service.resetUserData(formattedApp)
+      Service.loadApplication(data)
     ).error((data, status) ->
       return
     )
 
   Service.getMyApplicationForListing = (listing_id) ->
     $http.get("/api/v1/short-form/listing-application/#{listing_id}").success((data, status) ->
-      if data.application && !_.isEmpty(data.application)
-        formattedApp = ShortFormDataService.reformatApplication(data.application, data.files)
-        Service.resetUserData(formattedApp)
+      Service.loadApplication(data)
     ).error((data, status) ->
       return
     )
+
+  Service.loadApplication = (data) ->
+    formattedApp = {}
+    if data.application && !_.isEmpty(data.application)
+      formattedApp = ShortFormDataService.reformatApplication(data.application, data.files)
+    # reset user data with either the found application, or empty (no application found for this user + listing)
+    Service.resetUserData(formattedApp)
 
   Service.checkSurveyComplete = ->
     app = Service.applicant

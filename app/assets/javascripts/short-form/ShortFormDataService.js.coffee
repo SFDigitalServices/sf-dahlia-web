@@ -192,7 +192,7 @@ ShortFormDataService = () ->
   # Reverse formatting functions (Salesforce -> Web app)
   #############################################
 
-  Service.reformatApplication = (sfApp, uploadedFiles) ->
+  Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
     whitelist = [
       'id', 'listingID', 'listing', 'applicationSubmittedDate', 'status', 'lotteryNumber'
     ]
