@@ -48,8 +48,9 @@ class Api::V1::ShortFormController < ApiController
 
   ####### - Short Form Application RESTful actions
   def show_application
-    @application = ShortFormService.get(application_params[:id])
+    @application = ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access(@application)
+    map_listing_to_application
     render json: { application: @application }
   end
 
@@ -117,6 +118,11 @@ class Api::V1::ShortFormController < ApiController
       listing_id: application_params[:listingID],
       lottery_number: lottery_number,
     ).deliver_now
+  end
+
+  def map_listing_to_application
+    listing = ListingService.listing(@application['listingID'])
+    @application['listing'] = listing
   end
 
   def find_listing_application

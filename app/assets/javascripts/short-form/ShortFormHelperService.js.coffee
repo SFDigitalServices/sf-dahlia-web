@@ -45,6 +45,11 @@ ShortFormHelperService = ($translate, $filter) ->
   Service.householdMemberForPreference = (application, pref_type) ->
     { user: application.preferences["#{pref_type}_household_member"] }
 
+  Service.fileAttachmentForPreference = (application, pref_type) ->
+    return '' if application.status == 'Submitted'
+    interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
+    $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+
 
   return Service
 

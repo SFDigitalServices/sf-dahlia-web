@@ -401,11 +401,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
                 $state.go('dahlia.welcome')
         ]
         application: [
-          '$stateParams', 'AccountService', 'ShortFormApplicationService',
-          ($stateParams, AccountService, ShortFormApplicationService) ->
+          '$stateParams', '$state', 'ShortFormApplicationService',
+          ($stateParams, $state, ShortFormApplicationService) ->
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
-            ShortFormApplicationService.getMyApplicationForListing($stateParams.id)
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+              if ShortFormApplicationService.application.status == 'Submitted'
+                # send them to their review page if the application is already submitted
+                $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
         ]
     })
     # Short form: "You" section
@@ -629,6 +632,22 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container':
           templateUrl: 'short-form/templates/g1-confirmation.html'
+    })
+    # Short form submission: Review
+    .state('dahlia.short-form-review', {
+      url: '/applications/:id'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/review-application.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        application: [
+          '$stateParams', 'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.getApplication($stateParams.id).then ->
+              if ShortFormApplicationService.application.status != 'Submitted'
+                $state.go('dahlia.my-applications')
+        ]
     })
 
     $translateProvider

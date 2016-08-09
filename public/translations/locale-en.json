@@ -218,6 +218,7 @@
         "EMAIL_ADDRESS": "Email",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
+        "FILE_ATTACHED": "{{file}} attached",
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
@@ -284,6 +285,13 @@
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "REVIEW_APPLICATION": {
+        "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
+        "PRINT_A_COPY": "Print a copy for your records",
+        "TITLE": "Here's the information you submitted.",
+        "VIEW_ORIGINAL_LISTING": "View the original listing",
+        "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
