@@ -110,7 +110,7 @@ ShortFormApplicationController = (
 
   unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
-    $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit($state.current)
+    $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
   $scope.submitForm = ->
     form = $scope.form.applicationForm
