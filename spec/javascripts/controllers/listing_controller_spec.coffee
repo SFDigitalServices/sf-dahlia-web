@@ -12,6 +12,7 @@ do ->
     fakeListingService = {}
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
+    fakeShortFormApplicationService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -50,6 +51,7 @@ do ->
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
+      $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       return
     )
 
