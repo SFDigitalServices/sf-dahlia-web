@@ -105,7 +105,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getLotteryResults)
               # check if user has already applied to this listing
-              setTimeout(ShortFormApplicationService.getMyApplicationForListing($stateParams.id))
+              setTimeout(ShortFormApplicationService.getMyApplicationForListing)
         ]
     })
     ##########################
