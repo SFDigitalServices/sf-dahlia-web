@@ -92,15 +92,20 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'listings/templates/listing.html'
           controller: 'ListingController'
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id).then ->
-            if _.isEmpty(ListingService.listing)
-              # kick them out unless there's a real listing
-              return $state.go('dahlia.welcome')
-            # trigger this asynchronously, allowing the listing page to load first
-            setTimeout(ListingService.getListingAMI)
-            setTimeout(ListingService.getLotteryPreferences)
-            setTimeout(ListingService.getListingUnits)
+        listing: [
+          '$stateParams', 'ListingService', 'AccountService', 'ShortFormApplicationService',
+          ($stateParams, ListingService, AccountService, ShortFormApplicationService) ->
+            ListingService.getListing($stateParams.id).then ->
+              if _.isEmpty(ListingService.listing)
+                # kick them out unless there's a real listing
+                return $state.go('dahlia.welcome')
+              # trigger this asynchronously, allowing the listing page to load first
+              setTimeout(ListingService.getListingAMI)
+              setTimeout(ListingService.getLotteryPreferences)
+              setTimeout(ListingService.getListingUnits)
+              setTimeout(ListingService.getLotteryResults)
+              # check if user has already applied to this listing
+              setTimeout(ShortFormApplicationService.getMyApplicationForListing($stateParams.id))
         ]
     })
     ##########################
