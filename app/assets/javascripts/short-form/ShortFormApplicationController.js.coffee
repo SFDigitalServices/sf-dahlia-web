@@ -439,7 +439,6 @@ ShortFormApplicationController = (
     Idle.watch()
 
   $scope.$on 'IdleStart', ->
-    # user has now been idle for x period of time, warn them of logout!
     if $state.is('dahlia.short-form-application.confirmation')
       # user is not logged in.
       if !AccountService.loggedIn()
