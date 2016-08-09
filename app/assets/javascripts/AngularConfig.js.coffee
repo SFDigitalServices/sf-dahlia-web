@@ -22,7 +22,6 @@
   'ui.validate',
   'ng-token-auth',
   'angular-uuid',
-  'ngAnimate'
 ]
 
 # Custom Directives
