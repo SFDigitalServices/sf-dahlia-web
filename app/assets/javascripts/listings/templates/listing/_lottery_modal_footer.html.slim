@@ -6,4 +6,5 @@ p.text-center.t-small.padding--3halves.no-margin.bg-dust
 
 footer.modal-footer.text-center.padding--3halves
   p.t-small.c-steel.no-margin
-    | {{'LOTTERY.RESULTS_UPDATED' | translate}}: July 23, 1990
+    ' {{'LOTTERY.RESULTS_UPDATED' | translate}}:
+    | {{listing.LastModifiedDate | date : "MMM d, yyyy" }}
