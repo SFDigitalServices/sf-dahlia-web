@@ -1,6 +1,6 @@
 .app-sub-header.border-top
   h3.app-sub-header_title
     | {{header}}
-  a.info-item_link.edit-link ng-href="{{ngHref}}"
+  a.info-item_link.edit-link ng-href="{{ngHref}}" ng-if="isEditable()"
     | {{'T.EDIT' | translate}}
   ng-transclude=""

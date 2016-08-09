@@ -196,7 +196,10 @@ ShortFormDataService = () ->
   #############################################
 
   Service.reformatApplication = (sfApp, uploadedFiles) ->
-    data = _.pick sfApp, ['id', 'listingID', 'status']
+    whitelist = [
+      'id', 'listingID', 'listing', 'applicationSubmittedDate', 'status', 'lotteryNumber'
+    ]
+    data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)

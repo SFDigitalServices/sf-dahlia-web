@@ -108,7 +108,7 @@ ShortFormApplicationController = (
   $scope.hideAlert = false
   $scope.hideMessage = false
 
-  unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
+  if ShortFormApplicationService.isShortFormPage($state.current) && !$window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
@@ -410,6 +410,9 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
+  $scope.fileAttachmentForPreference = (pref_type) ->
+    ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
 
@@ -432,8 +435,10 @@ ShortFormApplicationController = (
     else
       $state.go('dahlia.short-form-application.create-account')
 
+  $scope.print = -> $window.print()
+
   ## idle timeout functions
-  unless ShortFormApplicationService.isWelcomePage($state.current)
+  if ShortFormApplicationService.isShortFormPage($state.current)
     Idle.watch()
 
   $scope.$on 'IdleStart', ->
