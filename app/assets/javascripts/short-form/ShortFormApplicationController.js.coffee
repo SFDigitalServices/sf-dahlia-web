@@ -440,6 +440,7 @@ ShortFormApplicationController = (
 
   $scope.$on 'IdleStart', ->
     if $state.is('dahlia.short-form-application.confirmation')
+      # user is not logged in.
       if !AccountService.loggedIn()
         $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
     else
