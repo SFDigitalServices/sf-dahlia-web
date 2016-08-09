@@ -97,7 +97,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     modalInstance = $modal.open({
       templateUrl: 'listings/templates/listing/_lottery_modal.html',
       controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
+      windowClass: 'modal-small'
     })
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
@@ -249,10 +249,21 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       return
     )
 
-  Service.getLotteryResults = ->
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_results").success((data, status, headers, config) ->
-      if data && data.lottery_results
-        Service.listing.Lottery_Members = data.lottery_results
+  Service.getLotteryBuckets = ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
+      if data && data.lottery_buckets.bucketResults
+        Service.listing.Lottery_Buckets = data.lottery_buckets
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getLotteryRanking = (lotteryNumber) ->
+    params =
+      params:
+        lottery_number: lotteryNumber
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
+      if data && data.lottery_ranking
+        Service.listing.Lottery_Ranking = data.lottery_ranking
     ).error( (data, status, headers, config) ->
       return
     )

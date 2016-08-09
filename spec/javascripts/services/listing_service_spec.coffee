@@ -221,22 +221,6 @@ do ->
         return
       return
 
-    describe 'Service.getLotteryResults', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-        return
-      it 'assigns Service.listing.Lottery_Members with the Lottery Member results', ->
-        # have to populate listing first
-        ListingService.listing = fakeListing.listing
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryResults
-        ListingService.getLotteryResults()
-        httpBackend.flush()
-        expect(ListingService.listing.Lottery_Members).toEqual fakeLotteryResults.lottery_results
-        return
-      return
-
-
     describe 'Service.getLotteryPreferences', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()

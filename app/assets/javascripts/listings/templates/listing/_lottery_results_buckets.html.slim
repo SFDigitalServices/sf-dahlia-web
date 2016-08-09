@@ -1,0 +1,32 @@
+// Lottery Results
+.modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
+  p.t-small.margin-top
+    | {{'LOTTERY.BUCKETS_INTRO' | translate}}
+
+.modal-overflow ng-if="!lotteryRankingSubmitted"
+  div
+    header.modal-inner
+      h2.h-caps-lined.margin-top
+        | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
+      p.t-small.c-steel.no-margin
+        | {{'LOTTERY.BUCKETS_RANKING_INFO' | translate}}
+
+    section
+      accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
+
+        lottery-results-bucket pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference" units_available='{{lotteryBuckets.certOfPreferenceUnitsAvailable}}'
+
+        lottery-results-bucket pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference" units_available='{{lotteryBuckets.displacedPreferenceUnitsAvailable}}'
+
+        lottery-results-bucket pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference" units_available='{{lotteryBuckets.neighborhoodPreferenceUnitsAvailable}}'
+
+        lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
+
+    header.modal-inner
+      h2.h-caps-lined.margin-top--2x
+        | {{'LOTTERY.GENERAL_LIST' | translate}}
+
+    section
+      accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
+
+        lottery-results-bucket pref_name='General Pool' abrev_pref_name="generalLottery"

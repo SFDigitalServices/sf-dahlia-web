@@ -35,6 +35,10 @@ do ->
         favorites: fakeListingFavorites
         maxIncomeLevels: []
         lotteryPreferences: []
+        getLotteryBuckets: () ->
+          undefined
+        getLotteryRanking: () ->
+          undefined
         hasEligibilityFilters: () ->
           undefined
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
@@ -43,14 +47,18 @@ do ->
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       fakeListingService.formattedAddress = jasmine.createSpy()
-      fakeListingService.openLotteryResultsModal = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
 
-    beforeEach inject(($rootScope, $controller) ->
+    beforeEach inject(($rootScope, $controller, $q) ->
+      deferred = $q.defer()
+      deferred.resolve('resolveData')
+      spyOn(fakeListingService, 'getLotteryBuckets').and.returnValue(deferred.promise)
+      spyOn(fakeListingService, 'getLotteryRanking').and.returnValue(deferred.promise)
+
       scope = $rootScope.$new()
       $controller 'ListingController',
         $scope: scope
@@ -177,9 +185,9 @@ do ->
         return
 
     describe '$scope.openLotteryResultsModal', ->
-      it 'expect ListingService.openLotteryResultsModal to be called', ->
+      it 'expect ListingService.getLotteryBuckets to be called', ->
         scope.openLotteryResultsModal()
-        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
+        expect(fakeListingService.getLotteryBuckets).toHaveBeenCalled()
         return
       return
 
@@ -340,10 +348,47 @@ do ->
         return
       return
 
-    describe '$scope.openLotteryResultsModal', ->
-      it 'expects ListingService.function to be called', ->
-        scope.openLotteryResultsModal()
-        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
+    describe '$scope.applicantSelectedForPreference', ->
+      describe 'applicant is selected for lottery preference', ->
+        it 'returns true', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults:[{somePreference: true}]
+          expect(scope.applicantSelectedForPreference()).toEqual(true)
+          return
+        return
+
+      describe 'applicant was not selected for lottery preference', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults:[{somePreference: false}]
+          expect(scope.applicantSelectedForPreference()).toEqual(false)
+          return
+        return
+      return
+
+    describe '$scope.lotteryNumberValid', ->
+      describe 'invalid', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults: []
+          expect(scope.lotteryNumberValid()).toEqual(false)
+          return
+        return
+
+      describe 'valid', ->
+        it 'returns false', ->
+          scope.listing.Lottery_Ranking =
+            applicationResults: [{somePreference: false}]
+          expect(scope.lotteryNumberValid()).toEqual(true)
+          return
+        return
+      return
+
+    describe 'showLotteryRanking', ->
+      it 'calls ListingService.getLotteryRanking', ->
+        scope.lotterySearchNumber = '22222'
+        scope.showLotteryRanking()
+        expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
         return
       return
   return

@@ -1,0 +1,10 @@
+p.text-center.t-small.padding--3halves.no-margin.bg-dust
+  | {{'LOTTERY.LOTTERY_RESULTS_PDF_TITLE' | translate}}:
+  br
+  a.a-dark href="#"
+    | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
+
+footer.modal-footer.text-center.padding--3halves
+  p.t-small.c-steel.no-margin
+    ' {{'LOTTERY.RESULTS_UPDATED' | translate}}:
+    | {{listing.LastModifiedDate | date : "MMM d, yyyy" }}

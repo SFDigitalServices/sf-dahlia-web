@@ -1,0 +1,64 @@
+// Lottery Ranking
+header.modal-inner.padding-top--2x
+  h2.h-caps-lined
+    | {{'LOTTERY.RANKING_TITLE' | translate}}
+  p.t-small.c-steel.no-margin
+    | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
+
+span ng-if="applicantSelectedForPreference()"
+  .alert-box.primary.no-margin
+    span.alert-icon.ui-icon.ui-medium
+      svg
+        use xlink:href="#i-warning"
+    p.alert-body
+      | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
+
+  section
+    accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
+      lottery-results-ranking pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference"
+      lottery-results-ranking pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
+      lottery-results-ranking pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
+      lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
+
+span ng-if="!applicantSelectedForPreference()"
+  span ng-if="lotteryNumberValid()"
+    .alert-box.primary.no-margin.bg-alert-tint
+      span.alert-icon.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-warning"
+      p.alert-body
+        | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
+    section
+        accordion.results-accordion.accordion-container.has-stat.expanded-content
+          lottery-results-ranking pref_name='General Pool' abrev_pref_name="generalLottery"
+
+  span ng-if="!lotteryNumberValid()"
+    .alert-box.primary.no-margin
+      span.alert-icon.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-warning"
+      p.alert-body
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P1' | translate}}
+
+    section.modal-inner
+      p.t-small.c-steel
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P2' | translate}}
+      p.t-small.c-steel
+        | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P3' | translate}}
+
+section ng-if="lotteryNumberValid()"
+  accordion.results-accordion.accordion-container.expanded-content
+    accordion-group
+      accordion-heading
+        a.accordion-name.semi.a-dark
+          | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}
+        span.ui-icon.ui-control.ui-small.i-color
+          svg
+            use xlink:href="#i-arrow-down"
+      .t-small.padding--3halves
+        p.c-steel.t-small.margin-top
+          | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
+        p.c-steel.t-small
+          | {{'LOTTERY.NEXT_STEPS_P2' | translate}}
+        p.c-steel.t-small
+          | {{'LOTTERY.NEXT_STEPS_P3' | translate}}

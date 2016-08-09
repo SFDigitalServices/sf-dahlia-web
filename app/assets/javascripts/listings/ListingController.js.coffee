@@ -11,6 +11,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
+  $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
+  # TO DO: debug why this isn't working:
+  # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
   $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
@@ -21,6 +24,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   # for searching lottery number
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
+  $scope.lotteryRankingSubmitted = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -77,7 +81,9 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
-    ListingService.openLotteryResultsModal()
+    ListingService.getLotteryBuckets().then( ->
+      ListingService.openLotteryResultsModal()
+    )
 
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
@@ -122,15 +128,24 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
 
   # lottery search
   $scope.clearLotterySearchNumber = ->
+    $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
 
-  $scope.lotteryMembers = ->
-    return $scope.listing.Lottery_Members unless $scope.lotterySearchNumber
-    _.filter $scope.listing.Lottery_Members, (ticket) ->
-      ticket.Lottery_Number.toString().indexOf($scope.lotterySearchNumber) == 0
+  $scope.applicantSelectedForPreference = ->
+    applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
+    return _.includes(applicationResults, true)
 
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
+
+  $scope.lotteryNumberValid = ->
+    !!$scope.listing.Lottery_Ranking.applicationResults[0]
+
+  # Temp function to display ranking markup
+  $scope.showLotteryRanking = ->
+    ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
+      $scope.lotteryRankingSubmitted = true
+    )
 
 ############################################################################################
 ######################################## CONFIG ############################################

@@ -1,0 +1,28 @@
+accordion-group
+  accordion-heading
+    h3.accordion-name.semi
+      | {{ pref_name }}
+    span.accordion-subheader.tiny ng-if="abrev_pref_name != 'generalLottery'"
+      | {{'LOTTERY.UP_TO' | translate}} {{ units_available }} {{'LOTTERY.UNITS_AVAILABLE' | translate}}
+    span.accordion-subheader.tiny ng-if="abrev_pref_name == 'generalLottery'"
+      | {{'LOTTERY.ANY_REMAINING_UNITS' | translate}}
+    span.ui-icon.ui-control.ui-small.i-color
+      svg
+        use xlink:href="#i-arrow-down"
+  .margin-bottom-last-child.padding.padding-horizontal--3halves
+    p.t-small
+      | {{ results_by_preference(abrev_pref_name).length }} {{'LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE' | translate}}
+  .overflow-panel
+    table.table-small.table-results role="grid"
+      thead
+        tr
+          th scope="col"
+            | {{'LOTTERY.RANK' | translate}}
+          th scope="col"
+            | {{'LOTTERY.TICKET' | translate}}
+      tbody
+        tr ng-repeat="result in results_by_preference(abrev_pref_name)"
+          td scope="row"
+            | {{ result.preferenceRank }}
+          td
+            | {{ result.lotteryNumber }}
