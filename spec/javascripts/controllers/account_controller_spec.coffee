@@ -11,8 +11,13 @@ do ->
       loggedIn: -> null
       requestPasswordReset: jasmine.createSpy()
       updatePassword: jasmine.createSpy()
+      userDataForContact: ->
+        firstName: 'X'
+        lastName: 'Y'
+        email: 'x@y.com'
     fakeShortFormApplicationService =
       submitApplication: () -> null
+      importUserData: () -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
