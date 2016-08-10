@@ -75,6 +75,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     else
       $scope.handleErrorState()
 
+  $scope.requestPasswordReset = ->
+    AccountService.requestPasswordReset()
+
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')
       AccountService.openConfirmEmailModal(reason.email)

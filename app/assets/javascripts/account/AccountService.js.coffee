@@ -51,6 +51,15 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         return false
       )
 
+  Service.requestPasswordReset = ->
+    params =
+      email: Service.userAuth.email
+    $auth.requestPasswordReset(params).then((resp) ->
+
+    ).catch (resp) ->
+      # handle error response
+    return
+
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
