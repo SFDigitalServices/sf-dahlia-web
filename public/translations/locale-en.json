@@ -199,6 +199,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation or sexual identity?",
+        "CANCEL": "Cancel",
         "CITY": "City Name",
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
@@ -256,6 +257,7 @@
         "SEE_LISTING": "See Listing",
         "SELECT_ONE": "Select One",
         "SELF_DECLARED_STATUS": "Self-declared status",
+        "SEND_EMAIL": "Send email",
         "SIGN_IN": "Sign In",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPECIAL_PROGRAMS": "Special Programs",
@@ -286,6 +288,10 @@
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox."
+    },
+    "FORGOT_PASSWORD": {
+        "TITLE": "Forgot Password",
+        "UPDATE_PASSWORD": "Update password"
     },
     "T": {
         "APPLICATION": "Application",
