@@ -7,6 +7,13 @@ class Api::V1::AccountController < ApiController
     render json: { applications: applications }
   end
 
+  def update
+    contact = account_params
+    contact[:contactID] = current_user.salesforce_contact_id
+    salesforce_contact = AccountService.create_or_update(contact)
+    render json: { contact: salesforce_contact }
+  end
+
   private
 
   def current_user_applications
@@ -19,5 +26,11 @@ class Api::V1::AccountController < ApiController
     applications.each do |app|
       app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }
     end
+  end
+
+  def account_params
+    params
+      .require(:contact)
+      .permit(:firstName, :middleName, :lastName, :DOB, :email)
   end
 end

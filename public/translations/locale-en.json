@@ -10,6 +10,7 @@
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
+        "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
         "TITLE": "Account Settings"
     },
     "B1_NAME": {

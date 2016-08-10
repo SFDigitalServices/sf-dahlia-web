@@ -113,7 +113,11 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     )
 
   Service.updateAccount = () ->
-    null
+    params =
+      contact: Service.userDataForSalesforce()
+    $http.put('/api/v1/account/update', params).success((data) ->
+      alert 'hooray.'
+    )
 
   #################### modals
   Service.openConfirmEmailModal = (email) ->
@@ -139,13 +143,16 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.userDataForContact = ->
     _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
 
-  Service._createAccountParams = ->
+  Service.userDataForSalesforce = ->
     contact = Service.userDataForContact()
     contact.DOB = ShortFormDataService.formatUserDOB(contact)
     contact = ShortFormDataService.removeDOBFields(contact)
+    contact
+
+  Service._createAccountParams = ->
     return {
       user: _.omit(Service.userAuth.user, ['email_confirmation'])
-      contact: contact
+      contact: Service.userDataForSalesforce()
     }
 
   Service._reformatDOB = ->
