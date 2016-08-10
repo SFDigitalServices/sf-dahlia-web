@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       end
       scope '/account' do
         get 'my-applications' => 'account#my_applications'
+        put 'update' => 'account#update'
       end
     end
   end

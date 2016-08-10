@@ -38,6 +38,10 @@
 
 
         form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" account-error="accountError")
+
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
+
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
               h2.form-label.caps
@@ -45,17 +49,17 @@
 
               label.sr-only for="firstName"
                 | {{'LABEL.FIRST_NAME' | translate}}
-              input#firstName ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }"
+              input#firstName type="text" ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice()"
               small.error ng-if="inputInvalid('firstName')"
                 | {{'ERROR.FIRST_NAME' | translate}}
 
               label.sr-only for="middleName"
                 | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-              input#middleName name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+              input#middleName type="text" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-change="displayChangeNotice()"
 
               label.sr-only for="lastName"
                 | {{'LABEL.LAST_NAME' | translate}}
-              input#lastName required="" ng-model="userAuth.contact.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }"
+              input#lastName type="text" ng-model="userAuth.contact.lastName" required="" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice()"
               small.error ng-if="inputInvalid('lastName')"
                 | {{'ERROR.LAST_NAME' | translate}}
 
@@ -68,17 +72,17 @@
                 .form-group-month.large-2.columns
                   label.sr-only for="date_of_birth_month"
                     | {{'LABEL.DOB_MONTH' | translate}}
-                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }"
+                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice()"
 
                 .form-group-day.large-2.columns
                   label.sr-only for="date_of_birth_day"
                     | {{'LABEL.DOB_DAY' | translate}}
-                  input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }"
+                  input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice()"
 
                 .form-group-year.large-2.columns.end
                   label.sr-only for="date_of_birth_year"
                     | {{'LABEL.DOB_YEAR' | translate}}
-                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }"
+                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice()"
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
