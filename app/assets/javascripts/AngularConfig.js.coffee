@@ -170,6 +170,14 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/reset-password.html'
           controller: 'AccountController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: ['$state', 'AccountService', ($state, AccountService) ->
+        unless AccountService.loggedIn()
+          return $state.go('dahlia.sign-in')
+      ]
     })
     ############
     # TODO: refactor "my account" pages to be under the same namespace/controller
