@@ -112,6 +112,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         angular.copy(data.applications, Service.myApplications)
     )
 
+  Service.updateAccount = () ->
+    null
+
   #################### modals
   Service.openConfirmEmailModal = (email) ->
     if email
@@ -132,7 +135,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       windowClass: 'modal-large'
     })
 
-
   #################### helper functions
   Service.userDataForContact = ->
     _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
@@ -150,11 +152,14 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     return false if !Service.loggedIn()
     _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
-  Service.copyApplicantFields = ->
-    applicant = ShortFormApplicationService.applicant
-    contactInfo = _.pick applicant,
+  Service.copyApplicantFields = (from = 'applicant')->
+    if from == 'applicant'
+      user = ShortFormApplicationService.applicant
+    else
+      user = Service.loggedInUser
+    contactInfo = _.pick user,
       ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
-    userInfo = _.pick applicant, ['email']
+    userInfo = _.pick user, ['email']
     angular.copy(contactInfo, Service.userAuth.contact)
     angular.copy(userInfo, Service.userAuth.user)
 
