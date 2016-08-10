@@ -1,6 +1,6 @@
 AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
-  $scope.form = {}
+  $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
   $scope.myApplications = AccountService.myApplications
@@ -16,8 +16,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.userDataForContact = {}
 
   $scope.accountForm = ->
-    # pick up which ever one is defined (the other will be undefined)
-    $scope.form.signIn || $scope.form.createAccount
+    # pick up which ever one is defined (the others will be undefined)
+    $scope.form.signIn || $scope.form.createAccount || $scope.form.current
 
   $scope.handleErrorState = ->
     if !$scope.accountError.message
@@ -88,6 +88,16 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $scope.accountError.message = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
+  $scope.updateEmail = ->
+    # form = $scope.form.accountEmail
+    $scope.form.current = $scope.form.accountEmail
+    AccountService.updateAccount()
+
+  $scope.updateNameDOB = ->
+    # form = $scope.form.accountEmail
+    $scope.form.current = $scope.form.accountNameDOB
+    AccountService.updateAccount()
+
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
@@ -143,7 +153,6 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     shortFormCreateAccountPath = 'dahlia.short-form-application.create-account'
     shortFormSignInPath = 'dahlia.short-form-application.sign-in'
     $state.current.name == shortFormCreateAccountPath ||  $state.current.name == shortFormSignInPath
-
 
   $scope.clearCreatedAccount = ->
     angular.copy({}, $scope.createdAccount)

@@ -177,9 +177,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       views:
         'container@':
           templateUrl: 'account/templates/account-settings.html'
+          controller: 'AccountController'
       resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
+        auth: ['$auth', 'AccountService', ($auth, AccountService) ->
+          $auth.validateUser().then ->
+            AccountService.copyApplicantFields('loggedInUser')
         ]
     })
     .state('dahlia.eligibility-settings', {
