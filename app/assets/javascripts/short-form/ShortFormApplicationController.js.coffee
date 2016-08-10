@@ -463,7 +463,6 @@ ShortFormApplicationController = (
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.handleErrorState() if $state.params.error
     ShortFormNavigationService.isLoading(false)
-    # if I've reached the confirmation page and I'm logged in, call Idle.unwatch()
 
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
