@@ -48,6 +48,8 @@ do ->
       spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
       spyOn($auth, 'submitLogin').and.callFake -> fakeHttp
       spyOn($auth, 'validateUser').and.callFake -> fakeHttp
+      spyOn($auth, 'requestPasswordReset').and.callFake -> fakeHttp
+      spyOn($auth, 'updatePassword').and.callFake -> fakeHttp
       AccountService = _AccountService_
       requestURL = AccountService.requestURL
       return
@@ -90,6 +92,21 @@ do ->
       it 'calls $auth.validateUser', ->
         AccountService.validateUser()
         expect($auth.validateUser).toHaveBeenCalled()
+        return
+      return
+
+    describe 'requestPasswordReset', ->
+      it 'calls $auth.requestPasswordReset', ->
+        AccountService.requestPasswordReset()
+        expect($auth.requestPasswordReset).toHaveBeenCalled()
+        return
+      return
+
+
+    describe 'updatePassword', ->
+      it 'calls $auth.updatePassword', ->
+        AccountService.updatePassword()
+        expect($auth.updatePassword).toHaveBeenCalled()
         return
       return
 
