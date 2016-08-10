@@ -291,7 +291,9 @@
     },
     "FORGOT_PASSWORD": {
         "TITLE": "Forgot Password",
-        "UPDATE_PASSWORD": "Update password"
+        "UPDATE_PASSWORD": "Update password",
+        "EMAIL_SENT_TITLE": "We've sent you an email.",
+        "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password."
     },
     "T": {
         "APPLICATION": "Application",
