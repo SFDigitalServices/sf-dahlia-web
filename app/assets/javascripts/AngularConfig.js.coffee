@@ -611,10 +611,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
 
-      # change logged in state of user
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
-        loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation') ? true : false
+        loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (fromState.name == 'dahlia.short-form-application.confirmation')
           isConfirmationState = true
