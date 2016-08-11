@@ -53,17 +53,17 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 
   Service.requestPasswordReset = ->
     params =
-      email: Service.userAuth.email
+      email: Service.userAuth.user.email
     $auth.requestPasswordReset(params).then((resp) ->
-      Service.userAuth.resetPwdEmailSent = true
+      Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
       # handle error response
     return
 
   Service.updatePassword = ->
     params =
-      password: Service.userAuth.password
-      password_confirmation: Service.userAuth.password_confirmation
+      password: Service.userAuth.user.password
+      password_confirmation: Service.userAuth.user.password_confirmation
 
     $auth.updatePassword(params).then((resp) ->
       $state.go('dahlia.my-applications')

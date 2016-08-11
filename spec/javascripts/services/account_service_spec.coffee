@@ -97,16 +97,26 @@ do ->
 
     describe 'requestPasswordReset', ->
       it 'calls $auth.requestPasswordReset', ->
+        AccountService.userAuth =
+          user: { email: 'example@email.com' }
+        expectedParams = { email: 'example@email.com' }
         AccountService.requestPasswordReset()
-        expect($auth.requestPasswordReset).toHaveBeenCalled()
+        expect($auth.requestPasswordReset).toHaveBeenCalledWith(expectedParams)
         return
       return
 
 
     describe 'updatePassword', ->
       it 'calls $auth.updatePassword', ->
+        AccountService.userAuth =
+          user:
+            password: 'password'
+            password_confirmation: 'password'
+        expectedParams =
+          password: 'password'
+          password_confirmation: 'password'
         AccountService.updatePassword()
-        expect($auth.updatePassword).toHaveBeenCalled()
+        expect($auth.updatePassword).toHaveBeenCalledWith(expectedParams)
         return
       return
 
