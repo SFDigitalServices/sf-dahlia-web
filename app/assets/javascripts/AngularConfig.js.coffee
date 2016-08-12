@@ -163,6 +163,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
+      onExit: ['AccountService', (AccountService) ->
+        AccountService.clearAccountErrorMessage()
+      ]
     })
     .state('dahlia.reset-password', {
       url: '/reset-password'
@@ -177,6 +180,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
         unless AccountService.loggedIn()
           return $state.go('dahlia.sign-in')
+      ]
+      onExit: ['AccountService', (AccountService) ->
+        AccountService.clearAccountErrorMessage()
       ]
     })
     ############
