@@ -16,7 +16,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
-    $scope.form.signIn || $scope.form.createAccount
+    $scope.form.signIn || $scope.form.createAccount || $scope.form.updatePassword
 
   $scope.handleErrorState = ->
     # show error alert
