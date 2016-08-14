@@ -14,6 +14,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
+  Service.accountSuccess = {message: null}
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -116,7 +117,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     params =
       contact: Service.userDataForSalesforce()
     $http.put('/api/v1/account/update', params).success((data) ->
-      alert 'hooray.'
+      Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
     )
 
   #################### modals

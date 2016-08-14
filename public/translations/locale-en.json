@@ -153,6 +153,9 @@
         "TERMS": "You must agree to the terms in order to continue",
         "ZIP": "Please enter a zipcode"
     },
+    "SUCCESS": {
+        "ACCOUNT_CHANGES_SAVED": "Your changes have been saved."
+    },
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
