@@ -42,6 +42,8 @@
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
 
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
               h2.form-label.caps

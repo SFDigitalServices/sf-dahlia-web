@@ -9,6 +9,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.hideAlert = false
   $scope.hideMessage = false
   $scope.accountError = AccountService.accountError
+  $scope.accountSuccess = AccountService.accountSuccess
   $scope.submitDisabled = false
   $scope.resendDisabled = false
   # track if user has re-sent confirmation inside the modal
