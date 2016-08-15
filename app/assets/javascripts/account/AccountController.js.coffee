@@ -15,6 +15,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   # track if user has re-sent confirmation inside the modal
   $scope.resentConfirmationMessage = null
   $scope.userDataForContact = {}
+  $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
 
   $scope.accountForm = ->
@@ -101,8 +102,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.updateEmail = ->
     $scope.form.current = $scope.form.accountEmail
-    # AccountService.updateAccount()
-    false
+    AccountService.updateAccount('email')
 
   $scope.updateNameDOB = ->
     $scope.form.current = $scope.form.accountNameDOB
@@ -170,8 +170,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.informationChangeNotice = ->
     $translate.instant('ACCOUNT_SETTINGS.INFORMATION_CHANGE_NOTICE')
 
-  $scope.displayChangeNotice = ->
-    $scope.nameOrDOBChanged = true
+  $scope.displayChangeNotice = (attributesChanged) ->
+    $scope[attributesChanged] = true
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
