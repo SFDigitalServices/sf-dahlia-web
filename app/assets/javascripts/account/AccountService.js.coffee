@@ -51,6 +51,28 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         return false
       )
 
+  Service.requestPasswordReset = ->
+    Service.clearAccountErrorMessage()
+    params =
+      email: Service.userAuth.user.email
+    $auth.requestPasswordReset(params).then((resp) ->
+      Service.userAuth.user.resetPwdEmailSent = true
+    ).catch (resp) ->
+      Service.accountError.message = $translate.instant("ERROR.EMAIL_NOT_FOUND")
+    return
+
+  Service.updatePassword = ->
+    Service.clearAccountErrorMessage()
+    params =
+      password: Service.userAuth.user.password
+      password_confirmation: Service.userAuth.user.password_confirmation
+
+    $auth.updatePassword(params).then((resp) ->
+      $state.go('dahlia.my-applications')
+    ).catch (resp) ->
+      Service.accountError.message = $translate.instant("ERROR.PASSWORD_UPDATE")
+    return
+
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
@@ -146,6 +168,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       name: false
       dob: false
       email: false
+
+  Service.clearAccountErrorMessage = ->
+    Service.accountError.message = null
 
   # run on page load
   Service.unlockFields()

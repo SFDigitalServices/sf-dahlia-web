@@ -9,6 +9,8 @@ do ->
       createAccount: -> null
       signIn: -> null
       loggedIn: -> null
+      requestPasswordReset: jasmine.createSpy()
+      updatePassword: jasmine.createSpy()
     fakeShortFormApplicationService =
       submitApplication: () -> null
 
@@ -111,6 +113,20 @@ do ->
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-account', {skipConfirm: true})
           return
+        return
+      return
+
+    describe '$scope.requestPasswordReset', ->
+      it 'calls on AccountService.function', ->
+        scope.requestPasswordReset()
+        expect(fakeAccountService.requestPasswordReset).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.updatePassword', ->
+      it 'calls on AccountService.function', ->
+        scope.updatePassword()
+        expect(fakeAccountService.updatePassword).toHaveBeenCalled()
         return
       return
   return

@@ -117,9 +117,10 @@
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
         "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "DOB": "Please enter a valid Date of Birth",
-        "EMAIL": "Please enter an email address",
+        "EMAIL": "Please enter a valid email address",
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
+        "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
         "FILE_MISSING": "Please upload your proof of preference",
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
@@ -139,6 +140,7 @@
         "NOT_ELIGIBLE": "It appears that you wouldn't qualify for this listing due to household size.",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
+        "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "RELATIONSHIP": "Please enter a relationship.",
@@ -199,6 +201,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation or sexual identity?",
+        "CANCEL": "Cancel",
         "CITY": "City Name",
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
@@ -256,6 +259,7 @@
         "SEE_LISTING": "See Listing",
         "SELECT_ONE": "Select One",
         "SELF_DECLARED_STATUS": "Self-declared status",
+        "SEND_EMAIL": "Send email",
         "SIGN_IN": "Sign In",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPECIAL_PROGRAMS": "Special Programs",
@@ -286,6 +290,17 @@
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox."
+    },
+    "FORGOT_PASSWORD": {
+        "TITLE": "Forgot Password",
+        "EMAIL_SENT_TITLE": "We've sent you an email.",
+        "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password."
+    },
+    "RESET_PASSWORD": {
+        "TITLE": "Reset Password",
+        "NEW_PASSWORD": "New Password",
+        "CONFIRM_NEW_PASSWORD": "Confirm New Password",
+        "UPDATE_PASSWORD": "Update password"
     },
     "T": {
         "APPLICATION": "Application",

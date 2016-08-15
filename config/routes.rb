@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       sessions: 'overrides/sessions',
       token_validations: 'overrides/token_validations',
       confirmations: 'overrides/confirmations',
+      passwords: 'overrides/passwords',
     },
   )
 

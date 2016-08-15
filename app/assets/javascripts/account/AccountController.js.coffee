@@ -16,7 +16,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
-    $scope.form.signIn || $scope.form.createAccount
+    $scope.form.signIn || $scope.form.createAccount || $scope.form.updatePassword
 
   $scope.handleErrorState = ->
     # show error alert
@@ -74,6 +74,12 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       )
     else
       $scope.handleErrorState()
+
+  $scope.requestPasswordReset = ->
+    AccountService.requestPasswordReset()
+
+  $scope.updatePassword = ->
+    AccountService.updatePassword()
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')
