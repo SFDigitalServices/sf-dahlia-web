@@ -2,7 +2,18 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedService, ListingService, IncomeCalculatorService) ->
+ListingController = (
+  $scope,
+  $state,
+  $sce,
+  $sanitize,
+  $filter,
+  Carousel,
+  SharedService,
+  ListingService,
+  IncomeCalculatorService,
+  ShortFormApplicationService
+) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
   $scope.openListings = ListingService.openListings
@@ -19,6 +30,7 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
+  $scope.application = ShortFormApplicationService.application
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
   # for searching lottery number
@@ -147,6 +159,13 @@ ListingController = ($scope, $state, $sce, $sanitize, $filter, Carousel, SharedS
       $scope.lotteryRankingSubmitted = true
     )
 
+  $scope.submittedApplication = ->
+    $scope.application && $scope.application.status == 'Submitted'
+
+  $scope.hasDraftApplication = ->
+    $scope.application && $scope.application.status == 'Draft'
+
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
@@ -160,7 +179,8 @@ ListingController.$inject = [
   'Carousel',
   'SharedService',
   'ListingService',
-  'IncomeCalculatorService'
+  'IncomeCalculatorService',
+  'ShortFormApplicationService'
 ]
 
 angular

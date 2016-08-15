@@ -1,0 +1,33 @@
+section.app-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      .app-header.app-card.form-card
+        header.app-card_header
+          h1.app-card_title
+            | {{'T.APPLICATION' | translate}}: {{application.listing.Building_Name}}
+        .app-card_nav.text-center
+          a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: application.listingID})"
+            | {{'REVIEW_APPLICATION.VIEW_ORIGINAL_LISTING' | translate}}
+
+      .app-card.form-card.ng-pristine.ng-valid
+        .app-inner.leader.border-bottom
+          h2.app-card_question
+            | {{'REVIEW_APPLICATION.TITLE' | translate}}
+          p.feed-item-date.text-center
+            ' {{'T.SUBMITTED' | translate}}:
+            | {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
+        .app-inner.inset.border-bottom
+          .form-group.text-center
+            h3.form-label.caps
+              | {{'REVIEW_APPLICATION.YOUR_LOTTERY_NUMBER' | translate}}
+            p.beta.t-serif.no-margin
+              | &#35;{{ application.lotteryNumber }}
+        ng-include src="'short-form/templates/partials/_review-application-details.html'"
+
+        .padding--2x.text-center
+          button.button-link.button-lined.t-small.lined.hide-for-print ng-click="print()"
+            | {{'REVIEW_APPLICATION.PRINT_A_COPY' | translate}}
+        .button-pager
+          .button-pager_row.primary.app-card_footer
+            button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.my-applications"
+              | {{'REVIEW_APPLICATION.BACK_TO_MY_APPLICATIONS' | translate}}

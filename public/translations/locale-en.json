@@ -201,6 +201,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation or sexual identity?",
+        "APPLY_ONLINE": "Apply Online",
         "CANCEL": "Cancel",
         "CITY": "City Name",
         "CONTACT_EMAIL": "Contact email address",
@@ -218,6 +219,7 @@
         "EMAIL_ADDRESS": "Email",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
+        "FILE_ATTACHED": "{{file}} attached",
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
@@ -239,6 +241,7 @@
         "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "MIDDLE_NAME": "Middle Name",
+        "MY_APPLICATION": "My Application",
         "NAME": "Name",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "OTHER": "Other",
@@ -285,6 +288,13 @@
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
+    "REVIEW_APPLICATION": {
+        "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
+        "PRINT_A_COPY": "Print a copy for your records",
+        "TITLE": "Here's the information you submitted.",
+        "VIEW_ORIGINAL_LISTING": "View the original listing",
+        "YOUR_LOTTERY_NUMBER": "Your lottery number"
+    },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
@@ -306,6 +316,7 @@
         "APPLICATION": "Application",
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
+        "APPLICATION_SUBMITTED": "Application Submitted",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "BACK": "Back",
         "CALL": "Call",

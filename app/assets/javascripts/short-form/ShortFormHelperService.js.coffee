@@ -2,9 +2,9 @@ ShortFormHelperService = ($translate, $filter) ->
   Service = {}
 
   Service.alternate_contact_options = [
-    ['Family member', $translate.instant('LABEL.FAMILY_MEMBER')]
+    ['Family Member', $translate.instant('LABEL.FAMILY_MEMBER')]
     ['Friend', $translate.instant('LABEL.FRIEND')]
-    ['Social worker or housing counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
+    ['Social Worker or Housing Counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
     ['Other', $translate.instant('LABEL.OTHER')]
   ]
 
@@ -44,6 +44,11 @@ ShortFormHelperService = ($translate, $filter) ->
 
   Service.householdMemberForPreference = (application, pref_type) ->
     { user: application.preferences["#{pref_type}_household_member"] }
+
+  Service.fileAttachmentForPreference = (application, pref_type) ->
+    return '' if application.status == 'Submitted'
+    interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
+    $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
 
   return Service

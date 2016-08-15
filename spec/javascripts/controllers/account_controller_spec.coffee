@@ -11,8 +11,14 @@ do ->
       loggedIn: -> null
       requestPasswordReset: jasmine.createSpy()
       updatePassword: jasmine.createSpy()
+      accountError: {message: ''}
+      userDataForContact: ->
+        firstName: 'X'
+        lastName: 'Y'
+        email: 'x@y.com'
     fakeShortFormApplicationService =
       submitApplication: () -> null
+      importUserData: () -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -25,7 +31,6 @@ do ->
         signIn: {}
         createAccount: {}
       state.go = jasmine.createSpy()
-
       deferred = $q.defer()
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
@@ -56,12 +61,11 @@ do ->
       describe 'user in short form session', ->
         beforeEach ->
           fakeShortFormApplicationService.session_uid = 'someuid'
-          fakeShortFormApplicationService.userkey = 'someuserkey'
           state.current.name = 'dahlia.short-form-application.create-account'
           deferred.resolve(true)
 
         it 'calls createAccount function on account service with shortFormSession data', ->
-          expectedArgument = {uid: 'someuid', userkey: 'someuserkey'}
+          expectedArgument = {uid: 'someuid'}
           scope.createAccount()
           expect(fakeAccountService.createAccount).toHaveBeenCalledWith(expectedArgument)
           return
