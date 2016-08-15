@@ -685,17 +685,25 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
-          # timeout from inactivity means that we don't need to ALSO ask for confirmation
-          if (toParams.skipConfirm || $window.confirm($translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')))
-            # disable the onbeforeunload so that you are no longer bothered if you
-            # try to reload the listings page, for example
-            $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-            ShortFormApplicationService.resetUserData()
-            AccountService.rememberShortFormState(null)
-          else
-            # prevent page transition if user did not confirm
-            e.preventDefault()
-            false
+        # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
+        loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
+        # Anonymous user coming from shortform and are on the confirmation page: change the leave message
+        if (fromState.name == 'dahlia.short-form-application.confirmation')
+          isConfirmationState = true
+          leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION'
+        else
+          leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE'
+        # timeout from inactivity means that we don't need to ALSO ask for confirmation
+        if (toParams.skipConfirm || loggedInConfirmation || $window.confirm($translate.instant(leaveMessage)))
+          # disable the onbeforeunload so that you are no longer bothered if you
+          # try to reload the listings page, for example
+          $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
+          ShortFormApplicationService.resetUserData()
+          AccountService.rememberShortFormState(null)
+        else
+          # prevent page transition if user did not confirm
+          e.preventDefault()
+          false
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # check if we're on short form and trying to access a later section than the first section
