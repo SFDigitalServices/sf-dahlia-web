@@ -389,7 +389,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
-    # reset user data with either the found application, or empty (no application found for this user + listing)
     Service.resetUserData(formattedApp)
 
   Service.checkSurveyComplete = ->

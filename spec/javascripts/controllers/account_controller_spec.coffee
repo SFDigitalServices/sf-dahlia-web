@@ -9,6 +9,8 @@ do ->
       createAccount: -> null
       signIn: -> null
       loggedIn: -> null
+      requestPasswordReset: jasmine.createSpy()
+      updatePassword: jasmine.createSpy()
       accountError: {message: ''}
       userDataForContact: ->
         firstName: 'X'
@@ -29,7 +31,6 @@ do ->
         signIn: {}
         createAccount: {}
       state.go = jasmine.createSpy()
-
       deferred = $q.defer()
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
@@ -116,6 +117,20 @@ do ->
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-account', {skipConfirm: true})
           return
+        return
+      return
+
+    describe '$scope.requestPasswordReset', ->
+      it 'calls on AccountService.function', ->
+        scope.requestPasswordReset()
+        expect(fakeAccountService.requestPasswordReset).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.updatePassword', ->
+      it 'calls on AccountService.function', ->
+        scope.updatePassword()
+        expect(fakeAccountService.updatePassword).toHaveBeenCalled()
         return
       return
   return

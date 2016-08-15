@@ -26,6 +26,16 @@ class Emailer < Devise::Mailer
     super
   end
 
+  def reset_password_instructions(record, token, opts = {})
+    contact = AccountService.get(record.salesforce_contact_id)
+    @name = if contact.present?
+              "#{contact['firstName']} #{contact['lastName']}"
+            else
+              record.email
+            end
+    super
+  end
+
   private
 
   def _submission_confirmation_email(params)

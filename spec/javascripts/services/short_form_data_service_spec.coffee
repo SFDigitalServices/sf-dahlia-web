@@ -29,7 +29,6 @@ do ->
         expect(formatted.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
         return
 
-
     describe 'reformatApplication', ->
       beforeEach ->
         reformatted = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
