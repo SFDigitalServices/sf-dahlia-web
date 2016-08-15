@@ -434,16 +434,18 @@ ShortFormApplicationController = (
     else
       $state.go('dahlia.short-form-application.create-account')
 
-  ## idle timeout functions
+  ## idle timeout functions (if user is not on the confirmation page)
   unless ShortFormApplicationService.isWelcomePage($state.current)
     Idle.watch()
 
   $scope.$on 'IdleStart', ->
-    # user has now been idle for x period of time, warn them of logout!
-    $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+    if $state.is('dahlia.short-form-application.confirmation')
+      if !AccountService.loggedIn()
+        $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+    else
+      $window.alert($translate.instant('T.SESSION_INACTIVITY'))
 
   $scope.$on 'IdleTimeout', ->
-    # they ran out of time
     $state.go('dahlia.listing', {skipConfirm: true, id: $scope.listing.Id})
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
