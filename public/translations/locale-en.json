@@ -11,7 +11,9 @@
     },
     "ACCOUNT_SETTINGS": {
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
-        "TITLE": "Account Settings"
+        "TITLE": "Account Settings",
+        "VERIFY_EMAIL": "Please check your email inbox to verify this change."
+
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
