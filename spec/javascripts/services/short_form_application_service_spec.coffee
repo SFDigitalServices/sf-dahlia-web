@@ -2,9 +2,10 @@ do ->
   'use strict'
   describe 'ShortFormApplicationService', ->
     ShortFormApplicationService = undefined
-    $localStorage = undefined
+    httpBackend = undefined
     fakeListing = undefined
     fakeShortForm = getJSONFixture('short-form-example.json')
+    fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     $translate = {}
     fakeUpload = {}
     fakeHouseholdMember = undefined
@@ -23,26 +24,28 @@ do ->
       workInSf: 'Yes'
       preferences: {liveInSf: null, workInSf: null}
       home_address: fakeAddress
-    fakeListingService =  {
-      listing: {
+    fakeListingService =
+      listing:
         Id: ''
-      }
-    }
+    fakeDataService =
+      formatApplication: -> fakeShortForm
+      reformatApplication: -> fakeShortForm
     uuid = {v4: jasmine.createSpy()}
+    requestURL = undefined
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
+      $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'Upload', fakeUpload
       return
     )
 
-    beforeEach inject((_ShortFormApplicationService_, _$localStorage_) ->
-      $localStorage = _$localStorage_
+    beforeEach inject((_$httpBackend_, _ShortFormApplicationService_) ->
+      httpBackend = _$httpBackend_
       ShortFormApplicationService = _ShortFormApplicationService_
-      # have to clear out local storage beforeEach test
-      $localStorage.application = ShortFormApplicationService.applicationDefaults
+      requestURL = ShortFormApplicationService.requestURL
       return
     )
 
@@ -390,14 +393,49 @@ do ->
         ShortFormApplicationService.application = fakeShortForm
 
       it 'should indicate app status as submitted', ->
-        ShortFormApplicationService.submitApplication(fakeListing.id)
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
+        return
+
+      it 'should call formatApplication on ShortFormDataService', ->
+        spyOn(fakeDataService, 'formatApplication').and.callThrough()
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect(fakeDataService.formatApplication).toHaveBeenCalled()
         return
 
       it 'should indicate app date submitted to be date today', ->
         dateToday = moment().format('YYYY-MM-DD')
-        ShortFormApplicationService.submitApplication(fakeListing.id)
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.applicationSubmittedDate).toEqual(dateToday)
         return
       return
+
+    describe 'getApplication', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'should call reformatApplication on ShortFormDataService', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getApplication 'xyz'
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        return
+      return
+
+    describe 'getMyApplicationForListing', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'should call reformatApplication on ShortFormDataService', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyApplicationForListing 'xyz'
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        return
+      return
+
     return

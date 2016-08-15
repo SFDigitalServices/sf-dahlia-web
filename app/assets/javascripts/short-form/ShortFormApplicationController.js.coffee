@@ -108,7 +108,7 @@ ShortFormApplicationController = (
   $scope.hideAlert = false
   $scope.hideMessage = false
 
-  unless ShortFormApplicationService.isWelcomePage($state.current) || $window.jasmine
+  if ShortFormApplicationService.isShortFormPage($state.current) && !$window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
@@ -140,7 +140,6 @@ ShortFormApplicationController = (
     $document.scrollToElement(el, topOffset, duration)
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
-    # console.log($scope.form)
     form = $scope.form.applicationForm
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
@@ -204,8 +203,7 @@ ShortFormApplicationController = (
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
       $scope.applicant.noAddress = false
-    unless $scope.applicant.hasAltMailingAddress
-      ShortFormApplicationService.copyHomeToMailingAddress()
+    ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetHomeAddress = ->
     #reset home address
@@ -235,7 +233,7 @@ ShortFormApplicationController = (
       # skip ahead if they aren't filling out an alt. contact
       $scope.goToHouseholdLandingPage()
     else
-      if $scope.alternateContact.alternateContactType != 'Social worker or housing counselor'
+      if $scope.alternateContact.alternateContactType != 'Social Worker or Housing Counselor'
         $scope.alternateContact.agency = null
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
@@ -412,6 +410,9 @@ ShortFormApplicationController = (
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
+  $scope.fileAttachmentForPreference = (pref_type) ->
+    ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
 
@@ -434,8 +435,10 @@ ShortFormApplicationController = (
     else
       $state.go('dahlia.short-form-application.create-account')
 
+  $scope.print = -> $window.print()
+
   ## idle timeout functions
-  unless ShortFormApplicationService.isWelcomePage($state.current)
+  if ShortFormApplicationService.isShortFormPage($state.current)
     Idle.watch()
 
   $scope.$on 'IdleStart', ->

@@ -7,14 +7,27 @@
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-settings"
-          h1.dash-title.no-margin Account Settings
-        .dash-card-inner.inset.border-bottom
-          .form-group
-            h2.form-label.caps Email Address
-            label.sr-only for="textInput"  Email address
-            input#textInput name="textInput" placeholder="example@web.com" type="text"
-            p.text-center.padding-top
-              button.button.small.no-margin type="button"  Update
+          h1.dash-title.no-margin
+            | {{'ACCOUNT_SETTINGS.TITLE' | translate}}
+
+        form novalidate="" name="form.accountEmail" ng-submit="updateEmail()"
+
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="emailChanged")
+
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+
+          .dash-card-inner.inset.border-bottom
+            .form-group ng-class="{ error: inputInvalid('email') }"
+              h2.form-label.caps for="auth_email"
+                ' {{'LABEL.EMAIL_ADDRESS' | translate}}
+              label.sr-only for="auth_email"
+                | {{'LABEL.EMAIL_ADDRESS' | translate}}
+              input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" autocomplete="off" ng-change="displayChangeNotice('emailChanged')"
+              small.error ng-if="inputInvalid('email')"
+                | {{'ERROR.EMAIL' | translate}}
+
+              p.text-center.padding-top
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps Password
@@ -27,30 +40,60 @@
             input#textInput name="textInput" placeholder=("Confirm New Password") type="text"
             p.text-center.padding-top
               button.button.small.secondary.no-margin type="button"  Update
-        .dash-card-inner.inset.border-bottom
-          .form-group.padding-bottom--2x
-            h2.form-label.caps Your Name
-            label.sr-only for="textInput"  Email address
-            input#textInput name="textInput" placeholder=("First Name") type="text"
-            label.sr-only for="textInput"  Middle Name (optional)
-            input#textInput name="textInput" placeholder=("Middle Name (optional)") type="text"
-            label.sr-only for="textInput"  Last Name
-            input#textInput name="textInput" placeholder=("Last Name") type="text"
-          .form-group
-            h2.form-label.caps Your Date of Birth
-            .form-date-of-birth.row.collapse
-              .form-group-month.large-2.columns
-                label.sr-only for="date_of_birth_1"  Month
-                input max="12" min="1" name="date_of_birth_1" placeholder="MM" type="number"
-              .form-group-day.large-2.columns
-                label.sr-only for="date_of_birth_2"  Day
-                input max="31" min="1" name="date_of_birth_2" placeholder="DD" type="number"
-              .form-group-year.large-2.columns.end
-                label.sr-only for="date_of_birth_3"  Year
-                input max="2016" min="1900" name="date_of_birth_3" placeholder="YYYY" type="number"
-          .form-group
-            p.text-center.padding-top
-              button.button.small.secondary.no-margin type="button"  Update
+
+
+        form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" account-error="accountError")
+
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
+
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+
+          .dash-card-inner.inset.border-bottom
+            .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
+              h2.form-label.caps
+                ' {{'LABEL.YOUR_NAME' | translate}}
+
+              label.sr-only for="firstName"
+                | {{'LABEL.FIRST_NAME' | translate}}
+              input#firstName type="text" ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+              small.error ng-if="inputInvalid('firstName')"
+                | {{'ERROR.FIRST_NAME' | translate}}
+
+              label.sr-only for="middleName"
+                | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
+              input#middleName type="text" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-change="displayChangeNotice('nameOrDOBChanged')"
+
+              label.sr-only for="lastName"
+                | {{'LABEL.LAST_NAME' | translate}}
+              input#lastName type="text" ng-model="userAuth.contact.lastName" required="" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+              small.error ng-if="inputInvalid('lastName')"
+                | {{'ERROR.LAST_NAME' | translate}}
+
+          .dash-card-inner.inset.border-bottom
+            .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
+              h2.form-label.caps
+                ' {{'LABEL.YOUR_DOB' | translate}}
+              .form-date-of-birth.row.collapse
+
+                .form-group-month.large-2.columns
+                  label.sr-only for="date_of_birth_month"
+                    | {{'LABEL.DOB_MONTH' | translate}}
+                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+
+                .form-group-day.large-2.columns
+                  label.sr-only for="date_of_birth_day"
+                    | {{'LABEL.DOB_DAY' | translate}}
+                  input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+
+                .form-group-year.large-2.columns.end
+                  label.sr-only for="date_of_birth_year"
+                    | {{'LABEL.DOB_YEAR' | translate}}
+                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+
+              p.text-center.padding-top
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps Deactivate Account

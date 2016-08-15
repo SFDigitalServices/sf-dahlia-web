@@ -9,6 +9,12 @@
         "TITLE": "Here's what to expect for this application.",
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
+    "ACCOUNT_SETTINGS": {
+        "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
+        "TITLE": "Account Settings",
+        "VERIFY_EMAIL": "Please check your email inbox to verify this change."
+
+    },
     "B1_NAME": {
         "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
         "TITLE": "First, what's your name?"
@@ -147,6 +153,9 @@
         "TERMS": "You must agree to the terms in order to continue",
         "ZIP": "Please enter a zipcode"
     },
+    "SUCCESS": {
+        "ACCOUNT_CHANGES_SAVED": "Your changes have been saved."
+    },
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
@@ -199,6 +208,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation or sexual identity?",
+        "APPLY_ONLINE": "Apply Online",
         "CITY": "City Name",
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
@@ -215,6 +225,7 @@
         "EMAIL_ADDRESS": "Email",
         "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
+        "FILE_ATTACHED": "{{file}} attached",
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
@@ -236,6 +247,7 @@
         "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "MIDDLE_NAME": "Middle Name",
+        "MY_APPLICATION": "My Application",
         "NAME": "Name",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "OTHER": "Other",
@@ -260,6 +272,7 @@
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPECIAL_PROGRAMS": "Special Programs",
         "SUGGESTED_ADDRESS": "Suggested Address",
+        "UPDATE": "Update",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "VIEW_APPLICATION": "View Application",
@@ -275,11 +288,48 @@
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
+    "LOTTERY": {
+        "ANY_REMAINING_UNITS": "any remaining units",
+        "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
+        "BUCKETS_RANKING_INFO": "Ranking in these lists is considered in the order shown here.",
+        "GENERAL_LIST": "General List",
+        "HOUSING_PREFERENCES": "Housing Preferences",
+        "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
+        "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
+        "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
+        "LOTTERY_RESULTS": "Lottery Results",
+        "LOTTERY_RESULTS_PDF_LINK": "Download Lottery Results PDF",
+        "LOTTERY_RESULTS_PDF_TITLE": "For Full Preference & Unsorted Rankings",
+        "NEXT_STEPS_P1": "Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.",
+        "NEXT_STEPS_P2": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.",
+        "NEXT_STEPS_P3": "If all vacancies are filled for a preference you will still be eligible for units in your following preference.",
+        "NEXT_STEPS_TITLE": "What happens next?",
+        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "applicants qualified for this preference",
+        "OUT_OF": "out of",
+        "QUALIFIED_APPLICANTS": "qualified applicants",
+        "RANK": "Rank",
+        "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order show here.",
+        "RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE": "Please note, preferences holders will be considered for all units first.",
+        "RANKING_PREFERENCE_CONSIDERATION_NOTE": "Please note, there are other preferences that will be considered for units first.",
+        "RANKING_TITLE": "Your preference ranking",
+        "RESULTS_UPDATED": "Results Updated",
+        "TICKET": "Ticket",
+        "UNITS_AVAILABLE": "units available",
+        "UP_TO": "Up to",
+        "YOUR_RANKING_IN_THIS_LIST": "Your ranking in this list is"
+    },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "REVIEW_APPLICATION": {
+        "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
+        "PRINT_A_COPY": "Print a copy for your records",
+        "TITLE": "Here's the information you submitted.",
+        "VIEW_ORIGINAL_LISTING": "View the original listing",
+        "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
@@ -291,9 +341,11 @@
         "APPLICATION": "Application",
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
+        "APPLICATION_SUBMITTED": "Application Submitted",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "BACK": "Back",
         "CALL": "Call",
+        "CLEAR": "Clear",
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
         "EDIT": "Edit",
@@ -310,46 +362,12 @@
         "PER_YEAR": "per year",
         "REQUIRED": "Required",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
+        "SEARCH": "Search",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
         "STATUS": "Status",
         "SUBMIT": "Submit",
         "SUBMITTED": "Submitted",
         "YES": "Yes",
-        "YOU": "You",
-        "SEARCH": "Search",
-        "CLEAR": "Clear"
-    },
-    "LOTTERY": {
-        "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
-        "BUCKETS_RANKING_INFO": "Ranking in these lists is considered in the order shown here.",
-        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "applicants qualified for this preference",
-        "RANKING_TITLE": "Your preference ranking",
-        "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order show here.",
-        "RANKING_PREFERENCE_CONSIDERATION_NOTE": "Please note, there are other preferences that will be considered for units first.",
-        "RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE": "Please note, preferences holders will be considered for all units first.",
-        "RANK": "Rank",
-        "TICKET": "Ticket",
-        "UP_TO": "Up to",
-        "OUT_OF": "out of",
-        "QUALIFIED_APPLICANTS": "qualified applicants",
-        "LOTTERY_RESULTS_PDF_TITLE": "For Full Preference & Unsorted Rankings",
-        "LOTTERY_RESULTS_PDF_LINK": "Download Lottery Results PDF",
-        "RESULTS_UPDATED": "Results Updated",
-        "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
-        "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
-        "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
-        "UNITS_AVAILABLE": "units available",
-        "NEXT_STEPS_TITLE": "What happens next?",
-        "NEXT_STEPS_P1": "Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.",
-        "NEXT_STEPS_P2": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.",
-        "NEXT_STEPS_P3": "If all vacancies are filled for a preference you will still be eligible for units in your following preference.",
-        "YOUR_RANKING_IN_THIS_LIST": "Your ranking in this list is",
-        "LOTTERY_RESULTS": "Lottery Results",
-        "HOUSING_PREFERENCES": "Housing Preferences",
-        "GENERAL_LIST": "General List",
-        "GENERAL_POOL": "General Pool",
-        "ANY_REMAINING_UNITS": "any remaining units",
-        "APPLICANTS_IN_LIST": "applicants are in this list",
-        "PREFERENCES_HOLDERS_CONSIDERED_FIRST": "Please note, all preference holders will be considered for units first."
+        "YOU": "You"
     }
 }

@@ -30,6 +30,7 @@ do ->
         firstName: "Oberon"
       }
       isWelcomePage: jasmine.createSpy()
+      isShortFormPage: jasmine.createSpy().and.returnValue(true)
       copyHomeToMailingAddress: jasmine.createSpy()
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()

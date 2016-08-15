@@ -20,14 +20,14 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
           span.feed-item-label.is-submitted
             ' {{'T.STATUS' | translate}}:
             | {{'T.SUBMITTED' | translate}}
-        a.button.small href="#"
+        a.button.small ui-sref="dahlia.short-form-review({id: application.id})"
           | {{'LABEL.VIEW_APPLICATION' | translate}}
 
       .feed-item-action ng-if="!isSubmitted() && !isPastDue()"
         p.feed-item-status
           ' {{'T.STATUS' | translate}}:
           | {{'T.IN_PROGRESS' | translate}}
-        a.button.small.primary href="#"
+        a.button.small.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
           | {{'LABEL.CONTINUE_APPLICATION' | translate}}
 
       .feed-item-action ng-if="!isSubmitted() && isPastDue()"

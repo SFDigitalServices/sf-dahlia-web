@@ -1,7 +1,8 @@
-ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, ListingService) ->
+ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, ShortFormDataService) ->
   Service = {}
   Service.listing = ListingService.listing
   Service.form = {}
+  Service.application = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -51,22 +52,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
       Review: {}
 
   Service.current_id = 0
-  Service.session_uid = uuid.v4()
-  Service.userkey = uuid.v4()
+  Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
 
-  Service.resetUserData = () ->
-    # even though this looks commented out, it still has an effect in ERB land
-    # <% if Rails.env.development? %> # -------------
-    $localStorage.application ?= Service.applicationDefaults
-    Service.application = $localStorage.application
-    Service.application.preferences = angular.copy(Service.applicationDefaults.preferences)
-    Service.application.id = null
-    Service.application.lotteryNumber = null
-    Service.application.status = null
-    Service.application.applicationSubmittedDate = null
-    # <% else %> # -------------
-    Service.application = angular.copy(Service.applicationDefaults)
-    # <% end %> # -------------
+  Service.resetUserData = (data = {}) ->
+    application = _.merge({}, Service.applicationDefaults, data)
+    angular.copy(application, Service.application)
     Service.applicant = Service.application.applicant
     Service.preferences = Service.application.preferences
     Service.alternateContact = Service.application.alternateContact
@@ -110,7 +100,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
         false
 
   Service.copyHomeToMailingAddress = () ->
-    angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
+    unless Service.applicant.hasAltMailingAddress
+      angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
 
   Service.validMailingAddress = () ->
     !! (Service.applicant.mailing_address.address1 &&
@@ -181,10 +172,12 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
         Service.preferences[k] = null
         if Service.preferences["#{preference}_proof_option"]
           Service.preferences["#{preference}_proof_option"] = null
-        if Service.hasPreferenceFile("#{preference}_proof_file")
-          Service.deletePreferenceFile("#{preference}_proof_file")
+        # TODO: fix, these are no longer in this service
+        #       but we can't include FileUploadService because it would be circular dependency
+        # if Service.hasPreferenceFile("#{preference}_proof_file")
+        #   Service.deletePreferenceFile("#{preference}_proof_file")
 
-    # persist the changes to Service.householdMembers / $localStorage
+    # persist the changes to Service.householdMembers
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
@@ -233,18 +226,18 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
-      if member.hasSameAddressAsApplicant == "No"
+      if member.hasSameAddressAsApplicant == 'No'
         _.lowerCase(member.home_address.city) == 'san francisco'
       else
-        member.hasSameAddressAsApplicant == "Yes" && applicantLivesInSf
-    liveInSfMembers.push(Service.applicant) if applicantLivesInSf
+        member.hasSameAddressAsApplicant == 'Yes' && applicantLivesInSf
+    liveInSfMembers.unshift(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
   Service.workInSfMembers = () ->
     workInSfMembers = Service.application.householdMembers.filter (member) ->
-      member.workInSf == "Yes"
-    applicantWorksInSf = Service.applicant.workInSf == "Yes"
-    workInSfMembers.push(Service.applicant) if applicantWorksInSf
+      member.workInSf == 'Yes'
+    applicantWorksInSf = Service.applicant.workInSf == 'Yes'
+    workInSfMembers.unshift(Service.applicant) if applicantWorksInSf
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
@@ -257,7 +250,7 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
         member.home_address && member.home_address.boundary_match
     # add applicant to the list if they match
     if Service.applicant.home_address.boundary_match
-      household.push(Service.applicant)
+      household.unshift(Service.applicant)
     household
 
   Service.preferencesApplyForHousehold = ->
@@ -326,7 +319,6 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
         uploaded_file:
           file: file
           session_uid: Service.session_uid
-          userkey: Service.userkey
           preference: prefType
     ).then( ((resp) ->
       Service.preferences["#{fileType}_loading"] = false
@@ -347,12 +339,11 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
       Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
 
     params =
-      application: Service._formatApplication(Service.listing.Id)
+      application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
-        userkey: Service.userkey
     if options.attachToAccount
-      params.temp_session_id = Service.session_uid + Service.userkey
+      params.temp_session_id = Service.session_uid
 
     if params.application.id
       # update
@@ -379,191 +370,27 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
       return
     )
 
-  Service._formatApplication = (listingId) ->
-    application = angular.copy(Service.application)
-    application.listingID = listingId
-    application = Service._formatDOB(application)
-    application = Service._formatAddress(application, 'applicant', 'home_address')
-    application = Service._formatAddress(application, 'applicant', 'mailing_address')
-    if application.alternateContact.alternateContactType == 'None'
-      delete application.alternateContact
-    else
-      application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
-    application = Service._formatMemberAddress(application)
-    application = Service._formatMemberDOB(application)
-    application = Service._formatPreferences(application)
-    application = Service._formatGenderOptions(application)
-    application = Service._formatReferrals(application)
-    application = Service._formatTerms(application)
-    application = Service._formatIncome(application)
-    application = Service._formatBooleans(application)
-    application = Service._renameApplicant(application)
-    delete application.householdMembers if _.isEmpty(application.householdMembers)
-    delete application.primaryApplicant.mailingGeocoding_data
-    delete application.completedSections
-    delete application.validatedForms
-    return application
-
-  Service._renameApplicant = (application) ->
-    application.primaryApplicant = angular.copy(application.applicant)
-    delete application.applicant
-    return application
-
-  Service._formatDOB = (application) ->
-    month = application.applicant.dob_month
-    day = application.applicant.dob_day
-    year = application.applicant.dob_year
-    formattedDOB = year + '-' + month + '-' + day
-    application.applicant.dob = formattedDOB
-    delete application.applicant.dob_month
-    delete application.applicant.dob_day
-    delete application.applicant.dob_year
-    return application
-
-  Service._formatMemberDOB = (application) ->
-    application.householdMembers.forEach( (member) ->
-      month = member.dob_month
-      day = member.dob_day
-      year = member.dob_year
-      formattedDOB = year + '-' + month + '-' + day
-      member.dob = formattedDOB
-      delete member.dob_day
-      delete member.dob_month
-      delete member.dob_year
-      delete member.id
+  Service.getApplication = (id) ->
+    $http.get("/api/v1/short-form/application/#{id}").success((data, status) ->
+      Service.loadApplication(data)
+    ).error((data, status) ->
       return
     )
-    return application
 
-
-  Service._formatAddress = (application, person, addressType) ->
-    delete application[person].geocoding_data
-    return application unless application[person][addressType]
-
-    if addressType == 'home_address'
-      _.forEach application[person][addressType], (value, key) ->
-        if !(key == 'address1' || key == 'address2')
-          application[person][key] = value
-        return
-      application[person].address = application[person][addressType].address1 + application[person][addressType].address2
-      delete application[person].confirmed_home_address
-
-    else if addressType == 'mailing_address'
-      _.forEach application[person][addressType], (value, key) ->
-        if !(key == 'address1' || key == 'address2')
-          newKey = 'mailing' + _.capitalize(key)
-          application[person][newKey] = value
-        return
-      application[person].mailingAddress = application[person][addressType].address1
-      address2 = application[person][addressType].address2
-      application[person].mailingAddress += " " + address2 if address2
-
-    delete application[person][addressType]
-    return application
-
-  Service._formatMemberAddress = (application) ->
-    application.householdMembers.forEach( (member) ->
-      if member.home_address
-        _.forEach member.home_address, (value, key) ->
-          if !(key == 'address1' || key == 'address2')
-            member[key] = value
-          return
-        member.address = member.home_address.address1 + member.home_address.address2
-
-      if member.hasSameAddressAsApplicant == 'Yes'
-        member.hasSameAddressAsApplicant = true
-      else
-        member.hasSameAddressAsApplicant = false
-
-      delete member.home_address
-      delete member.confirmed_home_address
-      delete member.geocoding_data
-    )
-    return application
-
-  Service._formatPreferences = (application) ->
-    preferences = [
-        'displaced',
-        'certOfPreference',
-        'liveInSf',
-        'workInSf',
-        'neighborhoodResidence'
-    ]
-
-    allMembers = angular.copy(application.householdMembers)
-    allMembers.push(application.applicant)
-
-    preferences.forEach( (preference) ->
-      memberName = application.preferences[preference + '_household_member']
-      member = _.find(allMembers, (m) ->
-        return memberName == (m.firstName + ' ' + m.lastName)
-      )
-      return unless member
-      memberDOB = member.dob.replace(/\//g, '.')
-      if preference == 'certOfPreference'
-        preferenceName = preference + 'NatKey'
-      else
-        preferenceName = preference + 'PreferenceNatKey'
-      application[preferenceName] = member.firstName + ',' + member.lastName + ',' + memberDOB
-      delete application.preferences[preference + '_household_member']
-    )
-
-    if application.householdVouchersSubsidies == 'Yes'
-      application.householdVouchersSubsidies = true
-    else
-      application.householdVouchersSubsidies = false
-    delete application.householdVouchersSubsidies
-    delete application.preferences
-    return application
-
-  Service._formatGenderOptions = (application) ->
-    allGenders = ""
-    _.forEach application.applicant.gender, (value, key) ->
-      allGenders += (key + ";") if value
+  Service.getMyApplicationForListing = (listing_id) ->
+    $http.get("/api/v1/short-form/listing-application/#{listing_id}").success((data, status) ->
+      Service.loadApplication(data)
+    ).error((data, status) ->
       return
-    application.applicant.gender = allGenders
-    return application
-
-  Service._formatReferrals = (application) ->
-    referrals = ""
-    _.forEach application.applicant.referral, (value, key) ->
-      referrals += (key + ";") if value
-      return
-    application.referral = referrals
-    delete application.applicant.referral
-    return application
-
-  Service._formatTerms = (application) ->
-    if application.applicant.terms.yes
-      application.agreeToTerms = true
-    else
-      application.agreeToTerms = false
-    delete application.applicant.terms
-    return application
-
-  Service._formatIncome = (application) ->
-    incomeTimeframe = application.householdIncome.incomeTimeframe
-    if incomeTimeframe == 'per_year'
-      application.annualIncome = application.householdIncome.incomeTotal
-    else if incomeTimeframe == 'per_month'
-      application.monthlyIncome = application.householdIncome.incomeTotal
-    delete application.householdIncome
-    return application
-
-  Service._formatBooleans = (application) ->
-    ['workInSf', 'hiv'].forEach (field) ->
-      if application.applicant[field] == 'Yes'
-        application.applicant[field] = true
-      else
-        application.applicant[field] = false
-
-    application.householdMembers.forEach( (member) ->
-      if member.workInSf == 'Yes'
-        member.workInSf = true
-      else
-        member.workInSf = false
     )
-    return application
+
+  Service.loadApplication = (data) ->
+    formattedApp = {}
+    if data.application && !_.isEmpty(data.application)
+      files = data.files || []
+      formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+    # reset user data with either the found application, or empty (no application found for this user + listing)
+    Service.resetUserData(formattedApp)
 
   Service.checkSurveyComplete = ->
     app = Service.applicant
@@ -589,7 +416,8 @@ ShortFormApplicationService = ($localStorage, $translate, $http, Upload, uuid, L
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$localStorage', '$translate', '$http', 'Upload', 'uuid', 'ListingService'
+  '$translate', '$http', 'Upload', 'uuid',
+  'ListingService', 'ShortFormDataService'
 ]
 
 angular

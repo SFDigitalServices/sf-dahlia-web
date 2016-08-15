@@ -31,6 +31,8 @@ Rails.application.routes.draw do
       end
       scope '/short-form' do
         post 'validate-household' => 'short_form#validate_household'
+        get 'listing-application/:listing_id' => 'short_form#show_listing_application_for_user'
+        get 'application/:id' => 'short_form#show_application'
         post 'application' => 'short_form#submit_application'
         put 'application/:id' => 'short_form#update_application'
         delete 'application/:id' => 'short_form#delete_application'
@@ -45,6 +47,7 @@ Rails.application.routes.draw do
       end
       scope '/account' do
         get 'my-applications' => 'account#my_applications'
+        put 'update' => 'account#update'
       end
     end
   end
