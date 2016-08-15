@@ -120,9 +120,11 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.updateAccount = (infoType) ->
     if infoType == 'email'
       params =
-        contact: Service.userDataForSalesforce()
-      # TO DO: Setup http request (in Story #127691269)
-      Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
+        user:
+          email: Service.userAuth.user.email
+      $http.put('/api/v1/auth', params).success((data) ->
+        Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
+      )
     else
       params =
         contact: Service.userDataForSalesforce()

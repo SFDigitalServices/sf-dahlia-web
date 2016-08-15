@@ -14,7 +14,7 @@
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="emailChanged")
 
-          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message && emailChanged")
 
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: inputInvalid('email') }"
@@ -47,7 +47,7 @@
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
 
-          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message && nameOrDOBChanged")
 
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"

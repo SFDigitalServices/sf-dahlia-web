@@ -7,7 +7,13 @@ class User < ActiveRecord::Base
          :timeoutable, :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  attr_accessor :initiate_email_reconfirmation
+
   def error_details(field)
     errors.details[field].collect { |i| i[:error] }
+  end
+
+  def email_changed?
+    initiate_email_reconfirmation.present?
   end
 end
