@@ -690,11 +690,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (fromState.name == 'dahlia.short-form-application.confirmation')
           isConfirmationState = true
-          leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION'
+          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
         else
-          leaveMessage = 'T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE'
+          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
-        if (toParams.skipConfirm || loggedInConfirmation || $window.confirm($translate.instant(leaveMessage)))
+        if (toParams.skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit

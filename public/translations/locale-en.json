@@ -171,6 +171,11 @@
         "P5": "I declare that the foregoing is true and accurate, and I acknowledge that any material misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
     },
+    "FORGOT_PASSWORD": {
+        "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password.",
+        "EMAIL_SENT_TITLE": "We've sent you an email.",
+        "TITLE": "Forgot Password"
+    },
     "G1_CONFIRMATION": {
         "CREATE_ACCOUNT": "Create an account",
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
@@ -326,6 +331,10 @@
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
+    "RESET_PASSWORD": {
+        "TITLE": "Reset Password",
+        "UPDATE_PASSWORD": "Update password"
+    },
     "REVIEW_APPLICATION": {
         "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
         "PRINT_A_COPY": "Print a copy for your records",
@@ -338,17 +347,6 @@
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox."
-    },
-    "FORGOT_PASSWORD": {
-        "TITLE": "Forgot Password",
-        "EMAIL_SENT_TITLE": "We've sent you an email.",
-        "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password."
-    },
-    "RESET_PASSWORD": {
-        "TITLE": "Reset Password",
-        "NEW_PASSWORD": "New Password",
-        "CONFIRM_NEW_PASSWORD": "Confirm New Password",
-        "UPDATE_PASSWORD": "Update password"
     },
     "T": {
         "APPLICATION": "Application",
