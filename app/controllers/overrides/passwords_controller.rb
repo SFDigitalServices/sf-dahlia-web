@@ -18,13 +18,8 @@ module Overrides
           expiry: expiry,
         }
 
-        # ensure that user is confirmed
-        @resource.skip_confirmation! if user_is_confirmed
+        save_resource_for_edit
 
-        # allow user to change password once without current_password
-        @resource.allow_password_change = true
-
-        @resource.save!
         yield @resource if block_given?
 
         redirect_to(@resource.build_auth_url(
@@ -40,6 +35,14 @@ module Overrides
     end
 
     private
+
+    def save_resource_for_edit
+      # ensure that user is confirmed
+      @resource.skip_confirmation! if user_is_confirmed
+      # allow user to change password once without current_password
+      @resource.allow_password_change = true
+      @resource.save!
+    end
 
     def redirect_url
       root_url + 'reset-password'
