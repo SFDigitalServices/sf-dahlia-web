@@ -9,6 +9,7 @@ angular.module('dahlia.directives')
     customMessage: '=?'
     invert: '=?'
     primary: '=?'
+    secondary: '=?'
     shortForm: '=?'
     accountError: '=?'
 
