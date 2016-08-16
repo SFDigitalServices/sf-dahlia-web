@@ -1,12 +1,13 @@
 div ng-controller="AccountController"
-  h1
-    | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
+  header.modal-header
+    h1.modal-title.t-gamma.no-margin
+      | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
+  section.modal-inner.bg-dust
+    p.c-steel
+      | {{confirmEmailSentMessage()}}
+    p.c-steel
+      | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
 
-  p
-    | {{confirmEmailSentMessage()}}
-  p
-    | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
-
-  ng-include src="'account/templates/partials/_resend_confirmation_button.html'"
+    ng-include src="'account/templates/partials/_resend_confirmation_button.html'"
 
   ng-include src="'account/templates/partials/_modal_close.html'"
