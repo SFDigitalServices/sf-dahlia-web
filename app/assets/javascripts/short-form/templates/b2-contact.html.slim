@@ -127,17 +127,4 @@
       small.highlight ng-if="applicant.workInSf == 'Yes'"
         | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 
-  .app-inner.inset
-    .form-group ng-class="{ error: inputInvalid('languageOther') }"
-      label.form-label.caps for="applicant_language"
-        | {{'LABEL.APPLICANT_PRIMARY_LANGUAGE' | translate}}
-      select#applicant_language ng-model="applicant.language" data-width="auto" name="language" ng-change="applicant.languageOther = null"
-        option ng-repeat="language in language_options" value="{{language}}"
-          | {{ language }}
-
-      label.sr-only for="applicant_languageOther" translate="LABEL.ENTER_YOUR_LANGUAGE"
-      input#applicant_language_other ng-model="applicant.languageOther" name="languageOther" placeholder="{{'LABEL.ENTER_YOUR_LANGUAGE' | translate}}" type="text" ng-class="{ error: inputInvalid('languageOther') }" ng-required="applicant.language == 'Other'" ng-if="applicant.language == 'Other'"
-      small.error ng-if="inputInvalid('languageOther')"
-        | {{'ERROR.LANGUAGE' | translate}}
-
   short-form-save-and-submit
