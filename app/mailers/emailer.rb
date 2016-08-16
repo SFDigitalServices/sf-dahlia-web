@@ -5,6 +5,17 @@ class Emailer < Devise::Mailer
   layout 'email'
 
   ### service external methods
+  def account_update(record)
+    contact = AccountService.get(record.salesforce_contact_id)
+    @email = record.email
+    @name = name(contact, record)
+    @subject = 'DAHLIA SF Housing Portal Account Updated'
+    @account_settings_url = "#{base_url}/account-settings"
+    mail(to: @email, subject: @subject) do |format|
+      format.html { render 'account_update' }
+    end
+  end
+
   def submission_confirmation(params)
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
     return false unless listing.present? && params[:email].present?
@@ -18,21 +29,13 @@ class Emailer < Devise::Mailer
 
   def confirmation_instructions(record, token, opts = {})
     contact = AccountService.get(record.salesforce_contact_id)
-    @name = if contact.present?
-              "#{contact['firstName']} #{contact['lastName']}"
-            else
-              record.email
-            end
+    @name = name(contact, record)
     super
   end
 
   def reset_password_instructions(record, token, opts = {})
     contact = AccountService.get(record.salesforce_contact_id)
-    @name = if contact.present?
-              "#{contact['firstName']} #{contact['lastName']}"
-            else
-              record.email
-            end
+    @name = name(contact, record)
     super
   end
 
@@ -49,6 +52,14 @@ class Emailer < Devise::Mailer
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'submission_confirmation' }
+    end
+  end
+
+  def name(contact, record)
+    if contact.present?
+      "#{contact['firstName']} #{contact['lastName']}"
+    else
+      record.email
     end
   end
 
