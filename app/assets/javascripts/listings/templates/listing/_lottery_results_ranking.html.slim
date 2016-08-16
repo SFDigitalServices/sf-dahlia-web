@@ -6,7 +6,7 @@ header.modal-inner.padding-top--2x
     | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
 span ng-if="applicantSelectedForPreference()"
-  .alert-box.primary.no-margin
+  .alert-box.primary.no-margin.no-close
     span.alert-icon.ui-icon.ui-medium
       svg
         use xlink:href="#i-warning"
@@ -46,19 +46,17 @@ span ng-if="!applicantSelectedForPreference()"
       p.t-small.c-steel
         | {{'LOTTERY.LOTTERY_NUMBER_NOT_FOUND_P3' | translate}}
 
-section ng-if="lotteryNumberValid()"
-  accordion.results-accordion.accordion-container.expanded-content
-    accordion-group
-      accordion-heading
-        a.accordion-name.semi.a-dark
-          | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}
-        span.ui-icon.ui-control.ui-small.i-color
-          svg
-            use xlink:href="#i-arrow-down"
-      .t-small.padding--3halves
-        p.c-steel.t-small.margin-top
-          | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
-        p.c-steel.t-small
-          | {{'LOTTERY.NEXT_STEPS_P2' | translate}}
-        p.c-steel.t-small
-          | {{'LOTTERY.NEXT_STEPS_P3' | translate}}
+.t-small.padding--3halves ng-if="lotteryNumberValid()"
+  .toggled
+    a.a-dark.toggler.toggle-more.t-small title="{{'LOTTERY.NEXT_STEPS_TITLE' | translate}}" href="#" ng-click="whatHappens = !whatHappens"
+      | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}&nbsp;
+      span.ui-icon.ui-static.ui-tiny.i-dark
+        svg
+          use xlink:href="#i-arrow-down"
+    span ng-show="whatHappens"
+      p.c-steel.t-small.margin-top
+        | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
+      p.c-steel.t-small
+        | {{'LOTTERY.NEXT_STEPS_P2' | translate}}
+      p.c-steel.t-small
+        | {{'LOTTERY.NEXT_STEPS_P3' | translate}}
