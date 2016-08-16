@@ -74,7 +74,7 @@
 
             h2.form-label.caps for="auth_email"
               ' {{'LABEL.EMAIL_ADDRESS' | translate}}
-              lock-icon ng-if="isLocked('dob')"
+              lock-icon ng-if="isLocked('email')"
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
             input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off"

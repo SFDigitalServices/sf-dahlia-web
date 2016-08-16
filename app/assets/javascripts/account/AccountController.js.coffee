@@ -1,6 +1,6 @@
 AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
-  $scope.form = {}
+  $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
   $scope.myApplications = AccountService.myApplications
@@ -9,15 +9,20 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.hideAlert = false
   $scope.hideMessage = false
   $scope.accountError = AccountService.accountError
+  $scope.accountSuccess = AccountService.accountSuccess
   $scope.submitDisabled = false
   $scope.resendDisabled = false
   # track if user has re-sent confirmation inside the modal
   $scope.resentConfirmationMessage = null
   $scope.userDataForContact = {}
+  $scope.nameOrDOBChanged = false
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
-    $scope.form.signIn || $scope.form.createAccount || $scope.form.updatePassword
+    $scope.form.signIn ||
+    $scope.form.createAccount ||
+    $scope.form.updatePassword ||
+    $scope.form.current
 
   $scope.handleErrorState = ->
     if !$scope.accountError.message
@@ -94,6 +99,15 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $scope.accountError.message = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
+  $scope.updateEmail = ->
+    $scope.form.current = $scope.form.accountEmail
+    # AccountService.updateAccount()
+    false
+
+  $scope.updateNameDOB = ->
+    $scope.form.current = $scope.form.accountNameDOB
+    AccountService.updateAccount()
+
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
@@ -150,9 +164,14 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     shortFormSignInPath = 'dahlia.short-form-application.sign-in'
     $state.current.name == shortFormCreateAccountPath ||  $state.current.name == shortFormSignInPath
 
-
   $scope.clearCreatedAccount = ->
     angular.copy({}, $scope.createdAccount)
+
+  $scope.informationChangeNotice = ->
+    $translate.instant('ACCOUNT_SETTINGS.INFORMATION_CHANGE_NOTICE')
+
+  $scope.displayChangeNotice = ->
+    $scope.nameOrDOBChanged = true
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 

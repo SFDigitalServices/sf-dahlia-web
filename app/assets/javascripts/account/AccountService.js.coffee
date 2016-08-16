@@ -14,6 +14,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
+  Service.accountSuccess = {message: null}
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -112,6 +113,13 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         angular.copy(data.applications, Service.myApplications)
     )
 
+  Service.updateAccount = () ->
+    params =
+      contact: Service.userDataForSalesforce()
+    $http.put('/api/v1/account/update', params).success((data) ->
+      Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
+    )
+
   #################### modals
   Service.openConfirmEmailModal = (email) ->
     if email
@@ -132,29 +140,34 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       windowClass: 'modal-large'
     })
 
-
   #################### helper functions
   Service.userDataForContact = ->
     _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
 
-  Service._createAccountParams = ->
+  Service.userDataForSalesforce = ->
     contact = Service.userDataForContact()
     contact.DOB = ShortFormDataService.formatUserDOB(contact)
     contact = ShortFormDataService.removeDOBFields(contact)
+    contact
+
+  Service._createAccountParams = ->
     return {
       user: _.omit(Service.userAuth.user, ['email_confirmation'])
-      contact: contact
+      contact: Service.userDataForSalesforce()
     }
 
   Service._reformatDOB = ->
     return false if !Service.loggedIn()
     _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
-  Service.copyApplicantFields = ->
-    applicant = ShortFormApplicationService.applicant
-    contactInfo = _.pick applicant,
+  Service.copyApplicantFields = (from = 'applicant')->
+    if from == 'applicant'
+      user = ShortFormApplicationService.applicant
+    else
+      user = Service.loggedInUser
+    contactInfo = _.pick user,
       ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
-    userInfo = _.pick applicant, ['email']
+    userInfo = _.pick user, ['email']
     angular.copy(contactInfo, Service.userAuth.contact)
     angular.copy(userInfo, Service.userAuth.user)
 
