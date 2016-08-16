@@ -14,7 +14,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError = {message: null}
-  Service.accountSuccess = {message: null}
+  Service.accountSuccess = {messages: {}}
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -24,13 +24,14 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.createAccount = (shortFormSession) ->
+    Service.clearAccountMessages()
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
-        Service.accountError.message = null
+        Service.clearAccountMessages()
         return true
       ).error((response) ->
         msg = response.errors.full_messages[0]
@@ -44,6 +45,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       )
 
   Service.signIn = ->
+    Service.clearAccountMessages()
     $auth.submitLogin(Service.userAuth.user)
       .then((response) ->
         # reset userAuth object
@@ -59,7 +61,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       )
 
   Service.requestPasswordReset = ->
-    Service.clearAccountErrorMessage()
+    Service.clearAccountMessages()
     params =
       email: Service.userAuth.user.email
     $auth.requestPasswordReset(params).then((resp) ->
@@ -69,7 +71,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     return
 
   Service.updatePassword = ->
-    Service.clearAccountErrorMessage()
+    Service.clearAccountMessages()
     params =
       password: Service.userAuth.user.password
       password_confirmation: Service.userAuth.user.password_confirmation
@@ -123,13 +125,13 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         user:
           email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
-        Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
+        Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       )
     else
       params =
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+        Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
       )
 
   #################### modals
@@ -196,8 +198,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       dob: false
       email: false
 
-  Service.clearAccountErrorMessage = ->
+  Service.clearAccountMessages = ->
     Service.accountError.message = null
+    Service.accountSuccess.messages = {}
 
   # run on page load
   Service.unlockFields()
