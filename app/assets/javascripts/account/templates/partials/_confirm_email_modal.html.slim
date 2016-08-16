@@ -2,12 +2,18 @@ div ng-controller="AccountController"
   header.modal-header
     h1.modal-title.t-gamma.no-margin
       | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
+
+  div ng-if="resentConfirmationMessage"
+    alert-box(primary="true" hide-alert="hideMessage" custom-message="resentConfirmationMessage" invert="true")
+
   section.modal-inner.bg-dust
     p.c-steel
       | {{confirmEmailSentMessage()}}
     p.c-steel
       | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
 
-    ng-include src="'account/templates/partials/_resend_confirmation_button.html'"
+    p.no-margin ng-if="!resentConfirmationMessage"
+      button.button-link.button-lined.no-padding ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+        | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
 
   ng-include src="'account/templates/partials/_modal_close.html'"
