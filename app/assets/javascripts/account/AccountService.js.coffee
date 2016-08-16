@@ -127,7 +127,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       params =
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
+        Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
       )
 
   #################### modals
