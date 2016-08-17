@@ -86,6 +86,10 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         angular.copy({}, Service.loggedInUser)
         ShortFormApplicationService.resetUserData()
       )
+      .catch (resp) ->
+        # still "log out" if there was some kind of error
+        angular.copy({}, Service.loggedInUser)
+        ShortFormApplicationService.resetUserData()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
