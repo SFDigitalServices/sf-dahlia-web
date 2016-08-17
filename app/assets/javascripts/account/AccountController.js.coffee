@@ -106,7 +106,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.updateNameDOB = ->
     $scope.form.current = $scope.form.accountNameDOB
-    AccountService.updateAccount()
+    AccountService.updateAccount('nameDOB')
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
@@ -171,6 +171,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     $translate.instant('ACCOUNT_SETTINGS.INFORMATION_CHANGE_NOTICE')
 
   $scope.displayChangeNotice = (attributesChanged) ->
+    AccountService.clearAccountMessages()
     $scope[attributesChanged] = true
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']

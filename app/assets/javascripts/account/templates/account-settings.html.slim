@@ -11,6 +11,7 @@
             | {{'ACCOUNT_SETTINGS.TITLE' | translate}}
 
         form novalidate="" name="form.accountEmail" ng-submit="updateEmail()"
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.email")
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="emailChanged")
 
@@ -28,6 +29,7 @@
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps Password
@@ -43,7 +45,7 @@
 
 
         form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
-          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" account-error="accountError")
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.nameDOB")
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
 

@@ -6,9 +6,8 @@ class Emailer < Devise::Mailer
 
   ### service external methods
   def account_update(record)
-    contact = AccountService.get(record.salesforce_contact_id)
+    load_salesforce_contact(record)
     @email = record.email
-    @name = name(contact, record)
     @subject = 'DAHLIA SF Housing Portal Account Updated'
     @account_settings_url = "#{base_url}/account-settings"
     mail(to: @email, subject: @subject) do |format|
@@ -28,18 +27,32 @@ class Emailer < Devise::Mailer
   end
 
   def confirmation_instructions(record, token, opts = {})
-    contact = AccountService.get(record.salesforce_contact_id)
-    @name = name(contact, record)
-    super
+    load_salesforce_contact(record)
+    if record.pending_reconfirmation?
+      action = :reconfirmation_instructions
+    else
+      action = :confirmation_instructions
+    end
+
+    @token = token
+    devise_mail(record, action, opts)
   end
 
   def reset_password_instructions(record, token, opts = {})
-    contact = AccountService.get(record.salesforce_contact_id)
-    @name = name(contact, record)
+    load_salesforce_contact(record)
     super
   end
 
   private
+
+  def load_salesforce_contact(record)
+    contact = AccountService.get(record.salesforce_contact_id)
+    @name = if contact.present?
+              "#{contact['firstName']} #{contact['lastName']}"
+            else
+              record.email
+            end
+  end
 
   def _submission_confirmation_email(params)
     # expects :email, :listing, :listing_url, :lottery_number

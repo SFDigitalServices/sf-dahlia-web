@@ -11,6 +11,7 @@
     },
     "ACCOUNT_SETTINGS": {
         "ACCOUNT_CHANGES_SAVED": "Your changes have been saved.",
+        "EMAIL_RECONFIRMED_UPDATED": "Your email has been updated here and on any unsubmitted applications.",
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
         "TITLE": "Account Settings",
         "VERIFY_EMAIL": "Please check your email inbox to verify this change."

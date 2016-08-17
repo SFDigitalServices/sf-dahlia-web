@@ -1,0 +1,11 @@
+p
+  = "#{t(:hello).capitalize} #{@name},"
+p
+  = t '.confirm_link_msg'
+p
+  = link_to t('.confirm_account_link'), confirmation_url(@resource, {confirmation_token: @token, config: message['client-config'].to_s, redirect_url: root_url + 'account-settings?reconfirmed=true'}).html_safe
+
+p
+  = "#{t(:thank_you).capitalize},"
+  br
+  = t 'devise.mailer.signature'

@@ -151,6 +151,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        AccountService.clearAccountMessages()
         if $stateParams.expiredUnconfirmed
           AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
         if $stateParams.expiredConfirmed
@@ -175,7 +176,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
       onExit: ['AccountService', (AccountService) ->
-        AccountService.clearAccountErrorMessage()
+        AccountService.clearAccountMessages()
       ]
     })
     .state('dahlia.reset-password', {
@@ -193,7 +194,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           return $state.go('dahlia.sign-in')
       ]
       onExit: ['AccountService', (AccountService) ->
-        AccountService.clearAccountErrorMessage()
+        AccountService.clearAccountMessages()
       ]
     })
     ############
@@ -201,7 +202,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     # once these pages become functional
     ############
     .state('dahlia.account-settings', {
-      url: '/account-settings'
+      url: '/account-settings?reconfirmed'
+      params:
+        reconfirmed: null
       views:
         'container@':
           templateUrl: 'account/templates/account-settings.html'
@@ -211,6 +214,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           $auth.validateUser().then ->
             AccountService.copyApplicantFields('loggedInUser')
         ]
+      onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        AccountService.clearAccountMessages()
+        if $stateParams.reconfirmed
+          AccountService.showReconfirmedMessage()
+      ]
     })
     .state('dahlia.eligibility-settings', {
       url: '/eligibility-settings'
