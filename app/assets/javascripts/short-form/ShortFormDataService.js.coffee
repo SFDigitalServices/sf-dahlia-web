@@ -14,7 +14,11 @@ ShortFormDataService = () ->
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
-    if application.alternateContact.alternateContactType == 'None'
+    noAltContact =
+      application.alternateContact.alternateContactType == 'None' ||
+      !application.alternateContact.firstName ||
+      !application.alternateContact.lastName
+    if noAltContact
       delete application.alternateContact
     else
       application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
