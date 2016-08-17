@@ -36,6 +36,8 @@ module Overrides
       if @resource
         @resource.initiate_email_reconfirmation = true
         if @resource.send(resource_update_method, account_update_params)
+          # turn off to disable any effects of after_save happening again
+          @resource.initiate_email_reconfirmation = false
           yield @resource if block_given?
           render_update_success
         else
