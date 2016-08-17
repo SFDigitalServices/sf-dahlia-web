@@ -34,7 +34,9 @@ module Overrides
 
     def update
       if @resource
-        @resource.initiate_email_reconfirmation = true
+        if user_params[:email].present?
+          @resource.initiate_email_reconfirmation = true
+        end
         if @resource.send(resource_update_method, account_update_params)
           # turn off to disable any effects of after_save happening again
           @resource.initiate_email_reconfirmation = false
