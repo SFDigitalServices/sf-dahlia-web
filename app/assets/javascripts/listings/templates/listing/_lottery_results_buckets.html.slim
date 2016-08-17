@@ -1,12 +1,12 @@
 // Lottery Results
 .modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
-  p.t-small.margin-top
+  p.t-small
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
 .modal-overflow ng-if="!lotteryRankingSubmitted"
   div
     header.modal-inner
-      h2.h-caps-lined.margin-top
+      h2.h-caps-lined
         | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
       p.t-small.c-steel.no-margin
         | {{'LOTTERY.BUCKETS_RANKING_INFO' | translate}}
@@ -23,7 +23,7 @@
         lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
 
     header.modal-inner
-      h2.h-caps-lined.margin-top--2x
+      h2.h-caps-lined.no-margin
         | {{'LOTTERY.GENERAL_LIST' | translate}}
 
     section
