@@ -117,12 +117,18 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         angular.copy(data.applications, Service.myApplications)
     )
 
-  Service.updateAccount = () ->
-    params =
-      contact: Service.userDataForSalesforce()
-    $http.put('/api/v1/account/update', params).success((data) ->
-      Service.accountSuccess.message = $translate.instant("SUCCESS.ACCOUNT_CHANGES_SAVED")
-    )
+  Service.updateAccount = (infoType) ->
+    if infoType == 'email'
+      params =
+        contact: Service.userDataForSalesforce()
+      # TO DO: Setup http request (in Story #127691269)
+      Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
+    else
+      params =
+        contact: Service.userDataForSalesforce()
+      $http.put('/api/v1/account/update', params).success((data) ->
+        Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+      )
 
   #################### modals
   Service.openConfirmEmailModal = (email) ->

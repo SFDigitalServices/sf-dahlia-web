@@ -10,8 +10,10 @@
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
+        "ACCOUNT_CHANGES_SAVED": "Your changes have been saved.",
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
-        "TITLE": "Account Settings"
+        "TITLE": "Account Settings",
+        "VERIFY_EMAIL": "Please check your email inbox to verify this change."
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
@@ -152,9 +154,6 @@
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
         "ZIP": "Please enter a zipcode"
-    },
-    "SUCCESS": {
-        "ACCOUNT_CHANGES_SAVED": "Your changes have been saved."
     },
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
