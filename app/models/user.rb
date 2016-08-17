@@ -34,10 +34,8 @@ class User < ActiveRecord::Base
 
   def sync_reconfirmation_with_salesforce
     if pending_reconfirmation? && persisted?
-      # TODO: we should not have to grab the existing applicant first.
-      #  This is currently necessary because salesforce is rejecting an
-      #  update to just the email field, saying we need to pass first/last name as well.
-      #  A bug has been filed for this.
+      # we have to grab the existing applicant first.
+      # Salesforce requires that we repackage all of their info when making an update
       contact = AccountService.get(salesforce_contact_id)
       AccountService.create_or_update(
         contactId: salesforce_contact_id,
