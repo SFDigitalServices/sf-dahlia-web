@@ -11,6 +11,7 @@ class Api::V1::AccountController < ApiController
     contact = account_params
     contact[:contactID] = current_user.salesforce_contact_id
     salesforce_contact = AccountService.create_or_update(contact)
+    Emailer.account_update(current_user).deliver_now
     render json: { contact: salesforce_contact }
   end
 
