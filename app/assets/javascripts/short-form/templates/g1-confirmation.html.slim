@@ -11,7 +11,7 @@
       label.form-label.caps
         | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
       p.beta.t-serif.no-margin
-        | {{ application.lotteryNumber }}
+        | &#35;{{ application.lotteryNumber }}
 
   .app-inner.inset.border-bottom
     label.form-label.caps
@@ -21,16 +21,19 @@
       | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
       | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
 
-  .app-inner.inset
+  .app-inner.inset ng-if="!loggedIn()"
     label.form-label.caps
       | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
     p.form-note
       | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
 
   .button-pager
-    .button-pager_row.primary
-      a.button.primary.radius ui-sref="dahlia.create-account"
-        | {{'G1_CONFIRMATION.CREATE_ACCOUNT' | translate}}
+    .button-pager_row.primary ng-if="!loggedIn()"
+      a.button.primary.radius ui-sref="dahlia.short-form-application.create-account"
+        | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
+    .button-pager_row.primary ng-if="loggedIn()"
+      a.button.primary.radius ui-sref="dahlia.my-applications"
+        | {{'G1_CONFIRMATION.VIEW_MY_APPLICATIONS' | translate}}
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
         | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
