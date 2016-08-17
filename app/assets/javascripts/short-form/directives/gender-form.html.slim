@@ -1,14 +1,11 @@
 .form-group
-  label.form-label.caps id="gender_form_label"
+  label.form-label.caps for="user_ethnicity"
     | {{'LABEL.APPLICANT_GENDER' | translate}}
-  p.form-note.margin-bottom
+  p.form-note.margin-bottom--half
     | {{'T.OPTIONAL' | translate}}
-  .radio-group role="group"
-    checkbox-form-item user='applicant' name='gender' option='{{gender}}' ng-repeat="gender in ::gender_options track by $index" is-disabled="genderOtherOptionSelected" labelledby="gender_form_label"
 
-    checkbox-form-item user='applicant' name='gender' option='Not Listed' label='Not Listed (Please Specify)' ng-click="resetGenderOptions(user, 'Not Listed')" labelledby="gender_form_label"
-    .radio-block ng-if="user.gender['Not Listed']"
-      label.sr-only for="genderOther" translate="LABEL.YOUR_GENDER"
-      input#genderOther ng-model="user.genderOther" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
-
-    checkbox-form-item user='applicant' name='gender' option='Decline to State' labelledby="gender_form_label" ng-click="resetGenderOptions(user, 'Decline to State')"
+  select#user_ethnicity ng-model="user.gender" data-width="auto" name="gender"
+    option disabled="" selected="" value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="option in gender_options" value="{{option}}"
+      | {{option}}
