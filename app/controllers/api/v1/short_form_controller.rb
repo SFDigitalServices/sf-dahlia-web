@@ -194,6 +194,8 @@ class Api::V1::ShortFormController < ApiController
             :id,
             {
               primaryApplicant: %i(
+                contactId
+                appMemberId
                 language
                 phone
                 firstName
@@ -230,6 +232,7 @@ class Api::V1::ShortFormController < ApiController
             },
             {
               alternateContact: %i(
+                appMemberId
                 language
                 alternateContactType
                 alternateContactTypeOther
@@ -247,6 +250,7 @@ class Api::V1::ShortFormController < ApiController
             },
             {
               householdMembers: %i(
+                appMemberId
                 firstName
                 lastName
                 hasSameAddressAsApplicant
@@ -265,6 +269,7 @@ class Api::V1::ShortFormController < ApiController
             :liveInSfPreferenceNatKey,
             :workInSfPreferenceNatKey,
             :neighborhoodResidencePreferenceNatKey,
+            :householdVouchersSubsidies,
             :referral,
             :annualIncome,
             :monthlyIncome,
