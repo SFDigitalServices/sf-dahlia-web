@@ -10,8 +10,11 @@ module Overrides
         # create client id
         add_resource_token
 
-        yield if block_given?
+        yield @resource if block_given?
 
+        # we want to disable the after_action,
+        # otherwise it will invalidate our current auth token
+        DeviseTokenAuth.change_headers_on_each_request = false
         redirect_to(@resource.build_auth_url(
                       redirect_url,
                       token: @token,
@@ -66,7 +69,7 @@ module Overrides
 
       @resource.tokens[@client_id] = {
         token:  @token_hash,
-        expiry: @expiry,
+        'expiry' => @expiry,
       }
       @resource.save!
     end
