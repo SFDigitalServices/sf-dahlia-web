@@ -10,8 +10,8 @@
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
-        "ACCOUNT_SETTINGS": "Account Settings",
         "ACCOUNT_CHANGES_SAVED": "Your changes have been saved.",
+        "ACCOUNT_SETTINGS": "Account Settings",
         "EMAIL_RECONFIRMED_UPDATED": "Your email has been updated here and on any unsubmitted applications.",
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
         "TITLE": "Account Settings",
@@ -19,7 +19,6 @@
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
-        "NAME_EDITABLE_VIA_LINK": "These fields are editable via your {{link}}",
         "TITLE": "First, what's your name?"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -143,8 +142,6 @@
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
-        "INVALID_EMAIL_CREDENTIALS": "Invalid credentials",
-        "LANGUAGE": "Please enter a language",
         "LAST_NAME": "Please enter a Last Name",
         "NOT_ELIGIBLE": "It appears that you wouldn't qualify for this listing due to household size.",
         "PASSWORD": "Please enter a valid password",
@@ -210,7 +207,6 @@
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
-        "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
@@ -221,7 +217,6 @@
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PHONE_NUMBER": "Contact phone number",
-        "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
         "CONTINUE_APPLICATION": "Continue Application",
         "CREATE_ACCOUNT": "Create Account",
         "DOB": "Date of Birth",
@@ -231,7 +226,6 @@
         "DONE_ADDING_PEOPLE": "Done adding people",
         "EDITED": "Edited",
         "EMAIL_ADDRESS": "Email",
-        "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
         "FILE_ATTACHED": "{{file}} attached",
         "FIRST_NAME": "First Name",
