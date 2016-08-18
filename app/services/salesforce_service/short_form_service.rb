@@ -36,8 +36,6 @@ module SalesforceService
       files.each do |file|
         attach_file(application_id, file, file.descriptive_name)
       end
-      # now that files are saved in SF, remove temp uploads
-      files.destroy_all
     end
 
     def self.ownership?(contact_id, application)

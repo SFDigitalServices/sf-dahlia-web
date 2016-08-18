@@ -367,6 +367,10 @@ ShortFormApplicationController = (
     else if error == 'too high'
       message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
       ShortFormApplicationService.invalidateIncomeForm()
+    else if errorResult == 'incomeEligibilityResult'
+      # default state, this shouldn't happen but it seems to if income == 0
+      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+      ShortFormApplicationService.invalidateIncomeForm()
     $scope.householdEligibilityErrorMessage = message
 
   $scope.invalidateIncomeForm = ->

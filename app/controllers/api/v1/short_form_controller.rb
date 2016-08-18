@@ -103,8 +103,14 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def send_attached_files(application_id)
-    files = UploadedFile.where(uploaded_file_params)
+    if user_signed_in?
+      files = UploadedFile.where(user_id: current_user.id)
+    else
+      files = UploadedFile.where(uploaded_file_params)
+    end
     ShortFormService.attach_files(application_id, files)
+    # now that files are saved in SF, remove temp uploads
+    files.destroy_all
   end
 
   def attach_temp_files_to_user

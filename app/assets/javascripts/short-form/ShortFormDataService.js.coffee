@@ -278,6 +278,11 @@ ShortFormDataService = () ->
     prefList.forEach( (preference) ->
       preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
       appMemberId = sfApp["#{preferenceName}ID"]
+      # these are just workarounds since the salesforce naming is inconsistent
+      if !appMemberId && preference == 'workInSf'
+        appMemberId = sfApp['worksInSfPreferenceID']
+      if !appMemberId && preference == 'neighborhoodResidence'
+        appMemberId = sfApp['neighborhoodPreferenceID']
       if appMemberId
         member = _.find(allHousehold, {appMemberId: appMemberId})
         # if we don't find a household member matching the preference that's probably bad.
