@@ -8,6 +8,7 @@ ShortFormApplicationController = (
   $window,
   $document,
   $translate,
+  $sce,
   Idle,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -385,6 +386,14 @@ ShortFormApplicationController = (
   $scope.applicationIncomeAmount = ->
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
+  $scope.accountSettingsLink = ->
+    link = $state.href('dahlia.account-settings')
+    markup = "<a href='" + link + "'>" + $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS') + "</a>"
+    return { link: $sce.trustAsHtml(markup) }
+
+  $scope.translateLoggedInMessage = (page) ->
+    ShortFormHelperService.translateLoggedInMessage(page)
+
   ## account service
   $scope.loggedIn = ->
     AccountService.loggedIn()
@@ -456,7 +465,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.isLoading(false)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
+  '$scope', '$state', '$window', '$document', '$translate', '$sce', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
   'AddressValidationService',
