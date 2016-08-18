@@ -37,34 +37,23 @@ ShortFormApplicationController = (
     'Trans Male',
     'Trans Female',
   ]
-  $scope.language_options = [
-    'English',
-    'Cantonese Chinese',
-    'Mandarin Chinese',
-    'Spanish',
-    'Filipino',
-    'Vietnamese',
-    'Russian',
+  $scope.relationship_options = [
+    'Spouse',
+    'Registered Domestic Partner',
+    'Parent',
+    'Child',
+    'Sibling',
+    'Cousin',
+    'Aunt',
+    'Uncle',
+    'Nephew',
+    'Niece',
+    'Grandparent',
+    'Great Grandparent',
+    'In-Law',
+    'Friend',
     'Other'
   ]
-
-  $scope.relationship_options = [
-      'Spouse',
-      'Registered Domestic Partner',
-      'Parent',
-      'Child',
-      'Sibling',
-      'Cousin',
-      'Aunt',
-      'Uncle',
-      'Nephew',
-      'Niece',
-      'Grandparent',
-      'Great Grandparent',
-      'In-Law',
-      'Friend',
-      'Other'
-    ]
   $scope.ethnicity_options = [
     'Hispanic/Latino',
     'Not Hispanic/Latino',
@@ -389,9 +378,6 @@ ShortFormApplicationController = (
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
-
-  $scope.returnLanguage = (person) ->
-    ShortFormHelperService.returnLanguage(person)
 
   $scope.applicationVouchersSubsidies = ->
     ShortFormHelperService.applicationVouchersSubsidies($scope.application)

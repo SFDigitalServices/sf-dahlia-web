@@ -222,7 +222,7 @@ ShortFormDataService = () ->
     return { alternateContactType: 'None' } unless alternateContact
     whitelist = [
       'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
-      'agency', 'email', 'firstName', 'lastName', 'language', 'languageOther', 'phone'
+      'agency', 'email', 'firstName', 'lastName', 'phone'
     ]
     contact = _.pick alternateContact, whitelist
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
@@ -231,7 +231,7 @@ ShortFormDataService = () ->
   Service._reformatPrimaryApplicant = (contact, altContact) ->
     whitelist = [
       'appMemberId', 'contactId',
-      'email', 'firstName', 'middleName', 'lastName', 'language', 'languageOther',
+      'email', 'firstName', 'middleName', 'lastName',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType',
     ]
     applicant = _.pick contact, whitelist
