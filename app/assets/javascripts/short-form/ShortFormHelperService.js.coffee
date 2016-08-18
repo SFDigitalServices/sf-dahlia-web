@@ -1,4 +1,4 @@
-ShortFormHelperService = ($translate, $filter) ->
+ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service = {}
 
   Service.alternate_contact_options = [
@@ -44,10 +44,21 @@ ShortFormHelperService = ($translate, $filter) ->
     interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
+  Service.translateLoggedInMessage = (page) ->
+    accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
+    link = $state.href('dahlia.account-settings')
+    markup = null
+    if page == 'b1-name'
+      nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
+      markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
+    else if page == 'b2-contact'
+      nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
+      markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
+    return $sce.trustAsHtml(markup)
 
   return Service
 
-ShortFormHelperService.$inject = ['$translate', '$filter']
+ShortFormHelperService.$inject = ['$translate', '$filter', '$sce', '$state']
 
 angular
   .module('dahlia.services')

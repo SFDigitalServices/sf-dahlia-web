@@ -11,13 +11,14 @@
     },
     "ACCOUNT_SETTINGS": {
         "ACCOUNT_CHANGES_SAVED": "Your changes have been saved.",
+        "ACCOUNT_SETTINGS": "Account Settings",
         "EMAIL_RECONFIRMED_UPDATED": "Your email has been updated here and on any unsubmitted applications.",
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
         "TITLE": "Account Settings",
         "VERIFY_EMAIL": "Please check your email inbox to verify this change."
     },
     "B1_NAME": {
-        "NAME_EDITABLE_VIA_ACCOUNT": "These fields are editable via your account settings",
+        "NAME_EDITABLE_VIA": "These fields are editable via your",
         "TITLE": "First, what's your name?"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -27,7 +28,7 @@
         "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
-        "EMAIL_EDITABLE_VIA_ACCOUNT": "Your email address is editable via your account settings",
+        "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
         "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
@@ -141,8 +142,6 @@
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
-        "INVALID_EMAIL_CREDENTIALS": "Invalid credentials",
-        "LANGUAGE": "Please enter a language",
         "LAST_NAME": "Please enter a Last Name",
         "NOT_ELIGIBLE": "It appears that you wouldn't qualify for this listing due to household size.",
         "PASSWORD": "Please enter a valid password",
@@ -208,7 +207,6 @@
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
-        "APPLICANT_PRIMARY_LANGUAGE": "What is your primary language?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
@@ -219,7 +217,6 @@
         "CONTACT_EMAIL": "Contact email address",
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PHONE_NUMBER": "Contact phone number",
-        "CONTACT_PRIMARY_LANGUAGE": "What is their primary language?",
         "CONTINUE_APPLICATION": "Continue Application",
         "CREATE_ACCOUNT": "Create Account",
         "DOB": "Date of Birth",
@@ -229,7 +226,6 @@
         "DONE_ADDING_PEOPLE": "Done adding people",
         "EDITED": "Edited",
         "EMAIL_ADDRESS": "Email",
-        "ENTER_YOUR_LANGUAGE": "Enter your language",
         "FAMILY_MEMBER": "Family member",
         "FILE_ATTACHED": "{{file}} attached",
         "FIRST_NAME": "First Name",

@@ -4,8 +4,7 @@ div
       span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
         svg
           use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
-    p.alert-body
-      | {{alertText()}}
+    p.alert-body ng-bind-html="alertText()"
 
   / Additional error message about required fields; only shows up on altContactTypePage
   .alert-notice.alert ng-show="showAltContactMessage()"

@@ -8,7 +8,6 @@ angular.module('dahlia.directives')
     templateUrl: 'account/directives/my-application.html'
 
     link: (scope, elem, attrs) ->
-      # console.log(attrs)
       scope.listing = scope.application.listing
       scope.application.deleted = false
 

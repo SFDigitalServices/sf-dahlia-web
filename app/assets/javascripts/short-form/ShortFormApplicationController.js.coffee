@@ -385,6 +385,9 @@ ShortFormApplicationController = (
   $scope.applicationIncomeAmount = ->
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
+  $scope.translateLoggedInMessage = (page) ->
+    ShortFormHelperService.translateLoggedInMessage(page)
+
   ## account service
   $scope.loggedIn = ->
     AccountService.loggedIn()
