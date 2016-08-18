@@ -13,8 +13,11 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.myApplications = []
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
-  Service.accountError = {message: null}
-  Service.accountSuccess = {message: null}
+  Service.accountError =
+    message: null
+    messages: {}
+  Service.accountSuccess =
+    messages: {}
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -24,13 +27,14 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.createAccount = (shortFormSession) ->
+    Service.clearAccountMessages()
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
-        Service.accountError.message = null
+        Service.clearAccountMessages()
         return true
       ).error((response) ->
         msg = response.errors.full_messages[0]
@@ -44,6 +48,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       )
 
   Service.signIn = ->
+    Service.clearAccountMessages()
     $auth.submitLogin(Service.userAuth.user)
       .then((response) ->
         # reset userAuth object
@@ -59,7 +64,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       )
 
   Service.requestPasswordReset = ->
-    Service.clearAccountErrorMessage()
+    Service.clearAccountMessages()
     params =
       email: Service.userAuth.user.email
     $auth.requestPasswordReset(params).then((resp) ->
@@ -69,7 +74,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     return
 
   Service.updatePassword = ->
-    Service.clearAccountErrorMessage()
+    Service.clearAccountMessages()
     params =
       password: Service.userAuth.user.password
       password_confirmation: Service.userAuth.user.password_confirmation
@@ -118,16 +123,29 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     )
 
   Service.updateAccount = (infoType) ->
+    Service.clearAccountMessages()
     if infoType == 'email'
       params =
-        contact: Service.userDataForSalesforce()
-      # TO DO: Setup http request (in Story #127691269)
-      Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
+        user:
+          email: Service.userAuth.user.email
+      $http.put('/api/v1/auth', params).success((data) ->
+        Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
+      ).error((response) ->
+        msg = response.errors.full_messages[0]
+        if msg == 'Email has already been taken'
+          Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+        else
+          Service.accountError.messages.email = msg
+      )
     else
       params =
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        Service.accountSuccess.message = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+        Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+      ).error((response) ->
+        # currently, shouldn't ever really reach this case
+        msg = response.errors.full_messages[0]
+        Service.accountError.messages.email = msg
       )
 
   #################### modals
@@ -151,6 +169,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     })
 
   #################### helper functions
+  Service.showReconfirmedMessage = ->
+    Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.EMAIL_RECONFIRMED_UPDATED")
+
   Service.userDataForContact = ->
     _.merge({}, Service.userAuth.contact, {email: Service.userAuth.user.email})
 
@@ -194,8 +215,10 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       dob: false
       email: false
 
-  Service.clearAccountErrorMessage = ->
+  Service.clearAccountMessages = ->
     Service.accountError.message = null
+    Service.accountError.messages = {}
+    Service.accountSuccess.messages = {}
 
   # run on page load
   Service.unlockFields()

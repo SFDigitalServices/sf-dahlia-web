@@ -9,8 +9,22 @@ class EmailerPreview < ActionMailer::Preview
     Emailer.submission_confirmation(params)
   end
 
+  def reset_password_instructions
+    u = User.first
+    token = u.confirmation_token || 'xyzABC123'
+    Emailer.reset_password_instructions(u, token)
+  end
+
   def confirmation_instructions
     u = User.first
+    u.unconfirmed_email = nil
+    token = u.confirmation_token || 'xyzABC123'
+    Emailer.confirmation_instructions(u, token)
+  end
+
+  def reconfirmation_instructions
+    u = User.first
+    u.unconfirmed_email = 'test@unconfirmed.com'
     token = u.confirmation_token || 'xyzABC123'
     Emailer.confirmation_instructions(u, token)
   end

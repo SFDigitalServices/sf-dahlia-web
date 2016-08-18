@@ -11,10 +11,11 @@
             | {{'ACCOUNT_SETTINGS.TITLE' | translate}}
 
         form novalidate="" name="form.accountEmail" ng-submit="updateEmail()"
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.email")
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="emailChanged")
 
-          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.email" ng-if="accountSuccess.messages.email")
 
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: inputInvalid('email') }"
@@ -28,6 +29,7 @@
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+
         .dash-card-inner.inset.border-bottom
           .form-group
             h2.form-label.caps Password
@@ -43,11 +45,11 @@
 
 
         form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
-          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" account-error="accountError")
+          alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.nameDOB")
 
           alert-box(primary="true" hide-alert="hideMessage" custom-message="informationChangeNotice()" ng-if="nameOrDOBChanged")
 
-          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.message" ng-if="accountSuccess.message")
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.nameDOB" ng-if="accountSuccess.messages.nameDOB")
 
           .dash-card-inner.inset.border-bottom
             .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"

@@ -17,14 +17,24 @@ en:
   #     unauthenticated: "You need to sign in or sign up before continuing."
   #     unconfirmed: "You have to confirm your email address before continuing."
     mailer:
+      reconfirmation_instructions:
+        subject: "Email change for DAHLIA"
+        confirm_link_msg: "A request to change your email has been made. To verify this request, please click the link below. Your email will be changed on any unsubmitted applications."
+        confirm_account_link: "Confirm my email"
       confirmation_instructions:
         subject: "DAHLIA San Francisco Housing Portal New Account Confirmation"
         thank_you_msg: "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
         confirm_link_msg: "To complete your account creation, please click the link below:"
+        # confirm_account_link: "Confirm my account"
       signature: "The San Francisco Mayor's Office of Housing and Community Development"
 
-  #     reset_password_instructions:0
-  #       subject: "Reset password instructions"
+      # reset_password_instructions:0
+      #   subject: "Reset password instructions"
+      #   request_reset_link_msg: "Someone has requested a link to change your password. You can do this through the link below."
+      #   password_change_link: "Change my password"
+      #   ignore_mail_msg: "If you didn't request this, please ignore this email."
+      #   no_changes_msg: "Your password won't change until you access the link above and create a new one."
+
   #     unlock_instructions:
   #       subject: "Unlock instructions"
   #     password_change:

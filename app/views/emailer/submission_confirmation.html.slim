@@ -35,4 +35,6 @@ p
     | #{@listing.Office_Open} &mdash; #{@listing.Office_Closed}
 
 p
-  | The DAHLIA Team
+  = "#{t(:thank_you).capitalize},"
+  br
+  = t 'devise.mailer.signature'

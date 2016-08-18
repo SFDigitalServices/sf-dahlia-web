@@ -50,7 +50,11 @@ Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/**/*'
 
+Style/ConditionalAssignment:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 80
   Exclude:
     - 'config/routes.rb'
+    - 'app/models/user.rb'

@@ -1,7 +1,6 @@
 module Overrides
   # Overrides to DeviseTokenAuth
   class RegistrationsController < DeviseTokenAuth::RegistrationsController
-    after_action :sync_with_salesforce, only: [:update]
     AccountService = SalesforceService::AccountService
 
     # method copied from original gem; refactored to please Rubocop
@@ -30,6 +29,24 @@ module Overrides
       rescue ActiveRecord::RecordNotUnique
         clean_up_passwords @resource
         render_create_error_email_already_exists
+      end
+    end
+
+    def update
+      if @resource
+        if user_params[:email].present?
+          @resource.initiate_email_reconfirmation = true
+        end
+        if @resource.send(resource_update_method, account_update_params)
+          # turn off to disable any effects of after_save happening again
+          @resource.initiate_email_reconfirmation = false
+          yield @resource if block_given?
+          render_update_success
+        else
+          render_update_error
+        end
+      else
+        render_update_error_user_not_found
       end
     end
 
@@ -136,7 +153,17 @@ module Overrides
         .permit(:firstName, :middleName, :lastName, :DOB, :email)
     end
 
+    # override DeviseTokenAuth method
     def sign_up_params
+      user_params
+    end
+
+    # override DeviseTokenAuth method
+    def account_update_params
+      user_params
+    end
+
+    def user_params
       params
         .require(:user)
         .permit(:email, :password, :password_confirmation, :temp_session_id)
