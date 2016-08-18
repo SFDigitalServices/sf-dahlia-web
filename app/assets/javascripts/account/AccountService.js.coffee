@@ -74,16 +74,28 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       Service.accountError.message = $translate.instant("ERROR.EMAIL_NOT_FOUND")
     return
 
-  Service.updatePassword = ->
+  Service.updatePassword = (type) ->
     Service.clearAccountMessages()
     params =
       password: Service.userAuth.user.password
       password_confirmation: Service.userAuth.user.password_confirmation
-
+    if type == 'change'
+      params.current_password = Service.userAuth.user.current_password
     $auth.updatePassword(params).then((resp) ->
-      $state.go('dahlia.my-applications')
-    ).catch (resp) ->
-      Service.accountError.message = $translate.instant("ERROR.PASSWORD_UPDATE")
+      if type == 'change'
+        msg = $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED')
+        Service.accountSuccess.messages.password = msg
+        $state.go('dahlia.account-settings')
+      else
+        $state.go('dahlia.my-applications')
+    ).catch (response) ->
+      response = response.data if response.data
+      msg = response.errors.full_messages[0]
+      if msg == 'Current password is invalid'
+        msg = $translate.instant("ERROR.CURRENT_PASSWORD_INVALID")
+      else
+        msg = $translate.instant("ERROR.PASSWORD_UPDATE")
+      Service.accountError.messages.password = msg
     return
 
   Service.signOut = ->

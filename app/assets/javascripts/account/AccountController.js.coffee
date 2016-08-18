@@ -18,6 +18,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
 
+  $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/
+
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
     $scope.form.signIn ||
@@ -89,8 +91,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.requestPasswordReset = ->
     AccountService.requestPasswordReset()
 
-  $scope.updatePassword = ->
-    AccountService.updatePassword()
+  $scope.updatePassword = (type) ->
+    $scope.form.current = $scope.form.accountPassword
+    if $scope.form.current.$valid
+      AccountService.updatePassword(type)
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')

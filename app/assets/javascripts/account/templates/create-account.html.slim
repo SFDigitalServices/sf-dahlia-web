@@ -94,9 +94,9 @@
               | {{'LABEL.PASSWORD' | translate}}
             p.form-note.margin-bottom
               | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
-            label.sr-only for="password"
+            label.sr-only for="auth_password"
               | {{'LABEL.PASSWORD' | translate}}
-            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/"
+            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex"
             small.error ng-if="inputInvalid('password')"
               | {{'ERROR.PASSWORD' | translate}}
 

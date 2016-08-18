@@ -129,7 +129,8 @@ do ->
 
     describe '$scope.updatePassword', ->
       it 'calls on AccountService.function', ->
-        scope.updatePassword()
+        scope.form.accountPassword = {$valid: true}
+        scope.updatePassword('reset')
         expect(fakeAccountService.updatePassword).toHaveBeenCalled()
         return
       return

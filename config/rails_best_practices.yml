@@ -22,7 +22,7 @@ ProtectMassAssignmentCheck: { }
 RemoveEmptyHelpersCheck: { }
 #RemoveTabCheck: { }
 RemoveTrailingWhitespaceCheck: { }
-RemoveUnusedMethodsInControllersCheck: { except_methods: ['Overrides::SessionsController#render_create_success', 'Overrides::TokenValidationsController#render_validate_token_success', 'Overrides::RegistrationsController#render_create_success', 'Overrides::RegistrationsController#error_checks_for_create', 'Overrides::SessionsController#render_create_error_not_confirmed', 'Overrides::SessionsController#render_create_error_bad_credentials', 'Overrides::PasswordsController#edit'] }
+RemoveUnusedMethodsInControllersCheck: { except_methods: ['Overrides::SessionsController#render_create_success', 'Overrides::TokenValidationsController#render_validate_token_success', 'Overrides::RegistrationsController#render_create_success', 'Overrides::RegistrationsController#error_checks_for_create', 'Overrides::SessionsController#render_create_error_not_confirmed', 'Overrides::SessionsController#render_create_error_bad_credentials', 'Overrides::PasswordsController#edit', 'Overrides::PasswordsController#resource_update_method'] }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: { except_methods: ['User#email_changed?'] }
 ReplaceComplexCreationWithFactoryMethodCheck: { attribute_assignment_count: 2 }
