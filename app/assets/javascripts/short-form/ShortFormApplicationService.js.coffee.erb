@@ -14,7 +14,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
-      gender: {}
       terms: {}
     alternateContact:
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -209,12 +208,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       income.incomeTotal
     else if income.incomeTimeframe == 'per_month'
       income.incomeTotal * 12
-
-  Service.resetGenderOptions = (user, option) ->
-    toggle = !user.gender[option]
-    user.gender = {}
-    user.genderOther = null
-    user.gender[option] = toggle
 
   ### Proof of Preferences ###
   Service.refreshLiveWorkPreferences = () ->

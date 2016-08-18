@@ -1,10 +1,10 @@
 .form-group
-  label.form-label.caps for="user_ethnicity"
+  label.form-label.caps for="user_gender"
     | {{'LABEL.APPLICANT_GENDER' | translate}}
   p.form-note.margin-bottom--half
     | {{'T.OPTIONAL' | translate}}
 
-  select#user_ethnicity ng-model="user.gender" data-width="auto" name="gender"
+  select#user_gender ng-model="user.gender" data-width="auto" name="gender"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
     option ng-repeat="option in gender_options" value="{{option}}"
