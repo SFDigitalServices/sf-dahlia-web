@@ -73,7 +73,7 @@ do ->
         it 'submits application as draft ', ->
           scope.createAccount()
           scope.$apply()
-          expectedArgument = {draft: true, attachToAccount: true}
+          expectedArgument = {attachToAccount: true}
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(expectedArgument)
           return
 
@@ -108,8 +108,7 @@ do ->
         it 'submits draft application', ->
           scope.signIn()
           scope.$apply()
-          expectedArgument = {draft: true}
-          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith(expectedArgument)
+          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
           return
 
         it 'routes user to my account', ->
