@@ -229,7 +229,6 @@ ShortFormDataService = () ->
     applicant = _.pick contact, whitelist
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
-    # applicant.gender = Service._reformatMultiSelect(contact.gender)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.hiv = Service._reformatBoolean(contact.hiv)
     altContactType = !! (!_.isEmpty(altContact) && altContact.alternateContactType)
