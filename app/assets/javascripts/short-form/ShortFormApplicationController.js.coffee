@@ -36,6 +36,7 @@ ShortFormApplicationController = (
     'Female',
     'Trans Male',
     'Trans Female',
+    'Decline to state'
   ]
   $scope.relationship_options = [
     'Spouse',
@@ -247,12 +248,6 @@ ShortFormApplicationController = (
     # wrap true value in a function a la function(){return true;}
     # used by isRequired() in _address_form
     true
-
-  $scope.resetGenderOptions = (user, option) ->
-    ShortFormApplicationService.resetGenderOptions(user, option)
-
-  $scope.genderOtherOptionSelected = (user) ->
-    user.gender['Not Listed'] || user.gender['Decline to State']
 
   $scope.getLandingPage = (section) ->
     ShortFormNavigationService.getLandingPage(section)

@@ -25,7 +25,6 @@ ShortFormDataService = () ->
     application = Service._formatHouseholdAddress(application)
     application = Service._formatHouseholdDOB(application)
     application = Service._formatPreferences(application)
-    application = Service._formatGenderOptions(application)
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
@@ -142,14 +141,6 @@ ShortFormDataService = () ->
     delete application.preferences
     return application
 
-  Service._formatGenderOptions = (application) ->
-    allGenders = ""
-    _.forEach application.applicant.gender, (value, key) ->
-      allGenders += (key + ";") if value
-      return
-    application.applicant.gender = allGenders
-    return application
-
   Service._formatReferrals = (application) ->
     referrals = ""
     _.forEach application.applicant.referral, (value, key) ->
@@ -232,12 +223,12 @@ ShortFormDataService = () ->
     whitelist = [
       'appMemberId', 'contactId',
       'email', 'firstName', 'middleName', 'lastName',
-      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType',
+      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
+      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther'
     ]
     applicant = _.pick contact, whitelist
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
-    applicant.gender = Service._reformatMultiSelect(contact.gender)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.hiv = Service._reformatBoolean(contact.hiv)
     altContactType = !! (!_.isEmpty(altContact) && altContact.alternateContactType)
