@@ -406,7 +406,7 @@ ShortFormApplicationController = (
 
   $scope.submitApplication = ->
     ShortFormNavigationService.isLoading(true)
-    ShortFormApplicationService.submitApplication({draft: false})
+    ShortFormApplicationService.submitApplication({finish: true})
       .then(  ->
         ShortFormNavigationService.isLoading(false)
         $state.go('dahlia.short-form-application.confirmation')
@@ -417,7 +417,7 @@ ShortFormApplicationController = (
     # prevent normal short form page submit
     ev.preventDefault()
     if AccountService.loggedIn()
-      ShortFormApplicationService.submitApplication({draft: true}).then((response) ->
+      ShortFormApplicationService.submitApplication().then((response) ->
         $state.go('dahlia.my-applications', {skipConfirm: true})
       )
     else

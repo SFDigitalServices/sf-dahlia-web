@@ -6,7 +6,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
-    status: null
+    status: 'draft'
     applicationSubmittedDate: null
     surveyComplete: false
     applicationSubmissionType: "Electronic"
@@ -322,13 +322,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     ))
 
   Service.submitApplication = (options={}) ->
-    if options.draft
-      Service.application.status = 'draft'
-      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
-    else
+    if options.finish
       Service.application.status ='submitted'
-      Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
 
+    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     params =
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
@@ -339,7 +336,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     if params.application.id
       # update
       id = params.application.id
-      appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+      if options.attachToAccount
+        appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
+      else
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
     else
       # create
       appSubmission = $http.post('/api/v1/short-form/application', params)
