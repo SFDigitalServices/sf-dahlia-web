@@ -14,18 +14,6 @@
   .app-inner.inset.border-bottom
     race-ethnicity-form user='applicant'
 
-  .app-inner.inset.border-bottom
-    .form-group
-      label.form-label.caps
-        | {{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}
-      p.form-note.margin-bottom
-        | {{'T.OPTIONAL' | translate}}
-      .radio-group role="radiogroup" aria-label="{{'LABEL.LIVING_WITH_HIV_AIDS' | translate}}"
-        radio-block-item value='Yes' user='applicant' name='hiv'
-          | {{'T.YES' | translate}}
-        radio-block-item value='No' user='applicant' name='hiv'
-          | {{'T.NO' | translate}}
-
   .app-inner.inset
     .form-group
       label.form-label.caps id="referral_label"
