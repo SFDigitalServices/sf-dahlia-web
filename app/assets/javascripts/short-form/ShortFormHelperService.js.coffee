@@ -15,12 +15,6 @@ ShortFormHelperService = ($translate, $filter) ->
     else
       alternateContact.alternateContactType
 
-  Service.returnLanguage = (person) ->
-    if person.language == 'Other'
-      person.languageOther
-    else
-      person.language
-
   Service.applicationVouchersSubsidies = (application) ->
     if application.householdVouchersSubsidies == 'Yes'
       $translate.instant('T.YES')
