@@ -30,8 +30,12 @@ We will create a Boxen for this project, but for now to get started:
 4. Run `overcommit --install` to install git hooks into the repo
 5. Run `bower install`
 6. Run `grunt`. Ensure that the *latest* pattern library is in the same folder as this repo.
-Running grunt will migrate the css over from the patter library.
-6. Run `rake bower:install`
+Running grunt will migrate the css over from the pattern library. You can ignore the warning that says `Unable to match 1 pattern.`.
+7. Run `rake bower:install`
+8. Open a separate terminal tab and run `postgres -D /usr/local/var/postgres` to start Postgres.
+9. Run `rake db:create`, followed by `rake db:migrate` to create the app database.
+10. If you have access to the correct environment values, create a file named `.env` and copy in the values. It will look similar to `.env.sample`.
+11. Run `rails s` to start the server.
 
 ## Running Tests ##
 
