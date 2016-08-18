@@ -38,10 +38,6 @@ do ->
         expect(reformatted.applicant.firstName).toEqual(fakeSalesforceApplication.primaryApplicant.firstName)
         return
 
-      it 'reformats multiselect to object with "true"', ->
-        expect(reformatted.applicant.gender).toEqual({Male: true})
-        return
-
       it 'reformats mailing address', ->
         expect(reformatted.applicant.mailing_address.address1).toEqual("4053 18TH ST")
         return
