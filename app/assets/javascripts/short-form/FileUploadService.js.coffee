@@ -20,9 +20,7 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
       },
     }).success((data, status, headers, config) ->
       Service.preferences[fileType] = null
-      # console.log(data)
     ).error( (data, status, headers, config) ->
-      # console.warn('error')
       return
     )
 
