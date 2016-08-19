@@ -18,7 +18,7 @@ do ->
         email: 'x@y.com'
     fakeShortFormApplicationService =
       submitApplication: () -> null
-      importUserData: () -> null
+      importUserData: () -> false
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -111,10 +111,10 @@ do ->
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
           return
 
-        it 'routes user to my account', ->
+        it 'routes user to my app', ->
           scope.signIn()
           scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-account', {skipConfirm: true})
+          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true, infoChanged: false})
           return
         return
       return

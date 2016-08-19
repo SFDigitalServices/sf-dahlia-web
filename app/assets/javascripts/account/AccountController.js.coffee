@@ -145,9 +145,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope._signInSubmitApplication = ->
     # make sure short form data inherits logged in user data
-    ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
     ShortFormApplicationService.submitApplication().then( ->
-      $state.go('dahlia.my-account', {skipConfirm: true})
+      $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
     )
 
   $scope._signInRedirect = ->

@@ -57,7 +57,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         if response.signedIn
           angular.copy(response, Service.loggedInUser)
           Service._reformatDOB()
-          ShortFormApplicationService.importUserData(Service.loggedInUser)
           return true
       ).catch((response) ->
         Service.accountError.message = response.errors[0]
@@ -165,6 +164,13 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       Service.createdAccount.email = email
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
+
+  Service.openInfoChangedModal = () ->
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_info_changed_modal.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
     })

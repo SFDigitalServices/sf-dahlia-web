@@ -394,10 +394,17 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.application.surveyComplete = _.every(responses)
 
   Service.importUserData = (loggedInUser) ->
-    userData = _.pick loggedInUser, [
+    fields = [
       'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
+    # copy over all non-blank values e.g. omit middleName if null
+    userData = _.omitBy(_.pick(loggedInUser, fields), _.isNil)
+    original = angular.copy(Service.applicant)
+    # merge the data into applicant
     _.merge Service.applicant, userData
+    changed = !_.isEqual(Service.applicant, original)
+    # return T/F if data was changed or not
+    return changed
 
   return Service
 
