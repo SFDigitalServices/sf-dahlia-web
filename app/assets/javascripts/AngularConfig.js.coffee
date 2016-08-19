@@ -140,12 +140,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 
     })
     .state('dahlia.sign-in', {
-      url: '/sign-in?expiredUnconfirmed&expiredConfirmed'
+      url: '/sign-in?expiredUnconfirmed&expiredConfirmed&redirectTo'
       params:
         newAccount: {squash: true}
         skipConfirm: { squash: true, value: false }
         expiredUnconfirmed: null
         expiredConfirmed: null
+        redirectTo: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
@@ -158,6 +159,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
         if $stateParams.newAccount
           AccountService.openConfirmEmailModal()
+        if $stateParams.redirectTo
+          AccountService.afterLoginRedirect($stateParams.redirectTo)
       ]
     })
     .state('dahlia.short-form-application.sign-in', {
