@@ -137,9 +137,8 @@ module Overrides
 
     def sync_with_salesforce
       return false if @resource.errors.any?
-      # account_params[:webAppID] = current_user.id
-      # account_params[:webAppID] = current_user.id
-      salesforce_contact = AccountService.create_or_update(account_params)
+      attrs = account_params.merge(webAppID: current_user.id)
+      salesforce_contact = AccountService.create_or_update(attrs)
       unless salesforce_contact && salesforce_contact['contactId'].present?
         @resource.errors.set(:salesforce_contact_id, ["can't be blank"])
         return false
