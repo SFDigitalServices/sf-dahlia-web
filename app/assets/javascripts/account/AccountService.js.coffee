@@ -82,6 +82,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     if type == 'change'
       params.current_password = Service.userAuth.user.current_password
     $auth.updatePassword(params).then((resp) ->
+      Service.userAuth.user.current_password = ''
+      Service.userAuth.user.password = ''
+      Service.userAuth.user.password_confirmation = ''
       if type == 'change'
         msg = $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED')
         Service.accountSuccess.messages.password = msg
@@ -96,7 +99,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       else
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
-    return
 
   Service.signOut = ->
     $auth.signOut()

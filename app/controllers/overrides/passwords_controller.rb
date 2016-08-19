@@ -36,6 +36,13 @@ module Overrides
 
     private
 
+    # easiest way to add this email hook without having to override the whole
+    # update method from the gem
+    def render_update_success
+      Emailer.account_update(current_user).deliver_now
+      super
+    end
+
     # copied from gem,
     # so we can override ability to reset password without current_password
     def resource_update_method

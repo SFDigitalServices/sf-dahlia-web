@@ -93,8 +93,11 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.updatePassword = (type) ->
     $scope.form.current = $scope.form.accountPassword
-    if $scope.form.current.$valid
-      AccountService.updatePassword(type)
+    form = $scope.form.current
+    if form.$valid
+      AccountService.updatePassword(type).then ->
+        form.$setUntouched()
+        form.$setPristine()
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')

@@ -9,8 +9,8 @@ do ->
       createAccount: -> null
       signIn: -> null
       loggedIn: -> null
+      updatePassword: -> null
       requestPasswordReset: jasmine.createSpy()
-      updatePassword: jasmine.createSpy()
       accountError: {message: ''}
       userDataForContact: ->
         firstName: 'X'
@@ -34,6 +34,7 @@ do ->
       deferred = $q.defer()
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
+      spyOn(fakeAccountService, 'updatePassword').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
 
       $controller 'AccountController',
