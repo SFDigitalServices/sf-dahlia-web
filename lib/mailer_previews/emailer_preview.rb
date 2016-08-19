@@ -9,6 +9,11 @@ class EmailerPreview < ActionMailer::Preview
     Emailer.submission_confirmation(params)
   end
 
+  def account_update
+    u = User.first
+    Emailer.account_update(u)
+  end
+
   def reset_password_instructions
     u = User.first
     token = u.confirmation_token || 'xyzABC123'

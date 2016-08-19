@@ -145,7 +145,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $state.go('dahlia.my-account', {skipConfirm: true})
       )
     else if AccountService.loggedIn()
-      $state.go('dahlia.my-account')
+      if AccountService.loginRedirect
+        AccountService.goToLoginRedirect()
+      else
+        $state.go('dahlia.my-account')
 
   $scope._createAccountRedirect = ->
     # send to sign in state if user created account from saving application

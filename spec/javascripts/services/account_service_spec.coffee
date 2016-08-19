@@ -3,7 +3,8 @@ do ->
   describe 'AccountService', ->
     AccountService = undefined
     ShortFormApplicationService = undefined
-    $translate = {}
+    $translate =
+      instant: ->
     $state = undefined
     $auth = undefined
     httpBackend = undefined
@@ -202,6 +203,23 @@ do ->
         AccountService.getMyApplications()
         httpBackend.flush()
         expect(AccountService.myApplications).toEqual fakeApplicationsData.applications
+        return
+      return
+
+    describe 'afterLoginRedirect', ->
+      it 'assigns loginRedirect with path', ->
+        path = 'dahlia.account-settings'
+        AccountService.afterLoginRedirect(path)
+        expect(AccountService.loginRedirect).toEqual path
+        return
+      return
+
+    describe 'goToLoginRedirect', ->
+      it 'takes you to redirect path', ->
+        path = 'dahlia.account-settings'
+        AccountService.afterLoginRedirect(path)
+        AccountService.goToLoginRedirect()
+        expect($state.go).toHaveBeenCalledWith(path)
         return
       return
 

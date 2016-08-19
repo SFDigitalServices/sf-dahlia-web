@@ -18,6 +18,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     messages: {}
   Service.accountSuccess =
     messages: {}
+  Service.loginRedirect = null
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -219,6 +220,15 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     Service.accountError.message = null
     Service.accountError.messages = {}
     Service.accountSuccess.messages = {}
+
+  Service.afterLoginRedirect = (path) ->
+    Service.accountSuccess.messages.redirect = $translate.instant('SIGN_IN.SIGN_IN_REQUIRED')
+    Service.loginRedirect = path
+
+  Service.goToLoginRedirect = ->
+    $state.go(Service.loginRedirect)
+    Service.loginRedirect = null
+
 
   # run on page load
   Service.unlockFields()
