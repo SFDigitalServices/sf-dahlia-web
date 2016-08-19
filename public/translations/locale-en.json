@@ -282,7 +282,6 @@
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
         "YOUR_DOB": "Your Date of Birth",
-        "YOUR_GENDER": "Please specify your gender",
         "YOUR_NAME": "Your Name",
         "YOUR_OR_ALTERNATE": "Your {{ contactType }} or Alternate {{ contactType }}",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
@@ -341,7 +340,8 @@
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
-        "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox."
+        "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
+        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
     },
     "T": {
         "APPLICATION": "Application",
