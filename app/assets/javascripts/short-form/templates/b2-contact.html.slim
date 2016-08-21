@@ -4,7 +4,7 @@
       | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 
   .app-inner.inset.border-bottom
-    .form-group.has-option ng-class="{ error: $scope.noRequiredContactInformation() }"
+    .form-group.has-option ng-class="{ error: $scope.missingRequiredContactInformation() }"
       .form-tel
         label.caps for="applicant_phone"
           | {{'LABEL.APPLICANT_PHONE' | translate}}
@@ -53,7 +53,7 @@
           | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group.has-option ng-class="{ error: (inputInvalid('email') || noRequiredContactInformation()) }"
+    .form-group.has-option ng-class="{ error: (inputInvalid('email') || missingRequiredContactInformation()) }"
       label.form-label.caps for="applicant_email"
         ' {{'LABEL.APPLICANT_EMAIL' | translate}}
         lock-icon ng-if="loggedIn()"
@@ -70,7 +70,7 @@
             | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group.row.has-option ng-class="{error: (addressInputInvalid('home_address') || noRequiredContactInformation())}"
+    .form-group.row.has-option ng-class="{error: (addressInputInvalid('home_address') || missingRequiredContactInformation())}"
       label.form-label.caps
         | {{'LABEL.ADDRESS' | translate}}
       p.form-note.margin-bottom

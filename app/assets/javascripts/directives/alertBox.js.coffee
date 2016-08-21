@@ -5,6 +5,7 @@ angular.module('dahlia.directives')
     formObject: '=?'
     hideAlert: '=?'
     missingInfo: '=?'
+    missingRequiredContactInfo: '=?'
     householdEligibilityErrorMessage: '=?'
     customMessage: '=?'
     invert: '=?'
