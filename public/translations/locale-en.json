@@ -28,14 +28,11 @@
         "TITLE": "We have located the following address. Please confirm it's correct."
     },
     "B2_CONTACT": {
-        "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
-        "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
-        "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
