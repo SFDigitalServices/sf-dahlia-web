@@ -12,10 +12,3 @@ div
     p.alert-notice_item Your Phone Number
     p.alert-notice_item Your Email Address
     p.alert-notice_item Your Address
-
-  / Additional error message about required fields; only shows up on altContactTypePage
-  .alert-notice.alert ng-show="showAltContactMessage()"
-    p.alert-notice_title
-      | {{'T.REQUIRED' | translate}}
-    p.alert-notice_item ng-repeat="contactType in missingInfo()"
-      | {{'LABEL.YOUR_OR_ALTERNATE' | translate: contactTypeData(contactType)}}

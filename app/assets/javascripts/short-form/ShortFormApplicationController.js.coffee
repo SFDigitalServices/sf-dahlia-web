@@ -175,22 +175,11 @@ ShortFormApplicationController = (
   $scope.clearPhoneData = (type) ->
     ShortFormApplicationService.clearPhoneData(type)
 
-  $scope.applicantHasPhoneEmailAndAddress = ->
-    $scope.applicant.phone &&
-      $scope.applicant.email &&
-      ShortFormApplicationService.validMailingAddress()
-
   $scope.validMailingAddress = ->
     ShortFormApplicationService.validMailingAddress()
 
-  $scope.missingPrimaryContactInfo = ->
-    ShortFormApplicationService.missingPrimaryContactInfo()
-
-  $scope.isMissingPrimaryContactInfo = (info) ->
-    ShortFormApplicationService.missingPrimaryContactInfo().indexOf(info) > -1
-
-  $scope.isMissingAddress = ->
-    $scope.isMissingPrimaryContactInfo('Address')
+  $scope.notRequired = ->
+    return false
 
   $scope.unsetNoAddressAndCheckMailingAddress = ->
     # $scope.applicant.noAddress = false
@@ -235,7 +224,7 @@ ShortFormApplicationController = (
 
   $scope.checkIfAlternateContactNeedsReset = ->
     # blank out alternateContact.alternateContactType if it was previously set to 'None' but that is no longer valid
-    if (!$scope.applicantHasPhoneEmailAndAddress() && $scope.alternateContact.alternateContactType == 'None')
+    if $scope.alternateContact.alternateContactType == 'None'
       $scope.alternateContact.alternateContactType = null
 
   $scope.hasNav = ->

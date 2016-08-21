@@ -4,7 +4,6 @@ angular.module('dahlia.directives')
   scope:
     formObject: '=?'
     hideAlert: '=?'
-    missingInfo: '=?'
     missingRequiredContactInfo: '=?'
     householdEligibilityErrorMessage: '=?'
     customMessage: '=?'
@@ -38,19 +37,10 @@ angular.module('dahlia.directives')
     scope.alertText = ->
       if scope.customMessage
         return scope.customMessage
-      else if scope.altContactTypeError()
-        $translate.instant("ERROR.ALT_CONTACT_TYPE")
       else if scope.householdEligibilityErrorMessage
         $translate.instant("ERROR.NOT_ELIGIBLE") + " " + scope.householdEligibilityErrorMessage
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
-
-    scope.altContactTypeError = ->
-      $state.current.name == 'dahlia.short-form-application.alternate-contact-type' &&
-        scope.missingInfo && scope.missingInfo().length > 0
-
-    scope.showAltContactMessage = ->
-      scope.showAlert() && scope.altContactTypeError()
 
     scope.contactTypeData = (contactType) ->
       {contactType: contactType}

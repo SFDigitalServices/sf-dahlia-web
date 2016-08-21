@@ -4,13 +4,13 @@
     short-form-back
     h2.app-card_question
       | {{'B3_ALTERNATE_CONTACT_TYPE.TITLE' | translate}}
-  alert-box short-form="true" missing-info="missingPrimaryContactInfo"
+  alert-box short-form="true"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('alternateContactType') || inputInvalid('alternateContactTypeOther')}"
       label.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT' | translate}}
-      p.form-note.margin-bottom ng-if="!applicantHasPhoneEmailAndAddress()"
+      p.form-note.margin-bottom
         | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
       .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
 
@@ -22,9 +22,7 @@
           small.error ng-show="inputInvalid('alternateContactTypeOther')"
             | {{'ERROR.RELATIONSHIP' | translate}}
 
-        .radio-block ng-if="applicantHasPhoneEmailAndAddress()"
-          / this option to bypass alternate contact is only available
-          / if the applicant has entered phone and address
+        .radio-block
           input#alternate_contact_none(ng-model="alternateContact.alternateContactType" name="alternateContactType" type="radio" value="None" ng-required="true" ng-class="{ error: inputInvalid('alternateContactType')}")
           label.radio-block_label for="alternate_contact_none"
            | {{'LABEL.NO_ALTERNATE_CONTACT' | translate}}
