@@ -151,9 +151,9 @@ ShortFormApplicationController = (
     return AddressValidationService.failedValidation(validated)
 
   $scope.checkContactRequirement = (contactType) ->
-    !$scope.applicant[contactType] || $scope.missingRequiredContactInformation()
+    !$scope.applicant[contactType] || $scope.requiredContactInformationMissing()
 
-  $scope.missingRequiredContactInformation = ->
+  $scope.requiredContactInformationMissing = ->
     $scope.applicant.noPhone && $scope.applicant.noAddress && $scope.applicant.noEmail
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
@@ -231,7 +231,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.backPageState()
 
   $scope.homeAddressRequired = ->
-    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress) || $scope.missingRequiredContactInformation()
+    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress) || $scope.requiredContactInformationMissing()
 
   $scope.truth = ->
     # wrap true value in a function a la function(){return true;}
