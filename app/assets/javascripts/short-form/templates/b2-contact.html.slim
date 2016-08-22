@@ -9,7 +9,7 @@
         label.caps for="applicant_phone"
           | {{'LABEL.APPLICANT_PHONE' | translate}}
 
-        input#applicant_phone_type(ng-model="applicant.phone" name="phone" type="tel" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-if="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
       label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
