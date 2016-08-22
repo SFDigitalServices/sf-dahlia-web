@@ -156,12 +156,6 @@ ShortFormApplicationController = (
   $scope.missingRequiredContactInformation = ->
     $scope.applicant.noPhone && $scope.applicant.noAddress && $scope.applicant.noEmail
 
-  # $scope.checkInvalidPhones = () ->
-  #   $scope.inputInvalid('phone') ||
-  #   $scope.inputInvalid('phoneType') ||
-  #   $scope.inputInvalid('alternatePhone') ||
-  #   $scope.inputInvalid('alternatePhoneType')
-
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
     field = form[fieldName]
