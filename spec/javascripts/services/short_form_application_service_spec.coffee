@@ -382,7 +382,6 @@ do ->
         ShortFormApplicationService.applicant.gender = {Fake: true}
         ShortFormApplicationService.applicant.ethnicity = 'Fake'
         ShortFormApplicationService.applicant.race = 'Fake'
-        ShortFormApplicationService.applicant.hiv = 'Fake'
         ShortFormApplicationService.applicant.referral = {Fake: true}
         expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
       return
