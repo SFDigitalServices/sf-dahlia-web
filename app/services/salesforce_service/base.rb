@@ -59,6 +59,10 @@ module SalesforceService
       api_call(:post, endpoint, params, parse_response)
     end
 
+    def self.api_delete(endpoint, params = nil, parse_response = false)
+      api_call(:delete, endpoint, params, parse_response)
+    end
+
     # NOTE: Have to use custom Faraday connection to send headers.
     def self.api_post_with_headers(endpoint, body = '', headers = {})
       conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])

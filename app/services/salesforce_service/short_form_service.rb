@@ -23,7 +23,7 @@ module SalesforceService
     end
 
     def self.delete(id)
-      api_post('/shortForm/delete/', id: id)
+      api_delete("/shortForm/delete/#{id}")
     end
 
     def self.attach_file(application_id, file, filename)
