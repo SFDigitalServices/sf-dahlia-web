@@ -20,6 +20,10 @@
         "TITLE": "Account Settings",
         "VERIFY_EMAIL": "Please check your email inbox to verify this change."
     },
+    "ALREADY_SUBMITTED": {
+        "MESSAGE": "You have already submitted an application to this listing.",
+        "TITLE": "Good news!"
+    },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
         "TITLE": "First, what's your name?"
@@ -62,6 +66,12 @@
         "P1": "You'll have the opportunity to add more household members on the next screen.",
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
+    },
+    "CHOOSE_DRAFT": {
+        "ALERT_MESSAGE": "Please choose which version of the application you want to use.",
+        "ALERT_TITLE": "Any primary contact information on your application will be overwritten by your current account settings.",
+        "APPLICATION_OPTIONS": "Application Options",
+        "TITLE": "There are two draft applications in progress for this listing."
     },
     "CONFIRM_ACCOUNT": {
         "ACCOUNT_ALREADY_CONFIRMED": "This account has already been confirmed",
@@ -254,6 +264,7 @@
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "OLD_PASSWORD": "Old Password",
+        "ORIGINAL_APPLICATION": "Original Application",
         "OTHER": "Other",
         "OTHER_PEOPLE": "Other people will live with me",
         "PASSWORD": "Password",
@@ -267,6 +278,7 @@
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF_OF_ADDRESS": "Proof of address",
+        "RECENT_APPLICATION": "Recent Application",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
         "SEE_LISTING": "See Listing",

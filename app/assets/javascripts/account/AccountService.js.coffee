@@ -11,6 +11,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.userAuth = angular.copy(Service.userAuthDefaults)
   Service.loggedInUser = {}
   Service.myApplications = []
+  Service.currentApplication = {}
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError =
@@ -185,6 +186,15 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.openInfoChangedModal = () ->
     modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_info_changed_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    })
+
+  Service.openAlreadySubmittedModal = (application_id) ->
+    currentApplication = _.find(Service.myApplications, {id: application_id})
+    angular.copy(currentApplication, Service.currentApplication)
+    modalInstance = $modal.open({
+      templateUrl: 'account/templates/partials/_already_submitted.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
     })

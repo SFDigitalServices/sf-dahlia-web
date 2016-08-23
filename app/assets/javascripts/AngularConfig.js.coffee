@@ -256,6 +256,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           value: false
         infoChanged:
           squash: true
+        alreadySubmittedId:
+          squash: true
       views:
         'container@':
           controller: 'AccountController'
@@ -270,6 +272,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         if $stateParams.infoChanged
           AccountService.openInfoChangedModal()
+        if $stateParams.alreadySubmittedId
+          AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId)
       ]
     })
     .state('dahlia.my-favorites', {
@@ -679,6 +683,23 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
             ShortFormApplicationService.getApplication($stateParams.id).then ->
               if ShortFormApplicationService.application.status != 'Submitted'
                 $state.go('dahlia.my-applications')
+        ]
+    })
+    .state('dahlia.short-form-application.choose-draft', {
+      url: '/choose-draft'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-draft.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.comparisonApplication)
+            $state.go('dahlia.my-applications')
         ]
     })
 
