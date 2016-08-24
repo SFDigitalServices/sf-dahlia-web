@@ -584,7 +584,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
               )
         ]
     })
-    # Short form: "Status" section
+    # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
       views:
@@ -629,7 +629,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'short-form/templates/e1-income.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Status')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     # Short form: "Review" section
