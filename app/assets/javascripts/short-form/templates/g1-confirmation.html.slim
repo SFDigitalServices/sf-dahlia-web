@@ -27,13 +27,18 @@
     p.form-note
       | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
 
-  .button-pager
-    .button-pager_row.primary ng-if="!loggedIn()"
+  .button-pager ng-if="!loggedIn()"
+    .button-pager_row.primary
       a.button.primary.radius ui-sref="dahlia.short-form-application.create-account"
         | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
-    .button-pager_row.primary ng-if="loggedIn()"
-      a.button.primary.radius ui-sref="dahlia.my-applications"
-        | {{'G1_CONFIRMATION.VIEW_MY_APPLICATIONS' | translate}}
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
         | {{'G1_CONFIRMATION.NO_THANKS_IM_DONE' | translate}}
+
+  .button-pager ng-if="loggedIn()"
+    .button-pager_row.primary
+      a.button.primary.radius ui-sref="dahlia.my-applications"
+        | {{'G1_CONFIRMATION.GO_TO_MY_APPLICATIONS' | translate}}
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listings"
+        | {{'G1_CONFIRMATION.BROWSE_MORE_LISTINGS' | translate}}
