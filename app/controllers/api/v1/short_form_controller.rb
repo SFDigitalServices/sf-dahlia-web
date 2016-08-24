@@ -68,7 +68,9 @@ class Api::V1::ShortFormController < ApiController
     response = ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
       attach_files_and_send_confirmation(response)
-      render json: response
+      if current_user && application_complete
+        delete_draft_application(application_params[:listingID])
+      end
     else
       render json: { error: ShortFormService.error }, status: 422
     end
@@ -101,6 +103,22 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def application_complete
+    application_params[:status] == 'submitted'
+  end
+
+  def delete_draft_application(listing_id)
+    applications = ShortFormService.get_for_user(user_contact_id)
+
+    duplicate_draft_applications = applications.select do |app|
+      app['listingID'] == listing_id && app['status'] == 'Draft'
+    end
+
+    duplicate_draft_applications.each do |app|
+      ShortFormService.delete(app['id'])
+    end
+  end
 
   def attach_files_and_send_confirmation(response)
     if application_params[:status] == 'draft' && user_signed_in?
