@@ -30,19 +30,42 @@
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
 
-        .dash-card-inner.inset.border-bottom
-          .form-group
-            h2.form-label.caps Password
-            p.t-small.c-steel When changing your password make sure you make note of it so you remember it in the future.
-            label.sr-only for="textInput"  Old Password
-            input#textInput name="textInput" placeholder=("Old Password") type="text"
-            label.sr-only for="textInput"  New Password
-            input#textInput name="textInput" placeholder=("New Password") type="text"
-            label.sr-only for="textInput"  Confirm New Password
-            input#textInput name="textInput" placeholder=("Confirm New Password") type="text"
-            p.text-center.padding-top
-              button.button.small.secondary.no-margin type="button"  Update
+        form novalidate="" name="form.accountPassword" ng-submit="updatePassword('change')"
+          alert-box(form-object="form.accountPassword" hide-alert="hideAlert" custom-message="accountError.messages.password")
 
+          alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.password" ng-if="accountSuccess.messages.password")
+
+          .dash-card-inner.inset.border-bottom
+            .form-group ng-class="{ error: inputInvalid('current_password') || inputInvalid('password') || inputInvalid('password_confirmation') }"
+              h2.form-label.caps for="password"
+                | {{'LABEL.PASSWORD' | translate}}
+              p.t-small.c-steel
+                | {{'ACCOUNT_SETTINGS.REMEMBER_YOUR_PASSWORD' | translate}}
+
+              label.sr-only for="auth_current_password"
+                | {{'LABEL.OLD_PASSWORD' | translate}}
+              input#auth_current_password ng-model="userAuth.user.current_password" name="current_password" placeholder="{{'LABEL.OLD_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('current_password'), 'margin-bottom': !inputInvalid('current_password') }" ng-pattern="passwordRegex"
+              small.error ng-if="inputInvalid('current_password')"
+                | {{'ERROR.PASSWORD' | translate}}
+              small.form-note.shift-up
+                a ui-sref="dahlia.forgot-password"
+                  | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
+
+              label.sr-only for="auth_password"
+                | {{'LABEL.NEW_PASSWORD' | translate}}
+              input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'LABEL.NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex"
+              small.error ng-if="inputInvalid('password')"
+                | {{'ERROR.PASSWORD' | translate}}
+
+              label.label-secondary for="auth_password_confirmation"
+                | {{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}
+              input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'"
+
+              small.error ng-if="inputInvalid('password_confirmation')"
+                | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}
+
+              p.text-center.padding-top
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
 
         form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
           alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.nameDOB")
