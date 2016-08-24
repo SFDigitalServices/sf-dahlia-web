@@ -230,7 +230,6 @@ ShortFormDataService = () ->
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
-    applicant.hiv = Service._reformatBoolean(contact.hiv)
     altContactType = !! (!_.isEmpty(altContact) && altContact.alternateContactType)
     applicant.noPhone = !! (!contact.phone && altContactType)
     applicant.noAddress = !! (!contact.address && altContactType)
