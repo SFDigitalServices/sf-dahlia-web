@@ -327,7 +327,7 @@ do ->
     describe 'submitApplication', ->
       it 'calls submitApplication ShortFormApplicationService', ->
         scope.submitApplication()
-        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: false})
+        expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({finish: true})
         return
       return
 
@@ -365,7 +365,7 @@ do ->
           scope.saveAndFinishLater(fakeEvent)
 
         it 'submits application as a draft', ->
-          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalledWith({draft: true})
+          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
           return
 
         it 'routes user to my applications', ->

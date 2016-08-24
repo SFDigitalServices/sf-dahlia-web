@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
       # Salesforce requires that we repackage all of their info when making an update
       contact = AccountService.get(salesforce_contact_id)
       AccountService.create_or_update(
+        webAppID: id,
         contactId: salesforce_contact_id,
         # send unconfirmed_email because it's about to be confirmed
         email: unconfirmed_email,
