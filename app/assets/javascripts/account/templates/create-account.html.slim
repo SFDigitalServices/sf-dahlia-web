@@ -115,7 +115,7 @@
           h2.dash-title.t-gamma
             | {{'CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT' | translate}}
           p.t-small.c-steel
-            a.button.no-margin ui-sref="dahlia.short-form-application.sign-in" ng-if="rememberedShortFormState"
+            a.button.no-margin ui-sref="dahlia.short-form-application.sign-in" ng-if="userInShortFormSession()"
               | {{'LABEL.SIGN_IN' | translate}}
-            a.button.no-margin ui-sref="dahlia.sign-in" ng-if="!rememberedShortFormState"
+            a.button.no-margin ui-sref="dahlia.sign-in" ng-if="!userInShortFormSession()"
               | {{'LABEL.SIGN_IN' | translate}}

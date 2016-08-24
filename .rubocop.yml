@@ -54,7 +54,7 @@ Style/ConditionalAssignment:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 80
+  Max: 90
   Exclude:
     - 'config/routes.rb'
     - 'app/models/user.rb'

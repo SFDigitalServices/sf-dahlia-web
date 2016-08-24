@@ -62,7 +62,7 @@ class Emailer < Devise::Mailer
     @listing_name = @listing.Building_Name
     @listing_url = params[:listing_url]
     @lottery_number = params[:lottery_number]
-    @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B%e, %Y')
+    @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'submission_confirmation' }

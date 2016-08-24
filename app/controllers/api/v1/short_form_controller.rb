@@ -49,7 +49,7 @@ class Api::V1::ShortFormController < ApiController
   ####### - Short Form Application RESTful actions
   def show_application
     @application = ShortFormService.get(params[:id])
-    return render_unauthorized_error unless user_can_access(@application)
+    return render_unauthorized_error unless user_can_access?(@application)
     map_listing_to_application
     render json: { application: @application }
   end
@@ -65,7 +65,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    response = ShortFormService.create_or_update(application_params, contact_id)
+    response = ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
       attach_files_and_send_confirmation(response)
       render json: response
@@ -74,17 +74,27 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  # claim an anon-submitted application
+  def claim_submitted_application
+    @application = ShortFormService.get(application_params[:id])
+    return render_unauthorized_error unless user_can_claim?(@application)
+    # calls same underlying method for submit
+    submit_application
+  end
+
   def update_application
     @application = ShortFormService.get(application_params[:id])
-    return render_unauthorized_error unless user_can_access(@application)
-    return render_unauthorized_error if submitted?(@application)
+    unless user_can_claim?(@application)
+      return render_unauthorized_error unless user_can_access?(@application)
+      return render_unauthorized_error if submitted?(@application)
+    end
     # calls same underlying method for submit
     submit_application
   end
 
   def delete_application
     @application = ShortFormService.get(params[:id])
-    return render_unauthorized_error unless user_can_access(@application)
+    return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
     result = ShortFormService.delete(params[:id])
     render json: result
@@ -95,11 +105,21 @@ class Api::V1::ShortFormController < ApiController
   def attach_files_and_send_confirmation(response)
     if application_params[:status] == 'draft' && user_signed_in?
       attach_temp_files_to_user
-    elsif application_params[:primaryApplicant][:email].present? &&
-          application_params[:status] == 'submitted'
+    elsif initial_submission?
       send_attached_files(response['id'])
       send_submit_app_confirmation(response['lotteryNumber'])
     end
+  end
+
+  def initial_submission?
+    return false if user_claiming_application?
+    application_params[:primaryApplicant][:email].present? &&
+      application_params[:status] == 'submitted'
+  end
+
+  def user_claiming_application?
+    params[:action] == 'claim_submitted_application' ||
+      (params[:action] == :update_application && user_can_claim?(@application))
   end
 
   def send_attached_files(application_id)
@@ -133,8 +153,7 @@ class Api::V1::ShortFormController < ApiController
 
   def find_listing_application
     @application = nil
-    contact_id = current_user.salesforce_contact_id
-    applications = ShortFormService.get_for_user(contact_id)
+    applications = ShortFormService.get_for_user(user_contact_id)
     applications.each do |application|
       if application['listingID'] == params[:listing_id]
         @application = application
@@ -149,9 +168,12 @@ class Api::V1::ShortFormController < ApiController
     )
   end
 
-  def user_can_access(application)
-    contact_id = current_user.salesforce_contact_id
-    ShortFormService.ownership?(contact_id, application)
+  def user_can_access?(application)
+    ShortFormService.ownership?(user_contact_id, application)
+  end
+
+  def user_can_claim?(application)
+    ShortFormService.can_claim?(application) && submitted?(application)
   end
 
   def submitted?(application)
@@ -162,24 +184,35 @@ class Api::V1::ShortFormController < ApiController
     render json: { error: 'unauthorized' }, status: 401
   end
 
-  def contact_id
+  def applicant_attrs
+    {
+      contactId: user_contact_id,
+      webAppID: current_user_id,
+    }
+  end
+
+  def user_contact_id
     if current_user
       current_user.salesforce_contact_id
-    elsif submitting_application_for_unconfirmed_user
-      unconfirmed_user_salesforce_contact_id
+    elsif unconfirmed_user_with_temp_session_id
+      @unconfirmed_user.salesforce_contact_id
     end
   end
 
-  def submitting_application_for_unconfirmed_user
-    params[:temp_session_id].present?
+  def unconfirmed_user_with_temp_session_id
+    return false if params[:temp_session_id].blank?
+    @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
+    if @unconfirmed_user
+      params.delete :temp_session_id
+      @unconfirmed_user.update(temp_session_id: nil)
+    end
   end
 
-  def unconfirmed_user_salesforce_contact_id
-    u = User.find_by_temp_session_id(params[:temp_session_id])
-    if u
-      params.delete :temp_session_id
-      u.update(temp_session_id: nil)
-      return u.salesforce_contact_id
+  def current_user_id
+    if current_user
+      current_user.id
+    elsif @unconfirmed_user
+      @unconfirmed_user.id
     end
   end
 

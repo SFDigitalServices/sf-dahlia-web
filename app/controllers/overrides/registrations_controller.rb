@@ -25,7 +25,7 @@ module Overrides
         resource_class.skip_callback('create',
                                      :after,
                                      :send_on_create_confirmation_instructions)
-        save_and_render_resource
+        save_and_render_created_registration
       rescue ActiveRecord::RecordNotUnique
         clean_up_passwords @resource
         render_create_error_email_already_exists
@@ -74,6 +74,24 @@ module Overrides
       @redirect_url ||= DeviseTokenAuth.default_confirm_success_url
     end
 
+    def save_and_render_created_registration
+      if @resource.save
+        synced = sync_with_salesforce
+        unless synced
+          # undo user creation
+          @resource.destroy
+          return render_create_error
+        end
+
+        yield @resource if block_given?
+        handle_registration_success
+        render_create_success
+      else
+        clean_up_passwords @resource
+        render_create_error
+      end
+    end
+
     def handle_registration_success
       if !@resource.confirmed?
         # user will require email authentication
@@ -92,24 +110,6 @@ module Overrides
         }
         @resource.save!
         update_auth_header
-      end
-    end
-
-    def save_and_render_resource
-      if @resource.save
-        synced = sync_with_salesforce
-        unless synced
-          # undo user creation
-          @resource.destroy
-          return render_create_error
-        end
-
-        yield @resource if block_given?
-        handle_registration_success
-        render_create_success
-      else
-        clean_up_passwords @resource
-        render_create_error
       end
     end
 
@@ -137,7 +137,8 @@ module Overrides
 
     def sync_with_salesforce
       return false if @resource.errors.any?
-      salesforce_contact = AccountService.create_or_update(account_params)
+      attrs = account_params.merge(webAppID: current_user.id)
+      salesforce_contact = AccountService.create_or_update(attrs)
       unless salesforce_contact && salesforce_contact['contactId'].present?
         @resource.errors.set(:salesforce_contact_id, ["can't be blank"])
         return false

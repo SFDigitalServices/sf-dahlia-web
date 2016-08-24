@@ -16,5 +16,7 @@ module SfDahliaWeb
 
     # http://guides.rubyonrails.org/action_mailer_basics.html#previewing-emails
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+
+    config.time_zone = 'Pacific Time (US & Canada)'
   end
 end

@@ -53,7 +53,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       shortFormSession = null
-      if $scope._userInShortFormSession()
+      if $scope.userInShortFormSession()
         shortFormSession =
           uid: ShortFormApplicationService.session_uid
       $scope.userDataForContact = AccountService.userDataForContact()
@@ -61,7 +61,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         if success
           form.$setUntouched()
           form.$setPristine()
-          $scope._createAccountRedirect()
+          if $scope.userInShortFormSession()
+            $scope._createAccountSubmitApplication()
+          else
+            $state.go('dahlia.sign-in', {newAccount: true})
           $scope.userDataForContact = {}
       ).catch( ->
         $scope.handleErrorState()
@@ -80,7 +83,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         if success
           form.$setUntouched()
           form.$setPristine()
-          $scope._signInRedirect()
+          if $scope.userInShortFormSession()
+            $scope._signInSubmitApplication()
+          else
+            $scope._signInRedirect()
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -144,32 +150,28 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     # as long as we have some where !deleted
     _.some($scope.myApplications, {deleted: false})
 
+  $scope._signInSubmitApplication = ->
+    # make sure short form data inherits logged in user data
+    ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    ShortFormApplicationService.submitApplication().then( ->
+      $state.go('dahlia.my-account', {skipConfirm: true})
+    )
+
   $scope._signInRedirect = ->
-    if AccountService.loggedIn() && $scope._userInShortFormSession()
-      # make sure short form data inherits logged in user data
-      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-      ShortFormApplicationService.submitApplication({draft: true}).then( ->
-        $state.go('dahlia.my-account', {skipConfirm: true})
-      )
-    else if AccountService.loggedIn()
-      if AccountService.loginRedirect
-        AccountService.goToLoginRedirect()
-      else
-        $state.go('dahlia.my-account')
-
-  $scope._createAccountRedirect = ->
-    # send to sign in state if user created account from saving application
-    if $scope._userInShortFormSession()
-      # make sure short form data inherits created account user data
-      ShortFormApplicationService.importUserData($scope.userDataForContact)
-      ShortFormApplicationService.submitApplication(
-        {draft: true, attachToAccount: true}
-      ).then ->
-        $state.go('dahlia.sign-in', {skipConfirm: true, newAccount: true})
+    return false unless AccountService.loggedIn()
+    if AccountService.loginRedirect
+      AccountService.goToLoginRedirect()
     else
-      $state.go('dahlia.sign-in', {newAccount: true})
+      $state.go('dahlia.my-account')
 
-  $scope._userInShortFormSession = ->
+  $scope._createAccountSubmitApplication = ->
+    # make sure short form data inherits created account user data
+    ShortFormApplicationService.importUserData($scope.userDataForContact)
+    ShortFormApplicationService.submitApplication({attachToAccount: true}).then ->
+      # send to sign in state if user created account from saving application
+      $state.go('dahlia.sign-in', {skipConfirm: true, newAccount: true})
+
+  $scope.userInShortFormSession = ->
     shortFormCreateAccountPath = 'dahlia.short-form-application.create-account'
     shortFormSignInPath = 'dahlia.short-form-application.sign-in'
     $state.current.name == shortFormCreateAccountPath ||  $state.current.name == shortFormSignInPath
