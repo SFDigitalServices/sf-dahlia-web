@@ -19,11 +19,11 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
         'household-member-form-edit'
       ]
     },
-    { name: 'Status', pages: [
-        'status-programs',
+    { name: 'Preferences', pages: [
+        'preferences-programs',
         'live-work-preference',
         'general-lottery-notice',
-        'status-vouchers'
+        'preferences-vouchers'
       ]
     },
     { name: 'Income', pages: [
@@ -49,10 +49,10 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
     'household-member-form': {callback: 'addHouseholdMember'}
     'household-member-form-edit': {callback: 'addHouseholdMember'}
     'household-member-verify-address': {path: 'household-members'}
-    'status-programs': {callback: 'checkIfPreferencesApply'}
-    'live-work-preference': {path: 'status-vouchers'}
-    'general-lottery-notice': {path: 'status-vouchers'}
-    'status-vouchers': {path: 'income'}
+    'preferences-programs': {callback: 'checkIfPreferencesApply'}
+    'live-work-preference': {path: 'preferences-vouchers'}
+    'general-lottery-notice': {path: 'preferences-vouchers'}
+    'preferences-vouchers': {path: 'income'}
     'income': {callback: 'validateHouseholdEligibility', params: 'incomeMatch'}
     'review-optional': {path: 'review-summary', callback: 'checkSurveyComplete'}
     'review-summary': {path: 'review-terms'}
@@ -140,19 +140,19 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
-      # -- Status
-      when 'status-programs'
+      # -- Preferences
+      when 'preferences-programs'
         if application.householdMembers.length
           'household-members'
         else
           'household-intro'
       when 'general-lottery-notice'
-        'status-programs'
-      when 'status-vouchers'
+        'preferences-programs'
+      when 'preferences-vouchers'
         if ShortFormApplicationService.preferencesApplyForHousehold()
           'live-work-preference'
         else
-          'status-programs'
+          'preferences-programs'
       # -- catch all
       else
         'intro'

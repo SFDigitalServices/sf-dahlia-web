@@ -1,0 +1,25 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'D1_PREFERENCES_PROGRAMS.TITLE' | translate}}
+    p.form-note.margin-bottom
+      | {{'T.OPTIONAL' | translate}}
+
+  .app-inner
+    .form-group
+      label.sr-only id="special_programs_label" translate="LABEL.SPECIAL_PROGRAMS"
+      .checkbox-group role="group"
+        checkbox-preference-item title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" type="displaced" labelledby="special_programs_label"
+          | {{'D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC' | translate}}
+        checkbox-preference-item title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" type="certOfPreference" labelledby="special_programs_label"
+          | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC' | translate}}
+
+    .form-group
+      p.form-note
+        ' {{'D1_PREFERENCES_PROGRAMS.PLEASE_CALL_P1' | translate}}
+        a title="{{'T.CALL' | translate | lowercase}} 415-701-5613" href="tel:415-701-5613"
+          | {{'T.CALL' | translate | lowercase}} 415-701-5613
+        '
+        ' {{'D1_PREFERENCES_PROGRAMS.PLEASE_CALL_P2' | translate}}
+
+  short-form-save-and-submit
