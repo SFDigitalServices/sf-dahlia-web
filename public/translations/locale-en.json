@@ -12,6 +12,8 @@
     "ACCOUNT_SETTINGS": {
         "ACCOUNT_CHANGES_SAVED": "Your changes have been saved.",
         "ACCOUNT_SETTINGS": "Account Settings",
+        "CONTACT_INFORMATION_UPDATED": "Contact Information Updated",
+        "CONTACT_INFORMATION_UPDATED_MESSAGE": "Some of the primary contact information on your application was updated to match your account settings.",
         "EMAIL_RECONFIRMED_UPDATED": "Your email has been updated here and on any unsubmitted applications.",
         "INFORMATION_CHANGE_NOTICE": "Your information will be changed on any applications that you haven't submitted yet.",
         "REMEMBER_YOUR_PASSWORD": "When changing your password make sure you make note of it so you remember it in the future.",

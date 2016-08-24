@@ -251,7 +251,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     .state('dahlia.my-applications', {
       url: '/my-applications'
       params:
-        skipConfirm: { squash: true, value: false }
+        skipConfirm:
+          squash: true
+          value: false
+        infoChanged:
+          squash: true
       views:
         'container@':
           controller: 'AccountController'
@@ -263,6 +267,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         myApplications: ['AccountService', (AccountService) ->
           AccountService.getMyApplications()
         ]
+      onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        if $stateParams.infoChanged
+          AccountService.openInfoChangedModal()
+      ]
     })
     .state('dahlia.my-favorites', {
       url: '/my-favorites'
