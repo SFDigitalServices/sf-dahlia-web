@@ -28,7 +28,7 @@ DeviseTokenAuth.setup do |config|
   # Uncomment to enforce current_password param to be checked before all
   # attribute updates. Set it to :password if you want it to be checked only if
   # password is updated.
-  # config.check_current_password_before_update = :attributes
+  config.check_current_password_before_update = :password
 
   # By default, only Bearer Token authentication is implemented out of the box.
   # If you wish to integrate with legacy Devise authentication, you can

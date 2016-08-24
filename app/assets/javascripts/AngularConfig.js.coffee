@@ -122,6 +122,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
         AccountService.unlockFields()
       ]
     })
@@ -134,10 +135,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
-
     })
     .state('dahlia.sign-in', {
       url: '/sign-in?expiredUnconfirmed&expiredConfirmed&redirectTo'
@@ -171,6 +172,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+      ]
     })
     .state('dahlia.forgot-password', {
       url: '/forgot-password'
@@ -178,7 +182,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
-      onExit: ['AccountService', (AccountService) ->
+      onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
     })
@@ -193,11 +197,9 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           $auth.validateUser()
         ]
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
+        AccountService.clearAccountMessages()
         unless AccountService.loggedIn()
           return $state.go('dahlia.sign-in')
-      ]
-      onExit: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
       ]
     })
     ############
