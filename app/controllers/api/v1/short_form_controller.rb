@@ -71,6 +71,7 @@ class Api::V1::ShortFormController < ApiController
       if current_user && application_complete
         delete_draft_application(application_params[:listingID])
       end
+      render json: response
     else
       render json: { error: ShortFormService.error }, status: 422
     end
