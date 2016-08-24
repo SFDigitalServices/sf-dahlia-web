@@ -161,8 +161,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         else
           $state.go('dahlia.short-form-application.choose-draft')
       else
-        # make sure short form data inherits logged in user data
-        changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+        changed = null
+        if ShortFormApplicationService.application.status == 'draft'
+          # make sure short form data inherits logged in user data
+          changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
         ShortFormApplicationService.submitApplication().then( ->
           $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
         )
