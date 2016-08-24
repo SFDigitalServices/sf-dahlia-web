@@ -107,12 +107,14 @@ do ->
           deferred.resolve(true)
 
         it 'submits draft application', ->
+          fakeShortFormApplicationService.application = { status: 'draft' }
           scope.signIn()
           scope.$apply()
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
           return
 
         it 'routes user to my app', ->
+          fakeShortFormApplicationService.application = { status: 'draft' }
           scope.signIn()
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true, infoChanged: false})
