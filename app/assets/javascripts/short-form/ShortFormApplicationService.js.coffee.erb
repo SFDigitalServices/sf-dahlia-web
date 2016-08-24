@@ -106,16 +106,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         Service.applicant.mailing_address.state &&
         Service.applicant.mailing_address.zip)
 
-  Service.missingPrimaryContactInfo = () ->
-    missingInfo = []
-    if !Service.applicant.phone
-      missingInfo.push("Phone")
-    if !Service.applicant.email
-      missingInfo.push("Email")
-    if !Service.validMailingAddress()
-      missingInfo.push("Address")
-    return missingInfo
-
   Service.clearPhoneData = (type) ->
     if type == 'alternate'
       Service.applicant.noPhone = false

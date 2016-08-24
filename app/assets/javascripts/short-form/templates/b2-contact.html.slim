@@ -4,16 +4,16 @@
       | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 
   .app-inner.inset.border-bottom
-    .form-group.has-option ng-class="{ error: checkInvalidPhones() }"
+    .form-group.has-option ng-class="{ error: $scope.requiredContactInformationMissing() }"
       .form-tel
         label.caps for="applicant_phone"
           | {{'LABEL.APPLICANT_PHONE' | translate}}
 
-        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-if="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
       label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
-      select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="!applicant.noPhone" ng-class="{ error: inputInvalid('phoneType') }"
+      select#applicant_phone_type ng-model="applicant.phoneType" data-width="auto" name="phoneType" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phoneType') }"
         option value="" translate="LABEL.WHAT_TYPE_OF_NUMBER"
         option value="Home" translate="LABEL.PHONE_HOME"
         option value="Work" translate="LABEL.PHONE_WORK"
@@ -28,8 +28,6 @@
             input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
             label for="applicant_no_phone"
               | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
-          small.highlight ng-if="applicant.noPhone"
-            | {{'B2_CONTACT.ALTERNATE_PHONE_REQUIRED' | translate}}
 
         .form-item.padding-bottom
           / this checkbox unchecks the other checkbox; only one can be selected
@@ -55,14 +53,14 @@
           | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group.has-option ng-class="{ error: inputInvalid('email') }"
+    .form-group.has-option ng-class="{ error: (inputInvalid('email') || requiredContactInformationMissing()) }"
       label.form-label.caps for="applicant_email"
         ' {{'LABEL.APPLICANT_EMAIL' | translate}}
         lock-icon ng-if="loggedIn()"
       p.form-note.margin-bottom
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
-        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false" ng-disabled="loggedIn()"
+        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="checkContactRequirement('noEmail')" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
@@ -71,11 +69,8 @@
           label for="applicant_no_email"
             | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
 
-        small.highlight ng-if="applicant.noEmail"
-          | {{'B2_CONTACT.REQUIRE_ALTERNATE_EMAIL' | translate}}
-
   .app-inner.inset.border-bottom
-    .form-group.row.has-option ng-class="{error: addressInputInvalid('home_address')}"
+    .form-group.row.has-option ng-class="{error: (addressInputInvalid('home_address') || requiredContactInformationMissing())}"
       label.form-label.caps
         | {{'LABEL.ADDRESS' | translate}}
       p.form-note.margin-bottom
@@ -86,14 +81,12 @@
       small.error ng-if="addressFailedValidation('home_address')"
         | {{'ERROR.ADDRESS_VALIDATION' | translate}}
 
-      .form-item.padding-bottom ng-class="{'padding-bottom': ! applicant.noAddress}"
+      .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
         .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
           input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
           label for="applicant_no_address"
             | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
-        small.highlight.padding-bottom ng-if="applicant.noAddress"
-          | {{'B2_CONTACT.REQUIRE_ALTERNATE_ADDRESS' | translate}}
 
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
