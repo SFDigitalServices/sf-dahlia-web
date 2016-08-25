@@ -151,14 +151,26 @@ do ->
           return
         return
 
-      describe 'old household member', ->
-        beforeEach ->
+      describe 'old household member update', ->
+        it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
-
-        it 'does not add the member', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
+          return
+
+        it 'updates the name for any preferences attached to the member', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          currentName = "#{householdMember.firstName} #{householdMember.lastName}"
+          # attach household member to the preference
+          ShortFormApplicationService.preferences['liveInSf_household_member'] = currentName
+          # now update
+          householdMember.firstName = 'Robert'
+          newName = "#{householdMember.firstName} #{householdMember.lastName}"
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          # the name attached to the preference should also update
+          expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
           return
         return
 

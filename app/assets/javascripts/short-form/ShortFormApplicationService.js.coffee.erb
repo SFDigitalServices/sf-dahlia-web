@@ -136,6 +136,13 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
     else
+      # search through all xxx_household_member items in preferences matching the full name
+      full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
+      _.each Service.preferences, (v,k) ->
+        if k.indexOf('_household_member') > 0 and v == full_name
+          # update the name of the preference to the new name
+          new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
+          Service.preferences[k] = new_full_name
       # update existing householdMember
       angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
