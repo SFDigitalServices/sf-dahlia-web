@@ -297,7 +297,7 @@ do ->
 
         it 'navigates to the given callback url', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.status-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
           return
         return
 

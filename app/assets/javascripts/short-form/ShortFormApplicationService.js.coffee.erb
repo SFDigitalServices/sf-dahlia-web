@@ -37,7 +37,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       Intro: false
       You: false
       Household: false
-      Status: false
+      Preferences: false
       Income: false
     # as you proceed through each page, validatedForms will store:
     #  [pagename]: T/F
@@ -45,7 +45,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     validatedForms:
       You: {}
       Household: {}
-      Status: {}
+      Preferences: {}
       Income: {}
       Review: {}
 
@@ -79,16 +79,16 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         completed.You &&
         # make sure all validatedForms in previous section == true
         _.every(validated['You'], (i) -> i)
-      when 'Status'
+      when 'Preferences'
         Service.userCanAccessSection('Household') &&
         completed.Household &&
         # make sure all validatedForms in previous section == true
         _.every(validated['Household'], (i) -> i)
       when 'Income'
-        Service.userCanAccessSection('Status') &&
-        completed.Status &&
+        Service.userCanAccessSection('Preferences') &&
+        completed.Preferences &&
         # make sure all validatedForms in previous section == true
-        _.every(validated['Status'], (i) -> i)
+        _.every(validated['Preferences'], (i) -> i)
       when 'Review'
         Service.userCanAccessSection('Income') &&
         completed.Income &&
@@ -282,7 +282,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.invalidateHouseholdForm = ->
     Service.application.completedSections['Household'] = false
-    Service.application.completedSections['Status'] = false
+    Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
 
   Service.preferenceFileIsLoading = (fileType) ->

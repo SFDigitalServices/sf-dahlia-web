@@ -27,11 +27,11 @@ do ->
           'household-member-form-edit'
         ]
       },
-      { name: 'Status', pages: [
-          'status-programs',
+      { name: 'Preferences', pages: [
+          'preferences-programs',
           'live-work-preference',
           'general-lottery-notice',
-          'status-vouchers'
+          'preferences-vouchers'
         ]
       },
       { name: 'Income', pages: [
@@ -92,9 +92,9 @@ do ->
 
     describe 'activeSection', ->
       it 'gets the active section of the current page', ->
-        $state.current.name = 'dahlia.short-form-application.status-programs'
+        $state.current.name = 'dahlia.short-form-application.preferences-programs'
         activeSection = ShortFormNavigationService.activeSection()
-        expect(activeSection.name).toEqual 'Status'
+        expect(activeSection.name).toEqual 'Preferences'
         return
 
     describe 'backPageState', ->

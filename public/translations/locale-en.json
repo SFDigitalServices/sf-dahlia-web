@@ -92,7 +92,7 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "D1_STATUS_PROGRAMS": {
+    "D1_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
@@ -117,7 +117,7 @@
             "TITLE": "Work in San Francisco Preference"
         }
     },
-    "D6_STATUS_VOUCHERS": {
+    "D6_PREFERENCES_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
         "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
     },
@@ -186,15 +186,16 @@
         "TITLE": "Forgot Password"
     },
     "G1_CONFIRMATION": {
+        "BROWSE_MORE_LISTINGS": "Browse more listings",
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
+        "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
         "NEXT_STEPS_BODY2": "Results will be posted on the listing. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents. ",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
-        "TITLE": "Thanks. We have received your application for",
-        "VIEW_MY_APPLICATIONS": "View My Applications"
+        "TITLE": "Thanks. We have received your application for"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",

@@ -329,7 +329,7 @@ ShortFormApplicationController = (
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         $state.go("dahlia.short-form-application.#{page}")
       else
-        $state.go('dahlia.short-form-application.status-programs')
+        $state.go('dahlia.short-form-application.preferences-programs')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'

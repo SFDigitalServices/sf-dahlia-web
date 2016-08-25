@@ -588,12 +588,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
               )
         ]
     })
-    # Short form: "Status" section
-    .state('dahlia.short-form-application.status-programs', {
-      url: '/status-programs'
+    # Short form: "Preferences" section
+    .state('dahlia.short-form-application.preferences-programs', {
+      url: '/preferences-programs'
       views:
         'container':
-          templateUrl: 'short-form/templates/d1-status-programs.html'
+          templateUrl: 'short-form/templates/d1-preferences-programs.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
@@ -619,11 +619,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           ShortFormApplicationService.completeSection('Household')
         ]
     })
-    .state('dahlia.short-form-application.status-vouchers', {
-      url: '/status-vouchers'
+    .state('dahlia.short-form-application.preferences-vouchers', {
+      url: '/preferences-vouchers'
       views:
         'container':
-          templateUrl: 'short-form/templates/d6-status-vouchers.html'
+          templateUrl: 'short-form/templates/d6-preferences-vouchers.html'
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income', {
@@ -633,7 +633,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'short-form/templates/e1-income.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Status')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     # Short form: "Review" section

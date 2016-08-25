@@ -58,7 +58,7 @@
 		"Household": true,
 		"Income": true,
 		"Intro": true,
-		"Status": true,
+		"Preferences": true,
 		"You": true
 	},
 	"householdIncome": {
@@ -123,10 +123,10 @@
 			"review-summary": true,
 			"review-terms": false
 		},
-		"Status": {
+		"Preferences": {
 			"live-work-preference": true,
-			"status-programs": true,
-			"status-vouchers": true
+			"preferences-programs": true,
+			"preferences-vouchers": true
 		},
 		"You": {
 			"alternate-contact-name": true,
