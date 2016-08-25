@@ -139,7 +139,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
       _.each Service.preferences, (v,k) ->
         if k.indexOf('_household_member') > 0 and v == full_name
-          preference = k.split('_household_member')[0]
           # update the name of the preference to the new name
           new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
           Service.preferences[k] = new_full_name
