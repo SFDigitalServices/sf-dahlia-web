@@ -157,13 +157,14 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       if !_.isEmpty(data.application)
         # application for this listing was found
         if (data.application.status.match(/submitted/i))
-          $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: data.application.id})
+          doubleSubmit = !! ShortFormApplicationService.application.status.match(/submitted/i)
+          $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: data.application.id, doubleSubmit: doubleSubmit})
         else
           $state.go('dahlia.short-form-application.choose-draft')
       else
         changed = null
         opts = {}
-        if ShortFormApplicationService.application.status == 'draft'
+        if ShortFormApplicationService.application.status.match(/draft/i)
           # make sure short form data inherits logged in user data
           changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
         else
@@ -206,6 +207,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.displayChangeNotice = (attributesChanged) ->
     AccountService.clearAccountMessages()
     $scope[attributesChanged] = true
+
+  $scope.dahliaContactEmail = ->
+    { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
