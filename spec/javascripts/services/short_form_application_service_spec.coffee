@@ -424,4 +424,34 @@ do ->
         return
       return
 
+    describe 'getMyComparisonApplication', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'should load application into comparisonApplication', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyComparisonApplication()
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
+        return
+      return
+
+    describe 'keepCurrentDraftApplication', ->
+      beforeEach ->
+        ShortFormApplicationService.application = fakeShortForm
+        ShortFormApplicationService.comparisonApplication = fakeShortForm
+        ShortFormApplicationService.comparisonApplication.id = '99'
+
+      it 'should inherit id from comparisonApplication', ->
+        ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
+        expect(ShortFormApplicationService.application.id).toEqual('99')
+        return
+
+      it 'should importUserData into current application', ->
+        ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
+        expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
+        return
+
     return

@@ -10,6 +10,7 @@ angular.module('dahlia.directives')
     invert: '=?'
     primary: '=?'
     shortForm: '=?'
+    customSubMessage: '=?'
 
   templateUrl: 'directives/alert-box.html'
 

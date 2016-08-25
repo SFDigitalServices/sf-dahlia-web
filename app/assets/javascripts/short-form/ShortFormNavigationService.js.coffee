@@ -57,6 +57,7 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
     'review-optional': {path: 'review-summary', callback: 'checkSurveyComplete'}
     'review-summary': {path: 'review-terms'}
     'review-terms': {callback: 'submitApplication'}
+    'choose-draft': {callback: 'chooseDraft'}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
