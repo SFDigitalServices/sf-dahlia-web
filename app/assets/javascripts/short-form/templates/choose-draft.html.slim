@@ -1,0 +1,53 @@
+.dash-container.tall#short-form-wrapper
+  section.row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      form.dash-card.ng-pristine.ng-valid(novalidate="" name="form.applicationForm" ng-submit="submitForm()")
+        header.dash-header
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile" xmlns:xlink="http://www.w3.org/1999/xlink"
+          h1.dash-title.no-margin
+            | {{'CHOOSE_DRAFT.TITLE' | translate}}
+
+        alert-box short-form="true"
+
+        alert-box short-form="true" custom-message="'CHOOSE_DRAFT.ALERT_TITLE' | translate" custom-sub-message="'CHOOSE_DRAFT.ALERT_MESSAGE' | translate"
+
+        .dash-card-inner.inset
+          .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('chooseDraft')}"
+            h3.form-label.caps
+              | {{'CHOOSE_DRAFT.APPLICATION_OPTIONS' | translate}}:
+            p.form-note.margin-bottom
+              | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+            .form-item.margin-bottom--2x
+              .radio-block
+                input#choose_draft_recent(name="chooseDraft" type="radio" value="recent"  ng-model="chosenApplicationToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseDraft')}")
+                label.radio-block_label for="choose_draft_recent"
+                  p.form-label
+                    | {{'LABEL.RECENT_APPLICATION' | translate}}:
+                  p.margin-bottom-none.t-base
+                    | {{applicantFullName(application.applicant)}}
+                    br
+                    ' {{listing.Building_Name}},
+                    ' {{listing.Building_Street_Address}}
+                  p.t-small.t-normal
+                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
+            .form-item
+              .radio-block
+                input#choose_draft_original(name="chooseDraft" type="radio" value="comparison" ng-model="chosenApplicationToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseDraft')}")
+                label.radio-block_label for="choose_draft_original"
+                  p.form-label
+                    | {{'LABEL.ORIGINAL_APPLICATION' | translate}}:
+                  p.margin-bottom-none.t-base
+                    | {{applicantFullName(comparisonApplication.applicant)}}
+                    br
+                    ' {{listing.Building_Name}},
+                    ' {{listing.Building_Street_Address}}
+                  p.t-small.t-normal
+                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{comparisonApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
+          .form-group
+            p.t-small.c-steel.text-center.padding-top
+              input.button.primary.no-margin type="submit" value="{{'T.NEXT' | translate}}"

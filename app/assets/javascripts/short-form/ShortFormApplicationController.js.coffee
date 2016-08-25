@@ -20,6 +20,8 @@ ShortFormApplicationController = (
   $scope.form = ShortFormApplicationService.form
   $scope.$state = $state
   $scope.application = ShortFormApplicationService.application
+  $scope.comparisonApplication = ShortFormApplicationService.comparisonApplication
+  $scope.chosenApplicationToKeep = null
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
@@ -375,6 +377,22 @@ ShortFormApplicationController = (
 
   $scope.translateLoggedInMessage = (page) ->
     ShortFormHelperService.translateLoggedInMessage(page)
+
+  $scope.applicantFullName = (applicant) ->
+    if (!applicant.firstName || !applicant.lastName)
+      return "No name entered"
+    else
+      "#{applicant.firstName} #{applicant.lastName}"
+
+  $scope.chooseDraft = ->
+    if ($scope.chosenApplicationToKeep == 'recent')
+      user = AccountService.loggedInUser
+      ShortFormApplicationService.keepCurrentDraftApplication(user).then( ->
+        $state.go('dahlia.my-applications', {skipConfirm: true})
+      )
+    else
+      $state.go('dahlia.my-applications', {skipConfirm: true})
+
 
   ## account service
   $scope.loggedIn = ->
