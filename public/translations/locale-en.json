@@ -82,7 +82,7 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "D1_STATUS_PROGRAMS": {
+    "D1_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
@@ -107,7 +107,7 @@
             "TITLE": "Work in San Francisco Preference"
         }
     },
-    "D6_STATUS_VOUCHERS": {
+    "D6_PREFERENCES_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
         "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
     },

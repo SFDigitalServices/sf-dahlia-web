@@ -64,7 +64,7 @@
     "Intro": true,
     "You": true,
     "Household": true,
-    "Status": true,
+    "Preferences": true,
     "Income": true
   },
   "validatedForms": {
@@ -75,10 +75,10 @@
       "alternate-contact-type": true
     },
     "Household": {},
-    "Status": {
-      "status-programs": true,
+    "Preferences": {
+      "preferences-programs": true,
       "live-work-preference": true,
-      "status-vouchers": true
+      "preferences-vouchers": true
     },
     "Income": {
       "income": true
