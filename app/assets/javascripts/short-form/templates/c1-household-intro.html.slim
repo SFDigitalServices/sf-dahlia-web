@@ -3,10 +3,10 @@
     h2.app-card_question
       | {{'C1_HOUSEHOLD_INTRO.TITLE' | translate}}
 
-  alert-box(short-form="true" household-eligibility-error-message="householdEligibilityErrorMessage")
+  alert-box(short-form="true" custom-message="householdEligibilityErrorMessage")
 
-  .alert-notice.alert ng-show="householdEligibilityErrorMessage"
-    p.c-steel translate="ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT"
+  .alert-notice.alert ng-show="householdEligibilityErrorMessage && !hideAlert"
+    p.c-steel translate="ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT" translate-values="visitResourcesLink()"
 
   .app-inner.inset.border-bottom
     .form-group

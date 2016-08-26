@@ -17,15 +17,14 @@
     label.form-label.caps
       | {{'G1_CONFIRMATION.NEXT_STEPS_TITLE' | translate}}
     p.form-note
-      | {{'G1_CONFIRMATION.NEXT_STEPS_BODY1' | translate}}&nbsp;
-      | {{ listing.Lottery_Date | date : 'longDate'}}.&nbsp;
-      | {{'G1_CONFIRMATION.NEXT_STEPS_BODY2' | translate}}
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY1"
+      '
+      ' {{ listing.Lottery_Date | date : 'longDate'}}.
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2"
 
   .app-inner.inset ng-if="!loggedIn()"
-    label.form-label.caps
-      | {{'G1_CONFIRMATION.CREATE_ACCOUNT_TITLE' | translate}}
-    p.form-note
-      | {{'G1_CONFIRMATION.CREATE_ACCOUNT_BODY' | translate}}
+    label.form-label.caps translate="G1_CONFIRMATION.CREATE_ACCOUNT_TITLE"
+    p.form-note translate="G1_CONFIRMATION.CREATE_ACCOUNT_BODY"
 
   .button-pager ng-if="!loggedIn()"
     .button-pager_row.primary

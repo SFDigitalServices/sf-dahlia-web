@@ -334,24 +334,32 @@ ShortFormApplicationController = (
 
   $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
     error = eligibility[errorResult].toLowerCase()
-    message = null
+    if errorResult == 'householdEligibilityResult'
+      message = $translate.instant("ERROR.NOT_ELIGIBLE_HOUSEHOLD") + ' '
+    else
+      message = $translate.instant("ERROR.NOT_ELIGIBLE_INCOME") + ' '
     if error == 'too big'
-      message = $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
+      message += $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
       ShortFormApplicationService.invalidateHouseholdForm()
     else if error == 'too small'
-      message = $translate.instant("ERROR.HOUSEHOLD_TOO_SMALL")
+      message += $translate.instant("ERROR.HOUSEHOLD_TOO_SMALL")
       ShortFormApplicationService.invalidateHouseholdForm()
     else if error == 'too low'
-      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+      message += $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
       ShortFormApplicationService.invalidateIncomeForm()
     else if error == 'too high'
-      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
+      message += $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
       ShortFormApplicationService.invalidateIncomeForm()
     else if errorResult == 'incomeEligibilityResult'
       # default state, this shouldn't happen but it seems to if income == 0
-      message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
+      message += $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
       ShortFormApplicationService.invalidateIncomeForm()
     $scope.householdEligibilityErrorMessage = message
+
+  $scope.visitResourcesLink = ->
+    linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
+    link = $state.href('dahlia.additional-resources')
+    {visitResourcesLink: "<a href='#{link}'>#{linkText}</a>"}
 
   $scope.invalidateIncomeForm = ->
     ShortFormApplicationService.invalidateIncomeForm()
