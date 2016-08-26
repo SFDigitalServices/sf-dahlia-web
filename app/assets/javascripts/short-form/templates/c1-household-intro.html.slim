@@ -6,14 +6,13 @@
   alert-box(short-form="true" household-eligibility-error-message="householdEligibilityErrorMessage")
 
   .alert-notice.alert ng-show="householdEligibilityErrorMessage"
-    p.c-steel
-      | {{'ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT' | translate}}
+    p.c-steel translate="ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT"
 
   .app-inner.inset.border-bottom
     .form-group
       button.button.expand.tall ng-click="validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.preferences-programs')"
         | {{'LABEL.LIVE_ALONE' | translate}}
-      button.button.expand.tall ui-sref="dahlia.short-form-application.household-overview"
+      button.button.expand.tall ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-overview"
        | {{'LABEL.OTHER_PEOPLE' | translate}}
 
   .button-pager
