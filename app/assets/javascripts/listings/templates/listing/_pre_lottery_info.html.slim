@@ -1,0 +1,19 @@
+.content-group
+  h4.h-caps-lined Lottery
+  p.content-group_date
+    span.content-group_day
+      | {{ listing.Lottery_Date | date : 'longDate' }}
+    span.content-group_time
+      | {{ listing.Lottery_Start_Time}}
+  p.content-group_address.c-steel
+    | {{ listing.Lottery_Venue }}
+    br/
+    | {{ listing.Lottery_Street_Address }}
+  p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+
+.content-group
+  h4.h-caps-lined Lottery Results
+  p.content-group_date
+    span.content-group_day
+      | {{ listing.Lottery_Results_Date | date : 'longDate' }}
+  p.c-steel.t-small Complete lottery results will be posted on this date by 5pm.

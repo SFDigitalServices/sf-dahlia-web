@@ -16,7 +16,10 @@ section.content-wrap
             use xlink:href="#i-clock"
         | Applications Closed
 
-  .content-group.expand.text-center ng-if="lotteryDateVenueAvailable(listing)"
+  span ng-if="lotteryDateVenueAvailable(listing) && !lotteryDatePassed(listing)"
+    ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
+
+  .content-group.expand.text-center ng-if="listing.Lottery_Results"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
 
   .content-group
