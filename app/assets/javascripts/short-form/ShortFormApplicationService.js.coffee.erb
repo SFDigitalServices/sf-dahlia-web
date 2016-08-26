@@ -395,6 +395,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.resetUserData(formattedApp)
 
   Service.loadComparisonApplication = (data) ->
+    return false if _.isEmpty(data.application)
     formattedApp = ShortFormDataService.reformatApplication(data.application)
     angular.copy(formattedApp, Service.comparisonApplication)
 

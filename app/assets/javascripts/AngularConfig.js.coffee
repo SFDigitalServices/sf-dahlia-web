@@ -258,6 +258,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           squash: true
         alreadySubmittedId:
           squash: true
+        doubleSubmit:
+          squash: true
       views:
         'container@':
           controller: 'AccountController'
@@ -273,7 +275,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
         if $stateParams.infoChanged
           AccountService.openInfoChangedModal()
         if $stateParams.alreadySubmittedId
-          AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId)
+          AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId, $stateParams.doubleSubmit)
       ]
     })
     .state('dahlia.my-favorites', {
@@ -706,7 +708,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
     $translateProvider
       .preferredLanguage('en')
       .fallbackLanguage('en')
-      .useSanitizeValueStrategy('escapeParameters')
+      .useSanitizeValueStrategy('sanitize')
       .useStaticFilesLoader(
         prefix: '/translations/locale-'
         suffix: '.json'

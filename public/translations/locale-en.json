@@ -121,6 +121,11 @@
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
         "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
     },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
+        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
+        "TITLE": "An application has already been submitted to this listing using this account."
+    },
     "E1_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
