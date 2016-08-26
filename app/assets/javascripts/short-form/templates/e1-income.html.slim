@@ -10,8 +10,7 @@
   alert-box(form-object="form.applicationForm" hide-alert="hideAlert" household-eligibility-error-message="householdEligibilityErrorMessage" invert="true")
 
   .alert-notice.alert ng-show="householdEligibilityErrorMessage"
-    p.c-steel
-      | {{'ERROR.HOUSEHOLD_INCOME_ERROR_CONTENT' | translate}}
+    p.c-steel translate="ERROR.HOUSEHOLD_INCOME_ERROR_CONTENT"
 
   .app-inner.inset
     .form-group ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"

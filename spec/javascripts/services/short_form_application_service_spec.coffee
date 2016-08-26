@@ -97,19 +97,6 @@ do ->
         return
       return
 
-    describe 'missingPrimaryContactInfo', ->
-      it 'informs if phone and mailing_address are missing', ->
-        expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual ['Phone', 'Email', 'Address']
-        return
-
-      it 'informs if phone and mailing_address are not missing', ->
-        ShortFormApplicationService.applicant.mailing_address = fakeAddress
-        ShortFormApplicationService.applicant.phone = '123-123123'
-        ShortFormApplicationService.applicant.email = 'email@email.com'
-        expect(ShortFormApplicationService.missingPrimaryContactInfo()).toEqual []
-        return
-      return
-
     describe 'getHouseholdMember', ->
       beforeEach ->
         fakeHouseholdMember =
@@ -164,14 +151,26 @@ do ->
           return
         return
 
-      describe 'old household member', ->
-        beforeEach ->
+      describe 'old household member update', ->
+        it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
-
-        it 'does not add the member', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
+          return
+
+        it 'updates the name for any preferences attached to the member', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          currentName = "#{householdMember.firstName} #{householdMember.lastName}"
+          # attach household member to the preference
+          ShortFormApplicationService.preferences['liveInSf_household_member'] = currentName
+          # now update
+          householdMember.firstName = 'Robert'
+          newName = "#{householdMember.firstName} #{householdMember.lastName}"
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          # the name attached to the preference should also update
+          expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
           return
         return
 
@@ -436,5 +435,35 @@ do ->
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
         return
       return
+
+    describe 'getMyComparisonApplication', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'should load application into comparisonApplication', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyComparisonApplication()
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
+        return
+      return
+
+    describe 'keepCurrentDraftApplication', ->
+      beforeEach ->
+        ShortFormApplicationService.application = fakeShortForm
+        ShortFormApplicationService.comparisonApplication = fakeShortForm
+        ShortFormApplicationService.comparisonApplication.id = '99'
+
+      it 'should inherit id from comparisonApplication', ->
+        ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
+        expect(ShortFormApplicationService.application.id).toEqual('99')
+        return
+
+      it 'should importUserData into current application', ->
+        ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
+        expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
+        return
 
     return

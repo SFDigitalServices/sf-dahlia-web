@@ -256,6 +256,10 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           value: false
         infoChanged:
           squash: true
+        alreadySubmittedId:
+          squash: true
+        doubleSubmit:
+          squash: true
       views:
         'container@':
           controller: 'AccountController'
@@ -270,6 +274,8 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         if $stateParams.infoChanged
           AccountService.openInfoChangedModal()
+        if $stateParams.alreadySubmittedId
+          AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId, $stateParams.doubleSubmit)
       ]
     })
     .state('dahlia.my-favorites', {
@@ -584,12 +590,12 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
               )
         ]
     })
-    # Short form: "Status" section
-    .state('dahlia.short-form-application.status-programs', {
-      url: '/status-programs'
+    # Short form: "Preferences" section
+    .state('dahlia.short-form-application.preferences-programs', {
+      url: '/preferences-programs'
       views:
         'container':
-          templateUrl: 'short-form/templates/d1-status-programs.html'
+          templateUrl: 'short-form/templates/d1-preferences-programs.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
@@ -615,11 +621,11 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           ShortFormApplicationService.completeSection('Household')
         ]
     })
-    .state('dahlia.short-form-application.status-vouchers', {
-      url: '/status-vouchers'
+    .state('dahlia.short-form-application.preferences-vouchers', {
+      url: '/preferences-vouchers'
       views:
         'container':
-          templateUrl: 'short-form/templates/d6-status-vouchers.html'
+          templateUrl: 'short-form/templates/d6-preferences-vouchers.html'
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income', {
@@ -629,7 +635,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           templateUrl: 'short-form/templates/e1-income.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Status')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     # Short form: "Review" section
@@ -681,11 +687,28 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
                 $state.go('dahlia.my-applications')
         ]
     })
+    .state('dahlia.short-form-application.choose-draft', {
+      url: '/choose-draft'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-draft.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.comparisonApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
 
     $translateProvider
       .preferredLanguage('en')
       .fallbackLanguage('en')
-      .useSanitizeValueStrategy('escapeParameters')
+      .useSanitizeValueStrategy('sanitize')
       .useStaticFilesLoader(
         prefix: '/translations/locale-'
         suffix: '.json'

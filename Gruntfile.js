@@ -54,7 +54,10 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.html',
         'app/assets/javascripts/**/*.html.slim'
       ],
-      customRegex: [ '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}' ],
+      customRegex: [
+         '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
+         '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"'
+       ],
       namespace: true,
       lang:     ['locale-en'],
       dest:     'public/translations'

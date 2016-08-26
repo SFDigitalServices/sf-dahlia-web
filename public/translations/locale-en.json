@@ -20,6 +20,10 @@
         "TITLE": "Account Settings",
         "VERIFY_EMAIL": "Please check your email inbox to verify this change."
     },
+    "ALREADY_SUBMITTED": {
+        "MESSAGE": "You have already submitted an application to this listing.",
+        "TITLE": "Good news!"
+    },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
         "TITLE": "First, what's your name?"
@@ -28,14 +32,11 @@
         "TITLE": "We have located the following address. Please confirm it's correct."
     },
     "B2_CONTACT": {
-        "ALTERNATE_PHONE_REQUIRED": "We'll require an alternate contact phone number on a later screen",
         "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
-        "REQUIRE_ALTERNATE_ADDRESS": "We'll require an alternate mailing address on a later screen",
-        "REQUIRE_ALTERNATE_EMAIL": "We'll require an alternate contact email adddress on a later screen",
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
@@ -66,6 +67,12 @@
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
+    "CHOOSE_DRAFT": {
+        "ALERT_MESSAGE": "Please choose which version of the application you want to use.",
+        "ALERT_TITLE": "Any primary contact information on your application will be overwritten by your current account settings.",
+        "APPLICATION_OPTIONS": "Application Options",
+        "TITLE": "There are two draft applications in progress for this listing."
+    },
     "CONFIRM_ACCOUNT": {
         "ACCOUNT_ALREADY_CONFIRMED": "This account has already been confirmed",
         "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "Please click on the link in the email we sent you in order to complete account creation.",
@@ -85,7 +92,7 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "D1_STATUS_PROGRAMS": {
+    "D1_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
@@ -110,9 +117,14 @@
             "TITLE": "Work in San Francisco Preference"
         }
     },
-    "D6_STATUS_VOUCHERS": {
+    "D6_PREFERENCES_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
         "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
+    },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
+        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
+        "TITLE": "An application has already been submitted to this listing using this account."
     },
     "E1_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
@@ -121,9 +133,8 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION": "The address you provided doesn't seem to exist. Please double check the information you have entered.",
+        "ADDRESS_VALIDATION": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
-        "ALT_CONTACT_TYPE": "Since you are not able to provide some of the required contact information, we'll need you to provide alternate contact information.",
         "CITY": "Please enter a city",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
         "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
@@ -137,11 +148,11 @@
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
-        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
+        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
+        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
@@ -180,15 +191,16 @@
         "TITLE": "Forgot Password"
     },
     "G1_CONFIRMATION": {
+        "BROWSE_MORE_LISTINGS": "Browse more listings",
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
+        "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
         "NEXT_STEPS_BODY2": "Housing lottery results will be posted on the listing. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.\n\nShould your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents. ",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
-        "TITLE": "Thanks. We have received your application for",
-        "VIEW_MY_APPLICATIONS": "View My Applications"
+        "TITLE": "Thanks. We have received your application for"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
@@ -258,6 +270,7 @@
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "OLD_PASSWORD": "Old Password",
+        "ORIGINAL_APPLICATION": "Original Application",
         "OTHER": "Other",
         "OTHER_PEOPLE": "Other people will live with me",
         "PASSWORD": "Password",
@@ -271,6 +284,7 @@
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF_OF_ADDRESS": "Proof of address",
+        "RECENT_APPLICATION": "Recent Application",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
         "SEE_LISTING": "See Listing",
@@ -290,7 +304,6 @@
         "WORK_IN_SF": "Do you work in San Francisco?",
         "YOUR_DOB": "Your Date of Birth",
         "YOUR_NAME": "Your Name",
-        "YOUR_OR_ALTERNATE": "Your {{ contactType }} or Alternate {{ contactType }}",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
         "YOU_HAVE_CLAIMED": "You have claimed",
         "ZIP": "Zip",
@@ -374,7 +387,6 @@
         "OPTIONAL": "Optional",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
-        "REQUIRED": "Required",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SEARCH": "Search",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",

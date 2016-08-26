@@ -2,6 +2,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service = {}
   Service.listing = ListingService.listing
   Service.form = {}
+  Service.comparisonApplication = {}
   Service.application = {}
   Service.applicationDefaults =
     id: null
@@ -36,7 +37,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       Intro: false
       You: false
       Household: false
-      Status: false
+      Preferences: false
       Income: false
     # as you proceed through each page, validatedForms will store:
     #  [pagename]: T/F
@@ -44,7 +45,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     validatedForms:
       You: {}
       Household: {}
-      Status: {}
+      Preferences: {}
       Income: {}
       Review: {}
 
@@ -78,16 +79,16 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         completed.You &&
         # make sure all validatedForms in previous section == true
         _.every(validated['You'], (i) -> i)
-      when 'Status'
+      when 'Preferences'
         Service.userCanAccessSection('Household') &&
         completed.Household &&
         # make sure all validatedForms in previous section == true
         _.every(validated['Household'], (i) -> i)
       when 'Income'
-        Service.userCanAccessSection('Status') &&
-        completed.Status &&
+        Service.userCanAccessSection('Preferences') &&
+        completed.Preferences &&
         # make sure all validatedForms in previous section == true
-        _.every(validated['Status'], (i) -> i)
+        _.every(validated['Preferences'], (i) -> i)
       when 'Review'
         Service.userCanAccessSection('Income') &&
         completed.Income &&
@@ -105,16 +106,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
         Service.applicant.mailing_address.city &&
         Service.applicant.mailing_address.state &&
         Service.applicant.mailing_address.zip)
-
-  Service.missingPrimaryContactInfo = () ->
-    missingInfo = []
-    if !Service.applicant.phone
-      missingInfo.push("Phone")
-    if !Service.applicant.email
-      missingInfo.push("Email")
-    if !Service.validMailingAddress()
-      missingInfo.push("Address")
-    return missingInfo
 
   Service.clearPhoneData = (type) ->
     if type == 'alternate'
@@ -145,6 +136,13 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
     else
+      # search through all xxx_household_member items in preferences matching the full name
+      full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
+      _.each Service.preferences, (v,k) ->
+        if k.indexOf('_household_member') > 0 and v == full_name
+          # update the name of the preference to the new name
+          new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
+          Service.preferences[k] = new_full_name
       # update existing householdMember
       angular.copy(householdMember, Service.householdMember)
     Service.householdMember = {}
@@ -291,7 +289,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.invalidateHouseholdForm = ->
     Service.application.completedSections['Household'] = false
-    Service.application.completedSections['Status'] = false
+    Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
 
   Service.preferenceFileIsLoading = (fileType) ->
@@ -323,7 +321,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.submitApplication = (options={}) ->
     if options.finish
-      Service.application.status ='submitted'
+      Service.application.status = 'submitted'
 
     Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
     params =
@@ -375,12 +373,31 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       return
     )
 
+  Service.getMyComparisonApplication = ->
+    $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
+      Service.loadComparisonApplication(data)
+    ).error((data, status) ->
+      return
+    )
+
+  Service.keepCurrentDraftApplication = (loggedInUser) ->
+    Service.importUserData(loggedInUser)
+    Service.application.id = Service.comparisonApplication.id
+    # now that we've overridden current application ID with our old one
+    # submitApplication() will update our existing draft on salesforce
+    Service.submitApplication()
+
   Service.loadApplication = (data) ->
     formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
     Service.resetUserData(formattedApp)
+
+  Service.loadComparisonApplication = (data) ->
+    return false if _.isEmpty(data.application)
+    formattedApp = ShortFormDataService.reformatApplication(data.application)
+    angular.copy(formattedApp, Service.comparisonApplication)
 
   Service.checkSurveyComplete = ->
     app = Service.applicant

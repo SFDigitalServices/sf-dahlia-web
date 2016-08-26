@@ -19,6 +19,7 @@ do ->
     fakeShortFormApplicationService =
       submitApplication: () -> null
       importUserData: () -> false
+      getMyComparisonApplication: -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -32,10 +33,19 @@ do ->
         createAccount: {}
       state.go = jasmine.createSpy()
       deferred = $q.defer()
+      fakeHttp =
+        success: (callback) ->
+          callback({})
+          { error: -> return }
+        then: (callback) ->
+          callback({})
+          { catch: -> return }
+        error: (callback) -> callback({})
       spyOn(fakeAccountService, 'createAccount').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'updatePassword').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'getMyComparisonApplication').and.callFake -> fakeHttp
 
       $controller 'AccountController',
         $scope: scope
@@ -107,12 +117,14 @@ do ->
           deferred.resolve(true)
 
         it 'submits draft application', ->
+          fakeShortFormApplicationService.application = { status: 'draft' }
           scope.signIn()
           scope.$apply()
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
           return
 
         it 'routes user to my app', ->
+          fakeShortFormApplicationService.application = { status: 'draft' }
           scope.signIn()
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true, infoChanged: false})

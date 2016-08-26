@@ -171,6 +171,16 @@ do ->
           return
         return
 
+    describe 'scope.requiredContactInformationMissing', ->
+      describe 'phone, email, address not provided', ->
+        it 'returns true', ->
+          scope.applicant.noPhone = true
+          scope.applicant.noAddress = true
+          scope.applicant.noEmail = true
+          expect(scope.requiredContactInformationMissing()).toEqual true
+          return
+        return
+
     describe '$scope.getHouseholdMember', ->
       it 'assigns $scope.householdMember with ShortFormApplicationService value', ->
         scope.householdMember = {}
@@ -287,7 +297,7 @@ do ->
 
         it 'navigates to the given callback url', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.status-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
           return
         return
 

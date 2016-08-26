@@ -8,7 +8,7 @@
       .form-tel
         label.caps for="alternate_phone"
           | {{'LABEL.CONTACT_PHONE_NUMBER' | translate}}
-        input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-required="isMissingPrimaryContactInfo('Phone')" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+        input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-show="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
 
@@ -21,7 +21,7 @@
       .form-email
         label.sr-only for="alternate_email"
           | {{'LABEL.EMAIL_ADDRESS' | translate}}
-        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-required="isMissingPrimaryContactInfo('Email')" ng-class="{ error: inputInvalid('email') }"
+        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-class="{ error: inputInvalid('email') }"
       small.error ng-show="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
 
@@ -31,6 +31,6 @@
         | {{'LABEL.CONTACT_MAILING_ADDRESS' | translate}}
       p.form-note.margin-bottom
         | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.CHOOSE_AN_ADDRESS' | translate}}
-      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = isMissingAddress"
+      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = notRequired"
 
   short-form-save-and-submit
