@@ -5,7 +5,7 @@ class Api::V1::AddressValidationController < ApiController
     @validated_address = service.validate
     status = 200 # default to success
     status = 422 if service.invalid?
-    render json: { address: @validated_address }, status: status
+    render json: { address: @validated_address, error: service.error }, status: status
   end
 
   private
