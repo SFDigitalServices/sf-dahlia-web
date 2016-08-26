@@ -190,11 +190,14 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       windowClass: 'modal-large'
     })
 
-  Service.openAlreadySubmittedModal = (application_id) ->
+  Service.openAlreadySubmittedModal = (application_id, doubleSubmit = false) ->
     currentApplication = _.find(Service.myApplications, {id: application_id})
     angular.copy(currentApplication, Service.currentApplication)
+    templateUrl = 'account/templates/partials/_already_submitted.html'
+    if doubleSubmit
+      templateUrl = 'account/templates/partials/_double_submitted.html'
     modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_already_submitted.html',
+      templateUrl: templateUrl,
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
     })

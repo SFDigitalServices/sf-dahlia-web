@@ -121,6 +121,11 @@
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
         "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
     },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
+        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
+        "TITLE": "An application has already been submitted to this listing using this account."
+    },
     "E1_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
@@ -143,11 +148,11 @@
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
-        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
+        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. \n\nIf you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
+        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to visit our additional resources page, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
