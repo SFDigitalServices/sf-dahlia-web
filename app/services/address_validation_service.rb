@@ -18,4 +18,11 @@ class AddressValidationService
     !@validation.verifications.delivery.success ||
       @validation.street1.include?('PO BOX')
   end
+
+  def error
+    return nil unless @validation.present? &&
+                      @validation.verifications.delivery.errors.present?
+    return 'PO BOX' if @validation.street1.include?('PO BOX')
+    @validation.verifications.delivery.errors.first.message
+  end
 end

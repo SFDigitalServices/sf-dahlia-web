@@ -30,6 +30,7 @@ ShortFormApplicationController = (
   $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
+  $scope.householdEligibilityErrorMessage = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -218,11 +219,6 @@ ShortFormApplicationController = (
         $scope.alternateContact.agency = null
       $state.go('dahlia.short-form-application.alternate-contact-name')
 
-  $scope.checkIfAlternateContactNeedsReset = ->
-    # blank out alternateContact.alternateContactType if it was previously set to 'None' but that is no longer valid
-    if $scope.alternateContact.alternateContactType == 'None'
-      $scope.alternateContact.alternateContactType = null
-
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
 
@@ -307,8 +303,6 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelHouseholdMember()
     $state.go('dahlia.short-form-application.household-members')
 
-  $scope.householdEligibilityErrorMessage = null
-
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearHouseholdErrorMessage()
     form = $scope.form.applicationForm
@@ -324,7 +318,7 @@ ShortFormApplicationController = (
   $scope._respondToHouseholdEligibilityResults = (response, match) ->
     eligibility = response.data
     if eligibility[match]
-      $scope.householdEligibilityErrorMessage = null
+      $scope.clearHouseholdErrorMessage()
       if match == 'incomeMatch'
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         $state.go("dahlia.short-form-application.#{page}")

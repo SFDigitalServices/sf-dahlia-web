@@ -155,24 +155,35 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     # check if this user has already applied to this listing
     ShortFormApplicationService.getMyComparisonApplication().success((data) ->
       if !_.isEmpty(data.application)
-        # application for this listing was found
-        if (data.application.status.match(/submitted/i))
-          $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: data.application.id})
-        else
-          $state.go('dahlia.short-form-application.choose-draft')
+        # if user already had an application for this listing
+        return $scope._signInWithPreviousApplication(data.application)
+      changed = null
+      opts = {}
+      if ShortFormApplicationService.application.status.match(/draft/i)
+        # make sure short form data inherits logged in user data
+        changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       else
-        changed = null
-        if ShortFormApplicationService.application.status == 'draft'
-          # make sure short form data inherits logged in user data
-          changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-        ShortFormApplicationService.submitApplication().then( ->
-          $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
-        )
+        # we're signing in to claim a submitted application
+        opts = {attachToAccount: true}
+      ShortFormApplicationService.submitApplication(opts).then( ->
+        $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
+      )
     ).error( ->
       # there was an error retrieving your account info, please try again
       # TODO: add some helpful message to the user
       $state.go('dahlia.short-form-application.name', {id: ShortFormApplicationService.listing.Id})
     )
+
+  $scope._signInWithPreviousApplication = (application) ->
+    if (application.status.match(/submitted/i))
+      # they've already submitted -- send them to "my applications", either with:
+      # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
+      # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
+      doubleSubmit = !! ShortFormApplicationService.application.status.match(/submitted/i)
+      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: application.id, doubleSubmit: doubleSubmit})
+    else
+      # send them to choose which draft they want to keep
+      $state.go('dahlia.short-form-application.choose-draft')
 
   $scope._signInRedirect = ->
     return false unless AccountService.loggedIn()
@@ -202,6 +213,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.displayChangeNotice = (attributesChanged) ->
     AccountService.clearAccountMessages()
     $scope[attributesChanged] = true
+
+  $scope.dahliaContactEmail = ->
+    { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
