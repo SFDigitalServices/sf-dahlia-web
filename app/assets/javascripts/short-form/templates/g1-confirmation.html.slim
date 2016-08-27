@@ -10,8 +10,10 @@
     .form-group.text-center
       label.form-label.caps
         | {{'G1_CONFIRMATION.LOTTERY_NUMBER' | translate}}
-      p.beta.t-serif.no-margin
+      p.beta.t-serif.margin-bottom--half
         | &#35;{{ application.lotteryNumber }}
+      p.form-note
+        | {{'G1_CONFIRMATION.PLEASE_WRITE_DOWN_YOUR_NUMBER' | translate}}
 
   .app-inner.inset.border-bottom
     label.form-label.caps

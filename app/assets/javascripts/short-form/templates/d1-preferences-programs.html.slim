@@ -4,6 +4,7 @@
       | {{'D1_PREFERENCES_PROGRAMS.TITLE' | translate}}
     p.form-note.margin-bottom
       | {{'T.OPTIONAL' | translate}}
+    p.form-note.margin-bottom translate="D1_PREFERENCES_PROGRAMS.INSTRUCTIONS"
 
   .app-inner
     .form-group
@@ -16,10 +17,9 @@
 
     .form-group
       p.form-note
-        ' {{'D1_PREFERENCES_PROGRAMS.PLEASE_CALL_P1' | translate}}
-        a title="{{'T.CALL' | translate | lowercase}} 415-701-5613" href="tel:415-701-5613"
-          | {{'T.CALL' | translate | lowercase}} 415-701-5613
-        '
-        ' {{'D1_PREFERENCES_PROGRAMS.PLEASE_CALL_P2' | translate}}
+        ' {{'D1_PREFERENCES_PROGRAMS.HAVE_NOT_HEARD_OF_PREFERENCES' | translate}}
+        a title="{{'D1_PREFERENCES_PROGRAMS.READ_MORE' | translate }}" href="http://sfmohcd.org/housing-preference-programs" target="_blank"
+          | {{'D1_PREFERENCES_PROGRAMS.READ_MORE' | translate }}
+        ' .
 
   short-form-save-and-submit
