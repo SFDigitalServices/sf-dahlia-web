@@ -32,7 +32,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       liveInSf_file_error: null
       workInSf_file_error: null
       neighborhoodResidence_file_error: null
-    householdIncome: { incomeTotal: 0, incomeTimeframe: 'per_year' }
+    householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
       You: false
@@ -201,7 +201,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     , 0)
 
   Service._calculateHouseholdIncome = () ->
-    income = Service.application.householdIncome
+    income = Service.application.householdIncome || 0
     if income.incomeTimeframe == 'per_year'
       income.incomeTotal
     else if income.incomeTimeframe == 'per_month'
