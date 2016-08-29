@@ -321,7 +321,7 @@ do ->
         it 'assigns an error message function', ->
           scope.householdEligibilityErrorMessage  = null
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(scope.householdEligibilityErrorMessage).toEqual('newmessage')
+          expect(scope.householdEligibilityErrorMessage).not.toEqual(null)
           return
         return
       return

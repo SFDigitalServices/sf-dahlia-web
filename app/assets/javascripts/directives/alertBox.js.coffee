@@ -5,12 +5,11 @@ angular.module('dahlia.directives')
     formObject: '=?'
     hideAlert: '=?'
     missingRequiredContactInfo: '=?'
-    householdEligibilityErrorMessage: '=?'
     customMessage: '=?'
+    customSubMessage: '=?'
     invert: '=?'
     primary: '=?'
     shortForm: '=?'
-    customSubMessage: '=?'
 
   templateUrl: 'directives/alert-box.html'
 
@@ -22,8 +21,6 @@ angular.module('dahlia.directives')
       scope.invert ?= true
 
     scope.showAlert = ->
-      if scope.householdEligibilityErrorMessage
-        return true
       if scope.customMessage
         return scope.hideAlert == false
       if $state.params.error
@@ -38,10 +35,13 @@ angular.module('dahlia.directives')
     scope.alertText = ->
       if scope.customMessage
         return scope.customMessage
-      else if scope.householdEligibilityErrorMessage
-        $translate.instant("ERROR.NOT_ELIGIBLE") + " " + scope.householdEligibilityErrorMessage
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
+
+    scope.close = ->
+      scope.hideAlert = true
+      if scope.shortForm
+        scope.$parent.hideAlert = true
 
     scope.contactTypeData = (contactType) ->
       {contactType: contactType}
