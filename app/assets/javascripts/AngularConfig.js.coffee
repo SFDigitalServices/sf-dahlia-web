@@ -722,10 +722,28 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
 ]
 
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  '$rootScope', '$state', '$window', '$translate', 'Idle', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, Idle, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+
     # check if user is logged in on page load
-    AccountService.validateUser()
+    AccountService.validateUser().then( ->
+      Idle.watch() if AccountService.loggedIn()
+    )
+
+    $rootScope.$on 'IdleStart', ->
+      if AccountService.loggedIn()
+        $window.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+      else if $state.is('dahlia.short-form-application.confirmation')
+        $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+      else
+        $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+
+    $rootScope.$on 'IdleTimeout', ->
+      if AccountService.loggedIn()
+        AccountService.signOut()
+        $state.go('dahlia.welcome')
+      else if ShortFormApplicationService.isShortFormPage($state.current)
+        $state.go('dahlia.listing', {skipConfirm: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
@@ -750,6 +768,13 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
           false
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+
+      #### Idle Trigger/Untrigger
+      if ShortFormApplicationService.isShortFormPage($state.current) || AccountService.loggedIn()
+        Idle.watch()
+      else
+        Idle.unwatch()
+
       # check if we're on short form and trying to access a later section than the first section
       toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
       if toSection
