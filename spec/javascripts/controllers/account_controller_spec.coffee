@@ -19,7 +19,7 @@ do ->
     fakeShortFormApplicationService =
       submitApplication: () -> null
       importUserData: () -> false
-      getMyComparisonApplication: -> null
+      getMyAccountApplication: -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -45,7 +45,7 @@ do ->
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'updatePassword').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'getMyComparisonApplication').and.callFake -> fakeHttp
+      spyOn(fakeShortFormApplicationService, 'getMyAccountApplication').and.callFake -> fakeHttp
 
       $controller 'AccountController',
         $scope: scope
