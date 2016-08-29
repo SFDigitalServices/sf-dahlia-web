@@ -104,7 +104,11 @@
     },
     "D2_LIVE_WORK_PREFERENCE": {
         "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
-        "LIVE_SF_PREFERENCE": "Live in San Francisco Preference",
+        "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
+        "LIVE_SF_PREFERENCE": {
+            "DESCRIPTION": "At least one household member must live in San Francisco.",
+            "TITLE": "Live in San Francisco Preference"
+        },
         "NEIGHBORHOOD_RESIDENCE": {
             "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
             "TITLE": "Neighborhood Resident Housing Preference"
@@ -286,6 +290,19 @@
         "PLEASE_SELECT_ONE": "Please select one.",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
+        "PROOF": {
+            "CABLE_BILL": "Cable and internet bill",
+            "ELECTRIC_BILL": "Electric bill",
+            "GARBAGE_BILL": "Garbage bill",
+            "GAS_BILL": "Gas bill",
+            "LETTER_FROM_EMPLOYER": "Letter from employer",
+            "PAYSTUB_EMPLOYER": "Paystub with employer address",
+            "PAYSTUB_HOME": "Paystub (listing home address)",
+            "PUBLIC_BENEFITS": "Public benefits record",
+            "SCHOOL_RECORD": "School record",
+            "TELEPHONE_BILL": "Telephone bill (land line only)",
+            "WATER_BILL": "Water bill"
+        },
         "PROOF_OF_ADDRESS": "Proof of address",
         "RECENT_APPLICATION": "Recent Application",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
