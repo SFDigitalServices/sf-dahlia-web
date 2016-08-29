@@ -18,7 +18,7 @@
     $rootScope.$on 'IdleTimeout', ->
       if AccountService.loggedIn()
         AccountService.signOut()
-        $state.go('dahlia.welcome')
+        $state.go('dahlia.sign-in')
       else if ShortFormApplicationService.isShortFormPage($state.current)
         $state.go('dahlia.listing', {skipConfirm: true, id: ShortFormApplicationService.listing.Id})
 
