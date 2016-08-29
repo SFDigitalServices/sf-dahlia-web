@@ -153,10 +153,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope._signInSubmitApplication = ->
     # check if this user has already applied to this listing
-    ShortFormApplicationService.getMyComparisonApplication().success((data) ->
-      if !_.isEmpty(data.application)
+    ShortFormApplicationService.getMyAccountApplication().success((data) ->
+      if !_.isEmpty(data.application) && $scope._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
-        return $scope._signInWithPreviousApplication(data.application)
+        return $scope._signInAndSkipSubmit(data.application)
       changed = null
       opts = {}
       if ShortFormApplicationService.application.status.match(/draft/i)
@@ -174,16 +174,22 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
       $state.go('dahlia.short-form-application.name', {id: ShortFormApplicationService.listing.Id})
     )
 
-  $scope._signInWithPreviousApplication = (application) ->
-    if (application.status.match(/submitted/i))
+  $scope._signInAndSkipSubmit = (previousApplication) ->
+    if (previousApplication.status.match(/submitted/i))
       # they've already submitted -- send them to "my applications", either with:
       # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
       # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
       doubleSubmit = !! ShortFormApplicationService.application.status.match(/submitted/i)
-      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: application.id, doubleSubmit: doubleSubmit})
+      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
     else
       # send them to choose which draft they want to keep
       $state.go('dahlia.short-form-application.choose-draft')
+
+  $scope._previousIsSubmittedOrBothDrafts = (previousApplication) ->
+    previousApplication.status.match(/submitted/i) || (
+      previousApplication.status.match(/draft/i) &&
+      ShortFormApplicationService.application.status.match(/draft/i)
+    )
 
   $scope._signInRedirect = ->
     return false unless AccountService.loggedIn()

@@ -2,7 +2,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service = {}
   Service.listing = ListingService.listing
   Service.form = {}
-  Service.comparisonApplication = {}
+  Service.accountApplication = {}
   Service.application = {}
   Service.applicationDefaults =
     id: null
@@ -373,16 +373,16 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       return
     )
 
-  Service.getMyComparisonApplication = ->
+  Service.getMyAccountApplication = ->
     $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
-      Service.loadComparisonApplication(data)
+      Service.loadAccountApplication(data)
     ).error((data, status) ->
       return
     )
 
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
-    Service.application.id = Service.comparisonApplication.id
+    Service.application.id = Service.accountApplication.id
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()
@@ -394,10 +394,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
     Service.resetUserData(formattedApp)
 
-  Service.loadComparisonApplication = (data) ->
+  Service.loadAccountApplication = (data) ->
     return false if _.isEmpty(data.application)
     formattedApp = ShortFormDataService.reformatApplication(data.application)
-    angular.copy(formattedApp, Service.comparisonApplication)
+    angular.copy(formattedApp, Service.accountApplication)
 
   Service.checkSurveyComplete = ->
     app = Service.applicant

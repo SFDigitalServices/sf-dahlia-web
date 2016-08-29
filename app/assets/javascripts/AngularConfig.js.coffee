@@ -700,7 +700,7 @@ angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUp
       onEnter: [
         '$state', 'ShortFormApplicationService',
         ($state, ShortFormApplicationService) ->
-          if _.isEmpty(ShortFormApplicationService.comparisonApplication)
+          if _.isEmpty(ShortFormApplicationService.accountApplication)
             $state.go('dahlia.my-applications')
         ]
     })
