@@ -41,13 +41,13 @@
                   p.form-label
                     | {{'LABEL.ORIGINAL_APPLICATION' | translate}}:
                   p.margin-bottom-none.t-base
-                    | {{applicantFullName(comparisonApplication.applicant)}}
+                    | {{applicantFullName(accountApplication.applicant)}}
                     br
                     ' {{listing.Building_Name}},
                     ' {{listing.Building_Street_Address}}
                   p.t-small.t-normal
                     ' {{'LABEL.EDITED' | translate}}:
-                    ' {{comparisonApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
+                    ' {{accountApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
           .form-group
             p.t-small.c-steel.text-center.padding-top
               input.button.primary.no-margin type="submit" value="{{'T.NEXT' | translate}}"
