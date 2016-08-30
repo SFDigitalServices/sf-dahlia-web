@@ -76,17 +76,6 @@ ShortFormApplicationController = (
     'Other/Multiracial',
     'Decline to state'
   ]
-  $scope.preference_proof_options = [
-    'Telephone bill (land line only)',
-    'Cable and internet bill',
-    'Gas bill',
-    'Electric bill',
-    'Garbage bill',
-    'Water bill',
-    'Paystub (listing home address)',
-    'Public benefits record',
-    'School record'
-  ]
   $scope.sexual_orientation_options = [
     'Straight/Heterosexual',
     'Gay',
@@ -381,7 +370,7 @@ ShortFormApplicationController = (
     ShortFormHelperService.translateLoggedInMessage(page)
 
   $scope.applicantFullName = (applicant) ->
-    if (!applicant.firstName || !applicant.lastName)
+    if (!applicant || !applicant.firstName || !applicant.lastName)
       return "No name entered"
     else
       "#{applicant.firstName} #{applicant.lastName}"
@@ -401,6 +390,12 @@ ShortFormApplicationController = (
     AccountService.loggedIn()
 
   ## translation helpers
+  $scope.preferenceProofOptions = (pref_type) ->
+    if pref_type == 'workInSf'
+      ShortFormHelperService.preference_proof_options_work
+    else
+      ShortFormHelperService.preference_proof_options_default
+
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)
 
