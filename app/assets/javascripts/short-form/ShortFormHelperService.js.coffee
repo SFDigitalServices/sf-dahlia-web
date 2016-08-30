@@ -8,6 +8,22 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Other', $translate.instant('LABEL.OTHER')]
   ]
 
+  Service.preference_proof_options_default = [
+    ['Telephone bill (land line only)', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
+    ['Cable and internet bill', $translate.instant('LABEL.PROOF.CABLE_BILL')],
+    ['Gas bill', $translate.instant('LABEL.PROOF.GAS_BILL')],
+    ['Electric bill', $translate.instant('LABEL.PROOF.ELECTRIC_BILL')],
+    ['Garbage bill', $translate.instant('LABEL.PROOF.GARBAGE_BILL')],
+    ['Water bill', $translate.instant('LABEL.PROOF.WATER_BILL')],
+    ['Paystub (listing home address)', $translate.instant('LABEL.PROOF.PAYSTUB_HOME')],
+    ['Public benefits record', $translate.instant('LABEL.PROOF.PUBLIC_BENEFITS')],
+    ['School record', $translate.instant('LABEL.PROOF.SCHOOL_RECORD')],
+  ]
+  Service.preference_proof_options_work = [
+    ['Paystub with employer address', $translate.instant('LABEL.PROOF.PAYSTUB_EMPLOYER')],
+    ['Letter from employer', $translate.instant('LABEL.PROOF.LETTER_FROM_EMPLOYER')],
+  ]
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.alternateContactType == 'Other'

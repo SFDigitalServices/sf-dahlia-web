@@ -26,8 +26,10 @@ div
         select id="{{pref_type_proof_option}}" ng-model="application.preferences[pref_type_proof_option]" data-width="auto" name="{{pref_type_proof_option}}" ng-required="application.preferences[pref_type]"
           option value=""
             | {{'LABEL.SELECT_ONE' | translate}}
-          option ng-repeat="option in preference_proof_options" value="{{option}}"
-            | {{ option }}
+          option ng-repeat="option in preferenceProofOptions(pref_type)" value="{{option[0]}}"
+            | {{ option[1] }}
+        p.form-note ng-if="application.preferences[pref_type_proof_option] == 'Letter from employer'"
+          | {{'D2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
 
       .form-group.text-center ng-if="show_preference_uploader(application)"
         div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type, application.preferences[pref_type_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
