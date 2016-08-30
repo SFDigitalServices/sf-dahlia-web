@@ -7,9 +7,12 @@ p
 p
   | What to expect next:
   br
-  ' The lottery will be held on #{@lottery_date}. Please return to
-  => link_to 'the listing', @listing_url
-  | to check lottery results after this date. Applicants will be contacted in order of lottery rank to fill out a full long-form application.
+  ' The lottery will be held on #{@lottery_date}. Housing lottery results will be posted
+  = link_to 'on the listing', @listing_url
+  ' .
+  | Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
+p
+  | Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.
 p
   | See below for contact information for the Leasing Agent for this listing.
 
