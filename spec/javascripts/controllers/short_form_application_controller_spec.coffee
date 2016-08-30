@@ -80,7 +80,6 @@ do ->
     beforeEach inject(($rootScope, $controller, $q, _$document_) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
-      fakeIdle = jasmine.createSpyObj('Idle', ['watch'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
@@ -238,10 +237,6 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.verify-address')
           return
         return
-
-    describe 'Idle.watch()', ->
-      it 'expects Idle.watch() to be called on initialization', ->
-        expect(fakeIdle.watch).toHaveBeenCalled()
 
     describe '$scope.getLandingPage', ->
       it 'calls getLandingPage in ShortFormNavigationService', ->

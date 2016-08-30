@@ -429,22 +429,6 @@ ShortFormApplicationController = (
 
   $scope.print = -> $window.print()
 
-  ## idle timeout functions (if user is not on the confirmation page)
-  if ShortFormApplicationService.isShortFormPage($state.current)
-    Idle.watch()
-
-  $scope.$on 'IdleStart', ->
-    if $state.is('dahlia.short-form-application.confirmation')
-      if AccountService.loggedIn()
-        Idle.unwatch()
-      else
-        $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
-    else
-      $window.alert($translate.instant('T.SESSION_INACTIVITY'))
-
-  $scope.$on 'IdleTimeout', ->
-    $state.go('dahlia.listing', {skipConfirm: true, id: $scope.listing.Id})
-
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # capture errors when trying to verify address and send them back to the appropriate page
     params = angular.copy(toParams)
