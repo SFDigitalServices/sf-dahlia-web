@@ -68,8 +68,8 @@
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
     "CHOOSE_DRAFT": {
-        "ALERT_MESSAGE": "Please choose which version of the application you want to use.",
-        "ALERT_TITLE": "Any primary contact information on your application will be overwritten by your current account settings.",
+        "ALERT_MESSAGE": "Any primary contact information on your application will be overwritten by your current account settings.",
+        "ALERT_TITLE": "Please choose which version of the application you want to use.",
         "APPLICATION_OPTIONS": "Application Options",
         "TITLE": "There are two draft applications in progress for this listing."
     },
