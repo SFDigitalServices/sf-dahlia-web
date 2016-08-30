@@ -6,7 +6,7 @@ header.modal-inner.padding-top--2x
     | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
 span ng-if="applicantSelectedForPreference()"
-  .alert-box.primary.no-margin.no-close
+  .alert-box.primary.no-margin.no-close ng-if="!applicantIsCop()"
     span.alert-icon.ui-icon.ui-medium
       svg
         use xlink:href="#i-warning"
