@@ -393,6 +393,8 @@ ShortFormApplicationController = (
   $scope.preferenceProofOptions = (pref_type) ->
     if pref_type == 'workInSf'
       ShortFormHelperService.preference_proof_options_work
+    else if pref_type == 'liveInSf'
+      ShortFormHelperService.preference_proof_options_live
     else
       ShortFormHelperService.preference_proof_options_default
 
