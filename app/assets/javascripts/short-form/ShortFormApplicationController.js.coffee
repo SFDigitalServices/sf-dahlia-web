@@ -381,7 +381,7 @@ ShortFormApplicationController = (
     ShortFormHelperService.translateLoggedInMessage(page)
 
   $scope.applicantFullName = (applicant) ->
-    if (!applicant.firstName || !applicant.lastName)
+    if (!applicant || !applicant.firstName || !applicant.lastName)
       return "No name entered"
     else
       "#{applicant.firstName} #{applicant.lastName}"
