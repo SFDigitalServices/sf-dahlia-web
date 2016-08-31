@@ -3,9 +3,7 @@
   ($rootScope, $state, $window, $translate, Idle, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
-    AccountService.validateUser().then( ->
-      Idle.watch() if AccountService.loggedIn()
-    )
+    AccountService.validateUser()
 
     $rootScope.$on 'IdleStart', ->
       if AccountService.loggedIn()
@@ -18,7 +16,7 @@
     $rootScope.$on 'IdleTimeout', ->
       if AccountService.loggedIn()
         AccountService.signOut()
-        $state.go('dahlia.sign-in')
+        $state.go('dahlia.sign-in', {skipConfirm: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
         $state.go('dahlia.listing', {skipConfirm: true, id: ShortFormApplicationService.listing.Id})
 
@@ -73,5 +71,3 @@
         return $state.go('dahlia.welcome')
 
 ]
-
-

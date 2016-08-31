@@ -101,15 +101,10 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       Service.accountError.messages.password = msg
 
   Service.signOut = ->
+    # reset the user data immediately, then call signOut
+    angular.copy({}, Service.loggedInUser)
+    ShortFormApplicationService.resetUserData()
     $auth.signOut()
-      .then((response) ->
-        angular.copy({}, Service.loggedInUser)
-        ShortFormApplicationService.resetUserData()
-      )
-      .catch (resp) ->
-        # still "log out" if there was some kind of error
-        angular.copy({}, Service.loggedInUser)
-        ShortFormApplicationService.resetUserData()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
