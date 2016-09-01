@@ -259,7 +259,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     selectedMember = Service.preferences[preference + '_household_member']
 
     # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
-    if _.isEmpty(eligibleMembers) || !members.includes(selectedMember)
+    if _.isEmpty(members) || !_.includes(members, selectedMember)
       Service.preferences[preference] = false
       Service.preferences[preference + '_file'] = null
       Service.preferences[preference + '_household_member'] = null
