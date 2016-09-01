@@ -68,7 +68,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
-    return false if state and Service.isWelcomePage(state)
+    # applicant and household members must verify their addresses and need to click next
+    if state and (Service.isWelcomePage(state) || Service._isPrimaryOrHouseholdAddressPage(state))
+      return false
+
     completed = Service.application.completedSections
     validated = Service.application.validatedForms
     switch name
@@ -211,6 +214,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.refreshLiveWorkPreferences = () ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
+    Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
 
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
@@ -250,14 +254,29 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only need to update if nobody is eligible
-    Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
+    members = eligibleMembers.map (member) ->
+      Service._householdMemberName(member)
+    selectedMember = Service.preferences[preference + '_household_member']
+
+    # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
+    if _.isEmpty(members) || !_.includes(members, selectedMember)
+      Service.preferences[preference] = false
+      Service.preferences[preference + '_file'] = null
+      Service.preferences[preference + '_household_member'] = null
+      Service.preferences[preference + '_proof_option'] = null
+
+  Service._householdMemberName = (member) ->
+    (member.firstName + ' ' + member.lastName)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
+
+  Service._isPrimaryOrHouseholdAddressPage = (state) ->
+    stateName = state.name.replace(/dahlia.short-form-(welcome|application)\./, "")
+    stateName.match(/contact/) || stateName.match(/household-member-form/)
 
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)

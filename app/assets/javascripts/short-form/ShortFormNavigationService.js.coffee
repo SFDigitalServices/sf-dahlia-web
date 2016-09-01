@@ -40,24 +40,24 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
 
   Service.submitActions =
     'name': {path: 'contact'}
-    'contact': {callback: 'checkIfAddressVerificationNeeded'}
-    'verify-address': {path: 'alternate-contact-type'}
-    'alternate-contact-type': {callback: 'checkIfAlternateContactInfoNeeded'}
+    'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkLiveWorkEligibility']}
+    'verify-address': {path: 'alternate-contact-type', callback: ['checkLiveWorkEligibility']}
+    'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
-    'alternate-contact-phone-address': {callback: 'goToHouseholdLandingPage'}
-    'household-members': {callback: 'validateHouseholdEligibility', params: 'householdMatch'}
-    'household-member-form': {callback: 'addHouseholdMember'}
-    'household-member-form-edit': {callback: 'addHouseholdMember'}
-    'household-member-verify-address': {path: 'household-members'}
-    'preferences-programs': {callback: 'checkIfPreferencesApply'}
+    'alternate-contact-phone-address': {callback: ['goToHouseholdLandingPage']}
+    'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
+    'household-member-form': {callback: ['addHouseholdMember', 'checkLiveWorkEligibility']}
+    'household-member-form-edit': {callback: ['addHouseholdMember', 'checkLiveWorkEligibility']}
+    'household-member-verify-address': {path: 'household-members', callback: ['checkLiveWorkEligibility']}
+    'preferences-programs': {callback: ['checkIfPreferencesApply']}
     'live-work-preference': {path: 'preferences-vouchers'}
     'general-lottery-notice': {path: 'preferences-vouchers'}
     'preferences-vouchers': {path: 'income'}
-    'income': {callback: 'validateHouseholdEligibility', params: 'incomeMatch'}
-    'review-optional': {path: 'review-summary', callback: 'checkSurveyComplete'}
+    'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
+    'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {path: 'review-terms'}
-    'review-terms': {callback: 'submitApplication'}
-    'choose-draft': {callback: 'chooseDraft'}
+    'review-terms': {callback: ['submitApplication']}
+    'choose-draft': {callback: ['chooseDraft']}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
