@@ -34,7 +34,7 @@ do ->
       copyHomeToMailingAddress: jasmine.createSpy()
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
-      refreshLiveWorkPreferences: jasmine.createSpy()
+      refreshPreferences: jasmine.createSpy()
       liveInSfMembers: () ->
         return
       workInSfMembers: () ->
@@ -259,10 +259,10 @@ do ->
         return
       return
 
-    describe '$scope.checkLiveWorkEligibility', ->
-      it 'calls refreshLiveWorkPreferences in ShortFormApplicationService', ->
-        scope.checkLiveWorkEligibility()
-        expect(fakeShortFormApplicationService.refreshLiveWorkPreferences).toHaveBeenCalled()
+    describe '$scope.checkPreferenceEligibility', ->
+      it 'calls refreshPreferences in ShortFormApplicationService', ->
+        scope.checkPreferenceEligibility()
+        expect(fakeShortFormApplicationService.refreshPreferences).toHaveBeenCalled()
         return
 
     describe '$scope.liveInSfMembers', ->

@@ -23,15 +23,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       liveInSf: null
       workInSf: null
       neighborhoodResidence: null
-      liveInSf_file: null
-      workInSf_file: null
-      neighborhoodResidence_file: null
-      liveInSf_file_loading: null
-      workInSf_file_loading: null
-      neighborhoodResidence_file_loading: null
-      liveInSf_file_error: null
-      workInSf_file_error: null
-      neighborhoodResidence_file_error: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
@@ -68,7 +59,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
-    return false if state and Service.isWelcomePage(state)
+    # applicant and household members must verify their addresses and need to click next
+    if state and (Service.isWelcomePage(state) || Service._isPrimaryOrHouseholdAddressPage(state))
+      return false
+
     completed = Service.application.completedSections
     validated = Service.application.validatedForms
     switch name
@@ -182,9 +176,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     )
 
   Service.cancelPreference = (preference) ->
-    Service.preferences[preference] = false
+    Service.preferences[preference] = null
     Service.preferences["#{preference}_household_member"] = null
     Service.preferences["#{preference}_proof_option"] = null
+    Service.preferences["#{preference}_proof_file"] = null
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -217,12 +212,15 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       income.incomeTotal * 12
 
   ### Proof of Preferences ###
-  Service.refreshLiveWorkPreferences = () ->
+  Service.refreshPreferences = () ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
+    Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
 
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
+    # no address also counts as "live in SF" to consider homelessness
+    applicantLivesInSf ||= Service.applicant.noAddress
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
       if member.hasSameAddressAsApplicant == 'No'
         _.lowerCase(member.home_address.city) == 'san francisco'
@@ -255,19 +253,21 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only need to update if nobody is eligible
-    if Service.preferences[preference] && Service.preferences["#{preference}_household_member"]
-      prefMember = Service.preferences["#{preference}_household_member"]
-      fullName = "#{prefMember.firstName} #{prefMember.lastName}"
-      prefMemberFound = _.filter(eligibleMembers, (m) -> "#{m.firstName} #{m.lastName}" == fullName).length
-      if _.isEmpty(eligibleMembers) || !prefMemberFound
-        Service.cancelPreference(preference)
+    members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
+    selectedMember = Service.preferences[preference + '_household_member']
+    # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
+    if _.isEmpty(members) || !_.includes(members, selectedMember)
+      Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
+
+  Service._isPrimaryOrHouseholdAddressPage = (state) ->
+    stateName = state.name.replace(/dahlia.short-form-(welcome|application)\./, "")
+    stateName.match(/contact/) || stateName.match(/household-member-form/)
 
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)

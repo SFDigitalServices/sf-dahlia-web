@@ -226,7 +226,7 @@ do ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
         return
 
-    describe 'refreshLiveWorkPreferences', ->
+    describe 'refreshPreferences', ->
       describe 'applicant does not work in SF', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
@@ -234,7 +234,7 @@ do ->
           ShortFormApplicationService.applicant.workInSf = 'No'
 
         it 'should not be assigned workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
+          ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
           return
         return
@@ -251,8 +251,33 @@ do ->
           ShortFormApplicationService.applicant.home_address = home_address
 
         it 'should not be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
+          ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
+          return
+
+        describe 'was previously eligible and selected for liveInSf', ->
+          beforeEach ->
+            home_address = {
+              address1: "312 Delaware RD"
+              address2: ""
+              city: "Mount Shasta"
+            }
+            ShortFormApplicationService.householdMembers = []
+            ShortFormApplicationService.applicant = fakeApplicant
+            ShortFormApplicationService.applicant.home_address = home_address
+            ShortFormApplicationService.preferences =
+              liveInSf: true
+              liveInSf_file: 'somefile'
+              liveInSf_proof_option: 'proofOption'
+              liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+
+          it 'clear liveInSf preference data', ->
+            ShortFormApplicationService.refreshPreferences()
+            expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
+            return
           return
         return
 

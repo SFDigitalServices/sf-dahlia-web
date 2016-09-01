@@ -230,9 +230,9 @@ ShortFormDataService = () ->
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
-    altContactType = !! (!_.isEmpty(altContact) && altContact.alternateContactType)
-    applicant.noPhone = !! (!contact.phone && altContactType)
-    applicant.noAddress = !! (!contact.address && altContactType)
+    # these "noXXX" fields will be stored in salesforce in a later story
+    applicant.noPhone = !contact.phone
+    applicant.noAddress = !contact.address
     applicant.additionalPhone = !! contact.alternatePhone
     applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     _.merge(applicant, Service.reformatDOB(contact.DOB))

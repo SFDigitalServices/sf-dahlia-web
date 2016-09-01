@@ -106,8 +106,9 @@ ShortFormApplicationController = (
 
   $scope.handleFormSuccess = ->
     options = ShortFormNavigationService.submitOptionsForCurrentPage()
-    if options.callback && $scope[options.callback]
-      $scope[options.callback](options.params)
+    if options.callback
+      options.callback.forEach (callback) ->
+        $scope[callback](options.params) if $scope[callback]
     if options.path
       $state.go(options.path)
 
@@ -253,8 +254,8 @@ ShortFormApplicationController = (
   $scope._preferencesApplyForHousehold = () ->
     ShortFormApplicationService.preferencesApplyForHousehold()
 
-  $scope.checkLiveWorkEligibility = () ->
-    ShortFormApplicationService.refreshLiveWorkPreferences()
+  $scope.checkPreferenceEligibility = () ->
+    ShortFormApplicationService.refreshPreferences()
 
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
@@ -401,6 +402,8 @@ ShortFormApplicationController = (
   $scope.preferenceProofOptions = (pref_type) ->
     if pref_type == 'workInSf'
       ShortFormHelperService.preference_proof_options_work
+    else if pref_type == 'liveInSf'
+      ShortFormHelperService.preference_proof_options_live
     else
       ShortFormHelperService.preference_proof_options_default
 
