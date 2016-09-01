@@ -41,7 +41,8 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
   Service.submitActions =
     'name': {path: 'contact'}
     'contact': {callback: 'checkIfAddressVerificationNeeded'}
-    'verify-address': {path: 'alternate-contact-type'}
+    # 'verify-address': {path: 'alternate-contact-type'}
+    'verify-address': {path: 'alternate-contact-type', callback: 'checkLiveWorkEligibility'}
     'alternate-contact-type': {callback: 'checkIfAlternateContactInfoNeeded'}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
     'alternate-contact-phone-address': {callback: 'goToHouseholdLandingPage'}

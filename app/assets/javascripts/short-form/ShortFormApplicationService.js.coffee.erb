@@ -214,6 +214,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.refreshLiveWorkPreferences = () ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
+    Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
 
   Service.liveInSfMembers = () ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
@@ -254,13 +255,21 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service._updatePreference = (preference, eligibleMembers) ->
     # only need to update if nobody is eligible
-    Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
+    if _.isEmpty(eligibleMembers)
+      Service.preferences[preference] = false
+      Service.preferences[preference + '_file'] = null
+      Service.preferences[preference + '_household_member'] = null
+      Service.preferences[preference + '_proof_option'] = null
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
     !!state.name.match(/short-form-welcome\./)
+
+  Service._isPrimaryOrHouseholdAddressPage = (state) ->
+    stateName = state.name.replace(/dahlia.short-form-(welcome|application)\./, "")
+    stateName.match(/contact/) || stateName.match(/household-member-form/)
 
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)
