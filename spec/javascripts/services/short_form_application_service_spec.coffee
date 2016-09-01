@@ -121,6 +121,7 @@ do ->
 
     describe 'addHouseholdMember', ->
       beforeEach ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
         fakeHouseholdMember =
           firstName: 'Bob'
           lastName: 'Williams'
@@ -128,12 +129,15 @@ do ->
           dob_day: '05'
           dob_year: '2015'
           relationship: 'Cousin'
+          hasSameAddressAsApplicant: 'Yes'
+          neighborhoodPreferenceMatch: null
         ShortFormApplicationService.householdMembers = []
         ShortFormApplicationService.householdMember = fakeHouseholdMember
         ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
       afterEach ->
         fakeHouseholdMember = undefined
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = null
 
       it 'clears the householdMember object', ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
@@ -149,9 +153,35 @@ do ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
           expect(ShortFormApplicationService.householdMembers[0]).toEqual fakeHouseholdMember
           return
+
+        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
         return
 
       describe 'old household member update', ->
+        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          householdMember.hasSameAddressAsApplicant = 'Yes'
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
+
+        it 'does not copy neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant == "No"', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          householdMember.neighborhoodPreferenceMatch = 'Not Matched'
+          householdMember.hasSameAddressAsApplicant = 'No'
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).not.toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
+
         it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
@@ -205,7 +235,7 @@ do ->
 
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
           return
         return
 
@@ -222,7 +252,7 @@ do ->
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
           return
         return
 

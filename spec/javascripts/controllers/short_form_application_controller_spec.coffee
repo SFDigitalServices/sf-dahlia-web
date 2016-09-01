@@ -170,6 +170,20 @@ do ->
           return
         return
 
+    describe '$scope.addressChange', ->
+      it 'unsets neighborhoodPreferenceMatch on member', ->
+        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.addressChange('applicant')
+        expect(scope.applicant.neighborhoodPreferenceMatch).toEqual null
+        return
+
+      it 'calls copyHomeToMailingAddress if member == applicant', ->
+        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.addressChange('applicant')
+        expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
+        return
+      return
+
     describe 'scope.requiredContactInformationMissing', ->
       describe 'phone, email, address not provided', ->
         it 'returns true', ->

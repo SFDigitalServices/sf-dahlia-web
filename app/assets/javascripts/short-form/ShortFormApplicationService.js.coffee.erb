@@ -132,7 +132,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.current_id = max_id + 1
 
   Service.addHouseholdMember = (householdMember) ->
-    if householdMember.hasSameAddressAsApplicant
+    if householdMember.hasSameAddressAsApplicant == 'Yes'
       # copy applicant's neighborhoodPreferenceMatch to householdMember
       householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     if !householdMember.id
@@ -176,7 +176,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
-      if member.hasSameAddressAsApplicant
+      if member.hasSameAddressAsApplicant == 'Yes'
         # copy applicant's neighborhoodPreferenceMatch to householdMember
         member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     )

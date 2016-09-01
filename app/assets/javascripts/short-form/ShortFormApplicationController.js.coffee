@@ -171,6 +171,13 @@ ShortFormApplicationController = (
     # $scope.applicant.noAddress = false
     $scope.checkIfMailingAddressNeeded()
 
+  $scope.addressChange = (model) ->
+    member = $scope[model]
+    # invalidate neighborhoodPreferenceMatch to ensure that they re-confirm address
+    member.neighborhoodPreferenceMatch = null
+    if member == $scope.applicant
+      $scope.checkIfMailingAddressNeeded()
+
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
       $scope.applicant.noAddress = false
@@ -189,11 +196,13 @@ ShortFormApplicationController = (
     $scope.checkIfMailingAddressNeeded()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if ($scope.applicant.noAddress ||
-        ($scope.applicant.confirmed_home_address &&
-        AddressValidationService.isConfirmed($scope.applicant.home_address, 'home')))
-      # skip ahead if they aren't filling out an address
-      # or their current address has already been confirmed
+    if $scope.applicant.noAddress || $scope.applicant.neighborhoodPreferenceMatch
+      ###
+      skip ahead if they aren't filling out an address
+       or their current address has already been confirmed.
+      $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
+       just that it has a value
+      ###
       $state.go('dahlia.short-form-application.alternate-contact-type')
     else
       $state.go('dahlia.short-form-application.verify-address')
@@ -279,9 +288,8 @@ ShortFormApplicationController = (
 
   $scope.addHouseholdMember = ->
     ShortFormApplicationService.addHouseholdMember($scope.householdMember)
-    if ($scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
-        ($scope.householdMember.confirmed_home_address &&
-        AddressValidationService.isConfirmed($scope.householdMember.home_address, 'home')))
+    if $scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
+        $scope.householdMember.neighborhoodPreferenceMatch
       # skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       $state.go('dahlia.short-form-application.household-members')
