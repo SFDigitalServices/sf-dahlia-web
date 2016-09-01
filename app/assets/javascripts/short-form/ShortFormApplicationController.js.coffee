@@ -106,8 +106,9 @@ ShortFormApplicationController = (
 
   $scope.handleFormSuccess = ->
     options = ShortFormNavigationService.submitOptionsForCurrentPage()
-    if options.callback && $scope[options.callback]
-      $scope[options.callback](options.params)
+    if options.callback
+      options.callback.forEach (callback) ->
+        $scope[callback](options.params) if $scope[callback]
     if options.path
       $state.go(options.path)
 
