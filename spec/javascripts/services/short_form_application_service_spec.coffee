@@ -224,6 +224,31 @@ do ->
           ShortFormApplicationService.refreshLiveWorkPreferences()
           expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
           return
+
+        describe 'was previously eligible and selected for liveInSf', ->
+          beforeEach ->
+            home_address = {
+              address1: "312 Delaware RD"
+              address2: ""
+              city: "Mount Shasta"
+            }
+            ShortFormApplicationService.householdMembers = []
+            ShortFormApplicationService.applicant = fakeApplicant
+            ShortFormApplicationService.applicant.home_address = home_address
+            ShortFormApplicationService.preferences =
+              liveInSf: true
+              liveInSf_file: 'somefile'
+              liveInSf_proof_option: 'proofOption'
+              liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+
+          it 'clear liveInSf preference data', ->
+            ShortFormApplicationService.refreshLiveWorkPreferences()
+            expect(ShortFormApplicationService.preferences.liveInSf).toEqual(false)
+            expect(ShortFormApplicationService.preferences.liveInSf_file).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
+            return
+          return
         return
 
     describe 'liveInSfMembers', ->
