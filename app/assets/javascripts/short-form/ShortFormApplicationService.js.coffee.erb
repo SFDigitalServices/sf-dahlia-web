@@ -68,7 +68,10 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
-    return false if state and Service.isWelcomePage(state)
+    # applicant and household members must verify their addresses and need to click next
+    if state and (Service.isWelcomePage(state) || Service._isPrimaryOrHouseholdAddressPage(state))
+      return false
+
     completed = Service.application.completedSections
     validated = Service.application.validatedForms
     switch name
