@@ -450,8 +450,10 @@
             ).then ->
               ShortFormApplicationService.copyHomeToMailingAddress()
               GeocodingService.geocode(
-                address: ShortFormApplicationService.applicant.home_address
-              )
+                address: ShortFormApplicationService.applicant.home_address,
+                member: ShortFormApplicationService.applicant
+              ).then ->
+                ShortFormApplicationService.copyNeighborhoodMatchToHousehold()
         ]
     })
     .state('dahlia.short-form-application.alternate-contact-type', {
@@ -548,7 +550,8 @@
               type: 'home'
             ).then ->
               GeocodingService.geocode(
-                address: ShortFormApplicationService.householdMember.home_address
+                address: ShortFormApplicationService.householdMember.home_address,
+                member: ShortFormApplicationService.householdMember
               )
         ]
     })

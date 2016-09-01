@@ -132,6 +132,9 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.current_id = max_id + 1
 
   Service.addHouseholdMember = (householdMember) ->
+    if householdMember.hasSameAddressAsApplicant
+      # copy applicant's neighborhoodPreferenceMatch to householdMember
+      householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
@@ -155,6 +158,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
 
   Service.cancelHouseholdMember = ->
+    # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
     # clear out preferences where this householdMember was selected
@@ -163,19 +167,24 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     _.each Service.preferences, (v,k) ->
       if k.indexOf('_household_member') > 0 and v == full_name
         preference = k.split('_household_member')[0]
-        Service.preferences[preference] = false
-        Service.preferences[k] = null
-        if Service.preferences["#{preference}_proof_option"]
-          Service.preferences["#{preference}_proof_option"] = null
-        # TODO: fix, these are no longer in this service
-        #       but we can't include FileUploadService because it would be circular dependency
-        # if Service.hasPreferenceFile("#{preference}_proof_file")
-        #   Service.deletePreferenceFile("#{preference}_proof_file")
+        Service.cancelPreference(preference)
 
     # persist the changes to Service.householdMembers
     Service.householdMember = {}
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
+
+  Service.copyNeighborhoodMatchToHousehold = ->
+    Service.householdMembers.forEach( (member) ->
+      if member.hasSameAddressAsApplicant
+        # copy applicant's neighborhoodPreferenceMatch to householdMember
+        member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+    )
+
+  Service.cancelPreference = (preference) ->
+    Service.preferences[preference] = false
+    Service.preferences["#{preference}_household_member"] = null
+    Service.preferences["#{preference}_proof_option"] = null
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -230,15 +239,11 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
-    # find all household members that either have their own address and match
-    # -- OR -- same address as applicant, who also matches
+    # find all household members that match
     household = Service.application.householdMembers.filter (member) ->
-      if (member.hasSameAddressAsApplicant == 'Yes')
-        return Service.applicant.home_address.boundary_match
-      else
-        member.home_address && member.home_address.boundary_match
+      member.neighborhoodPreferenceMatch == 'Matched'
     # add applicant to the list if they match
-    if Service.applicant.home_address.boundary_match
+    if Service.applicant.neighborhoodPreferenceMatch == 'Matched'
       household.unshift(Service.applicant)
     household
 
@@ -251,7 +256,12 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service._updatePreference = (preference, eligibleMembers) ->
     # only need to update if nobody is eligible
-    Service.preferences[preference] = false if _.isEmpty(eligibleMembers)
+    if Service.preferences[preference] && Service.preferences["#{preference}_household_member"]
+      prefMember = Service.preferences["#{preference}_household_member"]
+      fullName = "#{prefMember.firstName} #{prefMember.lastName}"
+      prefMemberFound = _.filter(eligibleMembers, (m) -> "#{m.firstName} #{m.lastName}" == fullName).length
+      if _.isEmpty(eligibleMembers) || !prefMemberFound
+        Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
