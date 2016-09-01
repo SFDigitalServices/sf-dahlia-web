@@ -9,13 +9,13 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   ]
 
   Service.preference_proof_options_default = [
-    ['Telephone bill (land line only)', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
+    ['Telephone bill', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
     ['Cable and internet bill', $translate.instant('LABEL.PROOF.CABLE_BILL')],
     ['Gas bill', $translate.instant('LABEL.PROOF.GAS_BILL')],
     ['Electric bill', $translate.instant('LABEL.PROOF.ELECTRIC_BILL')],
     ['Garbage bill', $translate.instant('LABEL.PROOF.GARBAGE_BILL')],
     ['Water bill', $translate.instant('LABEL.PROOF.WATER_BILL')],
-    ['Paystub (listing home address)', $translate.instant('LABEL.PROOF.PAYSTUB_HOME')],
+    ['Paystub', $translate.instant('LABEL.PROOF.PAYSTUB_HOME')],
     ['Public benefits record', $translate.instant('LABEL.PROOF.PUBLIC_BENEFITS')],
     ['School record', $translate.instant('LABEL.PROOF.SCHOOL_RECORD')],
   ]
@@ -23,6 +23,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Paystub with employer address', $translate.instant('LABEL.PROOF.PAYSTUB_EMPLOYER')],
     ['Letter from employer', $translate.instant('LABEL.PROOF.LETTER_FROM_EMPLOYER')],
   ]
+  Service.preference_proof_options_live = angular.copy(Service.preference_proof_options_default)
+  Service.preference_proof_options_live.push(
+    ['Third-Party Proof of SF Homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
+  )
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->

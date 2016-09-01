@@ -295,6 +295,7 @@
             "ELECTRIC_BILL": "Electric bill",
             "GARBAGE_BILL": "Garbage bill",
             "GAS_BILL": "Gas bill",
+            "HOMELESSNESS": "Third-Party Proof of SF Homelessness",
             "LETTER_FROM_EMPLOYER": "Letter from employer",
             "PAYSTUB_EMPLOYER": "Paystub with employer address",
             "PAYSTUB_HOME": "Paystub (listing home address)",
