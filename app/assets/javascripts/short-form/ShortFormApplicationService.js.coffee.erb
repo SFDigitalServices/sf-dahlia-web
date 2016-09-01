@@ -254,12 +254,19 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only need to update if nobody is eligible
-    if _.isEmpty(eligibleMembers)
+    members = eligibleMembers.map (member) ->
+      Service._householdMemberName(member)
+    selectedMember = Service.preferences[preference + '_household_member']
+
+    # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
+    if _.isEmpty(eligibleMembers) || !members.includes(selectedMember)
       Service.preferences[preference] = false
       Service.preferences[preference + '_file'] = null
       Service.preferences[preference + '_household_member'] = null
       Service.preferences[preference + '_proof_option'] = null
+
+  Service._householdMemberName = (member) ->
+    (member.firstName + ' ' + member.lastName)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
