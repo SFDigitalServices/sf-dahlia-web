@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
-
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.2.3'
 
-gem 'rails', '~> 4.2.4'
+gem 'rails', '~> 4.2.7'
 gem 'rails-api'
 
 # Use SCSS for stylesheets
@@ -26,16 +24,15 @@ gem 'bower-rails'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Adds HTML templates into Angular's $templateCache using asset pipeline.
-gem 'angular-rails-templates'
-# NOTE: angular-rails-templates not yet compatible with sprockets > 3.0
+# angular-rails-templates > 1.0.0 now compatible with sprockets > 3.0
 # https://github.com/pitr/angular-rails-templates/issues/93
-gem 'sprockets', '~> 2.12.4'
+gem 'angular-rails-templates'
 
 # salesforce
 gem 'restforce', require: false
 
 # handy ruby extensions
-gem "facets", require: false
+gem 'facets', require: false
 
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
@@ -103,12 +100,3 @@ group :production do
   gem 'memcachier'
   gem 'rails_12factor'
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
