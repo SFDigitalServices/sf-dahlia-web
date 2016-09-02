@@ -3,7 +3,7 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
 
 .app-inner
   review-summary-item label="{{'LABEL.NAME' | translate}}"
-    | {{applicant.firstName}} {{applicant.lastName}}
+    | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
   review-summary-item label="{{'LABEL.DOB' | translate}}"
     | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
   review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone" sub-label="{{applicant.phoneType}}"
@@ -51,7 +51,7 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
 
   .info-item ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
     review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{member.relationship}}"
-      | {{member.firstName}} {{member.lastName}}
+      | {{member.firstName}} {{member.middleName}} {{member.lastName}}
 
     review-summary-item label="{{'LABEL.DOB' | translate}}"
       | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
