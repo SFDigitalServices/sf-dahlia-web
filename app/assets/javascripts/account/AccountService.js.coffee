@@ -249,6 +249,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     Service.accountError.messages = {}
     Service.accountSuccess.messages = {}
 
+  Service.resetUserAuth = ->
+    angular.copy(Service.userAuthDefaults, Service.userAuth)
+
   Service.afterLoginRedirect = (path) ->
     Service.accountSuccess.messages.redirect = $translate.instant('SIGN_IN.SIGN_IN_REQUIRED')
     Service.loginRedirect = path
@@ -256,7 +259,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.goToLoginRedirect = ->
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
-
 
   # run on page load
   Service.unlockFields()

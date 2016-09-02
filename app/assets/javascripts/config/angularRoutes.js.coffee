@@ -84,7 +84,6 @@
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
         AccountService.unlockFields()
       ]
     })
@@ -97,7 +96,6 @@
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
@@ -115,7 +113,6 @@
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
-        AccountService.clearAccountMessages()
         if $stateParams.expiredUnconfirmed
           AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
         if $stateParams.expiredConfirmed
@@ -134,9 +131,6 @@
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
-      onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
-      ]
     })
     .state('dahlia.forgot-password', {
       url: '/forgot-password'
@@ -144,9 +138,6 @@
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
-      onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
-      ]
     })
     .state('dahlia.reset-password', {
       url: '/reset-password'
@@ -159,7 +150,6 @@
           $auth.validateUser()
         ]
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
-        AccountService.clearAccountMessages()
         unless AccountService.loggedIn()
           return $state.go('dahlia.sign-in')
       ]
