@@ -157,9 +157,12 @@ ListingController = (
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
-    ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
-      $scope.lotteryRankingSubmitted = true
-    )
+    if $scope.lotterySearchNumber == ''
+      $scope.lotteryRankingSubmitted = false
+    else
+      ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
+        $scope.lotteryRankingSubmitted = true
+      )
 
   $scope.submittedApplication = ->
     $scope.application && $scope.application.status == 'Submitted'
