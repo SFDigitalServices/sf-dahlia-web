@@ -104,7 +104,7 @@ do ->
         tomorrow = new Date()
         tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
-        expect(ListingService.listingIsOpen(listing.Application_Due_Date)).toEqual true
+        expect(ListingService.listingIsOpen(listing)).toEqual true
         return
       return
 
