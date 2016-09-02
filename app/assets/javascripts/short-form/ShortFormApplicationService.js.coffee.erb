@@ -145,10 +145,9 @@ ShortFormApplicationService = (
       # update existing householdMember
       householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
       angular.copy(householdMember, householdMemberToUpdate)
-    Service.resetHouseholdmember()
     Service.invalidateHouseholdForm()
 
-  Service.resetHouseholdmember = () ->
+  Service.resetHouseholdMember = () ->
     angular.copy({}, Service.householdMember)
 
   Service.getHouseholdMember = (id) ->
@@ -167,7 +166,7 @@ ShortFormApplicationService = (
         Service.cancelPreference(preference)
 
     # persist the changes to Service.householdMembers
-    Service.householdMember = {}
+    Service.resetHouseholdMember()
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
 

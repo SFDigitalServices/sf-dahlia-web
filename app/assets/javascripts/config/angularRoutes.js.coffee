@@ -491,7 +491,7 @@
         householdMember: [
           'ShortFormApplicationService',
           (ShortFormApplicationService) ->
-            ShortFormApplicationService.resetHouseholdmember()
+            ShortFormApplicationService.resetHouseholdMember()
         ]
     })
     .state('dahlia.short-form-application.household-member-form-edit', {
