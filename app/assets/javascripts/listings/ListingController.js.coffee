@@ -149,6 +149,9 @@ ListingController = (
     applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
     return _.includes(applicationResults, true)
 
+  $scope.applicantIsCop = ->
+    $scope.listing.Lottery_Ranking.applicationResults[0].certOfPreference
+
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
 
