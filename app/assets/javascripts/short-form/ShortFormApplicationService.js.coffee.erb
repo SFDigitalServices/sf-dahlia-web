@@ -1,4 +1,7 @@
-ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, ShortFormDataService) ->
+ShortFormApplicationService = (
+  $translate, $http, Upload, uuid,
+  ListingService, ShortFormDataService, AddressValidationService, GeocodingService
+) ->
   Service = {}
   Service.listing = ListingService.listing
   Service.form = {}
@@ -59,8 +62,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
-    # applicant and household members must verify their addresses and need to click next
-    if state and (Service.isWelcomePage(state) || Service._isPrimaryOrHouseholdAddressPage(state))
+    if state and (Service.isWelcomePage(state))
       return false
 
     completed = Service.application.completedSections
@@ -141,15 +143,16 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
           new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
           Service.preferences[k] = new_full_name
       # update existing householdMember
-      angular.copy(householdMember, Service.householdMember)
-    Service.householdMember = {}
+      householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
+      angular.copy(householdMember, householdMemberToUpdate)
+    Service.resetHouseholdmember()
     Service.invalidateHouseholdForm()
 
   Service.resetHouseholdmember = () ->
-    Service.householdMember = {}
+    angular.copy({}, Service.householdMember)
 
   Service.getHouseholdMember = (id) ->
-    Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
+    angular.copy(_.find(Service.householdMembers, {id: parseInt(id)}), Service.householdMember)
 
   Service.cancelHouseholdMember = ->
     # list of all householdMembers minus the cancelled one
@@ -277,7 +280,11 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
-      Service.application.validatedForms[section.name][stateName] = Service.form.applicationForm.$valid
+      isValid = Service.form.applicationForm.$valid
+      # special case for contact form
+      if stateName.match(/contact/)
+        isValid = !!Service.applicant.neighborhoodPreferenceMatch
+      Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
@@ -292,6 +299,9 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.isLeavingShortForm = (toState, fromState) ->
     # leaving means we're going from short form to a non-short form page
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.invalidateContactForm = ->
+    Service.application.validatedForms['You']['contact'] = false
 
   Service.invalidateIncomeForm = ->
     Service.application.completedSections['Income'] = false
@@ -432,6 +442,42 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     # return T/F if data was changed or not
     return changed
 
+
+  ####### Address validation functions
+  Service.validateApplicantAddress = (callback) ->
+    # validate + geocode address
+    # errors are handled in the controller
+    AddressValidationService.validate(
+      address: Service.applicant.home_address
+      type: 'home'
+    ).success( ->
+      Service.copyHomeToMailingAddress()
+      GeocodingService.geocode(
+        address: Service.applicant.home_address,
+        member: Service.applicant
+      ).success( ->
+        Service.copyNeighborhoodMatchToHousehold()
+        callback()
+      )
+    )
+
+  Service.validateHouseholdMemberAddress = (callback) ->
+    # validate + geocode address
+    # errors are handled in the controller
+    AddressValidationService.validate(
+      address: Service.householdMember.home_address
+      type: 'home'
+    ).success( ->
+      GeocodingService.geocode(
+        address: Service.householdMember.home_address,
+        member: Service.householdMember
+      ).success( ->
+        Service.addHouseholdMember(Service.householdMember)
+        callback()
+      )
+    )
+
+
   return Service
 
 ############################################################################################
@@ -440,7 +486,8 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', 'Upload', 'uuid',
-  'ListingService', 'ShortFormDataService'
+  'ListingService', 'ShortFormDataService',
+  'AddressValidationService', 'GeocodingService'
 ]
 
 angular

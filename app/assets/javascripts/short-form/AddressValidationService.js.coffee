@@ -10,23 +10,23 @@ AddressValidationService = ($http) ->
   Service.validate = (opts) ->
     address = opts.address || {}
     type = opts.type || 'home'
-    validated = Service["validated_#{type}_address"]
-    angular.copy({}, validated)
+    validated_address_obj = Service["validated_#{type}_address"]
+    angular.copy({}, validated_address_obj)
     params =
       address: _.mapKeys(address, (v, key) ->
         # EasyPost calls it "street1,2" instead of "address1,2"
         key.replace('address', 'street')
       )
     $http.post('/api/v1/addresses/validate.json', params).success((data, status, headers, config) ->
-      angular.copy((if data and data.address then data.address else {}), validated)
+      angular.copy((if data and data.address then data.address else {}), validated_address_obj)
       # now copy the validated address data into our source address
-      Service.copy(validated, address)
+      Service.copy(validated_address_obj, address)
     ).error( (data, status, headers, config) ->
       # still grab the data for capturing the verifications/errors
       validated_with_errors = (if data and data.address then data.address else {})
       # add invalid flag to indicate validation error
       validated_with_errors.invalid = true
-      angular.copy(validated_with_errors, validated)
+      angular.copy(validated_with_errors, validated_address_obj)
     )
 
   Service.copy = (validated, copyTo) ->

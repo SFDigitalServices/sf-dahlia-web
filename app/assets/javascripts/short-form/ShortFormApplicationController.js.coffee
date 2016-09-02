@@ -89,6 +89,7 @@ ShortFormApplicationController = (
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
   $scope.hideMessage = false
+  $scope.addressError = ShortFormApplicationService.addressError
 
   if ShortFormApplicationService.isShortFormPage($state.current) && !$window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
@@ -139,7 +140,7 @@ ShortFormApplicationController = (
     $scope.inputInvalid('zip', identifier)
 
   $scope.addressFailedValidation = (identifier = '') ->
-    return false unless $state.params.error
+    return false unless $scope.addressError
     validated = $scope["validated_#{identifier}"]
     return AddressValidationService.failedValidation(validated)
 
@@ -178,6 +179,9 @@ ShortFormApplicationController = (
     member.neighborhoodPreferenceMatch = null
     if member == $scope.applicant
       $scope.checkIfMailingAddressNeeded()
+      ShortFormApplicationService.invalidateContactForm()
+    else
+      ShortFormApplicationService.invalidateHouseholdForm()
 
   $scope.checkIfMailingAddressNeeded = ->
     if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
@@ -206,7 +210,14 @@ ShortFormApplicationController = (
       ###
       $state.go('dahlia.short-form-application.alternate-contact-type')
     else
-      $state.go('dahlia.short-form-application.verify-address')
+      # validate + geocode address, but kick out if we have errors
+      ShortFormApplicationService.validateApplicantAddress( ->
+        $state.go('dahlia.short-form-application.verify-address')
+      ).error( ->
+        $scope.addressError = true
+        $scope.handleErrorState()
+      )
+
 
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.alternateContactType == 'None'
@@ -283,19 +294,25 @@ ShortFormApplicationController = (
     FileUploadService.preferenceFileIsLoading(fileType)
 
   ###### Household Section ########
-  $scope.getHouseholdMember = ->
-    # we just edit a copy, and then put it back in place after saving in addHouseholdMember
-    $scope.householdMember = angular.copy(ShortFormApplicationService.householdMember)
+  # $scope.getHouseholdMember = ->
+  #   # we just edit a copy, and then put it back in place after saving in addHouseholdMember
+  #   $scope.householdMember = angular.copy(ShortFormApplicationService.householdMember)
 
   $scope.addHouseholdMember = ->
-    ShortFormApplicationService.addHouseholdMember($scope.householdMember)
     if $scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
         $scope.householdMember.neighborhoodPreferenceMatch
-      # skip ahead if they aren't filling out an address
+      # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
+      ShortFormApplicationService.addHouseholdMember($scope.householdMember)
       $state.go('dahlia.short-form-application.household-members')
     else
-      $state.go('dahlia.short-form-application.household-member-verify-address', {member_id: $scope.householdMember.id})
+      # validate + geocode address, but kick out if we have errors
+      ShortFormApplicationService.validateHouseholdMemberAddress( ->
+        $state.go('dahlia.short-form-application.household-member-verify-address', {member_id: $scope.householdMember.id})
+      ).error( ->
+        $scope.addressError = true
+        $scope.handleErrorState()
+      )
 
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
@@ -441,19 +458,12 @@ ShortFormApplicationController = (
   $scope.print = -> $window.print()
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
-    # capture errors when trying to verify address and send them back to the appropriate page
-    params = angular.copy(toParams)
-    params.error = true
+    # NOTE: not sure when this will ever really get hit any more
+    #  used to be for address validation errors
     $scope.handleErrorState()
-    if toState.name == 'dahlia.short-form-application.verify-address'
-      e.preventDefault()
-      return $state.go('dahlia.short-form-application.contact', params)
-    else if toState.name == 'dahlia.short-form-application.household-member-verify-address'
-      e.preventDefault()
-      return $state.go('dahlia.short-form-application.household-member-form-edit', params)
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
-    $scope.handleErrorState() if $state.params.error
+    $scope.addressError = false
     ShortFormNavigationService.isLoading(false)
 
 ShortFormApplicationController.$inject = [

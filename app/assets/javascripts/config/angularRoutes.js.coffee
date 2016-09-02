@@ -427,8 +427,6 @@
     })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
-      params:
-        error: null
       views:
         'container':
           templateUrl: 'short-form/templates/b2-contact.html'
@@ -438,23 +436,6 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b2a-verify-address.html'
-      resolve:
-        addressValidation: [
-          'AddressValidationService',
-          'ShortFormApplicationService',
-          'GeocodingService',
-          (AddressValidationService, ShortFormApplicationService, GeocodingService) ->
-            AddressValidationService.validate(
-              address: ShortFormApplicationService.applicant.home_address
-              type: 'home'
-            ).then ->
-              ShortFormApplicationService.copyHomeToMailingAddress()
-              GeocodingService.geocode(
-                address: ShortFormApplicationService.applicant.home_address,
-                member: ShortFormApplicationService.applicant
-              ).then ->
-                ShortFormApplicationService.copyNeighborhoodMatchToHousehold()
-        ]
     })
     .state('dahlia.short-form-application.alternate-contact-type', {
       url: '/alternate-contact-type'
@@ -515,8 +496,6 @@
     })
     .state('dahlia.short-form-application.household-member-form-edit', {
       url: '/household-member-form/:member_id'
-      params:
-        error: null
       views:
         'container':
           templateUrl: 'short-form/templates/c3-household-member-form.html'
@@ -533,27 +512,6 @@
       views:
         'container':
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
-      resolve:
-        householdMember: [
-          '$stateParams',
-          'ShortFormApplicationService',
-          ($stateParams, ShortFormApplicationService) ->
-            ShortFormApplicationService.getHouseholdMember($stateParams.member_id)
-        ]
-        addressValidation: [
-          'AddressValidationService',
-          'ShortFormApplicationService',
-          'GeocodingService',
-          (AddressValidationService, ShortFormApplicationService, GeocodingService) ->
-            AddressValidationService.validate(
-              address: ShortFormApplicationService.householdMember.home_address
-              type: 'home'
-            ).then ->
-              GeocodingService.geocode(
-                address: ShortFormApplicationService.householdMember.home_address,
-                member: ShortFormApplicationService.householdMember
-              )
-        ]
     })
     # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-programs', {
