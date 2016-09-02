@@ -44,6 +44,11 @@ do ->
       clearAlternateContactDetails: jasmine.createSpy()
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
+      invalidateContactForm: jasmine.createSpy()
+      validateHouseholdMemberAddress: ->
+        { error: -> null }
+      validateApplicantAddress: ->
+        { error: -> null }
       checkHouseholdEligiblity: (listing) ->
         return
       submitApplication: (options={}) ->
@@ -91,6 +96,8 @@ do ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -194,17 +201,13 @@ do ->
           return
         return
 
-    describe '$scope.getHouseholdMember', ->
-      it 'assigns $scope.householdMember with ShortFormApplicationService value', ->
-        scope.householdMember = {}
-        scope.getHouseholdMember()
-        expect(scope.householdMember).toEqual(fakeShortFormApplicationService.householdMember)
-        return
-
     describe '$scope.addHouseholdMember', ->
-      it 'calls addHouseholdMember in ShortFormApplicationService', ->
-        scope.addHouseholdMember()
-        expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
+      describe 'user has same address applicant', ->
+        it 'directly call addHouseholdMember in ShortFormApplicationService', ->
+          scope.householdMember.hasSameAddressAsApplicant = 'Yes'
+          scope.addHouseholdMember()
+          expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
+          return
         return
 
     describe '$scope.cancelHouseholdMember', ->
@@ -221,7 +224,7 @@ do ->
     describe '$scope.addressFailedValidation', ->
       it 'calls failedValidation in AddressValidationService', ->
         scope.validated_home_address = {street1: 'x'}
-        state.params.error = true
+        scope.addressError = true
         scope.addressFailedValidation('home_address')
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
@@ -230,7 +233,7 @@ do ->
       it 'calls failedValidation in AddressValidationService', ->
         scope.form = {applicationForm: {}}
         scope.validated_home_address = {street1: 'x'}
-        state.params.error = true
+        scope.addressError = true
         scope.addressInputInvalid('home_address')
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
         return
@@ -248,7 +251,7 @@ do ->
         it 'navigates ahead to verify address page', ->
           scope.applicant.noAddress = false
           scope.checkIfAddressVerificationNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.verify-address')
+          expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
           return
         return
 

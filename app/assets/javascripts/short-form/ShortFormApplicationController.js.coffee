@@ -294,10 +294,6 @@ ShortFormApplicationController = (
     FileUploadService.preferenceFileIsLoading(fileType)
 
   ###### Household Section ########
-  # $scope.getHouseholdMember = ->
-  #   # we just edit a copy, and then put it back in place after saving in addHouseholdMember
-  #   $scope.householdMember = angular.copy(ShortFormApplicationService.householdMember)
-
   $scope.addHouseholdMember = ->
     if $scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
         $scope.householdMember.neighborhoodPreferenceMatch

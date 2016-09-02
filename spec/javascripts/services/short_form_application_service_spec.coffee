@@ -139,8 +139,8 @@ do ->
         fakeHouseholdMember = undefined
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = null
 
-      it 'clears the householdMember object', ->
-        expect(ShortFormApplicationService.householdMember).toEqual {}
+      it 'invalidates the household form', ->
+        expect(ShortFormApplicationService.application.completedSections['Household']).toEqual false
         return
 
       describe 'new household member', ->
