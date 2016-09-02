@@ -40,15 +40,15 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
 
   Service.submitActions =
     'name': {path: 'contact'}
-    'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkLiveWorkEligibility']}
-    'verify-address': {path: 'alternate-contact-type', callback: ['checkLiveWorkEligibility']}
+    'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
+    'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
     'alternate-contact-phone-address': {callback: ['goToHouseholdLandingPage']}
     'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
-    'household-member-form': {callback: ['addHouseholdMember', 'checkLiveWorkEligibility']}
-    'household-member-form-edit': {callback: ['addHouseholdMember', 'checkLiveWorkEligibility']}
-    'household-member-verify-address': {path: 'household-members', callback: ['checkLiveWorkEligibility']}
+    'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
+    'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
+    'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'preferences-programs': {callback: ['checkIfPreferencesApply']}
     'live-work-preference': {path: 'preferences-vouchers'}
     'general-lottery-notice': {path: 'preferences-vouchers'}

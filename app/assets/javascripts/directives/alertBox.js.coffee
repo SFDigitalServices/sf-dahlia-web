@@ -3,6 +3,7 @@ angular.module('dahlia.directives')
   restrict: 'E'
   scope:
     formObject: '=?'
+    addressError: '=?'
     hideAlert: '=?'
     missingRequiredContactInfo: '=?'
     customMessage: '=?'
@@ -23,7 +24,7 @@ angular.module('dahlia.directives')
     scope.showAlert = ->
       if scope.customMessage
         return scope.hideAlert == false
-      if $state.params.error
+      if scope.addressError
         return true
       else
         form = scope.formObject

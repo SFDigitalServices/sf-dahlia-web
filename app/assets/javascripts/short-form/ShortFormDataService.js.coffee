@@ -60,7 +60,7 @@ ShortFormDataService = () ->
   Service._formatHouseholdDOB = (application) ->
     application.householdMembers.forEach( (member) ->
       member.dob = Service.formatUserDOB(member)
-      member = Service.removeDOBFields(member)
+      angular.copy(Service.removeDOBFields(member), member)
       delete member.id
       return
     )
@@ -222,7 +222,7 @@ ShortFormDataService = () ->
   Service._reformatPrimaryApplicant = (contact, altContact) ->
     whitelist = [
       'appMemberId', 'contactId',
-      'email', 'firstName', 'middleName', 'lastName',
+      'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther'
     ]
@@ -251,7 +251,8 @@ ShortFormDataService = () ->
 
   Service._reformatHouseholdMember = (contact) ->
     whitelist = [
-      'appMemberId', 'firstName', 'middleName', 'lastName', 'relationship'
+      'appMemberId', 'firstName', 'middleName', 'lastName',
+      'relationship', 'neighborhoodPreferenceMatch',
     ]
     member = _.pick contact, whitelist
     member.home_address = Service._reformatHomeAddress(contact)

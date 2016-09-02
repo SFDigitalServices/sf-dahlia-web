@@ -121,6 +121,7 @@ do ->
 
     describe 'addHouseholdMember', ->
       beforeEach ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
         fakeHouseholdMember =
           firstName: 'Bob'
           lastName: 'Williams'
@@ -128,15 +129,18 @@ do ->
           dob_day: '05'
           dob_year: '2015'
           relationship: 'Cousin'
+          hasSameAddressAsApplicant: 'Yes'
+          neighborhoodPreferenceMatch: null
         ShortFormApplicationService.householdMembers = []
         ShortFormApplicationService.householdMember = fakeHouseholdMember
         ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
       afterEach ->
         fakeHouseholdMember = undefined
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = null
 
-      it 'clears the householdMember object', ->
-        expect(ShortFormApplicationService.householdMember).toEqual {}
+      it 'invalidates the household form', ->
+        expect(ShortFormApplicationService.application.completedSections['Household']).toEqual false
         return
 
       describe 'new household member', ->
@@ -149,9 +153,35 @@ do ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
           expect(ShortFormApplicationService.householdMembers[0]).toEqual fakeHouseholdMember
           return
+
+        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
         return
 
       describe 'old household member update', ->
+        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          householdMember.hasSameAddressAsApplicant = 'Yes'
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
+
+        it 'does not copy neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant == "No"', ->
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          householdMember = angular.copy(householdMember)
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          householdMember.neighborhoodPreferenceMatch = 'Not Matched'
+          householdMember.hasSameAddressAsApplicant = 'No'
+          ShortFormApplicationService.addHouseholdMember(householdMember)
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.neighborhoodPreferenceMatch).not.toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          return
+
         it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
@@ -196,7 +226,7 @@ do ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
         return
 
-    describe 'refreshLiveWorkPreferences', ->
+    describe 'refreshPreferences', ->
       describe 'applicant does not work in SF', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
@@ -204,8 +234,8 @@ do ->
           ShortFormApplicationService.applicant.workInSf = 'No'
 
         it 'should not be assigned workInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(false)
+          ShortFormApplicationService.refreshPreferences()
+          expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
           return
         return
 
@@ -221,8 +251,8 @@ do ->
           ShortFormApplicationService.applicant.home_address = home_address
 
         it 'should not be assigned liveInSf preference', ->
-          ShortFormApplicationService.refreshLiveWorkPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(false)
+          ShortFormApplicationService.refreshPreferences()
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
           return
 
         describe 'was previously eligible and selected for liveInSf', ->
@@ -242,9 +272,9 @@ do ->
               liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
 
           it 'clear liveInSf preference data', ->
-            ShortFormApplicationService.refreshLiveWorkPreferences()
-            expect(ShortFormApplicationService.preferences.liveInSf).toEqual(false)
-            expect(ShortFormApplicationService.preferences.liveInSf_file).toEqual(null)
+            ShortFormApplicationService.refreshPreferences()
+            expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
+            expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
             return

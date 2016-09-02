@@ -286,6 +286,7 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
+                neighborhoodPreferenceMatch
               ),
             },
             {
@@ -311,6 +312,7 @@ class Api::V1::ShortFormController < ApiController
                 appMemberId
                 firstName
                 lastName
+                middleName
                 hasSameAddressAsApplicant
                 workInSf
                 relationship
@@ -319,6 +321,7 @@ class Api::V1::ShortFormController < ApiController
                 city
                 state
                 zip
+                neighborhoodPreferenceMatch
               ),
             },
             :listingID,

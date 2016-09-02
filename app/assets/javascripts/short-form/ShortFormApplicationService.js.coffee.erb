@@ -1,4 +1,7 @@
-ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, ShortFormDataService) ->
+ShortFormApplicationService = (
+  $translate, $http, Upload, uuid,
+  ListingService, ShortFormDataService, AddressValidationService, GeocodingService
+) ->
   Service = {}
   Service.listing = ListingService.listing
   Service.form = {}
@@ -23,15 +26,6 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       liveInSf: null
       workInSf: null
       neighborhoodResidence: null
-      liveInSf_file: null
-      workInSf_file: null
-      neighborhoodResidence_file: null
-      liveInSf_file_loading: null
-      workInSf_file_loading: null
-      neighborhoodResidence_file_loading: null
-      liveInSf_file_error: null
-      workInSf_file_error: null
-      neighborhoodResidence_file_error: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     completedSections:
       Intro: false
@@ -68,8 +62,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
   Service.userCanAccessSection = (name, state = null) ->
     # user can't access later sections yet when on the welcome page
-    # applicant and household members must verify their addresses and need to click next
-    if state and (Service.isWelcomePage(state) || Service._isPrimaryOrHouseholdAddressPage(state))
+    if state and (Service.isWelcomePage(state))
       return false
 
     completed = Service.application.completedSections
@@ -135,6 +128,9 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     Service.current_id = max_id + 1
 
   Service.addHouseholdMember = (householdMember) ->
+    if householdMember.hasSameAddressAsApplicant == 'Yes'
+      # copy applicant's neighborhoodPreferenceMatch to householdMember
+      householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
@@ -147,17 +143,18 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
           new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
           Service.preferences[k] = new_full_name
       # update existing householdMember
-      angular.copy(householdMember, Service.householdMember)
-    Service.householdMember = {}
+      householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
+      angular.copy(householdMember, householdMemberToUpdate)
     Service.invalidateHouseholdForm()
 
-  Service.resetHouseholdmember = () ->
-    Service.householdMember = {}
+  Service.resetHouseholdMember = () ->
+    angular.copy({}, Service.householdMember)
 
   Service.getHouseholdMember = (id) ->
-    Service.householdMember = _.find(Service.householdMembers, {id: parseInt(id)})
+    angular.copy(_.find(Service.householdMembers, {id: parseInt(id)}), Service.householdMember)
 
   Service.cancelHouseholdMember = ->
+    # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
     # clear out preferences where this householdMember was selected
@@ -166,19 +163,25 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     _.each Service.preferences, (v,k) ->
       if k.indexOf('_household_member') > 0 and v == full_name
         preference = k.split('_household_member')[0]
-        Service.preferences[preference] = false
-        Service.preferences[k] = null
-        if Service.preferences["#{preference}_proof_option"]
-          Service.preferences["#{preference}_proof_option"] = null
-        # TODO: fix, these are no longer in this service
-        #       but we can't include FileUploadService because it would be circular dependency
-        # if Service.hasPreferenceFile("#{preference}_proof_file")
-        #   Service.deletePreferenceFile("#{preference}_proof_file")
+        Service.cancelPreference(preference)
 
     # persist the changes to Service.householdMembers
-    Service.householdMember = {}
+    Service.resetHouseholdMember()
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
+
+  Service.copyNeighborhoodMatchToHousehold = ->
+    Service.householdMembers.forEach( (member) ->
+      if member.hasSameAddressAsApplicant == 'Yes'
+        # copy applicant's neighborhoodPreferenceMatch to householdMember
+        member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+    )
+
+  Service.cancelPreference = (preference) ->
+    Service.preferences[preference] = null
+    Service.preferences["#{preference}_household_member"] = null
+    Service.preferences["#{preference}_proof_option"] = null
+    Service.preferences["#{preference}_proof_file"] = null
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -211,7 +214,7 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       income.incomeTotal * 12
 
   ### Proof of Preferences ###
-  Service.refreshLiveWorkPreferences = () ->
+  Service.refreshPreferences = () ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
     Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
@@ -236,15 +239,11 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return workInSfMembers
 
   Service.neighborhoodResidenceMembers = () ->
-    # find all household members that either have their own address and match
-    # -- OR -- same address as applicant, who also matches
+    # find all household members that match
     household = Service.application.householdMembers.filter (member) ->
-      if (member.hasSameAddressAsApplicant == 'Yes')
-        return Service.applicant.home_address.boundary_match
-      else
-        member.home_address && member.home_address.boundary_match
+      member.neighborhoodPreferenceMatch == 'Matched'
     # add applicant to the list if they match
-    if Service.applicant.home_address.boundary_match
+    if Service.applicant.neighborhoodPreferenceMatch == 'Matched'
       household.unshift(Service.applicant)
     household
 
@@ -256,19 +255,11 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    members = eligibleMembers.map (member) ->
-      Service._householdMemberName(member)
+    members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
-
     # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
     if _.isEmpty(members) || !_.includes(members, selectedMember)
-      Service.preferences[preference] = false
-      Service.preferences[preference + '_file'] = null
-      Service.preferences[preference + '_household_member'] = null
-      Service.preferences[preference + '_proof_option'] = null
-
-  Service._householdMemberName = (member) ->
-    (member.firstName + ' ' + member.lastName)
+      Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
@@ -288,7 +279,11 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
-      Service.application.validatedForms[section.name][stateName] = Service.form.applicationForm.$valid
+      isValid = Service.form.applicationForm.$valid
+      # special case for contact form
+      if stateName.match(/contact/)
+        isValid = !!Service.applicant.neighborhoodPreferenceMatch
+      Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
@@ -303,6 +298,9 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
   Service.isLeavingShortForm = (toState, fromState) ->
     # leaving means we're going from short form to a non-short form page
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.invalidateContactForm = ->
+    Service.application.validatedForms['You']['contact'] = false
 
   Service.invalidateIncomeForm = ->
     Service.application.completedSections['Income'] = false
@@ -443,6 +441,42 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
     # return T/F if data was changed or not
     return changed
 
+
+  ####### Address validation functions
+  Service.validateApplicantAddress = (callback) ->
+    # validate + geocode address
+    # errors are handled in the controller
+    AddressValidationService.validate(
+      address: Service.applicant.home_address
+      type: 'home'
+    ).success( ->
+      Service.copyHomeToMailingAddress()
+      GeocodingService.geocode(
+        address: Service.applicant.home_address,
+        member: Service.applicant
+      ).success( ->
+        Service.copyNeighborhoodMatchToHousehold()
+        callback()
+      )
+    )
+
+  Service.validateHouseholdMemberAddress = (callback) ->
+    # validate + geocode address
+    # errors are handled in the controller
+    AddressValidationService.validate(
+      address: Service.householdMember.home_address
+      type: 'home'
+    ).success( ->
+      GeocodingService.geocode(
+        address: Service.householdMember.home_address,
+        member: Service.householdMember
+      ).success( ->
+        Service.addHouseholdMember(Service.householdMember)
+        callback()
+      )
+    )
+
+
   return Service
 
 ############################################################################################
@@ -451,7 +485,8 @@ ShortFormApplicationService = ($translate, $http, Upload, uuid, ListingService, 
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', 'Upload', 'uuid',
-  'ListingService', 'ShortFormDataService'
+  'ListingService', 'ShortFormDataService',
+  'AddressValidationService', 'GeocodingService'
 ]
 
 angular
