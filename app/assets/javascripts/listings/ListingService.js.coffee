@@ -220,6 +220,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     # listing is open if deadline is in the future
     return deadline > now
 
+  Service.isAcceptingOnlineApplications = (listing) ->
+    return false if _.isEmpty(listing)
+    return false unless Service.listingIsOpen(listing)
+    return listing.Accepting_Online_Applications
+
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
     percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
