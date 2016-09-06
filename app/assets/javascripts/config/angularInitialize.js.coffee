@@ -1,9 +1,17 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'Idle', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, Idle, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  '$rootScope', '$state', '$window', '$translate', 'Idle', 'bsLoadingOverlayService',
+  'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
+  ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
+
+    bsLoadingOverlayService.setGlobalConfig({
+      delay: 0
+      activeClass: 'loading'
+      templateUrl: 'shared/templates/spinner.html'
+    })
 
     $rootScope.$on 'IdleStart', ->
       if AccountService.loggedIn()
@@ -21,6 +29,9 @@
         $state.go('dahlia.listing', {skipConfirm: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+      # always start the loading overlay
+      bsLoadingOverlayService.start()
+
       if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
@@ -43,6 +54,8 @@
           false
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+      # always stop the loading overlay
+      bsLoadingOverlayService.stop()
 
       #### Idle Trigger/Untrigger
       if ShortFormApplicationService.isShortFormPage($state.current) || AccountService.loggedIn()
@@ -67,6 +80,9 @@
           AccountService.rememberShortFormState(fromState.name)
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
+      # always stop the loading overlay
+      bsLoadingOverlayService.stop()
+
       if fromState.name == ''
         return $state.go('dahlia.welcome')
 

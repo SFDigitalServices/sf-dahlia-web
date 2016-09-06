@@ -22,6 +22,7 @@
   'ui.validate',
   'ng-token-auth',
   'angular-uuid',
+  'bsLoadingOverlay'
 ]
 
 # Custom Directives

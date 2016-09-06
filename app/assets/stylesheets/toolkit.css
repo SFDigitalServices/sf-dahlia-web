@@ -9033,7 +9033,7 @@ input.icon-input-field {
     left: 0;
     background-color: rgba(255, 255, 255, 0.8);
     content: '';
-    z-index: 2; }
+    z-index: 102; }
   .loading .spinner {
     position: absolute;
     top: 50%;
@@ -9044,7 +9044,7 @@ input.icon-input-field {
     margin-right: auto;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    z-index: 3; }
+    z-index: 103; }
 
 .share-accordion .accordion-header {
   position: relative; }
