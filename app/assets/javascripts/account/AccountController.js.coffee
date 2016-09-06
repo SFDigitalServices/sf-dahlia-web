@@ -223,6 +223,11 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.dahliaContactEmail = ->
     { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
 
+  # clear error messages and user auth form fields on state transition
+  $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+    AccountService.clearAccountMessages()
+    AccountService.resetUserAuth()
+
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
 angular
