@@ -52,6 +52,8 @@ class Api::V1::ListingsController < ApiController
   end
 
   def lottery_preferences
+    # this is not returning anything anymore.
+    # $scope.lotteryPreferencesDescription is empty
     @lottery_preferences = ListingService.lottery_preferences
     render json: { lottery_preferences: @lottery_preferences }
   end

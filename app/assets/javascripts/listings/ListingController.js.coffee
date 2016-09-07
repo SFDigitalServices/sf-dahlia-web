@@ -87,7 +87,7 @@ ListingController = (
     IncomeCalculatorService.resetIncomeSources()
 
   $scope.listingApplicationClosed = (listing) ->
-    ! ListingService.listingIsOpen(listing.Application_Due_Date)
+    ! ListingService.listingIsOpen(listing)
 
   $scope.lotteryDatePassed = (listing) ->
     today = new Date
