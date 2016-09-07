@@ -1,0 +1,38 @@
+{
+   "application": {
+      "id": null,
+      "status": "submitted",
+      "applicationSubmittedDate": "2016-09-07",
+      "surveyComplete": false,
+      "applicationSubmissionType": "Electronic",
+      "householdMembers": [{
+         "firstName": "Obie",
+         "lastName": "Kanobi",
+         "hasSameAddressAsApplicant": true,
+         "workInSf": false,
+         "relationship": "Spouse",
+         "dob": "1990-7-23"
+      }],
+      "householdVouchersSubsidies": true,
+      "listingID": "a0WU000000ClNXGMA3",
+      "referral": "",
+      "agreeToTerms": true,
+      "annualIncome": 20000,
+      "primaryApplicant": {
+         "phone": "2222222222",
+         "firstName": "Christine",
+         "lastName": "Dolendo",
+         "noPhone": false,
+         "phoneType": "Home",
+         "additionalPhone": false,
+         "alternatePhone": null,
+         "alternatePhoneType": null,
+         "noEmail": true,
+         "hasAltMailingAddress": false,
+         "noAddress": true,
+         "workInSf": false,
+         "gender": "Male",
+         "dob": "1990-2-2"
+      }
+   }
+}
