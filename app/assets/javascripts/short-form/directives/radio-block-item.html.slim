@@ -1,3 +1,3 @@
 .radio-block.margin-bottom
-  input(id="{{id}}" ng-required="ngRequired" ng-model="user[name]" name="{{name}}" type="radio" ng-value="value" ng-class="{ error: inputInvalid(name)}")
+  input(id="{{id}}" ng-required="ngRequired" ng-model="user[name]" name="{{name}}" type="radio" ng-value="value" ng-class="{ error: inputInvalid(name)}" ng-change="onChange()")
   label.radio-block_label for="{{id}}" ng-transclude=""

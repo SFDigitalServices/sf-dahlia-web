@@ -304,6 +304,9 @@ ShortFormApplicationService = (
   Service.invalidateContactForm = ->
     Service.application.validatedForms['You']['contact'] = false
 
+  Service.invalidateAltContactTypeForm = ->
+    Service.application.validatedForms['You']['alternate-contact-type'] = false
+
   Service.invalidateIncomeForm = ->
     Service.application.completedSections['Income'] = false
     Service.application.validatedForms['Income']['income'] = false
