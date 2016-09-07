@@ -77,29 +77,28 @@ describe 'ShortForm API' do
     end
   end
 
-  # describe 'submit_application' do
-  # RSPEC IS CONVERTING THE BOOLEAN TO STRINGS, SALESFORCE REJECTING PARAMS
-  #   before do
-  #     Api::V1::ShortFormController.any_instance
-  #                                 .stub(:attach_files_and_send_confirmation)
-  #                                 .and_return(true)
-  #     Api::V1::ShortFormController.any_instance
-  #                                 .stub(:delete_draft_application)
-  #                                 .and_return(true)
-  #   end
+  describe 'submit_application' do
+    # NOTE: to get this one to work we created a cassette that stripped out all bools
+    #    because VCR converts the bools->strings, which makes salesforce reject it
+    before do
+      Api::V1::ShortFormController.any_instance
+                                  .stub(:attach_files_and_send_confirmation)
+                                  .and_return(true)
+      Api::V1::ShortFormController.any_instance
+                                  .stub(:delete_draft_application)
+                                  .and_return(true)
+    end
 
-  #   it 'returns successful response' do
-  #     url = '/api/v1/short-form/application'
-  #     file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
-  #     params = JSON.parse(File.read(file))
-  #     p params
-  #     p 'JSON PARSE ABOVE'
-  #     VCR.use_cassette('shortform/submit_application') do
-  #       post url, params, format: :json
-  #     end
-  #     expect(response).to be_success
-  #   end
-  # end
+    it 'returns successful response' do
+      url = '/api/v1/short-form/application'
+      file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
+      params = JSON.parse(File.read(file))
+      VCR.use_cassette('shortform/submit_application') do
+        post url, params, format: :json
+      end
+      expect(response).to be_success
+    end
+  end
 
   it 'gets eligibility matches' do
     VCR.use_cassette('shortform/validate_household_match') do
