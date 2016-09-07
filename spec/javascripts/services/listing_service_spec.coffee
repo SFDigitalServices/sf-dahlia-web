@@ -107,8 +107,32 @@ do ->
         tomorrow = new Date()
         tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
-        expect(ListingService.listingIsOpen(listing.Application_Due_Date)).toEqual true
+        expect(ListingService.listingIsOpen(listing)).toEqual true
         return
+      return
+
+    describe 'Service.isAcceptingOnlineApplications', ->
+      it 'returns false if an empty listing is passed in', ->
+        expect(ListingService.isAcceptingOnlineApplications({})).toEqual false
+        return
+
+      it 'returns false if due date has passed', ->
+        listing = fakeListing.listing
+        past = new Date()
+        past.setDate(past.getDate() - 10)
+        listing.Application_Due_Date = past.toString()
+        expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
+        return
+
+      it 'returns true if due date in future and Accepting_Online_Applications', ->
+        listing = fakeListing.listing
+        listing.Accepting_Online_Applications = true
+        tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        listing.Application_Due_Date = tomorrow.toString()
+        expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
+        return
+
       return
 
     describe 'Service.toggleFavoriteListing', ->

@@ -39,7 +39,8 @@ html lang="en"
       section(ui-view="translate")
       section(ui-view="version")
       section(ui-view="navigation")
-      section(ui-view="container")
+      .loading-overlay(bs-loading-overlay)
+        section(ui-view="container")
     .footer-section(ui-view="footer")
 
     / icon collection
