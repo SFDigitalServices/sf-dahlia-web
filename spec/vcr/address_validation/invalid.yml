@@ -30,44 +30,48 @@ http_interactions:
       - 1; mode=block
       X-Content-Type-Options:
       - nosniff
+      X-Ep-Request-Uuid:
+      - 9d662082-2def-40eb-8c74-633d2ff727e5
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, private
+      Pragma:
+      - no-cache
+      Expires:
+      - '0'
       Location:
-      - "/api/v2/addresses/adr_e968f7a712d7457180d3788ee8202085"
+      - "/api/v2/addresses/adr_ba3f0e7f813a44448908e503a5579142"
       Content-Type:
       - application/json; charset=utf-8
-      Etag:
-      - W/"0a658c3badf42c2dfa709a21153824b7"
-      Cache-Control:
-      - max-age=0, private, must-revalidate
       X-Request-Id:
-      - d18d2d5b-6659-4ebb-824f-7c157d61bada
+      - 21950ff5-ff97-4cab-b403-ed1611f72ab2
       X-Runtime:
-      - '0.321199'
+      - '0.334818'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - 77c937474c
+      - e8e9178a41
       - easypost
-      - web14sj
+      - web11sj
       X-Backend:
       - easypost
       X-Proxied:
-      - lb5sj, c105967beb
+      - lb5sj, 95ad0152de
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA4SRTU/DMAyG/0qVM0xN6daut8HYcZMYXECoMok7gtJkSlIE
-        TP3vOEUd4kNwqFJbr+3Hrw9MSVYxkK7G+axsCih4Jot8WvAylWdFWSKWWZql
-        5ZSdMPvwhCKQfiGlQ+8pJRxCQFlDTGcpn52mxWnGr3lZTfMqy29J0+3lvxoD
-        LbLKdFpTT9vuwbyOoQ8OMXCq5dl8zuc8Odfw+EBf4sOEjYLsWK4C1bItmGTl
-        wAjlhR1UBEH5iwUFb2o/9DvL417Cdia4WHSzpXD/aM0RBltQegxaK2OLgD7E
-        MnBOoasbEEoPQz9UZI2SaIKCY2GDEh3oOsBLHR0fNyOkb7lndKpRAoKyxrPq
-        wCRqRcnX+O87IaLvVQPaI8E5Zx2FdwfaYUC7nCyWy6vL7Xay3lzXq83Nehl3
-        73Y7YqaWRyCF+uPy4yVbemCHn9dNjA1JQ9ZI1t+fEEcgJyJS3w8G5v8Q/Rz6
-        14jfkP7Y6QtR7N73/TsAAAD//wMA4wvq980CAAA=
+        H4sIAAAAAAAAA5SR0U/CMBDG/5Wlz0A6xoTtDUUfNRF40ZjlWG9Q07Wk7YxI
+        9r97HRlGYyQuWba7fN/1d1+PTAqWMxC22EBScZxWsziBCT2zjM8w5Qmk6TSL
+        J2M2YGbziqUn/VwIi85Rq7QIHkUBoT3m8dWQZ0M+XfE050me8ifSNHtxUaOh
+        RpbrRimaaeo96ENfOm8RfUzeeJxlcRZH1wp2G3oj50esF4zPdunJy5agozsL
+        upSuNJ2KIKh/M6fiQ+67eckkDUuYRnsbTOsllfud0WcYrEGqvqiNCCM8Oh9s
+        YK1EW1RQStUdelJRNFKg9hLOxgoFWlCFh/ciJN5vRkg/em9oZSVL8NJox/Ij
+        E6gkNQ/h3zVlGXLPK1AOCc5aY6l8PtIOHdrtaL5YPN4ul6P7h1Vx97C+XxBp
+        JVGd7rm/t5o+sMWvu4y08VFFQYiQVbPd0o6EcMJqXwbE4SmJgNS2XYCTC0T/
+        O+I3yD92+kbUIbbtJwAAAP//AwDJuGFnzQIAAA==
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:54:25 GMT
+  recorded_at: Wed, 07 Sep 2016 05:03:50 GMT
 recorded_with: VCR 3.0.3

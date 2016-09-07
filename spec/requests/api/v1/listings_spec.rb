@@ -14,8 +14,8 @@ describe 'Listings API' do
   end
   describe 'show' do
     save_fixture do
-      VCR.use_cassette('listings/a0X210000004afdEAA') do
-        get '/api/v1/listings/a0X210000004afdEAA.json'
+      VCR.use_cassette('listings/a0Wf0000003j03WEAQ') do
+        get '/api/v1/listings/a0Wf0000003j03WEAQ.json'
       end
     end
   end
@@ -29,17 +29,17 @@ describe 'Listings API' do
   describe 'units' do
     save_fixture do
       VCR.use_cassette('listings/units') do
-        get '/api/v1/listings/a0X210000004afdEAA/units.json'
+        get '/api/v1/listings/a0Wf0000003j03WEAQ/units.json'
       end
     end
   end
-  describe 'lottery preferences' do
-    save_fixture do
-      VCR.use_cassette('listings/lottery-preferences') do
-        get '/api/v1/listings/lottery-preferences.json'
-      end
-    end
-  end
+  # describe 'lottery preferences' do
+  #   save_fixture do
+  #     VCR.use_cassette('listings/lottery-preferences') do
+  #       get '/api/v1/listings/lottery-preferences.json'
+  #     end
+  #   end
+  # end
   describe 'eligibility listings' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
@@ -77,12 +77,12 @@ describe 'Listings API' do
 
     # check to make sure the right amount of listings are returned
     # (based on VCR cassette with 15 listings)
-    expect(json['listings'].length).to eq(15)
+    expect(json['listings'].length).to eq(16)
   end
 
   it 'sends an individual listing' do
-    VCR.use_cassette('listings/a0X210000004afdEAA') do
-      get '/api/v1/listings/a0X210000004afdEAA.json'
+    VCR.use_cassette('listings/a0Wf0000003j03WEAQ') do
+      get '/api/v1/listings/a0Wf0000003j03WEAQ.json'
     end
 
     json = JSON.parse(response.body)
@@ -91,7 +91,7 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right Id is present
-    expect(json['listing']['Id']).to eq('a0X210000004afdEAA')
+    expect(json['listing']['Id']).to eq('a0Wf0000003j03WEAQ')
   end
 
   it 'gets eligibility matches' do
@@ -130,24 +130,24 @@ describe 'Listings API' do
     expect(json['ami'].length).to eq(9)
   end
 
-  it 'gets Lottery Preferences' do
-    VCR.use_cassette('listings/lottery-preferences') do
-      get '/api/v1/listings/lottery-preferences.json'
-    end
+  # it 'gets Lottery Preferences' do
+  #   VCR.use_cassette('listings/lottery-preferences') do
+  #     get '/api/v1/listings/lottery-preferences.json'
+  #   end
 
-    json = JSON.parse(response.body)
+  #   json = JSON.parse(response.body)
 
-    # test for the 200 status-code
-    expect(response).to be_success
+  #   # test for the 200 status-code
+  #   expect(response).to be_success
 
-    # check to make sure the right amount of lottery preferences are returned
-    # (based on VCR cassette with 5 results)
-    expect(json['lottery_preferences'].length).to eq(5)
-  end
+  #   # check to make sure the right amount of lottery preferences are returned
+  #   # (based on VCR cassette with 5 results)
+  #   expect(json['lottery_preferences'].length).to eq(5)
+  # end
 
   it 'gets Unit results for a Listing' do
     VCR.use_cassette('listings/units') do
-      get '/api/v1/listings/a0X210000004afdEAA/units.json'
+      get '/api/v1/listings/a0Wf0000003j03WEAQ/units.json'
     end
 
     json = JSON.parse(response.body)
@@ -161,15 +161,15 @@ describe 'Listings API' do
   end
 
   # TO DO: Convert other listings specs to QA env so this test can pass locally
-  # it 'gets lottery buckets for a Listing' do
-  #   VCR.use_cassette('listings/lottery-buckets') do
-  #     get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
-  #   end
+  it 'gets lottery buckets for a Listing' do
+    VCR.use_cassette('listings/lottery-buckets') do
+      get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
+    end
 
-  #   json = JSON.parse(response.body)
+    json = JSON.parse(response.body)
 
-  #   expect(response).to be_success
+    expect(response).to be_success
 
-  #   expect(json['lottery_buckets']['bucketResults'].length).to eq(5)
-  # end
+    expect(json['lottery_buckets']['bucketResults'].length).to eq(5)
+  end
 end

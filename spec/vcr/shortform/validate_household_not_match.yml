@@ -5,7 +5,7 @@ http_interactions:
     uri: https://test.salesforce.com/services/oauth2/token
     body:
       encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40mohcd.com.full&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:55:41 GMT
+      - Wed, 07 Sep 2016 15:52:50 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,8 +29,8 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=Gavv6f0sQjy-RPbE8TdT2Q;Path=/;Domain=.salesforce.com;Expires=Mon,
-        19-Sep-2016 18:55:41 GMT
+      - BrowserId=n2by4e0tSiWk5AZLlMgxcw;Path=/;Domain=.salesforce.com;Expires=Sun,
+        06-Nov-2016 15:52:50 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -45,12 +45,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1469127342112","signature":"KqWr7vHbGSZAuRelxsJL3AnCcDER3JdmdYtNq0ZKh/0="}'
+      string: '{"access_token":"00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa","instance_url":"https://sfhousing--QA.cs16.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473263570736","signature":"ek7jpgxmwkFDTc1W0aDYTskFIvfNCYGIYrDX38XuA88="}'
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:55:42 GMT
+  recorded_at: Wed, 07 Sep 2016 15:52:50 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0X210000000IMMEA2?householdsize=10&incomelevel=10000
+    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3?childrenUnder6=0&householdsize=10&incomelevel=10000
     body:
       encoding: US-ASCII
       string: ''
@@ -58,7 +58,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7
+      - OAuth 00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,7 +69,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:55:42 GMT
+      - Wed, 07 Sep 2016 15:52:51 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
@@ -77,8 +77,8 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=TqwdSEbsTTWNSdqxOye2fQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        19-Sep-2016 18:55:42 GMT
+      - BrowserId=RSHBG5oiSN64t5FSaYmCWQ;Path=/;Domain=.salesforce.com;Expires=Sun,
+        06-Nov-2016 15:52:51 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -87,8 +87,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"listingId":"a0X210000000IMMEA2","incomeMatch":false,"incomeEligibilityResult":"Too
+      string: '{"listingId":"a0WU000000ClNXGMA3","incomeMatch":false,"incomeEligibilityResult":"Too
         Low","householdMatch":false,"householdEligibilityResult":"Too Big"}'
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:55:42 GMT
+  recorded_at: Wed, 07 Sep 2016 15:52:51 GMT
 recorded_with: VCR 3.0.3
