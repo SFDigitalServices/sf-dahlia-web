@@ -16,11 +16,11 @@ a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" n
   | Email
 p.content-group_address.no-margin
   | {{listing.Application_Organization}}
-p.c-steel
-  | {{ listing.Building_Street_Address }},
+p.c-steel ng-if="listing.Application_Street_Address"
+  | {{ listing.Application_Street_Address }},
   br
-  | {{ listing.Building_City }} {{ listing.Building_State }} {{ listing.Building_Zip_Code }}
-a.has-icon.d-block.margin-bottom title="View Map: {{formattedBuildingAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
+  | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
+a.has-icon.d-block.margin-bottom target="_blank" title="View Map: {{formattedApplicationAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}" ng-if="listing.Application_Street_Address"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-map"
