@@ -10,7 +10,7 @@ describe 'ShortForm API' do
       save_fixture do
         VCR.use_cassette('shortform/validate_household_match') do
           params = {
-            listing_id: 'a0X210000000IMMEA2',
+            listing_id: 'a0WU000000ClNXGMA3',
             eligibility: {
               householdsize: '2',
               incomelevel: 40_000,
@@ -24,7 +24,7 @@ describe 'ShortForm API' do
       save_fixture do
         VCR.use_cassette('shortform/validate_household_not_match') do
           params = {
-            listing_id: 'a0X210000000IMMEA2',
+            listing_id: 'a0WU000000ClNXGMA3',
             eligibility: {
               householdsize: '10',
               incomelevel: 10_000,
@@ -41,7 +41,7 @@ describe 'ShortForm API' do
   it 'gets eligibility matches' do
     VCR.use_cassette('shortform/validate_household_match') do
       params = {
-        listing_id: 'a0X210000000IMMEA2',
+        listing_id: 'a0WU000000ClNXGMA3',
         eligibility: {
           householdsize: '2',
           incomelevel: 40_000,
