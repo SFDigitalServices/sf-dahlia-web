@@ -73,10 +73,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       parseFloat(Service.eligibility_filters.income_total)
 
   Service.occupancyMinMax = (listing) ->
-    minMax = [1,1]
+    minMax = [1, 1]
     if listing.unitSummary
-      listing.unitSummary.forEach (unit_summary) ->
-        minMax = [Math.min(minMax[0], unit_summary.minOccupancy), Math.max(minMax[1], unit_summary.maxOccupancy)]
+      min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      minMax = [min, max]
     return minMax
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
