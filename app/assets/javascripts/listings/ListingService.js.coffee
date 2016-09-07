@@ -73,10 +73,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       parseFloat(Service.eligibility_filters.income_total)
 
   Service.occupancyMinMax = (listing) ->
-    minMax = [1,1]
+    minMax = [1, 1]
     if listing.unitSummary
-      listing.unitSummary.forEach (unit_summary) ->
-        minMax = [Math.min(minMax[0], unit_summary.minOccupancy), Math.max(minMax[1], unit_summary.maxOccupancy)]
+      min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      minMax = [min, max]
     return minMax
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
@@ -85,7 +86,10 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     ami.forEach (amiLevel) ->
       occupancy = parseInt(amiLevel.numOfHousehold)
       # only grab the incomeLevels that fit within our listing's occupancyMinMax
-      if occupancy >= occupancyMinMax[0] && occupancy <= occupancyMinMax[1]
+      # + we add 2 more to account for potential childrenUnder6
+      min = occupancyMinMax[0]
+      max = occupancyMinMax[1] + 2
+      if occupancy >= min && occupancy <= max
         incomeLevels.push({
           occupancy: occupancy,
           yearly: parseFloat(amiLevel.amount),
@@ -186,14 +190,14 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
-      if Service.listingIsOpen(listing.Application_Due_Date)
+      if Service.listingIsOpen(listing)
         # All Open Listings Array
         Service.openListings.push(listing)
         if listing.Does_Match
           Service.openMatchListings.push(listing)
         else
           Service.openNotMatchListings.push(listing)
-      else if !Service.listingIsOpen(listing.Application_Due_Date)
+      else if !Service.listingIsOpen(listing)
         if listing.Lottery_Results
           Service.lotteryResultsListings.push(listing)
         else
@@ -213,12 +217,17 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 
   # Business logic for determining if a listing is open
   # `due date` should be a datetime, to include precise hour of deadline
-  Service.listingIsOpen = (due_date) ->
-    return false unless due_date
+  Service.listingIsOpen = (listing) ->
+    return false unless listing.Application_Due_Date
     now = moment()
-    deadline = moment(due_date).tz('America/Los_Angeles')
+    deadline = moment(listing.Application_Due_Date).tz('America/Los_Angeles')
     # listing is open if deadline is in the future
     return deadline > now
+
+  Service.isAcceptingOnlineApplications = (listing) ->
+    return false if _.isEmpty(listing)
+    return false unless Service.listingIsOpen(listing)
+    return listing.Accepting_Online_Applications
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)

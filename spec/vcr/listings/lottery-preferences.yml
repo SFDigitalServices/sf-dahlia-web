@@ -5,7 +5,7 @@ http_interactions:
     uri: https://test.salesforce.com/services/oauth2/token
     body:
       encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40mohcd.com.full&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:55:37 GMT
+      - Wed, 07 Sep 2016 04:50:05 GMT
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Content-Security-Policy-Report-Only:
@@ -29,8 +29,8 @@ http_interactions:
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
         data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
       Set-Cookie:
-      - BrowserId=5WT2fVsRSqCS7Gysk7kMVQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        19-Sep-2016 18:55:37 GMT
+      - BrowserId=DA5NBY2NSvimlWSD03Eiag;Path=/;Domain=.salesforce.com;Expires=Sun,
+        06-Nov-2016 04:50:05 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -45,12 +45,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7","instance_url":"https://sfhousing--full.cs26.my.salesforce.com","id":"https://test.salesforce.com/id/00D210000000OEpEAM/00521000000E79dAAC","token_type":"Bearer","issued_at":"1469127337484","signature":"C4LMsNxBrCEpHYJ4SRWF/8CqL6y2qTgQnS6IzfwXmko="}'
+      string: '{"access_token":"00Df0000003aGup!AQ4AQBEPjNyj0_sMfIKAzsZf.cq0l_m.01ekeE.N9n8voyX2_qKk9jFq.CDQsm_WFse3PlhnR3uIap5qMNP9FATwRKA4LWsW","instance_url":"https://sfhousing--QA.cs16.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473223805741","signature":"QzMqw8qAQnFnw23+BamROU+r+0rZoexYbss9rtHFtfg="}'
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:55:37 GMT
+  recorded_at: Wed, 07 Sep 2016 04:50:05 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs26.my.salesforce.com/services/apexrest/LotteryPreference
+    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/LotteryPreference
     body:
       encoding: US-ASCII
       string: ''
@@ -58,18 +58,18 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00D210000000OEp!AQMAQLhjioobcBcXVh4QuEsznAt_4Zv70c3bmikMnYtpa_a9bzxS8aUFm4vcKLIkIgZVgAmqJ5QKG.32.8ixbx8nsZ91GfQ7
+      - OAuth 00Df0000003aGup!AQ4AQBEPjNyj0_sMfIKAzsZf.cq0l_m.01ekeE.N9n8voyX2_qKk9jFq.CDQsm_WFse3PlhnR3uIap5qMNP9FATwRKA4LWsW
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
       - "*/*"
   response:
     status:
-      code: 200
-      message: OK
+      code: 500
+      message: Server Error
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:55:37 GMT
+      - Wed, 07 Sep 2016 04:50:06 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
         style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
@@ -77,8 +77,8 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=Vi8VAW55QwW06tZ11-_GPQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        19-Sep-2016 18:55:37 GMT
+      - BrowserId=YtG8bdJBTTir5GRKAG7diA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        06-Nov-2016 04:50:06 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -86,13 +86,9 @@ http_interactions:
       Transfer-Encoding:
       - chunked
     body:
-      encoding: ASCII-8BIT
-      string: '[{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m210000004l2cAAA"},"Id":"a0m210000004l2cAAA","Name":"Live/Work","Description__c":"Lives
-        near location"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIuAAO"},"Id":"a0m21000000DFIuAAO","Name":"Certificate
-        of Preference","Description__c":"Certificate of Preference (COP)"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFIzAAO"},"Id":"a0m21000000DFIzAAO","Name":"Displaced
-        Tenants Housing Preference","Description__c":"DTHP program"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFJ4AAO"},"Id":"a0m21000000DFJ4AAO","Name":"Live/Work","Description__c":"Lives
-        for works close to property"},{"attributes":{"type":"Lottery_Preference__c","url":"/services/data/v35.0/sobjects/Lottery_Preference__c/a0m21000000DFJ9AAO"},"Id":"a0m21000000DFJ9AAO","Name":"Live/Work
-        in SF","Description__c":"Live or work in San Francisco"}]'
+      encoding: UTF-8
+      string: '[{"errorCode":"APEX_ERROR","message":"Exception: Method does not exist
+        or incorrect signature: ListingLotteryService.getLotteryPreferenceByID(String)\n\n"}]'
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:55:37 GMT
+  recorded_at: Wed, 07 Sep 2016 04:50:06 GMT
 recorded_with: VCR 3.0.3

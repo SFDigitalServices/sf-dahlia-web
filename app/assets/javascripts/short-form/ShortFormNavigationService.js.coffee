@@ -1,4 +1,6 @@
-ShortFormNavigationService = ($state, ShortFormApplicationService) ->
+ShortFormNavigationService = (
+  $state, bsLoadingOverlayService, ShortFormApplicationService
+) ->
   Service = {}
   Service.loading = false
   Service.sections = [
@@ -85,6 +87,10 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
       return Service.loading
     else
       Service.loading = bool
+      if Service.loading
+        bsLoadingOverlayService.start()
+      else
+        bsLoadingOverlayService.stop()
 
   Service.hasNav = ->
     hideNav = ['intro', 'confirmation']
@@ -187,7 +193,9 @@ ShortFormNavigationService = ($state, ShortFormApplicationService) ->
 
   return Service
 
-ShortFormNavigationService.$inject = ['$state', 'ShortFormApplicationService']
+ShortFormNavigationService.$inject = [
+  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService'
+]
 
 angular
   .module('dahlia.services')

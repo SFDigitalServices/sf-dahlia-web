@@ -356,7 +356,10 @@
       abstract: true
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id)
+          ListingService.getListing($stateParams.id).then ->
+            if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
+              # kick them out unless there's a real listing
+              $state.go('dahlia.welcome')
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -386,7 +389,7 @@
           '$stateParams', '$state', 'ListingService',
           ($stateParams, $state, ListingService) ->
             ListingService.getListing($stateParams.id).then ->
-              if _.isEmpty(ListingService.listing)
+              if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
                 # kick them out unless there's a real listing
                 $state.go('dahlia.welcome')
         ]
