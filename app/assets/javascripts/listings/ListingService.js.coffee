@@ -85,7 +85,10 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     ami.forEach (amiLevel) ->
       occupancy = parseInt(amiLevel.numOfHousehold)
       # only grab the incomeLevels that fit within our listing's occupancyMinMax
-      if occupancy >= occupancyMinMax[0] && occupancy <= occupancyMinMax[1]
+      # + we add 2 more to account for potential childrenUnder6
+      min = occupancyMinMax[0]
+      max = occupancyMinMax[1] + 2
+      if occupancy >= min && occupancy <= max
         incomeLevels.push({
           occupancy: occupancy,
           yearly: parseFloat(amiLevel.amount),

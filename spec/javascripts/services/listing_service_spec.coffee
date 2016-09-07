@@ -92,9 +92,9 @@ do ->
         listing.unitSummary = [{unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}]
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
-        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
         expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
-        expect(incomeLevels.length).toEqual 2
+        # fakeListing has Studio, so there should be 4 income Levels (max == 2, + 2 more)
+        expect(incomeLevels.length).toEqual 4
         return
       return
 
