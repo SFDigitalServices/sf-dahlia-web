@@ -89,12 +89,15 @@ do ->
     describe 'Service.maxIncomeLevelsFor', ->
       it 'returns incomeLevels with occupancy, yearly, monthly values', ->
         listing = fakeListing.listing
-        listing.unitSummary = [{unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}]
+        listing.unitSummary = [
+          {unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}
+          {unitType: '1 BR', minOccupancy: 1, maxOccupancy: 3}
+        ]
+        expect(ListingService.occupancyMinMax(listing)).toEqual [1,3]
         ami = fakeAMI.ami
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
-        # fakeListing has Studio, so there should be 2 income Levels (for occupancy 1,2)
-        expect(ListingService.occupancyMinMax(listing)).toEqual [1,2]
-        expect(incomeLevels.length).toEqual 2
+        # number of income levels should == maxOccupancy + 2
+        expect(incomeLevels.length).toEqual 5
         return
       return
 

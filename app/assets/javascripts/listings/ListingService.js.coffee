@@ -73,10 +73,11 @@ ListingService = ($http, $localStorage, $modal, $q) ->
       parseFloat(Service.eligibility_filters.income_total)
 
   Service.occupancyMinMax = (listing) ->
-    minMax = [1,1]
+    minMax = [1, 1]
     if listing.unitSummary
-      listing.unitSummary.forEach (unit_summary) ->
-        minMax = [Math.min(minMax[0], unit_summary.minOccupancy), Math.max(minMax[1], unit_summary.maxOccupancy)]
+      min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      minMax = [min, max]
     return minMax
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
@@ -85,7 +86,10 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     ami.forEach (amiLevel) ->
       occupancy = parseInt(amiLevel.numOfHousehold)
       # only grab the incomeLevels that fit within our listing's occupancyMinMax
-      if occupancy >= occupancyMinMax[0] && occupancy <= occupancyMinMax[1]
+      # + we add 2 more to account for potential childrenUnder6
+      min = occupancyMinMax[0]
+      max = occupancyMinMax[1] + 2
+      if occupancy >= min && occupancy <= max
         incomeLevels.push({
           occupancy: occupancy,
           yearly: parseFloat(amiLevel.amount),
