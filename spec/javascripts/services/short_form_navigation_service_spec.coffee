@@ -9,6 +9,9 @@ do ->
     fakeShortFormApplicationService =
       application:
         householdMembers: []
+    fakeLoadingOverlayService =
+      start: -> null
+      stop: -> null
     sections = [
       { name: 'You', pages: [
           'name',
@@ -51,6 +54,7 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
+      $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       return
     )
