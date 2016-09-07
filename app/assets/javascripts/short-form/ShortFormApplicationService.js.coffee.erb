@@ -282,7 +282,9 @@ ShortFormApplicationService = (
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
-        isValid = !!Service.applicant.neighborhoodPreferenceMatch
+        applicant = Service.applicant
+        addressValid = !!applicant.neighborhoodPreferenceMatch || applicant.noAddress
+        isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->

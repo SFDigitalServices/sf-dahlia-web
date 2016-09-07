@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:54:18 GMT
+      - Wed, 07 Sep 2016 05:03:48 GMT
       Server:
       - ''
       Cache-Control:
@@ -44,7 +44,7 @@ http_interactions:
         \  \"location\": {\n    \"x\": -13629295.084645359,\n    \"y\": 4545718.9589669053\n
         \  },\n   \"score\": 79,\n   \"attributes\": {\n    \n   }\n  }\n ]\n}"
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:54:25 GMT
+  recorded_at: Wed, 07 Sep 2016 05:03:51 GMT
 - request:
     method: get
     uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13629293.11924395,4545683.891492538&geometryType=esriGeometryPoint&objectIds=3&returnCountOnly=true&spatialRel=esriSpatialRelIntersects
@@ -64,13 +64,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 21 Jul 2016 18:54:18 GMT
+      - Wed, 07 Sep 2016 05:03:48 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - wsglSDas1yYyTDPT_1469053405
+      - n6MfhuSEcJB837yA_1469053405
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
@@ -84,5 +84,5 @@ http_interactions:
          "count": 1
         }
     http_version:
-  recorded_at: Thu, 21 Jul 2016 18:54:25 GMT
+  recorded_at: Wed, 07 Sep 2016 05:03:51 GMT
 recorded_with: VCR 3.0.3
