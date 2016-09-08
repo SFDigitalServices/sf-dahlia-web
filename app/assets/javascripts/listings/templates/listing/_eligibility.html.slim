@@ -64,55 +64,56 @@ accordion-heading.lead
         / --- TODO: remove hardcoded feature
         / --- 480 Potrero + Alchemy
         / ----------------------------------------------
-        .content-card ng-if="showLotteryPreferences()"
-          header.content-card_ordered
-            span.content-card_number
-              ' 1
-              sup st
-            h4.content-card_title.no-margin Certificate of Preference (COP)
-            p.c-steel Up to {{listing.COPUnits}} units available
-          p.c-steel
-            | Households in which one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
-            br
-            a href="http://sfmohcd.org/certificate-preference" target="_blank"
-              | Read More
-        .content-card
-          header.content-card_ordered
-            span.content-card_number
-              ' 2
-              sup nd
-            h4.content-card_title.no-margin Displaced Tenant Housing Preference (DTHP)
-            p.c-steel Up to {{listing.DTHPUnits}} units available
-          p.c-steel
-            | Households in which one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
-            br
-            a href="http://sfmohcd.org/displaced-tenant-housing-preference-program-0" target="_blank"
-              | Read More
-        .content-card
-          header.content-card_ordered
-            span.content-card_number
-              ' 3
-              sup rd
-            h4.content-card_title.no-margin Neighborhood Resident Housing Preference (NRHP)
-            p.c-steel Up to {{listing.NRHPUnits}} units available
-          p.c-steel
-            | Households that submit acceptable documentation that at least one member lives either within supervisorial District {{listing.supervisorialDistrict}} or within a half-mile of the project.
-            br
-            a href="http://sfmohcd.org/neighborhood-resident-housing-preference" target="_blank"
-              | Read More
-        .content-card
-          header.content-card_ordered
-            span.content-card_number
-              ' 4
-              sup th
-            h4.content-card_title.no-margin Live/Work Preference
-            p.c-steel All remaining units
-          p.c-steel
-            | Households that submit acceptable documentation that at least one member lives or works in San Francisco. In order to claim Work Preference, you or a household member must currently work in San Francisco at least 75% of your working hours.
-            br
-            a href="http://sfmohcd.org/housing-preference-programs" target="_blank"
-              | Read More
-        p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
+        div ng-if="showLotteryPreferences()"
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 1
+                sup st
+              h4.content-card_title.no-margin Certificate of Preference (COP)
+              p.c-steel Up to {{listing.COPUnits}} units available
+            p.c-steel
+              | Households in which one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
+              br
+              a href="http://sfmohcd.org/certificate-preference" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 2
+                sup nd
+              h4.content-card_title.no-margin Displaced Tenant Housing Preference (DTHP)
+              p.c-steel Up to {{listing.DTHPUnits}} units available
+            p.c-steel
+              | Households in which one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
+              br
+              a href="http://sfmohcd.org/displaced-tenant-housing-preference-program-0" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 3
+                sup rd
+              h4.content-card_title.no-margin Neighborhood Resident Housing Preference (NRHP)
+              p.c-steel Up to {{listing.NRHPUnits}} units available
+            p.c-steel
+              | Households that submit acceptable documentation that at least one member lives either within supervisorial District {{listing.supervisorialDistrict}} or within a half-mile of the project.
+              br
+              a href="http://sfmohcd.org/neighborhood-resident-housing-preference" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 4
+                sup th
+              h4.content-card_title.no-margin Live/Work Preference
+              p.c-steel All remaining units
+            p.c-steel
+              | Households that submit acceptable documentation that at least one member lives or works in San Francisco. In order to claim Work Preference, you or a household member must currently work in San Francisco at least 75% of your working hours.
+              br
+              a href="http://sfmohcd.org/housing-preference-programs" target="_blank"
+                | Read More
+          p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
 
 
 
