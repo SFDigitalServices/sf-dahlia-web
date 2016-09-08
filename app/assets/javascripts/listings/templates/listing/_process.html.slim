@@ -37,7 +37,9 @@ accordion-heading
           span.content-group_day
             | {{session.Date | dateSuffix}}
           span.content-group_time
-            | {{session.Start_Time}}&mdash;{{session.End_Time}}
+            | {{session.Start_Time}}
+            span ng-if="session.End_Time"
+              | &mdash;{{session.End_Time}}
 
 
   .show-for-medium-up
