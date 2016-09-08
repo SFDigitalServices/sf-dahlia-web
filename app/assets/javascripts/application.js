@@ -41,6 +41,7 @@
 //= require ng-token-auth
 //= require angular-ui-validate
 //= require angular-uuids
+//= require angular-linkify
 //= require angular-loading-overlay
 //= require config/angularModules.js
 //= require config/angularRoutes.js
