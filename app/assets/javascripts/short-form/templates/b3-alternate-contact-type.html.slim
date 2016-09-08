@@ -14,7 +14,7 @@
         | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
       .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
 
-        radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true'
+        radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true' on-change='invalidateAltContactTypeForm'
           | {{option[1]}}
 
         .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
