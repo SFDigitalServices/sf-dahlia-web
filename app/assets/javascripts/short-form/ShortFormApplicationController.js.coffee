@@ -131,6 +131,13 @@ ShortFormApplicationController = (
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
 
+  # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
+  $scope.uncheckNoOption = (fieldName) ->
+    return if !$scope.applicant[fieldName] || $scope.inputValid(fieldName)
+    # e.g. "phone" --> "noPhone"
+    fieldToDisable = "no#{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}"
+    $scope.applicant[fieldToDisable] = false
+
   $scope.addressInputInvalid = (identifier = '') ->
     if $scope.addressFailedValidation(identifier)
       return true
