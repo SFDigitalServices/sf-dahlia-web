@@ -32,7 +32,12 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+      if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
+        # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
+        e.preventDefault()
+        $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
+
+      else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message

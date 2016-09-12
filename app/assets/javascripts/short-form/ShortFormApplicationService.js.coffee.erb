@@ -298,8 +298,11 @@ ShortFormApplicationService = (
     return !jumpAhead
 
   Service.isLeavingShortForm = (toState, fromState) ->
-    # leaving means we're going from short form to a non-short form page
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.hittingBackFromConfirmation = (fromState, toState) ->
+    confirmationState = 'dahlia.short-form-application.confirmation'
+    (fromState.name == confirmationState) && Service.isShortFormPage(toState)
 
   Service.invalidateContactForm = ->
     Service.application.validatedForms['You']['contact'] = false
