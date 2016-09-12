@@ -22,6 +22,7 @@
   'ui.validate',
   'ng-token-auth',
   'angular-uuid',
+  'linkify',
   'bsLoadingOverlay'
 ]
 

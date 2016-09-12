@@ -56,14 +56,66 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Lottery Preferences
-          p.custom-counter_text
+          p.custom-counter_text ng-if="!showLotteryPreferences()"
             | Preference holders will be given highest ranking in the lottery process.
-        .content-card ng-repeat="preference in listing.Listing_Lottery_Preferences"
-          h4.content-card_title
-            | {{preference.Lottery_Preference.Name}}
-          p
-            / Look up lotteryPreferenceDescription from Service.lotteryPreferences
-            | {{lotteryPreferenceDescription(preference.Lottery_Preference.Name)}}
+          p.custom-counter_text ng-if="showLotteryPreferences()"
+            | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
+        / ----------------------------------------------
+        / --- TODO: remove hardcoded feature
+        / --- 480 Potrero + Alchemy
+        / ----------------------------------------------
+        div ng-if="showLotteryPreferences()"
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 1
+                sup st
+              h4.content-card_title.no-margin Certificate of Preference (COP)
+              p.c-steel Up to {{listing.COPUnits}} units available
+            p.c-steel
+              | Households in which one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
+              br
+              a href="http://sfmohcd.org/certificate-preference" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 2
+                sup nd
+              h4.content-card_title.no-margin Displaced Tenant Housing Preference (DTHP)
+              p.c-steel Up to {{listing.DTHPUnits}} units available
+            p.c-steel
+              | Households in which one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
+              br
+              a href="http://sfmohcd.org/displaced-tenant-housing-preference-program-0" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 3
+                sup rd
+              h4.content-card_title.no-margin Neighborhood Resident Housing Preference (NRHP)
+              p.c-steel Up to {{listing.NRHPUnits}} units available
+            p.c-steel
+              | Households that submit acceptable documentation that at least one member lives either within supervisorial District {{listing.supervisorialDistrict}} or within a half-mile of the project.
+              br
+              a href="http://sfmohcd.org/neighborhood-resident-housing-preference" target="_blank"
+                | Read More
+          .content-card
+            header.content-card_ordered
+              span.content-card_number
+                ' 4
+                sup th
+              h4.content-card_title.no-margin Live/Work Preference
+              p.c-steel All remaining units
+            p.c-steel
+              | Households that submit acceptable documentation that at least one member lives or works in San Francisco. In order to claim Work Preference, you or a household member must currently work in San Francisco at least 75% of your working hours.
+              br
+              a href="http://sfmohcd.org/housing-preference-programs" target="_blank"
+                | Read More
+          p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
+
+
 
     li.custom-counter_item
       .content-tile
@@ -82,16 +134,15 @@ accordion-heading.lead
 
         .content-card ng-if="listing.Credit_Rating"
           h4.content-card_title Credit History
-          p.c-steel ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60"
+          p.c-steel(ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60" linkify)
 
         .content-card ng-if="listing.Eviction_History"
           h4.content-card_title Rental History
-          p.c-steel ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60"
+          p.c-steel(ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60" linkify)
 
         .content-card
           h4.content-card_title Criminal Background
           p.c-steel
             ' Qualified applicants with criminal history will be considered for
-                housing in compliance with <a target="_blank" class="no-padding" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a>
-              | of the San Francisco Police Code: Fair Chance Ordinance.
-          p.c-steel ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20"
+              housing in compliance with <a target="_blank" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
+          p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20" linkify)
