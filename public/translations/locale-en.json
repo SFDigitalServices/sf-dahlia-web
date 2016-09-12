@@ -347,7 +347,7 @@
         "NEXT_STEPS_P2": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.",
         "NEXT_STEPS_P3": "If all vacancies are filled for a preference you will still be eligible for units in your following preference.",
         "NEXT_STEPS_TITLE": "What happens next?",
-        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "applicants qualified for this preference",
+        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "{{number}} applicants qualified for this preference",
         "OUT_OF": "out of",
         "QUALIFIED_APPLICANTS": "qualified applicants",
         "RANK": "Rank",
@@ -358,7 +358,7 @@
         "RESULTS_UPDATED": "Results Updated",
         "TICKET": "Ticket",
         "UNITS_AVAILABLE": "units available",
-        "UP_TO": "Up to",
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units available",
         "YOUR_RANKING_IN_THIS_LIST": "Your ranking in this list is"
     },
     "MY_APPLICATIONS": {

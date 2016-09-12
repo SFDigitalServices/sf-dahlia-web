@@ -39,6 +39,7 @@ ListingController = (
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
+  $scope.loadingLotteryResults = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -95,7 +96,10 @@ ListingController = (
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
+    $scope.loadingLotteryResults = true
     ListingService.getLotteryBuckets().then( ->
+      $scope.loadingLotteryResults = false
+      $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
       ListingService.openLotteryResultsModal()
     )
 
