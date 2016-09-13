@@ -9,7 +9,7 @@
         label.caps for="applicant_phone"
           | {{'LABEL.APPLICANT_PHONE' | translate}}
 
-        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.noPhone = false" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+        input#applicant_phone(ng-model="applicant.phone" name="phone" type="tel" ng-required="checkContactRequirement('noPhone')" ng-class="{ error: inputInvalid('phone') }" ng-pattern="/[^a-zA-Z]/" ng-change="uncheckNoOption('phone')" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
       small.error ng-if="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
       label.sr-only for="applicant_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
@@ -40,7 +40,7 @@
         .form-tel
           label.caps for="applicant_alternate_phone"
             | {{'LABEL.APPLICANT_SECOND_PHONE' | translate}}
-          input#applicant_alternate_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ng-change="applicant.additionalPhone = true" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
+          input#applicant_alternate_phone(ng-model="applicant.alternatePhone" name="alternatePhone" type="tel" ng-required="applicant.additionalPhone" ng-class="{ error: inputInvalid('alternatePhone') }" ng-pattern="/[^a-zA-Z]/" ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
         small.error ng-if="inputInvalid('alternatePhone')"
           | {{'ERROR.PHONE_NUMBER' | translate}}
         label.sr-only for="applicant_alternate_phone_type" translate="LABEL.WHAT_TYPE_OF_NUMBER"
@@ -60,7 +60,7 @@
       p.form-note.margin-bottom
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
-        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="checkContactRequirement('noEmail')" ng-class="{ error: inputInvalid('email') }" ng-change="applicant.noEmail = false" ng-disabled="loggedIn()"
+        input#applicant_email ng-model="applicant.email" name="email" placeholder="you@myemail.com" type="email" ng-required="checkContactRequirement('noEmail')" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn()"
       small.error ng-if="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
