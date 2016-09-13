@@ -334,7 +334,6 @@
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
-        "BUCKETS_RANKING_INFO": "Ranking in these lists is considered in the order shown here.",
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "DTHP": "Displaced Tenants Housing Preference",
         "GENERAL_POOL": "General Pool",
@@ -351,18 +350,13 @@
         "NEXT_STEPS_TITLE": "What happens next?",
         "NRHP": "Neighborhood Resident Housing Preference",
         "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "{{number}} applicants qualified for this preference",
-        "OUT_OF": "out of",
-        "QUALIFIED_APPLICANTS": "qualified applicants",
         "RANK": "Rank",
-        "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order show here.",
+        "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order shown here.",
         "RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE": "Please note, all preferences holders will be considered for all units first.",
         "RANKING_PREFERENCE_CONSIDERATION_NOTE": "Please note, there are other preferences that will be considered for units first.",
         "RANKING_TITLE": "Your preference ranking",
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
-        "UNITS_AVAILABLE": "units available",
-        "UP_TO": "Up to",
-        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units available",
-        "YOUR_RANKING_IN_THIS_LIST": "Your ranking in this list is"
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units available"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",

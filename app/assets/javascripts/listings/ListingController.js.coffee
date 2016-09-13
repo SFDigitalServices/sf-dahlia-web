@@ -147,7 +147,7 @@ ListingController = (
     applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
     return _.includes(applicationResults, true)
 
-  $scope.applicantIsCop = ->
+  $scope.applicantHasCertOfPreference = ->
     $scope.listing.Lottery_Ranking.applicationResults[0].certOfPreference
 
   $scope.showNeighborhoodPreferences = ->
@@ -161,8 +161,10 @@ ListingController = (
     if $scope.lotterySearchNumber == ''
       $scope.lotteryRankingSubmitted = false
     else
+      $scope.loadingLotteryResults = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         $scope.lotteryRankingSubmitted = true
+        $scope.loadingLotteryResults = false
       )
 
   $scope.submittedApplication = ->
