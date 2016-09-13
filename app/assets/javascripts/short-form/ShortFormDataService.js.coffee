@@ -321,9 +321,9 @@ ShortFormDataService = () ->
     _.zipObject keys, _.fill(new Array(keys.length), true)
 
   Service._reformatBoolean = (bool) ->
-    if bool == true
+    if bool == 'true'
       'Yes'
-    else if bool == false
+    else if bool == 'false'
       'No'
 
   return Service
