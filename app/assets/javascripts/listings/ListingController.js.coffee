@@ -122,12 +122,6 @@ ListingController = (
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
 
-  $scope.lotteryPreferenceDescription = (name) ->
-    found = ''
-    angular.forEach $scope.lotteryPreferences, (pref) ->
-      found = pref.Description if pref.Name == name
-    found
-
   # --- Carousel ---
   $scope.carouselHeight = 300
   $scope.Carousel = Carousel
@@ -172,6 +166,36 @@ ListingController = (
 
   $scope.hasDraftApplication = ->
     $scope.application && $scope.application.status == 'Draft'
+
+  # TODO: -- REMOVE HARDCODED FEATURES --
+  $scope.showLotteryPreferences = ->
+    $scope.listingIs480Potrero() || $scope.listingIsAlchemy()
+
+  $scope.listingIs480Potrero = ->
+    ListingService.listingIs480Potrero($scope.listing)
+
+  $scope.listingIsAlchemy = ->
+    ListingService.listingIsAlchemy($scope.listing)
+
+  if ($scope.listingIsAlchemy())
+    $scope.listing.COPUnits = 50
+    $scope.listing.DTHPUnits = 10
+    $scope.listing.NRHPUnits = 20
+    $scope.listing.supervisorialDistrict = 8
+    $scope.listing.Lottery_Results = true
+    $scope.listing.LotteryResultsPDFUrl  = '''
+      http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/Posting%20200%20Buchanan%20-%20Alchemy%208-31-2016.pdf
+    '''
+
+  if ($scope.listingIs480Potrero())
+    $scope.listing.COPUnits = 11
+    $scope.listing.DTHPUnits = 2
+    $scope.listing.NRHPUnits = 4
+    $scope.listing.supervisorialDistrict = 10
+
+  # ------------------------------
+
+
 
 
 ############################################################################################

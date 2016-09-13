@@ -4,4 +4,10 @@ p.content-group_day.margin-bottom
 .padding.bg-dust
   p.c-steel.t-small.margin-bottom ng-if="listing.Lottery_Summary"
     | {{listing.Lottery_Summary}}
-  button.primary.expand.no-margin ng-click="openLotteryResultsModal()" View Lottery Results
+
+  button.primary.expand.no-margin ng-click="openLotteryResultsModal()" ng-if="!listingIsAlchemy()"
+    | View Lottery Results
+
+  / TODO: remove hardcoded feature
+  a.button.primary.expand.no-margin ng-if="listingIsAlchemy()" ng-href="{{listing.LotteryResultsPDFUrl}}" target="_blank"
+    | Download Lottery Results
