@@ -1,26 +1,13 @@
 p.text-center.t-small.padding--3halves.no-margin.bg-dust
-  a.a-dark href="#"
-    | Read About Housing Preferences
+  a.a-dark href="http://sfmohcd.org/housing-preference-programs" target="_blank"
+    | {{'LOTTERY.READ_ABOUT_PREFERENCES' | translate}}
 
 footer.modal-footer.text-center.padding--3halves
   p.t-small
-    | Results from February 21, 2016
-  p.t-small
-    a.a-dark href="#" target="_blank"
+    ' Results from
+    | {{lotteryBuckets.lotteryDate | date : "MMM d, yyyy" }}
+  p.t-small ng-if="lotteryBuckets.lotteryResultsURL"
+    a.a-dark ng-href="{{lotteryBuckets.lotteryResultsURL}}" target="_blank"
       | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
   p.t-small.c-steel
     | Unsorted results are used to determine the rank within each preference.
-
-
-
-
-/ p.text-center.t-small.padding--3halves.no-margin.bg-dust
-/   | {{'LOTTERY.LOTTERY_RESULTS_PDF_TITLE' | translate}}:
-/   br
-/   a.a-dark href="#"
-/     | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
-/
-/ footer.modal-footer.text-center.padding--3halves
-/   p.t-small.c-steel.no-margin
-/     ' {{'LOTTERY.RESULTS_UPDATED' | translate}}:
-/     | {{listing.LastModifiedDate | date : "MMM d, yyyy" }}

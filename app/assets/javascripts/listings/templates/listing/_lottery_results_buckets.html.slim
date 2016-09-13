@@ -14,26 +14,22 @@
 
     section.buckets
       .bucket
-        h3.bucket-title
-          | Certificate of Preference
+        h3.bucket-title translate="LOTTERY.CERT_OF_PREFERENCE"
         p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{lotteryBuckets.certOfPreferenceUnitsAvailable}}"
         p.t-tiny.c-steel.no-margin translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{lotteryBuckets.certOfPreferenceAppTotal}}"
 
       .bucket
-        h3.bucket-title
-          | Displaced Tenants Housing Preference
+        h3.bucket-title translate="LOTTERY.DTHP"
         p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{lotteryBuckets.displacedPreferenceUnitsAvailable}}"
         p.t-tiny.c-steel.no-margin translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{lotteryBuckets.displacedPreferenceAppTotal}}"
 
       .bucket
-        h3.bucket-title
-          | Neighborhood Resident Housing Preference
+        h3.bucket-title translate="LOTTERY.NRHP"
         p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{lotteryBuckets.neighborhoodPreferenceUnitsAvailable}}"
         p.t-tiny.c-steel.no-margin translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{lotteryBuckets.neighborhoodPreferenceAppTotal}}"
 
       .bucket
-        h3.bucket-title
-          | Live/Work Preference
+        h3.bucket-title translate="LOTTERY.LIVE_WORK"
         p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}"
         p.t-tiny.c-steel.no-margin translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{lotteryBuckets.liveWorkPreferenceAppTotal}}"
 
@@ -42,8 +38,6 @@
 
     section.buckets
       .bucket
-        h3.bucket-title
-          | General Pool
-        p.bucket-subtitle
-          | {{'LOTTERY.ANY_REMAINING_UNITS' | translate}}
+        h3.bucket-title translate="LOTTERY.GENERAL_POOL"
+        p.bucket-subtitle translate="LOTTERY.ANY_REMAINING_UNITS"
         p.t-tiny.c-steel.no-margin translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{lotteryBuckets.generalLotteryAppTotal}}"
