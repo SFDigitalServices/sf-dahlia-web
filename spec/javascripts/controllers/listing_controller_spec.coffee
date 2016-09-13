@@ -42,6 +42,9 @@ do ->
         # TODO: REMOVE HARDCODED FEATURES
         listingIsAlchemy: () -> null
         listingIs480Potrero: () -> null
+        listingIsClarence: () -> null
+        listingIsOlume: () -> null
+        listingIs168Hyde: () -> null
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
       fakeListingService.openLotteryResultsModal = jasmine.createSpy()
