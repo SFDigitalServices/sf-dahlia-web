@@ -4,7 +4,7 @@
       ng-carousel ng-carousel-name="hero-carousel" ng-style="{height: carouselHeight + 'px'}"
         slidecontainer
           slide ng-repeat="image in ::listingImages(listing) track by $index"
-            img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{listing.Building_Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{image}}")
+            img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{listing.Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{image}}")
         .carousel-arrow.carousel-arrow-left
           button ng-click="Carousel.get('hero-carousel').previous()"
             span.ui-icon.ui-static.ui-large.i-white
@@ -17,7 +17,7 @@
                 use xlink:href="#i-right"
 
     h1.property-hero_title.offset
-      | {{listing.Building_Name}}
+      | {{listing.Name}}
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
