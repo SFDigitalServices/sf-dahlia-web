@@ -175,13 +175,42 @@ ListingController = (
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.showLotteryPreferences = ->
-    $scope.listingIs480Potrero() || $scope.listingIsAlchemy()
+    $scope.listingIs480Potrero() ||
+    $scope.listingIsAlchemy() ||
+    $scope.listingIsClarence() ||
+    $scope.listingIs168Hyde() ||
+    $scope.listingIsOlume()
 
   $scope.listingIs480Potrero = ->
     ListingService.listingIs480Potrero($scope.listing)
 
   $scope.listingIsAlchemy = ->
     ListingService.listingIsAlchemy($scope.listing)
+
+  $scope.listingIsClarence = ->
+    ListingService.listingIsClarence($scope.listing)
+
+  $scope.listingIs168Hyde = ->
+    ListingService.listingIs168Hyde($scope.listing)
+
+  $scope.listingIsOlume = ->
+    ListingService.listingIsOlume($scope.listing)
+
+  $scope.positionOfPreference = (pref) ->
+    prefs = []
+    prefs.push('COP') if $scope.listing.COPUnits
+    prefs.push('DTHP') if $scope.listing.DTHPUnits
+    prefs.push('NRHP') if $scope.listing.NRHPUnits
+    if pref != 'liveWork'
+      pos = prefs.indexOf(pref) + 1
+    else
+      pos = prefs.length + 1
+    return pos
+
+  $scope.getOrdinal = (n) ->
+    s = ['th', 'st', 'nd', 'rd']
+    v = n % 100
+    (s[(v - 20) % 10] or s[v] or s[0])
 
   if ($scope.listingIsAlchemy())
     $scope.listing.COPUnits = 50
@@ -194,11 +223,26 @@ ListingController = (
     '''
 
   if ($scope.listingIs480Potrero())
-    $scope.listing.COPUnits = 11
+    $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 4
     $scope.listing.supervisorialDistrict = 10
 
+  if ($scope.listingIsClarence())
+    $scope.listing.COPUnits = 1
+    $scope.listing.DTHPUnits = 1
+    $scope.listing.NRHPUnits = 0
+
+  if ($scope.listingIs168Hyde())
+    $scope.listing.COPUnits = 1
+    $scope.listing.DTHPUnits = 0
+    $scope.listing.NRHPUnits = 0
+
+  if ($scope.listingIsOlume())
+    $scope.listing.COPUnits = 18
+    $scope.listing.DTHPUnits = 3
+    $scope.listing.NRHPUnits = 7
+    $scope.listing.supervisorialDistrict = 6
   # ------------------------------
 
 
