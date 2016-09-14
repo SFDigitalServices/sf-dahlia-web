@@ -59,7 +59,7 @@ class Emailer < Devise::Mailer
     # expects :email, :listing, :listing_url, :lottery_number
     @email = params[:email]
     @listing = params[:listing]
-    @listing_name = @listing.Building_Name
+    @listing_name = @listing.Name
     @listing_url = params[:listing_url]
     @lottery_number = params[:lottery_number]
     @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')

@@ -1,10 +1,10 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Building_Name}}
+      | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Name}}
 
   figure.full-figure
-    img.property-thumb alt="Listing Name:{{listing.Building_Name}}" ng-src="{{listing.Building_URL}}"
+    img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.Building_URL}}"
 
   .app-inner.inset.border-bottom
     .form-group.text-center
