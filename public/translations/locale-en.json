@@ -138,7 +138,7 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION": "We can't find the address you provided. Please double check the information you entered.",
+        "ADDRESS_VALIDATION": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
