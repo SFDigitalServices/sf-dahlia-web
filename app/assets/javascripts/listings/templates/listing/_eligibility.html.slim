@@ -65,11 +65,12 @@ accordion-heading.lead
         / --- 480 Potrero + Alchemy
         / ----------------------------------------------
         div ng-if="showLotteryPreferences()"
-          .content-card
+          .content-card ng-if="listing.COPUnits"
             header.content-card_ordered
               span.content-card_number
-                ' 1
-                sup st
+                ' {{positionOfPreference('COP')}}
+                sup
+                  | {{getOrdinal(positionOfPreference('COP'))}}
               h4.content-card_title.no-margin Certificate of Preference (COP)
               p.c-steel Up to {{listing.COPUnits}} units available
             p.c-steel
@@ -77,11 +78,12 @@ accordion-heading.lead
               br
               a href="http://sfmohcd.org/certificate-preference" target="_blank"
                 | Read More
-          .content-card
+          .content-card ng-if="listing.DTHPUnits"
             header.content-card_ordered
               span.content-card_number
-                ' 2
-                sup nd
+                ' {{positionOfPreference('DTHP')}}
+                sup
+                  | {{getOrdinal(positionOfPreference('DTHP'))}}
               h4.content-card_title.no-margin Displaced Tenant Housing Preference (DTHP)
               p.c-steel Up to {{listing.DTHPUnits}} units available
             p.c-steel
@@ -89,11 +91,12 @@ accordion-heading.lead
               br
               a href="http://sfmohcd.org/displaced-tenant-housing-preference-program-0" target="_blank"
                 | Read More
-          .content-card
+          .content-card ng-if="listing.NRHPUnits"
             header.content-card_ordered
               span.content-card_number
-                ' 3
-                sup rd
+                ' {{positionOfPreference('NRHP')}}
+                sup
+                  | {{getOrdinal(positionOfPreference('NRHP'))}}
               h4.content-card_title.no-margin Neighborhood Resident Housing Preference (NRHP)
               p.c-steel Up to {{listing.NRHPUnits}} units available
             p.c-steel
@@ -104,8 +107,9 @@ accordion-heading.lead
           .content-card
             header.content-card_ordered
               span.content-card_number
-                ' 4
-                sup th
+                ' {{positionOfPreference('liveWork')}}
+                sup
+                  | {{getOrdinal(positionOfPreference('liveWork'))}}
               h4.content-card_title.no-margin Live/Work Preference
               p.c-steel All remaining units
             p.c-steel
@@ -134,15 +138,15 @@ accordion-heading.lead
 
         .content-card ng-if="listing.Credit_Rating"
           h4.content-card_title Credit History
-          p.c-steel(ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60" linkify)
+          p.c-steel(ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60")
 
         .content-card ng-if="listing.Eviction_History"
           h4.content-card_title Rental History
-          p.c-steel(ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60" linkify)
+          p.c-steel(ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60")
 
         .content-card
           h4.content-card_title Criminal Background
           p.c-steel
             ' Qualified applicants with criminal history will be considered for
               housing in compliance with <a target="_blank" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
-          p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20" linkify)
+          p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20")

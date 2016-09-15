@@ -6,34 +6,35 @@ header.modal-inner.padding-top--2x
     | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
 span ng-if="applicantSelectedForPreference()"
-  .alert-box.primary.no-margin.no-close ng-if="!applicantIsCop()"
-    span.alert-icon.ui-icon.ui-medium
+  .alert-box.primary.no-margin.no-close.alert-box ng-if="!applicantHasCertOfPreference()"
+    span.alert-icon.ui-icon.ui-medium.ng-scope
       svg
-        use xlink:href="#i-warning"
+        use xlink:href="#i-info" xmlns:xlink="http://www.w3.org/1999/xlink"
     p.alert-body
       | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
 
-  section
-    accordion.results-accordion.accordion-container.has-stat.expanded-content close-others="oneAtATime"
-      lottery-results-ranking pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference"
-      lottery-results-ranking pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference"
-      lottery-results-ranking pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference"
-      lottery-results-ranking pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference"
+  section.buckets
+    lottery-results-row item-type="rank" pref-name="{{'LOTTERY.CERT_OF_PREFERENCE' | translate}}" abbr-pref-name="certOfPreference"
+
+    lottery-results-row item-type="rank" pref-name="{{'LOTTERY.DTHP' | translate}}" abbr-pref-name="displacedPreference"
+
+    lottery-results-row item-type="rank" pref-name="{{'LOTTERY.NRHP' | translate}}" abbr-pref-name="neighborhoodPreference"
+
+    lottery-results-row item-type="rank" pref-name="{{'LOTTERY.LIVE_WORK' | translate}}" abbr-pref-name="liveWorkPreference"
 
 span ng-if="!applicantSelectedForPreference()"
   span ng-if="lotteryNumberValid()"
-    .alert-box.primary.no-margin.bg-alert-tint
-      span.alert-icon.ui-icon.ui-medium
+    .alert-box.primary.no-margin.no-close.alert-box
+      span.alert-icon.ui-icon.ui-medium.ng-scope
         svg
-          use xlink:href="#i-warning"
+          use xlink:href="#i-info" xmlns:xlink="http://www.w3.org/1999/xlink"
       p.alert-body
         | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
-    section
-        accordion.results-accordion.accordion-container.has-stat.expanded-content
-          lottery-results-ranking pref_name='General Pool' abrev_pref_name="generalLottery"
+    section.buckets
+      lottery-results-row item-type="rank" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"
 
   span ng-if="!lotteryNumberValid()"
-    .alert-box.primary.no-margin
+    .alert-box.alert.no-margin
       span.alert-icon.ui-icon.ui-medium
         svg
           use xlink:href="#i-warning"

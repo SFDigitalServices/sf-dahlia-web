@@ -2,7 +2,7 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
   .feed-item-inner
     header.feed-item-header
       h3.feed-item-title
-        | {{listing.Building_Name}}
+        | {{listing.Name}}
       p.feed-item-due
         ' {{'T.APPLICATION_DEADLINE' | translate}}:
         ' {{listing.Application_Due_Date | date : "MMM d, yyyy" }}

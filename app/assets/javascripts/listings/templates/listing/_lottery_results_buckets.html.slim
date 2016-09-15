@@ -3,30 +3,26 @@
   p.t-small
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
-.modal-overflow ng-if="!lotteryRankingSubmitted"
-  div
+.modal-buckets-container ng-if="!lotteryRankingSubmitted"
+  .modal-buckets
     header.modal-inner
       h2.h-caps-lined
         | {{'LOTTERY.HOUSING_PREFERENCES' | translate}}
       p.t-small.c-steel.no-margin
-        | {{'LOTTERY.BUCKETS_RANKING_INFO' | translate}}
+        | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
-    section
-      accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
 
-        lottery-results-bucket pref_name='Certificate Of Preference' abrev_pref_name="certOfPreference" units_available='{{lotteryBuckets.certOfPreferenceUnitsAvailable}}'
+    section.buckets
+      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.CERT_OF_PREFERENCE' | translate}}" abbr-pref-name="certOfPreference"
 
-        lottery-results-bucket pref_name='Displaced Tenants Housing Preference' abrev_pref_name="displacedPreference" units_available='{{lotteryBuckets.displacedPreferenceUnitsAvailable}}'
+      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.DTHP' | translate}}" abbr-pref-name="displacedPreference"
 
-        lottery-results-bucket pref_name='Neighborhood Resident Housing Preference' abrev_pref_name="neighborhoodPreference" units_available='{{lotteryBuckets.neighborhoodPreferenceUnitsAvailable}}'
+      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.NRHP' | translate}}" abbr-pref-name="neighborhoodPreference"
 
-        lottery-results-bucket pref_name='Live/Work Preference' abrev_pref_name="liveWorkPreference" units_available='{{lotteryBuckets.liveWorkPreferenceUnitsAvailable}}'
+      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.LIVE_WORK' | translate}}" abbr-pref-name="liveWorkPreference"
 
-    header.modal-inner
-      h2.h-caps-lined.no-margin
-        | {{'LOTTERY.GENERAL_LIST' | translate}}
+    .modal-inner.bg-dust
+      .buckets-divider
 
-    section
-      accordion.results-accordion.accordion-container.expanded-content close-others="oneAtATime"
-
-        lottery-results-bucket pref_name='General Pool' abrev_pref_name="generalLottery"
+    section.buckets
+      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"

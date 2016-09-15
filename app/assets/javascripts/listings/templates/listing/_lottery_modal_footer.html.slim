@@ -1,10 +1,11 @@
 p.text-center.t-small.padding--3halves.no-margin.bg-dust
-  | {{'LOTTERY.LOTTERY_RESULTS_PDF_TITLE' | translate}}:
-  br
-  a.a-dark href="#"
-    | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
+  a.a-dark href="http://sfmohcd.org/housing-preference-programs" target="_blank"
+    | {{'LOTTERY.READ_ABOUT_PREFERENCES' | translate}}
 
-footer.modal-footer.text-center.padding--3halves
-  p.t-small.c-steel.no-margin
-    ' {{'LOTTERY.RESULTS_UPDATED' | translate}}:
-    | {{listing.LastModifiedDate | date : "MMM d, yyyy" }}
+footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingSubmitted"
+  p.t-small translate="LOTTERY.RESULTS_FROM" translate-value-date="{{lotteryBuckets.lotteryDate | date : 'MMM d, yyyy' }}"
+  p.t-small ng-if="lotteryBuckets.lotteryResultsURL"
+    a.a-dark ng-href="{{lotteryBuckets.lotteryResultsURL}}" target="_blank"
+      | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
+  p.t-small.c-steel
+    | {{'LOTTERY.UNSORTED_RESULTS_NOTE' | translate}}
