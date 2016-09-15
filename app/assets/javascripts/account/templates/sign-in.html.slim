@@ -42,12 +42,12 @@
                 | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
           .form-group
             p.t-small.c-steel.text-center.padding-top.no-margin
-              input.button.no-margin.primary type="submit" value="{{'LABEL.SIGN_IN' | translate}}" ng-disabled="submitDisabled"
+              input.button.no-margin.primary type="submit" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN' | translate}}" ng-disabled="submitDisabled"
         footer.dash-header
           h2.dash-title
             | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
           p.t-small.c-steel
-            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" ng-if="rememberedShortFormState"
+            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" data-event="gtm-create-account" ng-if="rememberedShortFormState"
               | {{'LABEL.CREATE_ACCOUNT' | translate}}
-            a.button.no-margin ui-sref="dahlia.create-account" ng-if="!rememberedShortFormState"
+            a.button.no-margin ui-sref="dahlia.create-account" data-event="gtm-create-account" ng-if="!rememberedShortFormState"
               | {{'LABEL.CREATE_ACCOUNT' | translate}}
