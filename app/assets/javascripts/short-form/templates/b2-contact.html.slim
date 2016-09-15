@@ -25,7 +25,7 @@
       div
         .form-item.padding-bottom
           .checkbox
-            input#applicant_no_phone name="applicant_no_phone" type="checkbox" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
+            input#applicant_no_phone name="applicant_no_phone" type="checkbox" data-event="gtm-applicant-no-phone" ng-model="applicant.noPhone" ng-disabled="form.applicationForm.phone.$valid && !applicant.noPhone || applicant.additionalPhone" ng-click="blankIfInvalid('phone'); blankIfInvalid('alternatePhone'); clearPhoneData('phone');"
             label for="applicant_no_phone"
               | {{'LABEL.APPLICANT_NO_PHONE' | translate}}
 
@@ -65,7 +65,7 @@
         | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
         .checkbox
-          input#applicant_no_email name="applicant_no_email" type="checkbox" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
+          input#applicant_no_email name="applicant_no_email" type="checkbox" data-event="gtm-applicant-no-email" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
           label for="applicant_no_email"
             | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
 
@@ -84,7 +84,7 @@
       .form-item.padding-bottom
         / this checkbox unchecks the other checkbox; only one can be selected
         .checkbox ng-click="resetHomeAddress(); resetAndCheckMailingAddress(); applicant.hasAltMailingAddress = false;"
-          input#applicant_no_address ng-model="applicant.noAddress" name="no_address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
+          input#applicant_no_address ng-model="applicant.noAddress" name="no_address" data-event="gtm-applicant-no-address" type="checkbox" ng-disabled="validMailingAddress() && !applicant.noAddress || addressFailedValidation('home_address') || applicant.hasAltMailingAddress"
           label for="applicant_no_address"
             | {{'LABEL.APPLICANT_NO_ADDRESS' | translate}}
 

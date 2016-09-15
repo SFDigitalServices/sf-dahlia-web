@@ -12,6 +12,7 @@ angular.module('dahlia.directives')
     scope.pref_type_proof_option = "#{scope.pref_type}_proof_option"
     scope.pref_type_proof_file = "#{scope.pref_type}_proof_file"
     scope.labelledby = attrs.labelledby
+    scope.pref_data_event = attrs.dataevent
 
     scope.show_preferences_options = (application) ->
       return false if !application.preferences
