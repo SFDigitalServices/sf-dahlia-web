@@ -102,7 +102,8 @@ ShortFormDataService = () ->
           if !_.includes(['address1', 'address2', 'boundary_match'], key)
             member[key] = value
           return
-        member.address = member.home_address.address1 + member.home_address.address2
+        member.address = member.home_address.address1
+        member.address += ' ' + member.home_address.address2 if member.home_address.address2
 
       if member.hasSameAddressAsApplicant == 'Yes'
         member.hasSameAddressAsApplicant = true
