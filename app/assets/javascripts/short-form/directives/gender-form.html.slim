@@ -4,8 +4,12 @@
   p.form-note.margin-bottom--half
     | {{'T.OPTIONAL' | translate}}
 
-  select#user_gender ng-model="user.gender" data-width="auto" name="gender"
+  select#user_gender ng-model="user.gender" data-width="auto" name="gender" ng-change="resetGenderOther()"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
     option ng-repeat="option in gender_options" value="{{option}}"
       | {{option}}
+
+  .radio-block ng-if="genderNotListed()"
+    label.sr-only for="genderOther" translate="LABEL.YOUR_GENDER"
+    input#genderOther ng-model="user.genderOther" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
