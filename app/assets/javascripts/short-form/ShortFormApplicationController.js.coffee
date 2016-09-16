@@ -39,7 +39,8 @@ ShortFormApplicationController = (
     'Female',
     'Trans Male',
     'Trans Female',
-    'Decline to state'
+    'Decline to State',
+    'Not Listed'
   ]
   $scope.relationship_options = [
     'Spouse',
