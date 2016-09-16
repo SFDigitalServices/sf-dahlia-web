@@ -10,6 +10,15 @@ do ->
     httpBackend = undefined
     requestURL = undefined
     fakeState = 'dahlia.short-form-application.contact'
+    fakeAuthResponse =
+      id: 99
+      email: 'applicant@email.com'
+      salesforce_contact_id: '001f000000r000000'
+    fakeUpdateResponse =
+      contact:
+        DOB: '1999-04-04'
+        firstName: 'X'
+        lastName: 'Y'
     fakeUserAuth =
       user:
         email: 'a@b.c'
@@ -131,6 +140,29 @@ do ->
           password_confirmation: 'password'
         AccountService.updatePassword()
         expect($auth.updatePassword).toHaveBeenCalledWith(expectedParams)
+        return
+      return
+
+    describe 'updateAccount', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns an email success message', ->
+        AccountService.userAuth =
+          user:
+            email: 'newemail@new1.com'
+        stubAngularAjaxRequest httpBackend, requestURL, fakeAuthResponse
+        AccountService.updateAccount('email')
+        httpBackend.flush()
+        expect(AccountService.accountSuccess.messages.email).not.toEqual null
+        return
+      it 'assigns new name/DOB attributes after update', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
+        AccountService.updateAccount('nameDOB')
+        httpBackend.flush()
+        expect(AccountService.loggedInUser.firstName).toEqual fakeUpdateResponse.contact.firstName
         return
       return
 

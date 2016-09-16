@@ -152,6 +152,9 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
+        data.contact.signedIn = true
+        angular.copy(data.contact, Service.loggedInUser)
+        Service._reformatDOB()
       ).error((response) ->
         # currently, shouldn't ever really reach this case
         msg = response.errors.full_messages[0]
