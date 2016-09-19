@@ -201,7 +201,11 @@ ShortFormApplicationController = (
     $scope.applicant.home_address = {}
 
   $scope.resetHouseholdMemberAddress = ->
-    delete $scope.householdMember.home_address
+    $scope.householdMember.home_address = {}
+
+  $scope.copyApplicantAddressToHouseholdMember = ->
+    $scope.householdMember.home_address = {}
+    angular.copy($scope.applicant.home_address, $scope.householdMember.home_address)
 
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
@@ -323,6 +327,7 @@ ShortFormApplicationController = (
 
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
+    $scope.form.applicationForm.$setPristine()
     $state.go('dahlia.short-form-application.household-members')
 
   $scope.validateHouseholdEligibility = (match) ->
