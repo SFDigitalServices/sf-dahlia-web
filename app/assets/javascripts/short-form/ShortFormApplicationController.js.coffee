@@ -209,7 +209,10 @@ ShortFormApplicationController = (
     $scope.checkIfMailingAddressNeeded()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.noAddress || $scope.applicant.neighborhoodPreferenceMatch
+    if $scope.applicant.noAddress || (
+      $scope.applicant.neighborhoodPreferenceMatch &&
+      $scope.application.validatedForms.You['verify-address'] != false
+    )
       ###
       skip ahead if they aren't filling out an address
        or their current address has already been confirmed.
