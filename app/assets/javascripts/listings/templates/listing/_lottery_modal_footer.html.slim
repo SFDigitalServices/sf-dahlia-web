@@ -7,5 +7,4 @@ footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingSubmitted
   p.t-small ng-if="lotteryBuckets.lotteryResultsURL"
     a.a-dark ng-href="{{lotteryBuckets.lotteryResultsURL}}" target="_blank"
       | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
-  p.t-small.c-steel
-    | {{'LOTTERY.UNSORTED_RESULTS_NOTE' | translate}}
+  p.t-small.c-steel translate="LOTTERY.UNSORTED_RESULTS_NOTE"  translate-value-date="{{lotteryBuckets.lotteryDate | date : 'MMM d, yyyy' }}"

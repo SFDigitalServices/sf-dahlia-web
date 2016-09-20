@@ -357,9 +357,9 @@
         "RANKING_PREFERENCE_CONSIDERATION_NOTE": "Please note, there are other preferences that will be considered for units first.",
         "RANKING_TITLE": "Your preference ranking",
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
-        "RESULTS_FROM": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}",
-        "UNSORTED_RESULTS_NOTE": "Unsorted results are used to determine the rank within each preference.",
-        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units"
+        "RESULTS_FROM": "Results from {{date}}",
+        "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units available"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
