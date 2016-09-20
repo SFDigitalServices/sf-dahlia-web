@@ -181,6 +181,10 @@ ListingController = (
     $scope.listingIs168Hyde() ||
     $scope.listingIsOlume()
 
+  $scope.showDownloadLotteryResultsButton = ->
+    return false unless $scope.listing.LotteryResultsURL
+    $scope.listingIsAlchemy()
+
   $scope.listingIs480Potrero = ->
     ListingService.listingIs480Potrero($scope.listing)
 
@@ -218,7 +222,7 @@ ListingController = (
     $scope.listing.NRHPUnits = 20
     $scope.listing.supervisorialDistrict = 8
     $scope.listing.Lottery_Results = true
-    $scope.listing.LotteryResultsPDFUrl  = '''
+    $scope.listing.LotteryResultsURL ?= '''
       http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/Posting%20200%20Buchanan%20-%20Alchemy%208-31-2016.pdf
     '''
 

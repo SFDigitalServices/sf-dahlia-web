@@ -9,5 +9,5 @@ p.content-group_day.margin-bottom
     | View Lottery Results
 
   / TODO: remove hardcoded feature
-  a.button.primary.expand.no-margin ng-if="listingIsAlchemy()" ng-href="{{listing.LotteryResultsPDFUrl}}" target="_blank"
+  a.button.primary.expand.no-margin ng-if="showDownloadLotteryResultsButton()" ng-href="{{listing.LotteryResultsURL}}" target="_blank"
     | Download Lottery Results
