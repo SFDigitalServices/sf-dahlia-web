@@ -598,6 +598,8 @@
         application: [
           '$stateParams', '$state', 'ShortFormApplicationService',
           ($stateParams, $state, ShortFormApplicationService) ->
+            applicationDataExists = !!ShortFormApplicationService.application.lotteryNumber
+            return if applicationDataExists
             ShortFormApplicationService.getApplication($stateParams.id).then ->
               if ShortFormApplicationService.application.status != 'Submitted'
                 $state.go('dahlia.my-applications')
