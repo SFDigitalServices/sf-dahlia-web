@@ -2,8 +2,8 @@ do ->
   'use strict'
   describe 'ShortFormDataService', ->
     ShortFormDataService = undefined
-    formatted = undefined
-    reformatted = undefined
+    formattedApp = undefined
+    reformattedApp = undefined
     fakeListingId = 'a0WU000000CkiM3MAJ'
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
@@ -19,25 +19,32 @@ do ->
 
     describe 'formatApplication', ->
       beforeEach ->
-        formatted = ShortFormDataService.formatApplication(fakeListingId, fakeApplication)
+        formattedApp = ShortFormDataService.formatApplication(fakeListingId, fakeApplication)
 
       it 'attaches given listingID', ->
-        expect(formatted.listingID).toEqual(fakeListingId)
+        expect(formattedApp.listingID).toEqual(fakeListingId)
         return
 
       it 'renames applicant to primaryApplicant', ->
-        expect(formatted.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
+        expect(formattedApp.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
         return
+
+      it 'sends stringified JSON for formMetadata', ->
+        metadata = JSON.stringify({completedSections: fakeApplication.completedSections})
+        expect(formattedApp.formMetadata).toEqual(metadata)
 
     describe 'reformatApplication', ->
       beforeEach ->
-        reformatted = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
+        reformattedApp = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
         return
 
       it 'renames primaryApplicant to applicant', ->
-        expect(reformatted.applicant.firstName).toEqual(fakeSalesforceApplication.primaryApplicant.firstName)
+        expect(reformattedApp.applicant.firstName).toEqual(fakeSalesforceApplication.primaryApplicant.firstName)
         return
 
       it 'reformats mailing address', ->
-        expect(reformatted.applicant.mailing_address.address1).toEqual("4053 18TH ST")
+        expect(reformattedApp.applicant.mailing_address.address1).toEqual("4053 18TH ST")
         return
+
+      it 'reformats stringified JSON formMetadata', ->
+        expect(reformattedApp.completedSections.Intro).toEqual(true)
