@@ -617,6 +617,11 @@
               if ShortFormApplicationService.application.status != 'Submitted'
                 $state.go('dahlia.my-applications')
         ]
+      onExit: [
+        'ShortFormApplicationService',
+        (ShortFormApplicationService) ->
+          ShortFormApplicationService.resetUserData()
+        ]
     })
     .state('dahlia.short-form-application.choose-draft', {
       url: '/choose-draft'
