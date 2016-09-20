@@ -333,6 +333,7 @@
         "ZIPCODE": "Zipcode"
     },
     "LOTTERY": {
+        "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "DTHP": "Displaced Tenants Housing Preference",
