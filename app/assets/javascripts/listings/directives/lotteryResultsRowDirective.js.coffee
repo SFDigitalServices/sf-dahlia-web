@@ -15,6 +15,12 @@ angular.module('dahlia.directives')
     scope.isBucket = ->
       scope.itemType == 'bucket'
 
+    scope.isGeneral = ->
+      scope.abbrPrefName == 'generalLottery'
+
+    scope.showGeneralNotice = ->
+      scope.isGeneral() && scope.isBucket()
+
     scope.show = ->
       return true if scope.isBucket()
       return true if scope.isRank() && scope.rankForPreference()
