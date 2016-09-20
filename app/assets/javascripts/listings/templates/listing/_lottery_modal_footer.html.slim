@@ -3,7 +3,7 @@ p.text-center.t-small.padding--3halves.no-margin.bg-dust
     | {{'LOTTERY.READ_ABOUT_PREFERENCES' | translate}}
 
 footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingSubmitted"
-  p.t-small translate="LOTTERY.RESULTS_FROM" translate-value-date="{{lotteryBuckets.lotteryDate | date : 'MMM d, yyyy' }}"
+  p.t-small translate="LOTTERY.RESULTS_FROM" translate-value-date="{{listing.Lottery_Results_Date | date : 'MMM d, yyyy' }}"
   p.t-small ng-if="lotteryBuckets.lotteryResultsURL"
     a.a-dark ng-href="{{lotteryBuckets.lotteryResultsURL}}" target="_blank"
       | {{'LOTTERY.LOTTERY_RESULTS_PDF_LINK' | translate}}
