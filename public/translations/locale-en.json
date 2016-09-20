@@ -392,6 +392,7 @@
         "APPLICATION_SUBMITTED": "Application Submitted",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
         "BACK": "Back",
         "CONFIRM": "Confirm",
         "DELETE": "Delete",

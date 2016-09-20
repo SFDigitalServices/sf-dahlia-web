@@ -300,9 +300,16 @@ ShortFormApplicationService = (
   Service.isLeavingShortForm = (toState, fromState) ->
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
 
+  Service.isLeavingConfirmationToSignIn = (toState, fromState) ->
+    fromState.name == 'dahlia.short-form-application.create-account' &&
+      toState.name == 'dahlia.sign-in' &&
+      Service.application.status == 'submitted'
+
   Service.hittingBackFromConfirmation = (fromState, toState) ->
-    confirmationState = 'dahlia.short-form-application.confirmation'
-    (fromState.name == confirmationState) && Service.isShortFormPage(toState)
+    # going from confirmation to a short form page that ISN'T "create-account"
+    fromState.name == 'dahlia.short-form-application.confirmation' &&
+      toState.name != 'dahlia.short-form-application.create-account' &&
+      Service.isShortFormPage(toState)
 
   Service.invalidateContactForm = ->
     Service.application.validatedForms['You']['contact'] = false
