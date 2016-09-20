@@ -191,7 +191,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
-      if Service.listingIsAlchemy(listing)
+      if Service.listingIs(listing, 'Alchemy')
         listing.Lottery_Results = true
       # ------------------------------
       if Service.listingIsOpen(listing)
@@ -282,20 +282,19 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     )
 
   # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.listingIs480Potrero = (listing) ->
-    listing.Id == 'a0WU000000DBJ9YMAX'
+  Service.LISTING_MAP = {
+    'a0WU000000DBJ9YMAX': '480Potrero'
+    'a0WU000000BdZWlMAN': 'Alchemy'
+    'a0W0P00000DYQpCUAX': 'Clarence'
+    'a0W0P00000DYPP7UAP': '168Hyde'
+    'a0W0P00000DYN6BUAX': 'Olume'
+  }
 
-  Service.listingIsAlchemy = (listing) ->
-    listing.Id == 'a0WU000000BdZWlMAN'
+  Service.listingIs = (listing, name) ->
+    Service.LISTING_MAP[listing.Id] == name
 
-  Service.listingIsClarence = (listing) ->
-    listing.Id == 'a0W0P00000DYQpCUAX'
-
-  Service.listingIs168Hyde = (listing) ->
-    listing.Id == 'a0W0P00000DYPP7UAP'
-
-  Service.listingIsOlume = (listing) ->
-    listing.Id == 'a0W0P00000DYN6BUAX'
+  Service.listingIsAny = (listing, names) ->
+    _.includes(names, Service.LISTING_MAP[listing.Id])
 
 
   return Service

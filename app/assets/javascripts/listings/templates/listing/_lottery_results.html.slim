@@ -5,7 +5,7 @@ p.content-group_day.margin-bottom
   p.c-steel.t-small.margin-bottom ng-if="listing.Lottery_Summary"
     | {{listing.Lottery_Summary}}
 
-  button.primary.expand.no-margin ng-click="openLotteryResultsModal()" ng-if="!listingIsAlchemy()" ng-disabled="loadingLotteryResults"
+  button.primary.expand.no-margin ng-click="openLotteryResultsModal()" ng-if="!showDownloadLotteryResultsButton()" ng-disabled="loadingLotteryResults"
     | View Lottery Results
 
   / TODO: remove hardcoded feature

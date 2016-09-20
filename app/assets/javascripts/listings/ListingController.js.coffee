@@ -175,30 +175,25 @@ ListingController = (
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.showLotteryPreferences = ->
-    $scope.listingIs480Potrero() ||
-    $scope.listingIsAlchemy() ||
-    $scope.listingIsClarence() ||
-    $scope.listingIs168Hyde() ||
-    $scope.listingIsOlume()
+    $scope.listingIsAny([
+      '480Potrero'
+      'Alchemy'
+      'Clarence'
+      '168Hyde'
+      'Olume'
+    ])
 
   $scope.showDownloadLotteryResultsButton = ->
     return false unless $scope.listing.LotteryResultsURL
-    $scope.listingIsAlchemy()
+    $scope.listingIsAny([
+      'Alchemy'
+    ])
 
-  $scope.listingIs480Potrero = ->
-    ListingService.listingIs480Potrero($scope.listing)
+  $scope.listingIs = (name) ->
+    ListingService.listingIs($scope.listing, name)
 
-  $scope.listingIsAlchemy = ->
-    ListingService.listingIsAlchemy($scope.listing)
-
-  $scope.listingIsClarence = ->
-    ListingService.listingIsClarence($scope.listing)
-
-  $scope.listingIs168Hyde = ->
-    ListingService.listingIs168Hyde($scope.listing)
-
-  $scope.listingIsOlume = ->
-    ListingService.listingIsOlume($scope.listing)
+  $scope.listingIsAny = (names) ->
+    ListingService.listingIsAny($scope.listing, names)
 
   $scope.positionOfPreference = (pref) ->
     prefs = []
@@ -216,7 +211,7 @@ ListingController = (
     v = n % 100
     (s[(v - 20) % 10] or s[v] or s[0])
 
-  if ($scope.listingIsAlchemy())
+  if ($scope.listingIs('Alchemy'))
     $scope.listing.COPUnits = 50
     $scope.listing.DTHPUnits = 10
     $scope.listing.NRHPUnits = 20
@@ -226,23 +221,23 @@ ListingController = (
       http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/Posting%20200%20Buchanan%20-%20Alchemy%208-31-2016.pdf
     '''
 
-  if ($scope.listingIs480Potrero())
+  if ($scope.listingIs('480Potrero'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 4
     $scope.listing.supervisorialDistrict = 10
 
-  if ($scope.listingIsClarence())
+  if ($scope.listingIs('Clarence'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 1
     $scope.listing.NRHPUnits = 0
 
-  if ($scope.listingIs168Hyde())
+  if ($scope.listingIs('168Hyde'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 0
     $scope.listing.NRHPUnits = 0
 
-  if ($scope.listingIsOlume())
+  if ($scope.listingIs('Olume'))
     $scope.listing.COPUnits = 18
     $scope.listing.DTHPUnits = 3
     $scope.listing.NRHPUnits = 7
