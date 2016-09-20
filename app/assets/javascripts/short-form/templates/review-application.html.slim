@@ -27,7 +27,7 @@ section.app-container
         .padding--2x.text-center
           button.button-link.button-lined.t-small.lined.hide-for-print ng-click="print()"
             | {{'REVIEW_APPLICATION.PRINT_A_COPY' | translate}}
-        .button-pager
+        .button-pager ng-if="loggedIn()"
           .button-pager_row.primary.app-card_footer
             button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.my-applications"
               | {{'REVIEW_APPLICATION.BACK_TO_MY_APPLICATIONS' | translate}}
