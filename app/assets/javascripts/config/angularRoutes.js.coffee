@@ -77,6 +77,8 @@
     ##########################
     # < Account/Login pages >
     ##########################
+    # TODO: refactor "my account" pages to be under the same namespace/controller
+    ############
     .state('dahlia.create-account', {
       url: '/create-account'
       views:
@@ -84,6 +86,8 @@
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
         AccountService.unlockFields()
       ]
     })
@@ -96,6 +100,8 @@
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
@@ -113,6 +119,9 @@
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+
         if $stateParams.expiredUnconfirmed
           AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
         if $stateParams.expiredConfirmed
@@ -131,6 +140,10 @@
         'container@':
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+      ]
     })
     .state('dahlia.forgot-password', {
       url: '/forgot-password'
@@ -138,6 +151,9 @@
         'container@':
           templateUrl: 'account/templates/forgot-password.html'
           controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+      ]
     })
     .state('dahlia.reset-password', {
       url: '/reset-password'
@@ -150,14 +166,11 @@
           $auth.validateUser()
         ]
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
+        AccountService.clearAccountMessages()
         unless AccountService.loggedIn()
           return $state.go('dahlia.sign-in')
       ]
     })
-    ############
-    # TODO: refactor "my account" pages to be under the same namespace/controller
-    # once these pages become functional
-    ############
     .state('dahlia.account-settings', {
       url: '/account-settings?reconfirmed'
       params:

@@ -49,9 +49,9 @@
       label.form-label.caps id="hasSameAddressAsApplicant_label"
         | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' ng-click="resetHouseholdMemberAddress()"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' ng-click="copyApplicantAddressToHouseholdMember()"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true'
+        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' ng-click="resetHouseholdMemberAddress()"
           | {{'T.NO' | translate}}
 
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
@@ -90,7 +90,7 @@
   .button-pager
     .button-pager_row.primary
       input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_ADD' | translate}}" ng-if="!householdMember.id"
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_SAVE' | translate}}" ng-if="!householdMember.id"
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
