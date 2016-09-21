@@ -160,6 +160,8 @@ ShortFormNavigationService = (
           'live-work-preference'
         else
           'preferences-programs'
+      when 'review-submitted'
+        'confirmation'
       # -- catch all
       else
         'intro'
