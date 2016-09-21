@@ -10,5 +10,5 @@ angular.module('dahlia.directives')
     scope.ngHref = $state.href(attrs.to)
 
     scope.isEditable = ->
-      scope.application.status != 'Submitted'
+      scope.application.status != 'submitted'
 ]

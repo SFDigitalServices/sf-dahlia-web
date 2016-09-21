@@ -52,7 +52,7 @@
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          ShortFormApplicationService.resetUserData()
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm
