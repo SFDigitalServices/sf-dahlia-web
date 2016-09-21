@@ -126,7 +126,7 @@ class Api::V1::ShortFormController < ApiController
       attach_temp_files_to_user
     elsif initial_submission?
       send_attached_files(response['id'])
-      send_submit_app_confirmation(response['lotteryNumber'])
+      send_submit_app_confirmation(response)
     end
   end
 
@@ -157,11 +157,13 @@ class Api::V1::ShortFormController < ApiController
     files.update_all(user_id: current_user.id)
   end
 
-  def send_submit_app_confirmation(lottery_number)
+  def send_submit_app_confirmation(response)
     Emailer.submission_confirmation(
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
-      lottery_number: lottery_number,
+      lottery_number: response['lotteryNumber'],
+      firstName: response['primaryApplicant']['firstName'],
+      lastName: response['primaryApplicant']['lastName'],
     ).deliver_now
   end
 
