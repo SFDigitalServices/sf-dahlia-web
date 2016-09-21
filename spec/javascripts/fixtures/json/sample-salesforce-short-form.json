@@ -132,5 +132,6 @@
     "workInSfPreferenceNatKey": null,
     "workInSfPreferenceProof": null,
     "worksInSanFrancisco": true,
-    "worksInSfPreferenceID": null
+    "worksInSfPreferenceID": null,
+    "formMetadata": "{\"completedSections\":{\"Intro\":true,\"You\":true,\"Household\":false,\"Preferences\":false,\"Income\":false}}"
 }

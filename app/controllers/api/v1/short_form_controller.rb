@@ -339,6 +339,7 @@ class Api::V1::ShortFormController < ApiController
             :applicationSubmissionType,
             :applicationSubmittedDate,
             :status,
+            :formMetadata,
           )
   end
 
