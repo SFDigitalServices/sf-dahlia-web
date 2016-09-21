@@ -176,10 +176,10 @@ ListingController = (
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.showLotteryPreferences = ->
     $scope.listingIsAny([
-      '480Potrero'
+      '480 Potrero'
       'Alchemy'
       'Clarence'
-      '168Hyde'
+      '168 Hyde'
       'Olume'
     ])
 
@@ -221,7 +221,7 @@ ListingController = (
       http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/Posting%20200%20Buchanan%20-%20Alchemy%208-31-2016.pdf
     '''
 
-  if ($scope.listingIs('480Potrero'))
+  if ($scope.listingIs('480 Potrero'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 4
@@ -232,7 +232,7 @@ ListingController = (
     $scope.listing.DTHPUnits = 1
     $scope.listing.NRHPUnits = 0
 
-  if ($scope.listingIs('168Hyde'))
+  if ($scope.listingIs('168 Hyde'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 0
     $scope.listing.NRHPUnits = 0

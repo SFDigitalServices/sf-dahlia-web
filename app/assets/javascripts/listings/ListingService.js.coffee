@@ -283,11 +283,16 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
-    'a0WU000000DBJ9YMAX': '480Potrero'
+    'a0WU000000DBJ9YMAX': '480 Potrero'
     'a0WU000000BdZWlMAN': 'Alchemy'
     'a0W0P00000DYQpCUAX': 'Clarence'
-    'a0W0P00000DYPP7UAP': '168Hyde'
+    'a0W0P00000DYPP7UAP': '168 Hyde'
     'a0W0P00000DYN6BUAX': 'Olume'
+    'a0WU000000BcwrAMAR': 'Rincon'
+    'a0WU000000C3hBWMAZ': 'Potrero 1010'
+    'a0WU000000C4FsQMAV': '529 Stevenson'
+    'a0WU000000D9iF8MAJ': '888 Paris'
+    'a0WU000000DB97cMAD': '77 Bluxome'
   }
 
   Service.listingIs = (listing, name) ->
