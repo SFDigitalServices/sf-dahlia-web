@@ -207,7 +207,8 @@
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you.",
-        "TITLE": "Thanks. We have received your application for"
+        "TITLE": "Thanks. We have received your application for",
+        "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",

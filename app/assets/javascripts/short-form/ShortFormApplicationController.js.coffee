@@ -92,7 +92,10 @@ ShortFormApplicationController = (
   $scope.hideMessage = false
   $scope.addressError = ShortFormApplicationService.addressError
 
-  if ShortFormApplicationService.isShortFormPage($state.current) && !$window.jasmine
+  $scope.atShortFormState = ->
+    ShortFormApplicationService.isShortFormPage($state.current)
+
+  if $scope.atShortFormState() && !$window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
