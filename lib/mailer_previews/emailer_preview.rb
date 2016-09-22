@@ -4,6 +4,8 @@ class EmailerPreview < ActionMailer::Preview
     params = {
       lottery_number: '3888078',
       email: 'test@person.com',
+      firstName: 'Mister',
+      lastName: 'Tester',
       listing_id: 'a0WU000000CkiM3MAJ',
     }
     Emailer.submission_confirmation(params)

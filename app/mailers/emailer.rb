@@ -18,6 +18,7 @@ class Emailer < Devise::Mailer
 
   def submission_confirmation(params)
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
+    @name = "#{params[:firstName]} #{params[:lastName]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],
@@ -48,11 +49,7 @@ class Emailer < Devise::Mailer
 
   def load_salesforce_contact(record)
     contact = AccountService.get(record.salesforce_contact_id)
-    @name = if contact.present?
-              "#{contact['firstName']} #{contact['lastName']}"
-            else
-              record.email
-            end
+    @name = name(contact, record)
   end
 
   def _submission_confirmation_email(params)

@@ -26,7 +26,6 @@ en:
         thank_you_msg: "Thank you for setting up your account on the DAHLIA San Francisco Housing Portal. It will now be easier for you to start, save, and submit online applications for listings that appear on the site."
         confirm_link_msg: "To complete your account creation, please click the link below:"
         # confirm_account_link: "Confirm my account"
-      signature: "The San Francisco Mayor's Office of Housing and Community Development"
 
       # reset_password_instructions:0
       #   subject: "Reset password instructions"

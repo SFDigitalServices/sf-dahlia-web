@@ -1,15 +1,7 @@
 p
-  = "Dear #{@name},"
-
-p
   | You recently changed information in your DAHLIA SF Housing Portal Account Settings. If you did not make this change, please visit your
   => link_to ' Account Settings', @account_settings_url
   |  to verify your information.
 
 p
   | Remember to always create a strong password for your account and not share your password with others.
-
-p
-  = "#{t(:thank_you).capitalize},"
-  br
-  = t 'devise.mailer.signature'
