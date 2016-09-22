@@ -208,7 +208,7 @@
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you.",
         "TITLE": "Thanks. We have received your application for",
-        "VIEW_AND_PRINT_A_COPY": ""
+        "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
@@ -262,7 +262,7 @@
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
-        "HOUSEHOLD_MEMBER_SAVE": "",
+        "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
         "INCOME": "Income",
@@ -326,7 +326,7 @@
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
         "YOUR_DOB": "Your Date of Birth",
-        "YOUR_GENDER": "",
+        "YOUR_GENDER": "Please specify your gender",
         "YOUR_NAME": "Your Name",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
         "YOU_HAVE_CLAIMED": "You have claimed:",
@@ -334,7 +334,7 @@
         "ZIPCODE": "Zipcode"
     },
     "LOTTERY": {
-        "ANY_REMAINING_UNITS": "",
+        "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "DTHP": "Displaced Tenants Housing Preference",
@@ -359,7 +359,7 @@
         "RANKING_TITLE": "Your preference ranking",
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
         "RESULTS_FROM": "Results from {{date}}",
-        "UNSORTED_RESULTS_NOTE": "Unsorted results are used to determine the rank within each preference.",
+        "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
         "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units"
     },
     "MY_APPLICATIONS": {
@@ -393,7 +393,7 @@
         "APPLICATION_SUBMITTED": "Application Submitted",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
         "BACK": "Back",
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
