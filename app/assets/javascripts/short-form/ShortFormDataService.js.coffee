@@ -30,9 +30,9 @@ ShortFormDataService = () ->
     application = Service._formatIncome(application)
     application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
+    application = Service._formatMetadata(application)
     delete application.householdMembers if _.isEmpty(application.householdMembers)
     delete application.primaryApplicant.mailingGeocoding_data
-    delete application.completedSections
     delete application.validatedForms
     delete application.lotteryNumber
     return application
@@ -102,7 +102,8 @@ ShortFormDataService = () ->
           if !_.includes(['address1', 'address2', 'boundary_match'], key)
             member[key] = value
           return
-        member.address = member.home_address.address1 + member.home_address.address2
+        member.address = member.home_address.address1
+        member.address += ' ' + member.home_address.address2 if member.home_address.address2
 
       if member.hasSameAddressAsApplicant == 'Yes'
         member.hasSameAddressAsApplicant = true
@@ -182,6 +183,14 @@ ShortFormDataService = () ->
     )
     return application
 
+  Service._formatMetadata = (application) ->
+    formMetadata = {
+      completedSections: application.completedSections
+    }
+    application.formMetadata = JSON.stringify(formMetadata)
+    delete application.completedSections
+    return application
+
   #############################################
   # Reverse formatting functions (Salesforce -> Web app)
   #############################################
@@ -198,6 +207,7 @@ ShortFormDataService = () ->
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
     data.preferences = Service._reformatPreferences(sfApp, uploadedFiles)
+    Service._reformatMetadata(sfApp, data)
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -222,6 +232,7 @@ ShortFormDataService = () ->
   Service._reformatPrimaryApplicant = (contact, altContact) ->
     whitelist = [
       'appMemberId', 'contactId',
+      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
       'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther'
@@ -231,10 +242,10 @@ ShortFormDataService = () ->
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     # these "noXXX" fields will be stored in salesforce in a later story
-    applicant.noPhone = !contact.phone
-    applicant.noAddress = !contact.address
+    # applicant.noPhone = !contact.phone
+    # applicant.noAddress = !contact.address
+    # applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     applicant.additionalPhone = !! contact.alternatePhone
-    applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
 
@@ -325,6 +336,11 @@ ShortFormDataService = () ->
       'Yes'
     else if bool == 'false'
       'No'
+
+  Service._reformatMetadata = (sfApp, data) ->
+    formMetadata = JSON.parse(sfApp.formMetadata)
+    return if _.isEmpty(formMetadata)
+    data.completedSections = formMetadata.completedSections
 
   return Service
 

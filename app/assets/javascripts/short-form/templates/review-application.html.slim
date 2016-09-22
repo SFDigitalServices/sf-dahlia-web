@@ -1,10 +1,11 @@
 section.app-container
   .row.collapse
     .medium-6.medium-centered.columns.fixed-width
+      short-form-back
       .app-header.app-card.form-card
         header.app-card_header
           h1.app-card_title
-            | {{'T.APPLICATION' | translate}}: {{application.listing.Name}}
+            | {{application.listing.Name || listing.Name}} {{'T.APPLICATION' | translate}}
         .app-card_nav.text-center
           a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: application.listingID})"
             | {{'REVIEW_APPLICATION.VIEW_ORIGINAL_LISTING' | translate}}
@@ -27,7 +28,7 @@ section.app-container
         .padding--2x.text-center
           button.button-link.button-lined.t-small.lined.hide-for-print ng-click="print()"
             | {{'REVIEW_APPLICATION.PRINT_A_COPY' | translate}}
-        .button-pager
+        .button-pager ng-if="loggedIn()"
           .button-pager_row.primary.app-card_footer
             button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.my-applications"
               | {{'REVIEW_APPLICATION.BACK_TO_MY_APPLICATIONS' | translate}}

@@ -10,5 +10,6 @@ angular.module('dahlia.directives')
     scope.ngHref = $state.href(attrs.to)
 
     scope.isEditable = ->
-      scope.application.status != 'Submitted'
+      # using regex .match made the angular digest loop angry!
+      scope.application.status.toLowerCase() == 'draft'
 ]

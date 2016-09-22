@@ -42,8 +42,9 @@
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (fromState.name == 'dahlia.short-form-application.confirmation')
-          isConfirmationState = true
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+        else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
+          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
         else
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
@@ -51,10 +52,11 @@
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm
+          bsLoadingOverlayService.stop()
           e.preventDefault()
           false
 

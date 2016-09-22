@@ -20,6 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello"
+  hello: "Hello %{name}"
   dear: "Dear"
   thank_you: "Thank you"
+  email_signature: "The San Francisco Mayor's Office of Housing and Community Development"

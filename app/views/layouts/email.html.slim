@@ -1,3 +1,13 @@
 doctype html
-body
-  = yield
+html
+  head
+  body
+    p
+      = "#{t(:hello, name: (@name || ''))},"
+
+    = yield
+
+    p
+      = "#{t(:thank_you).capitalize},"
+      br
+      = t :email_signature
