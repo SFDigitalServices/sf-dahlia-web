@@ -97,6 +97,7 @@ ShortFormNavigationService = (
     hideNav.indexOf(Service._currentPage()) < 0
 
   Service.hasBackButton = ->
+    return false if $state.current.name == 'dahlia.short-form-review'
     hideBackButton = [
       'intro',
       'overview',

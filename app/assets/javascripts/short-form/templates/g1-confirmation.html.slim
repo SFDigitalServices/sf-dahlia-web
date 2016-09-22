@@ -45,5 +45,7 @@
         | {{'G1_CONFIRMATION.BROWSE_MORE_LISTINGS' | translate}}
 
   .padding--2x.text-center.border-top
-    a.t-small.lined ui-sref="dahlia.short-form-application.review-submitted"
+    a.t-small.lined ui-sref="dahlia.short-form-application.review-submitted" ng-if="!loggedIn()"
+      | {{'G1_CONFIRMATION.VIEW_AND_PRINT_A_COPY' | translate}}
+    a.t-small.lined ui-sref="dahlia.short-form-review({id: application.id})" ng-if="loggedIn()"
       | {{'G1_CONFIRMATION.VIEW_AND_PRINT_A_COPY' | translate}}
