@@ -190,10 +190,6 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
-      # TODO: -- REMOVE HARDCODED FEATURES --
-      if Service.listingIs(listing, 'Alchemy')
-        listing.Lottery_Results = true
-      # ------------------------------
       if Service.listingIsOpen(listing)
         # All Open Listings Array
         Service.openListings.push(listing)
