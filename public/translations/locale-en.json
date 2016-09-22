@@ -207,7 +207,8 @@
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you.",
-        "TITLE": "Thanks. We have received your application for"
+        "TITLE": "Thanks. We have received your application for",
+        "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
@@ -257,11 +258,11 @@
         "FRIEND": "Friend",
         "HOUSEHOLD_MEMBER": "Household Member",
         "HOUSEHOLD_MEMBERS": "Household members",
-        "HOUSEHOLD_MEMBER_ADD": "Add Household Member",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
+        "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
         "INCOME": "Income",

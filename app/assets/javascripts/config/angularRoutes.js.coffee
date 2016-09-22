@@ -600,6 +600,20 @@
         'container':
           templateUrl: 'short-form/templates/g1-confirmation.html'
     })
+    .state('dahlia.short-form-application.review-submitted', {
+      url: '/review-submitted'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/review-application.html'
+          controller: 'ShortFormApplicationController'
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          applicationDataExists = !!ShortFormApplicationService.application.lotteryNumber
+          return if applicationDataExists
+          $state.go('dahlia.welcome')
+        ]
+    })
     # Short form submission: Review
     .state('dahlia.short-form-review', {
       url: '/applications/:id'

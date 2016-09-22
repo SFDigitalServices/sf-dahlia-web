@@ -306,8 +306,9 @@ ShortFormApplicationService = (
       Service.application.status == 'submitted'
 
   Service.hittingBackFromConfirmation = (fromState, toState) ->
-    # going from confirmation to a short form page that ISN'T "create-account"
+    # going from confirmation to a short form page that ISN'T "create-account" or "review"
     fromState.name == 'dahlia.short-form-application.confirmation' &&
+      toState.name != 'dahlia.short-form-application.review-submitted' &&
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
 

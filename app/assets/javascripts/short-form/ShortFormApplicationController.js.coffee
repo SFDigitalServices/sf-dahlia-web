@@ -92,7 +92,10 @@ ShortFormApplicationController = (
   $scope.hideMessage = false
   $scope.addressError = ShortFormApplicationService.addressError
 
-  if ShortFormApplicationService.isShortFormPage($state.current) && !$window.jasmine
+  $scope.atShortFormState = ->
+    ShortFormApplicationService.isShortFormPage($state.current)
+
+  if $scope.atShortFormState() && !$window.jasmine
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
@@ -201,7 +204,11 @@ ShortFormApplicationController = (
     $scope.applicant.home_address = {}
 
   $scope.resetHouseholdMemberAddress = ->
-    delete $scope.householdMember.home_address
+    $scope.householdMember.home_address = {}
+
+  $scope.copyApplicantAddressToHouseholdMember = ->
+    $scope.householdMember.home_address = {}
+    angular.copy($scope.applicant.home_address, $scope.householdMember.home_address)
 
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
@@ -323,6 +330,7 @@ ShortFormApplicationController = (
 
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
+    $scope.form.applicationForm.$setPristine()
     $state.go('dahlia.short-form-application.household-members')
 
   $scope.validateHouseholdEligibility = (match) ->
