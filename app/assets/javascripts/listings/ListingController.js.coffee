@@ -221,10 +221,6 @@ ListingController = (
     $scope.listing.DTHPUnits = 10
     $scope.listing.NRHPUnits = 20
     $scope.listing.supervisorialDistrict = 8
-    $scope.listing.Lottery_Results = true
-    $scope.listing.LotteryResultsURL ?= '''
-      http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/Posting%20200%20Buchanan%20-%20Alchemy%208-31-2016.pdf
-    '''
 
   if ($scope.listingIs('480 Potrero'))
     $scope.listing.COPUnits = 1
