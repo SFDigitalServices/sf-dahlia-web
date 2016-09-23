@@ -296,6 +296,9 @@ ShortFormDataService = () ->
             preferences["#{preference}_proof_option"] = file.document_type
             preferences["#{preference}_proof_file"] = file
     )
+    if preferences.liveInSf || preferences.workInSf
+      preferences.liveWorkInSf = true
+      preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
 
 

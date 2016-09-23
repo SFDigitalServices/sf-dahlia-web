@@ -9,11 +9,14 @@ angular.module('dahlia.directives')
     scope.init = ->
       scope.title = attrs.title
       if attrs.type == 'liveWorkInSf'
+        # liveWorkInSf is a special case where the checkbox_pref_type is "liveWorkInSf"
+        # but the pref_type is the preference you're selecting: "liveInSf" or "workInSf"
         scope.liveWorkInSf = true
         scope.checkbox_pref_type = 'liveWorkInSf'
         if scope.application.preferences.liveWorkInSf_preference
           scope.set_pref_type(scope.application.preferences.liveWorkInSf_preference)
       else
+        # otherwise checkbox_pref_type == pref_type
         scope.checkbox_pref_type = attrs.type
         scope.set_pref_type(attrs.type)
       scope.labelledby = attrs.labelledby
@@ -48,13 +51,15 @@ angular.module('dahlia.directives')
       return false if scope.only_applicant_eligible()
       return true
 
-    scope.select_pref_type = (type) ->
-      scope.reset_preference_data(type)
+    scope.select_liveWork_type = (type) ->
+      scope.reset_preference_data('workInSf')
+      scope.reset_preference_data('liveInSf')
       scope.set_pref_type(type)
 
     scope.set_pref_type = (type) ->
-      return false unless type
+      # type may be undefined which will reset the liveWorkInSf dropdown to "Select One"
       scope.pref_type = type
+      return false unless type
       scope.pref_type_household_member = "#{scope.pref_type}_household_member"
       scope.pref_type_proof_option = "#{scope.pref_type}_proof_option"
       scope.pref_type_proof_file = "#{scope.pref_type}_proof_file"
