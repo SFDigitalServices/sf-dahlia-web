@@ -109,6 +109,10 @@
             "DESCRIPTION": "At least one household member must live in San Francisco.",
             "TITLE": "Live in San Francisco Preference"
         },
+        "LIVE_WORK_SF_PREFERENCE": {
+            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
+            "TITLE": "Live or Work in San Francisco Preference"
+        },
         "NEIGHBORHOOD_RESIDENCE": {
             "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
             "TITLE": "Neighborhood Resident Housing Preference"
