@@ -111,6 +111,8 @@
         },
         "LIVE_WORK_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
+            "LIVE_SF_PREFERENCE": "Live in San Francisco",
+            "WORK_SF_PREFERENCE": "Work in San Francisco",
             "TITLE": "Live or Work in San Francisco Preference"
         },
         "NEIGHBORHOOD_RESIDENCE": {
@@ -293,6 +295,7 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
+        "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {

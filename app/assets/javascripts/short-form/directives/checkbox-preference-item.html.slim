@@ -1,16 +1,29 @@
 div
   p.checkbox-block
-    input id="preferences-{{pref_type}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click='reset_preference_data(pref_type)'
-    label.checkbox-block_label for="preferences-{{pref_type}}"
+    input id="preferences-{{checkbox_pref_type}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[checkbox_pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click='reset_preference_data(checkbox_pref_type)'
+    label.checkbox-block_label for="preferences-{{checkbox_pref_type}}"
       strong.form-label.caps
         | {{title}}
       / ng-transclude tells it to yield the body of the directive
       span.checkbox-block_note ng-transclude=""
 
+
+    / select for liveWorkInSf preference type
+    .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: inputInvalid('liveWorkInSf_preference') }" ng-if="application.preferences.liveWorkInSf && liveWorkInSf"
+
+        label.form-label.caps for="liveWorkPrefOption"
+          | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
+        select id="liveWorkPrefOption" ng-model="application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="application.preferences.liveWorkInSf" ng-change="select_pref_type(application.preferences.liveWorkInSf_preference)"
+          option value="" translate="LABEL.SELECT_ONE"
+          option value="liveInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
+          option value="workInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
+
+
     / select for household member that has the preference
     / not shown if it is only the applicant eligible
-    .form-group.input-inset ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[pref_type]" ng-hide="only_applicant_eligible() && !show_preferences_options(application) && !show_preference_uploader(application)"
-      div ng-hide="only_applicant_eligible()"
+    .form-group.input-inset ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[checkbox_pref_type]" ng-hide="!show_household_member_select() && !show_preferences_options() && !show_preference_uploader()"
+
+      div ng-hide="!show_household_member_select()"
         label.form-label.caps for="{{pref_type_household_member}}"
           | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
         select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
@@ -20,7 +33,7 @@ div
             | {{ member.firstName }} {{ member.lastName }}
 
       / checkbox for proof options for this preference
-      .form-group ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options(application)"
+      .form-group ng-class="{ error: inputInvalid(pref_type_proof_option) }" ng-if="show_preferences_options()"
         label.form-label.caps for="{{pref_type_proof_option}}"
           | {{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}
         select id="{{pref_type_proof_option}}" ng-model="application.preferences[pref_type_proof_option]" data-width="auto" name="{{pref_type_proof_option}}" ng-required="application.preferences[pref_type]"
@@ -31,7 +44,7 @@ div
         p.form-note ng-if="application.preferences[pref_type_proof_option] == 'Letter from employer'"
           | {{'D2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
 
-      .form-group.text-center ng-if="show_preference_uploader(application)"
+      .form-group.text-center ng-if="show_preference_uploader()"
         div.button.ghost-white.expand ngf-select="uploadProof($file, pref_type, application.preferences[pref_type_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{pref_type_proof_file}}" ng-model="application.preferences[pref_type_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[pref_type]"
           | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
         small.error ng-if="inputInvalid('file_'+pref_type_proof_file) && !preferenceFileError(pref_type_proof_file)"
