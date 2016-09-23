@@ -18,6 +18,9 @@ class Api::V1::ShortFormController < ApiController
 
   ####### - File upload functions
   def upload_proof
+    # get rid of any previous uploads for this preference
+    # (e.g. from an abandoned session or if you unchecked the box)
+    destroy_files_for_listing_preference
     @uploaded_file = UploadedFile.create(uploaded_file_attrs)
     if @uploaded_file
       render json: {
@@ -31,15 +34,8 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def delete_proof
-    file_params = uploaded_file_params
-    preference = file_params.delete(:preference)
-    if user_signed_in?
-      file_params.delete(:session_uid)
-      file_params[:user_id] = current_user.id
-    end
-    @uploaded_file = UploadedFile.send(preference).find_by(file_params)
-    if @uploaded_file
-      @uploaded_file.destroy
+    success = destroy_files_for_listing_preference
+    if success
       render json: { success: true }
     else
       render json: { success: false, errors: 'not found' }
@@ -235,6 +231,22 @@ class Api::V1::ShortFormController < ApiController
     elsif @unconfirmed_user
       @unconfirmed_user.id
     end
+  end
+
+  def destroy_files_for_listing_preference
+    file_params = {
+      session_uid: uploaded_file_params[:session_uid],
+      listing_id: uploaded_file_params[:listing_id],
+      preference: uploaded_file_params[:preference],
+    }
+    preference = file_params.delete(:preference)
+    if user_signed_in?
+      file_params.delete(:session_uid)
+      file_params[:user_id] = current_user.id
+    end
+    uploaded_files = UploadedFile.send(preference).where(file_params)
+    return false unless uploaded_files.any?
+    uploaded_files.destroy_all
   end
 
   def eligibility_params

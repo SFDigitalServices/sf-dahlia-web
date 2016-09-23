@@ -49,11 +49,11 @@ angular.module('dahlia.directives')
       return true
 
     scope.select_pref_type = (type) ->
-      scope.reset_preference_data('workInSf')
-      scope.reset_preference_data('liveInSf')
+      scope.reset_preference_data(type)
       scope.set_pref_type(type)
 
     scope.set_pref_type = (type) ->
+      return false unless type
       scope.pref_type = type
       scope.pref_type_household_member = "#{scope.pref_type}_household_member"
       scope.pref_type_proof_option = "#{scope.pref_type}_proof_option"
