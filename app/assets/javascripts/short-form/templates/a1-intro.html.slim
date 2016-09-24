@@ -6,7 +6,7 @@ section.app-container
       form.app-card.form-card
         h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
           a ui-sref="dahlia.short-form-welcome.overview"
-            | {{'A1_INTRO.TITLE' | translate}}
+            | {{listing.Name}}
         figure.property-card_figure.radius
           a.property-card_overlay ui-sref="dahlia.short-form-welcome.overview"
             img.property-card_thumb alt="Listing Name:{{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
