@@ -155,6 +155,18 @@
         AccountService.clearAccountMessages()
       ]
     })
+    .state('dahlia.short-form-application.forgot-password', {
+      # duplicated from above but to differentiate state for "Save and finish later"
+      # will be accessed at '/listings/{id}/apply/forgot-password'
+      url: '/forgot-password'
+      views:
+        'container@':
+          templateUrl: 'account/templates/forgot-password.html'
+          controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+      ]
+    })
     .state('dahlia.reset-password', {
       url: '/reset-password'
       views:
