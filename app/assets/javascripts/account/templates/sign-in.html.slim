@@ -1,12 +1,7 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns.fixed-width
-      .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
-        a.back-link ui-sref="{{rememberedShortFormState}}"
-          span.ui-icon.ui-static.ui-medium.i-primary
-            svg
-              use xlink:href="#i-left"
-          | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
+      back-to-application-link
 
       form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
         header.dash-header
@@ -38,7 +33,9 @@
             small.error ng-if="inputInvalid('password')"
               | {{'ERROR.PASSWORD' | translate}}
             small.form-note.shift-up
-              a ui-sref="dahlia.forgot-password"
+              a ui-sref="dahlia.short-form-application.forgot-password" ng-if="rememberedShortFormState"
+                | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
+              a ui-sref="dahlia.forgot-password" ng-if="!rememberedShortFormState"
                 | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
           .form-group
             p.t-small.c-steel.text-center.padding-top.no-margin
