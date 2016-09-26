@@ -16,10 +16,10 @@ a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" n
   | Email
 p.content-group_address.no-margin
   | {{listing.Application_Organization}}
-p.c-steel ng-if="listing.Application_Street_Address"
-  | {{ listing.Application_Street_Address }},
+p.c-steel ng-if="listing.Leasing_Agent_Street"
+  | {{ listing.Leasing_Agent_Street }},
   br
-  | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
+  | {{ listing.Leasing_Agent_City }} {{ listing.Leasing_Agent_State }} {{ listing.Leasing_Agent_Zip }}
 a.has-icon.d-block.margin-bottom target="_blank" title="View Map: {{formattedApplicationAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}" ng-if="listing.Application_Street_Address"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
