@@ -380,11 +380,11 @@
       url: '/listings/:id/apply-welcome'
       abstract: true
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id).then ->
-            if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
-              # kick them out unless there's a real listing
-              $state.go('dahlia.welcome')
+        listing: [
+          '$stateParams', 'ListingService',
+          ($stateParams, ListingService) ->
+            # store the listing in ListingService and kick out if it's not open for applications
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -411,12 +411,10 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$state', 'ListingService',
-          ($stateParams, $state, ListingService) ->
-            ListingService.getListing($stateParams.id).then ->
-              if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
-                # kick them out unless there's a real listing
-                $state.go('dahlia.welcome')
+          '$stateParams', 'ListingService',
+          ($stateParams, ListingService) ->
+            # store the listing in ListingService and kick out if it's not open for applications
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         application: [
           '$stateParams', '$state', 'ShortFormApplicationService',

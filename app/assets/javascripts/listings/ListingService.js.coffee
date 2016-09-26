@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q) ->
+ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -229,6 +229,15 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
+  Service.getListingAndCheckIfOpen = (id) ->
+    Service.getListing(id).then ->
+      if _.isEmpty(Service.listing)
+        # kick them out unless there's a real listing
+        return $state.go('dahlia.welcome')
+      else if !Service.isAcceptingOnlineApplications(Service.listing)
+        # kick them back to the listing
+        return $state.go('dahlia.listing', {id: id})
+
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
     percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
@@ -305,7 +314,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state']
 
 angular
   .module('dahlia.services')
