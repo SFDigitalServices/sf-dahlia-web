@@ -1,12 +1,7 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns.fixed-width
-      .back-link-container.small-only-text-center ng-if="rememberedShortFormState"
-        a.back-link ui-sref="{{rememberedShortFormState}}"
-          span.ui-icon.ui-static.ui-medium.i-primary
-            svg
-              use xlink:href="#i-left"
-          | {{'CREATE_ACCOUNT.CONTINUE_WITH_APPLICATION' | translate}}
+      back-to-application-link
 
       form#form-wrapper.dash-card novalidate="" name="form.createAccount" ng-submit="createAccount()"
         header.dash-header

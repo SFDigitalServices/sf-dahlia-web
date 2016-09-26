@@ -12,18 +12,22 @@ do ->
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
+    $state = undefined
     modalMock = undefined
     requestURL = undefined
 
+    beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
       return
     )
 
-    beforeEach inject((_$httpBackend_, _ListingService_, _$localStorage_) ->
+    beforeEach inject((_ListingService_, _$httpBackend_, _$localStorage_, _$state_) ->
       httpBackend = _$httpBackend_
-      ListingService = _ListingService_
       $localStorage = _$localStorage_
+      $state = _$state_
+      $state.go = jasmine.createSpy()
+      ListingService = _ListingService_
       requestURL = ListingService.requestURL
       return
     )
