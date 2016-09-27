@@ -236,7 +236,7 @@
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
-        "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
+        "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Whose name is on the document you're uploading?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
@@ -296,7 +296,7 @@
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
         "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
-        "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
+        "PREFERENCE_PROOF_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
             "CABLE_BILL": "Cable and internet bill",
