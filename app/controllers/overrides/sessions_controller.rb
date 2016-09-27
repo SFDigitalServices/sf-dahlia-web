@@ -11,6 +11,9 @@ module Overrides
     end
 
     def render_create_error_not_confirmed
+      unless @resource.valid_password?(resource_params[:password])
+        return render_create_error_bad_credentials
+      end
       render_error_json('not_confirmed')
     end
 
