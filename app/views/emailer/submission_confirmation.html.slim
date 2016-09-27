@@ -28,9 +28,9 @@ p
 p
   = @listing.Application_Organization
   br
-  = @listing.Building_Street_Address + ','
+  = @listing.Leasing_Agent_Street + ','
   br
-  | #{@listing.Building_City} #{@listing.Building_State} #{@listing.Building_Zip_Code}
+  | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
 - if @listing.Office_Open && @listing.Office_Closed
   p
     | Office Hours
