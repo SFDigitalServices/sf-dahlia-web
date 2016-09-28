@@ -33,13 +33,6 @@ describe 'Listings API' do
       end
     end
   end
-  # describe 'lottery preferences' do
-  #   save_fixture do
-  #     VCR.use_cassette('listings/lottery-preferences') do
-  #       get '/api/v1/listings/lottery-preferences.json'
-  #     end
-  #   end
-  # end
   describe 'eligibility listings' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
@@ -160,7 +153,20 @@ describe 'Listings API' do
     expect(json['units'].length).to eq(2)
   end
 
-  # TO DO: Convert other listings specs to QA env so this test can pass locally
+  it 'returns lottery ranking for lottery number and listing id' do
+    VCR.use_cassette('listings/lottery-ranking') do
+      url = '/api/v1/listings/a0WU000000CkiM3MAJ/lottery_ranking.json'
+      params = { lottery_number: '00002612' }
+      get url, params
+    end
+
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json['lottery_ranking']['applicationResults'].length).to eq(1)
+  end
+
   it 'gets lottery buckets for a Listing' do
     VCR.use_cassette('listings/lottery-buckets') do
       get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
