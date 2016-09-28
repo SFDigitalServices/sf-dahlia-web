@@ -24,8 +24,10 @@ div
     .form-group.input-inset ng-class="{ error: inputInvalid(pref_type_household_member) }" ng-if="application.preferences[checkbox_pref_type]" ng-hide="!show_household_member_select() && !show_preferences_options() && !show_preference_uploader()"
 
       div ng-hide="!show_household_member_select()"
-        label.form-label.caps for="{{pref_type_household_member}}"
+        label.form-label.caps for="{{pref_type_household_member}}" ng-if="!liveWorkInSf"
           | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
+        label.form-label.caps for="{{pref_type_household_member}}" ng-if="liveWorkInSf"
+          | {{'LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME' | translate}}
         select id="{{pref_type_household_member}}" ng-model="application.preferences[pref_type_household_member]" data-width="auto" name="{{pref_type_household_member}}" ng-required="application.preferences[pref_type]"
           option value=""
             | {{'LABEL.SELECT_ONE' | translate}}

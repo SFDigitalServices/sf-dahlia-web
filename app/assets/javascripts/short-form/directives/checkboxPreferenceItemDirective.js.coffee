@@ -52,9 +52,14 @@ angular.module('dahlia.directives')
       return true
 
     scope.select_liveWork_type = (type) ->
+      # on change, totally reset both live/work options
+      scope.application.preferences.workInSf = null
+      scope.application.preferences.liveInSf = null
       scope.reset_preference_data('workInSf')
       scope.reset_preference_data('liveInSf')
       scope.set_pref_type(type)
+      # selecting a liveWork pref type is the equivalent to checking the checkbox = true
+      scope.application.preferences[type] = true
 
     scope.set_pref_type = (type) ->
       # type may be undefined which will reset the liveWorkInSf dropdown to "Select One"
@@ -73,6 +78,7 @@ angular.module('dahlia.directives')
 
     scope.reset_preference_data = (pref_type) ->
       if pref_type == 'liveWorkInSf'
+        # this means you're clicking on the combined live/work checkbox
         scope.application.preferences.liveWorkInSf_preference = null
         scope.pref_type = null
         scope.reset_preference_data('workInSf')
