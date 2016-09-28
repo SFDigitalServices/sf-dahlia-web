@@ -128,8 +128,7 @@ class Api::V1::ShortFormController < ApiController
 
   def initial_submission?
     return false if user_claiming_application?
-    application_params[:primaryApplicant][:email].present? &&
-      application_params[:status] == 'submitted'
+    application_params[:status] == 'submitted'
   end
 
   def user_claiming_application?
