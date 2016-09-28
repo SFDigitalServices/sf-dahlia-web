@@ -27,10 +27,12 @@ p
   = @listing.Leasing_Agent_Email
 p
   = @listing.Application_Organization
-  br
-  = @listing.Leasing_Agent_Street + ','
-  br
-  | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
+  - if @listing.Leasing_Agent_Street
+    br
+    | #{@listing.Leasing_Agent_Street},
+  - if @listing.Leasing_Agent_City
+    br
+    | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
 - if @listing.Office_Open && @listing.Office_Closed
   p
     | Office Hours
