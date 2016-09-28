@@ -13,8 +13,12 @@ angular.module('dahlia.directives')
         # but the pref_type is the preference you're selecting: "liveInSf" or "workInSf"
         scope.liveWorkInSf = true
         scope.checkbox_pref_type = 'liveWorkInSf'
-        if scope.application.preferences.liveWorkInSf_preference
-          scope.set_pref_type(scope.application.preferences.liveWorkInSf_preference)
+        if scope.preferences.liveInSf
+          scope.preferences.liveWorkInSf_preference = 'liveInSf'
+        else if scope.preferences.workInSf
+          scope.preferences.liveWorkInSf_preference = 'workInSf'
+        if scope.preferences.liveWorkInSf_preference
+          scope.set_pref_type(scope.preferences.liveWorkInSf_preference)
       else
         # otherwise checkbox_pref_type == pref_type
         scope.checkbox_pref_type = attrs.type
@@ -23,9 +27,9 @@ angular.module('dahlia.directives')
       scope.pref_data_event = attrs.dataevent
 
     scope.show_preferences_options = ->
-      return false if !scope.application.preferences
+      return false if !scope.preferences
       return false if scope.liveWorkInSf && !scope.pref_type
-      scope.application.preferences[scope.checkbox_pref_type] && attrs.uploadProof
+      scope.preferences[scope.checkbox_pref_type] && attrs.uploadProof
 
     scope.show_preference_uploader = ->
       return false if scope.liveWorkInSf && !scope.pref_type
@@ -53,13 +57,13 @@ angular.module('dahlia.directives')
 
     scope.select_liveWork_type = (type) ->
       # on change, totally reset both live/work options
-      scope.application.preferences.workInSf = null
-      scope.application.preferences.liveInSf = null
+      scope.preferences.workInSf = null
+      scope.preferences.liveInSf = null
       scope.reset_preference_data('workInSf')
       scope.reset_preference_data('liveInSf')
       scope.set_pref_type(type)
       # selecting a liveWork pref type is the equivalent to checking the checkbox = true
-      scope.application.preferences[type] = true
+      scope.preferences[type] = true
 
     scope.set_pref_type = (type) ->
       # type may be undefined which will reset the liveWorkInSf dropdown to "Select One"
@@ -73,13 +77,13 @@ angular.module('dahlia.directives')
       applicant_only = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
       if applicant_only
         # even though the form input is hidden we automatically set the value to the applicant
-        scope.application.preferences[scope.pref_type_household_member] = "#{scope.applicant.firstName} #{scope.applicant.lastName}"
+        scope.preferences[scope.pref_type_household_member] = "#{scope.applicant.firstName} #{scope.applicant.lastName}"
       applicant_only
 
     scope.reset_preference_data = (pref_type) ->
       if pref_type == 'liveWorkInSf'
         # this means you're clicking on the combined live/work checkbox
-        scope.application.preferences.liveWorkInSf_preference = null
+        scope.preferences.liveWorkInSf_preference = null
         scope.pref_type = null
         scope.reset_preference_data('workInSf')
         scope.reset_preference_data('liveInSf')
@@ -90,10 +94,10 @@ angular.module('dahlia.directives')
            'workInSf',
            'neighborhoodResidence'
        ]
-      scope.application.preferences[pref_type + '_household_member'] = null
+      scope.preferences[pref_type + '_household_member'] = null
 
       if _.includes(preferencesProofNeeded, pref_type)
-        scope.application.preferences[pref_type + '_proof_option'] = null
+        scope.preferences[pref_type + '_proof_option'] = null
         scope.deletePreferenceFile(pref_type)
 
     # --- initialize at the end so we can use functions above ---
