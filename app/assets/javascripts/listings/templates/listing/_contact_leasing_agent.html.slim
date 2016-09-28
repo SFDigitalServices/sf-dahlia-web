@@ -25,7 +25,7 @@ a.has-icon.d-block.margin-bottom target="_blank" title="View Map: {{formattedApp
     svg
       use xlink:href="#i-map"
   | Get Directions
-p.no-margin ng-if="listing.Office_Open && listing.Office_Closed"
-  | Office Hours
-p.c-steel
-  | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+.content-group_hours ng-if="listing.Office_Hours"
+  h3.content-group_title
+    | Office Hours
+  p.content-group_days.inline ng-bind-html="listing.Office_Hours"

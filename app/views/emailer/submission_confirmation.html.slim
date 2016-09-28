@@ -34,5 +34,4 @@ p
 - if @listing.Office_Open && @listing.Office_Closed
   p
     | Office Hours
-    br
-    | #{@listing.Office_Open} &mdash; #{@listing.Office_Closed}
+  == simple_format strip_tags(@listing.Office_Hours)
