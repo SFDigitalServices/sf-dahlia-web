@@ -33,7 +33,7 @@ p
   - if @listing.Leasing_Agent_City
     br
     | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
-- if @listing.Office_Open && @listing.Office_Closed
+- if @listing.Office_Hours
   p
     | Office Hours
   == simple_format strip_tags(@listing.Office_Hours)
