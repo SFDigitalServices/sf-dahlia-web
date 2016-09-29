@@ -6,11 +6,11 @@ div
           use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
     p.alert-body ng-bind-html="alertText()"
 
-  .alert-notice.alert ng-if="missingRequiredContactInfo"
-    p.alert-notice_title Please provide one of the following ways to contact you:
-    p.alert-notice_item Your Phone Number
-    p.alert-notice_item Your Email Address
-    p.alert-notice_item Your Address
+  .alert-notice.alert ng-if="missingRequiredContactInfo && showAlert()"
+    p.alert-notice_title translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.DESC"
+    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.PHONE"
+    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.EMAIL"
+    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.ADDRESS"
 
   .alert-notice.alert ng-show="customSubMessage && !hideAlert"
     p.alert-notice_title

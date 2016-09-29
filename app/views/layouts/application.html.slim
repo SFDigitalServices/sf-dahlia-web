@@ -41,7 +41,9 @@ html lang="en"
       section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
         section(ui-view="container")
-    .footer-section(ui-view="footer")
+    .footer-section
+      .loading-overlay(bs-loading-overlay)
+        section(ui-view="footer")
 
     / icon collection
     ng-include src="'shared/templates/icons.html'"
