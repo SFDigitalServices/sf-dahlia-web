@@ -17,7 +17,7 @@ a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" n
 p.content-group_address.no-margin
   | {{listing.Application_Organization}}
 p.c-steel ng-if="listing.Leasing_Agent_Street"
-  | {{ listing.Leasing_Agent_Street }},
+  | {{ listing.Leasing_Agent_Street }}
   br
   | {{ listing.Leasing_Agent_City }} {{ listing.Leasing_Agent_State }} {{ listing.Leasing_Agent_Zip }}
 a.has-icon.d-block.margin-bottom target="_blank" title="View Map: {{formattedApplicationAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}" ng-if="listing.Application_Street_Address"

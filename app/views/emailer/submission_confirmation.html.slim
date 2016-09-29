@@ -25,14 +25,12 @@ p
   = @listing.Leasing_Agent_Phone
   br
   = @listing.Leasing_Agent_Email
-p
   = @listing.Application_Organization
-  - if @listing.Leasing_Agent_Street
-    br
-    | #{@listing.Leasing_Agent_Street},
-  - if @listing.Leasing_Agent_City
-    br
-    | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
+  br
+  = @listing.Leasing_Agent_Street
+  br
+  | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
+
 - if @listing.Office_Hours
   p
     | Office Hours
