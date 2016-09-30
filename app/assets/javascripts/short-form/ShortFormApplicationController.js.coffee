@@ -289,6 +289,17 @@ ShortFormApplicationController = (
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
+  $scope.showPreference = (type) ->
+    switch type
+      when 'liveWorkInSf'
+        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
+      when 'liveInSf'
+        $scope.liveInSfMembers().length > 0 && $scope.workInSfMembers().length == 0
+      when 'workInSf'
+        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length == 0
+      when 'neighborhoodResidence'
+        $scope.neighborhoodResidenceMembers().length > 0
+
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
