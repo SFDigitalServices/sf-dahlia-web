@@ -565,6 +565,10 @@
       views:
         'container':
           templateUrl: 'short-form/templates/d6-preferences-vouchers.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Preferences')
+        ]
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income', {
@@ -572,10 +576,6 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e1-income.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Preferences')
-        ]
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
