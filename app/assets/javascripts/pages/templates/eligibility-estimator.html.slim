@@ -33,7 +33,7 @@ section.row.margin-bottom--2x
 
           .form-group.padding-bottom--half
             .checkbox
-              input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6" ng-change="resetChildrenUnder6()"
+              input#include_children_under_6 name="include_children_under_6" type="checkbox" ng-model="filters.include_children_under_6" ng-change="resetChildrenUnder6()" ng-disabled="filters.household_size <= 1"
               label for="include_children_under_6" Yes, this includes children under 6
 
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
