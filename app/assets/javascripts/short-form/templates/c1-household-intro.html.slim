@@ -15,7 +15,5 @@
       button.button.expand.tall ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-overview"
        | {{'LABEL.OTHER_PEOPLE' | translate}}
 
-  .button-pager
-    .button-pager_row
-      button.button-link.button-lined.small-text-center data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)'
-        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+
+  short-form-save-and-submit(next-button="false")
