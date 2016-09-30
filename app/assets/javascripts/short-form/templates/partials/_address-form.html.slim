@@ -3,26 +3,26 @@
     label.sr-only for="{{model}}_{{addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
       ng-change="addressChange(model)" name="{{addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }")
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }" ng-disabled="this[model].noAddress")
     small.error ng-show="isRequired() && inputInvalid('address1', addressType)"
       | {{'ERROR.ADDRESS' | translate}}
 
   .form-group-apt.large-12.column
     label for="{{model}}_{{addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
-      ng-change="addressChange(model)" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
+      ng-change="addressChange(model)" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text" ng-disabled="this[model].noAddress")
   .form-group-city.form-item.small-7.columns ng-class="{ error: isRequired() && inputInvalid('city', addressType) }"
     label for="{{model}}_{{addressType}}_city" translate="LABEL.CITY"
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="addressChange(model)" name="{{addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }")
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }" ng-disabled="this[model].noAddress")
     small.error ng-show="isRequired() && inputInvalid('city', addressType)"
       | {{'ERROR.CITY' | translate}}
   .form-group-state.form-item.small-5.columns ng-class="{ error: isRequired() && inputInvalid('state', addressType) }"
     label for="{{model}}_{{addressType}}_state" State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
       ng-change="addressChange(model)" data-width="auto" name="{{addressType}}_state"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('state', addressType) }")
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('state', addressType) }" ng-disabled="this[model].noAddress")
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option value="AL" Alabama
@@ -83,6 +83,6 @@
     label for="{{model}}_{{addressType}}_zip"
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="addressChange(model)" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }")
+      ng-change="addressChange(model)" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }" ng-disabled="this[model].noAddress")
     small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
       | {{'ERROR.ZIP' | translate}}
