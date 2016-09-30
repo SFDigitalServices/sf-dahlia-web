@@ -11,13 +11,16 @@
       label.sr-only id="additional_preferences_label" translate="LABEL.ADDITIONAL_PREFERENCES"
       .checkbox-group role="group"
 
-        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" type="liveInSf" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-livesf" ng-if="liveInSfMembers().length > 0")
-            | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION' | translate}}
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" type="liveInSf" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-livesf" ng-if="showPreference('liveInSf')")
+          span translate="D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION"
 
-        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" type="neighborhoodResidence" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-neighborhood" ng-if="neighborhoodResidenceMembers().length > 0")
-            | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION' | translate}}
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" type="neighborhoodResidence" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-neighborhood" ng-if="showPreference('neighborhoodResidence')")
+          span translate="D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION"
 
-        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" type="workInSf" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-if="workInSfMembers().length > 0")
-            | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION' | translate}}
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" type="workInSf" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-if="showPreference('workInSf')")
+          span translate="D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION"
+
+        checkbox-preference-item(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" type="liveWorkInSf" upload_proof="true" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-if="showPreference('liveWorkInSf')")
+          span translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION"
 
   short-form-save-and-submit

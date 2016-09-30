@@ -34,9 +34,4 @@
               use xlink:href="#i-plus"
           | {{'LABEL.ADD_HOUSEHOLD_MEMBER' | translate}}
 
-  .button-pager
-    .button-pager_row.primary
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.DONE_ADDING_PEOPLE' | translate}}" ng-disabled="isLoading()"
-    .button-pager_row
-      a.button.button-link.button-lined.small-text-center.expand-small data-event="gtm-finish-later" ng-click='clearHouseholdErrorMessage(); saveAndFinishLater($event);'
-        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+  short-form-save-and-submit(submit-value="{{'LABEL.DONE_ADDING_PEOPLE' | translate}}")
