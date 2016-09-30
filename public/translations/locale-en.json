@@ -115,6 +115,12 @@
             "DESCRIPTION": "At least one household member must live in San Francisco.",
             "TITLE": "Live in San Francisco Preference"
         },
+        "LIVE_WORK_SF_PREFERENCE": {
+            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
+            "LIVE_SF_PREFERENCE": "Live in San Francisco",
+            "TITLE": "Live or Work in San Francisco Preference",
+            "WORK_SF_PREFERENCE": "Work in San Francisco"
+        },
         "NEIGHBORHOOD_RESIDENCE": {
             "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
             "TITLE": "Neighborhood Resident Housing Preference"
@@ -236,6 +242,7 @@
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
+        "APPLICANT_PREFERENCES_DOCUMENT_NAME": "Whose name is on the document you're uploading?",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
@@ -295,7 +302,8 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
-        "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
+        "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
+        "PREFERENCE_PROOF_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
             "CABLE_BILL": "Cable and internet bill",
