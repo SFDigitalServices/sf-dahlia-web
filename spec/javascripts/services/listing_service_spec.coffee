@@ -62,6 +62,16 @@ do ->
           ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
+
+      it 'sorts groupedListings based on their dates', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListings()
+        httpBackend.flush()
+        date1 = ListingService.lotteryResultsListings[0].Lottery_Results_Date
+        date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
+        expect(date1 >= date2).toEqual true
+        return
+
       return
 
     describe 'Service.getListing', ->
