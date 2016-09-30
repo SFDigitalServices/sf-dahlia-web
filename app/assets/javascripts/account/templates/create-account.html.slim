@@ -49,17 +49,17 @@
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_month"
                   | {{'LABEL.DOB_MONTH' | translate}}
-                input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')"
+                input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')"
 
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_day"
                   | {{'LABEL.DOB_DAY' | translate}}
-                input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')"
+                input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')"
 
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_year"
                   | {{'LABEL.DOB_YEAR' | translate}}
-                input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')"
+                input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')"
 
           small.error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
             | {{'ERROR.DOB' | translate}}
