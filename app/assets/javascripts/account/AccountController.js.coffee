@@ -28,6 +28,9 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     $scope.form.updatePassword ||
     $scope.form.current
 
+  $scope.closeAlert = ->
+    $scope.hideAlert = true
+
   $scope.handleErrorState = ->
     if !$scope.accountError.message
       $scope.accountError.message = $translate.instant('ERROR.FORM_SUBMISSION')
@@ -110,7 +113,6 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     if (reason.error == 'not_confirmed')
       AccountService.openConfirmEmailModal(reason.email)
     else
-      # if (reason.error == 'bad_credentials')
       $scope.accountError.message = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
