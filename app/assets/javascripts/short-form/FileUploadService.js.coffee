@@ -8,6 +8,7 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
 
   Service.deletePreferenceFile = (prefType, listing_id) ->
     fileType = "#{prefType}_proof_file"
+    return if _.isEmpty(Service.preferences[fileType])
     params =
       uploaded_file:
         session_uid: Service.session_uid
