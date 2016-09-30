@@ -23,14 +23,11 @@ section.row.margin-bottom--2x
           .form-group ng-class="{ error: inputInvalid('household_size') }"
             label.form-label.t-caps.sr-only for="household_size" ng-class="{ error: inputInvalid('household_size') }"
               | Household Size
-            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }"
+            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }" ng-change="onChangeHouseholdSize()"
               option disabled="" selected="" value="" Enter number of people
               option value="1" 1 person
-              option value="2" 2 people
-              option value="3" 3 people
-              option value="4" 4 people
-              option value="5" 5 people
-              option value="6" 6 people
+              option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}"
+                | {{val}} people
             small.error ng-show="inputInvalid('household_size')"
               | Please enter a household size
 
@@ -44,15 +41,8 @@ section.row.margin-bottom--2x
             select#children_under_6 name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
               option disabled="" selected="" value="0" How many children?
               option value="1" 1 child
-              option value="2" 2 children
-              option value="3" 3 children
-              option value="4" 4 children
-              option value="5" 5 children
-              option value="6" 6 children
-              option value="7" 7 children
-              option value="8" 8 children
-              option value="9" 9 children
-              option value="10" 10 children
+              option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}" ng-show="val < filters.household_size"
+                | {{val}} children
             small.error.no-margin ng-show="inputInvalid('children_under_6')"
               | Please enter number of children
 
