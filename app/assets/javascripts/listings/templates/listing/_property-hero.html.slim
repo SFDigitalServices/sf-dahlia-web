@@ -47,7 +47,7 @@
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .property-hero_apply.hide-for-medium-up
+  .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
       span.label.label--flag.primary-tint
         | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
