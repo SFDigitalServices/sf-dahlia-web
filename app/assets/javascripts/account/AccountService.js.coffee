@@ -60,7 +60,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
           Service._reformatDOB()
           return true
       ).catch((response) ->
-        Service.accountError.message = response.errors[0]
         return false
       )
 
