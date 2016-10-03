@@ -202,6 +202,18 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
+    Service.sortListings()
+
+  Service.sortListings = ->
+    # openListing types
+    ['openListings', 'openMatchListings', 'openNotMatchListings'].forEach (type) ->
+      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Application_Due_Date))
+    # closedListing types
+    ['closedListings', 'lotteryResultsListings'].forEach (type) ->
+      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Lottery_Results_Date))
+    # lotteryResults get reversed (latest lottery results date first)
+    Service.lotteryResultsListings = _.reverse(Service.lotteryResultsListings)
+
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids, checkFavorites = false) ->
