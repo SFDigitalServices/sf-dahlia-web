@@ -25,7 +25,7 @@
         | {{formattedBuildingAddress(listing)}}
         br
         | {{listing.Developer}}
-      a.ui-link.t-micro target="_blank" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
+      a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
         | View on Map
 
     .property-hero_favorite
@@ -47,7 +47,7 @@
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .property-hero_apply.hide-for-medium-up
+  .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
       span.label.label--flag.primary-tint
         | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
