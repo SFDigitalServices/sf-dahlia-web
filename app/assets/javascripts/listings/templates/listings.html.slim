@@ -90,9 +90,9 @@ section.row ng-if="!openListings.length"
         ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in openMatchListings"
 
   / Not Matched Section Heading
-  .results-section.not-matched ng-if="openMatchListings.length && openNotMatchListings.length"
+  .results-section.not-matched ng-if="openNotMatchListings.length"
     / Notification: Not Matched listings
-    .margin-bottom--2x
+    .margin-bottom--2x ng-if="openMatchListings.length && openNotMatchListings.length"
       ng-include src="'listings/templates/_housing-counselor.html'"
 
     .row

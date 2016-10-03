@@ -47,15 +47,15 @@
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
+        "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
         "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
-        "ONLY_USE_EMAIL": "We will only use this email address to contact your contact about your application.",
+        "ONLY_USE_INFO": "We'll only use this information to contact them about your application.",
         "TITLE": "Let us know how to reach your alternate contact."
     },
     "B4_ALTERNATE_CONTACT_NAME": {
-        "P1": "A good alternate contact is a person who will know how to reach you.",
         "TITLE": "Who is your alternate contact?"
     },
     "C1A_HOUSEHOLD_OVERVIEW": {
@@ -436,6 +436,7 @@
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
         "BACK": "Back",
+        "CLOSE": "close",
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
         "EDIT": "Edit",

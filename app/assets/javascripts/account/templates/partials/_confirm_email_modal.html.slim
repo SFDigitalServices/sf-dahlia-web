@@ -1,19 +1,24 @@
 div ng-controller="AccountController"
-  header.modal-header
+  header.modal-inner
     h1.modal-title.t-gamma.no-margin
       | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
 
-  div ng-if="resentConfirmationMessage"
-    alert-box(primary="true" hide-alert="hideMessage" custom-message="resentConfirmationMessage" invert="true")
+  .alert-box.alert.primary.no-margin.no-icon.padding-left--3halves ng-if="resentConfirmationMessage && !hideAlert"
+    p.alert-body
+      | {{resentConfirmationMessage}}
+    button.button-link.close.text.ng-scope translate="T.CLOSE" ng-click="closeAlert()"
 
-  section.modal-inner.bg-dust
+  section.modal-inner
     p.c-steel
       | {{confirmEmailSentMessage()}}
     p.c-steel
       | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
 
-    p.no-margin ng-if="!resentConfirmationMessage"
-      button.button-link.button-lined.no-padding ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
-        | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+    .button-stack.text-center.row.padding-top
+      .small-12.medium-6.columns
+        button.button.primary.right-on-medium translate="T.OK" ng-click="closeModal()"
+      .small-12.medium-6.columns
+        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+          | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
 
   ng-include src="'account/templates/partials/_modal_close.html'"
