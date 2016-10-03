@@ -76,7 +76,7 @@ do ->
         it 'resets filters.children_under_6 value', ->
           scope.filters.children_under_6 = '1'
           scope.resetChildrenUnder6()
-          expect(scope.filters.children_under_6).toEqual '0'
+          expect(scope.filters.children_under_6).toEqual ''
           return
         return
 

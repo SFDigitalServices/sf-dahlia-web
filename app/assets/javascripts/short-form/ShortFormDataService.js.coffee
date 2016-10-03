@@ -345,6 +345,19 @@ ShortFormDataService = () ->
     return if _.isEmpty(formMetadata)
     data.completedSections = formMetadata.completedSections
 
+  #############################################
+  # Helper functions
+  #############################################
+
+  Service.maxDOBDay = (month, year) ->
+    max = 31
+    if month == 2
+      max = if (year % 4 == 0) then 29 else 28
+    else if _.includes([4, 6, 9, 11], month)
+      max = 30
+    return max
+
+
   return Service
 
 #############################################
