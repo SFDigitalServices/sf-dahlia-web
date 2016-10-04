@@ -35,10 +35,11 @@ module Overrides
     def update
       if @resource
         if user_params[:email].present?
+          # <SFDAHLIA> custom way to determine if we want to send reconfirmation
           @resource.initiate_email_reconfirmation = true
         end
         if @resource.send(resource_update_method, account_update_params)
-          # turn off to disable any effects of after_save happening again
+          # <SFDAHLIA> turn off to disable any effects of after_save happening again
           @resource.initiate_email_reconfirmation = false
           yield @resource if block_given?
           render_update_success
@@ -76,12 +77,14 @@ module Overrides
 
     def save_and_render_created_registration
       if @resource.save
+        # <SFDAHLIA ...
         synced = sync_with_salesforce
         unless synced
           # undo user creation
           @resource.destroy
           return render_create_error
         end
+        # />
 
         yield @resource if block_given?
         handle_registration_success
