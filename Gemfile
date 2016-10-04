@@ -46,8 +46,8 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.0.3'
-gem 'devise_token_auth', '~> 0.1.37'
+gem 'devise', '~> 4.2.0'
+gem 'devise_token_auth', '~> 0.1.39'
 
 # postgresql database
 gem 'pg'
