@@ -3,8 +3,7 @@
   '$stateProvider',
   '$urlRouterProvider',
   '$locationProvider',
-  '$translateProvider',
-  ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider) ->
+  ($stateProvider, $urlRouterProvider, $locationProvider) ->
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -662,15 +661,6 @@
             $state.go('dahlia.my-applications')
         ]
     })
-
-    $translateProvider
-      .preferredLanguage('en')
-      .fallbackLanguage('en')
-      .useSanitizeValueStrategy('sanitize')
-      .useStaticFilesLoader(
-        prefix: '/translations/locale-'
-        suffix: '.json'
-      )
 
     $urlRouterProvider.otherwise('/') # default to welcome screen
 
