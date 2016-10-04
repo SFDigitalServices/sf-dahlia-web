@@ -49,3 +49,14 @@
       confirmationSuccessUrl: conf.confirmationSuccessUrl
       validateOnPageLoad: false
 ]
+
+@dahlia.config ['$translateProvider', ($translateProvider) ->
+  $translateProvider
+    .preferredLanguage('en')
+    .fallbackLanguage('en')
+    .useSanitizeValueStrategy('sanitize')
+    .useStaticFilesLoader(
+      prefix: '/translations/locale-'
+      suffix: '.json'
+    )
+]
