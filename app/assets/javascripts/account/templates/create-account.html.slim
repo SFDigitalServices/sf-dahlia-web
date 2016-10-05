@@ -13,7 +13,7 @@
             | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
           p.dash-summary
             | {{'CREATE_ACCOUNT.P1' | translate}}
-        alert-box(form-object="form.accountForm" hide-alert="hideAlert" custom-message="accountError.message")
+        alert-box(form-object="form.accountForm" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
         alert-box(primary="true" hide-alert="hideMessage" custom-message="emailConfirmInstructions()" ng-if="isLocked('email') && (userAuth.user.email !== userAuth.user.email_confirmation)")
 
