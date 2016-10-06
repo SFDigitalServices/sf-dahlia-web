@@ -42,8 +42,12 @@
             use style="display:none" xlink:href="#i-forward-fill"
         span.sr-only Share
 
-    p.post-dealine_alert.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
-      span.label.label--flag.alert-tint Applications Closed
+  .property-hero_stats.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
+    span.label.label--flag.alert-tint
+      span.ui-icon.ui-static.ui-medium.i-color
+        svg
+          use xlink:href="#i-clock"
+      | Applications Closed
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
