@@ -225,6 +225,12 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.dahliaContactEmail = ->
     { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
 
+  $scope.maxDOBDay = ->
+    month = $scope.userAuth.contact.dob_month
+    year = $scope.userAuth.contact.dob_year
+    AccountService.maxDOBDay(month, year)
+
+
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 
 angular

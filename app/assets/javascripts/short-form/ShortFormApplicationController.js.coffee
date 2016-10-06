@@ -486,6 +486,12 @@ ShortFormApplicationController = (
 
   $scope.print = -> $window.print()
 
+
+  $scope.maxDOBDay = (model = 'applicant') ->
+    month = $scope[model].dob_month
+    year = $scope[model].dob_year
+    ShortFormApplicationService.maxDOBDay(month, year)
+
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # NOTE: not sure when this will ever really get hit any more
     #  used to be for address validation errors

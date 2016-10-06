@@ -36,7 +36,7 @@
         .form-group-day.large-2.columns
           label.sr-only for="date_of_birth_day"
             | {{'LABEL.DOB_DAY' | translate}}
-          input#date_of_birth_day.no-margin ng-model="householdMember.dob_day" max="31" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number"  ng-class="{ error: inputInvalid('date_of_birth_day') }"
+          input#date_of_birth_day.no-margin ng-model="householdMember.dob_day" max="{{maxDOBDay('householdMember')}}" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number"  ng-class="{ error: inputInvalid('date_of_birth_day') }"
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
