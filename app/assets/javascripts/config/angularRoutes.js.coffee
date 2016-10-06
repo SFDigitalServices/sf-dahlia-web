@@ -3,8 +3,7 @@
   '$stateProvider',
   '$urlRouterProvider',
   '$locationProvider',
-  '$translateProvider',
-  ($stateProvider, $urlRouterProvider, $locationProvider, $translateProvider) ->
+  ($stateProvider, $urlRouterProvider, $locationProvider) ->
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -146,6 +145,18 @@
       ]
     })
     .state('dahlia.forgot-password', {
+      url: '/forgot-password'
+      views:
+        'container@':
+          templateUrl: 'account/templates/forgot-password.html'
+          controller: 'AccountController'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+      ]
+    })
+    .state('dahlia.short-form-application.forgot-password', {
+      # duplicated from above but to differentiate state for "Save and finish later"
+      # will be accessed at '/listings/{id}/apply/forgot-password'
       url: '/forgot-password'
       views:
         'container@':
@@ -368,11 +379,11 @@
       url: '/listings/:id/apply-welcome'
       abstract: true
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListing($stateParams.id).then ->
-            if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
-              # kick them out unless there's a real listing
-              $state.go('dahlia.welcome')
+        listing: [
+          '$stateParams', 'ListingService',
+          ($stateParams, ListingService) ->
+            # store the listing in ListingService and kick out if it's not open for applications
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -399,12 +410,10 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$state', 'ListingService',
-          ($stateParams, $state, ListingService) ->
-            ListingService.getListing($stateParams.id).then ->
-              if !ListingService.isAcceptingOnlineApplications(ListingService.listing)
-                # kick them out unless there's a real listing
-                $state.go('dahlia.welcome')
+          '$stateParams', 'ListingService',
+          ($stateParams, ListingService) ->
+            # store the listing in ListingService and kick out if it's not open for applications
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         application: [
           '$stateParams', '$state', 'ShortFormApplicationService',
@@ -554,18 +563,18 @@
       url: '/preferences-vouchers'
       views:
         'container':
-          templateUrl: 'short-form/templates/d6-preferences-vouchers.html'
+          templateUrl: 'short-form/templates/e1-income-vouchers.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Preferences')
+        ]
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income', {
       url: '/income'
       views:
         'container':
-          templateUrl: 'short-form/templates/e1-income.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Preferences')
-        ]
+          templateUrl: 'short-form/templates/e2-income-household.html'
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
@@ -652,15 +661,6 @@
             $state.go('dahlia.my-applications')
         ]
     })
-
-    $translateProvider
-      .preferredLanguage('en')
-      .fallbackLanguage('en')
-      .useSanitizeValueStrategy('sanitize')
-      .useStaticFilesLoader(
-        prefix: '/translations/locale-'
-        suffix: '.json'
-      )
 
     $urlRouterProvider.otherwise('/') # default to welcome screen
 

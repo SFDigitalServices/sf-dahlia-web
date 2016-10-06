@@ -25,14 +25,13 @@ p
   = @listing.Leasing_Agent_Phone
   br
   = @listing.Leasing_Agent_Email
-p
   = @listing.Application_Organization
   br
-  = @listing.Building_Street_Address + ','
+  = @listing.Leasing_Agent_Street
   br
-  | #{@listing.Building_City} #{@listing.Building_State} #{@listing.Building_Zip_Code}
-- if @listing.Office_Open && @listing.Office_Closed
+  | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
+
+- if @listing.Office_Hours
   p
     | Office Hours
-    br
-    | #{@listing.Office_Open} &mdash; #{@listing.Office_Closed}
+  == simple_format strip_tags(@listing.Office_Hours)

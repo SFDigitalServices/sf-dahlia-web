@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q) ->
+ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -202,6 +202,18 @@ ListingService = ($http, $localStorage, $modal, $q) ->
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
+    Service.sortListings()
+
+  Service.sortListings = ->
+    # openListing types
+    ['openListings', 'openMatchListings', 'openNotMatchListings'].forEach (type) ->
+      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Application_Due_Date))
+    # closedListing types
+    ['closedListings', 'lotteryResultsListings'].forEach (type) ->
+      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Lottery_Results_Date))
+    # lotteryResults get reversed (latest lottery results date first)
+    Service.lotteryResultsListings = _.reverse(Service.lotteryResultsListings)
+
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids, checkFavorites = false) ->
@@ -228,6 +240,15 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     return false if _.isEmpty(listing)
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
+
+  Service.getListingAndCheckIfOpen = (id) ->
+    Service.getListing(id).then ->
+      if _.isEmpty(Service.listing)
+        # kick them out unless there's a real listing
+        return $state.go('dahlia.welcome')
+      else if !Service.isAcceptingOnlineApplications(Service.listing)
+        # kick them back to the listing
+        return $state.go('dahlia.listing', {id: id})
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
@@ -306,7 +327,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state']
 
 angular
   .module('dahlia.services')

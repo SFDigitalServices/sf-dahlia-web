@@ -12,18 +12,22 @@ do ->
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
+    $state = undefined
     modalMock = undefined
     requestURL = undefined
 
+    beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
       return
     )
 
-    beforeEach inject((_$httpBackend_, _ListingService_, _$localStorage_) ->
+    beforeEach inject((_ListingService_, _$httpBackend_, _$localStorage_, _$state_) ->
       httpBackend = _$httpBackend_
-      ListingService = _ListingService_
       $localStorage = _$localStorage_
+      $state = _$state_
+      $state.go = jasmine.createSpy()
+      ListingService = _ListingService_
       requestURL = ListingService.requestURL
       return
     )
@@ -58,6 +62,16 @@ do ->
           ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
         return
+
+      it 'sorts groupedListings based on their dates', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
+        ListingService.getListings()
+        httpBackend.flush()
+        date1 = ListingService.lotteryResultsListings[0].Lottery_Results_Date
+        date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
+        expect(date1 >= date2).toEqual true
+        return
+
       return
 
     describe 'Service.getListing', ->
