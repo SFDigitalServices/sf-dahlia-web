@@ -119,7 +119,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       email: Service.createdAccount.email
 
     $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
-      # $modal.close()
       data
     ).catch( (data, status, headers, config) ->
       return
@@ -260,6 +259,8 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.goToLoginRedirect = ->
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
+
+  Service.maxDOBDay = ShortFormDataService.maxDOBDay
 
   # run on page load
   Service.unlockFields()
