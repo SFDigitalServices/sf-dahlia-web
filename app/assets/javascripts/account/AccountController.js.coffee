@@ -32,8 +32,8 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     $scope.hideAlert = true
 
   $scope.handleErrorState = ->
-    if !$scope.accountError.message
-      $scope.accountError.message = $translate.instant('ERROR.FORM_SUBMISSION')
+    if !$scope.accountError.messages.user
+      $scope.accountError.messages.user = $translate.instant('ERROR.FORM_SUBMISSION')
     # show error alert
     $scope.hideAlert = false
     el = angular.element(document.getElementById('form-wrapper'))
@@ -53,7 +53,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
-      $scope.accountError.message = null
+      $scope.accountError.messages.user = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       shortFormSession = null
@@ -113,7 +113,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     if (reason.error == 'not_confirmed')
       AccountService.openConfirmEmailModal(reason.email)
     else
-      $scope.accountError.message = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
+      $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
   $scope.updateEmail = ->
@@ -224,6 +224,12 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
 
   $scope.dahliaContactEmail = ->
     { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
+
+  $scope.maxDOBDay = ->
+    month = $scope.userAuth.contact.dob_month
+    year = $scope.userAuth.contact.dob_year
+    AccountService.maxDOBDay(month, year)
+
 
 AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
 

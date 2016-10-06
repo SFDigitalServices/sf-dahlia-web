@@ -39,7 +39,7 @@ section.row.margin-bottom--2x
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
             label.sr-only for="children_under_6" How many children?
             select#children_under_6 name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
-              option disabled="" selected="" value="0" How many children?
+              option disabled="" selected="" value="" How many children?
               option value="1" 1 child
               option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}" ng-show="val < filters.household_size"
                 | {{val}} children
