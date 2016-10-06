@@ -39,11 +39,11 @@
       ng-include src="'listings/templates/_stats-list.html'"
 
       .property-card_action.small-only-text-center
-        button.button.round-icon.has-label data-event="gtm-favorite" ng-click="toggleFavoriteListing(listing.Id);"
+        button.button.round-icon.has-label data-event="gtm-favorite" ng-click="toggleFavoriteListing(listing.Id)"
           span.ui-icon
             svg
-              use xlink:href="#i-like"
-              use xlink:href="#i-like-fill" ng-if="isFavorited(listing.Id)"
+              use xlink:href="#i-like" ng-show="!isFavorited(listing.Id)"
+              use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
           span.inline
             | Favorite
 
