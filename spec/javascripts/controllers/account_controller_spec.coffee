@@ -14,7 +14,8 @@ do ->
       resendConfirmationEmail: -> null
       requestPasswordReset: jasmine.createSpy()
       goToLoginRedirect: jasmine.createSpy()
-      accountError: {message: ''}
+      accountError: {messages: ''}
+      accountSuccess: {messages: ''}
       userDataForContact: ->
         firstName: 'X'
         lastName: 'Y'
