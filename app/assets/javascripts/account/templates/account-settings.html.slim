@@ -95,7 +95,7 @@
               small.error ng-if="inputInvalid('lastName')"
                 | {{'ERROR.LAST_NAME' | translate}}
 
-          .dash-card-inner.inset.border-bottom
+          .dash-card-inner.inset
             .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
               h2.form-label.caps
                 ' {{'LABEL.YOUR_DOB' | translate}}
@@ -118,10 +118,3 @@
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
-
-        .dash-card-inner.inset.border-bottom
-          .form-group
-            h2.form-label.caps Deactivate Account
-            p.t-small.c-steel Deactivating your account will mean losing all previously saved favorites and settings.
-            p.text-center.padding-top
-              button.button.small.alert.no-margin type="button"  Deactivate
