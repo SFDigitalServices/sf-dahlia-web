@@ -32,7 +32,7 @@
       button.button.round-icon.i-block title="Favorite" ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
-            use xlink:href="#i-like"
+            use xlink:href="#i-like" ng-show="!isFavorited(listing.Id)"
             use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
         span.sr-only Favorite
       a.button.round-icon.i-block title="Share" ui-sref="dahlia.share({id: listing.Id})"
