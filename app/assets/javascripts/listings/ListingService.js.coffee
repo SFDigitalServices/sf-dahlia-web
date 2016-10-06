@@ -289,6 +289,7 @@ ListingService = ($http, $localStorage, $modal, $q) ->
     'a0WU000000C4FsQMAV': '529 Stevenson'
     'a0WU000000D9iF8MAJ': '888 Paris'
     'a0WU000000DB97cMAD': '77 Bluxome'
+    'a0W0P00000DYbAYUA1': '3445 Geary'
   }
 
   Service.listingIs = (listing, name) ->

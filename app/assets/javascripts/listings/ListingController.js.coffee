@@ -181,6 +181,7 @@ ListingController = (
       'Clarence'
       '168 Hyde'
       'Olume'
+      '3445 Geary'
     ])
 
   $scope.showDownloadLotteryResultsButton = ->
@@ -224,7 +225,7 @@ ListingController = (
     $scope.listing.supervisorialDistrict = 8
 
   if ($scope.listingIs('480 Potrero'))
-    $scope.listing.COPUnits = 1
+    $scope.listing.COPUnits = 11
     $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 4
     $scope.listing.supervisorialDistrict = 10
@@ -244,6 +245,11 @@ ListingController = (
     $scope.listing.DTHPUnits = 3
     $scope.listing.NRHPUnits = 7
     $scope.listing.supervisorialDistrict = 6
+
+  if ($scope.listingIs('3445 Geary'))
+    $scope.listing.COPUnits = 1
+    $scope.listing.DTHPUnits = 0
+    $scope.listing.NRHPUnits = 0
   # ------------------------------
 
 
