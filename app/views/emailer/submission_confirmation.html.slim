@@ -18,20 +18,17 @@ p
 
 p
   = @listing.Leasing_Agent_Name
-  - if @listing.Leasing_Agent_Title
+  - fields = %w(Leasing_Agent_Title Leasing_Agent_Phone Leasing_Agent_Email Application_Organization Leasing_Agent_Street)
+  - fields.each do |field|
+    - val = @listing.send(field)
+    - if val
+      br
+      = val
+  - if @listing.Leasing_Agent_City
     br
-    = @listing.Leasing_Agent_Title
-  br
-  = @listing.Leasing_Agent_Phone
-  br
-  = @listing.Leasing_Agent_Email
-  = @listing.Application_Organization
-  br
-  = @listing.Leasing_Agent_Street
-  br
-  | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
+    | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
 
 - if @listing.Office_Hours
   p
-    | Office Hours
+    | Office Hours:
   == simple_format strip_tags(@listing.Office_Hours)
