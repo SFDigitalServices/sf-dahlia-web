@@ -471,6 +471,7 @@ ShortFormApplicationService = (
       GeocodingService.geocode(
         address: Service.applicant.home_address,
         member: Service.applicant
+        applicant: Service.applicant
       ).success( ->
         Service.copyNeighborhoodMatchToHousehold()
         callback()
@@ -487,6 +488,7 @@ ShortFormApplicationService = (
       GeocodingService.geocode(
         address: Service.householdMember.home_address,
         member: Service.householdMember
+        applicant: Service.applicant
       ).success( ->
         Service.addHouseholdMember(Service.householdMember)
         callback()

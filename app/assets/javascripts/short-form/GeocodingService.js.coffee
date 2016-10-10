@@ -2,11 +2,20 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-GeocodingService = ($http) ->
+GeocodingService = ($http, ShortFormDataService) ->
   Service = {}
 
   Service.geocode = (options) ->
-    params = { address: options.address }
+    ['member', 'applicant'].forEach (user) ->
+      options[user].dob = ShortFormDataService.formatUserDOB(options[user])
+      options[user] = _.pick options[user], ['firstName', 'lastName', 'dob']
+    options.address = _.pick options.address, ['address1', 'city', 'zip']
+    params = {
+      address: options.address
+      # member, applicant sent over for logging purposes
+      member: options.member
+      applicant: options.applicant
+    }
     member = options.member
     $http.post('/api/v1/addresses/geocode.json', params).success((data, status, headers, config) ->
       # append neighborhoodPreferenceMatch data to member
@@ -24,7 +33,7 @@ GeocodingService = ($http) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-GeocodingService.$inject = ['$http']
+GeocodingService.$inject = ['$http', 'ShortFormDataService']
 
 angular
   .module('dahlia.services')
