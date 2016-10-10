@@ -4,11 +4,13 @@ class Api::V1::GeocodingController < ApiController
     # could be nil if no results found
     @data = GeocodingService.new(address_params).geocode
     if @data
-      x = @data['location']['x']
-      y = @data['location']['y']
-      name = '2198 Market' # TODO: remove hardcoded listing name
-      match = NeighborhoodBoundaryService.new(name, x, y).in_boundary?
-      @data[:boundary_match] = match
+      # TODO: revive this code once NRHP matching is ready to go live
+      # x = @data['location']['x']
+      # y = @data['location']['y']
+      # name = '2198 Market' # TODO: remove hardcoded listing name
+      # match = NeighborhoodBoundaryService.new(name, x, y).in_boundary?
+      # @data[:boundary_match] = match
+      @data[:boundary_match] = false
     else
       @data = { boundary_match: false }
     end
