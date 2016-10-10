@@ -20,6 +20,10 @@ describe 'Geocoding API' do
       lastName: 'Doe',
       dob: '1980-10-2',
     },
+    listing: {
+      Id: 'xyzyy123',
+      Name: '132 Main St.',
+    },
   }
   fake_invalid_params = fake_params.clone
   fake_invalid_params[:address] = {

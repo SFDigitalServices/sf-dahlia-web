@@ -7,10 +7,8 @@ class GeocodingService
 
   API_URL = 'https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates'.freeze
 
-  def initialize(opts = {})
-    @address = opts[:address]
-    @member = opts[:member]
-    @applicant = opts[:applicant]
+  def initialize(address)
+    @address = address
     clean_address
   end
 
@@ -35,8 +33,8 @@ class GeocodingService
       f: 'pjson',
     }
     HTTP.get(API_URL + "?#{query_params.to_query}").to_s
-  rescue StandardError => e
-    puts "GEOCODING ERROR! #{e.message}"
+  rescue
+    puts 'GEOCODING ERROR!'
     '{"candidates": []}'
   end
 
@@ -45,7 +43,6 @@ class GeocodingService
   end
 
   def geocode
-    result = json_data['candidates'].first
-    return result if result.present?
+    json_data['candidates'].first
   end
 end
