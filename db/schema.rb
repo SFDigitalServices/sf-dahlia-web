@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20161010222323) do
     t.string   "city"
     t.string   "zip"
     t.string   "listing_id"
-    t.json     "member"
-    t.json     "applicant"
+    t.jsonb    "member"
+    t.jsonb    "applicant"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

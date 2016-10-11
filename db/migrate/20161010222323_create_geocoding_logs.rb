@@ -5,8 +5,8 @@ class CreateGeocodingLogs < ActiveRecord::Migration
       t.string :city
       t.string :zip
       t.string :listing_id
-      t.json :member
-      t.json :applicant
+      t.jsonb :member
+      t.jsonb :applicant
 
       t.timestamps null: false
     end

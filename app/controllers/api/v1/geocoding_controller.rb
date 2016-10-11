@@ -11,7 +11,8 @@ class Api::V1::GeocodingController < ApiController
       @data[:boundary_match] = match
     else
       if address_params[:city].casecmp('San Francisco') == 0
-        GeocodingLog.create(log_params)
+        log = GeocodingLog.create(log_params)
+        Emailer.geocoding_log_notification(log).deliver_now
       end
       @data = { boundary_match: false }
     end

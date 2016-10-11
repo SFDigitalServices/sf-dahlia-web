@@ -45,6 +45,22 @@ class Emailer < Devise::Mailer
     super
   end
 
+  def geocoding_log_notification(log)
+    @log = log
+    @applicant = Hashie::Mash.new(log.applicant)
+    @member = Hashie::Mash.new(log.member)
+    @name = 'DAHLIA Admins'
+    if Rails.env.production? and ENV['PRODUCTION']
+      email = 'dahlia-admins@exygy.com'
+    else
+      email = 'dave+test@exygy.com'
+    end
+    subject = '[SF-DAHLIA] Address not found in arcgis service'
+    mail(to: email, subject: subject) do |format|
+      format.html { render 'geocoding_log_notification' }
+    end
+  end
+
   private
 
   def load_salesforce_contact(record)
