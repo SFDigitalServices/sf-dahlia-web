@@ -2,6 +2,40 @@
     "A1_INTRO": {
         "TITLE": "Let's get started on your application:"
     },
+    "T": {
+        "APPLICATION": "Application",
+        "APPLICATION_DUE": "Application Due",
+        "GET_STARTED": "Get Started",
+        "APPLICATION_DEADLINE": "Application Deadline",
+        "APPLICATION_SUBMITTED": "Application Submitted",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
+        "BACK": "Back",
+        "CONFIRM": "Confirm",
+        "DELETE": "Delete",
+        "EDIT": "Edit",
+        "IN_PROGRESS": "In Progress",
+        "I_AGREE": "I agree",
+        "NEVER_SUBMITTED": "Never Submitted",
+        "NEXT": "Next",
+        "NO": "No",
+        "NONE": "None",
+        "OK": "OK",
+        "OPTIONAL": "Optional",
+        "PER_MONTH": "per month",
+        "PER_YEAR": "per year",
+        "SAVE_AND_FINISH_LATER": "Save and finish later",
+        "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
+        "SESSION_INACTIVITY_CONFIRMATION": "Your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
+        "SESSION_INACTIVITY_LOGGED_IN": "Your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",
+        "STATUS": "Status",
+        "SUBMIT": "Submit",
+        "SUBMITTED": "Submitted",
+        "YES": "Yes",
+        "YOU": "You",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
+        "CLOSE": "close"
+    },
     "A2_OVERVIEW": {
         "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
         "P2": "You'll get a chance to review your application before you submit it.",
@@ -37,23 +71,23 @@
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
+        "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
+        "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours.",
         "PROVIDE_WAY_TO_CONTACT_YOU": {
             "ADDRESS": "Your Address",
             "DESC": "Please provide one of the following ways to contact you:",
             "EMAIL": "Your Email Address",
             "PHONE": "Your Phone Number"
-        },
-        "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
-        "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
+        }
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
-        "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you.",
-        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?"
+        "TITLE": "Is there someone else you'd like to authorize us to contact if we can't reach you?",
+        "GOOD_ALTERNATE_CONTACT": "A good alternate contact is a person who will know how to reach you."
     },
     "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
         "CHOOSE_AN_ADDRESS": "Choose an address where they can receive updates and materials about your application.",
-        "ONLY_USE_INFO": "We'll only use this information to contact them about your application.",
-        "TITLE": "Let us know how to reach your alternate contact."
+        "TITLE": "Let us know how to reach your alternate contact.",
+        "ONLY_USE_INFO": "We'll only use this information to contact them about your application."
     },
     "B4_ALTERNATE_CONTACT_NAME": {
         "TITLE": "Who is your alternate contact?"
@@ -115,12 +149,6 @@
             "DESCRIPTION": "At least one household member must live in San Francisco.",
             "TITLE": "Live in San Francisco Preference"
         },
-        "LIVE_WORK_SF_PREFERENCE": {
-            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
-            "LIVE_SF_PREFERENCE": "Live in San Francisco",
-            "TITLE": "Live or Work in San Francisco Preference",
-            "WORK_SF_PREFERENCE": "Work in San Francisco"
-        },
         "NEIGHBORHOOD_RESIDENCE": {
             "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
             "TITLE": "Neighborhood Resident Housing Preference"
@@ -132,6 +160,12 @@
         "WORK_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must currently work in San Francisco at least 75% of their working hours.",
             "TITLE": "Work in San Francisco Preference"
+        },
+        "LIVE_WORK_SF_PREFERENCE": {
+            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
+            "LIVE_SF_PREFERENCE": "Live in San Francisco",
+            "TITLE": "Live or Work in San Francisco Preference",
+            "WORK_SF_PREFERENCE": "Work in San Francisco"
         }
     },
     "D6_PREFERENCES_VOUCHERS": {
@@ -242,7 +276,6 @@
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
-        "APPLICANT_PREFERENCES_DOCUMENT_NAME": "Whose name is on the document you're uploading?",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
@@ -275,7 +308,6 @@
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
-        "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
         "INCOME": "Income",
@@ -302,7 +334,6 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
-        "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
@@ -340,15 +371,17 @@
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
         "YOUR_DOB": "Your Date of Birth",
-        "YOUR_GENDER": "Please specify your gender",
         "YOUR_NAME": "Your Name",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
         "YOU_HAVE_CLAIMED": "You have claimed:",
         "ZIP": "Zip",
-        "ZIPCODE": "Zipcode"
+        "ZIPCODE": "Zipcode",
+        "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
+        "YOUR_GENDER": "Please specify your gender",
+        "APPLICANT_PREFERENCES_DOCUMENT_NAME": "Whose name is on the document you're uploading?",
+        "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?"
     },
     "LOTTERY": {
-        "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "DTHP": "Displaced Tenants Housing Preference",
@@ -374,13 +407,32 @@
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
         "RESULTS_FROM": "Results from {{date}}",
         "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
-        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units"
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units",
+        "ANY_REMAINING_UNITS": "Any remaining units"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "RESET_PASSWORD": {
+        "TITLE": "Reset Password",
+        "UPDATE_PASSWORD": "Update password"
+    },
+    "REVIEW_APPLICATION": {
+        "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
+        "PRINT_A_COPY": "Print a copy for your records",
+        "TITLE": "Here's the information you submitted.",
+        "VIEW_ORIGINAL_LISTING": "View the original listing",
+        "YOUR_LOTTERY_NUMBER": "Your lottery number"
+    },
+    "SIGN_IN": {
+        "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
+        "DONT_HAVE_ACCOUNT": "Don't have an account?",
+        "FORGOT_PASSWORD": "Forgot password?",
+        "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
+        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
     },
     "PRIVACY_POLICY": {
         "COOKIES_P1": "We use cookies when providing online services such as online applications. We use cookies to improve quality of our service.",
@@ -408,57 +460,5 @@
         "SITE_SECURITY_P2": "We take appropriate security measures to protect unauthorized access, alteration or destruction of data.",
         "SITE_SECURITY_TITLE": "Site Security",
         "TITLE": "Privacy Policy"
-    },
-    "RESET_PASSWORD": {
-        "TITLE": "Reset Password",
-        "UPDATE_PASSWORD": "Update password"
-    },
-    "REVIEW_APPLICATION": {
-        "BACK_TO_MY_APPLICATIONS": "Back to My Applications",
-        "PRINT_A_COPY": "Print a copy for your records",
-        "TITLE": "Here's the information you submitted.",
-        "VIEW_ORIGINAL_LISTING": "View the original listing",
-        "YOUR_LOTTERY_NUMBER": "Your lottery number"
-    },
-    "SIGN_IN": {
-        "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
-        "DONT_HAVE_ACCOUNT": "Don't have an account?",
-        "FORGOT_PASSWORD": "Forgot password?",
-        "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
-        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
-    },
-    "T": {
-        "APPLICATION": "Application",
-        "APPLICATION_DEADLINE": "Application Deadline",
-        "APPLICATION_DUE": "Application Due",
-        "APPLICATION_SUBMITTED": "Application Submitted",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
-        "BACK": "Back",
-        "CLOSE": "close",
-        "CONFIRM": "Confirm",
-        "DELETE": "Delete",
-        "EDIT": "Edit",
-        "GET_STARTED": "Get Started",
-        "IN_PROGRESS": "In Progress",
-        "I_AGREE": "I agree",
-        "NEVER_SUBMITTED": "Never Submitted",
-        "NEXT": "Next",
-        "NO": "No",
-        "NONE": "None",
-        "OK": "OK",
-        "OPTIONAL": "Optional",
-        "PER_MONTH": "per month",
-        "PER_YEAR": "per year",
-        "SAVE_AND_FINISH_LATER": "Save and finish later",
-        "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
-        "SESSION_INACTIVITY_CONFIRMATION": "Your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
-        "SESSION_INACTIVITY_LOGGED_IN": "Your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",
-        "STATUS": "Status",
-        "SUBMIT": "Submit",
-        "SUBMITTED": "Submitted",
-        "YES": "Yes",
-        "YOU": "You"
     }
 }
