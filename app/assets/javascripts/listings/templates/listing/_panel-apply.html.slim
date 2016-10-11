@@ -32,13 +32,13 @@
       | {{ listing.Application_Street_Address }},
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
-    a.t-small.d-block.ui-link.margin-bottom title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
+    a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
       | View Map
-    p.content-group_hours ng-if="listing.Office_Open"
-      span.content-group_title
+    .content-group_hours ng-if="listing.Office_Hours"
+      h3.content-group_title
         | Office Hours
-      span.content-group_time
-        | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+      .content-group_days.inline ng-bind-html="listing.Office_Hours"
+
     .option-divider
       span.or
         | or

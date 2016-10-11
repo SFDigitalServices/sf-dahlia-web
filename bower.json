@@ -10,7 +10,7 @@
     "angular-pageslide-directive": "~1.0.8",
     "angular-mocks": "~1.4.7",
     "angular-clipboard": "~1.1.1",
-    "ngstorage": "~0.3.10",
+    "ngstorage": "~0.3.11",
     "angular-filter": "~0.5.8",
     "angulartics": "~1.0.2",
     "angulartics-google-analytics": "~0.1.3",

@@ -296,6 +296,9 @@ ShortFormDataService = () ->
             preferences["#{preference}_proof_option"] = file.document_type
             preferences["#{preference}_proof_file"] = file
     )
+    if preferences.liveInSf || preferences.workInSf
+      preferences.liveWorkInSf = true
+      preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
 
 
@@ -341,6 +344,19 @@ ShortFormDataService = () ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
     data.completedSections = formMetadata.completedSections
+
+  #############################################
+  # Helper functions
+  #############################################
+
+  Service.maxDOBDay = (month, year) ->
+    max = 31
+    if month == 2
+      max = if (year % 4 == 0) then 29 else 28
+    else if _.includes([4, 6, 9, 11], month)
+      max = 30
+    return max
+
 
   return Service
 

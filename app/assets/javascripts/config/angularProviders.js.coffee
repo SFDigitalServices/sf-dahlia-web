@@ -49,3 +49,16 @@
       confirmationSuccessUrl: conf.confirmationSuccessUrl
       validateOnPageLoad: false
 ]
+
+@dahlia.config ['$translateProvider', ($translateProvider) ->
+  # will generate new timestamp every hour
+  timestamp = Math.floor(new Date().getTime() / (1000 * 60 * 60))
+  $translateProvider
+    .preferredLanguage('en')
+    .fallbackLanguage('en')
+    .useSanitizeValueStrategy('sanitize')
+    .useStaticFilesLoader(
+      prefix: '/translations/locale-'
+      suffix: ".json?t=#{timestamp}"
+    )
+]

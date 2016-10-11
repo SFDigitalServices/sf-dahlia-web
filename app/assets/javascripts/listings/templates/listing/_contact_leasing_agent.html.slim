@@ -16,16 +16,16 @@ a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" n
   | Email
 p.content-group_address.no-margin
   | {{listing.Application_Organization}}
-p.c-steel ng-if="listing.Application_Street_Address"
-  | {{ listing.Application_Street_Address }},
+p.c-steel ng-if="listing.Leasing_Agent_Street"
+  | {{ listing.Leasing_Agent_Street }}
   br
-  | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
-a.has-icon.d-block.margin-bottom target="_blank" title="View Map: {{formattedApplicationAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}" ng-if="listing.Application_Street_Address"
+  | {{ listing.Leasing_Agent_City }} {{ listing.Leasing_Agent_State }} {{ listing.Leasing_Agent_Zip }}
+a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map: {{formattedApplicationAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}" ng-if="listing.Application_Street_Address"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-map"
   | Get Directions
-p.no-margin ng-if="listing.Office_Open && listing.Office_Closed"
-  | Office Hours
-p.c-steel
-  | {{listing.Office_Open}}&mdash;{{listing.Office_Closed}}
+.content-group_hours ng-if="listing.Office_Hours"
+  h3.content-group_title
+    | Office Hours
+  .content-group_days.inline ng-bind-html="listing.Office_Hours"

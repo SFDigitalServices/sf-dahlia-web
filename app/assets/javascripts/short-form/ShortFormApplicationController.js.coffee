@@ -289,6 +289,17 @@ ShortFormApplicationController = (
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
+  $scope.showPreference = (type) ->
+    switch type
+      when 'liveWorkInSf'
+        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
+      when 'liveInSf'
+        $scope.liveInSfMembers().length > 0 && $scope.workInSfMembers().length == 0
+      when 'workInSf'
+        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length == 0
+      when 'neighborhoodResidence'
+        $scope.neighborhoodResidenceMembers().length > 0
+
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
@@ -474,6 +485,12 @@ ShortFormApplicationController = (
       $state.go('dahlia.short-form-application.create-account')
 
   $scope.print = -> $window.print()
+
+
+  $scope.maxDOBDay = (model = 'applicant') ->
+    month = $scope[model].dob_month
+    year = $scope[model].dob_year
+    ShortFormApplicationService.maxDOBDay(month, year)
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # NOTE: not sure when this will ever really get hit any more

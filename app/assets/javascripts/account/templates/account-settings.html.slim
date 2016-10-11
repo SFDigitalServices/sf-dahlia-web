@@ -95,7 +95,7 @@
               small.error ng-if="inputInvalid('lastName')"
                 | {{'ERROR.LAST_NAME' | translate}}
 
-          .dash-card-inner.inset.border-bottom
+          .dash-card-inner.inset
             .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
               h2.form-label.caps
                 ' {{'LABEL.YOUR_DOB' | translate}}
@@ -104,24 +104,17 @@
                 .form-group-month.large-2.columns
                   label.sr-only for="date_of_birth_month"
                     | {{'LABEL.DOB_MONTH' | translate}}
-                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
 
                 .form-group-day.large-2.columns
                   label.sr-only for="date_of_birth_day"
                     | {{'LABEL.DOB_DAY' | translate}}
-                  input ng-model="userAuth.contact.dob_day" required="" max="31" min="1" name="date_of_birth_day" placeholder="DD" type="number" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_day" required="" max="{{maxDOBDay()}}" min="1" name="date_of_birth_day" placeholder="DD" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
 
                 .form-group-year.large-2.columns.end
                   label.sr-only for="date_of_birth_year"
                     | {{'LABEL.DOB_YEAR' | translate}}
-                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
-
-        .dash-card-inner.inset.border-bottom
-          .form-group
-            h2.form-label.caps Deactivate Account
-            p.t-small.c-steel Deactivating your account will mean losing all previously saved favorites and settings.
-            p.text-center.padding-top
-              button.button.small.alert.no-margin type="button"  Deactivate

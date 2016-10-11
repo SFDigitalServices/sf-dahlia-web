@@ -45,8 +45,12 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     ListingService.setEligibilityFilters($scope.filters)
 
   $scope.resetChildrenUnder6 = ->
-    $scope.filters.children_under_6 = "0"
+    $scope.filters.children_under_6 = ""
 
+  $scope.onChangeHouseholdSize = ->
+    if $scope.filters.children_under_6 >= $scope.filters.household_size
+      $scope.resetChildrenUnder6()
+      $scope.filters.include_children_under_6 = false
 
 ############################################################################################
 ######################################## CONFIG ############################################

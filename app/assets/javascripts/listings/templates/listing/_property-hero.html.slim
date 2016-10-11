@@ -25,14 +25,14 @@
         | {{formattedBuildingAddress(listing)}}
         br
         | {{listing.Developer}}
-      a.ui-link.t-micro target="_blank" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
+      a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
         | View on Map
 
     .property-hero_favorite
       button.button.round-icon.i-block title="Favorite" ng-click="toggleFavoriteListing(listing.Id);"
         span.ui-icon
           svg
-            use xlink:href="#i-like"
+            use xlink:href="#i-like" ng-show="!isFavorited(listing.Id)"
             use xlink:href="#i-like-fill" ng-show="isFavorited(listing.Id)"
         span.sr-only Favorite
       a.button.round-icon.i-block title="Share" ui-sref="dahlia.share({id: listing.Id})"
@@ -42,12 +42,16 @@
             use style="display:none" xlink:href="#i-forward-fill"
         span.sr-only Share
 
-    p.post-dealine_alert.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
-      span.label.label--flag.alert-tint Applications Closed
+  .property-hero_stats.show-for-small-only.margin-top ng-if="listingApplicationClosed(listing)"
+    span.label.label--flag.alert-tint
+      span.ui-icon.ui-static.ui-medium.i-color
+        svg
+          use xlink:href="#i-clock"
+      | Applications Closed
 
   ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .property-hero_apply.hide-for-medium-up
+  .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
       span.label.label--flag.primary-tint
         | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}

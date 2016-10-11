@@ -2,6 +2,7 @@
   short-form-header
     h2.app-card_question
       | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.TITLE' | translate}}
+    p.form-note.margin-bottom translate="B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.ONLY_USE_INFO"
 
   .app-inner.inset.border-bottom
     .form-group ng-class="{ error: inputInvalid('phone') }"
@@ -16,8 +17,6 @@
     .form-group ng-class="{ error: inputInvalid('email') }"
       label.form-label.caps
         | {{'LABEL.CONTACT_EMAIL' | translate}}
-      p.form-note.margin-bottom
-        | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.ONLY_USE_EMAIL' | translate}}
       .form-email
         label.sr-only for="alternate_email"
           | {{'LABEL.EMAIL_ADDRESS' | translate}}

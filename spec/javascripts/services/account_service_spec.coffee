@@ -9,6 +9,7 @@ do ->
     $auth = undefined
     httpBackend = undefined
     requestURL = undefined
+    fakeParams = undefined
     fakeState = 'dahlia.short-form-application.contact'
     fakeAuthResponse =
       id: 99
@@ -27,6 +28,7 @@ do ->
     fakeShortFormApplicationService =
       applicant: {}
       importUserData: ->
+      resetUserData: jasmine.createSpy()
     modalMock =
       open: () ->
         return
@@ -68,6 +70,7 @@ do ->
           { catch: -> return }
         error: (callback) -> callback({})
       spyOn($auth, 'submitRegistration').and.callFake -> fakeHttp
+      spyOn($auth, 'signOut').and.callFake -> fakeHttp
       spyOn($auth, 'submitLogin').and.callFake -> fakeHttp
       spyOn($auth, 'validateUser').and.callFake -> fakeHttp
       spyOn($auth, 'requestPasswordReset').and.callFake -> fakeHttp
@@ -94,11 +97,26 @@ do ->
         return
       return
 
+    describe 'loggedIn', ->
+      it 'returns value of Service.loggedInUser.signedIn', ->
+        AccountService.loggedInUser.signedIn = true
+        expect(AccountService.loggedIn()).toEqual true
+        return
+      return
+
     describe 'createAccount', ->
-      it 'calls $auth.submitRegistration with userAuth params', ->
+      beforeEach ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         fakeParams = AccountService._createAccountParams()
+
+      it 'calls $auth.submitRegistration with userAuth params', ->
         AccountService.createAccount()
+        expect($auth.submitRegistration).toHaveBeenCalledWith fakeParams
+        return
+      it 'adds temp_session_id if shortFormSession is present', ->
+        fakeSession = {uid: 'xyz'}
+        AccountService.createAccount(fakeSession)
+        fakeParams.user.temp_session_id = fakeSession.uid
         expect($auth.submitRegistration).toHaveBeenCalledWith fakeParams
         return
       return
@@ -108,6 +126,19 @@ do ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         AccountService.signIn()
         expect($auth.submitLogin).toHaveBeenCalledWith fakeUserAuth.user
+        return
+      return
+
+    describe 'signOut', ->
+      it 'calls $auth.signOut', ->
+        AccountService.signOut()
+        expect($auth.signOut).toHaveBeenCalled()
+        return
+
+      it 'resets user data', ->
+        AccountService.signOut()
+        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(AccountService.loggedInUser).toEqual {}
         return
       return
 
@@ -224,7 +255,6 @@ do ->
         return
       return
 
-
     describe 'getMyApplications', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
@@ -254,6 +284,14 @@ do ->
         expect($state.go).toHaveBeenCalledWith(path)
         return
       return
+
+    describe 'clearAccountMessages', ->
+      it 'clears the messages', ->
+        AccountService.accountError.messages = {test: 'xyz'}
+        AccountService.accountSuccess.messages = {test: 'xyz'}
+        AccountService.clearAccountMessages()
+        expect(AccountService.accountError.messages).toEqual {}
+        expect(AccountService.accountSuccess.messages).toEqual {}
 
 
   return

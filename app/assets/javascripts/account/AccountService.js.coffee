@@ -15,7 +15,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.createdAccount = {}
   Service.rememberedShortFormState = null
   Service.accountError =
-    message: null
     messages: {}
   Service.accountSuccess =
     messages: {}
@@ -41,11 +40,11 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       ).error((response) ->
         msg = response.errors.full_messages[0]
         if msg == 'Email already in use'
-          Service.accountError.message = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
+          Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
         else if msg == 'Salesforce contact can\'t be blank'
-          Service.accountError.message = $translate.instant("ERROR.CREATE_ACCOUNT")
+          Service.accountError.messages.user = $translate.instant("ERROR.CREATE_ACCOUNT")
         else
-          Service.accountError.message = msg
+          Service.accountError.messages.user = msg
         return false
       )
 
@@ -60,7 +59,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
           Service._reformatDOB()
           return true
       ).catch((response) ->
-        Service.accountError.message = response.errors[0]
         return false
       )
 
@@ -71,7 +69,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     $auth.requestPasswordReset(params).then((resp) ->
       Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
-      Service.accountError.message = $translate.instant("ERROR.EMAIL_NOT_FOUND")
+      Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_NOT_FOUND")
     return
 
   Service.updatePassword = (type) ->
@@ -120,7 +118,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       email: Service.createdAccount.email
 
     $http.post('/api/v1/auth/confirmation', params).then((data, status, headers, config) ->
-      # $modal.close()
       data
     ).catch( (data, status, headers, config) ->
       return
@@ -247,7 +244,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       email: false
 
   Service.clearAccountMessages = ->
-    Service.accountError.message = null
     Service.accountError.messages = {}
     Service.accountSuccess.messages = {}
 
@@ -261,6 +257,8 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.goToLoginRedirect = ->
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
+
+  Service.maxDOBDay = ShortFormDataService.maxDOBDay
 
   # run on page load
   Service.unlockFields()
