@@ -53,7 +53,7 @@ class Emailer < Devise::Mailer
     if Rails.env.production? and ENV['PRODUCTION']
       email = 'dahlia-admins@exygy.com'
     else
-      email = 'dave+test@exygy.com'
+      email = 'dahlia-test@exygy.com'
     end
     subject = '[SF-DAHLIA] Address not found in arcgis service'
     mail(to: email, subject: subject) do |format|
