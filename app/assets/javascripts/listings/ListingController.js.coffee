@@ -187,7 +187,6 @@ ListingController = (
   $scope.showDownloadLotteryResultsButton = ->
     return false unless $scope.listing.LotteryResultsURL
     $scope.listingIsAny([
-      'Alchemy'
       'Rincon'
       '77 Bluxome'
       'Potrero 1010'
