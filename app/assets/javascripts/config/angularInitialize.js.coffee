@@ -1,7 +1,8 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'Idle', 'bsLoadingOverlayService',
+  '$rootScope', '$state', '$window', '$translate', '$analytics',
+  'Idle', 'bsLoadingOverlayService',
   'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
+  ($rootScope, $state, $window, $translate, $analytics, Idle, bsLoadingOverlayService,
   ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
@@ -53,6 +54,7 @@
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          $analytics.eventTrack('shortForm-leave', { category: 'shortForm' })
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm

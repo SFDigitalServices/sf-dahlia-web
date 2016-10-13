@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, Upload, uuid,
+  $translate, $http, $analytics, Upload, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService
 ) ->
   Service = {}
@@ -263,6 +263,7 @@ ShortFormApplicationService = (
       Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
+    $analytics.eventTrack('shortForm-leave', { category: 'shortForm' })
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
@@ -508,7 +509,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', 'Upload', 'uuid',
+  '$translate', '$http', '$analytics', 'Upload', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService'
 ]
