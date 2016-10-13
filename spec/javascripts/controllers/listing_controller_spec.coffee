@@ -106,10 +106,6 @@ do ->
         expect(scope.favorites).toEqual fakeListingFavorites
         return
 
-      it 'populates scope with activeOptionsClass', ->
-        expect(scope.activeOptionsClass).toEqual null
-        return
-
       it 'populates scope with maxIncomeLevels', ->
         expect(scope.maxIncomeLevels).toBeDefined()
         return

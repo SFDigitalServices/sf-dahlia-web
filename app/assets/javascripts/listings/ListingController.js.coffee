@@ -26,7 +26,6 @@ ListingController = (
   # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
-  $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
@@ -46,7 +45,6 @@ ListingController = (
 
   $scope.showApplicationOptions = false
   $scope.toggleApplicationOptions = () ->
-    $scope.activeOptionsClass = if $scope.activeOptionsClass == 'active' then '' else 'active'
     $scope.showApplicationOptions = !$scope.showApplicationOptions
 
   $scope.toggleTable = (table) ->
