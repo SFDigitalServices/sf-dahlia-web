@@ -23,8 +23,10 @@
 //= require angular-filter
 //= require angular-translate
 //= require angular-translate-loader-static-files
-//= require angulartics
+//= require angulartics/dist/angulartics.min
+//= require angulartics/dist/angulartics-debug.min
 //= require angulartics-google-analytics
+//= require angulartics-google-tag-manager
 //= require lifely-angular-carousel
 //= require angular-ui-mask
 //= require hammerjs

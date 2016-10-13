@@ -8,6 +8,7 @@ ShortFormApplicationController = (
   $window,
   $document,
   $translate,
+  $analytics,
   Idle,
   ShortFormApplicationService,
   ShortFormNavigationService,
@@ -96,6 +97,7 @@ ShortFormApplicationController = (
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
   $scope.submitForm = ->
+    $analytics.eventTrack('submitForm-test')
     form = $scope.form.applicationForm
     ShortFormNavigationService.isLoading(true)
     if form.$valid
@@ -503,7 +505,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.isLoading(false)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
+  '$scope', '$state', '$window', '$document', '$translate', '$analytics', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
   'AddressValidationService',

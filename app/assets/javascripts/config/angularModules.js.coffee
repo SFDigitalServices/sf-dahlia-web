@@ -13,6 +13,8 @@
   'angular.filter',
   'angulartics',
   'angulartics.google.analytics',
+  'angulartics.google.tagmanager',
+  'angulartics.debug',
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',
