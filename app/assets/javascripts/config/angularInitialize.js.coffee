@@ -33,6 +33,10 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      if (fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/))
+        # track if they are leaving create account to go somewhere else
+        $analytics.eventTrack('Abandon Form', { category: 'accounts', action: 'create-account' })
+
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
@@ -54,7 +58,7 @@
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
-          $analytics.eventTrack('shortForm-leave', { category: 'shortForm' })
+          $analytics.eventTrack('Abandon Form', { category: 'application' })
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm

@@ -1,4 +1,12 @@
-AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
+AccountController = (
+  $scope,
+  $state,
+  $document,
+  $translate,
+  $analytics,
+  AccountService,
+  ShortFormApplicationService
+) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
@@ -53,6 +61,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
+      $analytics.eventTrack('Submit Form', { category: 'accounts', action: 'create-account' })
       $scope.accountError.messages.user = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -75,11 +84,13 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $scope.submitDisabled = false
       )
     else
+      $analytics.eventTrack('Submit Form Error', { category: 'accounts', action: 'create-account' })
       $scope.handleErrorState()
 
   $scope.signIn = ->
     form = $scope.accountForm()
     if form.$valid
+      $analytics.eventTrack('Submit Form', { category: 'accounts', action: 'sign-in' })
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then( (success) ->
@@ -96,6 +107,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $scope.submitDisabled = false
       )
     else
+      $analytics.eventTrack('Submit Form Error', { category: 'accounts', action: 'sign-in' })
       $scope.handleErrorState()
 
   $scope.requestPasswordReset = ->
@@ -231,7 +243,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     AccountService.maxDOBDay(month, year)
 
 
-AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
+AccountController.$inject = [
+  '$scope', '$state', '$document', '$translate', '$analytics',
+  'AccountService', 'ShortFormApplicationService'
+]
 
 angular
   .module('dahlia.controllers')

@@ -100,12 +100,16 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     ShortFormNavigationService.isLoading(true)
     if form.$valid
-      $analytics.eventTrack('submitForm', { category: 'shortForm' })
+      $analytics.eventTrack('Submit Form', {
+        category: 'application', action: ShortFormNavigationService._currentPage()
+      })
       # reset page form state (i.e. reset error messages)
       form.$setPristine()
       $scope.handleFormSuccess()
     else
-      $analytics.eventTrack('submitForm-error', { category: 'shortForm' })
+      $analytics.eventTrack('Submit Form Error', {
+        category: 'application', action: ShortFormNavigationService._currentPage()
+      })
       $scope.handleErrorState()
 
   $scope.handleFormSuccess = ->
