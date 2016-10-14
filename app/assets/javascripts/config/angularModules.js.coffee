@@ -12,7 +12,6 @@
   'mm.foundation',
   'angular.filter',
   'angulartics',
-  'angulartics.google.analytics',
   'angulartics.google.tagmanager',
   'angulartics.debug',
   'angular-carousel',
