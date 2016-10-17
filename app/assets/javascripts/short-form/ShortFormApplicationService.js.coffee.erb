@@ -284,7 +284,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.neighborhoodPreferenceMatch || applicant.noAddress
+        addressValid = !!applicant.neighborhoodPreferenceMatch || !!applicant.noAddress
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -474,6 +474,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success( ->
+        Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
         Service.copyNeighborhoodMatchToHousehold()
         callback()
       )
@@ -492,6 +493,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success( ->
+        Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
         Service.addHouseholdMember(Service.householdMember)
         callback()
       )
