@@ -3,8 +3,11 @@ module SalesforceService
   class ShortFormService < SalesforceService::Base
     def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(householdsize incomelevel childrenUnder6).each do |k|
+      %i(householdsize childrenUnder6).each do |k|
         params[k] = params[k].present? ? params[k].to_i : 0
+      end
+      %i(incomelevel).each do |k|
+        params[k] = params[k].present? ? params[k].to_f : 0
       end
       api_get(endpoint, params)
     end
