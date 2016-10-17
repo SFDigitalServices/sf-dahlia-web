@@ -469,8 +469,10 @@ ShortFormApplicationService = (
     ).success( ->
       Service.copyHomeToMailingAddress()
       GeocodingService.geocode(
-        address: Service.applicant.home_address,
+        address: Service.applicant.home_address
         member: Service.applicant
+        applicant: Service.applicant
+        listing: Service.listing
       ).success( ->
         Service.copyNeighborhoodMatchToHousehold()
         callback()
@@ -485,8 +487,10 @@ ShortFormApplicationService = (
       type: 'home'
     ).success( ->
       GeocodingService.geocode(
-        address: Service.householdMember.home_address,
+        address: Service.householdMember.home_address
         member: Service.householdMember
+        applicant: Service.applicant
+        listing: Service.listing
       ).success( ->
         Service.addHouseholdMember(Service.householdMember)
         callback()

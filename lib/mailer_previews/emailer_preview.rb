@@ -35,4 +35,16 @@ class EmailerPreview < ActionMailer::Preview
     token = u.confirmation_token || 'xyzABC123'
     Emailer.confirmation_instructions(u, token)
   end
+
+  def geocoding_log_notification
+    log = GeocodingLog.new(
+      address: '123 Main St',
+      city: 'San Francisco',
+      zip: '94123',
+      listing_id: 'xyz',
+      member: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
+      applicant: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
+    )
+    Emailer.geocoding_log_notification(log)
+  end
 end
