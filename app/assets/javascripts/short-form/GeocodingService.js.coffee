@@ -4,8 +4,10 @@
 
 GeocodingService = ($http, ShortFormDataService) ->
   Service = {}
+  Service.neighborhoodPreferenceMatch = null
 
   Service.geocode = (options) ->
+    Service.neighborhoodPreferenceMatch = null
     ['member', 'applicant'].forEach (user) ->
       options[user].dob = ShortFormDataService.formatUserDOB(options[user])
       options[user] = _.pick options[user], ['firstName', 'lastName', 'dob']
@@ -23,10 +25,9 @@ GeocodingService = ($http, ShortFormDataService) ->
       # append neighborhoodPreferenceMatch data to member
       # 'Matched' and 'Not Matched' correspond with what gets stored in Salesforce
       match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
-      member.neighborhoodPreferenceMatch = match
+      Service.neighborhoodPreferenceMatch = match
     ).error( (data, status, headers, config) ->
       # error
-      member.neighborhoodPreferenceMatch = null
     )
 
   return Service
