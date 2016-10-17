@@ -64,12 +64,10 @@ describe 'ShortForm API' do
     # NOTE: to get this one to work we created a cassette that stripped out all bools
     #    because VCR converts the bools->strings, which makes salesforce reject it
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:attach_files_and_send_confirmation)
-                                  .and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:delete_draft_application)
-                                  .and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:attach_files_and_send_confirmation).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:delete_draft_application).and_return(true)
     end
 
     it 'returns successful response' do
@@ -85,11 +83,10 @@ describe 'ShortForm API' do
 
   describe 'show_application' do
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:user_can_access?).and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:map_listing_to_application)
-                                  .and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_access?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:map_listing_to_application).and_return(true)
     end
 
     it 'returns an application object' do
@@ -104,10 +101,10 @@ describe 'ShortForm API' do
 
   describe 'delete_application' do
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:user_can_access?).and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:submitted?).and_return(false)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_access?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:submitted?).and_return(false)
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/delete_application') do
@@ -121,15 +118,12 @@ describe 'ShortForm API' do
     # NOTE: to get this one to work we created a cassette that stripped out all bools
     #    because VCR converts the bools->strings, which makes salesforce reject it
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:attach_files_and_send_confirmation)
-                                  .and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:delete_draft_application)
-                                  .and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:user_can_claim?)
-                                  .and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:attach_files_and_send_confirmation).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:delete_draft_application).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_claim?).and_return(true)
     end
 
     it 'returns success response' do
@@ -147,15 +141,12 @@ describe 'ShortForm API' do
     # NOTE: to get this one to work we created a cassette that stripped out all bools
     #    because VCR converts the bools->strings, which makes salesforce reject it
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:user_can_claim?)
-                                  .and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:attach_files_and_send_confirmation)
-                                  .and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:delete_draft_application)
-                                  .and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_claim?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:attach_files_and_send_confirmation).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:delete_draft_application).and_return(true)
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/claim_submitted_application') do
@@ -170,11 +161,10 @@ describe 'ShortForm API' do
 
   describe 'show_listing_application_for_user' do
     before do
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:find_listing_application).and_return(true)
-      Api::V1::ShortFormController.any_instance
-                                  .stub(:find_application_files)
-                                  .and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:find_listing_application).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:find_application_files).and_return(true)
     end
 
     it 'returns successful response' do
