@@ -3,6 +3,8 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    $analytics =
+      eventTrack: ->
     fakeIdle = undefined
     fakeTitle = undefined
     eligibilityResponse = undefined
@@ -79,6 +81,7 @@ do ->
         getLandingPage: spyOn(fakeFunctions, 'fakeGetLandingPage').and.callThrough()
         isLoading: spyOn(fakeFunctions, 'fakeIsLoading').and.callThrough()
         submitOptionsForCurrentPage: spyOn(fakeFunctions, 'fakeSubmitOptionsForCurrentPage').and.callThrough()
+        _currentPage: jasmine.createSpy()
       return
     )
 
@@ -111,6 +114,7 @@ do ->
         Idle: fakeIdle
         Title: fakeTitle
         $translate: $translate
+        $analytics: $analytics
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService

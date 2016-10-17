@@ -5,6 +5,8 @@ do ->
     state = {current: {name: undefined}}
     deferred = undefined
     $translate = {}
+    $analytics =
+      eventTrack: ->
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
@@ -57,6 +59,7 @@ do ->
       $controller 'AccountController',
         $scope: scope
         $state: state
+        $analytics: $analytics
         AccountService: fakeAccountService
         ShortFormApplicationService: fakeShortFormApplicationService
       return
