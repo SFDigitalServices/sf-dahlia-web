@@ -402,6 +402,11 @@ ShortFormApplicationController = (
     link = $state.href('dahlia.additional-resources')
     {visitResourcesLink: "<a href='#{link}'>#{linkText}</a>"}
 
+  $scope.listingLink = ->
+    linkText = $translate.instant('LABEL.ON_THE_LISTING')
+    link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
+    {listingLink: "<a href='#{link}'>#{linkText}</a>"}
+
   $scope.invalidateIncomeForm = ->
     ShortFormApplicationService.invalidateIncomeForm()
 

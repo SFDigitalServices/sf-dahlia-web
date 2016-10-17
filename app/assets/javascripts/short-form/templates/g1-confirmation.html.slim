@@ -22,7 +22,7 @@
       span translate="G1_CONFIRMATION.NEXT_STEPS_BODY1"
       '
       ' {{ listing.Lottery_Date | date : 'longDate'}}.
-      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2"
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2" translate-values="listingLink()"
 
   .app-inner.inset ng-if="!loggedIn()"
     label.form-label.caps translate="G1_CONFIRMATION.CREATE_ACCOUNT_TITLE"
