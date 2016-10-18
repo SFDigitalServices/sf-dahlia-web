@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NP_Composite_001/GeocodeServer/findAddressCandidates?City=San%20Francisco&Street=4053%2018th%20St&f=pjson
+    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&Street=4053%2018th%20St&f=pjson
     body:
       encoding: US-ASCII
       string: ''
@@ -19,13 +19,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 05:03:48 GMT
+      - Mon, 10 Oct 2016 23:22:45 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - 26f51bb2
+      - 4d95c7f6
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
@@ -38,13 +38,13 @@ http_interactions:
         3857\n },\n \"candidates\": [\n  {\n   \"address\": \"4053 18TH ST, San Francisco\",\n
         \  \"location\": {\n    \"x\": -13629293.11924395,\n    \"y\": 4545683.8914925382\n
         \  },\n   \"score\": 100,\n   \"attributes\": {\n    \n   }\n  },\n  {\n   \"address\":
-        \"4053 18TH ST, San Francisco\",\n   \"location\": {\n    \"x\": -13629289.140881428,\n
-        \   \"y\": 4545703.8986498807\n   },\n   \"score\": 100,\n   \"attributes\":
+        \"4053 18TH ST, San Francisco\",\n   \"location\": {\n    \"x\": -13629288.270665675,\n
+        \   \"y\": 4545692.3312512981\n   },\n   \"score\": 100,\n   \"attributes\":
         {\n    \n   }\n  },\n  {\n   \"address\": \"4054 18TH ST, San Francisco\",\n
-        \  \"location\": {\n    \"x\": -13629295.084645359,\n    \"y\": 4545718.9589669053\n
+        \  \"location\": {\n    \"x\": -13629295.954870859,\n    \"y\": 4545730.5263941195\n
         \  },\n   \"score\": 79,\n   \"attributes\": {\n    \n   }\n  }\n ]\n}"
     http_version:
-  recorded_at: Wed, 07 Sep 2016 05:03:51 GMT
+  recorded_at: Mon, 10 Oct 2016 23:22:47 GMT
 - request:
     method: get
     uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13629293.11924395,4545683.891492538&geometryType=esriGeometryPoint&objectIds=3&returnCountOnly=true&spatialRel=esriSpatialRelIntersects
@@ -64,13 +64,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 05:03:48 GMT
+      - Mon, 10 Oct 2016 23:22:45 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - n6MfhuSEcJB837yA_1469053405
+      - NkdDShcQpxk2vvzP_1469053405
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
@@ -84,5 +84,5 @@ http_interactions:
          "count": 1
         }
     http_version:
-  recorded_at: Wed, 07 Sep 2016 05:03:51 GMT
+  recorded_at: Mon, 10 Oct 2016 23:22:47 GMT
 recorded_with: VCR 3.0.3
