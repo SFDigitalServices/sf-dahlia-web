@@ -39,7 +39,6 @@ ShortFormApplicationController = (
     'Female',
     'Trans Male',
     'Trans Female',
-    'Decline to State',
     'Not Listed'
   ]
   $scope.relationship_options = [
@@ -61,8 +60,7 @@ ShortFormApplicationController = (
   ]
   $scope.ethnicity_options = [
     'Hispanic/Latino',
-    'Not Hispanic/Latino',
-    'Decline to state'
+    'Not Hispanic/Latino'
   ]
   $scope.race_options = [
     'American Indian/Alaskan Native',
@@ -74,8 +72,7 @@ ShortFormApplicationController = (
     'American Indian/Alaskan Native and White',
     'Asian and White',
     'Black/African American and White',
-    'Other/Multiracial',
-    'Decline to state'
+    'Other/Multiracial'
   ]
   $scope.sexual_orientation_options = [
     'Straight/Heterosexual',
@@ -83,8 +80,7 @@ ShortFormApplicationController = (
     'Lesbian',
     'Bisexual',
     'Questioning/Unsure',
-    'Not Listed',
-    'Decline to state'
+    'Not Listed'
   ]
 
   # hideAlert tracks if the user has manually closed the alert "X"

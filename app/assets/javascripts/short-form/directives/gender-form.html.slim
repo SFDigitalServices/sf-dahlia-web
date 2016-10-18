@@ -1,8 +1,6 @@
 .form-group
   label.form-label.caps for="user_gender"
     | {{'LABEL.APPLICANT_GENDER' | translate}}
-  p.form-note.margin-bottom--half
-    | {{'T.OPTIONAL' | translate}}
 
   select#user_gender ng-model="user.gender" data-width="auto" name="gender" ng-change="resetGenderOther()"
     option disabled="" selected="" value=""
