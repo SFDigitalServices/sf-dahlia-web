@@ -1,8 +1,9 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Name}}
-
+      | {{'G1_CONFIRMATION.TITLE' | translate}}
+      br
+        | {{listing.Name}}
   figure.full-figure
     img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.Building_URL}}"
 
