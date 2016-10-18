@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808065918) do
+ActiveRecord::Schema.define(version: 20161010222323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "geocoding_logs", force: :cascade do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "listing_id"
+    t.jsonb    "member"
+    t.jsonb    "applicant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "uploaded_files", force: :cascade do |t|
     t.binary   "file"

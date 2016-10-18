@@ -10,7 +10,7 @@
       .radio-group.padding-top--half role="radiogroup" aria-label="{{'D6_PREFERENCES_VOUCHERS.TITLE' | translate}}"
         radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' ng-click="invalidateIncomeForm()"
+        radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' on-change="invalidateIncomeForm"
           | {{'T.NO' | translate}}
 
   short-form-save-and-submit

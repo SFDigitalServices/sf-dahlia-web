@@ -30,6 +30,11 @@ class Emailer < Devise::Mailer
 
   def confirmation_instructions(record, token, opts = {})
     load_salesforce_contact(record)
+    @utm_params = {
+      utm_source: 'validationemail',
+      utm_campaign: 'validationemail',
+      utm_medium: 'email',
+    }
     if record.pending_reconfirmation?
       action = :reconfirmation_instructions
     else
@@ -43,6 +48,22 @@ class Emailer < Devise::Mailer
   def reset_password_instructions(record, token, opts = {})
     load_salesforce_contact(record)
     super
+  end
+
+  def geocoding_log_notification(log)
+    @log = log
+    @applicant = Hashie::Mash.new(log.applicant)
+    @member = Hashie::Mash.new(log.member)
+    @name = 'DAHLIA Admins'
+    if Rails.env.production? and ENV['PRODUCTION']
+      email = 'dahlia-admins@exygy.com'
+    else
+      email = 'dahlia-test@exygy.com'
+    end
+    subject = '[SF-DAHLIA] Address not found in arcgis service'
+    mail(to: email, subject: subject) do |format|
+      format.html { render 'geocoding_log_notification' }
+    end
   end
 
   private

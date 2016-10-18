@@ -1,5 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe UploadedFile, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe UploadedFile, type: :model do
+  it 'should create a new instance of UploadedFile given valid attributes' do
+    # use Factory
+    create(:uploaded_file)
+  end
+
+  it 'should be able to generate a descriptive name for the file' do
+    # use Factory
+    attrs = {
+      name: 'foo.png',
+      preference: 'liveInSf',
+      document_type: 'gas bill',
+    }
+    file = create(:uploaded_file, attrs)
+    expect(file.descriptive_name).to eql('liveInSf - gas bill.png')
+  end
 end
