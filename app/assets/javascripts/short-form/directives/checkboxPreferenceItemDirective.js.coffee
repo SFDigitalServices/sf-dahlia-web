@@ -65,6 +65,15 @@ angular.module('dahlia.directives')
       # selecting a liveWork pref type is the equivalent to checking the checkbox = true
       scope.preferences[type] = true
 
+    scope.refresh_member_dropdown = ->
+      householdSize = scope.application.householdMembers.length + 1
+      oneEligibleWithHouseholdMembers = (scope.eligible_members().length == 1) && (householdSize > 1)
+      if oneEligibleWithHouseholdMembers
+        eligibleMember = scope.eligible_members()[0]
+        scope.application.preferences[scope.pref_type_household_member] = "#{eligibleMember.firstName} #{eligibleMember.lastName}"
+      else
+        scope.application.preferences[scope.pref_type_household_member] = null
+
     scope.set_pref_type = (type) ->
       # type may be undefined which will reset the liveWorkInSf dropdown to "Select One"
       scope.pref_type = type

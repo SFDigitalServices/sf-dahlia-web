@@ -1,6 +1,6 @@
 div
   p.checkbox-block
-    input id="preferences-{{checkbox_pref_type}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[checkbox_pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click='reset_preference_data(checkbox_pref_type)'
+    input id="preferences-{{checkbox_pref_type}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[checkbox_pref_type]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click="reset_preference_data(checkbox_pref_type);refresh_member_dropdown()"
     label.checkbox-block_label for="preferences-{{checkbox_pref_type}}"
       strong.form-label.caps
         | {{title}}
@@ -13,7 +13,7 @@ div
 
         label.form-label.caps for="liveWorkPrefOption"
           | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
-        select id="liveWorkPrefOption" ng-model="application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="application.preferences.liveWorkInSf" ng-change="select_liveWork_type(application.preferences.liveWorkInSf_preference)"
+        select id="liveWorkPrefOption" ng-model="application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="application.preferences.liveWorkInSf" ng-change="select_liveWork_type(application.preferences.liveWorkInSf_preference);refresh_member_dropdown()"
           option value="" translate="LABEL.SELECT_ONE"
           option value="liveInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
           option value="workInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
