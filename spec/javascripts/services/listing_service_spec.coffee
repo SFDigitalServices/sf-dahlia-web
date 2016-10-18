@@ -81,7 +81,7 @@ do ->
         return
       it 'assigns Service.listing with an individual listing', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
-        ListingService.getListing 0
+        ListingService.getListing 'abc123'
         httpBackend.flush()
         expect(ListingService.listing).toEqual fakeListing.listing
         return

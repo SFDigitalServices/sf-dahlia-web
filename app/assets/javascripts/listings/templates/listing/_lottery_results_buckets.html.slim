@@ -21,7 +21,7 @@
 
       lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.LIVE_WORK' | translate}}" abbr-pref-name="liveWorkPreference"
 
-    .modal-inner.bg-dust
+    .modal-inner.bg-dust ng-if="lotteryBuckets.generalLotteryAppTotal"
       .buckets-divider
 
     section.buckets
