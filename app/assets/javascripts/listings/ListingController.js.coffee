@@ -173,6 +173,12 @@ ListingController = (
   $scope.hasDraftApplication = ->
     $scope.application && $scope.application.status == 'Draft'
 
+  $scope.sortedOpenHouses = ->
+    ListingService.sortByDate($scope.listing.Open_Houses)
+
+  $scope.sortedInformationSessions = ->
+    ListingService.sortByDate($scope.listing.Information_Sessions)
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.showLotteryPreferences = ->
     $scope.listingIsAny([
