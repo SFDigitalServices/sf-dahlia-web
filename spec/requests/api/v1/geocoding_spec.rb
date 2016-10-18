@@ -4,32 +4,45 @@ require 'support/vcr_setup'
 require 'support/jasmine'
 
 describe 'Geocoding API' do
+  fake_params = {
+    address: {
+      address1: '4053 18th St.',
+      city: 'San Francisco',
+      zip: '94114',
+    },
+    member: {
+      firstName: 'Jane',
+      lastName: 'Doe',
+      dob: '1980-10-1',
+    },
+    applicant: {
+      firstName: 'Johnny',
+      lastName: 'Doe',
+      dob: '1980-10-2',
+    },
+    listing: {
+      Id: 'xyzyy123',
+      Name: '132 Main St.',
+    },
+  }
+  fake_invalid_params = fake_params.clone
+  fake_invalid_params[:address] = {
+    address1: '1299191 Blahblah st.',
+    city: 'San Francisco',
+    zip: '12345',
+  }
   ### generate Jasmine fixtures
   describe 'valid address' do
     save_fixture do
       VCR.use_cassette('geocoding/valid') do
-        params = {
-          address: {
-            address1: '4053 18th St.',
-            city: 'San Francisco',
-            zip: '94114',
-          },
-        }
-        post '/api/v1/addresses/geocode.json', params
+        post '/api/v1/addresses/geocode.json', fake_params
       end
     end
   end
   describe 'invalid address' do
     save_fixture do
       VCR.use_cassette('geocoding/invalid') do
-        params = {
-          address: {
-            address1: '1299191 Blahblah st.',
-            city: 'San Francisco',
-            zip: '12345',
-          },
-        }
-        post '/api/v1/addresses/geocode.json', params
+        post '/api/v1/addresses/geocode.json', fake_invalid_params
       end
     end
   end
@@ -37,14 +50,7 @@ describe 'Geocoding API' do
 
   it 'validates valid address with success == true' do
     VCR.use_cassette('geocoding/valid') do
-      params = {
-        address: {
-          address1: '4053 18th St.',
-          city: 'San Francisco',
-          zip: '94114',
-        },
-      }
-      post '/api/v1/addresses/geocode.json', params
+      post '/api/v1/addresses/geocode.json', fake_params
     end
 
     json = JSON.parse(response.body)
@@ -58,14 +64,7 @@ describe 'Geocoding API' do
 
   it 'validates invalid address with success == false' do
     VCR.use_cassette('geocoding/invalid') do
-      params = {
-        address: {
-          address1: '1299191 Blahblah st.',
-          city: 'San Francisco',
-          zip: '12345',
-        },
-      }
-      post '/api/v1/addresses/geocode.json', params
+      post '/api/v1/addresses/geocode.json', fake_invalid_params
     end
 
     json = JSON.parse(response.body)

@@ -148,6 +148,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
+    _id = Service.mapSlugToId(_id)
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
@@ -300,9 +301,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
+    # can also serve as slugToId map for applicable listings
     'a0WU000000DBJ9YMAX': '480 Potrero'
     'a0WU000000BdZWlMAN': 'Alchemy'
-    'a0W0P00000DYQpCUAX': 'Clarence'
+    'a0W0P00000DYQpCUAX': '21 Clarence'
     'a0W0P00000DYPP7UAP': '168 Hyde'
     'a0W0P00000DYN6BUAX': 'Olume'
     'a0WU000000BcwrAMAR': 'Rincon'
@@ -312,7 +314,15 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0WU000000DB97cMAD': '77 Bluxome'
     'a0W0P00000DYbAYUA1': '3445 Geary'
     'a0W0P00000DYgtDUAT': '125 Mason'
+    'a0W0P00000DYiwiUAD': 'Argenta 909'
   }
+
+  Service.mapSlugToId = (id) ->
+    # strip spaces and lowercase the listing names e.g. "Argenta 909" => "argenta909"
+    mapping = _.mapKeys _.invert(Service.LISTING_MAP), (v, k) -> k.toLowerCase().replace(/ /g, '')
+    slug = id.toLowerCase()
+    # by default will just return the id, unless it finds a matching slug
+    return if mapping[slug] then mapping[slug] else id
 
   Service.listingIs = (listing, name) ->
     Service.LISTING_MAP[listing.Id] == name
