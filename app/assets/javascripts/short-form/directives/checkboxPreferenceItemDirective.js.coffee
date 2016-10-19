@@ -55,6 +55,13 @@ angular.module('dahlia.directives')
       return false if scope.only_applicant_eligible()
       return true
 
+    scope.on_preference_change = (type) ->
+      if scope.liveWorkInSf && (type == 'liveInSf' || type == 'workInSf')
+        scope.select_liveWork_type(type)
+      else
+        scope.reset_preference_data(type)
+      scope.refresh_member_dropdown()
+
     scope.select_liveWork_type = (type) ->
       # on change, totally reset both live/work options
       scope.preferences.workInSf = null
@@ -65,6 +72,14 @@ angular.module('dahlia.directives')
       # selecting a liveWork pref type is the equivalent to checking the checkbox = true
       scope.preferences[type] = true
 
+    scope.refresh_member_dropdown = ->
+      oneEligibleWithHouseholdMembers = (scope.eligible_members().length == 1) && (scope._householdSize() > 1)
+      if oneEligibleWithHouseholdMembers
+        eligibleMember = scope.eligible_members()[0]
+        scope.application.preferences[scope.pref_type_household_member] = "#{eligibleMember.firstName} #{eligibleMember.lastName}"
+      else
+        scope.application.preferences[scope.pref_type_household_member] = null
+
     scope.set_pref_type = (type) ->
       # type may be undefined which will reset the liveWorkInSf dropdown to "Select One"
       scope.pref_type = type
@@ -74,11 +89,15 @@ angular.module('dahlia.directives')
       scope.pref_type_proof_file = "#{scope.pref_type}_proof_file"
 
     scope.only_applicant_eligible = () ->
-      applicant_only = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
-      if applicant_only
+      onlyApplicantIsEligible = (scope.eligible_members().length == 1) && (scope.eligible_members()[0] == scope.applicant)
+      eligibleAndOnlyApplicant = (scope._householdSize() == 1) && onlyApplicantIsEligible
+      if eligibleAndOnlyApplicant
         # even though the form input is hidden we automatically set the value to the applicant
         scope.preferences[scope.pref_type_household_member] = "#{scope.applicant.firstName} #{scope.applicant.lastName}"
-      applicant_only
+      eligibleAndOnlyApplicant
+
+    scope._householdSize = ->
+      scope.application.householdMembers.length + 1
 
     scope.reset_preference_data = (pref_type) ->
       if pref_type == 'liveWorkInSf'
