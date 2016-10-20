@@ -61,7 +61,9 @@ AccountController = (
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
-      $analytics.eventTrack('Submit Form', { category: 'accounts', action: 'create-account' })
+      $analytics.eventTrack('Form Message',
+        { category: 'Accounts', action: 'Form Success', label: 'create-account' }
+      )
       $scope.accountError.messages.user = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -84,7 +86,9 @@ AccountController = (
         $scope.submitDisabled = false
       )
     else
-      $analytics.eventTrack('Submit Form Error', { category: 'accounts', action: 'create-account' })
+      $analytics.eventTrack('Form Message',
+        { category: 'Accounts', action: 'Form Error', label: 'create-account' }
+      )
       $scope.handleErrorState()
 
   $scope.signIn = ->

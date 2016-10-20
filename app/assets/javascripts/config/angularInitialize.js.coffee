@@ -33,9 +33,11 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if (fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/))
+      if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
         # track if they are leaving create account to go somewhere else
-        $analytics.eventTrack('Abandon Form', { category: 'accounts', action: 'create-account' })
+        $analytics.eventTrack('Form Message',
+          { category: 'Accounts', action: 'Form Abandon', label: 'create-account' }
+        )
 
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
