@@ -145,6 +145,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     end = lotteryDate.clone().subtract(2, 'days')
     return now > begin && now < end
 
+  Service.sortByDate = (sessions) ->
+    # used for sorting Open_Houses and Information_Sessions
+    _.sortBy sessions, (session) ->
+      moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
