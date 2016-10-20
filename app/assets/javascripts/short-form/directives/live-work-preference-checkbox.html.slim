@@ -1,0 +1,79 @@
+div
+  p.checkbox-block
+    input id="preferences-liveWorkInSf" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences.liveWorkInSf" type="checkbox" aria-labelledby="{{labelledby}}" ng-click="on_preference_change('liveWorkInSf')"
+    label.checkbox-block_label for="preferences-liveWorkInSf"
+      strong.form-label.caps
+        | {{title}}
+      / ng-transclude tells it to yield the body of the directive
+      span.checkbox-block_note ng-transclude=""
+
+    / select for liveWorkInSf preference type
+    .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: inputInvalid('liveWorkInSf_preference') }" ng-if="application.preferences.liveWorkInSf"
+
+        label.form-label.caps for="liveWorkPrefOption"
+          | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
+        select id="liveWorkPrefOption" ng-model="application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="application.preferences.liveWorkInSf" ng-change="on_preference_change(application.preferences.liveWorkInSf_preference)"
+          option value="" translate="LABEL.SELECT_ONE"
+          option value="liveInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
+          option value="workInSf" translate="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
+
+
+    .form-group.input-inset ng-class="{ error: inputInvalid(preference_household_member) }" ng-if="application.preferences[preference]"
+
+      / select for household member that has the preference
+      / not shown if it is only the applicant eligible
+      div ng-hide="only_applicant_eligible()"
+        label.form-label.caps for="{{preference_household_member}}" ng-if="!show_preference_uploader()"
+          | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
+        label.form-label.caps for="{{preference_household_member}}" ng-if="show_preference_uploader()"
+          | {{'LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME' | translate}}
+        select id="{{preference_household_member}}" ng-model="application.preferences[preference_household_member]" data-width="auto" name="{{preference_household_member}}" ng-required="application.preferences[preference]"
+          option value=""
+            | {{'LABEL.SELECT_ONE' | translate}}
+          option ng-repeat="member in eligible_members() track by $index" value="{{ member.firstName }} {{ member.lastName }}"
+            | {{ member.firstName }} {{ member.lastName }}
+
+      / checkbox for proof options for this preference
+      .form-group ng-class="{ error: inputInvalid(preference_proof_option) }"
+        label.form-label.caps for="{{preference_proof_option}}"
+          | {{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}
+        select id="{{preference_proof_option}}" ng-model="application.preferences[preference_proof_option]" data-width="auto" name="{{preference_proof_option}}" ng-required="application.preferences[preference]"
+          option value=""
+            | {{'LABEL.SELECT_ONE' | translate}}
+          option ng-repeat="option in preferenceProofOptions(preference)" value="{{option[0]}}"
+            | {{ option[1] }}
+        p.form-note ng-if="application.preferences[preference_proof_option] == 'Letter from employer'"
+          | {{'D2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
+
+      .form-group.text-center ng-if="show_preference_uploader()"
+        div.button.ghost-white.expand ngf-select="uploadProof($file, preference, application.preferences[preference_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{preference_proof_file}}" ng-model="application.preferences[preference_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[preference]"
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
+        small.error ng-if="inputInvalid('file_'+preference_proof_file) && !preferenceFileError(preference_proof_file)"
+          | {{'ERROR.FILE_MISSING' | translate}}
+        small.error ng-if="preferenceFileError(preference_proof_file)"
+          | {{'ERROR.FILE_UPLOAD' | translate}}
+        p.form-note.input-inset
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
+        p.form-note.input-inset.margin-bottom
+          | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
+
+      article.attachment.is-loading.media ng-if="preferenceFileIsLoading(preference_proof_file)"
+        figure.attachment-img.media-img
+          div ng-include="'shared/templates/spinner.html'"
+        .media-body
+          strong
+            | {{'LABEL.PROOF_OF_ADDRESS' | translate}}
+          br
+          span
+            | {{'LABEL.UPLOADING' | translate}}...
+
+      article.attachment.media.margin-bottom ng-if="hasPreferenceFile(preference_proof_file)"
+        figure.media-img
+          img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
+        .media-body
+          strong
+            | {{application.preferences[preference_proof_file].name}}
+          br
+            ' {{'LABEL.UPLOADED' | translate}}:
+            | {{application.preferences[preference_proof_file].created_at | dateSuffix}}
+          button.button-link.attachment-action.a-alert-dark type="button" ng-click="deletePreferenceFile(preference)"  Delete
