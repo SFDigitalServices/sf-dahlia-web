@@ -12,6 +12,10 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json').listing
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
+    fakeAnalyticsService =
+      trackFormSuccess: jasmine.createSpy()
+      trackFormError: jasmine.createSpy()
+      trackFormAbandon: jasmine.createSpy()
     fakeShortFormApplicationService =
       form:
         applicationForm:
@@ -114,10 +118,10 @@ do ->
         Idle: fakeIdle
         Title: fakeTitle
         $translate: $translate
-        $analytics: $analytics
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
+        AnalyticsService: fakeAnalyticsService
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService

@@ -3,8 +3,8 @@ AccountController = (
   $state,
   $document,
   $translate,
-  $analytics,
   AccountService,
+  AnalyticsService,
   ShortFormApplicationService
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
@@ -61,9 +61,7 @@ AccountController = (
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
-      $analytics.eventTrack('Form Message',
-        { category: 'Accounts', action: 'Form Success', label: 'create-account' }
-      )
+      AnalyticsService.trackFormSuccess('Accounts')
       $scope.accountError.messages.user = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -86,15 +84,13 @@ AccountController = (
         $scope.submitDisabled = false
       )
     else
-      $analytics.eventTrack('Form Message',
-        { category: 'Accounts', action: 'Form Error', label: 'create-account' }
-      )
+      AnalyticsService.trackFormError('Accounts')
       $scope.handleErrorState()
 
   $scope.signIn = ->
     form = $scope.accountForm()
     if form.$valid
-      $analytics.eventTrack('Submit Form', { category: 'accounts', action: 'sign-in' })
+      AnalyticsService.trackFormSuccess('Accounts')
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then( (success) ->
@@ -111,7 +107,7 @@ AccountController = (
         $scope.submitDisabled = false
       )
     else
-      $analytics.eventTrack('Submit Form Error', { category: 'accounts', action: 'sign-in' })
+      AnalyticsService.trackFormError('Accounts')
       $scope.handleErrorState()
 
   $scope.requestPasswordReset = ->
@@ -246,10 +242,9 @@ AccountController = (
     year = $scope.userAuth.contact.dob_year
     AccountService.maxDOBDay(month, year)
 
-
 AccountController.$inject = [
-  '$scope', '$state', '$document', '$translate', '$analytics',
-  'AccountService', 'ShortFormApplicationService'
+  '$scope', '$state', '$document', '$translate',
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService'
 ]
 
 angular

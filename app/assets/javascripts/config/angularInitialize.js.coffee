@@ -1,9 +1,9 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', '$analytics',
+  '$rootScope', '$state', '$window', '$translate',
   'Idle', 'bsLoadingOverlayService',
-  'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, $analytics, Idle, bsLoadingOverlayService,
-  ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -33,12 +33,6 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
-        # track if they are leaving create account to go somewhere else
-        $analytics.eventTrack('Form Message',
-          { category: 'Accounts', action: 'Form Abandon', label: 'create-account' }
-        )
-
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
@@ -60,13 +54,16 @@
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
-          $analytics.eventTrack('Abandon Form', { category: 'application' })
+          AnalyticsService.trackFormAbandon('Application')
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
+      else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
+        # track if they are leaving create account to go somewhere else
+        AnalyticsService.trackFormAbandon('Accounts')
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay

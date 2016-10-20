@@ -8,12 +8,12 @@ ShortFormApplicationController = (
   $window,
   $document,
   $translate,
-  $analytics,
   Idle,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
   FileUploadService,
+  AnalyticsService,
   AddressValidationService,
   AccountService
 ) ->
@@ -100,16 +100,13 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     ShortFormNavigationService.isLoading(true)
     if form.$valid
-      $analytics.eventTrack('Form Message',
-        { category: 'Application', action: 'Form Success', label: ShortFormNavigationService._currentPage() }
-      )
+      AnalyticsService.trackFormSuccess('Application')
+
       # reset page form state (i.e. reset error messages)
       form.$setPristine()
       $scope.handleFormSuccess()
     else
-      $analytics.eventTrack('Form Message',
-        { category: 'Application', action: 'Form Error', label: ShortFormNavigationService._currentPage() }
-      )
+      AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
   $scope.handleFormSuccess = ->
@@ -510,9 +507,10 @@ ShortFormApplicationController = (
     ShortFormNavigationService.isLoading(false)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', '$analytics', 'Idle',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
+  'AnalyticsService',
   'AddressValidationService',
   'AccountService'
 ]

@@ -13,7 +13,7 @@
   'angular.filter',
   'angulartics',
   'angulartics.google.tagmanager',
-  # 'angulartics.debug', # <-- turn on to debug $analytics / GTM calls
+  'angulartics.debug', # <-- turn on to debug $analytics / GTM calls
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',
