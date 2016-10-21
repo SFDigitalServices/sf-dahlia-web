@@ -2,23 +2,35 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-AnalyticsService = ($state, $analytics) ->
+AnalyticsService = ($state) ->
   Service = {}
+  dataLayer = window.dataLayer || []
+  ga = window.ga || {}
 
-  Service.track = (event, properties) ->
+  Service.trackEvent = (event, properties) ->
     unless properties.label
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       properties.label = current_path
-    $analytics.eventTrack(event, properties)
+    # console.log('eventTrack', event, properties)
+    properties.event = event
+    dataLayer.push(properties)
+
+  Service.trackCurrentPage = ->
+    path = $state.href($state.current.name, $state.params)
+    ga("#{Service._namespace()}set", 'page', path)
+    ga("#{Service._namespace()}send", 'pageview')
 
   Service.trackFormSuccess = (category) ->
-    Service.track('Form Message', { category: category, action: 'Form Success' })
+    Service.trackEvent('Form Message', { category: category, action: 'Form Success' })
 
   Service.trackFormError = (category) ->
-    Service.track('Form Message', { category: category, action: 'Form Error' })
+    Service.trackEvent('Form Message', { category: category, action: 'Form Error' })
 
   Service.trackFormAbandon = (category) ->
-    Service.track('Form Message', { category: category, action: 'Form Abandon' })
+    Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
+
+  Service._namespace = ->
+    if window.GA_NAMESPACE then "#{window.GA_NAMESPACE}." else ''
 
   return Service
 
@@ -27,7 +39,7 @@ AnalyticsService = ($state, $analytics) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-AnalyticsService.$inject = ['$state', '$analytics']
+AnalyticsService.$inject = ['$state']
 
 angular
   .module('dahlia.services')

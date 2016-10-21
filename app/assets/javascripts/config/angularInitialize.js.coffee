@@ -69,6 +69,9 @@
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
 
+      # track routes as we navigate EXCEPT for initial page load which is already tracked
+      AnalyticsService.trackCurrentPage() unless fromState.name == ''
+
       #### Idle Trigger/Untrigger
       if ShortFormApplicationService.isShortFormPage($state.current) || AccountService.loggedIn()
         Idle.watch()

@@ -3,8 +3,6 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
-    $analytics =
-      eventTrack: ->
     fakeIdle = undefined
     fakeTitle = undefined
     eligibilityResponse = undefined

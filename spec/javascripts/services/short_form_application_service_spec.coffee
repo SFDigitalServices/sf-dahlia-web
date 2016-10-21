@@ -7,8 +7,6 @@ do ->
     fakeShortForm = getJSONFixture('short-form-example.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     $translate = {}
-    $analytics =
-      eventTrack: ->
     fakeUpload = {}
     fakeHouseholdMember = undefined
     fakeAddress =
@@ -37,7 +35,6 @@ do ->
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
-      $provide.value '$analytics', $analytics
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
