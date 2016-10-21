@@ -11,7 +11,6 @@ AnalyticsService = ($state) ->
     unless properties.label
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       properties.label = current_path
-    # console.log('eventTrack', event, properties)
     properties.event = event
     dataLayer.push(properties)
 
