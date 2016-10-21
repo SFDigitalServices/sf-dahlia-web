@@ -4,10 +4,9 @@
 
 AnalyticsService = ($state) ->
   Service = {}
-  dataLayer = window.dataLayer || []
-  ga = window.ga || {}
 
   Service.trackEvent = (event, properties) ->
+    dataLayer = window.dataLayer || []
     unless properties.label
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       properties.label = current_path
@@ -15,6 +14,7 @@ AnalyticsService = ($state) ->
     dataLayer.push(properties)
 
   Service.trackCurrentPage = ->
+    ga = window.ga || () ->
     path = $state.href($state.current.name, $state.params)
     ga("#{Service._namespace()}set", 'page', path)
     ga("#{Service._namespace()}send", 'pageview')
