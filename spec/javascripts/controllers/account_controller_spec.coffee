@@ -5,6 +5,10 @@ do ->
     state = {current: {name: undefined}}
     deferred = undefined
     $translate = {}
+    fakeAnalyticsService =
+      trackFormSuccess: jasmine.createSpy()
+      trackFormError: jasmine.createSpy()
+      trackFormAbandon: jasmine.createSpy()
     fakeAccountService =
       createAccount: -> null
       signIn: -> null
@@ -58,6 +62,7 @@ do ->
         $scope: scope
         $state: state
         AccountService: fakeAccountService
+        AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
