@@ -45,12 +45,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa","instance_url":"https://sfhousing--QA.cs16.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473263569631","signature":"qaER8PM5dIUOxNl0HrUj5+qBa2R6G2z28R7i7JW78gI="}'
+      string: '{"access_token":"00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473263569631","signature":"qaER8PM5dIUOxNl0HrUj5+qBa2R6G2z28R7i7JW78gI="}'
     http_version:
   recorded_at: Wed, 07 Sep 2016 15:52:49 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3?childrenUnder6=0&householdsize=2&incomelevel=40000
+    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3?childrenUnder6=0&householdsize=2&incomelevel=40000.0
     body:
       encoding: US-ASCII
       string: ''
