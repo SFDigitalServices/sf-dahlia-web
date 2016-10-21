@@ -57,9 +57,8 @@ module SalesforceService
 
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
-      cache_disabled = !ENV['CACHE_REQUESTS']
+      cache_disabled = ENV['CACHE_SALESFORCE_REQUESTS'] != 'true'
       Rails.cache.fetch(key, force: cache_disabled) do
-        puts "i'm in here!"
         api_call(:get, endpoint, params, parse_response)
       end
     end
