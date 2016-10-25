@@ -29,11 +29,11 @@ ShortFormApplicationService = (
       neighborhoodResidence: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     completedSections:
-      Intro: true
-      You: true
-      Household: true
-      Preferences: true
-      Income: true
+      Intro: false
+      You: false
+      Household: false
+      Preferences: false
+      Income: false
     # as you proceed through each page, validatedForms will store:
     #  [pagename]: T/F
     # to indicate if that form was left valid or invalid
@@ -290,7 +290,6 @@ ShortFormApplicationService = (
       Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
-    return true
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
     # they're "jumping ahead" if they're not coming from a short form page or create-account
