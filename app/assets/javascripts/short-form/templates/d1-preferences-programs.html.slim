@@ -10,10 +10,10 @@
     .form-group
       label.sr-only id="special_programs_label" translate="LABEL.SPECIAL_PROGRAMS"
       .checkbox-group role="group"
-        preference-checkbox title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" labelledby="special_programs_label" dataevent="gtm-preference-cop"
-          | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC' | translate}}
-        preference-checkbox title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp"
-          | {{'D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC' | translate}}
+
+        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" labelledby="special_programs_label" dataevent="gtm-preference-cop" description="D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC"
+
+        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp" description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC"
 
     .form-group
       p.form-note

@@ -1,8 +1,7 @@
 div
   p.checkbox-block
-    input id="preferences-{{preference}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[preference]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click="on_preference_change(preference)"
+    input id="preferences-{{preference}}" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences[preference]" type="checkbox" aria-labelledby="{{labelledby}}" ng-click="reset_preference_data(preference)"
     label.checkbox-block_label for="preferences-{{preference}}"
       strong.form-label.caps
         | {{title}}
-      / ng-transclude tells it to yield the body of the directive
-      span.checkbox-block_note ng-transclude=""
+      span.checkbox-block_note translate="{{description}}"

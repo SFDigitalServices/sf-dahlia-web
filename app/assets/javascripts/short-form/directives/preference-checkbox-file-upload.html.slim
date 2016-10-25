@@ -12,9 +12,9 @@ div
       / select for household member that has the preference
       / not shown if it is only the applicant eligible
       div ng-hide="only_applicant_eligible()"
-        label.form-label.caps for="{{preference_household_member}}" ng-if="!show_preference_uploader()"
+        label.form-label.caps for="{{preference_household_member}}"
           | {{'LABEL.APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER' | translate}}
-        label.form-label.caps for="{{preference_household_member}}" ng-if="show_preference_uploader()"
+        label.form-label.caps for="{{preference_household_member}}"
           | {{'LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME' | translate}}
         select id="{{preference_household_member}}" ng-model="application.preferences[preference_household_member]" data-width="auto" name="{{preference_household_member}}" ng-required="application.preferences[preference]"
           option value=""
