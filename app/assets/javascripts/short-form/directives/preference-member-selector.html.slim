@@ -1,4 +1,4 @@
-.form-group ng-class="{ error: inputInvalid(preference_household_member) }" ng-if="application.preferences[preference] && !only_applicant_eligible()"
+.form-group ng-class="{ error: inputInvalid(preference_household_member) }"
   / select for household member that has the preference
   / not shown if it is only the applicant eligible
   div
@@ -9,5 +9,3 @@
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="member in eligible_members() track by $index" value="{{ member.firstName }} {{ member.lastName }}"
         | {{ member.firstName }} {{ member.lastName }}
-
-

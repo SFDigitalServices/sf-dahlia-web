@@ -1,5 +1,5 @@
 / checkbox for proof options for this preference
-.form-group ng-class="{ error: inputInvalid(preference_proof_option) }" ng-if="application.preferences[preference] && !only_applicant_eligible()"
+.form-group ng-class="{ error: inputInvalid(preference_proof_option) }"
   label.form-label.caps for="{{preference_proof_option}}"
     | {{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}
   select id="{{preference_proof_option}}" ng-model="application.preferences[preference_proof_option]" data-width="auto" name="{{preference_proof_option}}" ng-required="application.preferences[preference]"
