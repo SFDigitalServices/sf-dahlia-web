@@ -14,7 +14,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
-  Service.lotteryPreferences = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -145,6 +144,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     end = lotteryDate.clone().subtract(2, 'days')
     return now > begin && now < end
 
+  Service.sortByDate = (sessions) ->
+    # used for sorting Open_Houses and Information_Sessions
+    _.sortBy sessions, (session) ->
+      moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
@@ -258,15 +262,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       if data && data.ami
         angular.copy(data.ami, Service.AMI)
         angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
-    ).error( (data, status, headers, config) ->
-      return
-    )
-
-  Service.getLotteryPreferences = ->
-    angular.copy([], Service.lotteryPreferences)
-    $http.get('/api/v1/listings/lottery-preferences.json').success((data, status, headers, config) ->
-      if data && data.lottery_preferences
-        angular.copy(data.lottery_preferences, Service.lotteryPreferences)
     ).error( (data, status, headers, config) ->
       return
     )

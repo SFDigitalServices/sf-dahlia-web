@@ -1,4 +1,12 @@
-AccountController = ($scope, $state, $document, $translate, AccountService, ShortFormApplicationService) ->
+AccountController = (
+  $scope,
+  $state,
+  $document,
+  $translate,
+  AccountService,
+  AnalyticsService,
+  ShortFormApplicationService
+) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
@@ -53,6 +61,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
   $scope.createAccount = ->
     form = $scope.accountForm()
     if form.$valid
+      AnalyticsService.trackFormSuccess('Accounts')
       $scope.accountError.messages.user = null
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
@@ -75,11 +84,13 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $scope.submitDisabled = false
       )
     else
+      AnalyticsService.trackFormError('Accounts')
       $scope.handleErrorState()
 
   $scope.signIn = ->
     form = $scope.accountForm()
     if form.$valid
+      AnalyticsService.trackFormSuccess('Accounts')
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
       AccountService.signIn().then( (success) ->
@@ -96,6 +107,7 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
         $scope.submitDisabled = false
       )
     else
+      AnalyticsService.trackFormError('Accounts')
       $scope.handleErrorState()
 
   $scope.requestPasswordReset = ->
@@ -230,8 +242,10 @@ AccountController = ($scope, $state, $document, $translate, AccountService, Shor
     year = $scope.userAuth.contact.dob_year
     AccountService.maxDOBDay(month, year)
 
-
-AccountController.$inject = ['$scope', '$state', '$document', '$translate', 'AccountService', 'ShortFormApplicationService']
+AccountController.$inject = [
+  '$scope', '$state', '$document', '$translate',
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService'
+]
 
 angular
   .module('dahlia.controllers')

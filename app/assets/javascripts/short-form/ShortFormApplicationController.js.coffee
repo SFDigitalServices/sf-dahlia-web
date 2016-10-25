@@ -13,6 +13,7 @@ ShortFormApplicationController = (
   ShortFormNavigationService,
   ShortFormHelperService,
   FileUploadService,
+  AnalyticsService,
   AddressValidationService,
   AccountService
 ) ->
@@ -39,7 +40,6 @@ ShortFormApplicationController = (
     'Female',
     'Trans Male',
     'Trans Female',
-    'Decline to State',
     'Not Listed'
   ]
   $scope.relationship_options = [
@@ -61,8 +61,7 @@ ShortFormApplicationController = (
   ]
   $scope.ethnicity_options = [
     'Hispanic/Latino',
-    'Not Hispanic/Latino',
-    'Decline to state'
+    'Not Hispanic/Latino'
   ]
   $scope.race_options = [
     'American Indian/Alaskan Native',
@@ -74,8 +73,7 @@ ShortFormApplicationController = (
     'American Indian/Alaskan Native and White',
     'Asian and White',
     'Black/African American and White',
-    'Other/Multiracial',
-    'Decline to state'
+    'Other/Multiracial'
   ]
   $scope.sexual_orientation_options = [
     'Straight/Heterosexual',
@@ -83,8 +81,7 @@ ShortFormApplicationController = (
     'Lesbian',
     'Bisexual',
     'Questioning/Unsure',
-    'Not Listed',
-    'Decline to state'
+    'Not Listed'
   ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
@@ -103,10 +100,13 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     ShortFormNavigationService.isLoading(true)
     if form.$valid
+      AnalyticsService.trackFormSuccess('Application')
+
       # reset page form state (i.e. reset error messages)
       form.$setPristine()
       $scope.handleFormSuccess()
     else
+      AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
   $scope.handleFormSuccess = ->
@@ -289,8 +289,8 @@ ShortFormApplicationController = (
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
-  $scope.showPreference = (type) ->
-    switch type
+  $scope.showPreference = (preference) ->
+    switch preference
       when 'liveWorkInSf'
         $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
       when 'liveInSf'
@@ -402,6 +402,11 @@ ShortFormApplicationController = (
     link = $state.href('dahlia.additional-resources')
     {visitResourcesLink: "<a href='#{link}'>#{linkText}</a>"}
 
+  $scope.listingLink = ->
+    linkText = $translate.instant('LABEL.ON_THE_LISTING')
+    link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
+    {listingLink: "<a href='#{link}'>#{linkText}</a>"}
+
   $scope.invalidateIncomeForm = ->
     ShortFormApplicationService.invalidateIncomeForm()
 
@@ -505,6 +510,7 @@ ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
+  'AnalyticsService',
   'AddressValidationService',
   'AccountService'
 ]

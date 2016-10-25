@@ -26,7 +26,6 @@ ListingController = (
   # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
-  $scope.activeOptionsClass = null
   $scope.maxIncomeLevels = ListingService.maxIncomeLevels
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
@@ -46,7 +45,6 @@ ListingController = (
 
   $scope.showApplicationOptions = false
   $scope.toggleApplicationOptions = () ->
-    $scope.activeOptionsClass = if $scope.activeOptionsClass == 'active' then '' else 'active'
     $scope.showApplicationOptions = !$scope.showApplicationOptions
 
   $scope.toggleTable = (table) ->
@@ -172,6 +170,12 @@ ListingController = (
 
   $scope.hasDraftApplication = ->
     $scope.application && $scope.application.status == 'Draft'
+
+  $scope.sortedOpenHouses = ->
+    ListingService.sortByDate($scope.listing.Open_Houses)
+
+  $scope.sortedInformationSessions = ->
+    ListingService.sortByDate($scope.listing.Information_Sessions)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.showLotteryPreferences = ->

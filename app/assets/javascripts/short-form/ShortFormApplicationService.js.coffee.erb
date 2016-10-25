@@ -263,6 +263,7 @@ ShortFormApplicationService = (
       Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
+    AnalyticsService.trackFormAbandon('Application')
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->

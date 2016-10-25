@@ -64,6 +64,12 @@
     },
     "HEAP_ANALYTICS_KEY":{
       "required":true
+    },
+    "GOOGLE_TAG_MANAGER_KEY":{
+      "required":true
+    },
+    "GOOGLE_ANALYTICS_NAMESPACE":{
+      "required":true
     }
   }
 }

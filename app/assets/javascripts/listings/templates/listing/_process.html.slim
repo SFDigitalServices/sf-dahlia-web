@@ -16,23 +16,25 @@ accordion-heading
       | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
   .content-group ng-if="listing.Information_Sessions"
-    h4.content-group_title Information Sessions
-    ul ng-repeat="session in listing.Information_Sessions" ng-if="listing.Information_Sessions"
-      li
-        p.content-group_date
+    h4.content-group_title
+      | Information Sessions
+    ul.content-list
+      li.margin-bottom ng-repeat="session in sortedInformationSessions()"
+        p.content-group_date.no-margin
           span.content-group_day
             | {{session.Date | dateSuffix}}
           span.content-group_time
             | {{session.Start_Time}}&mdash;{{session.End_Time}}
-        p.content-group_address.no-margin
+        p.content-group_address.c-steel.no-margin ng-if="session.Venue"
           | {{session.Venue}}
-        p.content-group_address.c-steel
+        p.content-group_address.c-steel ng-if="session.Street_Address"
           | {{session.Street_Address}}, {{session.City}}
 
   .content-group ng-if="listing.Open_Houses"
-    h4.content-group_title Open Houses
-    ul.content-list  ng-repeat="session in listing.Open_Houses" ng-if="listing.Open_Houses"
-      li
+    h4.content-group_title
+      | Open Houses
+    ul.content-list
+      li ng-repeat="session in sortedOpenHouses()"
         p.content-group_date
           span.content-group_day
             | {{session.Date | dateSuffix}}

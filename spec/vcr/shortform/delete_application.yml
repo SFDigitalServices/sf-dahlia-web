@@ -41,12 +41,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQFx_GSFApf1XEalHpx.lhkj_MGFxP4z6NoQux13Tuc5tsZmZ5eKLImrIqR4lCyqlZIx4CswOUvrDcnOswbQd4SVBmK9X","instance_url":"https://sfhousing--QA.cs16.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1474988922092","signature":"0W023h8QSQk/qT1iv1tYTBzyWjbaMQvfWwy/tQZBXA8="}'
+      string: '{"access_token":"00Df0000003aGup!AQ4AQFx_GSFApf1XEalHpx.lhkj_MGFxP4z6NoQux13Tuc5tsZmZ5eKLImrIqR4lCyqlZIx4CswOUvrDcnOswbQd4SVBmK9X","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1474988922092","signature":"0W023h8QSQk/qT1iv1tYTBzyWjbaMQvfWwy/tQZBXA8="}'
     http_version:
   recorded_at: Tue, 27 Sep 2016 15:08:42 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/shortForm/a0tf0000000xw9pAAA
+    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/shortForm/a0tf0000000xw9pAAA
     body:
       encoding: US-ASCII
       string: ''
@@ -88,7 +88,7 @@ http_interactions:
   recorded_at: Tue, 27 Sep 2016 15:08:43 GMT
 - request:
     method: delete
-    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/shortForm/delete/a0tf0000000xw9pAAA
+    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/shortForm/delete/a0tf0000000xw9pAAA
     body:
       encoding: US-ASCII
       string: ''

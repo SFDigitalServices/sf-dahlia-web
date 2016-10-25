@@ -4,8 +4,8 @@
       | {{'F2_REVIEW_TERMS.TITLE' | translate}}
 
   .app-inner
-    p
-      | {{'F2_REVIEW_TERMS.P1' | translate}}
+    p translate="F2_REVIEW_TERMS.P1" translate-value-date="{{listing.Application_Due_Date | date : 'MMM d, yyyy' }}"
+
     p
       | {{'F2_REVIEW_TERMS.P2' | translate}}
     p

@@ -11,8 +11,6 @@
   'templates',
   'mm.foundation',
   'angular.filter',
-  'angulartics',
-  'angulartics.google.analytics',
   'angular-carousel',
   'pascalprecht.translate',
   'ui.mask',

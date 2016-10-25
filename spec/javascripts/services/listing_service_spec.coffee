@@ -10,7 +10,6 @@ do ->
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
-    fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
     $state = undefined
     modalMock = undefined
@@ -262,20 +261,6 @@ do ->
         return
       return
 
-    describe 'Service.getLotteryPreferences', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-        return
-      it 'assigns Service.lotteryPreferences with the Lottery Preference data', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryPreferences
-        ListingService.getLotteryPreferences()
-        httpBackend.flush()
-        expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
-        return
-      return
-
-
     describe 'Service.getListingsByIds', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
@@ -339,6 +324,20 @@ do ->
         listing.Lottery_Date = moment().add(1, 'days').toString()
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
+        return
+      return
+
+    describe 'Service.sortByDate', ->
+      it 'returns sorted list of Open Houses', ->
+        listing = fakeListing.listing
+        fakeOpenHouses = [
+          {Date: '2016-10-15', Start_Time: '10:00 AM'}
+          {Date: '2016-10-13', Start_Time: '10:00 AM'} # <-- should be first
+          {Date: '2016-10-13', Start_Time: '1:00 PM'}
+          {Date: '2016-10-17', Start_Time: '1:00 PM'}
+        ]
+        sorted = ListingService.sortByDate(angular.copy(fakeOpenHouses))
+        expect(sorted[0]).toEqual fakeOpenHouses[1]
         return
       return
 

@@ -1,8 +1,9 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'Idle', 'bsLoadingOverlayService',
-  'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  '$rootScope', '$state', '$window', '$translate',
+  'Idle', 'bsLoadingOverlayService',
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
-  ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -53,16 +54,23 @@
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          AnalyticsService.trackFormAbandon('Application')
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
+      else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
+        # track if they are leaving create account to go somewhere else
+        AnalyticsService.trackFormAbandon('Accounts')
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
+
+      # track routes as we navigate EXCEPT for initial page load which is already tracked
+      AnalyticsService.trackCurrentPage() unless fromState.name == ''
 
       #### Idle Trigger/Untrigger
       if ShortFormApplicationService.isShortFormPage($state.current) || AccountService.loggedIn()
