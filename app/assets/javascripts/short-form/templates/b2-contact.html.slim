@@ -112,9 +112,9 @@
         | {{'B2_CONTACT.WORK_IN_SF_DESC' | translate}}
 
       .radio-group-inline.double role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
-        radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true'
+        radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true'
+        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error"
           | {{'T.NO' | translate}}
 
       small.highlight ng-if="applicant.workInSf == 'Yes'"
