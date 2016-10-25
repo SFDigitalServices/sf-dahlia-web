@@ -10,7 +10,6 @@ do ->
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
-    fakeLotteryPreferences = getJSONFixture('listings-api-lottery-preferences.json')
     $localStorage = undefined
     $state = undefined
     modalMock = undefined
@@ -261,20 +260,6 @@ do ->
         expect(ListingService.listing.Units).toEqual fakeUnits.units
         return
       return
-
-    describe 'Service.getLotteryPreferences', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-        return
-      it 'assigns Service.lotteryPreferences with the Lottery Preference data', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryPreferences
-        ListingService.getLotteryPreferences()
-        httpBackend.flush()
-        expect(ListingService.lotteryPreferences).toEqual fakeLotteryPreferences.lottery_preferences
-        return
-      return
-
 
     describe 'Service.getListingsByIds', ->
       afterEach ->

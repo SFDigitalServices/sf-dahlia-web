@@ -62,9 +62,7 @@
                 return $state.go('dahlia.welcome')
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
-              setTimeout(ListingService.getLotteryPreferences)
               setTimeout(ListingService.getListingUnits)
-              setTimeout(ListingService.getLotteryResults)
         ]
         application: [
           '$stateParams', 'ShortFormApplicationService',
