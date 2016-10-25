@@ -116,6 +116,7 @@
 			"household-overview": true
 		},
 		"Income": {
+			"income-vouchers": true,
 			"income": true
 		},
 		"Review": {
@@ -125,8 +126,7 @@
 		},
 		"Preferences": {
 			"live-work-preference": true,
-			"preferences-programs": true,
-			"preferences-vouchers": true
+			"preferences-programs": true
 		},
 		"You": {
 			"alternate-contact-name": true,
