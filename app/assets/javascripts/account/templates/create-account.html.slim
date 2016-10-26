@@ -61,8 +61,8 @@
                   | {{'LABEL.DOB_YEAR' | translate}}
                 input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" aria-describedby="date_of_birth_error"
 
-          small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
-            | {{'ERROR.DOB' | translate}}
+            small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+              | {{'ERROR.DOB' | translate}}
 
         .dash-card-inner.inset.border-bottom
           .form-group ng-class="{ error: inputInvalid('email') || inputInvalid('email_confirmation') }"
