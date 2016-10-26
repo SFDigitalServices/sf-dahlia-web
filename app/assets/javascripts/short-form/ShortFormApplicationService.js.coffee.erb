@@ -1,6 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, Upload, uuid,
-  ListingService, ShortFormDataService, AddressValidationService, GeocodingService
+  ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
+  AnalyticsService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -511,7 +512,8 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', 'Upload', 'uuid',
   'ListingService', 'ShortFormDataService',
-  'AddressValidationService', 'GeocodingService'
+  'AddressValidationService', 'GeocodingService',
+  'AnalyticsService'
 ]
 
 angular
