@@ -50,7 +50,9 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
     ).then( ((resp) ->
       Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = false
-      Service.preferences["#{fileType}"] = resp.data
+      Service.preferences["#{fileType}"] = {}
+      Service.preferences["#{fileType}"].name = resp.data.name
+      Service.preferences["#{fileType}"].created_at = resp.data.created_at
     ), ((resp) ->
       # error handler
       Service.preferences["#{fileType}_loading"] = false
