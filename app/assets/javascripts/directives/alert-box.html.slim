@@ -1,9 +1,11 @@
 div
-  .alert-box.alert alert="" close="close()" ng-show="showAlert()" ng-class="getStyles" role="alert"
+  .alert-box.alert ng-show="showAlert()" ng-class="getStyles()" role="alert"
     span.alert-icon ng-if="!primary"
       span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
         svg
           use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
+    button.button-link.close ng-click="close()" aria-label="Close Alert Box"
+      | &times;
     p.alert-body ng-bind-html="alertText()"
 
   .alert-notice.alert ng-if="missingRequiredContactInfo && showAlert()"
