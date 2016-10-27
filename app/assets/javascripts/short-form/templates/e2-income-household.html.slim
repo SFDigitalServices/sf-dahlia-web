@@ -20,8 +20,8 @@
         label.sr-only for="incomeTotal"
           | {{'LABEL.INCOME' | translate}}
         span.label-dollar $
-        input#incomeTotal.form-income_input ng-model="application.householdIncome.incomeTotal" name="incomeTotal" required="" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('incomeTotal') }" ng-change="invalidateIncomeForm()"
-        small.error ng-show="inputInvalid('incomeTotal')"
+        input#incomeTotal.form-income_input ng-model="application.householdIncome.incomeTotal" name="incomeTotal" required="" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('incomeTotal') }" ng-change="invalidateIncomeForm()" aria-describedby="incomeTotal_error"
+        small.error#incomeTotal_error ng-show="inputInvalid('incomeTotal')"
             | {{'ERROR.INCOME' | translate}}
 
       .radio-group ng-class="{ error: inputInvalid('incomeTimeframe') }" role="radiogroup" aria-label="{{'LABEL.INCOME' | translate}}"
@@ -30,10 +30,10 @@
           label.radio-block_label for="per_month"
             | {{'LABEL.PER_MONTH' | translate}}
         p.radio-block
-          input#per_year name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_year" required="" ng-click="invalidateIncomeForm()"
+          input#per_year name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_year" required="" ng-click="invalidateIncomeForm()" aria-describedby="per_year_error"
           label.radio-block_label for="per_year"
             | {{'LABEL.PER_YEAR' | translate}}
-        small.error ng-show="inputInvalid('incomeTimeframe')"
+        small.error#per_year_error ng-show="inputInvalid('incomeTimeframe')"
           | {{'ERROR.INCOME_TIMEFRAME' | translate}}
 
   short-form-save-and-submit

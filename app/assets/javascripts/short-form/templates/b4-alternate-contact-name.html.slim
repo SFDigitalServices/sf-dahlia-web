@@ -8,12 +8,12 @@
       h3.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT_NAME' | translate}}
       label.sr-only for="alternate_firstName" translate="LABEL.FIRST_NAME"
-      input#alternate_first_name ng-model="alternateContact.firstName" name="firstName" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('firstName') }"
-      small.error ng-show="inputInvalid('firstName')"
+      input#alternate_first_name ng-model="alternateContact.firstName" name="firstName" required="" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="alternate_first_name_error"
+      small.error#alternate_first_name_error ng-show="inputInvalid('firstName')"
         | {{'ERROR.FIRST_NAME' | translate}}
       label.sr-only for="alternate_lastName" translate="LABEL.LAST_NAME"
-      input#alternate_last_name ng-model="alternateContact.lastName" name="lastName" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }"
-      small.error ng-show="inputInvalid('lastName')"
+      input#alternate_last_name ng-model="alternateContact.lastName" name="lastName" required="" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="alternate_last_name_error"
+      small.error#alternate_last_name_error ng-show="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
     .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social Worker or Housing Counselor'"
       h3.form-label.caps

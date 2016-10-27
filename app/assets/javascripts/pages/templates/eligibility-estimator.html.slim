@@ -23,12 +23,12 @@ section.row.margin-bottom--2x
           .form-group ng-class="{ error: inputInvalid('household_size') }"
             label.form-label.t-caps.sr-only for="household_size" ng-class="{ error: inputInvalid('household_size') }"
               | Household Size
-            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }" ng-change="onChangeHouseholdSize()"
+            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }" ng-change="onChangeHouseholdSize()" aria-describedby="household_size_error"
               option disabled="" selected="" value="" Enter number of people
               option value="1" 1 person
               option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}"
                 | {{val}} people
-            small.error ng-show="inputInvalid('household_size')"
+            small.error#household_size_error ng-show="inputInvalid('household_size')"
               | Please enter a household size
 
           .form-group.padding-bottom--half
@@ -38,12 +38,12 @@ section.row.margin-bottom--2x
 
           .form-group.household-children ng-show="filters.include_children_under_6" ng-class="{ error: inputInvalid('children_under_6') }"
             label.sr-only for="children_under_6" How many children?
-            select#children_under_6 name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }"
+            select#children_under_6 name="children_under_6" ng-model="filters.children_under_6" ng-required='filters.include_children_under_6' ng-class="{ error: inputInvalid('children_under_6') }" aria-describedby="children_under_6_error"
               option disabled="" selected="" value="" How many children?
               option value="1" 1 child
               option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}" ng-show="val < filters.household_size"
                 | {{val}} children
-            small.error.no-margin ng-show="inputInvalid('children_under_6')"
+            small.error#children_under_6_error.no-margin ng-show="inputInvalid('children_under_6')"
               | Please enter number of children
 
         .medium-6.columns.padding-top.padding-bottom.padding-right--2x
@@ -56,19 +56,19 @@ section.row.margin-bottom--2x
             label.form-label.t-caps.sr-only for="income_total" Household Income
             .form-income
               span.label-dollar $
-              input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }"
+              input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }" aria-describedby="income_total_error"
               a.button.input-editor.tiny.secondary title="Edit" ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
                 | Edit
-          small.error ng-show="inputInvalid('income_total')"
+          small.error#income_total_error ng-show="inputInvalid('income_total')"
               | Please enter an income amount
           .radio-group-inline ng-class="{ error: inputInvalid('income_timeframe') }"
             p.radio-inline
               input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
               label for="per_month" per month
             p.radio-inline
-              input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required=""
+              input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required="" aria-describedby="income_timeframe_error"
               label for="per_year" per year
-            small.error ng-show="inputInvalid('income_timeframe')"
+            small.error#income_timeframe_error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe
 
     .row.margin-top--2x.show-for-medium-up
