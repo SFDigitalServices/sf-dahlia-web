@@ -81,13 +81,13 @@ review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to=
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
     | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
+/ Income
+review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
+
+.app-inner
   review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
     | {{applicationVouchersSubsidies()}}
 
-/ Income
-review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income"
-
-.app-inner
   .info-item.margin-bottom
     h4.info-item_name
       | {{ applicationIncomeAmount() }}
