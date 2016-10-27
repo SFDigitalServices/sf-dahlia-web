@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, Upload, uuid,
+  $translate, $http, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
   AnalyticsService
 ) ->
@@ -336,30 +336,6 @@ ShortFormApplicationService = (
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
-  Service.uploadProof = (file, prefType) ->
-    fileType = "#{prefType}_proof_file"
-    if (!file)
-      Service.preferences["#{fileType}_error"] = true
-      return
-    Service.preferences["#{fileType}_loading"] = true
-    Upload.upload(
-      url: '/api/v1/short-form/proof'
-      method: 'POST'
-      data:
-        uploaded_file:
-          file: file
-          session_uid: Service.session_uid
-          preference: prefType
-    ).then( ((resp) ->
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = false
-      Service.preferences["#{fileType}"] = resp.data
-    ), ((resp) ->
-      # error handler
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = true
-    ))
-
   Service.submitApplication = (options={}) ->
     if options.finish
       Service.application.status = 'submitted'
@@ -513,7 +489,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', 'Upload', 'uuid',
+  '$translate', '$http', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
   'AnalyticsService'
