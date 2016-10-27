@@ -30,6 +30,12 @@ module SalesforceService
       cached_api_get("/Listing/Units/#{listing_id}", nil, true)
     end
 
+    # get all preferences for a given listing
+    def self.preferences(listing_id)
+      # TODO: change to cached_api_get once this feature is no longer WIP
+      api_get("/Listing/Preferences/#{listing_id}", nil, true)
+    end
+
     # get AMI
     def self.ami(percent = 100)
       results = cached_api_get("/ami?percent=#{percent}", nil, true)
