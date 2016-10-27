@@ -29,10 +29,6 @@ html lang="en"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-    - if ENV['GOOGLE_ANALYTICS_NAMESPACE']
-      javascript:
-        window.GA_NAMESPACE = "#{ENV['GOOGLE_ANALYTICS_NAMESPACE']}";
-
   body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()"
 
     .site-container

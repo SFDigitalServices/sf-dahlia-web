@@ -16,8 +16,9 @@ AnalyticsService = ($state) ->
   Service.trackCurrentPage = ->
     ga = window.ga || () ->
     path = $state.href($state.current.name, $state.params)
-    ga("#{Service._namespace()}set", 'page', path)
-    ga("#{Service._namespace()}send", 'pageview')
+    path = '/' if path == ''
+    ga('set', 'page', path)
+    ga('send', 'pageview')
 
   Service.trackFormSuccess = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Success' })
@@ -27,9 +28,6 @@ AnalyticsService = ($state) ->
 
   Service.trackFormAbandon = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
-
-  Service._namespace = ->
-    if window.GA_NAMESPACE then "#{window.GA_NAMESPACE}." else ''
 
   return Service
 

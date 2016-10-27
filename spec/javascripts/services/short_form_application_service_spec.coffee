@@ -30,6 +30,10 @@ do ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
+    fakeAnalyticsService =
+      trackFormSuccess: jasmine.createSpy()
+      trackFormError: jasmine.createSpy()
+      trackFormAbandon: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
 
@@ -38,6 +42,7 @@ do ->
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
+      $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'Upload', fakeUpload
       return
     )
