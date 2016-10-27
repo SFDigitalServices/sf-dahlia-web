@@ -23,8 +23,8 @@
                 ' {{'LABEL.EMAIL_ADDRESS' | translate}}
               label.sr-only for="auth_email"
                 | {{'LABEL.EMAIL_ADDRESS' | translate}}
-              input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" autocomplete="off" ng-change="displayChangeNotice('emailChanged')"
-              small.error ng-if="inputInvalid('email')"
+              input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" autocomplete="off" ng-change="displayChangeNotice('emailChanged')" aria-describedby="auth_email_error"
+              small.error#auth_email_error ng-if="inputInvalid('email')"
                 | {{'ERROR.EMAIL' | translate}}
 
               p.text-center.padding-top
@@ -44,8 +44,8 @@
 
               label.sr-only for="auth_current_password"
                 | {{'LABEL.OLD_PASSWORD' | translate}}
-              input#auth_current_password ng-model="userAuth.user.current_password" name="current_password" placeholder="{{'LABEL.OLD_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('current_password'), 'margin-bottom': !inputInvalid('current_password') }" ng-pattern="passwordRegex"
-              small.error ng-if="inputInvalid('current_password')"
+              input#auth_current_password ng-model="userAuth.user.current_password" name="current_password" placeholder="{{'LABEL.OLD_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('current_password'), 'margin-bottom': !inputInvalid('current_password') }" ng-pattern="passwordRegex" aria-describedby="auth_current_password_error"
+              small.error#auth_current_password_error ng-if="inputInvalid('current_password')"
                 | {{'ERROR.PASSWORD' | translate}}
               small.form-note.shift-up
                 a ui-sref="dahlia.forgot-password"
@@ -53,15 +53,15 @@
 
               label.sr-only for="auth_password"
                 | {{'LABEL.NEW_PASSWORD' | translate}}
-              input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'LABEL.NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex"
-              small.error ng-if="inputInvalid('password')"
+              input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'LABEL.NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
+              small.error#auth_password_error ng-if="inputInvalid('password')"
                 | {{'ERROR.PASSWORD' | translate}}
 
               label.label-secondary for="auth_password_confirmation"
                 | {{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}
-              input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'"
+              input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'LABEL.CONFIRM_NEW_PASSWORD' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
 
-              small.error ng-if="inputInvalid('password_confirmation')"
+              small.error#auth_password_confirmation_error ng-if="inputInvalid('password_confirmation')"
                 | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}
 
               p.text-center.padding-top
@@ -81,8 +81,8 @@
 
               label.sr-only for="firstName"
                 | {{'LABEL.FIRST_NAME' | translate}}
-              input#firstName type="text" ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
-              small.error ng-if="inputInvalid('firstName')"
+              input#firstName type="text" ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="firstName_error"
+              small.error#firstName_error ng-if="inputInvalid('firstName')"
                 | {{'ERROR.FIRST_NAME' | translate}}
 
               label.sr-only for="middleName"
@@ -91,8 +91,8 @@
 
               label.sr-only for="lastName"
                 | {{'LABEL.LAST_NAME' | translate}}
-              input#lastName type="text" ng-model="userAuth.contact.lastName" required="" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
-              small.error ng-if="inputInvalid('lastName')"
+              input#lastName type="text" ng-model="userAuth.contact.lastName" required="" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="lastName_error"
+              small.error#lastName_error ng-if="inputInvalid('lastName')"
                 | {{'ERROR.LAST_NAME' | translate}}
 
           .dash-card-inner.inset
@@ -104,17 +104,19 @@
                 .form-group-month.large-2.columns
                   label.sr-only for="date_of_birth_month"
                     | {{'LABEL.DOB_MONTH' | translate}}
-                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
 
                 .form-group-day.large-2.columns
                   label.sr-only for="date_of_birth_day"
                     | {{'LABEL.DOB_DAY' | translate}}
-                  input ng-model="userAuth.contact.dob_day" required="" max="{{maxDOBDay()}}" min="1" name="date_of_birth_day" placeholder="DD" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_day" required="" max="{{maxDOBDay()}}" min="1" name="date_of_birth_day" placeholder="DD" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
 
                 .form-group-year.large-2.columns.end
                   label.sr-only for="date_of_birth_year"
                     | {{'LABEL.DOB_YEAR' | translate}}
-                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')"
+                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
+              small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+                | {{'ERROR.DOB' | translate}}
 
               p.text-center.padding-top
                 input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
