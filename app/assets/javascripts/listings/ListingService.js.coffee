@@ -14,7 +14,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
-  Service.lotteryPreferences = []
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -267,15 +266,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       return
     )
 
-  Service.getLotteryPreferences = ->
-    angular.copy([], Service.lotteryPreferences)
-    $http.get('/api/v1/listings/lottery-preferences.json').success((data, status, headers, config) ->
-      if data && data.lottery_preferences
-        angular.copy(data.lottery_preferences, Service.lotteryPreferences)
-    ).error( (data, status, headers, config) ->
-      return
-    )
-
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
@@ -320,6 +310,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYbAYUA1': '3445 Geary'
     'a0W0P00000DYgtDUAT': '125 Mason'
     'a0W0P00000DYiwiUAD': 'Argenta 909'
+    'a0W0P00000DYm1xUAD': 'Northpoint Vistas'
   }
 
   Service.mapSlugToId = (id) ->

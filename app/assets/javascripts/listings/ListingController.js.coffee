@@ -188,6 +188,7 @@ ListingController = (
       '3445 Geary'
       '125 Mason'
       'Argenta 909'
+      'Northpoint Vistas'
     ])
 
   $scope.showDownloadLotteryResultsButton = ->
@@ -262,6 +263,11 @@ ListingController = (
     $scope.listing.NRHPUnits = 0
 
   if ($scope.listingIs('Argenta 909'))
+    $scope.listing.COPUnits = 1
+    $scope.listing.DTHPUnits = 1
+    $scope.listing.NRHPUnits = 0
+
+  if ($scope.listingIs('Northpoint Vistas'))
     $scope.listing.COPUnits = 1
     $scope.listing.DTHPUnits = 1
     $scope.listing.NRHPUnits = 0
