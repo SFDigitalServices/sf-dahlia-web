@@ -7,7 +7,6 @@ do ->
     fakeShortForm = getJSONFixture('short-form-example.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     $translate = {}
-    fakeUpload = {}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -43,7 +42,6 @@ do ->
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
-      $provide.value 'Upload', fakeUpload
       return
     )
 
