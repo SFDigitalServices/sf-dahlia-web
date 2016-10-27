@@ -1,8 +1,8 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate',
+  '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
+  ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
@@ -93,6 +93,28 @@
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)
+
+    $rootScope.$on '$viewContentLoaded', ->
+      # Utility function to scroll to top of page when state changes
+      $document.scrollTop(0)
+      $timeout ->
+        # After elements are rendered, make sure to re-focus keyboard input
+        # on elements at the top of the page
+        topfocus = _.last $document[0].getElementsByClassName('topfocus')
+        focusContainer = _.last $document[0].getElementsByClassName('focus-container')
+        if focusContainer
+          el = focusContainer.querySelectorAll('input, a, button')[0]
+          i = 1
+          # skip over all ".close" buttons which are hidden within alert boxes
+          while el.className == 'close' && el
+            el = focusContainer.querySelectorAll('input, a, button')[i]
+            i++
+          # if we found an input within the .focus-container, put it into focus
+          el.focus() if el
+        else if topfocus
+          # focus + blur the topfocus element so that it doesn't have the focus outline
+          topfocus.focus()
+          topfocus.blur()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay
