@@ -1,9 +1,7 @@
 .app-card.form-card ng-init="checkPreferenceEligibility()"
   short-form-header
-    h2.app-card_question
-      | {{'D2_LIVE_WORK_PREFERENCE.TITLE' | translate}}
-    p.form-note.margin-bottom
-      | {{'T.OPTIONAL' | translate}}
+    h2.app-card_question translate="D2_LIVE_WORK_PREFERENCE.TITLE"
+    p.form-note.margin-bottom translate="T.OPTIONAL"
     p.form-note.margin-bottom translate="D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
 
   .app-inner
