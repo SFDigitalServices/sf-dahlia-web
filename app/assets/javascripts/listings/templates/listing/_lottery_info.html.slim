@@ -8,7 +8,7 @@ accordion-heading
       use xlink:href="#i-arrow-down"
 
 section.content-wrap
-  .content-group.no-padding
+  .content-group.no-padding.hide-for-small-down
     p.post-dealine_alert
       span.label.flag-label.alert-tint
         span.ui-icon.ui-static.ui-medium.i-color
@@ -43,4 +43,3 @@ section.content-wrap
 
   .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
-
