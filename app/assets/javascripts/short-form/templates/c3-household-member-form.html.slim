@@ -31,16 +31,16 @@
         .form-group-month.large-2.columns
           label.sr-only for="date_of_birth_month"
             | {{'LABEL.DOB_MONTH' | translate}}
-          input#date_of_birth_month.no-margin ng-model="householdMember.dob_month" max="12" min="1" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="number" aria-describedby="date_of_birth_error"
+          input#date_of_birth_month.no-margin(ng-model="householdMember.dob_month" maxlength="2" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'month\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
 
         .form-group-day.large-2.columns
           label.sr-only for="date_of_birth_day"
             | {{'LABEL.DOB_DAY' | translate}}
-          input#date_of_birth_day.no-margin ng-model="householdMember.dob_day" max="{{maxDOBDay('householdMember')}}" min="1" name="date_of_birth_day" required="" placeholder="DD" type="number"  ng-class="{ error: inputInvalid('date_of_birth_day') }" aria-describedby="date_of_birth_error"
+          input#date_of_birth_day.no-margin(ng-model="householdMember.dob_day" maxlength="2" name="date_of_birth_day" required="" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'day\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin ng-model="householdMember.dob_year" max="2016" min="1900" name="date_of_birth_year" required="" placeholder="YYYY" type="number" ng-class="{ error: inputInvalid('date_of_birth_year') }" aria-describedby="date_of_birth_error"
+          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" required="" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
       small.error#date_of_birth_error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
         | {{'ERROR.DOB' | translate}}
 

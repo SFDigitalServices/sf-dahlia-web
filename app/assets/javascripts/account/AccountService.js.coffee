@@ -258,7 +258,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
 
-  Service.maxDOBDay = ShortFormDataService.maxDOBDay
+  Service.DOBValid = ShortFormDataService.DOBValid
 
   # run on page load
   Service.unlockFields()

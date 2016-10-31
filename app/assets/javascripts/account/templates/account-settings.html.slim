@@ -104,17 +104,18 @@
                 .form-group-month.large-2.columns
                   label.sr-only for="date_of_birth_month"
                     | {{'LABEL.DOB_MONTH' | translate}}
-                  input ng-model="userAuth.contact.dob_month" required="" max="12" min="1" name="date_of_birth_month" placeholder="MM" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
+                  input(ng-model="userAuth.contact.dob_month" required="" maxlength="2" name="date_of_birth_month" placeholder="MM" type="text" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay('accountNameDOB'); displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error")
 
                 .form-group-day.large-2.columns
                   label.sr-only for="date_of_birth_day"
                     | {{'LABEL.DOB_DAY' | translate}}
-                  input ng-model="userAuth.contact.dob_day" required="" max="{{maxDOBDay()}}" min="1" name="date_of_birth_day" placeholder="DD" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
+                  input(ng-model="userAuth.contact.dob_day" required="" maxlength="2" name="date_of_birth_day" placeholder="DD" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error")
 
                 .form-group-year.large-2.columns.end
                   label.sr-only for="date_of_birth_year"
                     | {{'LABEL.DOB_YEAR' | translate}}
-                  input ng-model="userAuth.contact.dob_year" required="" max="2016" min="1900" name="date_of_birth_year" placeholder="YYYY" type="number" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error"
+                  input(ng-model="userAuth.contact.dob_year" required="" maxlength="4" name="date_of_birth_year" placeholder="YYYY" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'year\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay('accountNameDOB'); displayChangeNotice('nameOrDOBChanged')" aria-describedby="date_of_birth_error")
+
               small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
                 | {{'ERROR.DOB' | translate}}
 

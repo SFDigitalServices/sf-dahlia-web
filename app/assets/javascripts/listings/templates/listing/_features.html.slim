@@ -52,9 +52,7 @@ accordion-heading
           span
             | ,  {{unitAreaRange(unit_summary)}}
             span
-              |  square feet,
-          span
-            |  Accessible units
+              |  square feet
           span.ui-control.ui-icon.ui-small
             svg
               use xlink:href="#i-arrow-down"
@@ -96,7 +94,7 @@ accordion-heading
         .small-6.columns.padding-bottom
           span.t-small Deposit
           p.t-delta.no-margin.t-bold
-            | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max">&ndash;</span>{{ listing.Deposit_Max }}
+            | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max != listing.Deposit_Min">&ndash;{{ listing.Deposit_Max }}</span>
           span.content-label.t-small
             | or one month's rent
           span.t-tiny.d-block

@@ -349,7 +349,21 @@ ShortFormDataService = () ->
   # Helper functions
   #############################################
 
+  Service.DOBValid = (field = 'day', values) ->
+    month = values.month
+    day = values.day
+    year = values.year
+    switch field
+      when 'day'
+        day >= 1 && day <= Service.maxDOBDay(month, year)
+      when 'month'
+        month >= 1 && month <= 12
+      when 'year'
+        year >= 1900 && year <= 2016
+
   Service.maxDOBDay = (month, year) ->
+    month = parseInt(month)
+    year = parseInt(year)
     max = 31
     if month == 2
       max = if (year % 4 == 0) then 29 else 28
