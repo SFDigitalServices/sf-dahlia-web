@@ -11,11 +11,11 @@
     | {{'D2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
 
 .form-group.text-center ng-if="show_preference_uploader()"
-  div.button.ghost-white.expand ngf-select="uploadProof($file, preference, application.preferences[preference_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{preference_proof_file}}" ng-model="application.preferences[preference_proof_file]" ngf-max-size="2MB" ng-required="application.preferences[preference]"
+  button.button.ghost-white.expand ngf-select="uploadProof($file, preference, application.preferences[preference_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{preference_proof_file}}" ngf-max-size="2MB" ng-required="application.preferences[preference]" aria-describedby="{{preference_proof_file}}_error"
     | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
-  small.error ng-if="inputInvalid('file_'+preference_proof_file) && !preferenceFileError(preference_proof_file)"
+  small.error id="{{preference_proof_file}}_error" ng-if="inputInvalid('file_'+preference_proof_file) && !preferenceFileError(preference_proof_file)"
     | {{'ERROR.FILE_MISSING' | translate}}
-  small.error ng-if="preferenceFileError(preference_proof_file)"
+  small.error id="{{preference_proof_file}}_error" ng-if="preferenceFileError(preference_proof_file)"
     | {{'ERROR.FILE_UPLOAD' | translate}}
   p.form-note.input-inset
     | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
@@ -32,7 +32,7 @@ article.attachment.is-loading.media ng-if="preferenceFileIsLoading(preference_pr
     span
       | {{'LABEL.UPLOADING' | translate}}...
 
-article.attachment.media.margin-bottom ng-if="hasPreferenceFile(preference_proof_file)"
+article.attachment.media.margin-bottom ng-show="hasPreferenceFile(preference_proof_file)"
   figure.media-img
     img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
   .media-body

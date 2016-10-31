@@ -9,6 +9,6 @@
       | {{ orientation }}
 
   label.sr-only for="user_sexual_orientation_other" translate="LABEL.YOUR_SEXUAL_ORIENTATION"
-  input#user_sexual_orientation_other ng-model="user.sexualOrientationOther" name="sexualOrientationOther" placeholder="{{'LABEL.YOUR_SEXUAL_ORIENTATION' | translate}}" type="text" ng-class="{ error: inputInvalid('sexualOrientationOther') }" ng-if="user.sexualOrientation == 'Not Listed'"
-  small.error ng-if="inputInvalid('sexualOrientationOther')"
+  input#user_sexual_orientation_other ng-model="user.sexualOrientationOther" name="sexualOrientationOther" placeholder="{{'LABEL.YOUR_SEXUAL_ORIENTATION' | translate}}" type="text" ng-class="{ error: inputInvalid('sexualOrientationOther') }" ng-if="user.sexualOrientation == 'Not Listed'" aria-describedby="user_sexual_orientation_other_error"
+  small.error#user_sexual_orientation_other_error ng-if="inputInvalid('sexualOrientationOther')"
     | {{'ERROR.SEXUAL_ORIENTATION' | translate}}

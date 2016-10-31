@@ -77,10 +77,10 @@
     "Household": {},
     "Preferences": {
       "preferences-programs": true,
-      "live-work-preference": true,
-      "preferences-vouchers": true
+      "live-work-preference": true
     },
     "Income": {
+      "income-vouchers": true,
       "income": true
     },
     "Review": {

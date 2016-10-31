@@ -6,12 +6,12 @@
           slide ng-repeat="image in ::listingImages(listing) track by $index"
             img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{listing.Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{image}}")
         .carousel-arrow.carousel-arrow-left
-          button ng-click="Carousel.get('hero-carousel').previous()"
+          button ng-click="Carousel.get('hero-carousel').previous()" tabindex="-1"
             span.ui-icon.ui-static.ui-large.i-white
               svg
                 use xlink:href="#i-left"
         .carousel-arrow.carousel-arrow-right
-          button ng-click="Carousel.get('hero-carousel').next()"
+          button ng-click="Carousel.get('hero-carousel').next()" tabindex="-1"
             span.ui-icon.ui-static.ui-large.i-white
               svg
                 use xlink:href="#i-right"

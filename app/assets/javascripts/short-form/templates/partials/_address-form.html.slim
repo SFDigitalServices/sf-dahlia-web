@@ -3,8 +3,9 @@
     label.sr-only for="{{model}}_{{addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
       ng-change="addressChange(model)" name="{{addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }" ng-disabled="this[model].noAddress")
-    small.error ng-show="isRequired() && inputInvalid('address1', addressType)"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('address1', addressType) }" ng-disabled="this[model].noAddress"
+      aria-describedby="{{model}}_{{addressType}}_address1_error")
+    small.error id="{{model}}_{{addressType}}_address1_error" ng-show="isRequired() && inputInvalid('address1', addressType)"
       | {{'ERROR.ADDRESS' | translate}}
 
   .form-group-apt.large-12.column
@@ -15,14 +16,16 @@
     label for="{{model}}_{{addressType}}_city" translate="LABEL.CITY"
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="addressChange(model)" name="{{addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }" ng-disabled="this[model].noAddress")
-    small.error ng-show="isRequired() && inputInvalid('city', addressType)"
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('city', addressType) }" ng-disabled="this[model].noAddress"
+      aria-describedby="{{model}}_{{addressType}}_city_error")
+    small.error id="{{model}}_{{addressType}}_city_error" ng-show="isRequired() && inputInvalid('city', addressType)"
       | {{'ERROR.CITY' | translate}}
   .form-group-state.form-item.small-5.columns ng-class="{ error: isRequired() && inputInvalid('state', addressType) }"
     label for="{{model}}_{{addressType}}_state" State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
       ng-change="addressChange(model)" data-width="auto" name="{{addressType}}_state"
-      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('state', addressType) }" ng-disabled="this[model].noAddress")
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('state', addressType) }" ng-disabled="this[model].noAddress"
+      aria-describedby="{{model}}_{{addressType}}_state_error")
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option value="AL" Alabama
@@ -77,12 +80,14 @@
       option value="WI" Wisconsin
       option value="WY" Wyoming
 
-    small.error ng-show="isRequired() && inputInvalid('state', addressType)"
+    small.error id="{{model}}_{{addressType}}_state_error" ng-show="isRequired() && inputInvalid('state', addressType)"
       | {{'ERROR.STATE' | translate}}
   .form-group-zip.form-item.small-12.columns ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }"
     label for="{{model}}_{{addressType}}_zip"
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
-      ng-change="addressChange(model)" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }" ng-disabled="this[model].noAddress")
-    small.error ng-show="isRequired() && inputInvalid('zip', addressType)"
+      ng-change="addressChange(model)" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder
+      ng-required="isRequired()" ng-class="{ error: isRequired() && inputInvalid('zip', addressType) }" ng-disabled="this[model].noAddress"
+      aria-describedby="{{model}}_{{addressType}}_zip_error")
+    small.error id="{{model}}_{{addressType}}_zip_error" ng-show="isRequired() && inputInvalid('zip', addressType)"
       | {{'ERROR.ZIP' | translate}}

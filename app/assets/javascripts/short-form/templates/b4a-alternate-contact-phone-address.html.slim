@@ -9,8 +9,8 @@
       .form-tel
         label.caps for="alternate_phone"
           | {{'LABEL.CONTACT_PHONE_NUMBER' | translate}}
-        input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" ui-mask-placeholder)
-      small.error ng-show="inputInvalid('phone')"
+        input#alternate_phone(ng-model="alternateContact.phone" name="phone" type="tel" ng-class="{ error: inputInvalid('phone') }"  ui-mask="(999) 999-9999" placeholder="(555) 555-5555" aria-describedby="alternate_phone_error" ui-mask-placeholder)
+      small.error#alternate_phone_error ng-show="inputInvalid('phone')"
         | {{'ERROR.PHONE_NUMBER' | translate}}
 
   .app-inner.inset.border-bottom
@@ -20,8 +20,8 @@
       .form-email
         label.sr-only for="alternate_email"
           | {{'LABEL.EMAIL_ADDRESS' | translate}}
-        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-class="{ error: inputInvalid('email') }"
-      small.error ng-show="inputInvalid('email')"
+        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-class="{ error: inputInvalid('email') }" aria-describedby="alternate_email_error"
+      small.error#alternate_email_error ng-show="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
 
   .app-inner.inset
