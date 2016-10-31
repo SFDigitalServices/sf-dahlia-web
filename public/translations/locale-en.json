@@ -109,7 +109,7 @@
         "TITLE": "Please check all lottery preferences that apply to you."
     },
     "D2_LIVE_WORK_PREFERENCE": {
-        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
+        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must live in San Francisco.",
@@ -157,6 +157,7 @@
         "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "CURRENT_PASSWORD_INVALID": "Invalid current password. Please try again.",
         "DOB": "Please enter a valid Date of Birth",
+        "DOB_PRIMARY_APPLICANT_AGE": "The primary applicant must be 18 years of age or older.",
         "EMAIL": "Please enter an email address",
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",

@@ -1,9 +1,7 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'D1_PREFERENCES_PROGRAMS.TITLE' | translate}}
-    p.form-note.margin-bottom
-      | {{'T.OPTIONAL' | translate}}
+    h2.app-card_question translate="D1_PREFERENCES_PROGRAMS.TITLE"
+    p.form-note.margin-bottom translate="T.OPTIONAL"
     p.form-note.margin-bottom translate="D1_PREFERENCES_PROGRAMS.INSTRUCTIONS"
 
   .app-inner
@@ -13,7 +11,7 @@
 
         preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" labelledby="special_programs_label" dataevent="gtm-preference-cop" description="D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC"
 
-        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp" description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC"
+        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp" description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" ng-if="!listingIs('280 Brighton')""
 
     .form-group
       p.form-note
