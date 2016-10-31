@@ -12,3 +12,4 @@ angular.module('dahlia.directives')
     scope.value = attrs.value
     scope.ngRequired = attrs.ngRequired
     scope.onChange = if attrs.onChange then scope[attrs.onChange] else () -> null
+    scope.ariaDescribedby = attrs.ariaDescribedby

@@ -30,26 +30,25 @@ header.lead-header ng-if="hasEligibilityFilters()"
               svg
                 use xlink:href="#i-arrow-down"
 
-          a.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="clearEligibilityFilters()"
+          button.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="clearEligibilityFilters()"
             | Clear
             span.ui-icon.ui-static.ui-small.i-color
               svg
                 use xlink:href="#i-close"
 
 / Notification: No listings with Open Applications
-section.row ng-if="!openListings.length"
-  .large-12.columns
-    .block.bg-mist.margin-top--2x.text-center
-      figure.block-icon
-        img src="/images/icon-home.png"
-      p.t-delta.t-serif.c-oil.no-margin
-        | No listings currently have open applications.
+section.results-section ng-if="!openListings.length"
+  .row
+    .large-12.columns
+      .short-block.bg-dust
+        h2.t-delta.t-serif.c-oil.no-margin
+          | No listings currently have open applications.
 
 / Listings:
 /   * Open (doesn't have a header)
 /   * Before Eligibility filter
-.results-section ng-if="!hasEligibilityFilters()"
-  .row ng-if="openListings.length"
+.results-section ng-if="!hasEligibilityFilters() && openListings.length"
+  .row
     .large-12.columns
       ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in openListings"
 

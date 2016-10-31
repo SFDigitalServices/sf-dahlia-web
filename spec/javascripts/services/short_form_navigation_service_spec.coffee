@@ -37,7 +37,7 @@ do ->
         ]
       },
       { name: 'Income', pages: [
-          'preferences-vouchers'
+          'income-vouchers'
           'income'
         ]
       },

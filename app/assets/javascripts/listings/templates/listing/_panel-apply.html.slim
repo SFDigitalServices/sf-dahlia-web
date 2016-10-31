@@ -29,7 +29,7 @@
     p.content-group_address.no-margin
       | {{listing.Application_Organization}}
     p.content-group_address
-      | {{ listing.Application_Street_Address }},
+      | {{ listing.Application_Street_Address }}
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
     a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
@@ -44,5 +44,21 @@
         | or
 
   .content-group
-    a.button.primary.small.expand.no-margin target="_blank" data-event="gtm-download-application" title="Download Application" ng-href="http://www.sfmohcd.org/index.aspx?page=133"
+    button.button.has-icon.has-icon--right.primary.small.expand.no-margin data-event="gtm-download-application" title="Download Application" ng-click="toggleApplicationOptions()"
       | Download Application
+      span.ui-icon.ui-small
+        svg
+          use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
+    .text-center.margin-top.t-small ng-show="showApplicationOptions"
+      p
+        a target="_blank" title="Download English Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/Universal%20Rent%20ShortForm%20PaperApp%20v7%20-%20English.pdf"
+          | English
+      p
+        a target="_blank" title="Download Spanish Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/ES_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
+          | Español
+      p.t-ch
+        a target="_blank" title="Download Traditional Chinese Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/TC_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
+          | 中国
+      p
+        a target="_blank" title="Download Tagalog Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/TG_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
+          | Filipino

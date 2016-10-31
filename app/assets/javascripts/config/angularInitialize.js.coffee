@@ -1,8 +1,9 @@
 @dahlia.run [
-  '$rootScope', '$state', '$window', '$translate', 'Idle', 'bsLoadingOverlayService',
-  'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  ($rootScope, $state, $window, $translate, Idle, bsLoadingOverlayService,
-  ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
+  'Idle', 'bsLoadingOverlayService',
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -53,16 +54,23 @@
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          AnalyticsService.trackFormAbandon('Application')
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
+      else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
+        # track if they are leaving create account to go somewhere else
+        AnalyticsService.trackFormAbandon('Accounts')
 
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
+
+      # track routes as we navigate EXCEPT for initial page load which is already tracked
+      AnalyticsService.trackCurrentPage() unless fromState.name == ''
 
       #### Idle Trigger/Untrigger
       if ShortFormApplicationService.isShortFormPage($state.current) || AccountService.loggedIn()
@@ -85,6 +93,28 @@
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)
+
+    $rootScope.$on '$viewContentLoaded', ->
+      # Utility function to scroll to top of page when state changes
+      $document.scrollTop(0)
+      $timeout ->
+        # After elements are rendered, make sure to re-focus keyboard input
+        # on elements at the top of the page
+        topfocus = _.last $document[0].getElementsByClassName('topfocus')
+        focusContainer = _.last $document[0].getElementsByClassName('focus-container')
+        if focusContainer
+          el = focusContainer.querySelectorAll('input, a, button')[0]
+          i = 1
+          # skip over all ".close" buttons which are hidden within alert boxes
+          while el.className == 'close' && el
+            el = focusContainer.querySelectorAll('input, a, button')[i]
+            i++
+          # if we found an input within the .focus-container, put it into focus
+          el.focus() if el
+        else if topfocus
+          # focus + blur the topfocus element so that it doesn't have the focus outline
+          topfocus.focus()
+          topfocus.blur()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay

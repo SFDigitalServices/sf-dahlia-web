@@ -109,7 +109,7 @@
         "TITLE": "Please check all lottery preferences that apply to you."
     },
     "D2_LIVE_WORK_PREFERENCE": {
-        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
+        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must live in San Francisco.",
@@ -157,6 +157,7 @@
         "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "CURRENT_PASSWORD_INVALID": "Invalid current password. Please try again.",
         "DOB": "Please enter a valid Date of Birth",
+        "DOB_PRIMARY_APPLICANT_AGE": "The primary applicant must be 18 years of age or older.",
         "EMAIL": "Please enter an email address",
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
@@ -196,7 +197,7 @@
         "TITLE": "Take a moment to review your information before submitting your application."
     },
     "F2_REVIEW_TERMS": {
-        "P1": "This application must be submitted by the listing due date. ",
+        "P1": "This application must be submitted by {{date}}.",
         "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled",
         "P3": "All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.",
         "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.  For more information, please contact the developer or leasing agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing; all applicants will be screened as outlined in the property's Resident Selection Criteria.",
@@ -215,10 +216,10 @@
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
-        "NEXT_STEPS_BODY2": "Housing lottery results will be posted on the listing. Please refer to the listing for the lottery results date. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.<br><br>Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.",
+        "NEXT_STEPS_BODY2": "Housing lottery results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.<br><br>Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
-        "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you.",
+        "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",
         "TITLE": "Thanks. We have received your application for",
         "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
@@ -291,6 +292,7 @@
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
         "OLD_PASSWORD": "Old Password",
+        "ON_THE_LISTING": "on the listing",
         "ORIGINAL_APPLICATION": "Original Application",
         "OTHER": "Other",
         "OTHER_PEOPLE": "Other people will live with me",

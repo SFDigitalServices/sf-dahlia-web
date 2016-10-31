@@ -45,12 +45,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQCDuSz.r2x.o6vn7z6LN5sr.b8kEzYCR7e8Nd__SHkTG3EiMAmtCFJW3_S0n7DKFOeECBJU6HDMsKOYkye6yEBPg9gsV","instance_url":"https://sfhousing--QA.cs16.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1470509997297","signature":"G4kXQOHB1vLVBP2M8m3XquSrSfIpcvood1iEyLXIKhM="}'
+      string: '{"access_token":"00Df0000003aGup!AQ4AQCDuSz.r2x.o6vn7z6LN5sr.b8kEzYCR7e8Nd__SHkTG3EiMAmtCFJW3_S0n7DKFOeECBJU6HDMsKOYkye6yEBPg9gsV","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1470509997297","signature":"G4kXQOHB1vLVBP2M8m3XquSrSfIpcvood1iEyLXIKhM="}'
     http_version:
   recorded_at: Sat, 06 Aug 2016 18:59:57 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs16.my.salesforce.com/services/apexrest/Listing/LotteryResult/Bucket/a0WU000000BmpBdMAJ
+    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/LotteryResult/Bucket/a0WU000000BmpBdMAJ
     body:
       encoding: US-ASCII
       string: ''

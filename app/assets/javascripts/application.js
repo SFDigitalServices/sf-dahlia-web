@@ -23,8 +23,6 @@
 //= require angular-filter
 //= require angular-translate
 //= require angular-translate-loader-static-files
-//= require angulartics
-//= require angulartics-google-analytics
 //= require lifely-angular-carousel
 //= require angular-ui-mask
 //= require hammerjs

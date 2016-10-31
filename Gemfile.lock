@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/Exygy/street-address.git
+  revision: b505ad8c9710cab53ca97c6267ed8971e61b025f
+  specs:
+    StreetAddress (2.0.0)
+
+GIT
   remote: git://github.com/pivotal/jasmine-gem.git
   revision: 93e2d514371af4213b4420ba71c69852f6931191
   specs:
@@ -11,7 +17,6 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    StreetAddress (1.0.6)
     actionmailer (4.2.7.1)
       actionpack (= 4.2.7.1)
       actionview (= 4.2.7.1)
@@ -332,7 +337,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  StreetAddress
+  StreetAddress!
   actionmailer-text
   active_model-errors_details
   angular-rails-templates
