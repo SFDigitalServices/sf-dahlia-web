@@ -61,7 +61,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     angular.copy(Service.eligibility_filter_defaults, Service.eligibility_filters)
 
   Service.hasEligibilityFilters = ->
-    !! (Service.eligibility_filters.income_total &&
+    hasIncome = Service.eligibility_filters.income_total >= 0 ? true : false
+    !! (hasIncome &&
         Service.eligibility_filters.income_timeframe &&
         Service.eligibility_filters.household_size)
 

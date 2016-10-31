@@ -237,10 +237,23 @@ AccountController = (
   $scope.dahliaContactEmail = ->
     { email: '<a href="mailto:dahliahousingportal@sfgov.org">dahliahousingportal@sfgov.org</a>' }
 
-  $scope.maxDOBDay = ->
-    month = $scope.userAuth.contact.dob_month
-    year = $scope.userAuth.contact.dob_year
-    AccountService.maxDOBDay(month, year)
+  $scope.DOBValid = (field, value) ->
+    values =
+      month: parseInt($scope.userAuth.contact.dob_month)
+      day: parseInt($scope.userAuth.contact.dob_day)
+      year: parseInt($scope.userAuth.contact.dob_year)
+    values[field] = parseInt(value)
+    ShortFormApplicationService.DOBValid(field, values)
+
+  $scope.recheckDOBDay = (formName = '') ->
+    if formName
+      form = $scope.form[formName]
+    else
+      form = $scope.accountForm()
+    day = form['date_of_birth_day']
+    # have to "reset" the dob_day form input by setting it to its current value
+    # which will auto-trigger its ui-validation
+    day.$setViewValue(day.$viewValue + ' ')
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
