@@ -16,7 +16,9 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
 
   $scope.submitForm = () ->
     if ($scope.eligibilityForm.$valid)
-      # submit
+      if !$scope.filters.income_total
+        $scope.filters.income_timeframe = 'per_year'
+        $scope.filters.income_total = 0
       ListingService.setEligibilityFilters($scope.filters)
       $state.go('dahlia.listings')
     else
