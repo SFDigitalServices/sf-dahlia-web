@@ -268,8 +268,8 @@ ListingController = (
     $scope.listing.NRHPUnits = 0
 
   if ($scope.listingIs('Northpoint Vistas'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 1
+    $scope.listing.COPUnits = 2
+    $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 0
   # ------------------------------
 
