@@ -201,6 +201,7 @@ ListingController = (
       '529 Stevenson'
       '888 Paris'
       '168 Hyde'
+      '125 Mason'
     ])
 
   $scope.listingIs = (name) ->
@@ -269,8 +270,8 @@ ListingController = (
     $scope.listing.NRHPUnits = 0
 
   if ($scope.listingIs('Northpoint Vistas'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 1
+    $scope.listing.COPUnits = 2
+    $scope.listing.DTHPUnits = 2
     $scope.listing.NRHPUnits = 0
 
   if ($scope.listingIs('280 Brighton'))
