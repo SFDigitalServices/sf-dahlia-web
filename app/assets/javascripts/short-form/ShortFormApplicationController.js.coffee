@@ -534,6 +534,10 @@ ShortFormApplicationController = (
     $scope.addressError = false
     ShortFormNavigationService.isLoading(false)
 
+  # TODO: -- REMOVE HARDCODED FEATURES --
+  $scope.listingIs = (name) ->
+    ShortFormApplicationService.listingIs($scope.listing, name)
+
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
