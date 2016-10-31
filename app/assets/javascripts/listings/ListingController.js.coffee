@@ -188,7 +188,7 @@ ListingController = (
       '3445 Geary'
       '125 Mason'
       'Argenta 909'
-      'Northpoint Vistas',
+      'Northpoint Vistas'
       '280 Brighton'
     ])
 

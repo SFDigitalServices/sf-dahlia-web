@@ -506,7 +506,7 @@ ShortFormApplicationController = (
     $scope.addressError = false
     ShortFormNavigationService.isLoading(false)
 
-  ### HOT FIX ###
+  # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
     ShortFormApplicationService.listingIs($scope.listing, name)
 
