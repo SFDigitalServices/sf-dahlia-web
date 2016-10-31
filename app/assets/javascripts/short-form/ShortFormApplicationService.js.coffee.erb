@@ -501,6 +501,10 @@ ShortFormApplicationService = (
 
   Service.maxDOBDay = ShortFormDataService.maxDOBDay
 
+  # TODO: -- REMOVE HARDCODED FEATURES --
+  Service.listingIs = (listing, name) ->
+    ListingService.listingIs(listing, name)
+
   return Service
 
 ############################################################################################
