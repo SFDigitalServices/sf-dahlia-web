@@ -63,10 +63,10 @@ section.row.margin-bottom--2x
               | Please enter an income amount
           .radio-group-inline ng-class="{ error: inputInvalid('income_timeframe') }"
             p.radio-inline
-              input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" required=""
+              input#per_month name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_month" ng-required="!!filters.income_total"
               label for="per_month" per month
             p.radio-inline
-              input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" required="" aria-describedby="income_timeframe_error"
+              input#per_year name="income_timeframe" ng-model="filters.income_timeframe" type="radio" value="per_year" aria-describedby="income_timeframe_error" ng-required="!!filters.income_total"
               label for="per_year" per year
             small.error#income_timeframe_error ng-show="inputInvalid('income_timeframe')"
               | Please enter an income timeframe

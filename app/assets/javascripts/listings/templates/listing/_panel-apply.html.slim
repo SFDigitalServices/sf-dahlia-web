@@ -29,7 +29,7 @@
     p.content-group_address.no-margin
       | {{listing.Application_Organization}}
     p.content-group_address
-      | {{ listing.Application_Street_Address }},
+      | {{ listing.Application_Street_Address }}
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
     a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
