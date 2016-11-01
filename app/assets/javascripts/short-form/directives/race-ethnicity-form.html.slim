@@ -1,8 +1,6 @@
 .form-group
   label.form-label.caps for="user_ethnicity"
     | {{'LABEL.APPLICANT_ETHNICITY' | translate}}
-  p.form-note.margin-bottom--half
-    | {{'T.OPTIONAL' | translate}}
 
   select#user_ethnicity ng-model="user.ethnicity" data-width="auto" name="ethnicity"
     option disabled="" selected="" value=""
@@ -12,7 +10,6 @@
 
   label.form-label.caps for="user_race"
     | {{'LABEL.APPLICANT_RACE' | translate}}
-  p.form-note.margin-bottom--half Optional
   select#user_race ng-model="user.race" data-width="auto" name="race"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}

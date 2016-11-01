@@ -7,7 +7,6 @@ do ->
     fakeShortForm = getJSONFixture('short-form-example.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     $translate = {}
-    fakeUpload = {}
     fakeHouseholdMember = undefined
     fakeAddress =
       address1: '123 Main St.'
@@ -30,6 +29,10 @@ do ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
+    fakeAnalyticsService =
+      trackFormSuccess: jasmine.createSpy()
+      trackFormError: jasmine.createSpy()
+      trackFormAbandon: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
 
@@ -38,7 +41,7 @@ do ->
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
-      $provide.value 'Upload', fakeUpload
+      $provide.value 'AnalyticsService', fakeAnalyticsService
       return
     )
 

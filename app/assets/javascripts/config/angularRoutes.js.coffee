@@ -62,9 +62,7 @@
                 return $state.go('dahlia.welcome')
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
-              setTimeout(ListingService.getLotteryPreferences)
               setTimeout(ListingService.getListingUnits)
-              setTimeout(ListingService.getLotteryResults)
         ]
         application: [
           '$stateParams', 'ShortFormApplicationService',
@@ -559,8 +557,8 @@
           ShortFormApplicationService.completeSection('Household')
         ]
     })
-    .state('dahlia.short-form-application.preferences-vouchers', {
-      url: '/preferences-vouchers'
+    .state('dahlia.short-form-application.income-vouchers', {
+      url: '/income-vouchers'
       views:
         'container':
           templateUrl: 'short-form/templates/e1-income-vouchers.html'

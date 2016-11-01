@@ -1,8 +1,9 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'G1_CONFIRMATION.TITLE' | translate}} {{listing.Name}}
-
+      | {{'G1_CONFIRMATION.TITLE' | translate}}
+      br
+        | {{listing.Name}}
   figure.full-figure
     img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.Building_URL}}"
 
@@ -22,7 +23,7 @@
       span translate="G1_CONFIRMATION.NEXT_STEPS_BODY1"
       '
       ' {{ listing.Lottery_Date | date : 'longDate'}}.
-      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2"
+      span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2" translate-values="listingLink()"
 
   .app-inner.inset ng-if="!loggedIn()"
     label.form-label.caps translate="G1_CONFIRMATION.CREATE_ACCOUNT_TITLE"

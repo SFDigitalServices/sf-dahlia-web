@@ -1,6 +1,7 @@
 ShortFormApplicationService = (
-  $translate, $http, Upload, uuid,
-  ListingService, ShortFormDataService, AddressValidationService, GeocodingService
+  $translate, $http, uuid,
+  ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
+  AnalyticsService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -263,6 +264,7 @@ ShortFormApplicationService = (
       Service.cancelPreference(preference)
 
   Service.onExit = (e) ->
+    AnalyticsService.trackFormAbandon('Application')
     e.returnValue = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
 
   Service.isWelcomePage = (state) ->
@@ -313,6 +315,9 @@ ShortFormApplicationService = (
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
 
+  Service.invalidateNameForm = ->
+    Service.application.validatedForms['You']['name'] = false
+
   Service.invalidateContactForm = ->
     Service.application.validatedForms['You']['contact'] = false
 
@@ -330,30 +335,6 @@ ShortFormApplicationService = (
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
-
-  Service.uploadProof = (file, prefType) ->
-    fileType = "#{prefType}_proof_file"
-    if (!file)
-      Service.preferences["#{fileType}_error"] = true
-      return
-    Service.preferences["#{fileType}_loading"] = true
-    Upload.upload(
-      url: '/api/v1/short-form/proof'
-      method: 'POST'
-      data:
-        uploaded_file:
-          file: file
-          session_uid: Service.session_uid
-          preference: prefType
-    ).then( ((resp) ->
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = false
-      Service.preferences["#{fileType}"] = resp.data
-    ), ((resp) ->
-      # error handler
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = true
-    ))
 
   Service.submitApplication = (options={}) ->
     if options.finish
@@ -499,7 +480,11 @@ ShortFormApplicationService = (
       )
     )
 
-  Service.maxDOBDay = ShortFormDataService.maxDOBDay
+  Service.DOBValid = ShortFormDataService.DOBValid
+
+  # TODO: -- REMOVE HARDCODED FEATURES --
+  Service.listingIs = (listing, name) ->
+    ListingService.listingIs(listing, name)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.listingIs = (listing, name) ->
@@ -512,9 +497,10 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', 'Upload', 'uuid',
+  '$translate', '$http', 'uuid',
   'ListingService', 'ShortFormDataService',
-  'AddressValidationService', 'GeocodingService'
+  'AddressValidationService', 'GeocodingService',
+  'AnalyticsService'
 ]
 
 angular
