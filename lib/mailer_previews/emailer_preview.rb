@@ -6,7 +6,7 @@ class EmailerPreview < ActionMailer::Preview
       email: 'test@person.com',
       firstName: 'Mister',
       lastName: 'Tester',
-      listing_id: 'a0Wf0000003j03WEAQ',
+      listing_id: 'a0WU000000ClNXGMA3',
     }
     Emailer.submission_confirmation(params)
   end
