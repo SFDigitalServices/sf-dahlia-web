@@ -5,15 +5,10 @@
 
   .app-inner
     p translate="F2_REVIEW_TERMS.P1" translate-value-date="{{listing.Application_Due_Date | date : 'MMM d, yyyy' }}"
-
-    p
-      | {{'F2_REVIEW_TERMS.P2' | translate}}
-    p
-      | {{'F2_REVIEW_TERMS.P3' | translate}}
-    p
-      | {{'F2_REVIEW_TERMS.P4' | translate}}
-    p
-      | {{'F2_REVIEW_TERMS.P5' | translate}}
+    p translate="F2_REVIEW_TERMS.P2"
+    p translate="F2_REVIEW_TERMS.P3"
+    p translate="F2_REVIEW_TERMS.P4"
+    p translate="F2_REVIEW_TERMS.P5"
 
     checkbox-form-item user='applicant' name='terms' option='yes' label="{{'T.I_AGREE' | translate}}" ng-required='true' error="{{'ERROR.TERMS' | translate}}" aria-describedby="terms_error"
 
