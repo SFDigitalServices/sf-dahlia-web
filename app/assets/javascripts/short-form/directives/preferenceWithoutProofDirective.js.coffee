@@ -5,7 +5,7 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.title = attrs.title
-    scope.description = attrs.description
+    scope.description = attrs.translatedDescription
     scope.preference = attrs.preference
     scope.labelledby = attrs.labelledby
     scope.pref_data_event = attrs.dataevent
