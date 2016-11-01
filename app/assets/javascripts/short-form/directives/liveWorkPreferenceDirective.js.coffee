@@ -5,9 +5,11 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.title = attrs.title
-    scope.description = attrs.description
+    scope.description = attrs.translatedDescription
     scope.labelledby = attrs.labelledby
     scope.pref_data_event = attrs.dataevent
+    # re-initialize the liveWork preference
+    scope.preference = scope.application.preferences.liveWorkInSf_preference
 
     scope.reset_livework_data = ->
       prefs = ['workInSf', 'liveInSf']
