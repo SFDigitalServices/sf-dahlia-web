@@ -9,56 +9,92 @@
       ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
 .content-column ng-if="!submittedApplication()"
-  .content-group.has-divider ng-if="listing.Accepting_Online_Applications"
-    h2.h-caps-lined
-      | How to Apply
-    button.button.primary.expand.no-margin type="button" data-event="gtm-apply" title="{{'LABEL.APPLY_ONLINE' | translate}}" ui-sref="dahlia.short-form-welcome.intro({id: listing.Id})" ng-if="!hasDraftApplication()"
-      | {{'LABEL.APPLY_ONLINE' | translate}}
-    .print-only.show-for-print
-      | at housing.sfgov.org
-    button.button.primary.expand.no-margin type="button" data-event="gtm-continue-application" title="{{'LABEL.CONTINUE_APPLICATION' | translate}}" ui-sref="dahlia.short-form-application.name({id: listing.Id})" ng-if="hasDraftApplication()"
-      | {{'LABEL.CONTINUE_APPLICATION' | translate}}
-    .option-divider
-      span.or
-        | or
-  .content-group.has-divider
-    h2.h-caps-lined ng-if="!listing.Accepting_Online_Applications"
-      | How to Apply
-    h3.content-group_title
-      | Pickup and turn in application
-    p.content-group_address.no-margin
-      | {{listing.Application_Organization}}
-    p.content-group_address
-      | {{ listing.Application_Street_Address }}
-      br
-      | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
-    a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
-      | View Map
-    .content-group_hours ng-if="listing.Office_Hours"
+  div ng-if="listingIs('280 Brighton')"
+    .content-group.has-divider
+      h2.h-caps-lined How to Apply
+      button.button.primary.expand.no-margin type="button" data-event="gtm-apply" title="{{'LABEL.APPLY_ONLINE' | translate}}" ui-sref="dahlia.short-form-welcome.intro({id: listing.Id})" ng-if="!hasDraftApplication()"  Apply Now Online
+      /! <span class="show-for-print">at www.sfhousing.org</span
+      .option-divider
+        span.or or
+    .content-group.has-divider
+      .t-delta.t-serif.margin-bottom
+        span.c-primary
+          ' 1
+        | Get a Paper Application
+      p.c-charcoal.t-small.margin-bottom Paper applications must be sent by US Mail and cannot be submitted in person.
+      ng-include src="'listings/templates/listing/_download_application.html'"
+      .option-divider
+        span.or or
+    .content-group.has-divider
+      h3.content-group_title Pickup an application
+      p.content-group_address.no-margin
+        | {{listing.Application_Organization}}
+      p.content-group_address
+        | {{ listing.Application_Street_Address }},
+        br
+        | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
+      a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
+        | View Map
+      .content-group_hours ng-if="listing.Office_Hours"
+        h3.content-group_title
+          | Office Hours
+        .content-group_days.inline ng-bind-html="listing.Office_Hours"
+      p.c-charcoal.t-small.margin-top Paper applications must be mailed to the P.O. Box below.
+    .content-group.bg-snow
+      .t-delta.t-serif.margin-bottom
+        span.c-primary
+          ' 2
+        | Submit a Paper Application
+      h3.content-group_title Send Application by US Mail
+      p.content-group_address
+        | Brighton BMR
+        br
+        | PO Box 420847
+        br
+        | San Francisco, CA 94142
+      p.c-charcoal.t-small In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you. Applications must be received by the deadline and postmarks will not be considered.
+      p.c-charcoal.t-small
+        | Do not apply online and also send in a paper application. All applications containing any person who appears on more than on application will be removed from the lottery.
+    .content-group
+      h4.h-caps-lined Need Help?
+      p.c-charcoal.t-small.margin-bottom Visit a local housing counselors for help with your online or paper application.
+      button.button.primary.expand.no-margin data-event="gtm-apply-online" type="button" ui-sref="dahlia.housing-counselors"  Find a Housing Counselor
+
+
+  div ng-if="!listingIs('280 Brighton')"
+    .content-group.has-divider ng-if="listing.Accepting_Online_Applications"
+      h2.h-caps-lined
+        | How to Apply
+      button.button.primary.expand.no-margin type="button" data-event="gtm-apply" title="{{'LABEL.APPLY_ONLINE' | translate}}" ui-sref="dahlia.short-form-welcome.intro({id: listing.Id})" ng-if="!hasDraftApplication()"
+        | {{'LABEL.APPLY_ONLINE' | translate}}
+      .print-only.show-for-print
+        | at housing.sfgov.org
+      button.button.primary.expand.no-margin type="button" data-event="gtm-continue-application" title="{{'LABEL.CONTINUE_APPLICATION' | translate}}" ui-sref="dahlia.short-form-application.name({id: listing.Id})" ng-if="hasDraftApplication()"
+        | {{'LABEL.CONTINUE_APPLICATION' | translate}}
+      .option-divider
+        span.or
+          | or
+    .content-group.has-divider
+      h2.h-caps-lined ng-if="!listing.Accepting_Online_Applications"
+        | How to Apply
       h3.content-group_title
-        | Office Hours
-      .content-group_days.inline ng-bind-html="listing.Office_Hours"
+        | Pickup and turn in application
+      p.content-group_address.no-margin
+        | {{listing.Application_Organization}}
+      p.content-group_address
+        | {{ listing.Application_Street_Address }}
+        br
+        | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
+      a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
+        | View Map
+      .content-group_hours ng-if="listing.Office_Hours"
+        h3.content-group_title
+          | Office Hours
+        .content-group_days.inline ng-bind-html="listing.Office_Hours"
 
-    .option-divider
-      span.or
-        | or
+      .option-divider
+        span.or
+          | or
 
-  .content-group
-    button.button.has-icon.has-icon--right.primary.small.expand.no-margin data-event="gtm-download-application" title="Download Application" ng-click="toggleApplicationOptions()"
-      | Download Application
-      span.ui-icon.ui-small
-        svg
-          use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-    .text-center.margin-top.t-small ng-show="showApplicationOptions"
-      p
-        a target="_blank" title="Download English Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/Universal%20Rent%20ShortForm%20PaperApp%20v7%20-%20English.pdf"
-          | English
-      p
-        a target="_blank" title="Download Spanish Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/ES_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
-          | Español
-      p.t-ch
-        a target="_blank" title="Download Traditional Chinese Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/TC_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
-          | 中国
-      p
-        a target="_blank" title="Download Tagalog Application"  href="http://sfmohcd.org/sites/default/files/Documents/MOH/TG_BMR%20Rent%20ShortForm%20PaperApp_v11.pdf"
-          | Filipino
+    .content-group
+      ng-include src="'listings/templates/listing/_download_application.html'"
