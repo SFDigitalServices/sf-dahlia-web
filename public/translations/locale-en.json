@@ -198,9 +198,9 @@
     },
     "F2_REVIEW_TERMS": {
         "P1": "This application must be submitted by {{date}}.",
-        "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled",
+        "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled.",
         "P3": "All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.",
-        "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.  For more information, please contact the developer or leasing agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing; all applicants will be screened as outlined in the property's Resident Selection Criteria.",
+        "P4": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.  For more information, please contact the developer or leasing agent posted in the listing. Completing this lottery application does not entitle you to housing or indicate you are eligible for housing; all applicants will be screened as outlined in the property's Resident Selection Criteria.<br><br>You cannot change your online application after you submit.",
         "P5": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
     },
@@ -216,7 +216,7 @@
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
-        "NEXT_STEPS_BODY2": "Housing lottery results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.<br><br>Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.",
+        "NEXT_STEPS_BODY2": "You do not need to attend the housing lottery. Results will be posted {{listingLink}}. Please refer to the listing for the lottery results date. <br><br>Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled. Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.",
         "NEXT_STEPS_TITLE": "What to expect next",
         "NO_THANKS_IM_DONE": "No thanks, I'm done.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",

@@ -9,12 +9,12 @@
       label.sr-only id="additional_preferences_label" translate="LABEL.ADDITIONAL_PREFERENCES"
       .checkbox-group role="group"
 
-        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" labelledby="additional_preferences_label" dataevent="gtm-preference-livesf" description="D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" ng-show="showPreference('liveInSf')")
+        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" labelledby="additional_preferences_label" dataevent="gtm-preference-livesf" translated-description="D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" ng-show="showPreference('liveInSf')")
 
-        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" preference="neighborhoodResidence" labelledby="additional_preferences_label" dataevent="gtm-preference-neighborhood" description="D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION" ng-show="showPreference('neighborhoodResidence')")
+        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" preference="neighborhoodResidence" labelledby="additional_preferences_label" dataevent="gtm-preference-neighborhood" translated-description="D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION" ng-show="showPreference('neighborhoodResidence')")
 
-        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-show="showPreference('workInSf')" description="D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION")
+        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-show="showPreference('workInSf')" translated-description="D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION")
 
-        live-work-preference(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" description="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION")
+        live-work-preference(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" labelledby="additional_preferences_label" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION")
 
   short-form-save-and-submit
