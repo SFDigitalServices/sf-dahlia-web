@@ -39,7 +39,8 @@ angular.module('dahlia.directives')
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 
-    scope.close = ->
+    scope.close = (e) ->
+      e.preventDefault()
       scope.hideAlert = true
       if scope.shortForm
         scope.$parent.hideAlert = true
