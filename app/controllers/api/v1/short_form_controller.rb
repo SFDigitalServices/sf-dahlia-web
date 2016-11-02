@@ -140,7 +140,7 @@ class Api::V1::ShortFormController < ApiController
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
-        listing_id: uploaded_file_params[:listing_id],
+        listing_id: application_params[:listingID],
       )
     else
       files = UploadedFile.where(uploaded_file_params)
