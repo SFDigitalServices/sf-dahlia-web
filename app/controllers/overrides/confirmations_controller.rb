@@ -21,6 +21,9 @@ module Overrides
                       client_id: @client_id,
                       account_confirmation_success: true,
                       config: params[:config],
+                      utm_source: 'validationemail',
+                      utm_campaign: 'validationemail',
+                      utm_medium: 'email',
         ))
       else
         # no user was found with that confirmation token.
