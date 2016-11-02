@@ -4,7 +4,7 @@ div
       span.ui-icon.ui-static.ui-medium ng-class="isIconInverted"
         svg
           use xlink:href="#i-warning" xmlns:xlink="http://www.w3.org/1999/xlink"
-    button.button-link.close ng-click="close()" aria-label="Close Alert Box"
+    button.button-link.close ng-click="close($event)" aria-label="Close Alert Box"
       | &times;
     p.alert-body ng-bind-html="alertText()"
 
