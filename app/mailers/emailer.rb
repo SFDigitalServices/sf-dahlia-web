@@ -30,11 +30,6 @@ class Emailer < Devise::Mailer
 
   def confirmation_instructions(record, token, opts = {})
     load_salesforce_contact(record)
-    @utm_params = {
-      utm_source: 'validationemail',
-      utm_campaign: 'validationemail',
-      utm_medium: 'email',
-    }
     if record.pending_reconfirmation?
       action = :reconfirmation_instructions
     else

@@ -10,8 +10,10 @@ div ng-controller="AccountController"
     p.c-steel ng-if="!createdAccount.confirmed"
       | {{confirmEmailExpiredMessage()}}
 
-    p.no-margin
-      ng-include src="'account/templates/partials/_resend_confirmation_button.html'" ng-if="!createdAccount.confirmed"
+    p.no-margin ng-if="!createdAccount.confirmed"
+      button.button-link.button-lined.no-padding ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+        | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+
 
     p ng-if="createdAccount.confirmed"
       button.button.small ng-click="closeModal()"

@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
       # we have to grab the existing applicant first.
       # Salesforce requires that we repackage all of their info when making an update
       contact = AccountService.get(salesforce_contact_id)
+      return unless contact.present?
       AccountService.create_or_update(
         webAppID: id,
         contactId: salesforce_contact_id,

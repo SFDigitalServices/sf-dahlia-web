@@ -4,5 +4,5 @@ p
   = t '.confirm_link_msg'
 
 p
-  - params = {confirmation_token: @token, config: message['client-config'].to_s, redirect_url: message['redirect-url']}.merge(@utm_params)
+  - params = { confirmation_token: @token, config: message['client-config'].to_s, redirect_url: message['redirect-url'] }
   = link_to t('.confirm_account_link'), confirmation_url(@resource, params).html_safe
