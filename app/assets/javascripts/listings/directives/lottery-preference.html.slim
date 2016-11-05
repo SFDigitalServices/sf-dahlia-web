@@ -1,0 +1,17 @@
+.content-card
+  header.content-card_ordered
+    span.content-card_number
+      ' {{preference.order}}
+      sup
+        | {{getOrdinal(preference.order)}}
+    h4.content-card_title.no-margin
+      | {{preference.preferenceName}}
+    p.c-steel ng-if="preference.unitsAvailable != 'Remaining'"
+      | Up to {{preference.unitsAvailable}} units available
+    p.c-steel ng-if="preference.unitsAvailable == 'Remaining'"
+      | All remaining units
+  p.c-steel
+    | {{preference.description}}
+    br
+    a ng-href="{{preference.readMoreUrl}}" target="_blank"
+      | Read More
