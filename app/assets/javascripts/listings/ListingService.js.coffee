@@ -279,7 +279,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
-    return unless _.isEmpty(Service.listing.preferences)
+    # if this listing had stubbed preferences then we can abort
+    return if !_.isEmpty(Service.listing.preferences)
     ## <--
     $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
       if data && data.preferences
