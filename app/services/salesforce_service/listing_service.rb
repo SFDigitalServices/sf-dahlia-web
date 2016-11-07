@@ -31,7 +31,6 @@ module SalesforceService
 
     # get all preferences for a given listing
     def self.preferences(listing_id)
-      # TODO: change to cached_api_get once this feature is no longer WIP
       cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
     end
 
