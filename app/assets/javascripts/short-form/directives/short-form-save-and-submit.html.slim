@@ -1,6 +1,6 @@
 .button-pager
   .button-pager_row.primary ng-if="hasNextButton"
-    input.button.primary.radius id="submit" type="submit" value="{{submitValue}}" ng-disabled="isLoading()"
+    input#submit.button.primary.radius type="submit" value="{{submitValue}}" ng-disabled="isLoading()"
   .button-pager_row
-    button.button.button-link.button-lined.small-text-center.expand-small id="save_and_finish_later" data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)'
+    button#save_and_finish_later.button.button-link.button-lined.small-text-center.expand-small data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)'
       | {{'T.SAVE_AND_FINISH_LATER' | translate}}
