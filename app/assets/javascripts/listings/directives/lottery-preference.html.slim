@@ -3,7 +3,7 @@
     span.content-card_number
       ' {{preference.order}}
       sup
-        | {{getOrdinal(preference.order)}}
+        | {{preference.order | ordinalSuffix}}
     h4.content-card_title.no-margin
       | {{preference.preferenceName}}
     p.c-steel ng-if="preference.unitsAvailable != 'Remaining'"

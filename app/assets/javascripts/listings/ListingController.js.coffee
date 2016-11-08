@@ -177,11 +177,6 @@ ListingController = (
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
-  $scope.getOrdinal = (n) ->
-    s = ['th', 'st', 'nd', 'rd']
-    v = n % 100
-    (s[(v - 20) % 10] or s[v] or s[0])
-
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
