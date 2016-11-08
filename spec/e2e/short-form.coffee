@@ -2,6 +2,7 @@ Chance = require('../../lib/assets/bower_components/chance')
 chance = new Chance()
 
 describe 'Short Form', ->
+  EC = undefined
   fillOutYouPageOne = undefined
   fillOutYouPageTwo = undefined
   noAltContactLivesAlone = undefined
@@ -12,8 +13,12 @@ describe 'Short Form', ->
   submitBasicApp = undefined
   createAccount = undefined
   openUrlFromCurrent = undefined
+  selectLiveInLiveWork = undefined
+  selectLiveSfMember = undefined
 
   beforeEach ->
+    EC = protractor.ExpectedConditions
+
     fillOutYouPageOne = ->
       element(By.model('applicant.firstName')).sendKeys('Jane')
       element(By.model('applicant.lastName')).sendKeys('Doe')
@@ -28,7 +33,7 @@ describe 'Short Form', ->
       element(By.cssContainingText('option', 'Home')).click()
       element(By.model('applicant.email')).sendKeys('jane@doe.com')
       element(By.model('applicant.noAddress')).click()
-      element(By.id('workInSf_no')).click()
+      element(By.id('workInSf_yes')).click()
       element(By.id('submit')).click()
 
     noAltContactLivesAlone = ->
@@ -79,6 +84,21 @@ describe 'Short Form', ->
           alert.accept()
           browser.get url
 
+    selectLiveInLiveWork = ->
+      element(By.id('preferences-liveWorkInSf')).click()
+      element(By.id('liveWorkPrefOption')).click()
+      element(By.cssContainingText('option', 'Live in San Francisco')).click()
+
+    selectLiveSfMember = (name) ->
+      # there are multiple liveInSf_household_members, click the visible one
+      element.all(By.id('liveInSf_household_member')).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      # there are multiple Jane Doe options, click the visible one
+      element.all(By.cssContainingText('option', name)).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+
   it 'should submit an application successfully', ->
     url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
     browser.get url
@@ -97,6 +117,32 @@ describe 'Short Form', ->
     expect(lotteryNumberMarkup.getText()).toBeTruthy()
     return
 
+  describe 'opting in to live/work then saying no on workInSf', ->
+    it 'should select live preference', ->
+      url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
+      openUrlFromCurrent(url)
+      fillOutYouPageOne()
+      fillOutYouPageTwo()
+      noAltContactLivesAlone()
+
+      # skip first preference page
+      element(By.id('submit')).click()
+
+      selectLiveInLiveWork()
+      selectLiveSfMember('Jane Doe')
+
+      # go back to You section and change to workinsf_no
+      element(By.cssContainingText('.progress-nav_item', 'You')).click()
+      element(By.id('submit')).click()
+      element(By.id('workInSf_no')).click()
+
+      element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
+      element(By.id('submit')).click()
+
+      liveInSf = element(By.id('preferences-liveInSf'))
+      browser.wait(EC.elementToBeSelected(liveInSf), 5000)
+      return
+    return
   return
 
 
