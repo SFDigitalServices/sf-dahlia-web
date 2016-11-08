@@ -47,6 +47,15 @@ describe 'Listings API' do
       end
     end
   end
+  describe 'lottery ranking' do
+    save_fixture do
+      VCR.use_cassette('listings/lottery-ranking') do
+        url = '/api/v1/listings/a0WU000000CkiM3MAJ/lottery_ranking.json'
+        params = { lottery_number: '00002612' }
+        get url, params
+      end
+    end
+  end
   # TO DO: Convert other listings specs to QA env so this test can pass locally
   describe 'lottery buckets' do
     save_fixture do
