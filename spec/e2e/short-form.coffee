@@ -1,8 +1,14 @@
 describe 'Short Form', ->
   fillOutYouPageOne = undefined
   fillOutYouPageTwo = undefined
+  noAltContactLivesAlone = undefined
+  skipPreferences = undefined
+  incomeWithVoucher = undefined
+  fillOutOptional = undefined
+  confirmAndSubmit = undefined
+  submitBasicApp = undefined
 
-  it 'should submit an application successfully', ->
+  beforeEach ->
     fillOutYouPageOne = ->
       element(By.model('applicant.firstName')).sendKeys('Jane')
       element(By.model('applicant.lastName')).sendKeys('Doe')
@@ -20,36 +26,44 @@ describe 'Short Form', ->
       element(By.id('workInSf_no')).click()
       element(By.id('submit')).click()
 
+    noAltContactLivesAlone = ->
+      element(By.id('alternate_contact_none')).click()
+      element(By.id('submit')).click()
+      element(By.id('live_alone')).click()
+
+    skipPreferences = ->
+      element(By.id('submit')).click()
+      element(By.id('submit')).click()
+
+    incomeWithVoucher = ->
+      element(By.id('householdVouchersSubsidies_yes')).click()
+      element(By.id('submit')).click()
+      element(By.id('incomeTotal')).sendKeys('22000')
+      element(By.id('per_year')).click()
+      element(By.id('submit')).click()
+
+    fillOutOptional = ->
+      element(By.id('referral_newspaper')).click()
+      element(By.id('submit')).click()
+
+    confirmAndSubmit = ->
+      element(By.id('submit')).click()
+      element(By.id('terms_yes')).click()
+      element(By.id('submit')).click()
+
+    submitBasicApp = ->
+      fillOutYouPageOne()
+      fillOutYouPageTwo()
+      noAltContactLivesAlone()
+      skipPreferences()
+      incomeWithVoucher()
+      fillOutOptional()
+      confirmAndSubmit()
+
+  it 'should submit an application successfully', ->
     url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
     browser.get url
-    fillOutYouPageOne()
-    fillOutYouPageTwo()
-
-    # no alt contact and lives alone
-    element(By.id('alternate_contact_none')).click()
-    element(By.id('submit')).click()
-    element(By.id('live_alone')).click()
-
-    #skip preferences
-    element(By.id('submit')).click()
-    element(By.id('submit')).click()
-
-    #indicate income
-    element(By.id('householdVouchersSubsidies_yes')).click()
-    element(By.id('submit')).click()
-    element(By.id('incomeTotal')).sendKeys('22000')
-    element(By.id('per_year')).click()
-    element(By.id('submit')).click()
-
-    #fill out optional Qs
-    element(By.id('referral_newspaper')).click()
-    element(By.id('submit')).click()
-
-    #confirm app and submit app
-    element(By.id('submit')).click()
-    element(By.id('terms_yes')).click()
-    element(By.id('submit')).click()
-
+    submitBasicApp()
     lotteryNumberMarkup = element(By.id('lottery_number'))
     expect(lotteryNumberMarkup.getText()).toBeTruthy()
     return
