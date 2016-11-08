@@ -183,6 +183,9 @@ ListingController = (
     (s[(v - 20) % 10] or s[v] or s[0])
 
   # TODO: -- REMOVE HARDCODED FEATURES --
+  $scope.listingIs = (name) ->
+    ListingService.listingIs(name)
+
   $scope.showDownloadLotteryResultsButton = ->
     return false unless $scope.listing.LotteryResultsURL
     $scope.listingIsAny([
