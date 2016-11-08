@@ -1,3 +1,6 @@
+Chance = require('../../lib/assets/bower_components/chance')
+chance = new Chance()
+
 describe 'Short Form', ->
   fillOutYouPageOne = undefined
   fillOutYouPageTwo = undefined
@@ -7,6 +10,8 @@ describe 'Short Form', ->
   fillOutOptional = undefined
   confirmAndSubmit = undefined
   submitBasicApp = undefined
+  createAccount = undefined
+  openUrlFromCurrent = undefined
 
   beforeEach ->
     fillOutYouPageOne = ->
@@ -60,6 +65,20 @@ describe 'Short Form', ->
       fillOutOptional()
       confirmAndSubmit()
 
+    createAccount = ->
+      email = chance.email()
+      element(By.id('auth_email')).sendKeys(email)
+      element(By.id('auth_email_confirmation')).sendKeys(email)
+      element(By.id('auth_password')).sendKeys('password123')
+      element(By.id('auth_password_confirmation')).sendKeys('password123')
+      element(By.id('submit')).click()
+
+    openUrlFromCurrent = (url) ->
+      browser.get(url).catch ->
+        browser.switchTo().alert().then (alert) ->
+          alert.accept()
+          browser.get url
+
   it 'should submit an application successfully', ->
     url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
     browser.get url
@@ -67,4 +86,30 @@ describe 'Short Form', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
     expect(lotteryNumberMarkup.getText()).toBeTruthy()
     return
+
+  it 'should allow the user to create an account on save draft', ->
+    url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
+    openUrlFromCurrent(url)
+    fillOutYouPageOne()
+    element(By.id('save_and_finish_later')).click()
+    createAccount()
+    lotteryNumberMarkup = element(By.id('confirmation_needed'))
+    expect(lotteryNumberMarkup.getText()).toBeTruthy()
+    return
+
   return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

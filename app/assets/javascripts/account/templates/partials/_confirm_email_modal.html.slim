@@ -1,6 +1,6 @@
 div ng-controller="AccountController"
   header.modal-inner
-    h1.modal-title.t-gamma.no-margin
+    h1.modal-title.t-gamma.no-margin id="confirmation_needed"
       | {{'CONFIRM_ACCOUNT.CONFIRMATION_NEEDED' | translate}}
 
   .alert-box.alert.primary.no-margin.no-icon.padding-left--3halves ng-if="resentConfirmationMessage && !hideAlert"
