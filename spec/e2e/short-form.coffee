@@ -100,7 +100,7 @@ describe 'Short Form', ->
       ).first().click()
 
   it 'should submit an application successfully', ->
-    url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
+    url = '/listings/a0W0P00000DYUcpUAH/apply/name'
     browser.get url
     submitBasicApp()
     lotteryNumberMarkup = element(By.id('lottery_number'))
@@ -108,7 +108,7 @@ describe 'Short Form', ->
     return
 
   it 'should allow the user to create an account on save draft', ->
-    url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
+    url = '/listings/a0W0P00000DYUcpUAH/apply/name'
     openUrlFromCurrent(url)
     fillOutYouPageOne()
     element(By.id('save_and_finish_later')).click()
@@ -119,7 +119,7 @@ describe 'Short Form', ->
 
   describe 'opting in to live/work then saying no on workInSf', ->
     it 'should select live preference', ->
-      url = 'http://localhost:3000/listings/a0W0P00000DYUcpUAH/apply/name'
+      url = '/listings/a0W0P00000DYUcpUAH/apply/name'
       openUrlFromCurrent(url)
       fillOutYouPageOne()
       fillOutYouPageTwo()
@@ -144,18 +144,3 @@ describe 'Short Form', ->
       return
     return
   return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
