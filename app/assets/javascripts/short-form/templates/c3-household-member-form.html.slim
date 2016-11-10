@@ -53,6 +53,8 @@
           | {{'T.YES' | translate}}
         radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
           | {{'T.NO' | translate}}
+        radio-block-item value='No Address' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+          | {{'LABEL.HOUSEHOLD_MEMBER_NO_ADDRESS' | translate}}
 
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
       ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
