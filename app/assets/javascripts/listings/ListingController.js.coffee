@@ -191,6 +191,8 @@ ListingController = (
       '888 Paris'
       '168 Hyde'
       '125 Mason'
+      '3445 Geary'
+      'Northpoint Vistas'
     ])
 
   $scope.listingIsAny = (names) ->
