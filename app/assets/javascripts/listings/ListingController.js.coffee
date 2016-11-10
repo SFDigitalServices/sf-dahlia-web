@@ -203,6 +203,7 @@ ListingController = (
       '168 Hyde'
       '125 Mason'
       '3445 Geary'
+      'Northpoint Vistas'
     ])
 
   $scope.listingIs = (name) ->
