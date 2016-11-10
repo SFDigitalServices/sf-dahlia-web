@@ -12,7 +12,8 @@
     "grunt-sort-json": "0.0.5"
   },
   "dependencies": {
-    "bower": "1.7.9"
+    "bower": "1.7.9",
+    "coffee-script": "1.11.1"
   },
   "engines": {
     "node": "4.1.x",

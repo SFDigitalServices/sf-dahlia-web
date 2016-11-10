@@ -39,7 +39,14 @@ Running grunt will migrate the css over from the pattern library. You can ignore
 
 ## Running Tests ##
 
-Run `thor tests`. This will run syntax linters, code quality linters, rspec and jasmine specs.
+Run:
+- `rake spec`
+- `rake jasmine:ci`
+
+To run E2E tests:
+- On a tab run `rails s`
+- On another tab, run `webdriver-manager start`
+- On a final tab, run `protractor spec/e2e/conf.js`
 
 ### Acceptance/Feature Apps ###
 
