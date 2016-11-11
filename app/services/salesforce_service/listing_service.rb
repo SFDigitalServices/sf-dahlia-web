@@ -16,7 +16,6 @@ module SalesforceService
     def self.eligible_listings(filters)
       results = api_get('/ListingDetails', filters, true)
       # sort the matched listings to the top of the list
-      # TODO: replace with sorting on the JS side
       results.partition { |i| i['Does_Match'] }.flatten
     end
 
@@ -28,6 +27,11 @@ module SalesforceService
     # get all units for a given listing
     def self.units(listing_id)
       cached_api_get("/Listing/Units/#{listing_id}", nil, true)
+    end
+
+    # get all preferences for a given listing
+    def self.preferences(listing_id)
+      cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
     end
 
     # get AMI
