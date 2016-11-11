@@ -157,7 +157,7 @@ ShortFormNavigationService = (
       when 'general-lottery-notice'
         'preferences-programs'
       when 'income-vouchers'
-        if ShortFormApplicationService.preferencesApplyForHousehold()
+        if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
           'live-work-preference'
         else
           'preferences-programs'
