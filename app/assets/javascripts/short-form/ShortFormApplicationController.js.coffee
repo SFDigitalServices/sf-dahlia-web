@@ -277,8 +277,11 @@ ShortFormApplicationController = (
   $scope.checkIfPreferencesApply = () ->
     if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
       $state.go('dahlia.short-form-application.live-work-preference')
-    else
+    else if ShortFormApplicationService.applicantHasNoPreferences()
       $state.go('dahlia.short-form-application.general-lottery-notice')
+    else
+      # skip ahead to income
+      $state.go('dahlia.short-form-application.income-vouchers')
 
   $scope.checkPreferenceEligibility = () ->
     ShortFormApplicationService.refreshPreferences()
