@@ -8,7 +8,10 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json')
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
+    fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
+    fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
+    fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     $localStorage = undefined
     $state = undefined
@@ -53,7 +56,7 @@ do ->
         combinedLength =
           ListingService.openListings.length +
           ListingService.closedListings.length +
-          ListingService.lotteryResultsListings.length;
+          ListingService.lotteryResultsListings.length
         expect(combinedLength).toEqual fakeListings.listings.length
 
         openLength =
@@ -261,6 +264,21 @@ do ->
         return
       return
 
+    describe 'Service.getListingPreferences', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.preferences with the Preference results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
+        ListingService.getListingPreferences()
+        httpBackend.flush()
+        expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
+        return
+      return
+
     describe 'Service.getListingsByIds', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
@@ -297,6 +315,34 @@ do ->
         ListingService.getListingsWithEligibility()
         httpBackend.flush()
         expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
+        return
+      return
+
+    describe 'Service.getLotteryBuckets', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+
+      it 'assigns Service.listing.Lottery_Buckets with bucket results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
+        ListingService.getLotteryBuckets()
+        httpBackend.flush()
+        expect(ListingService.listing.Lottery_Buckets).toEqual fakeLotteryBuckets.lottery_buckets
+        return
+      return
+
+    describe 'Service.getLotteryRanking', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+
+      it 'assigns Service.listing.Lottery_Ranking with ranking results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
+        ListingService.getLotteryRanking('00002612')
+        httpBackend.flush()
+        expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
         return
       return
 

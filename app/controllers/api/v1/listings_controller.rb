@@ -33,6 +33,11 @@ class Api::V1::ListingsController < ApiController
     render json: { lottery_ranking: @lottery_ranking }
   end
 
+  def preferences
+    @preferences = ListingService.preferences(params[:id])
+    render json: { preferences: @preferences }
+  end
+
   def eligibility
     e = params[:eligibility]
     # have to massage params into number values
@@ -49,12 +54,5 @@ class Api::V1::ListingsController < ApiController
     percent = params[:percent].presence || 100
     @ami = ListingService.ami(percent)
     render json: { ami: @ami }
-  end
-
-  def lottery_preferences
-    # this is not returning anything anymore.
-    # $scope.lotteryPreferencesDescription is empty
-    @lottery_preferences = ListingService.lottery_preferences
-    render json: { lottery_preferences: @lottery_preferences }
   end
 end
