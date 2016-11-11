@@ -23,10 +23,10 @@ Rails.application.routes.draw do
           get 'units'
           get 'lottery_buckets'
           get 'lottery_ranking'
+          get 'preferences'
         end
         collection do
           get 'ami' => 'listings#ami'
-          get 'lottery-preferences' => 'listings#lottery_preferences'
           post 'eligibility' => 'listings#eligibility'
         end
       end
