@@ -38,7 +38,7 @@ ListingController = (
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
-  $scope.loadingLotteryResults = false
+  $scope.loading = ListingService.loading
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -94,12 +94,7 @@ ListingController = (
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
-    $scope.loadingLotteryResults = true
-    ListingService.getLotteryBuckets().then( ->
-      $scope.loadingLotteryResults = false
-      $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
-      ListingService.openLotteryResultsModal()
-    )
+    ListingService.openLotteryResultsModal()
 
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
@@ -159,10 +154,10 @@ ListingController = (
     if $scope.lotterySearchNumber == ''
       $scope.lotteryRankingSubmitted = false
     else
-      $scope.loadingLotteryResults = true
+      $scope.loading.lotteryRank = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         $scope.lotteryRankingSubmitted = true
-        $scope.loadingLotteryResults = false
+        $scope.loading.lotteryRank = false
       )
 
   $scope.submittedApplication = ->
@@ -177,29 +172,18 @@ ListingController = (
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
+  $scope.showLotteryResultsModalButton = ->
+    ListingService.listingHasLotteryBuckets()
+
+  $scope.showDownloadLotteryResultsButton = ->
+    $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+
+  $scope.listingHasPreferences = ->
+    $scope.listing.preferences && $scope.listing.preferences.length
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
-
-  $scope.showDownloadLotteryResultsButton = ->
-    return false unless $scope.listing.LotteryResultsURL
-    $scope.listingIsAny([
-      'Rincon'
-      '77 Bluxome'
-      'Potrero 1010'
-      '529 Stevenson'
-      '888 Paris'
-      '168 Hyde'
-      '125 Mason'
-      '3445 Geary'
-      'Northpoint Vistas'
-    ])
-
-  $scope.listingIsAny = (names) ->
-    ListingService.listingIsAny($scope.listing, names)
-  # ------------------------------
-
-
 
 
 ############################################################################################

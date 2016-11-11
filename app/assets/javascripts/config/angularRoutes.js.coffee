@@ -64,6 +64,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
+              setTimeout(ListingService.getLotteryBuckets)
         ]
         application: [
           '$stateParams', 'ShortFormApplicationService',

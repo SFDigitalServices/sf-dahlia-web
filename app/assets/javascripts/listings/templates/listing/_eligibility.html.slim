@@ -56,14 +56,14 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Lottery Preferences
-          p.custom-counter_text ng-if="!listing.preferences"
+          p.custom-counter_text ng-if="!listingHasPreferences()"
             | Preference holders will be given highest ranking in the lottery process.
-          p.custom-counter_text ng-if="listing.preferences"
+          p.custom-counter_text ng-if="listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
 
         lottery-preference ng-repeat="preference in listing.preferences"
 
-        div ng-if="listing.preferences"
+        div ng-if="listingHasPreferences()"
           p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
 
 

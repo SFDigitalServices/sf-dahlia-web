@@ -39,9 +39,7 @@ do ->
         getLotteryBuckets: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
-        # TODO: REMOVE HARDCODED FEATURES
-        listingIs: () -> null
-        listingIsAny: () -> null
+        loading: {}
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
       fakeListingService.openLotteryResultsModal = jasmine.createSpy()
@@ -154,9 +152,9 @@ do ->
           expect(scope.lotteryDatePassed(futureLotListing)).toEqual false
 
     describe '$scope.openLotteryResultsModal', ->
-      it 'expect ListingService.getLotteryBuckets to be called', ->
+      it 'expect ListingService.openLotteryResultsModal to be called', ->
         scope.openLotteryResultsModal()
-        expect(fakeListingService.getLotteryBuckets).toHaveBeenCalled()
+        expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
 
     describe '$scope.lotteryDateVenueAvailable', ->
       beforeEach ->
