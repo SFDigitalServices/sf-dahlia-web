@@ -56,67 +56,14 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Lottery Preferences
-          p.custom-counter_text ng-if="!showLotteryPreferences()"
+          p.custom-counter_text ng-if="!listingHasPreferences()"
             | Preference holders will be given highest ranking in the lottery process.
-          p.custom-counter_text ng-if="showLotteryPreferences()"
+          p.custom-counter_text ng-if="listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
-        / ----------------------------------------------
-        / --- TODO: remove hardcoded feature
-        / --- After we add Lottery Preferences from Salesforce
-        / ----------------------------------------------
-        div ng-if="showLotteryPreferences()"
-          .content-card ng-if="listing.COPUnits"
-            header.content-card_ordered
-              span.content-card_number
-                ' {{positionOfPreference('COP')}}
-                sup
-                  | {{getOrdinal(positionOfPreference('COP'))}}
-              h4.content-card_title.no-margin Certificate of Preference (COP)
-              p.c-steel Up to {{listing.COPUnits}} units available
-            p.c-steel
-              | Households in which one member holds a Certificate of Preference from the former San Francisco Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
-              br
-              a href="http://sfmohcd.org/certificate-preference" target="_blank"
-                | Read More
-          .content-card ng-if="listing.DTHPUnits"
-            header.content-card_ordered
-              span.content-card_number
-                ' {{positionOfPreference('DTHP')}}
-                sup
-                  | {{getOrdinal(positionOfPreference('DTHP'))}}
-              h4.content-card_title.no-margin Displaced Tenant Housing Preference (DTHP)
-              p.c-steel Up to {{listing.DTHPUnits}} units available
-            p.c-steel
-              | Households in which one member holds a Displaced Tenant Housing Preference Certificate. DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled, remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
-              br
-              a href="http://sfmohcd.org/displaced-tenant-housing-preference-program-0" target="_blank"
-                | Read More
-          .content-card ng-if="listing.NRHPUnits"
-            header.content-card_ordered
-              span.content-card_number
-                ' {{positionOfPreference('NRHP')}}
-                sup
-                  | {{getOrdinal(positionOfPreference('NRHP'))}}
-              h4.content-card_title.no-margin Neighborhood Resident Housing Preference (NRHP)
-              p.c-steel Up to {{listing.NRHPUnits}} units available
-            p.c-steel
-              | Households that submit acceptable documentation that at least one member lives either within supervisorial District {{listing.supervisorialDistrict}} or within a half-mile of the project.
-              br
-              a href="http://sfmohcd.org/neighborhood-resident-housing-preference" target="_blank"
-                | Read More
-          .content-card
-            header.content-card_ordered
-              span.content-card_number
-                ' {{positionOfPreference('liveWork')}}
-                sup
-                  | {{getOrdinal(positionOfPreference('liveWork'))}}
-              h4.content-card_title.no-margin Live/Work Preference
-              p.c-steel All remaining units
-            p.c-steel
-              | Households that submit acceptable documentation that at least one member lives or works in San Francisco. In order to claim Work Preference, you or a household member must currently work in San Francisco at least 75% of your working hours.
-              br
-              a href="http://sfmohcd.org/housing-preference-programs" target="_blank"
-                | Read More
+
+        lottery-preference ng-repeat="preference in listing.preferences"
+
+        div ng-if="listingHasPreferences()"
           p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
 
 

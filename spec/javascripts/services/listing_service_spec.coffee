@@ -8,6 +8,7 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json')
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
+    fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
@@ -260,6 +261,21 @@ do ->
         ListingService.getListingUnits()
         httpBackend.flush()
         expect(ListingService.listing.Units).toEqual fakeUnits.units
+        return
+      return
+
+    describe 'Service.getListingPreferences', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+        return
+      it 'assigns Service.listing.preferences with the Preference results', ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
+        ListingService.getListingPreferences()
+        httpBackend.flush()
+        expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
         return
       return
 

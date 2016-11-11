@@ -1,0 +1,90 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://test.salesforce.com/services/oauth2/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Nov 2016 19:18:39 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Set-Cookie:
+      - BrowserId=hgSKGYAUTPGFWgKy5neKkA;Path=/;Domain=.salesforce.com;Expires=Fri,
+        06-Jan-2017 19:18:39 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store
+      X-Readonlymode:
+      - 'false'
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"00D6C0000000TrI!AQ4AQOUIuzYkqnOp5auHbji9qx9dleKYgMB4myKZ5.SXg681F9fcaDfxavuNQo9TQ8MO_U4sVH_.Mo_mQj4V9LBg6Au28Rqh","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1478546319374","signature":"xJUprMBYrQ11Eqog+X1KL4MqOMsFb0L/9iU7l9ous8A="}'
+    http_version:
+  recorded_at: Mon, 07 Nov 2016 19:18:39 GMT
+- request:
+    method: get
+    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/Preferences/a0WU000000BmpBdMAJ
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Authorization:
+      - OAuth 00D6C0000000TrI!AQ4AQOUIuzYkqnOp5auHbji9qx9dleKYgMB4myKZ5.SXg681F9fcaDfxavuNQo9TQ8MO_U4sVH_.Mo_mQj4V9LBg6Au28Rqh
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 07 Nov 2016 19:18:39 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Set-Cookie:
+      - BrowserId=WqnupjYbT22G2o6Jj_BVCg;Path=/;Domain=.salesforce.com;Expires=Fri,
+        06-Jan-2017 19:18:39 GMT
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"unitsAvailable":1,"readMoreUrl":"http://www.google.com","preferenceName":"Certificate
+        of Preference (COP)","order":1,"NRHPDistrict":null,"name":"LP-00001","listingPreferenceID":"a0l6C000000ClfDQAS","listingId":"a0WU000000BmpBdMAJ","description":"Households
+        in which one member holds a Certificate of Preference from the former San
+        Francisco Redevelopment Agency. COP holders were displaced by Agency action
+        generally during the 1960s and 1970s.","appTotal":null},{"unitsAvailable":12,"readMoreUrl":"http://sfmohcd.org/displaced-tenant-housing-preference-program-0","preferenceName":"DTHP","order":2,"NRHPDistrict":null,"name":"LP-00010","listingPreferenceID":"a0l6C000000Cqn7QAC","listingId":"a0WU000000BmpBdMAJ","description":"Description
+        for DTHP - generic","appTotal":null}]'
+    http_version:
+  recorded_at: Mon, 07 Nov 2016 19:18:40 GMT
+recorded_with: VCR 3.0.3
