@@ -39,6 +39,8 @@ do ->
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
       refreshPreferences: jasmine.createSpy()
+      clearPhoneData: jasmine.createSpy()
+      validMailingAddress: jasmine.createSpy()
       liveInSfMembers: () ->
         return
       workInSfMembers: () ->
@@ -57,8 +59,6 @@ do ->
         return
       submitApplication: (options={}) ->
         return
-      validMailingAddress: ->
-        true
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -72,7 +72,8 @@ do ->
         return
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
-    fakeFileUploadService = {}
+    fakeFileUploadService =
+      uploadProof: jasmine.createSpy()
     fakeEvent =
       preventDefault: -> return
 
@@ -209,10 +210,19 @@ do ->
 
     describe '$scope.addHouseholdMember', ->
       describe 'user has same address applicant', ->
-        it 'directly call addHouseholdMember in ShortFormApplicationService', ->
+        it 'directly calls addHouseholdMember in ShortFormApplicationService', ->
           scope.householdMember.hasSameAddressAsApplicant = 'Yes'
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
+          return
+        return
+
+      describe 'user does not have same address applicant', ->
+        it 'calls validateHouseholdMemberAddress in ShortFormApplicationService', ->
+          scope.householdMember.hasSameAddressAsApplicant = 'No'
+          scope.householdMember.neighborhoodPreferenceMatch = false
+          scope.addHouseholdMember()
+          expect(fakeShortFormApplicationService.validateHouseholdMemberAddress).toHaveBeenCalled()
           return
         return
 
@@ -290,12 +300,30 @@ do ->
 
     describe 'validateHouseholdEligibility', ->
       it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
-
-        match = 'householdMatch'
         scope.listing = fakeListing
-
-        scope.validateHouseholdEligibility(match)
+        scope.validateHouseholdEligibility('householdMatch')
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+        return
+      it 'skips ahead if incomeMatch and vouchers', ->
+        scope.listing = fakeListing
+        scope.application.householdVouchersSubsidies = 'Yes'
+        scope.validateHouseholdEligibility('incomeMatch')
+        expect(state.go).toHaveBeenCalled()
+        return
+      return
+
+    describe '$scope.clearPhoneData', ->
+      it 'calls clearPhoneData in ShortFormApplicationService', ->
+        type = 'phone'
+        scope.clearPhoneData(type)
+        expect(fakeShortFormApplicationService.clearPhoneData).toHaveBeenCalledWith(type)
+        return
+      return
+
+    describe '$scope.validMailingAddress', ->
+      it 'calls validMailingAddress in ShortFormApplicationService', ->
+        scope.validMailingAddress()
+        expect(fakeShortFormApplicationService.validMailingAddress).toHaveBeenCalled()
         return
       return
 
@@ -383,6 +411,16 @@ do ->
           path = 'dahlia.short-form-application.general-lottery-notice'
           expect(state.go).toHaveBeenCalledWith(path)
           return
+        return
+      return
+
+    describe 'uploadProof', ->
+      it 'calls uploadProof on FileUploadService', ->
+        file = {}
+        pref = 'liveInSf'
+        docType = 'water bill'
+        scope.uploadProof(file, pref, docType)
+        expect(fakeFileUploadService.uploadProof).toHaveBeenCalledWith(file, pref, docType, scope.listing.Id)
         return
       return
 

@@ -40,7 +40,9 @@ ShortFormDataService = () ->
   Service.formatUserDOB = (user) ->
     dob_fields = _.compact [user.dob_year, user.dob_month, user.dob_day]
     return null unless dob_fields.length == 3
-    dob_fields.join('-')
+    dob_string = dob_fields.join('-')
+    # ensure padded zeroes e.g. 01-01-1980
+    moment(dob_string, "YYYY-MM-DD").format("YYYY-MM-DD")
 
   Service.removeDOBFields = (user) ->
     _.omit user, ['dob_day', 'dob_month', 'dob_year']
