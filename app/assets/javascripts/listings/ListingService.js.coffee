@@ -14,6 +14,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
+  Service.loading = {}
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -103,6 +104,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       controller: 'ModalInstanceController',
       windowClass: 'modal-small'
     })
+
+  Service.listingHasLotteryBuckets = ->
+    Service.listing.Lottery_Buckets &&
+    _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
     # If Street address is undefined, then return false for display and google map lookup
@@ -290,10 +295,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     )
 
   Service.getLotteryBuckets = ->
+    Service.listing.Lottery_Buckets = {}
+    Service.loading.lotteryResults = true
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
+      Service.loading.lotteryResults = false
       if data && data.lottery_buckets.bucketResults
-        Service.listing.Lottery_Buckets = data.lottery_buckets
+        angular.copy(data.lottery_buckets, Service.listing.Lottery_Buckets)
     ).error( (data, status, headers, config) ->
+      Service.loading.lotteryResults = false
       return
     )
 
@@ -337,9 +346,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.listingIs = (name) ->
     Service.LISTING_MAP[Service.listing.Id] == name
-
-  Service.listingIsAny = (listing, names) ->
-    _.includes(names, Service.LISTING_MAP[listing.Id])
 
   Service.stubListingPreferences = ->
     opts = null

@@ -42,7 +42,7 @@ module SalesforceService
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
-      api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
+      cached_api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
     end
 
     # get Individual Lottery Result with rankings
