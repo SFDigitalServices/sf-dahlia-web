@@ -391,6 +391,15 @@ do ->
         return
         # TODO: write test for household who lives in SF.
 
+    describe 'eligibleForLiveWorkOrNRHP', ->
+      it 'returns true if someone is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.workInSf = 'Yes'
+        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual true
+
+      it 'returns false if nobody is eligible for live/work/NRHP', ->
+        ShortFormApplicationService.applicant.workInSf = 'No'
+        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual false
+
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}
