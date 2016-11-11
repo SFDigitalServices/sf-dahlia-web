@@ -17,8 +17,8 @@ angular.module('dahlia.directives')
       scope.application.preferences.liveWorkInSf_preference = null
       scope.reset_livework_data()
 
-    scope.select_liveWork_preference = () ->
-      scope.reset_livework_data()
+    scope.select_liveWork_preference = (opts = {}) ->
+      scope.reset_livework_data() if opts.reset
       preference = scope.application.preferences.liveWorkInSf_preference
       scope.preference = preference
       scope.setup_preference_variables(preference)
