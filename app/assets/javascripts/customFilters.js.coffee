@@ -58,3 +58,8 @@ angular.module('customFilters', [])
       country = ''
     number = number.slice(0, 3) + '-' + number.slice(3)
     (country + ' (' + city + ') ' + number).trim()
+.filter 'ordinalSuffix', ->
+  (n) ->
+    s = ['th', 'st', 'nd', 'rd']
+    v = n % 100
+    (s[(v - 20) % 10] or s[v] or s[0])
