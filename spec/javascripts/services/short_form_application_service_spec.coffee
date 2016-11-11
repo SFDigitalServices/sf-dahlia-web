@@ -407,6 +407,65 @@ do ->
         return
         # TODO: write test for household who lives in SF.
 
+    describe 'neighborhoodResidenceMembers', ->
+      beforeEach ->
+        ShortFormApplicationService.applicant = fakeApplicant
+      afterEach ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = null
+        ShortFormApplicationService.applicant.noAddress = null
+      describe 'applicant doesn\'t have neighborhood preference', ->
+        it 'should return array without applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+      describe 'applicant doesn\'t match neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+        it 'should return array without applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+      describe 'applicant matches neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        it 'should return array with applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+      describe 'household member matches neighborhood preference', ->
+        beforeEach ->
+          fakeHouseholdMember =
+            firstName: 'Bob'
+            lastName: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+        it 'should return array with household member', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeHouseholdMember)
+      describe 'applicant and household member match neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          fakeHouseholdMember =
+            firstName: 'Bob'
+            lastName: 'Williams'
+            dob_month: '07'
+            dob_day: '05'
+            dob_year: '2015'
+            relationship: 'Cousin'
+          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+        it 'should return array with applicant and household member', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(2)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[1]).toEqual(fakeHouseholdMember)
+      describe 'applicant does not have address', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.noAddress = true
+        it 'should return array with applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+
+
+
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}
