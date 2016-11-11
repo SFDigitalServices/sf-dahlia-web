@@ -15,6 +15,7 @@ describe 'Short Form', ->
   openUrlFromCurrent = undefined
   selectLiveInLiveWork = undefined
   selectLiveSfMember = undefined
+  fillOutUpToLiveWorkPreferencePage = undefined
   listingId = 'a0W0P00000DYUcpUAH'
 
   beforeEach ->
@@ -100,6 +101,19 @@ describe 'Short Form', ->
         elem.isDisplayed()
       ).first().click()
 
+    fillOutUpToLiveWorkPreferencePage = ->
+      url = "/listings/#{listingId}/apply/name"
+      openUrlFromCurrent(url)
+      fillOutYouPageOne()
+      fillOutYouPageTwo()
+      noAltContactLivesAlone()
+
+      # skip first preference page
+      element(By.id('submit')).click()
+
+      selectLiveInLiveWork()
+      selectLiveSfMember('Jane Doe')
+
   it 'should submit an application successfully', ->
     url = "/listings/#{listingId}/apply/name"
     browser.get url
@@ -120,18 +134,7 @@ describe 'Short Form', ->
 
   describe 'opting in to live/work then saying no on workInSf', ->
     it 'should select live preference', ->
-      url = "/listings/#{listingId}/apply/name"
-      openUrlFromCurrent(url)
-      fillOutYouPageOne()
-      fillOutYouPageTwo()
-      noAltContactLivesAlone()
-
-      # skip first preference page
-      element(By.id('submit')).click()
-
-      selectLiveInLiveWork()
-      selectLiveSfMember('Jane Doe')
-
+      fillOutUpToLiveWorkPreferencePage()
       # go back to You section and change to workinsf_no
       element(By.cssContainingText('.progress-nav_item', 'You')).click()
       element(By.id('submit')).click()
@@ -147,18 +150,7 @@ describe 'Short Form', ->
 
   describe 'selecting live/work member, then going back and forth to prev page', ->
     it 'should still show uploader fields', ->
-      url = "/listings/#{listingId}/apply/name"
-      openUrlFromCurrent(url)
-      fillOutYouPageOne()
-      fillOutYouPageTwo()
-      noAltContactLivesAlone()
-
-      # skip first preference page
-      element(By.id('submit')).click()
-
-      selectLiveInLiveWork()
-      selectLiveSfMember('Jane Doe')
-
+      fillOutUpToLiveWorkPreferencePage()
       # back to first preference page
       browser.navigate().back()
       element(By.id('submit')).click()
