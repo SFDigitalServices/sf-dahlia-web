@@ -22,9 +22,7 @@ angular.module('dahlia.directives')
       scope.isGeneral() && scope.isBucket()
 
     scope.show = ->
-      if scope.isBucket()
-        return true if scope.isGeneral() && scope.appTotal()
-        return true if scope.unitsAvailable()
+      return true if scope.isBucket() && scope.appTotal()
       return true if scope.isRank() && scope.rankForPreference()
       false
 

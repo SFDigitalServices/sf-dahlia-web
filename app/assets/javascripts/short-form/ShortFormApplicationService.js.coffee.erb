@@ -486,8 +486,7 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.listingIs = (listing, name) ->
-    ListingService.listingIs(listing, name)
+  Service.listingIs = ListingService.listingIs
 
   return Service
 

@@ -63,6 +63,8 @@
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
+              setTimeout(ListingService.getListingPreferences)
+              setTimeout(ListingService.getLotteryBuckets)
         ]
         application: [
           '$stateParams', 'ShortFormApplicationService',

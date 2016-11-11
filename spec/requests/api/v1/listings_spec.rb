@@ -47,11 +47,17 @@ describe 'Listings API' do
       end
     end
   end
-  # TO DO: Convert other listings specs to QA env so this test can pass locally
   describe 'lottery buckets' do
     save_fixture do
       VCR.use_cassette('listings/lottery-buckets') do
         get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
+      end
+    end
+  end
+  describe 'listing preferences' do
+    save_fixture do
+      VCR.use_cassette('listings/preferences') do
+        get '/api/v1/listings/a0WU000000BmpBdMAJ/preferences.json'
       end
     end
   end
@@ -123,21 +129,6 @@ describe 'Listings API' do
     expect(json['ami'].length).to eq(9)
   end
 
-  # it 'gets Lottery Preferences' do
-  #   VCR.use_cassette('listings/lottery-preferences') do
-  #     get '/api/v1/listings/lottery-preferences.json'
-  #   end
-
-  #   json = JSON.parse(response.body)
-
-  #   # test for the 200 status-code
-  #   expect(response).to be_success
-
-  #   # check to make sure the right amount of lottery preferences are returned
-  #   # (based on VCR cassette with 5 results)
-  #   expect(json['lottery_preferences'].length).to eq(5)
-  # end
-
   it 'gets Unit results for a Listing' do
     VCR.use_cassette('listings/units') do
       get '/api/v1/listings/a0Wf0000003j03WEAQ/units.json'
@@ -177,5 +168,17 @@ describe 'Listings API' do
     expect(response).to be_success
 
     expect(json['lottery_buckets']['bucketResults'].length).to eq(5)
+  end
+
+  it 'gets lottery preferences for a Listing' do
+    VCR.use_cassette('listings/preferences') do
+      get '/api/v1/listings/a0WU000000BmpBdMAJ/preferences.json'
+    end
+
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json['preferences'].length).to eq(2)
   end
 end

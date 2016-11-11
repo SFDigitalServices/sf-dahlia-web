@@ -38,7 +38,7 @@ ListingController = (
   $scope.lotterySearchNumber = ''
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
-  $scope.loadingLotteryResults = false
+  $scope.loading = ListingService.loading
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -94,12 +94,7 @@ ListingController = (
     lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
-    $scope.loadingLotteryResults = true
-    ListingService.getLotteryBuckets().then( ->
-      $scope.loadingLotteryResults = false
-      $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
-      ListingService.openLotteryResultsModal()
-    )
+    ListingService.openLotteryResultsModal()
 
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
@@ -159,10 +154,10 @@ ListingController = (
     if $scope.lotterySearchNumber == ''
       $scope.lotteryRankingSubmitted = false
     else
-      $scope.loadingLotteryResults = true
+      $scope.loading.lotteryRank = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         $scope.lotteryRankingSubmitted = true
-        $scope.loadingLotteryResults = false
+        $scope.loading.lotteryRank = false
       )
 
   $scope.submittedApplication = ->
@@ -177,112 +172,18 @@ ListingController = (
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
-  # TODO: -- REMOVE HARDCODED FEATURES --
-  $scope.showLotteryPreferences = ->
-    $scope.listingIsAny([
-      '480 Potrero'
-      'Alchemy'
-      '21 Clarence'
-      '168 Hyde'
-      'Olume'
-      '3445 Geary'
-      '125 Mason'
-      'Argenta 909'
-      'Northpoint Vistas'
-      '280 Brighton'
-    ])
+  $scope.showLotteryResultsModalButton = ->
+    ListingService.listingHasLotteryBuckets()
 
   $scope.showDownloadLotteryResultsButton = ->
-    return false unless $scope.listing.LotteryResultsURL
-    $scope.listingIsAny([
-      'Rincon'
-      '77 Bluxome'
-      'Potrero 1010'
-      '529 Stevenson'
-      '888 Paris'
-      '168 Hyde'
-      '125 Mason'
-      '3445 Geary'
-      'Northpoint Vistas'
-    ])
+    $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
+  $scope.listingHasPreferences = ->
+    $scope.listing.preferences && $scope.listing.preferences.length
+
+  # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
-    ListingService.listingIs($scope.listing, name)
-
-  $scope.listingIsAny = (names) ->
-    ListingService.listingIsAny($scope.listing, names)
-
-  $scope.positionOfPreference = (pref) ->
-    prefs = []
-    prefs.push('COP') if $scope.listing.COPUnits
-    prefs.push('DTHP') if $scope.listing.DTHPUnits
-    prefs.push('NRHP') if $scope.listing.NRHPUnits
-    if pref != 'liveWork'
-      pos = prefs.indexOf(pref) + 1
-    else
-      pos = prefs.length + 1
-    return pos
-
-  $scope.getOrdinal = (n) ->
-    s = ['th', 'st', 'nd', 'rd']
-    v = n % 100
-    (s[(v - 20) % 10] or s[v] or s[0])
-
-  if ($scope.listingIs('Alchemy'))
-    $scope.listing.COPUnits = 50
-    $scope.listing.DTHPUnits = 10
-    $scope.listing.NRHPUnits = 20
-    $scope.listing.supervisorialDistrict = 8
-
-  if ($scope.listingIs('480 Potrero'))
-    $scope.listing.COPUnits = 11
-    $scope.listing.DTHPUnits = 2
-    $scope.listing.NRHPUnits = 4
-    $scope.listing.supervisorialDistrict = 10
-
-  if ($scope.listingIs('21 Clarence'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 1
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('168 Hyde'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 0
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('Olume'))
-    $scope.listing.COPUnits = 18
-    $scope.listing.DTHPUnits = 3
-    $scope.listing.NRHPUnits = 7
-    $scope.listing.supervisorialDistrict = 6
-
-  if ($scope.listingIs('3445 Geary'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 0
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('125 Mason'))
-    $scope.listing.COPUnits = 3
-    $scope.listing.DTHPUnits = 3
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('Argenta 909'))
-    $scope.listing.COPUnits = 1
-    $scope.listing.DTHPUnits = 1
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('Northpoint Vistas'))
-    $scope.listing.COPUnits = 2
-    $scope.listing.DTHPUnits = 2
-    $scope.listing.NRHPUnits = 0
-
-  if ($scope.listingIs('280 Brighton'))
-    $scope.listing.COPUnits = 3
-    $scope.listing.DTHPUnits = 0
-    $scope.listing.NRHPUnits = 0
-  # ------------------------------
-
-
+    ListingService.listingIs(name)
 
 
 ############################################################################################
