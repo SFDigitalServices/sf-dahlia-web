@@ -31,7 +31,6 @@ do ->
       fakeIncomeCalculatorService.deleteIncome = jasmine.createSpy()
       fakeIncomeCalculatorService.nextId = jasmine.createSpy()
       fakeIncomeCalculatorService.newIncomeSource = () ->
-        return
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
@@ -47,49 +46,33 @@ do ->
     describe 'scope defaults are set', ->
       it 'populates $scope.income with default income source', ->
         expect(scope.income).toEqual defaultIncomeSource
-        return
 
       it 'populates $scope.incomeSources with income sources from the IncomeCalc Service', ->
         expect(scope.incomeSources).toEqual fakeIncomeSources
-        return
 
       it 'assigns $scope.additionalIncome as false', ->
         expect(scope.additionalIncome).toEqual false
-        return
-      return
 
     describe '$scope.noIncomeSources', ->
       describe 'incomeSources is not empty', ->
         it 'returns false', ->
           expect(scope.noIncomeSources()).toEqual false
-          return
-        return
-      return
 
     describe '$scope.hasIncomeSources', ->
       describe 'incomeSources is not empty', ->
         it 'returns true', ->
           expect(scope.hasIncomeSources()).toEqual true
-          return
-        return
-      return
 
     describe '$scope.toggleIncomeEditForm', ->
       describe 'income.editing is false', ->
         it 'toggles income editing value', ->
           expect(scope.hasIncomeSources()).toEqual true
-          return
-        return
-      return
 
     describe '$scope.toggleAdditionalIncomeForm', ->
       describe '$scope.additionalIncome is false', ->
         it 'toggles additionalIncome value', ->
           scope.toggleAdditionalIncomeForm()
           expect(scope.additionalIncome).toEqual true
-          return
-        return
-      return
 
     describe '$scope.addAdditionalIncome', ->
       beforeEach ->
@@ -99,26 +82,19 @@ do ->
 
       it 'calls IncomeCalculatorService.function', ->
         expect(fakeIncomeCalculatorService.addIncomeSource).toHaveBeenCalled()
-        return
 
       it 'resets scope.income to a new income source', ->
         expect(fakeIncomeCalculatorService.newIncomeSource).toHaveBeenCalled()
-        return
-      return
 
     describe '$scope.totalHouseholdIncome', ->
       it 'expects IncomeCalculatorService.function to be called', ->
         scope.totalHouseholdIncome()
         expect(fakeIncomeCalculatorService.calculateTotalYearlyIncome).toHaveBeenCalled()
-        return
-      return
 
     describe '$scope.deleteIncome', ->
       it 'expects IncomeCalculatorService.function to be called', ->
         scope.deleteIncome(fakeIncomeSource)
         expect(fakeIncomeCalculatorService.deleteIncome).toHaveBeenCalled()
-        return
-      return
 
     describe '$scope.resetIncomeSource', ->
       beforeEach ->
@@ -127,28 +103,17 @@ do ->
 
       it 'called newIncomeSource function in IncomeCalculatorService', ->
         expect(fakeIncomeCalculatorService.newIncomeSource).toHaveBeenCalled()
-        return
 
       it 'assigns scope.income to default income values', ->
         expect(scope.income).toEqual(defaultIncomeSource)
-        return
-      return
 
     describe '$scope.closeAdditionalIncomeForm', ->
       it 'assigns scope.additionalIncome to false', ->
         scope.additionalIncome = true
         scope.closeAdditionalIncomeForm()
         expect(scope.additionalIncome).toEqual(false)
-        return
-      return
 
     describe 'scope.nextId', ->
       it 'calls nextId from IncomeCalculatorService', ->
         scope.nextId()
         expect(fakeIncomeCalculatorService.nextId).toHaveBeenCalled()
-        return
-      return
-  return
-
-#nextID
-
