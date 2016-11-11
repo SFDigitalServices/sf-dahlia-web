@@ -8,8 +8,8 @@ angular.module('dahlia.directives')
     scope.description = attrs.translatedDescription
     scope.labelledby = attrs.labelledby
     scope.pref_data_event = attrs.dataevent
-    # re-initialize the liveWork preference
-    scope.preference = scope.application.preferences.liveWorkInSf_preference
+    # note: preference data also gets re-initialized via ng-init in the template
+    # because the template has access to the parent functions
 
     scope.reset_livework_data = ->
       prefs = ['workInSf', 'liveInSf']
