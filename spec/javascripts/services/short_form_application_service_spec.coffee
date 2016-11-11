@@ -161,6 +161,13 @@ do ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
           return
+
+        it 'sets householdMember.noAddress if hasSameAddressAsApplicant = "No Address"', ->
+          fakeHouseholdMember.hasSameAddressAsApplicant = 'No Address'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
+          expect(householdMember.noAddress).toEqual true
+          return
         return
 
       describe 'old household member update', ->
@@ -228,6 +235,15 @@ do ->
       it 'should clear householdMember object', ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
         return
+
+    describe 'fullHousehold', ->
+      it 'contains the primary applicant', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.indexOf(ShortFormApplicationService.applicant) > -1).toEqual true
+
+      it 'has array length of household plus one', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
 
     describe 'refreshPreferences', ->
       describe 'applicant does not work in SF', ->

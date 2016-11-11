@@ -330,6 +330,7 @@ class Api::V1::ShortFormController < ApiController
                 lastName
                 middleName
                 hasSameAddressAsApplicant
+                noAddress
                 workInSf
                 relationship
                 dob

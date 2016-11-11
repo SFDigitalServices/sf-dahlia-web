@@ -324,8 +324,8 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->
-    if $scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
-        $scope.householdMember.neighborhoodPreferenceMatch
+    noAddress = _.includes(['Yes', 'No Address'], $scope.householdMember.hasSameAddressAsApplicant)
+    if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)

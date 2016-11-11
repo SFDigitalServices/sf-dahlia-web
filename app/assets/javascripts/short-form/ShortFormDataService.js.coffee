@@ -241,10 +241,6 @@ ShortFormDataService = () ->
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
-    # these "noXXX" fields will be stored in salesforce in a later story
-    # applicant.noPhone = !contact.phone
-    # applicant.noAddress = !contact.address
-    # applicant.hasAltMailingAddress = !_.isEqual(applicant.mailing_address, applicant.home_address)
     applicant.additionalPhone = !! contact.alternatePhone
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
@@ -263,11 +259,15 @@ ShortFormDataService = () ->
   Service._reformatHouseholdMember = (contact) ->
     whitelist = [
       'appMemberId', 'firstName', 'middleName', 'lastName',
-      'relationship', 'neighborhoodPreferenceMatch',
+      'relationship', 'neighborhoodPreferenceMatch', 'noAddress'
     ]
     member = _.pick contact, whitelist
     member.home_address = Service._reformatHomeAddress(contact)
-    member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
+    if member.noAddress
+      # this is how it's modeled in the form
+      member.hasSameAddressAsApplicant = 'No Address'
+    else
+      member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
     member.workInSf = Service._reformatBoolean(contact.workInSf)
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
