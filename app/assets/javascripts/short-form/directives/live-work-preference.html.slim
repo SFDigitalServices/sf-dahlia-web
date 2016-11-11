@@ -1,5 +1,5 @@
 parent-preference
-  preference-checkbox-live-work
+  preference-checkbox-live-work ng-init="select_liveWork_preference({reset: false})"
   .form-group.input-inset ng-if='live_or_work_selected()'
     preference-member-selector label="{{'LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME' | translate}}"
     preference-proof-uploader
