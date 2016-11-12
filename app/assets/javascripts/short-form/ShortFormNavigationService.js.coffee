@@ -52,7 +52,7 @@ ShortFormNavigationService = (
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'preferences-programs': {callback: ['checkIfPreferencesApply']}
-    'live-work-preference': {path: 'income-vouchers'}
+    'live-work-preference': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
@@ -154,9 +154,7 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
-      when 'general-lottery-notice'
-        'preferences-programs'
-      when 'income-vouchers'
+      when 'general-lottery-notice', 'income-vouchers'
         if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
           'live-work-preference'
         else

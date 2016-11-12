@@ -257,9 +257,14 @@ ShortFormApplicationService = (
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
-    !Service.eligibleForLiveWorkOrNRHP() &&
-    !Service.preferences.displaced &&
-    !Service.preferences.certOfPreference
+    prefList = [
+      'certOfPreference'
+      'displaced'
+      'liveInSf'
+      'neighborhoodResidence'
+      'workInSf'
+    ]
+    return !_.some(_.pick(Service.preferences, prefList))
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
