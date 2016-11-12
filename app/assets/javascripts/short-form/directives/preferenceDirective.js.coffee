@@ -20,9 +20,10 @@ angular.module('dahlia.directives')
     scope.select_liveWork_preference = (opts = {}) ->
       scope.reset_livework_data() if opts.reset
       preference = scope.application.preferences.liveWorkInSf_preference
-      scope.preference = preference
-      scope.setup_preference_variables(preference)
-      scope.preferences[preference] = true
+      if preference
+        scope.preference = preference
+        scope.setup_preference_variables(preference)
+        scope.preferences[preference] = true
 
     scope.refresh_member_dropdown = ->
       oneEligibleWithHouseholdMembers = (scope.eligible_members().length == 1) && (scope._householdSize() > 1)
