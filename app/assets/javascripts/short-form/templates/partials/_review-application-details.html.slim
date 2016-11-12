@@ -66,6 +66,9 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
 review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to="dahlia.short-form-application.preferences-programs"
 
 .app-inner
+  review-summary-item label="{{'LABEL.PREFERENCES' | translate}}" ng-if="applicantHasNoPreferences()"
+    | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
+
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
     | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
@@ -88,6 +91,5 @@ review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-
   review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
     | {{applicationVouchersSubsidies()}}
 
-  .info-item.margin-bottom
-    h4.info-item_name
-      | {{ applicationIncomeAmount() }}
+  review-summary-item label="{{'LABEL.INCOME' | translate}}"
+    | {{ applicationIncomeAmount() }}
