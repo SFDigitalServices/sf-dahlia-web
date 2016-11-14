@@ -63,10 +63,10 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
       | {{member.home_address.zip}}
 
 / Self-declared status
-review-summary-section header="{{'LABEL.SELF_DECLARED_STATUS' | translate}}" to="dahlia.short-form-application.preferences-programs"
+review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
 
 .app-inner
-  review-summary-item label="{{'LABEL.PREFERENCES' | translate}}" ng-if="applicantHasNoPreferences()"
+  p.info-item_name ng-if="applicantHasNoPreferences()"
     | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
 
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
