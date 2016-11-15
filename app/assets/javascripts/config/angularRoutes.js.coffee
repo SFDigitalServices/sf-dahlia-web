@@ -43,6 +43,10 @@
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListings()
         ]
+        $title: ['$title', '$translate', ($title, $translate) ->
+          # translate used without ".instant" so that it will async resolve
+          $translate('PAGE_TITLE.LISTINGS')
+        ]
     })
     .state('dahlia.listing', {
       url: '/listings/:id',
@@ -54,23 +58,30 @@
           controller: 'ListingController'
       resolve:
         listing: [
-          '$stateParams', 'ListingService',
-          ($stateParams, ListingService) ->
+          '$stateParams', '$q', 'ListingService',
+          ($stateParams, $q, ListingService) ->
+            deferred = $q.defer()
             ListingService.getListing($stateParams.id).then ->
+              deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
                 return $state.go('dahlia.welcome')
+
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
+            return deferred.promise
         ]
         application: [
           '$stateParams', 'ShortFormApplicationService',
           ($stateParams, ShortFormApplicationService) ->
             # check if user has already applied to this listing
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id)
+        ]
+        $title: ['$title', 'listing', ($title, listing) ->
+          listing.Name
         ]
     })
     ##########################
@@ -263,6 +274,9 @@
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.FAVORITES')
+        ]
     })
     ##########################
     # </ End Account/Login >
@@ -312,12 +326,20 @@
       views:
         'container@':
           templateUrl: 'pages/templates/disclaimer.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.DISCLAIMER')
+        ]
     })
     .state('dahlia.privacy', {
       url: '/privacy'
       views:
         'container@':
           templateUrl: 'pages/templates/privacy.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.PRIVACY')
+        ]
     })
     .state('dahlia.share', {
       url: '/share/:id'
@@ -325,6 +347,14 @@
         'container@':
           templateUrl: 'pages/templates/share.html'
           controller: 'ShareController'
+      resolve:
+        $title: ['$title', '$translate', 'ListingService', ($title, $translate, ListingService) ->
+          if !_.isEmpty(ListingService.listing)
+            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingService.listing.Name})
+          else
+            $translate('PAGE_TITLE.SHARE_LISTING', {listing: 'Listing'})
+        ]
+
     })
     .state('dahlia.eligibility-estimator', {
       url: '/eligibility-estimator'
@@ -364,12 +394,20 @@
       views:
         'container@':
           templateUrl: 'pages/templates/get-assistance.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.GET_ASSISTANCE')
+        ]
     })
     .state('dahlia.additional-resources',{
       url: '/additional-resources'
       views:
         'container@':
           templateUrl: 'pages/templates/additional-resources.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
+        ]
     })
     ##########################
     # Short form application #

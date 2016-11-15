@@ -7,6 +7,7 @@
   'ng-currency',
   # dependencies
   'ui.router',
+  'ui.router.title',
   'angular-clipboard',
   'templates',
   'mm.foundation',

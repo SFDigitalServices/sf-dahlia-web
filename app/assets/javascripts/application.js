@@ -14,6 +14,7 @@
 //= require angular
 //= require angular-foundation
 //= require angular-ui-router
+//= require angular-ui-router-title
 //= require angular-rails-templates
 //= require angular-pageslide-directive
 //= require ngstorage
