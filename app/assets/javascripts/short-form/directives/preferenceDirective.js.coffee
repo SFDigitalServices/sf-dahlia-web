@@ -19,10 +19,20 @@ angular.module('dahlia.directives')
 
     scope.select_liveWork_preference = (opts = {}) ->
       scope.reset_livework_data() if opts.reset
-      preference = scope.application.preferences.liveWorkInSf_preference
-      scope.preference = preference
-      scope.setup_preference_variables(preference)
-      scope.preferences[preference] = true
+      prefs = scope.preferences
+      # have to check for the case where you had already chosen live or work (individual)
+      # but now have changed your eligibility to where you will see the liveWork combo
+      if !prefs.liveWorkInSf_preference && (prefs.liveInSf || prefs.workInSf)
+        preference = 'liveInSf' if prefs.liveInSf
+        preference = 'workInSf' if prefs.workInSf
+        prefs.liveWorkInSf_preference = preference
+        prefs.liveWorkInSf = true
+      # liveWorkInSf_preference will be 'liveInSf', 'workInSf' or undefined
+      preference = prefs.liveWorkInSf_preference
+      if preference
+        scope.preference = preference
+        scope.setup_preference_variables(preference)
+        scope.preferences[preference] = true
 
     scope.refresh_member_dropdown = ->
       oneEligibleWithHouseholdMembers = (scope.eligible_members().length == 1) && (scope._householdSize() > 1)
