@@ -8,6 +8,7 @@ ShortFormApplicationService = (
   Service.form = {}
   Service.accountApplication = {}
   Service.application = {}
+  Service._householdEligibility = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -193,7 +194,9 @@ ShortFormApplicationService = (
         incomelevel: Service._calculateHouseholdIncome()
         childrenUnder6: Service._childrenUnder6()
     $http.post("/api/v1/short-form/validate-household", params).success((data, status, headers, config) ->
-      data
+      # assigning value to object for now to make function unit testable
+      angular.copy(data, Service._householdEligibility)
+      return Service.householdEligibility
     ).error( (data, status, headers, config) ->
       return
     )
