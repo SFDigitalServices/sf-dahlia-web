@@ -56,7 +56,7 @@
   $translateProvider
     .preferredLanguage('en')
     .fallbackLanguage('en')
-    .useSanitizeValueStrategy('sanitize')
+    .useSanitizeValueStrategy('sceParameters')
     .useStaticFilesLoader(
       prefix: '/translations/locale-'
       suffix: ".json?t=#{timestamp}"

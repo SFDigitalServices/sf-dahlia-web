@@ -141,6 +141,10 @@
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
       ]
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.SIGN_IN')
+        ]
     })
     .state('dahlia.short-form-application.sign-in', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -154,6 +158,10 @@
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
       ]
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.SIGN_IN')
+        ]
     })
     .state('dahlia.forgot-password', {
       url: '/forgot-password'
@@ -308,18 +316,30 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-chinese.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.WELCOME_CHINESE')
+        ]
     })
     .state('dahlia.welcome-spanish', {
       url: '/welcome-spanish'
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.WELCOME_SPANISH')
+        ]
     })
     .state('dahlia.welcome-filipino', {
       url: '/welcome-filipino'
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-filipino.html'
+      resolve:
+        $title: ['$title', '$translate', ($title, $translate) ->
+          $translate('PAGE_TITLE.WELCOME_FILIPINO')
+        ]
     })
     .state('dahlia.disclaimer', {
       url: '/disclaimer'

@@ -391,7 +391,11 @@
         "GET_ASSISTANCE": "Get Assistance",
         "LISTINGS": "Listings",
         "PRIVACY": "Privacy Policy",
-        "SHARE_LISTING": "Share {{name}}"
+        "SHARE_LISTING": "Share {{name}}",
+        "SIGN_IN": "Sign In",
+        "WELCOME_CHINESE": "中文",
+        "WELCOME_FILIPINO": "Filipino",
+        "WELCOME_SPANISH": "Español"
     },
     "PRIVACY_POLICY": {
         "COOKIES_P1": "We use cookies when providing online services such as online applications. We use cookies to improve quality of our service.",
