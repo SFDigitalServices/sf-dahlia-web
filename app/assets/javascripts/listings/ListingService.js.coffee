@@ -170,7 +170,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     )
 
   Service.getListings = (opts = {}) ->
-    # check for default state
+    # check for eligibility options being set in the session
     if opts.checkEligibility && Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
     $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
