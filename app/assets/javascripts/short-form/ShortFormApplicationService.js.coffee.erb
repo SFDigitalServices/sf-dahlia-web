@@ -461,6 +461,10 @@ ShortFormApplicationService = (
         Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
         Service.copyNeighborhoodMatchToHousehold()
         callback()
+      ).error( ->
+        # if there was a problem with the GeocodingService...
+        # you won't be matched to neighborhood, but at least you won't get stuck.
+        callback()
       )
     )
 
