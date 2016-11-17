@@ -386,9 +386,12 @@
     },
     "PAGE_TITLE": {
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
+        "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
+        "ELIGIBILITY_ESTIMATOR": "Estimate Your Eligibility",
         "FAVORITES": "My Favorites",
         "GET_ASSISTANCE": "Get Assistance",
+        "HOUSING_COUNSELORS": "Housing Counselors",
         "LISTINGS": "Listings",
         "PRIVACY": "Privacy Policy",
         "SHARE_LISTING": "Share {{name}}",

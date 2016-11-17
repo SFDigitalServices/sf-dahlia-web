@@ -32,6 +32,10 @@
         'container@':
           templateUrl: 'pages/templates/housing-counselors.html',
           controller: 'HousingCounselorsController'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.HOUSING_COUNSELORS')
+        ]
     })
     .state('dahlia.listings', {
       url: '/listings'
@@ -41,9 +45,9 @@
           controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings()
+          ListingService.getListings({checkEligibility: true})
         ]
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
           $translate('PAGE_TITLE.LISTINGS')
         ]
@@ -100,6 +104,10 @@
         AccountService.resetUserAuth()
         AccountService.unlockFields()
       ]
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.CREATE_ACCOUNT')
+        ]
     })
     .state('dahlia.short-form-application.create-account', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -115,6 +123,10 @@
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.CREATE_ACCOUNT')
+        ]
     })
     .state('dahlia.sign-in', {
       url: '/sign-in?expiredUnconfirmed&expiredConfirmed&redirectTo'
@@ -142,7 +154,7 @@
           AccountService.afterLoginRedirect($stateParams.redirectTo)
       ]
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.SIGN_IN')
         ]
     })
@@ -159,7 +171,7 @@
         AccountService.resetUserAuth()
       ]
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.SIGN_IN')
         ]
     })
@@ -282,7 +294,7 @@
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.FAVORITES')
         ]
     })
@@ -299,6 +311,9 @@
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavoriteListings()
         ]
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.FAVORITES')
+        ]
     })
     .state('dahlia.welcome', {
       url: '/'
@@ -308,7 +323,7 @@
           templateUrl: 'pages/templates/welcome.html'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings()
+          ListingService.getListings({checkEligibility: false})
         ]
     })
     .state('dahlia.welcome-chinese', {
@@ -317,7 +332,7 @@
         'container@':
           templateUrl: 'pages/templates/welcome-chinese.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
         ]
     })
@@ -327,7 +342,7 @@
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
         ]
     })
@@ -337,7 +352,7 @@
         'container@':
           templateUrl: 'pages/templates/welcome-filipino.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')
         ]
     })
@@ -347,7 +362,7 @@
         'container@':
           templateUrl: 'pages/templates/disclaimer.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.DISCLAIMER')
         ]
     })
@@ -357,7 +372,7 @@
         'container@':
           templateUrl: 'pages/templates/privacy.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.PRIVACY')
         ]
     })
@@ -382,6 +397,10 @@
         'container@':
           templateUrl: 'pages/templates/eligibility-estimator.html'
           controller: 'EligibilityEstimatorController'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.ELIGIBILITY_ESTIMATOR')
+        ]
     })
     .state('dahlia.income-calculator', {
       url: '/income-calculator'
@@ -415,7 +434,7 @@
         'container@':
           templateUrl: 'pages/templates/get-assistance.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.GET_ASSISTANCE')
         ]
     })
@@ -425,7 +444,7 @@
         'container@':
           templateUrl: 'pages/templates/additional-resources.html'
       resolve:
-        $title: ['$title', '$translate', ($title, $translate) ->
+        $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
         ]
     })
