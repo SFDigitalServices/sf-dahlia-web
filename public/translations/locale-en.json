@@ -351,7 +351,7 @@
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
-        "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please check each one in order to confirm your ranking.",
+        "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
         "CERT_OF_PREFERENCE": "Certificate of Preference",
         "DTHP": "Displaced Tenants Housing Preference",
         "GENERAL_POOL": "General Pool",
