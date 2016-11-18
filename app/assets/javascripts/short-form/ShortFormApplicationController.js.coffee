@@ -274,14 +274,24 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
-  $scope.checkIfPreferencesApply = () ->
-    if $scope._preferencesApplyForHousehold()
+  # this is called after d1-preferences-programs
+  $scope.checkIfPreferencesApply = ->
+    if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
       $state.go('dahlia.short-form-application.live-work-preference')
     else
-      $state.go('dahlia.short-form-application.general-lottery-notice')
+      $scope.checkIfNoPreferencesSelected()
 
-  $scope._preferencesApplyForHousehold = () ->
-    ShortFormApplicationService.preferencesApplyForHousehold()
+  # this is called after d2-live-work-preference (and also inside of the above function)
+  $scope.checkIfNoPreferencesSelected = ->
+    if ShortFormApplicationService.applicantHasNoPreferences()
+      # only show general lottery notice if they have no preferences
+      $state.go('dahlia.short-form-application.general-lottery-notice')
+    else
+      # otherwise go to the Income section
+      $state.go('dahlia.short-form-application.income-vouchers')
+
+  $scope.applicantHasNoPreferences = ->
+    ShortFormApplicationService.applicantHasNoPreferences()
 
   $scope.checkPreferenceEligibility = () ->
     ShortFormApplicationService.refreshPreferences()

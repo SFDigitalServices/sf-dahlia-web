@@ -21,6 +21,10 @@ describe 'Short Form', ->
   beforeEach ->
     EC = protractor.ExpectedConditions
 
+    ############################
+    # --- Helper Functions --- #
+    ############################
+
     fillOutYouPageOne = ->
       element(By.model('applicant.firstName')).sendKeys('Jane')
       element(By.model('applicant.lastName')).sendKeys('Doe')
@@ -44,7 +48,11 @@ describe 'Short Form', ->
       element(By.id('live_alone')).click()
 
     skipPreferences = ->
+      # skip d1
       element(By.id('submit')).click()
+      # skip d2 (because we did mark workInSf, this page will show up)
+      element(By.id('submit')).click()
+      # also skip general lottery notice
       element(By.id('submit')).click()
 
     incomeWithVoucher = ->
@@ -114,13 +122,16 @@ describe 'Short Form', ->
       selectLiveInLiveWork()
       selectLiveSfMember('Jane Doe')
 
+  ######################
+  # --- Test Cases --- #
+  ######################
+
   it 'should submit an application successfully', ->
     url = "/listings/#{listingId}/apply/name"
     browser.get url
     submitBasicApp()
     lotteryNumberMarkup = element(By.id('lottery_number'))
     expect(lotteryNumberMarkup.getText()).toBeTruthy()
-    return
 
   it 'should allow the user to create an account on save draft', ->
     url = "/listings/#{listingId}/apply/name"
@@ -130,7 +141,6 @@ describe 'Short Form', ->
     createAccount()
     lotteryNumberMarkup = element(By.id('confirmation_needed'))
     expect(lotteryNumberMarkup.getText()).toBeTruthy()
-    return
 
   describe 'opting in to live/work then saying no on workInSf', ->
     it 'should select live preference', ->
@@ -145,8 +155,6 @@ describe 'Short Form', ->
 
       liveInSf = element(By.id('preferences-liveInSf'))
       browser.wait(EC.elementToBeSelected(liveInSf), 5000)
-      return
-    return
 
   describe 'selecting live/work member, then going back and forth to prev page', ->
     it 'should still show uploader fields', ->
@@ -161,6 +169,3 @@ describe 'Short Form', ->
       ).first()
       # expect the member selection field to still be there
       expect(liveInSfMember.getText()).toBeTruthy()
-      return
-    return
-  return
