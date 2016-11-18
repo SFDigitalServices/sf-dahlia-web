@@ -26,32 +26,18 @@ do ->
       describe 'expects $scope.clipboardLink to be called and return link', ->
         it 'calls clipboardLink and returns link', ->
           expect(scope.textToCopy.indexOf('http')).toEqual 0
-          return
-        return
-      return
 
     describe '$scope.clipboardLink', ->
       describe 'calles clipboardLink', ->
         it 'returns a link', ->
           expect(scope.clipboardLink().indexOf('http')).toEqual 0
-          return
-        return
-      return
 
     describe '$scope.clipboardSuccess', ->
       describe 'toggles clipboardSuccess', ->
         it 'returns true', ->
           expect(scope.clipboardSuccess()).toEqual true
-          return
-        return
-      return
 
     describe '$scope.closeShareSuccess', ->
       describe 'toggles closeShareSuccess', ->
         it 'returns false', ->
           expect(scope.closeShareSuccess()).toEqual false
-          return
-        return
-      return
-
-  return
