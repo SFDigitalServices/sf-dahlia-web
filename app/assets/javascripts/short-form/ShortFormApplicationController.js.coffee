@@ -290,6 +290,9 @@ ShortFormApplicationController = (
       # otherwise go to the Income section
       $state.go('dahlia.short-form-application.income-vouchers')
 
+  $scope.applicantHasNoPreferences = ->
+    ShortFormApplicationService.applicantHasNoPreferences()
+
   $scope.checkPreferenceEligibility = () ->
     ShortFormApplicationService.refreshPreferences()
 
