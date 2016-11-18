@@ -252,12 +252,22 @@ ShortFormApplicationService = (
       household.unshift(Service.applicant)
     household
 
-  Service.preferencesApplyForHousehold = ->
+  Service.eligibleForLiveWorkOrNRHP = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
     neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
-    displacedOrCertOfPreference = Service.preferences.displaced || Service.preferences.certOfPreference
-    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
+    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible)
+
+  Service.applicantHasNoPreferences = ->
+    # true if no preferences are selected at all
+    prefList = [
+      'certOfPreference'
+      'displaced'
+      'liveInSf'
+      'neighborhoodResidence'
+      'workInSf'
+    ]
+    return !_.some(_.pick(Service.preferences, prefList))
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
