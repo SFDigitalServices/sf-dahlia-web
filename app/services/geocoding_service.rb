@@ -5,7 +5,7 @@ require 'http'
 class GeocodingService
   attr_reader :address
 
-  API_URL = 'https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates'.freeze
+  API_URL = ENV['GEOCODING_SERVICE_URL'].freeze
 
   def initialize(address)
     @address = address

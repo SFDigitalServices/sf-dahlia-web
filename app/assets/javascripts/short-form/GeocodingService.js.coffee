@@ -27,7 +27,7 @@ GeocodingService = ($http, ShortFormDataService) ->
       match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
       Service.neighborhoodPreferenceMatch = match
     ).error( (data, status, headers, config) ->
-      # error
+      Service.neighborhoodPreferenceMatch = 'Not Matched'
     )
 
   return Service

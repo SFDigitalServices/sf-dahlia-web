@@ -447,6 +447,10 @@ ShortFormApplicationService = (
   Service.validateApplicantAddress = (callback) ->
     # validate + geocode address
     # errors are handled in the controller
+    afterGeocode = ->
+      Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.copyNeighborhoodMatchToHousehold()
+      callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
@@ -457,15 +461,9 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
-      ).success( ->
-        Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
-        Service.copyNeighborhoodMatchToHousehold()
-        callback()
-      ).error( ->
-        # if there was a problem with the GeocodingService...
-        # you won't be matched to neighborhood, but at least you won't get stuck.
-        callback()
-      )
+      ).success(afterGeocode)
+      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      .error(afterGeocode)
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
