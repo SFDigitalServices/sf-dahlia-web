@@ -32,6 +32,8 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
     !! Service.preferences["#{fileType}_loading"]
 
   Service.uploadProof = (file, prefType, docType, listing_id) ->
+    # re-initializing Service.preferences here seems to fix some strange issues
+    Service.preferences = ShortFormApplicationService.preferences
     fileType = "#{prefType}_proof_file"
     if (!file)
       Service.preferences["#{fileType}_error"] = true
