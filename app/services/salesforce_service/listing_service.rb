@@ -16,7 +16,6 @@ module SalesforceService
     def self.eligible_listings(filters)
       results = api_get('/ListingDetails', filters, true)
       # sort the matched listings to the top of the list
-      # TODO: replace with sorting on the JS side
       results.partition { |i| i['Does_Match'] }.flatten
     end
 
@@ -30,6 +29,11 @@ module SalesforceService
       cached_api_get("/Listing/Units/#{listing_id}", nil, true)
     end
 
+    # get all preferences for a given listing
+    def self.preferences(listing_id)
+      cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
+    end
+
     # get AMI
     def self.ami(percent = 100)
       results = cached_api_get("/ami?percent=#{percent}", nil, true)
@@ -38,7 +42,7 @@ module SalesforceService
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
-      api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
+      cached_api_get("/Listing/LotteryResult/Bucket/#{listing_id}", nil, false)
     end
 
     # get Individual Lottery Result with rankings

@@ -23,8 +23,6 @@ do ->
         $scope: scope
         $state: state
         $modalInstance: fakeModalInstance
-
-      return
     )
 
     describe '$scope.closeModal', ->
@@ -32,7 +30,3 @@ do ->
         it 'calls the modalInstance to close', ->
           scope.closeModal()
           expect(fakeModalInstance.close).toHaveBeenCalled()
-          return
-        return
-      return
-  return

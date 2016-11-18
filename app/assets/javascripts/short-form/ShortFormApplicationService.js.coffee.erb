@@ -8,6 +8,7 @@ ShortFormApplicationService = (
   Service.form = {}
   Service.accountApplication = {}
   Service.application = {}
+  Service._householdEligibility = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -193,7 +194,9 @@ ShortFormApplicationService = (
         incomelevel: Service._calculateHouseholdIncome()
         childrenUnder6: Service._childrenUnder6()
     $http.post("/api/v1/short-form/validate-household", params).success((data, status, headers, config) ->
-      data
+      # assigning value to object for now to make function unit testable
+      angular.copy(data, Service._householdEligibility)
+      return Service.householdEligibility
     ).error( (data, status, headers, config) ->
       return
     )
@@ -249,12 +252,22 @@ ShortFormApplicationService = (
       household.unshift(Service.applicant)
     household
 
-  Service.preferencesApplyForHousehold = ->
+  Service.eligibleForLiveWorkOrNRHP = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
     neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
-    displacedOrCertOfPreference = Service.preferences.displaced || Service.preferences.certOfPreference
-    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
+    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible)
+
+  Service.applicantHasNoPreferences = ->
+    # true if no preferences are selected at all
+    prefList = [
+      'certOfPreference'
+      'displaced'
+      'liveInSf'
+      'neighborhoodResidence'
+      'workInSf'
+    ]
+    return !_.some(_.pick(Service.preferences, prefList))
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
@@ -487,8 +500,7 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.listingIs = (listing, name) ->
-    ListingService.listingIs(listing, name)
+  Service.listingIs = ListingService.listingIs
 
   return Service
 

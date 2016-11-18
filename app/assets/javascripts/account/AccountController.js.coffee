@@ -34,6 +34,7 @@ AccountController = (
     $scope.form.signIn ||
     $scope.form.createAccount ||
     $scope.form.updatePassword ||
+    $scope.form.passwordReset ||
     $scope.form.current
 
   $scope.closeAlert = ->
@@ -111,7 +112,16 @@ AccountController = (
       $scope.handleErrorState()
 
   $scope.requestPasswordReset = ->
-    AccountService.requestPasswordReset()
+    form = $scope.form.passwordReset
+    if form.$valid
+      AnalyticsService.trackFormSuccess('Accounts')
+      $scope.submitDisabled = false
+      AccountService.requestPasswordReset().then( (success) ->
+        $scope.submitDisabled = false
+      )
+    else
+      AnalyticsService.trackFormError('Accounts')
+      $scope.handleErrorState()
 
   $scope.updatePassword = (type) ->
     $scope.form.current = $scope.form.accountPassword

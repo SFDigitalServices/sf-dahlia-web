@@ -15,9 +15,15 @@ describe 'Short Form', ->
   openUrlFromCurrent = undefined
   selectLiveInLiveWork = undefined
   selectLiveSfMember = undefined
+  fillOutUpToLiveWorkPreferencePage = undefined
+  listingId = 'a0W0P00000DYUcpUAH'
 
   beforeEach ->
     EC = protractor.ExpectedConditions
+
+    ############################
+    # --- Helper Functions --- #
+    ############################
 
     fillOutYouPageOne = ->
       element(By.model('applicant.firstName')).sendKeys('Jane')
@@ -42,7 +48,11 @@ describe 'Short Form', ->
       element(By.id('live_alone')).click()
 
     skipPreferences = ->
+      # skip d1
       element(By.id('submit')).click()
+      # skip d2 (because we did mark workInSf, this page will show up)
+      element(By.id('submit')).click()
+      # also skip general lottery notice
       element(By.id('submit')).click()
 
     incomeWithVoucher = ->
@@ -99,27 +109,8 @@ describe 'Short Form', ->
         elem.isDisplayed()
       ).first().click()
 
-  it 'should submit an application successfully', ->
-    url = '/listings/a0W0P00000DYUcpUAH/apply/name'
-    browser.get url
-    submitBasicApp()
-    lotteryNumberMarkup = element(By.id('lottery_number'))
-    expect(lotteryNumberMarkup.getText()).toBeTruthy()
-    return
-
-  it 'should allow the user to create an account on save draft', ->
-    url = '/listings/a0W0P00000DYUcpUAH/apply/name'
-    openUrlFromCurrent(url)
-    fillOutYouPageOne()
-    element(By.id('save_and_finish_later')).click()
-    createAccount()
-    lotteryNumberMarkup = element(By.id('confirmation_needed'))
-    expect(lotteryNumberMarkup.getText()).toBeTruthy()
-    return
-
-  describe 'opting in to live/work then saying no on workInSf', ->
-    it 'should select live preference', ->
-      url = '/listings/a0W0P00000DYUcpUAH/apply/name'
+    fillOutUpToLiveWorkPreferencePage = ->
+      url = "/listings/#{listingId}/apply/name"
       openUrlFromCurrent(url)
       fillOutYouPageOne()
       fillOutYouPageTwo()
@@ -131,6 +122,29 @@ describe 'Short Form', ->
       selectLiveInLiveWork()
       selectLiveSfMember('Jane Doe')
 
+  ######################
+  # --- Test Cases --- #
+  ######################
+
+  it 'should submit an application successfully', ->
+    url = "/listings/#{listingId}/apply/name"
+    browser.get url
+    submitBasicApp()
+    lotteryNumberMarkup = element(By.id('lottery_number'))
+    expect(lotteryNumberMarkup.getText()).toBeTruthy()
+
+  it 'should allow the user to create an account on save draft', ->
+    url = "/listings/#{listingId}/apply/name"
+    openUrlFromCurrent(url)
+    fillOutYouPageOne()
+    element(By.id('save_and_finish_later')).click()
+    createAccount()
+    lotteryNumberMarkup = element(By.id('confirmation_needed'))
+    expect(lotteryNumberMarkup.getText()).toBeTruthy()
+
+  describe 'opting in to live/work then saying no on workInSf', ->
+    it 'should select live preference', ->
+      fillOutUpToLiveWorkPreferencePage()
       # go back to You section and change to workinsf_no
       element(By.cssContainingText('.progress-nav_item', 'You')).click()
       element(By.id('submit')).click()
@@ -141,6 +155,17 @@ describe 'Short Form', ->
 
       liveInSf = element(By.id('preferences-liveInSf'))
       browser.wait(EC.elementToBeSelected(liveInSf), 5000)
-      return
-    return
-  return
+
+  describe 'selecting live/work member, then going back and forth to prev page', ->
+    it 'should still show uploader fields', ->
+      fillOutUpToLiveWorkPreferencePage()
+      # back to first preference page
+      browser.navigate().back()
+      element(By.id('submit')).click()
+
+      # there are multiple liveInSf_household_members, click the visible one
+      liveInSfMember = element.all(By.id('liveInSf_household_member')).filter((elem) ->
+        elem.isDisplayed()
+      ).first()
+      # expect the member selection field to still be there
+      expect(liveInSfMember.getText()).toBeTruthy()

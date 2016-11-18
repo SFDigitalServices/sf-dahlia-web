@@ -14,6 +14,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   # these get loaded after the listing is loaded
   Service.AMI = []
   Service.maxIncomeLevels = []
+  Service.loading = {}
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -103,6 +104,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       controller: 'ModalInstanceController',
       windowClass: 'modal-small'
     })
+
+  Service.listingHasLotteryBuckets = ->
+    Service.listing.Lottery_Buckets &&
+    _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
     # If Street address is undefined, then return false for display and google map lookup
@@ -276,11 +281,28 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       return
     )
 
-  Service.getLotteryBuckets = ->
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
-      if data && data.lottery_buckets.bucketResults
-        Service.listing.Lottery_Buckets = data.lottery_buckets
+  Service.getListingPreferences = ->
+    # TODO: -- REMOVE HARDCODED FEATURES --
+    Service.stubListingPreferences()
+    # if this listing had stubbed preferences then we can abort
+    return if !_.isEmpty(Service.listing.preferences)
+    ## <--
+    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
+      if data && data.preferences
+        Service.listing.preferences = data.preferences
     ).error( (data, status, headers, config) ->
+      return
+    )
+
+  Service.getLotteryBuckets = ->
+    Service.listing.Lottery_Buckets = {}
+    Service.loading.lotteryResults = true
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
+      Service.loading.lotteryResults = false
+      if data && data.lottery_buckets.bucketResults
+        angular.copy(data.lottery_buckets, Service.listing.Lottery_Buckets)
+    ).error( (data, status, headers, config) ->
+      Service.loading.lotteryResults = false
       return
     )
 
@@ -322,11 +344,128 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
 
-  Service.listingIs = (listing, name) ->
-    Service.LISTING_MAP[listing.Id] == name
+  Service.listingIs = (name) ->
+    Service.LISTING_MAP[Service.listing.Id] == name
 
-  Service.listingIsAny = (listing, names) ->
-    _.includes(names, Service.LISTING_MAP[listing.Id])
+  Service.stubListingPreferences = ->
+    opts = null
+    if (Service.listingIs('Alchemy'))
+      opts = {
+        COPUnits: 50
+        DTHPUnits: 10
+        NRHPUnits: 20
+        NRHPDistrict: 8
+      }
+    if (Service.listingIs('480 Potrero'))
+      opts = {
+        COPUnits: 11
+        DTHPUnits: 2
+        NRHPUnits: 4
+        NRHPDistrict: 10
+      }
+    if (Service.listingIs('21 Clarence'))
+      opts = {
+        COPUnits: 1
+        DTHPUnits: 1
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('168 Hyde'))
+      opts = {
+        COPUnits: 1
+        DTHPUnits: 0
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('Olume'))
+      opts = {
+        COPUnits: 18
+        DTHPUnits: 3
+        NRHPUnits: 7
+        NRHPDistrict: 6
+      }
+    if (Service.listingIs('3445 Geary'))
+      opts = {
+        COPUnits: 1
+        DTHPUnits: 0
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('125 Mason'))
+      opts = {
+        COPUnits: 3
+        DTHPUnits: 3
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('Argenta 909'))
+      opts = {
+        COPUnits: 1
+        DTHPUnits: 1
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('Northpoint Vistas'))
+      opts = {
+        COPUnits: 2
+        DTHPUnits: 2
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('280 Brighton'))
+      opts = {
+        COPUnits: 3
+        DTHPUnits: 0
+        NRHPUnits: 0
+      }
+    if opts
+      Service.stubPreferences(opts)
+
+  Service.stubPreferences = (options) ->
+    defaults = [
+      {
+        preferenceName: 'Certificate of Preference (COP)'
+        description: '''
+          Households in which one member holds a Certificate of Preference from the former San Francisco
+          Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
+          '''
+        unitsAvailable: options.COPUnits
+        readMoreUrl: 'http://sfmohcd.org/certificate-preference'
+      },
+      {
+        preferenceName: 'Displaced Tenant Housing Preference (DTHP)'
+        description: '''
+          Households in which one member holds a Displaced Tenant Housing Preference Certificate.
+          DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction
+          or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled,
+          remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
+          '''
+        unitsAvailable: options.DTHPUnits
+        readMoreUrl: 'http://sfmohcd.org/displaced-tenant-housing-preference-program-0'
+      },
+      {
+        preferenceName: 'Neighborhood Resident Housing Preference (NRHP)'
+        description: """
+          Households that submit acceptable documentation that at least one member lives either within supervisorial
+          District #{options.NRHPDistrict} or within a half-mile of the project.
+          """
+        unitsAvailable: options.NRHPUnits
+        readMoreUrl: 'http://sfmohcd.org/neighborhood-resident-housing-preference'
+      },
+      {
+        preferenceName: 'Live/Work Preference'
+        description: '''
+          Households that submit acceptable documentation that at least one member lives or works in San Francisco.
+          In order to claim Work Preference, you or a household member must currently work in San Francisco at least
+          75% of your working hours.
+          '''
+        unitsAvailable: 'Remaining'
+        readMoreUrl: 'http://sfmohcd.org/housing-preference-programs'
+      }
+    ]
+
+    preferences = []
+    i = 1
+    defaults.forEach (pref) ->
+      if pref.unitsAvailable
+        pref.order = i++
+        preferences.push(pref)
+
+    Service.listing.preferences = preferences
 
 
   return Service

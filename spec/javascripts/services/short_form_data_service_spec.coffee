@@ -23,11 +23,9 @@ do ->
 
       it 'attaches given listingID', ->
         expect(formattedApp.listingID).toEqual(fakeListingId)
-        return
 
       it 'renames applicant to primaryApplicant', ->
         expect(formattedApp.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
-        return
 
       it 'sends stringified JSON for formMetadata', ->
         metadata = JSON.stringify({completedSections: fakeApplication.completedSections})
@@ -36,15 +34,12 @@ do ->
     describe 'reformatApplication', ->
       beforeEach ->
         reformattedApp = ShortFormDataService.reformatApplication(fakeSalesforceApplication)
-        return
 
       it 'renames primaryApplicant to applicant', ->
         expect(reformattedApp.applicant.firstName).toEqual(fakeSalesforceApplication.primaryApplicant.firstName)
-        return
 
       it 'reformats mailing address', ->
         expect(reformattedApp.applicant.mailing_address.address1).toEqual("4053 18TH ST")
-        return
 
       it 'reformats stringified JSON formMetadata', ->
         expect(reformattedApp.completedSections.Intro).toEqual(true)
@@ -52,12 +47,9 @@ do ->
     describe 'maxDOBDay', ->
       it 'gives max of 30 for appropriate months', ->
         expect(ShortFormDataService.maxDOBDay(4, 2001)).toEqual(30)
-        return
 
       it 'gives max of 31 for appropriate months', ->
         expect(ShortFormDataService.maxDOBDay(5, 2001)).toEqual(31)
-        return
 
       it 'gives max of 29 for leap year', ->
         expect(ShortFormDataService.maxDOBDay(2, 2000)).toEqual(29)
-        return
