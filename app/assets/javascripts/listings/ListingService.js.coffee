@@ -81,6 +81,24 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       minMax = [min, max]
     return minMax
 
+  Service.hasPreference = (preference) ->
+    hasPreference = null
+    preferenceNames = _.map(Service.listing.preferences, Service._returnPreferenceName)
+
+    preferenceMap =
+      certOfPreference: "Certificate of Preference (COP)"
+      displaced: "Displaced Tenant Housing Preference (DTHP)"
+      liveWorkInSf: "Live/Work Preference"
+      liveInSf: "Live/Work Preference"
+      workInSf: "Live/Work Preference"
+      neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+
+    _.forEach preferenceMap, (value, key) ->
+      if (preference == key) && _.includes(preferenceNames, value)
+        hasPreference = true
+
+    return hasPreference
+
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
     incomeLevels = []
@@ -347,6 +365,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.listingIs = (name) ->
     Service.LISTING_MAP[Service.listing.Id] == name
+
+  Service._returnPreferenceName = (preference) ->
+    return preference.preferenceName
 
   Service.stubListingPreferences = ->
     opts = null
