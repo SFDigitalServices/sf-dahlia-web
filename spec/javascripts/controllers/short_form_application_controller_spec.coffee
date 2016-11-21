@@ -10,6 +10,7 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json').listing
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
+    fakeListingService = {}
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -118,6 +119,7 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        ListingService: fakeListingService
       return
     )
 
