@@ -86,9 +86,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     preferenceMap =
       certOfPreference: "Certificate of Preference (COP)"
       displaced: "Displaced Tenant Housing Preference (DTHP)"
-      liveWorkInSf: "Live/Work Preference"
-      liveInSf: "Live/Work Preference"
-      workInSf: "Live/Work Preference"
+      liveWorkInSf: "Live or Work in San Francisco Preference"
+      liveInSf: "Live or Work in San Francisco Preference"
+      workInSf: "Live or Work in San Francisco Preference"
       neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
 
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
