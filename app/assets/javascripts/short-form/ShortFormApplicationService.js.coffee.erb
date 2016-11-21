@@ -8,6 +8,7 @@ ShortFormApplicationService = (
   Service.form = {}
   Service.accountApplication = {}
   Service.application = {}
+  Service._householdEligibility = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -196,7 +197,9 @@ ShortFormApplicationService = (
         incomelevel: Service._calculateHouseholdIncome()
         childrenUnder6: Service._childrenUnder6()
     $http.post("/api/v1/short-form/validate-household", params).success((data, status, headers, config) ->
-      data
+      # assigning value to object for now to make function unit testable
+      angular.copy(data, Service._householdEligibility)
+      return Service.householdEligibility
     ).error( (data, status, headers, config) ->
       return
     )
@@ -252,12 +255,22 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.preferencesApplyForHousehold = ->
+  Service.eligibleForLiveWorkOrNRHP = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
     neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
-    displacedOrCertOfPreference = Service.preferences.displaced || Service.preferences.certOfPreference
-    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible || displacedOrCertOfPreference)
+    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible)
+
+  Service.applicantHasNoPreferences = ->
+    # true if no preferences are selected at all
+    prefList = [
+      'certOfPreference'
+      'displaced'
+      'liveInSf'
+      'neighborhoodResidence'
+      'workInSf'
+    ]
+    return !_.some(_.pick(Service.preferences, prefList))
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
@@ -447,6 +460,10 @@ ShortFormApplicationService = (
   Service.validateApplicantAddress = (callback) ->
     # validate + geocode address
     # errors are handled in the controller
+    afterGeocode = ->
+      Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.copyNeighborhoodMatchToHousehold()
+      callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
@@ -457,16 +474,18 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
-      ).success( ->
-        Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
-        Service.copyNeighborhoodMatchToHousehold()
-        callback()
-      )
+      ).success(afterGeocode)
+      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      .error(afterGeocode)
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
     # validate + geocode address
     # errors are handled in the controller
+    afterGeocode = ->
+      Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.addHouseholdMember(Service.householdMember)
+      callback()
     AddressValidationService.validate(
       address: Service.householdMember.home_address
       type: 'home'
@@ -476,11 +495,9 @@ ShortFormApplicationService = (
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
-      ).success( ->
-        Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
-        Service.addHouseholdMember(Service.householdMember)
-        callback()
-      )
+      ).success(afterGeocode)
+      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      .error(afterGeocode)
     )
 
   Service.DOBValid = ShortFormDataService.DOBValid

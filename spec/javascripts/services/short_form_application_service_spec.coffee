@@ -6,6 +6,7 @@ do ->
     fakeListing = undefined
     fakeShortForm = getJSONFixture('short-form-example.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
+    validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
     fakeSFAddress =
       address1: '123 Main St.'
@@ -216,6 +217,15 @@ do ->
         hh = ShortFormApplicationService.fullHousehold()
         expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
 
+    describe 'fullHousehold', ->
+      it 'contains the primary applicant', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.indexOf(ShortFormApplicationService.applicant) > -1).toEqual true
+
+      it 'has array length of household plus one', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
+
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
@@ -383,6 +393,15 @@ do ->
           expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
           expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
 
+    describe 'eligibleForLiveWorkOrNRHP', ->
+      it 'returns true if someone is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.workInSf = 'Yes'
+        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual true
+
+      it 'returns false if nobody is eligible for live/work/NRHP', ->
+        ShortFormApplicationService.applicant.workInSf = 'No'
+        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual false
+
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}
@@ -508,3 +527,90 @@ do ->
       it 'should importUserData into current application', ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
+
+    describe 'clearPhoneData', ->
+      describe 'type is alternate', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.noPhone = true
+          ShortFormApplicationService.applicant.alternatePhone = '2222222222'
+          ShortFormApplicationService.applicant.alternatePhoneType = 'Home'
+
+        it 'clears noPhone, alternatePhone and alternatePhoneType', ->
+          ShortFormApplicationService.clearPhoneData('alternate')
+          expect(ShortFormApplicationService.applicant.noPhone).toEqual false
+          expect(ShortFormApplicationService.applicant.alternatePhone).toEqual null
+          expect(ShortFormApplicationService.applicant.alternatePhoneType).toEqual null
+
+      describe 'type is phone', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.additionalPhone = true
+          ShortFormApplicationService.applicant.phone = '2222222222'
+          ShortFormApplicationService.applicant.phoneType = 'Home'
+
+        it 'clears additionalPhone, phone and phoneType', ->
+          ShortFormApplicationService.clearPhoneData('phone')
+          expect(ShortFormApplicationService.applicant.additionalPhone).toEqual false
+          expect(ShortFormApplicationService.applicant.phone).toEqual null
+          expect(ShortFormApplicationService.applicant.phoneType).toEqual null
+
+    describe 'cancelPreference', ->
+      beforeEach ->
+        ShortFormApplicationService.preferences["liveInSf"] = true
+        ShortFormApplicationService.preferences["liveInSf_household_member"] = 'Jane Doe'
+        ShortFormApplicationService.preferences["liveInSf_proof_option"] = 'Telephone Bill'
+        ShortFormApplicationService.preferences["liveInSf_proof_file"] = 'Some file'
+
+      it 'should clear preference name, household member, proof option and file', ->
+        ShortFormApplicationService.cancelPreference("liveInSf")
+        expect(ShortFormApplicationService.preferences["liveInSf"]).toEqual null
+        expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
+        expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
+        expect(ShortFormApplicationService.preferences["liveInSf_proof_file"]).toEqual null
+
+    describe 'checkHouseholdEligiblity', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'should make validate-household api request', ->
+        ShortFormApplicationService.application.householdIncome =
+          incomeTotal: 22222
+          incomeTimeframe: 'per_year'
+        requestUrl = "/api/v1/short-form/validate-household"
+        stubAngularAjaxRequest httpBackend, requestURL, validateHouseholdMatch
+        ShortFormApplicationService.checkHouseholdEligiblity(fakeListing)
+        httpBackend.flush()
+        expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
+
+    describe 'loadApplication', ->
+      it 'reformats the application', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        data =
+          application: fakeShortForm
+        ShortFormApplicationService.loadApplication(data)
+        expect(fakeDataService.reformatApplication)
+          .toHaveBeenCalledWith(data.application, [])
+
+      it 'resets user data', ->
+        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        data =
+          application: fakeShortForm
+        ShortFormApplicationService.loadApplication(data)
+        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+
+    describe 'loadAccountApplication', ->
+      beforeEach ->
+        spyOn(fakeDataService, 'reformatApplication').and.returnValue({application: 'someapp'})
+
+      it 'reformats the application', ->
+        data =
+          application: fakeShortForm
+        ShortFormApplicationService.loadAccountApplication(data)
+        expect(fakeDataService.reformatApplication)
+          .toHaveBeenCalledWith(data.application)
+
+      it 'assigns accountApplication to formatted app', ->
+        data =
+          application: fakeShortForm
+        ShortFormApplicationService.loadAccountApplication(data)
+        expect(ShortFormApplicationService.accountApplication)
+          .toEqual({application: 'someapp'})
