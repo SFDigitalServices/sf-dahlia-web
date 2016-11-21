@@ -461,12 +461,15 @@ ShortFormApplicationController = (
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
-    if pref_type == 'workInSf'
-      ShortFormHelperService.preference_proof_options_work
-    else if pref_type == 'liveInSf'
-      ShortFormHelperService.preference_proof_options_live
-    else
-      ShortFormHelperService.preference_proof_options_default
+    switch pref_type
+      when 'workInSf'
+        ShortFormHelperService.preference_proof_options_work
+      when 'liveInSf'
+        ShortFormHelperService.preference_proof_options_live
+      when 'neighborhoodResidence'
+        ShortFormHelperService.preference_proof_options_live
+      else
+        ShortFormHelperService.preference_proof_options_default
 
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)

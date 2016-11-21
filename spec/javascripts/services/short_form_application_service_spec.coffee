@@ -8,22 +8,17 @@ do ->
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
-    fakeHouseholdMember = undefined
-    fakeAddress =
+    fakeSFAddress =
       address1: '123 Main St.'
       city: 'San Francisco'
       state: 'CA'
       zip: '94109'
-    fakeApplicant =
-      firstName: 'Bob'
-      lastName: 'Williams'
-      dob_month: '07'
-      dob_day: '05'
-      dob_year: '2015'
-      relationship: 'Cousin'
-      workInSf: 'Yes'
-      preferences: {liveInSf: null, workInSf: null}
-      home_address: fakeAddress
+    fakeNonSFAddress =
+      address1: '312 Delaware RD'
+      address2: ''
+      city: 'Mount Shasta'
+    fakeApplicant = undefined
+    fakeHouseholdMember = undefined
     fakeListingService =
       listing:
         Id: ''
@@ -36,8 +31,31 @@ do ->
       trackFormAbandon: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
-
-    beforeEach module('dahlia.services', ($provide)->
+    setupFakeApplicant = (attributes) ->
+      fakeApplicant = _.assign {
+        firstName: 'Bob'
+        lastName: 'Williams'
+        dob_month: '07'
+        dob_day: '05'
+        dob_year: '2015'
+        relationship: 'Cousin'
+        workInSf: 'Yes'
+        preferences: {liveInSf: null, workInSf: null}
+        home_address: fakeSFAddress
+      }, attributes
+    setupFakeHouseholdMember = (attributes) ->
+      fakeHouseholdMember = _.assign {
+        firstName: 'Ethel'
+        lastName: 'O\'Keefe'
+        dob_month: '09'
+        dob_day: '27'
+        dob_year: '1966'
+        relationship: 'Cousin'
+      }, attributes
+    resetFakePeople = ->
+      fakeApplicant = undefined
+      fakeHouseholdMember = undefined
+    beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
@@ -50,126 +68,90 @@ do ->
       httpBackend = _$httpBackend_
       ShortFormApplicationService = _ShortFormApplicationService_
       requestURL = ShortFormApplicationService.requestURL
-      return
     )
 
     describe 'Service setup', ->
       it 'initializes applicant defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.applicant
         expect(ShortFormApplicationService.applicant).toEqual expectedDefault
-        return
 
       it 'initializes application defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults
         expect(ShortFormApplicationService.application).toEqual expectedDefault
-        return
 
       it 'initializes alternateContact defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.alternateContact
         expect(ShortFormApplicationService.alternateContact).toEqual expectedDefault
-        return
-      return
 
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.completedSections
         ShortFormApplicationService.userCanAccessSection('')
         expect(ShortFormApplicationService.application.completedSections).toEqual expectedDefault
-        return
 
       it 'does not initially allow access to later sections', ->
         expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
-        return
-      return
 
 
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
-        ShortFormApplicationService.applicant.home_address = fakeAddress
+        ShortFormApplicationService.applicant.home_address = fakeSFAddress
         ShortFormApplicationService.copyHomeToMailingAddress()
         expect(ShortFormApplicationService.applicant.mailing_address).toEqual ShortFormApplicationService.applicant.home_address
-        return
-      return
 
     describe 'validMailingAddress', ->
       it 'invalidates if all mailing address required values are not present', ->
         expect(ShortFormApplicationService.validMailingAddress()).toEqual false
-        return
+
       it 'validates if all mailing address required values are present', ->
-        ShortFormApplicationService.applicant.mailing_address = fakeAddress
+        ShortFormApplicationService.applicant.mailing_address = fakeSFAddress
         expect(ShortFormApplicationService.validMailingAddress()).toEqual true
-        return
-      return
 
     describe 'getHouseholdMember', ->
       beforeEach ->
-        fakeHouseholdMember =
-          firstName: 'Bob'
-          lastName: 'Williams'
-          dob_month: '07'
-          dob_day: '05'
-          dob_year: '2015'
-          relationship: 'Cousin'
-          id: 1
-        return
-
+        setupFakeHouseholdMember({id: 1})
       afterEach ->
-        fakeHouseholdMember = undefined
-        return
+        resetFakePeople()
 
       it 'returns the householdMember object', ->
         ShortFormApplicationService.householdMembers = [fakeHouseholdMember]
         expect(ShortFormApplicationService.getHouseholdMember(1)).toEqual fakeHouseholdMember
-        return
-      return
 
     describe 'addHouseholdMember', ->
       beforeEach ->
-        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
-        fakeHouseholdMember =
-          firstName: 'Bob'
-          lastName: 'Williams'
-          dob_month: '07'
-          dob_day: '05'
-          dob_year: '2015'
-          relationship: 'Cousin'
+        setupFakeApplicant({neighborhoodPreferenceMatch: 'Matched'})
+        ShortFormApplicationService.applicant = fakeApplicant
+        setupFakeHouseholdMember(
           hasSameAddressAsApplicant: 'Yes'
           neighborhoodPreferenceMatch: null
+        )
         ShortFormApplicationService.householdMembers = []
         ShortFormApplicationService.householdMember = fakeHouseholdMember
         ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-
       afterEach ->
-        fakeHouseholdMember = undefined
-        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = null
+        resetFakePeople()
 
       it 'invalidates the household form', ->
         expect(ShortFormApplicationService.application.completedSections['Household']).toEqual false
-        return
 
       describe 'new household member', ->
         it 'adds an ID to the householdMember object', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.id).toEqual(1)
-          return
 
         it 'adds household member to Service.householdMembers', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
           expect(ShortFormApplicationService.householdMembers[0]).toEqual fakeHouseholdMember
-          return
 
         it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
-          return
 
         it 'sets householdMember.noAddress if hasSameAddressAsApplicant = "No Address"', ->
           fakeHouseholdMember.hasSameAddressAsApplicant = 'No Address'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.noAddress).toEqual true
-          return
-        return
 
       describe 'old household member update', ->
         it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
@@ -180,7 +162,6 @@ do ->
           ShortFormApplicationService.addHouseholdMember(householdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
-          return
 
         it 'does not copy neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant == "No"', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
@@ -191,14 +172,12 @@ do ->
           ShortFormApplicationService.addHouseholdMember(householdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).not.toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
-          return
 
         it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
-          return
 
         it 'updates the name for any preferences attached to the member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
@@ -212,30 +191,31 @@ do ->
           ShortFormApplicationService.addHouseholdMember(householdMember)
           # the name attached to the preference should also update
           expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
-          return
-        return
 
     describe 'cancelHouseholdMember', ->
       beforeEach ->
-        fakeHouseholdMember =
-          firstName: 'Bob'
-          lastName: 'Williams'
-          dob_month: '07'
-          dob_day: '05'
-          dob_year: '2015'
-          relationship: 'Cousin'
+        setupFakeHouseholdMember()
         ShortFormApplicationService.householdMembers = []
         ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
         ShortFormApplicationService.householdMember = fakeHouseholdMember
         ShortFormApplicationService.cancelHouseholdMember()
+      afterEach ->
+        resetFakePeople()
 
       it 'removed household member from list', ->
         expect(ShortFormApplicationService.householdMembers).toEqual []
-        return
 
       it 'should clear householdMember object', ->
         expect(ShortFormApplicationService.householdMember).toEqual {}
-        return
+
+    describe 'fullHousehold', ->
+      it 'contains the primary applicant', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.indexOf(ShortFormApplicationService.applicant) > -1).toEqual true
+
+      it 'has array length of household plus one', ->
+        hh = ShortFormApplicationService.fullHousehold()
+        expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
 
     describe 'fullHousehold', ->
       it 'contains the primary applicant', ->
@@ -247,6 +227,11 @@ do ->
         expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
 
     describe 'refreshPreferences', ->
+      beforeEach ->
+        setupFakeApplicant()
+      afterEach ->
+        resetFakePeople()
+
       describe 'applicant does not work in SF', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
@@ -256,35 +241,22 @@ do ->
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
-          return
-        return
 
       describe 'applicant does not live in SF', ->
         beforeEach ->
-          home_address = {
-            address1: "312 Delaware RD"
-            address2: ""
-            city: "Mount Shasta"
-          }
+          fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.home_address = home_address
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
-          return
 
         describe 'was previously eligible and selected for liveInSf', ->
           beforeEach ->
-            home_address = {
-              address1: "312 Delaware RD"
-              address2: ""
-              city: "Mount Shasta"
-            }
+            fakeApplicant.home_address = fakeNonSFAddress
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
-            ShortFormApplicationService.applicant.home_address = home_address
             ShortFormApplicationService.preferences =
               liveInSf: true
               liveInSf_file: 'somefile'
@@ -297,116 +269,129 @@ do ->
             expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
-            return
-          return
-        return
 
     describe 'liveInSfMembers', ->
+      beforeEach ->
+        setupFakeApplicant()
+        setupFakeHouseholdMember
+          workInSf: 'Yes'
+      afterEach ->
+        resetFakePeople()
+
       describe 'household member has separate sf address', ->
         beforeEach ->
-          home_address = {
-            address1: "312 Delaware RD"
-            address2: ""
-            city: "Mount Shasta"
-          }
+          fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMemberWithAltMailingAddress =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-            hasSameAddressAsApplicant: 'No'
-            home_address: fakeAddress
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMemberWithAltMailingAddress)
+          fakeHouseholdMember.hasSameAddressAsApplicant = 'No'
+          fakeHouseholdMember.home_address = fakeSFAddress
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+
         it 'should return array of household member who lives in SF', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(1)
-          return
-        return
 
       describe 'household member has the same sf address as the applicant', ->
         beforeEach ->
-          home_address = {
-            address1: "312 Delaware RD"
-            address2: ""
-            city: "San Francisco"
-          }
+          fakeApplicant.home_address = fakeSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
-          ShortFormApplicationService.applicant.home_address = home_address
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
-            hasSameAddressAsApplicant: 'Yes'
+          fakeHouseholdMember.hasSameAddressAsApplicant = 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+
         it 'should return an array of both applicant and household member', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(2)
-          return
-        return
-      return
 
     describe 'workInSfMembers', ->
+      beforeEach ->
+        setupFakeApplicant()
+        setupFakeHouseholdMember()
+      afterEach ->
+        resetFakePeople()
+
       describe 'only applicant works in SF', ->
         beforeEach ->
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'No'
+          fakeApplicant.workInSf = 'Yes'
           ShortFormApplicationService.applicant = fakeApplicant
+          fakeHouseholdMember.workInSf = 'No'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.workInSf = 'Yes'
+
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers()).toEqual([ShortFormApplicationService.applicant])
-          return
-        return
 
       describe 'only household member works in SF', ->
         beforeEach ->
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
+          fakeApplicant.workInSf = 'No'
           ShortFormApplicationService.applicant = fakeApplicant
+          fakeHouseholdMember.workInSf = 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.workInSf = 'No'
+
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers()).toEqual([fakeHouseholdMember])
-          return
-        return
 
       describe 'both applicant and household member work in SF', ->
         beforeEach ->
-          fakeHouseholdMember =
-            firstName: 'Bob'
-            lastName: 'Williams'
-            dob_month: '07'
-            dob_day: '05'
-            dob_year: '2015'
-            relationship: 'Cousin'
-            workInSf: 'Yes'
+          fakeApplicant.workInSf = 'Yes'
           ShortFormApplicationService.applicant = fakeApplicant
+          fakeHouseholdMember.workInSf = 'Yes'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          ShortFormApplicationService.applicant.workInSf = 'Yes'
+
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
-          return
-        return
-        # TODO: write test for household who lives in SF.
+
+    describe 'neighborhoodResidenceMembers', ->
+      beforeEach ->
+        setupFakeApplicant()
+        setupFakeHouseholdMember()
+        ShortFormApplicationService.applicant = fakeApplicant
+      afterEach ->
+        resetFakePeople()
+
+      describe 'applicant doesn\'t have neighborhood preference', ->
+        it 'returns array without applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+
+      describe 'applicant doesn\'t match neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+
+        it 'returns array without applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+
+      describe 'applicant matches neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+
+        it 'returns array with applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+
+      describe 'household member matches neighborhood preference', ->
+        beforeEach ->
+          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+
+        it 'returns array with household member', ->
+          members = ShortFormApplicationService.neighborhoodResidenceMembers()
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeHouseholdMember)
+
+      describe 'applicant and household member match neighborhood preference', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
+
+        it 'returns array with applicant and household member', ->
+          neighborhoodResidenceMembers = ShortFormApplicationService.neighborhoodResidenceMembers()
+          expect(neighborhoodResidenceMembers.length).toEqual(2)
+          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
+          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
+
+      describe 'applicant does not have address', ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.noAddress = true
+
+        it 'returns array with applicant', ->
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
 
     describe 'eligibleForLiveWorkOrNRHP', ->
       it 'returns true if someone is eligible for NRHP', ->
@@ -452,9 +437,13 @@ do ->
         toState = {name: 'dahlia.create-account'}
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
-      return
 
     describe 'checkSurveyComplete', ->
+      beforeEach ->
+        setupFakeApplicant()
+      afterEach ->
+        resetFakePeople()
+
       it 'should check if survey is incomplete', ->
         ShortFormApplicationService.applicant = fakeApplicant
         ShortFormApplicationService.applicant.gender = {Female: true}
@@ -467,7 +456,6 @@ do ->
         ShortFormApplicationService.applicant.race = 'Fake'
         ShortFormApplicationService.applicant.referral = {Fake: true}
         expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
-      return
 
     describe 'submitApplication', ->
       beforeEach ->
@@ -477,78 +465,68 @@ do ->
       it 'should indicate app status as submitted', ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
-        return
 
       it 'should call formatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
-        return
 
       it 'should indicate app date submitted to be date today', ->
         dateToday = moment().format('YYYY-MM-DD')
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.applicationSubmittedDate).toEqual(dateToday)
-        return
-      return
 
     describe 'getApplication', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
+
       it 'should call reformatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'reformatApplication').and.callThrough()
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
         ShortFormApplicationService.getApplication 'xyz'
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
-        return
-      return
 
     describe 'getMyApplicationForListing', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
+
       it 'should call reformatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'reformatApplication').and.callThrough()
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
         ShortFormApplicationService.getMyApplicationForListing 'xyz'
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
-        return
-      return
 
     describe 'getMyAccountApplication', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
+
       it 'should load application into accountApplication', ->
         spyOn(fakeDataService, 'reformatApplication').and.callThrough()
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
         ShortFormApplicationService.getMyAccountApplication()
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
-        return
-      return
 
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
+        setupFakeApplicant()
         ShortFormApplicationService.application = fakeShortForm
         ShortFormApplicationService.accountApplication = fakeShortForm
         ShortFormApplicationService.accountApplication.id = '99'
+      afterEach ->
+        resetFakePeople()
 
       it 'should inherit id from accountApplication', ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.application.id).toEqual('99')
-        return
-
       it 'should importUserData into current application', ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
-        return
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
@@ -562,8 +540,6 @@ do ->
           expect(ShortFormApplicationService.applicant.noPhone).toEqual false
           expect(ShortFormApplicationService.applicant.alternatePhone).toEqual null
           expect(ShortFormApplicationService.applicant.alternatePhoneType).toEqual null
-          return
-        return
 
       describe 'type is phone', ->
         beforeEach ->
@@ -576,8 +552,6 @@ do ->
           expect(ShortFormApplicationService.applicant.additionalPhone).toEqual false
           expect(ShortFormApplicationService.applicant.phone).toEqual null
           expect(ShortFormApplicationService.applicant.phoneType).toEqual null
-          return
-        return
 
     describe 'cancelPreference', ->
       beforeEach ->
@@ -592,7 +566,6 @@ do ->
         expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_proof_file"]).toEqual null
-        return
 
     describe 'checkHouseholdEligiblity', ->
       afterEach ->
@@ -607,7 +580,6 @@ do ->
         ShortFormApplicationService.checkHouseholdEligiblity(fakeListing)
         httpBackend.flush()
         expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
-        return
 
     describe 'loadApplication', ->
       it 'reformats the application', ->
@@ -617,7 +589,6 @@ do ->
         ShortFormApplicationService.loadApplication(data)
         expect(fakeDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application, [])
-        return
 
       it 'resets user data', ->
         spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
@@ -625,7 +596,6 @@ do ->
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
         expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
-        return
 
     describe 'loadAccountApplication', ->
       beforeEach ->
@@ -637,7 +607,6 @@ do ->
         ShortFormApplicationService.loadAccountApplication(data)
         expect(fakeDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application)
-        return
 
       it 'assigns accountApplication to formatted app', ->
         data =
@@ -645,5 +614,3 @@ do ->
         ShortFormApplicationService.loadAccountApplication(data)
         expect(ShortFormApplicationService.accountApplication)
           .toEqual({application: 'someapp'})
-        return
-return
