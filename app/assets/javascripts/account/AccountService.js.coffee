@@ -70,7 +70,6 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
       Service.userAuth.user.resetPwdEmailSent = true
     ).catch (resp) ->
       Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_NOT_FOUND")
-    return
 
   Service.updatePassword = (type) ->
     Service.clearAccountMessages()

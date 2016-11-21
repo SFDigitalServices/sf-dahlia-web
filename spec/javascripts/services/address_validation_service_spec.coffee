@@ -32,18 +32,15 @@ do ->
     describe 'Service setup', ->
       it 'initializes defaults', ->
         expect(AddressValidationService.validated_mailing_address).toEqual {}
-        return
-      return
+
       it 'initializes defaults', ->
         expect(AddressValidationService.validated_home_address).toEqual {}
-        return
-      return
 
     describe 'Service.validate', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
+
       it 'assigns validated address with results from validation service', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeValidResult
         AddressValidationService.validate({
@@ -52,7 +49,7 @@ do ->
         })
         httpBackend.flush()
         expect(AddressValidationService.validated_home_address).toEqual fakeValidResult.address
-        return
+
       it 'determines if valid address is deliverable', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeValidResult
         AddressValidationService.validate({
@@ -62,7 +59,7 @@ do ->
         httpBackend.flush()
         result = AddressValidationService.isDeliverable(AddressValidationService.validated_home_address)
         expect(result).toEqual true
-        return
+
       it 'determines if invalid address failed validation', ->
         stubAngularAjaxErrorRequest httpBackend, requestURL, fakeInvalidResult
         AddressValidationService.validate({
@@ -72,7 +69,3 @@ do ->
         httpBackend.flush()
         result = AddressValidationService.failedValidation(AddressValidationService.validated_home_address)
         expect(result).toEqual true
-        return
-      return
-
-  return
