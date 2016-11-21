@@ -42,17 +42,13 @@ do ->
     describe 'scope defaults are set', ->
       it 'populates $scope.filters with filter values from ListingService', ->
         expect(scope.filters).toEqual eligibilityFilterDefaults
-        return
 
       it 'populates $scope.hideAlert as false', ->
         expect(scope.hideAlert).toEqual false
-        return
 
       describe 'IncomeCalculatorService.calculateTotalYearlyIncome is 0', ->
         it 'populates $scope.filter_defaults with default filters', ->
           expect(scope.filter_defaults).toEqual eligibilityFilterDefaults
-          return
-        return
 
       describe 'IncomeCalculatorService.calculateTotalYearlyIncome is > 0', ->
         beforeEach inject(($rootScope, $controller) ->
@@ -65,20 +61,15 @@ do ->
             $state: state
             IncomeCalculatorService: fakeIncomeCalculatorService
             ListingService: fakeListingService
-          return
         )
         it 'assigns filters.income_total with calculated yearly income', ->
           expect(scope.filters.income_total).toEqual income
-          return
-        return
 
       describe 'resetChildrenUnder6', ->
         it 'resets filters.children_under_6 value', ->
           scope.filters.children_under_6 = '1'
           scope.resetChildrenUnder6()
           expect(scope.filters.children_under_6).toEqual ''
-          return
-        return
 
       describe 'submitForm', ->
         describe 'valid form', ->
@@ -90,12 +81,9 @@ do ->
           it 'calls function to store on filters in ListingService', ->
             expect(fakeListingService.setEligibilityFilters)
               .toHaveBeenCalledWith(scope.filters)
-            return
 
           it 'changes state to dahlia.listings', ->
             expect(state.go).toHaveBeenCalledWith('dahlia.listings')
-            return
-          return
 
         describe 'invalid form', ->
           it 'assigned hideAlert to false', ->
@@ -103,7 +91,6 @@ do ->
             scope.eligibilityForm = { $valid: false }
             scope.submitForm()
             expect(scope.hideAlert).toEqual false
-        return
 
       describe 'clearForm', ->
         beforeEach ->
@@ -117,21 +104,16 @@ do ->
           expect(scope.eligibilityForm.$setUntouched).toHaveBeenCalled()
           expect(scope.eligibilityForm.$setPristine).toHaveBeenCalled()
           expect(scope.hideAlert).toEqual false
-          return
 
         it 'resets filters', ->
           expect(scope.filters).toEqual(eligibilityFilterDefaults)
-          return
 
         it 'calls function to reset filters in ListingService', ->
           expect(fakeListingService.resetEligibilityFilters)
             .toHaveBeenCalled()
-          return
 
         it 'calls IncomeCalc Service to reset income sources', ->
           expect(fakeIncomeCalculatorService.resetIncomeSources).toHaveBeenCalled()
-          return
-        return
 
       describe 'hasCalculatedIncome', ->
         describe 'yearlyIncome greater than zero', ->
@@ -145,21 +127,15 @@ do ->
               $state: state
               IncomeCalculatorService: fakeIncomeCalculatorService
               ListingService: fakeListingService
-            return
           )
           it 'returns true', ->
             expect(scope.hasCalculatedIncome()).toEqual(true)
-          return
+
         describe 'yearlyIncome is zero', ->
           it 'returns false', ->
             expect(scope.hasCalculatedIncome()).toEqual(false)
-          return
 
       describe 'goToIncomeCalculator', ->
         it 'calls function to store current filters into ListingService',->
           scope.goToIncomeCalculator()
           expect(fakeListingService.setEligibilityFilters).toHaveBeenCalledWith(scope.filters)
-          return
-        return
-
-  return

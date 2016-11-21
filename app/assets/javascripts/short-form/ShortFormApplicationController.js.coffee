@@ -274,14 +274,24 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
-  $scope.checkIfPreferencesApply = () ->
-    if $scope._preferencesApplyForHousehold()
+  # this is called after d1-preferences-programs
+  $scope.checkIfPreferencesApply = ->
+    if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
       $state.go('dahlia.short-form-application.live-work-preference')
     else
-      $state.go('dahlia.short-form-application.general-lottery-notice')
+      $scope.checkIfNoPreferencesSelected()
 
-  $scope._preferencesApplyForHousehold = () ->
-    ShortFormApplicationService.preferencesApplyForHousehold()
+  # this is called after d2-live-work-preference (and also inside of the above function)
+  $scope.checkIfNoPreferencesSelected = ->
+    if ShortFormApplicationService.applicantHasNoPreferences()
+      # only show general lottery notice if they have no preferences
+      $state.go('dahlia.short-form-application.general-lottery-notice')
+    else
+      # otherwise go to the Income section
+      $state.go('dahlia.short-form-application.income-vouchers')
+
+  $scope.applicantHasNoPreferences = ->
+    ShortFormApplicationService.applicantHasNoPreferences()
 
   $scope.checkPreferenceEligibility = () ->
     ShortFormApplicationService.refreshPreferences()
@@ -324,8 +334,8 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->
-    if $scope.householdMember.hasSameAddressAsApplicant == 'Yes' ||
-        $scope.householdMember.neighborhoodPreferenceMatch
+    noAddress = _.includes(['Yes', 'No Address'], $scope.householdMember.hasSameAddressAsApplicant)
+    if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)
@@ -451,12 +461,15 @@ ShortFormApplicationController = (
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
-    if pref_type == 'workInSf'
-      ShortFormHelperService.preference_proof_options_work
-    else if pref_type == 'liveInSf'
-      ShortFormHelperService.preference_proof_options_live
-    else
-      ShortFormHelperService.preference_proof_options_default
+    switch pref_type
+      when 'workInSf'
+        ShortFormHelperService.preference_proof_options_work
+      when 'liveInSf'
+        ShortFormHelperService.preference_proof_options_live
+      when 'neighborhoodResidence'
+        ShortFormHelperService.preference_proof_options_live
+      else
+        ShortFormHelperService.preference_proof_options_default
 
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)

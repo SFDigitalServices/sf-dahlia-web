@@ -18,7 +18,6 @@ do ->
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
-
       return
     )
 
@@ -36,26 +35,19 @@ do ->
     describe 'Service setup', ->
       it 'initializes session_uid', ->
         expect(FileUploadService.session_uid).not.toEqual null
-        return
-      return
 
     describe 'Service.uploadProof', ->
       it 'calls Upload.upload function', ->
         FileUploadService.uploadProof(fakeFile, prefType)
         expect(Upload.upload).toHaveBeenCalled()
-        return
-      return
 
     describe 'Service.deletePreferenceFile', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'unsets FileUploadService prefType_proof_file', ->
         stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
         FileUploadService.preferences["#{prefType}_proof_file"] = fakeFile
         FileUploadService.deletePreferenceFile(prefType)
         httpBackend.flush()
         expect(FileUploadService.preferences["#{prefType}_proof_file"]).toEqual null
-        return
-      return

@@ -37,18 +37,13 @@ do ->
     describe 'Service setup', ->
       it 'initializes defaults', ->
         expect(ListingService.listings).toEqual []
-        return
-      return
       it 'initializes defaults', ->
         expect(ListingService.openListings).toEqual []
-        return
-      return
 
     describe 'Service.getListings', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns ListingService listing buckets with grouped arrays of listings', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
         ListingService.getListings()
@@ -63,7 +58,6 @@ do ->
           ListingService.openMatchListings.length +
           ListingService.openNotMatchListings.length
         expect(openLength).toEqual ListingService.openListings.length
-        return
 
       it 'sorts groupedListings based on their dates', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
@@ -72,35 +66,27 @@ do ->
         date1 = ListingService.lotteryResultsListings[0].Lottery_Results_Date
         date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
         expect(date1 >= date2).toEqual true
-        return
 
-      return
 
     describe 'Service.getListing', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns Service.listing with an individual listing', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 'abc123'
         httpBackend.flush()
         expect(ListingService.listing).toEqual fakeListing.listing
-        return
-      return
 
     describe 'Service.getListingAMI', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns Service.AMI with the AMI results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
         ListingService.getListingAMI()
         httpBackend.flush()
         expect(ListingService.AMI).toEqual fakeAMI.ami
-        return
-      return
 
     describe 'Service.maxIncomeLevelsFor', ->
       it 'returns incomeLevels with occupancy, yearly, monthly values', ->
@@ -114,8 +100,6 @@ do ->
         incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
         # number of income levels should == maxOccupancy + 2
         expect(incomeLevels.length).toEqual 5
-        return
-      return
 
     describe 'Service.listingIsOpen', ->
       it 'checks if listing application due date has passed', ->
@@ -124,13 +108,10 @@ do ->
         tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.listingIsOpen(listing)).toEqual true
-        return
-      return
 
     describe 'Service.isAcceptingOnlineApplications', ->
       it 'returns false if an empty listing is passed in', ->
         expect(ListingService.isAcceptingOnlineApplications({})).toEqual false
-        return
 
       it 'returns false if due date has passed', ->
         listing = fakeListing.listing
@@ -138,7 +119,6 @@ do ->
         past.setDate(past.getDate() - 10)
         listing.Application_Due_Date = past.toString()
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
-        return
 
       it 'returns true if due date in future and Accepting_Online_Applications', ->
         listing = fakeListing.listing
@@ -147,9 +127,6 @@ do ->
         tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
-        return
-
-      return
 
     describe 'Service.toggleFavoriteListing', ->
       describe 'When a listing is favorited', ->
@@ -158,17 +135,12 @@ do ->
         beforeEach ->
           ListingService.favorites = $localStorage.favorites = []
           ListingService.toggleFavoriteListing listingId
-          return
-        afterEach ->
-          return
+
         it 'should store Service.favorites in localStorage', ->
           expect($localStorage.favorites).toEqual expectedResult
           expect($localStorage.favorites).toEqual ListingService.favorites
-          return
         it 'should update Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
-          return
-        return
 
       describe 'When a favorited listing is unfavorited', ->
         expectedResult = []
@@ -179,18 +151,12 @@ do ->
           ListingService.toggleFavoriteListing listingId
           #unfavoriting listing
           ListingService.toggleFavoriteListing listingId
-          return
-        afterEach ->
-          return
+
         it 'should update Service.favorites in localStorage', ->
           expect($localStorage.favorites).toEqual expectedResult
           expect($localStorage.favorites).toEqual ListingService.favorites
-          return
         it 'should updated Service.favorites', ->
           expect(ListingService.favorites).toEqual expectedResult
-          return
-        return
-      return
 
     describe 'Service.getFavorites', ->
       describe 'When a listing has been favorited', ->
@@ -199,8 +165,6 @@ do ->
         it 'updates Service.favorites with appropriate data', ->
           ListingService.toggleFavoriteListing 1
           expect(ListingService.favorites).toEqual [1]
-          return
-        return
       describe 'When a favorite is not found', ->
         beforeEach ->
           ListingService.favorites = $localStorage.favorites = []
@@ -216,9 +180,6 @@ do ->
           ListingService.getFavoriteListings()
           httpBackend.flush()
           expect(ListingService.favorites).toEqual []
-          return
-        return
-      return
 
     describe 'Service.setEligibilityFilters', ->
       describe 'When filters have been set', ->
@@ -236,24 +197,18 @@ do ->
           ListingService.setEligibilityFilters(fakeFilters)
           expect(ListingService.eligibility_filters.income_total).toEqual 3500
           expect(ListingService.eligibility_filters.household_size).toEqual 2
-          return
         it 'checks if eligibility filters have been set', ->
           expect(ListingService.hasEligibilityFilters()).toEqual false
           ListingService.setEligibilityFilters(fakeFilters)
           expect(ListingService.hasEligibilityFilters()).toEqual true
-          return
         it 'returns yearly income', ->
           ListingService.setEligibilityFilters(fakeFilters)
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
-          return
-        return
-      return
 
     describe 'Service.getListingUnits', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns Service.listing.Units with the Unit results', ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
@@ -261,14 +216,11 @@ do ->
         ListingService.getListingUnits()
         httpBackend.flush()
         expect(ListingService.listing.Units).toEqual fakeUnits.units
-        return
-      return
 
     describe 'Service.getListingPreferences', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns Service.listing.preferences with the Preference results', ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
@@ -276,14 +228,11 @@ do ->
         ListingService.getListingPreferences()
         httpBackend.flush()
         expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
-        return
-      return
 
     describe 'Service.getListingsByIds', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
       it 'assigns Service.listings with the returned listing results', ->
         ListingService.listings = [fakeListing]
         listingIds = fakeListings.listings.map((listing) ->
@@ -293,14 +242,11 @@ do ->
         ListingService.getListingsByIds(listingIds)
         httpBackend.flush()
         expect(ListingService.listings).toEqual fakeListings.listings
-        return
-      return
 
     describe 'Service.getListingsWithEligibility', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
 
       it 'calls groupListings function with returned listings', ->
         ListingService.groupListings = jasmine.createSpy()
@@ -315,36 +261,28 @@ do ->
         ListingService.getListingsWithEligibility()
         httpBackend.flush()
         expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
-        return
-      return
 
     describe 'Service.getLotteryBuckets', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
 
       it 'assigns Service.listing.Lottery_Buckets with bucket results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
         ListingService.getLotteryBuckets()
         httpBackend.flush()
         expect(ListingService.listing.Lottery_Buckets).toEqual fakeLotteryBuckets.lottery_buckets
-        return
-      return
 
     describe 'Service.getLotteryRanking', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-        return
 
       it 'assigns Service.listing.Lottery_Ranking with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00002612')
         httpBackend.flush()
         expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
-        return
-      return
 
     describe 'Service.showNeighborhoodPreferences', ->
       it 'returns true if URL is available and <9 and >2 days from lottery', ->
@@ -353,16 +291,12 @@ do ->
         listing.Lottery_Date = moment().add(4, 'days').toString()
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
-        return
-      return
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
         listing = fakeListing.listing
         listing.NeighborHoodPreferenceUrl = null
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
-        return
-      return
 
       it 'returns false if URL is available but <2 days from lottery', ->
         # have to populate listing first
@@ -370,8 +304,6 @@ do ->
         listing.Lottery_Date = moment().add(1, 'days').toString()
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
-        return
-      return
 
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
@@ -384,7 +316,3 @@ do ->
         ]
         sorted = ListingService.sortByDate(angular.copy(fakeOpenHouses))
         expect(sorted[0]).toEqual fakeOpenHouses[1]
-        return
-      return
-
-  return
