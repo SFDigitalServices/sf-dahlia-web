@@ -278,6 +278,7 @@
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
         "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
+        "HOUSEHOLD_MEMBER_NO_ADDRESS": "They don't have an address",
         "HOW_DID_YOU_HEAR_ABOUT_THIS": "How did you hear about this listing?",
         "INCOME": "Income",
         "INCOME_PLACEHOLDER": "Total all of your income sources",

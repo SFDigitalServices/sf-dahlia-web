@@ -96,11 +96,11 @@ ShortFormApplicationService = (
       else
         false
 
-  Service.copyHomeToMailingAddress = () ->
+  Service.copyHomeToMailingAddress = ->
     unless Service.applicant.hasAltMailingAddress
       angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
 
-  Service.validMailingAddress = () ->
+  Service.validMailingAddress = ->
     !! (Service.applicant.mailing_address.address1 &&
         Service.applicant.mailing_address.city &&
         Service.applicant.mailing_address.state &&
@@ -131,9 +131,12 @@ ShortFormApplicationService = (
     Service.current_id = max_id + 1
 
   Service.addHouseholdMember = (householdMember) ->
+    householdMember.noAddress = false
     if householdMember.hasSameAddressAsApplicant == 'Yes'
       # copy applicant's neighborhoodPreferenceMatch to householdMember
       householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+    else if householdMember.hasSameAddressAsApplicant == 'No Address'
+      householdMember.noAddress = true
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
@@ -150,7 +153,7 @@ ShortFormApplicationService = (
       angular.copy(householdMember, householdMemberToUpdate)
     Service.invalidateHouseholdForm()
 
-  Service.resetHouseholdMember = () ->
+  Service.resetHouseholdMember = ->
     angular.copy({}, Service.householdMember)
 
   Service.getHouseholdMember = (id) ->
@@ -211,7 +214,7 @@ ShortFormApplicationService = (
       count + (if age < 6 then 1 else 0)
     , 0)
 
-  Service._calculateHouseholdIncome = () ->
+  Service._calculateHouseholdIncome = ->
     income = Service.application.householdIncome || 0
     if income.incomeTimeframe == 'per_year'
       income.incomeTotal
@@ -219,38 +222,38 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   ### Proof of Preferences ###
-  Service.refreshPreferences = () ->
+  Service.refreshPreferences = ->
     Service._updatePreference("liveInSf", Service.liveInSfMembers())
     Service._updatePreference("workInSf", Service.workInSfMembers())
     Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
 
-  Service.liveInSfMembers = () ->
+  Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     # no address also counts as "live in SF" to consider homelessness
     applicantLivesInSf ||= Service.applicant.noAddress
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
       if member.hasSameAddressAsApplicant == 'No'
         _.lowerCase(member.home_address.city) == 'san francisco'
+      else if member.noAddress
+        true
       else
         member.hasSameAddressAsApplicant == 'Yes' && applicantLivesInSf
     liveInSfMembers.unshift(Service.applicant) if applicantLivesInSf
     return liveInSfMembers
 
-  Service.workInSfMembers = () ->
-    workInSfMembers = Service.application.householdMembers.filter (member) ->
+  Service.workInSfMembers = ->
+    Service.fullHousehold().filter (member) ->
       member.workInSf == 'Yes'
-    applicantWorksInSf = Service.applicant.workInSf == 'Yes'
-    workInSfMembers.unshift(Service.applicant) if applicantWorksInSf
-    return workInSfMembers
 
-  Service.neighborhoodResidenceMembers = () ->
-    # find all household members that match
-    household = Service.application.householdMembers.filter (member) ->
-      member.neighborhoodPreferenceMatch == 'Matched'
-    # add applicant to the list if they match
-    if Service.applicant.neighborhoodPreferenceMatch == 'Matched'
-      household.unshift(Service.applicant)
-    household
+  Service.neighborhoodResidenceMembers = ->
+    Service.fullHousehold().filter (member) ->
+      # find all household members that match NRHP or have "No Address"
+      member.neighborhoodPreferenceMatch == 'Matched' || member.noAddress
+
+  Service.fullHousehold = ->
+    # return an array with the Household and Primary Applicant
+    # JS concat creates a new array (does not modify HH member array)
+    Service.application.householdMembers.concat([Service.applicant])
 
   Service.eligibleForLiveWorkOrNRHP = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
