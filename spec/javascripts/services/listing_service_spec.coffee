@@ -316,3 +316,14 @@ do ->
         ]
         sorted = ListingService.sortByDate(angular.copy(fakeOpenHouses))
         expect(sorted[0]).toEqual fakeOpenHouses[1]
+
+    describe 'Service.hasPreference', ->
+      describe 'listing has preference', ->
+        it 'should return true', ->
+          ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
+          expect(ListingService.hasPreference('liveInSf')).toEqual true
+
+      describe 'listing does not have preference', ->
+        it 'should return false', ->
+          ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
+          expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
