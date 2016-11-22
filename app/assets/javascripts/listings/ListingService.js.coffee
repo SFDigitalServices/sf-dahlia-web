@@ -335,6 +335,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYiwiUAD': 'Argenta 909'
     'a0W0P00000DYm1xUAD': 'Northpoint Vistas'
     'a0W0P00000DYlxMUAT': '280 Brighton'
+    'a0W0P00000DYuFSUA1': '30 Dore'
   }
 
   Service.mapSlugToId = (id) ->
@@ -409,6 +410,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     if (Service.listingIs('280 Brighton'))
       opts = {
         COPUnits: 3
+        DTHPUnits: 0
+        NRHPUnits: 0
+      }
+    if (Service.listingIs('30 Dore'))
+      opts = {
+        COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
