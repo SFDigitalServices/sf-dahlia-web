@@ -481,6 +481,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.stubFeatures = (listing) ->
     listing.STUB_Reserved_community_type = 'Senior Community Building'
+    listing.STUB_Has_waitlist = true
     return listing
 
   return Service

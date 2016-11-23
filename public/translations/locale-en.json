@@ -368,7 +368,9 @@
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "WE_KNOW_YOU_MAY_HAVE_OPTIONS": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
-        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
+        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property.",
+        "AVAILABLE_UNITS": "Available Units",
+        "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist"
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",

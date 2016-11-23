@@ -39,6 +39,9 @@
 
   .property-card_content
     .property-card_stats
+      h2.property-card_label
+        span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="listing.STUB_Has_waitlist"
+        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.STUB_Has_waitlist"
       ng-include src="'listings/templates/_stats-list.html'"
 
       .property-card_action.small-only-text-center
