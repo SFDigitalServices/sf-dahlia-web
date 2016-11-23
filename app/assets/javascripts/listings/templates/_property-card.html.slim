@@ -34,6 +34,9 @@
         | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
         | {{formattedBuildingAddress(listing, 'city-state-zip')}}
+      span.label.radius.medium.negative ng-if="listing.STUB_Reserved_community_type"
+        | {{listing.STUB_Reserved_community_type}}
+
   .property-card_content
     .property-card_stats
       ng-include src="'listings/templates/_stats-list.html'"
