@@ -2,15 +2,17 @@ header.lead-header.bg-dust ng-if="!hasEligibilityFilters()"
   .row
     .medium-12.columns
       .results-header
-        h1.results-header_values Tell us your household size and income and we'll highlight listings that might be a fit.
+        h1.results-header_values
+          | {{'LISTINGS.TELL_US_YOUR_HOUSEHOLD_SIZE' | translate}}
         .results-header_actions
-          a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator" Estimate Your Eligibility
+          a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator"
+            | {{'LABEL.ESTIMATE_YOUR_ELIGIBILITY' | translate}}
 
 /// Matches results bar
 header.lead-header ng-if="hasEligibilityFilters()"
   .row
     .medium-12.columns
-      h1.lead-header_title Showing matches for
+      h1.lead-header_title translate="LISTINGS.SHOWING_MATCHES_FOR"
       .results-header
         p.results-header_values
           strong
@@ -25,13 +27,13 @@ header.lead-header ng-if="hasEligibilityFilters()"
           ' at <strong>{{ eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ eligibilityFilters.income_timeframe | incomeTimeframe }}
         .results-header_actions
           a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator"
-            | Edit Eligibility
+            | {{'LABEL.EDIT_ELIGIBILITY' | translate}}
             span.ui-icon.ui-static.ui-small.i-color
               svg
                 use xlink:href="#i-arrow-down"
 
           button.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="clearEligibilityFilters()"
-            | Clear
+            | {{'LABEL.CLEAR' | translate}}
             span.ui-icon.ui-static.ui-small.i-color
               svg
                 use xlink:href="#i-close"
@@ -40,9 +42,8 @@ header.lead-header ng-if="hasEligibilityFilters()"
 section.results-section ng-if="!openListings.length"
   .row
     .large-12.columns
-      .short-block.bg-dust
-        h2.t-delta.t-serif.c-oil.no-margin
-          | No listings currently have open applications.
+      .block--short.bg-dust
+        h2.t-delta.t-serif.c-oil.no-margin translate="LISTINGS.NO_OPEN_LISTINGS"
 
 / Listings:
 /   * Open (doesn't have a header)
@@ -62,12 +63,14 @@ section.results-section ng-if="!openListings.length"
     .row
       .large-12.columns
         header.status-header.status--not-matched
-          h2.status-header_title.gamma No Matches
+          h2.status-header_title.gamma
+            | {{'LISTINGS.NO_MATCHES' | translate}}
           p.margin-bottom--half
-            | Based on information you entered, you don't match any current listings.
+            | {{'LISTINGS.YOU_DONT_MATCH_ANY' | translate}}
           p.t-small.c-steel.no-margin
             | Currently this site only includes Below Market Rate rentals. <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
-    ng-include src="'listings/templates/_housing-counselor.html'"
+
+    .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
 
   / Notification: Matched listings
   section.results-section.bg-dust ng-if="openMatchListings.length"
@@ -80,73 +83,85 @@ section.results-section ng-if="!openListings.length"
                 use xlink:href="#i-check"
           hgroup.status-header_group
             h2.status-header_title
-              | Matched
-            p.no-margin Based on information you entered, you may be eligible for units at the following property.
+              | {{'LABEL.MATCHED' | translate}}
+            p.no-margin
+              | {{'LISTINGS.YOU_MAY_BE_ELIGIBLE' | translate}}
 
     / Listings: Open Matched Listings
-    .row ng-if="openMatchListings.length"
+    .row.margin-top--2x
       .large-12.columns
         ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in openMatchListings"
 
-  / Not Matched Section Heading
-  .results-section.not-matched ng-if="openNotMatchListings.length"
-    / Notification: Not Matched listings
-    .margin-bottom--2x ng-if="openMatchListings.length && openNotMatchListings.length"
-      ng-include src="'listings/templates/_housing-counselor.html'"
 
-    .row
-      .large-12.columns
-        header.status-header.status--other
+/ Notification: Not Matched listings
+section.margin-top--2x.margin-bottom--2x ng-if="openMatchListings.length && openNotMatchListings.length"
+  ng-include src="'listings/templates/_housing-counselor.html'"
+
+/ Not Matched Section Heading
+section.results-section.border-top ng-if="hasEligibilityFilters() && openNotMatchListings.length"
+  article.row
+    .large-12.columns
+      header.status-header.status--closed.has-button
+        .status-header_content
           .status-header_icon
             span.ui-icon.ui-xlarge
               svg
                 use xlink:href="#i-building"
           hgroup.status-header_group
-            h2.status-header_title.gamma Other Listings
-            p.no-margin We know you may have options about how many people will live with you. Here are listings for other houseshold sizes and income levels.
+            h2.status-header_title.gamma
+              | {{'LISTINGS.ADDITIONAL_LISTINGS' | translate}}
+            p.no-margin
+              | {{'LISTINGS.WE_KNOW_YOU_MAY_HAVE_OPTIONS' | translate}}
+        .status-header_action
+          button.button.ghost-white.expand-small.right.toggler ng-click="toggleNotMatchedListings()"
+            span ng-show="!displayNotMatchedListings"
+              span translate="LISTINGS.SHOW_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
+            span ng-show="displayNotMatchedListings"
+              span translate="LISTINGS.HIDE_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
 
-    / Listings: Open Not Matched Listings
-    .row ng-if="openNotMatchListings.length"
+  .section.margin-top--2x ng-show="displayNotMatchedListings"
+    / Additional (not matched) listings
+    article.row
       .large-12.columns
         ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in openNotMatchListings"
 
-    / All listings match Section footer
-    .all-match ng-if="openMatchListings.length && !openNotMatchListings.length"
-      ng-include src="'listings/templates/_housing-counselor.html'"
-
-/ Listings: Closed
-section.results-section.border-top ng-if="closedListings.length"
-  .row
-    .large-12.columns
-      header.status-header.status--closed
-        .status-header_icon
-          span.ui-icon.ui-large
-            svg
-              use xlink:href="#i-clock"
-        hgroup.status-header_group
-          h2.status-header_title.gamma
-            | Closed Listings
-          p.no-margin The remaining properties are no longer taking applications but will post lottery results soon.
-  .row ng-if="closedListings.length"
-    .large-12.columns
-      ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in closedListings"
-
 / Listings: Lottery Results
-section.results-section.border-top ng-if="lotteryResultsListings.length"
-  .row
+section.results-section.border-top ng-if="closedAndLotteryListingsCount()"
+  article.row
     .large-12.columns
-      header.status-header.status--closed
-        .status-header_icon
-          span.ui-icon.ui-large
-            svg
-              use xlink:href="#i-result"
-        hgroup.status-header_group
-          h2.status-header_title.gamma
-            | Lottery Results
-          p.no-margin The remaining properties are no longer taking applications but can be used to check lottery results.
-  .row ng-if="lotteryResultsListings.length"
-    .large-12.columns
-      ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in lotteryResultsListings"
+      header.status-header.status--closed.has-button
+        .status-header_content
+          .status-header_icon
+            span.ui-icon.ui-xlarge
+              svg
+                use xlink:href="#i-result"
+          hgroup.status-header_group
+            h2.status-header_title.gamma
+              | {{'LISTINGS.LOTTERY_RESULTS' | translate}}
+            p.no-margin
+              | {{'LISTINGS.REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS' | translate}}
+        .status-header_action
+          button.button.ghost-white.expand-small.right.toggler ng-click="toggleLotteryResultsListings()"
+            span ng-show="!displayLotteryResultsListings"
+              span translate="LISTINGS.SHOW_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
+            span ng-show="displayLotteryResultsListings"
+              span translate="LISTINGS.HIDE_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
+
+  .section.margin-top--2x ng-show="displayLotteryResultsListings"
+    / Lottery Results Posted
+    article.row ng-if="lotteryResultsListings.length"
+      .large-12.columns
+        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in lotteryResultsListings"
+    / Divider
+    .row ng-if="closedListings.length"
+      .large-12.columns
+        header.results-section_divider
+          h3.results-section_subheader
+            | Lottery Results Coming Soon
+    / Closed Listings
+    article.row ng-if="closedListings.length"
+      .large-12.columns
+        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in closedListings"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"
