@@ -18,5 +18,7 @@ module SfDahliaWeb
     config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
 
     config.time_zone = 'Pacific Time (US & Canada)'
+
+    ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates'
   end
 end

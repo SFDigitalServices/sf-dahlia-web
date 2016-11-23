@@ -30,15 +30,9 @@ do ->
         AnalyticsService.trackEvent(event, props)
         props.label = 'my-path'
         expect(dataLayer.push).toHaveBeenCalledWith(props)
-        return
-      return
 
     describe 'Service.trackCurrentPage', ->
       it 'calls analytics function ga("send")', ->
         $state.current.url = '/my-path'
         AnalyticsService.trackCurrentPage()
         expect(ga).toHaveBeenCalledWith('send', 'pageview')
-        return
-      return
-
-  return
