@@ -13,6 +13,12 @@ do ->
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
+    fakeEligibilityFilters =
+      household_size: 2
+      income_timeframe: 'per_month'
+      income_total: 3500
+      include_children_under_6: true
+      children_under_6: 1
     $localStorage = undefined
     $state = undefined
     modalMock = undefined
@@ -67,6 +73,11 @@ do ->
         date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
         expect(date1 >= date2).toEqual true
 
+      it 'returns Service.getListingsWithEligibility if eligibilty options are set', ->
+        ListingService.getListingsWithEligibility = jasmine.createSpy()
+        ListingService.setEligibilityFilters(fakeEligibilityFilters)
+        ListingService.getListings({checkEligibility: true})
+        expect(ListingService.getListingsWithEligibility).toHaveBeenCalled()
 
     describe 'Service.getListing', ->
       afterEach ->
@@ -183,10 +194,6 @@ do ->
 
     describe 'Service.setEligibilityFilters', ->
       describe 'When filters have been set', ->
-        fakeFilters =
-          household_size: 2
-          income_timeframe: 'per_month'
-          income_total: 3500
         beforeEach ->
           # reset eligibility filters
           ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
@@ -194,15 +201,15 @@ do ->
           # reset eligibility filters
           ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
         it 'updates Service.eligibility_filters with appropriate data', ->
-          ListingService.setEligibilityFilters(fakeFilters)
+          ListingService.setEligibilityFilters(fakeEligibilityFilters)
           expect(ListingService.eligibility_filters.income_total).toEqual 3500
           expect(ListingService.eligibility_filters.household_size).toEqual 2
         it 'checks if eligibility filters have been set', ->
           expect(ListingService.hasEligibilityFilters()).toEqual false
-          ListingService.setEligibilityFilters(fakeFilters)
+          ListingService.setEligibilityFilters(fakeEligibilityFilters)
           expect(ListingService.hasEligibilityFilters()).toEqual true
         it 'returns yearly income', ->
-          ListingService.setEligibilityFilters(fakeFilters)
+          ListingService.setEligibilityFilters(fakeEligibilityFilters)
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
 
     describe 'Service.getListingUnits', ->
@@ -250,13 +257,7 @@ do ->
 
       it 'calls groupListings function with returned listings', ->
         ListingService.groupListings = jasmine.createSpy()
-        fakeFilters =
-          household_size: 2
-          income_timeframe: 'per_month'
-          income_total: 3500
-          include_children_under_6: true
-          children_under_6: 1
-        ListingService.setEligibilityFilters(fakeFilters)
+        ListingService.setEligibilityFilters(fakeEligibilityFilters)
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
         ListingService.getListingsWithEligibility()
         httpBackend.flush()

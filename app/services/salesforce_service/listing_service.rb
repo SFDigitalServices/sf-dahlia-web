@@ -14,7 +14,7 @@ module SalesforceService
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = api_get('/ListingDetails', filters, true)
+      results = cached_api_get('/ListingDetails', filters, true)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
     end

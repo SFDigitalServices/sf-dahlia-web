@@ -385,6 +385,22 @@
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
+    "PAGE_TITLE": {
+        "ADDITIONAL_RESOURCES": "More Housing Opportunities",
+        "CREATE_ACCOUNT": "Create an Account",
+        "DISCLAIMER": "Disclaimer",
+        "ELIGIBILITY_ESTIMATOR": "Estimate Your Eligibility",
+        "FAVORITES": "My Favorites",
+        "GET_ASSISTANCE": "Get Assistance",
+        "HOUSING_COUNSELORS": "Housing Counselors",
+        "LISTINGS": "Listings",
+        "PRIVACY": "Privacy Policy",
+        "SHARE_LISTING": "Share {{name}}",
+        "SIGN_IN": "Sign In",
+        "WELCOME_CHINESE": "中文",
+        "WELCOME_FILIPINO": "Filipino",
+        "WELCOME_SPANISH": "Español"
+    },
     "PRIVACY_POLICY": {
         "COOKIES_P1": "We use cookies when providing online services such as online applications. We use cookies to improve quality of our service.",
         "COOKIES_P2": "The use of 'cookies' is a standard practice among Internet websites and most Internet web browsers may be customized to reject cookies, to only accept or reject cookies by user intervention, or to delete cookies. However, some features may not function properly without cookies.",
