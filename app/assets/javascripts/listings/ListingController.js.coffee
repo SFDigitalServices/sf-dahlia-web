@@ -198,7 +198,7 @@ ListingController = (
     ListingService.listingIs(name)
 
   if $scope.listingIs('Test Listing')
-    listing = ListingService.stubFeatures(listing)
+    $scope.listing = ListingService.stubFeatures($scope.listing)
   # ---
 
 ############################################################################################
