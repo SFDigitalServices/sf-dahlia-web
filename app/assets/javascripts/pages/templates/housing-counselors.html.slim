@@ -20,7 +20,7 @@ section.row
           span ng-repeat="language in counselor.languages"
             span.label.radius.secondary
               | {{ language }}
-        .a-icon-left.d-block
+        .a-icon-left.d-block ng-if="counselor.address || counselor.citystate"
           span.ui-icon.ui-medium
             svg
               use xlink:href="#i-map" /
