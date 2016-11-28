@@ -530,6 +530,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.stubFeatures = (listing) ->
     listing.STUB_Reserved_community_type = 'Senior Community Building'
+<<<<<<< HEAD
     listing.STUB_Has_waitlist = true
     listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
     listing.STUB_AMI_Levels = [
@@ -537,6 +538,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       {year: '2016', chartType: 'HCD/TCAC', percent: '50'}
       {year: '2016', chartType: 'Non-HERA', percent: '60'}
     ]
+=======
+>>>>>>> Features/mf community unit tags #133559357 (#555)
     return listing
 
   return Service
