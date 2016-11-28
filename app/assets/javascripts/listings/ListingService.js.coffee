@@ -367,6 +367,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
 
+  Service.listingPriorities = (listing) ->
+    return '' unless listing.STUB_Priorities && listing.STUB_Priorities.length
+    listing.STUB_Priorities.join(', ')
+
   Service.stubListingPreferences = ->
     opts = null
     if (Service.listingIs('Alchemy'))
@@ -495,6 +499,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.stubFeatures = (listing) ->
     listing.STUB_Reserved_community_type = 'Senior Community Building'
+    listing.STUB_Has_waitlist = true
+    listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
     return listing
 
   return Service

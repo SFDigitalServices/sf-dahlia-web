@@ -193,6 +193,9 @@ ListingController = (
   $scope.toggleNotMatchedListings = ->
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
+  $scope.listingPriorities = (listing) ->
+    ListingService.listingPriorities(listing)
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
