@@ -35,9 +35,13 @@ module SalesforceService
     end
 
     # get AMI
-    def self.ami(percent = 100)
-      results = cached_api_get("/ami?percent=#{percent}", nil, true)
+    def self.ami(opts = {})
+      results = cached_api_get("/ami?#{opts.to_query}", nil, true)
       results.sort_by { |i| i['numOfHousehold'] }
+    end
+
+    def self.ami_charts
+      api_get('/ami/charts')
     end
 
     # get Lottery Buckets with rankings
