@@ -215,6 +215,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
+      # TODO: -- REMOVE HARDCODED FEATURES --
+      if Service.listingIs('Test Listing', listing)
+        listing = Service.stubFeatures(listing)
+      # ---
       if Service.listingIsOpen(listing)
         # All Open Listings Array
         Service.openListings.push(listing)
@@ -350,6 +354,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYm1xUAD': 'Northpoint Vistas'
     'a0W0P00000DYlxMUAT': '280 Brighton'
     'a0W0P00000DYuFSUA1': '30 Dore'
+    'a0W0P00000DYUcpUAH': 'Test Listing'
   }
 
   Service.mapSlugToId = (id) ->
@@ -359,8 +364,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
 
-  Service.listingIs = (name) ->
-    Service.LISTING_MAP[Service.listing.Id] == name
+  Service.listingIs = (name, listing = Service.listing) ->
+    Service.LISTING_MAP[listing.Id] == name
 
   Service.stubListingPreferences = ->
     opts = null
@@ -488,6 +493,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
     Service.listing.preferences = preferences
 
+  Service.stubFeatures = (listing) ->
+    listing.STUB_Reserved_community_type = 'Senior Community Building'
+    return listing
 
   return Service
 
