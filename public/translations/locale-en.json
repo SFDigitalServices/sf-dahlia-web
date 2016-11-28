@@ -360,8 +360,11 @@
     },
     "LISTINGS": {
         "ADDITIONAL_LISTINGS": "Additional Listings",
+        "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
+        "AVAILABLE_UNITS": "Available Units",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
         "HIDE_LOTTERY_RESULTS": "Hide Lottery Results ({{number}})",
+        "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
         "LOTTERY_RESULTS": "Lottery Results",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
