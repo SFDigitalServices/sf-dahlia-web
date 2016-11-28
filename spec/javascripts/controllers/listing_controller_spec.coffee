@@ -39,6 +39,8 @@ do ->
         getLotteryBuckets: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
+        stubFeatures: () -> null
+        listingIs: () -> null
         loading: {}
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
