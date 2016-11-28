@@ -56,9 +56,15 @@
   $translateProvider
     .preferredLanguage('en')
     .fallbackLanguage('en')
-    .useSanitizeValueStrategy('sanitize')
+    .useSanitizeValueStrategy('sceParameters')
     .useStaticFilesLoader(
       prefix: '/translations/locale-'
       suffix: ".json?t=#{timestamp}"
     )
+]
+
+@dahlia.config ['$titleProvider', ($titleProvider) ->
+  $titleProvider.documentTitle (title) ->
+    defaultTitle = 'DAHLIA San Francisco Housing Portal'
+    if title then "#{title}  |  #{defaultTitle}" else defaultTitle
 ]
