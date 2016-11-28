@@ -490,7 +490,9 @@
           '$stateParams', 'ListingService',
           ($stateParams, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            ListingService.getListingAndCheckIfOpen($stateParams.id)
+            ListingService.getListingAndCheckIfOpen($stateParams.id).then( ->
+              ListingService.getListingPreferences()
+            )
         ]
         application: [
           '$stateParams', '$state', 'ShortFormApplicationService',
@@ -614,6 +616,11 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
+        ]
+        listing: [
+          '$stateParams', 'ListingService',
+          ($stateParams, ListingService) ->
+            ListingService.getListingPreferences()
         ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {

@@ -81,6 +81,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       minMax = [min, max]
     return minMax
 
+  Service.hasPreference = (preference) ->
+    preferenceNames = _.map(Service.listing.preferences, (pref) -> pref.preferenceName)
+    preferenceMap =
+      certOfPreference: "Certificate of Preference (COP)"
+      displaced: "Displaced Tenant Housing Preference (DTHP)"
+      liveWorkInSf: "Live or Work in San Francisco Preference"
+      liveInSf: "Live or Work in San Francisco Preference"
+      workInSf: "Live or Work in San Francisco Preference"
+      neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+
+    # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
+    preferenceName = preferenceMap[preference]
+    return _.includes(preferenceNames, preferenceName)
+
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
     incomeLevels = []

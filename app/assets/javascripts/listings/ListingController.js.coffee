@@ -39,6 +39,9 @@ ListingController = (
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
+  # for showing/hiding listings results buckets on browse page, hidden by default
+  $scope.displayNotMatchedListings = false
+  $scope.displayLotteryResultsListings = false
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -180,6 +183,15 @@ ListingController = (
 
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length
+
+  $scope.closedAndLotteryListingsCount = ->
+    $scope.lotteryResultsListings.length + $scope.closedListings.length
+
+  $scope.toggleLotteryResultsListings = ->
+    $scope.displayLotteryResultsListings = !$scope.displayLotteryResultsListings
+
+  $scope.toggleNotMatchedListings = ->
+    $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

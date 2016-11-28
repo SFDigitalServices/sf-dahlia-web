@@ -20,19 +20,19 @@ section.row
           span ng-repeat="language in counselor.languages"
             span.label.radius.secondary
               | {{ language }}
-        .a-icon-left.d-block
+        .a-icon-left.d-block ng-if="counselor.address || counselor.citystate"
           span.ui-icon.ui-medium
             svg
-              use xlink:href="#i-map" /
+              use xlink:href="#i-map"
           p.offset-icon.margin-bottom--half
-            | {{ counselor.address }},
+            | {{ counselor.address }}
             br
             | {{ counselor.citystate }}
         p
           a.button-on-small title="Call {{ counselor.phone }}" href="tel:+1{{counselor.phone}}"
             span.ui-icon.ui-medium
               svg
-                use xlink:href="#i-phone" /
+                use xlink:href="#i-phone"
             | Call {{ counselor.phone }}
           a.button-on-small target="_blank" href="{{counselor.website}}"
             span.ui-icon.ui-medium
