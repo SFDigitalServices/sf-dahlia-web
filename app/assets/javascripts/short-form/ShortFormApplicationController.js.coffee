@@ -9,6 +9,7 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
+  ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
@@ -300,6 +301,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.liveInSfMembers()
 
   $scope.showPreference = (preference) ->
+    return false unless ListingService.hasPreference(preference)
     switch preference
       when 'liveWorkInSf'
         $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
@@ -309,6 +311,8 @@ ShortFormApplicationController = (
         $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length == 0
       when 'neighborhoodResidence'
         $scope.neighborhoodResidenceMembers().length > 0
+      else
+        true
 
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
@@ -552,7 +556,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.listingIs(name)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'ListingService',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
