@@ -8,9 +8,9 @@
     .form-group
       label.sr-only id="special_programs_label" translate="LABEL.SPECIAL_PROGRAMS"
       .checkbox-group role="group"
-        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" labelledby="special_programs_label" dataevent="gtm-preference-cop" translated-description="D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC"
+        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" labelledby="special_programs_label" dataevent="gtm-preference-cop" translated-description="D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC" ng-show="showPreference('certOfPreference')"
 
-        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp" translated-description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" ng-show="!listingIs('280 Brighton')"
+        preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" labelledby="special_programs_label" dataevent="gtm-preference-dthp" translated-description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" ng-show="showPreference('displaced')"
 
     .form-group
       p.form-note

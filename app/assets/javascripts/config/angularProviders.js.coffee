@@ -45,7 +45,7 @@
     conf = AccountConfirmationServiceProvider.$get()
     $authProvider.configure
       apiUrl: '/api/v1'
-      storage: 'sessionStorage'
+      storage: getAvailableStorageType()
       confirmationSuccessUrl: conf.confirmationSuccessUrl
       validateOnPageLoad: false
 ]
@@ -68,3 +68,17 @@
     defaultTitle = 'DAHLIA San Francisco Housing Portal'
     if title then "#{title}  |  #{defaultTitle}" else defaultTitle
 ]
+
+
+getAvailableStorageType = ->
+  # When Safari (OS X or iOS) is in private browsing mode, it appears as though localStorage and sessionStorage
+  # is available, but trying to call .setItem throws an exception below:
+  # "QUOTA_EXCEEDED_ERR: DOM Exception 22: An attempt was made to add something to storage that exceeded the quota."
+  key = '__' + Math.round(Math.random() * 1e7)
+  try
+    sessionStorage.setItem key, key
+    sessionStorage.removeItem key
+    return 'sessionStorage'
+  catch e
+    # private window can use cookies, they will just be cleared when you close the window
+    return 'cookies'

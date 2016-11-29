@@ -10,6 +10,8 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json').listing
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
+    fakeListingService =
+      hasPreference: () ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -118,6 +120,7 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        ListingService: fakeListingService
       return
     )
 
@@ -379,3 +382,14 @@ do ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(false)
           scope.saveAndFinishLater(fakeEvent)
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
+
+    describe 'showPreference', ->
+      describe 'listing does not have preference', ->
+        it 'returns false', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+          expect(scope.showPreference('liveInSf')).toEqual false
+
+      describe 'listing has preference', ->
+        it 'returns true', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+          expect(scope.showPreference('displaced')).toEqual true
