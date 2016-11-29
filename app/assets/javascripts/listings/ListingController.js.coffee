@@ -200,8 +200,7 @@ ListingController = (
     $scope.AMI.length > 1
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
-    return [] unless amiLevel
-    return amiLevel.values
+    ListingService.occupancyIncomeLevels(amiLevel)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

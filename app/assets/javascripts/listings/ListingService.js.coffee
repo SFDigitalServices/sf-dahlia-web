@@ -13,7 +13,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.lotteryResultsListings = []
   # these get loaded after the listing is loaded
   Service.AMI = []
-  # Service.maxIncomeLevels = []
   Service.loading = {}
 
   $localStorage.favorites ?= []
@@ -94,23 +93,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
     preferenceName = preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
-
-  # Service.maxIncomeLevelsFor = (listing, ami) ->
-  #   occupancyMinMax = Service.occupancyMinMax(listing)
-  #   incomeLevels = []
-  #   ami.forEach (amiLevel) ->
-  #     occupancy = parseInt(amiLevel.numOfHousehold)
-  #     # only grab the incomeLevels that fit within our listing's occupancyMinMax
-  #     # + we add 2 more to account for potential childrenUnder6
-  #     min = occupancyMinMax[0]
-  #     max = occupancyMinMax[1] + 2
-  #     if occupancy >= min && occupancy <= max
-  #       incomeLevels.push({
-  #         occupancy: occupancy,
-  #         yearly: parseFloat(amiLevel.amount),
-  #         monthly: parseFloat(amiLevel.amount) / 12.0
-  #       })
-  #   return incomeLevels
 
   Service.openLotteryResultsModal = ->
     modalInstance = $modal.open({
@@ -338,6 +320,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.occupancyIncomeLevels = (amiLevel) ->
+    return [] unless amiLevel
+    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    min = occupancyMinMax[0]
+    # add 2 to the max to account for possible childrenUnder6
+    max = occupancyMinMax[1] + 2
+    _.filter amiLevel.values, (value) ->
+      # where numOfHousehold >= min && <= max
+      value.numOfHousehold >= min && value.numOfHousehold <= max
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
