@@ -1,7 +1,8 @@
 {
   "name": "sf-dahlia-web",
   "resolutions": {
-    "angular": "~1.4.7"
+    "angular": "~1.4.7",
+    "angular-translate": "2.13.0"
   },
   "dependencies": {
     "angular": "~1.4.7",
