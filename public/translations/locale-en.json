@@ -108,6 +108,10 @@
         "READ_MORE": "Read more about housing lottery preferences",
         "TITLE": "Please check all lottery preferences that apply to you."
     },
+    "D2F_GENERAL_LOTTERY_NOTICE": {
+        "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
+        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
+    },
     "D2_LIVE_WORK_PREFERENCE": {
         "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
