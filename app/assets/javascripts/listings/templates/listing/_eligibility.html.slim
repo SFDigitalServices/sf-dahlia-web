@@ -15,7 +15,7 @@ accordion-heading.lead
           h4.custom-counter_title Household Maximum Income
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text For income calculations, household size includes everyone (all ages) living in the unit.
-        .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
+        .stats-card.bg-tint ng-show="AMI.length > 0"
           .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
             .stats-list_value.highlight
               span.value-label
@@ -30,7 +30,8 @@ accordion-heading.lead
                 use xlink:href="#i-arrow-down"
 
           .toggled ng-class="[activeIncomeClass, smallDisplayClass]"
-            ng-include src="'listings/templates/listing/_income-table.html'"
+            ng-include src="'listings/templates/listing/_income-table.html'" ng-if="!hasMultipleAMICharts()"
+            ng-include src="'listings/templates/listing/_income-table-NEW.html'" ng-if="hasMultipleAMICharts()"
 
     li.custom-counter_item
       .content-tile

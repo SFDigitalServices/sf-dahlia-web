@@ -13,7 +13,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.lotteryResultsListings = []
   # these get loaded after the listing is loaded
   Service.AMI = []
-  Service.maxIncomeLevels = []
+  # Service.maxIncomeLevels = []
   Service.loading = {}
 
   $localStorage.favorites ?= []
@@ -95,22 +95,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     preferenceName = preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
 
-  Service.maxIncomeLevelsFor = (listing, ami) ->
-    occupancyMinMax = Service.occupancyMinMax(listing)
-    incomeLevels = []
-    ami.forEach (amiLevel) ->
-      occupancy = parseInt(amiLevel.numOfHousehold)
-      # only grab the incomeLevels that fit within our listing's occupancyMinMax
-      # + we add 2 more to account for potential childrenUnder6
-      min = occupancyMinMax[0]
-      max = occupancyMinMax[1] + 2
-      if occupancy >= min && occupancy <= max
-        incomeLevels.push({
-          occupancy: occupancy,
-          yearly: parseFloat(amiLevel.amount),
-          monthly: parseFloat(amiLevel.amount) / 12.0
-        })
-    return incomeLevels
+  # Service.maxIncomeLevelsFor = (listing, ami) ->
+  #   occupancyMinMax = Service.occupancyMinMax(listing)
+  #   incomeLevels = []
+  #   ami.forEach (amiLevel) ->
+  #     occupancy = parseInt(amiLevel.numOfHousehold)
+  #     # only grab the incomeLevels that fit within our listing's occupancyMinMax
+  #     # + we add 2 more to account for potential childrenUnder6
+  #     min = occupancyMinMax[0]
+  #     max = occupancyMinMax[1] + 2
+  #     if occupancy >= min && occupancy <= max
+  #       incomeLevels.push({
+  #         occupancy: occupancy,
+  #         yearly: parseFloat(amiLevel.amount),
+  #         monthly: parseFloat(amiLevel.amount) / 12.0
+  #       })
+  #   return incomeLevels
 
   Service.openLotteryResultsModal = ->
     modalInstance = $modal.open({
@@ -281,11 +281,15 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMI)
-    percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
-    $http.get("/api/v1/listings/ami.json?percent=#{percent}").success((data, status, headers, config) ->
+    # TODO: remove hardcoded features
+    if Service.listing.STUB_AMI_Levels
+      params = { ami: Service.listing.STUB_AMI_Levels }
+    else
+      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: '50'}] }
+    $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(data.ami, Service.AMI)
-        angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
+        # angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
     ).error( (data, status, headers, config) ->
       return
     )
@@ -501,6 +505,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     listing.STUB_Reserved_community_type = 'Senior Community Building'
     listing.STUB_Has_waitlist = true
     listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
+    listing.STUB_AMI_Levels = [
+      {year: '2016', chartType: 'Non-HERA', percent: '50'}
+      {year: '2016', chartType: 'Non-HERA', percent: '60'}
+    ]
     return listing
 
   return Service

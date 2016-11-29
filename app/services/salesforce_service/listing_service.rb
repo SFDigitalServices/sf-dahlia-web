@@ -34,7 +34,7 @@ module SalesforceService
       cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
     end
 
-    # get AMI
+    # get AMI: opts are percent, chartType, year
     def self.ami(opts = {})
       results = cached_api_get("/ami?#{opts.to_query}", nil, true)
       results.sort_by { |i| i['numOfHousehold'] }

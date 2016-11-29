@@ -26,7 +26,7 @@ ListingController = (
   # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
-  $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  $scope.AMI = ListingService.AMI
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
   $scope.application = ShortFormApplicationService.application
@@ -195,6 +195,13 @@ ListingController = (
 
   $scope.listingPriorities = (listing) ->
     ListingService.listingPriorities(listing)
+
+  $scope.hasMultipleAMICharts = ->
+    $scope.AMI.length > 1
+
+  $scope.occupancyIncomeLevels = (amiLevel) ->
+    return [] unless amiLevel
+    return amiLevel.values
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

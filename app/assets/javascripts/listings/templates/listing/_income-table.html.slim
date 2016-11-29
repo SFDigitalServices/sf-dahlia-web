@@ -5,10 +5,10 @@ table role="grid"
       th scope="col"  maximum income/month
       th scope="col"  maximum income/year
   tbody
-    tr ng-repeat="incomeLevel in maxIncomeLevels"
+    tr ng-repeat="incomeLevel in occupancyIncomeLevels(AMI[0])"
       td scope="row"
-        | {{incomeLevel.occupancy}} <small>person</small>
+        | {{incomeLevel.numOfHousehold}} <small>person</small>
       td
-        | {{incomeLevel.monthly | currency : $ : 0}}<small>/month</small>
+        | {{incomeLevel.amount | currency : $ : 0}}<small>/month</small>
       td
-        | {{incomeLevel.yearly | currency : $ : 0}}<small>/year</small>
+        | {{incomeLevel.amount | currency : $ : 0}}<small>/year</small>
