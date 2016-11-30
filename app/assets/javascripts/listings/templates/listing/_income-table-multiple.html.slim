@@ -1,0 +1,21 @@
+/ columns
+/   loop through each amiChart to get 30%, 50%, 70%
+/
+/ rows
+/   loop through each householdSize
+/   row
+/     show household_size
+/     loop through each amiChart to get $30k/yr, $35k/yr, $40k/yr
+
+table role="grid"
+  thead
+    tr
+      th scope="col" household size
+      th scope="col" ng-repeat="amiChart in AMICharts"
+        | {{amiChart.percent}}% AMI UNITS
+  tbody
+    tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])"
+      td scope="row"
+        | {{householdIncomeLevel.numOfHousehold}} <small>person</small>
+      td ng-repeat="amiChart in AMICharts"
+        | {{incomeForHouseholdSize(amiChart, householdIncomeLevel) | currency : $ : 0}}<small>/year</small>

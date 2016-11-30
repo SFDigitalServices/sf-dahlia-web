@@ -12,7 +12,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.closedListings = []
   Service.lotteryResultsListings = []
   # these get loaded after the listing is loaded
-  Service.AMI = []
+  Service.AMICharts = []
   Service.loading = {}
 
   $localStorage.favorites ?= []
@@ -262,7 +262,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         return $state.go('dahlia.listing', {id: id})
 
   Service.getListingAMI = ->
-    angular.copy([], Service.AMI)
+    angular.copy([], Service.AMICharts)
     # TODO: remove hardcoded features
     if Service.listing.STUB_AMI_Levels
       params = { ami: Service.listing.STUB_AMI_Levels }
@@ -270,11 +270,26 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: '50'}] }
     $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
       if data && data.ami
-        angular.copy(data.ami, Service.AMI)
-        # angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
+        angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service._consolidatedAMICharts = (amiData) ->
+    charts = []
+    amiData.forEach (chart) ->
+      # look for an existing chart at the same percentage level
+      amiPercentChart = _.find charts, (c) -> c.percent == chart.percent
+      if !amiPercentChart
+        charts.push(chart)
+      else
+        # if it exists, modify it with the max values
+        i = 0
+        amiPercentChart.values.forEach (incomeLevel) ->
+          incomeLevel.amount = Math.max(incomeLevel.amount, chart.values[i].amount)
+          i++
+    charts
+
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
@@ -330,6 +345,18 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
+
+  Service.minYearlyIncome = ->
+    return if _.isEmpty(Service.AMICharts)
+    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    # get the first (lowest) income level amount
+    _.first(incomeLevels).amount
+
+  Service.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+    incomeLevel = _.find amiChart.values, (value) ->
+      value.numOfHousehold == householdIncomeLevel.numOfHousehold
+    return unless incomeLevel
+    incomeLevel.amount
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
@@ -499,6 +526,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
     listing.STUB_AMI_Levels = [
       {year: '2016', chartType: 'Non-HERA', percent: '50'}
+      {year: '2016', chartType: 'HCD/TCAC', percent: '50'}
       {year: '2016', chartType: 'Non-HERA', percent: '60'}
     ]
     return listing

@@ -23,6 +23,8 @@ do ->
     $state = undefined
     modalMock = undefined
     requestURL = undefined
+    incomeLevels = undefined
+    minMax = undefined
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
@@ -93,11 +95,12 @@ do ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.AMI with the AMI results', ->
+      it 'assigns Service.AMI with the consolidated AMI results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
         ListingService.getListingAMI()
         httpBackend.flush()
-        expect(ListingService.AMI).toEqual fakeAMI.ami
+        consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)
+        expect(ListingService.AMICharts).toEqual consolidated
 
     describe 'Service.listingIsOpen', ->
       it 'checks if listing application due date has passed', ->
@@ -315,3 +318,27 @@ do ->
         it 'should return false', ->
           ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
+
+    describe 'Service.occupancyIncomeLevels', ->
+      beforeEach ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        incomeLevels = ListingService.occupancyIncomeLevels(fakeAMI.ami[0])
+        minMax = ListingService.occupancyMinMax(ListingService.listing)
+      it 'should filter the incomeLevels to start from min household', ->
+        expect(incomeLevels[0].numOfHousehold).toEqual minMax[0]
+      it 'should filter the incomeLevels to end at max household + 2', ->
+        expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual minMax[1] + 2
+
+    describe 'Service.minYearlyIncome', ->
+      it 'should get the minimum yearly income for the first (and only) AMI Chart', ->
+        ListingService.AMICharts = ListingService._consolidatedAMICharts(fakeAMI.ami)
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.AMICharts[0])
+        expect(ListingService.minYearlyIncome()).toEqual incomeLevels[0].amount
+
+    describe 'Service.incomeForHouseholdSize', ->
+      it 'should get the income amount for the selected AMI Chart and householdIncomeLevel', ->
+        fakeChart = fakeAMI.ami[0]
+        fakeIncomeLevel = {numOfHousehold: 2}
+        amount = ListingService.incomeForHouseholdSize(fakeChart, fakeIncomeLevel)
+        expect(amount).toEqual fakeChart.values[1].amount
