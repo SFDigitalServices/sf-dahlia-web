@@ -286,7 +286,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     if Service.listing.STUB_AMI_Levels
       params = { ami: Service.listing.STUB_AMI_Levels }
     else
-      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: '50'}] }
+      percent = Service.listing.AMI_Percentage || 100
+      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
     $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
@@ -359,11 +360,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     return [] unless amiLevel
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     min = occupancyMinMax[0]
-    # add 2 to the max to account for possible childrenUnder6
     max = occupancyMinMax[1] + 2
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
+
+  Service.householdAMIChartCutoff = ->
+    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    max = occupancyMinMax[1]
+    # cutoff at 2x the num of bedrooms
+    Math.floor(max/2) * 2
 
   Service.minYearlyIncome = ->
     return if _.isEmpty(Service.AMICharts)
