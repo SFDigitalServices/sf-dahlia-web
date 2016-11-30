@@ -14,7 +14,7 @@ table role="grid"
       th scope="col" ng-repeat="amiChart in AMICharts"
         | {{amiChart.percent}}% AMI UNITS
   tbody
-    tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])"
+    tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])" ng-show="amiChartExpanded || householdIncomeLevel.numOfHousehold <= householdAMIChartCutoff()"
       td scope="row"
         | {{householdIncomeLevel.numOfHousehold}} <small>person</small>
       td ng-repeat="amiChart in AMICharts"
