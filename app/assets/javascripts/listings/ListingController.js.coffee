@@ -32,6 +32,7 @@ ListingController = (
   $scope.application = ShortFormApplicationService.application
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
+  $scope.amiChartExpanded = false
   # for expanding the "What happens next"
   $scope.whatHappens = false
   # for searching lottery number
@@ -208,6 +209,9 @@ ListingController = (
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
+
+  $scope.householdAMIChartCutoff = ->
+    ListingService.householdAMIChartCutoff()
 
   $scope.minYearlyIncome = ->
     ListingService.minYearlyIncome()
