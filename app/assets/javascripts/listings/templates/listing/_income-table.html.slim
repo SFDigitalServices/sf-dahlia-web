@@ -5,7 +5,7 @@ table role="grid"
       th scope="col"  maximum income/month
       th scope="col"  maximum income/year
   tbody
-    tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])"
+    tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])" ng-show="amiChartExpanded || householdIncomeLevel.numOfHousehold <= householdAMIChartCutoff()"
       td scope="row"
         | {{householdIncomeLevel.numOfHousehold}} <small>person</small>
       td
