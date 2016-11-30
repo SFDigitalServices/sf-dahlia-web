@@ -34,7 +34,7 @@ do ->
         lotteryResultsListings: []
         listing: fakeListing
         favorites: fakeListingFavorites
-        maxIncomeLevels: []
+        AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
         getLotteryRanking: () -> null
@@ -97,8 +97,8 @@ do ->
       it 'populates scope with favorites', ->
         expect(scope.favorites).toEqual fakeListingFavorites
 
-      it 'populates scope with maxIncomeLevels', ->
-        expect(scope.maxIncomeLevels).toBeDefined()
+      it 'populates scope with AMICharts', ->
+        expect(scope.AMICharts).toBeDefined()
 
       it 'populates scope with lotteryPreferences', ->
         expect(scope.lotteryPreferences).toBeDefined()
