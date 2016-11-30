@@ -73,3 +73,5 @@ angular.module('customFilters', [])
     s = ['th', 'st', 'nd', 'rd']
     v = n % 100
     (s[(v - 20) % 10] or s[v] or s[0])
+.filter 'divideBy', ->
+  (input, divider) -> input / divider
