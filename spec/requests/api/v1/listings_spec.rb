@@ -22,7 +22,14 @@ describe 'Listings API' do
   describe 'AMI' do
     save_fixture do
       VCR.use_cassette('listings/ami') do
-        get '/api/v1/listings/ami.json'
+        params = {
+          ami: [
+            { year: '2016', chartType: 'Non-HERA', percent: '50' },
+            { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
+            { year: '2016', chartType: 'Non-HERA', percent: '60' },
+          ],
+        }
+        post '/api/v1/listings/ami.json', params
       end
     end
   end
@@ -125,7 +132,14 @@ describe 'Listings API' do
 
   it 'gets AMI results' do
     VCR.use_cassette('listings/ami') do
-      get '/api/v1/listings/ami.json'
+      params = {
+        ami: [
+          { year: '2016', chartType: 'Non-HERA', percent: '50' },
+          { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
+          { year: '2016', chartType: 'Non-HERA', percent: '60' },
+        ],
+      }
+      post '/api/v1/listings/ami.json', params
     end
 
     json = JSON.parse(response.body)
@@ -134,8 +148,8 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of AMI results are returned
-    # (based on VCR cassette with 9 results)
-    expect(json['ami'].length).to eq(9)
+    # (based on VCR cassette with 3 different AMI levels)
+    expect(json['ami'].length).to eq(3)
   end
 
   it 'gets Unit results for a Listing' do
