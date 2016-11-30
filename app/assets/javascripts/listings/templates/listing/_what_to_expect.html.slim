@@ -14,8 +14,5 @@ p.c-steel.t-small.margin-bottom
     span ng-if="!listingIsFirstComeFirstServe()"
       |  from the lottery
     | , be prepared to fill out a more detailed application and provide required supporting documents.
-a.toggler.toggle-more.t-small.hide-for-print title="read {{ whatToExpectOpen ? 'less' : 'more' }}" href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
-  ' read {{ whatToExpectOpen ? 'less' : 'more' }}
-  span.ui-icon.ui-tiny.i-primary
-    svg
-      use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
+
+show-more-toggler toggle-state="whatToExpectOpen" verb="read"
