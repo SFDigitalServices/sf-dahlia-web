@@ -102,7 +102,7 @@ section.results-section.border-top ng-if="hasEligibilityFilters() && openNotMatc
   article.row
     .large-12.columns
       header.status-header.status--closed.has-button
-        .status-header_content
+        .status-header_content aria-describedby="toggle-not-matched" ng-click="toggleNotMatchedListings($event)"
           .status-header_icon
             span.ui-icon.ui-xlarge
               svg
@@ -113,7 +113,7 @@ section.results-section.border-top ng-if="hasEligibilityFilters() && openNotMatc
             p.no-margin
               | {{'LISTINGS.WE_KNOW_YOU_MAY_HAVE_OPTIONS' | translate}}
         .status-header_action
-          button.button.ghost-white.expand-small.right.toggler ng-click="toggleNotMatchedListings()"
+          button.button.ghost-white.expand-small.right.toggler#toggle-not-matched ng-click="toggleNotMatchedListings($event)"
             span ng-show="!displayNotMatchedListings"
               span translate="LISTINGS.SHOW_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
             span ng-show="displayNotMatchedListings"
@@ -130,7 +130,7 @@ section.results-section.border-top ng-if="closedAndLotteryListingsCount()"
   article.row
     .large-12.columns
       header.status-header.status--closed.has-button
-        .status-header_content
+        .status-header_content aria-describedby="toggle-lottery-results" ng-click="toggleLotteryResultsListings($event)"
           .status-header_icon
             span.ui-icon.ui-xlarge
               svg
@@ -141,7 +141,7 @@ section.results-section.border-top ng-if="closedAndLotteryListingsCount()"
             p.no-margin
               | {{'LISTINGS.REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS' | translate}}
         .status-header_action
-          button.button.ghost-white.expand-small.right.toggler ng-click="toggleLotteryResultsListings()"
+          button.button.ghost-white.expand-small.right.toggler#toggle-lottery-results ng-click="toggleLotteryResultsListings($event)"
             span ng-show="!displayLotteryResultsListings"
               span translate="LISTINGS.SHOW_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
             span ng-show="displayLotteryResultsListings"

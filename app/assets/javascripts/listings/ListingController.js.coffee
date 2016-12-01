@@ -187,10 +187,12 @@ ListingController = (
   $scope.closedAndLotteryListingsCount = ->
     $scope.lotteryResultsListings.length + $scope.closedListings.length
 
-  $scope.toggleLotteryResultsListings = ->
+  $scope.toggleLotteryResultsListings = (e) ->
+    e.currentTarget.blur()
     $scope.displayLotteryResultsListings = !$scope.displayLotteryResultsListings
 
-  $scope.toggleNotMatchedListings = ->
+  $scope.toggleNotMatchedListings = (e) ->
+    e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
   # TODO: -- REMOVE HARDCODED FEATURES --
