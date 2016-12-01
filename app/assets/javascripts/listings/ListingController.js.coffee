@@ -182,6 +182,9 @@ ListingController = (
     $scope.listing.preferences && $scope.listing.preferences.length
 
   # TODO: -- REMOVE HARDCODED FEATURES --
+  $scope.listingIsFirstComeFirstServe = ->
+    ListingService.listingIs('168 Hyde Relisting')
+
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
 

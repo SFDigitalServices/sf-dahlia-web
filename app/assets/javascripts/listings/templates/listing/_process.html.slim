@@ -47,7 +47,7 @@ accordion-heading
   .show-for-medium-up
     ng-include src="'listings/templates/listing/_panel-apply.html'"
 
-  .content-group
+  .content-group ng-if="!listingIsFirstComeFirstServe()"
     h4.h-caps-lined Public Lottery
     ul ng-if="lotteryDateVenueAvailable(listing)"
       li
