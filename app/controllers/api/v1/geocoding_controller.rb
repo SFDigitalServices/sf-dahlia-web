@@ -1,27 +1,44 @@
 # RESTful JSON API to query for address geocoding
 class Api::V1::GeocodingController < ApiController
   def geocode
-    # could be nil if no results found
-    @data = GeocodingService.new(address_params).geocode
-    if @data
-      # TODO: revive this code once NRHP matching is ready to go live
-      # x = @data['location']['x']
-      # y = @data['location']['y']
-      # name = '2198 Market' # TODO: remove hardcoded listing name
-      # match = NeighborhoodBoundaryService.new(name, x, y).in_boundary?
-      # @data[:boundary_match] = match
-      @data[:boundary_match] = false
-    else
-      if address_params[:city].casecmp('San Francisco') == 0
-        log = GeocodingLog.create(log_params)
-        Emailer.geocoding_log_notification(log).deliver_now
-      end
-      @data = { boundary_match: false }
-    end
-    render json: { geocoding_data: @data }
+    render json: { geocoding_data: { boundary_match: check_boundary_match } }
   end
 
   private
+
+  # If we get a valid address from geocoder and a valid response from boundary service,
+  # return the boundary service match response.
+  # Otherwise, always return a false match so users can move on with the application
+  def check_boundary_match
+    geocoded_addresses = ArcGISService::GeocodingService.new(address_params).geocode
+
+    if geocoded_addresses[:candidates].present?
+      # TODO: revive this code once NRHP matching is ready to go live
+      address = geocoded_addresses[:candidates].first
+      x = address[:location][:x]
+      y = address[:location][:y]
+      name = '2198 Market' # TODO: remove hardcoded listing name
+      match = ArcGISService::NeighborhoodBoundaryService.new(name, x, y).in_boundary?
+
+      if match[:errors].present?
+        ArcGISNotificationService.new(
+          match.merge(service_name: ArcGISService::NeighborhoodBoundaryService::NAME),
+          log_params,
+        )
+
+        false
+      else
+        match
+      end
+    else
+      ArcGISNotificationService.new(
+        geocoded_addresses.merge(service_name: ArcGISService::GeocodingService::NAME),
+        log_params,
+      )
+
+      false
+    end
+  end
 
   def address_params
     params.require(:address).permit(:address1, :city, :zip)

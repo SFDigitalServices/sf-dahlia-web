@@ -1,0 +1,13 @@
+p
+  - if error[:type] == :connection_error
+    | The ArcGIS #{data[:service_name]} service was unreachable when DAHLIA searched for this address.
+  - elsif error[:type] == :invalid_response || error[:type] == :http_error
+    | The ArcGIS #{data[:service_name]} service was not returning a valid response when DAHLIA searched for this address.
+
+  - if error[:type] == :http_error
+    |  The server responded with "#{error[:message]}"
+
+  |  Please find details below.
+
+
+= render 'arc_gis_notification_body', log: log, member: member, applicant: applicant
