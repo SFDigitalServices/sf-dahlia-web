@@ -346,8 +346,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
 
-  Service.listingIs = (name) ->
-    Service.LISTING_MAP[Service.listing.Id] == name
+  Service.listingIs = (name, listing = Service.listing) ->
+    Service.LISTING_MAP[listing.Id] == name
 
   Service.stubListingPreferences = ->
     opts = null
