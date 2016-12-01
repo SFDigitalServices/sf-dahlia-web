@@ -356,7 +356,7 @@ ShortFormApplicationService = (
     if options.finish
       Service.application.status = 'submitted'
 
-    Service.application.applicationSubmittedDate = moment().format('YYYY-MM-DD')
+    Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
     params =
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:

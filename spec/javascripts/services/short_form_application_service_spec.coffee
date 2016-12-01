@@ -472,7 +472,7 @@ do ->
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
 
       it 'should indicate app date submitted to be date today', ->
-        dateToday = moment().format('YYYY-MM-DD')
+        dateToday = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.applicationSubmittedDate).toEqual(dateToday)
 
