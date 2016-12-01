@@ -5,7 +5,7 @@ module ArcGISService
   #    .in_boundary?
   #
   class NeighborhoodBoundaryService < ArcGISService::Base
-    API_URL = 'https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query'.freeze
+    API_URL = ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'].freeze
     NAME = 'NRHP Boundary Check'.freeze
 
     ID_MAPPING = {
@@ -33,13 +33,8 @@ module ArcGISService
     end
 
     def in_boundary?
-      boundary_match = json_data
-
-      if boundary_match[:count].present?
-        { boundary_match: json_data[:count] > 0 }
-      else
-        boundary_match
-      end
+      count = json_data.try(:[], :count)
+      count.present? && count > 0
     end
   end
 end

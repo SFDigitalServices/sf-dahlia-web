@@ -3,7 +3,7 @@ require 'http'
 module ArcGISService
   # Shared functionality for ArcGIS services
   class Base
-    attr_reader :errors
+    attr_accessor :errors
 
     def initialize
       @errors = []
@@ -31,7 +31,13 @@ module ArcGISService
       if @errors.any?
         send_errors
       else
-        JSON.parse(geocode_data, symbolize_names: true)
+        parsed = JSON.parse(geocode_data, symbolize_names: true)
+        if parsed[:error].present?
+          add_error(:invalid_response, parsed[:error][:message])
+          send_errors
+        else
+          parsed
+        end
       end
     rescue JSON::ParserError => error
       add_error(:invalid_response, error)

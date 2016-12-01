@@ -3,8 +3,6 @@ class ArcGISNotificationService
   def initialize(service_data, log_params)
     @service_data = service_data
     @log_params = log_params
-
-    send_notifications
   end
 
   def send_notifications

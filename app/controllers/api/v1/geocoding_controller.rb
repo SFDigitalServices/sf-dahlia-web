@@ -1,7 +1,10 @@
 # RESTful JSON API to query for address geocoding
 class Api::V1::GeocodingController < ApiController
+  GeocodingService = ArcGISService::GeocodingService
+  NeighborhoodBoundaryService = ArcGISService::NeighborhoodBoundaryService
+
   def geocode
-    render json: { geocoding_data: { boundary_match: check_boundary_match } }
+    render json: { geocoding_data: geocoding_data }
   end
 
   private
@@ -9,35 +12,40 @@ class Api::V1::GeocodingController < ApiController
   # If we get a valid address from geocoder and a valid response from boundary service,
   # return the boundary service match response.
   # Otherwise, always return a false match so users can move on with the application
-  def check_boundary_match
-    geocoded_addresses = ArcGISService::GeocodingService.new(address_params).geocode
-
+  def geocoding_data
+    geocoded_addresses = GeocodingService.new(address_params).geocode
     if geocoded_addresses[:candidates].present?
-      # TODO: revive this code once NRHP matching is ready to go live
-      address = geocoded_addresses[:candidates].first
-      x = address[:location][:x]
-      y = address[:location][:y]
-      name = '2198 Market' # TODO: remove hardcoded listing name
-      match = ArcGISService::NeighborhoodBoundaryService.new(name, x, y).in_boundary?
-
-      if match[:errors].present?
-        ArcGISNotificationService.new(
-          match.merge(service_name: ArcGISService::NeighborhoodBoundaryService::NAME),
-          log_params,
-        )
-
-        false
-      else
-        match
-      end
+      return add_neighborhood_match_data(geocoded_addresses)
     else
       ArcGISNotificationService.new(
-        geocoded_addresses.merge(service_name: ArcGISService::GeocodingService::NAME),
+        geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
-      )
-
-      false
+      ).send_notifications
+      # default response
+      { boundary_match: false }
     end
+  end
+
+  def add_neighborhood_match_data(geocoded_addresses)
+    address = geocoded_addresses[:candidates].first
+    x = address[:location][:x]
+    y = address[:location][:y]
+    name = '2198 Market' # TODO: remove hardcoded listing name
+    neighborhood = NeighborhoodBoundaryService.new(name, x, y)
+    match = neighborhood.in_boundary?
+    # return successful geocoded data with the result of boundary_match
+    return address.merge(boundary_match: match) unless neighborhood.errors.present?
+
+    # otherwise notify of errors
+    ArcGISNotificationService.new(
+      {
+        errors: neighborhood.errors,
+        service_name: NeighborhoodBoundaryService::NAME,
+      },
+      log_params,
+    ).send_notifications
+    # default response
+    { boundary_match: false }
   end
 
   def address_params

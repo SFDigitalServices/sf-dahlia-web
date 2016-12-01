@@ -96,6 +96,8 @@ class Emailer < Devise::Mailer
   end
 
   def admin_email
+    # all heroku apps have Rails.env.production
+    # but ENV['PRODUCTION'] is only on dahlia-production
     if Rails.env.production? and ENV['PRODUCTION']
       'dahlia-admins@exygy.com'
     else

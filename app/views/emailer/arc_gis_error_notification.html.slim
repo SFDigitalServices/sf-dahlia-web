@@ -4,7 +4,7 @@ p
   - elsif error[:type] == :invalid_response || error[:type] == :http_error
     | The ArcGIS #{data[:service_name]} service was not returning a valid response when DAHLIA searched for this address.
 
-  - if error[:type] == :http_error
+  - if error[:message].present?
     |  The server responded with "#{error[:message]}"
 
   |  Please find details below.
