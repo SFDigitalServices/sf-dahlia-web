@@ -19,7 +19,11 @@
         span.ui-icon.ui-static.ui-medium.i-white
           svg
             use xlink:href="#i-clock"
-        | Application Deadline: {{listing.Application_Due_Date | dateSuffix}}
+        span ng-if="!listingIsFirstComeFirstServe(listing)"
+          | Application Deadline: {{listing.Application_Due_Date | dateSuffix}}
+        span ng-if="listingIsFirstComeFirstServe(listing)"
+          / # TODO: -- REMOVE HARDCODED FEATURES --
+          | Application Available: December 6th
       span.application-label.label.label--flag.alert ng-if="isClosedListing(listing)"
         | Application Closed: {{listing.Application_Due_Date | dateSuffix}}
       span.status-label.label.label--flag ng-if="isClosedListing(listing) && !listingIsFirstComeFirstServe(listing) && listing.Lottery_Results_Date"
