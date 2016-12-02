@@ -188,10 +188,15 @@ ListingController = (
     $scope.lotteryResultsListings.length + $scope.closedListings.length
 
   $scope.toggleLotteryResultsListings = (e) ->
-    e.currentTarget.blur()
+    # When you use keyboard nav to click on the button inside the header
+    # for some reason it triggers both a MouseEvent and KeyboardEvent.
+    # So, we ignore the KeyboardEvent.
+    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
+    e.currentTarget.blur() if e
     $scope.displayLotteryResultsListings = !$scope.displayLotteryResultsListings
 
   $scope.toggleNotMatchedListings = (e) ->
+    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
