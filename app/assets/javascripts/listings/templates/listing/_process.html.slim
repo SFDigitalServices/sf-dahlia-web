@@ -13,7 +13,11 @@ accordion-heading
       span.ui-icon.ui-medium
         svg
           use xlink:href="#i-clock"
-      | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      span ng-if="!listingIsFirstComeFirstServe(listing)"
+        | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      span ng-if="listingIsFirstComeFirstServe(listing)"
+        / # TODO: -- REMOVE HARDCODED FEATURES --
+        | Application Available: December 6, 2016
 
   .content-group ng-if="listing.Information_Sessions"
     h4.content-group_title
@@ -47,7 +51,7 @@ accordion-heading
   .show-for-medium-up
     ng-include src="'listings/templates/listing/_panel-apply.html'"
 
-  .content-group
+  .content-group ng-if="!listingIsFirstComeFirstServe()"
     h4.h-caps-lined Public Lottery
     ul ng-if="lotteryDateVenueAvailable(listing)"
       li
