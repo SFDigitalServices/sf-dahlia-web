@@ -1,0 +1,14 @@
+; EditorConfig is awesome: http://EditorConfig.org
+
+# editorconfig.org
+root = true
+
+[*]
+indent_style = space
+ident_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+; It is acceptable and often preferred to leave certain EditorConfig properties unspecified. For example tab_width need not be specified unless it differs from the value of indent_size. Also when indent_style is set to tab it may be desirable to leave indent_size unspecified so readers may view the file using their preferred indentation format. Additionally if a property is not standardized in your project (end_of_line for example) it may be best to leave it blank.
