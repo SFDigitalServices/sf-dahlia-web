@@ -19,17 +19,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Dec 2016 19:08:13 GMT
+      - Tue, 06 Dec 2016 07:46:33 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - 4d95c7f6
+      - 5a0dba1e
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
-      - '629'
+      - '627'
       Connection:
       - close
     body:
@@ -38,16 +38,16 @@ http_interactions:
         3857\n },\n \"candidates\": [\n  {\n   \"address\": \"4053 18TH ST, San Francisco\",\n
         \  \"location\": {\n    \"x\": -13629293.11924395,\n    \"y\": 4545683.8914925382\n
         \  },\n   \"score\": 100,\n   \"attributes\": {\n    \n   }\n  },\n  {\n   \"address\":
-        \"4053 18TH ST, San Francisco\",\n   \"location\": {\n    \"x\": -13629288.270665675,\n
-        \   \"y\": 4545692.3312512981\n   },\n   \"score\": 100,\n   \"attributes\":
+        \"4053 18TH ST, San Francisco\",\n   \"location\": {\n    \"x\": -13629287.78842972,\n
+        \   \"y\": 4545704.8358086878\n   },\n   \"score\": 100,\n   \"attributes\":
         {\n    \n   }\n  },\n  {\n   \"address\": \"4054 18TH ST, San Francisco\",\n
-        \  \"location\": {\n    \"x\": -13629295.954870859,\n    \"y\": 4545730.5263941195\n
+        \  \"location\": {\n    \"x\": -13629293.494277338,\n    \"y\": 4545716.629964605\n
         \  },\n   \"score\": 79,\n   \"attributes\": {\n    \n   }\n  }\n ]\n}"
     http_version:
-  recorded_at: Thu, 01 Dec 2016 19:08:14 GMT
+  recorded_at: Tue, 06 Dec 2016 07:46:45 GMT
 - request:
     method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13629293.11924395,4545683.891492538&geometryType=esriGeometryPoint&objectIds=3&returnCountOnly=true&spatialRel=esriSpatialRelIntersects
+    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13629293.11924395,4545683.891492538&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=project_id=%27%27
     body:
       encoding: US-ASCII
       string: ''
@@ -64,13 +64,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Dec 2016 19:08:13 GMT
+      - Tue, 06 Dec 2016 07:46:33 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - BUOcRiFFzUKh7KO1_53cf148b
+      - QDO2mH8fE9wMRJdO_53cf146c
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
@@ -81,48 +81,8 @@ http_interactions:
       encoding: UTF-8
       string: |-
         {
-         "count": 1
+         "count": 0
         }
     http_version:
-  recorded_at: Thu, 01 Dec 2016 19:08:14 GMT
-- request:
-    method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13629293.11924395,4545683.891492538&geometryType=esriGeometryPoint&objectIds=3&returnCountOnly=true&spatialRel=esriSpatialRelIntersects
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Connection:
-      - close
-      Host:
-      - sfgis-svc.sfgov.org
-      User-Agent:
-      - http.rb/2.0.2
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 01 Dec 2016 19:08:13 GMT
-      Server:
-      - ''
-      Cache-Control:
-      - max-age=0,must-revalidate
-      Etag:
-      - BUOcRiFFzUKh7KO1_53cf148b
-      Content-Type:
-      - text/plain;charset=utf-8
-      Content-Length:
-      - '15'
-      Connection:
-      - close
-    body:
-      encoding: UTF-8
-      string: |-
-        {
-         "count": 1
-        }
-    http_version:
-  recorded_at: Thu, 01 Dec 2016 19:08:14 GMT
+  recorded_at: Tue, 06 Dec 2016 07:46:45 GMT
 recorded_with: VCR 3.0.3
