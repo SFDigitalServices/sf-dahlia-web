@@ -15,8 +15,9 @@ class Api::V1::GeocodingController < ApiController
   def geocoding_data
     geocoded_addresses = GeocodingService.new(address_params).geocode
     if geocoded_addresses[:candidates].present?
-      match = address_within_neighborhood?(geocoded_addresses)
-      return geocoded_addresses.merge(boundary_match: match)
+      address = geocoded_addresses[:candidates].first
+      match = address_within_neighborhood?(address)
+      return address.merge(boundary_match: match)
     else
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
@@ -27,8 +28,7 @@ class Api::V1::GeocodingController < ApiController
     end
   end
 
-  def address_within_neighborhood?(geocoded_addresses)
-    address = geocoded_addresses[:candidates].first
+  def address_within_neighborhood?(address)
     x = address[:location][:x]
     y = address[:location][:y]
     project_id = listing_params[:Project_ID]
