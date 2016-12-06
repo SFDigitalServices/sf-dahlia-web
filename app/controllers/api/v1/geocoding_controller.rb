@@ -30,8 +30,8 @@ class Api::V1::GeocodingController < ApiController
     address = geocoded_addresses[:candidates].first
     x = address[:location][:x]
     y = address[:location][:y]
-    name = '2198 Market' # TODO: remove hardcoded listing name
-    neighborhood = NeighborhoodBoundaryService.new(name, x, y)
+    project_id = listing_params[:Project_ID]
+    neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
     # return successful geocoded data with the result of boundary_match
     return address.merge(boundary_match: match) unless neighborhood.errors.present?
@@ -61,7 +61,7 @@ class Api::V1::GeocodingController < ApiController
   end
 
   def listing_params
-    params.require(:listing).permit(:Id, :Name)
+    params.require(:listing).permit(:Id, :Name, :Project_ID)
   end
 
   def log_params
