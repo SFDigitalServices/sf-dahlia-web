@@ -140,11 +140,13 @@ AccountController = (
 
   $scope.updateEmail = ->
     $scope.form.current = $scope.form.accountEmail
-    AccountService.updateAccount('email')
+    if $scope.form.current.$valid
+      AccountService.updateAccount('email')
 
   $scope.updateNameDOB = ->
     $scope.form.current = $scope.form.accountNameDOB
-    AccountService.updateAccount('nameDOB')
+    if $scope.form.current.$valid
+      AccountService.updateAccount('nameDOB')
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
