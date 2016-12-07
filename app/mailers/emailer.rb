@@ -47,21 +47,63 @@ class Emailer < Devise::Mailer
 
   def geocoding_log_notification(log)
     @log = log
-    @applicant = Hashie::Mash.new(log.applicant)
-    @member = Hashie::Mash.new(log.member)
-    @name = 'DAHLIA Admins'
-    if Rails.env.production? and ENV['PRODUCTION']
-      email = 'dahlia-admins@exygy.com'
-    else
-      email = 'dahlia-test@exygy.com'
+    setup_geocoding_notification
+
+    subject = '[SF-DAHLIA] Address not found in ArcGIS service'
+    mail(to: admin_email, subject: subject) do |format|
+      format.html do
+        render(
+          'arc_gis_log_notification',
+          locals: {
+            log: @log,
+            applicant: @applicant,
+            member: @member,
+          },
+        )
+      end
     end
-    subject = '[SF-DAHLIA] Address not found in arcgis service'
-    mail(to: email, subject: subject) do |format|
-      format.html { render 'geocoding_log_notification' }
+  end
+
+  def geocoding_error_notification(data, log)
+    @data = data
+    @log = log
+    @error = data[:errors].first
+    setup_geocoding_notification
+
+    subject = "[SF-DAHLIA] ArcGIS #{data[:service_name]} service error"
+    mail(to: admin_email, subject: subject) do |format|
+      format.html do
+        render(
+          'arc_gis_error_notification',
+          locals: {
+            data: @data,
+            log: @log,
+            error: @error,
+            applicant: @applicant,
+            member: @member,
+          },
+        )
+      end
     end
   end
 
   private
+
+  def setup_geocoding_notification
+    @applicant = Hashie::Mash.new(@log[:applicant])
+    @member = Hashie::Mash.new(@log[:member])
+    @name = 'DAHLIA Admins'
+  end
+
+  def admin_email
+    # all heroku apps have Rails.env.production
+    # but ENV['PRODUCTION'] is only on dahlia-production
+    if Rails.env.production? and ENV['PRODUCTION']
+      'dahlia-admins@exygy.com'
+    else
+      'dahlia-test@exygy.com'
+    end
+  end
 
   def load_salesforce_contact(record)
     contact = AccountService.get(record.salesforce_contact_id)
