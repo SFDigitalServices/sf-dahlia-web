@@ -1,6 +1,18 @@
 p If this application is submitted now or in the future, and the listing lottery has Neighborhood Resident Housing Preference, you will need to manually check this application's eligibility and add them to the NRHP preference bucket.
 
 p
+  | Which Listing:
+  br
+  = link_to log[:listing_name], log[:listing_url]
+
+p
+  | Primary Applicant:
+  br
+  = "#{applicant[:firstName]} #{applicant[:lastName]}"
+  br
+  = "DOB: #{applicant[:dob]}"
+
+p
   | Address:
   br
   = log[:address]
@@ -13,10 +25,3 @@ p
   = "#{member[:firstName]} #{member[:lastName]}"
   br
   = "DOB: #{member[:dob]}"
-
-p
-  | Primary Applicant:
-  br
-  = "#{applicant[:firstName]} #{applicant[:lastName]}"
-  br
-  = "DOB: #{applicant[:dob]}"
