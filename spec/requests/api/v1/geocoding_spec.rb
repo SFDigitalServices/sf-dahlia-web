@@ -6,9 +6,9 @@ require 'support/jasmine'
 describe 'Geocoding API' do
   fake_params = {
     address: {
-      address1: '4053 18th St.',
+      address1: '1222 Harrison St.',
       city: 'San Francisco',
-      zip: '94114',
+      zip: '94103',
     },
     member: {
       firstName: 'Jane',
@@ -23,6 +23,7 @@ describe 'Geocoding API' do
     listing: {
       Id: 'xyzyy123',
       Name: '132 Main St.',
+      Project_ID: '2012-021',
     },
   }
   fake_invalid_params = fake_params.clone

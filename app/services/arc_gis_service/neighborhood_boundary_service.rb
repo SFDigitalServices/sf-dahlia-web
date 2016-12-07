@@ -8,22 +8,16 @@ module ArcGISService
     API_URL = ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'].freeze
     NAME = 'NRHP Boundary Check'.freeze
 
-    ID_MAPPING = {
-      '55 Laguna' => 1,
-      '2198 Market' => 3,
-    }.freeze
-
-    def initialize(listing_name, x, y)
+    def initialize(project_id, x, y)
       super()
       @x = x
       @y = y
-      @development_id = ID_MAPPING[listing_name]
+      @project_id = project_id
     end
 
     def query_params
       {
-        # where: "development='#{@listing_name}'",
-        objectIds: @development_id,
+        where: "project_id='#{@project_id}'",
         geometry: "#{@x},#{@y}",
         geometryType: 'esriGeometryPoint',
         spatialRel: 'esriSpatialRelIntersects',
