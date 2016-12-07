@@ -60,7 +60,6 @@ class EmailerPreview < ActionMailer::Preview
       zip: '94123',
       listing_id: 'xyz',
       listing_name: 'Test Listing',
-      listing_url: 'https://housing.sfgov.org/listings/xyz',
       member: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
       applicant: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
     }
