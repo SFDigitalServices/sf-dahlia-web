@@ -201,6 +201,9 @@ ListingController = (
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
   # TODO: -- REMOVE HARDCODED FEATURES --
+  $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
+    ListingService.listingIs('168 Hyde Relisting', listing)
+
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
 

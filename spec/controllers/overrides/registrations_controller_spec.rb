@@ -29,7 +29,7 @@ describe Overrides::RegistrationsController do
         lastName: 'lastName',
         email: 'test@test.com',
         DOB: '1989-03-29',
-        contactId: '003f000000r2oseAAA',
+        contactId: '0036C000001sI5oQAE',
       }.as_json
     end
 
@@ -42,7 +42,7 @@ describe Overrides::RegistrationsController do
         post :create, valid_user_params
       end
       expect(assigns(:resource).salesforce_contact_id)
-        .to eq('003f000000r2oseAAA')
+        .to eq('0036C000001sI5oQAE')
     end
   end
 end

@@ -15,7 +15,9 @@ class Api::V1::GeocodingController < ApiController
   def geocoding_data
     geocoded_addresses = GeocodingService.new(address_params).geocode
     if geocoded_addresses[:candidates].present?
-      return add_neighborhood_match_data(geocoded_addresses)
+      address = geocoded_addresses[:candidates].first
+      match = address_within_neighborhood?(address)
+      return address.merge(boundary_match: match)
     else
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
@@ -26,15 +28,15 @@ class Api::V1::GeocodingController < ApiController
     end
   end
 
-  def add_neighborhood_match_data(geocoded_addresses)
-    address = geocoded_addresses[:candidates].first
+  def address_within_neighborhood?(address)
     x = address[:location][:x]
     y = address[:location][:y]
-    name = '2198 Market' # TODO: remove hardcoded listing name
-    neighborhood = NeighborhoodBoundaryService.new(name, x, y)
+    project_id = listing_params[:Project_ID]
+    return false unless project_id.present?
+    neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
     # return successful geocoded data with the result of boundary_match
-    return address.merge(boundary_match: match) unless neighborhood.errors.present?
+    return match unless neighborhood.errors.present?
 
     # otherwise notify of errors
     ArcGISNotificationService.new(
@@ -45,7 +47,7 @@ class Api::V1::GeocodingController < ApiController
       log_params,
     ).send_notifications
     # default response
-    { boundary_match: false }
+    false
   end
 
   def address_params
@@ -61,7 +63,7 @@ class Api::V1::GeocodingController < ApiController
   end
 
   def listing_params
-    params.require(:listing).permit(:Id, :Name)
+    params.require(:listing).permit(:Id, :Name, :Project_ID)
   end
 
   def log_params

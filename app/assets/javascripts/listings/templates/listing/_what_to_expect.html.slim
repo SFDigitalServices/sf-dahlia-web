@@ -1,8 +1,19 @@
-h4.h-caps-lined What to Expect
-p.c-steel.t-small.margin-bottom Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
+h4.h-caps-lined
+  | What to Expect
+p.c-steel.t-small.margin-bottom
+  ' Applicants will be contacted by the leasing agent
+  span ng-if="!listingIsFirstComeFirstServe()"
+    | in lottery rank order until vacancies are filled.
+  span ng-if="listingIsFirstComeFirstServe()"
+    | on a first-come, first-serve basis until the vacancy is filled.
 .show-for-print ng-show="whatToExpectOpen"
-  p.c-steel.t-small All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
-  p.c-steel.t-small Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.
+  p.c-steel.t-small
+    | All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
+  p.c-steel.t-small
+    | Should your application be chosen
+    span ng-if="!listingIsFirstComeFirstServe()"
+      |  from the lottery
+    | , be prepared to fill out a more detailed application and provide required supporting documents.
 a.toggler.toggle-more.t-small.hide-for-print title="read {{ whatToExpectOpen ? 'less' : 'more' }}" href="#" ng-class="{ open : whatToExpectOpen }" ng-click="whatToExpectOpen = !whatToExpectOpen"
   ' read {{ whatToExpectOpen ? 'less' : 'more' }}
   span.ui-icon.ui-tiny.i-primary
