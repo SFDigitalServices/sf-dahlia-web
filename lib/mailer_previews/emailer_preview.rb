@@ -59,6 +59,7 @@ class EmailerPreview < ActionMailer::Preview
       city: 'San Francisco',
       zip: '94123',
       listing_id: 'xyz',
+      listing_name: 'Test Listing',
       member: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
       applicant: { firstName: 'Mister', lastName: 'Mister', dob: '1990-10-1' },
     }

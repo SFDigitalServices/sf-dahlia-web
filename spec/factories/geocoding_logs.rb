@@ -4,6 +4,7 @@ FactoryGirl.define do
     city 'San Francisco'
     zip '94123'
     listing_id 'xyz'
+    listing_name 'Test Listing'
     member '{"firstName": "Abc"}'
     applicant '{"firstName": "Abc"}'
   end

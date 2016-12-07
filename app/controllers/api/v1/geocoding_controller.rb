@@ -74,6 +74,7 @@ class Api::V1::GeocodingController < ApiController
       member: member_params.as_json,
       applicant: applicant_params.as_json,
       listing_id: listing_params[:Id],
+      listing_name: listing_params[:Name],
     }
   end
 end
