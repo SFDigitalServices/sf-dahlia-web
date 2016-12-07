@@ -101,8 +101,6 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     ShortFormNavigationService.isLoading(true)
     if form.$valid
-      AnalyticsService.trackFormSuccess('Application')
-
       # reset page form state (i.e. reset error messages)
       form.$setPristine()
       $scope.handleFormSuccess()
@@ -116,7 +114,16 @@ ShortFormApplicationController = (
       options.callback.forEach (callback) ->
         $scope[callback](options.params) if $scope[callback]
     if options.path
-      $state.go(options.path)
+      $scope.goToAndTrackFormSuccess(options.path)
+
+  $scope.goToAndTrackFormSuccess = (path, params) ->
+    AnalyticsService.trackFormSuccess('Application')
+    $state.go(path, params)
+
+  $scope.goToAndLeaveForm = (path, params) ->
+    # go to a page without the Form Success analytics tracking
+    $state.go(path, params)
+
 
   $scope.handleErrorState = ->
     # show error alert
@@ -223,11 +230,11 @@ ShortFormApplicationController = (
       $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
        just that it has a value
       ###
-      $state.go('dahlia.short-form-application.alternate-contact-type')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alternate-contact-type')
     else
       # validate + geocode address, but kick out if we have errors
       ShortFormApplicationService.validateApplicantAddress( ->
-        $state.go('dahlia.short-form-application.verify-address')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.verify-address')
       ).error( ->
         $scope.addressError = true
         $scope.handleErrorState()
@@ -242,7 +249,7 @@ ShortFormApplicationController = (
     else
       if $scope.alternateContact.alternateContactType != 'Social Worker or Housing Counselor'
         $scope.alternateContact.agency = null
-      $state.go('dahlia.short-form-application.alternate-contact-name')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alternate-contact-name')
 
   $scope.hasNav = ->
     ShortFormNavigationService.hasNav()
@@ -265,7 +272,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.getLandingPage(section)
 
   $scope.goToHouseholdLandingPage = ->
-    $state.go("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
+    $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
 
   $scope.getHouseholdLandingPage = (section) ->
     $scope.getLandingPage({name: 'Household'})
@@ -274,7 +281,7 @@ ShortFormApplicationController = (
   # this is called after d1-preferences-programs
   $scope.checkIfPreferencesApply = ->
     if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
-      $state.go('dahlia.short-form-application.live-work-preference')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
       $scope.checkIfNoPreferencesSelected()
 
@@ -282,10 +289,10 @@ ShortFormApplicationController = (
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
       # only show general lottery notice if they have no preferences
-      $state.go('dahlia.short-form-application.general-lottery-notice')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
     else
       # otherwise go to the Income section
-      $state.go('dahlia.short-form-application.income-vouchers')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -339,11 +346,12 @@ ShortFormApplicationController = (
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)
-      $state.go('dahlia.short-form-application.household-members')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-members')
     else
       # validate + geocode address, but kick out if we have errors
       ShortFormApplicationService.validateHouseholdMemberAddress( ->
-        $state.go('dahlia.short-form-application.household-member-verify-address', {member_id: $scope.householdMember.id})
+        opts = {member_id: $scope.householdMember.id}
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-member-verify-address', opts)
       ).error( ->
         $scope.addressError = true
         $scope.handleErrorState()
@@ -352,7 +360,8 @@ ShortFormApplicationController = (
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
     $scope.form.applicationForm.$setPristine()
-    $state.go('dahlia.short-form-application.household-members')
+    # go back to household members page without tracking Form Success
+    $scope.goToAndLeaveForm('dahlia.short-form-application.household-members')
 
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearHouseholdErrorMessage()
@@ -360,7 +369,8 @@ ShortFormApplicationController = (
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
       page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-      return $state.go("dahlia.short-form-application.#{page}")
+      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         $scope._respondToHouseholdEligibilityResults(response, match)
@@ -372,9 +382,9 @@ ShortFormApplicationController = (
       $scope.clearHouseholdErrorMessage()
       if match == 'incomeMatch'
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-        $state.go("dahlia.short-form-application.#{page}")
+        $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
       else
-        $state.go('dahlia.short-form-application.preferences-programs')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
@@ -385,9 +395,15 @@ ShortFormApplicationController = (
 
   $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
     error = eligibility[errorResult].toLowerCase()
+    if errorResult == 'incomeEligibilityResult' && error == ''
+      # error message from salesforce seems to be blank when income == 0
+      error = 'too low'
+    # determine if we're in a household or income error state
     if errorResult == 'householdEligibilityResult'
+      AnalyticsService.trackFormError('Application', "household #{error}")
       message = $translate.instant("ERROR.NOT_ELIGIBLE_HOUSEHOLD") + ' '
     else
+      AnalyticsService.trackFormError('Application', "income #{error}")
       message = $translate.instant("ERROR.NOT_ELIGIBLE_INCOME") + ' '
     if error == 'too big'
       message += $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
@@ -400,10 +416,6 @@ ShortFormApplicationController = (
       ShortFormApplicationService.invalidateIncomeForm()
     else if error == 'too high'
       message += $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
-      ShortFormApplicationService.invalidateIncomeForm()
-    else if errorResult == 'incomeEligibilityResult'
-      # default state, this shouldn't happen but it seems to if income == 0
-      message += $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_LOW")
       ShortFormApplicationService.invalidateIncomeForm()
     $scope.householdEligibilityErrorMessage = message
 
@@ -449,10 +461,10 @@ ShortFormApplicationController = (
     if ($scope.chosenApplicationToKeep == 'recent')
       user = AccountService.loggedInUser
       ShortFormApplicationService.keepCurrentDraftApplication(user).then( ->
-        $state.go('dahlia.my-applications', {skipConfirm: true})
+        $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
       )
     else
-      $state.go('dahlia.my-applications', {skipConfirm: true})
+      $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
 
 
   ## account service
@@ -488,7 +500,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.submitApplication({finish: true})
       .then(  ->
         ShortFormNavigationService.isLoading(false)
-        $state.go('dahlia.short-form-application.confirmation')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.confirmation')
       )
 
   ## Save and finish later
@@ -499,11 +511,13 @@ ShortFormApplicationController = (
     if AccountService.loggedIn()
       ShortFormApplicationService.submitApplication().then((response) ->
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
-        $state.go('dahlia.my-applications', {skipConfirm: true})
+        # go to my applications without tracking Form Success
+        $scope.goToAndLeaveForm('dahlia.my-applications', {skipConfirm: true})
       )
     else
       ShortFormNavigationService.isLoading(false)
-      $state.go('dahlia.short-form-application.create-account')
+      # go to Create Account without tracking Form Success
+      $scope.goToAndLeaveForm('dahlia.short-form-application.create-account')
 
   $scope.print = -> $window.print()
 

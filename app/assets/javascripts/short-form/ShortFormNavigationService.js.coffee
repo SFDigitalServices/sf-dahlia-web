@@ -126,6 +126,9 @@ ShortFormNavigationService = (
     Service._sectionOfPage(Service._currentPage())
 
   Service.backPageState = ->
+    $state.href("dahlia.short-form-application.#{Service.previousPage()}")
+
+  Service.previousPage = ->
     application = ShortFormApplicationService.application
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
@@ -164,7 +167,7 @@ ShortFormNavigationService = (
       # -- catch all
       else
         'intro'
-    $state.href("dahlia.short-form-application.#{page}")
+    page
 
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)
