@@ -118,11 +118,17 @@ ShortFormApplicationController = (
 
   $scope.goToAndTrackFormSuccess = (path, params) ->
     AnalyticsService.trackFormSuccess('Application')
-    $state.go(path, params)
+    if params
+      $state.go(path, params)
+    else
+      $state.go(path)
 
   $scope.goToAndLeaveForm = (path, params) ->
     # go to a page without the Form Success analytics tracking
-    $state.go(path, params)
+    if params
+      $state.go(path, params)
+    else
+      $state.go(path)
 
 
   $scope.handleErrorState = ->

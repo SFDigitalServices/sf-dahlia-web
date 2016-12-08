@@ -96,10 +96,16 @@ do ->
         expect(activeSection.name).toEqual 'Preferences'
 
     describe 'backPageState', ->
-      it 'gets the previous page to be used by the back button', ->
+      it 'gets the previous page href to be used by the back button', ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousState = ShortFormNavigationService.backPageState()
         expect(previousState).toEqual $state.href('dahlia.short-form-application.name')
+
+    describe 'previousPage', ->
+      it 'gets the name of the previous page based on your current page', ->
+        $state.current.name = 'dahlia.short-form-application.contact'
+        previousPage = ShortFormNavigationService.previousPage()
+        expect(previousPage).toEqual 'name'
 
     describe 'getLandingPage', ->
       it 'gets the first page of the section if it\'s not Household', ->

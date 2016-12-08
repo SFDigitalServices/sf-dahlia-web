@@ -316,6 +316,14 @@ do ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(scope.householdEligibilityErrorMessage).not.toEqual(null)
 
+        it 'tracks an income form error in analytics', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'incomeMatch')
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'income too low')
+
+        it 'tracks a household size form error in analytics', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big')
+
     describe 'clearHouseholdErrorMessage', ->
       it 'assigns scope.householdEligibilityErrorMessage to null', ->
         scope.householdEligibilityErrorMessage = 'some error message'
