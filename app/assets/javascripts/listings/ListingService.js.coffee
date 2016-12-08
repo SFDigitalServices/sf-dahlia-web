@@ -469,7 +469,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         readMoreUrl: 'http://sfmohcd.org/neighborhood-resident-housing-preference'
       },
       {
-        preferenceName: 'Live/Work Preference'
+        preferenceName: 'Live or Work in San Francisco Preference'
         description: '''
           Households that submit acceptable documentation that at least one member lives or works in San Francisco.
           In order to claim Work Preference, you or a household member must currently work in San Francisco at least
