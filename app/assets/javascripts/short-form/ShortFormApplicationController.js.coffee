@@ -406,10 +406,14 @@ ShortFormApplicationController = (
       error = 'too low'
     # determine if we're in a household or income error state
     if errorResult == 'householdEligibilityResult'
-      AnalyticsService.trackFormError('Application', "household #{error}")
+      # TODO: get householdsize from the application (look for the same params in checkHouseholdEligiblity)
+      householdSize = 5
+      AnalyticsService.trackFormError('Application', "household #{error}", householdSize)
       message = $translate.instant("ERROR.NOT_ELIGIBLE_HOUSEHOLD") + ' '
     else
-      AnalyticsService.trackFormError('Application', "income #{error}")
+      # TODO: get yearlyIncomeAmount from the application (look for the same params in checkHouseholdEligiblity)
+      yearlyIncomeAmount = 5
+      AnalyticsService.trackFormError('Application', "income #{error}", yearlyIncomeAmount)
       message = $translate.instant("ERROR.NOT_ELIGIBLE_INCOME") + ' '
     if error == 'too big'
       message += $translate.instant("ERROR.HOUSEHOLD_TOO_BIG")
