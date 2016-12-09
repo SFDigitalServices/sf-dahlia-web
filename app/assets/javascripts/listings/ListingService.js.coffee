@@ -76,7 +76,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     minMax = [1, 1]
     if listing.unitSummary
       min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
-      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
       minMax = [min, max]
     return minMax
 
@@ -161,6 +161,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+      # TODO: -- REMOVE HARDCODED FEATURES --
+      if Service.listingIs('Test Listing')
+        Service.listing = Service.stubFeatures(Service.listing)
+      # ---
     ).error( (data, status, headers, config) ->
       return
     )
@@ -296,10 +300,21 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        Service.listing.Units = data.units
+        # TODO: -- REMOVE HARDCODED FEATURES --
+        if Service.listingIs('Test Listing')
+          units = Service.stubUnitFeatures(data.units)
+        # ---
+        Service.listing.Units = units
+        Service.listing.unitSummaryAMI = Service.groupAMIUnits(units)
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.groupAMIUnits = (units) ->
+    byPercent = _.groupBy units, 'STUB_AMI_percent'
+    _.forEach byPercent, (amiUnits, percent) ->
+      byPercent[percent] = _.groupBy amiUnits, 'Unit_Type'
+    byPercent
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -385,7 +400,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYuFSUA1': '30 Dore'
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
-    'a0W0P00000DYUcpUAH': 'Test Listing'
+    'a0W6C000000DbnZUAS': 'Test Listing'
   }
 
   Service.mapSlugToId = (id) ->
@@ -530,7 +545,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.stubFeatures = (listing) ->
     listing.STUB_Reserved_community_type = 'Senior Community Building'
-<<<<<<< HEAD
     listing.STUB_Has_waitlist = true
     listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
     listing.STUB_AMI_Levels = [
@@ -538,9 +552,19 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       {year: '2016', chartType: 'HCD/TCAC', percent: '50'}
       {year: '2016', chartType: 'Non-HERA', percent: '60'}
     ]
-=======
->>>>>>> Features/mf community unit tags #133559357 (#555)
     return listing
+
+  Service.stubUnitFeatures = (units) ->
+    units.forEach (unit) ->
+      unit.STUB_AMI_chartType = 'Non-HERA'
+      if unit.Id == 'a0b6C000000DDo5QAG'
+        unit.STUB_AMI_percent = '50'
+        unit.STUB_Status = 'Occupied'
+      else
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Available'
+      unit.STUB_AMI_year = '2016'
+    units
 
   return Service
 

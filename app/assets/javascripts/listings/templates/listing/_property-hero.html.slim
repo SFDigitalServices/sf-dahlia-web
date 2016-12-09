@@ -51,7 +51,33 @@
           use xlink:href="#i-clock"
       | Applications Closed
 
-  ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+  div ng-repeat="(percent, unitTypes) in listing.unitSummaryAMI"
+    h2
+      | {{percent}}% AMI
+
+    .property-hero_stats
+      table.pricing-table.table-flex
+        thead
+          tr
+            th Unit Type
+            th Minimum Income
+            th Rent
+            th Availabililty
+        tr ng-repeat="(unitType, units) in unitTypes"
+          td.tr data-th="Unit Type"
+            span.h-small
+              | {{unitType}}
+          td data-th="Min. Income"
+            | {{units[0].BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
+          td data-th="Rent"
+            | {{units[0].BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
+          td data-th="Availabililty"
+            | {{units.length}}
+            small
+              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+
+
+  / ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
