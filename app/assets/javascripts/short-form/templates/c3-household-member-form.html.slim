@@ -49,7 +49,7 @@
       label.form-label.caps id="hasSameAddressAsApplicant_label"
         | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="copyApplicantAddressToHouseholdMember"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
           | {{'T.YES' | translate}}
         radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
           | {{'T.NO' | translate}}
