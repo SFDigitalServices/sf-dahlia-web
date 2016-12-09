@@ -207,10 +207,6 @@ ShortFormApplicationController = (
   $scope.resetHouseholdMemberAddress = ->
     $scope.householdMember.home_address = {}
 
-  $scope.copyApplicantAddressToHouseholdMember = ->
-    $scope.householdMember.home_address = {}
-    angular.copy($scope.applicant.home_address, $scope.householdMember.home_address)
-
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
     $scope.applicant.mailing_address = {}
