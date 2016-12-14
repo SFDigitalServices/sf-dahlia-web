@@ -62,8 +62,8 @@
           controller: 'ListingController'
       resolve:
         listing: [
-          '$stateParams', '$q', 'ListingService',
-          ($stateParams, $q, ListingService) ->
+          '$stateParams', '$state', '$q', 'ListingService',
+          ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
             ListingService.getListing($stateParams.id).then ->
               deferred.resolve(ListingService.listing)
