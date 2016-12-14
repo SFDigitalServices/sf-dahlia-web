@@ -614,3 +614,19 @@ do ->
         ShortFormApplicationService.loadAccountApplication(data)
         expect(ShortFormApplicationService.accountApplication)
           .toEqual({application: 'someapp'})
+
+    describe 'applicationWasSubmitted', ->
+      beforeEach ->
+        ShortFormApplicationService.application = fakeShortForm
+
+      it 'should not indicate app was submitted for "Draft"', ->
+        ShortFormApplicationService.application.status = 'Draft'
+        expect(ShortFormApplicationService.applicationWasSubmitted()).toEqual(false)
+
+      it 'should indicate app was submitted for "Submitted"', ->
+        ShortFormApplicationService.application.status = 'Submitted'
+        expect(ShortFormApplicationService.applicationWasSubmitted()).toEqual(true)
+
+      it 'should indicate app was submitted for "Removed"', ->
+        ShortFormApplicationService.application.status = 'Removed'
+        expect(ShortFormApplicationService.applicationWasSubmitted()).toEqual(true)

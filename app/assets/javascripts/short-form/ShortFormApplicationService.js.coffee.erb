@@ -500,6 +500,10 @@ ShortFormApplicationService = (
       .error(afterGeocode)
     )
 
+  Service.applicationWasSubmitted = (application = Service.application) ->
+    # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
+    _.includes(['Submitted', 'Removed'], application.status)
+
   Service.DOBValid = ShortFormDataService.DOBValid
 
   # TODO: -- REMOVE HARDCODED FEATURES --

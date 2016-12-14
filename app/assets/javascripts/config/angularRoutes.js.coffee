@@ -719,7 +719,7 @@
           '$stateParams', '$state', 'ShortFormApplicationService',
           ($stateParams, $state, ShortFormApplicationService) ->
             ShortFormApplicationService.getApplication($stateParams.id).then ->
-              if ShortFormApplicationService.application.status != 'Submitted'
+              if !ShortFormApplicationService.applicationWasSubmitted()
                 $state.go('dahlia.my-applications')
         ]
       onExit: [

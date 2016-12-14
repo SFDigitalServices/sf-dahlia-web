@@ -40,7 +40,7 @@ angular.module('dahlia.directives')
         }
 
       scope.isSubmitted = ->
-        scope.application.status == 'Submitted'
+        ShortFormApplicationService.applicationWasSubmitted(scope.application)
 
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
