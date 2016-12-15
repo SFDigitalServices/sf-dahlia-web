@@ -9,7 +9,7 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
   .form-group.padding-top--2x
     label.form-label for="source_{{income.id}}" ng-class="{ error: inputInvalid(income.id, 'source') }"
       | Where is this income from?
-    select id="source_{{income.id}}" ng-model="income.source" name="source_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'source') }" aria-describedby="source_{{income.id}}_error"
+    select id="source_{{income.id}}" ng-model="income.source" name="source_{{income.id}}" ng-required="true" ng-class="{ error: inputInvalid(income.id, 'source') }" aria-describedby="source_{{income.id}}_error"
       option disabled="" selected="" value=""  Please select one
       option value="Wages"  Wages
       option value="Social Security"  Social Security
@@ -25,17 +25,17 @@ ng-form name="forms.incomeForm_{{income.id}}" ng-init="income.id = income.id || 
       | How much is the income of this source?
     .form-income
       span.label-dollar $
-      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value_{{income.id}}" required="" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }" aria-describedby="value_{{income.id}}_error"
+      input.form-income_input id="value_{{income.id}}" placeholder="Enter amount" type="text" ng-model="income.value" ng-currency="" currency-symbol="" name="value_{{income.id}}" ng-required="true" ng-class="{ error: inputInvalid(income.id, 'value') || inputInvalid(income.id, 'frequency_'+income.id) }" aria-describedby="value_{{income.id}}_error"
       small.error id="value_{{income.id}}_error" ng-show="inputInvalid(income.id, 'value')"
           | Please enter an income amount
     .radio-group-inline ng-class="{ error: inputInvalid(income.id, 'frequency') }"
       p.radio-inline
         / `::$id` is a "one-time binding" of $id
         / see: https://docs.angularjs.org/guide/expression
-        input id="income_frequency_month_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="month" ng-model="income.frequency" required="" aria-describedby="frequency_{{income.id}}_error"
+        input id="income_frequency_month_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="month" ng-model="income.frequency" ng-required="true" aria-describedby="frequency_{{income.id}}_error"
         label for="income_frequency_month_{{income.id}}"  per month
       p.radio-inline
-        input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" required="" aria-describedby="frequency_{{income.id}}_error"
+        input id="income_frequency_year_{{income.id}}" name="frequency_{{income.id}}" type="radio" value="year" ng-model="income.frequency" ng-required="true" aria-describedby="frequency_{{income.id}}_error"
         label for="income_frequency_year_{{income.id}}"  per year
 
       small.error id="frequency_{{income.id}}_error" ng-show="inputInvalid(income.id, 'frequency_'+income.id)"

@@ -58,6 +58,8 @@ AccountController = (
     field = form[fieldName]
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
+    else
+      false
 
   $scope.createAccount = ->
     form = $scope.accountForm()
