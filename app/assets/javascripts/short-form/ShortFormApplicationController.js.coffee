@@ -499,11 +499,14 @@ ShortFormApplicationController = (
   $scope.saveAndFinishLater = (ev) ->
     # prevent normal short form page submit
     ev.preventDefault()
+    ShortFormNavigationService.isLoading(true)
     if AccountService.loggedIn()
       ShortFormApplicationService.submitApplication().then((response) ->
+        ShortFormNavigationService.isLoading(false)
         $state.go('dahlia.my-applications', {skipConfirm: true})
       )
     else
+      ShortFormNavigationService.isLoading(false)
       $state.go('dahlia.short-form-application.create-account')
 
   $scope.print = -> $window.print()
