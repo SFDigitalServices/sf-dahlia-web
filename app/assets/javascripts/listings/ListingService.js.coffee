@@ -351,6 +351,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYlxMUAT': '280 Brighton'
     'a0W0P00000DYuFSUA1': '30 Dore'
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
+    'a0W0P00000DZ4dTUAT': 'L Seven'
   }
 
   Service.mapSlugToId = (id) ->
