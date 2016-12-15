@@ -19,7 +19,7 @@ section.content-wrap
   span ng-if="lotteryDateVenueAvailable(listing) && !lotteryDatePassed(listing)"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
-  .content-group ng-if='!listing.Lottery_Results'
+  .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
     h4.h-caps-lined Lottery Results
     p.content-group_date
       span.content-group_day
