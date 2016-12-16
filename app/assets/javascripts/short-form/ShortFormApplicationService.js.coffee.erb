@@ -193,8 +193,8 @@ ShortFormApplicationService = (
     params =
       listing_id: listing.Id,
       eligibility:
-        householdsize: Service.application.householdMembers.length + 1
-        incomelevel: Service._calculateHouseholdIncome()
+        householdsize: Service.householdSize()
+        incomelevel: Service.calculateHouseholdIncome()
         childrenUnder6: Service._childrenUnder6()
     $http.post("/api/v1/short-form/validate-household", params).success((data, status, headers, config) ->
       # assigning value to object for now to make function unit testable
@@ -203,6 +203,9 @@ ShortFormApplicationService = (
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.householdSize = ->
+    Service.application.householdMembers.length + 1
 
   Service._childrenUnder6 = ->
     allMembers = angular.copy(Service.application.householdMembers)
@@ -214,7 +217,7 @@ ShortFormApplicationService = (
       count + (if age < 6 then 1 else 0)
     , 0)
 
-  Service._calculateHouseholdIncome = ->
+  Service.calculateHouseholdIncome = ->
     income = Service.application.householdIncome || 0
     if income.incomeTimeframe == 'per_year'
       income.incomeTotal

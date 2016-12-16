@@ -40,6 +40,8 @@ do ->
       copyHomeToMailingAddress: jasmine.createSpy()
       addHouseholdMember: jasmine.createSpy()
       cancelHouseholdMember: jasmine.createSpy()
+      householdSize: -> 1
+      calculateHouseholdIncome: -> 1000
       refreshPreferences: jasmine.createSpy()
       clearPhoneData: jasmine.createSpy()
       validMailingAddress: jasmine.createSpy()
@@ -72,6 +74,8 @@ do ->
       uploadProof: jasmine.createSpy()
     fakeEvent =
       preventDefault: ->
+    fakeHHOpts = {}
+    fakeIncomeOpts = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
@@ -301,6 +305,11 @@ do ->
         beforeEach ->
           eligibilityResponse =
             data: invalidHousehold
+          fakeHHOpts =
+            householdSize: fakeShortFormApplicationService.householdSize()
+          fakeIncomeOpts =
+            householdSize: fakeShortFormApplicationService.householdSize()
+            value: fakeShortFormApplicationService.calculateHouseholdIncome()
 
         it 'updates the scope that shows the alert', ->
           scope.hideAlert = true
@@ -318,11 +327,11 @@ do ->
 
         it 'tracks an income form error in analytics', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'incomeMatch')
-          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'income too low')
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'income too low', fakeIncomeOpts)
 
         it 'tracks a household size form error in analytics', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big')
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big', fakeHHOpts)
 
     describe 'clearHouseholdErrorMessage', ->
       it 'assigns scope.householdEligibilityErrorMessage to null', ->
