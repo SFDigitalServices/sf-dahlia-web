@@ -79,7 +79,9 @@ module Overrides
       if @resource.save
         # <SFDAHLIA ...
         synced = sync_with_salesforce
-        unless synced
+        if synced
+          attach_temp_files_to_new_user
+        else
           # undo user creation
           @resource.destroy
           return render_create_error
@@ -149,6 +151,11 @@ module Overrides
       @resource.update_attributes(
         salesforce_contact_id: salesforce_contact['contactId'],
       )
+    end
+
+    def attach_temp_files_to_new_user
+      files = UploadedFile.where(session_uid: @resource.temp_session_id)
+      files.update_all(user_id: @resource.id)
     end
 
     def account_params

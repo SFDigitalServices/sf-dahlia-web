@@ -23,7 +23,7 @@ section.row.margin-bottom--2x
           .form-group ng-class="{ error: inputInvalid('household_size') }"
             label.form-label.t-caps.sr-only for="household_size" ng-class="{ error: inputInvalid('household_size') }"
               | Household Size
-            select#household_size name="household_size" ng-model="filters.household_size" required="" ng-class="{ error: inputInvalid('household_size') }" ng-change="onChangeHouseholdSize()" aria-describedby="household_size_error"
+            select#household_size name="household_size" ng-model="filters.household_size" ng-required="true" ng-class="{ error: inputInvalid('household_size') }" ng-change="onChangeHouseholdSize()" aria-describedby="household_size_error"
               option disabled="" selected="" value="" Enter number of people
               option value="1" 1 person
               option ng-repeat="val in [2,3,4,5,6,7,8,9]" value="{{val}}"
@@ -56,7 +56,7 @@ section.row.margin-bottom--2x
             label.form-label.t-caps.sr-only for="income_total" Household Income
             .form-income
               span.label-dollar $
-              input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" required="" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }" aria-describedby="income_total_error"
+              input#income_total.form-income_input name="income_total" ng-model="filters.income_total" placeholder="Total all of your income sources" type="text" ng-required="true" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('income_total') || inputInvalid('income_timeframe') }" aria-describedby="income_total_error"
               a.button.input-editor.tiny.secondary title="Edit" ui-sref="dahlia.income-calculator.edit" ng-click="goToIncomeCalculator()" ng-show="hasCalculatedIncome()"
                 | Edit
           small.error#income_total_error ng-show="inputInvalid('income_total')"
