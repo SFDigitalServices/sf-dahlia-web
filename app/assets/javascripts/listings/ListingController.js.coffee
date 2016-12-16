@@ -219,6 +219,9 @@ ListingController = (
   $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
     ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
+  $scope.listingHasMultipleAMI = ->
+    _.keys($scope.listing.unitSummaryAMI).length > 1
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
     ListingService.listingIs('168 Hyde Relisting', listing)

@@ -52,7 +52,7 @@
       | Applications Closed
 
   div ng-repeat="(percent, unitTypes) in listing.unitSummaryAMI"
-    h2
+    h2 ng-if="percent && listingHasMultipleAMI()"
       | {{percent}}% AMI
 
     .property-hero_stats
