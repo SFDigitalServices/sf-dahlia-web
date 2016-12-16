@@ -47,7 +47,9 @@ ShortFormApplicationService = (
       Review: {}
 
   Service.current_id = 0
-  Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
+  Service.refreshSessionUid = ->
+    Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
+  Service.refreshSessionUid()
 
   Service.resetUserData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
