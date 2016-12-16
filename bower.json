@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "angular": "1.4.14",
-    "angular-aria": "1.5.8",
+    "angular-aria": "1.4.14",
     "angular-clipboard": "1.1.2",
     "angular-cookie": "4.1.0",
     "angular-filter": "0.5.11",
@@ -15,7 +15,7 @@
     "angular-loading-overlay": "1.1.1",
     "angular-mocks": "1.4.14",
     "angular-pageslide-directive": "1.0.13",
-    "angular-sanitize": "1.5.8",
+    "angular-sanitize": "1.4.14",
     "angular-scroll": "1.0.0",
     "angular-translate": "2.13.0",
     "angular-translate-loader-static-files": "2.13.0",

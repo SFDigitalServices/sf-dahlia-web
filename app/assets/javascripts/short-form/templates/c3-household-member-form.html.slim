@@ -11,7 +11,7 @@
         | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
       label.sr-only for="houshold_member_first_name"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" required="" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
+      input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
       small.error#houshold_member_first_name_error ng-show="inputInvalid('firstName')"
         | {{'ERROR.FIRST_NAME' | translate}}
       label.sr-only for="household_member_middle_name"
@@ -19,7 +19,7 @@
       input#household_member_middle_name ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
       label.sr-only for="household_member_last_name"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#household_member_last_name ng-model="householdMember.lastName" name="lastName" required="" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
+      input#household_member_last_name ng-model="householdMember.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
       small.error#household_member_last_name_error ng-show="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
 
@@ -31,16 +31,16 @@
         .form-group-month.large-2.columns
           label.sr-only for="date_of_birth_month"
             | {{'LABEL.DOB_MONTH' | translate}}
-          input#date_of_birth_month.no-margin(ng-model="householdMember.dob_month" maxlength="2" name="date_of_birth_month" required="" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" pattern="\d*" ui-validate="'DOBValid(\'month\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+          input#date_of_birth_month.no-margin(ng-model="householdMember.dob_month" maxlength="2" name="date_of_birth_month" ng-required="true" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" pattern="\d*" ui-validate="'DOBValid(\'month\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
 
         .form-group-day.large-2.columns
           label.sr-only for="date_of_birth_day"
             | {{'LABEL.DOB_DAY' | translate}}
-          input#date_of_birth_day.no-margin(ng-model="householdMember.dob_day" maxlength="2" name="date_of_birth_day" required="" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" pattern="\d*" ui-validate="'DOBValid(\'day\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
+          input#date_of_birth_day.no-margin(ng-model="householdMember.dob_day" maxlength="2" name="date_of_birth_day" ng-required="true" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" pattern="\d*" ui-validate="'DOBValid(\'day\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" required="" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\')'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
       small.error#date_of_birth_error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
         | {{'ERROR.DOB' | translate}}
 
@@ -81,7 +81,7 @@
     .form-group ng-class="{ error: inputInvalid('relationship') }"
       label.form-label.caps for="household_member_relationship"
         | {{'LABEL.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
-      select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" required="" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
+      select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" ng-required="true" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
         option ng-repeat="relationship in relationship_options" value="{{relationship}}"
