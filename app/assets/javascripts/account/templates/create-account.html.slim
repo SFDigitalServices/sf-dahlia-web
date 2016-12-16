@@ -25,7 +25,7 @@
 
             label.sr-only for="firstName"
               | {{'LABEL.FIRST_NAME' | translate}}
-            input#firstName ng-model="userAuth.contact.firstName" required="" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
+            input#firstName ng-model="userAuth.contact.firstName" ng-required="true" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
             small.error#firstName_error ng-if="inputInvalid('firstName')"
               | {{'ERROR.FIRST_NAME' | translate}}
 
@@ -35,7 +35,7 @@
 
             label.sr-only for="lastName"
               | {{'LABEL.LAST_NAME' | translate}}
-            input#lastName required="" ng-model="userAuth.contact.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
+            input#lastName ng-required="true" ng-model="userAuth.contact.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
             small.error#lastName_error ng-if="inputInvalid('lastName')"
               | {{'ERROR.LAST_NAME' | translate}}
 
@@ -49,17 +49,17 @@
               .form-group-month.large-2.columns
                 label.sr-only for="date_of_birth_month"
                   | {{'LABEL.DOB_MONTH' | translate}}
-                input(ng-model="userAuth.contact.dob_month" required="" maxlength="2" name="date_of_birth_month" placeholder="MM" type="text" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
+                input(ng-model="userAuth.contact.dob_month" ng-required="true" maxlength="2" name="date_of_birth_month" placeholder="MM" type="text" ng-class="{ error: inputInvalid('date_of_birth_month') }" ng-disabled="isLocked('dob')" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
 
               .form-group-day.large-2.columns
                 label.sr-only for="date_of_birth_day"
                   | {{'LABEL.DOB_DAY' | translate}}
-                input(ng-model="userAuth.contact.dob_day" required="" maxlength="2" name="date_of_birth_day" placeholder="DD" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
+                input(ng-model="userAuth.contact.dob_day" ng-required="true" maxlength="2" name="date_of_birth_day" placeholder="DD" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" aria-describedby="date_of_birth_error")
 
               .form-group-year.large-2.columns.end
                 label.sr-only for="date_of_birth_year"
                   | {{'LABEL.DOB_YEAR' | translate}}
-                input(ng-model="userAuth.contact.dob_year" required="" maxlength="4" name="date_of_birth_year" placeholder="YYYY" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'year\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
+                input(ng-model="userAuth.contact.dob_year" ng-required="true" maxlength="4" name="date_of_birth_year" placeholder="YYYY" type="text" pattern="\d*" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="isLocked('dob')" ui-validate="'DOBValid(\'year\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOBDay()" aria-describedby="date_of_birth_error")
 
             small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
               | {{'ERROR.DOB' | translate}}
@@ -72,13 +72,13 @@
               lock-icon ng-if="isLocked('email')"
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
-            input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" required="" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
+            input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
             small.error#auth_email_error ng-if="inputInvalid('email')"
               | {{'ERROR.EMAIL' | translate}}
 
             label.label-secondary for="auth_email_confirmation"
               | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
-            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" required="" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
+            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" ng-required="true" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
 
             small.error#auth_email_confirmation_error ng-if="inputInvalid('email_confirmation')"
               | {{'ERROR.EMAIL_CONFIRMATION' | translate}}
@@ -91,13 +91,13 @@
               | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
             label.sr-only for="auth_password"
               | {{'LABEL.PASSWORD' | translate}}
-            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
+            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
             small.error#auth_password_error ng-if="inputInvalid('password')"
               | {{'ERROR.PASSWORD' | translate}}
 
             label.label-secondary for="auth_password_confirmation"
               | {{'LABEL.RE_ENTER_PASSWORD' | translate}}
-            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" required="" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
+            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
 
             small.error#auth_password_confirmation_error ng-if="inputInvalid('password_confirmation')"
               | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}

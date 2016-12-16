@@ -135,6 +135,8 @@ ShortFormApplicationController = (
     field = form[fieldName]
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
+    else
+      false
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
