@@ -300,9 +300,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
+        units = data.units
         # TODO: -- REMOVE HARDCODED FEATURES --
         if Service.listingIs('Test Listing')
-          units = Service.stubUnitFeatures(data.units)
+          units = Service.stubUnitFeatures(units)
         # ---
         Service.listing.Units = units
         Service.listing.unitSummaryAMI = Service.groupAMIUnits(units)
