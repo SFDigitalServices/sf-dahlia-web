@@ -500,7 +500,7 @@ ShortFormApplicationController = (
     ShortFormNavigationService.isLoading(true)
     if AccountService.loggedIn()
       ShortFormApplicationService.submitApplication().then((response) ->
-        ShortFormNavigationService.isLoading(false)
+        # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         $state.go('dahlia.my-applications', {skipConfirm: true})
       )
     else
