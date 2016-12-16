@@ -143,7 +143,11 @@ class Api::V1::ShortFormController < ApiController
         listing_id: application_params[:listingID],
       )
     else
-      files = UploadedFile.where(uploaded_file_params)
+      upload_params = uploaded_file_params.merge(
+        user_id: nil,
+        listing_id: application_params[:listingID],
+      )
+      files = UploadedFile.where(upload_params)
     end
     ShortFormService.attach_files(application_id, files)
     # now that files are saved in SF, remove temp uploads
