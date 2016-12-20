@@ -51,42 +51,18 @@
           use xlink:href="#i-clock"
       | Applications Closed
 
-  div ng-repeat="(percent, unitSummaries) in listing.groupedUnits"
-    h2 ng-if="percent && hasMultipleAMIUnits()"
-      | {{percent}}% AMI
+  section.property-hero_stats.margin-bottom--2x
+    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitSummaries) in listing.groupedUnits"
+      h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
+        | {{percent}}% AMI
+        / TODO: will fully implement this More Info popup link in a later story
+        a.property-hero_stat-info href="#"
+          span.ui-icon.ui-static.ui-medium.i-primary
+            svg
+              use xlink:href="#i-info"
+          |  More Info
 
-    .property-hero_stats
-      table.pricing-table.table-flex
-        thead
-          tr
-            th Unit Type
-            th Minimum Income
-            th Rent
-            th Availability
-        tr ng-repeat="summary in unitSummaries" ng-class="{'tr-reserved': summary.STUB_Reserved_Type || summary.STUB_Priority_Type}"
-          td.tr data-th="Unit Type"
-            span.h-small
-              | {{summary.Unit_Type}}
-          td data-th="Min. Income"
-            span ng-if="summary.BMR_Rental_Minimum_Monthly_Income_Needed"
-              | {{summary.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
-            em ng-if="!summary.BMR_Rental_Minimum_Monthly_Income_Needed"
-              | None
-          td data-th="Rent"
-            span ng-if="summary.BMR_Rent_Monthly"
-              | {{summary.BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
-            span ng-if="!summary.BMR_Rent_Monthly && summary.STUB_Percent_Rent"
-              | {{summary.STUB_Percent_Rent | currency:"$":0}}<small>%/income</small>
-          td data-th="Availability"
-            em ng-if="summary.STUB_Status == 'Occupied'"
-              | Waitlist
-            span ng-if="summary.STUB_Status != 'Occupied'"
-              | {{summary.total}}
-              small
-                ng-pluralize count="summary.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-
-
-  / ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+      ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"

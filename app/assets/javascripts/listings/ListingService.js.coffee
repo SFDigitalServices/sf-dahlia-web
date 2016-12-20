@@ -175,6 +175,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
+        # TODO: remove after "listing.unitSummaries" is properly implemented
+        if Service.listing.unitSummaries
+          sums = Service.listing.unitSummaries
+          Service.listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
       # ---
     ).error( (data, status, headers, config) ->
       return
@@ -215,6 +219,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing', listing)
         listing = Service.stubFeatures(listing)
+      # TODO: remove after "listing.unitSummaries" is properly implemented
+      if listing.unitSummaries
+        sums = listing.unitSummaries
+        listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
       # ---
       if Service.listingIsOpen(listing)
         # All Open Listings Array
