@@ -20,11 +20,14 @@ AnalyticsService = ($state) ->
     ga('set', 'page', path)
     ga('send', 'pageview')
 
-  Service.trackFormSuccess = (category) ->
-    Service.trackEvent('Form Message', { category: category, action: 'Form Success' })
+  Service.trackFormSuccess = (category, label = null) ->
+    params = { category: category, action: 'Form Success', label: label }
+    Service.trackEvent('Form Message', params)
 
-  Service.trackFormError = (category) ->
-    Service.trackEvent('Form Message', { category: category, action: 'Form Error' })
+  Service.trackFormError = (category, label = null, opts = {}) ->
+    params = { category: category, action: 'Form Error', label: label }
+    _.merge(params, opts)
+    Service.trackEvent('Form Message', params)
 
   Service.trackFormAbandon = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
