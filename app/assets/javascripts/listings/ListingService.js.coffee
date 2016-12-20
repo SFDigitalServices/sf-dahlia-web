@@ -15,6 +15,17 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.AMICharts = []
   Service.loading = {}
 
+  Service.fieldsForUnitGrouping = [
+    'Unit_Type',
+    'STUB_Reserved_Type',
+    'STUB_Priority_Type',
+    'BMR_Rent_Monthly',
+    'BMR_Rental_Minimum_Monthly_Income_Needed',
+    'STUB_Percent_Rent',
+    'STUB_Status',
+  ]
+
+
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
 
@@ -312,39 +323,30 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     )
 
   Service.groupUnitDetails = (units) ->
-    pickList = [
-      'Unit_Type',
-      'STUB_Reserved_Type',
-      'STUB_Priority_Type',
-      'BMR_Rent_Monthly',
-      'BMR_Rental_Minimum_Monthly_Income_Needed',
-      'STUB_Percent_Rent',
-      'STUB_Status',
-    ]
     grouped = _.groupBy units, 'STUB_AMI_percent'
     flattened = {}
     _.forEach grouped, (amiUnits, percent) ->
       flattened[percent] = []
-      # create an identity function to group by all unit features in the pickList
       grouped[percent] = _.groupBy amiUnits, (unit) ->
-        _.flatten(_.toPairs(_.pick(unit, pickList)))
-      # summarize each group
+        # create an identity function to group by all unit features in the pickList
+        _.flatten(_.toPairs(_.pick(unit, Service.fieldsForUnitGrouping)))
       _.forEach grouped[percent], (groupedUnits, id) ->
-        summary = _.pick(groupedUnits[0], pickList)
+        # summarize each group by combining the unit details + total # of units
+        summary = _.pick(groupedUnits[0], Service.fieldsForUnitGrouping)
         summary.total = groupedUnits.length
         flattened[percent].push(summary)
 
       # make sure each array is sorted according to our desired order
-      flattened[percent] = Service._sortGroupedUnits(flattened[percent], pickList)
+      flattened[percent] = Service._sortGroupedUnits(flattened[percent])
     return flattened
 
-  Service._sortGroupedUnits = (units, fields) ->
+  Service._sortGroupedUnits = (units) ->
     # little hack to re-sort Studio to the top
     _.map units, (u) ->
       u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
       return u
     # sort everything based on the order presented in pickList
-    units = _.sortBy units, fields
+    units = _.sortBy units, Service.fieldsForUnitGrouping
     # put "Studio" back to normal
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
