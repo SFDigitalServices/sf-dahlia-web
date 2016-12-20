@@ -16,8 +16,8 @@ accordion-heading
       .medium-9.columns
         p.feature-tile_content.t-small
           | {{listing.Neighborhood}}
-    .feature-row.row.collapse
-      .medium-3.columns ng-if="listing.Year_Built"
+    .feature-row.row.collapse ng-if="listing.Year_Built"
+      .medium-3.columns
         h4.feature-title
           | Built
       .medium-9.columns
@@ -94,7 +94,9 @@ accordion-heading
         .small-6.columns.padding-bottom
           span.t-small Deposit
           p.t-delta.no-margin.t-bold
-            | {{listing.Deposit_Min | currency:"$":0}}<span ng-if="listing.Deposit_Max != listing.Deposit_Min">&ndash;{{ listing.Deposit_Max }}</span>
+            | {{listing.Deposit_Min | currency:"$":0}}
+            span ng-if="listing.Deposit_Max && listing.Deposit_Max != listing.Deposit_Min"
+              | &ndash;{{ listing.Deposit_Max }}
           span.content-label.t-small
             | or one month's rent
           span.t-tiny.d-block
