@@ -207,6 +207,10 @@ ListingController = (
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
 
+  $scope.hasMultipleAMIUnits = ->
+    _.keys($scope.listing.groupedUnits).length > 1
+
+
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
 
@@ -218,9 +222,6 @@ ListingController = (
 
   $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
     ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
-
-  $scope.listingHasMultipleAMI = ->
-    _.keys($scope.listing.unitSummaryAMI).length > 1
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->

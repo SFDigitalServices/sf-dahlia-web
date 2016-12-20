@@ -306,16 +306,49 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
           units = Service.stubUnitFeatures(units)
         # ---
         Service.listing.Units = units
-        Service.listing.unitSummaryAMI = Service.groupAMIUnits(units)
+        Service.listing.groupedUnits = Service.groupUnitDetails(units)
     ).error( (data, status, headers, config) ->
       return
     )
 
-  Service.groupAMIUnits = (units) ->
-    byPercent = _.groupBy units, 'STUB_AMI_percent'
-    _.forEach byPercent, (amiUnits, percent) ->
-      byPercent[percent] = _.groupBy amiUnits, 'Unit_Type'
-    byPercent
+  Service.groupUnitDetails = (units) ->
+    pickList = [
+      'Unit_Type',
+      'STUB_Reserved_Type',
+      'STUB_Priority_Type',
+      'BMR_Rent_Monthly',
+      'BMR_Rental_Minimum_Monthly_Income_Needed',
+      'STUB_Percent_Rent',
+      'STUB_Status',
+    ]
+    grouped = _.groupBy units, 'STUB_AMI_percent'
+    flattened = {}
+    _.forEach grouped, (amiUnits, percent) ->
+      flattened[percent] = []
+      # create an identity function to group by all unit features in the pickList
+      grouped[percent] = _.groupBy amiUnits, (unit) ->
+        _.flatten(_.toPairs(_.pick(unit, pickList)))
+      # summarize each group
+      _.forEach grouped[percent], (groupedUnits, id) ->
+        summary = _.pick(groupedUnits[0], pickList)
+        summary.total = groupedUnits.length
+        flattened[percent].push(summary)
+
+      # make sure each array is sorted according to our desired order
+      flattened[percent] = Service._sortGroupedUnits(flattened[percent], pickList)
+    return flattened
+
+  Service._sortGroupedUnits = (units, fields) ->
+    # little hack to re-sort Studio to the top
+    _.map units, (u) ->
+      u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
+      return u
+    # sort everything based on the order presented in pickList
+    units = _.sortBy units, fields
+    # put "Studio" back to normal
+    _.map units, (u) ->
+      u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
+      return u
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -561,6 +594,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       if unit.Id == 'a0b6C000000DDo5QAG'
         unit.STUB_AMI_percent = '50'
         unit.STUB_Status = 'Occupied'
+      else if unit.Id == 'a0b6C000000DKyaQAG'
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Occupied'
+      else if unit.Id == 'a0b6C000000DKyfQAG'
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Available'
+        unit.STUB_Percent_Rent = '30'
+        unit.STUB_Reserved_Type = 'Vision impaired'
       else
         unit.STUB_AMI_percent = '60'
         unit.STUB_Status = 'Available'

@@ -51,8 +51,8 @@
           use xlink:href="#i-clock"
       | Applications Closed
 
-  div ng-repeat="(percent, unitTypes) in listing.unitSummaryAMI"
-    h2 ng-if="percent && listingHasMultipleAMI()"
+  div ng-repeat="(percent, unitSummaries) in listing.groupedUnits"
+    h2 ng-if="percent && hasMultipleAMIUnits()"
       | {{percent}}% AMI
 
     .property-hero_stats
@@ -62,19 +62,28 @@
             th Unit Type
             th Minimum Income
             th Rent
-            th Availabililty
-        tr ng-repeat="(unitType, units) in unitTypes"
+            th Availability
+        tr ng-repeat="summary in unitSummaries" ng-class="{'tr-reserved': summary.STUB_Reserved_Type || summary.STUB_Priority_Type}"
           td.tr data-th="Unit Type"
             span.h-small
-              | {{unitType}}
+              | {{summary.Unit_Type}}
           td data-th="Min. Income"
-            | {{units[0].BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
+            span ng-if="summary.BMR_Rental_Minimum_Monthly_Income_Needed"
+              | {{summary.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
+            em ng-if="!summary.BMR_Rental_Minimum_Monthly_Income_Needed"
+              | None
           td data-th="Rent"
-            | {{units[0].BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
-          td data-th="Availabililty"
-            | {{units.length}}
-            small
-              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+            span ng-if="summary.BMR_Rent_Monthly"
+              | {{summary.BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
+            span ng-if="!summary.BMR_Rent_Monthly && summary.STUB_Percent_Rent"
+              | {{summary.STUB_Percent_Rent | currency:"$":0}}<small>%/income</small>
+          td data-th="Availability"
+            em ng-if="summary.STUB_Status == 'Occupied'"
+              | Waitlist
+            span ng-if="summary.STUB_Status != 'Occupied'"
+              | {{summary.total}}
+              small
+                ng-pluralize count="summary.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
 
 
   / ng-include src="'listings/templates/listing/_property_unit_stats.html'"
