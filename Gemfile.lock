@@ -1,11 +1,11 @@
 GIT
-  remote: https://github.com/Exygy/street-address.git
+  remote: git://github.com/Exygy/street-address.git
   revision: b505ad8c9710cab53ca97c6267ed8971e61b025f
   specs:
     StreetAddress (2.0.0)
 
 GIT
-  remote: https://github.com/pivotal/jasmine-gem.git
+  remote: git://github.com/pivotal/jasmine-gem.git
   revision: b58ea472656af3a1e8409c0675c0f1b877aef162
   specs:
     jasmine (2.5.1)
@@ -395,4 +395,4 @@ RUBY VERSION
    ruby 2.2.3p173
 
 BUNDLED WITH
-   1.13.6
+   1.12.5
