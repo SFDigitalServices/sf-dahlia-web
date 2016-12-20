@@ -1,8 +1,8 @@
 .form-item.padding-bottom  ng-class="{error: inputInvalid(name)}"
   .checkbox
-    input id="{{id}}" name="{{name}}" type="checkbox" ng-model="user[name][option]" ng-disabled='isDisabled(user)' ng-required="isRequired()" aria-labelledby="{{labelledby}}" aria-describedby="{{ariaDescribedby}}"
+    input id="{{id}}" name="{{name}}" type="checkbox" ng-model="user[name][option]" ng-disabled='isDisabled(user)' ng-required="isRequired()" aria-describedby="{{id}}_error"
     label for="{{id}}"
       | {{label}}
 
-  small.error id="{{ariaDescribedby}}" ng-show="inputInvalid(name)"
+  small.error id="{{id}}_error" ng-show="inputInvalid(name)"
     | {{error}}

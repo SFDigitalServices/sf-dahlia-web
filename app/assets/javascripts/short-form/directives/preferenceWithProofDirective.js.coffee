@@ -7,7 +7,6 @@ angular.module('dahlia.directives')
     scope.title = attrs.title
     scope.description = attrs.translatedDescription
     scope.preference = attrs.preference
-    scope.labelledby = attrs.labelledby
     scope.pref_data_event = attrs.dataevent
 
     scope.reset_preference_data = (preference) ->
