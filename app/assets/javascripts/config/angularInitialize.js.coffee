@@ -25,9 +25,9 @@
     $rootScope.$on 'IdleTimeout', ->
       if AccountService.loggedIn()
         AccountService.signOut()
-        $state.go('dahlia.sign-in', {skipConfirm: true})
+        $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
-        $state.go('dahlia.listing', {skipConfirm: true, id: ShortFormApplicationService.listing.Id})
+        $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
@@ -49,12 +49,16 @@
         else
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
-        if (toParams.skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
+        skipConfirm = toParams.skipConfirm || toParams.timeout
+        if (skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
           ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
-          AnalyticsService.trackFormAbandon('Application')
+          if toParams.timeout
+            AnalyticsService.trackTimeout('Application')
+          else
+            AnalyticsService.trackFormAbandon('Application')
           AccountService.rememberShortFormState(null)
         else
           # prevent page transition if user did not confirm

@@ -32,6 +32,9 @@ AnalyticsService = ($state) ->
   Service.trackFormAbandon = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
 
+  Service.trackTimeout = (category) ->
+    Service.trackEvent('Form Message', { category: category, action: 'Timeout' })
+
   return Service
 
 
