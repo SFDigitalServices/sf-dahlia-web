@@ -448,6 +448,9 @@ ShortFormApplicationController = (
   $scope.invalidateAltContactTypeForm = ->
     ShortFormApplicationService.invalidateAltContactTypeForm()
 
+  $scope.checkToInvalidatePreferenceForm = ->
+    ShortFormApplicationService.checkToInvalidatePreferenceForm()
+
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 

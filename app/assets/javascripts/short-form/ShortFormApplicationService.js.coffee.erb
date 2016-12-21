@@ -153,6 +153,7 @@ ShortFormApplicationService = (
       # update existing householdMember
       householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
       angular.copy(householdMember, householdMemberToUpdate)
+    Service.checkToInvalidatePreferenceForm()
     Service.invalidateHouseholdForm()
 
   Service.resetHouseholdMember = ->
@@ -353,6 +354,13 @@ ShortFormApplicationService = (
     Service.application.completedSections['Household'] = false
     Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
+
+  Service.checkToInvalidatePreferenceForm = ->
+    workInSfMember = Service.application.preferences.workInSf_household_member
+    workInSfMembers = Service.workInSfMembers().map((member) -> member.firstName + " " + member.lastName )
+    if !workInSfMembers.includes(workInSfMember)
+      Service.refreshPreferences()
+      Service.application.completedSections['Preferences'] = false
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
