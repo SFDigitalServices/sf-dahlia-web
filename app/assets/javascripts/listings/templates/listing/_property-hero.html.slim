@@ -51,7 +51,18 @@
           use xlink:href="#i-clock"
       | Applications Closed
 
-  ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+  section.property-hero_stats.margin-bottom--2x
+    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitSummaries) in listing.groupedUnits"
+      h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
+        | {{percent}}% AMI
+        / TODO: will fully implement this More Info popup link in a later story
+        a.property-hero_stat-info href="#"
+          span.ui-icon.ui-static.ui-medium.i-primary
+            svg
+              use xlink:href="#i-info"
+          |  More Info
+
+      ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"

@@ -207,6 +207,10 @@ ListingController = (
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
 
+  $scope.hasMultipleAMIUnits = ->
+    _.keys($scope.listing.groupedUnits).length > 1
+
+
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
 
@@ -225,9 +229,6 @@ ListingController = (
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
-
-  if $scope.listingIs('Test Listing')
-    $scope.listing = ListingService.stubFeatures($scope.listing)
   # ---
 
 ############################################################################################

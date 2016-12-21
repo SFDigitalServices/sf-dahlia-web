@@ -15,6 +15,17 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.AMICharts = []
   Service.loading = {}
 
+  Service.fieldsForUnitGrouping = [
+    'Unit_Type',
+    'STUB_Reserved_Type',
+    'STUB_Priority_Type',
+    'BMR_Rent_Monthly',
+    'BMR_Rental_Minimum_Monthly_Income_Needed',
+    'STUB_Percent_Rent',
+    'STUB_Status',
+  ]
+
+
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
 
@@ -76,7 +87,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     minMax = [1, 1]
     if listing.unitSummary
       min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
-      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
       minMax = [min, max]
     return minMax
 
@@ -161,6 +172,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+      # TODO: -- REMOVE HARDCODED FEATURES --
+      if Service.listingIs('Test Listing')
+        Service.listing = Service.stubFeatures(Service.listing)
+        # TODO: remove after "listing.unitSummaries" is properly implemented
+        if Service.listing.unitSummaries
+          sums = Service.listing.unitSummaries
+          Service.listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
+      # ---
     ).error( (data, status, headers, config) ->
       return
     )
@@ -200,6 +219,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing', listing)
         listing = Service.stubFeatures(listing)
+      # TODO: remove after "listing.unitSummaries" is properly implemented
+      if listing.unitSummaries
+        sums = listing.unitSummaries
+        listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
       # ---
       if Service.listingIsOpen(listing)
         # All Open Listings Array
@@ -296,10 +319,46 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        Service.listing.Units = data.units
+        units = data.units
+        # TODO: -- REMOVE HARDCODED FEATURES --
+        if Service.listingIs('Test Listing')
+          units = Service.stubUnitFeatures(units)
+        # ---
+        Service.listing.Units = units
+        Service.listing.groupedUnits = Service.groupUnitDetails(units)
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.groupUnitDetails = (units) ->
+    grouped = _.groupBy units, 'STUB_AMI_percent'
+    flattened = {}
+    _.forEach grouped, (amiUnits, percent) ->
+      flattened[percent] = []
+      grouped[percent] = _.groupBy amiUnits, (unit) ->
+        # create an identity function to group by all unit features in the pickList
+        _.flatten(_.toPairs(_.pick(unit, Service.fieldsForUnitGrouping)))
+      _.forEach grouped[percent], (groupedUnits, id) ->
+        # summarize each group by combining the unit details + total # of units
+        summary = _.pick(groupedUnits[0], Service.fieldsForUnitGrouping)
+        summary.total = groupedUnits.length
+        flattened[percent].push(summary)
+
+      # make sure each array is sorted according to our desired order
+      flattened[percent] = Service._sortGroupedUnits(flattened[percent])
+    return flattened
+
+  Service._sortGroupedUnits = (units) ->
+    # little hack to re-sort Studio to the top
+    _.map units, (u) ->
+      u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
+      return u
+    # sort everything based on the order presented in pickList
+    units = _.sortBy units, Service.fieldsForUnitGrouping
+    # put "Studio" back to normal
+    _.map units, (u) ->
+      u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
+      return u
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -385,7 +444,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYuFSUA1': '30 Dore'
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
-    'a0W0P00000DYUcpUAH': 'Test Listing'
+    'a0W6C000000DbnZUAS': 'Test Listing'
   }
 
   Service.mapSlugToId = (id) ->
@@ -538,6 +597,26 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       {year: '2016', chartType: 'Non-HERA', percent: '60'}
     ]
     return listing
+
+  Service.stubUnitFeatures = (units) ->
+    units.forEach (unit) ->
+      unit.STUB_AMI_chartType = 'Non-HERA'
+      if unit.Id == 'a0b6C000000DDo5QAG'
+        unit.STUB_AMI_percent = '50'
+        unit.STUB_Status = 'Occupied'
+      else if unit.Id == 'a0b6C000000DKyaQAG'
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Occupied'
+      else if unit.Id == 'a0b6C000000DKyfQAG'
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Available'
+        unit.STUB_Percent_Rent = '30'
+        unit.STUB_Reserved_Type = 'Vision impaired'
+      else
+        unit.STUB_AMI_percent = '60'
+        unit.STUB_Status = 'Available'
+      unit.STUB_AMI_year = '2016'
+    units
 
   return Service
 
