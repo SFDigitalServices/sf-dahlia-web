@@ -356,11 +356,20 @@ ShortFormApplicationService = (
     Service.application.completedSections['Income'] = false
 
   Service.checkToInvalidatePreferenceForm = ->
-    workInSfMember = Service.application.preferences.workInSf_household_member
-    workInSfMembers = Service.workInSfMembers().map((member) -> member.firstName + " " + member.lastName )
-    if !workInSfMembers.includes(workInSfMember)
+    liveInSfMemberName = Service.application.preferences.liveInSf_household_member
+    liveInSfMember = _.find Service.liveInSfMembers(), (member) ->
+      (member.firstName + " " + member.lastName) == liveInSfMemberName
+
+    workInSfMemberName = Service.application.preferences.workInSf_household_member
+    workInSfMemberNames = Service.workInSfMembers().map((member) -> member.firstName + " " + member.lastName )
+
+    if !workInSfMemberNames.includes(workInSfMemberName) || !Service.liveInSfMembers().includes(liveInSfMember)
       Service.refreshPreferences()
       Service.application.completedSections['Preferences'] = false
+
+  Service._liveInSfMemberStillEligible = (liveInSfMember) ->
+      return false unless liveInSfMember
+      liveInSfMember.noAddress || (_.lowerCase(liveInSfMember.home_address.city) == 'san francisco')
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]

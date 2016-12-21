@@ -43,7 +43,7 @@ ShortFormNavigationService = (
   Service.submitActions =
     'name': {path: 'contact'}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
-    'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
+    'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility', 'checkToInvalidatePreferenceForm']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
     'alternate-contact-phone-address': {callback: ['goToHouseholdLandingPage']}
