@@ -203,16 +203,19 @@ do ->
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
 
     describe 'Service.getListingUnits', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.listing.Units with the Unit results', ->
+      beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
         ListingService.getListingUnits()
         httpBackend.flush()
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'assigns Service.listing.Units with the Unit results', ->
         expect(ListingService.listing.Units).toEqual fakeUnits.units
+      it 'assigns Service.listing.groupedUnits with the grouped Unit results', ->
+        expect(ListingService.listing.groupedUnits).toEqual ListingService.groupUnitDetails(fakeUnits.units)
 
     describe 'Service.getListingPreferences', ->
       afterEach ->
@@ -342,3 +345,9 @@ do ->
         fakeIncomeLevel = {numOfHousehold: 2}
         amount = ListingService.incomeForHouseholdSize(fakeChart, fakeIncomeLevel)
         expect(amount).toEqual fakeChart.values[1].amount
+
+    describe 'Service.groupUnitDetails', ->
+      it 'should return an object containing a list of units for each AMI level', ->
+        grouped = ListingService.groupUnitDetails(fakeUnits.units)
+        # fakeUnits just has one AMI level
+        expect(_.keys(grouped).length).toEqual 1
