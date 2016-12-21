@@ -153,7 +153,6 @@ ShortFormApplicationService = (
       # update existing householdMember
       householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
       angular.copy(householdMember, householdMemberToUpdate)
-    Service.checkToInvalidatePreferenceForm()
     Service.invalidateHouseholdForm()
 
   Service.resetHouseholdMember = ->
@@ -281,9 +280,16 @@ ShortFormApplicationService = (
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
-    # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
-    if _.isEmpty(members) || !_.includes(members, selectedMember)
+
+    # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
+    if !_.includes(members, selectedMember)
+      Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
+
+    # clear if nobody is eligible
+    else if _.isEmpty(members)
+      Service.cancelPreference(preference)
+
 
   Service.onExit = (e) ->
     AnalyticsService.trackFormAbandon('Application')
@@ -354,22 +360,6 @@ ShortFormApplicationService = (
     Service.application.completedSections['Household'] = false
     Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
-
-  Service.checkToInvalidatePreferenceForm = ->
-    liveInSfMemberName = Service.application.preferences.liveInSf_household_member
-    liveInSfMember = _.find Service.liveInSfMembers(), (member) ->
-      (member.firstName + " " + member.lastName) == liveInSfMemberName
-
-    workInSfMemberName = Service.application.preferences.workInSf_household_member
-    workInSfMemberNames = Service.workInSfMembers().map((member) -> member.firstName + " " + member.lastName )
-
-    if !workInSfMemberNames.includes(workInSfMemberName) || !Service.liveInSfMembers().includes(liveInSfMember)
-      Service.refreshPreferences()
-      Service.application.completedSections['Preferences'] = false
-
-  Service._liveInSfMemberStillEligible = (liveInSfMember) ->
-      return false unless liveInSfMember
-      liveInSfMember.noAddress || (_.lowerCase(liveInSfMember.home_address.city) == 'san francisco')
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
