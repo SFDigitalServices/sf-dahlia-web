@@ -18,7 +18,7 @@ table.pricing-table.table-flex.no-margin
       span ng-if="summary.BMR_Rent_Monthly"
         | {{summary.BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
       span ng-if="!summary.BMR_Rent_Monthly && summary.STUB_Percent_Rent"
-        | {{summary.STUB_Percent_Rent | currency:"$":0}}<small>%/income</small>
+        | {{summary.STUB_Percent_Rent}}%<small> income</small>
     td data-th="Availability"
       em ng-if="summary.STUB_Status == 'Occupied'"
         | Waitlist
