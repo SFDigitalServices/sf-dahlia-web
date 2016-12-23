@@ -73,7 +73,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
     else if page == 'b2-contact'
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
-      markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
+      markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
 
   return Service

@@ -1,5 +1,5 @@
 .app-card.form-card
-  short-form-header logged-in-message="{{translateLoggedInMessage('b2-contact')}}"
+  short-form-header
     h2.app-card_question
       | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
 
@@ -53,7 +53,7 @@
           | {{'ERROR.PHONE_NUMBER_TYPE' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group.has-option ng-class="{ error: inputInvalid('email') }"
+    .form-group.has-option ng-class="{ error: inputInvalid('email'), 'is-locked': loggedIn() }"
       label.form-label.caps for="applicant_email"
         ' {{'LABEL.APPLICANT_EMAIL' | translate}}
         lock-icon ng-if="loggedIn()"
@@ -61,6 +61,7 @@
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
         input#applicant_email ng-model="applicant.email" name="email" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-required="checkContactRequirement('noEmail')" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
+      small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
       small.error#applicant_email_error ng-if="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
@@ -114,7 +115,7 @@
       .radio-group-inline.double role="radiogroup" aria-label="{{'LABEL.WORK_IN_SF' | translate}}"
         radio-block-item value='Yes' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error"
+        radio-block-item value='No' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error" on-change="checkPreferenceEligibility"
           | {{'T.NO' | translate}}
 
       small.highlight ng-if="applicant.workInSf == 'Yes'"
