@@ -280,9 +280,16 @@ ShortFormApplicationService = (
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
-    # only need to clear if nobody is eligible or if selected householdMember is no longer eligible
-    if _.isEmpty(members) || !_.includes(members, selectedMember)
+
+    # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
+    if !_.includes(members, selectedMember)
+      Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
+
+    # clear if nobody is eligible
+    else if _.isEmpty(members)
+      Service.cancelPreference(preference)
+
 
   Service.onExit = (e) ->
     AnalyticsService.trackFormAbandon('Application')

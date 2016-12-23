@@ -257,6 +257,7 @@ do ->
             fakeApplicant.home_address = fakeNonSFAddress
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
+            ShortFormApplicationService.application.completedSections['Preferences'] = true
             ShortFormApplicationService.preferences =
               liveInSf: true
               liveInSf_file: 'somefile'
@@ -269,6 +270,10 @@ do ->
             expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
+
+          it 'invalidates preferences section', ->
+            ShortFormApplicationService.refreshPreferences()
+            expect(ShortFormApplicationService.application.completedSections['Preferences']).toEqual(false)
 
     describe 'liveInSfMembers', ->
       beforeEach ->
