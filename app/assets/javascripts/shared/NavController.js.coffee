@@ -12,16 +12,26 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.showNavMobile = false
   $scope.toggleNavMobile = ->
     $scope.showNavMobile = !$scope.showNavMobile
+    if !$scope.showNavMobile
+      $scope.focusOnMenuButton()
 
-  $scope.focusOnMobileNav = ->
+  $scope.focusOnNavMobile = ->
+    $scope.focusOnElement('nav-mobile-topfocus')
+
+  $scope.focusOnMenuButton = ->
+    $scope.focusOnElement('open-nav-mobile')
+
+  $scope.focusOnElement = (className) ->
     # put it on a slight delay so that it doesn't mess with the mobile nav slideout animation
     $timeout ->
-      element = _.last $document[0].getElementsByClassName('nav-mobile-topfocus')
+      element = _.last $document[0].getElementsByClassName(className)
       element.focus()
     , 333
 
   $rootScope.$on '$stateChangeStart', ->
-    # Always close the mobile nav when state changes
+    # if menu is open, then focus out of it
+    $scope.focusOnMenuButton() if $scope.showNavMobile
+    # always close the mobile nav when state changes
     $scope.showNavMobile = false
 
 
