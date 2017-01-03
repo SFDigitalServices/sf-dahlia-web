@@ -1,8 +1,16 @@
 require('coffee-script').register()
+require('dotenv').config()
+
+var baseUrl = 'https://dahlia-qa.herokuapp.com'
+
+if (process.env.PULL_REQUEST_NUMBER) {
+  baseUrl = 'https://dahlia-qa-' + process.env.PULL_REQUEST_NUMBER + '.herokuapp.com'
+}
 
 exports.config = {
-  framework: 'jasmine',
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  baseUrl: 'http://localhost:3000/',
-  specs: [ 'short-form.coffee' ]
+ sauceUser: process.env.SAUCE_USERNAME,
+ sauceKey: process.env.SAUCE_ACCESS_KEY,
+ framework: 'jasmine',
+ baseUrl: baseUrl,
+ specs: [ 'short-form.coffee' ],
 }
