@@ -13,7 +13,8 @@
   },
   "dependencies": {
     "bower": "1.7.9",
-    "coffee-script": "1.11.1"
+    "coffee-script": "1.11.1",
+    "dotenv": "^2.0.0"
   },
   "engines": {
     "node": "4.1.x",
