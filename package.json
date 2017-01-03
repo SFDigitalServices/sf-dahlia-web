@@ -9,7 +9,8 @@
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.8.1",
     "grunt-replace": "0.11.0",
-    "grunt-sort-json": "0.0.5"
+    "grunt-sort-json": "0.0.5",
+    "protractor": "4.0.10"
   },
   "dependencies": {
     "bower": "1.7.9",
