@@ -9,18 +9,24 @@
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-copy": "0.8.1",
     "grunt-replace": "0.11.0",
-    "grunt-sort-json": "0.0.5"
+    "grunt-sort-json": "0.0.5",
+    "protractor": "4.0.10",
+    "npm-run-all": "4.0.0"
   },
   "dependencies": {
     "bower": "1.7.9",
-    "coffee-script": "1.11.1"
+    "coffee-script": "1.11.1",
+    "dotenv": "^2.0.0"
   },
   "engines": {
     "node": "4.1.x",
     "npm": "2.1.x"
   },
   "scripts": {
-    "postinstall": "bower install"
+    "postinstall": "bower install",
+    "webdriver-start": "./node_modules/protractor/bin/webdriver-manager start",
+    "protractor": "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
+    "e2e": "npm-run-all -p -r webdriver-start protractor"
   },
   "license": "GNU GENERAL PUBLIC LICENSE",
   "keywords": [

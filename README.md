@@ -45,8 +45,9 @@ Run:
 
 To run E2E tests:
 - On a tab run `rails s`
-- On another tab, run `webdriver-manager start`
-- On a final tab, run `protractor spec/e2e/conf.js`
+- On another tab, run `npm run e2e` -- this will start the selenium webdriver in the background and run the protractor tests
+
+Note: These tests will run on Semaphore (our CI) as well for every review app and QA deploy.
 
 ### Acceptance/Feature Apps ###
 
