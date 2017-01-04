@@ -35,7 +35,6 @@
     "ng-idle": "1.2.2",
     "ng-text-truncate": "Exygy/ng-text-truncate",
     "ng-token-auth": "0.0.29",
-    "ngstorage": "0.3.11",
-    "protractor": "4.0.10"
+    "ngstorage": "0.3.11"
   }
 }
