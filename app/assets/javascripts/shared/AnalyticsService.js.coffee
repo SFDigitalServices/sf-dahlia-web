@@ -29,8 +29,16 @@ AnalyticsService = ($state) ->
     _.merge(params, opts)
     Service.trackEvent('Form Message', params)
 
+  Service.trackFormFieldError = (category, fieldId = '', opts = {}) ->
+    params = { category: category, action: 'Form Field Error', fieldId: fieldId }
+    _.merge(params, opts)
+    Service.trackEvent('Field Message', params)
+
   Service.trackFormAbandon = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
+
+  Service.trackTimeout = (category) ->
+    Service.trackEvent('Form Message', { category: category, action: 'Timeout' })
 
   return Service
 
