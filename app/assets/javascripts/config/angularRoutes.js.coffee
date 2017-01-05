@@ -56,6 +56,7 @@
       url: '/listings/:id',
       params:
         skipConfirm: { squash: true, value: false }
+        timeout: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'listings/templates/listing.html'
@@ -133,6 +134,7 @@
       params:
         newAccount: {squash: true}
         skipConfirm: { squash: true, value: false }
+        timeout: { squash: true, value: false }
         expiredUnconfirmed: null
         expiredConfirmed: null
         redirectTo: null
