@@ -1,45 +1,44 @@
 pageslide ps-class="ng-pageslide hide-for-print" ps-open="showNavMobile" ps-side="right" ps-size="{{ '300px' }}" ps-cloak="false"
   header.nav-mobile_header
-    button.nav-mobile_menu-icon.nav-mobile-topfocus.i-white.button-link title="Close Menu" ng-click="closeNavMobile()" aria-label="Close Menu"
+    button.nav-mobile_menu-icon.nav-mobile-topfocus.i-white.button-link.nav-mobile-focus title="Close Menu" ng-click="closeNavMobile()" aria-label="Close Menu" ng-blur="trapFocus($event)"
       span.ui-icon.ui-medium.i-white
         svg
           use xlink:href="#i-right"
 
   ul.nav-mobile
     li.has-icon
-      a ui-sref="dahlia.listings"
+      a.nav-mobile-focus ui-sref="dahlia.listings" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-browse"
         | Browse Listings
     li.has-icon
-      a ui-sref="dahlia.favorites"
+      a.nav-mobile-focus ui-sref="dahlia.favorites" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-favorite"
         | My Favorites
     li.has-icon
-      a ui-sref="dahlia.get-assistance"
+      a.nav-mobile-focus ui-sref="dahlia.get-assistance" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-assistance"
         | Get Assistance
     li.has-icon ng-if="!loggedIn()"
-      a ui-sref="dahlia.sign-in"
+      a.nav-mobile-focus ui-sref="dahlia.sign-in" ng-blur="trapFocus($event)"
         | Sign In
     li.has-icon ng-if="loggedIn()"
-      a ui-sref="dahlia.my-applications"
+      a.nav-mobile-focus ui-sref="dahlia.my-applications" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-application"
         | My Applications
     li.has-icon ng-if="loggedIn()"
-      a ui-sref="dahlia.account-settings"
+      a.nav-mobile-focus ui-sref="dahlia.account-settings" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-settings"
         | Account Settings
     li.has-icon ng-if="loggedIn()"
-      / TODO: make into a button, properly styled
-      a ng-click="signOut()"
+      a.nav-mobile-focus ng-click="signOut()" ng-blur="trapFocus($event)"
         | Sign Out

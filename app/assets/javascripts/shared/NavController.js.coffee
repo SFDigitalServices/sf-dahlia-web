@@ -17,23 +17,32 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.openNavMobile = ->
     $scope.showNavMobile = true
 
-  $scope.focusOnNavMobile = ->
-    $scope.focusOnElement('nav-mobile-topfocus')
+  $scope.focusOnNavMobile = (delay) ->
+    $scope.focusOnElement('nav-mobile-topfocus', delay)
 
-  $scope.focusOnMenuButton = ->
-    $scope.focusOnElement('open-nav-mobile')
+  $scope.focusOnMenuButton = (delay) ->
+    $scope.focusOnElement('open-nav-mobile', delay)
 
-  $scope.focusOnElement = (className) ->
+  $scope.focusOnElement = (className, delay = 333) ->
     # put it on a slight delay so that it doesn't mess with the mobile nav slideout animation
     $timeout ->
       element = _.last $document[0].getElementsByClassName(className)
       element.focus()
-    , 333
+    , delay
 
   $rootScope.$on '$stateChangeStart', ->
     # always close the mobile nav when state changes
-    $scope.closeNavMobile()
+    $scope.closeNavMobile() if $scope.showNavMobile
 
+  $scope.trapFocus = (ev) ->
+    # if mobile nav is open, and we're trying to "blur" away from the mobile nav,
+    # then trap focus by refocusing on the nav (i.e. the close button at the top)
+    return unless $scope.showNavMobile
+    # check if we're blurring between '.nav-mobile-focus' items
+    unless angular.element(ev.relatedTarget).hasClass('nav-mobile-focus')
+      ev.stopPropagation()
+      # nav is already open, no need to delay 333ms
+      $scope.focusOnNavMobile(0)
 
 ############################################################################################
 ######################################## CONFIG ############################################
