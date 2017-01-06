@@ -31,9 +31,8 @@ html lang="en"
 
   body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()"
 
-    .sr-only
-      a href="#main-content"
-        | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
+    button.button-link.sr-only ng-click="focusOnMainContent()"
+      | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
     .site-container
       section(ui-view="translate")

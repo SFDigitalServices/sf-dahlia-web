@@ -2,8 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  'SharedService'
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
-  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService) ->
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
+  SharedService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -101,29 +103,32 @@
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
       $document.scrollTop(0)
-      # TODO: implement topfocus feature that doesn't cause unsightly outline on home page logo
-      # and other places but does help keyboard users better navigate site
-      # $timeout ->
-      #   # After elements are rendered, make sure to re-focus keyboard input
-      #   # on elements at the top of the page
-      #   topfocus = _.last $document[0].getElementsByClassName('topfocus')
-      #   focusContainer = _.last $document[0].getElementsByClassName('focus-container')
-      #   if focusContainer
-      #     el = focusContainer.querySelectorAll('input, a, button')[0]
-      #     i = 1
-      #     # skip over all non-visible elements
-      #     # http://stackoverflow.com/a/21696585/260495
-      #     while el.offsetParent == null && el
-      #       el = focusContainer.querySelectorAll('input, a, button')[i]
-      #       i++
-      #     # if we found an input within the .focus-container, put it into focus
-      #     if el
-      #       el.focus()
-      #       el.blur()
-      #   else if topfocus
-      #     # focus + blur the topfocus element so that it doesn't have the focus outline
-      #     topfocus.focus()
-      #     topfocus.blur()
+
+      # After elements are rendered, make sure to re-focus keyboard input
+      # on elements at the top of the page
+      $timeout ->
+        SharedService.focusOnBody()
+
+        # TODO: implement topfocus feature that doesn't cause unsightly outline on home page logo
+        # and other places but does help keyboard users better navigate site
+        # topfocus = _.last $document[0].getElementsByClassName('topfocus')
+        # focusContainer = _.last $document[0].getElementsByClassName('focus-container')
+        # if focusContainer
+        #   el = focusContainer.querySelectorAll('input, a, button')[0]
+        #   i = 1
+        #   # skip over all non-visible elements
+        #   # http://stackoverflow.com/a/21696585/260495
+        #   while el.offsetParent == null && el
+        #     el = focusContainer.querySelectorAll('input, a, button')[i]
+        #     i++
+        #   # if we found an input within the .focus-container, put it into focus
+        #   if el
+        #     el.focus()
+        #     # el.blur()
+        # else if topfocus
+        #   # focus + blur the topfocus element so that it doesn't have the focus outline
+        #   topfocus.focus()
+        #   topfocus.blur()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay
