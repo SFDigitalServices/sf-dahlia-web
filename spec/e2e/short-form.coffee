@@ -1,4 +1,4 @@
-Chance = require('../../lib/assets/bower_components/chance')
+Chance = require('chance')
 chance = new Chance()
 
 describe 'Short Form', ->
