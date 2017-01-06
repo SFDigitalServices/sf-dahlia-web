@@ -14,7 +14,7 @@ exports.config = {
   cucumberOpts: {
     require: [
       'env.coffee',
-      'step_definitions/steps.coffee'
+      'step_definitions/*.coffee'
     ],
     tags: false,
     format: 'pretty',
