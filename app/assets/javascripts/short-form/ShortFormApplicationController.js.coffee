@@ -105,8 +105,17 @@ ShortFormApplicationController = (
       form.$setPristine()
       $scope.handleFormSuccess()
     else
-      AnalyticsService.trackFormError('Application')
+      $scope.trackFormErrors()
       $scope.handleErrorState()
+
+  $scope.trackFormErrors = ->
+    # track global form error
+    AnalyticsService.trackFormError('Application')
+    form = $scope.form.applicationForm
+    fieldErrors = _.chain(form.$error).values().flatten().map('$name').uniq().value()
+    fieldErrors.forEach (field) ->
+      # track individual field errors
+      AnalyticsService.trackFormFieldError('Application', field)
 
   $scope.handleFormSuccess = ->
     options = ShortFormNavigationService.submitOptionsForCurrentPage()
