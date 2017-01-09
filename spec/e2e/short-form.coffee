@@ -12,11 +12,14 @@ describe 'Short Form', ->
   confirmAndSubmit = undefined
   submitBasicApp = undefined
   createAccount = undefined
-  openUrlFromCurrent = undefined
+  openUrlFromShortForm = undefined
   selectLiveInLiveWork = undefined
   selectLiveSfMember = undefined
   fillOutUpToLiveWorkPreferencePage = undefined
+  finishAndSubmitAppWithPreferences = undefined
+  signIn = undefined
   listingId = 'a0W0P00000DYUcpUAH'
+  email = chance.email()
 
   beforeEach ->
     EC = protractor.ExpectedConditions
@@ -33,11 +36,11 @@ describe 'Short Form', ->
       element(By.model('applicant.dob_year')).sendKeys('1990')
       element(By.id('submit')).click()
 
-    fillOutYouPageTwo = ->
+    fillOutYouPageTwo = (signedIn) ->
       element(By.model('applicant.phone')).sendKeys('2222222222')
       element(By.model('applicant.phoneType')).click()
       element(By.cssContainingText('option', 'Home')).click()
-      element(By.model('applicant.email')).sendKeys('jane@doe.com')
+      element(By.model('applicant.email')).sendKeys(email) if !signedIn
       element(By.model('applicant.noAddress')).click()
       element(By.id('workInSf_yes')).click()
       element(By.id('submit')).click()
@@ -46,6 +49,23 @@ describe 'Short Form', ->
       element(By.id('alternate_contact_none')).click()
       element(By.id('submit')).click()
       element(By.id('live_alone')).click()
+
+    fillInD1Preferences = ->
+      element(By.id('preferences-certOfPreference')).click()
+      element.all(By.id('certOfPreference_household_member')).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      element.all(By.cssContainingText('option', 'Jane Doe')).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      element(By.id('preferences-displaced')).click()
+      element.all(By.id('displaced_household_member')).filter((elem) ->
+        elem.isDisplayed()
+      ).last().click()
+      element.all(By.cssContainingText('option', 'Jane Doe')).filter((elem) ->
+        elem.isDisplayed()
+      ).last().click()
+      element(By.id('submit')).click()
 
     skipPreferences = ->
       # skip d1
@@ -81,14 +101,13 @@ describe 'Short Form', ->
       confirmAndSubmit()
 
     createAccount = ->
-      email = chance.email()
       element(By.id('auth_email')).sendKeys(email)
       element(By.id('auth_email_confirmation')).sendKeys(email)
       element(By.id('auth_password')).sendKeys('password123')
       element(By.id('auth_password_confirmation')).sendKeys('password123')
       element(By.id('submit')).click()
 
-    openUrlFromCurrent = (url) ->
+    openUrlFromShortForm = (url) ->
       browser.get(url).catch ->
         browser.switchTo().alert().then (alert) ->
           alert.accept()
@@ -111,7 +130,7 @@ describe 'Short Form', ->
 
     fillOutUpToLiveWorkPreferencePage = ->
       url = "/listings/#{listingId}/apply/name"
-      openUrlFromCurrent(url)
+      openUrlFromShortForm(url)
       fillOutYouPageOne()
       fillOutYouPageTwo()
       noAltContactLivesAlone()
@@ -121,6 +140,28 @@ describe 'Short Form', ->
 
       selectLiveInLiveWork()
       selectLiveSfMember('Jane Doe')
+
+    finishAndSubmitAppWithPreferences = ->
+      listingAppUrl= "/listings/#{listingId}/apply/name"
+      browser.get(listingAppUrl)
+      # skip page one
+      element(By.id('submit')).click()
+      fillOutYouPageTwo(true)
+      noAltContactLivesAlone()
+      fillInD1Preferences()
+      # skip live/work preferences
+      element(By.id('submit')).click()
+      incomeWithVoucher()
+      fillOutOptional()
+      confirmAndSubmit()
+
+    signIn = ->
+      signInUrl = "/sign-in"
+      browser.get(signInUrl)
+      element(By.id('auth_email')).sendKeys(email)
+      element(By.id('auth_password')).sendKeys('password123')
+      element(By.id('sign-in')).click()
+      browser.waitForAngular()
 
   ######################
   # --- Test Cases --- #
@@ -135,15 +176,39 @@ describe 'Short Form', ->
 
   it 'should allow the user to create an account on save draft', ->
     url = "/listings/#{listingId}/apply/name"
-    openUrlFromCurrent(url)
+    openUrlFromShortForm(url)
     fillOutYouPageOne()
     element(By.id('save_and_finish_later')).click()
     createAccount()
-    lotteryNumberMarkup = element(By.id('confirmation_needed'))
-    expect(lotteryNumberMarkup.getText()).toBeTruthy()
+    confirmationPopup = element(By.id('confirmation_needed'))
+    expect(confirmationPopup.getText()).toBeTruthy()
+
+  it 'should save application data on account', ->
+    # confirm the account
+    browser.ignoreSynchronization = true
+    url = "/api/v1/account/confirm/?email=#{email}"
+    browser.get(url)
+    browser.ignoreSynchronization = false
+    signIn()
+
+    finishAndSubmitAppWithPreferences()
+    element(By.cssContainingText('.button', 'Go to My Applications')).click()
+    element(By.cssContainingText('.button', 'View Application')).click()
+
+    appName = element(By.id('full-name'))
+    expect(appName.getText()).toBe('JANE DOE')
+    appDob = element(By.id('dob'))
+    expect(appDob.getText()).toBe('2/22/1990')
+    appEmail = element(By.id('email'))
+    expect(appEmail.getText()).toBe(email.toUpperCase())
+    certOfPref = element(By.cssContainingText('.info-item_name', 'CERTIFICATE OF PREFERENCE (COP)'))
+    expect(certOfPref).toBeTruthy()
+    DTHP = element(By.cssContainingText('.info-item_name', 'DISPLACED TENANT HOUSING PREFERENCE (DTHP)'))
+    expect(DTHP).toBeTruthy()
 
   describe 'opting in to live/work then saying no on workInSf', ->
     it 'should select live preference', ->
+      browser.restart()
       fillOutUpToLiveWorkPreferencePage()
       # go back to You section and change to workinsf_no
       element(By.cssContainingText('.progress-nav_item', 'You')).click()
