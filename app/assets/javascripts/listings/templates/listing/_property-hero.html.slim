@@ -52,7 +52,7 @@
       | Applications Closed
 
   section.property-hero_stats.margin-bottom--2x
-    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitSummaries) in listing.groupedUnits"
+    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
         | {{percent}}% AMI
         / TODO: will fully implement this More Info popup link in a later story

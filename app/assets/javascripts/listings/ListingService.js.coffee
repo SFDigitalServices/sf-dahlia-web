@@ -17,12 +17,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
   Service.fieldsForUnitGrouping = [
     'Unit_Type',
-    'STUB_Reserved_Type',
-    'STUB_Priority_Type',
+    'Reserved_Type',
+    'Priority_Type',
     'BMR_Rent_Monthly',
     'BMR_Rental_Minimum_Monthly_Income_Needed',
-    'STUB_Percent_Rent',
-    'STUB_Status',
+    'Rent_percent_of_income',
+    'Status',
   ]
 
 
