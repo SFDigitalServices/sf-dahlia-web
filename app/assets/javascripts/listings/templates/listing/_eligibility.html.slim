@@ -9,6 +9,17 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
+    li.custom-counter_item ng-if="listing.Reserved_community_type"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+        .content-card
+          h4.content-card_title.no-margin
+            | {{listing.Reserved_community_type}}
+          p.c-steel
+            | All Units
+          p.c-steel(ng-text-truncate="listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
+
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
