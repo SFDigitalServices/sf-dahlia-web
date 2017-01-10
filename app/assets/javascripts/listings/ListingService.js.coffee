@@ -331,7 +331,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     )
 
   Service.groupUnitDetails = (units) ->
-    grouped = _.groupBy units, 'STUB_AMI_percent'
+    grouped = _.groupBy units, 'of_AMI_for_Pricing_Unit'
     flattened = {}
     _.forEach grouped, (amiUnits, percent) ->
       flattened[percent] = []
