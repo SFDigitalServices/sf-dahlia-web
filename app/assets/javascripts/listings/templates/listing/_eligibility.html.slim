@@ -90,6 +90,37 @@ accordion-heading.lead
           p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
 
 
+    li.custom-counter_item ng-if="listingHasReservedUnits()"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | {{'LISTINGS.RESERVED_UNITS' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
+        .content-card ng-repeat="(type, units) in listing.reservedUnits"
+          h4.content-card_title.no-margin
+            | {{type}}
+          p.c-steel
+            | {{units.length}} unit
+            span
+              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")
+
+    li.custom-counter_item ng-if="listingHasPriorityUnits()"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | {{'LISTINGS.PRIORITY_UNITS' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
+        .content-card ng-repeat="(type, units) in listing.priorityUnits"
+          h4.content-card_title.no-margin
+            | {{type}}
+          p.c-steel
+            | {{units.length}}
+            span
+              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")
 
     li.custom-counter_item
       .content-tile
