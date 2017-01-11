@@ -9,3 +9,4 @@ angular.module('dahlia.directives')
     scope.label = attrs.label
     scope.subLabel = attrs.subLabel
     scope.boldSubLabel = attrs.boldSubLabel
+    scope.identifier = attrs.identifier

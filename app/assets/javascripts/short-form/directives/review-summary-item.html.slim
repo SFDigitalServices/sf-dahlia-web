@@ -2,7 +2,7 @@
   h4.info-item_value.margin-bottom
     | {{label}}
   / ng-transclude tells it to yield the body of the directive
-  p.info-item_name ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
+  p.info-item_name id="{{identifier}}" ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
   span.info-item_note ng-if="subLabel"
     | {{subLabel}}
   span.info-item_note.t-bold ng-if="!!boldSubLabel"
