@@ -10,23 +10,24 @@
 
 .content-column ng-if="!submittedApplication()"
 
-  div ng-if="listing.numberOfAvailableUnits == 0 && listing.hasWaitlist"
-    .content-group
-      h4.content-group_title.c-primary
-        span translate="LISTING.APPLY_TO_WAITLIST" translate-value-number="{{listing.Total_waitlist_openings}}"
-      p.t-small.c-steel
-        span translate="LISTING.NUMBER_ON_WAITLIST" translate-value-number="{{listing.Number_of_people_currently_on_waitlist}}"
-        br/
-        span translate="LISTING.WAITLIST_SPOTS_REMAINING" translate-value-number="{{waitlistSlotsRemaining(listing)}}"
-      p.t-small.c-steel
-      | {{'LISTING.NO_VACANT_UNITS' | translate}}
+  span ng-if="listing.hasWaitlist"
+    div ng-if="listing.numberOfAvailableUnits == 0"
+      .content-group
+        h4.content-group_title.c-primary
+          span translate="LISTING.APPLY_TO_WAITLIST" translate-value-number="{{listing.Total_waitlist_openings}}"
+        p.t-small.c-steel
+          span translate="LISTING.NUMBER_ON_WAITLIST" translate-value-number="{{listing.Number_of_people_currently_on_waitlist}}"
+          br/
+          span translate="LISTING.WAITLIST_SPOTS_REMAINING" translate-value-number="{{waitlistSlotsRemaining(listing)}}"
+        p.t-small.c-steel
+        | {{'LISTING.NO_VACANT_UNITS' | translate}}
 
-  div ng-if="listing.numberOfAvailableUnits == listing.Units.length && listing.hasWaitlist"
-    .content-group
-      h4.content-group_title.c-primary
-        span translate="LISTING.APPLY_TO_AVAILABLE_AND_WAITLIST" translate-value-number="{{listing.numberOfAvailableUnits}}"
-      p.t-small.c-steel
-        span translate="LISTING.WAITLIST_WITH_AVAIABLE_UNITS" translate-value-availableUnits="{{listing.numberOfAvailableUnits}}" translate-value-waitlistMax="{{listing.Maximum_waitlist_size}}"
+    div ng-if="listing.numberOfAvailableUnits == listing.Units.length"
+      .content-group
+        h4.content-group_title.c-primary
+          span translate="LISTING.APPLY_TO_AVAILABLE_AND_WAITLIST" translate-value-number="{{listing.numberOfAvailableUnits}}"
+        p.t-small.c-steel
+          span translate="LISTING.WAITLIST_WITH_AVAIABLE_UNITS" translate-value-availableUnits="{{listing.numberOfAvailableUnits}}" translate-value-waitlistMax="{{listing.Maximum_waitlist_size}}"
 
   div ng-if="listingIs('L Seven')"
     .content-group.has-divider
