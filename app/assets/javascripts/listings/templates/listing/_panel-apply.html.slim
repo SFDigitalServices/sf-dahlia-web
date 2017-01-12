@@ -9,6 +9,18 @@
       ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
 .content-column ng-if="!submittedApplication()"
+
+  div ng-if="numberOfAvailableUnits == 0 && hasWaitlist"
+    .content-group
+      h4.content-group_title.c-primary
+        span translate="LISTING.APPLY_TO_WAITLIST" translate-value-number="{{Total_waitlist_openings}}"
+      p.t-small.c-steel
+        span translate="LISTING.NUMBER_ON_WAITLIST" translate-value-number="{{Number_of_people_currently_on_waitlist}}"
+        br/
+        span translate="LISTING.WAITLIST_SPOTS_REMAINING" translate-value-number="{{waitlistSlotsRemaining()}}"
+      p.t-small.c-steel
+      | {{'LISTING.NO_VACANT_UNITS' | translate}}
+
   div ng-if="listingIs('L Seven')"
     .content-group.has-divider
       h2.h-caps-lined How to Apply
