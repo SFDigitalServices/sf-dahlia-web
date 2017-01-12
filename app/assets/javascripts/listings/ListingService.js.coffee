@@ -180,6 +180,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.sortBy sessions, (session) ->
       moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
 
+
+  Service.calculateNumberOfAvailableUnits = (listing) ->
+    units = _.filter listing.Units, (unit) ->
+      unit.Status == "Available"
+    listing.numberOfAvailableUnits = units.length
+
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id) ->
@@ -190,6 +196,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+      Service.calculateNumberOfAvailableUnits(Service.listing)
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
