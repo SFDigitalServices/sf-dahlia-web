@@ -8,28 +8,37 @@ listingId = 'a0W0P00000DYUcpUAH'
 sessionEmail = chance.email()
 accountPassword = 'password123'
 
+# reusable functions
+fillOutContactPage = (email = '') ->
+  element(By.model('applicant.phone')).sendKeys('2222222222')
+  element(By.model('applicant.phoneType')).click()
+  element(By.cssContainingText('option', 'Home')).click()
+  element(By.model('applicant.email')).sendKeys(email) if email
+  element(By.model('applicant.noAddress')).click()
+  element(By.id('workInSf_yes')).click()
+
+getUrlAndCatchPopup = (url) ->
+  # always catch and confirm popup alert in case we are leaving an existing application
+  # (i.e. from a previous test)
+  browser.get(url).catch ->
+    browser.switchTo().alert().then (alert) ->
+      alert.accept()
+      browser.get url
+
 module.exports = ->
   # import global cucumber options
   @World = World
 
-  # reusable functions
-  fillOutContactPage = (email = '') ->
-    element(By.model('applicant.phone')).sendKeys('2222222222')
-    element(By.model('applicant.phoneType')).click()
-    element(By.cssContainingText('option', 'Home')).click()
-    element(By.model('applicant.email')).sendKeys(email) if email
-    element(By.model('applicant.noAddress')).click()
-    element(By.id('workInSf_yes')).click()
-
-
   @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
-    # always catch and confirm popup alert in case we are leaving an existing application
-    # (i.e. from a previous test)
-    browser.get(url).catch ->
-      browser.switchTo().alert().then (alert) ->
-        alert.accept()
-        browser.get url
+    getUrlAndCatchPopup(url)
+
+  @Given 'I have a confirmed account', ->
+    # confirm the account
+    browser.ignoreSynchronization = true
+    url = "/api/v1/account/confirm/?email=#{sessionEmail}"
+    getUrlAndCatchPopup(url)
+    browser.ignoreSynchronization = false
 
   @When /^I fill out the short form Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
@@ -147,17 +156,11 @@ module.exports = ->
 
   @When 'I submit the Create Account form', ->
     element(By.id('submit')).click()
-
-  @When 'I have a confirmed account', ->
-    # confirm the account
-    browser.ignoreSynchronization = true
-    url = "/api/v1/account/confirm/?email=#{sessionEmail}"
-    browser.get(url)
-    browser.ignoreSynchronization = false
+    browser.waitForAngular()
 
   @When 'I sign in', ->
     signInUrl = "/sign-in"
-    browser.get(signInUrl)
+    getUrlAndCatchPopup(signInUrl)
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
@@ -166,6 +169,7 @@ module.exports = ->
   @When 'I view the application from My Applications', ->
     element(By.cssContainingText('.button', 'Go to My Applications')).click()
     element(By.cssContainingText('.button', 'View Application')).click()
+    browser.waitForAngular()
 
   @When 'I use the browser back button', ->
     browser.navigate().back()
@@ -177,11 +181,11 @@ module.exports = ->
 
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
-    @expect(lotteryNumberMarkup.getText()).to.eventually.exist
+    @expect(lotteryNumberMarkup.isPresent()).to.eventually.equal(true)
 
   @Then 'I should be on the login page with the email confirmation popup', ->
     confirmationPopup = element(By.id('confirmation_needed'))
-    @expect(confirmationPopup.getText()).to.eventually.exist
+    @expect(confirmationPopup.isPresent()).to.eventually.equal(true)
 
   @Then 'I should still see the single Live in San Francisco preference selected', ->
     liveInSf = element(By.id('preferences-liveInSf'))
@@ -193,16 +197,16 @@ module.exports = ->
       elem.isDisplayed()
     ).first()
     # expect the member selection field to still be there
-    @expect(liveInSfMember.getText()).to.eventually.exist
+    @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
-    expect(appName.getText()).toBe('JANE DOE')
+    @expect(appName.getText()).to.eventually.equal('JANE DOE')
     appDob = element(By.id('dob'))
-    expect(appDob.getText()).toBe('2/22/1990')
+    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
     appEmail = element(By.id('email'))
-    expect(appEmail.getText()).toBe(email.toUpperCase())
-    certOfPref = element(By.cssContainingText('.info-item_name', 'CERTIFICATE OF PREFERENCE (COP)'))
-    expect(certOfPref).toBeTruthy()
-    DTHP = element(By.cssContainingText('.info-item_name', 'DISPLACED TENANT HOUSING PREFERENCE (DTHP)'))
-    expect(DTHP).toBeTruthy()
+    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
+    certOfPref = element(By.cssContainingText('.info-item_name', 'Certificate of Preference (COP)'))
+    @expect(certOfPref.isPresent()).to.eventually.equal(true)
+    DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
+    @expect(DTHP.isPresent()).to.eventually.equal(true)

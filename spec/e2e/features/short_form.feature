@@ -17,14 +17,6 @@ Feature: Short Form Application
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
 
-    Scenario: Creating an account in order to "Save and Finish Later"
-      Given I go to the first page of the Test Listing application
-      When I fill out the short form Name page as "Jane Doe"
-      And I click the Save and Finish Later button
-      And I fill out my account info
-      And I submit the Create Account form
-      Then I should be on the login page with the email confirmation popup
-
     Scenario: Opting in to live/work then saying no to workInSf
       Given I go to the first page of the Test Listing application
       When I fill out the short form Name page as "Jane Doe"
@@ -49,6 +41,14 @@ Feature: Short Form Application
       And I go to the second page of preferences
       Then I should still see the preference options and uploader input visible
 
+    Scenario: Creating an account in order to "Save and Finish Later"
+      Given I go to the first page of the Test Listing application
+      When I fill out the short form Name page as "Jane Doe"
+      And I click the Save and Finish Later button
+      And I fill out my account info
+      And I submit the Create Account form
+      Then I should be on the login page with the email confirmation popup
+
     Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
       Given I have a confirmed account
       When I sign in
@@ -68,3 +68,6 @@ Feature: Short Form Application
       And I agree to the terms and submit
       And I view the application from My Applications
       Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
+      #
+      # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
+      #
