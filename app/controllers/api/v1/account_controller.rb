@@ -1,6 +1,6 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:confirm]
 
   def my_applications
     applications = map_listings_to_applications(current_user_applications)
@@ -14,6 +14,17 @@ class Api::V1::AccountController < ApiController
     salesforce_contact = AccountService.create_or_update(contact)
     Emailer.account_update(current_user).deliver_now
     render json: { contact: salesforce_contact }
+  end
+
+  def confirm
+    return unless Rails.env.development?
+    user = User.find_by_email(params[:email])
+    if user
+      user.confirm
+      render plain: 'OK'
+    else
+      render plain: 'User not found'
+    end
   end
 
   private

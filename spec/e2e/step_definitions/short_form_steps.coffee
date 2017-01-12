@@ -1,13 +1,28 @@
 World = require('../world.coffee').World
+Chance = require('chance')
+chance = new Chance()
 EC = protractor.ExpectedConditions
 
 # QA "Test Listing"
 listingId = 'a0W0P00000DYUcpUAH'
+sessionEmail = chance.email()
+accountPassword = 'password123'
 
 module.exports = ->
+  # import global cucumber options
   @World = World
 
-  @Given 'I go to the first page of the application', ->
+  # reusable functions
+  fillOutContactPage = (email = '') ->
+    element(By.model('applicant.phone')).sendKeys('2222222222')
+    element(By.model('applicant.phoneType')).click()
+    element(By.cssContainingText('option', 'Home')).click()
+    element(By.model('applicant.email')).sendKeys(email) if email
+    element(By.model('applicant.noAddress')).click()
+    element(By.id('workInSf_yes')).click()
+
+
+  @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
     # always catch and confirm popup alert in case we are leaving an existing application
     # (i.e. from a previous test)
@@ -26,13 +41,15 @@ module.exports = ->
     element(By.model('applicant.dob_year')).sendKeys('1990')
     element(By.id('submit')).click()
 
+  @When 'I submit the short form Name page with my account info', ->
+    element(By.id('submit')).click()
+
   @When 'I fill out the short form Contact page with No Address and WorkInSF', ->
-    element(By.model('applicant.phone')).sendKeys('2222222222')
-    element(By.model('applicant.phoneType')).click()
-    element(By.cssContainingText('option', 'Home')).click()
-    element(By.model('applicant.email')).sendKeys('jane@doe.com')
-    element(By.model('applicant.noAddress')).click()
-    element(By.id('workInSf_yes')).click()
+    fillOutContactPage('jane@doe.com')
+    element(By.id('submit')).click()
+
+  @When 'I fill out the short form Contact page with my account email, No Address and WorkInSF', ->
+    fillOutContactPage()
     element(By.id('submit')).click()
 
   @When 'I don\'t indicate an alternate contact', ->
@@ -50,8 +67,28 @@ module.exports = ->
     # also skip general lottery notice
     element(By.id('submit')).click()
 
+  @When /^I select "([^"]*)" for COP preference$/, (fullName) ->
+    element(By.id('preferences-certOfPreference')).click()
+    element.all(By.id('certOfPreference_household_member')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', fullName)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When /^I select "([^"]*)" for DTHP preference$/, (fullName) ->
+    element(By.id('preferences-displaced')).click()
+    element.all(By.id('displaced_household_member')).filter((elem) ->
+      elem.isDisplayed()
+    ).last().click()
+    element.all(By.cssContainingText('option', fullName)).filter((elem) ->
+      elem.isDisplayed()
+    ).last().click()
+
   @When 'I go to the second page of preferences', ->
-    # skip d1
+    element(By.id('submit')).click()
+
+  @When 'I go to the income page', ->
     element(By.id('submit')).click()
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
@@ -103,14 +140,32 @@ module.exports = ->
     element(By.id('save_and_finish_later')).click()
 
   @When 'I fill out my account info', ->
-    email = @chance.email()
-    element(By.id('auth_email')).sendKeys(email)
-    element(By.id('auth_email_confirmation')).sendKeys(email)
-    element(By.id('auth_password')).sendKeys('password123')
-    element(By.id('auth_password_confirmation')).sendKeys('password123')
+    element(By.id('auth_email')).sendKeys(sessionEmail)
+    element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
+    element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
   @When 'I submit the Create Account form', ->
     element(By.id('submit')).click()
+
+  @When 'I have a confirmed account', ->
+    # confirm the account
+    browser.ignoreSynchronization = true
+    url = "/api/v1/account/confirm/?email=#{sessionEmail}"
+    browser.get(url)
+    browser.ignoreSynchronization = false
+
+  @When 'I sign in', ->
+    signInUrl = "/sign-in"
+    browser.get(signInUrl)
+    element(By.id('auth_email')).sendKeys(sessionEmail)
+    element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('sign-in')).click()
+    browser.waitForAngular()
+
+  @When 'I view the application from My Applications', ->
+    element(By.cssContainingText('.button', 'Go to My Applications')).click()
+    element(By.cssContainingText('.button', 'View Application')).click()
 
   @When 'I use the browser back button', ->
     browser.navigate().back()
@@ -139,3 +194,15 @@ module.exports = ->
     ).first()
     # expect the member selection field to still be there
     @expect(liveInSfMember.getText()).to.eventually.exist
+
+  @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
+    appName = element(By.id('full-name'))
+    expect(appName.getText()).toBe('JANE DOE')
+    appDob = element(By.id('dob'))
+    expect(appDob.getText()).toBe('2/22/1990')
+    appEmail = element(By.id('email'))
+    expect(appEmail.getText()).toBe(email.toUpperCase())
+    certOfPref = element(By.cssContainingText('.info-item_name', 'CERTIFICATE OF PREFERENCE (COP)'))
+    expect(certOfPref).toBeTruthy()
+    DTHP = element(By.cssContainingText('.info-item_name', 'DISPLACED TENANT HOUSING PREFERENCE (DTHP)'))
+    expect(DTHP).toBeTruthy()
