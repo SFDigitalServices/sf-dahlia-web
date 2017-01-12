@@ -373,6 +373,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
 
+  Service.reservedTypes = (listing) ->
+    _.keys(listing.reservedUnits).join(', ')
+
   Service.specialUnitTypeDescription = (type) ->
     switch type
       when 'Senior'
