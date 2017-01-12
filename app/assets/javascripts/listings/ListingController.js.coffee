@@ -123,8 +123,8 @@ ListingController = (
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
 
-  $scope.waitlistSlotsRemaining = ->
-    $scope.listing.Maximum_waitlist_size - $scope.listing.Number_of_people_currently_on_waitlist
+  $scope.waitlistSlotsRemaining = (listing) ->
+    listing.Maximum_waitlist_size - listing.Number_of_people_currently_on_waitlist
 
   # --- Carousel ---
   $scope.carouselHeight = 300
