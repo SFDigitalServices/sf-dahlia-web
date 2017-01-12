@@ -5,7 +5,7 @@ table.pricing-table.table-flex.no-margin
       th Minimum Income
       th Rent
       th Availability
-  tr ng-repeat="group in unitGroups" ng-class="{'tr-reserved': group.Reserved_Type || group.Priority_Type}"
+  tr ng-repeat="group in unitGroups" ng-class="{'tr-reserved': group.Reserved_Type || listing.Reserved_community_type}"
     td.tr data-th="Unit Type"
       span.h-small
         ' {{group.Unit_Type}}
