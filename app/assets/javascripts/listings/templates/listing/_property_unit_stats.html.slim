@@ -5,24 +5,24 @@ table.pricing-table.table-flex.no-margin
       th Minimum Income
       th Rent
       th Availability
-  tr ng-repeat="summary in unitSummaries" ng-class="{'tr-reserved': summary.STUB_Reserved_Type || summary.STUB_Priority_Type}"
+  tr ng-repeat="group in unitGroups" ng-class="{'tr-reserved': group.Reserved_Type || group.Priority_Type}"
     td.tr data-th="Unit Type"
       span.h-small
-        | {{summary.Unit_Type}}
+        | {{group.Unit_Type}}
     td data-th="Min. Income"
-      span ng-if="summary.BMR_Rental_Minimum_Monthly_Income_Needed"
-        | {{summary.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
-      em ng-if="!summary.BMR_Rental_Minimum_Monthly_Income_Needed"
+      span ng-if="group.BMR_Rental_Minimum_Monthly_Income_Needed"
+        | {{group.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
+      em ng-if="!group.BMR_Rental_Minimum_Monthly_Income_Needed"
         | None
     td data-th="Rent"
-      span ng-if="summary.BMR_Rent_Monthly"
-        | {{summary.BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
-      span ng-if="!summary.BMR_Rent_Monthly && summary.STUB_Percent_Rent"
-        | {{summary.STUB_Percent_Rent}}%<small> income</small>
+      span ng-if="group.BMR_Rent_Monthly"
+        | {{group.BMR_Rent_Monthly | currency:"$":0}}<small>/month</small>
+      span ng-if="!group.BMR_Rent_Monthly && group.Rent_percent_of_income"
+        | {{group.Rent_percent_of_income}}%<small> income</small>
     td data-th="Availability"
-      em ng-if="summary.STUB_Status == 'Occupied'"
+      em ng-if="group.Status == 'Occupied'"
         | Waitlist
-      span ng-if="summary.STUB_Status != 'Occupied'"
-        | {{summary.total}}
+      span ng-if="group.Status != 'Occupied'"
+        | {{group.total}}
         small
-          ng-pluralize count="summary.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          ng-pluralize count="group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
