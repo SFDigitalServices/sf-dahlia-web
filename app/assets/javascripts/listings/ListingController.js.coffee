@@ -229,6 +229,9 @@ ListingController = (
   $scope.listingHasReservedUnits = ->
     ListingService.listingHasReservedUnits($scope.listing)
 
+  $scope.listingReservedTypes = ->
+    ListingService.reservedTypes($scope.listing)
+
   $scope.specialUnitTypeDescription = (type) ->
     ListingService.specialUnitTypeDescription(type)
 
