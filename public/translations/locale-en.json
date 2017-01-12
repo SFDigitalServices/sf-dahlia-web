@@ -385,6 +385,12 @@
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
     },
+    "LISTING": {
+        "APPLY_TO_WAITLIST": "Apply to the Waitlist for {{number}} Units",
+        "NUMBER_ON_WAITLIST": "{{number}} people are currently on this list",
+        "WAITLIST_SPOTS_REMAINING": "{{number}} open slots remaining",
+        "NO_VACANT_UNITS": "There are no vacant units available for this listing at this time. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available."
+    },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
