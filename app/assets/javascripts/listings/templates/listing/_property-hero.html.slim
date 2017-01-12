@@ -61,7 +61,9 @@
 
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
-        | {{percent}}% AMI
+        ' {{percent}}% AMI
+        ng-pluralize count="unitGroups.length" when="{'1': ' Unit', 'other': ' Units'}"
+
         / TODO: will fully implement this More Info popup link in a later story
         a.property-hero_stat-info href="#"
           span.ui-icon.ui-static.ui-medium.i-primary
