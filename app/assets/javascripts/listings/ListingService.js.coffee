@@ -18,7 +18,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.fieldsForUnitGrouping = [
     'Unit_Type',
     'Reserved_Type',
-    'Priority_Type',
     'BMR_Rent_Monthly',
     'BMR_Rental_Minimum_Monthly_Income_Needed',
     'Rent_percent_of_income',
@@ -372,6 +371,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
+
+  Service.reservedTypes = (listing) ->
+    _.keys(listing.reservedUnits).join(', ')
 
   Service.specialUnitTypeDescription = (type) ->
     switch type
