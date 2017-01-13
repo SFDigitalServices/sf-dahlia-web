@@ -23,7 +23,7 @@ module SalesforceService
 
     def self.get_for_user(contact_id)
       apps = api_get("/shortForm/list/#{contact_id}")
-      apps.sort_by { |app| app['applicationSubmittedDate'] }.reverse
+      apps.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
     def self.delete(id)
