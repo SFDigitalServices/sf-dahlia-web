@@ -18,8 +18,7 @@
 
     h1.property-hero_title.offset
       | {{listing.Name}}
-    span.property-hero_label.label.radius.bg-charcoal ng-if="listing.STUB_Reserved_community_type"
-      | {{listing.STUB_Reserved_community_type}}
+    span.property-hero_label.label.radius.bg-splash ng-if="listing.Reserved_community_type" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix

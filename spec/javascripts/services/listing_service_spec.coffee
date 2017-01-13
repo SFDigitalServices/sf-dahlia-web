@@ -21,6 +21,7 @@ do ->
       children_under_6: 1
     $localStorage = undefined
     $state = undefined
+    $translate = {}
     modalMock = undefined
     requestURL = undefined
     incomeLevels = undefined
@@ -29,6 +30,7 @@ do ->
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
+      $provide.value '$translate', $translate
       return
     )
 
