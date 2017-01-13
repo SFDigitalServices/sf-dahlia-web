@@ -88,6 +88,7 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
       it 'assigns Service.listing with an individual listing', ->
+        fakeListing.listing.numberOfAvailableUnits = 0
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 'abc123'
         httpBackend.flush()
