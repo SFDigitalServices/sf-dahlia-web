@@ -1,0 +1,6 @@
+.feature-row.row.collapse ng-if="description"
+  .medium-3.columns.padding-right--half
+    h4.feature-title
+      | {{title}}
+  .medium-9.columns
+    p.feature-tile_content.t-small ng-bind-html="description | nl2br"
