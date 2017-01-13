@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state) ->
+ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -326,6 +326,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         # ---
         Service.listing.Units = units
         Service.listing.groupedUnits = Service.groupUnitDetails(units)
+        Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
+        Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
       return
     )
@@ -359,6 +361,32 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
       return u
+
+  Service.groupSpecialUnits = (units, type) ->
+    grouped = _.groupBy units, type
+    delete grouped['undefined']
+    grouped
+
+  Service.listingHasPriorityUnits = (listing) ->
+    !_.isEmpty(listing.priorityUnits)
+
+  Service.listingHasReservedUnits = (listing) ->
+    !_.isEmpty(listing.reservedUnits)
+
+  Service.specialUnitTypeDescription = (type) ->
+    switch type
+      when 'Senior'
+        $translate.instant("LISTINGS.RESERVED_SENIOR_DESCRIPTION")
+      when 'Veteran'
+        $translate.instant("LISTINGS.RESERVED_VETERAN_DESCRIPTION")
+      when 'Developmental disabilities'
+        $translate.instant("LISTINGS.RESERVED_DEVELOPMENTALLY_DISABLED_DESCRIPTION")
+      when 'Hearing/Vision impaired'
+        ,'Vision impaired'
+        ,'Hearing impaired'
+          $translate.instant("LISTINGS.PRIORITY_HEARING_VISION_IMPAIRED_DESCRIPTION")
+      when 'Mobility impaired'
+        $translate.instant("LISTINGS.PRIORITY_MOBILITY_IMPAIRED_DESCRIPTION")
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -625,7 +653,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate']
 
 angular
   .module('dahlia.services')
