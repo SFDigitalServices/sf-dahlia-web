@@ -20,7 +20,7 @@ class Api::V1::AccountController < ApiController
     return unless Rails.env.development?
     user = User.find_by_email(params[:email])
     if user
-      user.update_attributes(confirmed_at: Date.today)
+      user.confirm
       render plain: 'OK'
     else
       render plain: 'User not found'
