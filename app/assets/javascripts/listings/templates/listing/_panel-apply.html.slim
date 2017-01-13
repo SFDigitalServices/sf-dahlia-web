@@ -22,7 +22,7 @@
         p.t-small.c-steel
         | {{'LISTING.NO_VACANT_UNITS' | translate}}
 
-    div ng-if="listing.numberOfAvailableUnits == listing.Units.length"
+    div ng-if="listing.numberOfAvailableUnits"
       .content-group
         h4.content-group_title.c-primary
           span translate="LISTING.APPLY_TO_AVAILABLE_AND_WAITLIST" translate-value-number="{{listing.numberOfAvailableUnits}}"
