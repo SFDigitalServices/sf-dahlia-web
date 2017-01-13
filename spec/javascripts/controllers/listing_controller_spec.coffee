@@ -48,6 +48,9 @@ do ->
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       fakeListingService.formattedAddress = jasmine.createSpy()
+      fakeListingService.listingHasPriorityUnits = jasmine.createSpy()
+      fakeListingService.listingHasReservedUnits = jasmine.createSpy()
+      fakeListingService.specialUnitTypeDescription = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -303,3 +306,19 @@ do ->
         scope.lotterySearchNumber = '22222'
         scope.showLotteryRanking()
         expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
+
+    describe 'listingHasPriorityUnits', ->
+      it 'calls ListingService.listingHasPriorityUnits', ->
+        scope.listingHasPriorityUnits()
+        expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'listingHasReservedUnits', ->
+      it 'calls ListingService.listingHasReservedUnits', ->
+        scope.listingHasReservedUnits()
+        expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'specialUnitTypeDescription', ->
+      it 'calls ListingService.specialUnitTypeDescription', ->
+        specialType = 'Senior'
+        scope.specialUnitTypeDescription(specialType)
+        expect(fakeListingService.specialUnitTypeDescription).toHaveBeenCalledWith(specialType)
