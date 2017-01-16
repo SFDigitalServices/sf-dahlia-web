@@ -162,11 +162,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.sortBy sessions, (session) ->
       moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
 
-
   Service.calculateNumberOfAvailableUnits = (listing) ->
     units = _.filter listing.Units, (unit) ->
       unit.Status == "Available"
     listing.numberOfAvailableUnits = units.length
+
+  Service.allListingUnitsAvailable = (listing) ->
+    listing.numberOfAvailableUnits == listing.Units.length
 
   ###################################### Salesforce API Calls ###################################
 
@@ -178,7 +180,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
-      Service.calculateNumberOfAvailableUnits(Service.listing)
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
@@ -332,6 +333,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
           units = Service.stubUnitFeatures(units)
         # ---
         Service.listing.Units = units
+        # TODO: remove after we get this field from salesforce
+        Service.calculateNumberOfAvailableUnits(Service.listing)
         Service.listing.groupedUnits = Service.groupUnitDetails(units)
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
