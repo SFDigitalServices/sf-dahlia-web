@@ -108,13 +108,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         incomeLevels.push({
           occupancy: occupancy,
           yearly: parseFloat(amiLevel.amount),
-          monthly: Service._roundDownMaxMonthlyIncome(amiLevel.amount)
+          monthly: Math.floor(parseFloat(amiLevel.amount) / 12.0)
         })
     return incomeLevels
-
-  Service._roundDownMaxMonthlyIncome = (amount) ->
-    maxMonthlyIncome = parseFloat(amount) / 12.0
-    return Math.floor(maxMonthlyIncome / 10) * 10
 
   Service.openLotteryResultsModal = ->
     modalInstance = $modal.open({
