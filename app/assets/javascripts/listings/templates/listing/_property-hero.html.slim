@@ -51,9 +51,22 @@
       | Applications Closed
 
   section.property-hero_stats.margin-bottom--2x
+    .message-group
+      .message.is-reserved ng-if="listing.Reserved_community_type"
+        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
+        span.message-text ng-if="listing.Reserved_community_minimum_age"
+          '
+          | {{listing.Reserved_community_minimum_age}}+
+      .message.is-reserved ng-if="listingHasReservedUnits()"
+        span.ui-icon.ui-static.ui-medium.i-color.message-icon
+          svg
+            use xlink:href="#i-star"
+        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR" translate-value-type="{{listingReservedTypes()}}"
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
-        | {{percent}}% AMI
+        ' {{percent}}% AMI
+        ng-pluralize count="unitGroups.length" when="{'1': ' Unit', 'other': ' Units'}"
+
         / TODO: will fully implement this More Info popup link in a later story
         a.property-hero_stat-info href="#"
           span.ui-icon.ui-static.ui-medium.i-primary
