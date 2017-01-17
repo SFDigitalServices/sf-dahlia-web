@@ -40,7 +40,7 @@
         | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
         | {{formattedBuildingAddress(listing, 'city-state-zip')}}
-      span.label.radius.medium.negative ng-if="listing.Reserved_community_type" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+      span.label.radius.medium.bg-splash ng-if="listing.Reserved_community_type" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
 
   .property-card_content
     .property-card_stats
