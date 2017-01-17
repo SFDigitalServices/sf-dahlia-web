@@ -182,11 +182,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
-      # TODO: remove after "listing.unitSummaries" is properly implemented
-      if Service.listing.unitSummaries
-        sums = Service.listing.unitSummaries
-        Service.listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
-      # ---
     ).error( (data, status, headers, config) ->
       return
     )
@@ -335,6 +330,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         # TODO: remove after we get this field from salesforce
         Service.calculateNumberOfAvailableUnits(Service.listing)
         Service.listing.groupedUnits = Service.groupUnitDetails(units)
+        Service.listing.unitTypes = Service.groupUnitTypes(units)
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
@@ -370,6 +366,26 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
       return u
+
+  Service.groupUnitTypes = (units) ->
+    # get a grouping of unit types across both "general" and "reserved"
+    grouped = _.groupBy units, 'Unit_Type'
+    unitTypes = []
+    _.forEach grouped, (groupedUnits, type) ->
+      group = {}
+      group.unitType = type
+      group.units = groupedUnits
+      group.unitAreaRange = Service.unitAreaRange(groupedUnits)
+      unitTypes.push(group)
+    unitTypes
+
+  Service.unitAreaRange = (units) ->
+    min = (_.minBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
+    max = (_.maxBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
+    if min != max
+      "#{min} - #{max}"
+    else
+      min
 
   Service.groupSpecialUnits = (units, type) ->
     grouped = _.groupBy units, type

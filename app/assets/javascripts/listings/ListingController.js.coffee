@@ -58,15 +58,6 @@ ListingController = (
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (unit_summary) ->
-    if unit_summary.minSquareFt != unit_summary.maxSquareFt
-      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
-    else
-      unit_summary.minSquareFt
-
-  $scope.unitsByType = (unit_type) ->
-    $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
-
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
