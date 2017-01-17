@@ -9,33 +9,11 @@ accordion-heading
 
 .content-section
   .content-tile.feature-tile
-    .feature-row.row.collapse
-      .medium-3.columns ng-if="listing.Neighborhood"
-        h4.feature-title
-          | Neighborhood
-      .medium-9.columns
-        p.feature-tile_content.t-small
-          | {{listing.Neighborhood}}
-    .feature-row.row.collapse ng-if="listing.Year_Built"
-      .medium-3.columns
-        h4.feature-title
-          | Built
-      .medium-9.columns
-        p.feature-tile_content.t-small
-          | {{listing.Year_Built}}
-    .feature-row.row.collapse ng-if="listing.Amenities"
-      .medium-3.columns
-        h4.feature-title
-          | Property Amenities
-      .medium-9.columns
-        div ng-bind-html="listing.Amenities | nl2br"
-    .feature-row.row.collapse ng-if="listing.Accessibility"
-      .medium-3.columns
-        h4.feature-title
-          | Accessibility
-      .medium-9.columns
-        div ng-bind-html="listing.Accessibility | nl2br"
-          | {{listing.Accessibility}}
+    feature-row title="Neighborhood" description="{{listing.Neighborhood}}"
+    feature-row title="Built" description="{{listing.Year_Built}}"
+    feature-row title="Property Amenities" description="{{listing.Amenities}}"
+    feature-row title="Accessibility" description="{{listing.Accessibility}}"
+    feature-row title="Services Onsite" description="{{listing.Services_Onsite}}"
 
   .content-tile.feature-tile
     h4.feature-title.margin-bottom Unit Features
