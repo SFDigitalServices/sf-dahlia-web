@@ -358,6 +358,8 @@
     },
     "LISTINGS": {
         "ADDITIONAL_LISTINGS": "Additional Listings",
+        "APPLY_TO_AVAILABLE_AND_WAITLIST": "Apply to {{number}} Available Units & Waitlist",
+        "APPLY_TO_WAITLIST": "Apply to the Waitlist for {{number}} Units",
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
@@ -366,6 +368,8 @@
         "LOTTERY_RESULTS": "Lottery Results",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
+        "NO_VACANT_UNITS": "There are no vacant units available for this listing at this time. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available.",
+        "NUMBER_ON_WAITLIST": "{{number}} people are currently on this list",
         "PRIORITY_HEARING_VISION_IMPAIRED_DESCRIPTION": "Lorem ipsum hearing/vision",
         "PRIORITY_MOBILITY_IMPAIRED_DESCRIPTION": "Lorem ipsum mobility",
         "PRIORITY_UNITS": "Priority Units",
@@ -381,6 +385,9 @@
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
+        "WAITLIST_SPOTS_REMAINING": "{{number}} open slots remaining",
+        "WAITLIST_WITH_NEW_BUILDING": "There are {{availableUnits}} vacant units available for this listing. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available. The resulting waitlist goes up to {{waitlistMax}}.",
+        "WAITLIST_WITH_SOME_AVAILABLE_UNITS": "There are {{availableUnits}} vacant units available for this listing. Once vacancies are filled the remaining lotttery winners will be placed on a waitlist and be reviewed based on their ranking as units become available. The resulting waitlist goes up to {{waitlistMax}}.",
         "WE_KNOW_YOU_MAY_HAVE_OPTIONS": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."

@@ -9,6 +9,26 @@
       ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
 .content-column ng-if="!submittedApplication()"
+
+  div ng-if="listing.hasWaitlist"
+    .content-group ng-if="listing.numberOfAvailableUnits == 0"
+      h4.content-group_title.c-primary
+        span translate="LISTINGS.APPLY_TO_WAITLIST" translate-value-number="{{listing.Units.length}}"
+      p.t-small.c-steel
+        span translate="LISTINGS.NUMBER_ON_WAITLIST" translate-value-number="{{listing.Number_of_people_currently_on_waitlist}}"
+        br
+        span translate="LISTINGS.WAITLIST_SPOTS_REMAINING" translate-value-number="{{waitlistSlotsRemaining(listing)}}"
+      p.t-small.c-steel
+        | {{'LISTINGS.NO_VACANT_UNITS' | translate}}
+
+    .content-group ng-if="listing.numberOfAvailableUnits"
+      h4.content-group_title.c-primary
+        span translate="LISTINGS.APPLY_TO_AVAILABLE_AND_WAITLIST" translate-value-number="{{listing.numberOfAvailableUnits}}"
+      p.t-small.c-steel ng-if="!allListingUnitsAvailable()"
+        span translate="LISTINGS.WAITLIST_WITH_SOME_AVAILABLE_UNITS" translate-value-available-units="{{listing.numberOfAvailableUnits}}" translate-value-waitlist-max="{{listing.Maximum_waitlist_size}}"
+      p.t-small.c-steel ng-if="allListingUnitsAvailable()"
+        span translate="LISTINGS.WAITLIST_WITH_NEW_BUILDING" translate-value-available-units="{{listing.numberOfAvailableUnits}}" translate-value-waitlist-max="{{listing.Maximum_waitlist_size}}"
+
   div ng-if="listingIs('L Seven')"
     .content-group.has-divider
       h2.h-caps-lined How to Apply

@@ -123,6 +123,9 @@ ListingController = (
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
 
+  $scope.waitlistSlotsRemaining = (listing) ->
+    listing.Maximum_waitlist_size - listing.Number_of_people_currently_on_waitlist
+
   # --- Carousel ---
   $scope.carouselHeight = 300
   $scope.Carousel = Carousel
@@ -231,6 +234,9 @@ ListingController = (
 
   $scope.specialUnitTypeDescription = (type) ->
     ListingService.specialUnitTypeDescription(type)
+
+  $scope.allListingUnitsAvailable = ->
+    ListingService.allListingUnitsAvailable($scope.listing)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
