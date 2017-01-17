@@ -358,9 +358,9 @@
     },
     "LISTINGS": {
         "ADDITIONAL_LISTINGS": "Additional Listings",
+        "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
         "APPLY_TO_AVAILABLE_AND_WAITLIST": "Apply to {{number}} Available Units & Waitlist",
         "APPLY_TO_WAITLIST": "Apply to the Waitlist for {{number}} Units",
-        "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
