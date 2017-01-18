@@ -221,11 +221,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing', listing)
         listing = Service.stubFeatures(listing)
-      # TODO: remove after "listing.unitSummaries" is properly implemented
-      if listing.unitSummaries
-        sums = listing.unitSummaries
-        listing.unitSummary = _.compact _.flatten([sums.general, sums.reserved])
-      # ---
       if Service.listingIsOpen(listing)
         # All Open Listings Array
         Service.openListings.push(listing)
@@ -400,9 +395,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.reservedTypes = (listing) ->
     _.keys(listing.reservedUnits).join(', ')
-
-  Service.listingIsReservedCommunity = (listing) ->
-    !! listing.Reserved_community_type
 
   Service.specialUnitTypeDescription = (type) ->
     switch type
