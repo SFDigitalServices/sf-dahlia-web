@@ -18,7 +18,7 @@
 
     h1.property-hero_title.offset
       | {{listing.Name}}
-    span.property-hero_label.label.radius.bg-splash ng-if="listing.Reserved_community_type" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+    span.property-hero_label.label.radius.bg-splash ng-if="listingIsReservedCommunity()" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
@@ -52,7 +52,7 @@
 
   section.property-hero_stats.margin-bottom--2x
     .message-group
-      .message.is-reserved ng-if="listing.Reserved_community_type"
+      .message.is-reserved ng-if="listingIsReservedCommunity()"
         span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
         span.message-text ng-if="listing.Reserved_community_minimum_age"
           '

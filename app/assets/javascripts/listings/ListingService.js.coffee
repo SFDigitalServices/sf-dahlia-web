@@ -401,6 +401,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.reservedTypes = (listing) ->
     _.keys(listing.reservedUnits).join(', ')
 
+  Service.listingIsReservedCommunity = (listing) ->
+    !! listing.Reserved_community_type
+
   Service.specialUnitTypeDescription = (type) ->
     switch type
       when 'Senior'
