@@ -50,6 +50,7 @@ Rails.application.routes.draw do
       scope '/account' do
         get 'my-applications' => 'account#my_applications'
         put 'update' => 'account#update'
+        get 'confirm' => 'account#confirm'
       end
     end
   end

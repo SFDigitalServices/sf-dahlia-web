@@ -2,15 +2,15 @@
 review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
 
 .app-inner
-  review-summary-item label="{{'LABEL.NAME' | translate}}"
+  review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
     | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
-  review-summary-item label="{{'LABEL.DOB' | translate}}"
+  review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
     | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
   review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone" sub-label="{{applicant.phoneType}}"
     | {{applicant.phone | tel}}
   review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" sub-label="{{applicant.alternatePhoneType}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
     | {{applicant.alternatePhone | tel}}
-  review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail"
+  review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
   review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="!applicant.noAddress"
     | {{applicant.home_address.address1}}
