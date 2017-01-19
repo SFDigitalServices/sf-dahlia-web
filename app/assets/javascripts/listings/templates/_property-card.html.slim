@@ -53,7 +53,7 @@
       / General
       table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': listingIsReservedCommunity(listing), 'td-bw': !listingIsReservedCommunity(listing)}"
         caption ng-if="listingIsReservedCommunity(listing)"
-          | Reserved for ...
+          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
         thead
           tr
             th scope="col" Unit Type

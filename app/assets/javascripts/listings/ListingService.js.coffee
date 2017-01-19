@@ -267,6 +267,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # listing is open if deadline is in the future
     return deadline > now
 
+  Service.listingIsReservedCommunity = (listing) ->
+    !! listing.Reserved_community_type
+
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
     return false unless Service.listingIsOpen(listing)
