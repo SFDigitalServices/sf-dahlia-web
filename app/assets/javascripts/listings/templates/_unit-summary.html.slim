@@ -1,0 +1,28 @@
+tr ng-repeat="unit_summary in summary"
+  td scope="row"
+    | {{unit_summary.unitType}}
+  td
+    / if there is a dollar min income
+    span ng-show="unit_summary.minRentalMinIncome"
+      | {{unit_summary.minRentalMinIncome | currency:"$":0}}
+      span ng-show="unit_summary.maxRentalMinIncome > unit_summary.minRentalMinIncome"
+        | -{{unit_summary.maxRentalMinIncome | currency:"$":0}}
+      span.value-label
+        | /month
+    / otherwise display "None"
+    span ng-show="!unit_summary.minRentalMinIncome"
+      em translate="T.NONE"
+  td.text-right
+    / if there is a dollar monthly rent
+    span ng-show="unit_summary.minMonthlyRent"
+      | {{unit_summary.minMonthlyRent | currency:"$":0}}
+      span ng-show="unit_summary.maxMonthlyRent > unit_summary.minMonthlyRent"
+        | -{{unit_summary.maxMonthlyRent | currency:"$":0}}
+      span.value-label
+        | /month
+    span ng-show="!unit_summary.minMonthlyRent && unit_summary.minPercentIncome"
+      | {{unit_summary.minPercentIncome}}
+      span ng-show="unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
+        | -{{unit_summary.maxPercentIncome}}
+      span.value-label
+        | % income
