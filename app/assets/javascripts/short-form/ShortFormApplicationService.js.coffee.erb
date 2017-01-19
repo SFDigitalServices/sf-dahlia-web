@@ -464,8 +464,16 @@ ShortFormApplicationService = (
     # merge the data into applicant
     _.merge Service.applicant, userData
     changed = !_.isEqual(Service.applicant, original)
+    Service._mapPrimaryApplicantPreferences(original, userData) if changed
     # return T/F if data was changed or not
     return changed
+
+  Service._mapPrimaryApplicantPreferences = (original, userData) ->
+    appFullName = original.firstName + " " + original.lastName
+    _.forEach Service.application.preferences, (value, key) ->
+      if value == appFullName
+        Service.application.preferences[key] = userData.firstName + " " + userData.lastName
+      return
 
 
   ####### Address validation functions
