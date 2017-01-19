@@ -378,6 +378,7 @@
         "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Community Building",
         "RESERVED_DEVELOPMENTALLY_DISABLED_DESCRIPTION": "Lorem ipsum developmentally disabled",
+        "RESERVED_FOR": "Reserved for {{type}}",
         "RESERVED_SENIOR_DESCRIPTION": "Lorem ipsum seniors",
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",

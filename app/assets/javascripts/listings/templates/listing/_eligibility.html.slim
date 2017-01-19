@@ -9,7 +9,7 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
-    li.custom-counter_item ng-if="listing.Reserved_community_type"
+    li.custom-counter_item ng-if="listingIsReservedCommunity()"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
