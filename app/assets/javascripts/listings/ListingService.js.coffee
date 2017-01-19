@@ -286,10 +286,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
-    # TODO: remove hardcoded features
-    if Service.listing.STUB_AMI_Levels
-      params = { ami: Service.listing.STUB_AMI_Levels }
+    if Service.listing.chartTypes
+      params = { ami: Service.listing.chartTypes }
     else
+      # TODO: do we actually want/need this fallback?
+      # listing.chartTypes *should* always exist now
       percent = Service.listing.AMI_Percentage || 100
       params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
     $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
