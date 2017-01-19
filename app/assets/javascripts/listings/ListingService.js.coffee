@@ -183,7 +183,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
       # create a combined unitSummary
-      Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+      unless Service.listing.unitSummary
+        Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
     ).error( (data, status, headers, config) ->
       return
     )
@@ -396,6 +397,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     grouped
 
   Service.combineUnitSummaries = (listing) ->
+    # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
+    listing.unitSummaries ?= {}
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     _.uniqBy(combined, 'unitType')
 
