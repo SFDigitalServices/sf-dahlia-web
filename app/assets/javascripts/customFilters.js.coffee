@@ -22,6 +22,7 @@ angular.module('customFilters', [])
 .filter 'stripMostTags', ->
   # https://github.com/kvz/locutus/blob/master/src/php/strings/strip_tags.js
   (input, allowed) ->
+    return '' unless input
     allowed = (((allowed or '<br><a>') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) or []).join('')
     tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
     input.replace tags, ($0, $1) ->
