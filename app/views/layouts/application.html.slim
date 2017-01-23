@@ -36,7 +36,7 @@ html lang="en"
       section(ui-view="version")
       section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
-        section(ui-view="container")
+        section#main-content(ui-view="container")
     .footer-section
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
