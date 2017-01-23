@@ -108,7 +108,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         incomeLevels.push({
           occupancy: occupancy,
           yearly: parseFloat(amiLevel.amount),
-          monthly: parseFloat(amiLevel.amount) / 12.0
+          monthly: Math.floor(parseFloat(amiLevel.amount) / 12.0)
         })
     return incomeLevels
 

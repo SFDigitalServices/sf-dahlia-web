@@ -6,7 +6,7 @@ nav.top-bar(top-bar role="navigation")
           a.topfocus ui-sref="dahlia.welcome" title="DAHLIA San Francisco Housing Portal"
             | DAHLIA San Francisco Housing Portal
       li.toggle-topbar.menu-icon
-        button.button-link.t-caps ng-click="toggleNavMobile()" aria-label="Open Menu"
+        button.button-link.t-caps.open-nav-mobile ng-click="openNavMobile();focusOnNavMobile()" aria-label="Open Menu"
           | Menu
           span.ui-icon.ui-static.ui-large.i-primary
             svg
