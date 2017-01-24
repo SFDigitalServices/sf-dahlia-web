@@ -1,5 +1,5 @@
 ShortFormNavigationService = (
-  $state, bsLoadingOverlayService, ShortFormApplicationService
+  $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
 ) ->
   Service = {}
   Service.loading = false
@@ -58,7 +58,7 @@ ShortFormNavigationService = (
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
-    'review-summary': {path: 'review-sign-in'}
+    'review-summary': {callback: ['confirmReviewedApplication']}
     'review-sign-in': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
     'choose-draft': {callback: ['chooseDraft']}
@@ -142,7 +142,6 @@ ShortFormNavigationService = (
         ,'review-optional'
         ,'review-summary'
         ,'review-sign-in'
-        ,'review-terms'
         ,'live-work-preference'
           Service._getPreviousPage()
       # -- Alt Contact
@@ -165,6 +164,11 @@ ShortFormNavigationService = (
           'live-work-preference'
         else
           'preferences-programs'
+      when 'review-terms'
+        if AccountService.loggedIn()
+          'review-summary'
+        else
+          'review-sign-in'
       when 'review-submitted'
         'confirmation'
       # -- catch all
@@ -201,7 +205,7 @@ ShortFormNavigationService = (
   return Service
 
 ShortFormNavigationService.$inject = [
-  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService'
+  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService', 'AccountService'
 ]
 
 angular

@@ -471,6 +471,12 @@ ShortFormApplicationController = (
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 
+  $scope.confirmReviewedApplication = ->
+    if AccountService.loggedIn()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-sign-in')
+
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
