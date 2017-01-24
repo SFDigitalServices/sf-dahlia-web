@@ -14,8 +14,8 @@ describe 'Listings API' do
   end
   describe 'show' do
     save_fixture do
-      VCR.use_cassette('listings/a0Wf0000003j03WEAQ') do
-        get '/api/v1/listings/a0Wf0000003j03WEAQ.json'
+      VCR.use_cassette('listings/a0W0P00000DYiwiUAD') do
+        get '/api/v1/listings/a0W0P00000DYiwiUAD.json'
       end
     end
   end
@@ -29,7 +29,7 @@ describe 'Listings API' do
   describe 'units' do
     save_fixture do
       VCR.use_cassette('listings/units') do
-        get '/api/v1/listings/a0Wf0000003j03WEAQ/units.json'
+        get '/api/v1/listings/a0W0P00000DYiwiUAD/units.json'
       end
     end
   end
@@ -89,8 +89,8 @@ describe 'Listings API' do
   end
 
   it 'sends an individual listing' do
-    VCR.use_cassette('listings/a0Wf0000003j03WEAQ') do
-      get '/api/v1/listings/a0Wf0000003j03WEAQ.json'
+    VCR.use_cassette('listings/a0W0P00000DYiwiUAD') do
+      get '/api/v1/listings/a0W0P00000DYiwiUAD.json'
     end
 
     json = JSON.parse(response.body)
@@ -99,7 +99,7 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right Id is present
-    expect(json['listing']['Id']).to eq('a0Wf0000003j03WEAQ')
+    expect(json['listing']['Id']).to eq('a0W0P00000DYiwiUAD')
   end
 
   it 'gets eligibility matches' do
@@ -140,7 +140,7 @@ describe 'Listings API' do
 
   it 'gets Unit results for a Listing' do
     VCR.use_cassette('listings/units') do
-      get '/api/v1/listings/a0Wf0000003j03WEAQ/units.json'
+      get '/api/v1/listings/a0W0P00000DYiwiUAD/units.json'
     end
 
     json = JSON.parse(response.body)

@@ -14,8 +14,36 @@ VCR.configure do |config|
     config.filter_sensitive_data("<<#{val}>>") do
       ENV[val]
     end
-
-    # needed for codeclimate to work
-    config.ignore_hosts 'codeclimate.com'
   end
+
+  %w[
+    SALESFORCE_USERNAME
+    SALESFORCE_PASSWORD
+  ].each do |val|
+    config.filter_sensitive_data("<<#{val}>>") do
+      CGI.escape(ENV[val])
+    end
+  end
+
+  config.filter_sensitive_data('<<ACCESS_TOKEN>>') do |interaction|
+    begin
+      j = JSON.parse(interaction.response.body)
+      # puts '*'*20
+      # puts j.try(:[], 'access_token')
+      # puts '*'*20
+      j.try(:[], 'access_token')
+    rescue
+      nil
+    end
+  end
+
+  config.filter_sensitive_data('<<ACCESS_TOKEN>>') do |interaction|
+    h = interaction.request.headers
+    if h['Authorization'] && h['Authorization'].first
+      h['Authorization'].first.split('OAuth ').last
+    end
+  end
+
+  # needed for codeclimate to work
+  config.ignore_hosts 'codeclimate.com'
 end
