@@ -14,6 +14,7 @@ Feature: Short Form Application
       And I fill out my income
       And I fill out the optional survey
       And I confirm details on the review page
+      And I continue confirmation without signing in
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
 

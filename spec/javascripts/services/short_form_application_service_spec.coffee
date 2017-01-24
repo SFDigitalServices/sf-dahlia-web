@@ -8,6 +8,7 @@ do ->
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
+    $state = {go: jasmine.createSpy()}
     fakeSFAddress =
       address1: '123 Main St.'
       city: 'San Francisco'
@@ -55,7 +56,9 @@ do ->
     resetFakePeople = ->
       fakeApplicant = undefined
       fakeHouseholdMember = undefined
+
     beforeEach module('dahlia.services', ($provide) ->
+      $provide.value '$state', $state
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
