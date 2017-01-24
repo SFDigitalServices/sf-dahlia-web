@@ -474,7 +474,8 @@
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
-        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
+        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page.",
+        "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully."
     },
     "T": {
         "APPLICATION": "Application",

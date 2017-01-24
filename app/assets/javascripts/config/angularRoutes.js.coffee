@@ -690,12 +690,25 @@
       views:
         'container':
           templateUrl: 'short-form/templates/f1a-review-sign-in.html'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
+      ]
     })
     .state('dahlia.short-form-application.review-terms', {
-      url: '/review-terms'
+      url: '/review-terms?loginMessage'
+      params:
+        loginMessage: { squash: true }
       views:
         'container':
           templateUrl: 'short-form/templates/f2-review-terms.html'
+      onEnter: ['$stateParams', '$translate', 'AccountService', ($stateParams, $translate, AccountService) ->
+        AccountService.clearAccountMessages()
+        if $stateParams.loginMessage
+          AccountService.accountSuccess.messages.login = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY')
+      ]
     })
     .state('dahlia.short-form-application.confirmation', {
       url: '/confirmation'

@@ -607,8 +607,8 @@ ShortFormApplicationController = (
           form.$setUntouched()
           form.$setPristine()
           # TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
-          # TODO: add "signed in successfully" to the top of the terms page
-          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {successMessage: 'hello'})
+          ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -616,6 +616,13 @@ ShortFormApplicationController = (
     else
       AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
+
+  $scope.isLocked = (field) ->
+    AccountService.lockedFields[field]
+
+  $scope.$on 'auth:login-error', (ev, reason) ->
+    $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
+    $scope.handleErrorState()
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # NOTE: not sure when this will ever really get hit any more

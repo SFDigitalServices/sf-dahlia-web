@@ -3,13 +3,16 @@
 
   .button-pager
     .button-pager_row.primary
-      input#submit.button.primary.radius type="submit" value="{{'F1A_REVIEW_SIGN_IN.CONFIRM_WITHOUT_AN_ACCOUNT' | translate}}"
+      a.button.primary.radius ui-sref="dahlia.short-form-application.review-terms"
+        | {{'F1A_REVIEW_SIGN_IN.CONFIRM_WITHOUT_AN_ACCOUNT' | translate}}
+
+  alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
   .app-inner.inset
+
     h2.app-card_question
       | {{'CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT' | translate}}
     p.form-note.margin-bottom translate="F1A_REVIEW_SIGN_IN.INSTRUCTIONS"
-
 
     ng-form novalidate="" name="form.signIn"
       / alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
