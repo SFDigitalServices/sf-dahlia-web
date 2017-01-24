@@ -17,7 +17,7 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     if scope.shortForm
       # shortForm "default settings"
-      scope.formObject ?= scope.$parent.form.applicationForm
+      scope.formObject ?= scope.$parent.currentForm()
       scope.hideAlert ?= scope.$parent.hideAlert
       scope.invert ?= true
 

@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, uuid,
+  $translate, $http, $state, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
   AnalyticsService
 ) ->
@@ -425,6 +425,49 @@ ShortFormApplicationService = (
       return
     )
 
+
+  # ----- TODO: call this function via AccountController and ShortFormApplicationController
+  # Service.signInSubmitApplication = (loggedInUser) ->
+  #   # check if this user has already applied to this listing
+  #   Service.getMyAccountApplication().success((data) ->
+  #     if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
+  #       # if user already had an application for this listing
+  #       return Service._signInAndSkipSubmit(data.application)
+  #     changed = null
+  #     opts = {}
+  #     if Service.application.status.match(/draft/i)
+  #       # make sure short form data inherits logged in user data
+  #       changed = Service.importUserData(loggedInUser)
+  #     else
+  #       # we're signing in to claim a submitted application
+  #       opts = {attachToAccount: true}
+  #     Service.submitApplication(opts).then( ->
+  #       $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
+  #     )
+  #   ).error( ->
+  #     # there was an error retrieving your account info, please try again
+  #     # TODO: add some helpful message to the user
+  #     $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
+  #   )
+  #
+  # Service._signInAndSkipSubmit = (previousApplication) ->
+  #   if (previousApplication.status.match(/submitted/i))
+  #     # they've already submitted -- send them to "my applications", either with:
+  #     # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
+  #     # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
+  #     doubleSubmit = !! Service.application.status.match(/submitted/i)
+  #     $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
+  #   else
+  #     # send them to choose which draft they want to keep
+  #     $state.go('dahlia.short-form-application.choose-draft')
+  #
+  # Service._previousIsSubmittedOrBothDrafts = (previousApplication) ->
+  #   previousApplication.status.match(/submitted/i) || (
+  #     previousApplication.status.match(/draft/i) &&
+  #     Service.application.status.match(/draft/i)
+  #   )
+  #
+
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
     Service.application.id = Service.accountApplication.id
@@ -528,7 +571,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', 'uuid',
+  '$translate', '$http', '$state', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
   'AnalyticsService'

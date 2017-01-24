@@ -89,6 +89,12 @@ ShortFormApplicationController = (
   $scope.hideAlert = false
   $scope.hideMessage = false
   $scope.addressError = ShortFormApplicationService.addressError
+  # Account / Login
+  $scope.userAuth = AccountService.userAuth
+  $scope.accountError = AccountService.accountError
+  $scope.accountSuccess = AccountService.accountSuccess
+  $scope.rememberedShortFormState = AccountService.rememberedShortFormState
+  $scope.submitDisabled = false
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
@@ -150,8 +156,13 @@ ShortFormApplicationController = (
     duration = 400 # animation speed in ms
     $document.scrollToElement(el, topOffset, duration)
 
+  $scope.currentForm = ->
+    # pick up which ever one is defined (the other will be undefined)
+    $scope.form.signIn ||
+    $scope.form.applicationForm
+
   $scope.inputInvalid = (fieldName, identifier = '') ->
-    form = $scope.form.applicationForm
+    form = $scope.currentForm()
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
@@ -576,6 +587,29 @@ ShortFormApplicationController = (
       year = form['date_of_birth_year']
       year.$setViewValue(year.$viewValue + ' ')
 
+
+  $scope.signIn = ->
+    form = $scope.form.signIn
+    # have to manually set this because it's an ng-form
+    form.$submitted = true
+    if form.$valid
+      $scope.submitDisabled = true
+      # AccountService.userAuth will have been modified by form inputs
+      AccountService.signIn().then( (success) ->
+        $scope.submitDisabled = false
+        if success
+          form.$setUntouched()
+          form.$setPristine()
+          # TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
+          # TODO: add "signed in successfully" to the top of the terms page
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {successMessage: 'hello'})
+      ).catch( ->
+        $scope.handleErrorState()
+        $scope.submitDisabled = false
+      )
+    else
+      AnalyticsService.trackFormError('Application')
+      $scope.handleErrorState()
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # NOTE: not sure when this will ever really get hit any more

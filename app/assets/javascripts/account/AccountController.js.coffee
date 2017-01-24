@@ -179,6 +179,7 @@ AccountController = (
     # as long as we have some where !deleted
     _.some($scope.myApplications, {deleted: false})
 
+  # ----- TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
   $scope._signInSubmitApplication = ->
     # check if this user has already applied to this listing
     ShortFormApplicationService.getMyAccountApplication().success((data) ->

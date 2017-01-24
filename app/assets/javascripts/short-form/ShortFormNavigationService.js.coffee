@@ -35,6 +35,7 @@ ShortFormNavigationService = (
     { name: 'Review', pages: [
         'review-optional',
         'review-summary',
+        'review-sign-in',
         'review-terms'
       ]
     }
@@ -57,7 +58,8 @@ ShortFormNavigationService = (
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
-    'review-summary': {path: 'review-terms'}
+    'review-summary': {path: 'review-sign-in'}
+    'review-sign-in': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
     'choose-draft': {callback: ['chooseDraft']}
 
@@ -139,6 +141,7 @@ ShortFormNavigationService = (
         ,'income'
         ,'review-optional'
         ,'review-summary'
+        ,'review-sign-in'
         ,'review-terms'
         ,'live-work-preference'
           Service._getPreviousPage()

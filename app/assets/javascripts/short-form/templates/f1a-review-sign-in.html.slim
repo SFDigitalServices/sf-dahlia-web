@@ -1,0 +1,21 @@
+.app-card.form-card
+  short-form-header
+
+  .button-pager
+    .button-pager_row.primary
+      input#submit.button.primary.radius type="submit" value="{{'F1A_REVIEW_SIGN_IN.CONFIRM_WITHOUT_AN_ACCOUNT' | translate}}"
+
+  .app-inner.inset
+    h2.app-card_question
+      | {{'CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT' | translate}}
+    p.form-note.margin-bottom translate="F1A_REVIEW_SIGN_IN.INSTRUCTIONS"
+
+
+    ng-form novalidate="" name="form.signIn"
+      / alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
+
+      ng-include src="'account/templates/partials/_sign_in_fields.html'"
+
+      .form-group
+        p.t-small.c-steel.text-center.padding-top.no-margin
+          input.button.no-margin.primary#sign-in type="button" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN_TO_CONFIRM' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"

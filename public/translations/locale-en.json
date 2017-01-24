@@ -200,6 +200,10 @@
     "F1_REVIEW_SUMMARY": {
         "TITLE": "Take a moment to review your information before submitting your application."
     },
+    "F1A_REVIEW_SIGN_IN": {
+        "CONFIRM_WITHOUT_AN_ACCOUNT": "Confirm without an account",
+        "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time."
+    },
     "F2_REVIEW_TERMS": {
         "P1": "This application must be submitted by {{date}}.",
         "P2": "Applicants will be contacted by the leasing agent in lottery rank and preference order until vacancies are filled.",
@@ -339,6 +343,7 @@
         "SELECT_ONE": "Select One",
         "SEND_EMAIL": "Send email",
         "SIGN_IN": "Sign In",
+        "SIGN_IN_TO_CONFIRM": "Sign in to confirm",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPECIAL_PROGRAMS": "Special Programs",
         "SUGGESTED_ADDRESS": "Suggested Address",

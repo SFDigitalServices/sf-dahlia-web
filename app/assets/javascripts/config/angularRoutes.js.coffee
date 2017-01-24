@@ -685,6 +685,12 @@
           ShortFormApplicationService.completeSection('Income')
         ]
     })
+    .state('dahlia.short-form-application.review-sign-in', {
+      url: '/review-sign-in'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f1a-review-sign-in.html'
+    })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms'
       views:
