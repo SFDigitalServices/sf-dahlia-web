@@ -15,6 +15,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.AMI = []
   Service.maxIncomeLevels = []
   Service.loading = {}
+  Service.displayLotteryResultsListings = false
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -190,6 +191,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
       listings = if data and data.listings then data.listings else []
       Service.groupListings(listings)
+      Service.displayLotteryResultsListings = !Service.openListings.length
     ).error( (data, status, headers, config) ->
       return
     )
