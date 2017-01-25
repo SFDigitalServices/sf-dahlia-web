@@ -533,6 +533,21 @@ do ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
 
+    describe 'importUserData', ->
+      describe 'account name differs from application name', ->
+        it 'replaces primary applicant preferences with account name', ->
+          loggedInUser =
+            firstName: 'Jane'
+            lastName: 'Doe'
+          ShortFormApplicationService.applicant =
+            firstName: 'Janice'
+            lastName: 'Jane'
+          ShortFormApplicationService.application.preferences =
+            liveInSf_household_member: 'Janice Jane'
+          ShortFormApplicationService.importUserData(loggedInUser)
+          expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
+            .toEqual('Jane Doe')
+
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
         beforeEach ->
