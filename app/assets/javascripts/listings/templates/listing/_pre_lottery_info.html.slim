@@ -4,9 +4,10 @@
     span.content-group_day
       | {{ listing.Lottery_Date | date : 'longDate' }}
     span.content-group_time
-      | {{ listing.Lottery_Start_Time}}
+      | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
   p.content-group_address.c-steel
     | {{ listing.Lottery_Venue }}
-    br/
+    br
     | {{ listing.Lottery_Street_Address }}
-  p.c-steel.t-small An open lottery will be held to draw numbers to determine selection. Attendence is optional.
+  p.c-steel.t-small
+    | An open lottery will be held to draw numbers to determine selection. Attendance is optional.
