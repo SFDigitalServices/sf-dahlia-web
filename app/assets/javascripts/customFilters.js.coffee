@@ -15,11 +15,21 @@ angular.module('customFilters', [])
     return '' unless input
     input.toString().trim().replace(/\D/g,'')
   ]
-.filter 'nl2br', ['$filter', ($filter) ->
+.filter 'nl2br', ->
   (input) ->
     return '' unless input
     input.trim().replace(/\n/g,'<br>')
-  ]
+.filter 'stripMostTags', ->
+  # https://github.com/kvz/locutus/blob/master/src/php/strings/strip_tags.js
+  (input, allowed) ->
+    return '' unless input
+    allowed = (((allowed or '<br><a>') + '').toLowerCase().match(/<[a-z][a-z0-9]*>/g) or []).join('')
+    tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi
+    input.replace tags, ($0, $1) ->
+      if allowed.indexOf('<' + $1.toLowerCase() + '>') > -1
+        $0
+      else
+        ''
 .filter 'incomeTimeframe', ['$filter', ($filter) ->
   (input) ->
     # just return 'month' or 'year' and get rid of the 'per_'
