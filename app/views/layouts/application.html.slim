@@ -31,12 +31,15 @@ html lang="en"
 
   body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()"
 
+    button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
+      | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
+
     .site-container
       section(ui-view="translate")
       section(ui-view="version")
       section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
-        section(ui-view="container")
+        section#main-content(ui-view="container")
     .footer-section
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
