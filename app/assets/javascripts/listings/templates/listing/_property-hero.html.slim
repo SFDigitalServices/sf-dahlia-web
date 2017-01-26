@@ -18,7 +18,7 @@
 
     h1.property-hero_title.offset
       | {{listing.Name}}
-    span.property-hero_label.label.radius.bg-splash ng-if="listingIsReservedCommunity()" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+    span.property-hero_label.label.radius.bg-splash ng-if="listingIsReservedCommunity()" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{reservedLabel(listing.Reserved_community_type, 'building')}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
@@ -53,15 +53,17 @@
   section.property-hero_stats.margin-bottom--2x
     .message-group
       .message.is-reserved ng-if="listingIsReservedCommunity()"
-        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
-        span.message-text ng-if="listing.Reserved_community_minimum_age"
-          '
-          | {{listing.Reserved_community_minimum_age}}+
-      .message.is-reserved ng-if="listingHasReservedUnits()"
+        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{reservedLabel(listing.Reserved_community_type, 'reservedFor')}}"
+      .message.is-reserved ng-if="listingHasReservedUnits() && listingIsReservedCommunity()"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
             use xlink:href="#i-star"
-        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR" translate-value-type="{{listingReservedTypes()}}"
+        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE" translate-value-reserved-type="{{reservedLabel(listingReservedTypes(), 'reservedFor')}}" translate-value-community-type="{{reservedLabel(listing.Reserved_community_type, 'reservedForWhoAre')}}"
+      .message.is-reserved ng-if="listingHasReservedUnits() && !listingIsReservedCommunity()"
+        span.ui-icon.ui-static.ui-medium.i-color.message-icon
+          svg
+            use xlink:href="#i-star"
+        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR" translate-value-reserved-type="{{reservedLabel(listingReservedTypes(), 'reservedFor')}}"
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
         ' {{percent}}% AMI

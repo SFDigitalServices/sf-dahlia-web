@@ -235,6 +235,23 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
+  $scope.reservedLabel = (type, modifier) ->
+    labelMap =
+      'Senior':
+        building: 'Senior'
+        reservedFor: 'seniors'
+        reservedForWhoAre: 'who are seniors ' + $scope.listing.Reserved_community_minimum_age
+      'Veteran':
+        building: 'Veterans'
+        reservedFor: 'veterans'
+        reservedForWhoAre: 'who are veterans'
+      'Developmental disabilities':
+        building: 'Developmental Disability'
+        reservedFor: 'the developmentally disabled'
+        reservedForWhoAre: 'the developmentally disabled'
+
+    return labelMap[type][modifier]
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
     ListingService.listingIs('168 Hyde Relisting', listing)
