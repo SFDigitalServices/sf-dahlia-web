@@ -16,8 +16,8 @@
     "coffee-script": "1.11.1"
   },
   "engines": {
-    "node": "4.1.x",
-    "npm": "2.1.x"
+    "node": "6.2.2",
+    "npm": "3.9.5"
   },
   "scripts": {
     "postinstall": "bower install"

@@ -64,9 +64,10 @@
 ]
 
 @dahlia.config ['$titleProvider', ($titleProvider) ->
-  $titleProvider.documentTitle (title) ->
+  $titleProvider.documentTitle ['$rootScope', ($rootScope) ->
     defaultTitle = 'DAHLIA San Francisco Housing Portal'
-    if title then "#{title}  |  #{defaultTitle}" else defaultTitle
+    if $rootScope.$title then "#{$rootScope.$title}  |  #{defaultTitle}" else defaultTitle
+  ]
 ]
 
 
