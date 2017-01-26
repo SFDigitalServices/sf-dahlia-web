@@ -40,7 +40,7 @@
         | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
         | {{formattedBuildingAddress(listing, 'city-state-zip')}}
-      span.label.radius.medium.bg-splash ng-if="listingIsReservedCommunity(listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+      span.label.radius.medium.bg-splash ng-if="listingIsReservedCommunity(listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{reservedLabel(listing.Reserved_community_type, 'building')}}"
 
   .property-card_content
     .property-card_stats
@@ -53,7 +53,7 @@
       / General
       table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': listingIsReservedCommunity(listing), 'td-bw': !listingIsReservedCommunity(listing)}"
         caption ng-if="listingIsReservedCommunity(listing)"
-          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
+          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedLabel(listing.Reserved_community_type, 'building')}}"
         thead
           tr
             th scope="col" Unit Type
