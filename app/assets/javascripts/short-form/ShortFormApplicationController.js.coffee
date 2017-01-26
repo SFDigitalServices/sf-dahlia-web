@@ -611,14 +611,17 @@ ShortFormApplicationController = (
     if form.$valid
       $scope.submitDisabled = true
       # AccountService.userAuth will have been modified by form inputs
+      ShortFormNavigationService.isLoading(true)
       AccountService.signIn().then( (success) ->
         $scope.submitDisabled = false
         if success
           form.$setUntouched()
           form.$setPristine()
-          # TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
-          ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
+          ShortFormApplicationService.signInSubmitApplication(
+            loggedInUser: AccountService.loggedInUser
+            submitCallback: ->
+              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
+          )
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false

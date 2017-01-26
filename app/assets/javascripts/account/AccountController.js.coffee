@@ -102,7 +102,11 @@ AccountController = (
           form.$setUntouched()
           form.$setPristine()
           if $scope.userInShortFormSession()
-            ShortFormApplicationService.signInSubmitApplication()
+            ShortFormApplicationService.signInSubmitApplication(
+              loggedInUser: AccountService.loggedInUser
+              submitCallback: (changed) ->
+                $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
+            )
           else
             $scope._signInRedirect()
       ).catch( ->
