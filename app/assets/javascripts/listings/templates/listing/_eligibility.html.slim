@@ -67,9 +67,8 @@ accordion-heading.lead
         lottery-preference ng-repeat="preference in listing.preferences"
 
         div ng-if="listingHasPreferences()"
-          p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
-
-
+          p.custom-counter_text
+            | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
 
     li.custom-counter_item
       .content-tile
