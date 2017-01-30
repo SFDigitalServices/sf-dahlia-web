@@ -17,16 +17,17 @@ accordion-heading.lead
           h4.content-card_title.no-margin
             | {{listing.Reserved_community_type}}
           p.c-steel
-            | All Units
+            | {{'LISTINGS.ALL_UNITS' | translate}}
           p.c-steel(ng-text-truncate="listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
 
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title Household Maximum Income
+          h4.custom-counter_title
+            | {{'LISTINGS.HOUSEHOLD_MAXIMUM_INCOME' | translate}}
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
-            | For income calculations, household size includes everyone (all ages) living in the unit.
+            | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
         .stats-card.bg-tint ng-show="AMICharts.length > 0"
           / single chart / BMR style
           div ng-if="!hasMultipleAMICharts()"
@@ -34,7 +35,7 @@ accordion-heading.lead
               .stats-list_value.highlight
                 span.value-label
                   ' Starts at
-                | {{minYearlyIncome() | divideBy : 12 | currency : $ : 0}}
+                | {{minYearlyIncome() | divideAndRoundDown : 12 | currency : $ : 0}}
                 span.value-label
                   | /month
               span.stats-list_label based on household size
@@ -55,21 +56,28 @@ accordion-heading.lead
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title Occupancy
-          p.custom-counter_text Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+          h4.custom-counter_title
+            | {{'T.OCCUPANCY' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION' | translate}}
 
         table role="grid"
           thead
             tr
-              th scope="col" Unit Type
-              th scope="col" Occupancy
+              th scope="col"
+                | {{'T.UNIT_TYPE' | translate}}
+              th scope="col"
+                | {{'T.OCCUPANCY' | translate}}
           tbody
             tr ng-repeat="unit_summary in listing.unitSummary"
-              td scope="row" {{unit_summary.unitType}}
+              td scope="row"
+                | {{unit_summary.unitType}}
               td ng-if="unit_summary.unitType == 'Flex'"
                 | Flex people
               td ng-if="unit_summary.unitType != 'Flex'"
-                | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
+                ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
+                small
+                  | people
 
     li.custom-counter_item
       .content-tile

@@ -9,6 +9,6 @@ table role="grid"
       td scope="row"
         | {{householdIncomeLevel.numOfHousehold}} <small>person</small>
       td
-        | {{householdIncomeLevel.amount | divideBy : 12 | currency : $ : 0}}<small>/month</small>
+        | {{householdIncomeLevel.amount | divideAndRoundDown : 12 | currency : $ : 0}}<small>/month</small>
       td
         | {{householdIncomeLevel.amount | currency : $ : 0}}<small>/year</small>

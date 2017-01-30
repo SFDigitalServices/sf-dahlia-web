@@ -200,6 +200,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('Test Listing')
         Service.listing = Service.stubFeatures(Service.listing)
+      # create a combined unitSummary
+      unless Service.listing.unitSummary
+        Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
     ).error( (data, status, headers, config) ->
       return
     )
@@ -305,10 +308,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
-    # TODO: remove hardcoded features
-    if Service.listing.STUB_AMI_Levels
-      params = { ami: Service.listing.STUB_AMI_Levels }
+    if Service.listing.chartTypes
+      params =
+        ami: _.sortBy(Service.listing.chartTypes, 'percent')
     else
+      # TODO: do we actually want/need this fallback?
+      # listing.chartTypes *should* always exist now
       percent = Service.listing.AMI_Percentage || 100
       params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
     $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
@@ -324,7 +329,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # look for an existing chart at the same percentage level
       amiPercentChart = _.find charts, (c) -> c.percent == chart.percent
       if !amiPercentChart
-        charts.push(chart)
+        # only push chart if it has any values
+        charts.push(chart) if chart.values.length
       else
         # if it exists, modify it with the max values
         i = 0
@@ -408,6 +414,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     grouped = _.groupBy units, type
     delete grouped['undefined']
     grouped
+
+  Service.combineUnitSummaries = (listing) ->
+    # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
+    listing.unitSummaries ?= {}
+    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
+    _.uniqBy(combined, 'unitType')
 
   Service.listingHasPriorityUnits = (listing) ->
     !_.isEmpty(listing.priorityUnits)
