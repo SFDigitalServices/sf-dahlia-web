@@ -50,8 +50,8 @@ describe 'Listings API' do
   describe 'lottery ranking' do
     save_fixture do
       VCR.use_cassette('listings/lottery-ranking') do
-        url = '/api/v1/listings/a0WU000000CkiM3MAJ/lottery_ranking.json'
-        params = { lottery_number: '00002612' }
+        url = '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_ranking.json'
+        params = { lottery_number: '00008502' }
         get url, params
       end
     end
@@ -85,7 +85,7 @@ describe 'Listings API' do
 
     # check to make sure the right amount of listings are returned
     # (based on VCR cassette with 15 listings)
-    expect(json['listings'].length).to eq(16)
+    expect(json['listings'].length).to eq(23)
   end
 
   it 'sends an individual listing' do
@@ -149,14 +149,14 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right amount of Unit results are returned
-    # (based on VCR listing with 2 units)
-    expect(json['units'].length).to eq(2)
+    # (based on VCR listing with 1 unit)
+    expect(json['units'].length).to eq(1)
   end
 
   it 'returns lottery ranking for lottery number and listing id' do
     VCR.use_cassette('listings/lottery-ranking') do
-      url = '/api/v1/listings/a0WU000000CkiM3MAJ/lottery_ranking.json'
-      params = { lottery_number: '00002612' }
+      url = '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_ranking.json'
+      params = { lottery_number: '00008502' }
       get url, params
     end
 
@@ -188,6 +188,6 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['preferences'].length).to eq(2)
+    expect(json['preferences'].length).to eq(1)
   end
 end
