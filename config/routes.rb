@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         post 'validate' => 'address_validation#validate'
         # address geocoding
         post 'geocode' => 'geocoding#geocode'
+        get 'timeout' => 'geocoding#timeout'
       end
       scope '/account' do
         get 'my-applications' => 'account#my_applications'
