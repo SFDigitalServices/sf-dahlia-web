@@ -63,7 +63,7 @@
       / Reserved
       table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="listing.unitSummaries.reserved"
         caption
-          | Reserved for Seniors, etc...
+          | Reserved for {{listingReservedTypes(listing)}}
         tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = listing.unitSummaries.reserved"
 
       .property-card_action.small-only-text-center

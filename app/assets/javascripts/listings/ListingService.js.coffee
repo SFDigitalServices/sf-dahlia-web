@@ -428,7 +428,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.reservedTypes = (listing) ->
-    _.keys(listing.reservedUnits).join(', ')
+    types = []
+    _.each listing.reservedDescriptor, (descriptor) -> types.push(descriptor.description)
+    if types.length then types.join(', ') else ''
 
   Service.specialUnitTypeDescription = (type) ->
     switch type
