@@ -7,11 +7,6 @@ class Api::V1::GeocodingController < ApiController
     render json: { geocoding_data: geocoding_data }
   end
 
-  def timeout
-    # TODO: remove before merging -- TEST ONLY
-    sleep(20)
-  end
-
   private
 
   # If we get a valid address from geocoder and a valid response from boundary service,
