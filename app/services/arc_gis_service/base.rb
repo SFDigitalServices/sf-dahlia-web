@@ -14,7 +14,8 @@ module ArcGISService
     end
 
     def data
-      response = HTTP.get(api_url + "?#{query_params.to_query}")
+      response = HTTP.timeout(:global, write: 2, connect: 5, read: 5)
+                     .get(api_url + "?#{query_params.to_query}")
 
       if response.code >= 400
         add_error(response.code)
