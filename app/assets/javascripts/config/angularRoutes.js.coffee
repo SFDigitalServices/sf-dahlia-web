@@ -145,6 +145,7 @@
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
+        AccountService.unlockFields()
 
         if $stateParams.expiredUnconfirmed
           AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
@@ -171,6 +172,8 @@
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
@@ -227,6 +230,7 @@
         auth: ['$auth', 'AccountService', ($auth, AccountService) ->
           $auth.validateUser().then ->
             AccountService.copyApplicantFields('loggedInUser')
+            AccountService.unlockFields()
         ]
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
@@ -765,6 +769,23 @@
         '$state', 'ShortFormApplicationService',
         ($state, ShortFormApplicationService) ->
           if _.isEmpty(ShortFormApplicationService.accountApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
+    .state('dahlia.short-form-application.choose-account-settings', {
+      url: '/choose-account-settings'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-account-settings.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.application)
             $state.go('dahlia.my-applications')
         ]
     })

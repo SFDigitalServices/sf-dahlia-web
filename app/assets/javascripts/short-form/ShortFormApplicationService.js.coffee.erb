@@ -426,7 +426,6 @@ ShortFormApplicationService = (
     )
 
 
-  # ----- TODO: call this function via AccountController and ShortFormApplicationController
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
     Service.getMyAccountApplication().success((data) ->
@@ -434,13 +433,16 @@ ShortFormApplicationService = (
         # if user already had an application for this listing
         return Service._signInAndSkipSubmit(data.application)
       changed = null
-      opts = {}
       if Service.application.status.match(/draft/i)
-        # make sure short form data inherits logged in user data
-        changed = Service.importUserData(opts.loggedInUser)
+        if opts.type == 'review-sign-in' && !_.isEqual(Service.applicant, opts.loggedInUser)
+          return $state.go('dahlia.short-form-application.choose-account-settings')
+        else
+          # make sure short form data inherits logged in user data
+          changed = Service.importUserData(opts.loggedInUser)
       else
         # we're signing in to claim a submitted application
         opts = {attachToAccount: true}
+      debugger
       Service.submitApplication(opts).then( ->
         opts.submitCallback(changed)
       )

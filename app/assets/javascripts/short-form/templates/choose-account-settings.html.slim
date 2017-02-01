@@ -1,0 +1,60 @@
+.dash-container.tall#short-form-wrapper
+  section.row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      form.dash-card.ng-pristine.ng-valid(novalidate="" name="form.applicationForm" ng-submit="submitForm()")
+        header.dash-header
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile" xmlns:xlink="http://www.w3.org/1999/xlink"
+          h1.dash-title.no-margin
+            | {{'CHOOSE_ACCOUNT_SETTINGS.TITLE' | translate}}
+
+        / this alert box displays "You'll need to resolve..." if there are form errors
+        alert-box short-form="true" custom-sub-message="'CHOOSE_ACCOUNT_SETTINGS.ALERT_MESSAGE' | translate" ng-if="inputInvalid('chooseAccountSettings')"
+
+        / this alert box displays the "choose draft" warning
+        alert-box short-form="true" custom-message="'CHOOSE_ACCOUNT_SETTINGS.ALERT_TITLE' | translate" custom-sub-message="'CHOOSE_DRAFT.ALERT_MESSAGE' | translate"  ng-if="!inputInvalid('chooseAccountSettings')"
+
+        .dash-card-inner.inset
+          .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('chooseAccountSettings')}"
+            h3.form-label.caps
+              | {{'CHOOSE_ACCOUNT_SETTINGS.PRIMARY_CONTACT_OPTIONS' | translate}}:
+            p.form-note.margin-bottom
+              | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+            .form-item.margin-bottom--2x
+              .radio-block
+                input#choose_application_settings(name="chooseAccountSettings" type="radio" value="application"  ng-model="chosenAccountSettingsToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseAccountSettings')}")
+                label.radio-block_label for="choose_application_settings"
+                  p.form-label
+                    | {{'LABEL.APPLICATION_CONTACT_DETAILS' | translate}}:
+                  p.margin-bottom-none.t-base
+                    | {{applicantFullName(applicant)}}
+                    br
+                    ' {{'LABEL.DOB' | translate}}:
+                    | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+                    br
+                    ' {{'LABEL.EMAIL_ADDRESS' | translate}}:
+                    | {{applicant.email}}
+
+            .form-item
+              .radio-block
+                input#choose_account_settings(name="chooseAccountSettings" type="radio" value="account" ng-model="chosenAccountSettingsToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseAccountSettings')}")
+                label.radio-block_label for="choose_account_settings"
+                  p.form-label
+                    | {{'LABEL.CURRENT_ACCOUNT_SETTINGS' | translate}}:
+                  p.margin-bottom-none.t-base
+                    | {{applicantFullName(loggedInUser)}}
+                    br
+                    ' {{'LABEL.DOB' | translate}}:
+                    | {{loggedInUser.dob_month}}/{{loggedInUser.dob_day}}/{{loggedInUser.dob_year}}
+                    br
+                    ' {{'LABEL.EMAIL_ADDRESS' | translate}}:
+                    | {{loggedInUser.email}}
+                  p.t-small.t-normal
+                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{loggedInUser.updated_at | date : "MMM d, yyyy" }}
+
+          .form-group
+            p.t-small.c-steel.text-center.padding-top
+              input.button.primary.no-margin type="submit" value="{{'T.NEXT' | translate}}"
