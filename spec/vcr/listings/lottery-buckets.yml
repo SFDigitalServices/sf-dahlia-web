@@ -5,7 +5,7 @@ http_interactions:
     uri: https://test.salesforce.com/services/oauth2/token
     body:
       encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -21,16 +21,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 06 Aug 2016 18:59:57 GMT
+      - Tue, 31 Jan 2017 01:36:58 GMT
       Strict-Transport-Security:
-      - max-age=10886400; includeSubDomains; preload
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
+      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
       Set-Cookie:
-      - BrowserId=M3BHHEcDR6qhh5fowRkzhQ;Path=/;Domain=.salesforce.com;Expires=Wed,
-        05-Oct-2016 18:59:57 GMT
+      - BrowserId=B22KI82yQA22FVBVIdTGnw;Path=/;Domain=.salesforce.com;Expires=Sat,
+        01-Apr-2017 01:36:58 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -41,13 +44,15 @@ http_interactions:
       - 'false'
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQCDuSz.r2x.o6vn7z6LN5sr.b8kEzYCR7e8Nd__SHkTG3EiMAmtCFJW3_S0n7DKFOeECBJU6HDMsKOYkye6yEBPg9gsV","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1470509997297","signature":"G4kXQOHB1vLVBP2M8m3XquSrSfIpcvood1iEyLXIKhM="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/0056C000000eBx5QAE","token_type":"Bearer","issued_at":"1485826618254","signature":"T/DgTYoSEgqy+eCHSRnOduipclxm2qj709SFCIuFOYU="}'
     http_version:
-  recorded_at: Sat, 06 Aug 2016 18:59:57 GMT
+  recorded_at: Tue, 31 Jan 2017 01:36:58 GMT
 - request:
     method: get
     uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/LotteryResult/Bucket/a0WU000000BmpBdMAJ
@@ -58,7 +63,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00Df0000003aGup!AQ4AQCDuSz.r2x.o6vn7z6LN5sr.b8kEzYCR7e8Nd__SHkTG3EiMAmtCFJW3_S0n7DKFOeECBJU6HDMsKOYkye6yEBPg9gsV
+      - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,26 +74,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 06 Aug 2016 18:59:58 GMT
+      - Tue, 31 Jan 2017 01:36:58 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
+        ''self'' *.salesforce.com *.force.com; font-src https: data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain;
+        base-uri http://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/LotteryResult/Bucket/a0WU000000BmpBdMAJ'
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=604800; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D6C0000000TrI";
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=McPev2VRSBq1Ju31ToENbA;Path=/;Domain=.salesforce.com;Expires=Wed,
-        05-Oct-2016 18:59:58 GMT
+      - BrowserId=-twkQ2-pRiGBJJee9FEqxA;Path=/;Domain=.salesforce.com;Expires=Sat,
+        01-Apr-2017 01:36:58 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"URL":null,"officeHours":null,"neighborhoodPreferenceUnitsAvailable":25,"neighborhoodPreferenceAppTotal":2,"lotteryResultsURL":"www.google.com","lotteryResults":true,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2015-12-03T19:00:00.000Z","lotteryCity":"San
-        Francisco","liveWorkPreferenceUnitsAvailable":20,"liveWorkPreferenceAppTotal":2,"listingId":"a0WU000000BmpBdMAJ","generalLotteryAppTotal":2,"displacedPreferenceUnitsAvailable":15,"displacedPreferenceAppTotal":4,"certOfPreferenceUnitsAvailable":10,"certOfPreferenceAppTotal":3,"bucketResults":[{"preferenceName":"liveWorkPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":null,"lotteryNumber":"00000274","applicationID":"a0tf0000000mN2fAAE"},{"preferenceRank":1,"lotteryRank":2,"lotteryNumber":"00000284","applicationID":"a0tf0000000mN3nAAE"},{"preferenceRank":2,"lotteryRank":3,"lotteryNumber":"00000578","applicationID":"a0tf0000000mPAmAAM"},{"preferenceRank":null,"lotteryRank":null,"lotteryNumber":"00000022","applicationID":"a0tf0000000mJK6AAM"}]},{"preferenceName":"certOfPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":null,"lotteryNumber":"00000274","applicationID":"a0tf0000000mN2fAAE"},{"preferenceRank":1,"lotteryRank":2,"lotteryNumber":"00000284","applicationID":"a0tf0000000mN3nAAE"},{"preferenceRank":2,"lotteryRank":3,"lotteryNumber":"00000578","applicationID":"a0tf0000000mPAmAAM"},{"preferenceRank":3,"lotteryRank":6,"lotteryNumber":"00000043","applicationID":"a0tf0000000mJcFAAU"},{"preferenceRank":null,"lotteryRank":null,"lotteryNumber":"00000022","applicationID":"a0tf0000000mJK6AAM"}]},{"preferenceName":"displacedPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00000010","applicationID":"a0tf0000000mGfzAAE"},{"preferenceRank":1,"lotteryRank":null,"lotteryNumber":"00000274","applicationID":"a0tf0000000mN2fAAE"},{"preferenceRank":2,"lotteryRank":2,"lotteryNumber":"00000284","applicationID":"a0tf0000000mN3nAAE"},{"preferenceRank":3,"lotteryRank":3,"lotteryNumber":"00000578","applicationID":"a0tf0000000mPAmAAM"},{"preferenceRank":4,"lotteryRank":6,"lotteryNumber":"00000043","applicationID":"a0tf0000000mJcFAAU"},{"preferenceRank":null,"lotteryRank":null,"lotteryNumber":"00000030","applicationID":"a0tf0000000mJMVAA2"},{"preferenceRank":null,"lotteryRank":null,"lotteryNumber":"00000022","applicationID":"a0tf0000000mJK6AAM"}]},{"preferenceName":"neighborhoodPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00000010","applicationID":"a0tf0000000mGfzAAE"},{"preferenceRank":1,"lotteryRank":null,"lotteryNumber":"00000274","applicationID":"a0tf0000000mN2fAAE"},{"preferenceRank":2,"lotteryRank":3,"lotteryNumber":"00000578","applicationID":"a0tf0000000mPAmAAM"},{"preferenceRank":null,"lotteryRank":null,"lotteryNumber":"00000022","applicationID":"a0tf0000000mJK6AAM"}]},{"preferenceName":"generalLottery","bucketResults":[{"preferenceRank":1,"lotteryRank":4,"lotteryNumber":"00000679","applicationID":"a0tf0000000mQ0jAAE"},{"preferenceRank":2,"lotteryRank":5,"lotteryNumber":"00000251","applicationID":"a0tf0000000mMj5AAE"}]}],"applicationResults":null}'
+      string: '{"URL":null,"officeHours":null,"neighborhoodPreferenceUnitsAvailable":null,"neighborhoodPreferenceAppTotal":null,"lotteryResultsURL":null,"lotteryResults":true,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2015-12-03T19:00:00.000Z","lotteryCity":"San
+        Francisco","liveWorkPreferenceUnitsAvailable":null,"liveWorkPreferenceAppTotal":null,"listingId":"a0WU000000BmpBdMAJ","generalLotteryAppTotal":1,"displacedPreferenceUnitsAvailable":null,"displacedPreferenceAppTotal":2,"certOfPreferenceUnitsAvailable":null,"certOfPreferenceAppTotal":2,"bucketResults":[{"preferenceName":"liveWorkPreference","bucketResults":[]},{"preferenceName":"certOfPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":3,"lotteryNumber":"00008503","applicationID":"a0o6C0000004aNaQAI"},{"preferenceRank":2,"lotteryRank":5,"lotteryNumber":"00008501","applicationID":"a0o6C0000004aNQQAY"}]},{"preferenceName":"displacedPreference","bucketResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00008502","applicationID":"a0o6C0000004aNVQAY"},{"preferenceRank":2,"lotteryRank":2,"lotteryNumber":"00008504","applicationID":"a0o6C0000004aNfQAI"}]},{"preferenceName":"neighborhoodPreference","bucketResults":[]},{"preferenceName":"generalLottery","bucketResults":[{"preferenceRank":1,"lotteryRank":4,"lotteryNumber":"00008505","applicationID":"a0o6C0000004aNkQAI"}]}],"applicationResults":null}'
     http_version:
-  recorded_at: Sat, 06 Aug 2016 18:59:58 GMT
+  recorded_at: Tue, 31 Jan 2017 01:36:58 GMT
 recorded_with: VCR 3.0.3

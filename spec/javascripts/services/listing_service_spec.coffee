@@ -69,8 +69,8 @@ do ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListings
         ListingService.getListings()
         httpBackend.flush()
-        date1 = ListingService.lotteryResultsListings[0].Lottery_Results_Date
-        date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
+        date1 = ListingService.lotteryResultsListings[3].Lottery_Results_Date
+        date2 = ListingService.lotteryResultsListings[4].Lottery_Results_Date
         expect(date1 >= date2).toEqual true
 
       it 'returns Service.getListingsWithEligibility if eligibilty options are set', ->
@@ -231,6 +231,8 @@ do ->
       it 'assigns Service.listing.preferences with the Preference results', ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
+        # just to divert from our hardcoding
+        ListingService.listing.Id = 'fakeId-123'
         stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
         ListingService.getListingPreferences()
         httpBackend.flush()

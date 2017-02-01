@@ -355,13 +355,16 @@ ShortFormDataService = () ->
     month = values.month
     day = values.day
     year = values.year
+    # allow valid year for the "unborn baby" rule, which is checked more precisely in
+    # ShortFormApplicationController.householdMemberValidAge
+    validYear = moment().add(10, 'months').year()
     switch field
       when 'day'
         day >= 1 && day <= Service.maxDOBDay(month, year)
       when 'month'
         month >= 1 && month <= 12
       when 'year'
-        year >= 1900 && year <= 2016
+        year >= 1900 && year <= validYear
 
   Service.maxDOBDay = (month, year) ->
     month = parseInt(month)
