@@ -580,7 +580,18 @@ ShortFormApplicationController = (
     return false unless values.month && values.day && year >= 1900
     dob = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
     age = moment().diff(dob, 'years')
-    return true if age < 18
+    return age < 18
+
+  $scope.householdMemberValidAge = ->
+    values = $scope.DOBValues('householdMember')
+    form = $scope.form.applicationForm
+    # have to grab viewValue because if the field is in error state the model will be undefined
+    year = parseInt(form['date_of_birth_year'].$viewValue)
+    return false unless values.month && values.day && year >= 1900
+    dob = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+    age = moment().add(10, 'months').diff(dob, 'days')
+    # HH member allowed to be 10 months "unborn"
+    return age >= 0
 
   $scope.recheckDOB = (member) ->
     form = $scope.form.applicationForm
@@ -588,10 +599,9 @@ ShortFormApplicationController = (
     # have to "reset" the dob_day form input by setting it to its current value
     # which will auto-trigger its ui-validation
     day.$setViewValue(day.$viewValue + ' ')
-    if member == 'applicant'
-      # also re-check year to see if primary applicant is over 18
-      year = form['date_of_birth_year']
-      year.$setViewValue(year.$viewValue + ' ')
+    # also re-check year to see if age is valid (primary > 18, HH > "10 months in the future")
+    year = form['date_of_birth_year']
+    year.$setViewValue(year.$viewValue + ' ')
 
 
   $scope.signIn = ->

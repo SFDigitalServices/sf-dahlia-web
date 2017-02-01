@@ -410,3 +410,29 @@ do ->
         it 'returns true', ->
           spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
           expect(scope.showPreference('displaced')).toEqual true
+
+    describe 'primaryApplicantUnder18', ->
+      it 'checks form values for primary applicant DOB that is under 18', ->
+        year = new Date().getFullYear()
+        scope.form.applicationForm.date_of_birth_year = {$viewValue: year}
+        scope.applicant.dob_month = 1
+        scope.applicant.dob_day = 1
+        scope.applicant.dob_year = year
+        expect(scope.primaryApplicantUnder18()).toEqual true
+
+      it 'checks form values for primary applicant DOB that is over 18', ->
+        scope.form.applicationForm.date_of_birth_year = {$viewValue: '1995'}
+        scope.applicant.dob_month = 10
+        scope.applicant.dob_day = 10
+        scope.applicant.dob_year = 1995
+        expect(scope.primaryApplicantUnder18()).toEqual false
+
+    describe 'householdMemberValidAge', ->
+      it 'checks form values for household member age', ->
+        year = new Date().getFullYear()
+        scope.form.applicationForm.date_of_birth_year = {$viewValue: year}
+        # due to "unborn child rule" 8-1-YYYY of current year should always be valid
+        scope.householdMember.dob_month = 8
+        scope.householdMember.dob_day = 1
+        scope.householdMember.dob_year = year
+        expect(scope.householdMemberValidAge()).toEqual true

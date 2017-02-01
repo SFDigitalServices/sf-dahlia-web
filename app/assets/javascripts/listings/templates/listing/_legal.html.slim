@@ -12,16 +12,16 @@ accordion-heading
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | Required Documents
-      p ng-text-truncate="listing.Required_Documents | nl2br" ng-tt-words-threshold="60"
+      p ng-text-truncate="listing.Required_Documents | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | Important Program Rules
-      p ng-text-truncate="listing.Legal_Disclaimers | nl2br" ng-tt-words-threshold="60"
+      p ng-text-truncate="listing.Legal_Disclaimers | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | Smoking Policy
-      p ng-text-truncate="listing.Smoking_Policy | nl2br" ng-tt-words-threshold="60"
+      p ng-text-truncate="listing.Smoking_Policy | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | Pets Policy
-      p ng-text-truncate="listing.Pet_Policy | nl2br" ng-tt-words-threshold="60"
+      p ng-text-truncate="listing.Pet_Policy | stripMostTags | nl2br" ng-tt-words-threshold="60"
