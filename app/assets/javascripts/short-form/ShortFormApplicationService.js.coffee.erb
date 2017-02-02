@@ -434,7 +434,7 @@ ShortFormApplicationService = (
         return Service._signInAndSkipSubmit(data.application)
       changed = null
       if Service.application.status.match(/draft/i)
-        if opts.type == 'review-sign-in' && !_.isEqual(Service.applicant, opts.loggedInUser)
+        if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
           return $state.go('dahlia.short-form-application.choose-account-settings')
         else
           # make sure short form data inherits logged in user data
@@ -442,7 +442,6 @@ ShortFormApplicationService = (
       else
         # we're signing in to claim a submitted application
         opts = {attachToAccount: true}
-      debugger
       Service.submitApplication(opts).then( ->
         opts.submitCallback(changed)
       )
@@ -512,6 +511,15 @@ ShortFormApplicationService = (
     # return T/F if data was changed or not
     return changed
 
+  Service.hasDifferentInfo = (applicant, loggedInUser) ->
+    fields = [
+      'email', 'firstName', 'middleName', 'lastName'
+    ]
+    userData = _.omitBy(_.pick(loggedInUser, fields), _.isNil)
+    userData.DOB = ShortFormDataService.formatUserDOB(loggedInUser)
+    applicantData = _.omitBy(_.pick(applicant, fields), _.isNil)
+    applicantData.DOB = ShortFormDataService.formatUserDOB(applicant)
+    !_.isEqual(userData, applicantData)
 
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->

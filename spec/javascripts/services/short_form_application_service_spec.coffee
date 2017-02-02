@@ -26,6 +26,7 @@ do ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
+      formatUserDOB: ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()

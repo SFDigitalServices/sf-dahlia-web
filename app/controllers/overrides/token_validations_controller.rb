@@ -4,7 +4,6 @@ module Overrides
     private
 
     def render_validate_token_success
-      # data = @resource.token_validation_response
       render json: {
         success: true,
         data: @resource.as_json.merge(salesforce_contact_data),
