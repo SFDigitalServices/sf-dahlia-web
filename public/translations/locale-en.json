@@ -380,6 +380,7 @@
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
         "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
+        "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Community Building",
         "RESERVED_DEVELOPMENTALLY_DISABLED_DESCRIPTION": "Lorem ipsum developmentally disabled",
         "RESERVED_FOR": "Reserved for {{type}}",
