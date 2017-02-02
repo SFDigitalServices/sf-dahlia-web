@@ -226,8 +226,8 @@ ListingController = (
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
 
-  $scope.listingReservedTypes = ->
-    ListingService.reservedTypes($scope.listing)
+  $scope.listingReservedTypes = (listing = $scope.listing) ->
+    ListingService.reservedTypes(listing)
 
   $scope.specialUnitTypeDescription = (type) ->
     ListingService.specialUnitTypeDescription(type)
