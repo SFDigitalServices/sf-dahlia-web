@@ -482,6 +482,7 @@
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
         "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
+        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
         "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
     },
     "T": {

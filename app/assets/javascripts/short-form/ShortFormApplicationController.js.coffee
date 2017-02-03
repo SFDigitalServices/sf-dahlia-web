@@ -511,7 +511,7 @@ ShortFormApplicationController = (
       ShortFormApplicationService.importUserData(AccountService.loggedInUser)
     ShortFormApplicationService.submitApplication().then( ->
       AccountService.importApplicantData($scope.applicant)
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
 
 
@@ -584,7 +584,7 @@ ShortFormApplicationController = (
             type: 'review-sign-in'
             loggedInUser: AccountService.loggedInUser
             submitCallback: ->
-              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
+              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'sign-in'})
           )
       ).catch( ->
         $scope.handleErrorState()
