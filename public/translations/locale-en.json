@@ -375,6 +375,7 @@
         "NO_VACANT_UNITS": "There are no vacant units available for this listing at this time. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available.",
         "NUMBER_ON_WAITLIST": "{{number}} people are currently on this list",
         "OCCUPANCY_DESCRIPTION": "Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.",
+        "OPEN_WAITLIST": "Open Waitlist",
         "PRIORITY_HEARING_VISION_IMPAIRED_DESCRIPTION": "Lorem ipsum hearing/vision",
         "PRIORITY_MOBILITY_IMPAIRED_DESCRIPTION": "Lorem ipsum mobility",
         "PRIORITY_UNITS": "Priority Units",
