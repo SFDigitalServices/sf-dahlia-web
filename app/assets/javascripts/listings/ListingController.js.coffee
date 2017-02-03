@@ -195,8 +195,8 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
-  $scope.listingPriorities = (listing) ->
-    ListingService.listingPriorities(listing)
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
 
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1

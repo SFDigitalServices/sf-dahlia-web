@@ -47,7 +47,7 @@
       h2.property-card_label
         span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="listing.STUB_Has_waitlist"
         span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.STUB_Has_waitlist"
-      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{listingPriorities(listing)}}" ng-if="listingPriorities(listing)"
+      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{priorityTypes(listing)}}" ng-if="priorityTypes(listing)"
 
       // -- Unit Summary Table(s)
       / General

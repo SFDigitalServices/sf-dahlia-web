@@ -428,8 +428,15 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.reservedTypes = (listing) ->
+    Service.collectTypes(listing.reservedDescriptor)
+
+  Service.priorityTypes = (listing) ->
+    Service.collectTypes(listing.prioritiesDescriptor)
+
+  Service.collectTypes = (list) ->
     types = []
-    _.each listing.reservedDescriptor, (descriptor) -> types.push(descriptor.name)
+    _.each list, (descriptor) ->
+      types.push(descriptor.name) if descriptor.name
     if types.length then types.join(', ') else ''
 
   Service.specialUnitTypeDescription = (type) ->
@@ -543,10 +550,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
-
-  Service.listingPriorities = (listing) ->
-    return '' unless listing.STUB_Priorities && listing.STUB_Priorities.length
-    listing.STUB_Priorities.join(', ')
 
   Service.stubListingPreferences = ->
     opts = null
