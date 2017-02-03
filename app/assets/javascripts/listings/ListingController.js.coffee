@@ -235,6 +235,12 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
+  $scope.seniorMinimumAge = (listing = $scope.listing) ->
+    if listing.Reserved_community_minimum_age && listing.Reserved_community_type == 'Senior'
+      "#{listing.Reserved_community_minimum_age}+"
+    else
+      ''
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
     ListingService.listingIs('168 Hyde Relisting', listing)

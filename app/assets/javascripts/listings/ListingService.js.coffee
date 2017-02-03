@@ -428,15 +428,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.reservedTypes = (listing) ->
-    Service.collectTypes(listing.reservedDescriptor)
+    Service.collectTypes(listing, 'reservedDescriptor')
 
   Service.priorityTypes = (listing) ->
-    Service.collectTypes(listing.prioritiesDescriptor)
+    Service.collectTypes(listing, 'prioritiesDescriptor')
 
-  Service.collectTypes = (list) ->
+  Service.collectTypes = (listing, specialType) ->
     types = []
-    _.each list, (descriptor) ->
-      types.push(descriptor.name) if descriptor.name
+    _.each listing[specialType], (descriptor) ->
+      if descriptor.name
+        name = descriptor.name
+        if listing.Reserved_community_minimum_age && name == 'Senior'
+          # TODO: make plural, after we finalize all the priority/reserved language
+          name = "#{name} #{listing.Reserved_community_minimum_age}+"
+        types.push(name)
     if types.length then types.join(', ') else ''
 
   Service.specialUnitTypeDescription = (type) ->
