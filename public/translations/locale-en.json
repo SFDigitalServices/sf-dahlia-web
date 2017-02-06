@@ -229,7 +229,6 @@
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
-        "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "ADDRESS": "Address",
         "ADDRESS_1": "Street Address",
         "ADDRESS_2": "Apt or Unit #",
@@ -340,7 +339,6 @@
         "SEND_EMAIL": "Send email",
         "SIGN_IN": "Sign In",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
-        "SPECIAL_PROGRAMS": "Special Programs",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
@@ -366,6 +364,7 @@
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
+        "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
