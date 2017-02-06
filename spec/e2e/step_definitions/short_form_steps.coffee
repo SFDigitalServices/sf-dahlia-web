@@ -141,6 +141,9 @@ module.exports = ->
   @When 'I confirm details on the review page', ->
     element(By.id('submit')).click()
 
+  @When 'I continue confirmation without signing in', ->
+    element(By.id('confirm_no_account')).click()
+
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click()
     element(By.id('submit')).click()

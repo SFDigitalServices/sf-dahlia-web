@@ -89,6 +89,13 @@ ShortFormApplicationController = (
   $scope.hideAlert = false
   $scope.hideMessage = false
   $scope.addressError = ShortFormApplicationService.addressError
+  # Account / Login
+  $scope.loggedInUser = AccountService.loggedInUser
+  $scope.userAuth = AccountService.userAuth
+  $scope.accountError = AccountService.accountError
+  $scope.accountSuccess = AccountService.accountSuccess
+  $scope.rememberedShortFormState = AccountService.rememberedShortFormState
+  $scope.submitDisabled = false
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
@@ -150,8 +157,13 @@ ShortFormApplicationController = (
     duration = 400 # animation speed in ms
     $document.scrollToElement(el, topOffset, duration)
 
+  $scope.currentForm = ->
+    # pick up which ever one is defined (the other will be undefined)
+    $scope.form.signIn ||
+    $scope.form.applicationForm
+
   $scope.inputInvalid = (fieldName, identifier = '') ->
-    form = $scope.form.applicationForm
+    form = $scope.currentForm()
     return false unless form
     fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
@@ -460,6 +472,12 @@ ShortFormApplicationController = (
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 
+  $scope.confirmReviewedApplication = ->
+    if AccountService.loggedIn()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-sign-in')
+
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
@@ -487,6 +505,14 @@ ShortFormApplicationController = (
       )
     else
       $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
+
+  $scope.chooseAccountSettings = ->
+    if ($scope.chosenAccountSettingsToKeep == 'account')
+      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    ShortFormApplicationService.submitApplication().then( ->
+      AccountService.importApplicantData($scope.applicant)
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
+    )
 
 
   ## account service
@@ -541,6 +567,34 @@ ShortFormApplicationController = (
       # go to Create Account without tracking Form Success
       $scope.goToAndLeaveForm('dahlia.short-form-application.create-account')
 
+  $scope.signIn = ->
+    form = $scope.form.signIn
+    # have to manually set this because it's an ng-form
+    form.$submitted = true
+    if form.$valid
+      $scope.submitDisabled = true
+      # AccountService.userAuth will have been modified by form inputs
+      ShortFormNavigationService.isLoading(true)
+      AccountService.signIn().then( (success) ->
+        $scope.submitDisabled = false
+        if success
+          form.$setUntouched()
+          form.$setPristine()
+          ShortFormApplicationService.signInSubmitApplication(
+            type: 'review-sign-in'
+            loggedInUser: AccountService.loggedInUser
+            submitCallback: ->
+              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'sign-in'})
+          )
+      ).catch( ->
+        $scope.handleErrorState()
+        $scope.submitDisabled = false
+      )
+    else
+      AnalyticsService.trackFormError('Application')
+      $scope.handleErrorState()
+
+
   $scope.print = -> $window.print()
 
   $scope.DOBValid = (field, value, model = 'applicant') ->
@@ -586,6 +640,12 @@ ShortFormApplicationController = (
     year = form['date_of_birth_year']
     year.$setViewValue(year.$viewValue + ' ')
 
+  $scope.isLocked = (field) ->
+    AccountService.lockedFields[field]
+
+  $scope.$on 'auth:login-error', (ev, reason) ->
+    $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
+    $scope.handleErrorState()
 
   $scope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
     # NOTE: not sure when this will ever really get hit any more
