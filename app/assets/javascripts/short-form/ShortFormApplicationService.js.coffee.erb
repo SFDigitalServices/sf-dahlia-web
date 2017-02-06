@@ -508,6 +508,7 @@ ShortFormApplicationService = (
     # merge the data into applicant
     _.merge Service.applicant, userData
     changed = !_.isEqual(Service.applicant, original)
+    Service._mapPrimaryApplicantPreferences(original, userData) if changed
     # return T/F if data was changed or not
     return changed
 
@@ -520,6 +521,13 @@ ShortFormApplicationService = (
     applicantData = _.omitBy(_.pick(applicant, fields), _.isNil)
     applicantData.DOB = ShortFormDataService.formatUserDOB(applicant)
     !_.isEqual(userData, applicantData)
+
+  Service._mapPrimaryApplicantPreferences = (original, userData) ->
+    originalFullName = original.firstName + " " + original.lastName
+    _.forEach Service.application.preferences, (value, key) ->
+      if value == originalFullName
+        Service.application.preferences[key] = userData.firstName + " " + userData.lastName
+      return
 
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->
