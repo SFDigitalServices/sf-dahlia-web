@@ -67,9 +67,8 @@ accordion-heading.lead
         lottery-preference ng-repeat="preference in listing.preferences"
 
         div ng-if="listingHasPreferences()"
-          p.custom-counter_text After all preference holders have been considered, any remaining units will be available to qualified applicants who do not live or work in San Francisco.
-
-
+          p.custom-counter_text
+            | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
 
     li.custom-counter_item
       .content-tile
@@ -98,5 +97,5 @@ accordion-heading.lead
           h4.content-card_title Criminal Background
           p.c-steel
             ' Qualified applicants with criminal history will be considered for
-              housing in compliance with <a target="_blank" href="http://sf-hrc.org/sites/sf-hrc.org/files/Fair%20Chance%20Housing%20Notice%20ENGLISH_0.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
+              housing in compliance with <a target="_blank" href="http://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
           p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20")

@@ -102,7 +102,11 @@ AccountController = (
           form.$setUntouched()
           form.$setPristine()
           if $scope.userInShortFormSession()
-            $scope._signInSubmitApplication()
+            ShortFormApplicationService.signInSubmitApplication(
+              loggedInUser: AccountService.loggedInUser
+              submitCallback: (changed) ->
+                $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
+            )
           else
             $scope._signInRedirect()
       ).catch( ->
@@ -178,47 +182,6 @@ AccountController = (
     return false if $scope.myApplications.length == 0
     # as long as we have some where !deleted
     _.some($scope.myApplications, {deleted: false})
-
-  # ----- TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
-  $scope._signInSubmitApplication = ->
-    # check if this user has already applied to this listing
-    ShortFormApplicationService.getMyAccountApplication().success((data) ->
-      if !_.isEmpty(data.application) && $scope._previousIsSubmittedOrBothDrafts(data.application)
-        # if user already had an application for this listing
-        return $scope._signInAndSkipSubmit(data.application)
-      changed = null
-      opts = {}
-      if ShortFormApplicationService.application.status.match(/draft/i)
-        # make sure short form data inherits logged in user data
-        changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-      else
-        # we're signing in to claim a submitted application
-        opts = {attachToAccount: true}
-      ShortFormApplicationService.submitApplication(opts).then( ->
-        $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
-      )
-    ).error( ->
-      # there was an error retrieving your account info, please try again
-      # TODO: add some helpful message to the user
-      $state.go('dahlia.short-form-application.name', {id: ShortFormApplicationService.listing.Id})
-    )
-
-  $scope._signInAndSkipSubmit = (previousApplication) ->
-    if (previousApplication.status.match(/submitted/i))
-      # they've already submitted -- send them to "my applications", either with:
-      # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
-      # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
-      doubleSubmit = !! ShortFormApplicationService.application.status.match(/submitted/i)
-      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
-    else
-      # send them to choose which draft they want to keep
-      $state.go('dahlia.short-form-application.choose-draft')
-
-  $scope._previousIsSubmittedOrBothDrafts = (previousApplication) ->
-    previousApplication.status.match(/submitted/i) || (
-      previousApplication.status.match(/draft/i) &&
-      ShortFormApplicationService.application.status.match(/draft/i)
-    )
 
   $scope._signInRedirect = ->
     return false unless AccountService.loggedIn()

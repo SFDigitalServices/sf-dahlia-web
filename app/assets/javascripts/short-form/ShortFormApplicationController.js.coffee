@@ -90,6 +90,7 @@ ShortFormApplicationController = (
   $scope.hideMessage = false
   $scope.addressError = ShortFormApplicationService.addressError
   # Account / Login
+  $scope.loggedInUser = AccountService.loggedInUser
   $scope.userAuth = AccountService.userAuth
   $scope.accountError = AccountService.accountError
   $scope.accountSuccess = AccountService.accountSuccess
@@ -505,6 +506,14 @@ ShortFormApplicationController = (
     else
       $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
 
+  $scope.chooseAccountSettings = ->
+    if ($scope.chosenAccountSettingsToKeep == 'account')
+      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    ShortFormApplicationService.submitApplication().then( ->
+      AccountService.importApplicantData($scope.applicant)
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
+    )
+
 
   ## account service
   $scope.loggedIn = ->
@@ -558,6 +567,34 @@ ShortFormApplicationController = (
       # go to Create Account without tracking Form Success
       $scope.goToAndLeaveForm('dahlia.short-form-application.create-account')
 
+  $scope.signIn = ->
+    form = $scope.form.signIn
+    # have to manually set this because it's an ng-form
+    form.$submitted = true
+    if form.$valid
+      $scope.submitDisabled = true
+      # AccountService.userAuth will have been modified by form inputs
+      ShortFormNavigationService.isLoading(true)
+      AccountService.signIn().then( (success) ->
+        $scope.submitDisabled = false
+        if success
+          form.$setUntouched()
+          form.$setPristine()
+          ShortFormApplicationService.signInSubmitApplication(
+            type: 'review-sign-in'
+            loggedInUser: AccountService.loggedInUser
+            submitCallback: ->
+              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'sign-in'})
+          )
+      ).catch( ->
+        $scope.handleErrorState()
+        $scope.submitDisabled = false
+      )
+    else
+      AnalyticsService.trackFormError('Application')
+      $scope.handleErrorState()
+
+
   $scope.print = -> $window.print()
 
   $scope.DOBValid = (field, value, model = 'applicant') ->
@@ -602,30 +639,6 @@ ShortFormApplicationController = (
     # also re-check year to see if age is valid (primary > 18, HH > "10 months in the future")
     year = form['date_of_birth_year']
     year.$setViewValue(year.$viewValue + ' ')
-
-
-  $scope.signIn = ->
-    form = $scope.form.signIn
-    # have to manually set this because it's an ng-form
-    form.$submitted = true
-    if form.$valid
-      $scope.submitDisabled = true
-      # AccountService.userAuth will have been modified by form inputs
-      AccountService.signIn().then( (success) ->
-        $scope.submitDisabled = false
-        if success
-          form.$setUntouched()
-          form.$setPristine()
-          # TODO: REMOVE AND REPLACE WITH ShortFormApplicationService.signInSubmitApplication
-          ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: true})
-      ).catch( ->
-        $scope.handleErrorState()
-        $scope.submitDisabled = false
-      )
-    else
-      AnalyticsService.trackFormError('Application')
-      $scope.handleErrorState()
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]

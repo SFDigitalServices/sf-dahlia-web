@@ -73,6 +73,12 @@
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
+    "CHOOSE_ACCOUNT_SETTINGS": {
+        "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
+        "ALERT_TITLE": "Please choose which version of primary contact details you want to use.",
+        "PRIMARY_CONTACT_OPTIONS": "Primary Contact Options",
+        "TITLE": "The primary contact details on your new application don't match your current account settings."
+    },
     "CHOOSE_DRAFT": {
         "ALERT_MESSAGE": "Any primary contact information on your application will be overwritten by your current account settings.",
         "ALERT_TITLE": "Please choose which version of the application you want to use.",
@@ -197,12 +203,12 @@
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
     },
-    "F1_REVIEW_SUMMARY": {
-        "TITLE": "Take a moment to review your information before submitting your application."
-    },
     "F1A_REVIEW_SIGN_IN": {
         "CONFIRM_WITHOUT_AN_ACCOUNT": "Confirm without an account",
         "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time."
+    },
+    "F1_REVIEW_SUMMARY": {
+        "TITLE": "Take a moment to review your information before submitting your application."
     },
     "F2_REVIEW_TERMS": {
         "P1": "This application must be submitted by {{date}}.",
@@ -233,7 +239,6 @@
     },
     "LABEL": {
         "ADDITIONAL_PHONE": "Additional Phone",
-        "ADDITIONAL_PREFERENCES": "Additional Preferences",
         "ADDRESS": "Address",
         "ADDRESS_1": "Street Address",
         "ADDRESS_2": "Apt or Unit #",
@@ -257,6 +262,7 @@
         "APPLICANT_SECOND_PHONE": "Your second phone number",
         "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation?",
+        "APPLICATION_CONTACT_DETAILS": "Application Contact Details",
         "APPLY_ONLINE": "Apply Online",
         "CANCEL": "Cancel",
         "CITY": "City Name",
@@ -267,6 +273,7 @@
         "CONTACT_PHONE_NUMBER": "Contact phone number",
         "CONTINUE_APPLICATION": "Continue Application",
         "CREATE_ACCOUNT": "Create Account",
+        "CURRENT_ACCOUNT_SETTINGS": "Current Account Settings",
         "DOB": "Date of Birth",
         "DOB_DAY": "Day",
         "DOB_MONTH": "Month",
@@ -345,7 +352,6 @@
         "SIGN_IN": "Sign In",
         "SIGN_IN_TO_CONFIRM": "Sign in to confirm",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
-        "SPECIAL_PROGRAMS": "Special Programs",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
@@ -371,6 +377,7 @@
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
+        "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
@@ -474,8 +481,9 @@
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
-        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page.",
-        "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully."
+        "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
+        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
+        "SIGN_IN_REQUIRED": "Please sign in to your account to access this page."
     },
     "T": {
         "APPLICATION": "Application",

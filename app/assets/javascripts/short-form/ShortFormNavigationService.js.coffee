@@ -62,6 +62,7 @@ ShortFormNavigationService = (
     'review-sign-in': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
     'choose-draft': {callback: ['chooseDraft']}
+    'choose-account-settings': {callback: ['chooseAccountSettings']}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})

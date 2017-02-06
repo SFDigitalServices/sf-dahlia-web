@@ -52,6 +52,7 @@ do ->
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
       invalidateContactForm: jasmine.createSpy()
+      signInSubmitApplication: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->

@@ -27,6 +27,19 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
     return false if !Service.loggedInUser
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
+  Service.setLoggedInUser = (data) ->
+    angular.copy(data, Service.loggedInUser)
+
+  Service.importApplicantData = (applicant) ->
+    fields = [
+      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+    ]
+    # copy over all non-blank values e.g. omit middleName if null
+    userData = _.omitBy(_.pick(applicant, fields), _.isNil)
+    # merge the data into loggedInUser
+    _.merge Service.loggedInUser, userData
+
+
   Service.createAccount = (shortFormSession) ->
     Service.clearAccountMessages()
     if shortFormSession
@@ -55,7 +68,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
         # reset userAuth object
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         if response.signedIn
-          angular.copy(response, Service.loggedInUser)
+          Service.setLoggedInUser(response)
           Service._reformatDOB()
           return true
       ).catch((response) ->
@@ -99,7 +112,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
 
   Service.signOut = ->
     # reset the user data immediately, then call signOut
-    angular.copy({}, Service.loggedInUser)
+    Service.setLoggedInUser({})
     ShortFormApplicationService.resetUserData()
     $auth.signOut()
 
@@ -107,7 +120,7 @@ AccountService = ($state, $auth, $modal, $http, $translate, ShortFormApplication
   Service.validateUser = ->
     $auth.validateUser().then((response) ->
       # will only reach this state if user is logged in w/ a token
-      angular.copy(response, Service.loggedInUser)
+      Service.setLoggedInUser(response)
       Service._reformatDOB()
       ShortFormApplicationService.importUserData(Service.loggedInUser)
     )
