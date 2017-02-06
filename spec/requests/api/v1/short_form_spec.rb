@@ -74,6 +74,8 @@ describe 'ShortForm API' do
       url = '/api/v1/short-form/application'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
+      params = clean_json_for_vcr(params)
+
       VCR.use_cassette('shortform/submit_application') do
         post url, params, format: :json
       end
@@ -122,40 +124,33 @@ describe 'ShortForm API' do
         .to receive(:attach_files_and_send_confirmation).and_return(true)
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:delete_draft_application).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:user_can_claim?).and_return(true)
     end
 
     it 'returns success response' do
-      url = '/api/v1/short-form/application/a0Wf0000003j03WEAQ'
+      url = '/api/v1/short-form/application/a0o6C0000005Sw4'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
+      params['application']['id'] = 'a0o6C0000005Sw4'
+      params['application']['status'] = 'draft'
+      params = clean_json_for_vcr(params)
+
       VCR.use_cassette('shortform/update_application') do
         put url, params, @auth_headers
       end
       expect(response).to be_success
     end
-  end
 
-  describe 'claim_submitted_application' do
-    # NOTE: to get this one to work we created a cassette that stripped out all bools
-    #    because VCR converts the bools->strings, which makes salesforce reject it
-    before do
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:user_can_claim?).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:attach_files_and_send_confirmation).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:delete_draft_application).and_return(true)
-    end
-    it 'returns success response' do
-      VCR.use_cassette('shortform/claim_submitted_application') do
-        url = '/api/v1/short-form/claim-application/a0tf0000000xw9pAAA.json'
-        file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
-        params = JSON.parse(File.read(file))
+    it 'does not return success response for an unauthorized application' do
+      # this application ID does not belong to the "login_user"
+      url = '/api/v1/short-form/application/a0o6C00000055ny'
+      file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
+      params = JSON.parse(File.read(file))
+      params = clean_json_for_vcr(params)
+
+      VCR.use_cassette('shortform/update_unauthorized_application') do
         put url, params, @auth_headers
       end
-      expect(response).to be_success
+      expect(response).not_to be_success
     end
   end
 
@@ -175,4 +170,14 @@ describe 'ShortForm API' do
       expect(response).to be_success
     end
   end
+end
+
+def clean_json_for_vcr(data)
+  app = data.clone
+  app['application'].delete_if { |_k, v| [true, false].include? v }
+  app['application']['primaryApplicant'].delete_if { |_k, v| [true, false].include? v }
+  app['application']['householdMembers'].each do |h|
+    h.delete_if { |_k, v| [true, false].include? v }
+  end
+  app
 end

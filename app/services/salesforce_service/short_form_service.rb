@@ -49,12 +49,5 @@ module SalesforceService
     def self.submitted?(application)
       application['status'] == 'Submitted'
     end
-
-    def self.can_claim?(application)
-      submission_date = Date.parse(application['applicationSubmittedDate'])
-      # you should not be trying to claim applications that were submitted in the past
-      return false if submission_date < Time.zone.today
-      application['primaryApplicant']['webAppID'].blank?
-    end
   end
 end
