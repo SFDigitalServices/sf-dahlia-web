@@ -61,8 +61,6 @@ describe 'ShortForm API' do
   end
 
   describe 'submit_application' do
-    # NOTE: to get this one to work we created a cassette that stripped out all bools
-    #    because VCR converts the bools->strings, which makes salesforce reject it
     before do
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:attach_files_and_send_confirmation).and_return(true)
@@ -117,8 +115,6 @@ describe 'ShortForm API' do
   end
 
   describe 'update_application' do
-    # NOTE: to get this one to work we created a cassette that stripped out all bools
-    #    because VCR converts the bools->strings, which makes salesforce reject it
     before do
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:attach_files_and_send_confirmation).and_return(true)
@@ -172,6 +168,8 @@ describe 'ShortForm API' do
   end
 end
 
+# NOTE: because VCR converts the bools->strings (which makes salesforce reject it)
+#       we have to strip all bools before submitting/recording cassette
 def clean_json_for_vcr(data)
   app = data.clone
   app['application'].delete_if { |_k, v| [true, false].include? v }
