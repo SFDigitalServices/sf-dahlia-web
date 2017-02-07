@@ -8,6 +8,7 @@ do ->
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
+    $state = {go: jasmine.createSpy()}
     fakeSFAddress =
       address1: '123 Main St.'
       city: 'San Francisco'
@@ -25,6 +26,7 @@ do ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
+      formatUserDOB: ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -55,7 +57,9 @@ do ->
     resetFakePeople = ->
       fakeApplicant = undefined
       fakeHouseholdMember = undefined
+
     beforeEach module('dahlia.services', ($provide) ->
+      $provide.value '$state', $state
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingService', fakeListingService
@@ -533,6 +537,21 @@ do ->
         ShortFormApplicationService.keepCurrentDraftApplication(fakeApplicant)
         expect(ShortFormApplicationService.applicant.firstName).toEqual(fakeApplicant.firstName)
 
+    describe 'importUserData', ->
+      describe 'account name differs from application name', ->
+        it 'replaces primary applicant preferences with account name', ->
+          loggedInUser =
+            firstName: 'Jane'
+            lastName: 'Doe'
+          ShortFormApplicationService.applicant =
+            firstName: 'Janice'
+            lastName: 'Jane'
+          ShortFormApplicationService.application.preferences =
+            liveInSf_household_member: 'Janice Jane'
+          ShortFormApplicationService.importUserData(loggedInUser)
+          expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
+            .toEqual('Jane Doe')
+
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
         beforeEach ->
@@ -635,3 +654,46 @@ do ->
       it 'should indicate app was submitted for "Removed"', ->
         ShortFormApplicationService.application.status = 'Removed'
         expect(ShortFormApplicationService.applicationWasSubmitted()).toEqual(true)
+
+
+    describe 'signInSubmitApplication', ->
+      beforeEach ->
+        ShortFormApplicationService.application = fakeShortForm
+        setupFakeApplicant()
+      afterEach ->
+        resetFakePeople()
+
+      it 'sends you to the already submitted confirmation if you already submitted', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.application.status = 'submitted'
+        ShortFormApplicationService.signInSubmitApplication()
+        httpBackend.flush()
+        stateOpts =
+          skipConfirm: true
+          alreadySubmittedId: fakeSalesforceApplication.application.id
+          doubleSubmit: true
+        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
+
+      it 'sends you to choose account settings if they were different', ->
+        opts =
+          type: 'review-sign-in'
+          loggedInUser:
+            firstName: 'Mister'
+            lastName: 'Tester'
+          submitCallback: jasmine.createSpy()
+        ShortFormApplicationService.application.status = 'draft'
+        stubAngularAjaxRequest httpBackend, requestURL, {}
+        ShortFormApplicationService.signInSubmitApplication(opts)
+        httpBackend.flush()
+        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-account-settings')
+
+    describe '_signInAndSkipSubmit', ->
+      it 'checks if you\'ve already submitted', ->
+        fakePrevApplication = { status: 'submitted', id: '123' }
+        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
+        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
+        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
+      it 'sends you to choose draft', ->
+        fakePrevApplication = { status: 'draft' }
+        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
+        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
