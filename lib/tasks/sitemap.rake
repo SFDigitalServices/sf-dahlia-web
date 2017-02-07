@@ -4,7 +4,10 @@ desc 'This task is called by the Heroku scheduler add-on'
 
 task sitemap: :environment do
   listings = ListingService.listings()
-  SitemapGenerator::Sitemap.default_host = 'https://housing.sfgov.org'
+  host_name ||= ENV['MAILER_DOMAIN']
+  host_name ||= ENV['HEROKU_APP_NAME'] ? "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" : nil
+  host_name ||= 'housing.sfgov.org'
+  SitemapGenerator::Sitemap.default_host = 'https://' + host_name
   SitemapGenerator::Sitemap.create do
     add '/', changefreq: 'weekly'
     add '/welcome-chinese', changefreq: 'weekly'
