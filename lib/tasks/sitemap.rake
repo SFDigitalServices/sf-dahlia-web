@@ -2,11 +2,15 @@ require 'sitemap_generator'
 
 desc 'This task is called by the Heroku scheduler add-on'
 
-task generate_sitemap: :environment do
-  listings = ListingService.listings(nil)
+task sitemap: :environment do
+  listings = ListingService.listings()
   SitemapGenerator::Sitemap.default_host = 'https://housing.sfgov.org'
   SitemapGenerator::Sitemap.create do
-    add '/listings', changefreq: 'monthly'
+    add '/', changefreq: 'weekly'
+    add '/welcome-chinese', changefreq: 'weekly'
+    add '/welcome-spanish', changefreq: 'weekly'
+    add '/welcome-filipino', changefreq: 'weekly'
+    add '/listings', changefreq: 'daily', priority: 0.75
     add '/eligibility-estimator', changefreq: 'monthly'
     add '/get-assistance', changefreq: 'monthly'
     add '/housing-counselors', changefreq: 'monthly'
@@ -16,7 +20,7 @@ task generate_sitemap: :environment do
     add '/disclaimer', changefreq: 'monthly'
     add '/privacy', changefreq: 'monthly'
     listings.each do |listing|
-      add "/listings/#{listing['listingID']}", changefreq: 'weekly'
+      add "/listings/#{listing['listingID']}", changefreq: 'daily', priority: 0.75
     end
   end
 end
