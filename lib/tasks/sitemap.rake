@@ -7,6 +7,7 @@ task sitemap: :environment do
   host_name ||= ENV['MAILER_DOMAIN']
   host_name ||= ENV['HEROKU_APP_NAME'] ? "#{ENV['HEROKU_APP_NAME']}.herokuapp.com" : nil
   host_name ||= 'housing.sfgov.org'
+  p host_name
   SitemapGenerator::Sitemap.default_host = 'https://' + host_name
   SitemapGenerator::Sitemap.create do
     add '/', changefreq: 'weekly'
