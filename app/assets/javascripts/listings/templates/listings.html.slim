@@ -119,7 +119,7 @@ section.results-section.border-top ng-if="hasEligibilityFilters() && openNotMatc
             span ng-show="displayNotMatchedListings"
               span translate="LISTINGS.HIDE_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
 
-  .section.margin-top--2x ng-show="displayNotMatchedListings"
+  .section.margin-top--2x.show-for-print ng-show="displayNotMatchedListings"
     / Additional (not matched) listings
     article.row
       .large-12.columns
@@ -147,7 +147,7 @@ section.results-section.border-top ng-if="closedAndLotteryListingsCount()"
             span ng-show="displayLotteryResultsListings"
               span translate="LISTINGS.HIDE_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
 
-  .section.margin-top--2x ng-show="displayLotteryResultsListings"
+  .section.margin-top--2x.show-for-print ng-show="displayLotteryResultsListings"
     / Lottery Results Posted
     article.row ng-if="lotteryResultsListings.length"
       .large-12.columns
