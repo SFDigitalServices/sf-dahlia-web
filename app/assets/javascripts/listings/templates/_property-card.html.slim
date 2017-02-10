@@ -40,7 +40,8 @@
         | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
         | {{formattedBuildingAddress(listing, 'city-state-zip')}}
-      span.label.radius.medium.bg-splash ng-if="listingIsReservedCommunity(listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+      span.label.radius.medium.bg-splash ng-if="listingIsReservedCommunity(listing)"
+        span translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
 
   .property-card_content
     .property-card_stats
@@ -48,13 +49,17 @@
         span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.hasWaitlist && listing.Units_Available > 0"
         span translate="LISTINGS.OPEN_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available == 0"
         span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available > 0"
-      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{listingPriorities(listing)}}" ng-if="listingPriorities(listing)"
+      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{priorityTypes(listing)}}" ng-if="priorityTypes(listing)"
 
       // -- Unit Summary Table(s)
       / General
       table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': listingIsReservedCommunity(listing), 'td-bw': !listingIsReservedCommunity(listing)}"
         caption ng-if="listingIsReservedCommunity(listing)"
           span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
+          span ng-if="seniorMinimumAge(listing)"
+            '
+            | {{seniorMinimumAge(listing)}}
+
         thead
           tr
             th scope="col" Unit Type

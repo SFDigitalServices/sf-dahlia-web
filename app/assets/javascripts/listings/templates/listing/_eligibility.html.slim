@@ -109,7 +109,7 @@ accordion-heading.lead
           h4.content-card_title.no-margin
             | {{type}}
           p.c-steel
-            | {{units.length}} unit
+            | {{units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://test.salesforce.com/services/oauth2/token
     body:
       encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -21,16 +21,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 21:12:36 GMT
+      - Mon, 06 Feb 2017 23:06:47 GMT
       Strict-Transport-Security:
-      - max-age=10886400; includeSubDomains; preload
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
+      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
       Set-Cookie:
-      - BrowserId=lGLb8UhXQG2ls-gcorCRLg;Path=/;Domain=.salesforce.com;Expires=Sun,
-        06-Nov-2016 21:12:36 GMT
+      - BrowserId=xqxFVzBnR9O56e0HdbNbgw;Path=/;Domain=.salesforce.com;Expires=Fri,
+        07-Apr-2017 23:06:47 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -41,13 +44,15 @@ http_interactions:
       - 'false'
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473282757209","signature":"HsT4OnGYSsuyYVcumF2KM0uqQKpurcHQSRBRoUq4yxs="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/0056C000000eBx5QAE","token_type":"Bearer","issued_at":"1486422407541","signature":"LAFgCCSDG6crJeMbIh/02wrs2ISoiI8jP2yOYhiZXeY="}'
     http_version:
-  recorded_at: Wed, 07 Sep 2016 21:12:37 GMT
+  recorded_at: Mon, 06 Feb 2017 23:06:47 GMT
 - request:
     method: post
     uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/shortForm
@@ -60,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json
       Authorization:
-      - OAuth 00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa
+      - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -71,25 +76,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 21:12:37 GMT
+      - Mon, 06 Feb 2017 23:06:48 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
+        ''self'' *.salesforce.com *.force.com; font-src https: data:; connect-src
+        ''self'' https:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain; base-uri
+        http://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/shortForm'
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D6C0000000TrI";
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=dpYBePlgSG-6dOPXSHJwYw;Path=/;Domain=.salesforce.com;Expires=Sun,
-        06-Nov-2016 21:12:38 GMT
+      - BrowserId=u2Q-W5TURQaWqrI3urUp8A;Path=/;Domain=.salesforce.com;Expires=Fri,
+        07-Apr-2017 23:06:48 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"worksInSfPreferenceID":null,"worksInSanFrancisco":false,"workInSfPreferenceProof":null,"workInSfPreferenceNatKey":null,"status":"Submitted","referral":null,"primaryApplicant":{"zip":null,"workInSf":false,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":null,"race":null,"phoneType":"Home","phone":"2222222222","neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"003f000000rPrc7AAC","city":null,"appMemberId":"a0pf0000002CASYAA4","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"neighborhoodResidencePreferenceNatKey":null,"neighborhoodPreferenceProof":null,"neighborhoodPreferenceID":null,"name":"APP-00029803","monthlyIncome":null,"lotteryNumber":"00029803","liveInSfPreferenceProof":null,"liveInSfPreferencePaper":false,"liveInSfPreferenceNatKey":null,"liveInSfPreferenceID":null,"listingID":"a0WU000000ClNXGMA3","id":"a0tf0000000y16jAAA","householdVouchersSubsidies":false,"householdMembers":[{"zip":null,"workInSf":false,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":"Spouse","race":null,"phoneType":null,"phone":null,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"appMemberId":"a0pf0000002CASZAA4","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"displacedPreferenceNatKey":null,"displacedPreferenceID":null,"certOfPreferenceNatKey":null,"certOfPreferenceID":null,"applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false}'
+      string: '{"worksInSfPreferenceID":null,"worksInSanFrancisco":false,"workInSfPreferenceProof":null,"workInSfPreferenceNatKey":null,"status":"Submitted","referral":null,"primaryApplicant":{"zip":null,"workInSf":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":null,"race":null,"phoneType":"Home","phone":"2222222222","noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"0036C000004Im3JQAS","city":null,"appMemberType":"Primary
+        Applicant","appMemberId":"a0n6C000000AAW7QAO","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"neighborhoodResidencePreferenceNatKey":null,"neighborhoodPreferenceProof":null,"neighborhoodPreferenceOptOut":false,"neighborhoodPreferenceID":null,"name":"APP-00040437","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00040437","liveWorkOptOut":false,"liveInSfPreferenceProof":null,"liveInSfPreferencePaper":false,"liveInSfPreferenceNatKey":null,"liveInSfPreferenceID":null,"listingID":"a0WU000000ClNXGMA3","id":"a0o6C0000005Z1iQAE","householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"workInSf":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":"Spouse","race":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"appMemberType":"Household
+        Member","appMemberId":"a0n6C000000AAW6QAO","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"formMetadata":null,"displacedPreferenceOptOut":false,"displacedPreferenceNatKey":null,"displacedPreferenceID":null,"certOfPreferenceOptOut":false,"certOfPreferenceNatKey":null,"certOfPreferenceID":null,"applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false}'
     http_version:
-  recorded_at: Wed, 07 Sep 2016 21:12:40 GMT
+  recorded_at: Mon, 06 Feb 2017 23:06:53 GMT
 recorded_with: VCR 3.0.3

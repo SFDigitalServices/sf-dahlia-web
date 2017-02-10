@@ -52,7 +52,8 @@ module.exports = function(grunt) {
         'app/assets/javascripts/**/*.js',
         'app/assets/javascripts/**/*.js.coffee',
         'app/assets/javascripts/**/*.html',
-        'app/assets/javascripts/**/*.html.slim'
+        'app/assets/javascripts/**/*.html.slim',
+        'app/views/layouts/application.html.slim'
       ],
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',

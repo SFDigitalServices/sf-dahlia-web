@@ -33,9 +33,7 @@
                     br
                     ' {{listing.Name}},
                     ' {{listing.Building_Street_Address}}
-                  p.t-small.t-normal
-                    ' {{'LABEL.EDITED' | translate}}:
-                    ' {{application.applicationSubmittedDate | date : "MMM d, yyyy" }}
+
             .form-item
               .radio-block
                 input#choose_draft_original(name="chooseDraft" type="radio" value="comparison" ng-model="chosenApplicationToKeep" ng-required="true" ng-class="{ error: inputInvalid('chooseDraft')}")
