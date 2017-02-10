@@ -1,5 +1,7 @@
 .app-card.form-card
   short-form-header
+    alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.login" ng-if="accountSuccess.messages.login")
+
     h2.app-card_question
       | {{'F2_REVIEW_TERMS.TITLE' | translate}}
 

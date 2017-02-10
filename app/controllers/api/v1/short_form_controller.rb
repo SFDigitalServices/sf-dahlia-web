@@ -73,20 +73,10 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
-  # claim an anon-submitted application
-  def claim_submitted_application
-    @application = ShortFormService.get(application_params[:id])
-    return render_unauthorized_error unless user_can_claim?(@application)
-    # calls same underlying method for submit
-    submit_application
-  end
-
   def update_application
     @application = ShortFormService.get(application_params[:id])
-    unless user_can_claim?(@application)
-      return render_unauthorized_error unless user_can_access?(@application)
-      return render_unauthorized_error if submitted?(@application)
-    end
+    return render_unauthorized_error unless user_can_access?(@application)
+    return render_unauthorized_error if submitted?(@application)
     # calls same underlying method for submit
     submit_application
   end
@@ -127,13 +117,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def initial_submission?
-    return false if user_claiming_application?
     application_params[:status] == 'submitted'
-  end
-
-  def user_claiming_application?
-    params[:action] == 'claim_submitted_application' ||
-      (params[:action] == :update_application && user_can_claim?(@application))
   end
 
   def send_attached_files(application_id)
@@ -192,11 +176,8 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def user_can_access?(application)
+    return false if application.empty?
     ShortFormService.ownership?(user_contact_id, application)
-  end
-
-  def user_can_claim?(application)
-    ShortFormService.can_claim?(application) && submitted?(application)
   end
 
   def submitted?(application)

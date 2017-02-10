@@ -3,6 +3,8 @@ do ->
   describe 'ShortFormNavigationService', ->
     ShortFormNavigationService = undefined
     $translate = {}
+    $auth = {}
+    $modal = {}
     Upload = {}
     uuid = {v4: jasmine.createSpy()}
     $state = undefined
@@ -44,6 +46,7 @@ do ->
       { name: 'Review', pages: [
           'review-optional',
           'review-summary',
+          'review-sign-in',
           'review-terms'
         ]
       }
@@ -52,6 +55,8 @@ do ->
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
+      $provide.value '$auth', $auth
+      $provide.value '$modal', $modal
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
