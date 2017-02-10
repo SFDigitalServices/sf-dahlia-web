@@ -22,8 +22,9 @@ ShortFormNavigationService = (
       ]
     },
     { name: 'Preferences', pages: [
-        'preferences-programs',
+        'neighborhood-preference',
         'live-work-preference',
+        'preferences-programs',
         'general-lottery-notice'
       ]
     },
@@ -53,6 +54,7 @@ ShortFormNavigationService = (
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'preferences-programs': {callback: ['checkIfPreferencesApply']}
+    'neighborhood-preference': {path: 'live-work-preference'}
     'live-work-preference': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
@@ -144,6 +146,7 @@ ShortFormNavigationService = (
         ,'review-summary'
         ,'review-sign-in'
         ,'live-work-preference'
+        ,'neighborhood-preference'
           Service._getPreviousPage()
       # -- Alt Contact
       when 'alternate-contact-type'

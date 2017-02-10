@@ -1,0 +1,13 @@
+.app-card.form-card ng-init="checkPreferenceEligibility()"
+  short-form-header
+    h2.app-card_question translate="D2A_NEIGHBORHOOD_PREFERENCE.TITLE"
+    p.form-note.margin-bottom translate="T.OPTIONAL"
+    p.form-note.margin-bottom translate="D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
+
+  .app-inner
+    .form-group
+      .checkbox-group role="group"
+
+        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION" ng-show="showPreference('neighborhoodResidence')")
+
+  short-form-save-and-submit

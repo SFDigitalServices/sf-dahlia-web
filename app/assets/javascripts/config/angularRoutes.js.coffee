@@ -651,6 +651,16 @@
           ShortFormApplicationService.completeSection('Household')
         ]
     })
+    .state('dahlia.short-form-application.neighborhood-preference', {
+      url: '/neighborhood-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2a-neighborhood-preference.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'
       views:
