@@ -428,8 +428,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.reservedTypes = (listing) ->
+    Service.collectTypes(listing, 'reservedDescriptor')
+
+  Service.priorityTypes = (listing) ->
+    Service.collectTypes(listing, 'prioritiesDescriptor')
+
+  Service.collectTypes = (listing, specialType) ->
     types = []
-    _.each listing.reservedDescriptor, (descriptor) -> types.push(descriptor.name)
+    _.each listing[specialType], (descriptor) ->
+      if descriptor.name
+        name = descriptor.name
+        if listing.Reserved_community_minimum_age && name == 'Senior'
+          # TODO: make plural, after we finalize all the priority/reserved language
+          name = "#{name} #{listing.Reserved_community_minimum_age}+"
+        types.push(name)
     if types.length then types.join(', ') else ''
 
   Service.specialUnitTypeDescription = (type) ->
@@ -543,10 +555,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
-
-  Service.listingPriorities = (listing) ->
-    return '' unless listing.STUB_Priorities && listing.STUB_Priorities.length
-    listing.STUB_Priorities.join(', ')
 
   Service.stubListingPreferences = ->
     opts = null

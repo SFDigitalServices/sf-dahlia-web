@@ -195,8 +195,8 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
-  $scope.listingPriorities = (listing) ->
-    ListingService.listingPriorities(listing)
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
 
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
@@ -234,6 +234,12 @@ ListingController = (
 
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
+
+  $scope.seniorMinimumAge = (listing = $scope.listing) ->
+    if listing.Reserved_community_minimum_age && listing.Reserved_community_type == 'Senior'
+      "#{listing.Reserved_community_minimum_age}+"
+    else
+      ''
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
