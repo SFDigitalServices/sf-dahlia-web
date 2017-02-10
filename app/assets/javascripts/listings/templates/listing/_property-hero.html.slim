@@ -54,9 +54,9 @@
     .message-group
       .message.is-reserved ng-if="listingIsReservedCommunity()"
         span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{listing.Reserved_community_type}}"
-        span.message-text ng-if="listing.Reserved_community_minimum_age"
+        span.message-text ng-if="seniorMinimumAge()"
           '
-          | {{listing.Reserved_community_minimum_age}}+
+          | {{seniorMinimumAge()}}
       .message.is-reserved ng-if="listingHasReservedUnits()"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
