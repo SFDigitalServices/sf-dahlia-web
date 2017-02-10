@@ -379,10 +379,7 @@ ShortFormApplicationService = (
     if params.application.id
       # update
       id = params.application.id
-      if options.attachToAccount
-        appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
-      else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+      appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
     else
       # create
       appSubmission = $http.post('/api/v1/short-form/application', params)
@@ -439,9 +436,6 @@ ShortFormApplicationService = (
         else
           # make sure short form data inherits logged in user data
           changed = Service.importUserData(opts.loggedInUser)
-      else
-        # we're signing in to claim a submitted application
-        opts = {attachToAccount: true}
       Service.submitApplication(opts).then( ->
         opts.submitCallback(changed)
       )
