@@ -56,6 +56,7 @@ gem 'actionmailer-text'
 gem 'hashie'
 gem 'active_model-errors_details'
 
+gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
 # http requests made easy
 gem 'http', require: false
