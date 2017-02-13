@@ -22,6 +22,7 @@ ShortFormNavigationService = (
       ]
     },
     { name: 'Preferences', pages: [
+        'preferences-intro',
         'neighborhood-preference',
         'live-work-preference',
         'preferences-programs',
@@ -53,6 +54,7 @@ ShortFormNavigationService = (
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
+    'preferences-intro': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkIfPreferencesApply']}
     'neighborhood-preference': {path: 'live-work-preference'}
     'live-work-preference': {callback: ['checkIfNoPreferencesSelected']}
@@ -167,7 +169,7 @@ ShortFormNavigationService = (
         if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
           'live-work-preference'
         else
-          'preferences-programs'
+          'preferences-intro'
       when 'review-terms'
         if AccountService.loggedIn()
           'review-summary'
