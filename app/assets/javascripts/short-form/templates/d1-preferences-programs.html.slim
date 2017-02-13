@@ -1,21 +1,15 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question translate="D1_PREFERENCES_PROGRAMS.TITLE"
+    p.form-note.margin-bottom translate="D1_PREFERENCES_PROGRAMS.HAVE_NOT_HEARD_OF_PREFERENCES"
     p.form-note.margin-bottom translate="T.OPTIONAL"
-    p.form-note.margin-bottom translate="D1_PREFERENCES_PROGRAMS.INSTRUCTIONS"
 
   .app-inner
     .form-group
+      p.t-sans.t-small.t-bold.margin-bottom--2x Please select to get your lottery preference:
       .checkbox-group role="group"
         preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" dataevent="gtm-preference-cop" translated-description="D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC" ng-show="showPreference('certOfPreference')"
 
         preference-without-proof title="{{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" dataevent="gtm-preference-dthp" translated-description="D1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" ng-show="showPreference('displaced')"
-
-    .form-group
-      p.form-note
-        ' {{'D1_PREFERENCES_PROGRAMS.HAVE_NOT_HEARD_OF_PREFERENCES' | translate}}
-        a title="{{'D1_PREFERENCES_PROGRAMS.READ_MORE' | translate }}" href="http://sfmohcd.org/housing-preference-programs" target="_blank"
-          | {{'D1_PREFERENCES_PROGRAMS.READ_MORE' | translate }}
-        ' .
 
   short-form-save-and-submit

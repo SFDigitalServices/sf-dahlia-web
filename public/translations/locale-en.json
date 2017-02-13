@@ -113,9 +113,7 @@
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
         "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move In Eviction in 2010 or later.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
-        "INSTRUCTIONS": "This listing is offered through a housing lottery. Some applicants get priority in the lottery through one of our preference programs.<br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
-        "READ_MORE": "Read more about housing lottery preferences",
-        "TITLE": "Please check all lottery preferences that apply to you."
+        "TITLE": "There are lottery preferences for people who already have special certificates."
     },
     "D2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",

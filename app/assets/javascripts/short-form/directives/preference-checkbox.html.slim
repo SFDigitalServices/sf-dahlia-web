@@ -4,4 +4,9 @@ div
     label.checkbox-block_label for="preferences-{{preference}}"
       strong.form-label.caps
         | {{title}}
-      span.checkbox-block_note translate="{{description}}"
+      span.show-for-print.checkbox-block_note translate="{{description}}" ng-show="show_preference_description"
+      a.toggler.toggle-more.t-small.hide-for-print title="read {{ show_preference_description ? 'less' : 'more' }}" href="#" ng-class="{ open : show_preference_description }" ng-click="show_preference_description = !show_preference_description"
+        ' read {{ show_preference_description ? 'less' : 'more' }}
+        span.ui-icon.ui-tiny.i-primary
+          svg
+            use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
