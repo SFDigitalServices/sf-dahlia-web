@@ -105,6 +105,11 @@
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
     "D1_PREFERENCES_INTRO": {
+        "GET_STARTED": "Get started",
+        "STEPS_TITLE": "Just 3 simple steps:",
+        "STEP_1": "See if you qualify for each lottery preference.",
+        "STEP_2": "Check each box to claim your lottery preference.",
+        "STEP_3": "Upload the required documents from your computer or phone.",
         "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
     },
     "D1_PREFERENCES_PROGRAMS": {
@@ -113,6 +118,7 @@
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
         "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move In Eviction in 2010 or later.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
+        "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "TITLE": "There are lottery preferences for people who already have special certificates."
     },
     "D2F_GENERAL_LOTTERY_NOTICE": {
