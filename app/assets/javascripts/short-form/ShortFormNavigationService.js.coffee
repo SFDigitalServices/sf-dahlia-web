@@ -22,6 +22,7 @@ ShortFormNavigationService = (
       ]
     },
     { name: 'Preferences', pages: [
+        'preferences-intro',
         'preferences-programs',
         'live-work-preference',
         'general-lottery-notice'
