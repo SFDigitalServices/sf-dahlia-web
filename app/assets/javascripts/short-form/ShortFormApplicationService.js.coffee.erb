@@ -47,13 +47,10 @@ ShortFormApplicationService = (
       Review: {}
 
   Service.optOutFields =
-    workInSf: 'Live_Work_Opt_Out'
-    liveInSf: 'Live_Work_Opt_Out'
-    liveWorkInSf: 'Live_Work_Opt_Out'
-    displaced: 'DTHP_Opt_Out'
-    certOfPreference: 'COP_Opt_Out'
-    neighborhoodResidence: 'NRHP_Opt_Out'
-
+    workInSf: 'liveWorkOptOut'
+    liveInSf: 'liveWorkOptOut'
+    liveWorkInSf: 'liveWorkOptOut'
+    neighborhoodResidence: 'neighborhoodPreferenceOptOut'
 
   Service.current_id = 0
   Service.refreshSessionUid = ->

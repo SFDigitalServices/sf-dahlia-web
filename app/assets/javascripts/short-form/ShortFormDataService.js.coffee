@@ -199,7 +199,14 @@ ShortFormDataService = () ->
 
   Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
     whitelist = [
-      'id', 'listingID', 'listing', 'applicationSubmittedDate', 'status', 'lotteryNumber'
+      'id'
+      'listingID'
+      'listing'
+      'applicationSubmittedDate'
+      'status'
+      'lotteryNumber'
+      'neighborhoodPreferenceOptOut'
+      'liveWorkOptOut'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)

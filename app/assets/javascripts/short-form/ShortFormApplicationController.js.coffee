@@ -356,6 +356,14 @@ ShortFormApplicationController = (
       else
         true
 
+  $scope.liveWorkPreferenceType = ->
+    if $scope.showPreference('liveWorkInSf')
+      'liveWorkInSf'
+    else if $scope.showPreference('liveInSf')
+      'liveInSf'
+    else
+      'workInSf'
+
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
@@ -372,6 +380,9 @@ ShortFormApplicationController = (
 
   $scope.cancelPreference = (preference) ->
     ShortFormApplicationService.cancelPreference(preference)
+
+  $scope.optOutField = (preference) ->
+    ShortFormApplicationService.optOutFields[preference]
 
   $scope.cancelOptOut = (preference) ->
     ShortFormApplicationService.cancelOptOut(preference)

@@ -127,6 +127,7 @@
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
             "NAME": "Neighborhood Resident Housing Preference",
+            "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
             "TITLE": "Live in the Neighborhood"
         },
         "TITLE": "Good news! You qualify for a higher ranking in the lottery."

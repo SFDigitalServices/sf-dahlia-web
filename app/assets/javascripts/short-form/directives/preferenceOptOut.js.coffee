@@ -5,7 +5,8 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     scope.preference = attrs.preference
-    scope.model = attrs.model
+    # look up the optOutField name using ShortFormApplicationController
+    scope.model = scope.optOutField(scope.preference)
 
     scope.uncheckPreference = ->
       # calls ShortFormApplicationController
