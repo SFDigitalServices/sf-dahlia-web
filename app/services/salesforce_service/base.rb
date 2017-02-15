@@ -46,7 +46,7 @@ module SalesforceService
         []
       end
     rescue StandardError => e
-      p "UH OH -- StandardError #{e.message}"
+      p "UH OH -- StandardError #{e.message}" if Rails.env.development?
       self.error = e.message
       []
     end

@@ -36,7 +36,6 @@ Rails.application.routes.draw do
         get 'application/:id' => 'short_form#show_application'
         post 'application' => 'short_form#submit_application'
         put 'application/:id' => 'short_form#update_application'
-        put 'claim-application/:id' => 'short_form#claim_submitted_application'
         delete 'application/:id' => 'short_form#delete_application'
         post 'proof' => 'short_form#upload_proof'
         delete 'proof' => 'short_form#delete_proof'
@@ -54,6 +53,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # sitemap generator
+  get 'sitemap.xml' => 'sitemaps#generate'
 
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'

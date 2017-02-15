@@ -145,6 +145,7 @@
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
+        AccountService.unlockFields()
 
         if $stateParams.expiredUnconfirmed
           AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
@@ -171,6 +172,8 @@
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
@@ -227,6 +230,7 @@
         auth: ['$auth', 'AccountService', ($auth, AccountService) ->
           $auth.validateUser().then ->
             AccountService.copyApplicantFields('loggedInUser')
+            AccountService.unlockFields()
         ]
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
@@ -685,11 +689,34 @@
           ShortFormApplicationService.completeSection('Income')
         ]
     })
+    .state('dahlia.short-form-application.review-sign-in', {
+      url: '/review-sign-in'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/f1a-review-sign-in.html'
+      onEnter: ['AccountService', (AccountService) ->
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
+      ]
+    })
     .state('dahlia.short-form-application.review-terms', {
-      url: '/review-terms'
+      url: '/review-terms?loginMessage'
+      params:
+        loginMessage: { squash: true }
       views:
         'container':
           templateUrl: 'short-form/templates/f2-review-terms.html'
+      onEnter: ['$stateParams', '$translate', 'AccountService', ($stateParams, $translate, AccountService) ->
+        AccountService.clearAccountMessages()
+        if $stateParams.loginMessage
+          if $stateParams.loginMessage == 'update'
+            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY_AND_UPDATED')
+          else
+            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY')
+          AccountService.accountSuccess.messages.login = message
+      ]
     })
     .state('dahlia.short-form-application.confirmation', {
       url: '/confirmation'
@@ -746,6 +773,23 @@
         '$state', 'ShortFormApplicationService',
         ($state, ShortFormApplicationService) ->
           if _.isEmpty(ShortFormApplicationService.accountApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
+    .state('dahlia.short-form-application.choose-account-settings', {
+      url: '/choose-account-settings'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-account-settings.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.application)
             $state.go('dahlia.my-applications')
         ]
     })
