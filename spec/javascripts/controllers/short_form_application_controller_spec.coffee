@@ -300,7 +300,7 @@ do ->
 
         it 'navigates to the given callback url', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-intro')
 
       describe 'not matched', ->
         beforeEach ->
@@ -353,26 +353,27 @@ do ->
         spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
 
       describe 'household is eligible for liveWork preferences',->
-        it 'routes user to live-work preference page', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(true)
+        it 'routes user to neighborhood preference page', ->
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.live-work-preference'
+          path = 'dahlia.short-form-application.neighborhood-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
       describe 'preferences do not apply to household',->
         it 'routes user to general lottery notice page', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.general-lottery-notice'
+          path = 'dahlia.short-form-application.preferences-programs'
           expect(state.go).toHaveBeenCalledWith(path)
 
-      describe 'household is not eligible for liveWork but has COP/DTHP',->
-        it 'routes user ahead to income section', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(false)
+      describe 'household is not eligible for neighborhood but has live/work',->
+        it 'routes user to live work preferences page', ->
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.income-vouchers'
+          path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'uploadProof', ->

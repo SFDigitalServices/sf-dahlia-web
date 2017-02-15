@@ -46,6 +46,15 @@ ShortFormApplicationService = (
       Income: {}
       Review: {}
 
+  Service.optOutFields =
+    workInSf: 'Live_Work_Opt_Out'
+    liveInSf: 'Live_Work_Opt_Out'
+    liveWorkInSf: 'Live_Work_Opt_Out'
+    displaced: 'DTHP_Opt_Out'
+    certOfPreference: 'COP_Opt_Out'
+    neighborhoodResidence: 'NRHP_Opt_Out'
+
+
   Service.current_id = 0
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
@@ -191,6 +200,15 @@ ShortFormApplicationService = (
     Service.preferences["#{preference}_proof_option"] = null
     Service.preferences["#{preference}_proof_file"] = null
 
+  Service.cancelOptOut = (preference) ->
+    optOutField = Service.optOutFields[preference]
+    Service.application[optOutField] = false
+
+  Service.preferenceRequired = (preference) ->
+    optOutField = Service.optOutFields[preference]
+    # pref is required if we are NOT opted out
+    return !Service.application[optOutField]
+
   Service.checkHouseholdEligiblity = (listing) ->
     params =
       listing_id: listing.Id,
@@ -260,11 +278,13 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.eligibleForLiveWorkOrNRHP = ->
+  Service.eligibleForLiveWork = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
-    neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
-    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible)
+    return (liveInSfEligible || workInSfEligible)
+
+  Service.eligibleForNRHP = ->
+    Service.neighborhoodResidenceMembers().length > 0
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
@@ -276,6 +296,9 @@ ShortFormApplicationService = (
       'workInSf'
     ]
     return !_.some(_.pick(Service.preferences, prefList))
+
+  Service.hasPreference = (preference) ->
+    !! Service.preferences[preference]
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"

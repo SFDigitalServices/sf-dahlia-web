@@ -34,13 +34,14 @@ do ->
       },
       { name: 'Preferences', pages: [
           'preferences-intro',
-          'preferences-programs',
+          'neighborhood-preference',
           'live-work-preference',
+          'preferences-programs',
           'general-lottery-notice'
         ]
       },
       { name: 'Income', pages: [
-          'income-vouchers'
+          'income-vouchers',
           'income'
         ]
       },

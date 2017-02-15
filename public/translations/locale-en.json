@@ -118,8 +118,18 @@
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
         "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move In Eviction in 2010 or later.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
-        "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "TITLE": "There are lottery preferences for people who already have special certificates."
+    },
+    "D2A_NEIGHBORHOOD_PREFERENCE": {
+        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
+        "PREFERENCE": {
+            "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
+            "NAME": "Neighborhood Resident Housing Preference",
+            "TITLE": "Live in the Neighborhood"
+        },
+        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
     "D2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -137,10 +147,6 @@
             "LIVE_SF_PREFERENCE": "Live in San Francisco",
             "TITLE": "Live or Work in San Francisco Preference",
             "WORK_SF_PREFERENCE": "Work in San Francisco"
-        },
-        "NEIGHBORHOOD_RESIDENCE": {
-            "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
-            "TITLE": "Neighborhood Resident Housing Preference"
         },
         "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
         "UPLOAD_PROOF": "Upload proof of preference",
@@ -286,6 +292,7 @@
         "DOB_MONTH": "Month",
         "DOB_YEAR": "Year",
         "DONE_ADDING_PEOPLE": "Done adding people",
+        "DONT_WANT_PREFERENCE": "I don't want this lottery preference",
         "EDITED": "Edited",
         "EDIT_ELIGIBILITY": "Edit Eligibility",
         "EMAIL_ADDRESS": "Email",
@@ -331,6 +338,7 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
+        "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "PREFERENCES": "Preferences",
         "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
@@ -359,6 +367,7 @@
         "SIGN_IN": "Sign In",
         "SIGN_IN_TO_CONFIRM": "Sign in to confirm",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
+        "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "You'll still have the opportunity to claim other preferences that have less value.",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",

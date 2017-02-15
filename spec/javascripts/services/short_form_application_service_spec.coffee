@@ -402,14 +402,23 @@ do ->
           expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
           expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
 
-    describe 'eligibleForLiveWorkOrNRHP', ->
-      it 'returns true if someone is eligible for NRHP', ->
+    describe 'eligibleForLiveWork', ->
+      it 'returns true if someone is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'Yes'
-        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual true
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual true
 
-      it 'returns false if nobody is eligible for live/work/NRHP', ->
+      it 'returns false if nobody is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'No'
-        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual false
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
+
+    describe 'eligibleForNRHP', ->
+      it 'returns true if someone is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
+
+      it 'returns false if nobody is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->

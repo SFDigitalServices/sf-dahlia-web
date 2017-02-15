@@ -307,14 +307,16 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
-  # this is called after d1-preferences-programs
+  # this is called after d0-preferences-intro
   $scope.checkIfPreferencesApply = ->
-    if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
+    if ShortFormApplicationService.eligibleForNRHP()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
+    else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
-      $scope.checkIfNoPreferencesSelected()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
-  # this is called after d2-live-work-preference (and also inside of the above function)
+  # this is called after preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
       # only show general lottery notice if they have no preferences
@@ -322,6 +324,14 @@ ShortFormApplicationController = (
     else
       # otherwise go to the Income section
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
+
+  $scope.checkAfterNeighborhood = ->
+    if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+      # you already selected NRHP, so skip live/work
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      # you opted out of NRHP, so go to live/work
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -351,6 +361,23 @@ ShortFormApplicationController = (
 
   $scope.neighborhoodResidenceMembers = ->
     ShortFormApplicationService.neighborhoodResidenceMembers()
+
+  $scope.neighborhoodResidenceAddresses = ->
+    addresses = _.map($scope.neighborhoodResidenceMembers(), (member) -> member.home_address.address1)
+    _.uniq(addresses)
+
+  $scope.neighborhoodResidenceAddress = ->
+    # turn the list of addresses into a string
+    $scope.neighborhoodResidenceAddresses().join(' and ')
+
+  $scope.cancelPreference = (preference) ->
+    ShortFormApplicationService.cancelPreference(preference)
+
+  $scope.cancelOptOut = (preference) ->
+    ShortFormApplicationService.cancelOptOut(preference)
+
+  $scope.preferenceRequired = (preference) ->
+    ShortFormApplicationService.preferenceRequired(preference)
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
@@ -413,7 +440,7 @@ ShortFormApplicationController = (
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
       else
-        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-intro')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'

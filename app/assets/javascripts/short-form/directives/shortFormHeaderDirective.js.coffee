@@ -8,5 +8,6 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     scope.loggedInMessage = attrs.loggedInMessage
     scope.noBorder = attrs.noBorder
+    scope.featuredLeader = attrs.featuredLeader
     scope.hasBorderBottom = ->
       return 'border-bottom' unless scope.noBorder

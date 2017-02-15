@@ -1,13 +1,18 @@
-.app-card.form-card ng-init="checkPreferenceEligibility()"
-  short-form-header
-    h2.app-card_question translate="D2A_NEIGHBORHOOD_PREFERENCE.TITLE"
-    p.form-note.margin-bottom translate="T.OPTIONAL"
-    p.form-note.margin-bottom translate="D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
+.app-card.form-card
+  short-form-header no-border="true" featured-leader="true"
+    .leader-header.featured-leader.border-bottom
+      h2.app-card_question translate="D2A_NEIGHBORHOOD_PREFERENCE.TITLE"
+      .form-group
+        p.form-note.t-regular.margin-bottom translate="D2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P1_SINGULAR" translate-value-address="{{neighborhoodResidenceAddress()}}" ng-if="neighborhoodResidenceAddresses().length == 1"
+        p.form-note.t-regular.margin-bottom translate="D2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P1_PLURAL" translate-value-address="{{neighborhoodResidenceAddress()}}" ng-if="neighborhoodResidenceAddresses().length > 1"
+        p.form-note.t-regular.margin-bottom translate="D2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P2"
 
   .app-inner
     .form-group
-      .checkbox-group role="group"
+      p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+        preference-with-proof(title="{{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")
 
-        preference-with-proof(title="{{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.DESCRIPTION" ng-show="showPreference('neighborhoodResidence')")
+      preference-opt-out model="NRHP_Opt_Out" preference="neighborhoodResidence"
 
   short-form-save-and-submit

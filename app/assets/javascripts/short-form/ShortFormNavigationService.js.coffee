@@ -54,10 +54,10 @@ ShortFormNavigationService = (
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
-    'preferences-intro': {path: 'preferences-programs'}
-    'preferences-programs': {callback: ['checkIfPreferencesApply']}
-    'neighborhood-preference': {path: 'live-work-preference'}
-    'live-work-preference': {callback: ['checkIfNoPreferencesSelected']}
+    'preferences-intro': {callback: ['checkIfPreferencesApply']}
+    'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
+    'live-work-preference': {path: 'preferences-programs'}
+    'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
@@ -160,16 +160,25 @@ ShortFormNavigationService = (
         else
           'alternate-contact-phone-address'
       # -- Preferences
-      when 'preferences-programs'
+      when 'preferences-intro'
         if application.householdMembers.length
           'household-members'
         else
           'household-intro'
-      when 'general-lottery-notice', 'income-vouchers'
-        if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
+      when 'preferences-programs'
+        if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+          'neighborhood-preference'
+        else if ShortFormApplicationService.eligibleForLiveWork()
           'live-work-preference'
         else
           'preferences-intro'
+      when 'general-lottery-notice'
+        'preferences-programs'
+      when 'income-vouchers'
+        if ShortFormApplicationService.applicantHasNoPreferences()
+          'general-lottery-notice'
+        else
+          'preferences-programs'
       when 'review-terms'
         if AccountService.loggedIn()
           'review-summary'

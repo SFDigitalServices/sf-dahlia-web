@@ -332,6 +332,7 @@ class Api::V1::ShortFormController < ApiController
             :liveInSfPreferenceNatKey,
             :workInSfPreferenceNatKey,
             :neighborhoodResidencePreferenceNatKey,
+            :NRHP_Opt_out,
             :householdVouchersSubsidies,
             :referral,
             :annualIncome,

@@ -1,10 +1,19 @@
 div
-  p.checkbox-block
-    input id="preferences-liveWorkInSf" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences.liveWorkInSf" type="checkbox" aria-labelledby="{{labelledby}}" ng-change="on_livework_preference_change()"
+  .checkbox-block
+    input id="preferences-liveWorkInSf" name="preferences" data-event="{{pref_data_event}}" ng-model="application.preferences.liveWorkInSf" type="checkbox" aria-labelledby="{{labelledby}}" ng-change="on_livework_preference_change()" aria-describedby="description-{{preference}}"
     label.checkbox-block_label for="preferences-liveWorkInSf"
       strong.form-label.caps
         | {{title}}
-      span.checkbox-block_note translate="{{description}}"
+      p.checkbox-block_note translate="{{shortDescription}}" ng-if="shortDescription"
+
+
+    .checkbox-block_note-inner
+      a.toggler.toggle-more.hide-for-print.open-bottom title="read {{ show_preference_description ? 'less' : 'more' }}" ng-class="{ 'margin-top-none' : shortDescription, open: show_preference_description }" ng-click="show_preference_description = !show_preference_description"
+        ' read {{ show_preference_description ? 'less' : 'more' }}
+        span.ui-icon.ui-tiny.i-primary
+          svg
+            use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
+      p.show-for-print.checkbox-block_more id="description-{{preference}}" ng-show="show_preference_description" translate="{{description}}"
 
     / select for liveWorkInSf preference type
     .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: inputInvalid('liveWorkInSf_preference') }" ng-if="application.preferences.liveWorkInSf"

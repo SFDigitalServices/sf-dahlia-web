@@ -5,7 +5,11 @@ div
     short-form-back
 
     / stuff inside the header e.g. "h2" titles get inserted in the transclude
-    ng-transclude
+    ng-transclude ng-if="!featuredLeader"
+
+
+  ng-transclude ng-if="featuredLeader"
+
   alert-box(short-form="true" missing-required-contact-info="requiredContactInformationMissing()" address-error="addressError")
 
   alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")
