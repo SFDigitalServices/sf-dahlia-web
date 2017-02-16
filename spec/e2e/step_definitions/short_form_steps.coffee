@@ -17,6 +17,13 @@ fillOutContactPage = (email = '') ->
   element(By.model('applicant.noAddress')).click()
   element(By.id('workInSf_yes')).click()
 
+optOutIfPresent = ->
+  optOut = element.all(By.id('preference-optout')).first()
+  if optOut
+    # opt out + submit preference page (e.g. NRHP, Live/Work)
+    optOut.click()
+    element(By.id('submit')).click()
+
 getUrlAndCatchPopup = (url) ->
   # always catch and confirm popup alert in case we are leaving an existing application
   # (i.e. from a previous test)
@@ -68,13 +75,24 @@ module.exports = ->
   @When 'I indicate I will live alone', ->
     element(By.id('live_alone')).click()
 
-  @When 'I don\'t choose any preferences', ->
-    # skip d1
+  @When 'I continue past the Lottery Preferences intro', ->
     element(By.id('submit')).click()
-    # skip d2 (because we did mark workInSf, this page will show up)
+
+  @When 'I don\'t choose any preferences', ->
+    # if NRHP present
+    optOutIfPresent()
+    # if Live/Work present
+    optOutIfPresent()
+    # skip preferences programs
     element(By.id('submit')).click()
     # also skip general lottery notice
     element(By.id('submit')).click()
+
+  @When 'I opt out of NRHP and Live/Work', ->
+    # if NRHP present
+    optOutIfPresent()
+    # if Live/Work present
+    optOutIfPresent()
 
   @When /^I select "([^"]*)" for COP preference$/, (fullName) ->
     element(By.id('preferences-certOfPreference')).click()
@@ -94,8 +112,9 @@ module.exports = ->
       elem.isDisplayed()
     ).last().click()
 
-  @When 'I go to the second page of preferences', ->
-    element(By.id('submit')).click()
+  @When 'I go to the Live/Work preference page', ->
+    # skip NRHP if present
+    optOutIfPresent()
 
   @When 'I go to the income page', ->
     element(By.id('submit')).click()
@@ -121,9 +140,14 @@ module.exports = ->
     element(By.id('submit')).click()
     element(By.id('workInSf_no')).click()
 
-  @When 'I go back to the second page of preferences', ->
+  @When 'I go back to the Live/Work preference page', ->
     element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
+    # skip intro
     element(By.id('submit')).click()
+    # skip NRHP (if exists)
+    if element(By.id('preferences-neighborhoodResidence'))
+      element(By.id('submit')).click()
+
 
   @When 'I indicate having vouchers', ->
     element(By.id('householdVouchersSubsidies_yes')).click()

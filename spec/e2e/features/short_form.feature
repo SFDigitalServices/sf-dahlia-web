@@ -9,6 +9,7 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I continue past the Lottery Preferences intro
       And I don't choose any preferences
       And I indicate having vouchers
       And I fill out my income
@@ -24,10 +25,11 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
-      And I go to the second page of preferences
+      And I continue past the Lottery Preferences intro
+      And I go to the Live/Work preference page
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I go back to the Contact page and change WorkInSF to No
-      And I go back to the second page of preferences
+      And I go back to the Live/Work preference page
       Then I should still see the single Live in San Francisco preference selected
 
     Scenario: Selecting live/work member, then going back and forth from previous page
@@ -36,10 +38,11 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
-      And I go to the second page of preferences
+      And I continue past the Lottery Preferences intro
+      And I go to the Live/Work preference page
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I use the browser back button
-      And I go to the second page of preferences
+      And I go back to the Live/Work preference page
       Then I should still see the preference options and uploader input visible
 
     Scenario: Creating an account in order to "Save and Finish Later"
@@ -58,9 +61,10 @@ Feature: Short Form Application
       And I fill out the short form Contact page with my account email, No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I continue past the Lottery Preferences intro
+      And I opt out of NRHP and Live/Work
       And I select "Jane Doe" for COP preference
       And I select "Jane Doe" for DTHP preference
-      And I go to the second page of preferences
       And I go to the income page
       And I indicate having vouchers
       And I fill out my income
