@@ -10,7 +10,7 @@ class ArcGISNotificationService
                                  @service_data[:candidates].empty? &&
                                  # Send notification of address not found only if address
                                  # is in San Francisco
-                                 @log_params[:city].casecmp('San Francisco') == 0
+                                 @log_params[:city].casecmp('San Francisco').zero?
 
     send_error_notification if @service_data[:errors].present?
   end

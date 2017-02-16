@@ -420,6 +420,13 @@ do ->
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
+    describe 'copyNRHPtoLiveInSf', ->
+      it 'copies NRHP member to liveInSf', ->
+        ShortFormApplicationService.preferences.neighborhoodResidence = true
+        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}

@@ -327,6 +327,8 @@ ShortFormApplicationController = (
 
   $scope.checkAfterNeighborhood = ->
     if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+      # NRHP provides automatic liveInSf preference
+      ShortFormApplicationService.copyNRHPtoLiveInSf()
       # you already selected NRHP, so skip live/work
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else
