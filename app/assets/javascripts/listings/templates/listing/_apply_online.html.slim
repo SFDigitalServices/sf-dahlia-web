@@ -1,6 +1,6 @@
 h2.h-caps-lined
   | How to Apply
-button.button.primary.expand.no-margin type="button" data-event="gtm-apply" title="{{'LABEL.APPLY_ONLINE' | translate}}" ui-sref="dahlia.short-form-welcome.intro({id: listing.Id})" ng-if="!hasDraftApplication()"
+button.button.primary.expand.no-margin type="button" data-event="gtm-apply" title="{{'LABEL.APPLY_ONLINE' | translate}}" ui-sref="dahlia.short-form-welcome.intro({id: listing.Id})" ng-if="!hasDraftApplication()" ng-click="trackApplyOnlineTimer()"
   | {{'LABEL.APPLY_ONLINE' | translate}}
 .print-only.show-for-print
   | at housing.sfgov.org

@@ -10,6 +10,9 @@
     # check if user is logged in on page load
     AccountService.validateUser()
 
+    # start Apply Online timer
+    AnalyticsService.startTimer('Apply Online Click')
+
     bsLoadingOverlayService.setGlobalConfig({
       delay: 0
       activeClass: 'loading'

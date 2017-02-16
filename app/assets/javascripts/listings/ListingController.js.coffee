@@ -12,7 +12,8 @@ ListingController = (
   SharedService,
   ListingService,
   IncomeCalculatorService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  AnalyticsService
 ) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
@@ -204,6 +205,9 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
+  $scope.trackApplyOnlineTimer = ->
+    AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
     ListingService.listingIs('168 Hyde Relisting', listing)
@@ -226,7 +230,8 @@ ListingController.$inject = [
   'SharedService',
   'ListingService',
   'IncomeCalculatorService',
-  'ShortFormApplicationService'
+  'ShortFormApplicationService',
+  'AnalyticsService'
 ]
 
 angular
