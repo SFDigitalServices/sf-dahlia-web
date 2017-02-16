@@ -197,9 +197,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
-      # TODO: -- REMOVE HARDCODED FEATURES --
-      if Service.listingIs('Test Listing')
-        Service.listing = Service.stubFeatures(Service.listing)
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
@@ -240,9 +237,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     angular.copy([], Service.closedListings)
     angular.copy([], Service.lotteryResultsListings)
     listings.forEach (listing) ->
-      # TODO: -- REMOVE HARDCODED FEATURES --
-      if Service.listingIs('Test Listing', listing)
-        listing = Service.stubFeatures(listing)
       if Service.listingIsOpen(listing)
         # All Open Listings Array
         Service.openListings.push(listing)
@@ -345,10 +339,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
         units = data.units
-        # TODO: -- REMOVE HARDCODED FEATURES --
-        if Service.listingIs('Test Listing')
-          units = Service.stubUnitFeatures(units)
-        # ---
         Service.listing.Units = units
         # TODO: remove after we get this field from salesforce
         Service.calculateNumberOfAvailableUnits(Service.listing)
@@ -681,37 +671,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         preferences.push(pref)
 
     Service.listing.preferences = preferences
-
-  Service.stubFeatures = (listing) ->
-    listing.STUB_Reserved_community_type = 'Senior Community Building'
-    listing.STUB_Has_waitlist = true
-    listing.STUB_Priorities = ['People with Developmental Disabilities', 'Veterans', 'Seniors']
-    listing.STUB_AMI_Levels = [
-      {year: '2016', chartType: 'Non-HERA', percent: '50'}
-      {year: '2016', chartType: 'HCD/TCAC', percent: '50'}
-      {year: '2016', chartType: 'Non-HERA', percent: '60'}
-    ]
-    return listing
-
-  Service.stubUnitFeatures = (units) ->
-    units.forEach (unit) ->
-      unit.STUB_AMI_chartType = 'Non-HERA'
-      if unit.Id == 'a0b6C000000DDo5QAG'
-        unit.STUB_AMI_percent = '50'
-        unit.STUB_Status = 'Occupied'
-      else if unit.Id == 'a0b6C000000DKyaQAG'
-        unit.STUB_AMI_percent = '60'
-        unit.STUB_Status = 'Occupied'
-      else if unit.Id == 'a0b6C000000DKyfQAG'
-        unit.STUB_AMI_percent = '60'
-        unit.STUB_Status = 'Available'
-        unit.STUB_Percent_Rent = '30'
-        unit.STUB_Reserved_Type = 'Vision impaired'
-      else
-        unit.STUB_AMI_percent = '60'
-        unit.STUB_Status = 'Available'
-      unit.STUB_AMI_year = '2016'
-    units
 
   return Service
 
