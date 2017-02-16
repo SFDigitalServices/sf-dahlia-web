@@ -54,6 +54,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # sitemap generator
+  get 'sitemap.xml' => 'sitemaps#generate'
+
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'
   # required for Angular html5mode
