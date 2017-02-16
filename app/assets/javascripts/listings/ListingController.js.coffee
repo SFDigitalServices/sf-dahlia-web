@@ -12,7 +12,8 @@ ListingController = (
   SharedService,
   ListingService,
   IncomeCalculatorService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  AnalyticsService
 ) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
@@ -240,6 +241,8 @@ ListingController = (
       "#{listing.Reserved_community_minimum_age}+"
     else
       ''
+  $scope.trackApplyOnlineTimer = ->
+    AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
@@ -263,7 +266,8 @@ ListingController.$inject = [
   'SharedService',
   'ListingService',
   'IncomeCalculatorService',
-  'ShortFormApplicationService'
+  'ShortFormApplicationService',
+  'AnalyticsService'
 ]
 
 angular
