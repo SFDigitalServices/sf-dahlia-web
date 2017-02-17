@@ -1,3 +1,4 @@
+/ checkPreferenceEligibility is what resets preferences on this page if things have changed
 .app-card.form-card ng-init="checkPreferenceEligibility()"
   short-form-header
     h2.app-card_question translate="D2_LIVE_WORK_PREFERENCE.TITLE"
@@ -16,6 +17,6 @@
 
         live-work-preference(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveWorkInSf')")
 
-      preference-opt-out preference="{{liveWorkPreferenceType()}}"
+      preference-opt-out preference="{{liveWorkPreferenceType()}}" application="application"
 
   short-form-save-and-submit

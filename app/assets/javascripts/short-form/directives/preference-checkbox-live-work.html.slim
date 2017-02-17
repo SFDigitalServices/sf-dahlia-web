@@ -1,5 +1,5 @@
 .checkbox-block ng-class="{ error: inputInvalid('liveWorkInSf') }"
-  input id="preferences-liveWorkInSf" name="liveWorkInSf" data-event="{{pref_data_event}}" ng-model="application.preferences.liveWorkInSf" type="checkbox" aria-labelledby="{{labelledby}}" ng-change="on_livework_preference_change()" aria-describedby="description-{{preference}}" ng-required="{{required}}"
+  input id="preferences-liveWorkInSf" name="liveWorkInSf" data-event="{{pref_data_event}}" ng-model="application.preferences.liveWorkInSf" type="checkbox" aria-labelledby="{{labelledby}}" ng-click="on_livework_preference_change()" aria-describedby="description-{{preference}}" ng-required="{{required}}"
   label.checkbox-block_label for="preferences-liveWorkInSf"
     strong.form-label.caps
       | {{title}}

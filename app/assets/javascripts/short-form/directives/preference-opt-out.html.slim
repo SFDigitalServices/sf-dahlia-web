@@ -1,7 +1,7 @@
 .checkbox-group ng-class="{ error: inputInvalid(preference) }"
   .checkbox-block.margin-bottom--2x
     / there is only one "optout" per page, so the id doesn't have to be dynamic (makes E2E easier)
-    input id="preference-optout" aria-describedby="preference-optout-description" name="preferences" type="checkbox"  ng-model="application[model]" ng-click="uncheckPreference()"
+    input id="preference-optout" aria-describedby="preference-optout-description" type="checkbox"  ng-model="application[optOutField]" ng-click="cancelPreference()"
     label.checkbox-block_label for="preference-optout"
       strong.form-label translate="LABEL.DONT_WANT_PREFERENCE"
       p.checkbox-block_note id="preference-optout-description" translate="LABEL.STILL_HAVE_OPPORTUNITY_TO_CLAIM"
