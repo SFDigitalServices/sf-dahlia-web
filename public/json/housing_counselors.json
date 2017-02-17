@@ -1,19 +1,27 @@
 { "locations": [
     {
-      "name": "Bayview Hunters Point Multipurpose Senior Services",
-      "languages": ["English", "Chinese (Cantonese)"],
-      "address": "1706 Yosemite Ave",
-      "citystate": "San Francisco, CA 94124",
-      "phone": "(415) 822-1444",
-      "website": "https://bhpmss.org/"
+      "name": "The Arc San Francisco",
+      "languages":["English", "Cantonese", "Spanish", "Tagalog", "American Sign Language"],
+      "address": "1500 Howard St",
+      "citystate": "San Francisco, CA 94103",
+      "phone": "(415) 255-7200",
+      "website": "http://www.thearcsf.org/"
     },
     {
-      "name": "BALANCE",
-      "languages": ["English", "Tagalog", "Spanish", "Russian", "Chinese (Cantonese)"],
+      "name": "BALANCE (formerly Consumer Credit Counseling",
+      "languages": ["English", "Cantonese", "Spanish", "Tagalog", "Russian"],
       "address": "595 Market St, 9th Floor",
       "citystate": "San Francisco, CA 94105",
       "phone": "(800) 777-7526",
       "website": "http://www.balancepro.org"
+    },
+    {
+      "name": "Bayview Hunters Point Multipurpose Senior Services",
+      "languages": ["English", "Cantonese"],
+      "address": "1706 Yosemite A ve",
+      "citystate": "San Francisco, CA 94124",
+      "phone": "(415) 822-1444",
+      "website": "https://bhpmss.org/"
     },
     {
       "name": "Homeless Prenatal Program, Inc.",
@@ -26,14 +34,14 @@
     {
       "name": "HomeownershipSF",
       "languages": ["English", "Spanish"],
-      "address": "",
-      "citystate": "",
+      "address": "275 5th St #314",
+      "citystate": "San Francisco, CA 94103",
       "phone": "(415) 202-5462",
       "website": "http://www.homeownershipsf.org"
     },
     {
       "name": "Independent Living Resource Center of SF",
-      "languages": ["English", "Chinese (Cantonese)", "Spanish"],
+      "languages": ["English", "Cantonese", "Spanish"],
       "address": "825 Howard St",
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 543-6222",
@@ -49,22 +57,14 @@
     },
     {
       "name": "San Francisco Housing Development Corporation",
-      "languages": ["English", "Spanish", "Coming early 2017: Samoan, Chinese (Cantonese), Tagalog"],
+      "languages": ["English", "Cantonese", "Spanish", "Tagalog", "Samoan"],
       "address": "4439 3rd St",
       "citystate": "San Francisco, CA 94124",
       "phone": "(415) 822-1022",
       "website": "http://sfhdc.org/"
     },
     {
-      "name": "Self-Help for the Elderly",
-      "languages": ["English", "Chinese"],
-      "address": "731 Sansome St #100",
-      "citystate": "San Francisco, CA 94111",
-      "phone": "(415) 677-7600",
-      "website": "https://www.selfhelpelderly.org/san-francisco"
-    },
-    {
-      "name": "SF LGBT Community Center",
+      "name": "San Francisco LGBT Community Center",
       "languages":["English"],
       "address": "1800 Market St",
       "citystate": "San Francisco, CA 94102",
@@ -72,16 +72,24 @@
       "website": "http://www.sfcenter.org/affordable-rentals"
     },
     {
-      "name": "The Arc San Francisco",
-      "languages":["English", "Spanish", "Chinese (Cantonese)", "Tagalog", "American Sign Language"],
-      "address": "1500 Howard St",
-      "citystate": "San Francisco, CA 94103",
-      "phone": "(415) 255-7200",
-      "website": "http://www.thearcsf.org/"
+      "name": "Self-Help for the Elderly",
+      "languages": ["English", "Cantonese", "Mandarin"],
+      "address": "731 Sansome St #100",
+      "citystate": "San Francisco, CA 94111",
+      "phone": "(415) 677-7600",
+      "website": "https://www.selfhelpelderly.org/san-francisco"
+    },
+    {
+      "name": "Tenderloin Housing Clinic",
+      "languages":["English"],
+      "address": "126 Hyde St",
+      "citystate": "San Francisco, CA 94102",
+      "phone": "(415) 775-7110",
+      "website": "http://www.thclinic.org"
     },
     {
       "name": "Veterans Equity Center",
-      "languages":["English", "Tagalog", "Spanish"],
+      "languages":["English", "Spanish", "Tagalog"],
       "address": "1010 Mission St",
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 255-2347",
