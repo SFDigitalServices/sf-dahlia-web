@@ -8,6 +8,12 @@ class Api::V1::AddressValidationController < ApiController
     render json: { address: @validated_address, error: service.error }, status: status
   end
 
+  def addresses
+    p 'we hit here'
+    sleep(30)
+    render json: { status: 'bad' }
+  end
+
   private
 
   def address_params

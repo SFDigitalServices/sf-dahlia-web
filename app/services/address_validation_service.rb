@@ -10,6 +10,7 @@ class AddressValidationService
 
   def validate
     return false unless @address.present?
+    EasyPost.api_base = 'http://localhost:3000'
     @validation = EasyPost::Address.create(@address)
   end
 

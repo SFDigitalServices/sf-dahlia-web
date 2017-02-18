@@ -11,6 +11,7 @@ AddressValidationService = ($http) ->
     address = opts.address || {}
     type = opts.type || 'home'
     validated_address_obj = Service["validated_#{type}_address"]
+    # empty out the "Validated Address" before we run validation
     angular.copy({}, validated_address_obj)
     params =
       address: _.mapKeys(address, (v, key) ->
@@ -22,11 +23,15 @@ AddressValidationService = ($http) ->
       # now copy the validated address data into our source address
       Service.copy(validated_address_obj, address)
     ).error( (data, status, headers, config) ->
-      # still grab the data for capturing the verifications/errors
-      validated_with_errors = (if data and data.address then data.address else {})
-      # add invalid flag to indicate validation error
-      validated_with_errors.invalid = true
-      angular.copy(validated_with_errors, validated_address_obj)
+      if status == 422
+        # still grab the data for capturing the verifications/errors
+        validated_with_errors = (if data and data.address then data.address else {})
+        # add invalid flag to indicate validation error
+        validated_with_errors.invalid = true
+        angular.copy(validated_with_errors, validated_address_obj)
+      else
+        # even though we weren't able to clean the address, pretend we did
+        angular.copy(address, validated_address_obj)
     )
 
   Service.copy = (validated, copyTo) ->
