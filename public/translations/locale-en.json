@@ -405,7 +405,7 @@
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved units for {{reservedType}} {{communityType}}",
         "RESERVED_VETERAN_DESCRIPTION": "Lorem ipsum veterans",
         "SHOWING_MATCHES_FOR": "Showing matches for",
-        "SHOW_ADDITIONAL_LISTINGS   ": "Show Additional Listings ({{number}})",
+        "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "WAITLIST_SPOTS_REMAINING": "{{number}} open slots remaining",
