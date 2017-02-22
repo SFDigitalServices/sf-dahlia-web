@@ -16,6 +16,33 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.maxIncomeLevels = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
+  Service.mohcdApplicationURL = """
+    http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Applications/General%20BMR%20Rental%20Application/
+  """
+
+  Service.listingDownloadURLs = []
+  Service.defaultApplicationURLs = [
+    {
+      'language': 'English'
+      'label': 'English'
+      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20English.pdf'
+    }
+    {
+      'language': 'Spanish'
+      'label': 'Español'
+      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20ES.pdf'
+    }
+    {
+      'language': 'Traditional Chinese'
+      'label': '中文'
+      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20TC.pdf'
+    }
+    {
+      'language': 'Tagalog'
+      'label': 'Filipino'
+      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20TGL.pdf'
+    }
+  ]
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -332,6 +359,21 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.getListingDownloadURLs = ->
+    urls = angular.copy(Service.defaultApplicationURLs)
+    english = _.find(urls, { language: 'English' })
+    chinese = _.find(urls, { language: 'Traditional Chinese' })
+    spanish = _.find(urls, { language: 'Spanish' })
+    tagalog = _.find(urls, { language: 'Tagalog' })
+    # replace download URLs if they are customized on the listing
+    listing = Service.listing
+    english.url = listing.Download_URL if listing.Download_URL
+    chinese.url = listing.Download_URL_Cantonese if listing.Download_URL_Cantonese
+    spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish
+    tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
+    angular.copy(urls, Service.listingDownloadURLs)
+
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {

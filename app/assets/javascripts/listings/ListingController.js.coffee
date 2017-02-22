@@ -43,6 +43,7 @@ ListingController = (
   # for showing/hiding listings results buckets on browse page, hidden by default
   $scope.displayNotMatchedListings = false
   $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
+  $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
