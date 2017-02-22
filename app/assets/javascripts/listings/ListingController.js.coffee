@@ -236,31 +236,45 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
-  $scope.reservedLabel = (type, modifier) ->
+  $scope.reservedForLabels = (listing) ->
+    types = []
+    _.each listing.reservedDescriptor, (descriptor) ->
+      if descriptor.name
+        type = descriptor.name
+        types.push($scope.reservedLabel(listing, type, 'reservedFor'))
+    if types.length then types.join(' and ') else ''
+
+  $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
       'Senior':
         building: 'Senior'
-        reservedFor: 'seniors'
-        reservedForWhoAre: 'who are seniors ' + $scope.listing.Reserved_community_minimum_age
+        eligibility: 'Seniors'
+        reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
+        reservedForWhoAre: "who are seniors #{$scope.seniorMinimumAge(listing)}"
+        unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
       'Veteran':
         building: 'Veterans'
+        eligibility: 'Veterans'
         reservedFor: 'veterans'
         reservedForWhoAre: 'who are veterans'
+        unitDescription: 'veterans of the U.S. Armed Forces.'
       'Developmental disabilities':
         building: 'Developmental Disability'
-        reservedFor: 'the developmentally disabled'
-        reservedForWhoAre: 'the developmentally disabled'
+        eligibility: 'People with developmental disabilities'
+        reservedFor: 'people with developmental disabilities'
+        reservedForWhoAre: 'who are developmentally disabled'
+        unitDescription: 'people with developmental disabilities'
 
     return labelMap[type][modifier]
 
   $scope.seniorMinimumAge = (listing = $scope.listing) ->
-    if listing.Reserved_community_minimum_age && listing.Reserved_community_type == 'Senior'
+    if listing.Reserved_community_minimum_age
       "#{listing.Reserved_community_minimum_age}+"
     else
       ''
+
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
-
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->

@@ -436,12 +436,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.specialUnitTypeDescription = (type) ->
     switch type
-      when 'Senior'
-        $translate.instant("LISTINGS.RESERVED_SENIOR_DESCRIPTION")
-      when 'Veteran'
-        $translate.instant("LISTINGS.RESERVED_VETERAN_DESCRIPTION")
-      when 'Developmental disabilities'
-        $translate.instant("LISTINGS.RESERVED_DEVELOPMENTALLY_DISABLED_DESCRIPTION")
       when 'Hearing/Vision impaired'
         ,'Vision impaired'
         ,'Hearing impaired'
