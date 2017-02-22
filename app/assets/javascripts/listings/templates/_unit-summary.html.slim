@@ -29,6 +29,8 @@ tr ng-repeat-end="" ng-if="unit_summary.minPercentIncome"
       em translate="T.NONE"
     span ng-show="unit_summary.minRentalMinIncome"
       | {{unit_summary.minRentalMinIncome | currency:"$":0}}
+      span.value-label
+        | /month
   td.text-right
     span
       | {{unit_summary.minPercentIncome}}
