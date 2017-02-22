@@ -5,7 +5,7 @@ http_interactions:
     uri: https://test.salesforce.com/services/oauth2/token
     body:
       encoding: US-ASCII
-      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=dave%40exygy.com.qa&password=XkzG%26h9%5EA%5El%21<<SALESFORCE_SECURITY_TOKEN>>
+      string: grant_type=password&client_id=<<SALESFORCE_CLIENT_ID>>&client_secret=<<SALESFORCE_CLIENT_SECRET>>&username=<<SALESFORCE_USERNAME>>&password=<<SALESFORCE_PASSWORD>><<SALESFORCE_SECURITY_TOKEN>>
     headers:
       User-Agent:
       - Faraday v0.9.2
@@ -21,16 +21,12 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 15:52:49 GMT
+      - Mon, 06 Feb 2017 22:34:33 GMT
       Strict-Transport-Security:
-      - max-age=10886400; includeSubDomains; preload
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=login'
+      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=e-qAMt9LTR6I1GhR1_RBhA;Path=/;Domain=.salesforce.com;Expires=Sun,
-        06-Nov-2016 15:52:49 GMT
+      - BrowserId=XB9MrQ4KTqW4q_OgVHrDGQ;Path=/;Domain=.salesforce.com;Expires=Fri,
+        07-Apr-2017 22:34:33 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -41,13 +37,15 @@ http_interactions:
       - 'false'
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa","instance_url":"https://sfhousing--qa.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00Df0000003aGupEAE/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1473263569631","signature":"qaER8PM5dIUOxNl0HrUj5+qBa2R6G2z28R7i7JW78gI="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/0056C000000eBx5QAE","token_type":"Bearer","issued_at":"1486420473233","signature":"OfBN8dN9kRLuVkntvMU2iQ7TMNb8yFZJP5hi1n8P+bo="}'
     http_version:
-  recorded_at: Wed, 07 Sep 2016 15:52:49 GMT
+  recorded_at: Mon, 06 Feb 2017 22:34:33 GMT
 - request:
     method: get
     uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3?childrenUnder6=0&householdsize=2&incomelevel=40000.0
@@ -58,7 +56,7 @@ http_interactions:
       User-Agent:
       - Faraday v0.9.2
       Authorization:
-      - OAuth 00Df0000003aGup!AQ4AQNUU83TTthNZ7v8J33pKonmL.ljHETS6cqP0zXi4m679irfZowBlssDUCdqfeurt_bgyW3BpCj1EC9tZhcFcWevLFKIa
+      - OAuth <<ACCESS_TOKEN>>
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -69,25 +67,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 07 Sep 2016 15:52:49 GMT
+      - Mon, 06 Feb 2017 22:34:33 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; font-src https:
-        data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain'
+        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
+        ''self'' *.salesforce.com *.force.com; font-src https: data:; connect-src
+        ''self'' https:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain; base-uri
+        http://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3'
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D6C0000000TrI";
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=ckUCeE8kS1KPFOGQT0lx8A;Path=/;Domain=.salesforce.com;Expires=Sun,
-        06-Nov-2016 15:52:49 GMT
+      - BrowserId=4rgXv-HbTaiSts4UqyaAiA;Path=/;Domain=.salesforce.com;Expires=Fri,
+        07-Apr-2017 22:34:33 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
       - application/json;charset=UTF-8
+      Vary:
+      - Accept-Encoding
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: '{"listingId":"a0WU000000ClNXGMA3","incomeMatch":true,"incomeEligibilityResult":"Match","householdMatch":true,"householdEligibilityResult":"Match"}'
     http_version:
-  recorded_at: Wed, 07 Sep 2016 15:52:50 GMT
+  recorded_at: Mon, 06 Feb 2017 22:34:33 GMT
 recorded_with: VCR 3.0.3

@@ -75,7 +75,7 @@
 
 
   div ng-if="!listingIs('L Seven')"
-    .content-group.has-divider ng-if="listing.Accepting_Online_Applications"
+    .content-group.has-divider ng-if="listing.Accepting_Online_Applications && !listing.Lottery_Results"
       ng-include src="'listings/templates/listing/_apply_online.html'"
     .content-group.has-divider
       h2.h-caps-lined ng-if="!listing.Accepting_Online_Applications"

@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/Exygy/sitemap_generator.git
+  revision: 804c7e44070c63c27ddd373a8116e50596a37524
+  specs:
+    sitemap_generator (5.2.0)
+      builder (~> 3.0)
+
+GIT
   remote: git://github.com/Exygy/street-address.git
   revision: b505ad8c9710cab53ca97c6267ed8971e61b025f
   specs:
@@ -384,6 +391,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   shoulda-matchers
+  sitemap_generator!
   slim-rails
   spring
   thor-rails

@@ -1,0 +1,22 @@
+.form-group ng-class="{ error: inputInvalid('email') }"
+  h3.form-label.caps
+    ' {{'LABEL.EMAIL_ADDRESS' | translate}}
+    lock-icon ng-if="isLocked('email')"
+  label.sr-only for="auth_email"
+    | {{'LABEL.EMAIL_ADDRESS' | translate}}
+  input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" aria-describedby="auth_email_error" ng-disabled="isLocked('email')"
+  small.error#auth_email_error ng-if="inputInvalid('email')"
+    | {{'ERROR.EMAIL' | translate}}
+.form-group ng-class="{ error: inputInvalid('password') }"
+  h3.form-label.caps
+    | {{'LABEL.PASSWORD' | translate}}
+  label.sr-only for="auth_password"
+    | {{'LABEL.PASSWORD' | translate}}
+  input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password') }" ng-minlength="8" aria-describedby="auth_password_error"
+  small.error#auth_password_error ng-if="inputInvalid('password')"
+    | {{'ERROR.PASSWORD' | translate}}
+  small.form-note.shift-up
+    a ui-sref="dahlia.short-form-application.forgot-password" ng-if="rememberedShortFormState"
+      | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}
+    a ui-sref="dahlia.forgot-password" ng-if="!rememberedShortFormState"
+      | {{'SIGN_IN.FORGOT_PASSWORD' | translate}}

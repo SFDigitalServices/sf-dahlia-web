@@ -10,6 +10,9 @@
     # check if user is logged in on page load
     AccountService.validateUser()
 
+    # start Apply Online timer
+    AnalyticsService.startTimer('Apply Online Click')
+
     bsLoadingOverlayService.setGlobalConfig({
       delay: 0
       activeClass: 'loading'
@@ -99,6 +102,10 @@
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)
+      if (toState.name == 'dahlia.short-form-application.review-sign-in')
+        # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
+        AccountService.rememberShortFormState(toState.name)
+
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes

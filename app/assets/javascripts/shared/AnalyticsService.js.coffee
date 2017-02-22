@@ -4,6 +4,7 @@
 
 AnalyticsService = ($state) ->
   Service = {}
+  Service.timer = {}
 
   Service.trackEvent = (event, properties) ->
     dataLayer = window.dataLayer || []
@@ -19,6 +20,22 @@ AnalyticsService = ($state) ->
     path = '/' if path == ''
     ga('set', 'page', path)
     ga('send', 'pageview')
+
+  Service.startTimer = (label) ->
+    Service.timer[label] = moment()
+
+  Service.trackTimerEvent = (category, variable, label) ->
+    # once the timer has been cleared, we don't track it any more
+    return unless Service.timer[label]
+
+    elapsed = moment().diff(Service.timer[label])
+    Service.timer[label] = null
+    params =
+      category: category
+      variable: variable
+      label: label
+      time: elapsed
+    Service.trackEvent('Timer Event', params)
 
   Service.trackFormSuccess = (category, label = null) ->
     params = { category: category, action: 'Form Success', label: label }

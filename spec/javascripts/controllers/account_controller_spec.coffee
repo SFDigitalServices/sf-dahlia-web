@@ -29,6 +29,7 @@ do ->
       importUserData: -> null
       submitApplication: -> null
       getMyAccountApplication: -> null
+      signInSubmitApplication: -> null
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -59,6 +60,7 @@ do ->
       spyOn(fakeAccountService, 'requestPasswordReset').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'importUserData').and.returnValue(false)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'signInSubmitApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'getMyAccountApplication').and.callFake -> fakeHttp
 
       $controller 'AccountController',
@@ -82,6 +84,10 @@ do ->
 
       describe 'user in short form session', ->
         beforeEach ->
+          scope.form.createAccount =
+            $valid: true
+            $setUntouched: () ->
+            $setPristine: () ->
           fakeShortFormApplicationService.session_uid = 'someuid'
           state.current.name = 'dahlia.short-form-application.create-account'
           deferred.resolve(true)
@@ -123,17 +129,11 @@ do ->
           state.current.name = 'dahlia.short-form-application.sign-in'
           deferred.resolve(true)
 
-        it 'submits draft application', ->
+        it 'calls ShortFormApplicationService.signInSubmitApplication', ->
           fakeShortFormApplicationService.application = { status: 'draft' }
           scope.signIn()
           scope.$apply()
-          expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
-
-        it 'routes user to my applications', ->
-          fakeShortFormApplicationService.application = { status: 'draft' }
-          scope.signIn()
-          scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true, infoChanged: false})
+          expect(fakeShortFormApplicationService.signInSubmitApplication).toHaveBeenCalled()
 
       describe 'user not in short form session', ->
         beforeEach ->
@@ -152,18 +152,6 @@ do ->
           scope.signIn()
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-account')
-
-    describe '$scope._signInAndSkipSubmit', ->
-      it 'checks if you\'ve already submitted', ->
-        fakePrevApplication = { status: 'submitted', id: '123' }
-        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
-        scope._signInAndSkipSubmit(fakePrevApplication)
-        expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
-      it 'sends you to choose draft', ->
-        fakePrevApplication = { status: 'draft' }
-        scope._signInAndSkipSubmit(fakePrevApplication)
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
-
 
     describe '$scope.requestPasswordReset', ->
       it 'calls on AccountService.requestPasswordReset', ->

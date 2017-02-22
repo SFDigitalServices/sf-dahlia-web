@@ -12,7 +12,8 @@ ListingController = (
   SharedService,
   ListingService,
   IncomeCalculatorService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  AnalyticsService
 ) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
@@ -195,8 +196,8 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
-  $scope.listingPriorities = (listing) ->
-    ListingService.listingPriorities(listing)
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
 
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
@@ -226,8 +227,8 @@ ListingController = (
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
 
-  $scope.listingReservedTypes = ->
-    ListingService.reservedTypes($scope.listing)
+  $scope.listingReservedTypes = (listing = $scope.listing) ->
+    ListingService.reservedTypes(listing)
 
   $scope.specialUnitTypeDescription = (type) ->
     ListingService.specialUnitTypeDescription(type)
@@ -252,6 +253,15 @@ ListingController = (
 
     return labelMap[type][modifier]
 
+  $scope.seniorMinimumAge = (listing = $scope.listing) ->
+    if listing.Reserved_community_minimum_age && listing.Reserved_community_type == 'Senior'
+      "#{listing.Reserved_community_minimum_age}+"
+    else
+      ''
+  $scope.trackApplyOnlineTimer = ->
+    AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
+
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
     ListingService.listingIs('168 Hyde Relisting', listing)
@@ -274,7 +284,8 @@ ListingController.$inject = [
   'SharedService',
   'ListingService',
   'IncomeCalculatorService',
-  'ShortFormApplicationService'
+  'ShortFormApplicationService',
+  'AnalyticsService'
 ]
 
 angular
