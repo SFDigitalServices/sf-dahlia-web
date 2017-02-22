@@ -63,7 +63,7 @@
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
             use xlink:href="#i-star"
-        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR" translate-value-reserved-type="{{reservedForLabels(listing)}}"
+        span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedForLabels(listing)}}"
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
         ' {{percent}}% AMI
