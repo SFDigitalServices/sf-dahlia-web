@@ -10,11 +10,11 @@ accordion-heading
 section.content-wrap
   .content-group.no-padding.hide-for-small-down
     p.post-dealine_alert
-      span.label.flag-label.alert-tint
+      .label.flag-label.secondary.text-wrap.alert-tint
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-clock"
-        | Applications Closed
+        | Applications Closed {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
   span ng-if="lotteryDateVenueAvailable(listing) && !lotteryDatePassed(listing)"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
