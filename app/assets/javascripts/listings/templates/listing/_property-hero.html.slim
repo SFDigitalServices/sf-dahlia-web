@@ -48,7 +48,7 @@
       span.ui-icon.ui-static.ui-medium.i-color
         svg
           use xlink:href="#i-clock"
-      | Applications Closed
+      | Applications Closed {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
   section.property-hero_stats.margin-bottom--2x
     .message-group
@@ -80,6 +80,6 @@
 
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
-      span.label.label--flag.primary-tint
+      .label.flag-label.secondary.text-wrap.alert-tint
         | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
       ng-include src="'listings/templates/listing/_panel-apply.html'"
