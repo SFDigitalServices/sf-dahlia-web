@@ -29,8 +29,6 @@ accordion-heading
             | {{session.Date | dateSuffix}}
           span.content-group_time
             | {{session.Start_Time}}
-            span ng-if="session.End_Time"
-              | &mdash;{{session.End_Time}}
         p.content-group_address.c-steel.no-margin ng-if="session.Venue"
           | {{session.Venue}}
         p.content-group_address.c-steel ng-if="session.Street_Address"
