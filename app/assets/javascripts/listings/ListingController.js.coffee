@@ -196,15 +196,11 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
-  $scope.priorityTypes = (listing) ->
-    ListingService.priorityTypes(listing)
-
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
-
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
@@ -226,12 +222,6 @@ ListingController = (
 
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
-
-  $scope.listingReservedTypes = (listing = $scope.listing) ->
-    ListingService.reservedTypes(listing)
-
-  $scope.specialUnitTypeDescription = (type) ->
-    ListingService.specialUnitTypeDescription(type)
 
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
@@ -266,6 +256,31 @@ ListingController = (
         unitDescription: 'people with developmental disabilities'
 
     return labelMap[type][modifier]
+
+  $scope.priorityLabel = (priority, type) ->
+    labelMap =
+      'Vision impaired':
+        name: 'Vision Impairments'
+        description: 'impaired vision'
+      'Hearing impaired':
+        name: 'Hearing Impairments'
+        description: 'impaired hearing'
+      'Hearing/Vision impaired':
+        name: 'Vision and/or Hearing Impairments'
+        description: 'impaired vision and/or hearing'
+      'Mobility impaired':
+        name: 'Mobility Impairments'
+        description: 'impaired mobility'
+
+    return labelMap[priority][type]
+
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
+
+  $scope.priorityTypeNames = (listing) ->
+    names = _.map $scope.priorityTypes(listing), (priority) ->
+      $scope.priorityLabel(priority, 'name')
+    names.join(', ')
 
   $scope.seniorMinimumAge = (listing = $scope.listing) ->
     if listing.Reserved_community_minimum_age

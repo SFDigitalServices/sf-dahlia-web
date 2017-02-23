@@ -417,31 +417,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
 
-  Service.reservedTypes = (listing) ->
-    Service.collectTypes(listing, 'reservedDescriptor')
-
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 
   Service.collectTypes = (listing, specialType) ->
-    types = []
-    _.each listing[specialType], (descriptor) ->
-      if descriptor.name
-        name = descriptor.name
-        if listing.Reserved_community_minimum_age && name == 'Senior'
-          # TODO: make plural, after we finalize all the priority/reserved language
-          name = "#{name} #{listing.Reserved_community_minimum_age}+"
-        types.push(name)
-    if types.length then types.join(', ') else ''
-
-  Service.specialUnitTypeDescription = (type) ->
-    switch type
-      when 'Hearing/Vision impaired'
-        ,'Vision impaired'
-        ,'Hearing impaired'
-          $translate.instant("LISTINGS.PRIORITY_HEARING_VISION_IMPAIRED_DESCRIPTION")
-      when 'Mobility impaired'
-        $translate.instant("LISTINGS.PRIORITY_MOBILITY_IMPAIRED_DESCRIPTION")
+    _.map listing[specialType], (descriptor) ->
+      descriptor.name
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --

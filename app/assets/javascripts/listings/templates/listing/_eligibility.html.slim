@@ -123,12 +123,12 @@ accordion-heading.lead
             | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
         .content-card ng-repeat="(type, units) in listing.priorityUnits"
           h4.content-card_title.no-margin
-            | {{type}}
+            | {{priorityLabel(type, 'name')}}
           p.c-steel
             | {{units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")
+          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{priorityLabel(type, 'description')}}"
 
     li.custom-counter_item
       .content-tile
