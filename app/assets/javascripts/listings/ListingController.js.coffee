@@ -255,9 +255,10 @@ ListingController = (
         reservedForWhoAre: 'developmentally disabled'
         unitDescription: 'people with developmental disabilities'
 
+    return type unless labelMap[type]
     return labelMap[type][modifier]
 
-  $scope.priorityLabel = (priority, type) ->
+  $scope.priorityLabel = (priority, modifier) ->
     labelMap =
       'Vision impaired':
         name: 'Vision Impairments'
@@ -272,7 +273,8 @@ ListingController = (
         name: 'Mobility Impairments'
         description: 'impaired mobility'
 
-    return labelMap[priority][type]
+    return priority unless labelMap[priority]
+    return labelMap[priority][modifier]
 
   $scope.priorityTypes = (listing) ->
     ListingService.priorityTypes(listing)
