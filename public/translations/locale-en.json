@@ -371,6 +371,7 @@
     },
     "LISTINGS": {
         "ADDITIONAL_LISTINGS": "Additional Listings",
+        "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
         "HIDE_LOTTERY_RESULTS": "Hide Lottery Results ({{number}})",
         "LOTTERY_RESULTS": "Lottery Results",
@@ -382,6 +383,7 @@
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
+        "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WE_KNOW_YOU_MAY_HAVE_OPTIONS": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."

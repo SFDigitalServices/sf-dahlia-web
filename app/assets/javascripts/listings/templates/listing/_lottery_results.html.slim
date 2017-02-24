@@ -6,7 +6,7 @@ p.content-group_day.margin-bottom
     | {{listing.Lottery_Summary}}
 
   button.primary.expand.no-margin ng-click="openLotteryResultsModal()" ng-if="showLotteryResultsModalButton()" ng-disabled="loading.lotteryResults" data-event="gtm-view-lottery-results"
-    | View Lottery Results
+    | {{'LISTINGS.VIEW_LOTTERY_RESULTS' | translate}}
 
   a.button.primary.expand.no-margin ng-if="showDownloadLotteryResultsButton()" ng-href="{{listing.LotteryResultsURL}}" target="_blank" ng-disabled="loading.lotteryResults" data-event="gtm-download-lottery-results"
-    | Download Lottery Results
+    | {{'LISTINGS.DOWNLOAD_LOTTERY_RESULTS' | translate}}
