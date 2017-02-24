@@ -16,31 +16,30 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.maxIncomeLevels = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURL = """
-    http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Applications/General%20BMR%20Rental%20Application/
-  """
+  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
+    # http://sfmohcd.org/general-bmr-rental-application
     {
       'language': 'English'
       'label': 'English'
-      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20English.pdf'
+      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20ES.pdf'
+      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20TC.pdf'
+      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service.mohcdApplicationURL + 'BMR%20Universal%20Rent%20Short%20Form%20Paper%20App%20v10%20TGL.pdf'
+      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
     }
   ]
 
