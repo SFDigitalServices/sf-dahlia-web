@@ -401,7 +401,7 @@
         "RESERVED_FOR": "Reserved for {{type}}",
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
-        "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{reservedType}} {{communityType}}",
+        "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",

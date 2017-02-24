@@ -231,8 +231,8 @@ ListingController = (
     _.each listing.reservedDescriptor, (descriptor) ->
       if descriptor.name
         type = descriptor.name
-        types.push($scope.reservedLabel(listing, type, 'reservedFor'))
-    if types.length then types.join(' and ') else ''
+        types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
+    if types.length then types.join(', ') else ''
 
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
@@ -240,19 +240,19 @@ ListingController = (
         building: 'Senior'
         eligibility: 'Seniors'
         reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
-        reservedForWhoAre: "who are seniors #{$scope.seniorMinimumAge(listing)}"
+        reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
         unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
       'Veteran':
         building: 'Veterans'
         eligibility: 'Veterans'
         reservedFor: 'veterans'
-        reservedForWhoAre: 'who are veterans'
+        reservedForWhoAre: 'veterans'
         unitDescription: 'veterans of the U.S. Armed Forces.'
       'Developmental disabilities':
         building: 'Developmental Disability'
         eligibility: 'People with developmental disabilities'
         reservedFor: 'people with developmental disabilities'
-        reservedForWhoAre: 'who are developmentally disabled'
+        reservedForWhoAre: 'developmentally disabled'
         unitDescription: 'people with developmental disabilities'
 
     return labelMap[type][modifier]

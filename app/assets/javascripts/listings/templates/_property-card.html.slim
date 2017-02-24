@@ -64,7 +64,7 @@
       / Reserved
       table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="listing.unitSummaries.reserved"
         caption ng-if="listingIsReservedCommunity(listing)"
-          span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE" translate-value-reserved-type="{{reservedForLabels(listing)}}" translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedForWhoAre')}}"
+          span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{reservedForLabels(listing)}}"
         caption ng-if="!listingIsReservedCommunity(listing)"
           span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedForLabels(listing)}}"
 
