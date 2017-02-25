@@ -151,12 +151,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
+    street = "#{type}_Street_Address"
+    zip = "#{type}_Postal_Code"
+    if type == 'Leasing_Agent'
+      street = "#{type}_Street"
+      zip = "#{type}_Zip"
+    else if type == 'Building'
+      zip = "#{type}_Zip_Code"
+
     # If Street address is undefined, then return false for display and google map lookup
-    if listing["#{type}_Street_Address"] == undefined
+    if listing[street] == undefined
       return
     # If other fields are undefined, proceed, with special string formatting
-    if listing["#{type}_Street_Address"] != undefined
-      Street_Address = listing["#{type}_Street_Address"] + ', '
+    if listing[street] != undefined
+      Street_Address = listing[street] + ', '
     else
       Street_Address = ''
     if listing["#{type}_City"] != undefined
@@ -167,12 +175,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       State = listing["#{type}_State"]
     else
       State = ''
-    if type == 'Application'
-      zip_code_field = "#{type}_Postal_Code"
-    else
-      zip_code_field = "#{type}_Zip_Code"
-    if listing[zip_code_field] != undefined
-      Zip_Code = listing[zip_code_field]
+    if listing[zip] != undefined
+      Zip_Code = listing[zip]
     else
       Zip_Code = ''
 

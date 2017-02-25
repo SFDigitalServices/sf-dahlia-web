@@ -77,6 +77,9 @@ ListingController = (
   $scope.formattedApplicationAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Application', display)
 
+  $scope.formattedLeasingAgentAddress = (listing, display) ->
+    ListingService.formattedAddress(listing, 'Leasing_Agent', display)
+
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
     api_key = 'AIzaSyCW_oXspwGsSlthw-MrPxjNvdH56El1pjM'

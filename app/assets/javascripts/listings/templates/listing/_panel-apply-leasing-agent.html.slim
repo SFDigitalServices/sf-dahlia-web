@@ -1,0 +1,10 @@
+p.content-group_address.c-steel
+  | {{ listing.Leasing_Agent_Street }}
+  br
+  | {{ listing.Leasing_Agent_City }} {{ listing.Leasing_Agent_State }} {{ listing.Leasing_Agent_Zip }}
+a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedLeasingAgentAddress(listing)}}"
+  | View Map
+.content-group_hours ng-if="listing.Office_Hours"
+  h3.content-group_title
+    | Office Hours
+  .content-group_days.inline ng-bind-html="listing.Office_Hours"

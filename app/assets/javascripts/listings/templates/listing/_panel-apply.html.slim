@@ -20,20 +20,16 @@
       span.c-primary
         ' 1
       | Get a Paper Application
-    p.c-charcoal.t-small.margin-bottom
+    p.c-charcoal.t-small.margin-bottom ng-if="!listing.Accepting_applications_at_leasing_agent"
       |  Paper applications must be sent by US Mail and cannot be submitted in person.
     ng-include src="'listings/templates/listing/_download_application.html'"
     .option-divider
-      span.or or
+      span.or
+        | or
   .content-group.has-divider
     h3.content-group_title
       | Pickup an application
-    p.c-charcoal.t-small
-      | You may pick up an application by visiting any of our housing counselors.
-    a.button.primary.expand.no-margin ui-sref="dahlia.housing-counselors"
-      | Visit a Housing Counselor
-    p.c-charcoal.t-small.margin-top
-      | Paper applications must be mailed to the P.O. Box below.
+    ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
 
   / Section 2: Submit a Paper Application
   .content-group.bg-snow
@@ -41,51 +37,45 @@
       span.c-primary
         ' 2
       | Submit a Paper Application
+    p.c-charcoal.t-small
+      | In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you.
+
+  / Section 2a: Send by Mail
+  .content-group.bg-snow ng-if="listing.Accepting_applications_by_PO_Box" ng-class="{'has-divider': listing.Accepting_applications_at_leasing_agent}"
     h3.content-group_title
       | Send Application by US Mail
-    p.content-group_address
-      | L Seven BMR
-      br
-      | P.O. Box 420847
-      br
-      | San Francisco, CA 94142
-    p.c-charcoal.t-small
-      | In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you. Applications must be received by the deadline and postmarks will not be considered.
-    p.c-charcoal.t-small
-      | Do not apply online and also send in a paper application. All applications containing any person who appears on more than on application will be removed from the lottery.
-
-  / Section 3: Find a Housing Counselor
-  .content-group
-    h4.h-caps-lined Need Help?
-    p.c-charcoal.t-small.margin-bottom Visit a local housing counselor for help with your online or paper application.
-    a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"
-      | Find a Housing Counselor
-
-
-  / div ng-if="listingIs('L Seven')"
-  .content-group.has-divider ng-if="listing.Accepting_Online_Applications && !listing.Lottery_Results"
-    ng-include src="'listings/templates/listing/_apply_online.html'"
-  .content-group.has-divider
-    h2.h-caps-lined ng-if="!listing.Accepting_Online_Applications"
-      | How to Apply
-    h3.content-group_title
-      | Pickup and turn in application
     p.content-group_address.no-margin
       | {{listing.Application_Organization}}
     p.content-group_address
       | {{ listing.Application_Street_Address }}
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
-    a.t-small.d-block.ui-link.margin-bottom.hide-for-print title="View Map" target="_blank" ng-href="https://www.google.com/maps/place/{{formattedApplicationAddress(listing)}}"
-      | View Map
-    .content-group_hours ng-if="listing.Office_Hours"
-      h3.content-group_title
-        | Office Hours
-      .content-group_days.inline ng-bind-html="listing.Office_Hours"
+    p.c-charcoal.t-small
+      | Applications must be received by the deadline and postmarks will not be considered.
 
-    .option-divider
-      span.or
+    .option-divider ng-if="listing.Accepting_applications_at_leasing_agent"
+      span.or.bg-snow
         | or
 
+  / Section 2b: Drop Off
+  .content-group.bg-snow ng-if="listing.Accepting_applications_at_leasing_agent"
+    h3.content-group_title ng-if="listing.Accepting_applications_by_PO_Box"
+      | Drop Off Application
+    h3.content-group_title ng-if="!listing.Accepting_applications_by_PO_Box"
+      | Drop Off Application or Send by US Mail
+    ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
+    p.c-charcoal.t-small ng-if="!listing.Accepting_applications_by_PO_Box"
+      | Applications must be received by the deadline and postmarks will not be considered.
+
+  .content-group.bg-snow
+    p.c-charcoal.t-small
+      | Do not apply online and also send in a paper application. All applications containing any person who appears on more than on application will be removed from the lottery.
+
+  / Section 3: Find a Housing Counselor
   .content-group
-    ng-include src="'listings/templates/listing/_download_application.html'"
+    h4.h-caps-lined
+      | Need Help?
+    p.c-charcoal.t-small.margin-bottom
+      | Visit a local housing counselor for help with your online or paper application.
+    a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"
+      | Find a Housing Counselor
