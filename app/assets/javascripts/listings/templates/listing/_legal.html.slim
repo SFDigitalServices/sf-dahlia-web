@@ -1,7 +1,7 @@
 accordion-heading
   img.accordion-icon src="/images/listing-legal.svg" alt="legal-documents"
   h3.accordion-name
-    | Additional Information
+    | {{'LISTINGS.ADDITIONAL_INFORMATION' | translate}}
   / span.accordion-subheader Required documents and selection criteria
   span.ui-control.ui-icon.ui-small
     svg
@@ -9,19 +9,23 @@ accordion-heading
 
 .content.content-section.clearfix
   .content-panel.wide
+    .content-card.bg-dust ng-if="listing.Listing_Other_Notes"
+      h4.content-card_title.t-serif
+        | {{'LISTINGS.SPECIAL_NOTES' | translate}}
+      p ng-text-truncate="listing.Listing_Other_Notes | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
-        | Required Documents
+        | {{'LISTINGS.REQUIRED_DOCUMENTS' | translate}}
       p ng-text-truncate="listing.Required_Documents | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
-        | Important Program Rules
+        | {{'LISTINGS.IMPORTANT_PROGRAM_RULES' | translate}}
       p ng-text-truncate="listing.Legal_Disclaimers | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
-        | Smoking Policy
+        | {{'LISTINGS.SMOKING_POLICY' | translate}}
       p ng-text-truncate="listing.Smoking_Policy | stripMostTags | nl2br" ng-tt-words-threshold="60"
     .content-card.bg-dust
       h4.content-card_title.t-serif
-        | Pets Policy
+        | {{'LISTINGS.PETS_POLICY' | translate}}
       p ng-text-truncate="listing.Pet_Policy | stripMostTags | nl2br" ng-tt-words-threshold="60"
