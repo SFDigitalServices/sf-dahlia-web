@@ -390,6 +390,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelOptOut(preference)
 
   $scope.preferenceRequired = (preference) ->
+    return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
 
   ###### Attachment File Uploads ########
