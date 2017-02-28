@@ -9,6 +9,7 @@ AnalyticsService = ($state) ->
   Service.trackEvent = (event, properties) ->
     dataLayer = window.dataLayer || []
     unless properties.label
+      # by default, grab the end of the URL e.g. the "contact" from "/x/y/z/contact"
       current_path = _.first(_.last($state.current.url.split('/')).split('?'))
       properties.label = current_path
     properties.event = event
@@ -16,7 +17,7 @@ AnalyticsService = ($state) ->
 
   Service.trackCurrentPage = ->
     ga = window.ga || () ->
-    path = $state.href($state.current.name, $state.params)
+    path = Service._currentHref()
     path = '/' if path == ''
     ga('set', 'page', path)
     ga('send', 'pageview')
@@ -54,8 +55,19 @@ AnalyticsService = ($state) ->
   Service.trackFormAbandon = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Form Abandon' })
 
+  Service.trackInvalidLotteryNumber = ->
+    label = Service._currentHref()
+    Service.trackEvent('Form Message', {
+      category: 'Application',
+      action: 'Invalid Lottery Number',
+      label: label
+    })
+
   Service.trackTimeout = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Timeout' })
+
+  Service._currentHref = ->
+    $state.href($state.current.name, $state.params)
 
   return Service
 
