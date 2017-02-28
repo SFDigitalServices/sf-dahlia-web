@@ -15,7 +15,7 @@ accordion-heading.lead
           h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
         .content-card
           h4.content-card_title.no-margin
-            | {{listing.Reserved_community_type}}
+            | {{reservedLabel(listing, listing.Reserved_community_type, 'eligibility')}}
           p.c-steel
             | {{'LISTINGS.ALL_UNITS' | translate}}
           p.c-steel(ng-text-truncate="listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
@@ -107,12 +107,12 @@ accordion-heading.lead
             | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
         .content-card ng-repeat="(type, units) in listing.reservedUnits"
           h4.content-card_title.no-margin
-            | {{type}}
+            | {{reservedLabel(listing, type, 'eligibility')}}
           p.c-steel
             | {{units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")
+          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{reservedLabel(listing, type, 'unitDescription')}}"
 
     li.custom-counter_item ng-if="listingHasPriorityUnits()"
       .content-tile
@@ -123,12 +123,12 @@ accordion-heading.lead
             | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
         .content-card ng-repeat="(type, units) in listing.priorityUnits"
           h4.content-card_title.no-margin
-            | {{type}}
+            | {{priorityLabel(type, 'name')}}
           p.c-steel
             | {{units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel(ng-text-truncate="specialUnitTypeDescription(type) | nl2br" ng-tt-words-threshold="60")
+          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{priorityLabel(type, 'description')}}"
 
     li.custom-counter_item
       .content-tile

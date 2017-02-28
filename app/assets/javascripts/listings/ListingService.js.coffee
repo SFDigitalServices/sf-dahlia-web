@@ -179,13 +179,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.sortBy sessions, (session) ->
       moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
 
-  Service.calculateNumberOfAvailableUnits = (listing) ->
-    units = _.filter listing.Units, (unit) ->
-      unit.Status == "Available"
-    listing.numberOfAvailableUnits = units.length
-
   Service.allListingUnitsAvailable = (listing) ->
-    listing.numberOfAvailableUnits == listing.Units.length
+    listing.Units_Available == listing.Units.length
 
   ###################################### Salesforce API Calls ###################################
 
@@ -340,8 +335,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if data && data.units
         units = data.units
         Service.listing.Units = units
-        # TODO: remove after we get this field from salesforce
-        Service.calculateNumberOfAvailableUnits(Service.listing)
         Service.listing.groupedUnits = Service.groupUnitDetails(units)
         Service.listing.unitTypes = Service.groupUnitTypes(units)
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
@@ -417,37 +410,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
 
-  Service.reservedTypes = (listing) ->
-    Service.collectTypes(listing, 'reservedDescriptor')
-
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 
   Service.collectTypes = (listing, specialType) ->
-    types = []
-    _.each listing[specialType], (descriptor) ->
-      if descriptor.name
-        name = descriptor.name
-        if listing.Reserved_community_minimum_age && name == 'Senior'
-          # TODO: make plural, after we finalize all the priority/reserved language
-          name = "#{name} #{listing.Reserved_community_minimum_age}+"
-        types.push(name)
-    if types.length then types.join(', ') else ''
-
-  Service.specialUnitTypeDescription = (type) ->
-    switch type
-      when 'Senior'
-        $translate.instant("LISTINGS.RESERVED_SENIOR_DESCRIPTION")
-      when 'Veteran'
-        $translate.instant("LISTINGS.RESERVED_VETERAN_DESCRIPTION")
-      when 'Developmental disabilities'
-        $translate.instant("LISTINGS.RESERVED_DEVELOPMENTALLY_DISABLED_DESCRIPTION")
-      when 'Hearing/Vision impaired'
-        ,'Vision impaired'
-        ,'Hearing impaired'
-          $translate.instant("LISTINGS.PRIORITY_HEARING_VISION_IMPAIRED_DESCRIPTION")
-      when 'Mobility impaired'
-        $translate.instant("LISTINGS.PRIORITY_MOBILITY_IMPAIRED_DESCRIPTION")
+    _.map listing[specialType], (descriptor) ->
+      descriptor.name
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --

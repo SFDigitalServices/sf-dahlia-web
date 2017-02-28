@@ -197,15 +197,11 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
-  $scope.priorityTypes = (listing) ->
-    ListingService.priorityTypes(listing)
-
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
-
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
@@ -228,20 +224,73 @@ ListingController = (
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
 
-  $scope.listingReservedTypes = (listing = $scope.listing) ->
-    ListingService.reservedTypes(listing)
-
-  $scope.specialUnitTypeDescription = (type) ->
-    ListingService.specialUnitTypeDescription(type)
-
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
+  $scope.reservedForLabels = (listing) ->
+    types = []
+    _.each listing.reservedDescriptor, (descriptor) ->
+      if descriptor.name
+        type = descriptor.name
+        types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
+    if types.length then types.join(', ') else ''
+
+  $scope.reservedLabel = (listing, type,  modifier) ->
+    labelMap =
+      'Senior':
+        building: 'Senior'
+        eligibility: 'Seniors'
+        reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
+        reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
+        unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
+      'Veteran':
+        building: 'Veterans'
+        eligibility: 'Veterans'
+        reservedFor: 'veterans'
+        reservedForWhoAre: 'veterans'
+        unitDescription: 'veterans of the U.S. Armed Forces.'
+      'Developmental disabilities':
+        building: 'Developmental Disability'
+        eligibility: 'People with developmental disabilities'
+        reservedFor: 'people with developmental disabilities'
+        reservedForWhoAre: 'developmentally disabled'
+        unitDescription: 'people with developmental disabilities'
+
+    return type unless labelMap[type]
+    return labelMap[type][modifier]
+
+  $scope.priorityLabel = (priority, modifier) ->
+    labelMap =
+      'Vision impaired':
+        name: 'Vision Impairments'
+        description: 'impaired vision'
+      'Hearing impaired':
+        name: 'Hearing Impairments'
+        description: 'impaired hearing'
+      'Hearing/Vision impaired':
+        name: 'Vision and/or Hearing Impairments'
+        description: 'impaired vision and/or hearing'
+      'Mobility impaired':
+        name: 'Mobility Impairments'
+        description: 'impaired mobility'
+
+    return priority unless labelMap[priority]
+    return labelMap[priority][modifier]
+
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
+
+  $scope.priorityTypeNames = (listing) ->
+    names = _.map $scope.priorityTypes(listing), (priority) ->
+      $scope.priorityLabel(priority, 'name')
+    names.join(', ')
+
   $scope.seniorMinimumAge = (listing = $scope.listing) ->
-    if listing.Reserved_community_minimum_age && listing.Reserved_community_type == 'Senior'
+    if listing.Reserved_community_minimum_age
       "#{listing.Reserved_community_minimum_age}+"
     else
       ''
+
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
 
