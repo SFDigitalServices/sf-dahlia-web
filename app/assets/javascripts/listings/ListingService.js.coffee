@@ -365,12 +365,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # little hack to re-sort Studio to the top
     _.map units, (u) ->
       u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
+      u.Unit_Type = '000SRO' if u.Unit_Type == 'SRO'
       return u
     # sort everything based on the order presented in pickList
     units = _.sortBy units, Service.fieldsForUnitGrouping
     # put "Studio" back to normal
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
+      u.Unit_Type = 'SRO' if u.Unit_Type == '000SRO'
       return u
 
   Service.groupUnitTypes = (units) ->
@@ -402,7 +404,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
     listing.unitSummaries ?= {}
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
-    _.uniqBy(combined, 'unitType')
+    combined = _.omitBy(_.uniqBy(combined, 'unitType'), _.isNil)
+    # rename the unitType field to match how individual units are labeled
+    _.map(combined, (u) -> u.Unit_Type = u.unitType)
+    Service._sortGroupedUnits(combined)
 
   Service.listingHasPriorityUnits = (listing) ->
     !_.isEmpty(listing.priorityUnits)

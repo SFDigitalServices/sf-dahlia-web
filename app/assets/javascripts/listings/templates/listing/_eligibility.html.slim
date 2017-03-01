@@ -38,7 +38,8 @@ accordion-heading.lead
                 | {{minYearlyIncome() | divideAndRoundDown : 12 | currency : $ : 0}}
                 span.value-label
                   | /month
-              span.stats-list_label based on household size
+              span.stats-list_label
+                | based on household size
 
               span.ui-control.ui-icon.ui-small
                 svg
@@ -71,10 +72,10 @@ accordion-heading.lead
           tbody
             tr ng-repeat="unit_summary in listing.unitSummary"
               td scope="row"
-                | {{unit_summary.unitType}}
-              td ng-if="unit_summary.unitType == 'Flex'"
+                | {{unit_summary.Unit_Type}}
+              td ng-if="unit_summary.Unit_Type == 'Flex'"
                 | Flex people
-              td ng-if="unit_summary.unitType != 'Flex'"
+              td ng-if="unit_summary.Unit_Type != 'Flex'"
                 ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
                 small
                   | people
