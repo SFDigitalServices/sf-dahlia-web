@@ -248,7 +248,7 @@ ListingController = (
         eligibility: 'Veterans'
         reservedFor: 'veterans'
         reservedForWhoAre: 'veterans'
-        unitDescription: 'veterans of the U.S. Armed Forces.'
+        unitDescription: 'veterans of the U.S. Armed Forces'
       'Developmental disabilities':
         building: 'Developmental Disability'
         eligibility: 'People with developmental disabilities'
