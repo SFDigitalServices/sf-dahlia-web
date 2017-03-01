@@ -1,12 +1,12 @@
 / checkPreferenceEligibility is what resets preferences on this page if things have changed
-.app-card.form-card ng-init="checkPreferenceEligibility()"
+.app-card.form-card ng-init="checkPreferenceEligibility('liveWorkInSf')"
   short-form-header
     h2.app-card_question translate="D2_LIVE_WORK_PREFERENCE.TITLE"
     p.form-note.margin-bottom translate="T.OPTIONAL"
     p.form-note.margin-bottom translate="D2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
 
   .app-inner
-    .form-group
+    .form-group ng-class="{ error: inputInvalid(currentLiveWorkType) }"
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
@@ -17,6 +17,6 @@
 
         live-work-preference(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveWorkInSf')")
 
-      preference-opt-out preference="{{liveWorkPreferenceType()}}" application="application"
+      preference-opt-out preference="{{currentLiveWorkType}}" application="application"
 
   short-form-save-and-submit

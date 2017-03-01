@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 / checkPreferenceEligibility is what resets preferences on this page if things have changed
 .app-card.form-card ng-init="checkPreferenceEligibility()"
+=======
+.app-card.form-card ng-init="checkPreferenceEligibility('neighborhoodResidence')"
+>>>>>>> features/new-page-for-live-in-neighborhood-#138684311
   short-form-header no-border="true" featured-leader="true"
     .leader-header.featured-leader.border-bottom
       h2.app-card_question translate="D2A_NEIGHBORHOOD_PREFERENCE.TITLE"
@@ -9,7 +13,7 @@
         p.form-note.t-regular.margin-bottom translate="D2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P2"
 
   .app-inner
-    .form-group
+    .form-group ng-class="{ error: inputInvalid('neighborhoodResidence') }"
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
         preference-with-proof(title="{{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")

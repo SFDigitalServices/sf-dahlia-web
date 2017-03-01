@@ -427,6 +427,15 @@ do ->
         ShortFormApplicationService.copyNRHPtoLiveInSf()
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
 
+    describe 'preferenceRequired', ->
+      it 'returns true if optOutField is not marked', ->
+        ShortFormApplicationService.application.liveWorkOptOut = false
+        expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual true
+
+      it 'returns false if optOutField is marked', ->
+        ShortFormApplicationService.application.liveWorkOptOut = true
+        expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
+
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}

@@ -53,6 +53,7 @@ do ->
       invalidateIncomeForm: jasmine.createSpy()
       invalidateContactForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
+      preferenceRequired: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -412,6 +413,20 @@ do ->
         it 'returns true', ->
           spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
           expect(scope.showPreference('displaced')).toEqual true
+
+    describe 'preferenceRequired', ->
+      describe 'listing does not have preference', ->
+        it 'returns false', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+          expect(scope.preferenceRequired('liveInSf')).toEqual false
+
+      describe 'listing has preference', ->
+        it 'calls preferenceRequired function', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+          spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
+          spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([1])
+          scope.preferenceRequired('liveInSf')
+          expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith('liveInSf')
 
     describe 'primaryApplicantUnder18', ->
       it 'checks form values for primary applicant DOB that is under 18', ->

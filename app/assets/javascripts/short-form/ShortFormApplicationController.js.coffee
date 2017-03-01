@@ -33,6 +33,10 @@ ShortFormApplicationController = (
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.householdEligibilityErrorMessage = null
+  # this tracks what type of pref is being shown on the live-work-preference page:
+  # liveWorkInSf (combo), liveInSf, or workInSf (single)
+  $scope.currentLiveWorkType = null
+  $scope.currentPreferenceType = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -151,7 +155,7 @@ ShortFormApplicationController = (
     # show error alert
     $scope.hideAlert = false
     ShortFormNavigationService.isLoading(false)
-    el = angular.element(document.getElementById('short-form-wrapper'))
+    el = angular.element(document.getElementById('short-form-alerts'))
     # uses duScroll aka 'angular-scroll' module
     topOffset = 0
     duration = 400 # animation speed in ms
@@ -338,7 +342,12 @@ ShortFormApplicationController = (
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 
-  $scope.checkPreferenceEligibility = () ->
+  $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
+    if type == 'liveWorkInSf'
+      $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
+      $scope.currentPreferenceType = $scope.currentLiveWorkType
+    else if type == 'neighborhoodResidence'
+      $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences()
 
   $scope.liveInSfMembers = ->
@@ -390,6 +399,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelOptOut(preference)
 
   $scope.preferenceRequired = (preference) ->
+    return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
 
   ###### Attachment File Uploads ########

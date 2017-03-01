@@ -10,6 +10,7 @@ div
 
   ng-transclude ng-if="featuredLeader"
 
-  alert-box(short-form="true" missing-required-contact-info="requiredContactInformationMissing()" address-error="addressError")
+  #short-form-alerts
+    alert-box(short-form="true" missing-required-contact-info="requiredContactInformationMissing()" preference-warning="inputInvalid(currentPreferenceType)" address-error="addressError")
 
-  alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")
+    alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")

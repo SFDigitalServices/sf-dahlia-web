@@ -207,6 +207,8 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
+        "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "RELATIONSHIP": "Please enter a relationship.",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
