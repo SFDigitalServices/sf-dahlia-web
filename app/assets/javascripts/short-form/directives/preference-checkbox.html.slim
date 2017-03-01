@@ -1,5 +1,5 @@
-.checkbox-block.margin-bottom ng-class="{ error: inputInvalid(preference) }"
-  input id="preferences-{{preference}}" name="{{preference}}" data-event="{{pref_data_event}}" ng-model="application.preferences[preference]" type="checkbox" ng-click="reset_preference_data(preference)" aria-describedby="description-{{preference}}" ng-required="{{required}}"
+.checkbox-block.margin-bottom
+  input id="preferences-{{preference}}" name="{{preference}}" data-event="{{pref_data_event}}" ng-model="application.preferences[preference]" type="checkbox" ng-click="reset_preference_data(preference)" aria-describedby="description-{{preference}}" ng-required="{{required}}" ng-class="{ error: inputInvalid(preference) }"
   label.checkbox-block_label for="preferences-{{preference}}"
     strong.form-label.caps
       | {{title}}

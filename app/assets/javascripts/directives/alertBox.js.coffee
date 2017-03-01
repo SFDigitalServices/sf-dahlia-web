@@ -6,6 +6,7 @@ angular.module('dahlia.directives')
     addressError: '=?'
     hideAlert: '=?'
     missingRequiredContactInfo: '=?'
+    preferenceWarning: '=?'
     customMessage: '=?'
     customSubMessage: '=?'
     invert: '=?'
@@ -36,6 +37,8 @@ angular.module('dahlia.directives')
     scope.alertText = ->
       if scope.customMessage
         return scope.customMessage
+      else if scope.preferenceWarning
+        $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 
