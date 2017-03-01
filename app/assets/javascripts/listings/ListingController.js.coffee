@@ -43,6 +43,7 @@ ListingController = (
   # for showing/hiding listings results buckets on browse page, hidden by default
   $scope.displayNotMatchedListings = false
   $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
+  $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -75,6 +76,9 @@ ListingController = (
 
   $scope.formattedApplicationAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Application', display)
+
+  $scope.formattedLeasingAgentAddress = (listing, display) ->
+    ListingService.formattedAddress(listing, 'Leasing_Agent', display)
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
