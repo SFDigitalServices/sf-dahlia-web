@@ -1,13 +1,14 @@
 angular.module('dahlia.directives')
-.directive 'preferenceOptOut', ->
-  scope: true
+.directive 'preferenceOptOut',
+['ShortFormApplicationService', (ShortFormApplicationService) ->
+  scope:
+    preference: '@'
+    application: '='
   templateUrl: 'short-form/directives/preference-opt-out.html'
 
   link: (scope, elem, attrs) ->
-    scope.preference = attrs.preference
-    # look up the optOutField name using ShortFormApplicationController
-    scope.model = scope.optOutField(scope.preference)
+    scope.optOutField = ShortFormApplicationService.optOutFields[scope.preference]
 
-    scope.uncheckPreference = ->
-      # calls ShortFormApplicationController
-      scope.cancelPreference(scope.preference)
+    scope.cancelPreference = ->
+      ShortFormApplicationService.cancelPreference(scope.preference)
+]

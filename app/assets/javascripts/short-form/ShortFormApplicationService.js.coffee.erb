@@ -196,13 +196,19 @@ ShortFormApplicationService = (
     Service.preferences["#{preference}_household_member"] = null
     Service.preferences["#{preference}_proof_option"] = null
     Service.preferences["#{preference}_proof_file"] = null
+    if preference == 'liveInSf' || preference == 'workInSf'
+      Service.preferences.liveWorkInSf = false
+    if preference == 'neighborhoodResidence'
+      # cancelling NRHP also cancels liveInSf
+      Service.cancelPreference('liveInSf')
+      Service.preferences.liveWorkInSf_preference = null
 
   Service.cancelOptOut = (preference) ->
     optOutField = Service.optOutFields[preference]
     Service.application[optOutField] = false
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
-      Service.application['liveWorkOptOut'] = false
+      Service.application.liveWorkOptOut = false
 
   Service.preferenceRequired = (preference) ->
     optOutField = Service.optOutFields[preference]
@@ -313,7 +319,7 @@ ShortFormApplicationService = (
     selectedMember = Service.preferences[preference + '_household_member']
 
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if !_.includes(members, selectedMember)
+    if selectedMember && !_.includes(members, selectedMember)
       Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
 

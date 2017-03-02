@@ -1,3 +1,4 @@
+/ checkPreferenceEligibility does some init to $scope vars to put the proper error messaging in place
 .app-card.form-card ng-init="checkPreferenceEligibility('neighborhoodResidence')"
   short-form-header no-border="true" featured-leader="true"
     .leader-header.featured-leader.border-bottom
@@ -13,6 +14,6 @@
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
         preference-with-proof(title="{{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")
 
-      preference-opt-out preference="neighborhoodResidence"
+      preference-opt-out preference="neighborhoodResidence" application="application"
 
   short-form-save-and-submit

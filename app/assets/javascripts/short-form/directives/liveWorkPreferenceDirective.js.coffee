@@ -13,6 +13,7 @@ angular.module('dahlia.directives')
     # because the template has access to the parent functions
 
     scope.reset_livework_data = ->
+      scope.cancelOptOut('liveWorkInSf')
       prefs = ['workInSf', 'liveInSf']
       prefs.forEach (preference) ->
         scope.preferences[preference] = null
