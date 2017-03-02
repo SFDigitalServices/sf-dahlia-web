@@ -4,6 +4,7 @@ angular.module('dahlia.directives')
   scope:
     preference: '@'
     application: '='
+    invalid: '@'
   templateUrl: 'short-form/directives/preference-opt-out.html'
 
   link: (scope, elem, attrs) ->

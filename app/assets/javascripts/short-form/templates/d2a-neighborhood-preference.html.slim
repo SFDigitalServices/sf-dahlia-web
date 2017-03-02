@@ -14,6 +14,9 @@
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
         preference-with-proof(title="{{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")
 
-      preference-opt-out preference="neighborhoodResidence" application="application"
+      preference-opt-out preference="neighborhoodResidence" application="application" invalid="inputInvalid('neighborhoodResidence')"
+
+      small.error ng-if="inputInvalid('neighborhoodResidence')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit

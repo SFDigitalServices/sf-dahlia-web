@@ -17,6 +17,9 @@
 
         live-work-preference(title="{{'D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="D2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveWorkInSf')")
 
-      preference-opt-out preference="{{currentLiveWorkType}}" application="application"
+      preference-opt-out preference="{{currentLiveWorkType}}" application="application" invalid="inputInvalid(currentLiveWorkType)"
+
+      small.error ng-if="inputInvalid(currentLiveWorkType)"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit
