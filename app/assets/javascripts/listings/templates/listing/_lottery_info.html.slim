@@ -16,7 +16,7 @@ section.content-wrap
             use xlink:href="#i-clock"
         | Applications Closed {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
-  span ng-if="lotteryDateVenueAvailable(listing) && !lotteryDatePassed(listing)"
+  span ng-if="lotteryDateVenueAvailable(listing) && !listing.Lottery_Results"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
   .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
