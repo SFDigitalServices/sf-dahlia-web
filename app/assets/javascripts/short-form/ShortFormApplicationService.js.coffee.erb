@@ -86,21 +86,21 @@ ShortFormApplicationService = (
         completed.You &&
         # make sure all validatedForms in previous section == true
         _.every(validated['You'], (i) -> i)
-      when 'Preferences'
+      when 'Income'
         Service.userCanAccessSection('Household') &&
         completed.Household &&
         # make sure all validatedForms in previous section == true
         _.every(validated['Household'], (i) -> i)
-      when 'Income'
-        Service.userCanAccessSection('Preferences') &&
-        completed.Preferences &&
-        # make sure all validatedForms in previous section == true
-        _.every(validated['Preferences'], (i) -> i)
-      when 'Review'
+      when 'Preferences'
         Service.userCanAccessSection('Income') &&
         completed.Income &&
         # make sure all validatedForms in previous section == true
         _.every(validated['Income'], (i) -> i)
+      when 'Review'
+        Service.userCanAccessSection('Preferences') &&
+        completed.Preferences &&
+        # make sure all validatedForms in previous section == true
+        _.every(validated['Preferences'], (i) -> i)
       else
         false
 

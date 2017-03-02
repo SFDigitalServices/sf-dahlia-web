@@ -9,10 +9,10 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I don't choose any preferences
       And I indicate having vouchers
       And I fill out my income
+      And I continue past the Lottery Preferences intro
+      And I don't choose any preferences
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
@@ -25,6 +25,8 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate having vouchers
+      And I fill out my income
       And I continue past the Lottery Preferences intro
       And I go to the Live/Work preference page
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
@@ -38,6 +40,8 @@ Feature: Short Form Application
       And I fill out the short form Contact page with No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate having vouchers
+      And I fill out my income
       And I continue past the Lottery Preferences intro
       And I go to the Live/Work preference page
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
@@ -61,13 +65,13 @@ Feature: Short Form Application
       And I fill out the short form Contact page with my account email, No Address and WorkInSF
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate having vouchers
+      And I fill out my income
       And I continue past the Lottery Preferences intro
       And I opt out of NRHP and Live/Work
       And I select "Jane Doe" for COP preference
       And I select "Jane Doe" for DTHP preference
-      And I go to the income page
-      And I indicate having vouchers
-      And I fill out my income
+      And I submit my preferences
       And I fill out the optional survey
       And I confirm details on the review page
       And I agree to the terms and submit
