@@ -88,11 +88,6 @@ ListingController = (
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
-  $scope.lotteryDatePassed = (listing) ->
-    today = new Date
-    lotteryDate = new Date(listing.Lottery_Date)
-    lotteryDate <= today
-
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
 

@@ -139,25 +139,6 @@ do ->
         scope.listingApplicationClosed(fakeListing)
         expect(fakeListingService.listingIsOpen).toHaveBeenCalled()
 
-    describe '$scope.lotteryDatePassed', ->
-      describe 'passed lottery date', ->
-        it 'returns true', ->
-          passedLotListing = fakeListing
-          passedLotListing.Lottery_Date = yesterday
-          expect(scope.lotteryDatePassed(passedLotListing)).toEqual true
-
-      describe 'lottery date today', ->
-        it 'returns true', ->
-          todayLotListing = fakeListing
-          todayLotListing.Lottery_Date = new Date()
-          expect(scope.lotteryDatePassed(todayLotListing)).toEqual true
-
-      describe 'lottery date tomorrow', ->
-        it 'returns false', ->
-          futureLotListing = fakeListing
-          futureLotListing.Lottery_Date = tomorrow
-          expect(scope.lotteryDatePassed(futureLotListing)).toEqual false
-
     describe '$scope.openLotteryResultsModal', ->
       it 'expect ListingService.openLotteryResultsModal to be called', ->
         scope.openLotteryResultsModal()
@@ -262,20 +243,6 @@ do ->
         display = 'full'
         scope.formattedApplicationAddress(fakeListing, display)
         expect(fakeListingService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Application', display)
-
-    describe '$scope.lotteryDatePassed', ->
-      describe 'passed lottery date', ->
-        it 'returns true', ->
-          expect(scope.lotteryDatePassed(fakeListing)).toEqual(true)
-
-      describe 'not passed lottery date', ->
-        it 'returns false', ->
-          listing = fakeListing
-          today = new Date()
-          tomorrow = new Date()
-          tomorrow.setDate(today.getDate()+1)
-          listing.Lottery_Date = tomorrow
-          expect(scope.lotteryDatePassed(fakeListing)).toEqual(false)
 
     describe '$scope.applicantSelectedForPreference', ->
       describe 'applicant is selected for lottery preference', ->
