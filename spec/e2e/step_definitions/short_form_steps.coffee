@@ -34,6 +34,9 @@ getUrlAndCatchPopup = (url) ->
       alert.accept()
       browser.get url
 
+submitForm = () ->
+  element(By.id('submit')).click()
+
 module.exports = ->
   # import global cucumber options
   @World = World
@@ -57,22 +60,22 @@ module.exports = ->
     element(By.model('applicant.dob_month')).sendKeys('02')
     element(By.model('applicant.dob_day')).sendKeys('22')
     element(By.model('applicant.dob_year')).sendKeys('1990')
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I submit the Name page with my account info', ->
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage({email: 'jane@doe.com'})
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
     fillOutContactPage({email: 'jane@doe.com', address1: '1222 Harrison St.'})
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage()
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -80,19 +83,31 @@ module.exports = ->
 
   @When 'I don\'t indicate an alternate contact', ->
     element(By.id('alternate_contact_none')).click()
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I indicate I will live alone', ->
     element(By.id('live_alone')).click()
 
+  @When 'I go to the income page', ->
+    submitForm()
+
+  @When 'I indicate having vouchers', ->
+    element(By.id('householdVouchersSubsidies_yes')).click()
+    submitForm()
+
+  @When 'I fill out my income', ->
+    element(By.id('incomeTotal')).sendKeys('22000')
+    element(By.id('per_year')).click()
+    submitForm()
+
   @When 'I continue past the Lottery Preferences intro', ->
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
-    element(By.id('submit')).click()
+    submitForm()
     # also skip general lottery notice
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I opt out of Live/Work preference', ->
     optOutAndSubmit()
@@ -119,7 +134,7 @@ module.exports = ->
     ).last().click()
 
   @When 'I go to the income page', ->
-    element(By.id('submit')).click()
+    submitForm()
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
@@ -139,40 +154,33 @@ module.exports = ->
 
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
-    element(By.id('submit')).click()
+    submitForm()
     element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Live/Work preference page', ->
     element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
     # skip intro
-    element(By.id('submit')).click()
+    submitForm()
     # skip NRHP (if exists)
     if element(By.id('preferences-neighborhoodResidence'))
-      element(By.id('submit')).click()
+      submitForm()
 
-
-  @When 'I indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_yes')).click()
-    element(By.id('submit')).click()
-
-  @When 'I fill out my income', ->
-    element(By.id('incomeTotal')).sendKeys('22000')
-    element(By.id('per_year')).click()
-    element(By.id('submit')).click()
+  @When 'I submit my preferences', ->
+    submitForm()
 
   @When 'I fill out the optional survey', ->
     element(By.id('referral_newspaper')).click()
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I confirm details on the review page', ->
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I continue confirmation without signing in', ->
     element(By.id('confirm_no_account')).click()
 
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click()
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
@@ -184,7 +192,7 @@ module.exports = ->
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
   @When 'I submit the Create Account form', ->
-    element(By.id('submit')).click()
+    submitForm()
     browser.waitForAngular()
 
   @When 'I sign in', ->

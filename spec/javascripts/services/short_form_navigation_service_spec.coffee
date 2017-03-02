@@ -11,6 +11,7 @@ do ->
     fakeShortFormApplicationService =
       application:
         householdMembers: []
+        surveyComplete: false
     fakeLoadingOverlayService =
       start: -> null
       stop: -> null
@@ -32,17 +33,17 @@ do ->
           'household-member-form-edit'
         ]
       },
+      { name: 'Income', pages: [
+          'income-vouchers',
+          'income'
+        ]
+      },
       { name: 'Preferences', pages: [
           'preferences-intro',
           'neighborhood-preference',
           'live-work-preference',
           'preferences-programs',
           'general-lottery-notice'
-        ]
-      },
-      { name: 'Income', pages: [
-          'income-vouchers',
-          'income'
         ]
       },
       { name: 'Review', pages: [
@@ -128,3 +129,16 @@ do ->
         fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getLandingPage(householdSection)
         expect(page).toEqual 'household-members'
+      it 'gets income landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Income'})
+        expect(page).toEqual 'income-vouchers'
+      it 'gets preference landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Preferences'})
+        expect(page).toEqual 'preferences-intro'
+      it 'gets review survey if survey is incomplete', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-optional'
+      it 'gets review summary if survey is complete', ->
+        fakeShortFormApplicationService.application.surveyComplete = true
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-summary'

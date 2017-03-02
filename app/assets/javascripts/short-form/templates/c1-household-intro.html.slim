@@ -10,9 +10,9 @@
 
   .app-inner.inset.border-bottom
     .form-group
-      button#live_alone.button.expand.tall ng-click="validateHouseholdEligibility('householdMatch', 'dahlia.short-form-application.preferences-programs')"
+      button#live_alone.button.expand.tall type="submit"
         | {{'LABEL.LIVE_ALONE' | translate}}
-      button.button.expand.tall ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-overview"
+      button#other-people.button.expand.tall ng-click="clearHouseholdErrorMessage()" ui-sref="dahlia.short-form-application.household-overview"
        | {{'LABEL.OTHER_PEOPLE' | translate}}
 
 

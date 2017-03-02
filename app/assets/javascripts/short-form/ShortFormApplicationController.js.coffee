@@ -262,7 +262,7 @@ ShortFormApplicationController = (
     if $scope.alternateContact.alternateContactType == 'None'
       ShortFormApplicationService.clearAlternateContactDetails()
       # skip ahead if they aren't filling out an alt. contact
-      $scope.goToHouseholdLandingPage()
+      $scope.goToLandingPage('Household')
     else
       if $scope.alternateContact.alternateContactType != 'Social Worker or Housing Counselor'
         $scope.alternateContact.agency = null
@@ -280,14 +280,12 @@ ShortFormApplicationController = (
   $scope.getLandingPage = (section) ->
     ShortFormNavigationService.getLandingPage(section)
 
-  $scope.goToHouseholdLandingPage = ->
-    $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.getHouseholdLandingPage()}")
-
-  $scope.getHouseholdLandingPage = (section) ->
-    $scope.getLandingPage({name: 'Household'})
+  $scope.goToLandingPage = (section) ->
+    page = ShortFormNavigationService.getLandingPage({name: section})
+    $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
 
   ###### Proof of Preferences Logic ########
-  # this is called after d0-preferences-intro
+  # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
@@ -302,8 +300,8 @@ ShortFormApplicationController = (
       # only show general lottery notice if they have no preferences
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
     else
-      # otherwise go to the Income section
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
+      # otherwise go to the Review section
+      $scope.goToLandingPage('Review')
 
   $scope.checkAfterNeighborhood = ->
     if ShortFormApplicationService.hasPreference('neighborhoodResidence')
@@ -426,8 +424,7 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     # skip the check if we're doing an incomeMatch and the applicant has vouchers
     if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+      $scope.goToLandingPage('Preferences')
       return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
@@ -439,10 +436,9 @@ ShortFormApplicationController = (
     if eligibility[match]
       $scope.clearHouseholdErrorMessage()
       if match == 'incomeMatch'
-        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
-        $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+        $scope.goToLandingPage('Preferences')
       else
-        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-intro')
+        $scope.goToLandingPage('Income')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
