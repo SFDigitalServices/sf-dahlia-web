@@ -15,6 +15,32 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.AMICharts = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
+  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+
+  Service.listingDownloadURLs = []
+  Service.defaultApplicationURLs = [
+    # http://sfmohcd.org/general-bmr-rental-application
+    {
+      'language': 'English'
+      'label': 'English'
+      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+    }
+    {
+      'language': 'Spanish'
+      'label': 'Español'
+      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+    {
+      'language': 'Traditional Chinese'
+      'label': '中文'
+      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+    {
+      'language': 'Tagalog'
+      'label': 'Filipino'
+      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+  ]
 
   Service.fieldsForUnitGrouping = [
     'Unit_Type',
@@ -134,12 +160,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
+    street = "#{type}_Street_Address"
+    zip = "#{type}_Postal_Code"
+    if type == 'Leasing_Agent'
+      street = "#{type}_Street"
+      zip = "#{type}_Zip"
+    else if type == 'Building'
+      zip = "#{type}_Zip_Code"
+
     # If Street address is undefined, then return false for display and google map lookup
-    if listing["#{type}_Street_Address"] == undefined
+    if listing[street] == undefined
       return
     # If other fields are undefined, proceed, with special string formatting
-    if listing["#{type}_Street_Address"] != undefined
-      Street_Address = listing["#{type}_Street_Address"] + ', '
+    if listing[street] != undefined
+      Street_Address = listing[street] + ', '
     else
       Street_Address = ''
     if listing["#{type}_City"] != undefined
@@ -150,12 +184,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       State = listing["#{type}_State"]
     else
       State = ''
-    if type == 'Application'
-      zip_code_field = "#{type}_Postal_Code"
-    else
-      zip_code_field = "#{type}_Zip_Code"
-    if listing[zip_code_field] != undefined
-      Zip_Code = listing[zip_code_field]
+    if listing[zip] != undefined
+      Zip_Code = listing[zip]
     else
       Zip_Code = ''
 
@@ -484,6 +514,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       value.numOfHousehold == householdIncomeLevel.numOfHousehold
     return unless incomeLevel
     incomeLevel.amount
+
+  Service.getListingDownloadURLs = ->
+    urls = angular.copy(Service.defaultApplicationURLs)
+    english = _.find(urls, { language: 'English' })
+    chinese = _.find(urls, { language: 'Traditional Chinese' })
+    spanish = _.find(urls, { language: 'Spanish' })
+    tagalog = _.find(urls, { language: 'Tagalog' })
+    # replace download URLs if they are customized on the listing
+    listing = Service.listing
+    english.url = listing.Download_URL if listing.Download_URL
+    chinese.url = listing.Download_URL_Cantonese if listing.Download_URL_Cantonese
+    spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish
+    tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
+    angular.copy(urls, Service.listingDownloadURLs)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
