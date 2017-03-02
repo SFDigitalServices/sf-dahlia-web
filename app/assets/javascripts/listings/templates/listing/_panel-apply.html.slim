@@ -45,10 +45,10 @@
     p.c-charcoal.t-small.margin-bottom ng-if="!listing.Accepting_applications_at_leasing_agent"
       |  Paper applications must be sent by US Mail and cannot be submitted in person.
     ng-include src="'listings/templates/listing/_download_application.html'"
-    .option-divider
+    .option-divider ng-if="listing.Blank_paper_application_can_be_picked_up"
       span.or
         | or
-  .content-group.has-divider
+  .content-group.has-divider ng-if="listing.Blank_paper_application_can_be_picked_up"
     h3.content-group_title
       | Pickup an application
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
