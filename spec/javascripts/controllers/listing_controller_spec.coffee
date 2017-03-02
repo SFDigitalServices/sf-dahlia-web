@@ -35,11 +35,13 @@ do ->
         lotteryResultsListings: []
         listing: fakeListing
         favorites: fakeListingFavorites
-        maxIncomeLevels: []
+        AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
+        stubFeatures: () -> null
+        listingIs: () -> null
         loading: {}
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
@@ -47,6 +49,9 @@ do ->
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       fakeListingService.formattedAddress = jasmine.createSpy()
+      fakeListingService.listingHasPriorityUnits = jasmine.createSpy()
+      fakeListingService.listingHasReservedUnits = jasmine.createSpy()
+      fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -97,8 +102,8 @@ do ->
       it 'populates scope with favorites', ->
         expect(scope.favorites).toEqual fakeListingFavorites
 
-      it 'populates scope with maxIncomeLevels', ->
-        expect(scope.maxIncomeLevels).toBeDefined()
+      it 'populates scope with AMICharts', ->
+        expect(scope.AMICharts).toBeDefined()
 
       it 'populates scope with lotteryPreferences', ->
         expect(scope.lotteryPreferences).toBeDefined()
@@ -303,3 +308,18 @@ do ->
         scope.lotterySearchNumber = '22222'
         scope.showLotteryRanking()
         expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
+
+    describe 'listingHasPriorityUnits', ->
+      it 'calls ListingService.listingHasPriorityUnits', ->
+        scope.listingHasPriorityUnits()
+        expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'listingHasReservedUnits', ->
+      it 'calls ListingService.listingHasReservedUnits', ->
+        scope.listingHasReservedUnits()
+        expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'allListingUnitsAvailable', ->
+      it 'calls ListingService.allListingUnitsAvailable', ->
+        scope.allListingUnitsAvailable()
+        expect(fakeListingService.allListingUnitsAvailable).toHaveBeenCalledWith(scope.listing)

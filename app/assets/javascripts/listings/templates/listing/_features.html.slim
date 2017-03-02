@@ -9,55 +9,33 @@ accordion-heading
 
 .content-section
   .content-tile.feature-tile
-    .feature-row.row.collapse
-      .medium-3.columns ng-if="listing.Neighborhood"
-        h4.feature-title
-          | Neighborhood
-      .medium-9.columns
-        p.feature-tile_content.t-small
-          | {{listing.Neighborhood}}
-    .feature-row.row.collapse ng-if="listing.Year_Built"
-      .medium-3.columns
-        h4.feature-title
-          | Built
-      .medium-9.columns
-        p.feature-tile_content.t-small
-          | {{listing.Year_Built}}
-    .feature-row.row.collapse ng-if="listing.Amenities"
-      .medium-3.columns
-        h4.feature-title
-          | Property Amenities
-      .medium-9.columns
-        div ng-bind-html="listing.Amenities | nl2br"
-    .feature-row.row.collapse ng-if="listing.Accessibility"
-      .medium-3.columns
-        h4.feature-title
-          | Accessibility
-      .medium-9.columns
-        div ng-bind-html="listing.Accessibility | nl2br"
-          | {{listing.Accessibility}}
+    feature-row title="Neighborhood" description="{{listing.Neighborhood}}"
+    feature-row title="Built" description="{{listing.Year_Built}}"
+    feature-row title="Property Amenities" description="{{listing.Amenities}}"
+    feature-row title="Accessibility" description="{{listing.Accessibility}}"
+    feature-row title="Services Onsite" description="{{listing.Services_Onsite}}"
 
   .content-tile.feature-tile
     h4.feature-title.margin-bottom Unit Features
 
-    .stats-toggle.margin-bottom ng-repeat="unit_summary in listing.unitSummary" data-event="gtm-unit-features" ng-click="toggleTable(unit_summary.unitType)" ng-class="isActiveTable(unit_summary.unitType)"
+    .stats-toggle.margin-bottom ng-repeat="unitGroup in listing.unitTypes" data-event="gtm-unit-features" ng-click="toggleTable(unitGroup.unitType)" ng-class="isActiveTable(unitGroup.unitType)"
       .toggle-box.toggler.has-toggle
         .toggle-box_label
           strong
-            | {{unit_summary.unitType}}:
+            | {{unitGroup.unitType}}:
           span
-            |  {{unit_summary.totalUnits}}
+            |  {{unitGroup.units.length}}
             span
-              ng-pluralize count="unit_summary.totalUnits" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+              ng-pluralize count="unitGroup.units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           span
-            | ,  {{unitAreaRange(unit_summary)}}
+            | ,  {{unitGroup.unitAreaRange}}
             span
               |  square feet
           span.ui-control.ui-icon.ui-small
             svg
               use xlink:href="#i-arrow-down"
 
-      .stats ng-show="isActiveTable(unit_summary.unitType)"
+      .stats ng-show="isActiveTable(unitGroup.unitType)"
         table role="grid"
           thead
             tr
@@ -67,7 +45,7 @@ accordion-heading
               th scope="col" Floor
               th scope="col" Accessibility
           tbody
-            tr ng-show="isActiveTable(unit_summary.unitType)" ng-repeat="unit in unitsByType(unit_summary.unitType)"
+            tr ng-show="isActiveTable(unitGroup.unitType)" ng-repeat="unit in unitGroup.units"
               td scope="row"
                 | {{unit.Unit_Number}}
               td
