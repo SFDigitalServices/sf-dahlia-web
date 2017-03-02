@@ -27,12 +27,13 @@ ListingController = (
   # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
-  $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  $scope.AMICharts = ListingService.AMICharts
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
   $scope.application = ShortFormApplicationService.application
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
+  $scope.amiChartExpanded = false
   # for expanding the "What happens next"
   $scope.whatHappens = false
   # for searching lottery number
@@ -43,6 +44,7 @@ ListingController = (
   # for showing/hiding listings results buckets on browse page, hidden by default
   $scope.displayNotMatchedListings = false
   $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
+  $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -58,15 +60,6 @@ ListingController = (
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (unit_summary) ->
-    if unit_summary.minSquareFt != unit_summary.maxSquareFt
-      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
-    else
-      unit_summary.minSquareFt
-
-  $scope.unitsByType = (unit_type) ->
-    $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
-
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
@@ -75,6 +68,9 @@ ListingController = (
 
   $scope.formattedApplicationAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Application', display)
+
+  $scope.formattedLeasingAgentAddress = (listing, display) ->
+    ListingService.formattedAddress(listing, 'Leasing_Agent', display)
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -122,6 +118,9 @@ ListingController = (
     $scope.closedListings.indexOf(listing) > -1
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
+
+  $scope.waitlistSlotsRemaining = (listing) ->
+    listing.Maximum_waitlist_size - listing.Number_of_people_currently_on_waitlist
 
   # --- Carousel ---
   $scope.carouselHeight = 300
@@ -206,6 +205,100 @@ ListingController = (
     e.currentTarget.blur()
     $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
+  $scope.hasMultipleAMICharts = ->
+    $scope.AMICharts.length > 1
+
+  $scope.hasMultipleAMIUnits = ->
+    _.keys($scope.listing.groupedUnits).length > 1
+
+  $scope.occupancyIncomeLevels = (amiLevel) ->
+    ListingService.occupancyIncomeLevels(amiLevel)
+
+  $scope.householdAMIChartCutoff = ->
+    ListingService.householdAMIChartCutoff()
+
+  $scope.minYearlyIncome = ->
+    ListingService.minYearlyIncome()
+
+  $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+    ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+
+  $scope.listingHasPriorityUnits = ->
+    ListingService.listingHasPriorityUnits($scope.listing)
+
+  $scope.listingHasReservedUnits = ->
+    ListingService.listingHasReservedUnits($scope.listing)
+
+  $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
+    ListingService.listingIsReservedCommunity(listing)
+
+  $scope.allListingUnitsAvailable = ->
+    ListingService.allListingUnitsAvailable($scope.listing)
+
+  $scope.reservedForLabels = (listing) ->
+    types = []
+    _.each listing.reservedDescriptor, (descriptor) ->
+      if descriptor.name
+        type = descriptor.name
+        types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
+    if types.length then types.join(', ') else ''
+
+  $scope.reservedLabel = (listing, type,  modifier) ->
+    labelMap =
+      'Senior':
+        building: 'Senior'
+        eligibility: 'Seniors'
+        reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
+        reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
+        unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
+      'Veteran':
+        building: 'Veterans'
+        eligibility: 'Veterans'
+        reservedFor: 'veterans'
+        reservedForWhoAre: 'veterans'
+        unitDescription: 'veterans of the U.S. Armed Forces'
+      'Developmental disabilities':
+        building: 'Developmental Disability'
+        eligibility: 'People with developmental disabilities'
+        reservedFor: 'people with developmental disabilities'
+        reservedForWhoAre: 'developmentally disabled'
+        unitDescription: 'people with developmental disabilities'
+
+    return type unless labelMap[type]
+    return labelMap[type][modifier]
+
+  $scope.priorityLabel = (priority, modifier) ->
+    labelMap =
+      'Vision impaired':
+        name: 'Vision Impairments'
+        description: 'impaired vision'
+      'Hearing impaired':
+        name: 'Hearing Impairments'
+        description: 'impaired hearing'
+      'Hearing/Vision impaired':
+        name: 'Vision and/or Hearing Impairments'
+        description: 'impaired vision and/or hearing'
+      'Mobility impaired':
+        name: 'Mobility Impairments'
+        description: 'impaired mobility'
+
+    return priority unless labelMap[priority]
+    return labelMap[priority][modifier]
+
+  $scope.priorityTypes = (listing) ->
+    ListingService.priorityTypes(listing)
+
+  $scope.priorityTypeNames = (listing) ->
+    names = _.map $scope.priorityTypes(listing), (priority) ->
+      $scope.priorityLabel(priority, 'name')
+    names.join(', ')
+
+  $scope.seniorMinimumAge = (listing = $scope.listing) ->
+    if listing.Reserved_community_minimum_age
+      "#{listing.Reserved_community_minimum_age}+"
+    else
+      ''
+
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
 
@@ -215,7 +308,7 @@ ListingController = (
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
-
+  # ---
 
 ############################################################################################
 ######################################## CONFIG ############################################

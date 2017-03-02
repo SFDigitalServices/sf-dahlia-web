@@ -1,0 +1,40 @@
+tr ng-repeat-start="unit_summary in summary" ng-if="unit_summary.minRentalMinIncome || unit_summary.maxRentalMinIncome"
+  / Dollar based rent and min income
+  td scope="row"
+    | {{unit_summary.unitType}}
+  td
+    span
+      span ng-show="unit_summary.minRentalMinIncome"
+        | {{unit_summary.minRentalMinIncome | currency:"$":0}}
+      span ng-show="!unit_summary.minRentalMinIncome"
+        | {{unit_summary.maxRentalMinIncome | currency:"$":0}}
+      span ng-show="unit_summary.minRentalMinIncome && (unit_summary.maxRentalMinIncome > unit_summary.minRentalMinIncome)"
+        | -{{unit_summary.maxRentalMinIncome | currency:"$":0}}
+      span.value-label
+        | /month
+  td.text-right
+    span
+      | {{unit_summary.minMonthlyRent | currency:"$":0}}
+      span ng-show="unit_summary.maxMonthlyRent > unit_summary.minMonthlyRent"
+        | -{{unit_summary.maxMonthlyRent | currency:"$":0}}
+      span.value-label
+        | /month
+
+tr ng-repeat-end="" ng-if="unit_summary.minPercentIncome"
+  / Percent-based rent with no min income
+  td scope="row"
+    | {{unit_summary.unitType}}
+  td
+    span ng-show="!unit_summary.minRentalMinIncome"
+      em translate="T.NONE"
+    span ng-show="unit_summary.minRentalMinIncome"
+      | {{unit_summary.minRentalMinIncome | currency:"$":0}}
+      span.value-label
+        | /month
+  td.text-right
+    span
+      | {{unit_summary.minPercentIncome}}
+      span ng-show="unit_summary.maxPercentIncome > unit_summary.minPercentIncome"
+        | -{{unit_summary.maxPercentIncome}}
+      span.value-label
+        | % income

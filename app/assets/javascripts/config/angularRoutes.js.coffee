@@ -77,6 +77,7 @@
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getListingDownloadURLs)
             return deferred.promise
         ]
         application: [

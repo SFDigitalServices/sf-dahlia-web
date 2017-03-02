@@ -40,9 +40,35 @@
         | {{formattedBuildingAddress(listing, 'street')}}
         br.show-for-small-only
         | {{formattedBuildingAddress(listing, 'city-state-zip')}}
+      span.label.radius.medium.bg-splash ng-if="listingIsReservedCommunity(listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{reservedLabel(listing, listing.Reserved_community_type, 'building')}}"
+
   .property-card_content
     .property-card_stats
-      ng-include src="'listings/templates/_stats-list.html'"
+      h2.property-card_label
+        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.hasWaitlist"
+        span translate="LISTINGS.OPEN_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available == 0"
+        span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available > 0"
+      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{priorityTypeNames(listing)}}" ng-if="priorityTypes(listing).length"
+
+      // -- Unit Summary Table(s)
+      / General
+      table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': listingIsReservedCommunity(listing), 'td-bw': !listingIsReservedCommunity(listing)}"
+        caption ng-if="listingIsReservedCommunity(listing)"
+          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}"
+        thead
+          tr
+            th scope="col" Unit Type
+            th scope="col" Minimum Income
+            th.text-right scope="col" Rent
+        tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = listing.unitSummaries.general"
+      / Reserved
+      table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="listing.unitSummaries.reserved"
+        caption ng-if="listingIsReservedCommunity(listing)"
+          span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{reservedForLabels(listing)}}"
+        caption ng-if="!listingIsReservedCommunity(listing)"
+          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedForLabels(listing)}}"
+
+        tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = listing.unitSummaries.reserved"
 
       .property-card_action.small-only-text-center
         button.button.round-icon.has-label data-event="gtm-favorite" ng-click="toggleFavoriteListing(listing.Id)"
