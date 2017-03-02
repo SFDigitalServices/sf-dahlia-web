@@ -616,73 +616,73 @@
         'container':
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
     })
+    # Short form: "Income" section
+    .state('dahlia.short-form-application.income-vouchers', {
+      url: '/income-vouchers'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d1-income-vouchers.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-income-household.html'
+    })
     # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-intro', {
       url: '/preferences-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/d0-preferences-intro.html'
+          templateUrl: 'short-form/templates/e0-preferences-intro.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
+          ShortFormApplicationService.completeSection('Income')
         ]
     })
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
       views:
         'container':
-          templateUrl: 'short-form/templates/d1-preferences-programs.html'
+          templateUrl: 'short-form/templates/e1-preferences-programs.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
-        ]
-    })
-    .state('dahlia.short-form-application.general-lottery-notice', {
-      url: '/general-lottery-notice'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/d2f-general-lottery-notice.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
+          ShortFormApplicationService.completeSection('Income')
         ]
     })
     .state('dahlia.short-form-application.live-work-preference', {
       url: '/live-work-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/d2-live-work-preference.html'
+          templateUrl: 'short-form/templates/e2-live-work-preference.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
+          ShortFormApplicationService.completeSection('Income')
         ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/d2a-neighborhood-preference.html'
+          templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
+          ShortFormApplicationService.completeSection('Income')
         ]
     })
-    .state('dahlia.short-form-application.income-vouchers', {
-      url: '/income-vouchers'
+    .state('dahlia.short-form-application.general-lottery-notice', {
+      url: '/general-lottery-notice'
       views:
         'container':
-          templateUrl: 'short-form/templates/e1-income-vouchers.html'
+          templateUrl: 'short-form/templates/e2f-general-lottery-notice.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Preferences')
+          ShortFormApplicationService.completeSection('Income')
         ]
-    })
-    # Short form: "Income" section
-    .state('dahlia.short-form-application.income', {
-      url: '/income'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/e2-income-household.html'
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
@@ -692,7 +692,7 @@
           templateUrl: 'short-form/templates/f0-review-optional.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     .state('dahlia.short-form-application.review-summary', {
@@ -702,7 +702,7 @@
           templateUrl: 'short-form/templates/f1-review-summary.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     .state('dahlia.short-form-application.review-sign-in', {

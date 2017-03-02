@@ -21,17 +21,17 @@ ShortFormNavigationService = (
         'household-member-form-edit'
       ]
     },
+    { name: 'Income', pages: [
+        'income-vouchers',
+        'income'
+      ]
+    },
     { name: 'Preferences', pages: [
         'preferences-intro',
         'neighborhood-preference',
         'live-work-preference',
         'preferences-programs',
         'general-lottery-notice'
-      ]
-    },
-    { name: 'Income', pages: [
-        'income-vouchers',
-        'income'
       ]
     },
     { name: 'Review', pages: [
@@ -49,18 +49,19 @@ ShortFormNavigationService = (
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
-    'alternate-contact-phone-address': {callback: ['goToHouseholdLandingPage']}
+    'alternate-contact-phone-address': {callback: ['goToLandingPage'], params: 'Household'}
+    'household-intro': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
+    'income-vouchers': {path: 'income'}
+    'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
     'live-work-preference': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
-    'general-lottery-notice': {path: 'income-vouchers'}
-    'income-vouchers': {path: 'income'}
-    'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
+    'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {callback: ['confirmReviewedApplication']}
     'review-sign-in': {path: 'review-terms'}
@@ -81,6 +82,10 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
+      when 'Income'
+        'income-vouchers'
+      when 'Preferences'
+        'preferences-intro'
       when 'Review'
         if application.surveyComplete
           'review-summary'
@@ -144,10 +149,10 @@ ShortFormNavigationService = (
         ,'alternate-contact-phone-address'
         ,'household-overview'
         ,'income'
-        ,'review-optional'
+        ,'preferences-intro'
+        ,'neighborhood-preference'
         ,'review-summary'
         ,'review-sign-in'
-        ,'neighborhood-preference'
           Service._getPreviousPage()
       # -- Alt Contact
       when 'alternate-contact-type'
@@ -158,12 +163,13 @@ ShortFormNavigationService = (
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
-      # -- Preferences
-      when 'preferences-intro'
+      # -- Income
+      when 'income-vouchers'
         if application.householdMembers.length
           'household-members'
         else
           'household-intro'
+      # -- Preferences
       when 'preferences-programs'
         if ShortFormApplicationService.hasPreference('neighborhoodResidence')
           'neighborhood-preference'
@@ -178,11 +184,12 @@ ShortFormNavigationService = (
           'preferences-intro'
       when 'general-lottery-notice'
         'preferences-programs'
-      when 'income-vouchers'
+      when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else
           'preferences-programs'
+      # -- Review
       when 'review-terms'
         if AccountService.loggedIn()
           'review-summary'

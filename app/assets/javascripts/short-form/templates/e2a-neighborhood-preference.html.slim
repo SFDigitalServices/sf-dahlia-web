@@ -1,0 +1,22 @@
+/ checkPreferenceEligibility does some init to $scope vars to put the proper error messaging in place
+.app-card.form-card ng-init="checkPreferenceEligibility('neighborhoodResidence')"
+  short-form-header no-border="true" featured-leader="true"
+    .leader-header.featured-leader.border-bottom
+      h2.app-card_question translate="E2A_NEIGHBORHOOD_PREFERENCE.TITLE"
+      .form-group
+        p.form-note.t-regular.margin-bottom translate="E2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P1_SINGULAR" translate-value-address="{{neighborhoodResidenceAddress()}}" ng-if="neighborhoodResidenceAddresses().length == 1"
+        p.form-note.t-regular.margin-bottom translate="E2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P1_PLURAL" translate-value-address="{{neighborhoodResidenceAddress()}}" ng-if="neighborhoodResidenceAddresses().length > 1"
+        p.form-note.t-regular.margin-bottom translate="E2A_NEIGHBORHOOD_PREFERENCE.INSTRUCTIONS_P2"
+
+  .app-inner
+    .form-group ng-class="{ error: inputInvalid('neighborhoodResidence') }"
+      p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+        preference-with-proof(title="{{'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")
+
+      preference-opt-out preference="neighborhoodResidence" application="application" invalid="inputInvalid('neighborhoodResidence')"
+
+      small.error ng-if="inputInvalid('neighborhoodResidence')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
+
+  short-form-save-and-submit

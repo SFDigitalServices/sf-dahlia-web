@@ -297,9 +297,13 @@ do ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(scope.householdEligibilityErrorMessage).toEqual(null)
 
-        it 'navigates to the given callback url', ->
+        it 'navigates to the given callback url for household', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-intro')
+          expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Income'})
+
+        it 'navigates to the given callback url for income', ->
+          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'incomeMatch')
+          expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Preferences'})
 
       describe 'not matched', ->
         beforeEach ->
@@ -451,3 +455,9 @@ do ->
         scope.householdMember.dob_day = 1
         scope.householdMember.dob_year = year
         expect(scope.householdMemberValidAge()).toEqual true
+
+    describe 'goToLandingPage', ->
+      it 'state.go to be called with landing page path', ->
+        scope.goToLandingPage('Household')
+        # Expect route path that is set up in FakeShortFormNavigationService, above
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
