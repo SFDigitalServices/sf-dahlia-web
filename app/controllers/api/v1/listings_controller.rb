@@ -51,8 +51,15 @@ class Api::V1::ListingsController < ApiController
   end
 
   def ami
-    percent = params[:percent].presence || 100
-    @ami = ListingService.ami(percent)
-    render json: { ami: @ami }
+    # loop through all the ami levels that you just sent me
+    # call ListingService.ami with each set of opts
+    @ami_levels = []
+    params[:ami].each do |opts|
+      @ami_levels << {
+        percent: opts[:percent],
+        values: ListingService.ami(opts.permit(%i(chartType percent year))),
+      }
+    end
+    render json: { ami: @ami_levels }
   end
 end

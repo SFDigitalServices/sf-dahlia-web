@@ -9,47 +9,76 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
+    li.custom-counter_item ng-if="listingIsReservedCommunity()"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
+        .content-card
+          h4.content-card_title.no-margin
+            | {{reservedLabel(listing, listing.Reserved_community_type, 'eligibility')}}
+          p.c-steel
+            | {{'LISTINGS.ALL_UNITS' | translate}}
+          p.c-steel(ng-text-truncate="listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
+
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title Household Maximum Income
+          h4.custom-counter_title
+            | {{'LISTINGS.HOUSEHOLD_MAXIMUM_INCOME' | translate}}
           /! Each unit type available has its own requirements based on household size.
-          p.custom-counter_text For income calculations, household size includes everyone (all ages) living in the unit.
-        .stats-card.bg-tint ng-show="maxIncomeLevels.length > 0"
-          .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
-            .stats-list_value.highlight
-              span.value-label
-                ' Starts at
-              | {{maxIncomeLevels[0].monthly | currency : $ : 0}}
-              span.value-label
-                | /month
-            span.stats-list_label based on household size
+          p.custom-counter_text
+            | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
+        .stats-card.bg-tint ng-show="AMICharts.length > 0"
+          / single chart / BMR style
+          div ng-if="!hasMultipleAMICharts()"
+            .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
+              .stats-list_value.highlight
+                span.value-label
+                  ' Starts at
+                | {{minYearlyIncome() | divideAndRoundDown : 12 | currency : $ : 0}}
+                span.value-label
+                  | /month
+              span.stats-list_label
+                | based on household size
 
-            span.ui-control.ui-icon.ui-small
-              svg
-                use xlink:href="#i-arrow-down"
+              span.ui-control.ui-icon.ui-small
+                svg
+                  use xlink:href="#i-arrow-down"
 
-          .toggled ng-class="[activeIncomeClass, smallDisplayClass]"
-            ng-include src="'listings/templates/listing/_income-table.html'"
+            .toggled ng-class="[activeIncomeClass, smallDisplayClass]"
+              ng-include src="'listings/templates/listing/_income-table.html'"
+
+          / multiple chart / MF style
+          div ng-if="hasMultipleAMICharts()"
+            ng-include src="'listings/templates/listing/_income-table-multiple.html'"
+
+        show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show"
 
     li.custom-counter_item
       .content-tile
         header.custom-counter_header
-          h4.custom-counter_title Occupancy
-          p.custom-counter_text Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.
+          h4.custom-counter_title
+            | {{'T.OCCUPANCY' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION' | translate}}
 
         table role="grid"
           thead
             tr
-              th scope="col" Unit Type
-              th scope="col" Occupancy
+              th scope="col"
+                | {{'T.UNIT_TYPE' | translate}}
+              th scope="col"
+                | {{'T.OCCUPANCY' | translate}}
           tbody
             tr ng-repeat="unit_summary in listing.unitSummary"
-              td scope="row" {{unit_summary.unitType}}
-              td ng-if="unit_summary.unitType == 'Flex'"
+              td scope="row"
+                | {{unit_summary.Unit_Type}}
+              td ng-if="unit_summary.Unit_Type == 'Flex'"
                 | Flex people
-              td ng-if="unit_summary.unitType != 'Flex'"
-                | {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}} <small>people</small>
+              td ng-if="unit_summary.Unit_Type != 'Flex'"
+                ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
+                small
+                  | people
 
     li.custom-counter_item
       .content-tile
@@ -69,6 +98,38 @@ accordion-heading.lead
         div ng-if="listingHasPreferences()"
           p.custom-counter_text
             | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
+
+    li.custom-counter_item ng-if="listingHasReservedUnits()"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | {{'LISTINGS.RESERVED_UNITS' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
+        .content-card ng-repeat="(type, units) in listing.reservedUnits"
+          h4.content-card_title.no-margin
+            | {{reservedLabel(listing, type, 'eligibility')}}
+          p.c-steel
+            | {{units.length}}
+            span
+              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{reservedLabel(listing, type, 'unitDescription')}}"
+
+    li.custom-counter_item ng-if="listingHasPriorityUnits()"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | {{'LISTINGS.PRIORITY_UNITS' | translate}}
+          p.custom-counter_text
+            | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
+        .content-card ng-repeat="(type, units) in listing.priorityUnits"
+          h4.content-card_title.no-margin
+            | {{priorityLabel(type, 'name')}}
+          p.c-steel
+            | {{units.length}}
+            span
+              ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{priorityLabel(type, 'description')}}"
 
     li.custom-counter_item
       .content-tile
