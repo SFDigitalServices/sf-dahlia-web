@@ -45,7 +45,7 @@
   .property-card_content
     .property-card_stats
       h2.property-card_label
-        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.hasWaitlist && listing.Units_Available > 0"
+        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="!listing.hasWaitlist"
         span translate="LISTINGS.OPEN_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available == 0"
         span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="listing.hasWaitlist && listing.Units_Available > 0"
       p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{priorityTypeNames(listing)}}" ng-if="priorityTypes(listing).length"
