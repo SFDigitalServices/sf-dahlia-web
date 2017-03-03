@@ -7,10 +7,9 @@ div
     / stuff inside the header e.g. "h2" titles get inserted in the transclude
     ng-transclude ng-if="!featuredLeader"
 
-
   ng-transclude ng-if="featuredLeader"
 
   #short-form-alerts
-    alert-box(short-form="true" missing-required-contact-info="requiredContactInformationMissing()" preference-warning="inputInvalid(currentPreferenceType)" address-error="addressError")
+    alert-box(short-form="true" preference-warning="inputInvalid(currentPreferenceType)" address-error="addressError")
 
     alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")

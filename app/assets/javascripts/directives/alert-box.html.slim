@@ -8,12 +8,6 @@ div
       | &times;
     p.alert-body ng-bind-html="alertText()"
 
-  .alert-notice.alert ng-if="missingRequiredContactInfo && showAlert()"
-    p.alert-notice_title translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.DESC"
-    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.PHONE"
-    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.EMAIL"
-    p.alert-notice_item translate="B2_CONTACT.PROVIDE_WAY_TO_CONTACT_YOU.ADDRESS"
-
   .alert-notice.alert ng-if="preferenceWarning && showAlert()"
     p.alert-notice_title translate="ERROR.PLEASE_SELECT_PREFERENCE_CONTENT"
 

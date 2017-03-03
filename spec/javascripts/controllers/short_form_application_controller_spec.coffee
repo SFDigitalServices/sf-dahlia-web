@@ -184,14 +184,6 @@ do ->
         scope.addressChange('applicant')
         expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
-    describe 'scope.requiredContactInformationMissing', ->
-      describe 'phone, email, address not provided', ->
-        it 'returns true', ->
-          scope.applicant.noPhone = true
-          scope.applicant.noAddress = true
-          scope.applicant.noEmail = true
-          expect(scope.requiredContactInformationMissing()).toEqual true
-
     describe '$scope.addHouseholdMember', ->
       describe 'user has same address applicant', ->
         it 'directly calls addHouseholdMember in ShortFormApplicationService', ->
