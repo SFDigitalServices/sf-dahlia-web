@@ -132,7 +132,9 @@
         "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
     },
     "D2_LIVE_WORK_PREFERENCE": {
+        "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
         "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
+        "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must live in San Francisco.",
@@ -203,8 +205,8 @@
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
-        "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
+        "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
         "RELATIONSHIP": "Please enter a relationship.",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
@@ -338,6 +340,7 @@
         "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "PREFERENCES": "Preferences",
         "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
+        "PREFERENCE_PROOF_ADDRESS_DOCUMENTS": "What type of document would you like to upload to show you live at that address?",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
