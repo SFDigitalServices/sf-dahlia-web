@@ -269,14 +269,14 @@ do ->
               liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
 
           it 'clear liveInSf preference data', ->
-            ShortFormApplicationService.refreshPreferences()
+            ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
 
           it 'invalidates preferences section', ->
-            ShortFormApplicationService.refreshPreferences()
+            ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.application.completedSections['Preferences']).toEqual(false)
 
     describe 'liveInSfMembers', ->
