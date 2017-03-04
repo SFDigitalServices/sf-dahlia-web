@@ -192,6 +192,7 @@ ShortFormApplicationService = (
     )
 
   Service.cancelPreference = (preference) ->
+    console.log 'CANCELING', preference
     Service.preferences[preference] = null
     Service.preferences["#{preference}_household_member"] = null
     Service.preferences["#{preference}_proof_option"] = null
