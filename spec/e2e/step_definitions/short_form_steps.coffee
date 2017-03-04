@@ -9,12 +9,13 @@ sessionEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
-fillOutContactPage = (email = '') ->
+fillOutContactPage = (opts = {}) ->
+  opts.address1 ||= '4053 18th St.'
   element(By.model('applicant.phone')).sendKeys('2222222222')
   element(By.model('applicant.phoneType')).click()
   element(By.cssContainingText('option', 'Home')).click()
-  element(By.model('applicant.email')).sendKeys(email) if email
-  element(By.id('applicant_home_address_address1')).sendKeys('4053 18th St.')
+  element(By.model('applicant.email')).sendKeys(opts.email) if opts.email
+  element(By.id('applicant_home_address_address1')).sendKeys(opts.address1)
   element(By.id('applicant_home_address_city')).sendKeys('San Francisco')
   element(By.cssContainingText('option', 'California')).click()
   element(By.id('applicant_home_address_zip')).sendKeys('94114')
@@ -48,7 +49,7 @@ module.exports = ->
     getUrlAndCatchPopup(url)
     browser.ignoreSynchronization = false
 
-  @When /^I fill out the short form Name page as "([^"]*)"$/, (fullName) ->
+  @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
     lastName  = fullName.split(' ')[1]
     element(By.model('applicant.firstName')).sendKeys(firstName)
@@ -58,14 +59,18 @@ module.exports = ->
     element(By.model('applicant.dob_year')).sendKeys('1990')
     element(By.id('submit')).click()
 
-  @When 'I submit the short form Name page with my account info', ->
+  @When 'I submit the Name page with my account info', ->
     element(By.id('submit')).click()
 
-  @When 'I fill out the short form Contact page with an address and WorkInSF', ->
-    fillOutContactPage('jane@doe.com')
+  @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
+    fillOutContactPage({email: 'jane@doe.com'})
     element(By.id('submit')).click()
 
-  @When 'I fill out the short form Contact page with my account email, an address and WorkInSF', ->
+  @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
+    fillOutContactPage({email: 'jane@doe.com', address1: '1222 Harrison St.'})
+    element(By.id('submit')).click()
+
+  @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage()
     element(By.id('submit')).click()
 
@@ -90,6 +95,9 @@ module.exports = ->
     element(By.id('submit')).click()
 
   @When 'I opt out of Live/Work preference', ->
+    optOutAndSubmit()
+
+  @When 'I opt out of NRHP preference', ->
     optOutAndSubmit()
 
   @When /^I select "([^"]*)" for COP preference$/, (fullName) ->

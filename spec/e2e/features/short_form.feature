@@ -5,8 +5,8 @@ Feature: Short Form Application
 
     Scenario: Submitting a basic application
       Given I go to the first page of the Test Listing application
-      When I fill out the short form Name page as "Jane Doe"
-      And I fill out the short form Contact page with an address and WorkInSF
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
@@ -23,8 +23,8 @@ Feature: Short Form Application
 
     Scenario: Opting in to live/work then saying no to workInSf
       Given I go to the first page of the Test Listing application
-      When I fill out the short form Name page as "Jane Doe"
-      And I fill out the short form Contact page with an address and WorkInSF
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
@@ -36,12 +36,13 @@ Feature: Short Form Application
 
     Scenario: Selecting live/work member, then going back and forth from previous page
       Given I go to the first page of the Test Listing application
-      When I fill out the short form Name page as "Jane Doe"
-      And I fill out the short form Contact page with an address and WorkInSF
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with an address (NRHP match) and WorkInSF
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
+      And I opt out of NRHP preference
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I use the browser back button
       And I go back to the Live/Work preference page
@@ -49,7 +50,7 @@ Feature: Short Form Application
 
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application
-      When I fill out the short form Name page as "Jane Doe"
+      When I fill out the Name page as "Jane Doe"
       And I click the Save and Finish Later button
       And I fill out my account info
       And I submit the Create Account form
@@ -59,8 +60,8 @@ Feature: Short Form Application
       Given I have a confirmed account
       When I sign in
       And I go to the first page of the Test Listing application
-      And I submit the short form Name page with my account info
-      And I fill out the short form Contact page with my account email, an address and WorkInSF
+      And I submit the Name page with my account info
+      And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
