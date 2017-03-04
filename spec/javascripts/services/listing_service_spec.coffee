@@ -284,23 +284,24 @@ do ->
         expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
 
     describe 'Service.showNeighborhoodPreferences', ->
-      it 'returns true if URL is available and <9 and >2 days from lottery', ->
+      it 'returns true if URL is available and the lottery results are not yet available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(4, 'days').toString()
+        listing.Lottery_Results = false
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
         listing = fakeListing.listing
+        listing.Lottery_Results = false
         listing.NeighborHoodPreferenceUrl = null
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
-      it 'returns false if URL is available but <2 days from lottery', ->
+      it 'returns false if the lottery results are available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(1, 'days').toString()
+        listing.Lottery_Results = true
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
