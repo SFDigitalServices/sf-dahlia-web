@@ -11,6 +11,9 @@ do ->
     requestURL = undefined
     fakeParams = undefined
     fakeState = 'dahlia.short-form-application.contact'
+    fakeLoadingOverlayService =
+      start: jasmine.createSpy()
+      stop: jasmine.createSpy()
     fakeAuthResponse =
       id: 99
       email: 'applicant@email.com'
@@ -50,6 +53,7 @@ do ->
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
       $provide.value '$modal', modalMock
+      $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       return
     )
@@ -110,12 +114,20 @@ do ->
         AccountService.createAccount(fakeSession)
         fakeParams.user.temp_session_id = fakeSession.uid
         expect($auth.submitRegistration).toHaveBeenCalledWith fakeParams
+      it 'triggers loading overlay', ->
+        AccountService.createAccount()
+        expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
 
     describe 'signIn', ->
       it 'calls $auth.submitLogin with userAuth params', ->
         AccountService.userAuth = angular.copy(fakeUserAuth)
         AccountService.signIn()
         expect($auth.submitLogin).toHaveBeenCalledWith fakeUserAuth.user
+
+      it 'triggers loading overlay', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        AccountService.signIn()
+        expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
 
     describe 'signOut', ->
       it 'calls $auth.signOut', ->
@@ -171,6 +183,12 @@ do ->
         AccountService.updateAccount('nameDOB')
         httpBackend.flush()
         expect(AccountService.loggedInUser.firstName).toEqual fakeUpdateResponse.contact.firstName
+      it 'triggers loading overlay', ->
+        AccountService.userAuth = angular.copy(fakeUserAuth)
+        stubAngularAjaxRequest httpBackend, requestURL, fakeUpdateResponse
+        AccountService.updateAccount('nameDOB')
+        httpBackend.flush()
+        expect(fakeLoadingOverlayService.start).toHaveBeenCalled()
 
     describe 'openConfirmEmailModal', ->
       describe 'account just created', ->
