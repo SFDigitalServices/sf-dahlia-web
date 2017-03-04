@@ -30,7 +30,13 @@ do ->
         gender: {}
       householdMembers: []
       preferences: {}
-      application: {}
+      application:
+        validatedForms:
+          You: {}
+          Household: {}
+          Preferences: {}
+          Income: {}
+          Review: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -166,11 +172,11 @@ do ->
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
 
-    describe '$scope.checkIfMailingAddressNeeded', ->
+    describe '$scope.copyHomeToMailingAddress', ->
       describe 'hasAltMailingAddress unchecked', ->
         it 'calls Service function to copy home address to mailing', ->
           scope.applicant.hasAltMailingAddress = false
-          scope.checkIfMailingAddressNeeded()
+          scope.copyHomeToMailingAddress()
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
     describe '$scope.addressChange', ->
@@ -223,17 +229,17 @@ do ->
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
-      describe 'No address verification indicated', ->
-        it 'navigates ahead to alt contact type', ->
-          scope.applicant.noAddress = true
-          scope.checkIfAddressVerificationNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
+      it 'navigates ahead to alt contact type if verification already happened', ->
+        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.application.validatedForms.You['verify-address'] = true
+        scope.checkIfAddressVerificationNeeded()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
 
-      describe 'Alternate contact type indicated', ->
-        it 'navigates ahead to verify address page', ->
-          scope.applicant.noAddress = false
-          scope.checkIfAddressVerificationNeeded()
-          expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
+      it 'navigates ahead to verify address page if verification had not happened', ->
+        scope.applicant.neighborhoodPreferenceMatch = null
+        scope.application.validatedForms.You['verify-address'] = null
+        scope.checkIfAddressVerificationNeeded()
+        expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
 
     describe '$scope.getLandingPage', ->
       it 'calls getLandingPage in ShortFormNavigationService', ->

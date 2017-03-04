@@ -3,7 +3,7 @@
     label.sr-only for="{{model}}_{{addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{model}}_{{addressType}}_address1" ng-model="this[model][addressType].address1"
       ng-change="addressChange(model)" name="{{addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
-      ng-required="true" ng-class="{ error: inputInvalid('address1', addressType) }" ng-disabled="this[model].noAddress"
+      ng-required="true" ng-class="{ error: inputInvalid('address1', addressType) }"
       aria-describedby="{{model}}_{{addressType}}_address1_error")
     small.error id="{{model}}_{{addressType}}_address1_error" ng-show="inputInvalid('address1', addressType)"
       | {{'ERROR.ADDRESS' | translate}}
@@ -11,12 +11,12 @@
   .form-group-apt.large-12.column
     label for="{{model}}_{{addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{model}}_{{addressType}}_address2" ng-model="this[model][addressType].address2"
-      ng-change="addressChange(model)" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text" ng-disabled="this[model].noAddress")
+      ng-change="addressChange(model)" name="{{addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
   .form-group-city.form-item.small-7.columns ng-class="{ error: inputInvalid('city', addressType) }"
     label for="{{model}}_{{addressType}}_city" translate="LABEL.CITY"
     input(id="{{model}}_{{addressType}}_city" ng-model="this[model][addressType].city"
       ng-change="addressChange(model)" name="{{addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
-      ng-required="true" ng-class="{ error: inputInvalid('city', addressType) }" ng-disabled="this[model].noAddress"
+      ng-required="true" ng-class="{ error: inputInvalid('city', addressType) }"
       aria-describedby="{{model}}_{{addressType}}_city_error")
     small.error id="{{model}}_{{addressType}}_city_error" ng-show="inputInvalid('city', addressType)"
       | {{'ERROR.CITY' | translate}}
@@ -24,7 +24,7 @@
     label for="{{model}}_{{addressType}}_state" State
     select(id="{{model}}_{{addressType}}_state" ng-model="this[model][addressType].state"
       ng-change="addressChange(model)" data-width="auto" name="{{addressType}}_state"
-      ng-required="true" ng-class="{ error: inputInvalid('state', addressType) }" ng-disabled="this[model].noAddress"
+      ng-required="true" ng-class="{ error: inputInvalid('state', addressType) }"
       aria-describedby="{{model}}_{{addressType}}_state_error")
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
@@ -87,7 +87,7 @@
       | {{'LABEL.ZIP' | translate}}
     input(id="{{model}}_{{addressType}}_zip" ng-model="this[model][addressType].zip"
       ng-change="addressChange(model)" name="{{addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{this[model][addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder
-      ng-required="true" ng-class="{ error: inputInvalid('zip', addressType) }" ng-disabled="this[model].noAddress"
+      ng-required="true" ng-class="{ error: inputInvalid('zip', addressType) }"
       aria-describedby="{{model}}_{{addressType}}_zip_error")
     small.error id="{{model}}_{{addressType}}_zip_error" ng-show="inputInvalid('zip', addressType)"
       | {{'ERROR.ZIP' | translate}}
