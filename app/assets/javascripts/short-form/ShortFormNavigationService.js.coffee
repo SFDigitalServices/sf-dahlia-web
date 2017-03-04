@@ -147,7 +147,6 @@ ShortFormNavigationService = (
         ,'review-optional'
         ,'review-summary'
         ,'review-sign-in'
-        ,'live-work-preference'
         ,'neighborhood-preference'
           Service._getPreviousPage()
       # -- Alt Contact
@@ -170,6 +169,11 @@ ShortFormNavigationService = (
           'neighborhood-preference'
         else if ShortFormApplicationService.eligibleForLiveWork()
           'live-work-preference'
+        else
+          'preferences-intro'
+      when 'live-work-preference'
+        if ShortFormApplicationService.eligibleForNRHP()
+          'neighborhood-preference'
         else
           'preferences-intro'
       when 'general-lottery-notice'

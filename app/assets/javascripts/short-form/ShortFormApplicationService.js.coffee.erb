@@ -251,10 +251,12 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   ### Proof of Preferences ###
-  Service.refreshPreferences = ->
-    Service._updatePreference("liveInSf", Service.liveInSfMembers())
-    Service._updatePreference("workInSf", Service.workInSfMembers())
-    Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
+  Service.refreshPreferences = (type) ->
+    if type == 'liveWorkInSf'
+      Service._updatePreference("liveInSf", Service.liveInSfMembers())
+      Service._updatePreference("workInSf", Service.workInSfMembers())
+    if type == 'neighborhoodResidence'
+      Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
 
   Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'

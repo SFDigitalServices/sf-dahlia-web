@@ -342,13 +342,13 @@ ShortFormApplicationController = (
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 
-  $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
+  $scope.checkPreferenceEligibility = (type) ->
     if type == 'liveWorkInSf'
       $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
       $scope.currentPreferenceType = $scope.currentLiveWorkType
     else if type == 'neighborhoodResidence'
       $scope.currentPreferenceType = 'neighborhoodResidence'
-    ShortFormApplicationService.refreshPreferences()
+    ShortFormApplicationService.refreshPreferences(type)
 
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
@@ -382,7 +382,10 @@ ShortFormApplicationController = (
     ShortFormApplicationService.neighborhoodResidenceMembers()
 
   $scope.neighborhoodResidenceAddresses = ->
-    addresses = _.map($scope.neighborhoodResidenceMembers(), (member) -> member.home_address.address1)
+    addresses = []
+    _.each $scope.neighborhoodResidenceMembers(), (member) ->
+      street = member.home_address.address1
+      addresses.push(street) unless _.isNil(street)
     _.uniq(addresses)
 
   $scope.neighborhoodResidenceAddress = ->
