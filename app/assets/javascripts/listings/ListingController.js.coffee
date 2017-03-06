@@ -177,6 +177,9 @@ ListingController = (
   $scope.showDownloadLotteryResultsButton = ->
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
+  $scope.listingHasLotteryResults = ->
+    ListingService.listingHasLotteryResults()
+
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length
 

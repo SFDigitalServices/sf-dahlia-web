@@ -51,6 +51,7 @@ do ->
       fakeListingService.formattedAddress = jasmine.createSpy()
       fakeListingService.listingHasPriorityUnits = jasmine.createSpy()
       fakeListingService.listingHasReservedUnits = jasmine.createSpy()
+      fakeListingService.listingHasLotteryResults = jasmine.createSpy()
       fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
@@ -285,6 +286,11 @@ do ->
       it 'calls ListingService.listingHasReservedUnits', ->
         scope.listingHasReservedUnits()
         expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'listingHasLotteryResults', ->
+      it 'calls ListingService.listingHasLotteryResults', ->
+        scope.listingHasLotteryResults()
+        expect(fakeListingService.listingHasLotteryResults).toHaveBeenCalled()
 
     describe 'allListingUnitsAvailable', ->
       it 'calls ListingService.allListingUnitsAvailable', ->

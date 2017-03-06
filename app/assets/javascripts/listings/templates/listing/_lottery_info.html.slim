@@ -16,7 +16,7 @@ section.content-wrap
             use xlink:href="#i-clock"
         | Applications Closed {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
 
-  span ng-if="lotteryDateVenueAvailable(listing) && !listing.Lottery_Results"
+  span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
   .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
@@ -26,7 +26,7 @@ section.content-wrap
         | {{ listing.Lottery_Results_Date | date : 'longDate' }}
     p.c-steel.t-small Complete lottery results will be posted on this date by 5pm.
 
-  .content-group.expand.text-center ng-if="listing.Lottery_Results"
+  .content-group.expand.text-center ng-if="listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
 
   .content-group
