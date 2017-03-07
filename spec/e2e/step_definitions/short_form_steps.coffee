@@ -9,20 +9,22 @@ sessionEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
-fillOutContactPage = (email = '') ->
+fillOutContactPage = (opts = {}) ->
+  opts.address1 ||= '4053 18th St.'
   element(By.model('applicant.phone')).sendKeys('2222222222')
   element(By.model('applicant.phoneType')).click()
   element(By.cssContainingText('option', 'Home')).click()
-  element(By.model('applicant.email')).sendKeys(email) if email
-  element(By.model('applicant.noAddress')).click()
+  element(By.model('applicant.email')).sendKeys(opts.email) if opts.email
+  element(By.id('applicant_home_address_address1')).sendKeys(opts.address1)
+  element(By.id('applicant_home_address_city')).sendKeys('San Francisco')
+  element(By.cssContainingText('option', 'California')).click()
+  element(By.id('applicant_home_address_zip')).sendKeys('94114')
   element(By.id('workInSf_yes')).click()
 
-optOutIfPresent = ->
-  optOut = element.all(By.id('preference-optout')).first()
-  if optOut
-    # opt out + submit preference page (e.g. NRHP, Live/Work)
-    optOut.click()
-    element(By.id('submit')).click()
+optOutAndSubmit = ->
+  # opt out + submit preference page (e.g. NRHP, Live/Work)
+  element(By.id('preference-optout')).click()
+  element(By.id('submit')).click()
 
 getUrlAndCatchPopup = (url) ->
   # always catch and confirm popup alert in case we are leaving an existing application
@@ -47,7 +49,7 @@ module.exports = ->
     getUrlAndCatchPopup(url)
     browser.ignoreSynchronization = false
 
-  @When /^I fill out the short form Name page as "([^"]*)"$/, (fullName) ->
+  @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
     lastName  = fullName.split(' ')[1]
     element(By.model('applicant.firstName')).sendKeys(firstName)
@@ -57,15 +59,23 @@ module.exports = ->
     element(By.model('applicant.dob_year')).sendKeys('1990')
     element(By.id('submit')).click()
 
-  @When 'I submit the short form Name page with my account info', ->
+  @When 'I submit the Name page with my account info', ->
     element(By.id('submit')).click()
 
-  @When 'I fill out the short form Contact page with No Address and WorkInSF', ->
-    fillOutContactPage('jane@doe.com')
+  @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
+    fillOutContactPage({email: 'jane@doe.com'})
     element(By.id('submit')).click()
 
-  @When 'I fill out the short form Contact page with my account email, No Address and WorkInSF', ->
+  @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
+    fillOutContactPage({email: 'jane@doe.com', address1: '1222 Harrison St.'})
+    element(By.id('submit')).click()
+
+  @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage()
+    element(By.id('submit')).click()
+
+  @When 'I confirm my address', ->
+    element(By.id('confirmed_home_address_yes')).click()
     element(By.id('submit')).click()
 
   @When 'I don\'t indicate an alternate contact', ->
@@ -78,21 +88,17 @@ module.exports = ->
   @When 'I continue past the Lottery Preferences intro', ->
     element(By.id('submit')).click()
 
-  @When 'I don\'t choose any preferences', ->
-    # if NRHP present
-    optOutIfPresent()
-    # if Live/Work present
-    optOutIfPresent()
+  @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
     element(By.id('submit')).click()
     # also skip general lottery notice
     element(By.id('submit')).click()
 
-  @When 'I opt out of NRHP and Live/Work', ->
-    # if NRHP present
-    optOutIfPresent()
-    # if Live/Work present
-    optOutIfPresent()
+  @When 'I opt out of Live/Work preference', ->
+    optOutAndSubmit()
+
+  @When 'I opt out of NRHP preference', ->
+    optOutAndSubmit()
 
   @When /^I select "([^"]*)" for COP preference$/, (fullName) ->
     element(By.id('preferences-certOfPreference')).click()
@@ -111,10 +117,6 @@ module.exports = ->
     element.all(By.cssContainingText('option', fullName)).filter((elem) ->
       elem.isDisplayed()
     ).last().click()
-
-  @When 'I go to the Live/Work preference page', ->
-    # skip NRHP if present
-    optOutIfPresent()
 
   @When 'I go to the income page', ->
     element(By.id('submit')).click()

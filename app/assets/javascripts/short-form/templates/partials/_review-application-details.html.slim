@@ -12,13 +12,13 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
     | {{applicant.alternatePhone | tel}}
   review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
-  review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+  review-summary-item label="{{'LABEL.ADDRESS' | translate}}"
     | {{applicant.home_address.address1}}
     br
     ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
     | {{applicant.home_address.zip}}
 
-  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.hasAltMailingAddress"
+  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="applicant.hasAltMailingAddress"
     | {{applicant.mailing_address.address1}}
     br
     ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}

@@ -151,12 +151,6 @@ do ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
 
-        it 'sets householdMember.noAddress if hasSameAddressAsApplicant = "No Address"', ->
-          fakeHouseholdMember.hasSameAddressAsApplicant = 'No Address'
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.noAddress).toEqual true
-
       describe 'old household member update', ->
         it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
@@ -393,14 +387,6 @@ do ->
           expect(neighborhoodResidenceMembers.length).toEqual(2)
           expect(_.find(neighborhoodResidenceMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
           expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
-
-      describe 'applicant does not have address', ->
-        beforeEach ->
-          ShortFormApplicationService.applicant.noAddress = true
-
-        it 'returns array with applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
 
     describe 'eligibleForLiveWork', ->
       it 'returns true if someone is eligible for live/work', ->

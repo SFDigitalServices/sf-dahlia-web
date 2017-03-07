@@ -196,12 +196,6 @@ ShortFormApplicationController = (
     validated = $scope["validated_#{identifier}"]
     return AddressValidationService.failedValidation(validated)
 
-  $scope.checkContactRequirement = (contactType) ->
-    !$scope.applicant[contactType] || $scope.requiredContactInformationMissing()
-
-  $scope.requiredContactInformationMissing = ->
-    $scope.applicant.noPhone && $scope.applicant.noAddress && $scope.applicant.noEmail
-
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
     field = form[fieldName]
@@ -221,23 +215,17 @@ ShortFormApplicationController = (
   $scope.notRequired = ->
     return false
 
-  $scope.unsetNoAddressAndCheckMailingAddress = ->
-    # $scope.applicant.noAddress = false
-    $scope.checkIfMailingAddressNeeded()
-
   $scope.addressChange = (model) ->
     member = $scope[model]
     # invalidate neighborhoodPreferenceMatch to ensure that they re-confirm address
     member.neighborhoodPreferenceMatch = null
     if member == $scope.applicant
-      $scope.checkIfMailingAddressNeeded()
+      $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
     else
       ShortFormApplicationService.invalidateHouseholdForm()
 
-  $scope.checkIfMailingAddressNeeded = ->
-    if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
-      $scope.applicant.noAddress = false
+  $scope.copyHomeToMailingAddress = ->
     ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetHomeAddress = ->
@@ -250,16 +238,12 @@ ShortFormApplicationController = (
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
     $scope.applicant.mailing_address = {}
-    $scope.checkIfMailingAddressNeeded()
+    $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.noAddress || (
-      $scope.applicant.neighborhoodPreferenceMatch &&
-      $scope.application.validatedForms.You['verify-address'] != false
-    )
+    if $scope.applicant.neighborhoodPreferenceMatch && $scope.application.validatedForms.You['verify-address']
       ###
-      skip ahead if they aren't filling out an address
-       or their current address has already been confirmed.
+      skip ahead if their current address has already been confirmed.
       $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
        just that it has a value
       ###
@@ -292,14 +276,6 @@ ShortFormApplicationController = (
 
   $scope.backPageState = ->
     ShortFormNavigationService.backPageState()
-
-  $scope.homeAddressRequired = ->
-    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress) || $scope.requiredContactInformationMissing()
-
-  $scope.truth = ->
-    # wrap true value in a function a la function(){return true;}
-    # used by isRequired() in _address_form
-    true
 
   $scope.getLandingPage = (section) ->
     ShortFormNavigationService.getLandingPage(section)
@@ -423,7 +399,7 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->
-    noAddress = _.includes(['Yes', 'No Address'], $scope.householdMember.hasSameAddressAsApplicant)
+    noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
     if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
