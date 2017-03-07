@@ -90,9 +90,8 @@ describe 'Listings API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the right amount of listings are returned
-    # (based on listings response in VCR)
-    expect(json['listings'].length).to eq(20)
+    # check to make sure listings are returned
+    expect(json['listings']).not_to be_empty
   end
 
   it 'sends an individual listing' do
