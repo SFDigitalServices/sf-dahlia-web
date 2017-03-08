@@ -32,7 +32,7 @@
         "TITLE": "We have located the following address. Please confirm it's correct."
     },
     "B2_CONTACT": {
-        "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
+        "APPLICANT_ADDRESS_DESC": "We need the address where you currently live. If you are homeless, enter either the shelter address or an address close to where you stay.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
@@ -69,6 +69,7 @@
         "TITLE": "Tell us about your household."
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
+        "MEMBER_ADDRESS_DESC": "We need the address where they currently live. If they are homeless, enter either their shelter address or an address close to where they stay.",
         "P1": "You'll have the opportunity to add more household members on the next screen.",
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."

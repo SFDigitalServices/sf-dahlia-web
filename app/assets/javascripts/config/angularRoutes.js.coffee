@@ -626,11 +626,6 @@
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
         ]
-        listing: [
-          '$stateParams', 'ListingService',
-          ($stateParams, ListingService) ->
-            ListingService.getListingPreferences()
-        ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
