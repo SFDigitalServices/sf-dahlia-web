@@ -83,4 +83,5 @@
     div ng-hide="listingApplicationClosed(listing)"
       .label.flag-label.secondary.text-wrap.alert-tint
         | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      ng-include src="'listings/templates/listing/_waitlist-info.html'"
       ng-include src="'listings/templates/listing/_panel-apply.html'"
