@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 31 Jan 2017 01:30:55 GMT
+      - Tue, 07 Mar 2017 18:39:34 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -32,8 +32,8 @@ http_interactions:
       - referrer origin-when-cross-origin
       - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
       Set-Cookie:
-      - BrowserId=MnO_isEKQMSIgCXemRAbKA;Path=/;Domain=.salesforce.com;Expires=Sat,
-        01-Apr-2017 01:30:55 GMT
+      - BrowserId=XUDL4YYeT--4C8ntxC6JEg;Path=/;Domain=.salesforce.com;Expires=Sat,
+        06-May-2017 18:39:34 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/0056C000000eBx5QAE","token_type":"Bearer","issued_at":"1485826255337","signature":"jvIXr5l3b+s9I902k2Cu6ORYBc4p4dz5047NABC5qTY="}'
-    http_version:
-  recorded_at: Tue, 31 Jan 2017 01:30:55 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008g3xUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1488911974946","signature":"DZxrWTN1gSggO4mk44nvnB+uecd+3UeFLH2FkLJKfx0="}'
+    http_version: 
+  recorded_at: Tue, 07 Mar 2017 18:39:34 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/Preferences/a0WU000000BmpBdMAJ
+    uri: https://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000DZTkAUAX
     body:
       encoding: US-ASCII
       string: ''
@@ -74,22 +74,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 31 Jan 2017 01:30:55 GMT
+      - Tue, 07 Mar 2017 18:39:35 GMT
       Content-Security-Policy-Report-Only:
       - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
         style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
-        ''self'' *.salesforce.com *.force.com; font-src https: data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain;
-        base-uri http://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/Preferences/a0WU000000BmpBdMAJ'
+        ''self'' *.salesforce.com *.force.com; font-src https: data:; connect-src
+        ''self'' https:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain; base-uri
+        http://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000DZTkAUAX'
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=604800; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D6C0000000TrI";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008g3x";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=rDJ6Nvt3T3Cn1zysh6t04A;Path=/;Domain=.salesforce.com;Expires=Sat,
-        01-Apr-2017 01:30:55 GMT
+      - BrowserId=ZeVofztuTQ-Omgz-u_1Pnw;Path=/;Domain=.salesforce.com;Expires=Sat,
+        06-May-2017 18:39:35 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -100,11 +101,25 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"unitsAvailable":20,"readMoreUrl":"http://sfmohcd.org/certificate-preference","preferenceName":"Certificate
-        of Preference (COP)","order":1,"NRHPDistrict":null,"name":"LP-00013","listingPreferenceID":"a0l6C000000CwqJQAS","listingId":"a0WU000000BmpBdMAJ","description":"Households
-        in which at least one member holds a Certificate of Preference from the former
-        San Francisco Redevelopment Agency. COP holders were displaced by Agency action
-        generally during the 1960s and 1970s.","appTotal":null}]'
-    http_version:
-  recorded_at: Tue, 31 Jan 2017 01:30:55 GMT
+      string: '[{"unitsAvailable":null,"readMoreUrl":"http://sfmohcd.org/certificate-preference","preferenceName":"Certificate
+        of Preference (COP)","order":1,"NRHPDistrict":null,"name":"LP-00099","listingPreferenceID":"a0l4D0000000Oi8QAE","listingId":"a0W0P00000DZTkAUAX","description":"Households
+        in which one member holds a Certificate of Preference from the former San
+        Francisco Redevelopment Agency. COP holders were displaced by Agency action
+        generally during the 1960s and 1970s.","appTotal":null},{"unitsAvailable":null,"readMoreUrl":"http://sfmohcd.org/displaced-tenant-housing-preference-program-0","preferenceName":"Displaced
+        Tenant Housing Preference (DTHP)","order":2,"NRHPDistrict":null,"name":"LP-00100","listingPreferenceID":"a0l4D0000000OiDQAU","listingId":"a0W0P00000DZTkAUAX","description":"Households
+        in which one member holds a Displaced Tenant Housing Preference Certificate.
+        DTHP Certificate holders are tenants who were evicted through either an Ellis
+        Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.
+        Once all units reserved for this preference are filled, remaining DTHP holders
+        will receive Live/Work preference, regardless of their current living or working
+        location.","appTotal":null},{"unitsAvailable":null,"readMoreUrl":"http://sfmohcd.org/neighborhood-resident-housing-preference","preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)","order":3,"NRHPDistrict":null,"name":"LP-00102","listingPreferenceID":"a0l4D0000000OiNQAU","listingId":"a0W0P00000DZTkAUAX","description":"Households
+        that submit acceptable documentation that at least one member lives either
+        within supervisorial District [#] or within a half-mile of the project.","appTotal":null},{"unitsAvailable":null,"readMoreUrl":"http://sfmohcd.org/housing-preference-programs","preferenceName":"Live
+        or Work in San Francisco Preference","order":3,"NRHPDistrict":null,"name":"LP-00101","listingPreferenceID":"a0l4D0000000OiIQAU","listingId":"a0W0P00000DZTkAUAX","description":"Households
+        that submit acceptable documentation that at least one member lives or works
+        in San Francisco. In order to claim Work Preference, you or a household member
+        must currently work in San Francisco at least 75% of your working hours.","appTotal":null}]'
+    http_version: 
+  recorded_at: Tue, 07 Mar 2017 18:39:35 GMT
 recorded_with: VCR 3.0.3

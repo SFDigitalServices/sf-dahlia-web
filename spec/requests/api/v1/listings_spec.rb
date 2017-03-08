@@ -57,8 +57,8 @@ describe 'Listings API' do
   describe 'lottery ranking' do
     save_fixture do
       VCR.use_cassette('listings/lottery-ranking') do
-        url = '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_ranking.json'
-        params = { lottery_number: '00008502' }
+        url = '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_ranking.json'
+        params = { lottery_number: '00008639' }
         get url, params
       end
     end
@@ -66,14 +66,14 @@ describe 'Listings API' do
   describe 'lottery buckets' do
     save_fixture do
       VCR.use_cassette('listings/lottery-buckets') do
-        get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
+        get '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_buckets.json'
       end
     end
   end
   describe 'listing preferences' do
     save_fixture do
       VCR.use_cassette('listings/preferences') do
-        get '/api/v1/listings/a0WU000000BmpBdMAJ/preferences.json'
+        get '/api/v1/listings/a0W0P00000DZTkAUAX/preferences.json'
       end
     end
   end
@@ -90,9 +90,8 @@ describe 'Listings API' do
     # test for the 200 status-code
     expect(response).to be_success
 
-    # check to make sure the right amount of listings are returned
-    # (based on VCR cassette with 15 listings)
-    expect(json['listings'].length).to eq(23)
+    # check to make sure listings are returned
+    expect(json['listings']).not_to be_empty
   end
 
   it 'sends an individual listing' do
@@ -169,8 +168,8 @@ describe 'Listings API' do
 
   it 'returns lottery ranking for lottery number and listing id' do
     VCR.use_cassette('listings/lottery-ranking') do
-      url = '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_ranking.json'
-      params = { lottery_number: '00008502' }
+      url = '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_ranking.json'
+      params = { lottery_number: '00008639' }
       get url, params
     end
 
@@ -183,7 +182,7 @@ describe 'Listings API' do
 
   it 'gets lottery buckets for a Listing' do
     VCR.use_cassette('listings/lottery-buckets') do
-      get '/api/v1/listings/a0WU000000BmpBdMAJ/lottery_buckets.json'
+      get '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_buckets.json'
     end
 
     json = JSON.parse(response.body)
@@ -195,13 +194,13 @@ describe 'Listings API' do
 
   it 'gets lottery preferences for a Listing' do
     VCR.use_cassette('listings/preferences') do
-      get '/api/v1/listings/a0WU000000BmpBdMAJ/preferences.json'
+      get '/api/v1/listings/a0W0P00000DZTkAUAX/preferences.json'
     end
 
     json = JSON.parse(response.body)
 
     expect(response).to be_success
 
-    expect(json['preferences'].length).to eq(1)
+    expect(json['preferences'].length).to eq(4)
   end
 end
