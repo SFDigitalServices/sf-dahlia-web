@@ -1,46 +1,32 @@
 .content-column ng-if="listing.hasWaitlist"
   .content-group.bg-tint ng-if="listing.Units_Available == 0"
-    h4.content-group_title
-      | WAITLIST IS OPEN
-    p.c-steel.t-small.margin-bottom.t-italic
-      | There are no available units at this time.
-    p.c-steel.t-small.margin-bottom
-      ' Enter the lottery for an open slot on the waitlist for
-      span.t-italic
-        | {{listing.Total_number_of_building_units}} units.
+    h4.content-group_title translate="LISTINGS.WAITLIST_IS_OPEN"
+    p.c-steel.t-small.margin-bottom.t-italic translate="LISTINGS.NO_AVAILABLE_UNITS"
+    p.c-steel.t-small.margin-bottom translate="LISTINGS.ENTER_LOTTERY_FOR_WAITLIST"  translate-value-number="{{listing.Total_number_of_building_units}}"
     ul.content-list
       li.content-stat
         span.content-stat-count
           | {{listing.Number_of_people_currently_on_waitlist}}
-        span.content-stat-label
-          | Current Waitlist Size
+        span.content-stat-label translate="LISTINGS.CURRENT_WAITLIST_SIZE"
       li.content-stat.emphasis
         span.content-stat-count
           | {{listing.Total_waitlist_openings}}
-        span.content-stat-label
-          | Open Waitlist Slots
+        span.content-stat-label translate="LISTINGS.OPEN_WAITLIST_SLOTS"
       li.content-stat
         span.content-stat-count
           | {{listing.Maximum_waitlist_size}}
-        span.content-stat-label
-          | Final Waitlist Size
+        span.content-stat-label translate="LISTINGS.FINAL_WAITLIST_SIZE"
 
   .content-group.bg-tint ng-if="!allListingUnitsAvailable() && listing.Units_Available > 0"
-    h4.content-group_title
-      | AVAILABLE UNITS AND WAITLIST
-    p.c-steel.t-small.margin-bottom
-      ' Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for
-      span.t-italic
-        | {{listing.Total_number_of_building_units}} units.
+    h4.content-group_title translate="LISTINGS.AVAILABLE_UNITS_AND_WAITLIST"
+    p.c-steel.t-small.margin-bottom translate="LISTINGS.AVAILABLE_UNITS_AND_WAITLIST_DESC" translate-value-number="{{listing.Total_number_of_building_units}}"
     ul.content-list
       li.content-stat.emphasis
         span.content-stat-count
           | {{listing.Units_Available}}
-        span.content-stat-label
-          | Available Units
+        span.content-stat-label translate="LISTINGS.AVAILABLE_UNITS"
 
       li.content-stat.emphasis
         span.content-stat-count
           | {{listing.Total_waitlist_openings}}
-        span.content-stat-label
-          | Open Waitlist Slots
+        span.content-stat-label translate="LISTINGS.OPEN_WAITLIST_SLOTS"
