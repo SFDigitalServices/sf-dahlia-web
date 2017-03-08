@@ -112,7 +112,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.occupancyMinMax = (listing) ->
     minMax = [1, 1]
     if listing.unitSummary
-      min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
+      min = _.min(_.map(listing.unitSummary, 'minOccupancy')) || 1
       max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
       minMax = [min, max]
     return minMax

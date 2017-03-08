@@ -51,7 +51,7 @@ PreCommit:
     enabled: true
     description: 'Checking for trailing whitespace'
     exclude:
-      - 'spec/cassettes/**/*.yml'
+      - 'spec/vcr/**/*.yml'
       - 'app/assets/**/*.svg'
       - 'public/images/**/*.svg'
       - 'lib/assets/bower_components/**/*'

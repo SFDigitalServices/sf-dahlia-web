@@ -92,7 +92,7 @@ do ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 'abc123'
         httpBackend.flush()
-        expect(ListingService.listing).toEqual fakeListing.listing
+        expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
 
     describe 'Service.getListingAMI', ->
       afterEach ->
