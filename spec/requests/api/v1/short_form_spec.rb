@@ -123,10 +123,10 @@ describe 'ShortForm API' do
     end
 
     it 'returns success response' do
-      url = '/api/v1/short-form/application/a0o6C0000005Sw4'
+      url = '/api/v1/short-form/application/a0o0P0000093OZE'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
-      params['application']['id'] = 'a0o6C0000005Sw4'
+      params['application']['id'] = 'a0o0P0000093OZE'
       params['application']['status'] = 'draft'
       params = clean_json_for_vcr(params)
 
@@ -138,7 +138,7 @@ describe 'ShortForm API' do
 
     it 'does not return success response for an unauthorized application' do
       # this application ID does not belong to the "login_user"
-      url = '/api/v1/short-form/application/a0o6C00000055ny'
+      url = '/api/v1/short-form/application/a0o0P0000093KJ0'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
       params = clean_json_for_vcr(params)
