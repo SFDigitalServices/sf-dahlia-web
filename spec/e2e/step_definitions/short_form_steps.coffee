@@ -3,8 +3,8 @@ Chance = require('chance')
 chance = new Chance()
 EC = protractor.ExpectedConditions
 
-# QA "Test Listing"
-listingId = 'a0W0P00000DYUcpUAH'
+# QA "280 Fell"
+listingId = 'a0W0P00000DZTkAUAX'
 sessionEmail = chance.email()
 accountPassword = 'password123'
 
