@@ -318,11 +318,11 @@ ShortFormApplicationController = (
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 
-  $scope.checkPreferenceEligibility = (type) ->
+  $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
     if type == 'liveWorkInSf'
       $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
       $scope.currentPreferenceType = $scope.currentLiveWorkType
-    else if type == 'neighborhoodResidence'
+    if type == 'neighborhoodResidence'
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 

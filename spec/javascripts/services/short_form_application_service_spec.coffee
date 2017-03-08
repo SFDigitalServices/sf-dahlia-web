@@ -31,6 +31,9 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+    fakeFileUploadService =
+      uploadProof: jasmine.createSpy()
+      deletePreferenceFile: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     setupFakeApplicant = (attributes) ->
@@ -65,6 +68,7 @@ do ->
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value 'FileUploadService', fakeFileUploadService
       return
     )
 
@@ -248,7 +252,7 @@ do ->
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).not.toEqual(true)
 
         describe 'was previously eligible and selected for liveInSf', ->
           beforeEach ->
@@ -265,7 +269,6 @@ do ->
           it 'clear liveInSf preference data', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
-            expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
 
@@ -600,7 +603,7 @@ do ->
         expect(ShortFormApplicationService.preferences["liveInSf"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_proof_file"]).toEqual null
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalled()
 
     describe 'checkHouseholdEligiblity', ->
       afterEach ->

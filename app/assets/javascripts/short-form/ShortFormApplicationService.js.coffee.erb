@@ -197,21 +197,20 @@ ShortFormApplicationService = (
     )
 
   Service.cancelPreference = (preference) ->
-    if preference == 'liveWorkInSf'
+    if preference == 'neighborhoodResidence'
+      # cancelling NRHP also cancels liveInSf
+      Service.cancelPreference('liveInSf')
+    if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
       # cancels liveWork combo options
       Service.preferences.liveWorkInSf = false
       Service.preferences.liveWorkInSf_preference = null
-      # also cancels live and work individual options
-      Service.cancelPreference('liveInSf')
-      Service.cancelPreference('workInSf')
-      return
-    if preference == 'liveInSf' || preference == 'workInSf'
-      Service.preferences.liveWorkInSf = false
-      Service.preferences.liveWorkInSf_preference = null
-    else if preference == 'neighborhoodResidence'
-      # cancelling NRHP also cancels liveInSf
-      Service.cancelPreference('liveInSf')
-    Service.unsetPreferenceFields(preference)
+    if preference == 'liveWorkInSf'
+      # cancels both live and work individual options
+      Service.unsetPreferenceFields('liveInSf')
+      Service.unsetPreferenceFields('workInSf')
+    else
+      # default, unset the indicated preference
+      Service.unsetPreferenceFields(preference)
 
   Service.unsetPreferenceFields = (preference) ->
     # clear out all fields for this preference
@@ -270,10 +269,12 @@ ShortFormApplicationService = (
   ### Proof of Preferences ###
   Service.refreshPreferences = (type) ->
     if type == 'liveWorkInSf'
-      Service._updatePreference("liveInSf", Service.liveInSfMembers())
-      Service._updatePreference("workInSf", Service.workInSfMembers())
-    if type == 'neighborhoodResidence'
-      Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
+      Service._updatePreference('workInSf', Service.workInSfMembers())
+    else if type == 'neighborhoodResidence'
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
+    else if type == 'workInSf'
+      Service._updatePreference('workInSf', Service.workInSfMembers())
 
   Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
@@ -329,14 +330,13 @@ ShortFormApplicationService = (
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
-
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
     if selectedMember && !_.includes(members, selectedMember)
       Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
-
     # clear if nobody is eligible
     else if _.isEmpty(members)
+      Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
 
 
@@ -579,6 +579,9 @@ ShortFormApplicationService = (
     afterGeocode = ->
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
+      # check if eligibility has changed
+      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
@@ -601,6 +604,9 @@ ShortFormApplicationService = (
     afterGeocode = ->
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
+      # check if NRHP eligibility has changed
+      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
       address: Service.householdMember.home_address
