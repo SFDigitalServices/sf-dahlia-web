@@ -1,5 +1,6 @@
 angular.module('dahlia.directives')
-.directive 'liveWorkPreference', ->
+.directive 'liveWorkPreference',
+['ShortFormApplicationService', (ShortFormApplicationService) ->
   scope: true
   templateUrl: 'short-form/directives/live-work-preference.html'
 
@@ -13,13 +14,12 @@ angular.module('dahlia.directives')
     # because the template has access to the parent functions
 
     scope.reset_livework_data = ->
-      scope.cancelOptOut('liveWorkInSf')
-      prefs = ['workInSf', 'liveInSf']
-      prefs.forEach (preference) ->
-        scope.preferences[preference] = null
-        scope.preferences[preference + '_household_member'] = null
-        scope.preferences[preference + '_proof_option'] = null
-        scope.deletePreferenceFile(preference)
+      ShortFormApplicationService.cancelOptOut('liveWorkInSf')
+      # we don't want to totally "cancelPreference" for live and work
+      # otherwise it would unset liveWorkInSf
+      ShortFormApplicationService.unsetPreferenceFields('workInSf')
+      ShortFormApplicationService.unsetPreferenceFields('liveInSf')
 
     scope.live_or_work_selected = ->
       scope.preferences.liveInSf || scope.preferences.workInSf
+]
