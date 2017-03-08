@@ -1,9 +1,5 @@
 require 'easypost'
 
-# TODO: remove debug code
-ENV['EASYPOST_DEBUG_URL'] ||= 'http://localhost:3000'
-EasyPost.api_base = ENV['EASYPOST_DEBUG_URL']
-
 # encapsulate all EasyPost / Address Validation methods
 class AddressValidationService
   def initialize(address, verify = {})

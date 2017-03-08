@@ -54,8 +54,6 @@ Rails.application.routes.draw do
     end
   end
 
-  post '/addresses' => 'api/v1/address_validation#addresses'
-
   # sitemap generator
   get 'sitemap.xml' => 'sitemaps#generate'
 
