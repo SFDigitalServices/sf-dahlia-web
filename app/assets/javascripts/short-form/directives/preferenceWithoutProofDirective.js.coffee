@@ -9,3 +9,6 @@ angular.module('dahlia.directives')
     scope.preference = attrs.preference
     scope.pref_data_event = attrs.dataevent
     scope.show_preference_description = false
+
+    # this is only shown on pref without proof aka COP/DTHP
+    scope.display_more_info_link = true
