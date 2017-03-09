@@ -73,4 +73,7 @@ angular.module('dahlia.directives')
     scope._householdSize = ->
       scope.application.householdMembers.length + 1
 
+    scope.liveOrNeighborhoodPreference = ->
+      scope.preference == 'liveInSf' || scope.preference == 'neighborhoodResidence'
+
     scope.init()

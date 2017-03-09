@@ -31,6 +31,9 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+    fakeFileUploadService =
+      uploadProof: jasmine.createSpy()
+      deletePreferenceFile: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     setupFakeApplicant = (attributes) ->
@@ -65,6 +68,7 @@ do ->
       $provide.value 'ListingService', fakeListingService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value 'FileUploadService', fakeFileUploadService
       return
     )
 
@@ -150,12 +154,6 @@ do ->
         it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
-
-        it 'sets householdMember.noAddress if hasSameAddressAsApplicant = "No Address"', ->
-          fakeHouseholdMember.hasSameAddressAsApplicant = 'No Address'
-          ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
-          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.noAddress).toEqual true
 
       describe 'old household member update', ->
         it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
@@ -254,7 +252,7 @@ do ->
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).not.toEqual(true)
 
         describe 'was previously eligible and selected for liveInSf', ->
           beforeEach ->
@@ -269,14 +267,13 @@ do ->
               liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
 
           it 'clear liveInSf preference data', ->
-            ShortFormApplicationService.refreshPreferences()
+            ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
-            expect(ShortFormApplicationService.preferences.liveInSf_proof_file).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
 
           it 'invalidates preferences section', ->
-            ShortFormApplicationService.refreshPreferences()
+            ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.application.completedSections['Preferences']).toEqual(false)
 
     describe 'liveInSfMembers', ->
@@ -394,22 +391,39 @@ do ->
           expect(_.find(neighborhoodResidenceMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
           expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
 
-      describe 'applicant does not have address', ->
-        beforeEach ->
-          ShortFormApplicationService.applicant.noAddress = true
-
-        it 'returns array with applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
-
-    describe 'eligibleForLiveWorkOrNRHP', ->
-      it 'returns true if someone is eligible for NRHP', ->
+    describe 'eligibleForLiveWork', ->
+      it 'returns true if someone is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'Yes'
-        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual true
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual true
 
-      it 'returns false if nobody is eligible for live/work/NRHP', ->
+      it 'returns false if nobody is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'No'
-        expect(ShortFormApplicationService.eligibleForLiveWorkOrNRHP()).toEqual false
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
+
+    describe 'eligibleForNRHP', ->
+      it 'returns true if someone is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
+
+      it 'returns false if nobody is eligible for NRHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
+
+    describe 'copyNRHPtoLiveInSf', ->
+      it 'copies NRHP member to liveInSf', ->
+        ShortFormApplicationService.preferences.neighborhoodResidence = true
+        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+
+    describe 'preferenceRequired', ->
+      it 'returns true if optOutField is not marked', ->
+        ShortFormApplicationService.application.liveWorkOptOut = false
+        expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual true
+
+      it 'returns false if optOutField is marked', ->
+        ShortFormApplicationService.application.liveWorkOptOut = true
+        expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
 
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
@@ -589,7 +603,7 @@ do ->
         expect(ShortFormApplicationService.preferences["liveInSf"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
         expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_proof_file"]).toEqual null
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalled()
 
     describe 'checkHouseholdEligiblity', ->
       afterEach ->

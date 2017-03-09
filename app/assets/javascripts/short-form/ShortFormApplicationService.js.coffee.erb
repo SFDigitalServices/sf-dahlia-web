@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
-  AnalyticsService
+  AnalyticsService, FileUploadService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -46,10 +46,23 @@ ShortFormApplicationService = (
       Income: {}
       Review: {}
 
+  Service.optOutFields =
+    workInSf: 'liveWorkOptOut'
+    liveInSf: 'liveWorkOptOut'
+    liveWorkInSf: 'liveWorkOptOut'
+    neighborhoodResidence: 'neighborhoodPreferenceOptOut'
+
   Service.current_id = 0
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
+
+  ## initialize FileUploadService to have access to preferences / session_uid
+  Service.initFileUploadService = ->
+    FileUploadService.preferences = Service.preferences
+    FileUploadService.session_uid = ->
+      Service.session_uid
+  ## -------
 
   Service.resetUserData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
@@ -59,6 +72,7 @@ ShortFormApplicationService = (
     Service.alternateContact = Service.application.alternateContact
     Service.householdMember = {}
     Service.householdMembers = Service.application.householdMembers
+    Service.initFileUploadService()
 
   Service.resetUserData()
 
@@ -133,12 +147,9 @@ ShortFormApplicationService = (
     Service.current_id = max_id + 1
 
   Service.addHouseholdMember = (householdMember) ->
-    householdMember.noAddress = false
     if householdMember.hasSameAddressAsApplicant == 'Yes'
       # copy applicant's neighborhoodPreferenceMatch to householdMember
       householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
-    else if householdMember.hasSameAddressAsApplicant == 'No Address'
-      householdMember.noAddress = true
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
@@ -186,10 +197,39 @@ ShortFormApplicationService = (
     )
 
   Service.cancelPreference = (preference) ->
+    if preference == 'neighborhoodResidence'
+      # cancelling NRHP also cancels liveInSf
+      Service.cancelPreference('liveInSf')
+    if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
+      # cancels liveWork combo options
+      Service.preferences.liveWorkInSf = false
+      Service.preferences.liveWorkInSf_preference = null
+    if preference == 'liveWorkInSf'
+      # cancels both live and work individual options
+      Service.unsetPreferenceFields('liveInSf')
+      Service.unsetPreferenceFields('workInSf')
+    else
+      # default, unset the indicated preference
+      Service.unsetPreferenceFields(preference)
+
+  Service.unsetPreferenceFields = (preference) ->
+    # clear out all fields for this preference
     Service.preferences[preference] = null
     Service.preferences["#{preference}_household_member"] = null
     Service.preferences["#{preference}_proof_option"] = null
-    Service.preferences["#{preference}_proof_file"] = null
+    FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+
+  Service.cancelOptOut = (preference) ->
+    optOutField = Service.optOutFields[preference]
+    Service.application[optOutField] = false
+    if preference == 'neighborhoodResidence'
+      # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
+      Service.application.liveWorkOptOut = false
+
+  Service.preferenceRequired = (preference) ->
+    optOutField = Service.optOutFields[preference]
+    # pref is required if we are NOT opted out
+    return !Service.application[optOutField]
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -227,20 +267,20 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   ### Proof of Preferences ###
-  Service.refreshPreferences = ->
-    Service._updatePreference("liveInSf", Service.liveInSfMembers())
-    Service._updatePreference("workInSf", Service.workInSfMembers())
-    Service._updatePreference("neighborhoodResidence", Service.neighborhoodResidenceMembers())
+  Service.refreshPreferences = (type) ->
+    if type == 'liveWorkInSf'
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
+      Service._updatePreference('workInSf', Service.workInSfMembers())
+    else if type == 'neighborhoodResidence'
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
+    else if type == 'workInSf'
+      Service._updatePreference('workInSf', Service.workInSfMembers())
 
   Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
-    # no address also counts as "live in SF" to consider homelessness
-    applicantLivesInSf ||= Service.applicant.noAddress
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
       if member.hasSameAddressAsApplicant == 'No'
         _.lowerCase(member.home_address.city) == 'san francisco'
-      else if member.noAddress
-        true
       else
         member.hasSameAddressAsApplicant == 'Yes' && applicantLivesInSf
     liveInSfMembers.unshift(Service.applicant) if applicantLivesInSf
@@ -252,42 +292,51 @@ ShortFormApplicationService = (
 
   Service.neighborhoodResidenceMembers = ->
     Service.fullHousehold().filter (member) ->
-      # find all household members that match NRHP or have "No Address"
-      member.neighborhoodPreferenceMatch == 'Matched' || member.noAddress
+      # find all household members that match NRHP
+      member.neighborhoodPreferenceMatch == 'Matched'
 
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.eligibleForLiveWorkOrNRHP = ->
+  Service.eligibleForLiveWork = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
-    neighborhoodResidenceEligible =  Service.neighborhoodResidenceMembers().length > 0
-    return (liveInSfEligible || workInSfEligible || neighborhoodResidenceEligible)
+    return (liveInSfEligible || workInSfEligible)
+
+  Service.eligibleForNRHP = ->
+    Service.neighborhoodResidenceMembers().length > 0
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
-    prefList = [
-      'certOfPreference'
-      'displaced'
-      'liveInSf'
-      'neighborhoodResidence'
-      'workInSf'
-    ]
+    prefList = ShortFormDataService.preferences
     return !_.some(_.pick(Service.preferences, prefList))
+
+  Service.hasPreference = (preference) ->
+    !! Service.preferences[preference]
+
+  Service.copyNRHPtoLiveInSf = ->
+    # clear out any previously entered values for live/work
+    Service.cancelPreference('liveWorkInSf')
+    # copy NRHP values to liveInSf
+    neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
+    # copy e.g. "Water Bill" so that it shows up properly on the review screen
+    proofOption = Service.preferences.neighborhoodResidence_proof_option
+    Service.preferences.liveInSf = true
+    Service.preferences.liveInSf_household_member = neighborhoodMember
+    Service.preferences.liveInSf_proof_option = proofOption
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
-
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if !_.includes(members, selectedMember)
+    if selectedMember && !_.includes(members, selectedMember)
       Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
-
     # clear if nobody is eligible
     else if _.isEmpty(members)
+      Service.application.completedSections['Preferences'] = false
       Service.cancelPreference(preference)
 
 
@@ -314,7 +363,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.neighborhoodPreferenceMatch || !!applicant.noAddress
+        addressValid = !!applicant.neighborhoodPreferenceMatch
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -530,6 +579,9 @@ ShortFormApplicationService = (
     afterGeocode = ->
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
+      # check if eligibility has changed
+      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
@@ -552,6 +604,9 @@ ShortFormApplicationService = (
     afterGeocode = ->
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
+      # check if NRHP eligibility has changed
+      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
       address: Service.householdMember.home_address
@@ -586,7 +641,7 @@ ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
-  'AnalyticsService'
+  'AnalyticsService', 'FileUploadService'
 ]
 
 angular

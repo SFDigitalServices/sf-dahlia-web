@@ -12,13 +12,13 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
     | {{applicant.alternatePhone | tel}}
   review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
-  review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="!applicant.noAddress"
+  review-summary-item label="{{'LABEL.ADDRESS' | translate}}"
     | {{applicant.home_address.address1}}
     br
     ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
     | {{applicant.home_address.zip}}
 
-  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="!applicant.noAddress && applicant.hasAltMailingAddress"
+  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="applicant.hasAltMailingAddress"
     | {{applicant.mailing_address.address1}}
     br
     ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
@@ -79,7 +79,7 @@ review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.s
     | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
 
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
-    | {{'D2_LIVE_WORK_PREFERENCE.NEIGHBORHOOD_RESIDENCE.TITLE' | translate}}
+    | {{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
 
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
     | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}

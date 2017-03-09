@@ -77,6 +77,7 @@
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getListingDownloadURLs)
             return deferred.promise
         ]
         application: [
@@ -616,6 +617,16 @@
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
     })
     # Short form: "Preferences" section
+    .state('dahlia.short-form-application.preferences-intro', {
+      url: '/preferences-intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d0-preferences-intro.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
       views:
@@ -624,11 +635,6 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
-        ]
-        listing: [
-          '$stateParams', 'ListingService',
-          ($stateParams, ListingService) ->
-            ListingService.getListingPreferences()
         ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
@@ -646,6 +652,16 @@
       views:
         'container':
           templateUrl: 'short-form/templates/d2-live-work-preference.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    .state('dahlia.short-form-application.neighborhood-preference', {
+      url: '/neighborhood-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2a-neighborhood-preference.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')

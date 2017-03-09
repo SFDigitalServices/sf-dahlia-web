@@ -33,13 +33,15 @@ do ->
         ]
       },
       { name: 'Preferences', pages: [
-          'preferences-programs',
+          'preferences-intro',
+          'neighborhood-preference',
           'live-work-preference',
+          'preferences-programs',
           'general-lottery-notice'
         ]
       },
       { name: 'Income', pages: [
-          'income-vouchers'
+          'income-vouchers',
           'income'
         ]
       },
