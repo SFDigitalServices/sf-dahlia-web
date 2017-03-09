@@ -8,3 +8,4 @@ angular.module('dahlia.directives')
     scope.description = attrs.translatedDescription
     scope.preference = attrs.preference
     scope.pref_data_event = attrs.dataevent
+    scope.show_preference_description = false
