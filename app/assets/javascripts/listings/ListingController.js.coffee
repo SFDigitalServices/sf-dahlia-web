@@ -88,11 +88,6 @@ ListingController = (
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
-  $scope.lotteryDatePassed = (listing) ->
-    today = new Date
-    lotteryDate = new Date(listing.Lottery_Date)
-    lotteryDate <= today
-
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
 
@@ -185,6 +180,9 @@ ListingController = (
 
   $scope.showDownloadLotteryResultsButton = ->
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+
+  $scope.listingHasLotteryResults = ->
+    ListingService.listingHasLotteryResults()
 
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length
