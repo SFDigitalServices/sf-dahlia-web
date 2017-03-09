@@ -88,11 +88,6 @@ ListingController = (
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
-  $scope.lotteryDatePassed = (listing) ->
-    today = new Date
-    lotteryDate = new Date(listing.Lottery_Date)
-    lotteryDate <= today
-
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
 
@@ -165,10 +160,14 @@ ListingController = (
       )
 
   $scope.submittedApplication = ->
-    $scope.application && $scope.application.status == 'Submitted'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'submitted'
 
   $scope.hasDraftApplication = ->
-    $scope.application && $scope.application.status == 'Draft'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'draft'
 
   $scope.sortedOpenHouses = ->
     ListingService.sortByDate($scope.listing.Open_Houses)
@@ -181,6 +180,9 @@ ListingController = (
 
   $scope.showDownloadLotteryResultsButton = ->
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+
+  $scope.listingHasLotteryResults = ->
+    ListingService.listingHasLotteryResults()
 
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length

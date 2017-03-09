@@ -617,6 +617,16 @@
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
     })
     # Short form: "Preferences" section
+    .state('dahlia.short-form-application.preferences-intro', {
+      url: '/preferences-intro'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d0-preferences-intro.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
       views:
@@ -642,6 +652,16 @@
       views:
         'container':
           templateUrl: 'short-form/templates/d2-live-work-preference.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    .state('dahlia.short-form-application.neighborhood-preference', {
+      url: '/neighborhood-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2a-neighborhood-preference.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')

@@ -15,9 +15,8 @@
     p.form-note.margin-bottom translate="F1A_REVIEW_SIGN_IN.INSTRUCTIONS"
 
     ng-form novalidate="" name="form.signIn"
-      / alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
-      ng-include src="'account/templates/partials/_sign_in_fields.html'"
+      sign-in-fields
 
       .form-group
         p.t-small.c-steel.text-center.padding-top.no-margin
