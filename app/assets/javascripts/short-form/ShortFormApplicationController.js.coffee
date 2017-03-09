@@ -33,6 +33,10 @@ ShortFormApplicationController = (
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.householdEligibilityErrorMessage = null
+  # this tracks what type of pref is being shown on the live-work-preference page:
+  # liveWorkInSf (combo), liveInSf, or workInSf (single)
+  $scope.currentLiveWorkType = null
+  $scope.currentPreferenceType = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -151,7 +155,7 @@ ShortFormApplicationController = (
     # show error alert
     $scope.hideAlert = false
     ShortFormNavigationService.isLoading(false)
-    el = angular.element(document.getElementById('short-form-wrapper'))
+    el = angular.element(document.getElementById('short-form-alerts'))
     # uses duScroll aka 'angular-scroll' module
     topOffset = 0
     duration = 400 # animation speed in ms
@@ -192,12 +196,6 @@ ShortFormApplicationController = (
     validated = $scope["validated_#{identifier}"]
     return AddressValidationService.failedValidation(validated)
 
-  $scope.checkContactRequirement = (contactType) ->
-    !$scope.applicant[contactType] || $scope.requiredContactInformationMissing()
-
-  $scope.requiredContactInformationMissing = ->
-    $scope.applicant.noPhone && $scope.applicant.noAddress && $scope.applicant.noEmail
-
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
     field = form[fieldName]
@@ -217,23 +215,17 @@ ShortFormApplicationController = (
   $scope.notRequired = ->
     return false
 
-  $scope.unsetNoAddressAndCheckMailingAddress = ->
-    # $scope.applicant.noAddress = false
-    $scope.checkIfMailingAddressNeeded()
-
   $scope.addressChange = (model) ->
     member = $scope[model]
     # invalidate neighborhoodPreferenceMatch to ensure that they re-confirm address
     member.neighborhoodPreferenceMatch = null
     if member == $scope.applicant
-      $scope.checkIfMailingAddressNeeded()
+      $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
     else
       ShortFormApplicationService.invalidateHouseholdForm()
 
-  $scope.checkIfMailingAddressNeeded = ->
-    if $scope.applicant.noAddress && ShortFormApplicationService.validMailingAddress()
-      $scope.applicant.noAddress = false
+  $scope.copyHomeToMailingAddress = ->
     ShortFormApplicationService.copyHomeToMailingAddress()
 
   $scope.resetHomeAddress = ->
@@ -246,16 +238,12 @@ ShortFormApplicationController = (
   $scope.resetAndCheckMailingAddress = ->
     #reset mailing address
     $scope.applicant.mailing_address = {}
-    $scope.checkIfMailingAddressNeeded()
+    $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.noAddress || (
-      $scope.applicant.neighborhoodPreferenceMatch &&
-      $scope.application.validatedForms.You['verify-address'] != false
-    )
+    if $scope.applicant.neighborhoodPreferenceMatch && $scope.application.validatedForms.You['verify-address']
       ###
-      skip ahead if they aren't filling out an address
-       or their current address has already been confirmed.
+      skip ahead if their current address has already been confirmed.
       $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
        just that it has a value
       ###
@@ -289,14 +277,6 @@ ShortFormApplicationController = (
   $scope.backPageState = ->
     ShortFormNavigationService.backPageState()
 
-  $scope.homeAddressRequired = ->
-    !($scope.applicant.noAddress || $scope.applicant.hasAltMailingAddress) || $scope.requiredContactInformationMissing()
-
-  $scope.truth = ->
-    # wrap true value in a function a la function(){return true;}
-    # used by isRequired() in _address_form
-    true
-
   $scope.getLandingPage = (section) ->
     ShortFormNavigationService.getLandingPage(section)
 
@@ -307,14 +287,16 @@ ShortFormApplicationController = (
     $scope.getLandingPage({name: 'Household'})
 
   ###### Proof of Preferences Logic ########
-  # this is called after d1-preferences-programs
+  # this is called after d0-preferences-intro
   $scope.checkIfPreferencesApply = ->
-    if ShortFormApplicationService.eligibleForLiveWorkOrNRHP()
+    if ShortFormApplicationService.eligibleForNRHP()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
+    else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
-      $scope.checkIfNoPreferencesSelected()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
-  # this is called after d2-live-work-preference (and also inside of the above function)
+  # this is called after preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
       # only show general lottery notice if they have no preferences
@@ -323,11 +305,26 @@ ShortFormApplicationController = (
       # otherwise go to the Income section
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
 
+  $scope.checkAfterNeighborhood = ->
+    if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+      # NRHP provides automatic liveInSf preference
+      ShortFormApplicationService.copyNRHPtoLiveInSf()
+      # you already selected NRHP, so skip live/work
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      # you opted out of NRHP, so go to live/work
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
+
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 
-  $scope.checkPreferenceEligibility = () ->
-    ShortFormApplicationService.refreshPreferences()
+  $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
+    if type == 'liveWorkInSf'
+      $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
+      $scope.currentPreferenceType = $scope.currentLiveWorkType
+    if type == 'neighborhoodResidence'
+      $scope.currentPreferenceType = 'neighborhoodResidence'
+    ShortFormApplicationService.refreshPreferences(type)
 
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
@@ -346,11 +343,43 @@ ShortFormApplicationController = (
       else
         true
 
+  $scope.liveWorkPreferenceType = ->
+    if $scope.showPreference('liveWorkInSf')
+      'liveWorkInSf'
+    else if $scope.showPreference('liveInSf')
+      'liveInSf'
+    else
+      'workInSf'
+
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
   $scope.neighborhoodResidenceMembers = ->
     ShortFormApplicationService.neighborhoodResidenceMembers()
+
+  $scope.neighborhoodResidenceAddresses = ->
+    addresses = []
+    _.each $scope.neighborhoodResidenceMembers(), (member) ->
+      street = member.home_address.address1
+      addresses.push(street) unless _.isNil(street)
+    _.uniq(addresses)
+
+  $scope.neighborhoodResidenceAddress = ->
+    # turn the list of addresses into a string
+    $scope.neighborhoodResidenceAddresses().join(' and ')
+
+  $scope.cancelPreference = (preference) ->
+    ShortFormApplicationService.cancelPreference(preference)
+
+  $scope.optOutField = (preference) ->
+    ShortFormApplicationService.optOutFields[preference]
+
+  $scope.cancelOptOut = (preference) ->
+    ShortFormApplicationService.cancelOptOut(preference)
+
+  $scope.preferenceRequired = (preference) ->
+    return false unless $scope.showPreference(preference)
+    ShortFormApplicationService.preferenceRequired(preference)
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
@@ -370,7 +399,7 @@ ShortFormApplicationController = (
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->
-    noAddress = _.includes(['Yes', 'No Address'], $scope.householdMember.hasSameAddressAsApplicant)
+    noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
     if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
@@ -413,7 +442,7 @@ ShortFormApplicationController = (
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
       else
-        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-intro')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'

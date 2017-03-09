@@ -160,10 +160,14 @@ ListingController = (
       )
 
   $scope.submittedApplication = ->
-    $scope.application && $scope.application.status == 'Submitted'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'submitted'
 
   $scope.hasDraftApplication = ->
-    $scope.application && $scope.application.status == 'Draft'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'draft'
 
   $scope.sortedOpenHouses = ->
     ListingService.sortByDate($scope.listing.Open_Houses)
