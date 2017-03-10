@@ -36,3 +36,12 @@ do ->
         $state.current.url = '/my-path'
         AnalyticsService.trackCurrentPage()
         expect(ga).toHaveBeenCalledWith('send', 'pageview')
+
+    describe 'Service.trackTimerEvent', ->
+      it 'calls GTM function as long as valid timer had been started', ->
+        category = 'Application'
+        variable = 'Timer'
+        label = 'Apply'
+        AnalyticsService.startTimer(label: label)
+        AnalyticsService.trackTimerEvent(category, label, variable)
+        expect(dataLayer.push).toHaveBeenCalled()

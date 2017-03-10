@@ -20,6 +20,24 @@ AnalyticsService = ($state) ->
     ga('set', 'page', path)
     ga('send', 'pageview')
 
+  Service.startTimer = (opts = {}) ->
+    if opts.label
+      Service.timer[opts.label] = {start: moment()}
+      Service.timer[opts.label].variable = opts.variable if opts.variable
+
+  Service.trackTimerEvent = (category, label, variable = '') ->
+    # once the timer has been cleared, we don't track it any more
+    return unless Service.timer[label]
+
+    elapsed = moment().diff(Service.timer[label].start)
+    params =
+      category: category
+      variable: Service.timer[label].variable || variable
+      label: label
+      time: elapsed
+    Service.timer[label] = null
+    Service.trackEvent('Timer Event', params)
+
   Service.trackFormSuccess = (category, label = null) ->
     params = { category: category, action: 'Form Success', label: label }
     Service.trackEvent('Form Message', params)
