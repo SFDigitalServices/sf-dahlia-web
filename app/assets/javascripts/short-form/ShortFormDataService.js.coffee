@@ -199,7 +199,14 @@ ShortFormDataService = () ->
 
   Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
     whitelist = [
-      'id', 'listingID', 'listing', 'applicationSubmittedDate', 'status', 'lotteryNumber'
+      'id'
+      'listingID'
+      'listing'
+      'applicationSubmittedDate'
+      'status'
+      'lotteryNumber'
+      'neighborhoodPreferenceOptOut'
+      'liveWorkOptOut'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
@@ -265,11 +272,7 @@ ShortFormDataService = () ->
     ]
     member = _.pick contact, whitelist
     member.home_address = Service._reformatHomeAddress(contact)
-    if member.noAddress
-      # this is how it's modeled in the form
-      member.hasSameAddressAsApplicant = 'No Address'
-    else
-      member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
+    member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
     member.workInSf = Service._reformatBoolean(contact.workInSf)
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member

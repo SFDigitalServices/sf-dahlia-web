@@ -99,7 +99,7 @@ class Api::V1::ShortFormController < ApiController
     applications = ShortFormService.get_for_user(user_contact_id)
 
     duplicate_draft_applications = applications.select do |app|
-      app['listingID'] == listing_id && app['status'] == 'Draft'
+      app['listingID'] == listing_id && app['status'].casecmp('draft').zero?
     end
 
     duplicate_draft_applications.each do |app|
@@ -108,7 +108,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
-    if application_params[:status] == 'draft' && user_signed_in?
+    if application_params[:status].casecmp('draft').zero? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
       send_attached_files(response['id'])
@@ -332,6 +332,8 @@ class Api::V1::ShortFormController < ApiController
             :liveInSfPreferenceNatKey,
             :workInSfPreferenceNatKey,
             :neighborhoodResidencePreferenceNatKey,
+            :liveWorkOptOut,
+            :neighborhoodPreferenceOptOut,
             :householdVouchersSubsidies,
             :referral,
             :annualIncome,

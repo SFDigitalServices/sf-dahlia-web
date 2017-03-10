@@ -357,3 +357,17 @@ do ->
         grouped = ListingService.groupUnitDetails(fakeUnits.units)
         # fakeUnits just has one AMI level
         expect(_.keys(grouped).length).toEqual 1
+
+    describe 'Service.listingHasLotteryResults', ->
+      it 'should be true if lottery PDF is available', ->
+        ListingService.listing.LotteryResultsURL = 'http://pdf.url'
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be true if lottery buckets are available', ->
+        ListingService.listing.Lottery_Buckets = fakeLotteryBuckets.lottery_buckets
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be false if lottery buckets and PDF are *not* available', ->
+        ListingService.listing.LotteryResultsURL = null
+        ListingService.listing.Lottery_Buckets = {bucketResults: []}
+        expect(ListingService.listingHasLotteryResults()).toEqual false

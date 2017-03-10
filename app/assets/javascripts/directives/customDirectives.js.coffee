@@ -24,3 +24,12 @@ angular.module('dahlia.directives')
         modelCtrl.$setViewValue transformedInput
         modelCtrl.$render()
       transformedInput
+
+.directive 'ngModel', ->
+  link: (scope, element, attrs) ->
+    return unless scope.inputInvalid
+    element.attr 'aria-invalid', scope.inputInvalid(attrs.name)
+    scope.$watch (->
+      scope.inputInvalid attrs.name
+    ), (newVal) ->
+      element.attr 'aria-invalid', newVal
