@@ -201,7 +201,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   Service.showNeighborhoodPreferences = (listing) ->
-    !!listing.NeighborHoodPreferenceUrl && !listing.Lottery_Results
+    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
 
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions

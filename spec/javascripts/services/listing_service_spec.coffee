@@ -287,21 +287,31 @@ do ->
       it 'returns true if URL is available and the lottery results are not yet available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Results = false
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Results = false
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = null
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
       it 'returns false if the lottery results are available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Results = true
+        # presence of LotteryResultsURL means lottery results are available
+        ListingService.listing.LotteryResultsURL = "http://anotherurl.com"
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
