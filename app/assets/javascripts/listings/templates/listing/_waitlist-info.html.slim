@@ -17,7 +17,7 @@
           | {{listing.Maximum_waitlist_size}}
         span.content-stat-label translate="LISTINGS.FINAL_WAITLIST_SIZE"
 
-  .content-group.bg-tint ng-if="!allListingUnitsAvailable() && listing.Units_Available > 0"
+  .content-group.bg-tint ng-if="listing.Units_Available > 0"
     h4.content-group_title translate="LISTINGS.AVAILABLE_UNITS_AND_WAITLIST"
     p.c-steel.t-small.margin-bottom translate="LISTINGS.AVAILABLE_UNITS_AND_WAITLIST_DESC" translate-value-number="{{listing.Total_number_of_building_units}}"
     ul.content-list
