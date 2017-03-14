@@ -192,6 +192,10 @@ ShortFormApplicationController = (
   $scope.onCommunityScreeningPage = ->
     $state.current.name == 'dahlia.short-form-welcome.community-screening'
 
+  $scope.checkCommunityScreening = ->
+    # ng-change action for answering 'Yes' to screening
+    $scope.communityScreeningInvalid = false
+
   $scope.validateCommunityEligibility = ->
     $scope.communityScreeningInvalid = false
     if $scope.application.communityScreening == 'No'
