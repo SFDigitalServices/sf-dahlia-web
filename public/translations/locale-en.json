@@ -5,11 +5,15 @@
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
             "YOU_OR_ANYONE": "Are you or anyone on this application a senior?",
-            "YOU_OR_ANYONE_DESC": "This is a senior building and all applicants must be {{minAge}}+"
+            "YOU_OR_ANYONE_DESC": "This is a senior building and at least one applicant must be {{minAge}}+.",
+            "YOU_OR_ANYONE_LABEL": "Yes, at least one person is {{minAge}}+",
+            "YOU_AND_EVERYONE": "Are you and everyone on this application a senior?",
+            "YOU_AND_EVERYONE_DESC": "This is a senior building and all applicants must be {{minAge}}+.",
+            "YOU_AND_EVERYONE_LABEL": "Yes, everyone is {{minAge}}+"
         },
         "VETERAN": {
             "YOU_OR_ANYONE": "Are you or anyone on this application a veteran?",
-            "YOU_OR_ANYONE_DESC": "This is a veteran building and at least one applicant must have served in the U.S. Military."
+            "YOU_OR_ANYONE_DESC": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
         }
     },
     "A4_OVERVIEW": {
