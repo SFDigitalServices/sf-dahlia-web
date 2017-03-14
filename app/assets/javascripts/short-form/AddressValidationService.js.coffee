@@ -11,6 +11,7 @@ AddressValidationService = ($http) ->
     address = opts.address || {}
     type = opts.type || 'home'
     validated_address_obj = Service["validated_#{type}_address"]
+    # empty out the "Validated Address" before we run validation
     angular.copy({}, validated_address_obj)
     params =
       address: _.mapKeys(address, (v, key) ->

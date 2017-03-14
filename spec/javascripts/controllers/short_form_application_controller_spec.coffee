@@ -30,7 +30,13 @@ do ->
         gender: {}
       householdMembers: []
       preferences: {}
-      application: {}
+      application:
+        validatedForms:
+          You: {}
+          Household: {}
+          Preferences: {}
+          Income: {}
+          Review: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -53,6 +59,7 @@ do ->
       invalidateIncomeForm: jasmine.createSpy()
       invalidateContactForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
+      preferenceRequired: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -165,11 +172,11 @@ do ->
           scope.checkIfAlternateContactInfoNeeded()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-name')
 
-    describe '$scope.checkIfMailingAddressNeeded', ->
+    describe '$scope.copyHomeToMailingAddress', ->
       describe 'hasAltMailingAddress unchecked', ->
         it 'calls Service function to copy home address to mailing', ->
           scope.applicant.hasAltMailingAddress = false
-          scope.checkIfMailingAddressNeeded()
+          scope.copyHomeToMailingAddress()
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
     describe '$scope.addressChange', ->
@@ -182,14 +189,6 @@ do ->
         scope.applicant.neighborhoodPreferenceMatch = 'Matched'
         scope.addressChange('applicant')
         expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
-
-    describe 'scope.requiredContactInformationMissing', ->
-      describe 'phone, email, address not provided', ->
-        it 'returns true', ->
-          scope.applicant.noPhone = true
-          scope.applicant.noAddress = true
-          scope.applicant.noEmail = true
-          expect(scope.requiredContactInformationMissing()).toEqual true
 
     describe '$scope.addHouseholdMember', ->
       describe 'user has same address applicant', ->
@@ -230,17 +229,17 @@ do ->
         expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
-      describe 'No address verification indicated', ->
-        it 'navigates ahead to alt contact type', ->
-          scope.applicant.noAddress = true
-          scope.checkIfAddressVerificationNeeded()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
+      it 'navigates ahead to alt contact type if verification already happened', ->
+        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.application.validatedForms.You['verify-address'] = true
+        scope.checkIfAddressVerificationNeeded()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
 
-      describe 'Alternate contact type indicated', ->
-        it 'navigates ahead to verify address page', ->
-          scope.applicant.noAddress = false
-          scope.checkIfAddressVerificationNeeded()
-          expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
+      it 'navigates ahead to verify address page if verification had not happened', ->
+        scope.applicant.neighborhoodPreferenceMatch = null
+        scope.application.validatedForms.You['verify-address'] = null
+        scope.checkIfAddressVerificationNeeded()
+        expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
 
     describe '$scope.getLandingPage', ->
       it 'calls getLandingPage in ShortFormNavigationService', ->
@@ -300,7 +299,7 @@ do ->
 
         it 'navigates to the given callback url', ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-intro')
 
       describe 'not matched', ->
         beforeEach ->
@@ -353,26 +352,27 @@ do ->
         spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
 
       describe 'household is eligible for liveWork preferences',->
-        it 'routes user to live-work preference page', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(true)
+        it 'routes user to neighborhood preference page', ->
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.live-work-preference'
+          path = 'dahlia.short-form-application.neighborhood-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
       describe 'preferences do not apply to household',->
         it 'routes user to general lottery notice page', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.general-lottery-notice'
+          path = 'dahlia.short-form-application.preferences-programs'
           expect(state.go).toHaveBeenCalledWith(path)
 
-      describe 'household is not eligible for liveWork but has COP/DTHP',->
-        it 'routes user ahead to income section', ->
-          fakeShortFormApplicationService.eligibleForLiveWorkOrNRHP = jasmine.createSpy().and.returnValue(false)
-          fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(false)
+      describe 'household is not eligible for neighborhood but has live/work',->
+        it 'routes user to live work preferences page', ->
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.income-vouchers'
+          path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'uploadProof', ->
@@ -411,6 +411,20 @@ do ->
         it 'returns true', ->
           spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
           expect(scope.showPreference('displaced')).toEqual true
+
+    describe 'preferenceRequired', ->
+      describe 'listing does not have preference', ->
+        it 'returns false', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+          expect(scope.preferenceRequired('liveInSf')).toEqual false
+
+      describe 'listing has preference', ->
+        it 'calls preferenceRequired function', ->
+          spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+          spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
+          spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([1])
+          scope.preferenceRequired('liveInSf')
+          expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith('liveInSf')
 
     describe 'primaryApplicantUnder18', ->
       it 'checks form values for primary applicant DOB that is under 18', ->

@@ -3,6 +3,16 @@ class UploadedFile < ActiveRecord::Base
   enum preference: %i(workInSf liveInSf neighborhoodResidence)
 
   def descriptive_name
-    "#{preference} - #{document_type}#{File.extname(name)}"
+    "#{preference_name} - #{document_type}#{File.extname(name)}"
+  end
+
+  def preference_name
+    # for neighborhoodResidence we combine NRHP and liveInSf in the filename
+    # because NRHP proof doubles as liveInSf proof
+    if preference.to_s == 'neighborhoodResidence'
+      'NRHP-liveInSf'
+    else
+      preference
+    end
   end
 end

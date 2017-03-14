@@ -26,7 +26,7 @@ Rails.application.routes.draw do
           get 'preferences'
         end
         collection do
-          get 'ami' => 'listings#ami'
+          post 'ami' => 'listings#ami'
           post 'eligibility' => 'listings#eligibility'
         end
       end
@@ -53,6 +53,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # sitemap generator
+  get 'sitemap.xml' => 'sitemaps#generate'
 
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'

@@ -21,12 +21,16 @@ do ->
       children_under_6: 1
     $localStorage = undefined
     $state = undefined
+    $translate = {}
     modalMock = undefined
     requestURL = undefined
+    incomeLevels = undefined
+    minMax = undefined
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
+      $provide.value '$translate', $translate
       return
     )
 
@@ -84,33 +88,22 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
       it 'assigns Service.listing with an individual listing', ->
+        fakeListing.listing.Units_Available = 0
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 'abc123'
         httpBackend.flush()
-        expect(ListingService.listing).toEqual fakeListing.listing
+        expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
 
     describe 'Service.getListingAMI', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.AMI with the AMI results', ->
+      it 'assigns Service.AMI with the consolidated AMI results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
         ListingService.getListingAMI()
         httpBackend.flush()
-        expect(ListingService.AMI).toEqual fakeAMI.ami
-
-    describe 'Service.maxIncomeLevelsFor', ->
-      it 'returns incomeLevels with occupancy, yearly, monthly values', ->
-        listing = fakeListing.listing
-        listing.unitSummary = [
-          {unitType: 'Studio', minOccupancy: 1, maxOccupancy: 2}
-          {unitType: '1 BR', minOccupancy: 1, maxOccupancy: 3}
-        ]
-        expect(ListingService.occupancyMinMax(listing)).toEqual [1,3]
-        ami = fakeAMI.ami
-        incomeLevels = ListingService.maxIncomeLevelsFor(listing, ami)
-        # number of income levels should == maxOccupancy + 2
-        expect(incomeLevels.length).toEqual 5
+        consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)
+        expect(ListingService.AMICharts).toEqual consolidated
 
     describe 'Service.listingIsOpen', ->
       it 'checks if listing application due date has passed', ->
@@ -213,16 +206,19 @@ do ->
           expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
 
     describe 'Service.getListingUnits', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.listing.Units with the Unit results', ->
+      beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
         ListingService.getListingUnits()
         httpBackend.flush()
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'assigns Service.listing.Units with the Unit results', ->
         expect(ListingService.listing.Units).toEqual fakeUnits.units
+      it 'assigns Service.listing.groupedUnits with the grouped Unit results', ->
+        expect(ListingService.listing.groupedUnits).toEqual ListingService.groupUnitDetails(fakeUnits.units)
 
     describe 'Service.getListingPreferences', ->
       afterEach ->
@@ -288,23 +284,34 @@ do ->
         expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
 
     describe 'Service.showNeighborhoodPreferences', ->
-      it 'returns true if URL is available and <9 and >2 days from lottery', ->
+      it 'returns true if URL is available and the lottery results are not yet available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(4, 'days').toString()
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
         listing = fakeListing.listing
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = null
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
-      it 'returns false if URL is available but <2 days from lottery', ->
+      it 'returns false if the lottery results are available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(1, 'days').toString()
+        # presence of LotteryResultsURL means lottery results are available
+        ListingService.listing.LotteryResultsURL = "http://anotherurl.com"
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
@@ -330,3 +337,47 @@ do ->
         it 'should return false', ->
           ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
+
+    describe 'Service.occupancyIncomeLevels', ->
+      beforeEach ->
+        # have to populate listing first
+        ListingService.listing = fakeListing.listing
+        incomeLevels = ListingService.occupancyIncomeLevels(fakeAMI.ami[0])
+        minMax = ListingService.occupancyMinMax(ListingService.listing)
+      it 'should filter the incomeLevels to start from min household', ->
+        expect(incomeLevels[0].numOfHousehold).toEqual minMax[0]
+      it 'should filter the incomeLevels to end at max household + 2', ->
+        expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual minMax[1] + 2
+
+    describe 'Service.minYearlyIncome', ->
+      it 'should get the minimum yearly income for the first (and only) AMI Chart', ->
+        ListingService.AMICharts = ListingService._consolidatedAMICharts(fakeAMI.ami)
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.AMICharts[0])
+        expect(ListingService.minYearlyIncome()).toEqual incomeLevels[0].amount
+
+    describe 'Service.incomeForHouseholdSize', ->
+      it 'should get the income amount for the selected AMI Chart and householdIncomeLevel', ->
+        fakeChart = fakeAMI.ami[0]
+        fakeIncomeLevel = {numOfHousehold: 2}
+        amount = ListingService.incomeForHouseholdSize(fakeChart, fakeIncomeLevel)
+        expect(amount).toEqual fakeChart.values[1].amount
+
+    describe 'Service.groupUnitDetails', ->
+      it 'should return an object containing a list of units for each AMI level', ->
+        grouped = ListingService.groupUnitDetails(fakeUnits.units)
+        # fakeUnits just has one AMI level
+        expect(_.keys(grouped).length).toEqual 1
+
+    describe 'Service.listingHasLotteryResults', ->
+      it 'should be true if lottery PDF is available', ->
+        ListingService.listing.LotteryResultsURL = 'http://pdf.url'
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be true if lottery buckets are available', ->
+        ListingService.listing.Lottery_Buckets = fakeLotteryBuckets.lottery_buckets
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be false if lottery buckets and PDF are *not* available', ->
+        ListingService.listing.LotteryResultsURL = null
+        ListingService.listing.Lottery_Buckets = {bucketResults: []}
+        expect(ListingService.listingHasLotteryResults()).toEqual false

@@ -21,12 +21,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 31 Jan 2017 01:28:23 GMT
+      - Tue, 14 Mar 2017 17:33:17 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
+      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
       Set-Cookie:
-      - BrowserId=xnF_ew9uRDCv3WvPy1YnYA;Path=/;Domain=.salesforce.com;Expires=Sat,
-        01-Apr-2017 01:28:23 GMT
+      - BrowserId=vdkoD4E2RhCrnhWmXoLg0g;Path=/;Domain=.salesforce.com;Expires=Sat,
+        13-May-2017 17:33:17 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -43,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs63.my.salesforce.com","id":"https://test.salesforce.com/id/00D6C0000000TrIUAU/0056C000000eBx5QAE","token_type":"Bearer","issued_at":"1485826104040","signature":"6bkJjRV/3FGWV1l1vnAU3udVI1qExC1wejn2rI7yNsY="}'
-    http_version:
-  recorded_at: Tue, 31 Jan 2017 01:28:24 GMT
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1489512797786","signature":"jXFSzX135IsuSCcgSRysV2oMNNRdsDbWqXn3KZcgsm4="}'
+    http_version: 
+  recorded_at: Tue, 14 Mar 2017 17:33:17 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/Units/a0W0P00000DYiwiUAD
+    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/Units/a0W0P00000DYiwiUAD
     body:
       encoding: US-ASCII
       string: ''
@@ -67,22 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 31 Jan 2017 01:28:24 GMT
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
-        ''self'' *.salesforce.com *.force.com; font-src https: data:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain;
-        base-uri http://sfhousing--qa.cs63.my.salesforce.com/services/apexrest/Listing/Units/a0W0P00000DYiwiUAD'
+      - Tue, 14 Mar 2017 17:33:18 GMT
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=604800; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D6C0000000TrI";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=G4sXuNv9RIC56Xh4UChynw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        01-Apr-2017 01:28:24 GMT
+      - BrowserId=dnwtJGP5SvmFhO4p8MRohQ;Path=/;Domain=.salesforce.com;Expires=Sat,
+        13-May-2017 17:33:18 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -94,7 +96,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '[{"attributes":{"type":"Unit__c","url":"/services/data/v35.0/sobjects/Unit__c/a0b0P00001Bw5t8QAB"},"Unit_Type__c":"1
-        BR","BMR_Rent_Monthly__c":2102.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":5255.00,"Unit_Square_Footage__c":822,"Unit_Number__c":"909","Unit_Floor__c":"9","Number_of_Bathrooms__c":1.00,"Id":"a0b0P00001Bw5t8QAB"}]'
-    http_version:
-  recorded_at: Tue, 31 Jan 2017 01:28:24 GMT
+        BR","BMR_Rent_Monthly__c":2102.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":5255.00,"Unit_Square_Footage__c":822,"Unit_Number__c":"909","Unit_Floor__c":"9","Number_of_Bathrooms__c":1.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
+        Unadjusted","AMI_chart_year__c":2016,"of_AMI_for_Pricing_Unit__c":100,"Id":"a0b0P00001Bw5t8QAB"}]'
+    http_version: 
+  recorded_at: Tue, 14 Mar 2017 17:33:18 GMT
 recorded_with: VCR 3.0.3

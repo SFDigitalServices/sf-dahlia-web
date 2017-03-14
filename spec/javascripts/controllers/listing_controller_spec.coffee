@@ -13,6 +13,7 @@ do ->
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
     fakeShortFormApplicationService = {}
+    fakeAnalyticsService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -34,11 +35,13 @@ do ->
         lotteryResultsListings: []
         listing: fakeListing
         favorites: fakeListingFavorites
-        maxIncomeLevels: []
+        AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
+        stubFeatures: () -> null
+        listingIs: () -> null
         loading: {}
       fakeListingService.toggleFavoriteListing = jasmine.createSpy()
       fakeListingService.isFavorited = jasmine.createSpy()
@@ -46,10 +49,15 @@ do ->
       fakeListingService.eligibility_filters = eligibilityFilterDefaults
       fakeListingService.resetEligibilityFilters = jasmine.createSpy()
       fakeListingService.formattedAddress = jasmine.createSpy()
+      fakeListingService.listingHasPriorityUnits = jasmine.createSpy()
+      fakeListingService.listingHasReservedUnits = jasmine.createSpy()
+      fakeListingService.listingHasLotteryResults = jasmine.createSpy()
+      fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+      $provide.value 'AnalyticsService', fakeAnalyticsService
       return
     )
 
@@ -95,8 +103,8 @@ do ->
       it 'populates scope with favorites', ->
         expect(scope.favorites).toEqual fakeListingFavorites
 
-      it 'populates scope with maxIncomeLevels', ->
-        expect(scope.maxIncomeLevels).toBeDefined()
+      it 'populates scope with AMICharts', ->
+        expect(scope.AMICharts).toBeDefined()
 
       it 'populates scope with lotteryPreferences', ->
         expect(scope.lotteryPreferences).toBeDefined()
@@ -131,25 +139,6 @@ do ->
         fakeListingService.listingIsOpen = jasmine.createSpy()
         scope.listingApplicationClosed(fakeListing)
         expect(fakeListingService.listingIsOpen).toHaveBeenCalled()
-
-    describe '$scope.lotteryDatePassed', ->
-      describe 'passed lottery date', ->
-        it 'returns true', ->
-          passedLotListing = fakeListing
-          passedLotListing.Lottery_Date = yesterday
-          expect(scope.lotteryDatePassed(passedLotListing)).toEqual true
-
-      describe 'lottery date today', ->
-        it 'returns true', ->
-          todayLotListing = fakeListing
-          todayLotListing.Lottery_Date = new Date()
-          expect(scope.lotteryDatePassed(todayLotListing)).toEqual true
-
-      describe 'lottery date tomorrow', ->
-        it 'returns false', ->
-          futureLotListing = fakeListing
-          futureLotListing.Lottery_Date = tomorrow
-          expect(scope.lotteryDatePassed(futureLotListing)).toEqual false
 
     describe '$scope.openLotteryResultsModal', ->
       it 'expect ListingService.openLotteryResultsModal to be called', ->
@@ -256,20 +245,6 @@ do ->
         scope.formattedApplicationAddress(fakeListing, display)
         expect(fakeListingService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Application', display)
 
-    describe '$scope.lotteryDatePassed', ->
-      describe 'passed lottery date', ->
-        it 'returns true', ->
-          expect(scope.lotteryDatePassed(fakeListing)).toEqual(true)
-
-      describe 'not passed lottery date', ->
-        it 'returns false', ->
-          listing = fakeListing
-          today = new Date()
-          tomorrow = new Date()
-          tomorrow.setDate(today.getDate()+1)
-          listing.Lottery_Date = tomorrow
-          expect(scope.lotteryDatePassed(fakeListing)).toEqual(false)
-
     describe '$scope.applicantSelectedForPreference', ->
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
@@ -301,3 +276,23 @@ do ->
         scope.lotterySearchNumber = '22222'
         scope.showLotteryRanking()
         expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
+
+    describe 'listingHasPriorityUnits', ->
+      it 'calls ListingService.listingHasPriorityUnits', ->
+        scope.listingHasPriorityUnits()
+        expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'listingHasReservedUnits', ->
+      it 'calls ListingService.listingHasReservedUnits', ->
+        scope.listingHasReservedUnits()
+        expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(scope.listing)
+
+    describe 'listingHasLotteryResults', ->
+      it 'calls ListingService.listingHasLotteryResults', ->
+        scope.listingHasLotteryResults()
+        expect(fakeListingService.listingHasLotteryResults).toHaveBeenCalled()
+
+    describe 'allListingUnitsAvailable', ->
+      it 'calls ListingService.allListingUnitsAvailable', ->
+        scope.allListingUnitsAvailable()
+        expect(fakeListingService.allListingUnitsAvailable).toHaveBeenCalledWith(scope.listing)

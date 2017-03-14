@@ -12,7 +12,8 @@ ListingController = (
   SharedService,
   ListingService,
   IncomeCalculatorService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  AnalyticsService
 ) ->
   $scope.shared = SharedService
   $scope.listings = ListingService.listings
@@ -26,12 +27,13 @@ ListingController = (
   # TO DO: debug why this isn't working:
   # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
   $scope.favorites = ListingService.favorites
-  $scope.maxIncomeLevels = ListingService.maxIncomeLevels
+  $scope.AMICharts = ListingService.AMICharts
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
   $scope.application = ShortFormApplicationService.application
   # for expanding the "read more/less" on What To Expect
   $scope.whatToExpectOpen = false
+  $scope.amiChartExpanded = false
   # for expanding the "What happens next"
   $scope.whatHappens = false
   # for searching lottery number
@@ -42,6 +44,7 @@ ListingController = (
   # for showing/hiding listings results buckets on browse page, hidden by default
   $scope.displayNotMatchedListings = false
   $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
+  $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -57,15 +60,6 @@ ListingController = (
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
 
-  $scope.unitAreaRange = (unit_summary) ->
-    if unit_summary.minSquareFt != unit_summary.maxSquareFt
-      "#{unit_summary.minSquareFt} - #{unit_summary.maxSquareFt}"
-    else
-      unit_summary.minSquareFt
-
-  $scope.unitsByType = (unit_type) ->
-    $filter('groupBy')($scope.listing.Units, 'Unit_Type')[unit_type]
-
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
@@ -74,6 +68,9 @@ ListingController = (
 
   $scope.formattedApplicationAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Application', display)
+
+  $scope.formattedLeasingAgentAddress = (listing, display) ->
+    ListingService.formattedAddress(listing, 'Leasing_Agent', display)
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -90,11 +87,6 @@ ListingController = (
 
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
-
-  $scope.lotteryDatePassed = (listing) ->
-    today = new Date
-    lotteryDate = new Date(listing.Lottery_Date)
-    lotteryDate <= today
 
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
@@ -121,6 +113,9 @@ ListingController = (
     $scope.closedListings.indexOf(listing) > -1
   $scope.isLotteryResultsListing = (listing) ->
     $scope.lotteryResultsListings.indexOf(listing) > -1
+
+  $scope.waitlistSlotsRemaining = (listing) ->
+    listing.Maximum_waitlist_size - listing.Number_of_people_currently_on_waitlist
 
   # --- Carousel ---
   $scope.carouselHeight = 300
@@ -159,15 +154,20 @@ ListingController = (
     else
       $scope.loading.lotteryRank = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
+        AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
         $scope.lotteryRankingSubmitted = true
         $scope.loading.lotteryRank = false
       )
 
   $scope.submittedApplication = ->
-    $scope.application && $scope.application.status == 'Submitted'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'submitted'
 
   $scope.hasDraftApplication = ->
-    $scope.application && $scope.application.status == 'Draft'
+    $scope.application &&
+    $scope.application.id &&
+    $scope.application.status.toLowerCase() == 'draft'
 
   $scope.sortedOpenHouses = ->
     ListingService.sortByDate($scope.listing.Open_Houses)
@@ -180,6 +180,9 @@ ListingController = (
 
   $scope.showDownloadLotteryResultsButton = ->
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+
+  $scope.listingHasLotteryResults = ->
+    ListingService.listingHasLotteryResults()
 
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length
@@ -303,7 +306,7 @@ ListingController = (
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
-
+  # ---
 
 ############################################################################################
 ######################################## CONFIG ############################################
@@ -319,7 +322,8 @@ ListingController.$inject = [
   'SharedService',
   'ListingService',
   'IncomeCalculatorService',
-  'ShortFormApplicationService'
+  'ShortFormApplicationService',
+  'AnalyticsService'
 ]
 
 angular

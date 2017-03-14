@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state) ->
+ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
   Service.listing = {}
   Service.listings = []
@@ -12,10 +12,45 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.closedListings = []
   Service.lotteryResultsListings = []
   # these get loaded after the listing is loaded
-  Service.AMI = []
-  Service.maxIncomeLevels = []
+  Service.AMICharts = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
+  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+
+  Service.listingDownloadURLs = []
+  Service.defaultApplicationURLs = [
+    # http://sfmohcd.org/general-bmr-rental-application
+    {
+      'language': 'English'
+      'label': 'English'
+      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+    }
+    {
+      'language': 'Spanish'
+      'label': 'Español'
+      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+    {
+      'language': 'Traditional Chinese'
+      'label': '中文'
+      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+    {
+      'language': 'Tagalog'
+      'label': 'Filipino'
+      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+    }
+  ]
+
+  Service.fieldsForUnitGrouping = [
+    'Unit_Type',
+    'Reserved_Type',
+    'BMR_Rent_Monthly',
+    'BMR_Rental_Minimum_Monthly_Income_Needed',
+    'Rent_percent_of_income',
+    'Status',
+  ]
+
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -77,8 +112,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
   Service.occupancyMinMax = (listing) ->
     minMax = [1, 1]
     if listing.unitSummary
-      min = _.min(_.map(listing.unitSummary, 'minOccupancy'))
-      max = _.max(_.map(listing.unitSummary, 'maxOccupancy'))
+      min = _.min(_.map(listing.unitSummary, 'minOccupancy')) || 1
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
       minMax = [min, max]
     return minMax
 
@@ -124,13 +159,25 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     Service.listing.Lottery_Buckets &&
     _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
+  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
+  Service.listingHasLotteryResults = ->
+    !! (Service.listing.LotteryResultsURL || Service.listingHasLotteryBuckets())
+
   Service.formattedAddress = (listing, type='Building', display='full') ->
+    street = "#{type}_Street_Address"
+    zip = "#{type}_Postal_Code"
+    if type == 'Leasing_Agent'
+      street = "#{type}_Street"
+      zip = "#{type}_Zip"
+    else if type == 'Building'
+      zip = "#{type}_Zip_Code"
+
     # If Street address is undefined, then return false for display and google map lookup
-    if listing["#{type}_Street_Address"] == undefined
+    if listing[street] == undefined
       return
     # If other fields are undefined, proceed, with special string formatting
-    if listing["#{type}_Street_Address"] != undefined
-      Street_Address = listing["#{type}_Street_Address"] + ', '
+    if listing[street] != undefined
+      Street_Address = listing[street] + ', '
     else
       Street_Address = ''
     if listing["#{type}_City"] != undefined
@@ -141,12 +188,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       State = listing["#{type}_State"]
     else
       State = ''
-    if type == 'Application'
-      zip_code_field = "#{type}_Postal_Code"
-    else
-      zip_code_field = "#{type}_Zip_Code"
-    if listing[zip_code_field] != undefined
-      Zip_Code = listing[zip_code_field]
+    if listing[zip] != undefined
+      Zip_Code = listing[zip]
     else
       Zip_Code = ''
 
@@ -158,17 +201,15 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   Service.showNeighborhoodPreferences = (listing) ->
-    return false unless listing.NeighborHoodPreferenceUrl
-    now = moment()
-    lotteryDate = moment(listing.Lottery_Date)
-    begin = lotteryDate.clone().subtract(9, 'days')
-    end = lotteryDate.clone().subtract(2, 'days')
-    return now > begin && now < end
+    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
 
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
     _.sortBy sessions, (session) ->
       moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
+
+  Service.allListingUnitsAvailable = (listing) ->
+    listing.Units_Available == listing.Units.length
 
   ###################################### Salesforce API Calls ###################################
 
@@ -180,6 +221,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
       angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+      # create a combined unitSummary
+      unless Service.listing.unitSummary
+        Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
     ).error( (data, status, headers, config) ->
       return
     )
@@ -263,6 +307,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     # listing is open if deadline is in the future
     return deadline > now
 
+  Service.listingIsReservedCommunity = (listing) ->
+    !! listing.Reserved_community_type
+
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
     return false unless Service.listingIsOpen(listing)
@@ -278,24 +325,131 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
         return $state.go('dahlia.listing', {id: id})
 
   Service.getListingAMI = ->
-    angular.copy([], Service.AMI)
-    percent = if (Service.listing && Service.listing.AMI_Percentage) then Service.listing.AMI_Percentage else 100
-    $http.get("/api/v1/listings/ami.json?percent=#{percent}").success((data, status, headers, config) ->
+    angular.copy([], Service.AMICharts)
+    if Service.listing.chartTypes
+      params =
+        ami: _.sortBy(Service.listing.chartTypes, 'percent')
+    else
+      # TODO: do we actually want/need this fallback?
+      # listing.chartTypes *should* always exist now
+      percent = Service.listing.AMI_Percentage || 100
+      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
+    $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
       if data && data.ami
-        angular.copy(data.ami, Service.AMI)
-        angular.copy(Service.maxIncomeLevelsFor(Service.listing, Service.AMI), Service.maxIncomeLevels)
+        angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service._consolidatedAMICharts = (amiData) ->
+    charts = []
+    amiData.forEach (chart) ->
+      # look for an existing chart at the same percentage level
+      amiPercentChart = _.find charts, (c) -> c.percent == chart.percent
+      if !amiPercentChart
+        # only push chart if it has any values
+        charts.push(chart) if chart.values.length
+      else
+        # if it exists, modify it with the max values
+        i = 0
+        amiPercentChart.values.forEach (incomeLevel) ->
+          incomeLevel.amount = Math.max(incomeLevel.amount, chart.values[i].amount)
+          i++
+    charts
+
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
       if data && data.units
-        Service.listing.Units = data.units
+        units = data.units
+        Service.listing.Units = units
+        Service.listing.groupedUnits = Service.groupUnitDetails(units)
+        Service.listing.unitTypes = Service.groupUnitTypes(units)
+        Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
+        Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.groupUnitDetails = (units) ->
+    grouped = _.groupBy units, 'of_AMI_for_Pricing_Unit'
+    flattened = {}
+    _.forEach grouped, (amiUnits, percent) ->
+      flattened[percent] = []
+      grouped[percent] = _.groupBy amiUnits, (unit) ->
+        # create an identity function to group by all unit features in the pickList
+        _.flatten(_.toPairs(_.pick(unit, Service.fieldsForUnitGrouping)))
+      _.forEach grouped[percent], (groupedUnits, id) ->
+        # summarize each group by combining the unit details + total # of units
+        summary = _.pick(groupedUnits[0], Service.fieldsForUnitGrouping)
+        summary.total = groupedUnits.length
+        flattened[percent].push(summary)
+
+      # make sure each array is sorted according to our desired order
+      flattened[percent] = Service._sortGroupedUnits(flattened[percent])
+    return flattened
+
+  Service._sortGroupedUnits = (units) ->
+    # little hack to re-sort Studio to the top
+    _.map units, (u) ->
+      u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
+      u.Unit_Type = '000SRO' if u.Unit_Type == 'SRO'
+      return u
+    # sort everything based on the order presented in pickList
+    units = _.sortBy units, Service.fieldsForUnitGrouping
+    # put "Studio" back to normal
+    _.map units, (u) ->
+      u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
+      u.Unit_Type = 'SRO' if u.Unit_Type == '000SRO'
+      return u
+
+  Service.groupUnitTypes = (units) ->
+    # get a grouping of unit types across both "general" and "reserved"
+    grouped = _.groupBy units, 'Unit_Type'
+    unitTypes = []
+    _.forEach grouped, (groupedUnits, type) ->
+      group = {}
+      group.unitType = type
+      group.units = groupedUnits
+      group.unitAreaRange = Service.unitAreaRange(groupedUnits)
+      unitTypes.push(group)
+    unitTypes
+
+  Service.unitAreaRange = (units) ->
+    min = (_.minBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
+    max = (_.maxBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
+    if min != max
+      "#{min} - #{max}"
+    else
+      min
+
+  Service.groupSpecialUnits = (units, type) ->
+    grouped = _.groupBy units, type
+    delete grouped['undefined']
+    grouped
+
+  Service.combineUnitSummaries = (listing) ->
+    # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
+    listing.unitSummaries ?= {}
+    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
+    combined = _.omitBy(_.uniqBy(combined, 'unitType'), _.isNil)
+    # rename the unitType field to match how individual units are labeled
+    _.map(combined, (u) -> u.Unit_Type = u.unitType)
+    Service._sortGroupedUnits(combined)
+
+  Service.listingHasPriorityUnits = (listing) ->
+    !_.isEmpty(listing.priorityUnits)
+
+  Service.listingHasReservedUnits = (listing) ->
+    !_.isEmpty(listing.reservedUnits)
+
+  Service.priorityTypes = (listing) ->
+    Service.collectTypes(listing, 'prioritiesDescriptor')
+
+  Service.collectTypes = (listing, specialType) ->
+    _.map listing[specialType], (descriptor) ->
+      descriptor.name
 
   Service.getListingPreferences = ->
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -333,6 +487,47 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
       return
     )
 
+  Service.occupancyIncomeLevels = (amiLevel) ->
+    return [] unless amiLevel
+    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    min = occupancyMinMax[0]
+    max = occupancyMinMax[1] + 2
+    _.filter amiLevel.values, (value) ->
+      # where numOfHousehold >= min && <= max
+      value.numOfHousehold >= min && value.numOfHousehold <= max
+
+  Service.householdAMIChartCutoff = ->
+    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    max = occupancyMinMax[1]
+    # cutoff at 2x the num of bedrooms
+    Math.floor(max/2) * 2
+
+  Service.minYearlyIncome = ->
+    return if _.isEmpty(Service.AMICharts)
+    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    # get the first (lowest) income level amount
+    _.first(incomeLevels).amount
+
+  Service.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+    incomeLevel = _.find amiChart.values, (value) ->
+      value.numOfHousehold == householdIncomeLevel.numOfHousehold
+    return unless incomeLevel
+    incomeLevel.amount
+
+  Service.getListingDownloadURLs = ->
+    urls = angular.copy(Service.defaultApplicationURLs)
+    english = _.find(urls, { language: 'English' })
+    chinese = _.find(urls, { language: 'Traditional Chinese' })
+    spanish = _.find(urls, { language: 'Spanish' })
+    tagalog = _.find(urls, { language: 'Tagalog' })
+    # replace download URLs if they are customized on the listing
+    listing = Service.listing
+    english.url = listing.Download_URL if listing.Download_URL
+    chinese.url = listing.Download_URL_Cantonese if listing.Download_URL_Cantonese
+    spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish
+    tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
+    angular.copy(urls, Service.listingDownloadURLs)
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
     # can also serve as slugToId map for applicable listings
@@ -354,6 +549,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
     'a0W0P00000DYuFSUA1': '30 Dore'
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
+    'a0W6C000000DbnZUAS': 'Test Listing'
   }
 
   Service.mapSlugToId = (id) ->
@@ -492,7 +688,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 
     Service.listing.preferences = preferences
 
-
   return Service
 
 
@@ -500,7 +695,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate']
 
 angular
   .module('dahlia.services')

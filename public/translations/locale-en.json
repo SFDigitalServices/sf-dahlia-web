@@ -32,17 +32,11 @@
         "TITLE": "We have located the following address. Please confirm it's correct."
     },
     "B2_CONTACT": {
-        "APPLICANT_ADDRESS_DESC": "We need the address where you currently live.",
+        "APPLICANT_ADDRESS_DESC": "We need the address where you currently live. If you are homeless, enter either the shelter address or an address close to where you stay.",
         "CLAIM_WORK_IN_SF": "In order to claim this as a lottery preference, you'll need to upload supporting documentation as instructed on a later screen.",
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
-        "PROVIDE_WAY_TO_CONTACT_YOU": {
-            "ADDRESS": "Your Address",
-            "DESC": "Please provide one of the following ways to contact you:",
-            "EMAIL": "Your Email Address",
-            "PHONE": "Your Phone Number"
-        },
         "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
@@ -69,6 +63,7 @@
         "TITLE": "Tell us about your household."
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
+        "MEMBER_ADDRESS_DESC": "We need the address where they currently live. If they are homeless, enter either their shelter address or an address close to where they stay.",
         "P1": "You'll have the opportunity to add more household members on the next screen.",
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
@@ -104,22 +99,42 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
+    "D0_PREFERENCES_INTRO": {
+        "GET_STARTED": "Get started",
+        "STEPS_TITLE": "Just 3 simple steps:",
+        "STEP_1": "See if you qualify for each lottery preference.",
+        "STEP_2": "Check each box to claim your lottery preference.",
+        "STEP_3": "Upload the required documents from your computer or phone.",
+        "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
+    },
     "D1_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
-        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction or an Owner Move In Eviction in 2010 or later.",
+        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
-        "INSTRUCTIONS": "This listing is offered through a housing lottery. Some applicants get priority in the lottery through one of our preference programs.<br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
-        "READ_MORE": "Read more about housing lottery preferences",
-        "TITLE": "Please check all lottery preferences that apply to you."
+        "TITLE": "There are lottery preferences for people who already have special certificates."
+    },
+    "D2A_NEIGHBORHOOD_PREFERENCE": {
+        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
+        "PREFERENCE": {
+            "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
+            "NAME": "Neighborhood Resident Housing Preference",
+            "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
+            "TITLE": "Live in the Neighborhood"
+        },
+        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
     "D2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
         "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
     },
     "D2_LIVE_WORK_PREFERENCE": {
+        "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
         "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
+        "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must live in San Francisco.",
@@ -130,10 +145,6 @@
             "LIVE_SF_PREFERENCE": "Live in San Francisco",
             "TITLE": "Live or Work in San Francisco Preference",
             "WORK_SF_PREFERENCE": "Work in San Francisco"
-        },
-        "NEIGHBORHOOD_RESIDENCE": {
-            "DESCRIPTION": "At least one household member must live in the same Supervisorial District or within 1/2 mile of the project.",
-            "TITLE": "Neighborhood Resident Housing Preference"
         },
         "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
         "UPLOAD_PROOF": "Upload proof of preference",
@@ -193,6 +204,9 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
+        "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
+        "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
         "RELATIONSHIP": "Please enter a relationship.",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
@@ -252,7 +266,6 @@
         "APPLICANT_ETHNICITY": "Which best describes your ethnicity?",
         "APPLICANT_GENDER": "Which best describes your gender?",
         "APPLICANT_INCOME_TOTAL": "What is your household total pre-tax income?",
-        "APPLICANT_NO_ADDRESS": "I don't have an address",
         "APPLICANT_NO_EMAIL": "I don't have an email address",
         "APPLICANT_NO_PHONE": "I don't have a telephone number",
         "APPLICANT_PHONE": "Your phone number",
@@ -260,7 +273,7 @@
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "Which household member has this preference?",
         "APPLICANT_RACE": "Which best describes your race?",
         "APPLICANT_SECOND_PHONE": "Your second phone number",
-        "APPLICANT_SEPARATE_ADDRESS": "I have a separate mailing address",
+        "APPLICANT_SEPARATE_ADDRESS": "Send my mail to a different address",
         "APPLICANT_SEXUAL_ORIENTATION": "Which best describes your sexual orientation?",
         "APPLICATION_CONTACT_DETAILS": "Application Contact Details",
         "APPLY_ONLINE": "Apply Online",
@@ -279,12 +292,14 @@
         "DOB_MONTH": "Month",
         "DOB_YEAR": "Year",
         "DONE_ADDING_PEOPLE": "Done adding people",
+        "DONT_WANT_PREFERENCE": "I don't want this lottery preference",
         "EDITED": "Edited",
         "EDIT_ELIGIBILITY": "Edit Eligibility",
         "EMAIL_ADDRESS": "Email",
         "ESTIMATE_YOUR_ELIGIBILITY": "Estimate Your Eligibility",
         "FAMILY_MEMBER": "Family member",
         "FILE_ATTACHED": "{{file}} attached",
+        "FIND_OUT_MORE_ABOUT_PREFERENCES": "Find out more about housing lottery preferences.",
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
@@ -293,7 +308,6 @@
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
-        "HOUSEHOLD_MEMBER_NO_ADDRESS": "They don't have an address",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "What is their relationship to you?",
         "HOUSEHOLD_MEMBER_SAVE": "Save Household Member",
         "HOUSEHOLD_MEMBER_UPDATE": "Update Household Member",
@@ -324,8 +338,10 @@
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
         "PLEASE_SELECT_ONE": "Please select one.",
+        "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "PREFERENCES": "Preferences",
         "PREFERENCE_OPTION_TO_CLAIM": "Which preference option would you like to claim?",
+        "PREFERENCE_PROOF_ADDRESS_DOCUMENTS": "What type of document would you like to upload to show you live at that address?",
         "PREFERENCE_PROOF_DOCUMENTS": "Which document are you uploading to prove eligibility?",
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
@@ -333,7 +349,7 @@
             "ELECTRIC_BILL": "Electric bill",
             "GARBAGE_BILL": "Garbage bill",
             "GAS_BILL": "Gas bill",
-            "HOMELESSNESS": "Third-Party Proof of SF Homelessness",
+            "HOMELESSNESS": "Letter documenting homelessness",
             "LETTER_FROM_EMPLOYER": "Letter from employer",
             "PAYSTUB_EMPLOYER": "Paystub with employer address",
             "PAYSTUB_HOME": "Paystub (listing home address)",
@@ -352,6 +368,7 @@
         "SIGN_IN": "Sign In",
         "SIGN_IN_TO_CONFIRM": "Sign in to confirm",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
+        "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "You'll still have the opportunity to claim other preferences.",
         "SUGGESTED_ADDRESS": "Suggested Address",
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
@@ -370,18 +387,51 @@
         "ZIPCODE": "Zipcode"
     },
     "LISTINGS": {
+        "ADDITIONAL_INFORMATION": "Additional Information",
         "ADDITIONAL_LISTINGS": "Additional Listings",
+        "ALL_UNITS": "All Units",
+        "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
+        "APPLY_TO_AVAILABLE_AND_WAITLIST": "Apply to {{number}} Available Units & Waitlist",
+        "APPLY_TO_WAITLIST": "Apply to the Waitlist for {{number}} Units",
+        "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
+        "AVAILABLE_UNITS": "Available Units",
+        "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
+        "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
         "HIDE_LOTTERY_RESULTS": "Hide Lottery Results ({{number}})",
+        "HOUSEHOLD_MAXIMUM_INCOME": "Household Maximum Income",
+        "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
+        "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
         "LOTTERY_RESULTS": "Lottery Results",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
+        "NO_VACANT_UNITS": "There are no vacant units available for this listing at this time. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available.",
+        "NUMBER_ON_WAITLIST": "{{number}} people are currently on this list",
+        "OCCUPANCY_DESCRIPTION": "Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.",
+        "OPEN_WAITLIST": "Open Waitlist",
+        "PETS_POLICY": "Pets Policy",
+        "PRIORITY_UNITS": "Priority Units",
+        "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
         "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
+        "REQUIRED_DOCUMENTS": "Required Documents",
+        "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
+        "RESERVED_FOR": "Reserved for {{type}}",
+        "RESERVED_UNITS": "Reserved Units",
+        "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
+        "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
         "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
+        "SMOKING_POLICY": "Smoking Policy",
+        "SPECIAL_NOTES": "Special Notes",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
+        "UNITS_ARE_FOR": "These units are for {{type}}.",
+        "UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR": "These units have accessibility features for people with {{type}}.",
+        "VIEW_LOTTERY_RESULTS": "View Lottery Results",
+        "WAITLIST_SPOTS_REMAINING": "{{number}} open slots remaining",
+        "WAITLIST_WITH_NEW_BUILDING": "There are {{availableUnits}} vacant units available for this listing. Once vacancies are filled the top portion of lottery applicants will be placed on a waitlist and be reviewed based on their ranking as units become available. The resulting waitlist goes up to {{waitlistMax}}.",
+        "WAITLIST_WITH_SOME_AVAILABLE_UNITS": "There are {{availableUnits}} vacant units available for this listing. Once vacancies are filled the remaining lotttery winners will be placed on a waitlist and be reviewed based on their ranking as units become available. The resulting waitlist goes up to {{waitlistMax}}.",
         "WE_KNOW_YOU_MAY_HAVE_OPTIONS": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
@@ -505,6 +555,7 @@
         "NEXT": "Next",
         "NO": "No",
         "NONE": "None",
+        "OCCUPANCY": "Occupancy",
         "OK": "OK",
         "OPTIONAL": "Optional",
         "PER_MONTH": "per month",
@@ -517,6 +568,7 @@
         "STATUS": "Status",
         "SUBMIT": "Submit",
         "SUBMITTED": "Submitted",
+        "UNIT_TYPE": "Unit Type",
         "YES": "Yes",
         "YOU": "You"
     }

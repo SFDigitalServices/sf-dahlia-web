@@ -56,6 +56,7 @@ gem 'actionmailer-text'
 gem 'hashie'
 gem 'active_model-errors_details'
 
+gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
 # http requests made easy
 gem 'http', require: false
@@ -86,6 +87,7 @@ group :development, :test do
   gem 'jquery-rails' # only needed for jasmine-jquery
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
+  gem 'phantomjs', '~> 1.9.8.0' # until we upgrade to 2.1 and also update semaphoreCI
   gem 'pry'
   gem 'pry-rails'
   gem 'quiet_assets'
