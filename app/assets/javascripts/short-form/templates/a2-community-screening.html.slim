@@ -1,0 +1,24 @@
+.app-card.form-card
+  header.app-inner.leader.border-bottom
+    h2.app-card_question
+      | Are you and everyone on this application a senior?
+    p.form-note.margin-bottom.text-center
+      | This is a senior building and all applicants must be 55+
+
+  #short-form-alerts
+    / this is for not answering the question
+    alert-box(short-form="true")
+    / this is the custom community screening "No" error
+    alert-box(custom-message="'Watch out'" custom-sub-message="'You need to check your privilege at the door.'" hide-alert="hideAlert" ng-if="communityScreeningInvalid" invert="true")
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('communityScreening') || communityScreeningInvalid }"
+      p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
+      .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
+        radio-block-item value='Yes' user='application' name='communityScreening' ng-required='true'
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='application' name='communityScreening' ng-required='true'
+          | {{'T.NO' | translate}}
+  .button-pager
+    .button-pager_row.primary.text-center
+      input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}"

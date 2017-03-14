@@ -183,6 +183,23 @@ ShortFormApplicationController = (
     fieldToDisable = "no#{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}"
     $scope.applicant[fieldToDisable] = false
 
+  $scope.determineCommunityScreening = ->
+    if $scope.listing.Reserved_community_type
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.community-screening')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
+
+  $scope.onCommunityScreeningPage = ->
+    $state.current.name == 'dahlia.short-form-welcome.community-screening'
+
+  $scope.validateCommunityEligibility = ->
+    $scope.communityScreeningInvalid = false
+    if $scope.application.communityScreening == 'No'
+      $scope.communityScreeningInvalid = true
+      $scope.handleErrorState()
+    else if $scope.application.communityScreening ==  'Yes'
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
+
   $scope.addressInputInvalid = (identifier = '') ->
     if $scope.addressFailedValidation(identifier)
       return true
