@@ -10,13 +10,11 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I opt out of Live/Work preference
-      And I don't choose COP/DTHP preferences
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
-      And I don't choose any preferences
+      And I opt out of Live/Work preference
+      And I don't choose COP/DTHP preferences
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
