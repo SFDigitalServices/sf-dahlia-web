@@ -37,6 +37,8 @@ ShortFormApplicationController = (
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null
   $scope.currentPreferenceType = null
+  # store label values that get overwritten by child directives
+  $scope.labels = {}
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
