@@ -298,7 +298,7 @@ ListingController = (
       ''
 
   $scope.trackApplyOnlineTimer = ->
-    AnalyticsService.trackTimerEvent('Application', 'Application Start', 'Apply Online Click')
+    AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->

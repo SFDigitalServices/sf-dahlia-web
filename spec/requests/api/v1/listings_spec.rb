@@ -73,7 +73,7 @@ describe 'Listings API' do
   describe 'listing preferences' do
     save_fixture do
       VCR.use_cassette('listings/preferences') do
-        get '/api/v1/listings/a0W0P00000DZTkAUAX/preferences.json'
+        get '/api/v1/listings/a0W0P00000DZ4dTUAT/preferences.json'
       end
     end
   end
@@ -194,7 +194,7 @@ describe 'Listings API' do
 
   it 'gets lottery preferences for a Listing' do
     VCR.use_cassette('listings/preferences') do
-      get '/api/v1/listings/a0W0P00000DZTkAUAX/preferences.json'
+      get '/api/v1/listings/a0W0P00000DZ4dTUAT/preferences.json'
     end
 
     json = JSON.parse(response.body)
