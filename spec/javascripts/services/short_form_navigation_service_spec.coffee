@@ -30,7 +30,8 @@ do ->
           'household-overview',
           'household-members',
           'household-member-form',
-          'household-member-form-edit'
+          'household-member-form-edit',
+          'household-public-housing',
         ]
       },
       { name: 'Income', pages: [
