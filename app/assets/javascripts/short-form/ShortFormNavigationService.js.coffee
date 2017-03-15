@@ -19,6 +19,7 @@ ShortFormNavigationService = (
         'household-members'
         'household-member-form'
         'household-member-form-edit'
+        'household-public-housing'
       ]
     },
     { name: 'Income', pages: [
@@ -55,6 +56,7 @@ ShortFormNavigationService = (
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
+    'household-public-housing': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
@@ -163,9 +165,16 @@ ShortFormNavigationService = (
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
+      when 'household-public-housing'
+        if application.householdMembers.length
+          'household-members'
+        else
+          'household-intro'
       # -- Income
       when 'income-vouchers'
-        if application.householdMembers.length
+        if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+          'household-public-housing'
+        else if application.householdMembers.length
           'household-members'
         else
           'household-intro'
@@ -184,12 +193,12 @@ ShortFormNavigationService = (
           'preferences-intro'
       when 'general-lottery-notice'
         'preferences-programs'
+      # -- Review
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else
           'preferences-programs'
-      # -- Review
       when 'review-terms'
         if AccountService.loggedIn()
           'review-summary'
