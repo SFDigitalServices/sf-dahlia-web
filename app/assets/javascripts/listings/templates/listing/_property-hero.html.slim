@@ -81,6 +81,9 @@
 
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-hide="listingApplicationClosed(listing)"
-      .label.flag-label.secondary.text-wrap.alert-tint
-        | Application Due {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      .label.flag-label.secondary.text-wrap
+        span.ui-icon.ui-medium
+          svg
+            use xlink:href="#i-clock"
+        | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
       ng-include src="'listings/templates/listing/_panel-apply.html'"

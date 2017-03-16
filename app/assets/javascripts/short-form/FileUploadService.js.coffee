@@ -1,8 +1,8 @@
-FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
+FileUploadService = ($http, Upload, uuid) ->
   Service = {}
-  Service.preferences = ShortFormApplicationService.preferences
-  Service.session_uid = ->
-    ShortFormApplicationService.session_uid
+  # these are to be overridden
+  Service.preferences = {}
+  Service.session_uid = -> null
 
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
@@ -33,8 +33,6 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
     !! Service.preferences["#{fileType}_loading"]
 
   Service.uploadProof = (file, prefType, docType, listing_id) ->
-    # re-initializing Service.preferences here seems to fix some strange issues
-    Service.preferences = ShortFormApplicationService.preferences
     fileType = "#{prefType}_proof_file"
     if (!file)
       Service.preferences["#{fileType}_error"] = true
@@ -67,7 +65,7 @@ FileUploadService = ($http, Upload, uuid, ShortFormApplicationService) ->
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', 'Upload', 'uuid', 'ShortFormApplicationService'
+  '$http', 'Upload', 'uuid'
 ]
 
 angular

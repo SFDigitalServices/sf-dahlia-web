@@ -38,6 +38,16 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      if (!fromState.name)
+        # fromState.name being empty means the user just arrived at DAHLIA
+        # start Apply Online timer, tracking if the first state that is arrived at is
+        # 1) the browse listings page, 2) a single listing page, or 3) any other page
+        timerVariable = switch toState.name
+          when 'dahlia.listings' then 'Browse to Application Start'
+          when 'dahlia.listing' then 'Listing Page to Application Start'
+          else 'Landing Page to Application Start'
+        AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
+
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()

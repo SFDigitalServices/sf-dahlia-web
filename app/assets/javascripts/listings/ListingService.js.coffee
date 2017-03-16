@@ -159,6 +159,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     Service.listing.Lottery_Buckets &&
     _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
 
+  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
+  Service.listingHasLotteryResults = ->
+    !! (Service.listing.LotteryResultsURL || Service.listingHasLotteryBuckets())
+
   Service.formattedAddress = (listing, type='Building', display='full') ->
     street = "#{type}_Street_Address"
     zip = "#{type}_Postal_Code"
@@ -197,12 +201,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   Service.showNeighborhoodPreferences = (listing) ->
-    return false unless listing.NeighborHoodPreferenceUrl
-    now = moment()
-    lotteryDate = moment(listing.Lottery_Date)
-    begin = lotteryDate.clone().subtract(9, 'days')
-    end = lotteryDate.clone().subtract(2, 'days')
-    return now > begin && now < end
+    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
 
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions

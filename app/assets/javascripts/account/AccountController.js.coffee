@@ -198,9 +198,7 @@ AccountController = (
       $state.go('dahlia.sign-in', {skipConfirm: true, newAccount: true})
 
   $scope.userInShortFormSession = ->
-    shortFormCreateAccountPath = 'dahlia.short-form-application.create-account'
-    shortFormSignInPath = 'dahlia.short-form-application.sign-in'
-    $state.current.name == shortFormCreateAccountPath ||  $state.current.name == shortFormSignInPath
+    $state.current.name.indexOf('dahlia.short-form-application') > -1
 
   $scope.clearCreatedAccount = ->
     angular.copy({}, $scope.createdAccount)

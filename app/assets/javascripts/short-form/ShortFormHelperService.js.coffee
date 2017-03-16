@@ -25,7 +25,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   ]
   Service.preference_proof_options_live = angular.copy(Service.preference_proof_options_default)
   Service.preference_proof_options_live.push(
-    ['Third-Party Proof of SF Homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
+    ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
   ## Review Page helpers

@@ -2,7 +2,7 @@ do ->
   'use strict'
   describe 'AccountController', ->
     scope = undefined
-    state = {current: {name: undefined}}
+    state = {current: {name: 'dahlia'}}
     deferred = undefined
     $translate =
       instant: jasmine.createSpy()

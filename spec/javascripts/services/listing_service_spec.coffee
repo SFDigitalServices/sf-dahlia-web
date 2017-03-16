@@ -284,23 +284,34 @@ do ->
         expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
 
     describe 'Service.showNeighborhoodPreferences', ->
-      it 'returns true if URL is available and <9 and >2 days from lottery', ->
+      it 'returns true if URL is available and the lottery results are not yet available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(4, 'days').toString()
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
         listing = fakeListing.listing
+
+        # clear any lottery results
+        ListingService.listing.Lottery_Buckets = null
+        ListingService.listing.LotteryResultsURL = null
+
         listing.NeighborHoodPreferenceUrl = null
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
-      it 'returns false if URL is available but <2 days from lottery', ->
+      it 'returns false if the lottery results are available', ->
         # have to populate listing first
         listing = fakeListing.listing
-        listing.Lottery_Date = moment().add(1, 'days').toString()
+        # presence of LotteryResultsURL means lottery results are available
+        ListingService.listing.LotteryResultsURL = "http://anotherurl.com"
+
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
         expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
 
@@ -356,3 +367,17 @@ do ->
         grouped = ListingService.groupUnitDetails(fakeUnits.units)
         # fakeUnits just has one AMI level
         expect(_.keys(grouped).length).toEqual 1
+
+    describe 'Service.listingHasLotteryResults', ->
+      it 'should be true if lottery PDF is available', ->
+        ListingService.listing.LotteryResultsURL = 'http://pdf.url'
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be true if lottery buckets are available', ->
+        ListingService.listing.Lottery_Buckets = fakeLotteryBuckets.lottery_buckets
+        expect(ListingService.listingHasLotteryResults()).toEqual true
+
+      it 'should be false if lottery buckets and PDF are *not* available', ->
+        ListingService.listing.LotteryResultsURL = null
+        ListingService.listing.Lottery_Buckets = {bucketResults: []}
+        expect(ListingService.listingHasLotteryResults()).toEqual false
