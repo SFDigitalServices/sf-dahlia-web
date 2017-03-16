@@ -50,18 +50,19 @@ AccountService = (
 
 
   Service.createAccount = (shortFormSession) ->
+    # loading overlay will be cleared on success by a state transition in the controller
     bsLoadingOverlayService.start()
     Service.clearAccountMessages()
     if shortFormSession
       Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
-        bsLoadingOverlayService.stop()
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         Service.clearAccountMessages()
         return true
       ).error((response) ->
+        # for errors we manually stop the loading overlay
         bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email already in use'
@@ -74,11 +75,11 @@ AccountService = (
       )
 
   Service.signIn = ->
+    # loading overlay will be cleared on success by a state transition in the controller
     bsLoadingOverlayService.start()
     Service.clearAccountMessages()
     $auth.submitLogin(Service.userAuth.user)
       .then((response) ->
-        bsLoadingOverlayService.stop()
         # reset userAuth object
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         if response.signedIn
@@ -86,6 +87,7 @@ AccountService = (
           Service._reformatDOB()
           return true
       ).catch((response) ->
+        # for errors we manually stop the loading overlay
         bsLoadingOverlayService.stop()
         return false
       )
