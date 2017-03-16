@@ -319,6 +319,8 @@ ShortFormApplicationService = (
   Service.copyNRHPtoLiveInSf = ->
     # clear out any previously entered values for live/work
     Service.cancelPreference('liveWorkInSf')
+    # reset the form so it's not in an "invalid" state
+    Service.resetLiveWorkForm()
     # copy NRHP values to liveInSf
     neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
@@ -409,6 +411,10 @@ ShortFormApplicationService = (
     Service.application.completedSections['Household'] = false
     Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
+
+  Service.resetLiveWorkForm = ->
+    return unless Service.application.validatedForms['Preferences']
+    delete Service.application.validatedForms['Preferences']['live-work-preference']
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
