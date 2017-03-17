@@ -438,13 +438,21 @@ ShortFormApplicationController = (
       $scope.clearHouseholdErrorMessage()
       if match == 'incomeMatch'
         $scope.goToLandingPage('Preferences')
-      else
-        # TO DO:
-        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
+      else if match == 'householdMatch'
+        if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-public-housing')
+        else
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
       $scope.handleErrorState()
+
+  $scope.checkIfPublicHousing = ->
+    if $scope.application.householdPublicHousing == 'No'
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null

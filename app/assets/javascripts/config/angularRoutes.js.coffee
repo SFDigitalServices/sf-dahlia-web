@@ -616,6 +616,12 @@
         'container':
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
     })
+    .state('dahlia.short-form-application.household-public-housing', {
+      url: '/household-public-housing'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c4-household-public-housing.html'
+    })
     .state('dahlia.short-form-application.monthly-rent', {
       url: '/monthly-rent'
       views:

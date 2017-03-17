@@ -11,7 +11,7 @@ do ->
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
     fakeListingService =
-      hasPreference: () ->
+      hasPreference: ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -65,6 +65,7 @@ do ->
       validateApplicantAddress: ->
         { error: -> null }
       checkHouseholdEligiblity: (listing) ->
+      hasHouseholdPublicHousingQuestion: ->
       submitApplication: (options={}) ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -112,6 +113,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
