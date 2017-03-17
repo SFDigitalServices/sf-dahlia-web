@@ -413,6 +413,10 @@ ShortFormApplicationController = (
         $scope.handleErrorState()
       )
 
+  $scope.groupedHouseholdAddresses = ->
+    ShortFormApplicationService.groupedHouseholdAddresses()
+
+
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
     $scope.form.applicationForm.$setPristine()
@@ -438,7 +442,7 @@ ShortFormApplicationController = (
       if match == 'incomeMatch'
         $scope.goToLandingPage('Preferences')
       else
-        $scope.goToLandingPage('Income')
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'

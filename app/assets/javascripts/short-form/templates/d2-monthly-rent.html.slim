@@ -1,0 +1,24 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | How much does your household pay in monthly rent?
+
+  .app-inner.inset ng-if="groupedHouseholdAddresses().length == 1"
+    .form-group ng-class="{ error: (inputInvalid('monthlyRent') }"
+      .form-income
+        label.sr-only for="incomeTotal"
+          | test
+        span.label-dollar $
+        input#monthlyRent.form-income_input ng-model="application.monthlyRent" name="monthlyRent" ng-required="true" placeholder="Monthly Rent" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('monthlyRent') }" aria-describedby="monthlyRent_error"
+
+  / .app-inner.inset ng-if="groupedHouseholdAddresses().length > 1"
+  /   .form-group ng-class="{ error: (inputInvalid('monthlyRent') }"
+  /     .form-income
+  /       label.sr-only for="incomeTotal"
+  /         | {{'LABEL.INCOME' | translate}}
+  /       span.label-dollar $
+  /       input#monthlyRent.form-income_input ng-model="application.monthlyRent" name="monthlyRent" ng-required="true" placeholder="Monthly Rent" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('monthlyRent') }" aria-describedby="monthlyRent_error"
+
+
+
+  short-form-save-and-submit

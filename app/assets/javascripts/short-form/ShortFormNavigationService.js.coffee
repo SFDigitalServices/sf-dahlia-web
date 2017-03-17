@@ -18,7 +18,8 @@ ShortFormNavigationService = (
         'household-overview',
         'household-members',
         'household-member-form',
-        'household-member-form-edit'
+        'household-member-form-edit',
+        'monthly-rent'
       ]
     },
     { name: 'Income', pages: [

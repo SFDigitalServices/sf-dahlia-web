@@ -196,6 +196,26 @@ ShortFormApplicationService = (
         member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     )
 
+  Service.groupedHouseholdAddresses = ->
+    groupedAddresses = []
+    groupedAddress = {}
+
+    groupedAddress.address = Service.applicant.home_address.address1 + " " + Service.applicant.home_address.address2
+    groupedAddress.members = ["You"]
+    groupedAddresses.push(groupedAddress)
+
+    _.each Service.householdMembers, (member) ->
+      groupedAddress.address = member.home_address.address1 + " " + member.home_address.address2
+      matchedIndex = _.findIndex(groupedAddresses, { address: groupedAddress.address})
+      memberName = member.firstName + " " + member.lastName
+      if matchedIndex > -1
+        groupedAddresses[matchedIndex].members.push(memberName)
+      else
+        groupedAddress.members = [memberName]
+        groupedAddresses.push(groupedAddress)
+
+    return groupedAddresses
+
   Service.cancelPreference = (preference) ->
     if preference == 'neighborhoodResidence'
       # cancelling NRHP also cancels liveInSf
