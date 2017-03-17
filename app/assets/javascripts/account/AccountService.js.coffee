@@ -56,11 +56,13 @@ AccountService = (
       Service.userAuth.user.temp_session_id = shortFormSession.uid
     $auth.submitRegistration(Service._createAccountParams())
       .success((response) ->
+        bsLoadingOverlayService.stop()
         angular.copy(response.data, Service.createdAccount)
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         Service.clearAccountMessages()
         return true
       ).error((response) ->
+        bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email already in use'
           Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
@@ -76,6 +78,7 @@ AccountService = (
     Service.clearAccountMessages()
     $auth.submitLogin(Service.userAuth.user)
       .then((response) ->
+        bsLoadingOverlayService.stop()
         # reset userAuth object
         angular.copy(Service.userAuthDefaults, Service.userAuth)
         if response.signedIn
@@ -83,6 +86,7 @@ AccountService = (
           Service._reformatDOB()
           return true
       ).catch((response) ->
+        bsLoadingOverlayService.stop()
         return false
       )
 
