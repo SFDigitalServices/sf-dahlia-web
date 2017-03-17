@@ -91,7 +91,9 @@
 
   .content-group.bg-snow
     p.c-charcoal.t-small
-      | Do not apply online and also send in a paper application. All applications containing any person who appears on more than one application will be removed from the lottery.
+      span ng-if="listing.Accepting_Online_Applications && !listing.Lottery_Results"
+        ' {{'LISTINGS.DO_NOT_APPLY_ONLINE_AND_PAPER' | translate}}
+      | {{'LISTINGS.DO_NOT_DO_MULTIPLE_APPLICATIONS' | translate}}
 
   / Section 3: Find a Housing Counselor
   .content-group

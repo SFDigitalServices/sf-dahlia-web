@@ -395,6 +395,8 @@
         "APPLY_TO_WAITLIST": "Apply to the Waitlist for {{number}} Units",
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
+        "DO_NOT_APPLY_ONLINE_AND_PAPER": "Do not apply online and also send in a paper application.",
+        "DO_NOT_DO_MULTIPLE_APPLICATIONS": "All applications containing any person who appears on more than one application will be removed from the lottery.",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",
         "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
