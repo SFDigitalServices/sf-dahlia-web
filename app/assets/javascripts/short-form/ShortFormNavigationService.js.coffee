@@ -164,6 +164,8 @@ ShortFormNavigationService = (
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
+      when 'monthly-rent'
+        'household-members'
       # -- Income
       when 'income-vouchers'
         if application.householdMembers.length

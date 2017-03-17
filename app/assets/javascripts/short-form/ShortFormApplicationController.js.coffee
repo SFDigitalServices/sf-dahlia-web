@@ -32,6 +32,7 @@ ShortFormApplicationController = (
   $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
+  $scope.groupedHouseholdAddresses = ShortFormApplicationService.application.groupedHouseholdAddresses
   $scope.householdEligibilityErrorMessage = null
   # this tracks what type of pref is being shown on the live-work-preference page:
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
@@ -413,10 +414,6 @@ ShortFormApplicationController = (
         $scope.handleErrorState()
       )
 
-  $scope.groupedHouseholdAddresses = ->
-    ShortFormApplicationService.groupedHouseholdAddresses()
-
-
   $scope.cancelHouseholdMember = ->
     ShortFormApplicationService.cancelHouseholdMember()
     $scope.form.applicationForm.$setPristine()
@@ -442,6 +439,7 @@ ShortFormApplicationController = (
       if match == 'incomeMatch'
         $scope.goToLandingPage('Preferences')
       else
+        # TO DO:
         $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'

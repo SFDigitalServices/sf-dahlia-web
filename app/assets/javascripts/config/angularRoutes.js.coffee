@@ -621,6 +621,10 @@
       views:
         'container':
           templateUrl: 'short-form/templates/d2-monthly-rent.html'
+      onEnter: [
+        'ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.groupHouseholdAddresses()
+      ]
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
