@@ -31,6 +31,7 @@ ShortFormApplicationService = (
       neighborhoodResidence: null
       assistedHousingRentBurden: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
+    groupedHouseholdAddresses: []
     completedSections:
       Intro: false
       You: false
@@ -196,6 +197,38 @@ ShortFormApplicationService = (
         # copy applicant's neighborhoodPreferenceMatch to householdMember
         member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     )
+
+  Service.groupHouseholdAddresses = ->
+    groupedAddresses =[]
+    groupedAddress = {}
+
+    primaryAddress = Service.applicant.home_address.address1
+    primaryAddress += ' ' + Service.applicant.home_address.address2 if Service.applicant.home_address.address2
+    groupedAddress.address = primaryAddress
+    groupedAddress.members = ['You']
+    groupedAddresses.push(angular.copy(groupedAddress))
+
+    _.each Service.householdMembers, (member) ->
+      groupedAddress = {}
+      if member.hasSameAddressAsApplicant == 'Yes'
+        groupedAddress.address = primaryAddress
+      else
+        groupedAddress.address = member.home_address.address1
+        groupedAddress.address += ' ' + member.home_address.address2 if member.home_address.address2
+      matchedIndex = _.findIndex(groupedAddresses, { address: groupedAddress.address})
+      if matchedIndex > -1
+        groupedAddresses[matchedIndex].members.push(member.firstName)
+      else
+        groupedAddress.members = [member.firstName]
+        groupedAddresses.push(angular.copy(groupedAddress))
+
+    _.each groupedAddresses, (groupedAddress) ->
+      matchedIndex = _.findIndex(Service.application.groupedHouseholdAddresses, { address: groupedAddress.address})
+      if matchedIndex > -1
+        groupedAddress.monthlyRent = Service.application.groupedHouseholdAddresses[matchedIndex].monthlyRent
+        groupedAddress.dontPayRent = Service.application.groupedHouseholdAddresses[matchedIndex].dontPayRent
+
+    angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
 
   Service.cancelPreference = (preference) ->
     if preference == 'neighborhoodResidence'

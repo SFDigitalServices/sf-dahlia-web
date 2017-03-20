@@ -622,12 +622,22 @@
         'container':
           templateUrl: 'short-form/templates/c4-household-public-housing.html'
     })
+    .state('dahlia.short-form-application.monthly-rent', {
+      url: '/monthly-rent'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-monthly-rent.html'
+      onEnter: [
+        'ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.groupHouseholdAddresses()
+      ]
+    })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'
       views:
         'container':
-          templateUrl: 'short-form/templates/d1-income-vouchers.html'
+          templateUrl: 'short-form/templates/d6-income-vouchers.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Household')
@@ -637,7 +647,7 @@
       url: '/income'
       views:
         'container':
-          templateUrl: 'short-form/templates/d2-income-household.html'
+          templateUrl: 'short-form/templates/e1-income-household.html'
     })
     # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-intro', {
