@@ -10,7 +10,7 @@
 
 .content-column ng-if="!submittedApplication()"
   / Apply Online button (if applicable)
-  .content-group.has-divider ng-if="listing.Accepting_Online_Applications && !listing.Lottery_Results"
+  .content-group.has-divider ng-if="listing.Accepting_Online_Applications"
     ng-include src="'listings/templates/listing/_apply_online.html'"
 
   / Section 1: Get a Paper Application
@@ -70,7 +70,7 @@
 
   .content-group.bg-snow
     p.c-charcoal.t-small
-      span ng-if="listing.Accepting_Online_Applications && !listing.Lottery_Results"
+      span ng-if="listing.Accepting_Online_Applications"
         ' {{'LISTINGS.DO_NOT_APPLY_ONLINE_AND_PAPER' | translate}}
       | {{'LISTINGS.DO_NOT_DO_MULTIPLE_APPLICATIONS' | translate}}
 
