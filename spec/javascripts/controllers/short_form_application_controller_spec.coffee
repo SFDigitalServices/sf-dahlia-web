@@ -58,6 +58,8 @@ do ->
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
       invalidateContactForm: jasmine.createSpy()
+      resetMonthlyRentForm: jasmine.createSpy()
+      invalidateMonthlyRentForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
       preferenceRequired: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
@@ -275,6 +277,26 @@ do ->
         scope.application.householdVouchersSubsidies = 'Yes'
         scope.validateHouseholdEligibility('incomeMatch')
         expect(state.go).toHaveBeenCalled()
+
+    describe 'checkIfPublicHousing', ->
+      it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
+        scope.application.householdPublicHousing = 'No'
+        scope.checkIfPublicHousing()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
+      it 'skips ahead if income section if publicHousing answer is "Yes"', ->
+        scope.application.householdPublicHousing = 'Yes'
+        scope.checkIfPublicHousing()
+        expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Income'})
+
+    describe 'resetMonthlyRentForm', ->
+      it 'calls resetMonthlyRentForm in ShortFormApplicationService', ->
+        scope.resetMonthlyRentForm()
+        expect(fakeShortFormApplicationService.resetMonthlyRentForm).toHaveBeenCalled()
+
+    describe 'invalidateMonthlyRentForm', ->
+      it 'calls invalidateMonthlyRentForm in ShortFormApplicationService', ->
+        scope.invalidateMonthlyRentForm()
+        expect(fakeShortFormApplicationService.invalidateMonthlyRentForm).toHaveBeenCalled()
 
     describe '$scope.clearPhoneData', ->
       it 'calls clearPhoneData in ShortFormApplicationService', ->

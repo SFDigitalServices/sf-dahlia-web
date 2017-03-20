@@ -32,6 +32,7 @@ do ->
           'household-member-form'
           'household-member-form-edit'
           'household-public-housing'
+          'household-monthly-rent'
         ]
       },
       { name: 'Income', pages: [

@@ -69,8 +69,15 @@
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
     "C4_HOUSEHOLD_PUBLIC_HOUSING": {
-        "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?",
-        "P1": "This does not include Section 8 vouchers or VASH housing choice vouchers."
+        "P1": "This does not include Section 8 vouchers or VASH housing choice vouchers.",
+        "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?"
+    },
+    "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay in rent?",
+        "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay in rent?",
+        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay in rent?",
+        "HOW_MUCH_DO_YOU_PAY": "How much do You pay in rent?",
+        "TITLE": "How much does your household pay in monthly rent?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
@@ -208,6 +215,7 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -325,10 +333,12 @@
         "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "MIDDLE_NAME": "Middle Name",
+        "MONTHLY_RENT": "Monthly Rent",
         "MY_APPLICATION": "My Application",
         "NAME": "Name",
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
+        "NO_RENT_PAID": "No rent paid",
         "OLD_PASSWORD": "Old Password",
         "ON_THE_LISTING": "on the listing",
         "ORIGINAL_APPLICATION": "Original Application",

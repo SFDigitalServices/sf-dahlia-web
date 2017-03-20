@@ -7,6 +7,7 @@
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
+      p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
       .radio-group.padding-top--half role="radiogroup" aria-label="{{'D1_INCOME_VOUCHERS.TITLE' | translate}}"
         radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
           | {{'T.YES' | translate}}
