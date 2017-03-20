@@ -450,9 +450,9 @@ ShortFormApplicationController = (
 
   $scope.checkIfPublicHousing = ->
     if $scope.application.householdPublicHousing == 'No'
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
+      $scope.goToLandingPage('Income')
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null

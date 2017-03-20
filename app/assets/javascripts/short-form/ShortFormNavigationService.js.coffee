@@ -20,7 +20,7 @@ ShortFormNavigationService = (
         'household-member-form'
         'household-member-form-edit'
         'household-public-housing'
-        'monthly-rent'
+        'household-monthly-rent'
       ]
     },
     { name: 'Income', pages: [
@@ -59,7 +59,7 @@ ShortFormNavigationService = (
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'household-public-housing': {path: 'income-vouchers'}
     'household-public-housing': {callback: ['checkIfPublicHousing']}
-    'monthly-rent': {path: 'income-vouchers'}
+    'household-monthly-rent': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
@@ -173,12 +173,12 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
-      when 'monthly-rent'
+      when 'household-monthly-rent'
         'household-public-housing'
       # -- Income
       when 'income-vouchers'
         if ShortFormApplicationService.application.householdPublicHousing == 'No'
-          'monthly-rent'
+          'household-monthly-rent'
         else if ShortFormApplicationService.application.householdPublicHousing == 'Yes'
           'household-public-housing'
         else if application.householdMembers.length

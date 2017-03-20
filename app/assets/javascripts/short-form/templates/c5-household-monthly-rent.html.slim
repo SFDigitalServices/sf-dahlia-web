@@ -1,0 +1,35 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE' | translate}}
+
+  .app-inner.inset
+    span ng-repeat="groupedAddress in groupedHouseholdAddresses"
+      .form-group.has-option ng-class="{ error: inputInvalid('monthlyRent_' + $index) }"
+        h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DO_YOU_PAY" ng-if="groupedAddress.members.length == 1 && groupedAddress.members[0] == 'You'"
+
+        h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DO_YOU_AND_MEMBERS_PAY" translate-value-members="{{groupedAddress.members.join(' and ')}}" ng-if="groupedAddress.members.length > 1 && groupedAddress.members[0] == 'You'"
+
+        h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DOES_MEMBER_PAY" translate-value-member="{{groupedAddress.members[0]}}" ng-if="groupedAddress.members.length == 1 && groupedAddress.members[0] != 'You'"
+
+        h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DO_MEMBERS_PAY" translate-value-members="{{groupedAddress.members.join(' and ')}}" ng-if="groupedAddress.members.length > 1 && groupedAddress.members[0] != 'You'"
+
+        .form-income
+          label.sr-only for="monthlyRent_{{$index}}"
+            | {{'LABEL.MONTHLY_RENT' | translate}}
+          span.label-dollar $
+          input.form-income_input id="monthlyRent_{{$index}}" ng-model="groupedAddress.monthlyRent" name="monthlyRent_{{$index}}" ng-required="!groupedAddress.dontPayRent" placeholder="{{'LABEL.MONTHLY_RENT' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('monthlyRent_' + $index) }" aria-describedby="monthlyRent_error" ng-disabled="groupedAddress.dontPayRent"
+
+        small.error#member_monthly_rent_error ng-if="inputInvalid('monthlyRent_' + $index)"
+          | {{'ERROR.PLEASE_PUT_IN_A_RENT' | translate}}
+
+        .form-item.padding-bottom
+          .checkbox
+            input id="dontPayRent_{{$index}}" name="dontPayRent_{{$index}}" type="checkbox" ng-model="groupedAddress.dontPayRent" ng-class="{ error: inputInvalid('monthlyRent_' + $index) }" ng-click="groupedAddress.monthlyRent = null"
+            label for="dontPayRent_{{$index}}" ng-class="{ error: inputInvalid('monthlyRent_' + $index) }"
+              | {{'LABEL.NO_RENT_PAID' | translate}}
+
+      div ng-if="applicant.additionalPhone && !applicant.noPhone"
+
+
+  short-form-save-and-submit
