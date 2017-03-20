@@ -424,17 +424,21 @@ ShortFormApplicationService = (
       Service.application.status = 'submitted'
 
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+    # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
+    Service.application.session_uid = Service.session_uid
     params =
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
-    if options.attachToAccount
-      params.temp_session_id = Service.session_uid
 
     if params.application.id
       # update
       id = params.application.id
-      appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+      if options.attachToAccount
+        params.temp_session_id = Service.session_uid
+        appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
+      else
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
     else
       # create
       appSubmission = $http.post('/api/v1/short-form/application', params)

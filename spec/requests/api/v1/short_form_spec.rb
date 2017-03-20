@@ -120,6 +120,8 @@ describe 'ShortForm API' do
         .to receive(:attach_files_and_send_confirmation).and_return(true)
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:delete_draft_application).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_claim?).and_return(true)
     end
 
     it 'returns success response' do
@@ -147,6 +149,30 @@ describe 'ShortForm API' do
         put url, params, @auth_headers
       end
       expect(response).not_to be_success
+    end
+  end
+
+  describe 'claim_submitted_application' do
+    # NOTE: this doesn't really test that the user should be *allowed* to claim
+    # just that the API call functionally works
+    before do
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_claim?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:attach_files_and_send_confirmation).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:delete_draft_application).and_return(true)
+    end
+    it 'returns success response' do
+      VCR.use_cassette('shortform/claim_submitted_application') do
+        url = '/api/v1/short-form/claim-application/a0o0P0000093KJ0.json'
+        file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
+        params = JSON.parse(File.read(file))
+        params['temp_session_id'] = 'xyz123'
+        params = clean_json_for_vcr(params)
+        put url, params, @auth_headers
+      end
+      expect(response).to be_success
     end
   end
 
