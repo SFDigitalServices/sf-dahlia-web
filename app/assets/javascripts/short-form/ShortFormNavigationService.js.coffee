@@ -5,39 +5,39 @@ ShortFormNavigationService = (
   Service.loading = false
   Service.sections = [
     { name: 'You', pages: [
-        'name',
-        'contact',
-        'verify-address',
-        'alternate-contact-type',
-        'alternate-contact-name',
-        'alternate-contact-phone-address',
+        'name'
+        'contact'
+        'verify-address'
+        'alternate-contact-type'
+        'alternate-contact-name'
+        'alternate-contact-phone-address'
       ]
     },
     { name: 'Household', pages: [
-        'household-intro',
-        'household-overview',
-        'household-members',
-        'household-member-form',
+        'household-intro'
+        'household-overview'
+        'household-members'
+        'household-member-form'
         'household-member-form-edit'
       ]
     },
     { name: 'Income', pages: [
-        'income-vouchers',
+        'income-vouchers'
         'income'
       ]
     },
     { name: 'Preferences', pages: [
-        'preferences-intro',
-        'neighborhood-preference',
-        'live-work-preference',
-        'preferences-programs',
+        'preferences-intro'
+        'neighborhood-preference'
+        'live-work-preference'
+        'preferences-programs'
         'general-lottery-notice'
       ]
     },
     { name: 'Review', pages: [
-        'review-optional',
-        'review-summary',
-        'review-sign-in',
+        'review-optional'
+        'review-summary'
+        'review-sign-in'
         'review-terms'
       ]
     }
