@@ -21,6 +21,8 @@ ShortFormNavigationService = (
         'household-member-form-edit'
         'household-public-housing'
         'household-monthly-rent'
+        'household-reserved-units-veteran'
+        'household-reserved-units-disabled'
       ]
     },
     { name: 'Income', pages: [
