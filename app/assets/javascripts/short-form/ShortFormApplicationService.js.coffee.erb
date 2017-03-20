@@ -319,6 +319,8 @@ ShortFormApplicationService = (
   Service.copyNRHPtoLiveInSf = ->
     # clear out any previously entered values for live/work
     Service.cancelPreference('liveWorkInSf')
+    # reset the form so it's not in an "invalid" state
+    Service.resetLiveWorkForm()
     # copy NRHP values to liveInSf
     neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
@@ -410,6 +412,10 @@ ShortFormApplicationService = (
     Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
 
+  Service.resetLiveWorkForm = ->
+    return unless Service.application.validatedForms['Preferences']
+    delete Service.application.validatedForms['Preferences']['live-work-preference']
+
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
@@ -418,17 +424,21 @@ ShortFormApplicationService = (
       Service.application.status = 'submitted'
 
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+    # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
+    Service.application.session_uid = Service.session_uid
     params =
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
-    if options.attachToAccount
-      params.temp_session_id = Service.session_uid
 
     if params.application.id
       # update
       id = params.application.id
-      appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+      if options.attachToAccount
+        params.temp_session_id = Service.session_uid
+        appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
+      else
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
     else
       # create
       appSubmission = $http.post('/api/v1/short-form/application', params)

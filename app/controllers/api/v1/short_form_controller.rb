@@ -81,6 +81,13 @@ class Api::V1::ShortFormController < ApiController
     submit_application
   end
 
+  def claim_submitted_application
+    @application = ShortFormService.get(application_params[:id])
+    return render_unauthorized_error unless user_can_claim?(@application)
+    # calls same underlying method for submit
+    submit_application
+  end
+
   def delete_application
     @application = ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
@@ -117,6 +124,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def initial_submission?
+    return false if params[:action].to_s == 'claim_submitted_application'
     application_params[:status] == 'submitted'
   end
 
@@ -178,6 +186,13 @@ class Api::V1::ShortFormController < ApiController
   def user_can_access?(application)
     return false if application.empty?
     ShortFormService.ownership?(user_contact_id, application)
+  end
+
+  def user_can_claim?(application)
+    # check if they are claiming a submitted application with a newly created account;
+    # current session key should match the session that was used to create the application
+    uid = params[:temp_session_id]
+    ShortFormService.can_claim?(uid, application)
   end
 
   def submitted?(application)

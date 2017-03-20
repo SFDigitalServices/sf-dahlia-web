@@ -46,6 +46,15 @@ module SalesforceService
       contact_id == application['primaryApplicant']['contactId']
     end
 
+    def self.can_claim?(session_uid, application)
+      return false unless application['status'].casecmp('submitted').zero?
+      metadata = JSON.parse(application['formMetadata'])
+      # only claimable if they are in the same user session
+      session_uid == metadata['session_uid']
+    rescue
+      false
+    end
+
     def self.submitted?(application)
       application['status'] == 'Submitted'
     end

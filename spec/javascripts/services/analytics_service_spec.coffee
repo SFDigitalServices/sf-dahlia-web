@@ -42,6 +42,6 @@ do ->
         category = 'Application'
         variable = 'Timer'
         label = 'Apply'
-        AnalyticsService.startTimer(label)
-        AnalyticsService.trackTimerEvent(category, variable, label)
+        AnalyticsService.startTimer(label: label)
+        AnalyticsService.trackTimerEvent(category, label, variable)
         expect(dataLayer.push).toHaveBeenCalled()

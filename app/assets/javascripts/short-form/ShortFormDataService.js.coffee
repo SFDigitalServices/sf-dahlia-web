@@ -186,11 +186,13 @@ ShortFormDataService = () ->
     return application
 
   Service._formatMetadata = (application) ->
-    formMetadata = {
+    formMetadata =
       completedSections: application.completedSections
-    }
+      session_uid: application.session_uid
+
     application.formMetadata = JSON.stringify(formMetadata)
     delete application.completedSections
+    delete application.session_uid
     return application
 
   #############################################
