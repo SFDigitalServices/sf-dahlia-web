@@ -32,6 +32,7 @@ ShortFormApplicationController = (
   $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
+  $scope.groupedHouseholdAddresses = ShortFormApplicationService.application.groupedHouseholdAddresses
   $scope.householdEligibilityErrorMessage = null
   # this tracks what type of pref is being shown on the live-work-preference page:
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
@@ -437,12 +438,21 @@ ShortFormApplicationController = (
       $scope.clearHouseholdErrorMessage()
       if match == 'incomeMatch'
         $scope.goToLandingPage('Preferences')
-      else
-        $scope.goToLandingPage('Income')
+      else if match == 'householdMatch'
+        if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-public-housing')
+        else
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
       $scope.handleErrorState()
+
+  $scope.checkIfPublicHousing = ->
+    if $scope.application.householdPublicHousing == 'No'
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.monthly-rent')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.income-vouchers')
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null

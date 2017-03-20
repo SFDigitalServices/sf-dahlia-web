@@ -88,6 +88,10 @@ module.exports = ->
   @When 'I indicate I will live alone', ->
     element(By.id('live_alone')).click()
 
+  @When 'I indicate living in public housing', ->
+    element(By.id('householdPublicHousing_yes')).click()
+    submitForm()
+
   @When 'I go to the income page', ->
     submitForm()
 
