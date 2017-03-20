@@ -79,13 +79,13 @@
         "HOW_MUCH_DO_YOU_PAY": "How much do You pay in rent?",
         "TITLE": "How much does your household pay in monthly rent?"
     },
-    "C6A_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
-        "P1": "There are reserved units...",
-        "TITLE": "Are you or anyone on this application developmentally disabled?"
-    },
     "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
         "P1": "There are reserved units...",
         "TITLE": "Are you or anyone on this application a veteran that has served in the US Military?"
+    },
+    "C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
+        "P1": "There are reserved units...",
+        "TITLE": "Are you or anyone on this application developmentally disabled?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
