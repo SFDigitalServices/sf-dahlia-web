@@ -47,6 +47,8 @@ accordion-heading
             span ng-if="session.End_Time"
               | &mdash;{{session.End_Time}}
 
+  .show-for-medium-up
+    ng-include src="'listings/templates/listing/_waitlist-info.html'"
 
   .show-for-medium-up
     ng-include src="'listings/templates/listing/_panel-apply.html'"
