@@ -3,7 +3,7 @@ Feature: Short Form Application
     I should be able to fill out the short form application
     In order to apply online to a listing
 
-    Scenario: Submitting a basic application
+    Scenario: Submitting a basic application, creating an account on the confirmation page
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
       And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
@@ -20,6 +20,11 @@ Feature: Short Form Application
       And I continue confirmation without signing in
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
+      # now that we've submitted, also create an account
+      When I click the Create Account button
+      And I fill out my account info with my locked-in application email
+      And I submit the Create Account form
+      Then I should be on the login page with the email confirmation popup
 
     Scenario: Opting in to live/work then saying no to workInSf
       Given I go to the first page of the Test Listing application

@@ -6,6 +6,7 @@ EC = protractor.ExpectedConditions
 # QA "280 Fell"
 listingId = 'a0W0P00000DZTkAUAX'
 sessionEmail = chance.email()
+janedoeEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
@@ -66,11 +67,11 @@ module.exports = ->
     submitForm()
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: 'jane@doe.com'})
+    fillOutContactPage({email: janedoeEmail})
     submitForm()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: 'jane@doe.com', address1: '1222 Harrison St.'})
+    fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
     submitForm()
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
@@ -79,7 +80,7 @@ module.exports = ->
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
-    element(By.id('submit')).click()
+    submitForm()
 
   @When 'I don\'t indicate an alternate contact', ->
     element(By.id('alternate_contact_none')).click()
@@ -185,9 +186,17 @@ module.exports = ->
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
 
+  @When 'I click the Create Account button', ->
+    element(By.id('create-account')).click()
+
   @When 'I fill out my account info', ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
+    element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
+
+  @When 'I fill out my account info with my locked-in application email', ->
+    element(By.id('auth_email_confirmation')).sendKeys(janedoeEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
