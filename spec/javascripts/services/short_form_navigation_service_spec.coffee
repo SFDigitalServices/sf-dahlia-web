@@ -12,6 +12,11 @@ do ->
       application:
         householdMembers: []
         surveyComplete: false
+      listingHasReservedUnitType: jasmine.createSpy()
+      RESERVED_TYPES:
+        VETERAN: 'Veteran'
+        DISABLED: 'Developmental disabilities'
+        SENIOR: 'Senior'
     fakeLoadingOverlayService =
       start: -> null
       stop: -> null
@@ -33,6 +38,8 @@ do ->
           'household-member-form-edit'
           'household-public-housing'
           'household-monthly-rent'
+          'household-reserved-units-veteran'
+          'household-reserved-units-disabled'
         ]
       },
       { name: 'Income', pages: [
@@ -116,6 +123,16 @@ do ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousPage = ShortFormNavigationService.previousPage()
         expect(previousPage).toEqual 'name'
+
+    describe 'getNextReservedPageIfAvailable', ->
+      it 'calls ShortFormApplicationService to check for the preference', ->
+        type = 'Veteran'
+        ShortFormNavigationService.getNextReservedPageIfAvailable(type)
+        expect(fakeShortFormApplicationService.listingHasReservedUnitType).toHaveBeenCalledWith(type)
+      it 'moves on to the Income landing page if no reserved types found', ->
+        type = 'Veteran'
+        page = ShortFormNavigationService.getNextReservedPageIfAvailable(type)
+        expect(page).toEqual ShortFormNavigationService.getLandingPage({name: 'Income'})
 
     describe 'getLandingPage', ->
       it 'gets the first page of the section if it\'s not Household', ->
