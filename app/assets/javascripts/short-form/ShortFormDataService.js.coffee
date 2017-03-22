@@ -8,6 +8,13 @@ ShortFormDataService = () ->
     'neighborhoodResidence'
   ]
 
+  Service.metaFields = [
+    'completedSections'
+    'session_uid'
+    # TODO: re-include this once this story has been resolved re: formMetadata limits #142188189
+    # 'groupedHouseholdAddresses'
+  ]
+
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
     application.listingID = listingId
@@ -30,6 +37,7 @@ ShortFormDataService = () ->
     application = Service._formatIncome(application)
     application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
+    application = Service._calculateTotalMonthlyRent(application)
     application = Service._formatMetadata(application)
     delete application.householdMembers if _.isEmpty(application.householdMembers)
     delete application.primaryApplicant.mailingGeocoding_data
@@ -185,14 +193,17 @@ ShortFormDataService = () ->
     )
     return application
 
-  Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
+  Service._calculateTotalMonthlyRent = (application) ->
+    # TODO: replace STUB with real field name once it exists
+    # _.sumBy will count any `null` or `undefined` values as 0
+    application.STUB_TotalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
+    return application
 
-    application.formMetadata = JSON.stringify(formMetadata)
-    delete application.completedSections
-    delete application.session_uid
+  # move all metaFields off the application object and into formMetadata JSON string
+  Service._formatMetadata = (application) ->
+    application.formMetadata = JSON.stringify(_.pick(application, Service.metaFields))
+    _.each Service.metaFields, (metaField) ->
+      delete application[metaField]
     return application
 
   #############################################
@@ -350,7 +361,7 @@ ShortFormDataService = () ->
   Service._reformatMetadata = (sfApp, data) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
-    data.completedSections = formMetadata.completedSections
+    _.merge(data, _.pick(formMetadata, Service.metaFields))
 
   #############################################
   # Helper functions

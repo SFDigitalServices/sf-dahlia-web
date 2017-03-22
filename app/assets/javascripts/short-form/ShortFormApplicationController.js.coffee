@@ -590,6 +590,8 @@ ShortFormApplicationController = (
       .then(  ->
         ShortFormNavigationService.isLoading(false)
         $scope.goToAndTrackFormSuccess('dahlia.short-form-application.confirmation')
+      ).catch( ->
+        ShortFormNavigationService.isLoading(false)
       )
 
   ## Save and finish later
@@ -602,6 +604,8 @@ ShortFormApplicationController = (
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
         $scope.goToAndLeaveForm('dahlia.my-applications', {skipConfirm: true})
+      ).catch( ->
+        ShortFormNavigationService.isLoading(false)
       )
     else
       ShortFormNavigationService.isLoading(false)
