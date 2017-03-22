@@ -1,9 +1,10 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.TITLE' | translate}}
-    p.form-note.margin-bottom
-      | {{'C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.P1' | translate}}
+    h2.app-card_question translate="C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.TITLE"
+    p.form-note.margin-bottom translate="C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.P1"
+    p
+      show-more-toggler toggle-state="readMoreDevelopmentalDisabilities" verb="read" inline="true"
+    p.form-note.page-content.margin-bottom.margin-top--half translate="C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.READ_MORE" ng-show="readMoreDevelopmentalDisabilities"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('qualifyingDevelopmentallyDisabled') }"
