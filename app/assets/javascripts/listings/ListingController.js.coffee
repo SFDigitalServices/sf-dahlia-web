@@ -276,7 +276,7 @@ ListingController = (
       'Hearing/Vision impaired':
         name: 'Vision and/or Hearing Impairments'
         description: 'impaired vision and/or hearing'
-      'Mobility/Hearing/Vision impaired':
+      'Mobility/hearing/vision impaired':
         name: 'Mobility, Hearing and/or Vision Impairments'
         description: 'impaired mobility, hearing and/or vision'
       'Mobility impaired':
