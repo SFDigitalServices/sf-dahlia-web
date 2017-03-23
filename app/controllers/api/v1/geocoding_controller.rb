@@ -51,7 +51,7 @@ class Api::V1::GeocodingController < ApiController
   end
 
   def address_params
-    params.require(:address).permit(:address1, :city, :zip)
+    params.require(:address).permit(:address1, :city, :state, :zip)
   end
 
   def member_params
@@ -70,6 +70,7 @@ class Api::V1::GeocodingController < ApiController
     {
       address: address_params[:address1],
       city: address_params[:city],
+      state: address_params[:state],
       zip: address_params[:zip],
       member: member_params.as_json,
       applicant: applicant_params.as_json,

@@ -11,7 +11,7 @@ GeocodingService = ($http, ShortFormDataService) ->
     ['member', 'applicant'].forEach (user) ->
       options[user].dob = ShortFormDataService.formatUserDOB(options[user])
       options[user] = _.pick options[user], ['firstName', 'lastName', 'dob']
-    options.address = _.pick options.address, ['address1', 'city', 'zip']
+    options.address = _.pick options.address, ['address1', 'city', 'state', 'zip']
     options.listing = _.pick options.listing, ['Id', 'Name', 'Project_ID']
     params = {
       address: options.address
