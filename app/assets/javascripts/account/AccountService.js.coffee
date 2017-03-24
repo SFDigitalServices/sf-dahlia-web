@@ -50,6 +50,7 @@ AccountService = (
 
 
   Service.createAccount = (shortFormSession) ->
+    # loading overlay will be cleared on success by a state transition in the controller
     bsLoadingOverlayService.start()
     Service.clearAccountMessages()
     if shortFormSession
@@ -61,6 +62,8 @@ AccountService = (
         Service.clearAccountMessages()
         return true
       ).error((response) ->
+        # for errors we manually stop the loading overlay
+        bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email already in use'
           Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
@@ -72,6 +75,7 @@ AccountService = (
       )
 
   Service.signIn = ->
+    # loading overlay will be cleared on success by a state transition in the controller
     bsLoadingOverlayService.start()
     Service.clearAccountMessages()
     $auth.submitLogin(Service.userAuth.user)
@@ -83,6 +87,8 @@ AccountService = (
           Service._reformatDOB()
           return true
       ).catch((response) ->
+        # for errors we manually stop the loading overlay
+        bsLoadingOverlayService.stop()
         return false
       )
 

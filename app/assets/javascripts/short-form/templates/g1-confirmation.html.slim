@@ -31,7 +31,7 @@
 
   .button-pager ng-if="!loggedIn()"
     .button-pager_row.primary
-      a.button.primary.radius ui-sref="dahlia.short-form-application.create-account"
+      a.button.primary.radius#create-account ui-sref="dahlia.short-form-application.create-account"
         | {{'CREATE_ACCOUNT.CREATE_AN_ACCOUNT' | translate}}
     .button-pager_row
       button.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.welcome"
