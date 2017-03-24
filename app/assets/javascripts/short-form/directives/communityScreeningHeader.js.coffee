@@ -1,11 +1,11 @@
 angular.module('dahlia.directives')
-.directive 'communityScreeningHeader', ['$translate', 'ListingService', ($translate, ListingService) ->
+.directive 'communityScreeningHeader', ['$translate', ($translate) ->
   replace: true
   scope: true
   templateUrl: 'short-form/directives/community-screening-header.html'
 
   link: (scope, elem, attrs) ->
-    listing = ListingService.listing
+    listing = scope.listing
     restriction = listing.STUB_CommunityRestriction
     age = { minAge: listing.Reserved_community_minimum_age }
 
