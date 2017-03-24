@@ -41,6 +41,7 @@ ShortFormApplicationController = (
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
+  $scope.priority_options = ShortFormHelperService.priority_options
   $scope.gender_options = [
     'Male',
     'Female',
@@ -206,6 +207,18 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
+
+  $scope.noPrioritiesSelected = ->
+    selected = $scope.application.prioritiesSelected
+    !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
+
+  $scope.clearPriorityOptions = ->
+    selected = $scope.application.prioritiesSelected
+    _.map selected, (val, k) ->
+      selected[k] = false unless k == 'no'
+
+  $scope.priorityNoSelected = ->
+    $scope.application.prioritiesSelected.no
 
   $scope.clearPhoneData = (type) ->
     ShortFormApplicationService.clearPhoneData(type)
@@ -452,7 +465,7 @@ ShortFormApplicationController = (
     if $scope.application.householdPublicHousing == 'No'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
     else
-      $scope.goToLandingPage('Income')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-priorities')
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null

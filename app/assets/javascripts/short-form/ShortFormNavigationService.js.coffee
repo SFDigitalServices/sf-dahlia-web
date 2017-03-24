@@ -21,6 +21,7 @@ ShortFormNavigationService = (
         'household-member-form-edit'
         'household-public-housing'
         'household-monthly-rent'
+        'household-priorities'
       ]
     },
     { name: 'Income', pages: [
@@ -58,7 +59,8 @@ ShortFormNavigationService = (
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'household-public-housing': {callback: ['checkIfPublicHousing']}
-    'household-monthly-rent': {path: 'income-vouchers'}
+    'household-monthly-rent': {path: 'household-priorities'}
+    'household-priorities': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
@@ -174,8 +176,7 @@ ShortFormNavigationService = (
           'household-intro'
       when 'household-monthly-rent'
         'household-public-housing'
-      # -- Income
-      when 'income-vouchers'
+      when 'household-priorities'
         if ShortFormApplicationService.application.householdPublicHousing == 'No'
           'household-monthly-rent'
         else if ShortFormApplicationService.application.householdPublicHousing == 'Yes'
@@ -184,6 +185,9 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
+      # -- Income
+      when 'income-vouchers'
+        'household-priorities'
       # -- Preferences
       when 'preferences-programs'
         if ShortFormApplicationService.hasPreference('neighborhoodResidence')

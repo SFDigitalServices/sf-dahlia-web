@@ -632,6 +632,12 @@
           ShortFormApplicationService.groupHouseholdAddresses()
       ]
     })
+    .state('dahlia.short-form-application.household-priorities', {
+      url: '/household-priorities'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c6-household-priorities.html'
+    })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'

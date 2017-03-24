@@ -1,0 +1,17 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'C6_HOUSEHOLD_PRIORITIES.QUESTION' | translate}}
+    p.form-note.margin-bottom
+      | {{'C6_HOUSEHOLD_PRIORITIES.P1' | translate}}
+
+  .app-inner.inset
+    .form-group
+      p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ALL_THAT_APPLY"
+
+      .checkbox-group role="group"
+        checkbox-form-item ng-repeat="priorityOption in priority_options" is-disabled="priorityNoSelected" ng-required="{{noPrioritiesSelected()}}" user='application' name='prioritiesSelected' option="{{priorityOption[0]}}" label="{{priorityOption[1]}}" error="This field is required."
+
+        checkbox-form-item user='application' on-change="clearPriorityOptions" ng-required="{{noPrioritiesSelected()}}" name='prioritiesSelected' option="no" label="{{'T.NO' | translate}}" error="This field is required."
+
+  short-form-save-and-submit

@@ -283,10 +283,10 @@ do ->
         scope.application.householdPublicHousing = 'No'
         scope.checkIfPublicHousing()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
-      it 'skips ahead if income section if publicHousing answer is "Yes"', ->
+      it 'skips ahead to priority question section if publicHousing answer is "Yes"', ->
         scope.application.householdPublicHousing = 'Yes'
         scope.checkIfPublicHousing()
-        expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Income'})
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-priorities')
 
     describe 'resetMonthlyRentForm', ->
       it 'calls resetMonthlyRentForm in ShortFormApplicationService', ->

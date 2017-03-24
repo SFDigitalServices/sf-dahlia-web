@@ -79,6 +79,10 @@
         "HOW_MUCH_DO_YOU_PAY": "How much do You pay in rent?",
         "TITLE": "How much does your household pay in monthly rent?"
     },
+    "C6_HOUSEHOLD_PRIORITIES": {
+        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability.",
+        "QUESTION": "Are you or anyone in your household a person who needs any of the following ADA accessibility features?"
+    },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
         "ALERT_TITLE": "Please choose which version of primary contact details you want to use.",
@@ -315,6 +319,7 @@
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
+        "HEARING_IMPAIRMENTS": "For Hearing Impairments",
         "HOUSEHOLD_MEMBER": "Household Member",
         "HOUSEHOLD_MEMBERS": "Household members",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
@@ -333,6 +338,7 @@
         "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "MIDDLE_NAME": "Middle Name",
+        "MOBILITY_IMPAIRMENTS": "For Mobility Impairments",
         "MONTHLY_RENT": "Monthly Rent",
         "MY_APPLICATION": "My Application",
         "NAME": "Name",
@@ -351,6 +357,7 @@
         "PHONE_CELL": "Cell",
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
+        "PLEASE_SELECT_ALL_THAT_APPLY": "Please select all that apply.",
         "PLEASE_SELECT_ONE": "Please select one.",
         "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "PREFERENCES": "Preferences",
@@ -388,6 +395,7 @@
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "VIEW_APPLICATION": "View Application",
+        "VISION_IMPAIRMENTS": "For Vision Impairments",
         "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
