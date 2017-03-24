@@ -398,6 +398,8 @@
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
+        "DO_NOT_APPLY_ONLINE_AND_PAPER": "Do not apply online and also send in a paper application.",
+        "DO_NOT_DO_MULTIPLE_APPLICATIONS": "All applications containing any person who appears on more than one application will be removed from the lottery.",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
         "FINAL_WAITLIST_SIZE": "Final Waitlist Size",
         "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",
