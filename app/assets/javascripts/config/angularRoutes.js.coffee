@@ -482,11 +482,20 @@
           templateUrl: 'short-form/templates/a1-intro.html'
           controller: 'ShortFormApplicationController'
     })
+    .state('dahlia.short-form-welcome.community-screening', {
+      url: '/community-screening'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+        'container@dahlia.short-form-welcome.community-screening':
+          templateUrl: 'short-form/templates/a2-community-screening.html'
+    })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
         'container@':
-          templateUrl: 'short-form/templates/a2-overview.html'
+          templateUrl: 'short-form/templates/a4-overview.html'
           controller: 'ShortFormApplicationController'
     })
     ## -- Short Form Application pages -- ##
