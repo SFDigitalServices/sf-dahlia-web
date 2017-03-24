@@ -250,10 +250,11 @@
         ]
     })
     .state('dahlia.my-account', {
-      url: '/my-account'
+      url: '/my-account?accountConfirmed'
       params:
         skipConfirm:
           squash: true
+        accountConfirmed: null
       views:
         'container@':
           templateUrl: 'account/templates/my-account.html'
@@ -261,6 +262,10 @@
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
+      onEnter: ['$stateParams', 'AnalyticsService', ($stateParams, AnalyticsService) ->
+        if $stateParams.accountConfirmed
+          AnalyticsService.trackAccountCreation()
+      ]
     })
     .state('dahlia.my-applications', {
       url: '/my-applications'
