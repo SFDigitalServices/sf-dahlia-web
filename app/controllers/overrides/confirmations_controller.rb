@@ -24,6 +24,8 @@ module Overrides
                       utm_source: 'validationemail',
                       utm_campaign: 'validationemail',
                       utm_medium: 'email',
+                      # For capturing confirmation success in Angular
+                      accountConfirmed: true,
         ))
       else
         # no user was found with that confirmation token.
