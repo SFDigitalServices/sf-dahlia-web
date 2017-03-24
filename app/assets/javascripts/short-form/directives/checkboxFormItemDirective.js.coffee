@@ -10,9 +10,9 @@ angular.module('dahlia.directives')
     scope.label = attrs.label || attrs.option
     scope.user = scope[attrs.user || 'applicant']
     scope.isDisabled = scope[attrs.isDisabled] || () -> false
+    scope.onChange = scope[attrs.onChange] || () -> null
     scope.error = attrs.error
-    scope.onChange = if attrs.onChange then scope[attrs.onChange] else () -> null
     scope.isRequired = () ->
-      return false if attrs.ngRequired == 'false'
-      attrs.ngRequired || false
+      return false if attrs.isRequired == 'false'
+      attrs.isRequired || false
     scope.id = "#{attrs.name}_#{_.kebabCase(attrs.option)}"
