@@ -26,6 +26,7 @@ GeocodingService = ($http, ShortFormDataService) ->
       # 'Matched' and 'Not Matched' correspond with what gets stored in Salesforce
       match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
       Service.neighborhoodPreferenceMatch = match
+      return data
     ).error( (data, status, headers, config) ->
       Service.neighborhoodPreferenceMatch = 'Not Matched'
     )
