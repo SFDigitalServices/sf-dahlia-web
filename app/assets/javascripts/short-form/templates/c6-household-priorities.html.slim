@@ -10,8 +10,11 @@
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ALL_THAT_APPLY"
 
       .checkbox-group role="group"
-        checkbox-form-item ng-repeat="priorityOption in priority_options" is-disabled="priorityNoSelected" is-required="{{noPrioritiesSelected()}}" user='application' name='prioritiesSelected' option="{{priorityOption[0]}}" label="{{priorityOption[1]}}" error="This field is required."
+        checkbox-form-item ng-repeat="priorityOption in priority_options" user='application' on-click="clearPriorityNoOption" is-required="{{noPrioritiesSelected()}}" name='prioritiesSelected' option="{{priorityOption[0]}}" label="{{priorityOption[1]}}" show-error-message='false'
 
-        checkbox-form-item user='application' on-change="clearPriorityOptions" is-required="{{noPrioritiesSelected()}}" name='prioritiesSelected' option="no" label="{{'T.NO' | translate}}" error="This field is required."
+        checkbox-form-item user='application' on-click="clearPriorityOptions" is-required="{{noPrioritiesSelected()}}" name='prioritiesSelected' option="no" label="{{'T.NO' | translate}}" show-error-message='false'
+
+      small.error#prioritiesSelected_error ng-show="inputInvalid('prioritiesSelected')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit

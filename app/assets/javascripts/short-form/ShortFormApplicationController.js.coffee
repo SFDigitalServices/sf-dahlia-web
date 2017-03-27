@@ -217,6 +217,9 @@ ShortFormApplicationController = (
     _.map selected, (val, k) ->
       selected[k] = false unless k == 'no'
 
+  $scope.clearPriorityNoOption = ->
+    $scope.application.prioritiesSelected.no = false
+
   $scope.priorityNoSelected = ->
     $scope.application.prioritiesSelected.no
 

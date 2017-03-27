@@ -93,6 +93,10 @@ module.exports = ->
     element(By.id('householdPublicHousing_yes')).click()
     submitForm()
 
+  @When 'I indicate no priority', ->
+    element(By.id('prioritiesSelected_no')).click()
+    submitForm()
+
   @When 'I go to the income page', ->
     submitForm()
 
