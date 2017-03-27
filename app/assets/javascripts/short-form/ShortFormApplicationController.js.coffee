@@ -9,7 +9,6 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
@@ -38,6 +37,8 @@ ShortFormApplicationController = (
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null
   $scope.currentPreferenceType = null
+  # read more toggler
+  $scope.readMoreDevelopmentalDisabilities = false
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -305,7 +306,7 @@ ShortFormApplicationController = (
       $scope.goToLandingPage('Review')
 
   $scope.checkAfterNeighborhood = ->
-    if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+    if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       # NRHP provides automatic liveInSf preference
       ShortFormApplicationService.copyNRHPtoLiveInSf()
       # you already selected NRHP, so skip live/work
@@ -329,7 +330,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.liveInSfMembers()
 
   $scope.showPreference = (preference) ->
-    return false unless ListingService.hasPreference(preference)
+    return false unless ShortFormApplicationService.listingHasPreference(preference)
     switch preference
       when 'liveWorkInSf'
         $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
@@ -442,7 +443,7 @@ ShortFormApplicationController = (
         if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
           $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-public-housing')
         else
-          $scope.goToLandingPage('Income')
+          $scope.checkIfReservedUnits()
     else
       $scope._determineHouseholdErrorMessage(eligibility, 'householdEligibilityResult') if match == 'householdMatch'
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
@@ -452,7 +453,12 @@ ShortFormApplicationController = (
     if $scope.application.householdPublicHousing == 'No'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
     else
-      $scope.goToLandingPage('Income')
+      $scope.checkIfReservedUnits()
+
+  # Check for need to ask about reserved units on the listing
+  $scope.checkIfReservedUnits = (type) ->
+    page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
+    $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
 
   $scope.clearHouseholdErrorMessage = () ->
     $scope.householdEligibilityErrorMessage = null
@@ -706,7 +712,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.listingIs(name)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'ListingService',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
