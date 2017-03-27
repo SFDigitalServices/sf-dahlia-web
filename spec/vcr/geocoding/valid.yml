@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&Street=1222%20Harrison%20St&f=pjson
+    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
     body:
       encoding: US-ASCII
       string: ''
@@ -19,33 +19,65 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 06 Dec 2016 19:15:27 GMT
+      - Mon, 27 Mar 2017 17:16:49 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - 77442e50
+      - c7a87876
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
-      - '642'
+      - '706'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
-        3857\n },\n \"candidates\": [\n  {\n   \"address\": \"1222 HARRISON ST, San
-        Francisco\",\n   \"location\": {\n    \"x\": -13626517.284101073,\n    \"y\":
-        4547486.5483443365\n   },\n   \"score\": 100,\n   \"attributes\": {\n    \n
-        \  }\n  },\n  {\n   \"address\": \"1222 HARRISON ST, San Francisco\",\n   \"location\":
-        {\n    \"x\": -13626493.887738071,\n    \"y\": 4547483.2117471769\n   },\n
-        \  \"score\": 100,\n   \"attributes\": {\n    \n   }\n  },\n  {\n   \"address\":
-        \"1223 HARRISON ST, San Francisco\",\n   \"location\": {\n    \"x\": -13626489.588851385,\n
-        \   \"y\": 4547470.2697900822\n   },\n   \"score\": 79,\n   \"attributes\":
-        {\n    \n   }\n  }\n ]\n}"
-    http_version:
-  recorded_at: Tue, 06 Dec 2016 19:15:41 GMT
+      string: |-
+        {
+         "spatialReference": {
+          "wkid": 102100,
+          "latestWkid": 3857
+         },
+         "candidates": [
+          {
+           "address": "1222 HARRISON ST, San Francisco",
+           "location": {
+            "x": -13626517.284101073,
+            "y": 4547486.5483443365
+           },
+           "score": 100,
+           "attributes": {
+            "loc_name": "EAS"
+           }
+          },
+          {
+           "address": "1222 HARRISON ST, San Francisco, CA",
+           "location": {
+            "x": -13626500.352575805,
+            "y": 4547489.678503979
+           },
+           "score": 100,
+           "attributes": {
+            "loc_name": "Street"
+           }
+          },
+          {
+           "address": "1223 HARRISON ST, San Francisco, CA",
+           "location": {
+            "x": -13626483.124013651,
+            "y": 4547463.8030332802
+           },
+           "score": 79,
+           "attributes": {
+            "loc_name": "Street"
+           }
+          }
+         ]
+        }
+    http_version: 
+  recorded_at: Mon, 27 Mar 2017 17:16:50 GMT
 - request:
     method: get
     uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/myr/NRHP_002/MapServer/0/query?f=pjson&geometry=-13626517.284101073,4547486.548344336&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=project_id=%272012-021%27
@@ -65,13 +97,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 06 Dec 2016 19:15:27 GMT
+      - Mon, 27 Mar 2017 17:16:49 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - QDO2mH8fE9wMRJdO_53cf148b
+      - 88vaLednMGJ2uDj9_53cf148b
       Content-Type:
       - text/plain;charset=utf-8
       Content-Length:
@@ -84,6 +116,6 @@ http_interactions:
         {
          "count": 1
         }
-    http_version:
-  recorded_at: Tue, 06 Dec 2016 19:15:41 GMT
+    http_version: 
+  recorded_at: Mon, 27 Mar 2017 17:16:50 GMT
 recorded_with: VCR 3.0.3
