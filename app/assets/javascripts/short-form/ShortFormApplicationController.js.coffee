@@ -33,6 +33,8 @@ ShortFormApplicationController = (
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.householdEligibilityErrorMessage = null
+  $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
+  $scope.householdEligibilityErrors = []
   # this tracks what type of pref is being shown on the live-work-preference page:
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null
@@ -421,6 +423,13 @@ ShortFormApplicationController = (
   ###### Household Section ########
   $scope.addHouseholdMember = ->
     noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
+    if !$scope.applicantDoesNotMeetSeniorRequirements('householdMember')
+      age = { minAge: $scope.listing.Reserved_community_minimum_age }
+      $scope.householdEligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
+      $scope.handleErrorState()
+      return
+    else
+      $scope.clearHouseholdErrorMessage()
     if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
@@ -467,8 +476,9 @@ ShortFormApplicationController = (
       $scope._determineHouseholdErrorMessage(eligibility, 'incomeEligibilityResult') if match == 'incomeMatch'
       $scope.handleErrorState()
 
-  $scope.clearHouseholdErrorMessage = () ->
+  $scope.clearHouseholdErrorMessage = ->
     $scope.householdEligibilityErrorMessage = null
+    $scope.householdEligibilityErrors = []
 
   $scope._determineHouseholdErrorMessage= (eligibility, errorResult) ->
     error = eligibility[errorResult].toLowerCase()
@@ -645,6 +655,16 @@ ShortFormApplicationController = (
 
   $scope.print = -> $window.print()
 
+  $scope.checkPrimaryApplicantAge = ->
+    if $scope.applicantDoesNotMeetSeniorRequirements()
+      ShortFormNavigationService.isLoading(false)
+      age = { minAge: $scope.listing.Reserved_community_minimum_age }
+      $scope.householdEligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
+      $scope.handleErrorState()
+    else
+      $scope.clearHouseholdErrorMessage()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+
   $scope.DOBValid = (field, value, model = 'applicant') ->
     values = $scope.DOBValues(model)
     values[field] = parseInt(value)
@@ -657,26 +677,55 @@ ShortFormApplicationController = (
       year: parseInt($scope[model].dob_year)
     }
 
+  $scope.primaryApplicantValidAge = ->
+    age = $scope.applicantAge('applicant')
+    return true unless age
+    return false if $scope.primaryApplicantUnder18()
+    return false if $scope.applicantDoesNotMeetSeniorRequirements()
+    true
+
+  $scope.applicantDOB_hasError = ->
+    $scope.inputInvalid('date_of_birth_day') ||
+    $scope.inputInvalid('date_of_birth_month') ||
+    $scope.inputInvalid('date_of_birth_year') ||
+    $scope.householdEligibilityErrors.length
+
+  $scope.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
+    listing = $scope.listing
+    age = $scope.applicantAge(member)
+    listing.Reserved_community_type == 'Senior' &&
+    listing.STUB_CommunityRestriction == 'All People' &&
+    age < listing.Reserved_community_minimum_age
+
   $scope.primaryApplicantUnder18 = ->
-    values = $scope.DOBValues('applicant')
+    $scope.applicantAge('applicant') < 18
+
+  $scope.householdMemberUnder0 = ->
+    dob = $scope.applicantDOBMoment('householdMember')
+    return false unless dob
+    ageDays = moment().add(10, 'months').diff(dob, 'days')
+    # HH member allowed to be 10 months "unborn"
+    return ageDays < 0
+
+  $scope.applicantAge = (member = 'applicant') ->
+    dob = $scope.applicantDOBMoment(member)
+    return unless dob
+    moment().diff(dob, 'years')
+
+  $scope.applicantDOBMoment = (member = 'applicant') ->
+    values = $scope.DOBValues(member)
     form = $scope.form.applicationForm
     # have to grab viewValue because if the field is in error state the model will be undefined
     year = parseInt(form['date_of_birth_year'].$viewValue)
     return false unless values.month && values.day && year >= 1900
-    dob = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
-    age = moment().diff(dob, 'years')
-    return age < 18
+    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
 
   $scope.householdMemberValidAge = ->
-    values = $scope.DOBValues('householdMember')
-    form = $scope.form.applicationForm
-    # have to grab viewValue because if the field is in error state the model will be undefined
-    year = parseInt(form['date_of_birth_year'].$viewValue)
-    return false unless values.month && values.day && year >= 1900
-    dob = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
-    age = moment().add(10, 'months').diff(dob, 'days')
-    # HH member allowed to be 10 months "unborn"
-    return age >= 0
+    age = $scope.applicantAge('householdMember')
+    return true unless age
+    return false if $scope.householdMemberUnder0()
+    return false if $scope.applicantDoesNotMeetSeniorRequirements('householdMember')
+    true
 
   $scope.recheckDOB = (member) ->
     form = $scope.form.applicationForm
@@ -687,6 +736,9 @@ ShortFormApplicationController = (
     # also re-check year to see if age is valid (primary > 18, HH > "10 months in the future")
     year = form['date_of_birth_year']
     year.$setViewValue(year.$viewValue + ' ')
+    if (member == 'applicant' && $scope.primaryApplicantValidAge()) ||
+      (member == 'householdMember' && $scope.householdMemberValidAge())
+        $scope.clearHouseholdErrorMessage()
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]

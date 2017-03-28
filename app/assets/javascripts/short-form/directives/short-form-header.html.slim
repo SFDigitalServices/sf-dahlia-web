@@ -13,3 +13,6 @@ div
     alert-box(short-form="true" preference-warning="inputInvalid(currentPreferenceType)" address-error="addressError")
 
     alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")
+
+    / this is if your household is not eligible (e.g. income, household size, senior community qualification)
+    alert-box(custom-message="notEligibleErrorMessage" household-eligibility-errors="householdEligibilityErrors" hide-alert="hideAlert" ng-if="householdEligibilityErrors.length" invert="true")
