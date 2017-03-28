@@ -15,10 +15,10 @@ section.app-container
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
           figcaption.property-card_info
             h1.property-card_title.show-for-medium-up
-              a ui-sref="dahlia.short-form-welcome.overview"
+              a ng-click="determineCommunityScreening()"
                 | {{listing.Name}}
             p.property-card_address
               | {{formattedBuildingAddress(listing)}}
     .text-center.padding
-      a#submit.button.expand-small.primary type="button" ui-sref="dahlia.short-form-welcome.overview"
+      a#submit.button.expand-small.primary type="button" ng-click="determineCommunityScreening()"
         | {{'T.GET_STARTED' | translate}}

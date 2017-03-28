@@ -457,7 +457,24 @@ do ->
         expect(scope.householdMemberValidAge()).toEqual true
 
     describe 'goToLandingPage', ->
-      it 'state.go to be called with landing page path', ->
+      it 'expects state.go to be called with landing page path', ->
         scope.goToLandingPage('Household')
         # Expect route path that is set up in FakeShortFormNavigationService, above
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
+
+    describe 'determineCommunityScreening', ->
+      it 'expects state.go to be called with community screening page if listing is a community building', ->
+        scope.listing.Reserved_community_type = 'Veteran'
+        scope.determineCommunityScreening()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening')
+
+    describe 'validateCommunityEligibility', ->
+      it 'expects state.go to be called with short form overview page if applicant answered Yes to screening question', ->
+        scope.application.communityScreening = 'Yes'
+        scope.validateCommunityEligibility()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview')
+
+      it 'expects communityScreeningInvalid to be marked true if applicant answered No to screening question', ->
+        scope.application.communityScreening = 'No'
+        scope.validateCommunityEligibility()
+        expect(scope.communityScreeningInvalid).toEqual true
