@@ -39,6 +39,8 @@ ShortFormApplicationController = (
   $scope.currentPreferenceType = null
   # read more toggler
   $scope.readMoreDevelopmentalDisabilities = false
+  # store label values that get overwritten by child directives
+  $scope.labels = {}
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -185,6 +187,27 @@ ShortFormApplicationController = (
     # e.g. "phone" --> "noPhone"
     fieldToDisable = "no#{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}"
     $scope.applicant[fieldToDisable] = false
+
+  $scope.determineCommunityScreening = ->
+    if $scope.listing.Reserved_community_type
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.community-screening')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
+
+  $scope.onCommunityScreeningPage = ->
+    $state.current.name == 'dahlia.short-form-welcome.community-screening'
+
+  $scope.checkCommunityScreening = ->
+    # ng-change action for answering 'Yes' to screening
+    $scope.communityScreeningInvalid = false
+
+  $scope.validateCommunityEligibility = ->
+    $scope.communityScreeningInvalid = false
+    if $scope.application.communityScreening == 'No'
+      $scope.communityScreeningInvalid = true
+      $scope.handleErrorState()
+    else if $scope.application.communityScreening ==  'Yes'
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
 
   $scope.addressInputInvalid = (identifier = '') ->
     if $scope.addressFailedValidation(identifier)

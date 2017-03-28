@@ -79,8 +79,9 @@
 
       ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
+  / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print
-    div ng-hide="listingApplicationClosed(listing)"
+    div ng-if="!listingApplicationClosed(listing)"
       .label.flag-label.secondary.text-wrap
         span.ui-icon.ui-medium
           svg

@@ -68,6 +68,9 @@ AnalyticsService = ($state) ->
   Service.trackTimeout = (category) ->
     Service.trackEvent('Form Message', { category: category, action: 'Timeout' })
 
+  Service.trackAccountCreation =  ->
+    Service.trackEvent('Form Message', { category: 'Accounts', action: 'Account Creation', label: 'Account Confirmation Success' })
+
   Service._currentHref = ->
     $state.href($state.current.name, $state.params)
 

@@ -2,7 +2,21 @@
     "A1_INTRO": {
         "TITLE": "Let's get started on your application:"
     },
-    "A2_OVERVIEW": {
+    "A2_COMMUNITY_SCREENING": {
+        "SENIOR": {
+            "YOU_OR_ANYONE": "Are you or anyone on this application a senior?",
+            "YOU_OR_ANYONE_DESC": "This is a senior building and at least one applicant must be {{minAge}}+.",
+            "YOU_OR_ANYONE_LABEL": "Yes, at least one person is {{minAge}}+",
+            "YOU_AND_EVERYONE": "Are you and everyone on this application a senior?",
+            "YOU_AND_EVERYONE_DESC": "This is a senior building and all applicants must be {{minAge}}+.",
+            "YOU_AND_EVERYONE_LABEL": "Yes, everyone is {{minAge}}+"
+        },
+        "VETERAN": {
+            "YOU_OR_ANYONE": "Are you or anyone on this application a veteran?",
+            "YOU_OR_ANYONE_DESC": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
+        }
+    },
+    "A4_OVERVIEW": {
         "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
         "P2": "You'll get a chance to review your application before you submit it.",
         "P3": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
@@ -243,8 +257,9 @@
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
     },
     "F1A_REVIEW_SIGN_IN": {
-        "CONFIRM_WITHOUT_AN_ACCOUNT": "Confirm without an account",
-        "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time."
+        "CONTINUE_WITHOUT_AN_ACCOUNT": "Continue without an account",
+        "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
+        "TITLE": "You're almost done!"
     },
     "F1_REVIEW_SUMMARY": {
         "TITLE": "Take a moment to review your information before submitting your application."
@@ -396,7 +411,7 @@
         "SELECT_ONE": "Select One",
         "SEND_EMAIL": "Send email",
         "SIGN_IN": "Sign In",
-        "SIGN_IN_TO_CONFIRM": "Sign in to confirm",
+        "SIGN_IN_TO_CONTINUE": "Sign in to continue",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "You'll still have the opportunity to claim other preferences.",
         "SUGGESTED_ADDRESS": "Suggested Address",
@@ -428,6 +443,8 @@
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
+        "DO_NOT_APPLY_ONLINE_AND_PAPER": "Do not apply online and also send in a paper application.",
+        "DO_NOT_DO_MULTIPLE_APPLICATIONS": "All applications containing any person who appears on more than one application will be removed from the lottery.",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
         "FINAL_WAITLIST_SIZE": "Final Waitlist Size",
         "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",

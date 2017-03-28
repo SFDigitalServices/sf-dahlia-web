@@ -23,10 +23,10 @@ Feature: Short Form Application
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
       # now that we've submitted, also create an account
-      When I click the Create Account button
-      And I fill out my account info with my locked-in application email
-      And I submit the Create Account form
-      Then I should be on the login page with the email confirmation popup
+      # When I click the Create Account button
+      # And I fill out my account info with my locked-in application email
+      # And I submit the Create Account form
+      # Then I should be on the login page with the email confirmation popup
 
     Scenario: Opting in to live/work then saying no to workInSf
       Given I go to the first page of the Test Listing application
