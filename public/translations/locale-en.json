@@ -73,10 +73,10 @@
         "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?"
     },
     "C5_HOUSEHOLD_MONTHLY_RENT": {
-        "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay in rent?",
-        "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay in rent?",
-        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay in rent?",
-        "HOW_MUCH_DO_YOU_PAY": "How much do You pay in rent?",
+        "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
+        "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
+        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
+        "HOW_MUCH_DO_YOU_PAY": "How much do You pay at {{address}}?",
         "TITLE": "How much does your household pay in monthly rent?"
     },
     "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
@@ -353,7 +353,7 @@
         "NAME": "Name",
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
-        "NO_RENT_PAID": "No rent paid",
+        "NO_RENT_PAID": "Don't pay rent",
         "OLD_PASSWORD": "Old Password",
         "ON_THE_LISTING": "on the listing",
         "ORIGINAL_APPLICATION": "Original Application",
