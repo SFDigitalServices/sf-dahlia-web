@@ -1,7 +1,11 @@
 require 'street_address'
-
 module ArcGISService
-  # Geocoding service
+  # encapsulate all Geocoding Service methods
+  #  - example: look up 4053 18th st.
+  #  addr = { address1: '4053 18TH ST', city: 'SAN FRANCISCO', zip: '94114' }
+  #  ArcGISService::GeocodingService.new(addr).geocode
+  #
+  #
   class GeocodingService < ArcGISService::Base
     attr_reader :address
 
