@@ -283,9 +283,6 @@ ShortFormApplicationService = (
   Service.householdSize = ->
     Service.application.householdMembers.length + 1
 
-  Service.hasHouseholdPublicHousingQuestion = ->
-    ListingService.hasPreference('assistedHousingRentBurden')
-
   Service._childrenUnder6 = ->
     allMembers = angular.copy(Service.application.householdMembers)
     allMembers.push(Service.applicant)
@@ -350,7 +347,7 @@ ShortFormApplicationService = (
     prefList = ShortFormDataService.preferences
     return !_.some(_.pick(Service.preferences, prefList))
 
-  Service.hasPreference = (preference) ->
+  Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
 
   Service.copyNRHPtoLiveInSf = ->
@@ -681,7 +678,17 @@ ShortFormApplicationService = (
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
 
+  # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
+
+  Service.hasHouseholdPublicHousingQuestion = ->
+    ListingService.hasPreference('assistedHousingRentBurden')
+
+  Service.listingHasReservedUnitType = (type) ->
+    ListingService.listingHasReservedUnitType(Service.listing, type)
+
+  Service.listingHasPreference = ListingService.hasPreference
+  Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.listingIs = ListingService.listingIs

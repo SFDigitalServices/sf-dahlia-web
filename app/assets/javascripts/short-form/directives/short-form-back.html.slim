@@ -1,3 +1,3 @@
-.form-back ng-if="hasBackButton()"
-  a.lined ng-href="{{backPageState()}}" ng-click="clearHouseholdErrorMessage()"
+.form-back ng-if="showBackButton"
+  a.lined ng-href="{{backPageHref}}" ng-click="clearHouseholdErrorMessage()"
     | {{'T.BACK' | translate}}

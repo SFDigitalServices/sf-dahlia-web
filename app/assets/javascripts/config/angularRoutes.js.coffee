@@ -632,11 +632,23 @@
           ShortFormApplicationService.groupHouseholdAddresses()
       ]
     })
+    .state('dahlia.short-form-application.household-reserved-units-veteran', {
+      url: '/household-reserved-units-veteran'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c6a-household-reserved-units-veteran.html'
+    })
+    .state('dahlia.short-form-application.household-reserved-units-disabled', {
+      url: '/household-reserved-units-disabled'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c6b-household-reserved-units-disabled.html'
+    })
     .state('dahlia.short-form-application.household-priorities', {
       url: '/household-priorities'
       views:
         'container':
-          templateUrl: 'short-form/templates/c6-household-priorities.html'
+          templateUrl: 'short-form/templates/c7-household-priorities.html'
     })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {

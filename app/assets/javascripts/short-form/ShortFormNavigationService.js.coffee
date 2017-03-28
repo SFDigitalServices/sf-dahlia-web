@@ -2,6 +2,7 @@ ShortFormNavigationService = (
   $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
 ) ->
   Service = {}
+  RESERVED_TYPES = ShortFormApplicationService.RESERVED_TYPES
   Service.loading = false
   Service.sections = [
     { name: 'You', pages: [
@@ -21,6 +22,8 @@ ShortFormNavigationService = (
         'household-member-form-edit'
         'household-public-housing'
         'household-monthly-rent'
+        'household-reserved-units-veteran'
+        'household-reserved-units-disabled'
         'household-priorities'
       ]
     },
@@ -59,7 +62,9 @@ ShortFormNavigationService = (
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
     'household-public-housing': {callback: ['checkIfPublicHousing']}
-    'household-monthly-rent': {path: 'household-priorities'}
+    'household-monthly-rent': {callback: ['checkIfReservedUnits']}
+    'household-reserved-units-veteran': {callback: ['checkIfReservedUnits'], params: RESERVED_TYPES.DISABLED}
+    'household-reserved-units-disabled': {path: 'household-priorities'}
     'household-priorities': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
@@ -176,15 +181,12 @@ ShortFormNavigationService = (
           'household-intro'
       when 'household-monthly-rent'
         'household-public-housing'
+      when 'household-reserved-units-veteran'
+        Service.getPrevPageOfHouseholdSection()
+      when 'household-reserved-units-disabled'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
       when 'household-priorities'
-        if ShortFormApplicationService.application.householdPublicHousing == 'No'
-          'household-monthly-rent'
-        else if ShortFormApplicationService.application.householdPublicHousing == 'Yes'
-          'household-public-housing'
-        else if application.householdMembers.length
-          'household-members'
-        else
-          'household-intro'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
       # -- Income
       when 'income-vouchers'
         'household-priorities'
@@ -220,6 +222,40 @@ ShortFormNavigationService = (
       else
         'intro'
     page
+
+  Service.getNextReservedPageIfAvailable = (type = RESERVED_TYPES.VETERAN, dir = 'next') ->
+    hasType = ShortFormApplicationService.listingHasReservedUnitType(type)
+    switch type
+      when RESERVED_TYPES.VETERAN
+        if hasType
+          'household-reserved-units-veteran'
+        else
+          if dir == 'next'
+            # move on to the next type
+            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'next')
+          else
+            Service.getPrevPageOfHouseholdSection()
+      when RESERVED_TYPES.DISABLED
+        if hasType
+          'household-reserved-units-disabled'
+        else
+          if dir == 'next'
+            # once we've gotten to the end of our types, go to Income
+            'household-priorities'
+          else
+            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+
+
+  Service.getPrevPageOfHouseholdSection = ->
+    application = ShortFormApplicationService.application
+    if application.householdPublicHousing == 'No'
+      'household-monthly-rent'
+    else if application.householdPublicHousing == 'Yes'
+      'household-public-housing'
+    else if application.householdMembers.length
+      'household-members'
+    else
+      'household-intro'
 
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)
