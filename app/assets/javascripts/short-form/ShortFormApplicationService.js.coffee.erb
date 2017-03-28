@@ -587,7 +587,6 @@ ShortFormApplicationService = (
     # validate + geocode address
     # errors are handled in the controller
     afterGeocode = (response) ->
-      console.log(response, 'Applicant - this is the response')
       Service.applicant.geocodingData = response.geocoding_data
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
@@ -614,7 +613,6 @@ ShortFormApplicationService = (
     # validate + geocode address
     # errors are handled in the controller
     afterGeocode = (response) ->
-      console.log(response, 'Member - this is the response')
       Service.householdMember.geocodingData = response.geocoding_data
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
