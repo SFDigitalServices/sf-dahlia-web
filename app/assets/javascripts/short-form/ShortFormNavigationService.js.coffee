@@ -24,6 +24,7 @@ ShortFormNavigationService = (
         'household-monthly-rent'
         'household-reserved-units-veteran'
         'household-reserved-units-disabled'
+        'household-priorities'
       ]
     },
     { name: 'Income', pages: [
@@ -63,7 +64,8 @@ ShortFormNavigationService = (
     'household-public-housing': {callback: ['checkIfPublicHousing']}
     'household-monthly-rent': {callback: ['checkIfReservedUnits']}
     'household-reserved-units-veteran': {callback: ['checkIfReservedUnits'], params: RESERVED_TYPES.DISABLED}
-    'household-reserved-units-disabled': {path: 'income-vouchers'}
+    'household-reserved-units-disabled': {path: 'household-priorities'}
+    'household-priorities': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
@@ -179,13 +181,15 @@ ShortFormNavigationService = (
           'household-intro'
       when 'household-monthly-rent'
         'household-public-housing'
-      when 'household-reserved-units-disabled'
-        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
       when 'household-reserved-units-veteran'
         Service.getPrevPageOfHouseholdSection()
+      when 'household-reserved-units-disabled'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+      when 'household-priorities'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
       # -- Income
       when 'income-vouchers'
-        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
+        'household-priorities'
       # -- Preferences
       when 'preferences-programs'
         if ShortFormApplicationService.hasPreference('neighborhoodResidence')
@@ -237,7 +241,7 @@ ShortFormNavigationService = (
         else
           if dir == 'next'
             # once we've gotten to the end of our types, go to Income
-            Service.getLandingPage({name: 'Income'})
+            'household-priorities'
           else
             Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
 

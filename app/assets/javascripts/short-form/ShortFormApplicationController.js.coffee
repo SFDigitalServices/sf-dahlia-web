@@ -42,6 +42,7 @@ ShortFormApplicationController = (
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
+  $scope.priority_options = ShortFormHelperService.priority_options
   $scope.gender_options = [
     'Male',
     'Female',
@@ -207,6 +208,21 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
+
+  $scope.noPrioritiesSelected = ->
+    selected = $scope.application.prioritiesSelected
+    !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
+
+  $scope.clearPriorityOptions = ->
+    selected = $scope.application.prioritiesSelected
+    _.map selected, (val, k) ->
+      selected[k] = false unless k == 'no'
+
+  $scope.clearPriorityNoOption = ->
+    $scope.application.prioritiesSelected.no = false
+
+  $scope.priorityNoSelected = ->
+    $scope.application.prioritiesSelected.no
 
   $scope.clearPhoneData = (type) ->
     ShortFormApplicationService.clearPhoneData(type)

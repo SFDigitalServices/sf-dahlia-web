@@ -40,6 +40,7 @@ do ->
           'household-monthly-rent'
           'household-reserved-units-veteran'
           'household-reserved-units-disabled'
+          'household-priorities'
         ]
       },
       { name: 'Income', pages: [
@@ -129,10 +130,10 @@ do ->
         type = 'Veteran'
         ShortFormNavigationService.getNextReservedPageIfAvailable(type)
         expect(fakeShortFormApplicationService.listingHasReservedUnitType).toHaveBeenCalledWith(type)
-      it 'moves on to the Income landing page if no reserved types found', ->
+      it 'moves on to the priorities page if no reserved types found', ->
         type = 'Veteran'
         page = ShortFormNavigationService.getNextReservedPageIfAvailable(type)
-        expect(page).toEqual ShortFormNavigationService.getLandingPage({name: 'Income'})
+        expect(page).toEqual 'household-priorities'
 
     describe 'getLandingPage', ->
       it 'gets the first page of the section if it\'s not Household', ->

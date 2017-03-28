@@ -644,6 +644,12 @@
         'container':
           templateUrl: 'short-form/templates/c6b-household-reserved-units-disabled.html'
     })
+    .state('dahlia.short-form-application.household-priorities', {
+      url: '/household-priorities'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c7-household-priorities.html'
+    })
     # Short form: "Income" section
     .state('dahlia.short-form-application.income-vouchers', {
       url: '/income-vouchers'

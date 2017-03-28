@@ -28,6 +28,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
+  Service.priority_options = [
+    ['Mobility', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
+  ]
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.alternateContactType == 'Other'

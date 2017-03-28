@@ -32,6 +32,7 @@ ShortFormDataService = () ->
     application = Service._formatHouseholdAddress(application)
     application = Service._formatHouseholdDOB(application)
     application = Service._formatPreferences(application)
+    application = Service._formatPrioritiesSelected(application)
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
@@ -152,6 +153,14 @@ ShortFormDataService = () ->
     delete application.preferences
     return application
 
+  Service._formatPrioritiesSelected = (application) ->
+    prioritiesSelected = ""
+    _.forEach application.prioritiesSelected, (value, key) ->
+      prioritiesSelected += (key + ";") if value
+      return
+    application.prioritiesSelected = prioritiesSelected
+    return application
+
   Service._formatReferrals = (application) ->
     referrals = ""
     _.forEach application.applicant.referral, (value, key) ->
@@ -224,6 +233,7 @@ ShortFormDataService = () ->
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
+    data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
