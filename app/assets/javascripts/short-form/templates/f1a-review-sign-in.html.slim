@@ -1,10 +1,12 @@
 .app-card.form-card
   short-form-header
+    h2.app-card_question
+      | {{'F1A_REVIEW_SIGN_IN.TITLE' | translate}}
 
   .button-pager
     .button-pager_row.primary
       a#confirm_no_account.button.primary.radius ui-sref="dahlia.short-form-application.review-terms"
-        | {{'F1A_REVIEW_SIGN_IN.CONFIRM_WITHOUT_AN_ACCOUNT' | translate}}
+        | {{'F1A_REVIEW_SIGN_IN.CONTINUE_WITHOUT_AN_ACCOUNT' | translate}}
 
   alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
@@ -20,4 +22,4 @@
 
       .form-group
         p.t-small.c-steel.text-center.padding-top.no-margin
-          input.button.no-margin.primary#sign-in type="button" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN_TO_CONFIRM' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"
+          input.button.no-margin.secondary#sign-in type="button" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN_TO_CONTINUE' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"
