@@ -21,10 +21,11 @@ Feature: Short Form Application
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
       # now that we've submitted, also create an account
-      # When I click the Create Account button
-      # And I fill out my account info with my locked-in application email
-      # And I submit the Create Account form
-      # Then I should be on the login page with the email confirmation popup
+      When I click the Create Account button
+      And I fill out my account info with my locked-in application email
+      And I wait "5" seconds
+      And I submit the Create Account form
+      Then I should be on the login page with the email confirmation popup
 
     Scenario: Opting in to live/work then saying no to workInSf
       Given I go to the first page of the Test Listing application
@@ -64,7 +65,10 @@ Feature: Short Form Application
     Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
       Given I have a confirmed account
       When I sign in
-      And I go to the first page of the Test Listing application
+      And I go to My Applications
+      Then I should see my draft application with a Continue Application button
+      # now submit the application
+      When I click the Continue Application button
       And I submit the Name page with my account info
       And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
       And I confirm my address
