@@ -498,6 +498,7 @@ ShortFormApplicationController = (
     else if error == 'too small'
       $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_SMALL"))
     if seniorReqError
+      # special case for "you or anyone" must be a senior, and you did not meet the reqs
       age = { minAge: $scope.listing.Reserved_community_minimum_age }
       $scope.eligibilityErrors.push($translate.instant('ERROR.SENIOR_ANYONE', age))
 

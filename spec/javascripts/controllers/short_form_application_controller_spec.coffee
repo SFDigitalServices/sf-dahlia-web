@@ -5,7 +5,8 @@ do ->
     state = undefined
     fakeIdle = undefined
     fakeTitle = undefined
-    eligibilityResponse = undefined
+    eligibility = undefined
+    error = undefined
     callbackUrl = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
@@ -265,6 +266,10 @@ do ->
         expect(fakeShortFormApplicationService.workInSfMembers).toHaveBeenCalled()
 
     describe 'validateHouseholdEligibility', ->
+      it 'resets the eligibility error messages', ->
+        scope.eligibilityErrors = ['Error']
+        scope.validateHouseholdEligibility()
+        expect(scope.eligibilityErrors).toEqual([])
       it 'calls checkHouseholdEligiblity in ShortFormApplicationService', ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
@@ -287,60 +292,73 @@ do ->
         expect(fakeShortFormApplicationService.validMailingAddress).toHaveBeenCalled()
 
     describe '_respondToHouseholdEligibilityResults', ->
-      describe 'matched', ->
-        #replace with a jasmine fixture
+      describe 'when householdMatch is true', ->
         beforeEach ->
-          eligibilityResponse =
-            data: validHousehold
-
-        it 'reset the eligibility error message', ->
-          scope.householdEligibilityErrorMessage = 'Error'
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(scope.householdEligibilityErrorMessage).toEqual(null)
+          eligibility = { householdMatch: true }
+          error = null
 
         it 'navigates to the given callback url for household', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
+          scope._respondToHouseholdEligibilityResults(eligibility, error)
           expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Income'})
 
+      describe 'when householdMatch is false', ->
+        beforeEach ->
+          eligibility = { householdMatch: false }
+          error = 'too big'
+          fakeHHOpts =
+            householdSize: fakeShortFormApplicationService.householdSize()
+
+        it 'expects household section to be invalidated', ->
+          scope._respondToHouseholdEligibilityResults(eligibility, error)
+          expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
+
+        it 'assigns an error message function', ->
+          scope.eligibilityErrors = []
+          scope._respondToHouseholdEligibilityResults(eligibility, error)
+          expect(scope.eligibilityErrors).not.toEqual([])
+
+        it 'tracks a household size form error in analytics', ->
+          scope._respondToHouseholdEligibilityResults(eligibility, error)
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big', fakeHHOpts)
+
+    describe '_respondToIncomeEligibilityResults', ->
+      describe 'when incomeMatch is true', ->
+        beforeEach ->
+          eligibility = { incomeMatch: true }
+          error = null
+
         it 'navigates to the given callback url for income', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'incomeMatch')
+          scope._respondToIncomeEligibilityResults(eligibility, error)
           expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Preferences'})
 
-      describe 'not matched', ->
+      describe 'when incomeMatch is false', ->
         beforeEach ->
-          eligibilityResponse =
-            data: invalidHousehold
+          eligibility = { incomeMatch: false }
+          error = 'too high'
+
           fakeHHOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
           fakeIncomeOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
             value: fakeShortFormApplicationService.calculateHouseholdIncome()
 
-        it 'updates the scope that shows the alert', ->
-          scope.hideAlert = true
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(scope.hideAlert).toEqual(false)
-
-        it 'expects household section to be invalidated', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch', callbackUrl)
-          expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
+        it 'expects income section to be invalidated', ->
+          scope._respondToIncomeEligibilityResults(eligibility, error)
+          expect(fakeShortFormApplicationService.invalidateIncomeForm).toHaveBeenCalled()
 
         it 'assigns an error message function', ->
-          scope.householdEligibilityErrorMessage  = null
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(scope.householdEligibilityErrorMessage).not.toEqual(null)
+          scope.eligibilityErrors = []
+          scope._respondToIncomeEligibilityResults(eligibility, error)
+          expect(scope.eligibilityErrors).not.toEqual([])
 
         it 'tracks an income form error in analytics', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'incomeMatch')
-          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'income too low', fakeIncomeOpts)
+          scope._respondToIncomeEligibilityResults(eligibility, error)
+          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'income too high', fakeIncomeOpts)
 
-        it 'tracks a household size form error in analytics', ->
-          scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
-          expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big', fakeHHOpts)
 
     describe 'clearEligibilityErrors', ->
       it 'empties scope.eligibilityErrors', ->
-        scope.eligibilityErrors = 'some error message'
+        scope.eligibilityErrors = ['some error message']
         scope.clearEligibilityErrors()
         expect(scope.eligibilityErrors).toEqual([])
 
