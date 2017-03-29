@@ -15,8 +15,8 @@ div ng-show="showAlert()"
     p.alert-notice_title
       | {{customSubMessage}}
 
-  .alert-notice.alert ng-show="householdEligibilityErrors && householdEligibilityErrors.length"
-    p.t-tiny.c-alert.margin-bottom ng-repeat="error in householdEligibilityErrors"
+  .alert-notice.alert ng-show="eligibilityErrors && eligibilityErrors.length"
+    p.t-tiny.c-alert.margin-bottom ng-repeat="error in eligibilityErrors"
       | {{error}}
 
     p.t-tiny.margin-bottom translate="ERROR.NOT_ELIGIBLE_DESCRIPTION"

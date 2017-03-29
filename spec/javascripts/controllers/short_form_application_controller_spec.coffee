@@ -193,6 +193,7 @@ do ->
     describe '$scope.addHouseholdMember', ->
       describe 'user has same address applicant', ->
         it 'directly calls addHouseholdMember in ShortFormApplicationService', ->
+          scope.form.applicationForm.date_of_birth_year = {$viewValue: '1955'}
           scope.householdMember.hasSameAddressAsApplicant = 'Yes'
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
@@ -337,11 +338,11 @@ do ->
           scope._respondToHouseholdEligibilityResults(eligibilityResponse, 'householdMatch')
           expect(fakeAnalyticsService.trackFormError).toHaveBeenCalledWith('Application', 'household too big', fakeHHOpts)
 
-    describe 'clearHouseholdErrorMessage', ->
-      it 'assigns scope.householdEligibilityErrorMessage to null', ->
-        scope.householdEligibilityErrorMessage = 'some error message'
-        scope.clearHouseholdErrorMessage()
-        expect(scope.householdEligibilityErrorMessage).toEqual(null)
+    describe 'clearEligibilityErrors', ->
+      it 'empties scope.eligibilityErrors', ->
+        scope.eligibilityErrors = 'some error message'
+        scope.clearEligibilityErrors()
+        expect(scope.eligibilityErrors).toEqual([])
 
     describe 'submitApplication', ->
       it 'calls submitApplication ShortFormApplicationService', ->

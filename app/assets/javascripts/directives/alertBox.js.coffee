@@ -11,7 +11,7 @@ angular.module('dahlia.directives')
     invert: '=?'
     primary: '=?'
     shortForm: '=?'
-    householdEligibilityErrors: '=?'
+    eligibilityErrors: '=?'
 
   templateUrl: 'directives/alert-box.html'
 

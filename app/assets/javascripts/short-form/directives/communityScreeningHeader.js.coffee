@@ -14,17 +14,17 @@ angular.module('dahlia.directives')
         scope.title = $translate.instant('A2_COMMUNITY_SCREENING.VETERAN.YOU_OR_ANYONE')
         scope.description = $translate.instant('A2_COMMUNITY_SCREENING.VETERAN.YOU_OR_ANYONE_DESC')
         scope.labels.communityScreeningYes = $translate.instant('T.YES')
-        scope.householdEligibilityErrors = [$translate.instant('ERROR.VETERAN_ANYONE')]
+        scope.eligibilityErrors = [$translate.instant('ERROR.VETERAN_ANYONE')]
       when 'Senior'
         if restriction == 'All People'
           scope.title = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE')
           scope.description = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_DESC', age)
           scope.labels.communityScreeningYes = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_LABEL', age)
-          scope.householdEligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
+          scope.eligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
         else
           scope.title = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE')
           scope.description = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE_DESC', age)
           scope.labels.communityScreeningYes = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_OR_ANYONE_LABEL', age)
-          scope.householdEligibilityErrors = [$translate.instant('ERROR.SENIOR_ANYONE', age)]
+          scope.eligibilityErrors = [$translate.instant('ERROR.SENIOR_ANYONE', age)]
 
 ]
