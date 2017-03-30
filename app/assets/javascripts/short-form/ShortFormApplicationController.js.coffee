@@ -749,6 +749,9 @@ ShortFormApplicationController = (
     # also re-check year to see if age is valid (primary > 18, HH > "10 months in the future")
     year = form['date_of_birth_year']
     year.$setViewValue(year.$viewValue + ' ')
+    if $scope.listing.Reserved_community_type == 'Senior'
+      # make sure we re-check them at the Household section, in case they are no longer senior eligible
+      ShortFormApplicationService.invalidateHouseholdForm()
     if (member == 'applicant' && $scope.primaryApplicantValidAge()) ||
       (member == 'householdMember' && $scope.householdMemberValidAge())
         $scope.clearEligibilityErrors()
