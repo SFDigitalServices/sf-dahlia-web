@@ -431,11 +431,14 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    if options.attachToAccount
+      # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
+      params.temp_session_id = Service.session_uid
+
     if params.application.id
       # update
       id = params.application.id
       if options.attachToAccount
-        params.temp_session_id = Service.session_uid
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
         appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
