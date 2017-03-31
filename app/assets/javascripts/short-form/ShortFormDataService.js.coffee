@@ -1,12 +1,6 @@
-ShortFormDataService = () ->
+ShortFormDataService = (ListingService) ->
   Service = {}
-  Service.preferences = [
-    'displaced',
-    'certOfPreference',
-    'liveInSf',
-    'workInSf',
-    'neighborhoodResidence'
-  ]
+  Service.preferences = _.keys(ListingService.preferenceMap)
 
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
@@ -119,28 +113,25 @@ ShortFormDataService = () ->
     return application
 
   Service._formatPreferences = (application) ->
+    application.shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-    preferences = angular.copy(Service.preferences)
-    preferences.forEach( (preference) ->
-      memberName = application.preferences[preference + '_household_member']
-      member = _.find(allMembers, (m) ->
-        return memberName == (m.firstName + ' ' + m.lastName)
-      )
+    angular.copy(Service.preferences).forEach( (preference) ->
+      memberName = application.preferences["#{preference}_household_member"]
+      return unless memberName
+      member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
+      # if member was marked for a preference, but not found, this seems like a bug/mistake
       return unless member
-      memberDOB = member.dob.replace(/\//g, '.')
-      if preference == 'certOfPreference'
-        preferenceName = preference + 'NatKey'
-      else
-        preferenceName = preference + 'PreferenceNatKey'
-      application[preferenceName] = member.firstName + ',' + member.lastName + ',' + memberDOB
-      delete application.preferences[preference + '_household_member']
+
+      listingPref = ListingService.getPreference(preference)
+      return unless listingPref
+      shortFormPref =
+        listingPreferenceID: listingPref.listingPreferenceID
+        naturalKey: "#{member.firstName},#{member.lastName},#{member.dob}"
+        preferenceProof: application.preferences["#{preference}_proof_option"]
+      application.shortFormPreferences.push(shortFormPref)
     )
 
-    if application.householdVouchersSubsidies == 'Yes'
-      application.householdVouchersSubsidies = true
-    else if application.householdVouchersSubsidies == 'No'
-      application.householdVouchersSubsidies = false
     delete application.preferences
     return application
 
@@ -171,6 +162,11 @@ ShortFormDataService = () ->
     return application
 
   Service._formatBooleans = (application) ->
+    if application.householdVouchersSubsidies == 'Yes'
+      application.householdVouchersSubsidies = true
+    else if application.householdVouchersSubsidies == 'No'
+      application.householdVouchersSubsidies = false
+
     ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
@@ -281,33 +277,33 @@ ShortFormDataService = () ->
 
   Service._reformatPreferences = (sfApp, files) ->
     preferences = {}
-    prefList = angular.copy(Service.preferences)
     allHousehold = sfApp.householdMembers
     allHousehold.unshift(sfApp.primaryApplicant)
-    prefList.forEach( (preference) ->
-      preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
-      appMemberId = sfApp["#{preferenceName}ID"]
-      # these are just workarounds since the salesforce naming is inconsistent
-      if !appMemberId && preference == 'workInSf'
-        appMemberId = sfApp['worksInSfPreferenceID']
-      if !appMemberId && preference == 'neighborhoodResidence'
-        appMemberId = sfApp['neighborhoodPreferenceID']
-      if appMemberId
-        member = _.find(allHousehold, {appMemberId: appMemberId})
-        # if we don't find a household member matching the preference that's probably bad.
-        if member
-          preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
-          preferences[preference] = true
-          file = _.find(files, {preference: preference})
-          if file
-            preferences["#{preference}_proof_option"] = file.document_type
-            preferences["#{preference}_proof_file"] = file
+    angular.copy(sfApp.shortFormPreferences).forEach( (shortFormPref) ->
+
+      listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
+      # if we don't find a matching listing preference that's probably bad.
+      return unless listingPref
+
+      member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
+      # if we don't find a household member matching the preference that's probably bad.
+      return unless member
+
+      # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
+      prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+
+      preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
+      preferences[prefKey] = true
+      file = _.find(files, {preference: prefKey})
+      if file
+        preferences["#{prefKey}_proof_option"] = file.document_type
+        preferences["#{prefKey}_proof_file"] = file
+
     )
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
       preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
-
 
   Service._reformatMailingAddress = (contact) ->
     return {
@@ -386,7 +382,9 @@ ShortFormDataService = () ->
 
 #############################################
 
-ShortFormDataService.$inject = []
+ShortFormDataService.$inject = [
+  'ListingService'
+]
 
 angular
   .module('dahlia.services')

@@ -51,6 +51,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'Status',
   ]
 
+  Service.preferenceMap =
+    certOfPreference: "Certificate of Preference (COP)"
+    displaced: "Displaced Tenant Housing Preference (DTHP)"
+    liveWorkInSf: "Live or Work in San Francisco Preference"
+    liveInSf: "Live or Work in San Francisco Preference"
+    workInSf: "Live or Work in San Francisco Preference"
+    neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -119,17 +126,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.hasPreference = (preference) ->
     preferenceNames = _.map(Service.listing.preferences, (pref) -> pref.preferenceName)
-    preferenceMap =
-      certOfPreference: "Certificate of Preference (COP)"
-      displaced: "Displaced Tenant Housing Preference (DTHP)"
-      liveWorkInSf: "Live or Work in San Francisco Preference"
-      liveInSf: "Live or Work in San Francisco Preference"
-      workInSf: "Live or Work in San Francisco Preference"
-      neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
-
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
-    preferenceName = preferenceMap[preference]
+    preferenceName = Service.preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
+
+  Service.getPreference = (preference) ->
+    preferenceName = Service.preferenceMap[preference]
+    _.find(Service.listing.preferences, { preferenceName: preferenceName })
+
+  Service.getPreferenceById = (listingPreferenceID) ->
+    _.find(Service.listing.preferences, { listingPreferenceID: listingPreferenceID })
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
@@ -458,7 +464,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
-    return if !_.isEmpty(Service.listing.preferences)
+    if !_.isEmpty(Service.listing.preferences)
+      return $q.when(Service.listing.preferences)
     ## <--
     $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
       if data && data.preferences
