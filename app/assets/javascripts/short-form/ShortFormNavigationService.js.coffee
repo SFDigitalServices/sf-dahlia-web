@@ -51,7 +51,7 @@ ShortFormNavigationService = (
 
   Service.submitActions =
     'community-screening': {callback: ['validateCommunityEligibility']}
-    'name': {path: 'contact'}
+    'name': {callback: ['checkPrimaryApplicantAge']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}

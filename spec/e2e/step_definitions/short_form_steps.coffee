@@ -212,6 +212,11 @@ module.exports = ->
     submitForm()
     browser.waitForAngular()
 
+  @When /^I wait "([^"]*)" seconds/, (delay) ->
+    # pause before continuing
+    delay = parseInt(delay) * 1000
+    browser.sleep(delay)
+
   @When 'I sign in', ->
     signInUrl = "/sign-in"
     getUrlAndCatchPopup(signInUrl)
@@ -223,6 +228,14 @@ module.exports = ->
   @When 'I view the application from My Applications', ->
     element(By.cssContainingText('.button', 'Go to My Applications')).click()
     element(By.cssContainingText('.button', 'View Application')).click()
+    browser.waitForAngular()
+
+  @When 'I go to My Applications', ->
+    element(By.cssContainingText('.dash-item', 'My Applications')).click()
+    browser.waitForAngular()
+
+  @When 'I click the Continue Application button', ->
+    element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
     browser.waitForAngular()
 
   @When 'I use the browser back button', ->
@@ -252,6 +265,10 @@ module.exports = ->
     ).first()
     # expect the member selection field to still be there
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see my draft application with a Continue Application button', ->
+    continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
+    @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))

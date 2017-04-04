@@ -335,6 +335,14 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
+  Service.memberAge = (member) ->
+    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
+    age = moment().diff(dob, 'years')
+    age
+
+  Service.maxHouseholdAge = ->
+    _.max(_.map(Service.fullHousehold(), Service.memberAge))
+
   Service.eligibleForLiveWork = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
@@ -474,11 +482,14 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    if options.attachToAccount
+      # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
+      params.temp_session_id = Service.session_uid
+
     if params.application.id
       # update
       id = params.application.id
       if options.attachToAccount
-        params.temp_session_id = Service.session_uid
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
         appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)

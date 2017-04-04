@@ -1,8 +1,8 @@
 module ArcGISService
   # encapsulate all Neighborhood Boundary check methods
   #  - example: check 4053 18th st.
-  #  - NeighborhoodBoundaryService.new('2198 Market', -13629293.1, 4545683.8)
-  #    .in_boundary?
+  #  ArcGISService::NeighborhoodBoundaryService.new('2014-009', -13629293.1, 4545683.8)
+  #  .in_boundary?
   #
   class NeighborhoodBoundaryService < ArcGISService::Base
     API_URL = ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'].freeze
@@ -17,7 +17,7 @@ module ArcGISService
 
     def query_params
       {
-        where: "project_id='#{@project_id}'",
+        where: "projid='#{@project_id}'",
         geometry: "#{@x},#{@y}",
         geometryType: 'esriGeometryPoint',
         spatialRel: 'esriSpatialRelIntersects',
