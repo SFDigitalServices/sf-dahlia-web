@@ -193,7 +193,7 @@ ShortFormNavigationService = (
         'household-priorities'
       # -- Preferences
       when 'preferences-programs'
-        if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+        if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
           'neighborhood-preference'
         else if ShortFormApplicationService.eligibleForLiveWork()
           'live-work-preference'
@@ -262,6 +262,7 @@ ShortFormNavigationService = (
     # This returns the page in the household section that comes directly after
     # the household members page
     application = ShortFormApplicationService.application
+    return '' if application.status.toLowerCase() == 'submitted'
     if application.householdPublicHousing
       'household-public-housing'
     else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.VETERAN)

@@ -63,24 +63,28 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
       | {{member.home_address.zip}}
 
 / Household Details
-/ [{"ADDRESS":"1520 YORK ST","MEMBERS":["YOU"],"MONTHLYRENT":1000},{"ADDRESS":"899 CAPP ST","MEMBERS":["EGW"],"MONTHLYRENT":800}]
-review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
+div ng-if="prioritiesSelectedExists()"
+  review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
-.app-inner
-  review-summary-item ng-repeat="groupedAddress in groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}" ng-if="groupedAddress.monthlyRent"
-    | {{ groupedAddress.monthlyRent | currency : $ : 2 }} {{'LABEL.PER_MONTH' | translate}}
-  review-summary-item label="{{'LABEL.SENIORS_IN_HOUSEHOLD' | translate}}"
-    | {{maxHouseholdAge}}
-    | {{listing.Reserved_community_minimum_age}}
-    | {{maxHouseholdAge >= listing.Reserved_community_minimum_age}}
-  review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.qualifyingServedInMilitary"
-    | {{application.qualifyingServedInMilitary}}
-  review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.qualifyingDevelopmentallyDisabled"
-    | {{application.qualifyingDevelopmentallyDisabled}}
-  review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}" ng-if="!noPrioritiesSelected() && !priorityNoSelected()"
-    span ng-repeat="priorityName in selectedPriorityNamesList()"
-      | {{priorityName}}
-      br
+  .app-inner
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.householdPublicHousing"
+      | {{application.householdPublicHousing}}
+    review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}"
+      span ng-if="groupedAddress.monthlyRent"
+        ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
+      span ng-if="!groupedAddress.monthlyRent"
+        ' {{ 0 | currency : $ : 0 }}
+      span translate="LABEL.PER_MONTH"
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.qualifyingServedInMilitary"
+      | {{application.qualifyingServedInMilitary}}
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.qualifyingDevelopmentallyDisabled"
+      | {{application.qualifyingDevelopmentallyDisabled}}
+    review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
+      span ng-repeat="priorityOption in priority_options" ng-if="application.prioritiesSelected[priorityOption[0]]"
+        | {{priorityOption[1]}}
+        br
+      span ng-if="application.prioritiesSelected.no"
+        | {{'T.NO' | translate}}
 
 / Self-declared status
 review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"

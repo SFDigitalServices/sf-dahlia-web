@@ -31,7 +31,6 @@ ShortFormApplicationController = (
   $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
-  $scope.groupedHouseholdAddresses = ShortFormApplicationService.application.groupedHouseholdAddresses
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
   # this tracks what type of pref is being shown on the live-work-preference page:
@@ -236,6 +235,9 @@ ShortFormApplicationController = (
   $scope.noPrioritiesSelected = ->
     selected = $scope.application.prioritiesSelected
     !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
+
+  $scope.prioritiesSelectedExists = ->
+    !_.isEmpty($scope.application.prioritiesSelected)
 
   $scope.clearPriorityOptions = ->
     selected = $scope.application.prioritiesSelected
@@ -619,10 +621,6 @@ ShortFormApplicationController = (
       AccountService.importApplicantData($scope.applicant)
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
-
-  $scope.selectedPriorityNamesList = ->
-    ShortFormHelperService.selectedPriorityNamesList($scope.application)
-
 
   ## account service
   $scope.loggedIn = ->
