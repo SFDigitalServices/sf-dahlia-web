@@ -241,7 +241,7 @@ ShortFormApplicationController = (
     $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.neighborhoodPreferenceMatch && $scope.application.validatedForms.You['verify-address']
+    if $scope.applicant.neighborhoodPreferenceMatch && $scope.application.validatedForms.You['verify-address'] != false
       ###
       skip ahead if their current address has already been confirmed.
       $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
