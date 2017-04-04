@@ -22,7 +22,7 @@
       input#applicant_last_name ng-model="applicant.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error"
       small.error#applicant_last_name_error ng-if="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
-    .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
+    .form-group ng-class="{ error: applicantDOB_hasError() }"
       h3.form-label.caps
         ' {{'LABEL.YOUR_DOB' | translate}}
         lock-icon ng-if="loggedIn()"
@@ -39,8 +39,8 @@
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18($value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
-      small.error#date_of_birth_error ng-if="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+          input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length  }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+      small.error#date_of_birth_error ng-if="applicantDOB_hasError()"
         span ng-if="!primaryApplicantUnder18()" translate="ERROR.DOB"
         span ng-if="primaryApplicantUnder18()" translate="ERROR.DOB_PRIMARY_APPLICANT_AGE"
 

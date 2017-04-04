@@ -4,12 +4,12 @@
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
-            "YOU_OR_ANYONE": "Are you or anyone on this application a senior?",
-            "YOU_OR_ANYONE_DESC": "This is a senior building and at least one applicant must be {{minAge}}+.",
-            "YOU_OR_ANYONE_LABEL": "Yes, at least one person is {{minAge}}+",
             "YOU_AND_EVERYONE": "Are you and everyone on this application a senior?",
             "YOU_AND_EVERYONE_DESC": "This is a senior building and all applicants must be {{minAge}}+.",
-            "YOU_AND_EVERYONE_LABEL": "Yes, everyone is {{minAge}}+"
+            "YOU_AND_EVERYONE_LABEL": "Yes, everyone is {{minAge}}+",
+            "YOU_OR_ANYONE": "Are you or anyone on this application a senior?",
+            "YOU_OR_ANYONE_DESC": "This is a senior building and at least one applicant must be {{minAge}}+.",
+            "YOU_OR_ANYONE_LABEL": "Yes, at least one person is {{minAge}}+"
         },
         "VETERAN": {
             "YOU_OR_ANYONE": "Are you or anyone on this application a veteran?",
@@ -201,6 +201,7 @@
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
+        "GET_ASSISTANCE": "Get Assistance",
         "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to {{visitResourcesLink}}, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
@@ -211,6 +212,8 @@
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
         "LAST_NAME": "Please enter a Last Name",
+        "NOT_ELIGIBLE": "Unfortunately it appears you do not qualify for this listing.",
+        "NOT_ELIGIBLE_DESCRIPTION": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
         "NOT_ELIGIBLE_HOUSEHOLD": "It appears that you wouldn't qualify for this listing due to household size.",
         "NOT_ELIGIBLE_INCOME": "It appears that you wouldn't qualify for this listing due to your household income.",
         "PASSWORD": "Please enter a valid password",
@@ -222,9 +225,12 @@
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
         "RELATIONSHIP": "Please enter a relationship.",
+        "SENIOR_ANYONE": "At least one member of your household must be a Senior {{minAge}}+",
+        "SENIOR_EVERYONE": "Everyone in your household must be a Senior {{minAge}}+",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
+        "VETERAN_ANYONE": "t least one member of your household must be a Veteran",
         "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {
