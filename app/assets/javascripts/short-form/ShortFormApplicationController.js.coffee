@@ -326,6 +326,9 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getLandingPage({name: section})
     $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
 
+  $scope.getStartOfHouseholdDetails = ->
+    ShortFormNavigationService.getStartOfHouseholdDetails()
+
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
@@ -617,6 +620,9 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
 
+  $scope.selectedPriorityNamesList = ->
+    ShortFormHelperService.selectedPriorityNamesList($scope.application)
+
 
   ## account service
   $scope.loggedIn = ->
@@ -642,6 +648,12 @@ ShortFormApplicationController = (
 
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
+  $scope.addressTranslationVariable = (address) ->
+    ShortFormHelperService.addressTranslationVariable(address)
+
+  $scope.membersTranslationVariable = (members) ->
+    ShortFormHelperService.membersTranslationVariable(members)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()

@@ -57,6 +57,19 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
 
+  Service.selectedPriorityNamesList = (application) ->
+    prioritiesList = []
+
+    _.each application.prioritiesSelected, (v1, k1) ->
+      # properties in prioritiesSelected can have a true or false value,
+      # so only process those with a true value
+      if v1
+        # find the translated name of this priority and add it to the priorities list string
+        _.each Service.priority_options, (v2, k2) ->
+          if v2[0] == k1 then prioritiesList.push(v2[1])
+
+    return prioritiesList
+
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
     name = applicant.firstName
@@ -81,6 +94,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
+
+  Service.addressTranslationVariable = (address) ->
+    { address: _.startCase(_.toLower(address)) }
+
+  Service.membersTranslationVariable = (members) ->
+    { user: $filter('listify')(members) }
 
   return Service
 
