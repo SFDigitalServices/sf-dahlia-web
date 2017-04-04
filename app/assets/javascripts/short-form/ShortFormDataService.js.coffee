@@ -116,19 +116,51 @@ ShortFormDataService = (ListingService) ->
     application.shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-    angular.copy(Service.preferences).forEach( (preference) ->
-      memberName = application.preferences["#{preference}_household_member"]
-      return unless memberName
-      member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
-      # if member was marked for a preference, but not found, this seems like a bug/mistake
-      return unless member
+    angular.copy(Service.preferences).forEach( (prefKey) ->
+      # prefKey is the short name like liveInSf
 
-      listingPref = ListingService.getPreference(preference)
+      preferenceProof = null
+      naturalKey = null
+      optOut = false
+      individualPref = null
+      if prefKey == 'neighborhoodResidence'
+        optOut = application.preferences.neighborhoodResidenceOptOut
+      else if prefKey == 'liveWorkInSf'
+        optOut = application.preferences.liveWorkOptOut
+      else if _.includes(['liveInSf', 'workInSf'], prefKey)
+        # for liveWorkInSf, need to indicate individual pref (live or work)
+        individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'
+
+      # if you optOut then you wouldn't have a memberName or proofOption
+      unless optOut
+        memberName = application.preferences["#{prefKey}_household_member"]
+        return unless memberName
+        member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
+        # if member was marked for a preference, but not found, this seems like a bug/mistake
+        return unless member
+        preferenceProof = application.preferences["#{prefKey}_proof_option"]
+        naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
+      else
+        # TODO: this requirement should get removed via Salesforce
+        # optOut seems to require a naturalKey/appMemberId to continue
+        member = application.applicant
+        naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
+
+      listingPref = ListingService.getPreference(prefKey)
       return unless listingPref
+
+      # if we aren't opting out, and don't have a member, then there is no reason to continue
+      return unless optOut || naturalKey
+
       shortFormPref =
         listingPreferenceID: listingPref.listingPreferenceID
-        naturalKey: "#{member.firstName},#{member.lastName},#{member.dob}"
-        preferenceProof: application.preferences["#{preference}_proof_option"]
+        naturalKey: naturalKey
+        # NOTE: preferenceProof will be made redundant by TBD new file attachment object
+        preferenceProof: preferenceProof
+        optOut: optOut
+        ifCombinedIndividualPreference: individualPref
+      # remove blank values
+      shortFormPref = _.omitBy(shortFormPref, _.isNil)
       application.shortFormPreferences.push(shortFormPref)
     )
 
@@ -203,8 +235,6 @@ ShortFormDataService = (ListingService) ->
       'applicationSubmittedDate'
       'status'
       'lotteryNumber'
-      'neighborhoodPreferenceOptOut'
-      'liveWorkOptOut'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
@@ -279,7 +309,8 @@ ShortFormDataService = (ListingService) ->
     preferences = {}
     allHousehold = sfApp.householdMembers
     allHousehold.unshift(sfApp.primaryApplicant)
-    angular.copy(sfApp.shortFormPreferences).forEach( (shortFormPref) ->
+    shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
+    shortFormPrefs.forEach( (shortFormPref) ->
 
       listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
       # if we don't find a matching listing preference that's probably bad.
@@ -290,14 +321,27 @@ ShortFormDataService = (ListingService) ->
       return unless member
 
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
-      prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+        if shortFormPref.ifCombinedIndividualPreference == 'Live in SF'
+          prefKey = 'liveInSf'
+        else
+          prefKey = 'workInSf'
+        preferences.liveWorkOptOut = shortFormPref.optOut
+      else
+        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
-      preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
-      preferences[prefKey] = true
-      file = _.find(files, {preference: prefKey})
-      if file
-        preferences["#{prefKey}_proof_option"] = file.document_type
-        preferences["#{prefKey}_proof_file"] = file
+      if prefKey == 'neighborhoodResidence'
+        preferences.neighborhoodResidenceOptOut = shortFormPref.optOut
+
+      unless shortFormPref.optOut
+        # now that we have prefKey, reconstruct the fields on preferences
+        preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
+        preferences[prefKey] = true
+
+        file = _.find(files, {preference: prefKey})
+        if file
+          preferences["#{prefKey}_proof_option"] = file.document_type
+          preferences["#{prefKey}_proof_file"] = file
 
     )
     if preferences.liveInSf || preferences.workInSf

@@ -50,15 +50,16 @@ ShortFormApplicationService = (
     workInSf: 'liveWorkOptOut'
     liveInSf: 'liveWorkOptOut'
     liveWorkInSf: 'liveWorkOptOut'
-    neighborhoodResidence: 'neighborhoodPreferenceOptOut'
+    neighborhoodResidence: 'neighborhoodResidenceOptOut'
 
   Service.current_id = 0
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
 
-  ## initialize FileUploadService to have access to preferences / session_uid
-  Service.initFileUploadService = ->
+  ## initialize other related services
+  Service.initServices = ->
+    # initialize FileUploadService to have access to preferences / session_uid
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
@@ -72,7 +73,7 @@ ShortFormApplicationService = (
     Service.alternateContact = Service.application.alternateContact
     Service.householdMember = {}
     Service.householdMembers = Service.application.householdMembers
-    Service.initFileUploadService()
+    Service.initServices()
 
   Service.resetUserData()
 
@@ -221,15 +222,15 @@ ShortFormApplicationService = (
 
   Service.cancelOptOut = (preference) ->
     optOutField = Service.optOutFields[preference]
-    Service.application[optOutField] = false
+    Service.application.preferences[optOutField] = false
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
-      Service.application.liveWorkOptOut = false
+      Service.cancelOptOut('liveWorkInSf')
 
   Service.preferenceRequired = (preference) ->
     optOutField = Service.optOutFields[preference]
     # pref is required if we are NOT opted out
-    return !Service.application[optOutField]
+    !Service.application.preferences[optOutField]
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =

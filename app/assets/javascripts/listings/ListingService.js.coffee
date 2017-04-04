@@ -131,6 +131,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return _.includes(preferenceNames, preferenceName)
 
   Service.getPreference = (preference) ->
+    # looks up full preference object via the short name e.g. 'liveInSf'
     preferenceName = Service.preferenceMap[preference]
     _.find(Service.listing.preferences, { preferenceName: preferenceName })
 

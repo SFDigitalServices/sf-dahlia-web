@@ -348,15 +348,10 @@ class Api::V1::ShortFormController < ApiController
                 appMemberID
                 naturalKey
                 preferenceProof
+                optOut
+                ifCombinedIndividualPreference
               ),
             },
-            # :displacedPreferenceNatKey,
-            # :certOfPreferenceNatKey,
-            # :liveInSfPreferenceNatKey,
-            # :workInSfPreferenceNatKey,
-            # :neighborhoodResidencePreferenceNatKey,
-            :liveWorkOptOut,
-            :neighborhoodPreferenceOptOut,
             :householdVouchersSubsidies,
             :referral,
             :annualIncome,

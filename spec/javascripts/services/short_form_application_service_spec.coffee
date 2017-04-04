@@ -418,11 +418,11 @@ do ->
 
     describe 'preferenceRequired', ->
       it 'returns true if optOutField is not marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = false
+        ShortFormApplicationService.application.preferences.liveWorkOptOut = false
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual true
 
       it 'returns false if optOutField is marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = true
+        ShortFormApplicationService.application.preferences.liveWorkOptOut = true
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
 
     describe 'authorizedToProceed', ->
