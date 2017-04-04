@@ -14,6 +14,7 @@ ShortFormDataService = () ->
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
+    application = Service._formatGeocodingData(application)
     noAltContact =
       application.alternateContact.alternateContactType == 'None' ||
       !application.alternateContact.firstName ||
@@ -183,6 +184,20 @@ ShortFormDataService = () ->
       else if member.workInSf == 'No'
         member.workInSf = false
     )
+    return application
+
+  Service._formatGeocodingData = (application) ->
+    members = application.householdMembers.concat([application.applicant])
+    members.forEach (member) ->
+      if member.geocodingData
+        geo = member.geocodingData
+        if geo.location
+          member.xCoordinate = geo.location.x
+          member.yCoordinate = geo.location.y
+        if geo.attributes
+          member.whichComponentOfLocatorWasUsed = geo.attributes.loc_name
+        member.candidateScore = geo.score
+        delete member.geocodingData
     return application
 
   Service._formatMetadata = (application) ->
