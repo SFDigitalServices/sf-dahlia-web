@@ -1,0 +1,40 @@
+section.results-section.border-top
+  article.row
+    .large-12.columns
+      header.status-header.status--closed.has-button aria-describedby="{{togglerId}}" ng-click="toggleListings($event)"
+        .status-header_content
+          .status-header_icon
+            span.ui-icon.ui-xlarge
+              svg
+                use xlink:href="{{icon}}"
+          hgroup.status-header_group
+            h2.status-header_title.gamma
+              | {{text.title}}
+            p.no-margin
+              | {{text.subtitle}}
+        .status-header_action
+          button.button.ghost-white.expand-small.right.toggler id="{{togglerId}}"
+            span ng-show="!displayToggledSection"
+              ' {{text.showResults}}
+              ' ({{listings.length}})
+            span ng-show="displayToggledSection"
+              ' {{text.hideResults}}
+              ' ({{listings.length}})
+
+  .section.margin-top--2x.show-for-print ng-show="displayToggledSection"
+    / Lottery Results Posted
+    article.row ng-if="listings.length"
+      .large-12.columns
+        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listings"
+
+
+    / / Divider
+    / .row ng-if="closedListings.length"
+    /   .large-12.columns
+    /     header.results-section_divider
+    /       h3.results-section_subheader
+    /         | Lottery Results Coming Soon
+    / / Closed Listings
+    / article.row ng-if="closedListings.length"
+    /   .large-12.columns
+    /     ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in closedListings"
