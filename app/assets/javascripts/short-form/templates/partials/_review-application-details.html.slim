@@ -42,7 +42,7 @@ span ng-hide="alternateContact.alternateContactType == 'None'"
       | {{alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getHouseholdLandingPage()}}"
+review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getLandingPage({name: 'Household'})}}"
 
 .app-inner
   .info-item.margin-bottom ng-if="!householdMembers || householdMembers.length == 0"
@@ -67,7 +67,7 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
 review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
 .app-inner
-  review-summary-item ng-repeat="groupedAddress in groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}"
+  review-summary-item ng-repeat="groupedAddress in groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}" ng-if="groupedAddress.monthlyRent"
     | {{ groupedAddress.monthlyRent | currency : $ : 2 }} {{'LABEL.PER_MONTH' | translate}}
   review-summary-item label="{{'LABEL.SENIORS_IN_HOUSEHOLD' | translate}}"
     | {{maxHouseholdAge}}

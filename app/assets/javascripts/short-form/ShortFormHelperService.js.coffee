@@ -96,7 +96,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     return $sce.trustAsHtml(markup)
 
   Service.addressTranslationVariable = (address) ->
-    { address: _.startCase(_.toLower(address)) }
+    { address: address }
 
   Service.membersTranslationVariable = (members) ->
     { user: $filter('listify')(members) }
