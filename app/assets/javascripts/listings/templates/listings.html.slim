@@ -98,13 +98,13 @@ section.margin-top--2x.margin-bottom--2x ng-if="openMatchListings.length && open
   ng-include src="'listings/templates/_housing-counselor.html'"
 
 / Listings: Not Matched
-listing-results-toggler listings="openNotMatchListings" section-name="notMatched" icon="#i-building" ng-if="hasEligibilityFilters() && openNotMatchListings.length"
+listing-results-toggler listing-results="openNotMatchListings" section-name="notMatched" icon="#i-building" ng-if="hasEligibilityFilters() && openNotMatchListings.length"
 
 / Listings: Upcoming Lotteries (Closed Listings)
-listing-results-toggler listings="closedListings" section-name="upcomingLotteries" icon="#i-clock"
+listing-results-toggler listing-results="closedListings" section-name="upcomingLotteries" icon="#i-clock"
 
 / Listings: Lottery Results
-listing-results-toggler listings="lotteryResultsListings" section-name="lotteryResults" icon="#i-result"
+listing-results-toggler listing-results="lotteryResultsListings" section-name="lotteryResults" icon="#i-result"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"

@@ -1,7 +1,7 @@
 section.results-section.border-top
   article.row
     .large-12.columns
-      header.status-header.status--closed.has-button aria-describedby="{{togglerId}}" ng-click="toggleListings($event)"
+      header.status-header.status--closed ng-class="{'has-button': hasListings}" aria-describedby="{{togglerId}}" ng-click="toggleListings($event)"
         .status-header_content
           .status-header_icon
             span.ui-icon.ui-xlarge
@@ -10,31 +10,21 @@ section.results-section.border-top
           hgroup.status-header_group
             h2.status-header_title.gamma
               | {{text.title}}
-            p.no-margin
+            p.no-margin ng-if="hasListings"
               | {{text.subtitle}}
-        .status-header_action
+            p.no-margin ng-if="!hasListings"
+              | {{text.noResults}}
+        .status-header_action ng-if="hasListings"
           button.button.ghost-white.expand-small.right.toggler id="{{togglerId}}"
             span ng-show="!displayToggledSection"
               ' {{text.showResults}}
-              ' ({{listings.length}})
+              ' ({{listingResults.length}})
             span ng-show="displayToggledSection"
               ' {{text.hideResults}}
-              ' ({{listings.length}})
+              ' ({{listingResults.length}})
 
   .section.margin-top--2x.show-for-print ng-show="displayToggledSection"
     / Lottery Results Posted
-    article.row ng-if="listings.length"
+    article.row
       .large-12.columns
-        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listings"
-
-
-    / / Divider
-    / .row ng-if="closedListings.length"
-    /   .large-12.columns
-    /     header.results-section_divider
-    /       h3.results-section_subheader
-    /         | Lottery Results Coming Soon
-    / / Closed Listings
-    / article.row ng-if="closedListings.length"
-    /   .large-12.columns
-    /     ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in closedListings"
+        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listingResults"

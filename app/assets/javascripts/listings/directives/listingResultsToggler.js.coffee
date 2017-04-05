@@ -5,7 +5,7 @@ angular.module('dahlia.directives')
   templateUrl: 'listings/directives/listing-results-toggler.html'
 
   link: (scope, elem, attrs) ->
-    scope.listings = scope[attrs.listings]
+    scope.listingResults = scope[attrs.listingResults]
     scope.sectionName = attrs.sectionName
     scope.icon = attrs.icon || '#i-result'
     # toggler defaults to closed
@@ -13,27 +13,31 @@ angular.module('dahlia.directives')
     scope.togglerId = "#{scope.sectionName}-toggler"
     scope.text = {}
 
+    scope.hasListings = !!scope.listingResults.length
+
     switch scope.sectionName
       when 'lotteryResults'
         scope.text = {
-          title: $translate.instant('LISTINGS.LOTTERY_RESULTS')
-          subtitle: $translate.instant('LISTINGS.YOU_CAN_NOW_CHECK_LOTTERY_RESULTS')
-          showResults: $translate.instant('LISTINGS.SHOW_LOTTERY_RESULTS')
-          hideResults: $translate.instant('LISTINGS.HIDE_LOTTERY_RESULTS')
+          title: $translate.instant('LISTINGS.LOTTERY_RESULTS.TITLE')
+          subtitle: $translate.instant('LISTINGS.LOTTERY_RESULTS.SUBTITLE')
+          showResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.SHOW')
+          hideResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.HIDE')
+          noResults: $translate.instant('LISTINGS.LOTTERY_RESULTS.NO_RESULTS')
         }
       when 'notMatched'
         scope.text = {
-          title: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS')
-          subtitle: $translate.instant('LISTINGS.WE_KNOW_YOU_MAY_HAVE_OPTIONS')
-          showResults: $translate.instant('LISTINGS.SHOW_ADDITIONAL_LISTINGS')
-          hideResults: $translate.instant('LISTINGS.HIDE_ADDITIONAL_LISTINGS')
+          title: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.TITLE')
+          subtitle: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.SUBTITLE')
+          showResults: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.SHOW')
+          hideResults: $translate.instant('LISTINGS.ADDITIONAL_LISTINGS.HIDE')
         }
       when 'upcomingLotteries'
         scope.text = {
-          title: $translate.instant('LISTINGS.UPCOMING_LOTTERIES')
-          subtitle: $translate.instant('LISTINGS.APPLICATION_DEADLINE_HAS_PASSED')
-          showResults: $translate.instant('LISTINGS.SHOW_UPCOMING_LOTTERIES')
-          hideResults: $translate.instant('LISTINGS.HIDE_UPCOMING_LOTTERIES')
+          title: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.TITLE')
+          subtitle: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.SUBTITLE')
+          showResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.SHOW')
+          hideResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.HIDE')
+          noResults: $translate.instant('LISTINGS.UPCOMING_LOTTERIES.NO_RESULTS')
         }
 
 
