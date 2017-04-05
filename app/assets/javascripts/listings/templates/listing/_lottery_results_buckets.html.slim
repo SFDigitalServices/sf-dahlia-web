@@ -11,15 +11,9 @@
       p.t-small.c-steel.no-margin
         | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
-
     section.buckets
-      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.CERT_OF_PREFERENCE' | translate}}" abbr-pref-name="certOfPreference"
-
-      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.DTHP' | translate}}" abbr-pref-name="displacedPreference"
-
-      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.NRHP' | translate}}" abbr-pref-name="neighborhoodPreference"
-
-      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.LIVE_WORK' | translate}}" abbr-pref-name="liveWorkPreference"
+      span ng-repeat="bucketResult in lotteryBuckets.bucketResults"
+        lottery-results-row item-type="bucket" pref-name="{{bucketResultFullPrefName(bucket)}}" abbr-pref-name="{{bucketResult.preferenceName}}"
 
     .modal-inner.bg-dust ng-if="lotteryBuckets.generalLotteryAppTotal"
       .buckets-divider

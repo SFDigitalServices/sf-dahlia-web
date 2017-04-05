@@ -175,6 +175,15 @@ ListingController = (
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
+  $scope.bucketResultFullPrefName = (bucket) ->
+    fullPrefNameMap =
+      displacedPreference: $translate.instant('LOTTERY.DTHP')
+      neighborhoodPreference: $translate.instant('LOTTERY.NRHP')
+      liveWorkPreference: $translate.instant('LOTTERY.LIVE_WORK')
+      certOfPreference: $translate.instant('LOTTERY.CERT_OF_PREFERENCE')
+
+    fullPrefNameMap[bucket.preferenceName]
+
   $scope.showLotteryResultsModalButton = ->
     ListingService.listingHasLotteryBuckets()
 
