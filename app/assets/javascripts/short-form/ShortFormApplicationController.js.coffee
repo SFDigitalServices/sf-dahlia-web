@@ -31,7 +31,6 @@ ShortFormApplicationController = (
   $scope.listing = ShortFormApplicationService.listing
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
-  $scope.groupedHouseholdAddresses = ShortFormApplicationService.application.groupedHouseholdAddresses
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
   # this tracks what type of pref is being shown on the live-work-preference page:
@@ -237,6 +236,9 @@ ShortFormApplicationController = (
     selected = $scope.application.prioritiesSelected
     !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
 
+  $scope.prioritiesSelectedExists = ->
+    !_.isEmpty($scope.application.prioritiesSelected)
+
   $scope.clearPriorityOptions = ->
     selected = $scope.application.prioritiesSelected
     _.map selected, (val, k) ->
@@ -325,6 +327,9 @@ ShortFormApplicationController = (
   $scope.goToLandingPage = (section) ->
     page = ShortFormNavigationService.getLandingPage({name: section})
     $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+
+  $scope.getStartOfHouseholdDetails = ->
+    ShortFormNavigationService.getStartOfHouseholdDetails()
 
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
@@ -617,7 +622,6 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
 
-
   ## account service
   $scope.loggedIn = ->
     AccountService.loggedIn()
@@ -642,6 +646,12 @@ ShortFormApplicationController = (
 
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
+  $scope.addressTranslationVariable = (address) ->
+    ShortFormHelperService.addressTranslationVariable(address)
+
+  $scope.membersTranslationVariable = (members) ->
+    ShortFormHelperService.membersTranslationVariable(members)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()

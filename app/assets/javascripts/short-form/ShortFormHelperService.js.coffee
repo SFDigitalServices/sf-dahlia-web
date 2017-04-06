@@ -57,6 +57,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
 
+
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
     name = applicant.firstName
@@ -81,6 +82,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
+
+  Service.addressTranslationVariable = (address) ->
+    { address: address }
+
+  Service.membersTranslationVariable = (members) ->
+    { user: $filter('listify')(members) }
 
   return Service
 

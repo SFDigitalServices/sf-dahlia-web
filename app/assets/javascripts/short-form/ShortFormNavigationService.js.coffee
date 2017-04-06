@@ -193,7 +193,7 @@ ShortFormNavigationService = (
         'household-priorities'
       # -- Preferences
       when 'preferences-programs'
-        if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+        if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
           'neighborhood-preference'
         else if ShortFormApplicationService.eligibleForLiveWork()
           'live-work-preference'
@@ -257,6 +257,20 @@ ShortFormNavigationService = (
       'household-members'
     else
       'household-intro'
+
+  Service.getStartOfHouseholdDetails = ->
+    # This returns the page in the household section that comes directly after
+    # the household members page
+    application = ShortFormApplicationService.application
+    return '' if application.status.toLowerCase() == 'submitted'
+    if application.householdPublicHousing
+      'household-public-housing'
+    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.VETERAN)
+      'household-reserved-units-veteran'
+    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.DISABLED)
+      'household-reserved-units-disabled'
+    else
+      'household-priorities'
 
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)

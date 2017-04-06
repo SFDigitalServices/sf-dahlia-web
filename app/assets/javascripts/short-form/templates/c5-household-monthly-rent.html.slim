@@ -4,10 +4,10 @@
       | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE' | translate}}
 
   .app-inner.inset
-    span ng-repeat="groupedAddress in groupedHouseholdAddresses"
+    span ng-repeat="groupedAddress in application.groupedHouseholdAddresses"
       .form-group.has-option ng-class="{ error: inputInvalid('monthlyRent_' + $index) }"
         / label is not shown at all if there is only one groupedHouseholdAddress
-        div ng-if="groupedHouseholdAddresses.length > 1"
+        div ng-if="application.groupedHouseholdAddresses.length > 1"
           h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DO_YOU_PAY" translate-value-address="{{groupedAddress.address}}" ng-if="groupedAddress.members.length == 1 && groupedAddress.members[0] == 'You'"
 
           h3.form-label translate="C5_HOUSEHOLD_MONTHLY_RENT.HOW_MUCH_DO_YOU_AND_MEMBERS_PAY" translate-value-address="{{groupedAddress.address}}" translate-value-members="{{groupedAddress.members | listify}}" ng-if="groupedAddress.members.length > 1 && groupedAddress.members[0] == 'You'"

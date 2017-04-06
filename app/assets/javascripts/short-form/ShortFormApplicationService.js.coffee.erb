@@ -461,6 +461,7 @@ ShortFormApplicationService = (
 
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
+    Service.application.groupedHouseholdAddresses = []
     delete Service.application.validatedForms['Household']['household-monthly-rent']
 
   Service.invalidateMonthlyRentForm = ->
