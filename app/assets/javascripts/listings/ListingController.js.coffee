@@ -9,6 +9,7 @@ ListingController = (
   $sanitize,
   $timeout,
   $filter,
+  $translate,
   Carousel,
   SharedService,
   ListingService,
@@ -138,8 +139,8 @@ ListingController = (
     $scope.listing.Lottery_Ranking.bucketResults
 
   $scope.preferenceBucketResults = (prefName) ->
-    preferenceBucketResults = _.find(scope.listingBucketResults(), { 'preferenceName': prefName })
-    return preferenceBucketResults['bucketResults']
+    preferenceBucketResults = _.find($scope.listingBucketResults(), { 'preferenceName': prefName })
+    if preferenceBucketResults then preferenceBucketResults['bucketResults'] else undefined
 
   $scope.applicantSelectedForPreference = ->
     preferenceBucketResults = _.filter($scope.listingBucketResults(), (preferenceBucketResult) ->
@@ -329,6 +330,7 @@ ListingController.$inject = [
   '$sanitize',
   '$timeout',
   '$filter',
+  '$translate',
   'Carousel',
   'SharedService',
   'ListingService',

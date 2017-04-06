@@ -13,7 +13,7 @@
 
     section.buckets
       span ng-repeat="bucketResult in lotteryBuckets.bucketResults"
-        lottery-results-row item-type="bucket" pref-name="{{bucketResultFullPrefName(bucket)}}" abbr-pref-name="{{bucketResult.preferenceName}}"
+        lottery-results-row item-type="bucket" pref-name="{{bucketResultFullPrefName(bucketResult)}}" abbr-pref-name="{{bucketResult.preferenceName}}"
 
     .modal-inner.bg-dust ng-if="lotteryBuckets.generalLotteryAppTotal"
       .buckets-divider

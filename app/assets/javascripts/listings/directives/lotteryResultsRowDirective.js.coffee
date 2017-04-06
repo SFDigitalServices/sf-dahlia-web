@@ -31,10 +31,7 @@ angular.module('dahlia.directives')
 
     scope.rankForPreference = () ->
       preferenceBucketResults = scope.preferenceBucketResults(scope.prefName)
-      if preferenceBucketResults[0]['preferenceRank']
-        preferenceBucketResults[0]['preferenceRank']
-      else
-        undefined
+      if !_.isEmpty(preferenceBucketResults) then preferenceBucketResults[0]['preferenceRank'] else undefined
 
     scope.appTotal = () ->
       scope.lotteryBuckets[scope.abbrPrefName + 'AppTotal']
