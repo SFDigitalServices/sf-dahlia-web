@@ -30,8 +30,7 @@ angular.module('dahlia.directives')
       scope.lotteryBuckets[scope.abbrPrefName + 'UnitsAvailable']
 
     scope.rankForPreference = () ->
-      listingBucketResults = scope.listing.Lottery_Ranking.bucketResults
-      preferenceBucketResults = _.find(listingBucketResults, { 'preferenceName': scope.prefName })
+      preferenceBucketResults = scope.preferenceBucketResults(scope.prefName)
       if preferenceBucketResults[0]['preferenceRank']
         preferenceBucketResults[0]['preferenceRank']
       else

@@ -134,18 +134,29 @@ ListingController = (
     $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
 
+  $scope.listingBucketResults = () ->
+    $scope.listing.Lottery_Ranking.bucketResults
+
+  $scope.preferenceBucketResults = (prefName) ->
+    preferenceBucketResults = _.find(scope.listingBucketResults(), { 'preferenceName': prefName })
+    return preferenceBucketResults['bucketResults']
+
   $scope.applicantSelectedForPreference = ->
-    applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
-    return _.includes(applicationResults, true)
+    preferenceBucketResults = _.filter($scope.listingBucketResults(), (preferenceBucketResult) ->
+      return false unless preferenceBucketResult['bucketResults'][0]
+      preferenceBucketResult['bucketResults'][0]['preferenceRank'] != null
+    )
+    return preferenceBucketResults.length > 0
 
   $scope.applicantHasCertOfPreference = ->
-    $scope.listing.Lottery_Ranking.applicationResults[0].certOfPreference
+    $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]['preferenceRank'] != null
 
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
 
   $scope.lotteryNumberValid = ->
-    !!$scope.listing.Lottery_Ranking.applicationResults[0]
+    # true if if there is a general lottery ranking
+    !_.isEmpty($scope.listing.Lottery_Ranking['bucketResults'][0]['bucketResults'])
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
