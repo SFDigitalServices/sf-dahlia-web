@@ -4,6 +4,8 @@ do ->
 
     scope = undefined
     state = {current: {name: undefined}}
+    $translate =
+      instant: jasmine.createSpy()
     listing = undefined
     yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
@@ -58,6 +60,7 @@ do ->
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value '$translate', $translate
       return
     )
 
