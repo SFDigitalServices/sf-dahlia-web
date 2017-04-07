@@ -59,6 +59,8 @@ do ->
       invalidateContactForm: jasmine.createSpy()
       resetMonthlyRentForm: jasmine.createSpy()
       invalidateMonthlyRentForm: jasmine.createSpy()
+      invalidatePreferencesForm: jasmine.createSpy()
+      resetAssistedHousingForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
       preferenceRequired: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
@@ -299,15 +301,21 @@ do ->
         scope.checkIfReservedUnits()
         expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
 
-    describe 'resetMonthlyRentForm', ->
+    describe 'publicHousingYes', ->
       it 'calls resetMonthlyRentForm in ShortFormApplicationService', ->
-        scope.resetMonthlyRentForm()
+        scope.publicHousingYes()
         expect(fakeShortFormApplicationService.resetMonthlyRentForm).toHaveBeenCalled()
+      it 'calls invalidatePreferencesForm in ShortFormApplicationService', ->
+        scope.publicHousingYes()
+        expect(fakeShortFormApplicationService.invalidatePreferencesForm).toHaveBeenCalled()
 
-    describe 'invalidateMonthlyRentForm', ->
+    describe 'publicHousingNo', ->
       it 'calls invalidateMonthlyRentForm in ShortFormApplicationService', ->
-        scope.invalidateMonthlyRentForm()
+        scope.publicHousingNo()
         expect(fakeShortFormApplicationService.invalidateMonthlyRentForm).toHaveBeenCalled()
+      it 'calls resetAssistedHousingForm in ShortFormApplicationService', ->
+        scope.publicHousingNo()
+        expect(fakeShortFormApplicationService.resetAssistedHousingForm).toHaveBeenCalled()
 
     describe '$scope.clearPhoneData', ->
       it 'calls clearPhoneData in ShortFormApplicationService', ->

@@ -630,13 +630,13 @@ do ->
       it 'should includes public housing question when listing has Assisted Housing / Rent Burden preference', ->
         spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousingRentBurden')
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
         expect(showHouseholdPublicHousingQuestion).toEqual true
 
       it 'should NOT include public housing question when listing doesn\'t have Assisted Housing / Rent Burden preference', ->
         spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousingRentBurden')
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
         expect(showHouseholdPublicHousingQuestion).toEqual false
 
     describe 'loadApplication', ->

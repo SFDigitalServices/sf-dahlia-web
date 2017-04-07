@@ -36,6 +36,7 @@ ShortFormNavigationService = (
         'preferences-intro'
         'neighborhood-preference'
         'live-work-preference'
+        'assisted-housing-preference'
         'preferences-programs'
         'general-lottery-notice'
       ]
@@ -71,7 +72,8 @@ ShortFormNavigationService = (
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
-    'live-work-preference': {path: 'preferences-programs'}
+    'live-work-preference': {callback: ['checkAfterLiveWork']}
+    'assisted-housing-preference': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
@@ -192,18 +194,15 @@ ShortFormNavigationService = (
       when 'income-vouchers'
         'household-priorities'
       # -- Preferences
-      when 'preferences-programs'
-        if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
-          'neighborhood-preference'
-        else if ShortFormApplicationService.eligibleForLiveWork()
-          'live-work-preference'
-        else
-          'preferences-intro'
       when 'live-work-preference'
         if ShortFormApplicationService.eligibleForNRHP()
           'neighborhood-preference'
         else
           'preferences-intro'
+      when 'assisted-housing-preference'
+        Service.getPrevPageOfPreferencesSection()
+      when 'preferences-programs'
+        Service.getPrevPageOfPreferencesSection()
       when 'general-lottery-notice'
         'preferences-programs'
       # -- Review
@@ -257,6 +256,16 @@ ShortFormNavigationService = (
       'household-members'
     else
       'household-intro'
+
+  Service.getPrevPageOfPreferencesSection = ->
+    if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
+      'assisted-housing-preference'
+    else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
+      'neighborhood-preference'
+    else if ShortFormApplicationService.eligibleForLiveWork()
+      'live-work-preference'
+    else
+      'preferences-intro'
 
   Service.getStartOfHouseholdDetails = ->
     # This returns the page in the household section that comes directly after

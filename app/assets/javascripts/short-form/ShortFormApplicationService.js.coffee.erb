@@ -29,7 +29,8 @@ ShortFormApplicationService = (
       workInSf: null
       liveWorkInSf: null
       neighborhoodResidence: null
-      assistedHousingRentBurden: null
+      assistedHousing: null
+      rentBurden: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     groupedHouseholdAddresses: []
     STUB_prioritiesSelected: {}
@@ -301,7 +302,7 @@ ShortFormApplicationService = (
     else if income.incomeTimeframe == 'per_month'
       income.incomeTotal * 12
 
-  ### Proof of Preferences ###
+  # update lists of eligible people for the dropdowns for these preferences
   Service.refreshPreferences = (type) ->
     if type == 'liveWorkInSf'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
@@ -350,6 +351,9 @@ ShortFormApplicationService = (
 
   Service.eligibleForNRHP = ->
     Service.neighborhoodResidenceMembers().length > 0
+
+  Service.eligibleForAssistedHousing = ->
+    Service.application.householdPublicHousing == 'Yes'
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
@@ -455,6 +459,9 @@ ShortFormApplicationService = (
     Service.application.completedSections['Preferences'] = false
     Service.application.completedSections['Income'] = false
 
+  Service.invalidatePreferencesForm = ->
+    Service.application.completedSections['Preferences'] = false
+
   Service.resetLiveWorkForm = ->
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
@@ -467,6 +474,11 @@ ShortFormApplicationService = (
   Service.invalidateMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
     Service.application.validatedForms['Household']['household-monthly-rent'] = false
+
+  Service.resetAssistedHousingForm = ->
+    Service.cancelPreference('assistedHousing')
+    return unless Service.application.validatedForms['Preferences']
+    delete Service.application.validatedForms['Preferences']['assisted-housing-preference']
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
@@ -695,7 +707,7 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   Service.hasHouseholdPublicHousingQuestion = ->
-    ListingService.hasPreference('assistedHousingRentBurden')
+    ListingService.hasPreference('assistedHousing')
 
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
