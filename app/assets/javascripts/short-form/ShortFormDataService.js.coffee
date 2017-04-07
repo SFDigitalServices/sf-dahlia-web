@@ -140,11 +140,6 @@ ShortFormDataService = (ListingService) ->
         return unless member
         preferenceProof = application.preferences["#{prefKey}_proof_option"]
         naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
-      else
-        # TODO: this requirement should get removed via Salesforce
-        # optOut seems to require a naturalKey/appMemberId to continue
-        member = application.applicant
-        naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
 
       listingPref = ListingService.getPreference(prefKey)
       return unless listingPref
