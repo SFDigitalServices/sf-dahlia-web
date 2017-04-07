@@ -63,11 +63,9 @@
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
         else
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
-        # Anonymous user on the shortform review page does not need leave confirmation
-        onShortFormReviewPage = fromState.name == 'dahlia.short-form-application.review-submitted'
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
-        if (skipConfirm || loggedInConfirmation || onShortFormReviewPage || $window.confirm(leaveMessage))
+        if (skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
