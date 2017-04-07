@@ -53,3 +53,13 @@ do ->
 
       it 'gives max of 29 for leap year', ->
         expect(ShortFormDataService.maxDOBDay(2, 2000)).toEqual(29)
+
+    describe '_calculateTotalMonthlyRent', ->
+      it 'adds up rent values from groupedHouseholdAddresses', ->
+        fakeApplication.groupedHouseholdAddresses = [
+          {monthlyRent: 750, dontPayRent: true}
+          {monthlyRent: null, dontPayRent: true}
+          {monthlyRent: 1000}
+        ]
+        ShortFormDataService._calculateTotalMonthlyRent(fakeApplication)
+        expect(fakeApplication.STUB_TotalMonthlyRent).toEqual(1750)

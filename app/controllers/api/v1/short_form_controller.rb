@@ -349,6 +349,7 @@ class Api::V1::ShortFormController < ApiController
             :neighborhoodResidencePreferenceNatKey,
             :liveWorkOptOut,
             :neighborhoodPreferenceOptOut,
+            :prioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
             :annualIncome,

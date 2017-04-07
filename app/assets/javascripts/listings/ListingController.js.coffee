@@ -243,19 +243,19 @@ ListingController = (
 
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
-      'Senior':
+      "#{ListingService.RESERVED_TYPES.SENIOR}":
         building: 'Senior'
         eligibility: 'Seniors'
         reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
         reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
         unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
-      'Veteran':
+      "#{ListingService.RESERVED_TYPES.VETERAN}":
         building: 'Veterans'
         eligibility: 'Veterans'
         reservedFor: 'veterans'
         reservedForWhoAre: 'veterans'
         unitDescription: 'veterans of the U.S. Armed Forces'
-      'Developmental disabilities':
+      "#{ListingService.RESERVED_TYPES.DISABLED}":
         building: 'Developmental Disability'
         eligibility: 'People with developmental disabilities'
         reservedFor: 'people with developmental disabilities'

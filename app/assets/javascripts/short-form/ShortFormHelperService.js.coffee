@@ -28,6 +28,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
+  Service.priority_options = [
+    ['Mobility', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
+  ]
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.alternateContactType == 'Other'
@@ -50,6 +56,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
+
 
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
@@ -75,6 +82,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
+
+  Service.addressTranslationVariable = (address) ->
+    { address: address }
+
+  Service.membersTranslationVariable = (members) ->
+    { user: $filter('listify')(members) }
 
   return Service
 

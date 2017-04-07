@@ -9,7 +9,6 @@ ShortFormApplicationController = (
   $document,
   $translate,
   Idle,
-  ListingService,
   ShortFormApplicationService,
   ShortFormNavigationService,
   ShortFormHelperService,
@@ -38,11 +37,14 @@ ShortFormApplicationController = (
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null
   $scope.currentPreferenceType = null
+  # read more toggler
+  $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
   $scope.labels = {}
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
+  $scope.priority_options = ShortFormHelperService.priority_options
   $scope.gender_options = [
     'Male',
     'Female',
@@ -230,6 +232,24 @@ ShortFormApplicationController = (
     if typeof form[fieldName] != 'undefined'
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
+  $scope.noPrioritiesSelected = ->
+    selected = $scope.application.prioritiesSelected
+    !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
+
+  $scope.prioritiesSelectedExists = ->
+    !_.isEmpty($scope.application.prioritiesSelected)
+
+  $scope.clearPriorityOptions = ->
+    selected = $scope.application.prioritiesSelected
+    _.map selected, (val, k) ->
+      selected[k] = false unless k == 'no'
+
+  $scope.clearPriorityNoOption = ->
+    $scope.application.prioritiesSelected.no = false
+
+  $scope.priorityNoSelected = ->
+    $scope.application.prioritiesSelected.no
+
   $scope.clearPhoneData = (type) ->
     ShortFormApplicationService.clearPhoneData(type)
 
@@ -308,6 +328,9 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getLandingPage({name: section})
     $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
 
+  $scope.getStartOfHouseholdDetails = ->
+    ShortFormNavigationService.getStartOfHouseholdDetails()
+
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
@@ -328,7 +351,7 @@ ShortFormApplicationController = (
       $scope.goToLandingPage('Review')
 
   $scope.checkAfterNeighborhood = ->
-    if ShortFormApplicationService.hasPreference('neighborhoodResidence')
+    if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       # NRHP provides automatic liveInSf preference
       ShortFormApplicationService.copyNRHPtoLiveInSf()
       # you already selected NRHP, so skip live/work
@@ -352,7 +375,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.liveInSfMembers()
 
   $scope.showPreference = (preference) ->
-    return false unless ListingService.hasPreference(preference)
+    return false unless ShortFormApplicationService.listingHasPreference(preference)
     switch preference
       when 'liveWorkInSf'
         $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
@@ -474,7 +497,11 @@ ShortFormApplicationController = (
   $scope._respondToHouseholdEligibilityResults = (eligibility, error) ->
     seniorReqError = $scope.householdDoesNotMeetSeniorRequirements()
     if eligibility.householdMatch && !seniorReqError
-      $scope.goToLandingPage('Income')
+      # determine next page of household section
+      if ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-public-housing')
+      else
+        $scope.checkIfReservedUnits()
     else
       $scope._determineHouseholdEligibilityErrors(error, seniorReqError)
       $scope.handleErrorState()
@@ -516,6 +543,23 @@ ShortFormApplicationController = (
     else if error == 'too high'
       message = $translate.instant("ERROR.HOUSEHOLD_INCOME_TOO_HIGH")
     $scope.eligibilityErrors = [message]
+
+  $scope.checkIfPublicHousing = ->
+    if $scope.application.householdPublicHousing == 'No'
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
+    else
+      $scope.checkIfReservedUnits()
+
+  # Check for need to ask about reserved units on the listing
+  $scope.checkIfReservedUnits = (type) ->
+    page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
+    $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
+
+  $scope.resetMonthlyRentForm = ->
+    ShortFormApplicationService.resetMonthlyRentForm()
+
+  $scope.invalidateMonthlyRentForm = ->
+    ShortFormApplicationService.invalidateMonthlyRentForm()
 
   $scope.visitResourcesLink = ->
     linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
@@ -578,7 +622,6 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
 
-
   ## account service
   $scope.loggedIn = ->
     AccountService.loggedIn()
@@ -604,6 +647,12 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.addressTranslationVariable = (address) ->
+    ShortFormHelperService.addressTranslationVariable(address)
+
+  $scope.membersTranslationVariable = (members) ->
+    ShortFormHelperService.membersTranslationVariable(members)
+
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
 
@@ -613,6 +662,8 @@ ShortFormApplicationController = (
       .then(  ->
         ShortFormNavigationService.isLoading(false)
         $scope.goToAndTrackFormSuccess('dahlia.short-form-application.confirmation')
+      ).catch( ->
+        ShortFormNavigationService.isLoading(false)
       )
 
   ## Save and finish later
@@ -625,6 +676,8 @@ ShortFormApplicationController = (
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
         $scope.goToAndLeaveForm('dahlia.my-applications', {skipConfirm: true})
+      ).catch( ->
+        ShortFormNavigationService.isLoading(false)
       )
     else
       ShortFormNavigationService.isLoading(false)
@@ -778,7 +831,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.listingIs(name)
 
 ShortFormApplicationController.$inject = [
-  '$scope', '$state', '$window', '$document', '$translate', 'Idle', 'ListingService',
+  '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',

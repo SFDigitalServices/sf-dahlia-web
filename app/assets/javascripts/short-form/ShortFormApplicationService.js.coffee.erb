@@ -29,7 +29,10 @@ ShortFormApplicationService = (
       workInSf: null
       liveWorkInSf: null
       neighborhoodResidence: null
+      assistedHousingRentBurden: null
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
+    groupedHouseholdAddresses: []
+    prioritiesSelected: {}
     completedSections:
       Intro: false
       You: false
@@ -196,6 +199,38 @@ ShortFormApplicationService = (
         member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     )
 
+  Service.groupHouseholdAddresses = ->
+    groupedAddresses =[]
+    groupedAddress = {}
+
+    primaryAddress = Service.applicant.home_address.address1
+    primaryAddress += ' ' + Service.applicant.home_address.address2 if Service.applicant.home_address.address2
+    groupedAddress.address = primaryAddress
+    groupedAddress.members = ['You']
+    groupedAddresses.push(angular.copy(groupedAddress))
+
+    _.each Service.householdMembers, (member) ->
+      groupedAddress = {}
+      if member.hasSameAddressAsApplicant == 'Yes'
+        groupedAddress.address = primaryAddress
+      else
+        groupedAddress.address = member.home_address.address1
+        groupedAddress.address += ' ' + member.home_address.address2 if member.home_address.address2
+      matchedIndex = _.findIndex(groupedAddresses, { address: groupedAddress.address})
+      if matchedIndex > -1
+        groupedAddresses[matchedIndex].members.push(member.firstName)
+      else
+        groupedAddress.members = [member.firstName]
+        groupedAddresses.push(angular.copy(groupedAddress))
+
+    _.each groupedAddresses, (groupedAddress) ->
+      matchedIndex = _.findIndex(Service.application.groupedHouseholdAddresses, { address: groupedAddress.address})
+      if matchedIndex > -1
+        groupedAddress.monthlyRent = Service.application.groupedHouseholdAddresses[matchedIndex].monthlyRent
+        groupedAddress.dontPayRent = Service.application.groupedHouseholdAddresses[matchedIndex].dontPayRent
+
+    angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
+
   Service.cancelPreference = (preference) ->
     if preference == 'neighborhoodResidence'
       # cancelling NRHP also cancels liveInSf
@@ -321,7 +356,7 @@ ShortFormApplicationService = (
     prefList = ShortFormDataService.preferences
     return !_.some(_.pick(Service.preferences, prefList))
 
-  Service.hasPreference = (preference) ->
+  Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
 
   Service.copyNRHPtoLiveInSf = ->
@@ -423,6 +458,15 @@ ShortFormApplicationService = (
   Service.resetLiveWorkForm = ->
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
+
+  Service.resetMonthlyRentForm = ->
+    return unless Service.application.validatedForms['Household']
+    Service.application.groupedHouseholdAddresses = []
+    delete Service.application.validatedForms['Household']['household-monthly-rent']
+
+  Service.invalidateMonthlyRentForm = ->
+    return unless Service.application.validatedForms['Household']
+    Service.application.validatedForms['Household']['household-monthly-rent'] = false
 
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
@@ -647,7 +691,17 @@ ShortFormApplicationService = (
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
 
+  # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
+
+  Service.hasHouseholdPublicHousingQuestion = ->
+    ListingService.hasPreference('assistedHousingRentBurden')
+
+  Service.listingHasReservedUnitType = (type) ->
+    ListingService.listingHasReservedUnitType(Service.listing, type)
+
+  Service.listingHasPreference = ListingService.hasPreference
+  Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.listingIs = ListingService.listingIs

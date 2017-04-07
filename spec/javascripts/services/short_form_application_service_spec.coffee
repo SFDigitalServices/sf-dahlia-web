@@ -23,6 +23,7 @@ do ->
     fakeListingService =
       listing:
         Id: ''
+      hasPreference: ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
@@ -227,6 +228,12 @@ do ->
       it 'has array length of household plus one', ->
         hh = ShortFormApplicationService.fullHousehold()
         expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
+
+    describe 'groupHouseholdAddresses', ->
+      it 'sets up groupedHouseholdAddresses array on application', ->
+        ShortFormApplicationService.groupHouseholdAddresses()
+        expect(ShortFormApplicationService.application.groupedHouseholdAddresses.length).toEqual 1
+        expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual ['You']
 
     describe 'refreshPreferences', ->
       beforeEach ->
@@ -618,6 +625,19 @@ do ->
         ShortFormApplicationService.checkHouseholdEligiblity(fakeListing)
         httpBackend.flush()
         expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
+
+    describe 'hasHouseholdPublicHousingQuestion', ->
+      it 'should includes public housing question when listing has Assisted Housing / Rent Burden preference', ->
+        spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousingRentBurden')
+        expect(showHouseholdPublicHousingQuestion).toEqual true
+
+      it 'should NOT include public housing question when listing doesn\'t have Assisted Housing / Rent Burden preference', ->
+        spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousingRentBurden')
+        expect(showHouseholdPublicHousingQuestion).toEqual false
 
     describe 'loadApplication', ->
       it 'reformats the application', ->

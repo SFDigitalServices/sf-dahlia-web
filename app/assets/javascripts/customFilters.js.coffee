@@ -76,3 +76,11 @@ angular.module('customFilters', [])
 .filter 'divideAndRoundDown', ->
   (input, divider) ->
     Math.floor(input / divider)
+.filter 'listify', ->
+  # will turn an array of items into a comma separated list, ending with "and" e.g.
+  # ['john', 'jane', 'joe', 'dana'] | listify
+  # 'john, jane, joe and dana'
+  (input) ->
+    # input must be an array
+    return '' unless input.length
+    _.replace(input.join(', '), /,(?!.*,)/, ' and')

@@ -8,6 +8,13 @@ ShortFormDataService = () ->
     'neighborhoodResidence'
   ]
 
+  Service.metaFields = [
+    'completedSections'
+    'session_uid'
+    # TODO: re-include this once this story has been resolved re: formMetadata limits #142188189
+    # 'groupedHouseholdAddresses'
+  ]
+
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
     application.listingID = listingId
@@ -25,11 +32,13 @@ ShortFormDataService = () ->
     application = Service._formatHouseholdAddress(application)
     application = Service._formatHouseholdDOB(application)
     application = Service._formatPreferences(application)
+    application = Service._formatPrioritiesSelected(application)
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
     application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
+    application = Service._calculateTotalMonthlyRent(application)
     application = Service._formatMetadata(application)
     delete application.householdMembers if _.isEmpty(application.householdMembers)
     delete application.primaryApplicant.mailingGeocoding_data
@@ -144,6 +153,14 @@ ShortFormDataService = () ->
     delete application.preferences
     return application
 
+  Service._formatPrioritiesSelected = (application) ->
+    prioritiesSelected = ""
+    _.forEach application.prioritiesSelected, (value, key) ->
+      prioritiesSelected += (key + ";") if value
+      return
+    application.prioritiesSelected = prioritiesSelected
+    return application
+
   Service._formatReferrals = (application) ->
     referrals = ""
     _.forEach application.applicant.referral, (value, key) ->
@@ -185,14 +202,17 @@ ShortFormDataService = () ->
     )
     return application
 
-  Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
+  Service._calculateTotalMonthlyRent = (application) ->
+    # TODO: replace STUB with real field name once it exists
+    # _.sumBy will count any `null` or `undefined` values as 0
+    application.STUB_TotalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
+    return application
 
-    application.formMetadata = JSON.stringify(formMetadata)
-    delete application.completedSections
-    delete application.session_uid
+  # move all metaFields off the application object and into formMetadata JSON string
+  Service._formatMetadata = (application) ->
+    application.formMetadata = JSON.stringify(_.pick(application, Service.metaFields))
+    _.each Service.metaFields, (metaField) ->
+      delete application[metaField]
     return application
 
   #############################################
@@ -213,6 +233,7 @@ ShortFormDataService = () ->
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
+    data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
@@ -350,7 +371,7 @@ ShortFormDataService = () ->
   Service._reformatMetadata = (sfApp, data) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
-    data.completedSections = formMetadata.completedSections
+    _.merge(data, _.pick(formMetadata, Service.metaFields))
 
   #############################################
   # Helper functions

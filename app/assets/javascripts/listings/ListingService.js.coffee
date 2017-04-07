@@ -51,6 +51,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'Status',
   ]
 
+  # Create a mapping to Salesforce naming conventions
+  Service.RESERVED_TYPES = {
+    VETERAN: 'Veteran'
+    DISABLED: 'Developmental disabilities'
+    SENIOR: 'Senior'
+  }
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -126,6 +132,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       liveInSf: "Live or Work in San Francisco Preference"
       workInSf: "Live or Work in San Francisco Preference"
       neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+      assistedHousingRentBurden: "Assisted Housing / Rent Burden Preference"
 
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
     preferenceName = preferenceMap[preference]
@@ -445,7 +452,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.priorityUnits)
 
   Service.listingHasReservedUnits = (listing) ->
-    !_.isEmpty(listing.reservedUnits)
+    !_.isEmpty(listing.unitSummaries.reserved)
+
+  # `type` should match what we get from Salesforce e.g. "Veteran"
+  Service.listingHasReservedUnitType = (listing, type) ->
+    return false unless Service.listingHasReservedUnits(listing)
+    types = _.map Service.listing.reservedDescriptor, (descriptor) -> descriptor.name
+    _.includes(types, type)
 
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')

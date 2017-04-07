@@ -1,0 +1,17 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE' | translate}}
+    p.form-note.margin-bottom
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.P1' | translate}}
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('householdPublicHousing') }"
+      p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
+      .radio-group.padding-top--half role="radiogroup" aria-label="{{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE' | translate}}"
+        radio-block-item value='Yes' user='application' name='householdPublicHousing' ng-required='true' on-change="resetMonthlyRentForm"
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='application' name='householdPublicHousing' ng-required='true' on-change="invalidateMonthlyRentForm"
+          | {{'T.NO' | translate}}
+
+  short-form-save-and-submit

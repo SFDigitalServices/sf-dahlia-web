@@ -10,6 +10,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
@@ -34,6 +36,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
@@ -49,6 +53,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
@@ -78,6 +84,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
