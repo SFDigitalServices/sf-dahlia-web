@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207011816) do
+ActiveRecord::Schema.define(version: 20170407225409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,10 @@ ActiveRecord::Schema.define(version: 20161207011816) do
     t.string   "listing_id"
     t.jsonb    "member"
     t.jsonb    "applicant"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "listing_name"
+    t.string   "state"
   end
 
   create_table "uploaded_files", force: :cascade do |t|
@@ -34,11 +35,13 @@ ActiveRecord::Schema.define(version: 20161207011816) do
     t.string   "content_type"
     t.string   "session_uid"
     t.integer  "preference"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "listing_id"
     t.string   "document_type"
     t.integer  "user_id"
+    t.string   "address"
+    t.integer  "rent_burden_type"
   end
 
   add_index "uploaded_files", ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree

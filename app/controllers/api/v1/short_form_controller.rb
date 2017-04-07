@@ -259,7 +259,7 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(%i(file session_uid listing_id
-                     document_type preference))
+                     document_type preference address rent_burden_type))
   end
 
   def application_params
@@ -369,6 +369,8 @@ class Api::V1::ShortFormController < ApiController
       listing_id: uploaded_file_params[:listing_id],
       preference: uploaded_file_params[:preference],
       document_type: uploaded_file_params[:document_type],
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,

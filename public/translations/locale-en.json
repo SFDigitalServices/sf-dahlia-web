@@ -186,6 +186,10 @@
         },
         "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
     },
+    "E2C_RENT_BURDEN_PREFERENCE": {
+        "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
+        "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent."
+    },
     "E2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
         "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
@@ -433,9 +437,9 @@
         "UPLOADING": "Uploading",
         "UPLOAD_COPY_OF_LEASE": "Upload Copy of Lease",
         "UPLOAD_LEASE_DESCRIPTION": "Please upload the first page, or whichever page shows the rent amount.",
-        "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
         "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
         "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB. Supported file types: PDF, JPG, PNG.",
+        "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
         "VETERANS_IN_HOUSEHOLD": "Veterans in Household",
         "VIEW_APPLICATION": "View Application",
         "VISION_IMPAIRMENTS": "For Vision Impairments",

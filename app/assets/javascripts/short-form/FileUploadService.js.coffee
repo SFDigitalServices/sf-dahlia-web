@@ -4,8 +4,20 @@ FileUploadService = ($http, Upload, uuid) ->
   Service.preferences = {}
   Service.session_uid = -> null
 
-  Service.hasPreferenceFile = (fileType) ->
-    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
+  Service.hasPreferenceFile = (fileType, rentBurdenOpts) ->
+    if rentBurdenOpts
+      # do it a different way for rentBurden...
+      opts = rentBurdenOpts
+      if opts.rentBurdenType == 'lease'
+        Service.preferences.rentBurden_proof[opts.address].lease_file.file
+    else
+      Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
+
+  Service.preferenceFileError = (fileType) ->
+    !! Service.preferences["#{fileType}_error"]
+
+  Service.preferenceFileIsLoading = (fileType) ->
+    !! Service.preferences["#{fileType}_loading"]
 
   Service.deletePreferenceFile = (prefType, listing_id) ->
     fileType = "#{prefType}_proof_file"
@@ -25,12 +37,6 @@ FileUploadService = ($http, Upload, uuid) ->
     ).error( (data, status, headers, config) ->
       return
     )
-
-  Service.preferenceFileError = (fileType) ->
-    !! Service.preferences["#{fileType}_error"]
-
-  Service.preferenceFileIsLoading = (fileType) ->
-    !! Service.preferences["#{fileType}_loading"]
 
   Service.uploadProof = (file, prefType, docType, listing_id) ->
     fileType = "#{prefType}_proof_file"
@@ -56,6 +62,49 @@ FileUploadService = ($http, Upload, uuid) ->
       # error handler
       Service.preferences["#{fileType}_loading"] = false
       Service.preferences["#{fileType}_error"] = true
+    ))
+
+  Service.uploadRentBurdenProof = (file, opts = {}) ->
+    ###
+    opts = {
+      address
+      rentBurdenType ("lease" or "rent")
+      docType ("Copy of Lease")
+      index
+    }
+    ###
+
+    # grab files for this particular address
+    proofFiles = Service.preferences.rentBurden_proof[opts.address]
+    if opts.rentBurdenType == 'lease'
+      proofFileObject = proofFiles.lease_file
+    else
+      proofFileObject = proofFiles.rent_files[opts.index]
+    if (!file)
+      proofFileObject.error = true
+      return
+
+    proofFileObject.loading = true
+    Upload.upload(
+      url: '/api/v1/short-form/proof'
+      method: 'POST'
+      data:
+        uploaded_file:
+          file: file
+          session_uid: Service.session_uid()
+          listing_id: opts.listing_id
+          document_type: opts.docType
+          preference: 'rentBurden'
+          address: opts.address
+          rent_burden_type: opts.rentBurdenType
+    ).then( ((resp) ->
+      proofFileObject.loading = false
+      proofFileObject.error = false
+      proofFileObject.file = resp.data
+    ), ((resp) ->
+      # error handler
+      proofFileObject.loading = false
+      proofFileObject.error = true
     ))
 
   return Service
