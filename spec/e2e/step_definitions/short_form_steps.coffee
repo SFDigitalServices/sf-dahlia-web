@@ -112,6 +112,9 @@ module.exports = ->
   @When 'I continue past the Lottery Preferences intro', ->
     submitForm()
 
+  @When 'I opt out of Assisted Housing preference', ->
+    optOutAndSubmit()
+
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
     submitForm()
