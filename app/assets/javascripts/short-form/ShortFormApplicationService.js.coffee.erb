@@ -424,8 +424,9 @@ ShortFormApplicationService = (
     # this will set the current section "completedSections" to false
     # in the event that you've gone back and edited a form and left it in an invalid state
     section = Service.activeSection
+    return unless section && section.name
     isValid = Service.checkFormState($state.current.name, section)
-    unless isValid
+    if !isValid && Service.application.completedSections[section.name]
       Service.application.completedSections[section.name] = false
 
   Service.submitApplication = (options={}) ->
