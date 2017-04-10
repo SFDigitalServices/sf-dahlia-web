@@ -1,11 +1,12 @@
 ShortFormDataService = () ->
   Service = {}
   Service.preferences = [
-    'displaced',
-    'certOfPreference',
-    'liveInSf',
-    'workInSf',
+    'displaced'
+    'certOfPreference'
+    'liveInSf'
+    'workInSf'
     'neighborhoodResidence'
+    'assistedHousing'
   ]
 
   Service.metaFields = [
