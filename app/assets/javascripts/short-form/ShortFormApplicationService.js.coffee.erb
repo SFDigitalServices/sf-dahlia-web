@@ -9,6 +9,7 @@ ShortFormApplicationService = (
   Service.accountApplication = {}
   Service.application = {}
   Service._householdEligibility = {}
+  Service.activeSection = {}
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -419,10 +420,19 @@ ShortFormApplicationService = (
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
+  Service.invalidateCurrentSectionIfIncomplete = ->
+    # this will set the current section "completedSections" to false
+    # in the event that you've gone back and edited a form and left it in an invalid state
+    section = Service.activeSection
+    isValid = Service.checkFormState($state.current.name, section)
+    unless isValid
+      Service.application.completedSections[section.name] = false
+
   Service.submitApplication = (options={}) ->
     if options.finish
       Service.application.status = 'submitted'
 
+    Service.invalidateCurrentSectionIfIncomplete()
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
     # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
     Service.application.session_uid = Service.session_uid
