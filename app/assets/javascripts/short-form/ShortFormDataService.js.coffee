@@ -11,8 +11,13 @@ ShortFormDataService = () ->
   Service.metaFields = [
     'completedSections'
     'session_uid'
-    # TODO: re-include this once this story has been resolved re: formMetadata limits #142188189
-    # 'groupedHouseholdAddresses'
+    'groupedHouseholdAddresses'
+    # TODO: remove once these fields are no longer stubbed
+    'STUB_TotalMonthlyRent'
+    'STUB_householdPublicHousing'
+    'STUB_prioritiesSelected'
+    'STUB_qualifyingDevelopmentallyDisabled'
+    'STUB_qualifyingServedInMilitary'
   ]
 
   Service.formatApplication = (listingId, shortFormApplication) ->
@@ -155,10 +160,10 @@ ShortFormDataService = () ->
 
   Service._formatPrioritiesSelected = (application) ->
     prioritiesSelected = ""
-    _.forEach application.prioritiesSelected, (value, key) ->
+    _.forEach application.STUB_prioritiesSelected, (value, key) ->
       prioritiesSelected += (key + ";") if value
       return
-    application.prioritiesSelected = prioritiesSelected
+    application.STUB_prioritiesSelected = prioritiesSelected
     return application
 
   Service._formatReferrals = (application) ->
@@ -233,7 +238,8 @@ ShortFormDataService = () ->
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
-    data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
+    # TODO: implement once this field exists in SF
+    # data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
@@ -371,7 +377,11 @@ ShortFormDataService = () ->
   Service._reformatMetadata = (sfApp, data) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
-    _.merge(data, _.pick(formMetadata, Service.metaFields))
+    metadata = _.pick(formMetadata, Service.metaFields)
+    # TODO: remove after stubbing is done, prioritiesSelected will not be in metadata
+    metadata.STUB_prioritiesSelected = Service._reformatMultiSelect(metadata.STUB_prioritiesSelected)
+    _.merge(data, metadata)
+
 
   #############################################
   # Helper functions

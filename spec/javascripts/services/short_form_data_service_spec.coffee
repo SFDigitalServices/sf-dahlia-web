@@ -28,8 +28,7 @@ do ->
         expect(formattedApp.primaryApplicant.firstName).toEqual(fakeApplication.applicant.firstName)
 
       it 'sends stringified JSON for formMetadata', ->
-        metadata = JSON.stringify({completedSections: fakeApplication.completedSections})
-        expect(formattedApp.formMetadata).toEqual(metadata)
+        expect(formattedApp.formMetadata).toContain('"completedSections"')
 
     describe 'reformatApplication', ->
       beforeEach ->
