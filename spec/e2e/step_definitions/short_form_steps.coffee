@@ -90,11 +90,11 @@ module.exports = ->
     element(By.id('live_alone')).click()
 
   @When 'I indicate living in public housing', ->
-    element(By.id('householdPublicHousing_yes')).click()
+    element(By.id('STUB_householdPublicHousing_yes')).click()
     submitForm()
 
   @When 'I indicate no priority', ->
-    element(By.id('prioritiesSelected_no')).click()
+    element(By.id('STUB_prioritiesSelected_no')).click()
     submitForm()
 
   @When 'I go to the income page', ->

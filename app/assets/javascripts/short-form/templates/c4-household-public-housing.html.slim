@@ -6,12 +6,12 @@
       | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.P1' | translate}}
 
   .app-inner.inset
-    .form-group ng-class="{ error: inputInvalid('householdPublicHousing') }"
+    .form-group ng-class="{ error: inputInvalid('STUB_householdPublicHousing') }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
       .radio-group.padding-top--half role="radiogroup" aria-label="{{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE' | translate}}"
-        radio-block-item value='Yes' user='application' name='householdPublicHousing' ng-required='true' on-change="resetMonthlyRentForm"
+        radio-block-item value='Yes' user='application' name='STUB_householdPublicHousing' ng-required='true' on-change="resetMonthlyRentForm"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='application' name='householdPublicHousing' ng-required='true' on-change="invalidateMonthlyRentForm"
+        radio-block-item value='No' user='application' name='STUB_householdPublicHousing' ng-required='true' on-change="invalidateMonthlyRentForm"
           | {{'T.NO' | translate}}
 
   short-form-save-and-submit

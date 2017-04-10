@@ -67,23 +67,23 @@ div ng-if="prioritiesSelectedExists()"
   review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
   .app-inner
-    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.householdPublicHousing"
-      | {{application.householdPublicHousing}}
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.STUB_householdPublicHousing"
+      | {{application.STUB_householdPublicHousing}}
     review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
       span ng-if="!groupedAddress.monthlyRent"
         ' {{ 0 | currency : $ : 0 }}
       span translate="LABEL.PER_MONTH"
-    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.qualifyingServedInMilitary"
-      | {{application.qualifyingServedInMilitary}}
-    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.qualifyingDevelopmentallyDisabled"
-      | {{application.qualifyingDevelopmentallyDisabled}}
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.STUB_qualifyingServedInMilitary"
+      | {{application.STUB_qualifyingServedInMilitary}}
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
+      | {{application.STUB_qualifyingDevelopmentallyDisabled}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
-      span ng-repeat="priorityOption in priority_options" ng-if="application.prioritiesSelected[priorityOption[0]]"
+      span ng-repeat="priorityOption in priority_options" ng-if="application.STUB_prioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}
         br
-      span ng-if="application.prioritiesSelected.no"
+      span ng-if="application.STUB_prioritiesSelected.no"
         | {{'T.NO' | translate}}
 
 / Self-declared status
