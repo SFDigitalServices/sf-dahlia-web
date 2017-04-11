@@ -203,6 +203,8 @@ ShortFormNavigationService = (
           'preferences-intro'
       when 'assisted-housing-preference'
         Service.getPrevPageOfPreferencesSection()
+      when 'rent-burden-preference'
+        Service.getPrevPageOfPreferencesSection()
       when 'preferences-programs'
         Service.getPrevPageOfPreferencesSection()
       when 'general-lottery-notice'

@@ -6,68 +6,34 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
 
+    scope.opts = {}
     if scope.preference == 'rentBurden'
-      # console.log scope.address
       scope.rentBurdenType = attrs.rentBurdenType
-      # console.log scope.preferences.rentBurden_proof[scope.address]
-      # if scope.rentBurdenType == 'lease'
-      #   scope.proof_file = scope.preferences.rentBurden_proof[scope.address].lease_file.file
-    else
-      scope.proof_file = scope.application.preferences[scope.preference_proof_file]
+      scope.index = attrs.index
+      scope.opts =
+        listing_id: scope.listing.Id
+        address: scope.address
+        rentBurdenType: scope.rentBurdenType
+        index: scope.index
+        # TODO: for rent, docType should come from the select dropdown
+        docType: 'Copy of Lease'
+
+      scope.proof_file = scope.rentBurdenFile(scope.opts).file
 
     scope.show_preference_uploader = ->
       scope.preferences[scope.preference] &&
-        !scope.preferenceFileIsLoading(scope.preference_proof_file) &&
-        !scope.hasPreferenceFile(scope.preference_proof_file)
+        !scope.preferenceFileIsLoading(scope.opts) &&
+        !scope.hasPreferenceFile(scope.opts)
 
-    scope.uploadProofFile = ($file) ->
-      # call appropriate method on controller
+    scope.uploadProofFile = ($file, opts) ->
       if scope.preference == 'rentBurden'
-        scope.uploadRentBurdenProof($file, scope.rentBurdenOpts())
+        FileUploadService.uploadRentBurdenProof($file, opts).then ->
+          fileObj = FileUploadService.rentBurdenFile(opts)
+          if fileObj
+            scope.proof_file = scope.rentBurdenFile(scope.opts).file
       else
-        proof_option = scope.application.preferences[preference_proof_option]
-        scope.uploadProof($file, scope.preference, proof_option)
-
-    scope.rentBurdenOpts = ->
-      {
-        address: scope.address
-        rentBurdenType: scope.rentBurdenType
-        docType: 'Copy of Lease'
-      }
-
-    scope.uploadProof = (file, prefType, docType) ->
-      FileUploadService.uploadProof(file, prefType, docType, scope.listing.Id)
-
-    scope.uploadRentBurdenProof = (file, opts) ->
-      opts.listing_id = scope.listing_id
-      #######
-      # TODO: not good enough to define this here, doesn't work
-      scope.proof_file = FileUploadService.rentBurdenFile(opts).file
-      #######
-      FileUploadService.uploadRentBurdenProof(file, opts)
-
-    scope.hasPreferenceFile = () ->
-      if scope.preference == 'rentBurden'
-        FileUploadService.hasRentBurdenFile(scope.rentBurdenOpts())
-      else
-        FileUploadService.hasPreferenceFile(scope.preference_proof_file)
-
-    scope.deletePreferenceFile = () ->
-      if scope.preference == 'rentBurden'
-        # FileUploadService.hasRentBurdenFile(scope.rentBurdenOpts())
-      else
-        FileUploadService.deletePreferenceFile(scope.preference, scope.listing.Id)
-
-    scope.preferenceFileError = () ->
-      if scope.preference == 'rentBurden'
-        FileUploadService.rentBurdenFileError(scope.rentBurdenOpts())
-      else
-        FileUploadService.preferenceFileError(scope.preference_proof_file)
-
-    scope.preferenceFileIsLoading = () ->
-      if scope.preference == 'rentBurden'
-        FileUploadService.rentBurdenFileIsLoading(scope.rentBurdenOpts())
-      else
-        FileUploadService.preferenceFileIsLoading(scope.preference_proof_file)
+        proof_option = scope.application.preferences[scope.preference_proof_option]
+        FileUploadService.uploadProof($file, scope.preference, proof_option, scope.listing.Id).then ->
+          scope.proof_file = scope.application.preferences[scope.preference_proof_file]
 
 ]

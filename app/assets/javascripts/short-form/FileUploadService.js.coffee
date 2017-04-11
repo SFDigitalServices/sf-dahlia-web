@@ -4,7 +4,7 @@ FileUploadService = ($http, Upload, uuid) ->
   Service.preferences = {}
   Service.session_uid = -> null
 
-  Service.hasPreferenceFile = (fileType, rentBurdenOpts) ->
+  Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
 
   Service.preferenceFileError = (fileType, rentBurdenOpts) ->
@@ -13,38 +13,33 @@ FileUploadService = ($http, Upload, uuid) ->
   Service.preferenceFileIsLoading = (fileType, rentBurdenOpts) ->
     !! Service.preferences["#{fileType}_loading"]
 
-
-  # Rent Burden specific functions
-  Service.hasRentBurdenFile = (opts) ->
-    Service.rentBurdenFile(opts).file && !Service.rentBurdenFileIsLoading(opts)
-
-  Service.rentBurdenFileError = (opts) ->
-    Service.rentBurdenFile(opts).error
-
-  Service.rentBurdenFileIsLoading = (opts) ->
-    Service.rentBurdenFile(opts).loading
-
-  Service.rentBurdenFile = (opts) ->
-    if opts.rentBurdenType == 'lease'
-      Service.preferences.rentBurden_proof[opts.address].lease_file
-
-  #########
-
-  Service.deletePreferenceFile = (prefType, listing_id) ->
-    fileType = "#{prefType}_proof_file"
-    return if _.isEmpty(Service.preferences[fileType])
+  Service.deletePreferenceFile = (prefType, listing_id, opts = {}) ->
     params =
       uploaded_file:
         session_uid: Service.session_uid()
         listing_id: listing_id
         preference: prefType
+
+    if opts.rentBurdenType
+      params.rent_burden_type = opts.rentBurdenType
+      params.address = opts.address
+      fileObj = Service.rentBurdenFile(opts)
+    else
+      fileType = "#{prefType}_proof_file"
+      fileObj = Service.preferences[fileType]
+    return if _.isEmpty(fileObj)
+
     $http.delete('/api/v1/short-form/proof', {
       data: params,
       headers: {
         'Content-Type': 'application/json'
       },
     }).success((data, status, headers, config) ->
-      Service.preferences[fileType] = null
+      # clear out fileObj
+      if opts.rentBurdenType
+        Service.clearRentBurdenFile(opts)
+      else
+        Service.preferences[fileType] = null
     ).error( (data, status, headers, config) ->
       return
     )
@@ -75,6 +70,60 @@ FileUploadService = ($http, Upload, uuid) ->
       Service.preferences["#{fileType}_error"] = true
     ))
 
+  # Rent Burden specific functions
+  Service.hasRentBurdenFile = (opts) ->
+    Service.rentBurdenFile(opts).file && !Service.rentBurdenFileIsLoading(opts)
+
+  Service.rentBurdenFileError = (opts) ->
+    Service.rentBurdenFile(opts).error
+
+  Service.rentBurdenFileIsLoading = (opts) ->
+    Service.rentBurdenFile(opts).loading
+
+  Service.clearRentBurdenFile = (opts) ->
+    proofFiles = Service.preferences.rentBurden_proof[opts.address]
+    return unless proofFiles
+    if opts.rentBurdenType == 'lease'
+      angular.copy({}, proofFiles.lease_file)
+    else
+      # remove pref file at opts.index
+      angular.copy({}, proofFiles.rent_files[opts.index])
+
+  Service.clearRentBurdenFiles = (address) ->
+    emptyPrefs = {
+      lease_file: {}
+      rent_files: []
+    }
+    angular.copy(emptyPrefs, Service.preferences.rentBurden_proof[address])
+
+  Service.rentBurdenFile = (opts) ->
+    proofFiles = Service.preferences.rentBurden_proof[opts.address]
+    return {} unless proofFiles
+    if opts.rentBurdenType == 'lease'
+      proofFiles.lease_file ?= {}
+    else
+      proofFiles.rent_files[opts.index] ?= {}
+
+  Service.deleteRentBurdenPreferenceFiles = (listing_id, address) ->
+    params =
+      uploaded_file:
+        session_uid: Service.session_uid()
+        listing_id: listing_id
+        address: address
+
+    $http.delete('/api/v1/short-form/rent-burden-proof', {
+      data: params,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }).success((data, status, headers, config) ->
+      # clear out fileObj
+      Service.clearRentBurdenFiles(address)
+    ).error( (data, status, headers, config) ->
+      return
+    )
+
+
   Service.uploadRentBurdenProof = (file, opts = {}) ->
     ###
     opts = {
@@ -85,12 +134,7 @@ FileUploadService = ($http, Upload, uuid) ->
     }
     ###
 
-    # grab files for this particular address
-    proofFiles = Service.preferences.rentBurden_proof[opts.address]
-    if opts.rentBurdenType == 'lease'
-      proofFileObject = proofFiles.lease_file
-    else
-      proofFileObject = proofFiles.rent_files[opts.index]
+    proofFileObject = Service.rentBurdenFile(opts)
     if (!file)
       proofFileObject.error = true
       return

@@ -2,7 +2,8 @@ angular.module('dahlia.directives')
 .directive 'parentPreference',
 ['$translate', ($translate) ->
   replace: true
-  scope: true
+  # share scope w/ parent e.g. "preferenceWithProof"
+  scope: false
   transclude: true
   # template is just one <div>
   templateUrl: 'short-form/directives/preference.html'

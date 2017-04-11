@@ -42,6 +42,15 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  def delete_rent_burden_proof
+    success = destroy_rent_burden_files
+    if success
+      render json: { success: true }
+    else
+      render json: { success: false, errors: 'not found' }
+    end
+  end
+
   ####### - Short Form Application RESTful actions
   def show_application
     @application = ShortFormService.get(params[:id])
@@ -240,6 +249,8 @@ class Api::V1::ShortFormController < ApiController
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
       preference: uploaded_file_params[:preference],
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
     }
     preference = file_params.delete(:preference)
     if user_signed_in?
@@ -247,6 +258,21 @@ class Api::V1::ShortFormController < ApiController
       file_params[:user_id] = current_user.id
     end
     uploaded_files = UploadedFile.send(preference).where(file_params)
+    return false unless uploaded_files.any?
+    uploaded_files.destroy_all
+  end
+
+  def destroy_rent_burden_files
+    file_params = {
+      session_uid: uploaded_file_params[:session_uid],
+      listing_id: uploaded_file_params[:listing_id],
+      address: uploaded_file_params[:address],
+    }
+    if user_signed_in?
+      file_params.delete(:session_uid)
+      file_params[:user_id] = current_user.id
+    end
+    uploaded_files = UploadedFile.rentBurden.where(file_params)
     return false unless uploaded_files.any?
     uploaded_files.destroy_all
   end

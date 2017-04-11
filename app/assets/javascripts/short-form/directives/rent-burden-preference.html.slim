@@ -10,8 +10,8 @@ parent-preference
     p.form-label.caps
       | 2. Upload Proof of Rent Payment
 
-    / preference-proof-uploader file-key="address1-rent#{key}"
-    /
-    / ng-repeat="file in application.preferences.rentBurden.files[address].rent_files"
+    preference-proof-uploader rent-burden-type="rent" index="0"
 
+    / TODO: some pseudocode for notes below...
+    / ng-repeat="file in application.preferences.rentBurden.files[address].rent_files"
     / preference-proof-uploader proof-type="rent" key="$index"
