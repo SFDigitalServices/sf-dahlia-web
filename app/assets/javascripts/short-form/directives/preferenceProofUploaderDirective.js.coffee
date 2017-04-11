@@ -10,8 +10,8 @@ angular.module('dahlia.directives')
       # console.log scope.address
       scope.rentBurdenType = attrs.rentBurdenType
       # console.log scope.preferences.rentBurden_proof[scope.address]
-      if scope.rentBurdenType == 'lease'
-        scope.proof_file = scope.preferences.rentBurden_proof[scope.address].lease_file.file
+      # if scope.rentBurdenType == 'lease'
+      #   scope.proof_file = scope.preferences.rentBurden_proof[scope.address].lease_file.file
     else
       scope.proof_file = scope.application.preferences[scope.preference_proof_file]
 
@@ -40,21 +40,34 @@ angular.module('dahlia.directives')
 
     scope.uploadRentBurdenProof = (file, opts) ->
       opts.listing_id = scope.listing_id
+      #######
+      # TODO: not good enough to define this here, doesn't work
+      scope.proof_file = FileUploadService.rentBurdenFile(opts).file
+      #######
       FileUploadService.uploadRentBurdenProof(file, opts)
 
     scope.hasPreferenceFile = () ->
       if scope.preference == 'rentBurden'
-        FileUploadService.hasPreferenceFile(scope.preference_proof_file, scope.rentBurdenOpts())
+        FileUploadService.hasRentBurdenFile(scope.rentBurdenOpts())
       else
         FileUploadService.hasPreferenceFile(scope.preference_proof_file)
 
     scope.deletePreferenceFile = () ->
-      FileUploadService.deletePreferenceFile(scope.preference, scope.listing.Id)
+      if scope.preference == 'rentBurden'
+        # FileUploadService.hasRentBurdenFile(scope.rentBurdenOpts())
+      else
+        FileUploadService.deletePreferenceFile(scope.preference, scope.listing.Id)
 
     scope.preferenceFileError = () ->
-      FileUploadService.preferenceFileError(scope.preference_proof_file)
+      if scope.preference == 'rentBurden'
+        FileUploadService.rentBurdenFileError(scope.rentBurdenOpts())
+      else
+        FileUploadService.preferenceFileError(scope.preference_proof_file)
 
     scope.preferenceFileIsLoading = () ->
-      FileUploadService.preferenceFileIsLoading(scope.preference_proof_file)
+      if scope.preference == 'rentBurden'
+        FileUploadService.rentBurdenFileIsLoading(scope.rentBurdenOpts())
+      else
+        FileUploadService.preferenceFileIsLoading(scope.preference_proof_file)
 
 ]

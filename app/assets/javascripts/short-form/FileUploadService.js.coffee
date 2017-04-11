@@ -5,19 +5,30 @@ FileUploadService = ($http, Upload, uuid) ->
   Service.session_uid = -> null
 
   Service.hasPreferenceFile = (fileType, rentBurdenOpts) ->
-    if rentBurdenOpts
-      # do it a different way for rentBurden...
-      opts = rentBurdenOpts
-      if opts.rentBurdenType == 'lease'
-        Service.preferences.rentBurden_proof[opts.address].lease_file.file
-    else
-      Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
+    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
 
-  Service.preferenceFileError = (fileType) ->
+  Service.preferenceFileError = (fileType, rentBurdenOpts) ->
     !! Service.preferences["#{fileType}_error"]
 
-  Service.preferenceFileIsLoading = (fileType) ->
+  Service.preferenceFileIsLoading = (fileType, rentBurdenOpts) ->
     !! Service.preferences["#{fileType}_loading"]
+
+
+  # Rent Burden specific functions
+  Service.hasRentBurdenFile = (opts) ->
+    Service.rentBurdenFile(opts).file && !Service.rentBurdenFileIsLoading(opts)
+
+  Service.rentBurdenFileError = (opts) ->
+    Service.rentBurdenFile(opts).error
+
+  Service.rentBurdenFileIsLoading = (opts) ->
+    Service.rentBurdenFile(opts).loading
+
+  Service.rentBurdenFile = (opts) ->
+    if opts.rentBurdenType == 'lease'
+      Service.preferences.rentBurden_proof[opts.address].lease_file
+
+  #########
 
   Service.deletePreferenceFile = (prefType, listing_id) ->
     fileType = "#{prefType}_proof_file"
