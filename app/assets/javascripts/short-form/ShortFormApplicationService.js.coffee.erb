@@ -354,7 +354,13 @@ ShortFormApplicationService = (
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
+    # can only have a Yes answer if assistedHousing preference is on this listing
     Service.application.STUB_householdPublicHousing == 'Yes'
+
+  Service.eligibleForRentBurden = ->
+    # can only have a No answer if assistedHousing preference is on this listing
+    # TODO: also include the calculation => total rent > (monthly income / 2)
+    Service.application.STUB_householdPublicHousing == 'No'
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all

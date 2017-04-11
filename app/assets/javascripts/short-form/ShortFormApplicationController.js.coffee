@@ -363,6 +363,8 @@ ShortFormApplicationController = (
   $scope.checkAfterLiveWork = ->
     if ShortFormApplicationService.eligibleForAssistedHousing()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else if ShortFormApplicationService.eligibleForRentBurden()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
     else
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 

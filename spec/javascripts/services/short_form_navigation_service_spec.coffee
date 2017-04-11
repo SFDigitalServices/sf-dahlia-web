@@ -53,6 +53,7 @@ do ->
           'neighborhood-preference'
           'live-work-preference'
           'assisted-housing-preference'
+          'rent-burden-preference'
           'preferences-programs'
           'general-lottery-notice'
         ]
