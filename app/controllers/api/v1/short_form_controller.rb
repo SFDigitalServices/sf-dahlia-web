@@ -42,7 +42,7 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
-  def delete_rent_burden_proof
+  def delete_all_rent_burden_proof
     success = destroy_rent_burden_files
     if success
       render json: { success: true }

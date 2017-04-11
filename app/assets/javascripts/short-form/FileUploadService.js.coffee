@@ -21,8 +21,8 @@ FileUploadService = ($http, Upload, uuid) ->
         preference: prefType
 
     if opts.rentBurdenType
-      params.rent_burden_type = opts.rentBurdenType
-      params.address = opts.address
+      params.uploaded_file.rent_burden_type = opts.rentBurdenType
+      params.uploaded_file.address = opts.address
       fileObj = Service.rentBurdenFile(opts)
     else
       fileType = "#{prefType}_proof_file"
