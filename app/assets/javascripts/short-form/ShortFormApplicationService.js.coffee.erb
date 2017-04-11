@@ -353,7 +353,7 @@ ShortFormApplicationService = (
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
-    Service.application.householdPublicHousing == 'Yes'
+    Service.application.STUB_householdPublicHousing == 'Yes'
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
