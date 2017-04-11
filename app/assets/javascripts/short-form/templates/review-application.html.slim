@@ -7,7 +7,7 @@ section.app-container
           h1.app-card_title
             | {{application.listing.Name || listing.Name}} {{'T.APPLICATION' | translate}}
         .app-card_nav.text-center
-          a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: application.listingID})"
+          a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: listing.listingID})"
             | {{'REVIEW_APPLICATION.VIEW_ORIGINAL_LISTING' | translate}}
 
       .app-card.form-card.ng-pristine.ng-valid
