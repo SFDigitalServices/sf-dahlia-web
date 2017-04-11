@@ -19,6 +19,8 @@ angular.module('dahlia.directives')
         docType: 'Copy of Lease'
 
       scope.proof_file = scope.rentBurdenFile(scope.opts).file
+    else
+      scope.proof_file = scope.application.preferences[scope.preference_proof_file]
 
     scope.show_preference_uploader = ->
       scope.preferences[scope.preference] &&
