@@ -1,9 +1,9 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | rent burden
+      | {{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_TITLE' | translate}}
     p.form-note.margin-bottom
-      | rent burden notes
+      | {{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_NOTES' | translate}}
 
   .app-inner
     .form-group ng-class="{ error: inputInvalid('rentBurden') }"
@@ -11,7 +11,7 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        rent-burden-preference(title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" preference="rentBurden" data-event="gtm-preference-rent-burden" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" address="{{application.groupedHouseholdAddresses[0].address}}" required="preferenceRequired('rentBurden')" proof-option="Copy of Lease" ng-show="application.groupedHouseholdAddresses.length == 1")
+        rent-burden-preference(title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" preference="rentBurden" data-event="gtm-preference-rent-burden" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" address="{{application.groupedHouseholdAddresses[0].address}}" monthly-rent="{{application.groupedHouseholdAddresses[0].monthlyRent}}" required="preferenceRequired('rentBurden')" ng-show="application.groupedHouseholdAddresses.length == 1")
 
         / TBD:  rent-burden-preference-dashboard(title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" preference="rentBurden" dataevent="gtm-preference-rent-burden" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" ng-show="application.groupedHouseholdAddresses.length > 1")
 

@@ -187,8 +187,10 @@
         "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
     },
     "E2C_RENT_BURDEN_PREFERENCE": {
+        "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
-        "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent."
+        "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
+        "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent."
     },
     "E2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -407,11 +409,15 @@
         "PRIMARY_USER": "Primary Applicant",
         "PROOF": {
             "CABLE_BILL": "Cable and internet bill",
+            "CANCELLED_CHECK": "Cancelled check",
+            "DEBIT_FROM_BANK": "Debit from your bank account",
             "ELECTRIC_BILL": "Electric bill",
             "GARBAGE_BILL": "Garbage bill",
             "GAS_BILL": "Gas bill",
             "HOMELESSNESS": "Letter documenting homelessness",
             "LETTER_FROM_EMPLOYER": "Letter from employer",
+            "MONEY_ORDER": "Money order",
+            "ONLINE_PAYMENT": "Screenshot of online payment",
             "PAYSTUB_EMPLOYER": "Paystub with employer address",
             "PAYSTUB_HOME": "Paystub (listing home address)",
             "PUBLIC_BENEFITS": "Public benefits record",
@@ -440,6 +446,8 @@
         "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
         "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB. Supported file types: PDF, JPG, PNG.",
         "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
+        "UPLOAD_PROOF_OF_RENT_PAYMENT": "Upload proof of rent payment",
+        "UPLOAD_RENT_DESCRIPTION": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
         "VETERANS_IN_HOUSEHOLD": "Veterans in Household",
         "VIEW_APPLICATION": "View Application",
         "VISION_IMPAIRMENTS": "For Vision Impairments",

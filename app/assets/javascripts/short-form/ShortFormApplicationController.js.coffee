@@ -650,6 +650,8 @@ ShortFormApplicationController = (
         ShortFormHelperService.preference_proof_options_live
       when 'neighborhoodResidence'
         ShortFormHelperService.preference_proof_options_live
+      when 'rentBurden'
+        ShortFormHelperService.preference_proof_options_rent_burden
       else
         ShortFormHelperService.preference_proof_options_default
 

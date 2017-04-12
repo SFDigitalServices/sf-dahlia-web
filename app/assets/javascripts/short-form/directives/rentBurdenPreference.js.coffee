@@ -9,9 +9,9 @@ angular.module('dahlia.directives')
     scope.description = attrs.translatedDescription
     scope.preference = attrs.preference
     scope.pref_data_event = attrs.dataevent
+    scope.monthlyRent = attrs.monthlyRent
     scope.address = attrs.address
     # allows a hardcoded proof option, e.g. "Copy of Lease" rather than showing the selector
-    scope.proofOption = attrs.proofOption || 'Copy of Lease'
 
     scope.reset_preference_data = (preference) ->
       scope.cancelOptOut(preference)

@@ -10,9 +10,9 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" dataevent="gtm-preference-livesf" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" uploader-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" ng-show="showPreference('liveInSf')" required="preferenceRequired('liveInSf')")
+        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" dataevent="gtm-preference-livesf" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" ng-show="showPreference('liveInSf')" required="preferenceRequired('liveInSf')")
 
-        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" dataevent="gtm-preference-worksf" uploader-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" ng-show="showPreference('workInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('workInSf')")
+        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" dataevent="gtm-preference-worksf" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" ng-show="showPreference('workInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('workInSf')")
 
         live-work-preference(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveWorkInSf')")
 

@@ -11,7 +11,6 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs, ctrl, transclude) ->
     scope.init = ->
       scope.setup_preference_variables(scope.preference)
-      scope.setup_input_labels()
       transclude(scope, (clone, scope) ->
         elem.append(clone)
       )
@@ -60,13 +59,6 @@ angular.module('dahlia.directives')
       scope.preference_household_member = "#{scope.preference}_household_member"
       scope.preference_proof_option = "#{scope.preference}_proof_option"
       scope.preference_proof_file = "#{scope.preference}_proof_file"
-
-    scope.setup_input_labels = ->
-      if scope.preference == 'liveInSf'
-        scope.uploaderLabel = $translate.instant('LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS')
-      else if scope.preference == 'workInSf'
-        scope.uploaderLabel = $translate.instant('LABEL.PREFERENCE_PROOF_DOCUMENTS')
-      scope.buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
 
     scope.eligible_members = () ->
       if scope.preference == "liveInSf"

@@ -1,14 +1,16 @@
 / checkbox for proof options for this preference
 .form-group ng-class="{ error: inputInvalid(preference_proof_option) || inputInvalid('file_'+preference_proof_file) }"
 
+
   label.form-label.caps for="{{preference_proof_option}}"
-    | {{uploaderLabel}}
+    | {{proofOptionLabel}}
 
   p.form-note.margin-bottom ng-if="liveOrNeighborhoodPreference()"
     | {{'E2_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME' | translate}}
-  p.form-note ng-if="assistedHousingRentBurdenPreference()"
+  p.form-note ng-if="proofType == 'Copy of Lease'"
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
-  select id="{{preference_proof_option}}" ng-model="application.preferences[preference_proof_option]" data-width="auto" name="{{preference_proof_option}}" ng-required="application.preferences[preference]" ng-if="!proofOption"
+
+  select id="{{preference_proof_option}}" ng-model="application.preferences[preference_proof_option]" data-width="auto" name="{{preference_proof_option}}" ng-required="application.preferences[preference]" ng-if="show_proof_option_selector()"
     option value=""
       | {{'LABEL.SELECT_ONE' | translate}}
     option ng-repeat="option in preferenceProofOptions(preference)" value="{{option[0]}}"

@@ -28,6 +28,13 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
+  Service.preference_proof_options_rent_burden = [
+    ['Money order', $translate.instant('LABEL.PROOF.MONEY_ORDER')]
+    ['Cancelled check', $translate.instant('LABEL.PROOF.CANCELLED_CHECK')]
+    ['Debit from your bank account', $translate.instant('LABEL.PROOF.DEBIT_FROM_BANK')]
+    ['Screenshot of online payment', $translate.instant('LABEL.PROOF.ONLINE_PAYMENT')]
+  ]
+
   Service.priority_options = [
     ['Mobility', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
     ['Vision', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
