@@ -26,10 +26,8 @@
     | {{'ERROR.FILE_MISSING' | translate}}
   small.error id="{{preference_proof_option}}_error" ng-if="preferenceFileError(preference_proof_file)"
     | {{'ERROR.FILE_UPLOAD' | translate}}
-  p.form-note.input-inset
-    | {{'LABEL.UPLOAD_PROOF_INSTRUCTIONS_1' | translate}}
-  p.form-note.input-inset.margin-bottom
-    | {{'LABEL.UPLOAD_PROOF_INSTRUCTIONS_2' | translate}}
+  p.form-note.micro.input-inset.margin-bottom ng-bind-html="uploadProofInstructions1"
+  p.form-note.micro.input-inset ng-bind-html="uploadProofInstructions2"
 
 article.attachment.is-loading.media ng-if="preferenceFileIsLoading(preference_proof_file)"
   figure.attachment-img.media-img
