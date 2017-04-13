@@ -7,8 +7,19 @@ do ->
     fakeListingId = 'a0WU000000CkiM3MAJ'
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
+    fakeListingService =
+      getPreference: jasmine.createSpy()
+      getPreferenceById: jasmine.createSpy()
+      preferenceMap:
+        certOfPreference: "Certificate of Preference (COP)"
+        displaced: "Displaced Tenant Housing Preference (DTHP)"
+        liveWorkInSf: "Live or Work in San Francisco Preference"
+        liveInSf: "Live or Work in San Francisco Preference"
+        workInSf: "Live or Work in San Francisco Preference"
+        neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
 
     beforeEach module('dahlia.services', ($provide) ->
+      $provide.value 'ListingService', fakeListingService
       return
     )
 

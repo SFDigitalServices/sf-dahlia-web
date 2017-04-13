@@ -4,7 +4,7 @@ do ->
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
-    fakeShortForm = getJSONFixture('short-form-example.json')
+    fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
@@ -424,12 +424,15 @@ do ->
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
 
     describe 'preferenceRequired', ->
+      beforeEach ->
+        ShortFormApplicationService.application.preferences.optOut = {}
+
       it 'returns true if optOutField is not marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = false
+        ShortFormApplicationService.application.preferences.optOut.liveInSf = false
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual true
 
       it 'returns false if optOutField is marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = true
+        ShortFormApplicationService.application.preferences.optOut.liveInSf = true
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
 
     describe 'authorizedToProceed', ->

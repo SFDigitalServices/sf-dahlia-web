@@ -1,14 +1,6 @@
-ShortFormDataService = () ->
+ShortFormDataService = (ListingService) ->
   Service = {}
-  Service.preferences = [
-    'displaced'
-    'certOfPreference'
-    'liveInSf'
-    'workInSf'
-    'neighborhoodResidence'
-    'assistedHousing'
-  ]
-
+  Service.preferences = _.keys(ListingService.preferenceMap)
   Service.metaFields = [
     'completedSections'
     'session_uid'
@@ -134,28 +126,50 @@ ShortFormDataService = () ->
     return application
 
   Service._formatPreferences = (application) ->
+    application.shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-    preferences = angular.copy(Service.preferences)
-    preferences.forEach( (preference) ->
-      memberName = application.preferences[preference + '_household_member']
-      member = _.find(allMembers, (m) ->
-        return memberName == (m.firstName + ' ' + m.lastName)
-      )
-      return unless member
-      memberDOB = member.dob.replace(/\//g, '.')
-      if preference == 'certOfPreference'
-        preferenceName = preference + 'NatKey'
-      else
-        preferenceName = preference + 'PreferenceNatKey'
-      application[preferenceName] = member.firstName + ',' + member.lastName + ',' + memberDOB
-      delete application.preferences[preference + '_household_member']
+    angular.copy(Service.preferences).forEach( (prefKey) ->
+      # prefKey is the short name like liveInSf
+
+      preferenceProof = null
+      naturalKey = null
+      individualPref = null
+      optOut = application.preferences.optOut[prefKey] || false
+
+      if _.includes(['liveInSf', 'workInSf'], prefKey)
+        # for liveWorkInSf, need to indicate individual pref (live or work)
+        individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'
+
+      # if you optOut then you wouldn't have a memberName or proofOption
+      unless optOut
+        memberName = application.preferences["#{prefKey}_household_member"]
+        return unless memberName
+        member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
+        # if member was marked for a preference, but not found, this seems like a bug/mistake
+        return unless member
+        preferenceProof = application.preferences["#{prefKey}_proof_option"]
+        naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
+
+      listingPref = ListingService.getPreference(prefKey)
+      return unless listingPref
+
+      # if we aren't opting out, and don't have a member, then there is no reason to continue
+      return unless optOut || naturalKey
+
+      shortFormPref =
+        listingPreferenceID: listingPref.listingPreferenceID
+        naturalKey: naturalKey
+        # NOTE: preferenceProof will be made redundant by TBD new file attachment object
+        # otherwise, options need to match up to salesforce pickList
+        # preferenceProof: preferenceProof
+        optOut: optOut
+        ifCombinedIndividualPreference: individualPref
+      # remove blank values
+      shortFormPref = _.omitBy(shortFormPref, _.isNil)
+      application.shortFormPreferences.push(shortFormPref)
     )
 
-    if application.householdVouchersSubsidies == 'Yes'
-      application.householdVouchersSubsidies = true
-    else if application.householdVouchersSubsidies == 'No'
-      application.householdVouchersSubsidies = false
     delete application.preferences
     return application
 
@@ -194,6 +208,11 @@ ShortFormDataService = () ->
     return application
 
   Service._formatBooleans = (application) ->
+    if application.householdVouchersSubsidies == 'Yes'
+      application.householdVouchersSubsidies = true
+    else if application.householdVouchersSubsidies == 'No'
+      application.householdVouchersSubsidies = false
+
     ['workInSf', 'hiv'].forEach (field) ->
       if application.applicant[field] == 'Yes'
         application.applicant[field] = true
@@ -233,8 +252,6 @@ ShortFormDataService = () ->
       'applicationSubmittedDate'
       'status'
       'lotteryNumber'
-      'neighborhoodPreferenceOptOut'
-      'liveWorkOptOut'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
@@ -308,34 +325,48 @@ ShortFormDataService = () ->
     return member
 
   Service._reformatPreferences = (sfApp, files) ->
-    preferences = {}
-    prefList = angular.copy(Service.preferences)
+    preferences = {
+      optOut: {}
+    }
     allHousehold = sfApp.householdMembers
     allHousehold.unshift(sfApp.primaryApplicant)
-    prefList.forEach( (preference) ->
-      preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
-      appMemberId = sfApp["#{preferenceName}ID"]
-      # these are just workarounds since the salesforce naming is inconsistent
-      if !appMemberId && preference == 'workInSf'
-        appMemberId = sfApp['worksInSfPreferenceID']
-      if !appMemberId && preference == 'neighborhoodResidence'
-        appMemberId = sfApp['neighborhoodPreferenceID']
-      if appMemberId
-        member = _.find(allHousehold, {appMemberId: appMemberId})
-        # if we don't find a household member matching the preference that's probably bad.
+    shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
+    shortFormPrefs.forEach( (shortFormPref) ->
+
+      listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
+      # if we don't find a matching listing preference that's probably bad.
+      return unless listingPref
+
+      member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
+
+      # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
+      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+        if shortFormPref.ifCombinedIndividualPreference == 'Live in SF'
+          prefKey = 'liveInSf'
+        else
+          prefKey = 'workInSf'
+      else
+        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+
+      preferences.optOut[prefKey] = shortFormPref.optOut
+
+      unless shortFormPref.optOut
+        # now that we have prefKey, reconstruct the fields on preferences
         if member
-          preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
-          preferences[preference] = true
-          file = _.find(files, {preference: preference})
-          if file
-            preferences["#{preference}_proof_option"] = file.document_type
-            preferences["#{preference}_proof_file"] = file
+          # some shortFormPrefs don't need a householdMember, e.g. assistedHousing
+          preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
+        preferences[prefKey] = true
+
+        file = _.find(files, {preference: prefKey})
+        if file
+          preferences["#{prefKey}_proof_option"] = file.document_type
+          preferences["#{prefKey}_proof_file"] = file
+
     )
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
       preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
-
 
   Service._reformatMailingAddress = (contact) ->
     return {
@@ -418,7 +449,9 @@ ShortFormDataService = () ->
 
 #############################################
 
-ShortFormDataService.$inject = []
+ShortFormDataService.$inject = [
+  'ListingService'
+]
 
 angular
   .module('dahlia.services')
