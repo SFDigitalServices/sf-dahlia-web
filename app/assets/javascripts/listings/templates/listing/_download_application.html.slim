@@ -5,5 +5,5 @@ button.button.has-icon.has-icon--right.small.expand.no-margin data-event="gtm-do
       use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
 .text-center.margin-top.t-small ng-show="showApplicationOptions"
   p ng-repeat="url in listingDownloadURLs"
-    a target="_blank" title="Download {{url.language}} Application" href="{{url.url}}"
+    a target="_blank" title="Download {{url.language}} Application" href="{{url.url}}" ng-class="{'t-ch': url.language == 'Traditional Chinese'}"
       | {{url.label}}
