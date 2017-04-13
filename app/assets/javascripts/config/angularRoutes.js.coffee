@@ -697,40 +697,30 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e1-preferences-programs.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
-        ]
     })
     .state('dahlia.short-form-application.live-work-preference', {
       url: '/live-work-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2-live-work-preference.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
-        ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
-        ]
+    })
+    .state('dahlia.short-form-application.assisted-housing-preference', {
+      url: '/assisted-housing-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2b-assisted-housing-preference.html'
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:
         'container':
           templateUrl: 'short-form/templates/e2f-general-lottery-notice.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
-        ]
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {

@@ -355,10 +355,16 @@ ShortFormApplicationController = (
       # NRHP provides automatic liveInSf preference
       ShortFormApplicationService.copyNRHPtoLiveInSf()
       # you already selected NRHP, so skip live/work
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkAfterLiveWork()
     else
       # you opted out of NRHP, so go to live/work
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
+
+  $scope.checkAfterLiveWork = ->
+    if ShortFormApplicationService.eligibleForAssistedHousing()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -555,11 +561,14 @@ ShortFormApplicationController = (
     page = ShortFormNavigationService.getNextReservedPageIfAvailable(type, 'next')
     $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{page}")
 
-  $scope.resetMonthlyRentForm = ->
+  $scope.publicHousingYes = ->
     ShortFormApplicationService.resetMonthlyRentForm()
+    # make sure they're forced through now that they have the assistedHousing option
+    ShortFormApplicationService.invalidatePreferencesForm()
 
-  $scope.invalidateMonthlyRentForm = ->
+  $scope.publicHousingNo = ->
     ShortFormApplicationService.invalidateMonthlyRentForm()
+    ShortFormApplicationService.resetAssistedHousingForm()
 
   $scope.visitResourcesLink = ->
     linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
