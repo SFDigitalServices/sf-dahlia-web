@@ -134,13 +134,10 @@ ShortFormDataService = (ListingService) ->
 
       preferenceProof = null
       naturalKey = null
-      optOut = false
       individualPref = null
-      if prefKey == 'neighborhoodResidence'
-        optOut = application.preferences.neighborhoodResidenceOptOut
-      else if prefKey == 'liveWorkInSf'
-        optOut = application.preferences.liveWorkOptOut
-      else if _.includes(['liveInSf', 'workInSf'], prefKey)
+      optOut = application.preferences.optOut[prefKey] || false
+
+      if _.includes(['liveInSf', 'workInSf'], prefKey)
         # for liveWorkInSf, need to indicate individual pref (live or work)
         individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'
 
@@ -328,7 +325,9 @@ ShortFormDataService = (ListingService) ->
     return member
 
   Service._reformatPreferences = (sfApp, files) ->
-    preferences = {}
+    preferences = {
+      optOut: {}
+    }
     allHousehold = sfApp.householdMembers
     allHousehold.unshift(sfApp.primaryApplicant)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
@@ -339,8 +338,6 @@ ShortFormDataService = (ListingService) ->
       return unless listingPref
 
       member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
-      # if we don't find a household member matching the preference that's probably bad.
-      return unless member
 
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
@@ -348,16 +345,16 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'liveInSf'
         else
           prefKey = 'workInSf'
-        preferences.liveWorkOptOut = shortFormPref.optOut
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
-      if prefKey == 'neighborhoodResidence'
-        preferences.neighborhoodResidenceOptOut = shortFormPref.optOut
+      preferences.optOut[prefKey] = shortFormPref.optOut
 
       unless shortFormPref.optOut
         # now that we have prefKey, reconstruct the fields on preferences
-        preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
+        if member
+          # some shortFormPrefs don't need a householdMember, e.g. assistedHousing
+          preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
         preferences[prefKey] = true
 
         file = _.find(files, {preference: prefKey})
