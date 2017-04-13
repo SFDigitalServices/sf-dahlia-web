@@ -368,6 +368,21 @@ ShortFormApplicationController = (
     else
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
+  ###### File Upload functions - can get overridden
+  $scope.hasPreferenceFile = (opts) ->
+    FileUploadService.hasPreferenceFile(opts.preference_proof_file)
+
+  $scope.deletePreferenceFile = (opts) ->
+    FileUploadService.deletePreferenceFile(opts.preference, $scope.listing.Id)
+
+  $scope.preferenceFileError = (opts) ->
+    FileUploadService.preferenceFileError(opts.preference_proof_file)
+
+  $scope.preferenceFileIsLoading = (opts) ->
+    FileUploadService.preferenceFileIsLoading(opts.preference_proof_file)
+
+
+
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 

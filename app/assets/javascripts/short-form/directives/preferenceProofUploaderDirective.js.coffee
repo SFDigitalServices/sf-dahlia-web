@@ -5,17 +5,9 @@ angular.module('dahlia.directives')
   templateUrl: 'short-form/directives/preference-proof-uploader.html'
 
   link: (scope, elem, attrs) ->
-
-    # this if/else is for the combo liveWork preference to display the right proofOptionLabel
-    if scope.preference == 'liveInSf'
-      scope.proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS')
-    else if scope.preference == 'workInSf'
-      scope.proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_DOCUMENTS')
-
     scope.proofOptionLabel ?= attrs.proofOptionLabel
-    scope.buttonLabel = attrs.buttonLabel || $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
+    scope.buttonLabel ?= attrs.buttonLabel || $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE')
 
-    scope.opts = {}
     if scope.preference == 'rentBurden'
       scope.proofType = attrs.proofType
       scope.rentBurdenType = attrs.rentBurdenType
@@ -27,10 +19,7 @@ angular.module('dahlia.directives')
         index: scope.index
         # TODO: for rent, docType should come from the select dropdown
         docType: 'Copy of Lease'
-
       scope.proof_file = scope.rentBurdenFile(scope.opts).file
-    else
-      scope.proof_file = scope.application.preferences[scope.preference_proof_file]
 
     scope.show_proof_option_selector = ->
       # having a set proofType hides the proof type selector

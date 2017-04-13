@@ -1,6 +1,5 @@
 angular.module('dahlia.directives')
-.directive 'preferenceWithProof',
-['FileUploadService', (FileUploadService) ->
+.directive 'preferenceWithProof', ->
   scope: true
   templateUrl: 'short-form/directives/preference-with-proof.html'
 
@@ -22,20 +21,3 @@ angular.module('dahlia.directives')
       scope.preferences["#{preference}_proof_option"] = scope.proofType || null
       scope.cancelOptOut(preference)
       scope.deletePreferenceFile(preference)
-
-    ###### File Upload functions
-
-    scope.hasPreferenceFile = () ->
-      FileUploadService.hasPreferenceFile(scope.preference_proof_file)
-
-    scope.deletePreferenceFile = () ->
-      FileUploadService.deletePreferenceFile(scope.preference, scope.listing.Id)
-
-    scope.preferenceFileError = () ->
-      FileUploadService.preferenceFileError(scope.preference_proof_file)
-
-    scope.preferenceFileIsLoading = () ->
-      FileUploadService.preferenceFileIsLoading(scope.preference_proof_file)
-
-
-]

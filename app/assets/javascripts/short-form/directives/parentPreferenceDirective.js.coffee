@@ -29,6 +29,14 @@ angular.module('dahlia.directives')
         scope.preference = preference
         scope.setup_preference_variables(preference)
         scope.preferences[preference] = true
+        scope.refreshInputLabels()
+
+    scope.refreshInputLabels = ->
+      # this mainly needs to be refreshed for the combo liveWork preference
+      if scope.preference == 'liveInSf'
+        scope.proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS')
+      else if scope.preference == 'workInSf'
+        scope.proofOptionLabel = $translate.instant('LABEL.PREFERENCE_PROOF_DOCUMENTS')
 
     scope.checkForLiveOrWorkValues = ->
       prefs = scope.preferences
@@ -59,6 +67,10 @@ angular.module('dahlia.directives')
       scope.preference_household_member = "#{scope.preference}_household_member"
       scope.preference_proof_option = "#{scope.preference}_proof_option"
       scope.preference_proof_file = "#{scope.preference}_proof_file"
+      scope.proof_file = scope.application.preferences[scope.preference_proof_file]
+      scope.opts =
+        preference_proof_file: scope.preference_proof_file
+        preference: scope.preference
 
     scope.eligible_members = () ->
       if scope.preference == "liveInSf"
