@@ -435,14 +435,6 @@ do ->
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
-    describe 'uploadProof', ->
-      it 'calls uploadProof on FileUploadService', ->
-        file = {}
-        pref = 'liveInSf'
-        docType = 'water bill'
-        scope.uploadProof(file, pref, docType)
-        expect(fakeFileUploadService.uploadProof).toHaveBeenCalledWith(file, pref, docType, scope.listing.Id)
-
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
         beforeEach ->

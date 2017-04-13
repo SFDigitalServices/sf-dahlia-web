@@ -434,26 +434,6 @@ ShortFormApplicationController = (
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
 
-  ###### Attachment File Uploads ########
-  # $scope.uploadProof = (file, prefType, docType) ->
-  #   FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
-  #
-  # $scope.uploadRentBurdenProof = (file, opts) ->
-  #   opts.listing_id = $scope.listing_id
-  #   FileUploadService.uploadRentBurdenProof(file, opts)
-  #
-  # $scope.hasPreferenceFile = (fileType) ->
-  #   FileUploadService.hasPreferenceFile(fileType)
-  #
-  # $scope.deletePreferenceFile = (prefType) ->
-  #   FileUploadService.deletePreferenceFile(prefType, $scope.listing.Id)
-  #
-  # $scope.preferenceFileError = (fileType) ->
-  #   FileUploadService.preferenceFileError(fileType)
-  #
-  # $scope.preferenceFileIsLoading = (fileType) ->
-  #   FileUploadService.preferenceFileIsLoading(fileType)
-
   ###### Household Section ########
   $scope.addHouseholdMember = ->
     noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
