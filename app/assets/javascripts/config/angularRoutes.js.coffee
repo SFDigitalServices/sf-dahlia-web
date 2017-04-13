@@ -508,24 +508,20 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', 'ListingService',
-          ($stateParams, ListingService) ->
+          '$stateParams', '$state', 'ListingService', 'ShortFormApplicationService',
+          ($stateParams, $state, ListingService, ShortFormApplicationService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then( ->
-              ListingService.getListingPreferences()
-            )
-        ]
-        application: [
-          '$stateParams', '$state', 'ShortFormApplicationService',
-          ($stateParams, $state, ShortFormApplicationService) ->
-            # always refresh the anonymous session_uid when starting a new application
-            ShortFormApplicationService.refreshSessionUid()
-            # it's ok if user is not logged in, we always check if they have an application
-            # this is because "loggedIn()" may not return true on initial load
-            ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
-              if ShortFormApplicationService.application.status == 'Submitted'
-                # send them to their review page if the application is already submitted
-                $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
+            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
+              # load listing preferences
+              ListingService.getListingPreferences().then ->
+                # always refresh the anonymous session_uid when starting a new application
+                ShortFormApplicationService.refreshSessionUid()
+                # even if user is not necessarily logged in, we always check if they have an application
+                # this is because "loggedIn()" may not return true on initial load
+                ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+                  if ShortFormApplicationService.application.status == 'Submitted'
+                    # send them to their review page if the application is already submitted
+                    $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
         ]
     })
     # Short form: "You" section

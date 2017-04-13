@@ -342,13 +342,16 @@ class Api::V1::ShortFormController < ApiController
               ),
             },
             :listingID,
-            :displacedPreferenceNatKey,
-            :certOfPreferenceNatKey,
-            :liveInSfPreferenceNatKey,
-            :workInSfPreferenceNatKey,
-            :neighborhoodResidencePreferenceNatKey,
-            :liveWorkOptOut,
-            :neighborhoodPreferenceOptOut,
+            {
+              shortFormPreferences: %i(
+                listingPreferenceID
+                appMemberID
+                naturalKey
+                preferenceProof
+                optOut
+                ifCombinedIndividualPreference
+              ),
+            },
             :prioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
