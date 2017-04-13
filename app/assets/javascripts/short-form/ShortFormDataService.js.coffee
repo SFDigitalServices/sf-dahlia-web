@@ -1,6 +1,17 @@
 ShortFormDataService = (ListingService) ->
   Service = {}
   Service.preferences = _.keys(ListingService.preferenceMap)
+  Service.metaFields = [
+    'completedSections'
+    'session_uid'
+    'groupedHouseholdAddresses'
+    # TODO: remove once these fields are no longer stubbed
+    'STUB_TotalMonthlyRent'
+    'STUB_householdPublicHousing'
+    'STUB_prioritiesSelected'
+    'STUB_qualifyingDevelopmentallyDisabled'
+    'STUB_qualifyingServedInMilitary'
+  ]
 
   Service.formatApplication = (listingId, shortFormApplication) ->
     application = angular.copy(shortFormApplication)
@@ -19,11 +30,13 @@ ShortFormDataService = (ListingService) ->
     application = Service._formatHouseholdAddress(application)
     application = Service._formatHouseholdDOB(application)
     application = Service._formatPreferences(application)
+    application = Service._formatPrioritiesSelected(application)
     application = Service._formatReferrals(application)
     application = Service._formatTerms(application)
     application = Service._formatIncome(application)
     application = Service._formatBooleans(application)
     application = Service._renameApplicant(application)
+    application = Service._calculateTotalMonthlyRent(application)
     application = Service._formatMetadata(application)
     delete application.householdMembers if _.isEmpty(application.householdMembers)
     delete application.primaryApplicant.mailingGeocoding_data
@@ -151,7 +164,8 @@ ShortFormDataService = (ListingService) ->
         listingPreferenceID: listingPref.listingPreferenceID
         naturalKey: naturalKey
         # NOTE: preferenceProof will be made redundant by TBD new file attachment object
-        preferenceProof: preferenceProof
+        # otherwise, options need to match up to salesforce pickList
+        # preferenceProof: preferenceProof
         optOut: optOut
         ifCombinedIndividualPreference: individualPref
       # remove blank values
@@ -160,6 +174,14 @@ ShortFormDataService = (ListingService) ->
     )
 
     delete application.preferences
+    return application
+
+  Service._formatPrioritiesSelected = (application) ->
+    prioritiesSelected = ""
+    _.forEach application.STUB_prioritiesSelected, (value, key) ->
+      prioritiesSelected += (key + ";") if value
+      return
+    application.STUB_prioritiesSelected = prioritiesSelected
     return application
 
   Service._formatReferrals = (application) ->
@@ -208,14 +230,17 @@ ShortFormDataService = (ListingService) ->
     )
     return application
 
-  Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
+  Service._calculateTotalMonthlyRent = (application) ->
+    # TODO: replace STUB with real field name once it exists
+    # _.sumBy will count any `null` or `undefined` values as 0
+    application.STUB_TotalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
+    return application
 
-    application.formMetadata = JSON.stringify(formMetadata)
-    delete application.completedSections
-    delete application.session_uid
+  # move all metaFields off the application object and into formMetadata JSON string
+  Service._formatMetadata = (application) ->
+    application.formMetadata = JSON.stringify(_.pick(application, Service.metaFields))
+    _.each Service.metaFields, (metaField) ->
+      delete application[metaField]
     return application
 
   #############################################
@@ -234,6 +259,8 @@ ShortFormDataService = (ListingService) ->
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
+    # TODO: implement once this field exists in SF
+    # data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
@@ -385,7 +412,11 @@ ShortFormDataService = (ListingService) ->
   Service._reformatMetadata = (sfApp, data) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
-    data.completedSections = formMetadata.completedSections
+    metadata = _.pick(formMetadata, Service.metaFields)
+    # TODO: remove after stubbing is done, prioritiesSelected will not be in metadata
+    metadata.STUB_prioritiesSelected = Service._reformatMultiSelect(metadata.STUB_prioritiesSelected)
+    _.merge(data, metadata)
+
 
   #############################################
   # Helper functions

@@ -89,6 +89,14 @@ module.exports = ->
   @When 'I indicate I will live alone', ->
     element(By.id('live_alone')).click()
 
+  @When 'I indicate living in public housing', ->
+    element(By.id('STUB_householdPublicHousing_yes')).click()
+    submitForm()
+
+  @When 'I indicate no priority', ->
+    element(By.id('STUB_prioritiesSelected_no')).click()
+    submitForm()
+
   @When 'I go to the income page', ->
     submitForm()
 
@@ -103,6 +111,9 @@ module.exports = ->
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitForm()
+
+  @When 'I opt out of Assisted Housing preference', ->
+    optOutAndSubmit()
 
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs

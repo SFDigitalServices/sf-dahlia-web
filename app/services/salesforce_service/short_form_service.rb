@@ -9,7 +9,7 @@ module SalesforceService
       %i(incomelevel).each do |k|
         params[k] = params[k].present? ? params[k].to_f : 0
       end
-      api_get(endpoint, params)
+      cached_api_get(endpoint, params)
     end
 
     def self.create_or_update(params, contact_attrs)

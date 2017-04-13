@@ -2,7 +2,6 @@
 .app-card.form-card ng-init="checkPreferenceEligibility('liveWorkInSf')"
   short-form-header
     h2.app-card_question translate="E2_LIVE_WORK_PREFERENCE.TITLE"
-    p.form-note.margin-bottom translate="T.OPTIONAL"
     p.form-note.margin-bottom translate="E2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
 
   .app-inner
@@ -11,9 +10,9 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" dataevent="gtm-preference-livesf" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" ng-show="showPreference('liveInSf')" required="preferenceRequired('liveInSf')")
+        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" preference="liveInSf" dataevent="gtm-preference-livesf" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" uploader-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" ng-show="showPreference('liveInSf')" required="preferenceRequired('liveInSf')")
 
-        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" dataevent="gtm-preference-worksf" ng-show="showPreference('workInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('workInSf')")
+        preference-with-proof(title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" preference="workInSf" dataevent="gtm-preference-worksf" uploader-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" ng-show="showPreference('workInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('workInSf')")
 
         live-work-preference(title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}" dataevent="gtm-preference-worksf" ng-show="showPreference('liveWorkInSf')" translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveWorkInSf')")
 

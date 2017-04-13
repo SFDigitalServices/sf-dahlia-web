@@ -11,8 +11,6 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json').listing
     validHousehold = getJSONFixture('short_form-api-validate_household-match.json')
     invalidHousehold = getJSONFixture('short_form-api-validate_household-not-match.json')
-    fakeListingService =
-      hasPreference: () ->
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -59,6 +57,10 @@ do ->
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
       invalidateContactForm: jasmine.createSpy()
+      resetMonthlyRentForm: jasmine.createSpy()
+      invalidateMonthlyRentForm: jasmine.createSpy()
+      invalidatePreferencesForm: jasmine.createSpy()
+      resetAssistedHousingForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
       preferenceRequired: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
@@ -66,7 +68,10 @@ do ->
       validateApplicantAddress: ->
         { error: -> null }
       checkHouseholdEligiblity: (listing) ->
+      hasHouseholdPublicHousingQuestion: ->
       submitApplication: (options={}) ->
+      listingHasPreference: ->
+      applicationHasPreference: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -94,6 +99,7 @@ do ->
         isLoading: spyOn(fakeFunctions, 'fakeIsLoading').and.callThrough()
         submitOptionsForCurrentPage: spyOn(fakeFunctions, 'fakeSubmitOptionsForCurrentPage').and.callThrough()
         _currentPage: jasmine.createSpy()
+        getNextReservedPageIfAvailable: jasmine.createSpy()
       return
     )
 
@@ -113,6 +119,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -133,7 +140,6 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
-        ListingService: fakeListingService
       return
     )
 
@@ -280,6 +286,37 @@ do ->
         scope.validateHouseholdEligibility('incomeMatch')
         expect(state.go).toHaveBeenCalled()
 
+    describe 'checkIfPublicHousing', ->
+      it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
+        scope.application.STUB_householdPublicHousing = 'No'
+        scope.checkIfPublicHousing()
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
+      it 'skips ahead to next household page if publicHousing answer is "Yes"', ->
+        scope.application.STUB_householdPublicHousing = 'Yes'
+        scope.checkIfPublicHousing()
+        expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
+
+    describe 'checkIfReservedUnits', ->
+      it 'calls getNextReservedPageIfAvailable on navService', ->
+        scope.checkIfReservedUnits()
+        expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
+
+    describe 'publicHousingYes', ->
+      it 'calls resetMonthlyRentForm in ShortFormApplicationService', ->
+        scope.publicHousingYes()
+        expect(fakeShortFormApplicationService.resetMonthlyRentForm).toHaveBeenCalled()
+      it 'calls invalidatePreferencesForm in ShortFormApplicationService', ->
+        scope.publicHousingYes()
+        expect(fakeShortFormApplicationService.invalidatePreferencesForm).toHaveBeenCalled()
+
+    describe 'publicHousingNo', ->
+      it 'calls invalidateMonthlyRentForm in ShortFormApplicationService', ->
+        scope.publicHousingNo()
+        expect(fakeShortFormApplicationService.invalidateMonthlyRentForm).toHaveBeenCalled()
+      it 'calls resetAssistedHousingForm in ShortFormApplicationService', ->
+        scope.publicHousingNo()
+        expect(fakeShortFormApplicationService.resetAssistedHousingForm).toHaveBeenCalled()
+
     describe '$scope.clearPhoneData', ->
       it 'calls clearPhoneData in ShortFormApplicationService', ->
         type = 'phone'
@@ -299,7 +336,7 @@ do ->
 
         it 'navigates to the given callback url for household', ->
           scope._respondToHouseholdEligibilityResults(eligibility, error)
-          expect(fakeShortFormNavigationService.getLandingPage).toHaveBeenCalledWith({name: 'Income'})
+          expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
 
       describe 'when householdMatch is false', ->
         beforeEach ->
@@ -427,23 +464,23 @@ do ->
     describe 'showPreference', ->
       describe 'listing does not have preference', ->
         it 'returns false', ->
-          spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(false)
           expect(scope.showPreference('liveInSf')).toEqual false
 
       describe 'listing has preference', ->
         it 'returns true', ->
-          spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(true)
           expect(scope.showPreference('displaced')).toEqual true
 
     describe 'preferenceRequired', ->
       describe 'listing does not have preference', ->
         it 'returns false', ->
-          spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(false)
           expect(scope.preferenceRequired('liveInSf')).toEqual false
 
       describe 'listing has preference', ->
         it 'calls preferenceRequired function', ->
-          spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(true)
           spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
           spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([1])
           scope.preferenceRequired('liveInSf')

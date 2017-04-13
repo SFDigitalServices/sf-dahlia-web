@@ -352,6 +352,7 @@ class Api::V1::ShortFormController < ApiController
                 ifCombinedIndividualPreference
               ),
             },
+            :prioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
             :annualIncome,

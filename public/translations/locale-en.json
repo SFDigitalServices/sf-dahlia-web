@@ -82,6 +82,30 @@
         "TITLE": "Tell us about this person.",
         "WORK_IN_SF_DESC": "This means they currently work in San Francisco at least 75% of their working hours."
     },
+    "C4_HOUSEHOLD_PUBLIC_HOUSING": {
+        "P1": "This does not include Section 8 vouchers or VASH housing choice vouchers.",
+        "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?"
+    },
+    "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
+        "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
+        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
+        "HOW_MUCH_DO_YOU_PAY": "How much do You pay at {{address}}?",
+        "TITLE": "How much does your household pay in monthly rent?"
+    },
+    "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
+        "P1": "There are reserved units available in this building if at least one applicant has served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information.",
+        "TITLE": "Are you or anyone on this application a veteran that has served in the U.S. Military?"
+    },
+    "C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
+        "P1": "There are reserved units available in this building if one or more applicants has a developmental disability.<br><br>Should your application be chosen, be prepared to provide more information.",
+        "READ_MORE": "There are reserved units available if one or more adult applicants meets the definition of developmental disability as defined in the HUD Handbook 4350.3, Chapter 3, Section 2, Figures 2-5 and 3-6.<br><br>A person with a developmental disability, as defined in Section 102(7) of the Developmental Disabilities Assistance and Bill of Rights Act (42 U.S.C. 6001(8)), i.e. a person with a severe chronic disability that:<br><br>Is attributable to a mental or physical impairment or combination of mental and physical impairments;<br><br>Is manifested before the person attains age 22<br><br>Is likely to continue indefinitely<br><br>Results in substantial functional limitation in three or more following areas of major life activity:<br><br><ul><li>Self-care</li><li>Receptive and expressive language</li><li>Learning</li><li>Mobility</li><li>Self-direction</li><li>Capacity for independent living, and economic self – sufficiency</li></ul>Reflects the person's need for a combination and sequence of special, inter-disciplinary, or generic care, treatment, or other services that are of lifelong or extended duration and are individually planned and coordinated.<br><br>The above will be evidenced by the HUD verification of Disability when eligibility of admission is based on Disability form provided at the time of initial interview.",
+        "TITLE": "Are you or anyone on this application developmentally disabled?"
+    },
+    "C7_HOUSEHOLD_PRIORITIES": {
+        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability.",
+        "QUESTION": "Are you or anyone in your household a person who needs any of the following ADA accessibility features?"
+    },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
         "ALERT_TITLE": "Please choose which version of primary contact details you want to use.",
@@ -155,6 +179,13 @@
         },
         "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
+    "E2B_ASSISTED_HOUSING_PREFERENCE": {
+        "INSTRUCTIONS": "This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
+        "PREFERENCE": {
+            "TITLE": "Assisted Housing Preference"
+        },
+        "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
+    },
     "E2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
         "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
@@ -175,9 +206,6 @@
             "WORK_SF_PREFERENCE": "Work in San Francisco"
         },
         "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
-        "UPLOAD_PROOF": "Upload proof of preference",
-        "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
-        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB. Supported file types: PDF, JPG, PNG.",
         "WORK_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must currently work in San Francisco at least 75% of their working hours.",
             "TITLE": "Work in San Francisco Preference"
@@ -214,13 +242,12 @@
         "LAST_NAME": "Please enter a Last Name",
         "NOT_ELIGIBLE": "Unfortunately it appears you do not qualify for this listing.",
         "NOT_ELIGIBLE_DESCRIPTION": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
-        "NOT_ELIGIBLE_HOUSEHOLD": "It appears that you wouldn't qualify for this listing due to household size.",
-        "NOT_ELIGIBLE_INCOME": "It appears that you wouldn't qualify for this listing due to your household income.",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -273,6 +300,7 @@
         "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
     "LABEL": {
+        "ADA_ACCESSIBLE_UNITS": "ADA Accessible Units",
         "ADDITIONAL_PHONE": "Additional Phone",
         "ADDRESS": "Address",
         "ADDRESS_1": "Street Address",
@@ -324,8 +352,10 @@
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
+        "HEARING_IMPAIRMENTS": "For Hearing Impairments",
+        "HOUSEHOLD_DETAILS": "Household Details",
         "HOUSEHOLD_MEMBER": "Household Member",
-        "HOUSEHOLD_MEMBERS": "Household members",
+        "HOUSEHOLD_MEMBERS": "Household Members",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
@@ -337,27 +367,33 @@
         "INCOME_PLACEHOLDER": "Total all of your income sources",
         "LAST_NAME": "Last Name",
         "LIVE_ALONE": "I will live alone",
+        "LIVE_IN_PUBLIC_HOUSING_OR_HUD": "Live in Assisted Housing",
         "MAILING_ADDRESS": "Mailing address",
         "MATCHED": "Matched",
         "MEMBER_SAME_ADDRESS": "Do they have the same address as you?",
         "MEMBER_WORK_IN_SF": "Do they work in San Francisco?",
         "MIDDLE_NAME": "Middle Name",
+        "MOBILITY_IMPAIRMENTS": "For Mobility Impairments",
+        "MONTHLY_RENT": "Monthly Rent",
         "MY_APPLICATION": "My Application",
         "NAME": "Name",
         "NEW_PASSWORD": "New Password",
         "NO_ALTERNATE_CONTACT": "I don't have an alternate contact",
+        "NO_RENT_PAID": "Don't pay rent",
         "OLD_PASSWORD": "Old Password",
         "ON_THE_LISTING": "on the listing",
         "ORIGINAL_APPLICATION": "Original Application",
         "OTHER": "Other",
         "OTHER_PEOPLE": "Other people will live with me",
         "PASSWORD": "Password",
+        "PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES": "People with Developmental Disabilities",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
         "PHONE": "Phone",
         "PHONE_CELL": "Cell",
         "PHONE_HOME": "Home",
         "PHONE_WORK": "Work",
+        "PLEASE_SELECT_ALL_THAT_APPLY": "Please select all that apply.",
         "PLEASE_SELECT_ONE": "Please select one.",
         "PLEASE_SELECT_PREFERENCE": "Please select to get your lottery preference:",
         "PREFERENCES": "Preferences",
@@ -381,6 +417,7 @@
         },
         "PROOF_OF_ADDRESS": "Proof of address",
         "RECENT_APPLICATION": "Recent Application",
+        "RENT_AT_ADDRESS": "Rent at {{address}}",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
         "RE_ENTER_PASSWORD": "Re-enter your password to confirm",
         "SEE_LISTING": "See Listing",
@@ -394,7 +431,14 @@
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
+        "UPLOAD_COPY_OF_LEASE": "Upload Copy of Lease",
+        "UPLOAD_LEASE_DESCRIPTION": "Please upload the first page, or whichever page shows the rent amount.",
+        "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
+        "UPLOAD_PROOF_INSTRUCTIONS_1": "If you’re on a smartphone, you can take a picture.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB.<br>Supported file types: PDF, JPG, PNG.",
+        "VETERANS_IN_HOUSEHOLD": "Veterans in Household",
         "VIEW_APPLICATION": "View Application",
+        "VISION_IMPAIRMENTS": "For Vision Impairments",
         "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",

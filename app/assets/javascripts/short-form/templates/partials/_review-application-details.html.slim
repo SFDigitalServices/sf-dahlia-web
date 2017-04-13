@@ -42,7 +42,7 @@ span ng-hide="alternateContact.alternateContactType == 'None'"
       | {{alternateContact.mailing_address.zip}}
 
 / Household Members
-review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getHouseholdLandingPage()}}"
+review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getLandingPage({name: 'Household'})}}"
 
 .app-inner
   .info-item.margin-bottom ng-if="!householdMembers || householdMembers.length == 0"
@@ -61,6 +61,30 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
       br
       ' {{member.home_address.city}}, {{member.home_address.state}}
       | {{member.home_address.zip}}
+
+/ Household Details
+div ng-if="prioritiesSelectedExists()"
+  review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
+
+  .app-inner
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.STUB_householdPublicHousing"
+      | {{application.STUB_householdPublicHousing}}
+    review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslationVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslationVariable(groupedAddress.members)}}"
+      span ng-if="groupedAddress.monthlyRent"
+        ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
+      span ng-if="!groupedAddress.monthlyRent"
+        ' {{ 0 | currency : $ : 0 }}
+      span translate="LABEL.PER_MONTH"
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.STUB_qualifyingServedInMilitary"
+      | {{application.STUB_qualifyingServedInMilitary}}
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
+      | {{application.STUB_qualifyingDevelopmentallyDisabled}}
+    review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
+      span ng-repeat="priorityOption in priority_options" ng-if="application.STUB_prioritiesSelected[priorityOption[0]]"
+        | {{priorityOption[1]}}
+        br
+      span ng-if="application.STUB_prioritiesSelected.no"
+        | {{'T.NO' | translate}}
 
 / Self-declared status
 review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"

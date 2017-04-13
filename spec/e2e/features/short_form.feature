@@ -10,10 +10,13 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
+      And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
       And I fill out the optional survey
       And I confirm details on the review page
@@ -34,6 +37,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
@@ -49,6 +54,8 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
@@ -78,10 +85,13 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
       And I indicate having vouchers
       And I fill out my income
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
+      And I opt out of Assisted Housing preference
       And I select "Jane Doe" for COP preference
       And I select "Jane Doe" for DTHP preference
       And I submit my preferences
