@@ -381,8 +381,6 @@ ShortFormApplicationController = (
   $scope.preferenceFileIsLoading = (opts) ->
     FileUploadService.preferenceFileIsLoading(opts.preference_proof_file)
 
-
-
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
 
