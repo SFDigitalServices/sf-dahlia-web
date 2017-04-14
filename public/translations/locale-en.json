@@ -587,5 +587,16 @@
         "UNIT_TYPE": "Unit Type",
         "YES": "Yes",
         "YOU": "You"
+    },
+    "WELCOME": {
+        "ADDITIONAL_OPPORTUNITIES": "Additional Opportunities",
+        "ALL_APPLICATION_CLOSED": "All applications are currently closed, but you can view closed listings.",
+        "BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE": "We encourage you to browse other resources, as there may be more rental and ownership opportunities.",
+        "ESTIMATE_ELIGIBILITY": "Estimate Eligibility",
+        "ESTIMATE_ELIGIBILITY_DESCRIPTION": "Tell us your household size and income and we'll highlight listings that might be a fit.",
+        "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
+        "SEE_LISTINGS": "See listings",
+        "SIGN_UP_TODAY": "Sign Up today",
+        "TITLE": "Browse Affordable Housing Opportunities"
     }
 }

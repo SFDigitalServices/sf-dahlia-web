@@ -1,31 +1,38 @@
 section.splash-header.bg-image
   .row
     header.hero-header.text-center
-      h1.hero-title.c-white.t-shadow Browse Affordable Housing Opportunities
+      h1.hero-title.c-white.t-shadow
+        | {{'WELCOME.TITLE' | translate}}
       .row
         .medium-9.medium-centered.columns
-          p.delta.t-sans.t-shadow.c-white ng-if="openListings.length == 0" All applications are currently closed, but you can view closed listings.
-          a.button.primary.shadow ui-sref="dahlia.listings" See Listings
+          p.delta.t-sans.t-shadow.c-white ng-if="openListings.length == 0"
+            | {{'WELCOME.ALL_APPLICATION_CLOSED' | translate}}
+          a.button.primary.shadow ui-sref="dahlia.listings"
+            | {{'WELCOME.SEE_LISTINGS' | translate}}
 
 section.splash-message
   .splash-message_panel.row
     .medium-8.columns
-      p.t-tiny.c-charcoal Currently this site includes only Below Market Rate rentals, a program that includes units priced to be affordable to lower or middle income households. We encourage you to browse other affordable housing resources.
+      p.t-tiny.c-charcoal
+        | {{'WELCOME.BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE' | translate}}
     .medium-4.columns.small-only-text-center
-      a.button.radius.ghost-white.no-margin.expand ui-sref="dahlia.additional-resources" Additional Opportunities
+      a.button.radius.ghost-white.no-margin.expand ui-sref="dahlia.additional-resources"
+        | {{'WELCOME.ADDITIONAL_OPPORTUNITIES' | translate}}
 
 section.splash-wells.row.collapse
   .medium-6.columns
     .welcome-block.block--tall.text-center
       figure.block-icon
         img src="/images/icon-home.png" alt="Home Icon"
-      h2.delta.t-serif.c-oil Tell us your household size and income and we'll highlight listings that might be a fit.
-      a.button.radius ui-sref="dahlia.eligibility-estimator" Estimate Eligibility
+      h2.delta.t-serif.c-oil
+        | {{'WELCOME.ESTIMATE_ELIGIBILITY_DESCRIPTION' | translate}}
+      a.button.radius ui-sref="dahlia.eligibility-estimator"
+        | {{'WELCOME.ESTIMATE_ELIGIBILITY' | translate}}
   .medium-6.columns
     .welcome-block.block--tall.text-center
       figure.block-icon
         img src="/images/icon-mail.png" alt="Mail Icon"
       h2.delta.t-serif.c-oil
-        | Get emailed whenever a new listing is posted.
+        | {{'WELCOME.NEW_LISTING_EMAIL_ALERT' | translate}}
       a.button.radius href="http://visitor.r20.constantcontact.com/manage/optin?v=001-rR5XWQW7dMuyJHtE1VRCKsbO11jmYRO8H1uzzSs3-D1IpgLqynO4XfpWqC1VNsQH18uAmSg3KefN0VH-e-qJPb97nMdJxJE9qz_-Vw8kA8%3D"
-        | Sign Up Today
+        | {{'WELCOME.SIGN_UP_TODAY' | translate}}
