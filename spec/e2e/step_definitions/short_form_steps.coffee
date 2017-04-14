@@ -254,6 +254,14 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should see my name, DOB, email all displayed as expected', ->
+    appName = element(By.id('full-name'))
+    @expect(appName.getText()).to.eventually.equal('JANE DOE')
+    appDob = element(By.id('dob'))
+    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
+    appEmail = element(By.id('email'))
+    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
+
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
     @expect(appName.getText()).to.eventually.equal('JANE DOE')
