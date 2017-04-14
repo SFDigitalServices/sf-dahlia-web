@@ -416,6 +416,34 @@ do ->
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
+    describe 'eligibleForAssistedHousing', ->
+      it 'return true if listing has assistedHousing preference', ->
+        # TO DO: update during API integration story for preference
+        ShortFormApplicationService.application.STUB_householdPublicHousing = 'Yes'
+        expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
+
+    describe 'eligibleForRentBurden', ->
+      describe 'listing does not have assistedHousing preference', ->
+        beforeEach ->
+          ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+
+        describe 'rent-to-income ratio is greater than or equal to 50%', ->
+          it 'returns true', ->
+            ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
+            ShortFormApplicationService.application.incomeTimeframe = 'per_month'
+            ShortFormApplicationService.application.groupedHouseholdAddresses = [
+              {
+                "address": "312 DEETZ RD",
+                "members": [
+                  "You"
+                ],
+                "monthlyRent": 2000
+              }
+            ]
+
+            # TO DO: update during API integration story for preference
+            expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual true
+
     describe 'copyNRHPtoLiveInSf', ->
       it 'copies NRHP member to liveInSf', ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
