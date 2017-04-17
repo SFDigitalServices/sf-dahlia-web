@@ -70,7 +70,7 @@
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
-                return $state.go('dahlia.welcome')
+                return $state.go('dahlia.listings')
 
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
