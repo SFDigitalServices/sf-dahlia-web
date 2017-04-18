@@ -1,7 +1,7 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE' | translate}}
+    h2.app-card_question translate="C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE"  translate-value-members="youOrHouseholdSubject()"
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE' | translate: members: }}
     p.form-note.margin-bottom
       | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.P1' | translate}}
 

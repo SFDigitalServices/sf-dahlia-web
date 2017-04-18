@@ -89,6 +89,11 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.membersTranslationVariable = (members) ->
     { user: $filter('listify')(members) }
 
+  Service.youOrHouseholdSubject = (membersCount) ->
+    # if membersCount > 0
+    #   you or anyone
+    return
+
   return Service
 
 ShortFormHelperService.$inject = ['$translate', '$filter', '$sce', '$state']

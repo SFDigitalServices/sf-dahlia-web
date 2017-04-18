@@ -662,6 +662,9 @@ ShortFormApplicationController = (
   $scope.membersTranslationVariable = (members) ->
     ShortFormHelperService.membersTranslationVariable(members)
 
+  $scope.youOrHouseholdSubject = () ->
+    ShortFormHelperService.youOrHouseholdSubject($scope.householdMembers.length)
+
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
 

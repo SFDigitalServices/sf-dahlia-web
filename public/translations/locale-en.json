@@ -84,7 +84,7 @@
     },
     "C4_HOUSEHOLD_PUBLIC_HOUSING": {
         "P1": "This does not include Section 8 vouchers or VASH housing choice vouchers.",
-        "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?"
+        "TITLE": "Do {{members}} currently live in public housing or HUD project-based housing?"
     },
     "C5_HOUSEHOLD_MONTHLY_RENT": {
         "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
