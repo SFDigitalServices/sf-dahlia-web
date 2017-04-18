@@ -656,11 +656,11 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
-  $scope.addressTranslationVariable = (address) ->
-    ShortFormHelperService.addressTranslationVariable(address)
+  $scope.addressTranslateVariable = (address) ->
+    ShortFormHelperService.addressTranslateVariable(address)
 
-  $scope.membersTranslationVariable = (members) ->
-    ShortFormHelperService.membersTranslationVariable(members)
+  $scope.membersTranslateVariable = (members) ->
+    ShortFormHelperService.membersTranslateVariable(members)
 
   $scope.youOrHouseholdTranslateVariable = (wholeHousehold) ->
     ShortFormHelperService.youOrHouseholdTranslateVariable($scope.householdMembers.length, wholeHousehold)

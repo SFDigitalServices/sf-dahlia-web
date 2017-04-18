@@ -83,10 +83,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
 
-  Service.addressTranslationVariable = (address) ->
+  Service.addressTranslateVariable = (address) ->
     { address: address }
 
-  Service.membersTranslationVariable = (members) ->
+  Service.membersTranslateVariable = (members) ->
     { user: $filter('listify')(members) }
 
   Service.youOrHouseholdTranslateVariable = (membersCount, wholeHousehold) ->
