@@ -1,7 +1,7 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE' | translate}}
+      | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE' | translate: youOrHouseholdTranslateVariable('wholeHousehold') }}
 
   .app-inner.inset
     span ng-repeat="groupedAddress in application.groupedHouseholdAddresses"
