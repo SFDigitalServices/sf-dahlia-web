@@ -236,10 +236,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return $q.when(Service.listing)
     angular.copy({}, Service.listing)
     $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
-      angular.copy((if data and data.listing then data.listing else {}), Service.listing)
+      if !data || !data.listing
+        return
+      angular.copy(data.listing, Service.listing)
       # TODO: -- REMOVE HARDCODED FEATURES --
       if Service.listingIs('AMI Chart Test 477') || Service.listingIs('Abaca')
         Service.stubListingFeatures()
+
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)

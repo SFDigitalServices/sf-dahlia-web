@@ -453,7 +453,12 @@
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
-        "ADDITIONAL_LISTINGS": "Additional Listings",
+        "ADDITIONAL_LISTINGS": {
+            "HIDE": "Hide Additional Listings",
+            "SHOW": "Show Additional Listings",
+            "SUBTITLE": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
+            "TITLE": "Additional Listings"
+        },
         "ALL_UNITS": "All Units",
         "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
@@ -467,12 +472,16 @@
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
         "FINAL_WAITLIST_SIZE": "Final Waitlist Size",
         "FOR_INCOME_CALCULATIONS": "For income calculations, household size includes everyone (all ages) living in the unit.",
-        "HIDE_ADDITIONAL_LISTINGS": "Hide Additional Listings ({{number}})",
-        "HIDE_LOTTERY_RESULTS": "Hide Lottery Results ({{number}})",
         "HOUSEHOLD_MAXIMUM_INCOME": "Household Maximum Income",
         "IMPORTANT_PROGRAM_RULES": "Important Program Rules",
         "INCLUDES_PRIORITY_UNITS": "Includes Priority Units for {{priorities}}",
-        "LOTTERY_RESULTS": "Lottery Results",
+        "LOTTERY_RESULTS": {
+            "HIDE": "Hide Lottery Results",
+            "NO_RESULTS": "There are no listings with lottery results at this time.",
+            "SHOW": "Show Lottery Results",
+            "SUBTITLE": "You can now check lottery results on the remaining listings.",
+            "TITLE": "Lottery Results"
+        },
         "NO_AVAILABLE_UNITS": "There are no available units at this time.",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
@@ -482,7 +491,6 @@
         "PETS_POLICY": "Pets Policy",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
-        "REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS": "The remaining properties are no longer taking applications but can be used to check lottery results.",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "REQUIRED_DOCUMENTS": "Required Documents",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
@@ -491,16 +499,20 @@
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
         "SHOWING_MATCHES_FOR": "Showing matches for",
-        "SHOW_ADDITIONAL_LISTINGS": "Show Additional Listings ({{number}})",
-        "SHOW_LOTTERY_RESULTS": "Show Lottery Results ({{number}})",
         "SMOKING_POLICY": "Smoking Policy",
         "SPECIAL_NOTES": "Special Notes",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "UNITS_ARE_FOR": "These units are for {{type}}.",
         "UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR": "These units have accessibility features for people with {{type}}.",
+        "UPCOMING_LOTTERIES": {
+            "HIDE": "Hide Upcoming Lotteries",
+            "NO_RESULTS": "There are no closed listings with upcoming lotteries at this time.",
+            "SHOW": "Show Upcoming Lotteries",
+            "SUBTITLE": "The application deadline has passed on the following listings, and you can still get information on the lottery date and time.",
+            "TITLE": "Upcoming Lotteries"
+        },
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
-        "WE_KNOW_YOU_MAY_HAVE_OPTIONS": "We know you may have options about how many people will live with you. Here are listings for other household sizes and income levels.",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
         "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
     },
@@ -639,5 +651,16 @@
         "UNIT_TYPE": "Unit Type",
         "YES": "Yes",
         "YOU": "You"
+    },
+    "WELCOME": {
+        "ADDITIONAL_OPPORTUNITIES": "Additional Opportunities",
+        "ALL_APPLICATION_CLOSED": "All applications are currently closed, but you can view closed listings.",
+        "BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE": "We encourage you to browse other resources, as there may be more rental and ownership opportunities.",
+        "ESTIMATE_ELIGIBILITY": "Estimate Eligibility",
+        "ESTIMATE_ELIGIBILITY_DESCRIPTION": "Tell us your household size and income and we'll highlight listings that might be a fit.",
+        "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
+        "SEE_LISTINGS": "See listings",
+        "SIGN_UP_TODAY": "Sign Up today",
+        "TITLE": "Browse Affordable Housing Opportunities"
     }
 }
