@@ -1,4 +1,4 @@
-header.lead-header.bg-dust ng-if="!hasEligibilityFilters()"
+header.lead-header.bg-dust#listings_header ng-if="!hasEligibilityFilters()"
   .row
     .medium-12.columns
       .results-header
@@ -97,71 +97,14 @@ section.results-section ng-if="!openListings.length"
 section.margin-top--2x.margin-bottom--2x ng-if="openMatchListings.length && openNotMatchListings.length"
   ng-include src="'listings/templates/_housing-counselor.html'"
 
-/ Not Matched Section Heading
-section.results-section.border-top ng-if="hasEligibilityFilters() && openNotMatchListings.length"
-  article.row
-    .large-12.columns
-      header.status-header.status--closed.has-button aria-describedby="toggle-not-matched" ng-click="toggleNotMatchedListings($event)"
-        .status-header_content
-          .status-header_icon
-            span.ui-icon.ui-xlarge
-              svg
-                use xlink:href="#i-building"
-          hgroup.status-header_group
-            h2.status-header_title.gamma
-              | {{'LISTINGS.ADDITIONAL_LISTINGS' | translate}}
-            p.no-margin
-              | {{'LISTINGS.WE_KNOW_YOU_MAY_HAVE_OPTIONS' | translate}}
-        .status-header_action
-          button.button.ghost-white.expand-small.right.toggler#toggle-not-matched
-            span ng-show="!displayNotMatchedListings"
-              span translate="LISTINGS.SHOW_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
-            span ng-show="displayNotMatchedListings"
-              span translate="LISTINGS.HIDE_ADDITIONAL_LISTINGS" translate-value-number="{{openNotMatchListings.length}}"
+/ Listings: Not Matched
+listing-results-toggler listing-results="openNotMatchListings" section-name="notMatched" icon="#i-building" ng-if="hasEligibilityFilters() && openNotMatchListings.length"
 
-  .section.margin-top--2x.show-for-print ng-show="displayNotMatchedListings"
-    / Additional (not matched) listings
-    article.row
-      .large-12.columns
-        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in openNotMatchListings"
+/ Listings: Upcoming Lotteries (Closed Listings)
+listing-results-toggler listing-results="closedListings" section-name="upcomingLotteries" icon="#i-clock"
 
 / Listings: Lottery Results
-section.results-section.border-top ng-if="closedAndLotteryListingsCount()"
-  article.row
-    .large-12.columns
-      header.status-header.status--closed.has-button aria-describedby="toggle-lottery-results" ng-click="toggleLotteryResultsListings($event)"
-        .status-header_content
-          .status-header_icon
-            span.ui-icon.ui-xlarge
-              svg
-                use xlink:href="#i-result"
-          hgroup.status-header_group
-            h2.status-header_title.gamma
-              | {{'LISTINGS.LOTTERY_RESULTS' | translate}}
-            p.no-margin
-              | {{'LISTINGS.REMAINING_PROPERTIES_NOT_TAKING_APPLICATIONS' | translate}}
-        .status-header_action
-          button.button.ghost-white.expand-small.right.toggler#toggle-lottery-results
-            span ng-show="!displayLotteryResultsListings"
-              span translate="LISTINGS.SHOW_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
-            span ng-show="displayLotteryResultsListings"
-              span translate="LISTINGS.HIDE_LOTTERY_RESULTS" translate-value-number="{{closedAndLotteryListingsCount()}}"
-
-  .section.margin-top--2x.show-for-print ng-show="displayLotteryResultsListings"
-    / Lottery Results Posted
-    article.row ng-if="lotteryResultsListings.length"
-      .large-12.columns
-        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in lotteryResultsListings"
-    / Divider
-    .row ng-if="closedListings.length"
-      .large-12.columns
-        header.results-section_divider
-          h3.results-section_subheader
-            | Lottery Results Coming Soon
-    / Closed Listings
-    article.row ng-if="closedListings.length"
-      .large-12.columns
-        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in closedListings"
+listing-results-toggler listing-results="lotteryResultsListings" section-name="lotteryResults" icon="#i-result"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"

@@ -8,7 +8,9 @@ do ->
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
-    $state = {go: jasmine.createSpy()}
+    $state =
+      go: jasmine.createSpy()
+      current: { name: 'dahlia' }
     fakeSFAddress =
       address1: '123 Main St.'
       city: 'San Francisco'
@@ -720,6 +722,25 @@ do ->
         ShortFormApplicationService.application.status = 'Removed'
         expect(ShortFormApplicationService.applicationWasSubmitted()).toEqual(true)
 
+    describe 'invalidateCurrentSectionIfIncomplete', ->
+      beforeEach ->
+        ShortFormApplicationService.activeSection = { name: 'You' }
+
+      it 'should set section as incomplete if it has an invalid form', ->
+        ShortFormApplicationService.form.applicationForm =
+          $invalid: true
+          $valid: false
+        ShortFormApplicationService.application.completedSections['You'] = true
+        ShortFormApplicationService.invalidateCurrentSectionIfIncomplete()
+        expect(ShortFormApplicationService.application.completedSections['You']).toEqual(false)
+
+      it 'should not mark section as incomplete if it has a valid form', ->
+        ShortFormApplicationService.form.applicationForm =
+          $invalid: false
+          $valid: true
+        ShortFormApplicationService.application.completedSections['You'] = true
+        ShortFormApplicationService.invalidateCurrentSectionIfIncomplete()
+        expect(ShortFormApplicationService.application.completedSections['You']).toEqual(true)
 
     describe 'signInSubmitApplication', ->
       beforeEach ->

@@ -298,7 +298,10 @@ ShortFormNavigationService = (
 
   Service.getShortFormSectionFromState = (state) ->
     return false unless state.name.match(/dahlia.short-form-application\./)
-    Service._sectionOfPage(Service._getSuffix(state.name))
+    # store in ShortFormApplicationService
+    section = Service._sectionOfPage(Service._getSuffix(state.name))
+    ShortFormApplicationService.activeSection = section
+    section
 
   Service._sectionOfPage = (stateName) ->
     currentSection = null

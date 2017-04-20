@@ -41,9 +41,6 @@ ListingController = (
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
-  # for showing/hiding listings results buckets on browse page, hidden by default
-  $scope.displayNotMatchedListings = false
-  $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
@@ -189,19 +186,6 @@ ListingController = (
 
   $scope.closedAndLotteryListingsCount = ->
     $scope.lotteryResultsListings.length + $scope.closedListings.length
-
-  $scope.toggleLotteryResultsListings = (e) ->
-    # When you use keyboard nav to click on the button inside the header
-    # for some reason it triggers both a MouseEvent and KeyboardEvent.
-    # So, we ignore the KeyboardEvent.
-    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
-    e.currentTarget.blur() if e
-    $scope.displayLotteryResultsListings = !$scope.displayLotteryResultsListings
-
-  $scope.toggleNotMatchedListings = (e) ->
-    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
-    e.currentTarget.blur()
-    $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
