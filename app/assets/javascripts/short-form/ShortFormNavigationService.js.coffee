@@ -264,6 +264,8 @@ ShortFormNavigationService = (
   Service.getPrevPageOfPreferencesSection = ->
     if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
+    else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
+      'rent-burden-preference'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.eligibleForLiveWork()

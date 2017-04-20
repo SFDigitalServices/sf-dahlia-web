@@ -41,6 +41,20 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
   ]
 
+  Service.proofOptions = (preference) ->
+    switch preference
+      when 'workInSf'
+        Service.preference_proof_options_work
+      when 'liveInSf'
+        Service.preference_proof_options_live
+      when 'neighborhoodResidence'
+        Service.preference_proof_options_live
+      when 'rentBurden'
+        Service.preference_proof_options_rent_burden
+      else
+        Service.preference_proof_options_default
+
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.alternateContactType == 'Other'
@@ -75,7 +89,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status == 'Submitted'
-    interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
+    interpolate = { file: application.preferences.documents[pref_type].proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.translateLoggedInMessage = (page) ->

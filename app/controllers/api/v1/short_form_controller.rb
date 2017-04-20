@@ -251,14 +251,16 @@ class Api::V1::ShortFormController < ApiController
       preference: uploaded_file_params[:preference],
       address: uploaded_file_params[:address],
       rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     preference = file_params.delete(:preference)
+    rent_burden_type = file_params.delete(:rent_burden_type)
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
     uploaded_files = UploadedFile.send(preference).where(file_params)
-    return false unless uploaded_files.any?
+    uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type
     uploaded_files.destroy_all
   end
 
@@ -266,14 +268,12 @@ class Api::V1::ShortFormController < ApiController
     file_params = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      address: uploaded_file_params[:address],
     }
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
     uploaded_files = UploadedFile.rentBurden.where(file_params)
-    return false unless uploaded_files.any?
     uploaded_files.destroy_all
   end
 
@@ -285,7 +285,7 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(%i(file session_uid listing_id
-                     document_type preference address rent_burden_type))
+                     document_type preference address rent_burden_type rent_burden_index))
   end
 
   def application_params
@@ -398,11 +398,12 @@ class Api::V1::ShortFormController < ApiController
       listing_id: uploaded_file_params[:listing_id],
       preference: uploaded_file_params[:preference],
       document_type: uploaded_file_params[:document_type],
-      address: uploaded_file_params[:address],
-      rent_burden_type: uploaded_file_params[:rent_burden_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs

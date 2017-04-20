@@ -7,6 +7,7 @@ ListingController = (
   $state,
   $sce,
   $sanitize,
+  $timeout,
   $filter,
   Carousel,
   SharedService,
@@ -118,7 +119,9 @@ ListingController = (
   $scope.carouselHeight = 300
   $scope.Carousel = Carousel
   $scope.adjustCarouselHeight = (elem) ->
-    $scope.$apply ->
+    # for why we need $timeout, see:
+    # http://stackoverflow.com/a/18996042/260495
+    $timeout ->
       $scope.carouselHeight = elem[0].offsetHeight
 
   $scope.listingImages = (listing) ->
@@ -301,6 +304,7 @@ ListingController.$inject = [
   '$state',
   '$sce',
   '$sanitize',
+  '$timeout',
   '$filter',
   'Carousel',
   'SharedService',

@@ -1,0 +1,55 @@
+/ checkbox for proof options for this preference
+.form-group ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-hide="$ctrl.uploaded"
+
+  label.form-label.caps for="{{$ctrl.selectorName}}"
+    | {{$ctrl.proofOptionLabel}}
+
+  p.form-note.margin-bottom ng-if="$ctrl.liveOrNeighborhoodPreference()"
+    | {{'E2_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME' | translate}}
+  p.form-note ng-if="$ctrl.proofType == 'Copy of Lease'"
+    | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
+
+  select id="{{$ctrl.selectorName}}" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]" ng-if="$ctrl.showProofOptionSelector()"
+    option value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
+      | {{ option[1] }}
+  p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
+    | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
+  p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
+    | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
+
+.form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
+  / type="button" tells it not to act as a submit button
+  button.button.ghost-white.secondary ng-class="{expand: ($ctrl.proofType != 'Copy of Lease'), disabled: $ctrl.uploaderDisabled()}" type="button" ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="{{$ctrl.fileInputName}}" ngf-max-size="2MB" ng-required="$ctrl.application.preferences[$ctrl.preference]" aria-describedby="{{$ctrl.fileInputName}}_error" ng-model="$ctrl.proofDocument.file.name" ng-disabled="$ctrl.uploaderDisabled()"
+    | {{$ctrl.buttonLabel}}
+  small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.fileInputName) && !$ctrl.proofDocument.error"
+    | {{'ERROR.FILE_MISSING' | translate}}
+  small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.proofDocument.error"
+    | {{'ERROR.FILE_UPLOAD' | translate}}
+  p.form-note.micro.input-inset.margin-bottom translate="LABEL.UPLOAD_PROOF_INSTRUCTIONS_1"
+  p.form-note.micro.input-inset translate="LABEL.UPLOAD_PROOF_INSTRUCTIONS_2"
+
+.form-group ng-if="$ctrl.proofDocument.loading"
+  article.attachment.is-loading.media
+    figure.attachment-img.media-img
+      div ng-include="'shared/templates/spinner.html'"
+    .media-body
+      strong
+        | {{$ctrl.proofDocument.proofOption}}
+      br
+      span
+        | {{'LABEL.UPLOADING' | translate}}...
+
+.form-group ng-if="$ctrl.hasPreferenceFile()"
+  article.attachment.media.margin-bottom
+    figure.media-img
+      img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
+    .media-body
+      strong
+        | {{$ctrl.proofDocument.proofOption}}
+      p.t-micro ng-text-truncate="$ctrl.proofDocument.file.name" ng-tt-chars-threshold="25" ng-tt-no-toggling=""
+      ' {{'LABEL.UPLOADED' | translate}}:
+      | {{$ctrl.proofDocument.file.created_at | dateSuffix}}
+      button.button-link.attachment-action.a-alert-dark type="button" ng-click="$ctrl.deletePreferenceFile($ctrl.opts)"
+        | Delete

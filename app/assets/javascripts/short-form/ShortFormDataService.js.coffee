@@ -132,7 +132,6 @@ ShortFormDataService = (ListingService) ->
     angular.copy(Service.preferences).forEach( (prefKey) ->
       # prefKey is the short name like liveInSf
 
-      preferenceProof = null
       naturalKey = null
       individualPref = null
       optOut = application.preferences.optOut[prefKey] || false
@@ -142,20 +141,17 @@ ShortFormDataService = (ListingService) ->
         individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'
 
       # if you optOut then you wouldn't have a memberName or proofOption
-      unless optOut
+      # rentBurden also doesn't have a specific member
+      unless optOut || prefKey == 'rentBurden'
         memberName = application.preferences["#{prefKey}_household_member"]
         return unless memberName
         member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
         # if member was marked for a preference, but not found, this seems like a bug/mistake
         return unless member
-        preferenceProof = application.preferences["#{prefKey}_proof_option"]
         naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
 
       listingPref = ListingService.getPreference(prefKey)
       return unless listingPref
-
-      # if we aren't opting out, and don't have a member, then there is no reason to continue
-      return unless optOut || naturalKey
 
       shortFormPref =
         listingPreferenceID: listingPref.listingPreferenceID
@@ -262,8 +258,8 @@ ShortFormDataService = (ListingService) ->
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
-    data.preferences = Service._reformatPreferences(sfApp, uploadedFiles)
     Service._reformatMetadata(sfApp, data)
+    data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -324,10 +320,20 @@ ShortFormDataService = (ListingService) ->
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
 
-  Service._reformatPreferences = (sfApp, files) ->
-    preferences = {
+  Service._initPreferences = (data) ->
+    data.preferences = {
       optOut: {}
+      documents: {
+        rentBurden: {}
+      }
     }
+    _.each data.groupedHouseholdAddresses, (groupedHouseholdAddress) ->
+      Service.initRentBurdenDocs(groupedHouseholdAddress.address, data)
+
+    data.preferences
+
+  Service._reformatPreferences = (sfApp, data, files) ->
+    preferences = Service._initPreferences(data)
     allHousehold = sfApp.householdMembers
     allHousehold.unshift(sfApp.primaryApplicant)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
@@ -343,9 +349,12 @@ ShortFormDataService = (ListingService) ->
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
         if shortFormPref.ifCombinedIndividualPreference == 'Live in SF'
           prefKey = 'liveInSf'
-        else
+        else if shortFormPref.ifCombinedIndividualPreference == 'Work in SF'
           prefKey = 'workInSf'
+        else
+          prefKey = 'liveWorkInSf'
       else
+        # TODO: needs ifCombinedIndividualPreference for Rent Burden vs Assisted Housing
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
       preferences.optOut[prefKey] = shortFormPref.optOut
@@ -357,10 +366,24 @@ ShortFormDataService = (ListingService) ->
           preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
         preferences[prefKey] = true
 
-        file = _.find(files, {preference: prefKey})
-        if file
-          preferences["#{prefKey}_proof_option"] = file.document_type
-          preferences["#{prefKey}_proof_file"] = file
+        _.each _.filter(files, {preference: prefKey}), (file) ->
+          if prefKey == 'rentBurden'
+            if file.rent_burden_type == 'lease'
+              preferences.documents.rentBurden[file.address].lease = {
+                proofOption: file.document_type
+                file: file
+              }
+            else
+              preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
+                id: file.rent_burden_index
+                proofOption: file.document_type
+                file: file
+              }
+          else
+            preferences.documents[prefKey] = {
+              proofOption: file.document_type
+              file: file
+            }
 
     )
     if preferences.liveInSf || preferences.workInSf
@@ -413,6 +436,14 @@ ShortFormDataService = (ListingService) ->
     # TODO: remove after stubbing is done, prioritiesSelected will not be in metadata
     metadata.STUB_prioritiesSelected = Service._reformatMultiSelect(metadata.STUB_prioritiesSelected)
     _.merge(data, metadata)
+
+  Service.initRentBurdenDocs = (address, data) ->
+    rentBurdenDocs = data.preferences.documents.rentBurden
+    rentBurdenDocs[address] = {
+      lease: {}
+      rent: {}
+    }
+
 
 
   #############################################

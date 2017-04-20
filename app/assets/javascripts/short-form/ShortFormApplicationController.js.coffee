@@ -173,13 +173,7 @@ ShortFormApplicationController = (
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.currentForm()
-    return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
-    field = form[fieldName]
-    if form && field
-      field.$invalid && (field.$touched || form.$submitted)
-    else
-      false
+    ShortFormApplicationService.inputInvalid(fieldName, form, identifier)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -339,7 +333,7 @@ ShortFormApplicationController = (
     else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkAfterLiveWork()
 
   # this is called after preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
@@ -367,19 +361,6 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
     else
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
-
-  ###### File Upload functions - can get overridden
-  $scope.hasPreferenceFile = (opts) ->
-    FileUploadService.hasPreferenceFile(opts.preference_proof_file)
-
-  $scope.deletePreferenceFile = (opts) ->
-    FileUploadService.deletePreferenceFile(opts.preference, $scope.listing.Id)
-
-  $scope.preferenceFileError = (opts) ->
-    FileUploadService.preferenceFileError(opts.preference_proof_file)
-
-  $scope.preferenceFileIsLoading = (opts) ->
-    FileUploadService.preferenceFileIsLoading(opts.preference_proof_file)
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -636,17 +617,7 @@ ShortFormApplicationController = (
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
-    switch pref_type
-      when 'workInSf'
-        ShortFormHelperService.preference_proof_options_work
-      when 'liveInSf'
-        ShortFormHelperService.preference_proof_options_live
-      when 'neighborhoodResidence'
-        ShortFormHelperService.preference_proof_options_live
-      when 'rentBurden'
-        ShortFormHelperService.preference_proof_options_rent_burden
-      else
-        ShortFormHelperService.preference_proof_options_default
+    ShortFormHelperService.proofOptions(pref_type)
 
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)

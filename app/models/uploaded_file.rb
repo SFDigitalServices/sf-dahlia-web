@@ -12,6 +12,9 @@ class UploadedFile < ActiveRecord::Base
     # because NRHP proof doubles as liveInSf proof
     if preference.to_s == 'neighborhoodResidence'
       'NRHP-liveInSf'
+    elsif preference.to_s == 'rentBurden'
+      # NOTE: this won't need to be in the filename after Salesforce attachment refactor
+      "rentBurden-#{rent_burden_type} #{address}"
     else
       preference
     end

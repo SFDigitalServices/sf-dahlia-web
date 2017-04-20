@@ -30,6 +30,7 @@ do ->
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
+      initRentBurdenDocs: jasmine.createSpy()
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -243,7 +244,7 @@ do ->
       afterEach ->
         resetFakePeople()
 
-      describe 'applicant does not work in SF', ->
+      describe 'for applicant who does not work in SF: ', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
@@ -253,7 +254,7 @@ do ->
           ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
 
-      describe 'applicant does not live in SF', ->
+      describe 'for applicant who does not live in SF: ', ->
         beforeEach ->
           fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.householdMembers = []
@@ -263,7 +264,7 @@ do ->
           ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.liveInSf).not.toEqual(true)
 
-        describe 'was previously eligible and selected for liveInSf', ->
+        describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
             fakeApplicant.home_address = fakeNonSFAddress
             ShortFormApplicationService.householdMembers = []
@@ -271,15 +272,19 @@ do ->
             ShortFormApplicationService.application.completedSections['Preferences'] = true
             ShortFormApplicationService.preferences =
               liveInSf: true
-              liveInSf_file: 'somefile'
-              liveInSf_proof_option: 'proofOption'
               liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+              documents: {
+                liveInSf: {
+                  file: {name: 'img.jpg'}
+                  proofOption: 'some option'
+                }
+              }
 
-          it 'clear liveInSf preference data', ->
+          it 'should clear liveInSf preference data', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
-            expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
+            expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
 
           it 'invalidates preferences section', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
@@ -293,7 +298,7 @@ do ->
       afterEach ->
         resetFakePeople()
 
-      describe 'household member has separate sf address', ->
+      describe 'for household member with separate SF address', ->
         beforeEach ->
           fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
@@ -304,7 +309,7 @@ do ->
         it 'should return array of household member who lives in SF', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(1)
 
-      describe 'household member has the same sf address as the applicant', ->
+      describe 'for household member with same SF address as the applicant', ->
         beforeEach ->
           fakeApplicant.home_address = fakeSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
@@ -447,9 +452,15 @@ do ->
             expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual true
 
     describe 'copyNRHPtoLiveInSf', ->
-      it 'copies NRHP member to liveInSf', ->
+      beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
         ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.documents.neighborhoodResidence = {
+          proofOption: 'Gas Bill'
+          file: {}
+        }
+
+      it 'copies NRHP member to liveInSf', ->
         ShortFormApplicationService.copyNRHPtoLiveInSf()
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
 
@@ -633,17 +644,19 @@ do ->
 
     describe 'cancelPreference', ->
       beforeEach ->
-        ShortFormApplicationService.preferences["liveInSf"] = true
-        ShortFormApplicationService.preferences["liveInSf_household_member"] = 'Jane Doe'
-        ShortFormApplicationService.preferences["liveInSf_proof_option"] = 'Telephone Bill'
-        ShortFormApplicationService.preferences["liveInSf_proof_file"] = 'Some file'
+        ShortFormApplicationService.preferences.liveInSf = true
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.documents.liveInSf = {
+          proofOption: 'Telephone Bill'
+          file: {name: 'somefile.pdf'}
+        }
 
       it 'should clear preference name, household member, proof option and file', ->
-        ShortFormApplicationService.cancelPreference("liveInSf")
-        expect(ShortFormApplicationService.preferences["liveInSf"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
-        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalled()
+        ShortFormApplicationService.cancelPreference('liveInSf')
+        expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
+        listingId = ShortFormApplicationService.listing.Id
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', listingId)
 
     describe 'checkHouseholdEligiblity', ->
       afterEach ->

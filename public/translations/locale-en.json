@@ -190,7 +190,8 @@
         "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
-        "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent."
+        "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
+        "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?"
     },
     "E2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -441,6 +442,7 @@
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
+        "UPLOAD_ADDITIONAL_PROOF": "Upload Additional Proof",
         "UPLOAD_COPY_OF_LEASE": "Upload Copy of Lease",
         "UPLOAD_LEASE_DESCRIPTION": "Please upload the first page, or whichever page shows the rent amount.",
         "UPLOAD_PROOF_INSTRUCTIONS_1": "If you’re on a smartphone, you can take a picture.",
