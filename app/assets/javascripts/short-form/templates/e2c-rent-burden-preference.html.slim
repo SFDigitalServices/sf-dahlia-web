@@ -11,9 +11,9 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        rent-burden-preference(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}"  translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" current-live-work-type="currentLiveWorkType" grouped-household-address-index="0" required="preferenceRequired('rentBurden')" ng-if="application.groupedHouseholdAddresses.length == 1")
+        rent-burden-preference(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}"  translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" grouped-household-address-index="0" required="preferenceRequired('rentBurden')" ng-if="application.groupedHouseholdAddresses.length == 1")
 
-        / TBD:  rent-burden-preference-dashboard(title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" preference="rentBurden" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" ng-if="application.groupedHouseholdAddresses.length > 1")
+        rent-burden-preference-dashboard(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" required="preferenceRequired('rentBurden')" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" ng-if="application.groupedHouseholdAddresses.length > 1")
 
       preference-opt-out preference="rentBurden" application="application" invalid="inputInvalid('rentBurden')" cancel-preference="cancelPreference('rentBurden')"
 

@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'rentBurdenPreference',
   bindings:
     application: '<'
-    form: '<'
     title: '@'
     translatedDescription: '@'
     groupedHouseholdAddressIndex: '<'
