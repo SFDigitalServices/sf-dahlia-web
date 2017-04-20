@@ -191,7 +191,9 @@
         "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
         "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
-        "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?"
+        "START_UPLOAD": "Start Upload",
+        "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
+        "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
     "E2F_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
@@ -426,7 +428,6 @@
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
-        "PROOF_OF_ADDRESS": "Proof of address",
         "RECENT_APPLICATION": "Recent Application",
         "RENT_AT_ADDRESS": "Rent at {{address}}",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
