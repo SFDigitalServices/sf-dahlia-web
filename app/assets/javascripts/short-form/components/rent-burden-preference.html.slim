@@ -37,3 +37,8 @@
             svg
               use xlink:href="#i-plus"
           | {{'LABEL.UPLOAD_ADDITIONAL_PROOF' | translate}}
+
+    .form-group.text-center ng-if="$ctrl.additionalUploadActivated"
+      p.margin-top--half
+        button.button-link.t-small.button-lined type="button" ng-click="$ctrl.additionalUploadActivated = false"
+          | {{'LABEL.CANCEL_UPLOAD' | translate}}
