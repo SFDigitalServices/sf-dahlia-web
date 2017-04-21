@@ -135,6 +135,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
+      'rent-burden-preference-edit',
       'review-summary',
       'confirmation'
     ]

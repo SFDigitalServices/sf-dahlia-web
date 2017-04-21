@@ -55,6 +55,7 @@ ShortFormApplicationService = (
       Income: {}
       Review: {}
 
+  Service.currentRentBurdenAddress = {}
   Service.current_id = 0
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
@@ -248,6 +249,10 @@ ShortFormApplicationService = (
         groupedAddress.dontPayRent = Service.application.groupedHouseholdAddresses[matchedIndex].dontPayRent
 
     angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
+
+  Service.setRentBurdenAddressIndex = (index) ->
+    angular.copy(Service.application.groupedHouseholdAddresses[index], Service.currentRentBurdenAddress)
+    Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
     if preference == 'neighborhoodResidence'
