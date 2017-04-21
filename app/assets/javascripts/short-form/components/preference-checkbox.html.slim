@@ -3,7 +3,7 @@
   label.checkbox-block_label for="preferences-{{$ctrl.preference}}" ng-class="{ 'margin-bottom--2x': !($ctrl.description || $ctrl.shortDescription) }"
     strong.form-label.caps
       | {{$ctrl.title}}
-    p.checkbox-block_note translate="{{$ctrl.shortDescription}}" ng-if="$ctrl.shortDescription"
+    p.checkbox-block_note translate='{{$ctrl.shortDescription}}' ng-if="$ctrl.shortDescription"
 
   .checkbox-block_note-inner ng-if="$ctrl.description"
     a.toggler.toggle-more.hide-for-print.open-bottom title="read {{ $ctrl.showDescription ? 'less' : 'more' }}" ng-class="{ 'margin-top-none' : $ctrl.shortDescription, open: $ctrl.showDescription }" ng-click="$ctrl.showDescription = !$ctrl.showDescription"
@@ -11,6 +11,6 @@
       span.ui-icon.ui-tiny.i-primary
         svg
           use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-    p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-show="$ctrl.showDescription" translate="{{$ctrl.description}}"
+    p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-show="$ctrl.showDescription" translate='{{$ctrl.description}}'
     p.show-for-print.checkbox-block_more ng-show="$ctrl.showDescription && $ctrl.displayMoreInfoLink"
       a.lined target="_blank" href="http://sfmohcd.org/housing-preference-programs" translate="LABEL.FIND_OUT_MORE_ABOUT_PREFERENCES"
