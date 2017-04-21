@@ -59,3 +59,83 @@ do ->
         FileUploadService.deletePreferenceFile(prefType)
         httpBackend.flush()
         expect(FileUploadService.preferences.documents[prefType].file).toEqual null
+
+    describe 'Service.rentBurdenFile', ->
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: 'lease file'
+                rent:
+                  1: 'rent file'
+      describe 'lease file', ->
+        it 'returns the correct lease file', ->
+          opts =
+            address: '123 Main St'
+            rentBurdenType: 'lease'
+          expect(FileUploadService.rentBurdenFile(opts)).toEqual('lease file')
+
+      describe 'rent file', ->
+        it 'returns the correct rent file', ->
+          opts =
+            address: '123 Main St'
+            rentBurdenType: 'rent'
+            index: 1
+          expect(FileUploadService.rentBurdenFile(opts)).toEqual('rent file')
+
+    describe 'Service.clearRentBurdenFile', ->
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {}
+
+      it 'clears pertinent file', ->
+        opts =
+          address: '123 Main St'
+          rentBurdenType: 'lease'
+        FileUploadService.clearRentBurdenFile(opts)
+        leaseFile = FileUploadService.preferences.documents.rentBurden['123 Main St'].lease
+        expect(leaseFile).toEqual {}
+
+    describe 'Service.clearRentBurdenFiles', ->
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {this: 'some file'}
+                rent:
+                  1: {this: 'some file'}
+
+      it 'clears all rent burden files', ->
+        FileUploadService.clearRentBurdenFiles('123 Main St')
+        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden['123 Main St']
+        expectedResult = { lease: {  }, rent: {  } }
+        expect(rentBurdenFiles).toEqual expectedResult
+
+    describe 'Service.deleteRentBurdenPreferenceFiles', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {this: 'some file'}
+                rent:
+                  1: {this: 'some file'}
+
+      it 'should delete all rent burden preference files', ->
+        stubAngularAjaxRequest httpBackend, "/api/v1/short-form/rent-burden-proof", 200
+        FileUploadService.deleteRentBurdenPreferenceFiles('listingID')
+        httpBackend.flush()
+        expectedResult = { lease: {  }, rent: {  } }
+        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden['123 Main St']
+        expect(rentBurdenFiles).toEqual expectedResult
+
+

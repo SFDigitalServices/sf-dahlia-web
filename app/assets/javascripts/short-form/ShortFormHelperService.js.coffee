@@ -108,7 +108,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { address: address }
 
   Service.membersTranslationVariable = (members) ->
-    { user: $filter('listify')(members) }
+    { user: $filter('listify')(members, "firstName")}
 
   return Service
 

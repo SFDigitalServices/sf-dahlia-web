@@ -80,7 +80,8 @@ angular.module('customFilters', [])
   # will turn an array of items into a comma separated list, ending with "and" e.g.
   # ['john', 'jane', 'joe', 'dana'] | listify
   # 'john, jane, joe and dana'
-  (input) ->
+  (input, fieldName) ->
     # input must be an array
     return '' unless input.length
-    _.replace(input.join(', '), /,(?!.*,)/, ' and')
+    list = if fieldName then  _.map(input, fieldName) else input
+    _.replace(list.join(', '), /,(?!.*,)/, ' and')

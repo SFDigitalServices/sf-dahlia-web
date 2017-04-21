@@ -234,9 +234,12 @@ do ->
 
     describe 'groupHouseholdAddresses', ->
       it 'sets up groupedHouseholdAddresses array on application', ->
+        setupFakeApplicant()
+        ShortFormApplicationService.applicant = fakeApplicant
         ShortFormApplicationService.groupHouseholdAddresses()
         expect(ShortFormApplicationService.application.groupedHouseholdAddresses.length).toEqual 1
-        expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual ['You']
+        correctValue = { fullName: 'Bob Williams (You)', firstName: 'You' }
+        expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual [correctValue]
 
     describe 'refreshPreferences', ->
       beforeEach ->
