@@ -3,7 +3,6 @@ angular.module('dahlia.components')
   bindings:
     preference: '@'
     application: '<'
-    form: '<'
     hasProof: '<'
     title: '@'
     translatedDescription: '@'

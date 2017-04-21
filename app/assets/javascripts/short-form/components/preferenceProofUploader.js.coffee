@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'preferenceProofUploader',
   bindings:
     application: '<'
-    form: '<'
     preference: '@'
     # can get passed through to hardcode a proofType
     proofType: '@'

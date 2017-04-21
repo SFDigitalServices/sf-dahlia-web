@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'rentBurdenPreference',
   bindings:
     application: '<'
-    form: '<'
     title: '@'
     translatedDescription: '@'
     groupedHouseholdAddressIndex: '<'
@@ -20,7 +19,7 @@ angular.module('dahlia.components')
       @address = @groupedHouseholdAddress.address
       @monthlyRent = @groupedHouseholdAddress.monthlyRent
       @members = @groupedHouseholdAddress.members
-      @proofOptions = ShortFormHelperService.preference_proof_options_rent_burden
+      @proofOptions = ShortFormHelperService.proofOptions('rentBurden')
       @additionalUploadActivated = false
 
       rentBurdenDocs = @application.preferences.documents.rentBurden
