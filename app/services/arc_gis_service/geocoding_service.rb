@@ -19,7 +19,7 @@ module ArcGISService
     end
 
     def clean_address
-      address_string = "#{@address[:address1]}, #{@address[:city]}, CA"
+      address_string = "#{@address[:address1]}, #{@address[:city]}, #{@address[:state]}"
       addr = StreetAddress::US.parse(address_string)
       return nil unless addr
       street = addr.street
@@ -29,6 +29,7 @@ module ArcGISService
         # do not include unit type / unit number in :street
         street: "#{addr.number} #{street} #{addr.street_type}",
         city: addr.city || 'San Francisco',
+        state: addr.state || 'CA',
       }
     end
 
@@ -36,7 +37,9 @@ module ArcGISService
       {
         Street: @address[:street],
         City: @address[:city],
+        State: @address[:state],
         f: 'pjson',
+        outfields: 'loc_name',
       }
     end
 
