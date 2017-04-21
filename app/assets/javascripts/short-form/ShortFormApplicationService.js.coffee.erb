@@ -217,7 +217,10 @@ ShortFormApplicationService = (
     primaryAddress = Service.applicant.home_address.address1
     primaryAddress += ' ' + Service.applicant.home_address.address2 if Service.applicant.home_address.address2
     groupedAddress.address = primaryAddress
-    groupedAddress.members = ['You']
+    primaryApplicant =
+      fullName: "#{Service.applicant.firstName} #{Service.applicant.lastName} (You)"
+      firstName: "You"
+    groupedAddress.members = [primaryApplicant]
     groupedAddresses.push(angular.copy(groupedAddress))
 
     _.each Service.householdMembers, (member) ->
@@ -228,10 +231,13 @@ ShortFormApplicationService = (
         groupedAddress.address = member.home_address.address1
         groupedAddress.address += ' ' + member.home_address.address2 if member.home_address.address2
       matchedIndex = _.findIndex(groupedAddresses, { address: groupedAddress.address})
+      name =
+        fullName: "#{member.firstName} #{member.lastName}"
+        firstName: member.firstName
       if matchedIndex > -1
-        groupedAddresses[matchedIndex].members.push(member.firstName)
+        groupedAddresses[matchedIndex].members.push(name)
       else
-        groupedAddress.members = [member.firstName]
+        groupedAddress.members = [name]
         groupedAddresses.push(angular.copy(groupedAddress))
 
     _.each groupedAddresses, (groupedAddress) ->
