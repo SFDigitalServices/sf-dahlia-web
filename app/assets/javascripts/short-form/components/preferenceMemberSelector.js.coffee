@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'preferenceMemberSelector',
   bindings:
     application: '<'
-    form: '<'
     eligibleMembers: '<'
     preference: '@'
     label: '@'

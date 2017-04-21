@@ -2,7 +2,6 @@ angular.module('dahlia.components')
 .component 'liveWorkComboPreference',
   bindings:
     application: '<'
-    form: '<'
     currentLiveWorkType: '<'
     title: '@'
     translatedDescription: '@'

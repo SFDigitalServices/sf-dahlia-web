@@ -329,6 +329,10 @@ class Api::V1::ShortFormController < ApiController
                 mailingState
                 mailingZip
                 neighborhoodPreferenceMatch
+                xCoordinate
+                yCoordinate
+                whichComponentOfLocatorWasUsed
+                candidateScore
               ),
             },
             {
@@ -365,6 +369,10 @@ class Api::V1::ShortFormController < ApiController
                 state
                 zip
                 neighborhoodPreferenceMatch
+                xCoordinate
+                yCoordinate
+                whichComponentOfLocatorWasUsed
+                candidateScore
               ),
             },
             :listingID,
