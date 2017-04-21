@@ -334,6 +334,7 @@
         "APPLICATION_CONTACT_DETAILS": "Application Contact Details",
         "APPLY_ONLINE": "Apply Online",
         "CANCEL": "Cancel",
+        "CANCEL_UPLOAD": "Cancel upload",
         "CITY": "City Name",
         "CLEAR": "Clear",
         "CONFIRM_NEW_PASSWORD": "Confirm New Password",
@@ -426,7 +427,6 @@
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
-        "PROOF_OF_ADDRESS": "Proof of address",
         "RECENT_APPLICATION": "Recent Application",
         "RENT_AT_ADDRESS": "Rent at {{address}}",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",

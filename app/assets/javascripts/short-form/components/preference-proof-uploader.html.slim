@@ -48,8 +48,11 @@
     .media-body
       strong
         | {{$ctrl.proofDocument.proofOption}}
-      p.t-micro ng-text-truncate="$ctrl.proofDocument.file.name" ng-tt-chars-threshold="25" ng-tt-no-toggling=""
-      ' {{'LABEL.UPLOADED' | translate}}:
-      | {{$ctrl.proofDocument.file.created_at | dateSuffix}}
+      p.t-micro
+        | {{$ctrl.proofDocument.file.name | limitTo: 25 }}
+        | {{$ctrl.proofDocument.file.name.length > 25 ? '...' : ''}}
+      p.t-small
+        ' {{'LABEL.UPLOADED' | translate}}:
+        | {{$ctrl.proofDocument.file.created_at | dateSuffix}}
       button.button-link.attachment-action.a-alert-dark type="button" ng-click="$ctrl.deletePreferenceFile($ctrl.opts)"
         | Delete
