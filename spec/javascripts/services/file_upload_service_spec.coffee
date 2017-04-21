@@ -59,3 +59,27 @@ do ->
         FileUploadService.deletePreferenceFile(prefType)
         httpBackend.flush()
         expect(FileUploadService.preferences.documents[prefType].file).toEqual null
+
+    describe 'Service.rentBurdenFile', ->
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: 'lease file'
+                rent:
+                  1: 'rent file'
+      describe 'lease file', ->
+        it 'returns the correct lease file', ->
+          opts =
+            address: '123 Main St'
+            rentBurdenType: 'lease'
+          expect(FileUploadService.rentBurdenFile(opts)).toEqual('lease file')
+
+      describe 'rent file', ->
+        it 'returns the correct rent file', ->
+          opts =
+            address: '123 Main St'
+            rentBurdenType: 'rent'
+            index: 1
+          expect(FileUploadService.rentBurdenFile(opts)).toEqual('rent file')
