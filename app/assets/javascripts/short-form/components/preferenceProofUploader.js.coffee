@@ -33,7 +33,7 @@ angular.module('dahlia.components')
         # @proofType means that proofOption gets hardcoded to the set value
         if @proofType
           @proofDocument.proofOption = @proofType
-        else if !@proofDocument.file
+        else if !@proofDocument && !@proofDocument.file
           @proofDocument.proofOption = null
 
       @liveOrNeighborhoodPreference = =>
