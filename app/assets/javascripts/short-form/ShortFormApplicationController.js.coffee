@@ -173,13 +173,7 @@ ShortFormApplicationController = (
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.currentForm()
-    return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
-    field = form[fieldName]
-    if form && field
-      field.$invalid && (field.$touched || form.$submitted)
-    else
-      false
+    ShortFormApplicationService.inputInvalid(fieldName, form, identifier)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -339,7 +333,7 @@ ShortFormApplicationController = (
     else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkAfterLiveWork()
 
   # this is called after preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
@@ -363,6 +357,8 @@ ShortFormApplicationController = (
   $scope.checkAfterLiveWork = ->
     if ShortFormApplicationService.eligibleForAssistedHousing()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else if ShortFormApplicationService.eligibleForRentBurden()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
     else
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
@@ -431,22 +427,6 @@ ShortFormApplicationController = (
   $scope.preferenceRequired = (preference) ->
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
-
-  ###### Attachment File Uploads ########
-  $scope.uploadProof = (file, prefType, docType) ->
-    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
-
-  $scope.hasPreferenceFile = (fileType) ->
-    FileUploadService.hasPreferenceFile(fileType)
-
-  $scope.deletePreferenceFile = (prefType) ->
-    FileUploadService.deletePreferenceFile(prefType, $scope.listing.Id)
-
-  $scope.preferenceFileError = (fileType) ->
-    FileUploadService.preferenceFileError(fileType)
-
-  $scope.preferenceFileIsLoading = (fileType) ->
-    FileUploadService.preferenceFileIsLoading(fileType)
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->
@@ -637,15 +617,7 @@ ShortFormApplicationController = (
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
-    switch pref_type
-      when 'workInSf'
-        ShortFormHelperService.preference_proof_options_work
-      when 'liveInSf'
-        ShortFormHelperService.preference_proof_options_live
-      when 'neighborhoodResidence'
-        ShortFormHelperService.preference_proof_options_live
-      else
-        ShortFormHelperService.preference_proof_options_default
+    ShortFormHelperService.proofOptions(pref_type)
 
   $scope.applicantFirstName = ->
     ShortFormHelperService.applicantFirstName($scope.applicant)

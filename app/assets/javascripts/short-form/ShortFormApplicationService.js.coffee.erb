@@ -33,6 +33,9 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       optOut: {}
+      documents: {
+        rentBurden: {}
+      }
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     groupedHouseholdAddresses: []
     STUB_prioritiesSelected: {}
@@ -76,6 +79,16 @@ ShortFormApplicationService = (
     Service.initServices()
 
   Service.resetUserData()
+  # --- end initialization
+
+  Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
+    return false unless form
+    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
+    field = form[fieldName]
+    if form && field
+      field.$invalid && (field.$touched || form.$submitted)
+    else
+      false
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
@@ -222,6 +235,7 @@ ShortFormApplicationService = (
         groupedAddresses.push(angular.copy(groupedAddress))
 
     _.each groupedAddresses, (groupedAddress) ->
+      ShortFormDataService.initRentBurdenDocs(groupedAddress.address, Service.application)
       matchedIndex = _.findIndex(Service.application.groupedHouseholdAddresses, { address: groupedAddress.address})
       if matchedIndex > -1
         groupedAddress.monthlyRent = Service.application.groupedHouseholdAddresses[matchedIndex].monthlyRent
@@ -248,9 +262,11 @@ ShortFormApplicationService = (
   Service.unsetPreferenceFields = (preference) ->
     # clear out all fields for this preference
     Service.preferences[preference] = null
-    Service.preferences["#{preference}_household_member"] = null
-    Service.preferences["#{preference}_proof_option"] = null
-    FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+    if preference == 'rentBurden'
+      FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
+    else
+      Service.preferences["#{preference}_household_member"] = null
+      FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
@@ -307,6 +323,17 @@ ShortFormApplicationService = (
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
 
+  Service.eligibleMembers = (preference) ->
+    switch preference
+      when 'liveInSf'
+        Service.liveInSfMembers()
+      when 'workInSf'
+        Service.workInSfMembers()
+      when 'neighborhoodResidence'
+        Service.neighborhoodResidenceMembers()
+      else
+        Service.fullHousehold()
+
   Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
     liveInSfMembers = Service.application.householdMembers.filter (member) ->
@@ -348,7 +375,19 @@ ShortFormApplicationService = (
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
+    # can only have a Yes answer if assistedHousingRentBurden preference is on this listing
     Service.application.STUB_householdPublicHousing == 'Yes'
+
+  Service.eligibleForRentBurden = ->
+    totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
+    incomeTotal = parseFloat(Service.application.householdIncome.incomeTotal)
+    if Service.application.householdIncome.incomeTimeframe == 'per_month'
+      ratio = totalMonthlyRent / incomeTotal
+    else
+      ratio = (totalMonthlyRent * 12) / incomeTotal
+
+    # can only have a No answer if assistedHousing/RentBurden preference is on this listing
+    Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
@@ -366,10 +405,10 @@ ShortFormApplicationService = (
     # copy NRHP values to liveInSf
     neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
-    proofOption = Service.preferences.neighborhoodResidence_proof_option
+    proofOption = Service.preferences.documents.neighborhoodResidence.proofOption
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
-    Service.preferences.liveInSf_proof_option = proofOption
+    Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"

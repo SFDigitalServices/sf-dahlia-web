@@ -20,6 +20,7 @@ do ->
         applicationForm:
           $valid: true
           $setPristine: -> undefined
+      inputInvalid: jasmine.createSpy()
       listing: fakeListing
       applicant:
         home_address: { address1: null, city: null, state: null, zip: null }
@@ -72,6 +73,8 @@ do ->
       submitApplication: (options={}) ->
       listingHasPreference: ->
       applicationHasPreference: ->
+      eligibleForAssistedHousing: ->
+      eligibleForRentBurden: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -85,7 +88,8 @@ do ->
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
     fakeFileUploadService =
-      uploadProof: jasmine.createSpy()
+      deletePreferenceFile: jasmine.createSpy()
+      hasPreferenceFile: jasmine.createSpy()
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -435,13 +439,42 @@ do ->
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
-    describe 'uploadProof', ->
-      it 'calls uploadProof on FileUploadService', ->
-        file = {}
-        pref = 'liveInSf'
-        docType = 'water bill'
-        scope.uploadProof(file, pref, docType)
-        expect(fakeFileUploadService.uploadProof).toHaveBeenCalledWith(file, pref, docType, scope.listing.Id)
+    # NOTE: could be moved to component unit tests?
+    # describe 'deletePreferenceFile', ->
+    #   it 'calls deletePreference files on FileUploadService with correct params', ->
+    #     scope.listing.Id = '1234'
+    #     opts =
+    #       preference: 'somePreference'
+    #     scope.deletePreferenceFile(opts)
+    #     expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith(opts.preference, scope.listing.Id)
+    #
+    # describe 'hasPreferenceFile', ->
+    #   it 'calls hasPreferenceFile files on FileUploadService with correct params', ->
+    #     opts =
+    #       preference_proof_file: 'somePreference_proof_file'
+    #     scope.hasPreferenceFile(opts)
+    #     expect(fakeFileUploadService.hasPreferenceFile).toHaveBeenCalledWith(opts.preference_proof_file)
+
+    describe 'checkAfterLiveWork', ->
+      describe 'eligible for assisted housing', ->
+        it 'routes to assisted housing preference page', ->
+          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(true)
+          scope.checkAfterLiveWork()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.assisted-housing-preference')
+
+      describe 'eligible for rent burden', ->
+        it 'routes to rent burden preference page', ->
+          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(false)
+          spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(true)
+          scope.checkAfterLiveWork()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.rent-burden-preference')
+
+      describe 'not eligible for assisted housing or rent burden', ->
+        it 'routes to preferences-programs page', ->
+          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(false)
+          spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(false)
+          scope.checkAfterLiveWork()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->

@@ -1,21 +1,21 @@
 {
   "name": "sf-dahlia-web",
   "resolutions": {
-    "angular": "1.4.14",
+    "angular": "1.5.11",
     "angular-translate": "2.13.0"
   },
   "dependencies": {
-    "angular": "1.4.14",
-    "angular-aria": "1.4.14",
+    "angular": "1.5.11",
+    "angular-aria": "1.5.11",
     "angular-clipboard": "1.1.2",
     "angular-cookie": "4.1.0",
     "angular-filter": "0.5.11",
     "angular-foundation": "Exygy/angular-foundation-bower#dac08966b3bd28548296efc98d21e19a0af46c4c",
     "angular-linkify": "1.2.0",
     "angular-loading-overlay": "1.1.1",
-    "angular-mocks": "1.4.14",
+    "angular-mocks": "1.5.11",
     "angular-pageslide-directive": "1.0.13",
-    "angular-sanitize": "1.4.14",
+    "angular-sanitize": "1.5.11",
     "angular-scroll": "1.0.0",
     "angular-translate": "2.13.0",
     "angular-translate-loader-static-files": "2.13.0",

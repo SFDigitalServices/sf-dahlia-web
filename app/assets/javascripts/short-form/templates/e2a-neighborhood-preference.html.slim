@@ -12,9 +12,11 @@
     .form-group ng-class="{ error: inputInvalid('neighborhoodResidence') }"
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
-        preference-with-proof(title="{{'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="neighborhoodResidence" dataevent="gtm-preference-neighborhood" translated-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" uploader-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" required="preferenceRequired('neighborhoodResidence')")
 
-      preference-opt-out preference="neighborhoodResidence" application="application" invalid="inputInvalid('neighborhoodResidence')"
+        preference(preference="neighborhoodResidence" has-proof="true" application="application" title="{{'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  translated-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.DESCRIPTION" translated-short-description="E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.SHORT_DESCRIPTION" required="preferenceRequired('neighborhoodResidence')")
+
+
+      preference-opt-out preference="neighborhoodResidence" application="application" invalid="inputInvalid('neighborhoodResidence')" cancel-preference="cancelPreference('neighborhoodResidence')"
 
       small.error ng-if="inputInvalid('neighborhoodResidence')"
         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
