@@ -23,5 +23,13 @@ angular.module('dahlia.components')
         if !@application.preferences.rentBurden
           FileUploadService.deleteRentBurdenPreferenceFiles(listingId)
 
+      @hasFiles = (address) =>
+        files = @application.preferences.documents.rentBurden[address]
+        files.lease.file || _.some(_.map(files.rent, 'file'))
+
+      @addressLinkText = (address) =>
+        # to be translated:
+        if @hasFiles(address) then 'Edit' else 'Start Upload'
+
       return ctrl
   ]

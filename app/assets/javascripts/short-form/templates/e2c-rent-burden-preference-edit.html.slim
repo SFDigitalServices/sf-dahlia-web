@@ -10,9 +10,14 @@
 
       rent-burden-preference(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}"  translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" grouped-household-address-index="currentRentBurdenAddress.index" show-checkbox="false")
 
-
       small.error ng-if="inputInvalid('rentBurden')"
         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
-  / TBD: "done with this address" saves and goes back to dashboard
-  / TBD: "cancel adding documents" cancels and goes back to dashboard
+
+  .button-pager
+    .button-pager_row.primary
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.DONE_WITH_THIS_ADDRESS' | translate}}"
+
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ng-click="goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')"
+        | {{'LABEL.CANCEL_ADDING_DOCUMENTS' | translate}}

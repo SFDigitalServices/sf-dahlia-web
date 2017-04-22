@@ -9,4 +9,5 @@
         | {{ address.address }}
       p.info-item_value
         | {{ address.members | listify : 'fullName' }}
-      a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burden-preference-edit({index: $index})" translate="E2C_RENT_BURDEN_PREFERENCE.START_UPLOAD"
+      a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burden-preference-edit({index: $index})"
+        | {{ $ctrl.addressLinkText(address.address) }}

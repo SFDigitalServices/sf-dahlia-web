@@ -54,6 +54,7 @@ do ->
           'live-work-preference'
           'assisted-housing-preference'
           'rent-burden-preference'
+          'rent-burden-preference-edit'
           'preferences-programs'
           'general-lottery-notice'
         ]
@@ -119,7 +120,7 @@ do ->
       it 'gets the previous page href to be used by the back button', ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousState = ShortFormNavigationService.backPageState()
-        expect(previousState).toEqual $state.href('dahlia.short-form-application.name')
+        expect(previousState).toEqual 'dahlia.short-form-application.name'
 
     describe 'previousPage', ->
       it 'gets the name of the previous page based on your current page', ->
