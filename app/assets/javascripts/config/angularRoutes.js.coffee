@@ -508,9 +508,10 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$state', 'ListingService', 'ShortFormApplicationService',
-          ($stateParams, $state, ListingService, ShortFormApplicationService) ->
+          '$stateParams', '$state', '$q', 'ListingService', 'ShortFormApplicationService',
+          ($stateParams, $state, $q, ListingService, ShortFormApplicationService) ->
             # store the listing in ListingService and kick out if it's not open for applications
+            deferred = $q.defer()
             ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
               # load listing preferences
               ListingService.getListingPreferences().then ->
@@ -519,9 +520,12 @@
                 # even if user is not necessarily logged in, we always check if they have an application
                 # this is because "loggedIn()" may not return true on initial load
                 ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+                  deferred.resolve(ShortFormApplicationService.application)
                   if ShortFormApplicationService.application.status == 'Submitted'
                     # send them to their review page if the application is already submitted
                     $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
+
+            return deferred.promise
         ]
     })
     # Short form: "You" section
@@ -717,6 +721,18 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e2c-rent-burden-preference.html'
+    })
+    .state('dahlia.short-form-application.rent-burden-preference-edit', {
+      url: '/rent-burden-preference/:index'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2c-rent-burden-preference-edit.html'
+      resolve:
+        addressIndex: [
+          '$stateParams', 'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
+        ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'

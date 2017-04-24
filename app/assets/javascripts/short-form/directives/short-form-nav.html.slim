@@ -5,5 +5,5 @@
   .app-card_nav
     ol.progress-nav
       li.progress-nav_item ng-repeat="section in sections track by $index" ng-class="{active: isActiveSection(section), disabled: sectionDisabled(section, $index)}" ng-disabled="sectionDisabled(section, $index)"
-        a ng-href="{{ngHref(section)}}" ng-click="clearHouseholdErrorMessage()"
+        a ng-href="{{ngHref(section)}}"
           | {{section.name}}
