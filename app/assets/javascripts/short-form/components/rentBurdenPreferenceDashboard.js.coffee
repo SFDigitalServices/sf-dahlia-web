@@ -8,8 +8,8 @@ angular.module('dahlia.components')
 
   templateUrl: 'short-form/components/rent-burden-preference-dashboard.html'
   controller:
-    ['ShortFormApplicationService','FileUploadService',
-    (ShortFormApplicationService, FileUploadService) ->
+    ['ShortFormApplicationService','FileUploadService', '$translate',
+    (ShortFormApplicationService, FileUploadService, $translate) ->
       ctrl = @
       @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
 
@@ -28,8 +28,7 @@ angular.module('dahlia.components')
         files.lease.file || _.some(_.map(files.rent, 'file'))
 
       @addressLinkText = (address) =>
-        # to be translated:
-        if @hasFiles(address) then 'Edit' else 'Start Upload'
+        if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
 
       return ctrl
   ]

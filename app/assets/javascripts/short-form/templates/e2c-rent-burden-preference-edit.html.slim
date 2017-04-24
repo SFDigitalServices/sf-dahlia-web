@@ -8,11 +8,7 @@
   .app-inner
     .form-group
 
-      rent-burden-preference(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}"  translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" grouped-household-address-index="currentRentBurdenAddress.index" show-checkbox="false")
-
-      small.error ng-if="inputInvalid('rentBurden')"
-        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
-
+      rent-burden-preference(application="application"  grouped-household-address-index="currentRentBurdenAddress.index" show-checkbox="false")
 
   .button-pager
     .button-pager_row.primary
