@@ -41,6 +41,7 @@ ShortFormApplicationController = (
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
   $scope.labels = {}
+  $scope.customInvalidMessage = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -373,6 +374,19 @@ ShortFormApplicationController = (
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 
+  $scope.checkForRentBurdenFiles = ->
+    if false # hasFiles
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      $scope.setRentBurdenError()
+      $scope.handleErrorState()
+
+  $scope.setRentBurdenError = ->
+    $scope.customInvalidMessage = 'rent burden error'
+
+  $scope.clearRentBurdenError = (message) ->
+    $scope.customInvalidMessage = null
+
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
@@ -416,6 +430,7 @@ ShortFormApplicationController = (
     $scope.neighborhoodResidenceAddresses().join(' and ')
 
   $scope.cancelPreference = (preference) ->
+    $scope.clearRentBurdenError() if preference == 'rentBurden'
     ShortFormApplicationService.cancelPreference(preference)
 
   $scope.optOutField = (preference) ->
@@ -804,6 +819,7 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.addressError = false
+    $scope.clearRentBurdenError()
     $scope.clearEligibilityErrors()
     ShortFormNavigationService.isLoading(false)
 

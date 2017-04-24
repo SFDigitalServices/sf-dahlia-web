@@ -75,7 +75,8 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
     'assisted-housing-preference': {path: 'preferences-programs'}
-    'rent-burden-preference': {path: 'preferences-programs'}
+    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
