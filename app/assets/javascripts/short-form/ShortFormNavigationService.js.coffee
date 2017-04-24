@@ -38,6 +38,7 @@ ShortFormNavigationService = (
         'live-work-preference'
         'assisted-housing-preference'
         'rent-burden-preference'
+        'rent-burden-preference-edit'
         'preferences-programs'
         'general-lottery-notice'
       ]
@@ -136,6 +137,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
+      'rent-burden-preference-edit',
       'review-summary',
       'confirmation'
     ]
@@ -155,7 +157,7 @@ ShortFormNavigationService = (
     Service._sectionOfPage(Service._currentPage())
 
   Service.backPageState = ->
-    $state.href("dahlia.short-form-application.#{Service.previousPage()}")
+    "dahlia.short-form-application.#{Service.previousPage()}"
 
   Service.previousPage = ->
     application = ShortFormApplicationService.application

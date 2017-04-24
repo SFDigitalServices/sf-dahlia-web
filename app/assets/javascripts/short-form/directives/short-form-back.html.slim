@@ -1,3 +1,4 @@
 .form-back ng-if="showBackButton"
-  a.lined ng-href="{{backPageHref}}" ng-click="clearHouseholdErrorMessage()"
+  / TODO: change this to <button> with correct styling to look the same as it does now
+  a.lined ng-click="goToAndSetPristine(backPageState)"
     | {{'T.BACK' | translate}}

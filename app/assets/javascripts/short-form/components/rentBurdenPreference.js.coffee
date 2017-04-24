@@ -6,6 +6,7 @@ angular.module('dahlia.components')
     translatedDescription: '@'
     groupedHouseholdAddressIndex: '<'
     required: '&'
+    showCheckbox: '<'
 
   templateUrl: 'short-form/components/rent-burden-preference.html'
   controller:
@@ -15,6 +16,7 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
+      @showCheckbox = true if @showCheckbox == undefined
       @groupedHouseholdAddress = @application.groupedHouseholdAddresses[@groupedHouseholdAddressIndex]
       @address = @groupedHouseholdAddress.address
       @monthlyRent = @groupedHouseholdAddress.monthlyRent

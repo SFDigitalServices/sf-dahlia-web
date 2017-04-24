@@ -29,6 +29,7 @@ ShortFormApplicationController = (
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ShortFormApplicationService.listing
+  $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
@@ -149,13 +150,15 @@ ShortFormApplicationController = (
     else
       $state.go(path)
 
-  $scope.goToAndLeaveForm = (path, params) ->
+  $scope.goToAndSetPristine = (path, params) ->
     # go to a page without the Form Success analytics tracking
+    # and reset the form validation state
+    form = $scope.form.applicationForm
+    form.$setPristine()
     if params
       $state.go(path, params)
     else
       $state.go(path)
-
 
   $scope.handleErrorState = ->
     # show error alert
@@ -472,7 +475,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelHouseholdMember()
     $scope.form.applicationForm.$setPristine()
     # go back to household members page without tracking Form Success
-    $scope.goToAndLeaveForm('dahlia.short-form-application.household-members')
+    $scope.goToAndSetPristine('dahlia.short-form-application.household-members')
 
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
@@ -671,14 +674,14 @@ ShortFormApplicationController = (
       ShortFormApplicationService.submitApplication().then((response) ->
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
-        $scope.goToAndLeaveForm('dahlia.my-applications', {skipConfirm: true})
+        $scope.goToAndSetPristine('dahlia.my-applications', {skipConfirm: true})
       ).catch( ->
         ShortFormNavigationService.isLoading(false)
       )
     else
       ShortFormNavigationService.isLoading(false)
       # go to Create Account without tracking Form Success
-      $scope.goToAndLeaveForm('dahlia.short-form-application.create-account')
+      $scope.goToAndSetPristine('dahlia.short-form-application.create-account')
 
   $scope.signIn = ->
     form = $scope.form.signIn
