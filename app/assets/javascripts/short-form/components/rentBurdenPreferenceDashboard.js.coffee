@@ -31,20 +31,22 @@ angular.module('dahlia.components')
         return false unless files
         files.lease.file || _.some(_.map(files.rent, 'file'))
 
-      @hasCompleteFiles = (address) =>
+      @hasCompleteFiles = (address) ->
+        ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
+
+      @hasFileForType = (address, type) =>
         files = @application.preferences.documents.rentBurden[address]
         return false unless files
-        files.lease.file && _.some(_.map(files.rent, 'file'))
+        if type == 'lease'
+          !!files.lease.file
+        else
+          _.some(_.map(files.rent, 'file'))
 
       @addressInvalid = (address) =>
         !@hasCompleteFiles(address) && !!@customInvalidMessage
 
       @addressLinkText = (address) =>
         if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
-
-      @hasFiles = (address) =>
-        files = @application.preferences.documents.rentBurden[address]
-        files.lease.file || _.some(_.map(files.rent, 'file'))
 
       @addressLinkText = (address) =>
         if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')

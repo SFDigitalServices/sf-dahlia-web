@@ -187,6 +187,7 @@
         "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
     },
     "E2C_RENT_BURDEN_PREFERENCE": {
+        "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
         "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
@@ -224,6 +225,7 @@
         "ADDRESS_VALIDATION": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
+        "COMPLETE_UPLOADING_DOCUMENTS": "Please complete uploading documents above.",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
         "CREATE_ACCOUNT": "There was an error creating your account, please try again.",
         "CURRENT_PASSWORD_INVALID": "Invalid current password. Please try again.",

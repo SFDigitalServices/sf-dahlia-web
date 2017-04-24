@@ -378,14 +378,14 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.checkForRentBurdenFiles = ->
-    if false # hasFiles
+    if ShortFormApplicationService.hasCompleteRentBurdenFiles()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else
       $scope.setRentBurdenError()
       $scope.handleErrorState()
 
   $scope.setRentBurdenError = ->
-    $scope.customInvalidMessage = 'rent burden error'
+    $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
 
   $scope.clearRentBurdenError = (message) ->
     $scope.customInvalidMessage = null
