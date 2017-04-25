@@ -75,6 +75,8 @@ do ->
       applicationHasPreference: ->
       eligibleForAssistedHousing: ->
       eligibleForRentBurden: ->
+      hasCompleteRentBurdenFiles: ->
+      cancelPreference: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -439,22 +441,6 @@ do ->
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
-    # NOTE: could be moved to component unit tests?
-    # describe 'deletePreferenceFile', ->
-    #   it 'calls deletePreference files on FileUploadService with correct params', ->
-    #     scope.listing.Id = '1234'
-    #     opts =
-    #       preference: 'somePreference'
-    #     scope.deletePreferenceFile(opts)
-    #     expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith(opts.preference, scope.listing.Id)
-    #
-    # describe 'hasPreferenceFile', ->
-    #   it 'calls hasPreferenceFile files on FileUploadService with correct params', ->
-    #     opts =
-    #       preference_proof_file: 'somePreference_proof_file'
-    #     scope.hasPreferenceFile(opts)
-    #     expect(fakeFileUploadService.hasPreferenceFile).toHaveBeenCalledWith(opts.preference_proof_file)
-
     describe 'checkAfterLiveWork', ->
       describe 'eligible for assisted housing', ->
         it 'routes to assisted housing preference page', ->
@@ -567,3 +553,26 @@ do ->
         scope.application.communityScreening = 'No'
         scope.validateCommunityEligibility()
         expect(scope.communityScreeningInvalid).toEqual true
+
+    describe 'checkForRentBurdenFiles', ->
+      describe 'has complete rent burden files', ->
+        it 'expects state.go to be called with preference-programs', ->
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = jasmine.createSpy().and.returnValue(true)
+          scope.checkForRentBurdenFiles()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'incomplete rent burden files', ->
+        it 'set custom invalid message', ->
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = jasmine.createSpy().and.returnValue(false)
+          scope.checkForRentBurdenFiles()
+          expect(scope.customInvalidMessage).not.toEqual(null)
+
+    describe 'cancelPreference', ->
+      it 'clears rent burden error for rent burden preference', ->
+        scope.customInvalidMessage = 'some value'
+        scope.cancelPreference('rentBurden')
+        expect(scope.customInvalidMessage).toEqual null
+
+      it 'calls cancelPreference on ShortFormApplicationService', ->
+        scope.cancelPreference()
+        expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
