@@ -570,6 +570,7 @@
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
     "PAGE_TITLE": {
+        "ACCOUNT_SETTINGS": "Account Settings",
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
@@ -578,8 +579,11 @@
         "GET_ASSISTANCE": "Get Assistance",
         "HOUSING_COUNSELORS": "Housing Counselors",
         "LISTINGS": "Listings",
+        "LISTING_APPLICATION": "{{listing}} Application",
+        "MY_ACCOUNT": "My Account",
+        "MY_APPLICATIONS": "My Applications",
         "PRIVACY": "Privacy Policy",
-        "SHARE_LISTING": "Share {{name}}",
+        "SHARE_LISTING": "Share {{listing}}",
         "SIGN_IN": "Sign In",
         "WELCOME_CHINESE": "中文",
         "WELCOME_FILIPINO": "Filipino",

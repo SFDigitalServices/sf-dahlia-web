@@ -1,7 +1,7 @@
 # Dahlia #
 
-[![Test Coverage](https://codeclimate.com/repos/560d76bb6956807c3a0028cb/badges/0d072238f8dc74804ac9/coverage.svg)](https://codeclimate.com/repos/560d76bb6956807c3a0028cb/coverage)
-
+[![Code Climate](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/gpa.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web)
+[![Test Coverage](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/coverage.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web/coverage)
 [![Build Status](https://semaphoreci.com/api/v1/projects/53186731-1e6c-43a4-9d43-860e0759ea9a/558206/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web)
 
 ## Purpose ##
