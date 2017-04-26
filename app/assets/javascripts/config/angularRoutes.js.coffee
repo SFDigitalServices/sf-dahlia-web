@@ -520,23 +520,27 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingService', 'ShortFormApplicationService',
-          ($stateParams, $state, $q, ListingService, ShortFormApplicationService) ->
-            deferred = $q.defer()
+          '$stateParams', '$q', 'ListingService',
+          ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
+            deferred = $q.defer()
             ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              deferred.resolve(ListingService.listing)
-              # load listing preferences
               ListingService.getListingPreferences().then ->
-                # always refresh the anonymous session_uid when starting a new application
-                ShortFormApplicationService.refreshSessionUid()
-                # even if user is not necessarily logged in, we always check if they have an application
-                # this is because "loggedIn()" may not return true on initial load
-                ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
-                  if ShortFormApplicationService.application.status == 'Submitted'
-                    # send them to their review page if the application is already submitted
-                    $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
+                deferred.resolve(ListingService.listing)
             return deferred.promise
+        ]
+        application: [
+          # 'listing' is part of the params so that application waits for listing (above) to resolve
+          '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
+          ($stateParams, $state, ShortFormApplicationService, listing) ->
+            # always refresh the anonymous session_uid when starting a new application
+            ShortFormApplicationService.refreshSessionUid()
+            # it's ok if user is not logged in, we always check if they have an application
+            # this is because "loggedIn()" may not return true on initial load
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+              if ShortFormApplicationService.application.status == 'Submitted'
+                # send them to their review page if the application is already submitted
+                $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
