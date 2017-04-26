@@ -389,7 +389,9 @@ do ->
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be true if lottery buckets are available', ->
-        ListingService.listing.Lottery_Buckets = fakeLotteryBuckets.lottery_buckets
+        ListingService.listing.Lottery_Buckets = {bucketResults: [
+          {preferenceName: 'COP', bucketResults: [{preferenceRank: 1, lotteryNumber: '1223'}]}
+        ]}
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be false if lottery buckets and PDF are *not* available', ->
