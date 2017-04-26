@@ -378,11 +378,19 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.checkForRentBurdenFiles = ->
-    if ShortFormApplicationService.hasCompleteRentBurdenFiles()
+    if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else
       $scope.setRentBurdenError()
       $scope.handleErrorState()
+
+  $scope.hasCompleteRentBurdenFilesForAddress = (address) ->
+    ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
+
+  $scope.cancelRentBurdenFilesForAddress = (address) ->
+    ShortFormNavigationService.isLoading(true)
+    FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
+      $scope.goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')
 
   $scope.setRentBurdenError = ->
     $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
@@ -435,9 +443,6 @@ ShortFormApplicationController = (
   $scope.cancelPreference = (preference) ->
     $scope.clearRentBurdenError() if preference == 'rentBurden'
     ShortFormApplicationService.cancelPreference(preference)
-
-  $scope.optOutField = (preference) ->
-    ShortFormApplicationService.optOutFields[preference]
 
   $scope.cancelOptOut = (preference) ->
     ShortFormApplicationService.cancelOptOut(preference)
