@@ -29,7 +29,7 @@ angular.module('dahlia.components')
       @hasFiles = (address) =>
         files = @application.preferences.documents.rentBurden[address]
         return false unless files
-        files.lease.file || _.some(_.map(files.rent, 'file'))
+        !!(files.lease.file || _.some(_.map(files.rent, 'file')))
 
       @hasCompleteFiles = (address) ->
         ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
