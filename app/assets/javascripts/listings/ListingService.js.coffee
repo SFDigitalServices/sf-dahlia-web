@@ -271,7 +271,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         else
           Service.openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
-        if listing.Lottery_Results
+        if Service.lotteryDatePassed(listing)
           Service.lotteryResultsListings.push(listing)
         else
           Service.closedListings.push(listing)
@@ -280,10 +280,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.sortListings = ->
     # openListing types
     ['openListings', 'openMatchListings', 'openNotMatchListings'].forEach (type) ->
-      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Application_Due_Date))
+      Service[type] = _.sortBy Service[type], (i) -> moment(i.Application_Due_Date)
     # closedListing types
     ['closedListings', 'lotteryResultsListings'].forEach (type) ->
-      Service[type] = _.sortBy(Service[type], (i) -> moment(i.Lottery_Results_Date))
+      Service[type] = _.sortBy Service[type], (i) ->
+        # fallback to Application_Due_Date, really only for the special case of First Come First Serve
+        moment(i.Lottery_Results_Date || i.Application_Due_Date)
     # lotteryResults get reversed (latest lottery results date first)
     Service.lotteryResultsListings = _.reverse(Service.lotteryResultsListings)
 
@@ -308,6 +310,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     deadline = moment(listing.Application_Due_Date).tz('America/Los_Angeles')
     # listing is open if deadline is in the future
     return deadline > now
+
+  Service.lotteryDatePassed = (listing) ->
+    return true if Service.listingIsFirstComeFirstServe(listing) && !Service.listingIsOpen(listing)
+    return false unless listing.Lottery_Date
+    today = moment().tz('America/Los_Angeles').startOf('day')
+    lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
+    # listing is open if deadline is in the future
+    return today > lotteryDate
 
   Service.listingIsReservedCommunity = (listing) ->
     !! listing.Reserved_community_type
@@ -563,6 +573,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
+
+  Service.listingIsFirstComeFirstServe = (listing = Service.listing) ->
+    # hardcoded, currently just this one listing
+    Service.listingIs('168 Hyde Relisting', listing)
 
   Service.stubListingPreferences = ->
     opts = null
