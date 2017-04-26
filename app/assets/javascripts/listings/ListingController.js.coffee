@@ -9,7 +9,6 @@ ListingController = (
   $sanitize,
   $timeout,
   $filter,
-  $translate,
   Carousel,
   SharedService,
   ListingService,
@@ -26,8 +25,7 @@ ListingController = (
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
   $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
-  # TO DO: debug why this isn't working:
-  # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
+  $scope.lotteryResultsRanking = ListingService.lotteryRanking
   $scope.favorites = ListingService.favorites
   $scope.AMICharts = ListingService.AMICharts
   $scope.lotteryPreferences = ListingService.lotteryPreferences
@@ -135,29 +133,28 @@ ListingController = (
     $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
 
-  $scope.listingBucketResults = () ->
-    $scope.listing.Lottery_Ranking.bucketResults
-
   $scope.preferenceBucketResults = (prefName) ->
-    preferenceBucketResults = _.find($scope.listingBucketResults(), { 'preferenceName': prefName })
-    if preferenceBucketResults then preferenceBucketResults['bucketResults'] else undefined
+    preferenceBucketResults = _.find($scope.lotteryResultsRanking.bucketResults, { 'preferenceName': prefName })
+    if preferenceBucketResults then preferenceBucketResults.bucketResults else []
 
   $scope.applicantSelectedForPreference = ->
-    preferenceBucketResults = _.filter($scope.listingBucketResults(), (preferenceBucketResult) ->
-      return false unless preferenceBucketResult['bucketResults'][0]
-      preferenceBucketResult['bucketResults'][0]['preferenceRank'] != null
+    preferenceBucketResults = _.filter($scope.lotteryResultsRanking.bucketResults, (preferenceBucketResult) ->
+      return false unless preferenceBucketResult.bucketResults[0]
+      preferenceBucketResult.bucketResults[0].preferenceRank != null
     )
-    return preferenceBucketResults.length > 0
+    preferenceBucketResults.length > 0
 
   $scope.applicantHasCertOfPreference = ->
-    $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]['preferenceRank'] != null
+    results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]
+    results && results.preferenceRank
 
   $scope.showNeighborhoodPreferences = ->
     ListingService.showNeighborhoodPreferences($scope.listing)
 
   $scope.lotteryNumberValid = ->
+    return unless $scope.lotteryResultsRanking && $scope.lotteryResultsRanking.bucketResults
     # true if if there is a general lottery ranking
-    !_.isEmpty($scope.listing.Lottery_Ranking['bucketResults'][0]['bucketResults'])
+    !_.isEmpty($scope.lotteryResultsRanking.bucketResults[0].bucketResults)
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
@@ -186,15 +183,6 @@ ListingController = (
 
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
-
-  $scope.bucketResultFullPrefName = (bucket) ->
-    fullPrefNameMap =
-      displacedPreference: $translate.instant('LOTTERY.DTHP')
-      neighborhoodPreference: $translate.instant('LOTTERY.NRHP')
-      liveWorkPreference: $translate.instant('LOTTERY.LIVE_WORK')
-      certOfPreference: $translate.instant('LOTTERY.CERT_OF_PREFERENCE')
-
-    fullPrefNameMap[bucket.preferenceName]
 
   $scope.showLotteryResultsModalButton = ->
     ListingService.listingHasLotteryBuckets()
@@ -330,7 +318,6 @@ ListingController.$inject = [
   '$sanitize',
   '$timeout',
   '$filter',
-  '$translate',
   'Carousel',
   'SharedService',
   'ListingService',

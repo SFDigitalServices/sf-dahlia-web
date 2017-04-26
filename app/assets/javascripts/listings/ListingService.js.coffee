@@ -16,6 +16,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.loading = {}
   Service.displayLotteryResultsListings = false
   Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.lotteryRanking = {}
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -516,12 +517,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     )
 
   Service.getLotteryRanking = (lotteryNumber) ->
+    angular.copy({}, Service.lotteryRanking)
     params =
       params:
         lottery_number: lotteryNumber
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
       if data && data.lottery_ranking
-        Service.listing.Lottery_Ranking = data.lottery_ranking
+        angular.copy(data.lottery_ranking, Service.lotteryRanking)
     ).error( (data, status, headers, config) ->
       return
     )

@@ -292,11 +292,11 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'assigns Service.listing.Lottery_Ranking with ranking results', ->
+      it 'assigns Service.lotteryRanking with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00002612')
         httpBackend.flush()
-        expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
+        expect(ListingService.lotteryRanking).toEqual fakeLotteryRanking.lottery_ranking
 
     describe 'Service.showNeighborhoodPreferences', ->
       it 'returns true if URL is available and the lottery results are not yet available', ->

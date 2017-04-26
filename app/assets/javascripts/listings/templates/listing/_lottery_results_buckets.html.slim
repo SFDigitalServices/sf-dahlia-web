@@ -12,11 +12,11 @@
         | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
     section.buckets
-      span ng-repeat="bucketResult in lotteryBuckets.bucketResults"
-        lottery-results-row item-type="bucket" pref-name="{{bucketResultFullPrefName(bucketResult)}}" abbr-pref-name="{{bucketResult.preferenceName}}"
+      lottery-results-row ng-repeat="bucketResult in lotteryBuckets.bucketResults" item-type="bucket" bucket-result="bucketResult"
 
     .modal-inner.bg-dust ng-if="lotteryBuckets.generalLotteryAppTotal"
       .buckets-divider
 
-    section.buckets
-      lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"
+    / NEED TO FIX after we figure out how to get General Lottery in the new format
+    / section.buckets
+    /   lottery-results-row item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" bucket-result="??"

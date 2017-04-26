@@ -4,7 +4,7 @@
     span.bucket-stat_value
       | {{ rankForPreference() }}
   h3.bucket-title
-    | {{ prefName }}
+    | {{ bucketResult.preferenceName }}
   p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{unitsAvailable()}}" ng-if="!isGeneral() && unitsAvailable()"
   p.bucket-subtitle translate="LOTTERY.ANY_REMAINING_UNITS" ng-if="isGeneral()"
 

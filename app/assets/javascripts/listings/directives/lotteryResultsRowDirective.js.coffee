@@ -1,13 +1,11 @@
 angular.module('dahlia.directives')
 .directive 'lotteryResultsRow', ->
-  scope: true
-  replace: true
+  scope:
+    bucketResult: '<'
+    itemType: '@'
   templateUrl: 'listings/directives/lottery-results-row.html'
 
   link: (scope, elem, attrs) ->
-    scope.prefName = attrs.prefName
-    scope.abbrPrefName = attrs.abbrPrefName
-    scope.itemType = attrs.itemType
 
     scope.isRank = ->
       scope.itemType == 'rank'
@@ -16,22 +14,26 @@ angular.module('dahlia.directives')
       scope.itemType == 'bucket'
 
     scope.isGeneral = ->
-      scope.abbrPrefName == 'generalLottery'
+      # TBD?? this is no longer a thing
+      # scope.abbrPrefName == 'generalLottery'
+
+      # scope.preferenceName == 'General Lottery' # <-- might be like this?
+      false
 
     scope.showGeneralNotice = ->
       scope.isGeneral() && scope.isBucket()
 
     scope.show = ->
-      return true if scope.isBucket() && scope.appTotal()
+      return true if scope.isBucket() && scope.bucketResult.bucketResults.length
       return true if scope.isRank() && scope.rankForPreference()
       false
 
-    scope.unitsAvailable = () ->
-      scope.lotteryBuckets[scope.abbrPrefName + 'UnitsAvailable']
+    scope.unitsAvailable = ->
+      scope.bucketResult.unitsAvailable
 
-    scope.rankForPreference = () ->
-      preferenceBucketResults = scope.preferenceBucketResults(scope.prefName)
-      if !_.isEmpty(preferenceBucketResults) then preferenceBucketResults[0]['preferenceRank'] else undefined
+    scope.rankForPreference = ->
+      results = scope.bucketResult.bucketResults
+      if !_.isEmpty(results) then results[0].preferenceRank else undefined
 
-    scope.appTotal = () ->
-      scope.lotteryBuckets[scope.abbrPrefName + 'AppTotal']
+    scope.appTotal = ->
+      scope.bucketResult.appTotal

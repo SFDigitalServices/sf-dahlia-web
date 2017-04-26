@@ -9,26 +9,28 @@ span ng-if="applicantSelectedForPreference()"
   .alert-box.primary.no-margin.no-close.alert-box ng-if="!applicantHasCertOfPreference()"
     span.alert-icon.ui-icon.ui-medium.ng-scope
       svg
-        use xlink:href="#i-info" xmlns:xlink="http://www.w3.org/1999/xlink"
+        use xlink:href="#i-info"
     p.alert-body
       | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
 
   section.buckets
-    span ng-repeat="bucketResult in lotteryBuckets.bucketResults"
-      lottery-results-row item-type="rank" pref-name="{{bucketResultFullPrefName(bucketResult)}}" abbr-pref-name="{{bucketResult.preferenceName}}"
+    span ng-repeat="bucketResult in lotteryResultsRanking.bucketResults"
+      lottery-results-row item-type="rank" bucket-result="bucketResult"
 
 span ng-if="!applicantSelectedForPreference()"
   span ng-if="lotteryNumberValid()"
     .alert-box.primary.no-margin.no-close.alert-box
       span.alert-icon.ui-icon.ui-medium.ng-scope
         svg
-          use xlink:href="#i-info" xmlns:xlink="http://www.w3.org/1999/xlink"
+          use xlink:href="#i-info"
       p.alert-body
         | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
-    section.buckets
-      lottery-results-row item-type="rank" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"
 
-  span ng-if="!lotteryNumberValid()"
+    / NEED TO FIX after we figure out how to get General Lottery in the new format
+    / section.buckets
+    /   lottery-results-row item-type="rank" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"
+
+  span ng-if="!loading.lotteryRank && !lotteryNumberValid()"
     .alert-box.alert.no-margin
       span.alert-icon.ui-icon.ui-medium
         svg
