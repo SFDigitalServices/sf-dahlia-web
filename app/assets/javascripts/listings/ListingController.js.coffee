@@ -289,7 +289,7 @@ ListingController = (
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
-    ListingService.listingIs('168 Hyde Relisting', listing)
+    ListingService.listingIsFirstComeFirstServe(listing)
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
