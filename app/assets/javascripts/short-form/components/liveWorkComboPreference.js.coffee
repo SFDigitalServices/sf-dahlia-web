@@ -7,6 +7,7 @@ angular.module('dahlia.components')
     translatedDescription: '@'
     dataEvent: '@'
     required: '&'
+    moreInfoLink: '<'
   templateUrl: 'short-form/components/live-work-combo-preference.html'
 
   controller:

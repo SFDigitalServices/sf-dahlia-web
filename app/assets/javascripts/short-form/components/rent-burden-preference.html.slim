@@ -1,5 +1,6 @@
 .checkbox-block
-  preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()" ng-if="$ctrl.showCheckbox")
+  preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()" more-info-link="$ctrl.moreInfoLink"
+  ng-if="$ctrl.showCheckbox")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
 

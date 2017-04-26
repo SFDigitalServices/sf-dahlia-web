@@ -8,8 +8,8 @@ angular.module('dahlia.components')
     preference: '@'
     description: '@'
     shortDescription: '@'
-    displayMoreInfoLink: '<'
     onChange: '&'
+    moreInfoLink: '<'
   templateUrl: 'short-form/components/preference-checkbox.html'
 
   controller: ->

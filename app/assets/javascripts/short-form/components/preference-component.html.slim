@@ -1,5 +1,5 @@
 .checkbox-block
-  preference-checkbox(application="$ctrl.application" preference="{{$ctrl.preference}}" invalid="$ctrl.inputInvalid($ctrl.preference)" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.onChange()" display-more-info-link="$ctrl.displayMoreInfoLink" required="$ctrl.required()")
+  preference-checkbox(application="$ctrl.application" preference="{{$ctrl.preference}}" invalid="$ctrl.inputInvalid($ctrl.preference)" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.onChange()" more-info-link="$ctrl.moreInfoLink" required="$ctrl.required()")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences[$ctrl.preference]"
     / member selector

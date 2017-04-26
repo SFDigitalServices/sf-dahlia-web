@@ -41,6 +41,16 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
   ]
 
+  Service.preference_more_info_links =
+    certOfPreference: 'http://sfmohcd.org/certificate-preference'
+    displaced: 'http://sfmohcd.org/displaced-tenant-housing-preference'
+    liveInSf: 'http://sfmohcd.org/housing-preference-programs'
+    workInSf: 'http://sfmohcd.org/housing-preference-programs'
+    liveWorkInSf: 'http://sfmohcd.org/housing-preference-programs'
+    neighborhoodResidence: 'http://sfmohcd.org/neighborhood-resident-housing-preference'
+    rentBurden: 'http://sfmohcd.org/rent-burdened-assisted-housing-preference'
+    assistedHousing: 'http://sfmohcd.org/rent-burdened-assisted-housing-preference'
+
   Service.proofOptions = (preference) ->
     switch preference
       when 'workInSf'
