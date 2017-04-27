@@ -261,7 +261,8 @@ ShortFormDataService = () ->
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
       'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther'
+      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     applicant = _.pick contact, whitelist
     applicant.mailing_address = Service._reformatMailingAddress(contact)
