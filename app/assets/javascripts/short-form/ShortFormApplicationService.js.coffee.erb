@@ -396,7 +396,7 @@ ShortFormApplicationService = (
 
   Service.eligibleForAssistedHousing = ->
     # can only have a Yes answer if assistedHousingRentBurden preference is on this listing
-    Service.application.STUB_householdPublicHousing == 'Yes'
+    Service.listing.STUB_householdPublicHousing == 'Yes'
 
   Service.eligibleForRentBurden = ->
     totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
@@ -407,7 +407,7 @@ ShortFormApplicationService = (
       ratio = (totalMonthlyRent * 12) / incomeTotal
 
     # can only have a No answer if assistedHousing/RentBurden preference is on this listing
-    Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
+    Service.listing.STUB_householdPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all

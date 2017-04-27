@@ -429,13 +429,13 @@ do ->
     describe 'eligibleForAssistedHousing', ->
       it 'return true if listing has assistedHousing preference', ->
         # TO DO: update during API integration story for preference
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'Yes'
+        ShortFormApplicationService.listing.STUB_householdPublicHousing = 'Yes'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
 
     describe 'eligibleForRentBurden', ->
       describe 'listing does not have assistedHousing preference', ->
         beforeEach ->
-          ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+          ShortFormApplicationService.listing.STUB_householdPublicHousing = 'No'
 
         describe 'rent-to-income ratio is greater than or equal to 50%', ->
           it 'returns true', ->

@@ -669,6 +669,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.stubListingFeatures = ->
     Service.listing.STUB_CommunityRestriction = 'All People'
+    Service.listing.STUB_householdPublicHousing = 'Yes'
 
   Service.stubPreferences = (options) ->
     defaults = [
