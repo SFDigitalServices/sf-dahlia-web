@@ -286,7 +286,8 @@ ShortFormDataService = () ->
   Service._reformatHouseholdMember = (contact) ->
     whitelist = [
       'appMemberId', 'firstName', 'middleName', 'lastName',
-      'relationship', 'neighborhoodPreferenceMatch', 'noAddress'
+      'relationship', 'neighborhoodPreferenceMatch', 'noAddress',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     member = _.pick contact, whitelist
     member.home_address = Service._reformatHomeAddress(contact)
