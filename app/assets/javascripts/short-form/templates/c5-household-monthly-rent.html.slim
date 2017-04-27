@@ -20,7 +20,7 @@
           label.sr-only for="monthlyRent_{{$index}}"
             | {{'LABEL.MONTHLY_RENT' | translate}}
           span.label-dollar $
-          input.form-income_input id="monthlyRent_{{$index}}" ng-model="groupedAddress.monthlyRent" name="monthlyRent_{{$index}}" ng-required="!groupedAddress.dontPayRent" placeholder="{{'LABEL.MONTHLY_RENT' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('monthlyRent_' + $index) }" aria-describedby="monthlyRent_error" ng-disabled="groupedAddress.dontPayRent"
+          input.form-income_input id="monthlyRent_{{$index}}" ng-model="groupedAddress.monthlyRent" name="monthlyRent_{{$index}}" ng-required="!groupedAddress.dontPayRent" placeholder="{{'LABEL.MONTHLY_RENT' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('monthlyRent_' + $index) }" aria-describedby="monthlyRent_error" ng-disabled="groupedAddress.dontPayRent" ng-change="onMonthlyRentChange()"
 
         small.error#member_monthly_rent_error ng-if="inputInvalid('monthlyRent_' + $index)"
           | {{'ERROR.PLEASE_PUT_IN_A_RENT' | translate}}
