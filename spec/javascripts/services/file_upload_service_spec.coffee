@@ -3,7 +3,11 @@ do ->
   describe 'FileUploadService', ->
     FileUploadService = undefined
     fakeShortFormApplicationService =
-      preferences: {}
+      preferences: {
+        documents: {
+          liveInSf: {}
+        }
+      }
     $translate = {}
     Upload =
       upload: ->
@@ -24,6 +28,8 @@ do ->
     beforeEach inject((_$httpBackend_, _FileUploadService_, _$q_) ->
       httpBackend = _$httpBackend_
       FileUploadService = _FileUploadService_
+      FileUploadService.preferences = fakeShortFormApplicationService.preferences
+      FileUploadService.session_uid = -> '123'
       $q = _$q_
       spyOn(Upload, 'upload').and.callFake ->
         deferred = $q.defer()
@@ -38,6 +44,7 @@ do ->
 
     describe 'Service.uploadProof', ->
       it 'calls Upload.upload function', ->
+
         FileUploadService.uploadProof(fakeFile, prefType)
         expect(Upload.upload).toHaveBeenCalled()
 
@@ -45,9 +52,10 @@ do ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
+
       it 'unsets FileUploadService prefType_proof_file', ->
         stubAngularAjaxRequest httpBackend, '/api/v1/short-form/proof', success
-        FileUploadService.preferences["#{prefType}_proof_file"] = fakeFile
+        FileUploadService.preferences.documents[prefType].file = fakeFile
         FileUploadService.deletePreferenceFile(prefType)
         httpBackend.flush()
-        expect(FileUploadService.preferences["#{prefType}_proof_file"]).toEqual null
+        expect(FileUploadService.preferences.documents[prefType].file).toEqual null

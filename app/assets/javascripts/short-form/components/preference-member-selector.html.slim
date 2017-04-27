@@ -1,0 +1,11 @@
+.form-group ng-class="{ error: $ctrl.inputInvalid($ctrl.preferenceHouseholdMember) }"
+  / select for household member that has the preference
+  / not shown if it is only the applicant eligible
+  div
+    label.form-label.caps for="{{$ctrl.preferenceHouseholdMember}}"
+      | {{ $ctrl.label }}
+    select id="{{$ctrl.preferenceHouseholdMember}}" ng-model="$ctrl.application.preferences[$ctrl.preferenceHouseholdMember]" data-width="auto" name="{{$ctrl.preferenceHouseholdMember}}" ng-required="$ctrl.application.preferences[$ctrl.preference]"
+      option value=""
+        | {{'LABEL.SELECT_ONE' | translate}}
+      option ng-repeat="member in $ctrl.eligibleMembers track by $index" value="{{ member.firstName }} {{ member.lastName }}"
+        | {{ member.firstName }} {{ member.lastName }}

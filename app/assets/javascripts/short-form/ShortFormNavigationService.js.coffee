@@ -37,6 +37,7 @@ ShortFormNavigationService = (
         'neighborhood-preference'
         'live-work-preference'
         'assisted-housing-preference'
+        'rent-burden-preference'
         'preferences-programs'
         'general-lottery-notice'
       ]
@@ -74,6 +75,7 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
     'assisted-housing-preference': {path: 'preferences-programs'}
+    'rent-burden-preference': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
@@ -201,6 +203,8 @@ ShortFormNavigationService = (
           'preferences-intro'
       when 'assisted-housing-preference'
         Service.getPrevPageOfPreferencesSection()
+      when 'rent-burden-preference'
+        Service.getPrevPageOfPreferencesSection()
       when 'preferences-programs'
         Service.getPrevPageOfPreferencesSection()
       when 'general-lottery-notice'
@@ -260,6 +264,8 @@ ShortFormNavigationService = (
   Service.getPrevPageOfPreferencesSection = ->
     if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
+    else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
+      'rent-burden-preference'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.eligibleForLiveWork()

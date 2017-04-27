@@ -9,9 +9,11 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference-with-proof(title="{{'E2B_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="assistedHousing" uploader-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" dataevent="gtm-preference-assistedHousing" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" required="preferenceRequired('assistedHousing')" proof-option="Copy of Lease")
 
-      preference-opt-out preference="assistedHousing" application="application" invalid="inputInvalid('assistedHousing')"
+        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E2B_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')" ng-if="showPreference('assistedHousing')" )
+
+
+      preference-opt-out preference="assistedHousing" application="application" invalid="inputInvalid('assistedHousing')" cancel-preference="cancelPreference('assistedHousing')"
 
       small.error ng-if="inputInvalid('assistedHousing')"
         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}

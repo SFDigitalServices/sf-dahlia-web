@@ -8,8 +8,9 @@
     .form-group
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
       .checkbox-group role="group"
-        preference-without-proof title="{{'E1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" dataevent="gtm-preference-cop" translated-description="E1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC" ng-show="showPreference('certOfPreference')"
+        preference(application="application" title="{{'E1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}" preference="certOfPreference" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  translated-description="E1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE_DESC" display-more-info-link="true" ng-if="showPreference('certOfPreference')" )
 
-        preference-without-proof title="{{'E1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" dataevent="gtm-preference-dthp" translated-description="E1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" ng-show="showPreference('displaced')"
+        preference(application="application" title="{{'E1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}" preference="displaced" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  translated-description="E1_PREFERENCES_PROGRAMS.DISPLACED_TENANTS_DESC" display-more-info-link="true" ng-if="showPreference('displaced')" )
+
 
   short-form-save-and-submit
