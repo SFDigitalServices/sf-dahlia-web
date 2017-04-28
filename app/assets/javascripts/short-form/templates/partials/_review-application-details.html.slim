@@ -108,8 +108,8 @@ review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.s
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
     | {{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.assistedHousing" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('assistedHousing') }}"
-    | {{'E2B_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}
+  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.rentBurden" get-sub-labels="fileAttachmentsForPreference('rentBurden')"
+    | {{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
 / Income
 review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"

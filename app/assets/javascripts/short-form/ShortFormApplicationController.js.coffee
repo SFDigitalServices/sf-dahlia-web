@@ -646,6 +646,9 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.fileAttachmentsForPreference = (pref_type) ->
+    ShortFormHelperService.fileAttachmentsForPreference($scope.application, pref_type)
+
   $scope.addressTranslationVariable = (address) ->
     ShortFormHelperService.addressTranslationVariable(address)
 
