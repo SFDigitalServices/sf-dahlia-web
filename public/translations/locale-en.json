@@ -193,6 +193,7 @@
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
         "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
+        "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
     "E2F_GENERAL_LOTTERY_NOTICE": {
@@ -235,7 +236,7 @@
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
         "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
-        "FILE_MISSING": "Please upload your proof of preference",
+        "FILE_MISSING": "Please upload a valid document",
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
@@ -346,6 +347,7 @@
         "CONTACT_MAILING_ADDRESS": "Contact mailing address",
         "CONTACT_PHONE_NUMBER": "Contact phone number",
         "CONTINUE_APPLICATION": "Continue Application",
+        "COPY_OF_LEASE": "Copy of Lease",
         "CREATE_ACCOUNT": "Create Account",
         "CURRENT_ACCOUNT_SETTINGS": "Current Account Settings",
         "DOB": "Date of Birth",
@@ -432,6 +434,7 @@
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
+        "PROOF_OF_RENT": "Proof of Rent",
         "RECENT_APPLICATION": "Recent Application",
         "RENT_AT_ADDRESS": "Rent at {{address}}",
         "RE_ENTER_EMAIL_ADDRESS": "Re-enter email address",
@@ -572,6 +575,7 @@
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
     "PAGE_TITLE": {
+        "ACCOUNT_SETTINGS": "Account Settings",
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
@@ -580,8 +584,11 @@
         "GET_ASSISTANCE": "Get Assistance",
         "HOUSING_COUNSELORS": "Housing Counselors",
         "LISTINGS": "Listings",
+        "LISTING_APPLICATION": "{{listing}} Application",
+        "MY_ACCOUNT": "My Account",
+        "MY_APPLICATIONS": "My Applications",
         "PRIVACY": "Privacy Policy",
-        "SHARE_LISTING": "Share {{name}}",
+        "SHARE_LISTING": "Share {{listing}}",
         "SIGN_IN": "Sign In",
         "WELCOME_CHINESE": "中文",
         "WELCOME_FILIPINO": "Filipino",

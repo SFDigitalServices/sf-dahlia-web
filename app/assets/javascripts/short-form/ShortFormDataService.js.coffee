@@ -132,10 +132,12 @@ ShortFormDataService = (ListingService) ->
     allMembers.push(application.applicant)
     angular.copy(Service.preferences).forEach( (prefKey) ->
       # prefKey is the short name like liveInSf
-
       naturalKey = null
       individualPref = null
       optOut = application.preferences.optOut[prefKey] || false
+
+      # only proceed if we optedOut or marked this pref as `true`
+      return unless optOut || application.preferences[prefKey]
 
       if _.includes(['liveInSf', 'workInSf'], prefKey)
         # for liveWorkInSf, need to indicate individual pref (live or work)
@@ -145,11 +147,15 @@ ShortFormDataService = (ListingService) ->
       # rentBurden also doesn't have a specific member
       unless optOut || prefKey == 'rentBurden'
         memberName = application.preferences["#{prefKey}_household_member"]
-        return unless memberName
-        member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
-        # if member was marked for a preference, but not found, this seems like a bug/mistake
-        return unless member
-        naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
+        if !memberName && application.status.match(/draft/i)
+          # this scenario is OK, if saving a draft
+          memberName = null
+        else
+          return unless memberName
+          member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
+          # if member was marked for a preference, but not found, this seems like a bug/mistake
+          return unless member
+          naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
 
       listingPref = ListingService.getPreference(prefKey)
       return unless listingPref
@@ -166,7 +172,8 @@ ShortFormDataService = (ListingService) ->
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       application.shortFormPreferences.push(shortFormPref)
     )
-
+    # ensure we don't send combo prefs (e.g. assistedHousing / rentBurden) twice
+    application.shortFormPreferences = _.uniqBy(application.shortFormPreferences, 'listingPreferenceID')
     delete application.preferences
     return application
 
@@ -373,8 +380,16 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'workInSf'
         else
           prefKey = 'liveWorkInSf'
-      else
+      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
         # TODO: needs ifCombinedIndividualPreference for Rent Burden vs Assisted Housing
+        # --- until that's supported, we have a hacky way of doing this
+        if member
+          prefKey = 'assistedHousing'
+        else
+          prefKey = 'rentBurden'
+        preferences.optOut.rentBurden = shortFormPref.optOut
+        preferences.optOut.assistedHousing = shortFormPref.optOut
+      else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
       preferences.optOut[prefKey] = shortFormPref.optOut
@@ -382,7 +397,7 @@ ShortFormDataService = (ListingService) ->
       unless shortFormPref.optOut
         # now that we have prefKey, reconstruct the fields on preferences
         if member
-          # some shortFormPrefs don't need a householdMember, e.g. assistedHousing
+          # some shortFormPrefs don't need a householdMember, e.g. rentBurden
           preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
         preferences[prefKey] = true
 

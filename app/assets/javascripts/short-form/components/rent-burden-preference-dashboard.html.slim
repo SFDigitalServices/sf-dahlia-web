@@ -18,7 +18,7 @@
             use xlink:href="#i-check"
           svg ng-if="!$ctrl.hasFileForType(address.address, 'lease')"
             use xlink:href="#i-close"
-        |  Copy of Lease
+        |  {{'LABEL.COPY_OF_LEASE' | translate}}
 
       p.info-item_doc ng-class="{error: !$ctrl.hasFileForType(address.address, 'rent')}" ng-if="$ctrl.addressInvalid(address.address) || $ctrl.hasFileForType(address.address, 'rent')"
         span.ui-icon.ui-static.ui-tiny.i-color
@@ -26,6 +26,6 @@
             use xlink:href="#i-check"
           svg ng-if="!$ctrl.hasFileForType(address.address, 'rent')"
             use xlink:href="#i-close"
-        |  Proof of Rent
+        |  {{'LABEL.PROOF_OF_RENT' | translate}}
 
       small.error.margin-bottom-none.margin-top--half ng-if="$ctrl.addressInvalid(address.address)" translate="ERROR.COMPLETE_UPLOADING_DOCUMENTS"

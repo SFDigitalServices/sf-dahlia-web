@@ -29,7 +29,9 @@ do ->
         mailing_address: { address1: null, city: null, state: null, zip: null }
         gender: {}
       householdMembers: []
-      preferences: {}
+      preferences: {
+        optOut: {}
+      }
       application:
         validatedForms:
           You: {}
@@ -64,6 +66,7 @@ do ->
       resetAssistedHousingForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
       preferenceRequired: jasmine.createSpy()
+      resetPreference: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -76,6 +79,7 @@ do ->
       eligibleForAssistedHousing: ->
       eligibleForRentBurden: ->
       hasCompleteRentBurdenFiles: ->
+      hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -92,6 +96,7 @@ do ->
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
+      deleteRentBurdenPreferenceFiles: ->
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -122,6 +127,7 @@ do ->
 
       deferred = $q.defer()
       deferred.resolve('resolveData')
+      spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
@@ -555,17 +561,36 @@ do ->
         expect(scope.communityScreeningInvalid).toEqual true
 
     describe 'checkForRentBurdenFiles', ->
-      describe 'has complete rent burden files', ->
+      describe 'with rent burden opted out', ->
         it 'expects state.go to be called with preference-programs', ->
-          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = jasmine.createSpy().and.returnValue(true)
+          scope.preferences.optOut.rentBurden = true
           scope.checkForRentBurdenFiles()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
-      describe 'incomplete rent burden files', ->
-        it 'set custom invalid message', ->
-          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = jasmine.createSpy().and.returnValue(false)
+      describe 'with complete rent burden files', ->
+        it 'expects state.go to be called with preference-programs', ->
+          scope.preferences.optOut.rentBurden = false
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> true
+          scope.checkForRentBurdenFiles()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'with incomplete rent burden files', ->
+        it 'sets custom invalid message', ->
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> false
           scope.checkForRentBurdenFiles()
           expect(scope.customInvalidMessage).not.toEqual(null)
+
+    describe 'cancelRentBurdenFilesForAddress', ->
+      it 'expects deleteRentBurdenPreferenceFiles to be called on Service', ->
+        address = '123 Main St'
+        scope.cancelRentBurdenFilesForAddress(address)
+        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
+
+    describe 'hasCompleteRentBurdenFilesForAddress', ->
+      it 'expects hasCompleteRentBurdenFilesForAddress to be called on Service', ->
+        address = '123 Main St'
+        scope.hasCompleteRentBurdenFilesForAddress(address)
+        expect(fakeShortFormApplicationService.hasCompleteRentBurdenFilesForAddress).toHaveBeenCalledWith(address)
 
     describe 'cancelPreference', ->
       it 'clears rent burden error for rent burden preference', ->

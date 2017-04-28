@@ -23,8 +23,13 @@ angular.module('dahlia.components')
         listingId = ShortFormApplicationService.listing.Id
         # will delete files if any previously existed, if we are unchecking the box
         if !@application.preferences.rentBurden
+          # on uncheck
           FileUploadService.deleteRentBurdenPreferenceFiles(listingId)
           @onUncheck()
+        else
+          # we are checking the box
+          # ensure that we proceed through Preferences section without skipping ahead to Review
+          ShortFormApplicationService.invalidatePreferencesForm()
 
       @hasFiles = (address) =>
         files = @application.preferences.documents.rentBurden[address]
