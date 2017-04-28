@@ -255,9 +255,9 @@ ShortFormNavigationService = (
 
   Service.getPrevPageOfHouseholdSection = ->
     application = ShortFormApplicationService.application
-    if listing.STUB_householdPublicHousing == 'No'
+    if application.STUB_householdPublicHousing == 'No'
       'household-monthly-rent'
-    else if listing.STUB_householdPublicHousing == 'Yes'
+    else if application.STUB_householdPublicHousing == 'Yes'
       'household-public-housing'
     else if application.householdMembers.length
       'household-members'
@@ -282,7 +282,7 @@ ShortFormNavigationService = (
     application = ShortFormApplicationService.application
     listing = ShortFormApplicationService.listing
     return '' if application.status.toLowerCase() == 'submitted'
-    if listing.STUB_householdPublicHousing
+    if application.STUB_householdPublicHousing
       'household-public-housing'
     else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.VETERAN)
       'household-reserved-units-veteran'

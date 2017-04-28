@@ -556,7 +556,7 @@ ShortFormApplicationController = (
     $scope.eligibilityErrors = [message]
 
   $scope.checkIfPublicHousing = ->
-    if $scope.listing.STUB_householdPublicHousing == 'No'
+    if $scope.application.STUB_householdPublicHousing == 'No'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
     else
       $scope.checkIfReservedUnits()
