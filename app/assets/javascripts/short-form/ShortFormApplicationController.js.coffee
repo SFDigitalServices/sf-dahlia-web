@@ -370,6 +370,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.applicantHasNoPreferences()
 
   $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
+    # if no type specified, it will refresh all (live/work/neighborhood)
     if type == 'liveWorkInSf'
       $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
       $scope.currentPreferenceType = $scope.currentLiveWorkType
@@ -568,10 +569,12 @@ ShortFormApplicationController = (
     ShortFormApplicationService.resetMonthlyRentForm()
     # make sure they're forced through now that they have the assistedHousing option
     ShortFormApplicationService.invalidatePreferencesForm()
+    ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.publicHousingNo = ->
     ShortFormApplicationService.invalidateMonthlyRentForm()
     ShortFormApplicationService.resetAssistedHousingForm()
+    ShortFormApplicationService.resetPreference('assistedHousing')
 
   $scope.visitResourcesLink = ->
     linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
@@ -583,8 +586,14 @@ ShortFormApplicationController = (
     link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
     {listingLink: "<a href='#{link}'>#{linkText}</a>"}
 
-  $scope.invalidateIncomeForm = ->
+  $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
+    unless ShortFormApplicationService.eligibleForRentBurden()
+      ShortFormApplicationService.resetPreference('rentBurden')
+
+  $scope.onMonthlyRentChange = ->
+    unless ShortFormApplicationService.eligibleForRentBurden()
+      ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.invalidateAltContactTypeForm = ->
     ShortFormApplicationService.invalidateAltContactTypeForm()

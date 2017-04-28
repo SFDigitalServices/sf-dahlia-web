@@ -661,6 +661,20 @@ do ->
         listingId = ShortFormApplicationService.listing.Id
         expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', listingId)
 
+    describe 'resetPreference', ->
+      beforeEach ->
+        ShortFormApplicationService.preferences.liveInSf = true
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.optOut = { liveInSf: true }
+        ShortFormApplicationService.application.validatedForms.Preferences['live-work-preference'] = false
+
+      it 'should clear preference options and validatedForms', ->
+        ShortFormApplicationService.resetPreference('liveInSf')
+        expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
+        expect(ShortFormApplicationService.application.validatedForms.Preferences).toEqual {}
+        expect(ShortFormApplicationService.application.preferences.optOut.liveInSf).toEqual false
+
     describe 'checkHouseholdEligiblity', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
