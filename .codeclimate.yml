@@ -2,3 +2,7 @@
 languages:
   Ruby: true
   JavaScript: true
+exclude_paths:
+  - "lib/assets"
+  # code climate complains a bunch about our toolkit.css -- how useful is this?
+  - "app/assets/stylesheets"

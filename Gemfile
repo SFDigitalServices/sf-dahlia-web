@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
-gem 'rails', '~> 4.2.7'
+# same method is used in https://github.com/rails/rails/blob/master/Gemfile
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'rails', '~> 4.2.8'
 gem 'rails-api'
 
 # Use SCSS for stylesheets
@@ -57,6 +63,8 @@ gem 'hashie'
 gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
+
+gem 'nokogiri', '~> 1.6.8'
 
 # http requests made easy
 gem 'http', require: false
