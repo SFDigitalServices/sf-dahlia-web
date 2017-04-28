@@ -29,7 +29,9 @@ do ->
         mailing_address: { address1: null, city: null, state: null, zip: null }
         gender: {}
       householdMembers: []
-      preferences: {}
+      preferences: {
+        optOut: {}
+      }
       application:
         validatedForms:
           You: {}
@@ -76,6 +78,9 @@ do ->
       applicationHasPreference: ->
       eligibleForAssistedHousing: ->
       eligibleForRentBurden: ->
+      hasCompleteRentBurdenFiles: ->
+      hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
+      cancelPreference: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -83,7 +88,8 @@ do ->
       fakeSubmitOptionsForCurrentPage: -> {}
     fakeAccountService = {}
     fakeShortFormNavigationService = undefined
-    fakeShortFormHelperService = {}
+    fakeShortFormHelperService =
+      fileAttachmentsForPreference: jasmine.createSpy()
     fakeAccountService =
       loggedIn: () ->
     fakeAddressValidationService =
@@ -91,6 +97,7 @@ do ->
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
+      deleteRentBurdenPreferenceFiles: ->
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -121,6 +128,7 @@ do ->
 
       deferred = $q.defer()
       deferred.resolve('resolveData')
+      spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
@@ -440,22 +448,6 @@ do ->
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
-    # NOTE: could be moved to component unit tests?
-    # describe 'deletePreferenceFile', ->
-    #   it 'calls deletePreference files on FileUploadService with correct params', ->
-    #     scope.listing.Id = '1234'
-    #     opts =
-    #       preference: 'somePreference'
-    #     scope.deletePreferenceFile(opts)
-    #     expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith(opts.preference, scope.listing.Id)
-    #
-    # describe 'hasPreferenceFile', ->
-    #   it 'calls hasPreferenceFile files on FileUploadService with correct params', ->
-    #     opts =
-    #       preference_proof_file: 'somePreference_proof_file'
-    #     scope.hasPreferenceFile(opts)
-    #     expect(fakeFileUploadService.hasPreferenceFile).toHaveBeenCalledWith(opts.preference_proof_file)
-
     describe 'checkAfterLiveWork', ->
       describe 'eligible for assisted housing', ->
         it 'routes to assisted housing preference page', ->
@@ -568,3 +560,50 @@ do ->
         scope.application.communityScreening = 'No'
         scope.validateCommunityEligibility()
         expect(scope.communityScreeningInvalid).toEqual true
+
+    describe 'checkForRentBurdenFiles', ->
+      describe 'with rent burden opted out', ->
+        it 'expects state.go to be called with preference-programs', ->
+          scope.preferences.optOut.rentBurden = true
+          scope.checkForRentBurdenFiles()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'with complete rent burden files', ->
+        it 'expects state.go to be called with preference-programs', ->
+          scope.preferences.optOut.rentBurden = false
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> true
+          scope.checkForRentBurdenFiles()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'with incomplete rent burden files', ->
+        it 'sets custom invalid message', ->
+          fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> false
+          scope.checkForRentBurdenFiles()
+          expect(scope.customInvalidMessage).not.toEqual(null)
+
+    describe 'cancelRentBurdenFilesForAddress', ->
+      it 'expects deleteRentBurdenPreferenceFiles to be called on Service', ->
+        address = '123 Main St'
+        scope.cancelRentBurdenFilesForAddress(address)
+        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
+
+    describe 'hasCompleteRentBurdenFilesForAddress', ->
+      it 'expects hasCompleteRentBurdenFilesForAddress to be called on Service', ->
+        address = '123 Main St'
+        scope.hasCompleteRentBurdenFilesForAddress(address)
+        expect(fakeShortFormApplicationService.hasCompleteRentBurdenFilesForAddress).toHaveBeenCalledWith(address)
+
+    describe 'cancelPreference', ->
+      it 'clears rent burden error for rent burden preference', ->
+        scope.customInvalidMessage = 'some value'
+        scope.cancelPreference('rentBurden')
+        expect(scope.customInvalidMessage).toEqual null
+
+      it 'calls cancelPreference on ShortFormApplicationService', ->
+        scope.cancelPreference()
+        expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
+
+    describe 'fileAttachmentsForPreference', ->
+      it 'called on fileAttachmentsForPreference on ShortFormHelperService', ->
+        scope.fileAttachmentsForPreference()
+        expect(fakeShortFormHelperService.fileAttachmentsForPreference).toHaveBeenCalled()

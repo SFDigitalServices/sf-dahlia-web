@@ -42,6 +42,7 @@ ShortFormApplicationController = (
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
   $scope.labels = {}
+  $scope.customInvalidMessage = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -377,6 +378,28 @@ ShortFormApplicationController = (
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 
+  $scope.checkForRentBurdenFiles = ->
+    if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      $scope.setRentBurdenError()
+      $scope.handleErrorState()
+
+  $scope.hasCompleteRentBurdenFilesForAddress = (address) ->
+    ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
+
+  $scope.cancelRentBurdenFilesForAddress = (address) ->
+    ShortFormNavigationService.isLoading(true)
+    FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
+      $scope.goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')
+
+  $scope.setRentBurdenError = ->
+    ShortFormApplicationService.invalidatePreferencesForm()
+    $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
+
+  $scope.clearRentBurdenError = (message) ->
+    $scope.customInvalidMessage = null
+
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
@@ -420,10 +443,8 @@ ShortFormApplicationController = (
     $scope.neighborhoodResidenceAddresses().join(' and ')
 
   $scope.cancelPreference = (preference) ->
+    $scope.clearRentBurdenError() if preference == 'rentBurden'
     ShortFormApplicationService.cancelPreference(preference)
-
-  $scope.optOutField = (preference) ->
-    ShortFormApplicationService.optOutFields[preference]
 
   $scope.cancelOptOut = (preference) ->
     ShortFormApplicationService.cancelOptOut(preference)
@@ -640,6 +661,9 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.fileAttachmentsForPreference = (pref_type) ->
+    ShortFormHelperService.fileAttachmentsForPreference($scope.application, pref_type)
+
   $scope.addressTranslationVariable = (address) ->
     ShortFormHelperService.addressTranslationVariable(address)
 
@@ -816,6 +840,7 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.addressError = false
+    $scope.clearRentBurdenError()
     $scope.clearEligibilityErrors()
     ShortFormNavigationService.isLoading(false)
 

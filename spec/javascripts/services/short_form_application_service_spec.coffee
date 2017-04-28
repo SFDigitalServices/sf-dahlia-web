@@ -813,3 +813,41 @@ do ->
         fakePrevApplication = { status: 'draft' }
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+    describe 'hasCompleteRentBurdenFilesForAddress', ->
+      it 'returns true with lease and rent file', ->
+        ShortFormApplicationService.application.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {file: 'some file'}
+                rent:
+                  1: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual true
+
+      it 'returns false with missing file', ->
+        ShortFormApplicationService.application.preferences.documents.rentBurden =
+          '123 Main St':
+            lease: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual false
+
+
+    describe 'hasCompleteRentBurdenFiles', ->
+      beforeEach ->
+        ShortFormApplicationService.application.groupedHouseholdAddresses = [{"address": "123 Main St"}]
+      it 'returns true with lease and rent file', ->
+        ShortFormApplicationService.application.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {file: 'some file'}
+                rent:
+                  1: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual true
+
+      it 'returns false with missing file', ->
+        ShortFormApplicationService.application.preferences.documents.rentBurden =
+          '123 Main St':
+            lease: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
+

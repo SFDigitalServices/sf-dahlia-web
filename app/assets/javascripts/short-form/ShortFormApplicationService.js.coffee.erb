@@ -292,7 +292,7 @@ ShortFormApplicationService = (
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
-    !Service.application.preferences.optOut[preference]
+    !Service.preferences.optOut[preference]
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -308,6 +308,15 @@ ShortFormApplicationService = (
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.hasCompleteRentBurdenFiles = ->
+    _.every Service.application.groupedHouseholdAddresses, (groupedAddress) ->
+      Service.hasCompleteRentBurdenFilesForAddress(groupedAddress.address)
+
+  Service.hasCompleteRentBurdenFilesForAddress = (address) ->
+    files = Service.application.preferences.documents.rentBurden[address]
+    return false unless files
+    files.lease.file && _.some(_.map(files.rent, 'file'))
 
   Service.householdSize = ->
     Service.application.householdMembers.length + 1
@@ -462,6 +471,8 @@ ShortFormApplicationService = (
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
+      # special case for rentBurden subpages
+      return if stateName.match(/rent-burden-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)

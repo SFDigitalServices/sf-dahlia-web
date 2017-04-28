@@ -87,10 +87,46 @@ module.exports = ->
     submitForm()
 
   @When 'I indicate I will live alone', ->
-    element(By.id('live_alone')).click()
+    element(By.id('live-alone')).click()
+
+  @When 'I indicate other people will live with me', ->
+    element(By.id('other-people')).click()
+    # also submit the household overview page
+    submitForm()
+
+  @When /^I add another household member named "([^"]*)"$/, (fullName) ->
+    # click into the Add Household Member form
+    element(By.id('add-member')).click()
+
+
+    firstName = fullName.split(' ')[0]
+    lastName  = fullName.split(' ')[1]
+    element(By.model('householdMember.firstName')).sendKeys(firstName)
+    element(By.model('householdMember.lastName')).sendKeys(lastName)
+    element(By.model('householdMember.dob_month')).sendKeys('10')
+    element(By.model('householdMember.dob_day')).sendKeys('04')
+    element(By.model('householdMember.dob_year')).sendKeys('1985')
+    element(By.id('hasSameAddressAsApplicant_yes')).click()
+    element(By.id('workInSf_no')).click()
+    element.all(By.cssContainingText('option', 'Spouse')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    # finish adding member
+    submitForm()
+
+  @When 'I indicate being done adding other people', ->
+    submitForm()
 
   @When 'I indicate living in public housing', ->
     element(By.id('STUB_householdPublicHousing_yes')).click()
+    submitForm()
+
+  @When 'I indicate not living in public housing', ->
+    element(By.id('STUB_householdPublicHousing_no')).click()
+    submitForm()
+
+  @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
+    element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
     submitForm()
 
   @When 'I indicate no priority', ->
@@ -126,6 +162,10 @@ module.exports = ->
 
   @When 'I opt out of NRHP preference', ->
     optOutAndSubmit()
+
+  @When 'I select Rent Burden Preference', ->
+    element(By.id('preferences-rentBurden')).click()
+
 
   @When /^I select "([^"]*)" for COP preference$/, (fullName) ->
     element(By.id('preferences-certOfPreference')).click()
@@ -268,6 +308,11 @@ module.exports = ->
     ).first()
     # expect the member selection field to still be there
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see proof uploaders for rent burden files', ->
+    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    uploader = element(By.model('$ctrl.proofDocument.file.name'))
+    @expect(uploader.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my draft application with a Continue Application button', ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
