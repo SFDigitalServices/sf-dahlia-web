@@ -4,5 +4,5 @@ languages:
   JavaScript: true
 exclude_paths:
   - "lib/assets"
-  # code climate complains a bunch about our toolkit.css -- how useful is this?
+  # code climate complains a bunch about our toolkit.css -- is it useful to validate our CSS?
   - "app/assets/stylesheets"
