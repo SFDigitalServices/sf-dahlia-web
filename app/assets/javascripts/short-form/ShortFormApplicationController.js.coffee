@@ -394,6 +394,7 @@ ShortFormApplicationController = (
       $scope.goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')
 
   $scope.setRentBurdenError = ->
+    ShortFormApplicationService.invalidatePreferencesForm()
     $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
 
   $scope.clearRentBurdenError = (message) ->
