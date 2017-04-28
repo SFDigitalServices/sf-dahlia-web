@@ -8,5 +8,5 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     # gets these parent scope functions from ShortFormApplicationController
     scope.showBackButton = scope.hasBackButton()
-    scope.backPageHref = scope.backPageState()
+    scope.backPageState = scope.backPageState()
 ]

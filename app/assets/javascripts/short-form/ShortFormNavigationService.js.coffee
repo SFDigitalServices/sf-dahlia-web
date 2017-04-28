@@ -37,6 +37,8 @@ ShortFormNavigationService = (
         'neighborhood-preference'
         'live-work-preference'
         'assisted-housing-preference'
+        'rent-burden-preference'
+        'rent-burden-preference-edit'
         'preferences-programs'
         'general-lottery-notice'
       ]
@@ -74,6 +76,8 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
     'assisted-housing-preference': {path: 'preferences-programs'}
+    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
@@ -133,6 +137,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
+      'rent-burden-preference-edit',
       'review-summary',
       'confirmation'
     ]
@@ -152,7 +157,7 @@ ShortFormNavigationService = (
     Service._sectionOfPage(Service._currentPage())
 
   Service.backPageState = ->
-    $state.href("dahlia.short-form-application.#{Service.previousPage()}")
+    "dahlia.short-form-application.#{Service.previousPage()}"
 
   Service.previousPage = ->
     application = ShortFormApplicationService.application
@@ -200,6 +205,8 @@ ShortFormNavigationService = (
         else
           'preferences-intro'
       when 'assisted-housing-preference'
+        Service.getPrevPageOfPreferencesSection()
+      when 'rent-burden-preference'
         Service.getPrevPageOfPreferencesSection()
       when 'preferences-programs'
         Service.getPrevPageOfPreferencesSection()
@@ -260,6 +267,8 @@ ShortFormNavigationService = (
   Service.getPrevPageOfPreferencesSection = ->
     if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
+    else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
+      'rent-burden-preference'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.eligibleForLiveWork()
@@ -271,6 +280,7 @@ ShortFormNavigationService = (
     # This returns the page in the household section that comes directly after
     # the household members page
     application = ShortFormApplicationService.application
+    listing = ShortFormApplicationService.listing
     return '' if application.status.toLowerCase() == 'submitted'
     if application.STUB_householdPublicHousing
       'household-public-housing'

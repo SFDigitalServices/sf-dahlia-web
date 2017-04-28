@@ -734,6 +734,24 @@
         'container':
           templateUrl: 'short-form/templates/e2b-assisted-housing-preference.html'
     })
+    .state('dahlia.short-form-application.rent-burden-preference', {
+      url: '/rent-burden-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2c-rent-burden-preference.html'
+    })
+    .state('dahlia.short-form-application.rent-burden-preference-edit', {
+      url: '/rent-burden-preference/:index'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2c-rent-burden-preference-edit.html'
+      resolve:
+        addressIndex: [
+          '$stateParams', 'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
+        ]
+    })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:

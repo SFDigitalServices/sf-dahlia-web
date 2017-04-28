@@ -33,6 +33,9 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       optOut: {}
+      documents: {
+        rentBurden: {}
+      }
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     groupedHouseholdAddresses: []
     STUB_prioritiesSelected: {}
@@ -52,6 +55,7 @@ ShortFormApplicationService = (
       Income: {}
       Review: {}
 
+  Service.currentRentBurdenAddress = {}
   Service.current_id = 0
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
@@ -76,6 +80,16 @@ ShortFormApplicationService = (
     Service.initServices()
 
   Service.resetUserData()
+  # --- end initialization
+
+  Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
+    return false unless form
+    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
+    field = form[fieldName]
+    if form && field
+      field.$invalid && (field.$touched || form.$submitted)
+    else
+      false
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
@@ -204,7 +218,10 @@ ShortFormApplicationService = (
     primaryAddress = Service.applicant.home_address.address1
     primaryAddress += ' ' + Service.applicant.home_address.address2 if Service.applicant.home_address.address2
     groupedAddress.address = primaryAddress
-    groupedAddress.members = ['You']
+    primaryApplicant =
+      fullName: "#{Service.applicant.firstName} #{Service.applicant.lastName} (You)"
+      firstName: "You"
+    groupedAddress.members = [primaryApplicant]
     groupedAddresses.push(angular.copy(groupedAddress))
 
     _.each Service.householdMembers, (member) ->
@@ -215,19 +232,27 @@ ShortFormApplicationService = (
         groupedAddress.address = member.home_address.address1
         groupedAddress.address += ' ' + member.home_address.address2 if member.home_address.address2
       matchedIndex = _.findIndex(groupedAddresses, { address: groupedAddress.address})
+      name =
+        fullName: "#{member.firstName} #{member.lastName}"
+        firstName: member.firstName
       if matchedIndex > -1
-        groupedAddresses[matchedIndex].members.push(member.firstName)
+        groupedAddresses[matchedIndex].members.push(name)
       else
-        groupedAddress.members = [member.firstName]
+        groupedAddress.members = [name]
         groupedAddresses.push(angular.copy(groupedAddress))
 
     _.each groupedAddresses, (groupedAddress) ->
+      ShortFormDataService.initRentBurdenDocs(groupedAddress.address, Service.application)
       matchedIndex = _.findIndex(Service.application.groupedHouseholdAddresses, { address: groupedAddress.address})
       if matchedIndex > -1
         groupedAddress.monthlyRent = Service.application.groupedHouseholdAddresses[matchedIndex].monthlyRent
         groupedAddress.dontPayRent = Service.application.groupedHouseholdAddresses[matchedIndex].dontPayRent
 
     angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
+
+  Service.setRentBurdenAddressIndex = (index) ->
+    angular.copy(Service.application.groupedHouseholdAddresses[index], Service.currentRentBurdenAddress)
+    Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
     if preference == 'neighborhoodResidence'
@@ -248,19 +273,26 @@ ShortFormApplicationService = (
   Service.unsetPreferenceFields = (preference) ->
     # clear out all fields for this preference
     Service.preferences[preference] = null
-    Service.preferences["#{preference}_household_member"] = null
-    Service.preferences["#{preference}_proof_option"] = null
-    FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+    if preference == 'rentBurden'
+      FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
+    else
+      Service.preferences["#{preference}_household_member"] = null
+      FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
       Service.cancelOptOut('liveWorkInSf')
+    # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
+    if preference == 'rentBurden' || preference == 'assistedHousing'
+      Service.application.preferences.optOut.assistedHousing = false
+      Service.application.preferences.optOut.rentBurden = false
+
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
-    !Service.application.preferences.optOut[preference]
+    !Service.preferences.optOut[preference]
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -276,6 +308,15 @@ ShortFormApplicationService = (
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.hasCompleteRentBurdenFiles = ->
+    _.every Service.application.groupedHouseholdAddresses, (groupedAddress) ->
+      Service.hasCompleteRentBurdenFilesForAddress(groupedAddress.address)
+
+  Service.hasCompleteRentBurdenFilesForAddress = (address) ->
+    files = Service.application.preferences.documents.rentBurden[address]
+    return false unless files
+    files.lease.file && _.some(_.map(files.rent, 'file'))
 
   Service.householdSize = ->
     Service.application.householdMembers.length + 1
@@ -306,6 +347,17 @@ ShortFormApplicationService = (
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
+
+  Service.eligibleMembers = (preference) ->
+    switch preference
+      when 'liveInSf'
+        Service.liveInSfMembers()
+      when 'workInSf'
+        Service.workInSfMembers()
+      when 'neighborhoodResidence'
+        Service.neighborhoodResidenceMembers()
+      else
+        Service.fullHousehold()
 
   Service.liveInSfMembers = ->
     applicantLivesInSf = _.lowerCase(Service.applicant.home_address.city) == 'san francisco'
@@ -348,7 +400,19 @@ ShortFormApplicationService = (
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
+    # can only have a Yes answer if assistedHousingRentBurden preference is on this listing
     Service.application.STUB_householdPublicHousing == 'Yes'
+
+  Service.eligibleForRentBurden = ->
+    totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
+    incomeTotal = parseFloat(Service.application.householdIncome.incomeTotal)
+    if Service.application.householdIncome.incomeTimeframe == 'per_month'
+      ratio = totalMonthlyRent / incomeTotal
+    else
+      ratio = (totalMonthlyRent * 12) / incomeTotal
+
+    # can only have a No answer if assistedHousing/RentBurden preference is on this listing
+    Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
@@ -366,23 +430,27 @@ ShortFormApplicationService = (
     # copy NRHP values to liveInSf
     neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
-    proofOption = Service.preferences.neighborhoodResidence_proof_option
+    proofOption = Service.preferences.documents.neighborhoodResidence.proofOption
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
-    Service.preferences.liveInSf_proof_option = proofOption
+    Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if selectedMember && !_.includes(members, selectedMember)
-      Service.application.completedSections['Preferences'] = false
-      Service.cancelPreference(preference)
-    # clear if nobody is eligible
-    else if _.isEmpty(members)
-      Service.application.completedSections['Preferences'] = false
-      Service.cancelPreference(preference)
+    if _.isEmpty(members) || selectedMember && !_.includes(members, selectedMember)
+      Service.resetPreference(preference)
 
+  Service.resetPreference = (preference) ->
+    # this should be called when you're cancelling the preference from an external factor
+    # e.g. you changed your address and are no longer eligible for liveInSf,
+    # so we totally cancel liveInSf and reset the preference validatedForms
+    Service.application.completedSections.Preferences = false
+    angular.copy({}, Service.application.validatedForms.Preferences)
+    # cancel both preference and optOut, this preference is no longer valid
+    Service.cancelPreference(preference)
+    Service.cancelOptOut(preference)
 
   Service.onExit = (e) ->
     AnalyticsService.trackFormAbandon('Application')
@@ -403,6 +471,8 @@ ShortFormApplicationService = (
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
+      # special case for rentBurden subpages
+      return if stateName.match(/rent-burden-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)

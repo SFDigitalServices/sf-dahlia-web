@@ -1,12 +1,14 @@
 angular.module('dahlia.directives')
 .directive 'reviewSummaryItem', ->
   replace: true
-  scope: true
+  scope:
+    label: '@'
+    subLabel: '@'
+    boldSubLabel: '@'
+    identifier: '@'
+    getSubLabels: '&'
   transclude: true
   templateUrl: 'short-form/directives/review-summary-item.html'
 
   link: (scope, elem, attrs) ->
-    scope.label = attrs.label
-    scope.subLabel = attrs.subLabel
-    scope.boldSubLabel = attrs.boldSubLabel
-    scope.identifier = attrs.identifier
+    scope.boldSubLabels = scope.getSubLabels() if scope.getSubLabels
