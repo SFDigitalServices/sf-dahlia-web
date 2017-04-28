@@ -280,6 +280,7 @@ ShortFormNavigationService = (
     # This returns the page in the household section that comes directly after
     # the household members page
     application = ShortFormApplicationService.application
+    listing = ShortFormApplicationService.listing
     return '' if application.status.toLowerCase() == 'submitted'
     if application.STUB_householdPublicHousing
       'household-public-housing'
