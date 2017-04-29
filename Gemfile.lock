@@ -173,7 +173,7 @@ GEM
     multipart-post (2.0.0)
     netrc (0.11.0)
     newrelic_rpm (3.16.0.318)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     oj (2.16.1)
     oj_mimic_json (1.0.1)
@@ -367,7 +367,7 @@ DEPENDENCIES
   jquery-rails
   memcachier
   newrelic_rpm
-  nokogiri (~> 1.6.8)
+  nokogiri (~> 1.7.1)
   oj
   oj_mimic_json
   overcommit
