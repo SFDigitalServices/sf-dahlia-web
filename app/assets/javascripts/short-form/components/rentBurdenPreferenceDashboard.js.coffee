@@ -14,6 +14,13 @@ angular.module('dahlia.components')
     (ShortFormApplicationService, FileUploadService, $translate) ->
       ctrl = @
       @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
+      @addressLinkText = {}
+
+      @initAddressLinkText = =>
+        _.each @groupedHouseholdAddresses, (groupedAddress) =>
+          address = groupedAddress.address
+          @addressLinkText[address] =
+            if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
 
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -28,13 +35,12 @@ angular.module('dahlia.components')
           @onUncheck()
         else
           # we are checking the box
+          @initAddressLinkText()
           # ensure that we proceed through Preferences section without skipping ahead to Review
           ShortFormApplicationService.invalidatePreferencesForm()
 
-      @hasFiles = (address) =>
-        files = @application.preferences.documents.rentBurden[address]
-        return false unless files
-        !!(files.lease.file || _.some(_.map(files.rent, 'file')))
+      @hasFiles = (address) ->
+        FileUploadService.hasRentBurdenFiles(address)
 
       @hasCompleteFiles = (address) ->
         ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
@@ -50,11 +56,6 @@ angular.module('dahlia.components')
       @addressInvalid = (address) =>
         !@hasCompleteFiles(address) && !!@customInvalidMessage
 
-      @addressLinkText = (address) =>
-        if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
-
-      @addressLinkText = (address) =>
-        if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
-
+      @initAddressLinkText()
       return ctrl
   ]

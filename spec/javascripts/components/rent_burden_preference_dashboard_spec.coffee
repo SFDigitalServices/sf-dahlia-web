@@ -23,6 +23,7 @@ do ->
       proofOptions: jasmine.createSpy()
     fakeFileUploadService =
       uploadedRentBurdenRentFiles: jasmine.createSpy()
+      hasRentBurdenFiles: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
 
     # set up default fake bindings
@@ -54,8 +55,9 @@ do ->
       ctrl = $componentController 'rentBurdenPreferenceDashboard', locals, fakeBindings
 
     describe 'hasFiles', ->
-      it 'should call return true if there is at least one file for address', ->
-        expect(ctrl.hasFiles('123 Main St')).toEqual true
+      it 'should call function on FileUploadService', ->
+        ctrl.hasFiles('123 Main St')
+        expect(fakeFileUploadService.hasRentBurdenFiles).toHaveBeenCalledWith('123 Main St')
 
     describe 'hasCompleteFiles', ->
       it 'calls on hasCompleteRentBurdenFilesForAddress on ShortFormApplicationService', ->
@@ -88,5 +90,3 @@ do ->
         it 'returns false', ->
           spyOn(fakeShortFormApplicationService, 'hasCompleteRentBurdenFilesForAddress').and.returnValue(true)
           expect(ctrl.addressInvalid(fakeAddress)).toEqual false
-
-

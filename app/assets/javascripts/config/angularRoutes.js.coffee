@@ -721,24 +721,36 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e2-live-work-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
+      ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
+      ]
     })
     .state('dahlia.short-form-application.assisted-housing-preference', {
       url: '/assisted-housing-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2b-assisted-housing-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('assistedHousing')
+      ]
     })
     .state('dahlia.short-form-application.rent-burden-preference', {
       url: '/rent-burden-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2c-rent-burden-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('rentBurden')
+      ]
     })
     .state('dahlia.short-form-application.rent-burden-preference-edit', {
       url: '/rent-burden-preference/:index'

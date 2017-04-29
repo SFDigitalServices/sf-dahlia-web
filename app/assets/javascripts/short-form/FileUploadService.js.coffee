@@ -22,7 +22,7 @@ FileUploadService = ($http, $q, Upload, uuid) ->
     else
       proofDocument = Service.preferences.documents[prefType]
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
-      return $q.reject()
+      return $q.resolve()
 
     $http.delete('/api/v1/short-form/proof', {
       data: params,
@@ -101,18 +101,31 @@ FileUploadService = ($http, $q, Upload, uuid) ->
       # remove pref file at opts.index
       delete rentBurdenDocs.rent[opts.index]
 
+  Service.hasRentBurdenFiles = (address = null) ->
+    hasFiles = false
+    if address
+      docs = Service.preferences.documents.rentBurden[address]
+      return false unless docs
+      hasFiles = !!(docs.lease.file || _.some(_.map(docs.rent, 'file')))
+    else
+      _.map Service.preferences.documents.rentBurden, (doc, address) ->
+        hasFiles = hasFiles || Service.hasRentBurdenFiles(address)
+    return hasFiles
+
   Service.clearRentBurdenFiles = (address = null) ->
     if address
       rentBurdenDocs = Service.preferences.documents.rentBurden[address]
       angular.copy({}, rentBurdenDocs.lease)
       angular.copy({}, rentBurdenDocs.rent)
     else
-      _.each Service.preferences.documents.rentBurden, (doc, address) ->
+      _.each Service.preferences.documents.rentBurden, (docs, address) ->
         rentBurdenDocs = Service.preferences.documents.rentBurden[address]
         angular.copy({}, rentBurdenDocs.lease)
         angular.copy({}, rentBurdenDocs.rent)
 
   Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
+    unless Service.hasRentBurdenFiles(address)
+      return $q.resolve()
     params =
       uploaded_file:
         session_uid: Service.session_uid()

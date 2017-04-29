@@ -50,7 +50,6 @@ do ->
       cancelHouseholdMember: jasmine.createSpy()
       householdSize: -> 1
       calculateHouseholdIncome: -> 1000
-      refreshPreferences: jasmine.createSpy()
       clearPhoneData: jasmine.createSpy()
       validMailingAddress: jasmine.createSpy()
       liveInSfMembers: () ->
@@ -66,7 +65,9 @@ do ->
       resetAssistedHousingForm: jasmine.createSpy()
       signInSubmitApplication: jasmine.createSpy()
       preferenceRequired: jasmine.createSpy()
+      refreshPreferences: jasmine.createSpy()
       resetPreference: jasmine.createSpy()
+      showPreference: jasmine.createSpy()
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -488,29 +489,21 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
 
     describe 'showPreference', ->
-      describe 'listing does not have preference', ->
-        it 'returns false', ->
-          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(false)
-          expect(scope.showPreference('liveInSf')).toEqual false
-
-      describe 'listing has preference', ->
-        it 'returns true', ->
-          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(true)
-          expect(scope.showPreference('displaced')).toEqual true
+      it 'calls function on ShortFormApplicationService', ->
+        scope.showPreference('liveInSf')
+        expect(fakeShortFormApplicationService.showPreference).toHaveBeenCalledWith 'liveInSf'
 
     describe 'preferenceRequired', ->
-      describe 'listing does not have preference', ->
-        it 'returns false', ->
-          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(false)
-          expect(scope.preferenceRequired('liveInSf')).toEqual false
+      it 'calls function on ShortFormApplicationService', ->
+        fakeShortFormApplicationService.showPreference = jasmine.createSpy().and.returnValue(true)
+        scope.preferenceRequired('liveInSf')
+        expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith 'liveInSf'
 
-      describe 'listing has preference', ->
-        it 'calls preferenceRequired function', ->
-          spyOn(fakeShortFormApplicationService, 'listingHasPreference').and.returnValue(true)
-          spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue([])
-          spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue([1])
-          scope.preferenceRequired('liveInSf')
-          expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith('liveInSf')
+    describe 'preferenceCheckboxInvalid', ->
+      it 'calls inputInvalid with currentPreferenceType', ->
+        scope.form.currentPreferenceType = 'liveInSf'
+        scope.preferenceCheckboxInvalid()
+        expect(fakeShortFormApplicationService.inputInvalid).toHaveBeenCalled()
 
     describe 'primaryApplicantUnder18', ->
       it 'checks form values for primary applicant DOB that is under 18', ->

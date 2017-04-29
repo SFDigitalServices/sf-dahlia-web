@@ -14,5 +14,5 @@
       input.button.primary.radius.expand-small type="submit" value="{{'LABEL.DONE_WITH_THIS_ADDRESS' | translate}}" ng-disabled="!hasCompleteRentBurdenFilesForAddress(currentRentBurdenAddress.address)"
 
     .button-pager_row
-      button.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelRentBurdenFilesForAddress(currentRentBurdenAddress.address)"
+      button.button.button-link.button-lined.small-text-center.expand-small type="button" ng-click="cancelRentBurdenFilesForAddress(currentRentBurdenAddress.address)"
         | {{'LABEL.CANCEL_ADDING_DOCUMENTS' | translate}}

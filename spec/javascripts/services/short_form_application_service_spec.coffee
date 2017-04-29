@@ -409,6 +409,9 @@ do ->
           expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
 
     describe 'eligibleForLiveWork', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
       it 'returns true if someone is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'Yes'
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual true
@@ -417,7 +420,15 @@ do ->
         ShortFormApplicationService.applicant.workInSf = 'No'
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
 
+      it 'returns false if listing does not have liveWorkInSf', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.workInSf = 'Yes'
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
+
     describe 'eligibleForNRHP', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
       it 'returns true if someone is eligible for NRHP', ->
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
@@ -426,33 +437,54 @@ do ->
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
+      it 'returns false if listing does not have NRHP', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
+
     describe 'eligibleForAssistedHousing', ->
-      it 'return true if listing has assistedHousing preference', ->
+      it 'returns true if application said yes to public housing', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
         ShortFormApplicationService.application.STUB_householdPublicHousing = 'Yes'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
 
+      it 'returns false if application does not have assistedHousing', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        # TO DO: update during API integration story for preference
+        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual false
+
     describe 'eligibleForRentBurden', ->
-      describe 'listing does not have assistedHousing preference', ->
-        beforeEach ->
-          ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        ShortFormApplicationService.application.householdIncome.incomeTimeframe = 'per_month'
+        ShortFormApplicationService.application.groupedHouseholdAddresses = [
+          {
+            "address": "312 DEETZ RD",
+            "members": [
+              "You"
+            ],
+            "monthlyRent": 2000
+          }
+        ]
 
-        describe 'rent-to-income ratio is greater than or equal to 50%', ->
-          it 'returns true', ->
-            ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
-            ShortFormApplicationService.application.incomeTimeframe = 'per_month'
-            ShortFormApplicationService.application.groupedHouseholdAddresses = [
-              {
-                "address": "312 DEETZ RD",
-                "members": [
-                  "You"
-                ],
-                "monthlyRent": 2000
-              }
-            ]
+      describe 'when rent-to-income ratio is greater than or equal to 50%', ->
+        it 'returns true', ->
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual true
 
-            # TO DO: update during API integration story for preference
-            expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual true
+      describe 'when rent-to-income ratio is less than 50%', ->
+        it 'returns false', ->
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 9000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
+
+      describe 'when listing does not have rentBurden preference', ->
+        it 'returns false', ->
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
 
     describe 'copyNRHPtoLiveInSf', ->
       beforeEach ->
@@ -478,6 +510,28 @@ do ->
       it 'returns false if optOutField is marked', ->
         ShortFormApplicationService.application.preferences.optOut.liveInSf = true
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
+
+    describe 'showPreference', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        ShortFormApplicationService.householdMembers = []
+
+        # TODO!
+        it 'returns true for liveWorkInSf if you are eligible for both live and work', ->
+          setupFakeApplicant({home_address: fakeSFAddress, workInSf: true})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('liveWorkInSf')).toEqual true
+
+        it 'returns true for liveInSf if you are only eligible for live', ->
+          setupFakeApplicant({home_address: fakeSFAddress, workInSf: false})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('liveInSf')).toEqual true
+
+        it 'returns true for workInSf if you are only eligible for work', ->
+          setupFakeApplicant({home_address: fakeNonSFAddress, workInSf: true})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('workInSf')).toEqual true
+
 
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
@@ -691,13 +745,13 @@ do ->
 
     describe 'hasHouseholdPublicHousingQuestion', ->
       it 'should includes public housing question when listing has Assisted Housing / Rent Burden preference', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
         expect(showHouseholdPublicHousingQuestion).toEqual true
 
       it 'should NOT include public housing question when listing doesn\'t have Assisted Housing / Rent Burden preference', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
         expect(showHouseholdPublicHousingQuestion).toEqual false
@@ -850,4 +904,3 @@ do ->
           '123 Main St':
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
-

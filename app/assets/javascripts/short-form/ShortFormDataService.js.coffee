@@ -139,6 +139,9 @@ ShortFormDataService = (ListingService) ->
       # only proceed if we optedOut or marked this pref as `true`
       return unless optOut || application.preferences[prefKey]
 
+      if prefKey == 'liveWorkInSf'
+        # combo liveWork pref only relevant if the individual ones are not set
+        return if application.preferences.workInSf || application.preferences.liveInSf
       if _.includes(['liveInSf', 'workInSf'], prefKey)
         # for liveWorkInSf, need to indicate individual pref (live or work)
         individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'

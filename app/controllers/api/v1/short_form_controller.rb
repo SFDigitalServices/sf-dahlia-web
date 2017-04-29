@@ -269,6 +269,9 @@ class Api::V1::ShortFormController < ApiController
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
     }
+    if uploaded_file_params[:address]
+      file_params[:address] = uploaded_file_params[:address]
+    end
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id

@@ -289,10 +289,37 @@ ShortFormApplicationService = (
       Service.application.preferences.optOut.assistedHousing = false
       Service.application.preferences.optOut.rentBurden = false
 
-
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
     !Service.preferences.optOut[preference]
+
+  Service.setFormPreferenceType = (preference) ->
+    if preference == 'liveWorkInSf'
+      Service.form.currentPreferenceType = Service.liveWorkPreferenceType()
+    else
+      Service.form.currentPreferenceType = preference
+
+  Service.showPreference = (preference) ->
+    return false unless Service.listingHasPreference(preference)
+    switch preference
+      when 'liveWorkInSf'
+        Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
+      when 'liveInSf'
+        Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
+      when 'workInSf'
+        Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
+      when 'neighborhoodResidence'
+        Service.neighborhoodResidenceMembers().length > 0
+      else
+        true
+
+  Service.liveWorkPreferenceType = ->
+    if Service.showPreference('liveWorkInSf')
+      'liveWorkInSf'
+    else if Service.showPreference('liveInSf')
+      'liveInSf'
+    else
+      'workInSf'
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -391,27 +418,32 @@ ShortFormApplicationService = (
   Service.maxHouseholdAge = ->
     _.max(_.map(Service.fullHousehold(), Service.memberAge))
 
+  Service.listingHasPreference = (preference) ->
+    ListingService.hasPreference(preference)
+
   Service.eligibleForLiveWork = ->
+    return false unless Service.listingHasPreference('liveWorkInSf')
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
     return (liveInSfEligible || workInSfEligible)
 
   Service.eligibleForNRHP = ->
+    return false unless Service.listingHasPreference('neighborhoodResidence')
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
-    # can only have a Yes answer if assistedHousingRentBurden preference is on this listing
+    return false unless Service.listingHasPreference('assistedHousing')
     Service.application.STUB_householdPublicHousing == 'Yes'
 
   Service.eligibleForRentBurden = ->
+    return false unless Service.listingHasPreference('rentBurden')
     totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
     incomeTotal = parseFloat(Service.application.householdIncome.incomeTotal)
     if Service.application.householdIncome.incomeTimeframe == 'per_month'
       ratio = totalMonthlyRent / incomeTotal
     else
       ratio = (totalMonthlyRent * 12) / incomeTotal
-
-    # can only have a No answer if assistedHousing/RentBurden preference is on this listing
+    # must have answered "No" and rent > 50% of income
     Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
@@ -733,7 +765,7 @@ ShortFormApplicationService = (
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
-      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
@@ -759,7 +791,7 @@ ShortFormApplicationService = (
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
       # check if NRHP eligibility has changed
-      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
@@ -789,7 +821,6 @@ ShortFormApplicationService = (
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
 
-  Service.listingHasPreference = ListingService.hasPreference
   Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --
