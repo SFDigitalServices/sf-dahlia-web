@@ -7,7 +7,6 @@ angular.module('dahlia.components')
     groupedHouseholdAddressIndex: '<'
     required: '&'
     showCheckbox: '<'
-    moreInfoLink: '<'
 
   templateUrl: 'short-form/components/rent-burden-preference.html'
   controller:

@@ -35,7 +35,6 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
-  $scope.preference_more_info_links = ShortFormHelperService.preference_more_info_links
   # this tracks what type of pref is being shown on the live-work-preference page:
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null

@@ -9,13 +9,15 @@ angular.module('dahlia.components')
     description: '@'
     shortDescription: '@'
     onChange: '&'
-    moreInfoLink: '<'
   templateUrl: 'short-form/components/preference-checkbox.html'
 
-  controller: ->
+  controller: ['ListingService', (ListingService) ->
     ctrl = @
 
     @showDescription = false
+    listingPreference = ListingService.getPreference(@preference)
+    @moreInfoLink = listingPreference.readMoreUrl
+
     gtmTags = {
       certOfPreference: 'cop'
       displaced: 'dthp'
@@ -28,3 +30,4 @@ angular.module('dahlia.components')
     @dataEvent = "gtm-preference-#{tag}"
 
     return ctrl
+  ]

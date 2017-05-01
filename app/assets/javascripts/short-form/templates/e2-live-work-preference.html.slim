@@ -9,11 +9,11 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-        preference(preference="liveInSf" has-proof="true" application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveInSf')"  more-info-link="preference_more_info_links.liveInSf" ng-if="showPreference('liveInSf')")
+        preference(preference="liveInSf" has-proof="true" application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.DESCRIPTION" required="preferenceRequired('liveInSf')" ng-if="showPreference('liveInSf')")
 
-        preference(preference="workInSf" has-proof="true" application="application" title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION"  required="preferenceRequired('workInSf')" more-info-link="preference_more_info_links.workInSf" ng-if="showPreference('workInSf')")
+        preference(preference="workInSf" has-proof="true" application="application" title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION"  required="preferenceRequired('workInSf')" ng-if="showPreference('workInSf')")
 
-        live-work-combo-preference(application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" more-info-link="preference_more_info_links.liveWorkInSf" ng-if="showPreference('liveWorkInSf')")
+        live-work-combo-preference(application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" ng-if="showPreference('liveWorkInSf')")
 
 
       preference-opt-out preference="{{form.currentPreferenceType}}" application="application" invalid="inputInvalid(form.currentPreferenceType)" cancel-preference="cancelPreference(form.currentPreferenceType)"

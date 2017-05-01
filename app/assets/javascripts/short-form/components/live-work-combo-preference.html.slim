@@ -1,5 +1,5 @@
 .checkbox-block
-  preference-checkbox(application="$ctrl.application" preference="liveWorkInSf" invalid="$ctrl.inputInvalid('liveWorkInSf')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.onCheckLiveWork()" more-info-link="$ctrl.moreInfoLink" required="$ctrl.required()")
+  preference-checkbox(application="$ctrl.application" preference="liveWorkInSf" invalid="$ctrl.inputInvalid('liveWorkInSf')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.onCheckLiveWork()" required="$ctrl.required()")
 
   / select for liveWorkInSf preference type
   .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: $ctrl.inputInvalid('liveWorkInSf_preference') }" ng-if="$ctrl.application.preferences.liveWorkInSf"
