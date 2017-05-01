@@ -61,7 +61,6 @@ module.exports = ->
     element(By.model('applicant.dob_month')).clear().sendKeys('02')
     element(By.model('applicant.dob_day')).clear().sendKeys('22')
     element(By.model('applicant.dob_year')).clear().sendKeys('1990')
-    element(By.id('submit')).click()
     submitForm()
 
   @When 'I submit the Name page with my account info', ->
