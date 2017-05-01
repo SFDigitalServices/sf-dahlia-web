@@ -113,6 +113,21 @@ do ->
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.listingIsOpen(listing)).toEqual true
 
+    describe 'Service.lotteryDatePassed', ->
+      it 'checks if listing lottery date has passed', ->
+        listing = fakeListing.listing
+        tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        listing.Lottery_Date = tomorrow.toString()
+        expect(ListingService.lotteryDatePassed(listing)).toEqual false
+
+      it 'checks if listing lottery date has not passed', ->
+        listing = fakeListing.listing
+        lastWeek = new Date()
+        lastWeek.setDate(lastWeek.getDate() - 7)
+        listing.Lottery_Date = lastWeek.toString()
+        expect(ListingService.lotteryDatePassed(listing)).toEqual true
+
     describe 'Service.isAcceptingOnlineApplications', ->
       it 'returns false if an empty listing is passed in', ->
         expect(ListingService.isAcceptingOnlineApplications({})).toEqual false

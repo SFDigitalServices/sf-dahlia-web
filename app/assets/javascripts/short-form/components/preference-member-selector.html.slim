@@ -4,8 +4,11 @@
   div
     label.form-label.caps for="{{$ctrl.preferenceHouseholdMember}}"
       | {{ $ctrl.label }}
-    select id="{{$ctrl.preferenceHouseholdMember}}" ng-model="$ctrl.application.preferences[$ctrl.preferenceHouseholdMember]" data-width="auto" name="{{$ctrl.preferenceHouseholdMember}}" ng-required="$ctrl.application.preferences[$ctrl.preference]"
+    select id="{{$ctrl.preferenceHouseholdMember}}" ng-class="{ error: $ctrl.inputInvalid($ctrl.preferenceHouseholdMember) }" ng-model="$ctrl.application.preferences[$ctrl.preferenceHouseholdMember]" data-width="auto" name="{{$ctrl.preferenceHouseholdMember}}" ng-required="$ctrl.application.preferences[$ctrl.preference]" aria-describedby="{{$ctrl.preferenceHouseholdMember}}_error"
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="member in $ctrl.eligibleMembers track by $index" value="{{ member.firstName }} {{ member.lastName }}"
         | {{ member.firstName }} {{ member.lastName }}
+
+    small.error id="{{$ctrl.preferenceHouseholdMember}}_error" ng-if="$ctrl.inputInvalid($ctrl.preferenceHouseholdMember)"
+      | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}

@@ -106,15 +106,43 @@ do ->
           documents:
             rentBurden:
               '123 Main St':
-                lease: {this: 'some file'}
+                lease: {file: 'some file'}
                 rent:
-                  1: {this: 'some file'}
+                  1: {file: 'some file'}
 
       it 'clears all rent burden files', ->
         FileUploadService.clearRentBurdenFiles('123 Main St')
         rentBurdenFiles = FileUploadService.preferences.documents.rentBurden['123 Main St']
         expectedResult = { lease: {  }, rent: {  } }
         expect(rentBurdenFiles).toEqual expectedResult
+
+    describe 'Service.hasRentBurdenFiles', ->
+      beforeEach ->
+        FileUploadService.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {file: 'some file'}
+                rent:
+                  1: {file: 'some file'}
+
+              '345 First St':
+                lease: {}
+                rent: {}
+
+      it 'returns true if there are files, and no arguments given', ->
+        hasFiles = FileUploadService.hasRentBurdenFiles()
+        expect(hasFiles).toEqual true
+      it 'returns true if there are files for the address given', ->
+        hasFiles = FileUploadService.hasRentBurdenFiles('123 Main St')
+        expect(hasFiles).toEqual true
+      it 'returns false if there are not files for the address given', ->
+        hasFiles = FileUploadService.hasRentBurdenFiles('345 First St')
+        expect(hasFiles).toEqual false
+      it 'returns false if there are no files at all', ->
+        FileUploadService.clearRentBurdenFiles()
+        hasFiles = FileUploadService.hasRentBurdenFiles()
+        expect(hasFiles).toEqual false
 
     describe 'Service.deleteRentBurdenPreferenceFiles', ->
       afterEach ->
@@ -126,9 +154,9 @@ do ->
           documents:
             rentBurden:
               '123 Main St':
-                lease: {this: 'some file'}
+                lease: {file: 'some file'}
                 rent:
-                  1: {this: 'some file'}
+                  1: {file: 'some file'}
 
       it 'should delete all rent burden preference files', ->
         stubAngularAjaxRequest httpBackend, "/api/v1/short-form/rent-burden-proof", 200

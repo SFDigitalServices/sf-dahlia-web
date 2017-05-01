@@ -30,6 +30,7 @@ ShortFormApplicationController = (
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
+  $scope.currentPreferenceType = ShortFormApplicationService.currentPreferenceType
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
@@ -43,6 +44,7 @@ ShortFormApplicationController = (
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
   $scope.labels = {}
+  $scope.customInvalidMessage = null
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -370,37 +372,40 @@ ShortFormApplicationController = (
     ShortFormApplicationService.applicantHasNoPreferences()
 
   $scope.checkPreferenceEligibility = (type = 'liveWorkInSf') ->
-    if type == 'liveWorkInSf'
-      $scope.currentLiveWorkType = $scope.liveWorkPreferenceType()
-      $scope.currentPreferenceType = $scope.currentLiveWorkType
-    if type == 'neighborhoodResidence'
-      $scope.currentPreferenceType = 'neighborhoodResidence'
+    # this mainly gets used as one of the submit callbacks for relevant pages in ShortFormNavigationService
     ShortFormApplicationService.refreshPreferences(type)
+
+  $scope.preferenceCheckboxInvalid = ->
+    # $scope.form.currentPreferenceType gets set in the onEnter for the preference page routes
+    $scope.inputInvalid($scope.form.currentPreferenceType)
+
+  $scope.checkForRentBurdenFiles = ->
+    if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      $scope.setRentBurdenError()
+      $scope.handleErrorState()
+
+  $scope.hasCompleteRentBurdenFilesForAddress = (address) ->
+    ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
+
+  $scope.cancelRentBurdenFilesForAddress = (address) ->
+    ShortFormNavigationService.isLoading(true)
+    FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
+      $scope.goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')
+
+  $scope.setRentBurdenError = ->
+    ShortFormApplicationService.invalidatePreferencesForm()
+    $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
+
+  $scope.clearRentBurdenError = (message) ->
+    $scope.customInvalidMessage = null
 
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
   $scope.showPreference = (preference) ->
-    return false unless ShortFormApplicationService.listingHasPreference(preference)
-    switch preference
-      when 'liveWorkInSf'
-        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length > 0
-      when 'liveInSf'
-        $scope.liveInSfMembers().length > 0 && $scope.workInSfMembers().length == 0
-      when 'workInSf'
-        $scope.workInSfMembers().length > 0 && $scope.liveInSfMembers().length == 0
-      when 'neighborhoodResidence'
-        $scope.neighborhoodResidenceMembers().length > 0
-      else
-        true
-
-  $scope.liveWorkPreferenceType = ->
-    if $scope.showPreference('liveWorkInSf')
-      'liveWorkInSf'
-    else if $scope.showPreference('liveInSf')
-      'liveInSf'
-    else
-      'workInSf'
+    ShortFormApplicationService.showPreference(preference)
 
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
@@ -420,10 +425,8 @@ ShortFormApplicationController = (
     $scope.neighborhoodResidenceAddresses().join(' and ')
 
   $scope.cancelPreference = (preference) ->
+    $scope.clearRentBurdenError() if preference == 'rentBurden'
     ShortFormApplicationService.cancelPreference(preference)
-
-  $scope.optOutField = (preference) ->
-    ShortFormApplicationService.optOutFields[preference]
 
   $scope.cancelOptOut = (preference) ->
     ShortFormApplicationService.cancelOptOut(preference)
@@ -549,10 +552,12 @@ ShortFormApplicationController = (
     ShortFormApplicationService.resetMonthlyRentForm()
     # make sure they're forced through now that they have the assistedHousing option
     ShortFormApplicationService.invalidatePreferencesForm()
+    ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.publicHousingNo = ->
     ShortFormApplicationService.invalidateMonthlyRentForm()
     ShortFormApplicationService.resetAssistedHousingForm()
+    ShortFormApplicationService.resetPreference('assistedHousing')
 
   $scope.visitResourcesLink = ->
     linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
@@ -564,8 +569,14 @@ ShortFormApplicationController = (
     link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
     {listingLink: "<a href='#{link}'>#{linkText}</a>"}
 
-  $scope.invalidateIncomeForm = ->
+  $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
+    unless ShortFormApplicationService.eligibleForRentBurden()
+      ShortFormApplicationService.resetPreference('rentBurden')
+
+  $scope.onMonthlyRentChange = ->
+    unless ShortFormApplicationService.eligibleForRentBurden()
+      ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.invalidateAltContactTypeForm = ->
     ShortFormApplicationService.invalidateAltContactTypeForm()
@@ -631,6 +642,9 @@ ShortFormApplicationController = (
 
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
+  $scope.fileAttachmentsForPreference = (pref_type) ->
+    ShortFormHelperService.fileAttachmentsForPreference($scope.application, pref_type)
 
   $scope.addressTranslationVariable = (address) ->
     ShortFormHelperService.addressTranslationVariable(address)
@@ -808,6 +822,7 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.addressError = false
+    $scope.clearRentBurdenError()
     $scope.clearEligibilityErrors()
     ShortFormNavigationService.isLoading(false)
 

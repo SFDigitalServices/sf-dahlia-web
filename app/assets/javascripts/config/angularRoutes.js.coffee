@@ -262,6 +262,9 @@
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
         ]
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.MY_ACCOUNT')
+        ]
       onEnter: ['$stateParams', 'AnalyticsService', ($stateParams, AnalyticsService) ->
         if $stateParams.accountConfirmed
           AnalyticsService.trackAccountCreation()
@@ -289,6 +292,9 @@
         ]
         myApplications: ['AccountService', (AccountService) ->
           AccountService.getMyApplications()
+        ]
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.MY_APPLICATIONS')
         ]
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         if $stateParams.infoChanged
@@ -469,10 +475,16 @@
       abstract: true
       resolve:
         listing: [
-          '$stateParams', 'ListingService',
-          ($stateParams, ListingService) ->
+          '$stateParams', '$q', 'ListingService',
+          ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            ListingService.getListingAndCheckIfOpen($stateParams.id)
+            deferred = $q.defer()
+            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
+              deferred.resolve(ListingService.listing)
+            return deferred.promise
+        ]
+        $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
+          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -508,24 +520,30 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingService', 'ShortFormApplicationService',
-          ($stateParams, $state, $q, ListingService, ShortFormApplicationService) ->
+          '$stateParams', '$q', 'ListingService',
+          ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
             deferred = $q.defer()
             ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              # load listing preferences
               ListingService.getListingPreferences().then ->
-                # always refresh the anonymous session_uid when starting a new application
-                ShortFormApplicationService.refreshSessionUid()
-                # even if user is not necessarily logged in, we always check if they have an application
-                # this is because "loggedIn()" may not return true on initial load
-                ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
-                  deferred.resolve(ShortFormApplicationService.application)
-                  if ShortFormApplicationService.application.status == 'Submitted'
-                    # send them to their review page if the application is already submitted
-                    $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
-
+                deferred.resolve(ListingService.listing)
             return deferred.promise
+        ]
+        application: [
+          # 'listing' is part of the params so that application waits for listing (above) to resolve
+          '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
+          ($stateParams, $state, ShortFormApplicationService, listing) ->
+            # always refresh the anonymous session_uid when starting a new application
+            ShortFormApplicationService.refreshSessionUid()
+            # it's ok if user is not logged in, we always check if they have an application
+            # this is because "loggedIn()" may not return true on initial load
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+              if ShortFormApplicationService.application.status == 'Submitted'
+                # send them to their review page if the application is already submitted
+                $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
+        ]
+        $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
+          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
         ]
     })
     # Short form: "You" section
@@ -703,24 +721,36 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e2-live-work-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
+      ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
+      ]
     })
     .state('dahlia.short-form-application.assisted-housing-preference', {
       url: '/assisted-housing-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2b-assisted-housing-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('assistedHousing')
+      ]
     })
     .state('dahlia.short-form-application.rent-burden-preference', {
       url: '/rent-burden-preference'
       views:
         'container':
           templateUrl: 'short-form/templates/e2c-rent-burden-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('rentBurden')
+      ]
     })
     .state('dahlia.short-form-application.rent-burden-preference-edit', {
       url: '/rent-burden-preference/:index'
@@ -819,11 +849,19 @@
           controller: 'ShortFormApplicationController'
       resolve:
         application: [
-          '$stateParams', '$state', 'ShortFormApplicationService',
-          ($stateParams, $state, ShortFormApplicationService) ->
+          '$stateParams', '$state', '$q', 'ShortFormApplicationService',
+          ($stateParams, $state, $q, ShortFormApplicationService) ->
+            deferred = $q.defer()
             ShortFormApplicationService.getApplication($stateParams.id).then ->
               if !ShortFormApplicationService.applicationWasSubmitted()
                 $state.go('dahlia.my-applications')
+              deferred.resolve(ShortFormApplicationService.application)
+            return deferred.promise
+        ]
+        $title: [
+          '$title', '$translate', 'application',
+          ($title, $translate, application) ->
+            $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
         ]
       onExit: [
         'ShortFormApplicationService',
@@ -857,6 +895,9 @@
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
+        ]
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.ACCOUNT_SETTINGS')
         ]
       onEnter: [
         '$state', 'ShortFormApplicationService',

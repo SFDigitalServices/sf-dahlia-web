@@ -9,23 +9,26 @@
   p.form-note ng-if="$ctrl.proofType == 'Copy of Lease'"
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
 
-  select id="{{$ctrl.selectorName}}" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]" ng-if="$ctrl.showProofOptionSelector()"
-    option value=""
-      | {{'LABEL.SELECT_ONE' | translate}}
-    option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
-      | {{ option[1] }}
-  p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
-    | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
-  p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
-    | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
+  div ng-if="$ctrl.showProofOptionSelector()"
+    select id="{{$ctrl.selectorName}}" ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]"
+      option value=""
+        | {{'LABEL.SELECT_ONE' | translate}}
+      option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
+        | {{ option[1] }}
+    small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
+      | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
+    p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
+      | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
+    p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
+      | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
   / type="button" tells it not to act as a submit button
-  button.button.ghost-white.secondary ng-class="{expand: ($ctrl.proofType != 'Copy of Lease'), disabled: $ctrl.uploaderDisabled()}" type="button" ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="{{$ctrl.fileInputName}}" ngf-max-size="2MB" ng-required="$ctrl.application.preferences[$ctrl.preference]" aria-describedby="{{$ctrl.fileInputName}}_error" ng-model="$ctrl.proofDocument.file.name" ng-disabled="$ctrl.uploaderDisabled()"
+  button.button.ghost-white.secondary ng-class="{expand: ($ctrl.proofType != 'Copy of Lease'), disabled: $ctrl.uploaderDisabled()}" type="button" ngf-select="$ctrl.uploadProofFile($file, $ctrl.opts)" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="{{$ctrl.fileInputName}}" ngf-max-size="2MB" ng-required="$ctrl.application.preferences[$ctrl.preference]" aria-describedby="{{$ctrl.fileInputName}}_error" ng-model="$ctrl.proofDocument.file.name" ng-disabled="$ctrl.uploaderDisabled()" id="{{$ctrl.fileInputName}}"
     | {{$ctrl.buttonLabel}}
-  small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.fileInputName) && !$ctrl.proofDocument.error"
+  small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.inputInvalid($ctrl.fileInputName) && !$ctrl.proofDocument.error"
     | {{'ERROR.FILE_MISSING' | translate}}
-  small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.proofDocument.error"
+  small.error id="{{$ctrl.fileInputName}}_error" ng-if="$ctrl.proofDocument.error"
     | {{'ERROR.FILE_UPLOAD' | translate}}
   p.form-note.micro.input-inset.margin-bottom translate="LABEL.UPLOAD_PROOF_INSTRUCTIONS_1"
   p.form-note.micro.input-inset translate="LABEL.UPLOAD_PROOF_INSTRUCTIONS_2"

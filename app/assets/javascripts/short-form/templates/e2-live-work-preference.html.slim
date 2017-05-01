@@ -1,11 +1,10 @@
-/ checkPreferenceEligibility is what resets preferences on this page if things have changed
-.app-card.form-card ng-init="checkPreferenceEligibility('liveWorkInSf')"
+.app-card.form-card
   short-form-header
     h2.app-card_question translate="E2_LIVE_WORK_PREFERENCE.TITLE"
     p.form-note.margin-bottom translate="E2_LIVE_WORK_PREFERENCE.INSTRUCTIONS"
 
   .app-inner
-    .form-group ng-class="{ error: inputInvalid(currentLiveWorkType) }"
+    .form-group ng-class="{ error: inputInvalid(form.currentPreferenceType) }"
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
@@ -14,11 +13,12 @@
 
         preference(preference="workInSf" has-proof="true" application="application" title="{{'E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.PREFERENCE_PROOF_DOCUMENTS' | translate}}" translated-description="E2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.DESCRIPTION"  required="preferenceRequired('workInSf')" more-info-link="preference_more_info_links.workInSf" ng-if="showPreference('workInSf')")
 
-        live-work-combo-preference(application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="currentLiveWorkType" required="preferenceRequired(currentLiveWorkType)" more-info-link="preference_more_info_links.liveWorkInSf" ng-if="showPreference('liveWorkInSf')")
+        live-work-combo-preference(application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" more-info-link="preference_more_info_links.liveWorkInSf" ng-if="showPreference('liveWorkInSf')")
 
-      preference-opt-out preference="{{currentLiveWorkType}}" application="application" invalid="inputInvalid(currentLiveWorkType)" cancel-preference="cancelPreference(currentLiveWorkType)"
 
-      small.error ng-if="inputInvalid(currentLiveWorkType)"
+      preference-opt-out preference="{{form.currentPreferenceType}}" application="application" invalid="inputInvalid(form.currentPreferenceType)" cancel-preference="cancelPreference(form.currentPreferenceType)"
+
+      small.error ng-if="inputInvalid(form.currentPreferenceType)"
         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit

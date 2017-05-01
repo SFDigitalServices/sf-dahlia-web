@@ -4,10 +4,28 @@
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
     p.form-label.caps translate="E2C_RENT_BURDEN_PREFERENCE.UPLOAD_FOR_EACH_ADDRESS"
 
-    .info-item.tall ng-class="{'border-bottom': !$last}" ng-repeat="address in $ctrl.groupedHouseholdAddresses"
+    .info-item.tall ng-class="{'border-bottom': !$last, error: $ctrl.addressInvalid(address.address)}" ng-repeat="address in $ctrl.groupedHouseholdAddresses"
       p.info-item_name
         | {{ address.address }}
       p.info-item_value
         | {{ address.members | listify : 'fullName' }}
       a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burden-preference-edit({index: $index})"
-        | {{ $ctrl.addressLinkText(address.address) }}
+        | {{ $ctrl.addressLinkText[address.address] }}
+
+      p.info-item_doc ng-class="{error: !$ctrl.hasFileForType(address.address, 'lease')}" ng-if="$ctrl.addressInvalid(address.address) || $ctrl.hasFileForType(address.address, 'lease')"
+        span.ui-icon.ui-static.ui-tiny.i-color
+          svg ng-if="$ctrl.hasFileForType(address.address, 'lease')"
+            use xlink:href="#i-check"
+          svg ng-if="!$ctrl.hasFileForType(address.address, 'lease')"
+            use xlink:href="#i-close"
+        |  {{'LABEL.COPY_OF_LEASE' | translate}}
+
+      p.info-item_doc ng-class="{error: !$ctrl.hasFileForType(address.address, 'rent')}" ng-if="$ctrl.addressInvalid(address.address) || $ctrl.hasFileForType(address.address, 'rent')"
+        span.ui-icon.ui-static.ui-tiny.i-color
+          svg ng-if="$ctrl.hasFileForType(address.address, 'rent')"
+            use xlink:href="#i-check"
+          svg ng-if="!$ctrl.hasFileForType(address.address, 'rent')"
+            use xlink:href="#i-close"
+        |  {{'LABEL.PROOF_OF_RENT' | translate}}
+
+      small.error.margin-bottom-none.margin-top--half ng-if="$ctrl.addressInvalid(address.address)" translate="ERROR.COMPLETE_UPLOADING_DOCUMENTS"

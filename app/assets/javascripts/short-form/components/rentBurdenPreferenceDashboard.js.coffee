@@ -5,6 +5,8 @@ angular.module('dahlia.components')
     title: '@'
     translatedDescription: '@'
     required: '&'
+    customInvalidMessage: '<'
+    onUncheck: '&'
 
   templateUrl: 'short-form/components/rent-burden-preference-dashboard.html'
   controller:
@@ -12,6 +14,13 @@ angular.module('dahlia.components')
     (ShortFormApplicationService, FileUploadService, $translate) ->
       ctrl = @
       @groupedHouseholdAddresses = @application.groupedHouseholdAddresses
+      @addressLinkText = {}
+
+      @initAddressLinkText = =>
+        _.each @groupedHouseholdAddresses, (groupedAddress) =>
+          address = groupedAddress.address
+          @addressLinkText[address] =
+            if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
 
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -21,14 +30,32 @@ angular.module('dahlia.components')
         listingId = ShortFormApplicationService.listing.Id
         # will delete files if any previously existed, if we are unchecking the box
         if !@application.preferences.rentBurden
+          # on uncheck
           FileUploadService.deleteRentBurdenPreferenceFiles(listingId)
+          @onUncheck()
+        else
+          # we are checking the box
+          @initAddressLinkText()
+          # ensure that we proceed through Preferences section without skipping ahead to Review
+          ShortFormApplicationService.invalidatePreferencesForm()
 
-      @hasFiles = (address) =>
+      @hasFiles = (address) ->
+        FileUploadService.hasRentBurdenFiles(address)
+
+      @hasCompleteFiles = (address) ->
+        ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress(address)
+
+      @hasFileForType = (address, type) =>
         files = @application.preferences.documents.rentBurden[address]
-        files.lease.file || _.some(_.map(files.rent, 'file'))
+        return false unless files
+        if type == 'lease'
+          !!files.lease.file
+        else
+          _.some(_.map(files.rent, 'file'))
 
-      @addressLinkText = (address) =>
-        if @hasFiles(address) then $translate.instant('T.EDIT') else $translate.instant('LABEL.START_UPLOAD')
+      @addressInvalid = (address) =>
+        !@hasCompleteFiles(address) && !!@customInvalidMessage
 
+      @initAddressLinkText()
       return ctrl
   ]

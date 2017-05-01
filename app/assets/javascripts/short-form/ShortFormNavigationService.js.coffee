@@ -76,7 +76,7 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
     'assisted-housing-preference': {path: 'preferences-programs'}
-    'rent-burden-preference': {path: 'preferences-programs'}
+    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
     'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
@@ -280,6 +280,7 @@ ShortFormNavigationService = (
     # This returns the page in the household section that comes directly after
     # the household members page
     application = ShortFormApplicationService.application
+    listing = ShortFormApplicationService.listing
     return '' if application.status.toLowerCase() == 'submitted'
     if application.STUB_householdPublicHousing
       'household-public-housing'

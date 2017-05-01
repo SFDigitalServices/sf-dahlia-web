@@ -284,10 +284,42 @@ ShortFormApplicationService = (
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
       Service.cancelOptOut('liveWorkInSf')
+    # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
+    if preference == 'rentBurden' || preference == 'assistedHousing'
+      Service.application.preferences.optOut.assistedHousing = false
+      Service.application.preferences.optOut.rentBurden = false
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
-    !Service.application.preferences.optOut[preference]
+    !Service.preferences.optOut[preference]
+
+  Service.setFormPreferenceType = (preference) ->
+    if preference == 'liveWorkInSf'
+      Service.form.currentPreferenceType = Service.liveWorkPreferenceType()
+    else
+      Service.form.currentPreferenceType = preference
+
+  Service.showPreference = (preference) ->
+    return false unless Service.listingHasPreference(preference)
+    switch preference
+      when 'liveWorkInSf'
+        Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length > 0
+      when 'liveInSf'
+        Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
+      when 'workInSf'
+        Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
+      when 'neighborhoodResidence'
+        Service.neighborhoodResidenceMembers().length > 0
+      else
+        true
+
+  Service.liveWorkPreferenceType = ->
+    if Service.showPreference('liveWorkInSf')
+      'liveWorkInSf'
+    else if Service.showPreference('liveInSf')
+      'liveInSf'
+    else
+      'workInSf'
 
   Service.checkHouseholdEligiblity = (listing) ->
     params =
@@ -303,6 +335,15 @@ ShortFormApplicationService = (
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service.hasCompleteRentBurdenFiles = ->
+    _.every Service.application.groupedHouseholdAddresses, (groupedAddress) ->
+      Service.hasCompleteRentBurdenFilesForAddress(groupedAddress.address)
+
+  Service.hasCompleteRentBurdenFilesForAddress = (address) ->
+    files = Service.application.preferences.documents.rentBurden[address]
+    return false unless files
+    files.lease.file && _.some(_.map(files.rent, 'file'))
 
   Service.householdSize = ->
     Service.application.householdMembers.length + 1
@@ -377,27 +418,32 @@ ShortFormApplicationService = (
   Service.maxHouseholdAge = ->
     _.max(_.map(Service.fullHousehold(), Service.memberAge))
 
+  Service.listingHasPreference = (preference) ->
+    ListingService.hasPreference(preference)
+
   Service.eligibleForLiveWork = ->
+    return false unless Service.listingHasPreference('liveWorkInSf')
     liveInSfEligible = Service.liveInSfMembers().length > 0
     workInSfEligible = Service.workInSfMembers().length > 0
     return (liveInSfEligible || workInSfEligible)
 
   Service.eligibleForNRHP = ->
+    return false unless Service.listingHasPreference('neighborhoodResidence')
     Service.neighborhoodResidenceMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
-    # can only have a Yes answer if assistedHousingRentBurden preference is on this listing
+    return false unless Service.listingHasPreference('assistedHousing')
     Service.application.STUB_householdPublicHousing == 'Yes'
 
   Service.eligibleForRentBurden = ->
+    return false unless Service.listingHasPreference('rentBurden')
     totalMonthlyRent = _.sumBy(Service.application.groupedHouseholdAddresses, 'monthlyRent')
     incomeTotal = parseFloat(Service.application.householdIncome.incomeTotal)
     if Service.application.householdIncome.incomeTimeframe == 'per_month'
       ratio = totalMonthlyRent / incomeTotal
     else
       ratio = (totalMonthlyRent * 12) / incomeTotal
-
-    # can only have a No answer if assistedHousing/RentBurden preference is on this listing
+    # must have answered "No" and rent > 50% of income
     Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
@@ -425,14 +471,18 @@ ShortFormApplicationService = (
     members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
     selectedMember = Service.preferences[preference + '_household_member']
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if selectedMember && !_.includes(members, selectedMember)
-      Service.application.completedSections['Preferences'] = false
-      Service.cancelPreference(preference)
-    # clear if nobody is eligible
-    else if _.isEmpty(members)
-      Service.application.completedSections['Preferences'] = false
-      Service.cancelPreference(preference)
+    if _.isEmpty(members) || selectedMember && !_.includes(members, selectedMember)
+      Service.resetPreference(preference)
 
+  Service.resetPreference = (preference) ->
+    # this should be called when you're cancelling the preference from an external factor
+    # e.g. you changed your address and are no longer eligible for liveInSf,
+    # so we totally cancel liveInSf and reset the preference validatedForms
+    Service.application.completedSections.Preferences = false
+    angular.copy({}, Service.application.validatedForms.Preferences)
+    # cancel both preference and optOut, this preference is no longer valid
+    Service.cancelPreference(preference)
+    Service.cancelOptOut(preference)
 
   Service.onExit = (e) ->
     AnalyticsService.trackFormAbandon('Application')
@@ -453,6 +503,8 @@ ShortFormApplicationService = (
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
+      # special case for rentBurden subpages
+      return if stateName.match(/rent-burden-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
@@ -713,7 +765,7 @@ ShortFormApplicationService = (
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
-      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
@@ -739,7 +791,7 @@ ShortFormApplicationService = (
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
       # check if NRHP eligibility has changed
-      Service._updatePreference('liveInSf', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
       callback()
     AddressValidationService.validate(
@@ -769,7 +821,6 @@ ShortFormApplicationService = (
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
 
-  Service.listingHasPreference = ListingService.hasPreference
   Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --

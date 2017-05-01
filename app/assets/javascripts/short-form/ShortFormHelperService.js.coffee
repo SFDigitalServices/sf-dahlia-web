@@ -102,6 +102,17 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     interpolate = { file: application.preferences.documents[pref_type].proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
+  Service.fileAttachmentsForPreference = (application, pref_type) ->
+    return '' if application.status == 'Submitted'
+    prefDocs = application.preferences.documents[pref_type]
+    leaseFileNames = _.map prefDocs, (address) ->
+      address.lease.file.name
+
+    rentFiles = _.map prefDocs, (address) -> address.rent
+    rentFileNames = _.map rentFiles, (file) ->
+      _.values(file)[0].file.name
+    _.concat(leaseFileNames, rentFileNames)
+
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
     link = $state.href('dahlia.account-settings')

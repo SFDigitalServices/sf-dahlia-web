@@ -13,7 +13,7 @@
 
         rent-burden-preference(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}"  translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" grouped-household-address-index="0" required="preferenceRequired('rentBurden')" more-info-link="preference_more_info_links.rentBurden" ng-if="application.groupedHouseholdAddresses.length == 1")
 
-        rent-burden-preference-dashboard(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" required="preferenceRequired('rentBurden')" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" ng-if="application.groupedHouseholdAddresses.length > 1")
+        rent-burden-preference-dashboard(application="application" title="{{'E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}" required="preferenceRequired('rentBurden')" translated-description="E2C_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE_DESC" custom-invalid-message="customInvalidMessage" on-uncheck="clearRentBurdenError()"  ng-if="application.groupedHouseholdAddresses.length > 1")
 
       preference-opt-out preference="rentBurden" application="application" invalid="inputInvalid('rentBurden')" cancel-preference="cancelPreference('rentBurden')"
 
