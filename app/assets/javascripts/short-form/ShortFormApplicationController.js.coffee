@@ -334,6 +334,8 @@ ShortFormApplicationController = (
   $scope.checkIfPreferencesApply = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
+    else if ShortFormApplicationService.eligibleForADHP()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.adhp-preference')
     else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else

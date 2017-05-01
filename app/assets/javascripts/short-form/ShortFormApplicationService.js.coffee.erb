@@ -447,6 +447,11 @@ ShortFormApplicationService = (
     return false unless Service.listingHasPreference('neighborhoodResidence')
     Service.neighborhoodResidenceMembers().length > 0
 
+  Service.eligibleForADHP = ->
+    return false unless Service.listingHasPreference('antiDisplacement')
+    return true
+    # Service.neighborhoodResidenceMembers().length > 0
+
   Service.eligibleForAssistedHousing = ->
     return false unless Service.listingHasPreference('assistedHousing')
     Service.application.STUB_householdPublicHousing == 'Yes'

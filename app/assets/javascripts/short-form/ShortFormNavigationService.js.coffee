@@ -35,6 +35,7 @@ ShortFormNavigationService = (
     { name: 'Preferences', pages: [
         'preferences-intro'
         'neighborhood-preference'
+        'adhp-preference'
         'live-work-preference'
         'assisted-housing-preference'
         'rent-burden-preference'
@@ -169,7 +170,6 @@ ShortFormNavigationService = (
         ,'household-overview'
         ,'income'
         ,'preferences-intro'
-        ,'neighborhood-preference'
         ,'review-summary'
         ,'review-sign-in'
           Service._getPreviousPage()
@@ -199,6 +199,9 @@ ShortFormNavigationService = (
       when 'income-vouchers'
         'household-priorities'
       # -- Preferences
+      when 'neighborhood-preference'
+        , 'adhp-preference'
+          'preferences-intro'
       when 'live-work-preference'
         if ShortFormApplicationService.eligibleForNRHP()
           'neighborhood-preference'
