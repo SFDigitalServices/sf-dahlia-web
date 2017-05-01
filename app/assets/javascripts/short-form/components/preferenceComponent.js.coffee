@@ -6,7 +6,6 @@ angular.module('dahlia.components')
     hasProof: '<'
     title: '@'
     translatedDescription: '@'
-    displayMoreInfoLink: '<'
     proofOptionLabel: '@'
     buttonLabel: '@'
     proofType: '@'

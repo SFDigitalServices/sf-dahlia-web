@@ -15,6 +15,7 @@
 
         live-work-combo-preference(application="application" title="{{'E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.TITLE' | translate}}"  translated-description="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.DESCRIPTION" current-live-work-type="form.currentPreferenceType" required="preferenceRequired(form.currentPreferenceType)" ng-if="showPreference('liveWorkInSf')")
 
+
       preference-opt-out preference="{{form.currentPreferenceType}}" application="application" invalid="inputInvalid(form.currentPreferenceType)" cancel-preference="cancelPreference(form.currentPreferenceType)"
 
       small.error ng-if="inputInvalid(form.currentPreferenceType)"
