@@ -12,14 +12,14 @@ accountPassword = 'password123'
 # reusable functions
 fillOutContactPage = (opts = {}) ->
   opts.address1 ||= '4053 18th St.'
-  element(By.model('applicant.phone')).sendKeys('2222222222')
+  element(By.model('applicant.phone')).clear().sendKeys('2222222222')
   element(By.model('applicant.phoneType')).click()
   element(By.cssContainingText('option', 'Home')).click()
-  element(By.model('applicant.email')).sendKeys(opts.email) if opts.email
-  element(By.id('applicant_home_address_address1')).sendKeys(opts.address1)
-  element(By.id('applicant_home_address_city')).sendKeys('San Francisco')
+  element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
+  element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
+  element(By.id('applicant_home_address_city')).clear().sendKeys('San Francisco')
   element(By.cssContainingText('option', 'California')).click()
-  element(By.id('applicant_home_address_zip')).sendKeys('94114')
+  element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
   element(By.id('workInSf_yes')).click()
 
 optOutAndSubmit = ->
@@ -56,11 +56,12 @@ module.exports = ->
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
     lastName  = fullName.split(' ')[1]
-    element(By.model('applicant.firstName')).sendKeys(firstName)
-    element(By.model('applicant.lastName')).sendKeys(lastName)
-    element(By.model('applicant.dob_month')).sendKeys('02')
-    element(By.model('applicant.dob_day')).sendKeys('22')
-    element(By.model('applicant.dob_year')).sendKeys('1990')
+    element(By.model('applicant.firstName')).clear().sendKeys(firstName)
+    element(By.model('applicant.lastName')).clear().sendKeys(lastName)
+    element(By.model('applicant.dob_month')).clear().sendKeys('02')
+    element(By.model('applicant.dob_day')).clear().sendKeys('22')
+    element(By.model('applicant.dob_year')).clear().sendKeys('1990')
+    element(By.id('submit')).click()
     submitForm()
 
   @When 'I submit the Name page with my account info', ->
@@ -284,10 +285,32 @@ module.exports = ->
   @When 'I use the browser back button', ->
     browser.navigate().back()
 
+  #######################
+  # --- Error cases --- #
+  #######################
 
-  ######################
+  @When "I don't fill out the Name page", ->
+    element(By.id('submit')).click()
+
+  @When "I fill out the Name page with an invalid DOB", ->
+    element(By.model('applicant.firstName')).sendKeys('Jane')
+    element(By.model('applicant.lastName')).sendKeys('Doe')
+    element(By.model('applicant.dob_month')).sendKeys('12')
+    element(By.model('applicant.dob_day')).sendKeys('33')
+    element(By.model('applicant.dob_year')).sendKeys('2019')
+    element(By.id('submit')).click()
+
+  @When "I fill out the Contact page with an address that isn't found", ->
+    fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
+    element(By.id('submit')).click()
+
+  @When "I don't select opt out or Live/Work preference", ->
+    element(By.id('submit')).click()
+
+
+  ########################
   # --- Expectations --- #
-  ######################
+  ########################
 
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
@@ -337,3 +360,32 @@ module.exports = ->
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
     @expect(DTHP.isPresent()).to.eventually.equal(true)
+
+  ###################################
+  # --- Error case expectations --- #
+  ###################################
+
+  # helper functions
+  expectAlertBox = (context, errorText = "You'll need to resolve any errors") ->
+    alertBox = element(By.cssContainingText('.alert-box', errorText))
+    context.expect(alertBox.isPresent()).to.eventually.equal(true)
+
+  expectError = (context, errorText) ->
+    error = element(By.cssContainingText('.error', errorText))
+    context.expect(error.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see name field errors on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter a First Name')
+
+  @Then 'I should see DOB field errors on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter a valid Date of Birth')
+
+  @Then 'I should see an address error on the Contact page', ->
+    expectAlertBox(@)
+    expectError(@, 'This address was not found.')
+
+  @Then 'I should see an error about selecting an option', ->
+    expectAlertBox(@, 'Please select and complete one of the options below in order to continue')
+    expectError(@, 'Please select one of the options above')
