@@ -7,8 +7,8 @@
       | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
     select id="liveWorkPrefOption" ng-model="$ctrl.application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="$ctrl.application.preferences.liveWorkInSf" ng-change="$ctrl.selectLiveOrWorkPreference()"
       option value="" translate="LABEL.SELECT_ONE"
-      option value="liveInSf" translate="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
-      option value="workInSf" translate="E2_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
+      option value="liveInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
+      option value="workInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
 
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.liveWorkInSf && $ctrl.liveOrWorkSelected()"

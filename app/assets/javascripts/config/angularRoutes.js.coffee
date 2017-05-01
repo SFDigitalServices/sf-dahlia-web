@@ -704,26 +704,11 @@
       url: '/preferences-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/e0-preferences-intro.html'
+          templateUrl: 'short-form/templates/e1-preferences-intro.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Income')
         ]
-    })
-    .state('dahlia.short-form-application.preferences-programs', {
-      url: '/preferences-programs'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/e1-preferences-programs.html'
-    })
-    .state('dahlia.short-form-application.live-work-preference', {
-      url: '/live-work-preference'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/e2-live-work-preference.html'
-      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-        ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
-      ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
@@ -734,11 +719,20 @@
         ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
       ]
     })
+    .state('dahlia.short-form-application.live-work-preference', {
+      url: '/live-work-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2c-live-work-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
+      ]
+    })
     .state('dahlia.short-form-application.assisted-housing-preference', {
       url: '/assisted-housing-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2b-assisted-housing-preference.html'
+          templateUrl: 'short-form/templates/e3a-assisted-housing-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('assistedHousing')
       ]
@@ -747,7 +741,7 @@
       url: '/rent-burden-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2c-rent-burden-preference.html'
+          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ]
@@ -756,7 +750,7 @@
       url: '/rent-burden-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2c-rent-burden-preference-edit.html'
+          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
@@ -764,11 +758,17 @@
             ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
         ]
     })
+    .state('dahlia.short-form-application.preferences-programs', {
+      url: '/preferences-programs'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7-preferences-programs.html'
+    })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2f-general-lottery-notice.html'
+          templateUrl: 'short-form/templates/e8-general-lottery-notice.html'
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {

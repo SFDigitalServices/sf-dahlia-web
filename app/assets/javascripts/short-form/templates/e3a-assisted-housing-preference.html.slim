@@ -1,7 +1,7 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question translate="E2B_ASSISTED_HOUSING_PREFERENCE.TITLE"
-    p.form-note.margin-bottom translate="E2B_ASSISTED_HOUSING_PREFERENCE.INSTRUCTIONS"
+    h2.app-card_question translate="E3A_ASSISTED_HOUSING_PREFERENCE.TITLE"
+    p.form-note.margin-bottom translate="E3A_ASSISTED_HOUSING_PREFERENCE.INSTRUCTIONS"
 
   .app-inner
     .form-group ng-class="{ error: inputInvalid('assistedHousing') }"
@@ -10,7 +10,7 @@
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
 
-        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E2B_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')" ng-if="showPreference('assistedHousing')" )
+        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')" ng-if="showPreference('assistedHousing')" )
 
 
       preference-opt-out preference="assistedHousing" application="application" invalid="inputInvalid('assistedHousing')" cancel-preference="cancelPreference('assistedHousing')"

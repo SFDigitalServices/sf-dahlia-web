@@ -370,6 +370,8 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceCheckboxInvalid = ->
+    # this gets used to determine whether the alertBox should show the
+    # "we strongly encourage..." error that is specific to preferences.
     # $scope.form.currentPreferenceType gets set in the onEnter for the preference page routes
     $scope.inputInvalid($scope.form.currentPreferenceType)
 
@@ -390,7 +392,7 @@ ShortFormApplicationController = (
 
   $scope.setRentBurdenError = ->
     ShortFormApplicationService.invalidatePreferencesForm()
-    $scope.customInvalidMessage = $translate.instant('E2C_RENT_BURDEN_PREFERENCE.FORM_ERROR')
+    $scope.customInvalidMessage = $translate.instant('E3B_RENT_BURDEN_PREFERENCE.FORM_ERROR')
 
   $scope.clearRentBurdenError = (message) ->
     $scope.customInvalidMessage = null

@@ -2,7 +2,7 @@
   preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
-    p.form-label.caps translate="E2C_RENT_BURDEN_PREFERENCE.UPLOAD_FOR_EACH_ADDRESS"
+    p.form-label.caps translate="E3B_RENT_BURDEN_PREFERENCE.UPLOAD_FOR_EACH_ADDRESS"
 
     .info-item.tall ng-class="{'border-bottom': !$last, error: $ctrl.addressInvalid(address.address)}" ng-repeat="address in $ctrl.groupedHouseholdAddresses"
       p.info-item_name

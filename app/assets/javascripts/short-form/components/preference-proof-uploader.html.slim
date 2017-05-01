@@ -5,7 +5,7 @@
     | {{$ctrl.proofOptionLabel}}
 
   p.form-note.margin-bottom ng-if="$ctrl.liveOrNeighborhoodPreference()"
-    | {{'E2_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME' | translate}}
+    | {{'E2C_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME' | translate}}
   p.form-note ng-if="$ctrl.proofType == 'Copy of Lease'"
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
 
@@ -18,9 +18,9 @@
     small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
     p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
-      | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
+      | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
     p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
-      | {{'E2_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
+      | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
   / type="button" tells it not to act as a submit button
