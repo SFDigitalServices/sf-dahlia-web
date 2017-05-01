@@ -366,11 +366,11 @@ ShortFormApplicationService = (
       income.incomeTotal * 12
 
   # update lists of eligible people for the dropdowns for these preferences
-  Service.refreshPreferences = (type) ->
-    if type == 'liveWorkInSf'
+  Service.refreshPreferences = (type = 'all') ->
+    if type == 'liveWorkInSf' || type == 'all'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('workInSf', Service.workInSfMembers())
-    else if type == 'neighborhoodResidence'
+    else if type == 'neighborhoodResidence' || type == 'all'
       Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
@@ -594,6 +594,8 @@ ShortFormApplicationService = (
       Service.application.status = 'submitted'
 
     Service.invalidateCurrentSectionIfIncomplete()
+    # clean up any old data hanging around from now invalidated/changed preferences
+    Service.refreshPreferences()
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
     # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
     Service.application.session_uid = Service.session_uid

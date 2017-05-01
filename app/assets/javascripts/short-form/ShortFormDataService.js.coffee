@@ -144,7 +144,7 @@ ShortFormDataService = (ListingService) ->
         return if application.preferences.workInSf || application.preferences.liveInSf
       if _.includes(['liveInSf', 'workInSf'], prefKey)
         # for liveWorkInSf, need to indicate individual pref (live or work)
-        individualPref = if application.preferences.workInSf then 'Work in SF' else 'Live in SF'
+        individualPref = if (prefKey == 'workInSf') then 'Work in SF' else 'Live in SF'
 
       # if you optOut then you wouldn't have a memberName or proofOption
       # rentBurden also doesn't have a specific member

@@ -252,6 +252,7 @@ do ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.workInSf = 'No'
+          ShortFormApplicationService.preferences.workInSf = true
 
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
@@ -262,10 +263,11 @@ do ->
           fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.preferences.liveInSf = true
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).not.toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
 
         describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
