@@ -1,6 +1,7 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question translate="C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.TITLE"
+    h2.app-card_question
+      | {{ 'C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.TITLE' | translate: youOrHouseholdTranslateVariable() }}
     p.form-note.margin-bottom translate="C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED.P1"
     p
       show-more-toggler toggle-state="readMoreDevelopmentalDisabilities" verb="read" inline="true"

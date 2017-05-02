@@ -84,27 +84,27 @@
     },
     "C4_HOUSEHOLD_PUBLIC_HOUSING": {
         "P1": "This does not include Section 8 vouchers or VASH housing choice vouchers.",
-        "TITLE": "Do you or anyone in your household currently live in public housing or HUD project-based housing?"
+        "TITLE": "Do {{members}} currently live in public housing or HUD project-based housing?"
     },
     "C5_HOUSEHOLD_MONTHLY_RENT": {
         "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
         "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_PAY": "How much do You pay at {{address}}?",
-        "TITLE": "How much does your household pay in monthly rent?"
+        "TITLE": "How much {{members}} pay in monthly rent?"
     },
     "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
         "P1": "There are reserved units available in this building if at least one applicant has served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information.",
-        "TITLE": "Are you or anyone on this application a veteran that has served in the U.S. Military?"
+        "TITLE": "Are {{members}} a veteran that has served in the U.S. Military?"
     },
     "C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
         "P1": "There are reserved units available in this building if one or more applicants has a developmental disability.<br><br>Should your application be chosen, be prepared to provide more information.",
         "READ_MORE": "There are reserved units available if one or more adult applicants meets the definition of developmental disability as defined in the HUD Handbook 4350.3, Chapter 3, Section 2, Figures 2-5 and 3-6.<br><br>A person with a developmental disability, as defined in Section 102(7) of the Developmental Disabilities Assistance and Bill of Rights Act (42 U.S.C. 6001(8)), i.e. a person with a severe chronic disability that:<br><br>Is attributable to a mental or physical impairment or combination of mental and physical impairments;<br><br>Is manifested before the person attains age 22<br><br>Is likely to continue indefinitely<br><br>Results in substantial functional limitation in three or more following areas of major life activity:<br><br><ul><li>Self-care</li><li>Receptive and expressive language</li><li>Learning</li><li>Mobility</li><li>Self-direction</li><li>Capacity for independent living, and economic self – sufficiency</li></ul>Reflects the person's need for a combination and sequence of special, inter-disciplinary, or generic care, treatment, or other services that are of lifelong or extended duration and are individually planned and coordinated.<br><br>The above will be evidenced by the HUD verification of Disability when eligibility of admission is based on Disability form provided at the time of initial interview.",
-        "TITLE": "Are you or anyone on this application developmentally disabled?"
+        "TITLE": "Are {{members}} developmentally disabled?"
     },
     "C7_HOUSEHOLD_PRIORITIES": {
         "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability.",
-        "QUESTION": "Are you or anyone in your household a person who needs any of the following ADA accessibility features?"
+        "QUESTION": "Are {{members}} a person who needs any of the following ADA accessibility features?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
@@ -139,7 +139,7 @@
     },
     "D1_INCOME_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
-        "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
+        "TITLE": "Do {{members}} receive any housing vouchers or rental subsidies?"
     },
     "D2_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
@@ -268,7 +268,7 @@
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
-        "VETERAN_ANYONE": "t least one member of your household must be a Veteran",
+        "VETERAN_ANYONE": "At least one member of your household must be a Veteran",
         "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {
