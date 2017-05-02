@@ -42,6 +42,15 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
+  def delete_all_rent_burden_proof
+    success = destroy_rent_burden_files
+    if success
+      render json: { success: true }
+    else
+      render json: { success: false, errors: 'not found' }
+    end
+  end
+
   ####### - Short Form Application RESTful actions
   def show_application
     @application = ShortFormService.get(params[:id])
@@ -240,14 +249,34 @@ class Api::V1::ShortFormController < ApiController
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
       preference: uploaded_file_params[:preference],
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     preference = file_params.delete(:preference)
+    rent_burden_type = file_params.delete(:rent_burden_type)
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
     uploaded_files = UploadedFile.send(preference).where(file_params)
-    return false unless uploaded_files.any?
+    uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type
+    uploaded_files.destroy_all
+  end
+
+  def destroy_rent_burden_files
+    file_params = {
+      session_uid: uploaded_file_params[:session_uid],
+      listing_id: uploaded_file_params[:listing_id],
+    }
+    if uploaded_file_params[:address]
+      file_params[:address] = uploaded_file_params[:address]
+    end
+    if user_signed_in?
+      file_params.delete(:session_uid)
+      file_params[:user_id] = current_user.id
+    end
+    uploaded_files = UploadedFile.rentBurden.where(file_params)
     uploaded_files.destroy_all
   end
 
@@ -259,7 +288,7 @@ class Api::V1::ShortFormController < ApiController
   def uploaded_file_params
     params.require(:uploaded_file)
           .permit(%i(file session_uid listing_id
-                     document_type preference))
+                     document_type preference address rent_burden_type rent_burden_index))
   end
 
   def application_params
@@ -303,6 +332,10 @@ class Api::V1::ShortFormController < ApiController
                 mailingState
                 mailingZip
                 neighborhoodPreferenceMatch
+                xCoordinate
+                yCoordinate
+                whichComponentOfLocatorWasUsed
+                candidateScore
               ),
             },
             {
@@ -339,6 +372,10 @@ class Api::V1::ShortFormController < ApiController
                 state
                 zip
                 neighborhoodPreferenceMatch
+                xCoordinate
+                yCoordinate
+                whichComponentOfLocatorWasUsed
+                candidateScore
               ),
             },
             :listingID,
@@ -375,6 +412,9 @@ class Api::V1::ShortFormController < ApiController
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs

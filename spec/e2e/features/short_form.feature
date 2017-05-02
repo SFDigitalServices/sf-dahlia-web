@@ -3,6 +3,32 @@ Feature: Short Form Application
     I should be able to fill out the short form application
     In order to apply online to a listing
 
+    Scenario: Seeing errors while filling out the form with missing or bad data
+      Given I go to the first page of the Test Listing application
+      When I don't fill out the Name page
+      # error: not filling out the first page
+      Then I should see name field errors on the Name page
+      When I fill out the Name page with an invalid DOB
+      # error: invalid DOB
+      Then I should see DOB field errors on the Name page
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with an address that isn't found
+      # error: address not found
+      Then I should see an address error on the Contact page
+      When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+      And I confirm my address
+      And I don't indicate an alternate contact
+      And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
+      And I indicate having vouchers
+      And I fill out my income
+      And I continue past the Lottery Preferences intro
+      And I don't select opt out or Live/Work preference
+      # error: preference option not chosen
+      Then I should see an error about selecting an option
+
+
     Scenario: Submitting a basic application, creating an account on the confirmation page
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
@@ -65,6 +91,26 @@ Feature: Short Form Application
       And I go back to the Live/Work preference page
       Then I should still see the preference options and uploader input visible
 
+    Scenario: Being eligible for Rent Burden preference with a single address
+      Given I go to the first page of the Test Listing application
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+      And I confirm my address
+      And I don't indicate an alternate contact
+      And I indicate other people will live with me
+      And I add another household member named "Jonny Doe"
+      And I indicate being done adding other people
+      And I indicate not living in public housing
+      And I enter "1200" for my monthly rent
+      And I indicate no priority
+      And I indicate having vouchers
+      And I fill out my income
+      And I continue past the Lottery Preferences intro
+      And I opt out of Live/Work preference
+      And I select Rent Burden Preference
+      Then I should see proof uploaders for rent burden files
+      # as opposed to seeing rent burden dashboard, which could be its own test...
+
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
@@ -99,7 +145,9 @@ Feature: Short Form Application
       And I confirm details on the review page
       And I agree to the terms and submit
       And I view the application from My Applications
-      Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
+      Then I should see my name, DOB, email all displayed as expected
+      # TODO: put back after multifamily + prefrefactor features have merged to master
+      # Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
       #
       # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
       #

@@ -28,11 +28,32 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
+  Service.preference_proof_options_rent_burden = [
+    ['Money order', $translate.instant('LABEL.PROOF.MONEY_ORDER')]
+    ['Cancelled check', $translate.instant('LABEL.PROOF.CANCELLED_CHECK')]
+    ['Debit from your bank account', $translate.instant('LABEL.PROOF.DEBIT_FROM_BANK')]
+    ['Screenshot of online payment', $translate.instant('LABEL.PROOF.ONLINE_PAYMENT')]
+  ]
+
   Service.priority_options = [
     ['Mobility', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
     ['Vision', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
     ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
   ]
+
+  Service.proofOptions = (preference) ->
+    switch preference
+      when 'workInSf'
+        Service.preference_proof_options_work
+      when 'liveInSf'
+        Service.preference_proof_options_live
+      when 'neighborhoodResidence'
+        Service.preference_proof_options_live
+      when 'rentBurden'
+        Service.preference_proof_options_rent_burden
+      else
+        Service.preference_proof_options_default
+
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
@@ -68,8 +89,19 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status == 'Submitted'
-    interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
+    interpolate = { file: application.preferences.documents[pref_type].proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+
+  Service.fileAttachmentsForPreference = (application, pref_type) ->
+    return '' if application.status == 'Submitted'
+    prefDocs = application.preferences.documents[pref_type]
+    leaseFileNames = _.map prefDocs, (address) ->
+      address.lease.file.name
+
+    rentFiles = _.map prefDocs, (address) -> address.rent
+    rentFileNames = _.map rentFiles, (file) ->
+      _.values(file)[0].file.name
+    _.concat(leaseFileNames, rentFileNames)
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
@@ -86,8 +118,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.addressTranslateVariable = (address) ->
     { address: address }
 
-  Service.membersTranslateVariable = (members) ->
-    { user: $filter('listify')(members) }
+  Service.membersTranslationVariable = (members) ->
+    { user: $filter('listify')(members, "firstName")}
 
   Service.youOrHouseholdTranslateVariable = (membersCount, wholeHousehold) ->
     value = if membersCount > 0

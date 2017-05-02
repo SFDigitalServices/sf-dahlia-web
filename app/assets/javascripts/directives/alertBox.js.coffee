@@ -5,6 +5,7 @@ angular.module('dahlia.directives')
     formObject: '=?'
     addressError: '=?'
     hideAlert: '=?'
+    # preferenceWarning T/F gets set by $scope.preferenceCheckboxInvalid()
     preferenceWarning: '=?'
     customMessage: '=?'
     customSubMessage: '=?'

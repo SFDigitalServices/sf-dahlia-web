@@ -1,0 +1,16 @@
+.checkbox-block ng-class="{ error: $ctrl.invalid(), 'margin-bottom': $ctrl.marginBottom }"
+  input id="preferences-{{$ctrl.preference}}" name="{{$ctrl.preference}}" data-event="{{$ctrl.dataEvent}}" ng-model="$ctrl.application.preferences[$ctrl.preference]" type="checkbox" ng-click="$ctrl.onChange()" aria-describedby="description-{{$ctrl.preference}}" ng-required="$ctrl.required()" ng-class="{ error: $ctrl.invalid() }"
+  label.checkbox-block_label for="preferences-{{$ctrl.preference}}" ng-class="{ 'margin-bottom--2x': !($ctrl.description || $ctrl.shortDescription || $ctrl.moreInfoLink) }"
+    strong.form-label.caps
+      | {{$ctrl.title}}
+    p.checkbox-block_note translate='{{$ctrl.shortDescription}}' ng-if="$ctrl.shortDescription"
+
+  .checkbox-block_note-inner ng-if="$ctrl.description || $ctrl.moreInfoLink"
+    a.toggler.toggle-more.hide-for-print.open-bottom title="read {{ $ctrl.showDescription ? 'less' : 'more' }}" ng-class="{ 'margin-top-none' : $ctrl.shortDescription, open: $ctrl.showDescription }" ng-click="$ctrl.showDescription = !$ctrl.showDescription"
+      ' read {{ $ctrl.showDescription ? 'less' : 'more' }}
+      span.ui-icon.ui-tiny.i-primary
+        svg
+          use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
+    p.show-for-print.checkbox-block_more id="description-{{$ctrl.preference}}" ng-show="$ctrl.showDescription && $ctrl.description" translate='{{$ctrl.description}}'
+    p.show-for-print.checkbox-block_more ng-show="$ctrl.showDescription && $ctrl.moreInfoLink"
+      a.lined target="_blank" href="{{$ctrl.moreInfoLink}}" translate="LABEL.FIND_OUT_MORE_ABOUT_PREFERENCES"

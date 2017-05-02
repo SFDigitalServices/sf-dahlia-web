@@ -1,0 +1,18 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question translate="E3B_RENT_BURDEN_PREFERENCE.UPLOAD_DOCUMENTS_FOR_ADDRESS" translate-value-address="{{currentRentBurdenAddress.address}}"
+    p.form-note.margin-bottom
+      | {{currentRentBurdenAddress.members | listify : 'fullName'}}
+
+  .app-inner
+    .form-group
+
+      rent-burden-preference(application="application"  grouped-household-address-index="currentRentBurdenAddress.index" show-checkbox="false")
+
+  .button-pager
+    .button-pager_row.primary
+      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.DONE_WITH_THIS_ADDRESS' | translate}}" ng-disabled="!hasCompleteRentBurdenFilesForAddress(currentRentBurdenAddress.address)"
+
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small type="button" ng-click="cancelRentBurdenFilesForAddress(currentRentBurdenAddress.address)"
+        | {{'LABEL.CANCEL_ADDING_DOCUMENTS' | translate}}

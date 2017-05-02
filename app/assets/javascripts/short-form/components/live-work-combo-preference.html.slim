@@ -1,0 +1,19 @@
+.checkbox-block
+  preference-checkbox(application="$ctrl.application" preference="liveWorkInSf" invalid="$ctrl.inputInvalid('liveWorkInSf')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.onCheckLiveWork()" required="$ctrl.required()")
+
+  / select for liveWorkInSf preference type
+  .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: $ctrl.inputInvalid('liveWorkInSf_preference') }" ng-if="$ctrl.application.preferences.liveWorkInSf"
+    label.form-label.caps for="liveWorkPrefOption"
+      | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
+    select id="liveWorkPrefOption" ng-model="$ctrl.application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="$ctrl.application.preferences.liveWorkInSf" ng-change="$ctrl.selectLiveOrWorkPreference()"
+      option value="" translate="LABEL.SELECT_ONE"
+      option value="liveInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
+      option value="workInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
+
+
+  .form-group.input-inset ng-if="$ctrl.application.preferences.liveWorkInSf && $ctrl.liveOrWorkSelected()"
+    / member selector
+    preference-member-selector(application="$ctrl.application" preference="{{$ctrl.application.preferences.liveWorkInSf_preference}}" eligible-members="$ctrl.eligibleMembers" label="{{$ctrl.memberSelectorLabel}}")
+
+    / proof uploader
+    preference-proof-uploader(application="$ctrl.application" preference="{{$ctrl.application.preferences.liveWorkInSf_preference}}" proof-option-label="{{$ctrl.proofOptionLabel}}" proof-options="$ctrl.proofOptions" proof-document="$ctrl.proofDocument")

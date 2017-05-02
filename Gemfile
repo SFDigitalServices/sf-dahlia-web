@@ -1,7 +1,13 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
-gem 'rails', '~> 4.2.7'
+# same method is used in https://github.com/rails/rails/blob/master/Gemfile
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
+gem 'rails', '~> 4.2.8'
 gem 'rails-api'
 
 # Use SCSS for stylesheets
@@ -58,6 +64,8 @@ gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
+gem 'nokogiri', '~> 1.7.1'
+
 # http requests made easy
 gem 'http', require: false
 
@@ -87,7 +95,7 @@ group :development, :test do
   gem 'jquery-rails' # only needed for jasmine-jquery
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
-  gem 'phantomjs', '~> 1.9.8.0' # until we upgrade to 2.1 and also update semaphoreCI
+  gem 'phantomjs', '~> 2.1.1'
   gem 'pry'
   gem 'pry-rails'
   gem 'quiet_assets'

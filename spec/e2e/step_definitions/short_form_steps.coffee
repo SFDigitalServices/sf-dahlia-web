@@ -12,14 +12,14 @@ accountPassword = 'password123'
 # reusable functions
 fillOutContactPage = (opts = {}) ->
   opts.address1 ||= '4053 18th St.'
-  element(By.model('applicant.phone')).sendKeys('2222222222')
+  element(By.model('applicant.phone')).clear().sendKeys('2222222222')
   element(By.model('applicant.phoneType')).click()
   element(By.cssContainingText('option', 'Home')).click()
-  element(By.model('applicant.email')).sendKeys(opts.email) if opts.email
-  element(By.id('applicant_home_address_address1')).sendKeys(opts.address1)
-  element(By.id('applicant_home_address_city')).sendKeys('San Francisco')
+  element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
+  element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
+  element(By.id('applicant_home_address_city')).clear().sendKeys('San Francisco')
   element(By.cssContainingText('option', 'California')).click()
-  element(By.id('applicant_home_address_zip')).sendKeys('94114')
+  element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
   element(By.id('workInSf_yes')).click()
 
 optOutAndSubmit = ->
@@ -56,11 +56,11 @@ module.exports = ->
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
     lastName  = fullName.split(' ')[1]
-    element(By.model('applicant.firstName')).sendKeys(firstName)
-    element(By.model('applicant.lastName')).sendKeys(lastName)
-    element(By.model('applicant.dob_month')).sendKeys('02')
-    element(By.model('applicant.dob_day')).sendKeys('22')
-    element(By.model('applicant.dob_year')).sendKeys('1990')
+    element(By.model('applicant.firstName')).clear().sendKeys(firstName)
+    element(By.model('applicant.lastName')).clear().sendKeys(lastName)
+    element(By.model('applicant.dob_month')).clear().sendKeys('02')
+    element(By.model('applicant.dob_day')).clear().sendKeys('22')
+    element(By.model('applicant.dob_year')).clear().sendKeys('1990')
     submitForm()
 
   @When 'I submit the Name page with my account info', ->
@@ -87,10 +87,46 @@ module.exports = ->
     submitForm()
 
   @When 'I indicate I will live alone', ->
-    element(By.id('live_alone')).click()
+    element(By.id('live-alone')).click()
+
+  @When 'I indicate other people will live with me', ->
+    element(By.id('other-people')).click()
+    # also submit the household overview page
+    submitForm()
+
+  @When /^I add another household member named "([^"]*)"$/, (fullName) ->
+    # click into the Add Household Member form
+    element(By.id('add-member')).click()
+
+
+    firstName = fullName.split(' ')[0]
+    lastName  = fullName.split(' ')[1]
+    element(By.model('householdMember.firstName')).sendKeys(firstName)
+    element(By.model('householdMember.lastName')).sendKeys(lastName)
+    element(By.model('householdMember.dob_month')).sendKeys('10')
+    element(By.model('householdMember.dob_day')).sendKeys('04')
+    element(By.model('householdMember.dob_year')).sendKeys('1985')
+    element(By.id('hasSameAddressAsApplicant_yes')).click()
+    element(By.id('workInSf_no')).click()
+    element.all(By.cssContainingText('option', 'Spouse')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    # finish adding member
+    submitForm()
+
+  @When 'I indicate being done adding other people', ->
+    submitForm()
 
   @When 'I indicate living in public housing', ->
     element(By.id('STUB_householdPublicHousing_yes')).click()
+    submitForm()
+
+  @When 'I indicate not living in public housing', ->
+    element(By.id('STUB_householdPublicHousing_no')).click()
+    submitForm()
+
+  @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
+    element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
     submitForm()
 
   @When 'I indicate no priority', ->
@@ -126,6 +162,10 @@ module.exports = ->
 
   @When 'I opt out of NRHP preference', ->
     optOutAndSubmit()
+
+  @When 'I select Rent Burden Preference', ->
+    element(By.id('preferences-rentBurden')).click()
+
 
   @When /^I select "([^"]*)" for COP preference$/, (fullName) ->
     element(By.id('preferences-certOfPreference')).click()
@@ -244,10 +284,32 @@ module.exports = ->
   @When 'I use the browser back button', ->
     browser.navigate().back()
 
+  #######################
+  # --- Error cases --- #
+  #######################
 
-  ######################
+  @When "I don't fill out the Name page", ->
+    element(By.id('submit')).click()
+
+  @When "I fill out the Name page with an invalid DOB", ->
+    element(By.model('applicant.firstName')).sendKeys('Jane')
+    element(By.model('applicant.lastName')).sendKeys('Doe')
+    element(By.model('applicant.dob_month')).sendKeys('12')
+    element(By.model('applicant.dob_day')).sendKeys('33')
+    element(By.model('applicant.dob_year')).sendKeys('2019')
+    element(By.id('submit')).click()
+
+  @When "I fill out the Contact page with an address that isn't found", ->
+    fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
+    element(By.id('submit')).click()
+
+  @When "I don't select opt out or Live/Work preference", ->
+    element(By.id('submit')).click()
+
+
+  ########################
   # --- Expectations --- #
-  ######################
+  ########################
 
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
@@ -269,9 +331,22 @@ module.exports = ->
     # expect the member selection field to still be there
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should see proof uploaders for rent burden files', ->
+    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    uploader = element(By.model('$ctrl.proofDocument.file.name'))
+    @expect(uploader.isPresent()).to.eventually.equal(true)
+
   @Then 'I should see my draft application with a Continue Application button', ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see my name, DOB, email all displayed as expected', ->
+    appName = element(By.id('full-name'))
+    @expect(appName.getText()).to.eventually.equal('JANE DOE')
+    appDob = element(By.id('dob'))
+    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
+    appEmail = element(By.id('email'))
+    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
 
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
@@ -284,3 +359,32 @@ module.exports = ->
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
     @expect(DTHP.isPresent()).to.eventually.equal(true)
+
+  ###################################
+  # --- Error case expectations --- #
+  ###################################
+
+  # helper functions
+  expectAlertBox = (context, errorText = "You'll need to resolve any errors") ->
+    alertBox = element(By.cssContainingText('.alert-box', errorText))
+    context.expect(alertBox.isPresent()).to.eventually.equal(true)
+
+  expectError = (context, errorText) ->
+    error = element(By.cssContainingText('.error', errorText))
+    context.expect(error.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see name field errors on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter a First Name')
+
+  @Then 'I should see DOB field errors on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter a valid Date of Birth')
+
+  @Then 'I should see an address error on the Contact page', ->
+    expectAlertBox(@)
+    expectError(@, 'This address was not found.')
+
+  @Then 'I should see an error about selecting an option', ->
+    expectAlertBox(@, 'Please select and complete one of the options below in order to continue')
+    expectError(@, 'Please select one of the options above')

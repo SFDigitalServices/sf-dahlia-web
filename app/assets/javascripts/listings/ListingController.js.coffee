@@ -7,6 +7,7 @@ ListingController = (
   $state,
   $sce,
   $sanitize,
+  $timeout,
   $filter,
   Carousel,
   SharedService,
@@ -41,9 +42,6 @@ ListingController = (
   $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
-  # for showing/hiding listings results buckets on browse page, hidden by default
-  $scope.displayNotMatchedListings = false
-  $scope.displayLotteryResultsListings = ListingService.displayLotteryResultsListings
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.toggleFavoriteListing = (listing_id) ->
@@ -121,7 +119,9 @@ ListingController = (
   $scope.carouselHeight = 300
   $scope.Carousel = Carousel
   $scope.adjustCarouselHeight = (elem) ->
-    $scope.$apply ->
+    # for why we need $timeout, see:
+    # http://stackoverflow.com/a/18996042/260495
+    $timeout ->
       $scope.carouselHeight = elem[0].offsetHeight
 
   $scope.listingImages = (listing) ->
@@ -189,19 +189,6 @@ ListingController = (
 
   $scope.closedAndLotteryListingsCount = ->
     $scope.lotteryResultsListings.length + $scope.closedListings.length
-
-  $scope.toggleLotteryResultsListings = (e) ->
-    # When you use keyboard nav to click on the button inside the header
-    # for some reason it triggers both a MouseEvent and KeyboardEvent.
-    # So, we ignore the KeyboardEvent.
-    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
-    e.currentTarget.blur() if e
-    $scope.displayLotteryResultsListings = !$scope.displayLotteryResultsListings
-
-  $scope.toggleNotMatchedListings = (e) ->
-    return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
-    e.currentTarget.blur()
-    $scope.displayNotMatchedListings = !$scope.displayNotMatchedListings
 
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
@@ -276,6 +263,9 @@ ListingController = (
       'Hearing/Vision impaired':
         name: 'Vision and/or Hearing Impairments'
         description: 'impaired vision and/or hearing'
+      'Mobility/hearing/vision impaired':
+        name: 'Mobility, Hearing and/or Vision Impairments'
+        description: 'impaired mobility, hearing and/or vision'
       'Mobility impaired':
         name: 'Mobility Impairments'
         description: 'impaired mobility'
@@ -302,7 +292,7 @@ ListingController = (
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
-    ListingService.listingIs('168 Hyde Relisting', listing)
+    ListingService.listingIsFirstComeFirstServe(listing)
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)
@@ -317,6 +307,7 @@ ListingController.$inject = [
   '$state',
   '$sce',
   '$sanitize',
+  '$timeout',
   '$filter',
   'Carousel',
   'SharedService',
