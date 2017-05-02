@@ -820,6 +820,10 @@ ShortFormApplicationController = (
     $scope.addressError = false
     $scope.clearRentBurdenError()
     $scope.clearEligibilityErrors()
+    # -- this will get replaced when merging w/ multifamily
+    form = $scope.form.applicationForm
+    form.$setPristine() if form
+    # --
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
