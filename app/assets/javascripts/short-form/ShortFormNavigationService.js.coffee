@@ -74,7 +74,8 @@ ShortFormNavigationService = (
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
-    'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
+    'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
+    'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
     'assisted-housing-preference': {path: 'preferences-programs'}
     'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
@@ -205,6 +206,8 @@ ShortFormNavigationService = (
       when 'live-work-preference'
         if ShortFormApplicationService.eligibleForNRHP()
           'neighborhood-preference'
+        else if ShortFormApplicationService.eligibleForADHP()
+          'adhp-preference'
         else
           'preferences-intro'
       when 'assisted-housing-preference'
@@ -274,6 +277,8 @@ ShortFormNavigationService = (
       'rent-burden-preference'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
+    else if ShortFormApplicationService.applicationHasPreference('antiDisplacement')
+      'adhp-preference'
     else if ShortFormApplicationService.eligibleForLiveWork()
       'live-work-preference'
     else

@@ -51,6 +51,7 @@ do ->
       { name: 'Preferences', pages: [
           'preferences-intro'
           'neighborhood-preference'
+          'adhp-preference'
           'live-work-preference'
           'assisted-housing-preference'
           'rent-burden-preference'
