@@ -30,7 +30,7 @@ html lang="en"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()"
+  body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="{'center-body': isShortFormPage()}"
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
