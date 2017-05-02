@@ -820,6 +820,9 @@ ShortFormApplicationService = (
   Service.hasHouseholdPublicHousingQuestion = ->
     ListingService.hasPreference('assistedHousing')
 
+  Service.formattedBuildingAddress = (listing, display) ->
+    ListingService.formattedAddress(listing, 'Building', display)
+
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
 

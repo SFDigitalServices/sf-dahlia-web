@@ -815,6 +815,9 @@ ShortFormApplicationController = (
       (member == 'householdMember' && $scope.householdMemberValidAge())
         $scope.clearEligibilityErrors()
 
+  $scope.formattedBuildingAddress = (listing, display) ->
+    ShortFormApplicationService.formattedBuildingAddress(listing, display)
+
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
