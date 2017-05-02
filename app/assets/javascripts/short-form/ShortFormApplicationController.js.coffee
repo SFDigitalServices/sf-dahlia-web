@@ -146,15 +146,20 @@ ShortFormApplicationController = (
     else
       $state.go(path)
 
-  $scope.goToAndSetPristine = (path, params) ->
+  $scope.go = (path, params) ->
     # go to a page without the Form Success analytics tracking
-    # and reset the form validation state
-    form = $scope.form.applicationForm
-    form.$setPristine()
     if params
       $state.go(path, params)
     else
       $state.go(path)
+
+  # called on stateChangeSuccess
+  $scope.clearErrors = ->
+    $scope.addressError = false
+    $scope.clearRentBurdenError()
+    $scope.clearEligibilityErrors()
+    form = $scope.form.applicationForm
+    form.$setPristine() if form
 
   $scope.handleErrorState = ->
     # show error alert
@@ -388,7 +393,7 @@ ShortFormApplicationController = (
   $scope.cancelRentBurdenFilesForAddress = (address) ->
     ShortFormNavigationService.isLoading(true)
     FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
-      $scope.goToAndSetPristine('dahlia.short-form-application.rent-burden-preference')
+      $scope.go('dahlia.short-form-application.rent-burden-preference')
 
   $scope.setRentBurdenError = ->
     ShortFormApplicationService.invalidatePreferencesForm()
@@ -460,7 +465,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.cancelHouseholdMember()
     $scope.form.applicationForm.$setPristine()
     # go back to household members page without tracking Form Success
-    $scope.goToAndSetPristine('dahlia.short-form-application.household-members')
+    $scope.go('dahlia.short-form-application.household-members')
 
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
@@ -670,14 +675,14 @@ ShortFormApplicationController = (
       ShortFormApplicationService.submitApplication().then((response) ->
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
-        $scope.goToAndSetPristine('dahlia.my-applications', {skipConfirm: true})
+        $scope.go('dahlia.my-applications', {skipConfirm: true})
       ).catch( ->
         ShortFormNavigationService.isLoading(false)
       )
     else
       ShortFormNavigationService.isLoading(false)
       # go to Create Account without tracking Form Success
-      $scope.goToAndSetPristine('dahlia.short-form-application.create-account')
+      $scope.go('dahlia.short-form-application.create-account')
 
   $scope.signIn = ->
     form = $scope.form.signIn
@@ -817,13 +822,7 @@ ShortFormApplicationController = (
     $scope.handleErrorState()
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
-    $scope.addressError = false
-    $scope.clearRentBurdenError()
-    $scope.clearEligibilityErrors()
-    # -- this will get replaced when merging w/ multifamily
-    form = $scope.form.applicationForm
-    form.$setPristine() if form
-    # --
+    $scope.clearErrors()
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
