@@ -5,23 +5,29 @@ section.app-container
         | {{'A1_INTRO.TITLE' | translate}}
       form.app-card.form-card.focus-container
         h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
-          a ng-click="determineCommunityScreening()"
-            | {{listing.Name}}
+          | {{listing.Name}}
         figure.property-card_figure.radius
-          a.property-card_overlay ng-click="determineCommunityScreening()" tabindex="-1"
-            img.property-card_thumb alt="Listing Name: {{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
+          .property-card_overlay
+            img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.Building_URL}}"
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
           figcaption.property-card_info
             h1.property-card_title.show-for-medium-up
-              a ng-click="determineCommunityScreening()"
-                | {{listing.Name}}
+              | {{listing.Name}}
             p.property-card_address
               | {{formattedBuildingAddress(listing)}}
     .text-center.padding.margin-top--2x
-      h3.h-caps.t-base.d-block Choose your language
-      a.button.secondary.expand-small.primary href="application-expect.html"  Begin
-      a.button.secondary.expand-small.primary href="application-expect--es.html"  Empezar
-      a.button.t-ch.secondary.expand-small.primary href="application-expect--zh.html"  開始
-      a.button.secondary.expand-small.primary href="#"  Magsimula
+      h3.h-caps.t-base.d-block
+        | Choose your language
+      button#submit-en.button.secondary.expand-small.primary type="button" ng-click="determineCommunityScreening()"
+        | Begin
+      '
+      button#submit-es.button.secondary.expand-small.primary type="button" ng-click="determineCommunityScreening()"
+        | Empezar
+      '
+      button#submit-zh.button.t-ch.secondary.expand-small.primary type="button" ng-click="determineCommunityScreening()"
+        | 開始
+      '
+      button#submit-tl.button.secondary.expand-small.primary type="button" ng-click="determineCommunityScreening()"
+        | Magsimula
