@@ -38,6 +38,7 @@ do ->
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
       deletePreferenceFile: jasmine.createSpy()
+      deleteRentBurdenPreferenceFiles: jasmine.createSpy()
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     setupFakeApplicant = (attributes) ->

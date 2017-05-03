@@ -479,6 +479,7 @@ ShortFormDataService = (ListingService) ->
 
   Service.initRentBurdenDocs = (address, data) ->
     rentBurdenDocs = data.preferences.documents.rentBurden
+    return if !_.isEmpty(rentBurdenDocs[address])
     rentBurdenDocs[address] = {
       lease: {}
       rent: {}
