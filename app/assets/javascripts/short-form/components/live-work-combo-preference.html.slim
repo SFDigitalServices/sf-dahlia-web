@@ -5,11 +5,12 @@
   .form-group.input-inset.margin-bottom-none.padding-bottom-none ng-class="{ error: $ctrl.inputInvalid('liveWorkInSf_preference') }" ng-if="$ctrl.application.preferences.liveWorkInSf"
     label.form-label.caps for="liveWorkPrefOption"
       | {{'LABEL.PREFERENCE_OPTION_TO_CLAIM' | translate}}
-    select id="liveWorkPrefOption" ng-model="$ctrl.application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="$ctrl.application.preferences.liveWorkInSf" ng-change="$ctrl.selectLiveOrWorkPreference()"
+    select id="liveWorkPrefOption" ng-class="{ error: $ctrl.inputInvalid('liveWorkInSf_preference') }" ng-model="$ctrl.application.preferences.liveWorkInSf_preference" data-width="auto" name="liveWorkInSf_preference" ng-required="$ctrl.application.preferences.liveWorkInSf" ng-change="$ctrl.selectLiveOrWorkPreference()" aria-describedby="liveWorkInSf_preference_error"
       option value="" translate="LABEL.SELECT_ONE"
       option value="liveInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.LIVE_SF_PREFERENCE"
       option value="workInSf" translate="E2C_LIVE_WORK_PREFERENCE.LIVE_WORK_SF_PREFERENCE.WORK_SF_PREFERENCE"
-
+    small.error id="liveWorkInSf_preference_error" ng-if="$ctrl.inputInvalid('liveWorkInSf_preference')"
+      | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.liveWorkInSf && $ctrl.liveOrWorkSelected()"
     / member selector
