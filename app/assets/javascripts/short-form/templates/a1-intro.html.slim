@@ -5,11 +5,11 @@ section.app-container
         | {{'A1_INTRO.TITLE' | translate}}
       form.app-card.form-card.focus-container
         h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
-          a ui-sref="dahlia.short-form-welcome.overview"
+          a ng-click="determineCommunityScreening()"
             | {{listing.Name}}
         figure.property-card_figure.radius
-          a.property-card_overlay ui-sref="dahlia.short-form-welcome.overview" tabindex="-1"
-            img.property-card_thumb alt="Listing Name:{{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
+          a.property-card_overlay ng-click="determineCommunityScreening()" tabindex="-1"
+            img.property-card_thumb alt="Listing Name: {{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
