@@ -273,6 +273,7 @@ ShortFormDataService = (ListingService) ->
   Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
     whitelist = [
       'id'
+      'applicationLanguage'
       'listingID'
       'listing'
       'applicationSubmittedDate'

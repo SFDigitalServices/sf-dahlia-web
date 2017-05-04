@@ -12,6 +12,7 @@ ShortFormApplicationService = (
   Service.activeSection = {}
   Service.applicationDefaults =
     id: null
+    applicationLanguage: null
     lotteryNumber: null
     status: 'draft'
     applicationSubmittedDate: null
@@ -60,6 +61,12 @@ ShortFormApplicationService = (
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
+
+  Service.languageMap =
+    en: 'English'
+    es: 'Spanish'
+    tl: 'Filipino'
+    zh: 'Chinese'
 
   ## initialize other related services
   Service.initServices = ->
@@ -829,6 +836,13 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.setApplicationLanguage = (lang) ->
+    Service.application.applicationLanguage = Service.languageMap[lang]
+
+  Service.getLanguageCode = (application) ->
+    # will take "English" and return "en"
+    _.invert(Service.languageMap)[application.applicationLanguage]
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid

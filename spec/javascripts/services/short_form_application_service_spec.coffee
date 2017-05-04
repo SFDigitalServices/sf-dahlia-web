@@ -907,3 +907,13 @@ do ->
           '123 Main St':
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
+
+    describe 'setApplicationLanguage', ->
+      it 'sets application language to the full name version of the lang param', ->
+        ShortFormApplicationService.setApplicationLanguage('es')
+        expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
+
+    describe 'getLanguageCode', ->
+      it 'returns the 2-letter code for the given language', ->
+        code = ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
+        expect(code).toEqual 'es'
