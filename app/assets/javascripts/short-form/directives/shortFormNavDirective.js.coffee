@@ -16,6 +16,9 @@ angular.module('dahlia.directives')
       scope.ngHref = (section) ->
         $state.href("dahlia.short-form-application.#{scope.getLandingPage(section)}")
 
+      scope.switchToLanguage = (lang) ->
+        $state.href($state.current.name, {lang: lang})
+
       # Section nav is disabled if:
       # 1. It is not the currently active section AND
       # 2. User can't access (e.g. have not made it that far)
