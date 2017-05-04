@@ -265,8 +265,7 @@ ShortFormApplicationController = (
     if member == $scope.applicant
       $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
-    else
-      ShortFormApplicationService.invalidateHouseholdForm()
+    ShortFormApplicationService.invalidateHouseholdForm()
 
   $scope.copyHomeToMailingAddress = ->
     ShortFormApplicationService.copyHomeToMailingAddress()
