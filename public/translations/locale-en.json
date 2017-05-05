@@ -304,6 +304,7 @@
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
+        "GET_DIRECTIONS": "Get Directions",
         "HOUSEHOLD_MEMBER": "Household Member",
         "HOUSEHOLD_MEMBERS": "Household members",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
@@ -375,6 +376,7 @@
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "VIEW_APPLICATION": "View Application",
+        "VIEW_MAP": "View Map",
         "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
@@ -386,6 +388,11 @@
         "YOU_HAVE_CLAIMED": "You have claimed:",
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
+    },
+    "LEASING_AGENT": {
+        "CONTACT": "Contact Leasing Agent",
+        "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
+        "OFFICE_HOURS": "Office Hours"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
