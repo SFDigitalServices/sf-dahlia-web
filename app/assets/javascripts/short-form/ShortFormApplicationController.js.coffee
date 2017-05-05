@@ -834,9 +834,15 @@ ShortFormApplicationController = (
 
   # separate this method out for better unit testing
   $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
-    $scope.clearErrors()
     ShortFormApplicationService.setApplicationLanguage(toParams.lang)
+    $scope.clearErrors()
     ShortFormNavigationService.isLoading(false)
+
+  $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
+    $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)
+
+  $scope.stateChangeStart = (e, toState, toParams, fromState, fromParams) ->
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

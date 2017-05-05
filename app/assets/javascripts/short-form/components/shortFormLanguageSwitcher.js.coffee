@@ -4,9 +4,11 @@ angular.module('dahlia.components')
   controller: ['$state', '$scope', ($state, $scope) ->
     ctrl = @
 
-    @stateName = $state.current.name
-    $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) =>
-      @stateName = toState.name
+    @switchToLanguage = (lang) ->
+      $state.href($state.current.name, {lang: lang})
+
+    @isSelectedLanguage = (lang) ->
+      $state.params.lang == lang
 
     return ctrl
   ]

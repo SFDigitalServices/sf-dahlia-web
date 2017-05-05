@@ -98,6 +98,11 @@ ShortFormApplicationService = (
     else
       false
 
+  Service.switchingLanguage = ->
+    toLang = $state.params.lang
+    fromLang = Service.getLanguageCode(Service.application)
+    !!fromLang && (toLang != fromLang)
+
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
 

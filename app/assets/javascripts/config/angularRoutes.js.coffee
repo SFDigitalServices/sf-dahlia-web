@@ -534,18 +534,15 @@
           '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($stateParams, $state, ShortFormApplicationService, listing) ->
 
-            ########
-            # This is sort of a weird way to do this?
-            # but we check if the application has a firstName which means that some data was already in session...
-            # this means we're merely switching languages and we DO NOT want to reload stuff.
-            return if ShortFormApplicationService.applicant.firstName
-            ########
+            return if ShortFormApplicationService.switchingLanguage()
 
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+              toLang = $state.params.lang
+              fromLang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
               return unless ShortFormApplicationService.application.id
               lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
