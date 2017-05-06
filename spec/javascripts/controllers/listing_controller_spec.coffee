@@ -12,7 +12,8 @@ do ->
     fakeListingService = {}
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
-    fakeShortFormApplicationService = {}
+    fakeShortFormApplicationService =
+      getLanguageCode: jasmine.createSpy()
     fakeAnalyticsService = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
@@ -43,16 +44,16 @@ do ->
         stubFeatures: () -> null
         listingIs: () -> null
         loading: {}
-      fakeListingService.toggleFavoriteListing = jasmine.createSpy()
-      fakeListingService.isFavorited = jasmine.createSpy()
-      fakeListingService.openLotteryResultsModal = jasmine.createSpy()
-      fakeListingService.eligibility_filters = eligibilityFilterDefaults
-      fakeListingService.resetEligibilityFilters = jasmine.createSpy()
-      fakeListingService.formattedAddress = jasmine.createSpy()
-      fakeListingService.listingHasPriorityUnits = jasmine.createSpy()
-      fakeListingService.listingHasReservedUnits = jasmine.createSpy()
-      fakeListingService.listingHasLotteryResults = jasmine.createSpy()
-      fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
+        toggleFavoriteListing: jasmine.createSpy()
+        isFavorited: jasmine.createSpy()
+        openLotteryResultsModal: jasmine.createSpy()
+        eligibility_filters: eligibilityFilterDefaults
+        resetEligibilityFilters: jasmine.createSpy()
+        formattedAddress: jasmine.createSpy()
+        listingHasPriorityUnits: jasmine.createSpy()
+        listingHasReservedUnits: jasmine.createSpy()
+        listingHasLotteryResults: jasmine.createSpy()
+        allListingUnitsAvailable: jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -296,3 +297,9 @@ do ->
       it 'calls ListingService.allListingUnitsAvailable', ->
         scope.allListingUnitsAvailable()
         expect(fakeListingService.allListingUnitsAvailable).toHaveBeenCalledWith(scope.listing)
+
+    describe 'getLanguageCode', ->
+      it 'expects getLanguageCode to be called on ShortFormApplicationService', ->
+        fakeApplication = {applicationLanguage: 'Spanish'}
+        scope.getLanguageCode(fakeApplication)
+        expect(fakeShortFormApplicationService.getLanguageCode).toHaveBeenCalledWith(fakeApplication)

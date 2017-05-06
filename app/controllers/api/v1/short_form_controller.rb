@@ -295,6 +295,7 @@ class Api::V1::ShortFormController < ApiController
     params.require(:application)
           .permit(
             :id,
+            :applicationLanguage,
             {
               primaryApplicant: %i(
                 contactId

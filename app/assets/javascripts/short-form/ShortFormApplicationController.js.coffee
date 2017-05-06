@@ -830,7 +830,12 @@ ShortFormApplicationController = (
     $scope.handleErrorState()
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+    $scope.onStateChangeSuccess(e, toState, toParams, fromState, fromParams)
+
+  # separate this method out for better unit testing
+  $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --

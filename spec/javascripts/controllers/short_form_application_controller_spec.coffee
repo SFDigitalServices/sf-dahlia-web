@@ -85,6 +85,7 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      setApplicationLanguage: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -606,3 +607,14 @@ do ->
       it 'called on fileAttachmentsForPreference on ShortFormHelperService', ->
         scope.fileAttachmentsForPreference()
         expect(fakeShortFormHelperService.fileAttachmentsForPreference).toHaveBeenCalled()
+
+    describe 'onStateChangeSuccess', ->
+      it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
+        lang = 'es'
+        scope.onStateChangeSuccess(null, null, {lang: lang})
+        expect(fakeShortFormApplicationService.setApplicationLanguage).toHaveBeenCalledWith(lang)
+
+      it 'expects isLoading to be set to false on ShortFormNavigationService', ->
+        lang = 'es'
+        scope.onStateChangeSuccess(null, null, {lang: lang})
+        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(false)
