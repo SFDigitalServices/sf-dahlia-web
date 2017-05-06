@@ -1,11 +1,17 @@
 ShortFormNavigationService = (
-  $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
+  $state,
+  bsLoadingOverlayService,
+  ShortFormApplicationService,
+  AccountService
 ) ->
   Service = {}
   RESERVED_TYPES = ShortFormApplicationService.RESERVED_TYPES
   Service.loading = false
   Service.sections = [
-    { name: 'You', pages: [
+    {
+      name: 'You',
+      translatedLabel: 'SHORT_FORM_NAV.YOU',
+      pages: [
         'name'
         'contact'
         'verify-address'
@@ -14,7 +20,10 @@ ShortFormNavigationService = (
         'alternate-contact-phone-address'
       ]
     },
-    { name: 'Household', pages: [
+    {
+      name: 'Household',
+      translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
+      pages: [
         'household-intro'
         'household-overview'
         'household-members'
@@ -27,12 +36,18 @@ ShortFormNavigationService = (
         'household-priorities'
       ]
     },
-    { name: 'Income', pages: [
+    {
+      name: 'Income',
+      translatedLabel: 'SHORT_FORM_NAV.INCOME',
+      pages: [
         'income-vouchers'
         'income'
       ]
     },
-    { name: 'Preferences', pages: [
+    {
+      name: 'Preferences',
+      translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
+      pages: [
         'preferences-intro'
         'neighborhood-preference'
         'live-work-preference'
@@ -43,7 +58,10 @@ ShortFormNavigationService = (
         'general-lottery-notice'
       ]
     },
-    { name: 'Review', pages: [
+    {
+      name: 'Review',
+      translatedLabel: 'SHORT_FORM_NAV.REVIEW',
+      pages: [
         'review-optional'
         'review-summary'
         'review-sign-in'
@@ -323,7 +341,10 @@ ShortFormNavigationService = (
   return Service
 
 ShortFormNavigationService.$inject = [
-  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService', 'AccountService'
+  '$state',
+  'bsLoadingOverlayService',
+  'ShortFormApplicationService',
+  'AccountService'
 ]
 
 angular
