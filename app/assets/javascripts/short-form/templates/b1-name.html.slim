@@ -12,9 +12,8 @@
 
       label.sr-only for="applicantFirstName"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#applicant_first_name ng-model="applicant.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error"
-      small.error#applicant_first_name_error ng-if="inputInvalid('firstName')"
-        | {{'ERROR.FIRST_NAME' | translate}}
+      input#applicant_first_name(ng-model="applicant.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error"  translated-error="ERROR.FIRST_NAME" ng-pattern="latinRegex" input-error)
+
       label.sr-only for="applicantMiddleName"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
       input#applicant_middle_name ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="loggedIn()"

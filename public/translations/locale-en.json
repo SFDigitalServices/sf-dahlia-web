@@ -270,7 +270,8 @@
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
         "VETERAN_ANYONE": "At least one member of your household must be a Veteran",
-        "ZIP": "Please enter a zipcode"
+        "ZIP": "Please enter a zipcode",
+        "PLEASE_ENTER_ENGLISH": "Please enter English."
     },
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
