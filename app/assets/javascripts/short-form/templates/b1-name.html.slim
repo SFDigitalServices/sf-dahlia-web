@@ -5,23 +5,23 @@
 
   .app-inner.inset
 
-    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
+    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName') || inputInvalid('middleName'))}"
       h3.form-label.caps
         ' {{'LABEL.YOUR_NAME' | translate}}
         lock-icon ng-if="loggedIn()"
 
       label.sr-only for="applicantFirstName"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#applicant_first_name(ng-model="applicant.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error"  translated-error="ERROR.FIRST_NAME" ng-pattern="latinRegex" input-error)
+      input#applicant_first_name(ng-model="applicant.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
 
       label.sr-only for="applicantMiddleName"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#applicant_middle_name ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="loggedIn()"
+      input#applicant_middle_name(ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
+
       label.sr-only for="applicantLastName"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#applicant_last_name ng-model="applicant.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error"
-      small.error#applicant_last_name_error ng-if="inputInvalid('lastName')"
-        | {{'ERROR.LAST_NAME' | translate}}
+      input#applicant_last_name(ng-model="applicant.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
+
     .form-group ng-class="{ error: applicantDOB_hasError() }"
       h3.form-label.caps
         ' {{'LABEL.YOUR_DOB' | translate}}
@@ -32,14 +32,17 @@
           label.sr-only for="date_of_birth_month"
             | {{'LABEL.DOB_MONTH' | translate}}
           input#date_of_birth_month.no-margin(ng-model="applicant.dob_month" maxlength="2" name="date_of_birth_month" ng-required="true" placeholder="MM"  ng-class="{ error: inputInvalid('date_of_birth_month') }" type="text" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'month\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
         .form-group-day.large-2.columns
           label.sr-only for="date_of_birth_day"
             | {{'LABEL.DOB_DAY' | translate}}
           input#date_of_birth_day.no-margin(ng-model="applicant.dob_day" maxlength="2" name="date_of_birth_day" ng-required="true" placeholder="DD" type="text" ng-class="{ error: inputInvalid('date_of_birth_day') }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'day\', $value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
           input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length  }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+
       small.error#date_of_birth_error ng-if="applicantDOB_hasError()"
         span ng-if="!primaryApplicantUnder18()" translate="ERROR.DOB"
         span ng-if="primaryApplicantUnder18()" translate="ERROR.DOB_PRIMARY_APPLICANT_AGE"

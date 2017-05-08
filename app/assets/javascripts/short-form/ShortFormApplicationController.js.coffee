@@ -653,8 +653,8 @@ ShortFormApplicationController = (
   $scope.addressTranslationVariable = (address) ->
     ShortFormHelperService.addressTranslationVariable(address)
 
-  $scope.membersTranslateVariable = (members) ->
-    ShortFormHelperService.membersTranslateVariable(members)
+  $scope.membersTranslationVariable = (members) ->
+    ShortFormHelperService.membersTranslationVariable(members)
 
   $scope.youOrHouseholdTranslateVariable = (wholeHousehold) ->
     ShortFormHelperService.youOrHouseholdTranslateVariable($scope.householdMembers.length, wholeHousehold)

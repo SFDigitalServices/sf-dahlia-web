@@ -1,7 +1,7 @@
 {
     "A1_INTRO": {
-        "TITLE": "Let's get started on your application",
-        "CHOOSE_YOUR_LANGUAGE": "Choose your language"
+        "CHOOSE_YOUR_LANGUAGE": "Choose your language",
+        "TITLE": "Let's get started on your application"
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
@@ -259,6 +259,7 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_ENTER_ENGLISH": "Please enter English.",
         "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
@@ -270,8 +271,7 @@
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
         "VETERAN_ANYONE": "At least one member of your household must be a Veteran",
-        "ZIP": "Please enter a zipcode",
-        "PLEASE_ENTER_ENGLISH": "Please enter English."
+        "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
@@ -657,7 +657,6 @@
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
         "EDIT": "Edit",
-        "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
         "NEVER_SUBMITTED": "Never Submitted",
