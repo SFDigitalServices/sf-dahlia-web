@@ -368,6 +368,7 @@
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
+        "GET_DIRECTIONS": "Get Directions",
         "HEARING_IMPAIRMENTS": "For Hearing Impairments",
         "HOUSEHOLD_DETAILS": "Household Details",
         "HOUSEHOLD_MEMBER": "Household Member",
@@ -462,6 +463,7 @@
         "UPLOAD_RENT_DESCRIPTION": "Please provide proof for your monthly rent. You said your rent at this address is: {{rent}} <br/><br/>You can upload multiple documents, if your household pays with multiple checks, money orders etc.",
         "VETERANS_IN_HOUSEHOLD": "Veterans in Household",
         "VIEW_APPLICATION": "View Application",
+        "VIEW_MAP": "View Map",
         "VISION_IMPAIRMENTS": "For Vision Impairments",
         "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
@@ -474,6 +476,11 @@
         "YOU_HAVE_CLAIMED": "You have claimed:",
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
+    },
+    "LEASING_AGENT": {
+        "CONTACT": "Contact Leasing Agent",
+        "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
+        "OFFICE_HOURS": "Office Hours"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
