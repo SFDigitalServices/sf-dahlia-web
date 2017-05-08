@@ -4,6 +4,7 @@ angular.module('dahlia.components')
     addressType: '@'
     isRequired: '@'
     model: '<'
+    modelName: '@'
     onChange: '&'
   templateUrl: 'short-form/components/address-form.html'
 
