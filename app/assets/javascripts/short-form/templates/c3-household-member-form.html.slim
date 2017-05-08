@@ -57,7 +57,8 @@
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
       p.form-note.margin-bottom
         | {{'C3_HOUSEHOLD_MEMBER_FORM.MEMBER_ADDRESS_DESC' | translate}}
-      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'householdMember'; isRequired = truth"
+
+      address-form address-type="home_address" model='householdMember' model-name='householdMember' is-required="true" on-change="addressChange('householdMember')"
 
       small.error ng-if="addressFailedValidation('home_address')"
         | {{'ERROR.ADDRESS_VALIDATION' | translate}}
