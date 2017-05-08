@@ -2,6 +2,7 @@
   'dahlia.directives',
   'dahlia.controllers',
   'dahlia.services',
+  'dahlia.components',
   # filters
   'customFilters',
   'ng-currency',
@@ -30,3 +31,4 @@ angular.module('dahlia.directives', ['pageslide-directive', 'ngTextTruncate'])
 # Service and Controller modules
 angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUpload'])
+angular.module('dahlia.components', [])

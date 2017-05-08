@@ -168,13 +168,7 @@ ShortFormApplicationController = (
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.currentForm()
-    return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
-    field = form[fieldName]
-    if form && field
-      field.$invalid && (field.$touched || form.$submitted)
-    else
-      false
+    ShortFormApplicationService.inputInvalid(fieldName, identifier, form)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
