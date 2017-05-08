@@ -1,0 +1,87 @@
+.form-address.row.expand
+  .form-group-street.form-item.large-12.columns ng-class="{ error: $ctrl.inputInvalid('address1', $ctrl.addressType) }"
+    label.sr-only for="{{$ctrl.model}}_{{$ctrl.addressType}}_address1" translate="LABEL.ADDRESS_1"
+    input(id="{{$ctrl.model}}_{{$ctrl.addressType}}_address1" ng-model="$ctrl.model[$ctrl.addressType].address1"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
+      ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('address1', $ctrl.addressType) }"
+      aria-describedby="{{$ctrl.model}}_{{$ctrl.addressType}}_address1_error")
+    small.error id="{{$ctrl.model}}_{{$ctrl.addressType}}_address1_error" ng-show="$ctrl.inputInvalid('address1', $ctrl.addressType)" translate="ERROR.ADDRESS"
+
+  .form-group-apt.large-12.column
+    label for="{{$ctrl.model}}_{{$ctrl.addressType}}_address2" translate="LABEL.ADDRESS_2"
+    input(id="{{$ctrl.model}}_{{$ctrl.addressType}}_address2" ng-model="$ctrl.model[$ctrl.addressType].address2"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
+  .form-group-city.form-item.small-7.columns ng-class="{ error: $ctrl.inputInvalid('city', $ctrl.addressType) }"
+    label for="{{$ctrl.model}}_{{$ctrl.addressType}}_city" translate="LABEL.CITY"
+    input(id="{{$ctrl.model}}_{{$ctrl.addressType}}_city" ng-model="$ctrl.model[$ctrl.addressType].city"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
+      ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('city', $ctrl.addressType) }"
+      aria-describedby="{{$ctrl.model}}_{{$ctrl.addressType}}_city_error")
+    small.error id="{{$ctrl.model}}_{{$ctrl.addressType}}_city_error" ng-show="$ctrl.inputInvalid('city', $ctrl.addressType)" translate="ERROR.CITY"
+  .form-group-state.form-item.small-5.columns ng-class="{ error: $ctrl.inputInvalid('state', $ctrl.addressType) }"
+    label for="{{$ctrl.model}}_{{$ctrl.addressType}}_state" State
+    select(id="{{$ctrl.model}}_{{$ctrl.addressType}}_state" ng-model="$ctrl.model[$ctrl.addressType].state"
+      ng-change="$ctrl.onChange()" data-width="auto" name="{{$ctrl.addressType}}_state"
+      ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('state', $ctrl.addressType) }"
+      aria-describedby="{{$ctrl.model}}_{{$ctrl.addressType}}_state_error")
+      option value="" translate="LABEL.SELECT_ONE"
+      option value="AL" Alabama
+      option value="AK" Alaska
+      option value="AZ" Arizona
+      option value="AR" Arkansas
+      option value="CA" California
+      option value="CO" Colorado
+      option value="CT" Connecticut
+      option value="DE" Delaware
+      option value="DC" District Of Columbia
+      option value="FL" Florida
+      option value="GA" Georgia
+      option value="HI" Hawaii
+      option value="ID" Idaho
+      option value="IL" Illinois
+      option value="IN" Indiana
+      option value="IA" Iowa
+      option value="KS" Kansas
+      option value="KY" Kentucky
+      option value="LA" Louisiana
+      option value="ME" Maine
+      option value="MD" Maryland
+      option value="MA" Massachusetts
+      option value="MI" Michigan
+      option value="MN" Minnesota
+      option value="MS" Mississippi
+      option value="MO" Missouri
+      option value="MT" Montana
+      option value="NE" Nebraska
+      option value="NV" Nevada
+      option value="NH" New Hampshire
+      option value="NJ" New Jersey
+      option value="NM" New Mexico
+      option value="NY" New York
+      option value="NC" North Carolina
+      option value="ND" North Dakota
+      option value="OH" Ohio
+      option value="OK" Oklahoma
+      option value="OR" Oregon
+      option value="PA" Pennsylvania
+      option value="RI" Rhode Island
+      option value="SC" South Carolina
+      option value="SD" South Dakota
+      option value="TN" Tennessee
+      option value="TX" Texas
+      option value="UT" Utah
+      option value="VT" Vermont
+      option value="VA" Virginia
+      option value="WA" Washington
+      option value="WV" West Virginia
+      option value="WI" Wisconsin
+      option value="WY" Wyoming
+
+    small.error id="{{$ctrl.model}}_{{$ctrl.addressType}}_state_error" ng-show="$ctrl.inputInvalid('state', $ctrl.addressType)" translate="ERROR.STATE"
+  .form-group-zip.form-item.small-12.columns ng-class="{ error: $ctrl.inputInvalid('zip', $ctrl.addressType) }"
+    label for="{{$ctrl.model}}_{{$ctrl.addressType}}_zip" translate="LABEL.ZIP"
+    input(id="{{$ctrl.model}}_{{$ctrl.addressType}}_zip" ng-model="$ctrl.model[$ctrl.addressType].zip"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_zip" placeholder="{{'LABEL.ZIPCODE' | translate}}" type="text" ui-mask="{{$ctrl.model[$ctrl.addressType].zip.length > 5 ? '99999-9999' : '99999'}}" ui-mask-placeholder
+      ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('zip', $ctrl.addressType) }"
+      aria-describedby="{{$ctrl.model}}_{{$ctrl.addressType}}_zip_error")
+    small.error id="{{$ctrl.model}}_{{$ctrl.addressType}}_zip_error" ng-show="$ctrl.inputInvalid('zip', $ctrl.addressType)" translate="ERROR.ZIP"

@@ -77,7 +77,8 @@
       p.form-note.margin-bottom
         | {{'B2_CONTACT.APPLICANT_ADDRESS_DESC' | translate}}
 
-      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'"
+      address-form application="application" address-type="home_address" model='applicant' is-required="true" on-change="addressChange('applicant')"
+      / ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'home_address'; model = 'applicant'"
 
       small.error ng-if="addressFailedValidation('home_address')"
         | {{'ERROR.ADDRESS_VALIDATION' | translate}}
@@ -95,7 +96,7 @@
       p.form-note.margin-bottom
         | {{'B2_CONTACT.PROVIDE_AN_ADDRESS' | translate}}
 
-      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'applicant'"
+      address-form address-type="mailing_address" model='applicant' is-required="true" on-change="addressChange('applicant')"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('workInSf') }"
