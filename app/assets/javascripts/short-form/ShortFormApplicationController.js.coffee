@@ -179,7 +179,7 @@ ShortFormApplicationController = (
 
   $scope.inputInvalid = (fieldName, identifier = '') ->
     form = $scope.currentForm()
-    ShortFormApplicationService.inputInvalid(fieldName, identifier, form)
+    ShortFormApplicationService.inputInvalid(fieldName, form, identifier)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -835,8 +835,8 @@ ShortFormApplicationController = (
 
   # separate this method out for better unit testing
   $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
-    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     $scope.clearErrors()
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     ShortFormNavigationService.isLoading(false)
 
   $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->

@@ -86,7 +86,6 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
-      inputInvalid: (fieldName, identifier, form = scope.form.applicationForm) ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
