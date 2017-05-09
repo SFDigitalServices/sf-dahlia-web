@@ -533,6 +533,9 @@
           # 'listing' is part of the params so that application waits for listing (above) to resolve
           '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($stateParams, $state, ShortFormApplicationService, listing) ->
+
+            return if ShortFormApplicationService.switchingLanguage()
+
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
             # it's ok if user is not logged in, we always check if they have an application

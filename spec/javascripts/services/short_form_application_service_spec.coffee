@@ -9,6 +9,8 @@ do ->
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
     $translate = {}
     $state =
+      params:
+        lang: undefined
       go: jasmine.createSpy()
       current: { name: 'dahlia' }
     fakeSFAddress =
@@ -917,3 +919,14 @@ do ->
       it 'returns the 2-letter code for the given language', ->
         code = ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
         expect(code).toEqual 'es'
+
+    describe 'switchingLanguage', ->
+      it 'returns true if user is switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'English'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual true
+
+      it 'returns false if user is not switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'Spanish'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual false
