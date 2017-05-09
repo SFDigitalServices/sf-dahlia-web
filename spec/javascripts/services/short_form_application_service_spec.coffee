@@ -7,7 +7,8 @@ do ->
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
-    $translate = {}
+    $translate =
+      use: jasmine.createSpy()
     $state =
       go: jasmine.createSpy()
       current: { name: 'dahlia' }
@@ -599,6 +600,10 @@ do ->
       it 'should indicate app status as submitted', ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
+
+      it 'should call $translate.use() to get current locale', ->
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect($translate.use).toHaveBeenCalled()
 
       it 'should call formatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
