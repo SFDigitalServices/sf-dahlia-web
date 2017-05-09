@@ -89,9 +89,8 @@ ShortFormApplicationService = (
   Service.resetUserData()
   # --- end initialization
 
-  Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
+  Service.inputInvalid = (fieldName, form = Service.form.applicationForm) ->
     return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
