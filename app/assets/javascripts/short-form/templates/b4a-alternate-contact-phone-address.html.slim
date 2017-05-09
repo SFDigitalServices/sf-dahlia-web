@@ -28,6 +28,6 @@
         | {{'LABEL.CONTACT_MAILING_ADDRESS' | translate}}
       p.form-note.margin-bottom
         | {{'B4A_ALTERNATE_CONTACT_PHONE_ADDRESS.CHOOSE_AN_ADDRESS' | translate}}
-      ng-include src="'short-form/templates/partials/_address-form.html'" ng-init="addressType = 'mailing_address'; model = 'alternateContact'; isRequired = notRequired"
+      address-form address-type="mailing_address" model='alternateContact' model-name='alternateContact' is-required="false" on-change="addressChange('alternateContact')"
 
   short-form-save-and-submit
