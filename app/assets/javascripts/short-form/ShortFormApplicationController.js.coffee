@@ -34,6 +34,7 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
+  $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
@@ -176,9 +177,9 @@ ShortFormApplicationController = (
     $scope.form.signIn ||
     $scope.form.applicationForm
 
-  $scope.inputInvalid = (fieldName, identifier = '') ->
+  $scope.inputInvalid = (fieldName) ->
     form = $scope.currentForm()
-    ShortFormApplicationService.inputInvalid(fieldName, form, identifier)
+    ShortFormApplicationService.inputInvalid(fieldName, form)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -652,8 +653,8 @@ ShortFormApplicationController = (
   $scope.addressTranslationVariable = (address) ->
     ShortFormHelperService.addressTranslationVariable(address)
 
-  $scope.membersTranslateVariable = (members) ->
-    ShortFormHelperService.membersTranslateVariable(members)
+  $scope.membersTranslationVariable = (members) ->
+    ShortFormHelperService.membersTranslationVariable(members)
 
   $scope.youOrHouseholdTranslateVariable = (wholeHousehold) ->
     ShortFormHelperService.youOrHouseholdTranslateVariable($scope.householdMembers.length, wholeHousehold)

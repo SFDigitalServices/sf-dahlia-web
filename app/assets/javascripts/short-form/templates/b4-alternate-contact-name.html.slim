@@ -8,17 +8,15 @@
       h3.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT_NAME' | translate}}
       label.sr-only for="alternate_firstName" translate="LABEL.FIRST_NAME"
-      input#alternate_first_name ng-model="alternateContact.firstName" name="firstName" ng-required="true" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="alternate_first_name_error"
-      small.error#alternate_first_name_error ng-show="inputInvalid('firstName')"
-        | {{'ERROR.FIRST_NAME' | translate}}
+      input#alternate_first_name(ng-model="alternateContact.firstName" name="firstName" ng-required="true" placeholder="First Name" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="alternate_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+
       label.sr-only for="alternate_lastName" translate="LABEL.LAST_NAME"
-      input#alternate_last_name ng-model="alternateContact.lastName" name="lastName" ng-required="true" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="alternate_last_name_error"
-      small.error#alternate_last_name_error ng-show="inputInvalid('lastName')"
-        | {{'ERROR.LAST_NAME' | translate}}
-    .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social Worker or Housing Counselor'"
+      input#alternate_last_name(ng-model="alternateContact.lastName" name="lastName" ng-required="true" placeholder="Last Name" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="alternate_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
+
+    .form-group.margin-bottom--2x ng-if="alternateContact.alternateContactType == 'Social Worker or Housing Counselor'" ng-class="{ error: inputInvalid('agency') }"
       h3.form-label.caps
         | {{'LABEL.ALTERNATE_CONTACT_AGENCY' | translate}}
       label.sr-only for="alternate_agency" translate="LABEL.ALTERNATE_CONTACT_AGENCY"
-      input#alternate_agency ng-model="alternateContact.agency" name="agency" placeholder="{{'LABEL.AGENCY' | translate}}" type="text"
+      input#alternate_agency(ng-model="alternateContact.agency"  ng-class="{ error: inputInvalid('agency')}" name="agency" placeholder="{{'LABEL.AGENCY' | translate}}" type="text" ng-pattern="latinRegex" input-error)
 
   short-form-save-and-submit

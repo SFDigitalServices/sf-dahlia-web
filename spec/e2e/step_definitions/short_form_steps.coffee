@@ -291,12 +291,16 @@ module.exports = ->
   @When "I don't fill out the Name page", ->
     element(By.id('submit')).click()
 
+  @When "I fill out the Name page with non-latin characters", ->
+    element(By.model('applicant.firstName')).sendKeys('Jane中文')
+    element(By.id('submit')).click()
+
   @When "I fill out the Name page with an invalid DOB", ->
-    element(By.model('applicant.firstName')).sendKeys('Jane')
-    element(By.model('applicant.lastName')).sendKeys('Doe')
-    element(By.model('applicant.dob_month')).sendKeys('12')
-    element(By.model('applicant.dob_day')).sendKeys('33')
-    element(By.model('applicant.dob_year')).sendKeys('2019')
+    element(By.model('applicant.firstName')).clear().sendKeys('Jane')
+    element(By.model('applicant.lastName')).clear().sendKeys('Doe')
+    element(By.model('applicant.dob_month')).clear().sendKeys('12')
+    element(By.model('applicant.dob_day')).clear().sendKeys('33')
+    element(By.model('applicant.dob_year')).clear().sendKeys('2019')
     element(By.id('submit')).click()
 
   @When "I fill out the Contact page with an address that isn't found", ->
@@ -376,6 +380,10 @@ module.exports = ->
   @Then 'I should see name field errors on the Name page', ->
     expectAlertBox(@)
     expectError(@, 'Please enter a First Name')
+
+  @Then 'I should see an error about providing answers in English on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please provide your answers in English')
 
   @Then 'I should see DOB field errors on the Name page', ->
     expectAlertBox(@)

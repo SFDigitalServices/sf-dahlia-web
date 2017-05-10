@@ -21,6 +21,7 @@ angular.module('dahlia.components', [])
   'mm.foundation',
   'angular.filter',
   'angular-carousel',
+  'ngMessages',
   'pascalprecht.translate',
   'ui.mask',
   'ngAria',
