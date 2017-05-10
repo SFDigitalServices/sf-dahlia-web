@@ -5,6 +5,9 @@
     "T": {
         "APPLICATION": "Aplicación",
         "APPLICATION_DUE": "Fecha de Vencimiento",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Estás seguro de que te gustaría navegar lejos de esta página? Perderá toda la información que haya introducido en la aplicación para este listado. Si desea guardar su información para finalizar la aplicación más adelante, haga clic en el botón 'Guardar y terminar más tarde'.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Estás seguro de que quieres salir de esta página? Si vincula su aplicación a una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Estás seguro de que quieres salir de esta página? Si crea una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
         "GET_STARTED": "Empezar"
     }
 }
