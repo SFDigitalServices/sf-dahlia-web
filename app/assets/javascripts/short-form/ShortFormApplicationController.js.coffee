@@ -34,7 +34,7 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
-  $scope.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$")
+  $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives

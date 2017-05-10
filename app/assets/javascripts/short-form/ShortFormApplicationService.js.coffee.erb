@@ -62,6 +62,7 @@ ShortFormApplicationService = (
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
 
+  Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/#%$:=\-_`~()]+$")
   Service.languageMap =
     en: 'English'
     es: 'Spanish'

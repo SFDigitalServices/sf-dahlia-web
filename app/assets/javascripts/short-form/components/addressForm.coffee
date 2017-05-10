@@ -12,7 +12,7 @@ angular.module('dahlia.components')
     ['ShortFormApplicationService', '$scope',
     (ShortFormApplicationService, $scope) ->
       ctrl = @
-      @latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\s'\.,-\/#!$%\^&\*;:{}=\-_`~()]+$")
+      @latinRegex = ShortFormApplicationService.latinRegex
 
       @inputInvalid = (fieldName) =>
         fieldName = "#{@addressType}_#{fieldName}"
