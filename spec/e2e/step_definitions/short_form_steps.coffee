@@ -46,12 +46,30 @@ module.exports = ->
     url = "/listings/#{listingId}/apply/name"
     getUrlAndCatchPopup(url)
 
+  @Given 'I go to the welcome page of the Test Listing application', ->
+    url = "/listings/#{listingId}/apply-welcome/intro"
+    getUrlAndCatchPopup(url)
+
   @Given 'I have a confirmed account', ->
     # confirm the account
     browser.ignoreSynchronization = true
     url = "/api/v1/account/confirm/?email=#{sessionEmail}"
     getUrlAndCatchPopup(url)
     browser.ignoreSynchronization = false
+
+  @When /^I select "([^"]*)" as my language$/, (language) ->
+    switch language
+      when "Spanish"
+        element(By.id('submit-es')).click()
+      when "English"
+        element(By.id('submit-en')).click()
+
+  @When 'I continue past the community screening and welcome overview', ->
+    element(By.id('communityScreening_yes')).click()
+    # community screening
+    submitForm()
+    # welcome overview
+    submitForm()
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     firstName = fullName.split(' ')[0]
@@ -284,6 +302,9 @@ module.exports = ->
   @When 'I use the browser back button', ->
     browser.navigate().back()
 
+  @When 'I go to the listings page in Spanish', ->
+    getUrlAndCatchPopup('/es/listings')
+
   #######################
   # --- Error cases --- #
   #######################
@@ -344,14 +365,6 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my name, DOB, email all displayed as expected', ->
-    appName = element(By.id('full-name'))
-    @expect(appName.getText()).to.eventually.equal('JANE DOE')
-    appDob = element(By.id('dob'))
-    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
-    appEmail = element(By.id('email'))
-    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
-
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
     @expect(appName.getText()).to.eventually.equal('JANE DOE')
@@ -363,6 +376,14 @@ module.exports = ->
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
     @expect(DTHP.isPresent()).to.eventually.equal(true)
+
+  @Then /^I should see "([^"]*)" selected in the short form language switcher$/, (language) ->
+    activeLang = element(By.cssContainingText('li.active.lined-nav_item', language))
+    @expect(activeLang.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should be redirected back to the listings page in English', ->
+    # we check that it is at the ":3000/listings" URL rather than ":3000/es/listings"
+    browser.wait(EC.urlContains(':3000/listings'), 6000)
 
   ###################################
   # --- Error case expectations --- #
