@@ -44,7 +44,8 @@
         !ShortFormApplicationService.isWelcomePage(toState)
           # redirect them to English version of the same page
           e.preventDefault()
-          return $state.go(toState, {lang: 'en'})
+          toParams.lang = 'en'
+          return $state.go(toState, toParams)
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
