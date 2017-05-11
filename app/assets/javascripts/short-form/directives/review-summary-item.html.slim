@@ -7,5 +7,5 @@
     | {{subLabel}}
   span.info-item_note.t-bold ng-if="!!boldSubLabel"
     | {{boldSubLabel}}
-  span.info-item_note.t-bold ng-repeat="sublabel in boldSubLabels() track by $index" ng-if="!!boldSubLabels"
+  span.info-item_note.t-bold ng-repeat="sublabel in boldSubLabels track by $index" ng-if="!!boldSubLabels"
     | {{sublabel}}

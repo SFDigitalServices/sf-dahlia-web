@@ -100,7 +100,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
     rentFiles = _.map prefDocs, (address) -> address.rent
     rentFileNames = _.map rentFiles, (file) ->
-      _.values(file)[0].file.name
+      uploadedFile = _.filter _.values(file), (f) -> !!f.file
+      uploadedFile[0].file.name
     _.concat(leaseFileNames, rentFileNames)
 
   Service.translateLoggedInMessage = (page) ->
