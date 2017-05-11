@@ -4,6 +4,7 @@
 
 SharedService = ($http, $state) ->
   Service = {}
+  Service.alternateLanguageLinks = []
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
@@ -29,6 +30,19 @@ SharedService = ($http, $state) ->
   Service.focusOnBody = ->
     body = angular.element(document.body)
     Service.focusOnElement(body)
+
+  Service.updateAlternateLanguageLinks = ->
+    angular.copy([], Service.alternateLanguageLinks)
+    currentState = $state.current.name
+    _.each ['en', 'es', 'tl', 'zh'], (lang) ->
+      params = _.merge(angular.copy($state.current.params), {lang: lang})
+      # because the homepage 'en' route gives a blank result when using {absolute: true}
+      # we just use the relative href and append to the root_url printed by Rails in application.html
+      href = $state.href($state.current.name, params)
+      Service.alternateLanguageLinks.push(
+        lang: lang
+        href: href.slice(1)
+      )
 
   return Service
 

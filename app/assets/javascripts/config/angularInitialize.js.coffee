@@ -88,6 +88,8 @@
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
 
+      SharedService.updateAlternateLanguageLinks()
+
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''
 
