@@ -14,7 +14,7 @@
     success = (response) ->
       response
     error = (response) ->
-      if response.status is 401 or 400
+      if _([400, 401]).includes(response.status)
         $rootScope.$broadcast "event:unauthorized"
         $location.path ""
         return response
