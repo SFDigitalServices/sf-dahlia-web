@@ -1,23 +1,20 @@
 p
-  ' Thanks for applying. We have received your application for
-  = link_to @listing_name, @listing_url
-  | .
+  == t '.thanks_for_applying_to_listing', link: link_to(@listing_name, @listing_url)
 p
-  | Here is your lottery number: #{@lottery_number}
+  = t '.here_is_your_lottery_number', lottery_number: @lottery_number
 p
-  | What to expect next:
+  = t '.what_to_expect_next'
+  | :
   br
-  ' The lottery will be held on #{@lottery_date}. Housing lottery results will be posted
-  = link_to 'on the listing', @listing_url
-  ' .
-  | Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled.
+  ==' t '.lottery_will_be_held', lottery_date: @lottery_date, link: link_to(t('.on_the_listing'), @listing_url)
+  = t '.applicants_will_be_contacted'
 p
-  | Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents.
+  = t '.should_your_application_be_chosen'
 p
-  | See below for contact information for the Leasing Agent for this listing.
+  = t '.see_below_for_contact_information'
 p
-  ' How are we doing?
-  = link_to "We'd like to get your feedback", 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
+  =' t '.how_are_we_doing'
+  = link_to t('.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
   | .
 
 p
@@ -32,7 +29,8 @@ p
     br
     | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
 
-- if @listing.Office_Hours
+- if @listing.Office_Hours || true
   p
-    | Office Hours:
+    = t '.office_hours'
+    | :
   == simple_format strip_tags(@listing.Office_Hours)

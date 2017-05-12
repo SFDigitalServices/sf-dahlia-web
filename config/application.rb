@@ -19,6 +19,12 @@ module SfDahliaWeb
 
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    # Whitelist locales available for the application
+    I18n.available_locales = [:en, :es, :tl, :zh]
+
+    # will use English translation if none found
+    config.i18n.fallbacks = true
+
     ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates'
     ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query'
   end
