@@ -1,4 +1,4 @@
-FileUploadService = ($http, $q, Upload, uuid) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
   Service = {}
   # these are to be overridden
   Service.preferences = {}
@@ -7,12 +7,16 @@ FileUploadService = ($http, $q, Upload, uuid) ->
   Service.hasPreferenceFile = (fileType) ->
     Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
 
-  Service.deletePreferenceFile = (prefType, listing_id, opts = {}) ->
+  Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
+    pref = ListingService.getPreference(pref_type)
+    # might be calling deletePreferenceFile on a preference that this listing doesn't have
+    return unless pref
+    pref_id = pref.listingPreferenceID
     params =
       uploaded_file:
         session_uid: Service.session_uid()
         listing_id: listing_id
-        preference: prefType
+        listing_preference_id: pref_id
 
     if opts.rentBurdenType
       params.uploaded_file.rent_burden_type = opts.rentBurdenType
@@ -20,7 +24,7 @@ FileUploadService = ($http, $q, Upload, uuid) ->
       params.uploaded_file.rent_burden_index = opts.index
       proofDocument = Service.rentBurdenFile(opts)
     else
-      proofDocument = Service.preferences.documents[prefType]
+      proofDocument = Service.preferences.documents[pref_type]
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
       return $q.resolve()
 
@@ -40,21 +44,22 @@ FileUploadService = ($http, $q, Upload, uuid) ->
       return
     )
 
-  Service.uploadProof = (file, prefType, listing_id, opts = {}) ->
+  Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
+    pref_id = ListingService.getPreference(pref_type).listingPreferenceID
     uploadedFileParams =
       file: file
       session_uid: Service.session_uid()
       listing_id: listing_id
-      preference: prefType
+      listing_preference_id: pref_id
 
-    if prefType == 'rentBurden'
+    if opts.rentBurdenType
       proofDocument = Service.rentBurdenFile(opts)
       uploadedFileParams.address = opts.address
       uploadedFileParams.rent_burden_type = opts.rentBurdenType
       uploadedFileParams.rent_burden_index = opts.index
     else
-      Service.preferences.documents[prefType] ?= {}
-      proofDocument = Service.preferences.documents[prefType]
+      Service.preferences.documents[pref_type] ?= {}
+      proofDocument = Service.preferences.documents[pref_type]
 
     uploadedFileParams.document_type = proofDocument.proofOption
 
@@ -124,16 +129,18 @@ FileUploadService = ($http, $q, Upload, uuid) ->
         angular.copy({}, rentBurdenDocs.rent)
 
   Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
+    pref_id = ListingService.getPreference('rentBurden').listingPreferenceID
     unless Service.hasRentBurdenFiles(address)
       return $q.resolve()
     params =
       uploaded_file:
         session_uid: Service.session_uid()
+        listing_preference_id: pref_id
         listing_id: listing_id
     # if no address provided, we are deleting *all* rentBurdenFiles for this user/listing
     params.uploaded_file.address = address if address
 
-    $http.delete('/api/v1/short-form/rent-burden-proof', {
+    $http.delete('/api/v1/short-form/proof', {
       data: params,
       headers: {
         'Content-Type': 'application/json'
@@ -152,7 +159,7 @@ FileUploadService = ($http, $q, Upload, uuid) ->
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid'
+  '$http', '$q', 'Upload', 'uuid', 'ListingService'
 ]
 
 angular

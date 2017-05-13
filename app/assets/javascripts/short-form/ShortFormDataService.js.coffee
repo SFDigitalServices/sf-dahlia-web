@@ -406,7 +406,7 @@ ShortFormDataService = (ListingService) ->
           preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
         preferences[prefKey] = true
 
-        _.each _.filter(files, {preference: prefKey}), (file) ->
+        _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
           if prefKey == 'rentBurden'
             if file.rent_burden_type == 'lease'
               preferences.documents.rentBurden[file.address].lease = {
