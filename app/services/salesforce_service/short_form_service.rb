@@ -23,7 +23,7 @@ module SalesforceService
 
     def self.get_for_user(contact_id)
       apps = api_get("/shortForm/list/#{contact_id}")
-      apps.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
+      apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
     def self.delete(id)
@@ -32,8 +32,14 @@ module SalesforceService
 
     def self.attach_file(application_id, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/file/#{application_id}"
-      api_post_with_headers(endpoint, file.file, headers)
+      endpoint = "/shortForm/Attachment/#{application_id}"
+      body = {
+        'fileName': filename,
+        'DocumentType': 'Word Doc',
+        'Body': Base64.encode64(file.file),
+        'ApplicationId': application_id,
+      }
+      api_post_with_headers(endpoint, body, headers)
     end
 
     def self.attach_files(application_id, files)

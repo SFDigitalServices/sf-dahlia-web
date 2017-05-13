@@ -72,7 +72,7 @@ module SalesforceService
     end
 
     # NOTE: Have to use custom Faraday connection to send headers.
-    def self.api_post_with_headers(endpoint, body = '', headers = {})
+    def self.api_post_with_headers(endpoint, body, headers = {})
       retries = 1
       status = nil
       response = nil
@@ -88,14 +88,14 @@ module SalesforceService
       response
     end
 
-    def self.post_with_headers(endpoint, body = '', headers = {})
+    def self.post_with_headers(endpoint, body, headers = {})
       conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
       conn.post "/services/apexrest#{endpoint}" do |req|
         headers.each do |k, v|
           req.headers[k] = v
         end
         req.headers['Authorization'] = "OAuth #{oauth_token}"
-        req.body = body
+        req.body = body.to_json
       end
     end
 
