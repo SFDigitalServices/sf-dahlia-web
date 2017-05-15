@@ -1,7 +1,7 @@
 doctype html
 /![if IE 9 ] <html class="ie9" lang="en">
 /! [if !(IE 9)]><!
-html lang="en"
+html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
   /! <![endif]
   head
     title DAHLIA San Francisco Housing Portal
@@ -12,6 +12,8 @@ html lang="en"
     meta content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg" name="google-site-verification"
     = render partial: '/layouts/favicons'
     = csrf_meta_tags
+
+    link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}"
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
@@ -30,7 +32,7 @@ html lang="en"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="{'center-body': isShortFormPage()}"
+  body id="ng-app" ng-class="{'center-body': isShortFormPage()}"
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
