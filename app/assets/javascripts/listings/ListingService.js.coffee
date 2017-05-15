@@ -239,9 +239,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
-      # TODO: -- REMOVE HARDCODED FEATURES --
-      if Service.listingIs('AMI Chart Test 477') || Service.listingIs('Abaca')
-        Service.stubListingFeatures()
 
       # create a combined unitSummary
       unless Service.listing.unitSummary
@@ -680,9 +677,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       }
     if opts
       Service.stubPreferences(opts)
-
-  Service.stubListingFeatures = ->
-    Service.listing.STUB_CommunityRestriction = 'All People'
 
   Service.stubPreferences = (options) ->
     defaults = [
