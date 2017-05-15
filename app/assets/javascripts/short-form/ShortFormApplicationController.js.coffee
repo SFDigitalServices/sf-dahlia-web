@@ -265,8 +265,7 @@ ShortFormApplicationController = (
     if member == $scope.applicant
       $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
-    else
-      ShortFormApplicationService.invalidateHouseholdForm()
+    ShortFormApplicationService.invalidateHouseholdForm()
 
   $scope.copyHomeToMailingAddress = ->
     ShortFormApplicationService.copyHomeToMailingAddress()
@@ -759,13 +758,13 @@ ShortFormApplicationController = (
     listing = $scope.listing
     age = $scope.applicantAge(member)
     listing.Reserved_community_type == 'Senior' &&
-    listing.STUB_CommunityRestriction == 'All People' &&
+    listing.Reserved_Community_Requirement == 'Entire Household' &&
     age < listing.Reserved_community_minimum_age
 
   $scope.householdDoesNotMeetSeniorRequirements = ->
     listing = $scope.listing
     listing.Reserved_community_type == 'Senior' &&
-    listing.STUB_CommunityRestriction != 'All People' &&
+    listing.Reserved_Community_Requirement != 'Entire Household' &&
     # check if the oldest person in the house does not meet the min requirements
     ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 

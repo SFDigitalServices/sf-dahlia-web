@@ -211,8 +211,13 @@ ShortFormApplicationService = (
         member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
     )
 
+
+  # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
+  # - gets called onEnter of household-monthly-rent
+  # - it's used to setup the monthly-rent page as well as rent-burden-preference pages
+  # - it will reset the addresses and Rent Burden if any members/addresses have changed
   Service.groupHouseholdAddresses = ->
-    groupedAddresses =[]
+    groupedAddresses = []
     groupedAddress = {}
 
     primaryAddress = Service.applicant.home_address.address1
@@ -248,7 +253,18 @@ ShortFormApplicationService = (
         groupedAddress.monthlyRent = Service.application.groupedHouseholdAddresses[matchedIndex].monthlyRent
         groupedAddress.dontPayRent = Service.application.groupedHouseholdAddresses[matchedIndex].dontPayRent
 
-    angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
+    newAddrs = groupedAddresses
+    oldAddrs = Service.application.groupedHouseholdAddresses
+    if newAddrs.length != oldAddrs.length
+      changed = true
+    else
+      diff = _.differenceWith newAddrs, oldAddrs, (newAddr, oldAddr) ->
+        _.isEqual(newAddr.members, oldAddr.members) && newAddr.address == oldAddr.address
+      changed = !!diff.length
+
+    if changed # have you changed anything?
+      Service.resetPreference('rentBurden')
+      angular.copy(groupedAddresses, Service.application.groupedHouseholdAddresses)
 
   Service.setRentBurdenAddressIndex = (index) ->
     angular.copy(Service.application.groupedHouseholdAddresses[index], Service.currentRentBurdenAddress)
