@@ -12,6 +12,7 @@ ShortFormApplicationService = (
   Service.activeSection = {}
   Service.applicationDefaults =
     id: null
+    applicationLanguage: null
     lotteryNumber: null
     status: 'draft'
     applicationSubmittedDate: null
@@ -61,6 +62,13 @@ ShortFormApplicationService = (
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
 
+  Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/#%$:=\-_`~()]+$")
+  Service.languageMap =
+    en: 'English'
+    es: 'Spanish'
+    tl: 'Filipino'
+    zh: 'Chinese'
+
   ## initialize other related services
   Service.initServices = ->
     # initialize FileUploadService to have access to preferences / session_uid
@@ -82,14 +90,18 @@ ShortFormApplicationService = (
   Service.resetUserData()
   # --- end initialization
 
-  Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
+  Service.inputInvalid = (fieldName, form = Service.form.applicationForm) ->
     return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
     if form && field
       field.$invalid && (field.$touched || form.$submitted)
     else
       false
+
+  Service.switchingLanguage = ->
+    toLang = $state.params.lang
+    fromLang = Service.getLanguageCode(Service.application)
+    !!fromLang && (toLang != fromLang)
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
@@ -829,6 +841,13 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.setApplicationLanguage = (lang) ->
+    Service.application.applicationLanguage = Service.languageMap[lang]
+
+  Service.getLanguageCode = (application) ->
+    # will take "English" and return "en"
+    _.invert(Service.languageMap)[application.applicationLanguage]
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid

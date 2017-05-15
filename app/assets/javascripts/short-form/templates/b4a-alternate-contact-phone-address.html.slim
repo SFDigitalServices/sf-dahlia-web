@@ -20,9 +20,7 @@
       .form-email
         label.sr-only for="alternate_email"
           | {{'LABEL.EMAIL_ADDRESS' | translate}}
-        input#alternate_email ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-class="{ error: inputInvalid('email') }" aria-describedby="alternate_email_error"
-      small.error#alternate_email_error ng-show="inputInvalid('email')"
-        | {{'ERROR.EMAIL' | translate}}
+        input#alternate_email(ng-model="alternateContact.email" name="email" placeholder="you@myemail.com" type="email" ng-class="{ error: inputInvalid('email') }" aria-describedby="alternate_email_error" ng-pattern="latinRegex" translated-error="ERROR.EMAIL" input-error)
 
   .app-inner.inset
     .form-group.row
