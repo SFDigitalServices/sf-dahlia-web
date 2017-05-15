@@ -2,6 +2,13 @@
     "A1_INTRO": {
         "TITLE": "让我们开始对您的应用程序"
     },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "家庭",
+        "INCOME": "优先",
+        "PREFERENCES": "收入",
+        "REVIEW": "评论",
+        "YOU": "您"
+    },
     "T": {
         "APPLICATION": "应用",
         "APPLICATION_DUE": "由于应用",

@@ -642,6 +642,13 @@
         "VIEW_ORIGINAL_LISTING": "View the original listing",
         "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "Household",
+        "INCOME": "Income",
+        "PREFERENCES": "Preferences",
+        "REVIEW": "Review",
+        "YOU": "You"
+    },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
