@@ -123,9 +123,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.youOrHouseholdTranslateVariable = (membersCount, wholeHousehold) ->
     value = if membersCount > 0
-      if wholeHousehold then 'does your household' else 'you or anyone on this application'
+      if wholeHousehold then $translate.instant('LABEL.YOUR_HOUSEHOLD') else $translate.instant('LABEL.YOU_OR_ANYONE')
     else
-      if wholeHousehold then 'do you' else 'you'
+      $translate.instant('LABEL.YOU')
     return {members: value}
 
   return Service

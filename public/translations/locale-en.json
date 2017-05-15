@@ -92,7 +92,8 @@
         "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_PAY": "How much do You pay at {{address}}?",
-        "TITLE": "How much {{members}} pay in monthly rent?"
+        "TITLE_HOUSEHOLD": "How much does {{members}} pay in monthly rent?",
+        "TITLE_YOU": "How much do {{members}} pay in monthly rent?"
     },
     "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
         "P1": "There are reserved units available in this building if at least one applicant has served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information.",
@@ -470,11 +471,14 @@
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
+        "YOU": "you",
         "YOUR_DOB": "Your Date of Birth",
         "YOUR_GENDER": "Please specify your gender",
+        "YOUR_HOUSEHOLD": "your household",
         "YOUR_NAME": "Your Name",
         "YOUR_SEXUAL_ORIENTATION": "Please specify your sexual orientation",
         "YOU_HAVE_CLAIMED": "You have claimed:",
+        "YOU_OR_ANYONE": "you are anyone on this application",
         "ZIP": "Zip",
         "ZIPCODE": "Zipcode"
     },
