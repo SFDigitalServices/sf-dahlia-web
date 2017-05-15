@@ -32,6 +32,13 @@ Feature: Short Form Application
       And I don't select opt out or Live/Work preference
       Then I should see an error about selecting an option
 
+    Scenario: Using multilingual to select a non-english language
+      Given I go to the welcome page of the Test Listing application
+      And I select "Spanish" as my language
+      And I continue past the community screening and welcome overview
+      Then I should see "Español" selected in the short form language switcher
+      When I go to the listings page in Spanish
+      Then I should be redirected back to the listings page in English
 
     Scenario: Submitting a basic application, creating an account on the confirmation page
       Given I go to the first page of the Test Listing application
@@ -149,9 +156,7 @@ Feature: Short Form Application
       And I confirm details on the review page
       And I agree to the terms and submit
       And I view the application from My Applications
-      Then I should see my name, DOB, email all displayed as expected
-      # TODO: put back after multifamily + prefrefactor features have merged to master
-      # Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
+      Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
       #
       # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
       #
