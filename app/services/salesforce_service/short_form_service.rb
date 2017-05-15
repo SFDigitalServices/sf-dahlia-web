@@ -30,21 +30,23 @@ module SalesforceService
       api_delete("/shortForm/delete/#{id}")
     end
 
-    def self.attach_file(application_id, file, filename)
+    def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/Attachment/#{application_id}"
+      endpoint = "/shortForm/Attachment/#{application['id']}"
       body = {
         'fileName': filename,
         'DocumentType': 'Word Doc',
         'Body': Base64.encode64(file.file),
-        'ApplicationId': application_id,
+        'ApplicationId': application['id'],
+        'ApplicationMemberID': file_pref(application, file).appMemberID,
+        'ApplicationPreferenceID': file_pref(application, file).shortformPreferenceID,
       }
       api_post_with_headers(endpoint, body, headers)
     end
 
-    def self.attach_files(application_id, files)
+    def self.attach_files(application, files)
       files.each do |file|
-        attach_file(application_id, file, file.descriptive_name)
+        attach_file(application, file, file.descriptive_name)
       end
     end
 
@@ -63,6 +65,14 @@ module SalesforceService
 
     def self.submitted?(application)
       application['status'] == 'Submitted'
+    end
+
+    private
+
+    def file_pref(application, file)
+      application.shortFormPreferences.select do |preference|
+        preference.listingPreferenceID == file.listing_preference_id
+      end
     end
   end
 end

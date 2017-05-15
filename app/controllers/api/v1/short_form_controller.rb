@@ -118,7 +118,7 @@ class Api::V1::ShortFormController < ApiController
     if application_params[:status].casecmp('draft').zero? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
-      send_attached_files(response['id'])
+      send_attached_files(response)
       send_submit_app_confirmation(response)
     end
   end
@@ -128,7 +128,7 @@ class Api::V1::ShortFormController < ApiController
     application_params[:status] == 'submitted'
   end
 
-  def send_attached_files(application_id)
+  def send_attached_files(application)
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
@@ -141,7 +141,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application_id, files)
+    ShortFormService.attach_files(application, files)
     # now that files are saved in SF, remove temp uploads
     files.destroy_all
   end
