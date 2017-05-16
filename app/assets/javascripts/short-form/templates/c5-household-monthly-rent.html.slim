@@ -1,9 +1,9 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question ng-if="householdMembers.length == 0"
-      | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE_YOU' | translate: youOrHouseholdTranslateVariable('wholeHousehold') }}
+      | {{ 'C5_HOUSEHOLD_MONTHLY_RENT.TITLE_YOU' | translate }}
     h2.app-card_question ng-if="householdMembers.length > 0"
-      | {{'C5_HOUSEHOLD_MONTHLY_RENT.TITLE_HOUSEHOLD' | translate: youOrHouseholdTranslateVariable('wholeHousehold') }}
+      | {{ 'C5_HOUSEHOLD_MONTHLY_RENT.TITLE_HOUSEHOLD' | translate }}
 
   .app-inner.inset
     span ng-repeat="groupedAddress in application.groupedHouseholdAddresses"
