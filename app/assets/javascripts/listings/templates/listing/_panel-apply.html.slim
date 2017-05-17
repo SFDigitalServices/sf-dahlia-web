@@ -34,11 +34,11 @@
 
   / Section 2: Submit a Paper Application
   .content-group.bg-snow
-    .t-delta.t-serif.margin-bottom
+    .t-delta.t-serif ng-class="{'margin-bottom': listing.SASE_Required_for_Lottery_Ticket}"
       span.c-primary
         ' 2
       | Submit a Paper Application
-    p.c-charcoal.t-small
+    p.c-charcoal.t-small ng-if="listing.SASE_Required_for_Lottery_Ticket"
       | In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you.
 
   / Section 2a: Send by Mail
