@@ -6,7 +6,7 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs) ->
     listing = scope.listing
-    restriction = listing.STUB_CommunityRestriction
+    restriction = listing.Reserved_Community_Requirement
     age = { minAge: listing.Reserved_community_minimum_age }
 
     switch listing.Reserved_community_type
@@ -16,7 +16,7 @@ angular.module('dahlia.directives')
         scope.labels.communityScreeningYes = $translate.instant('T.YES')
         scope.eligibilityErrors = [$translate.instant('ERROR.VETERAN_ANYONE')]
       when 'Senior'
-        if restriction == 'All People'
+        if restriction == 'Entire household'
           scope.title = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE')
           scope.description = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_DESC', age)
           scope.labels.communityScreeningYes = $translate.instant('A2_COMMUNITY_SCREENING.SENIOR.YOU_AND_EVERYONE_LABEL', age)
