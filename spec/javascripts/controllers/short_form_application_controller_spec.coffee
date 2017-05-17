@@ -54,7 +54,8 @@ do ->
       validMailingAddress: jasmine.createSpy()
       liveInSfMembers: () ->
       workInSfMembers: () ->
-      neighborhoodResidenceMembers: () ->
+      liveInTheNeighborhoodMembers: () ->
+      copyNeighborhoodToLiveInSf: jasmine.createSpy()
       clearAlternateContactDetails: jasmine.createSpy()
       invalidateHouseholdForm: jasmine.createSpy()
       invalidateIncomeForm: jasmine.createSpy()
@@ -79,6 +80,7 @@ do ->
       applicationHasPreference: ->
       eligibleForAssistedHousing: ->
       eligibleForRentBurden: ->
+      eligibleForADHP: ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
@@ -423,7 +425,7 @@ do ->
         members = ['somemembers']
         spyOn(fakeShortFormApplicationService, 'liveInSfMembers').and.returnValue(members)
         spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue(members)
-        spyOn(fakeShortFormApplicationService, 'neighborhoodResidenceMembers').and.returnValue([])
+        spyOn(fakeShortFormApplicationService, 'liveInTheNeighborhoodMembers').and.returnValue([])
 
       describe 'household is eligible for liveWork preferences',->
         it 'routes user to neighborhood preference page', ->
@@ -449,8 +451,18 @@ do ->
           path = 'dahlia.short-form-application.live-work-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
+    describe 'checkAfterLiveInTheNeighborhood', ->
+      it 'calls copyNeighborhoodToLiveInSf method if you selected the preference', ->
+        spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
+        scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
+        expect(fakeShortFormApplicationService.copyNeighborhoodToLiveInSf).toHaveBeenCalledWith('neighborhoodResidence')
+      it 'goes to live-work-preference page if you did not select the preference', ->
+        spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
+        scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.live-work-preference')
+
     describe 'checkAfterLiveWork', ->
-      describe 'eligible for assisted housing', ->
+      describe 'when eligible for assisted housing', ->
         it 'routes to assisted housing preference page', ->
           spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(true)
           scope.checkAfterLiveWork()

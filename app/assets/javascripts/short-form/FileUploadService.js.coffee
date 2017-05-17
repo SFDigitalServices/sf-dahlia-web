@@ -26,6 +26,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
     else
       proofDocument = Service.preferences.documents[pref_type]
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
+      proofDocument.proofOption = null if proofDocument
       return $q.resolve()
 
     $http.delete('/api/v1/short-form/proof', {

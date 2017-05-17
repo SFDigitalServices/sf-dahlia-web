@@ -145,6 +145,9 @@ ShortFormDataService = (ListingService) ->
       if _.includes(['liveInSf', 'workInSf'], prefKey)
         # for liveWorkInSf, need to indicate individual pref (live or work)
         individualPref = if (prefKey == 'workInSf') then 'Work in SF' else 'Live in SF'
+      if _.includes(['rentBurden', 'assistedHousing'], prefKey)
+        # for liveWorkInSf, need to indicate individual pref (live or work)
+        individualPref = if (prefKey == 'assistedHousing') then 'Assisted Housing' else 'Rent Burdened'
 
       # if you optOut then you wouldn't have a memberName or proofOption
       # rentBurden also doesn't have a specific member
@@ -166,9 +169,6 @@ ShortFormDataService = (ListingService) ->
       shortFormPref =
         listingPreferenceID: listingPref.listingPreferenceID
         naturalKey: naturalKey
-        # NOTE: preferenceProof will be made redundant by TBD new file attachment object
-        # otherwise, options need to match up to salesforce pickList
-        # preferenceProof: preferenceProof
         optOut: optOut
         ifCombinedIndividualPreference: individualPref
       # remove blank values
@@ -386,14 +386,10 @@ ShortFormDataService = (ListingService) ->
         else
           prefKey = 'liveWorkInSf'
       else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
-        # TODO: needs ifCombinedIndividualPreference for Rent Burden vs Assisted Housing
-        # --- until that's supported, we have a hacky way of doing this
-        if member
+        if shortFormPref.ifCombinedIndividualPreference == 'Assisted Housing'
           prefKey = 'assistedHousing'
-        else
+        else if shortFormPref.ifCombinedIndividualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
-        preferences.optOut.rentBurden = shortFormPref.optOut
-        preferences.optOut.assistedHousing = shortFormPref.optOut
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
