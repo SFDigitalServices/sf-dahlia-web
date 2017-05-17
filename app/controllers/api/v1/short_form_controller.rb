@@ -392,6 +392,7 @@ class Api::V1::ShortFormController < ApiController
             :prioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
+            :hasPublicHousing,
             :annualIncome,
             :monthlyIncome,
             :agreeToTerms,

@@ -7,7 +7,6 @@ ShortFormDataService = (ListingService) ->
     'groupedHouseholdAddresses'
     # TODO: remove once these fields are no longer stubbed
     'STUB_TotalMonthlyRent'
-    'hasPublicHousing'
     'STUB_prioritiesSelected'
     'STUB_qualifyingDevelopmentallyDisabled'
     'STUB_qualifyingServedInMilitary'
@@ -278,6 +277,7 @@ ShortFormDataService = (ListingService) ->
       'applicationSubmittedDate'
       'status'
       'lotteryNumber'
+      'hasPublicHousing'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
