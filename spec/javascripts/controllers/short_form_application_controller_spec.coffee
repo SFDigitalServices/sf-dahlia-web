@@ -302,11 +302,11 @@ do ->
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
-        scope.application.STUB_householdPublicHousing = 'No'
+        scope.application.hasPublicHousing = 'No'
         scope.checkIfPublicHousing()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-monthly-rent')
       it 'skips ahead to next household page if publicHousing answer is "Yes"', ->
-        scope.application.STUB_householdPublicHousing = 'Yes'
+        scope.application.hasPublicHousing = 'Yes'
         scope.checkIfPublicHousing()
         expect(fakeShortFormNavigationService.getNextReservedPageIfAvailable).toHaveBeenCalled()
 

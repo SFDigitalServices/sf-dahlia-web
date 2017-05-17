@@ -67,8 +67,8 @@ div ng-if="prioritiesSelectedExists()"
   review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
   .app-inner
-    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.STUB_householdPublicHousing"
-      | {{application.STUB_householdPublicHousing}}
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.hasPublicHousing"
+      | {{application.hasPublicHousing}}
     review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslateVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}

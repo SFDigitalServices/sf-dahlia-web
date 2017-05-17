@@ -449,7 +449,7 @@ ShortFormApplicationService = (
 
   Service.eligibleForAssistedHousing = ->
     return false unless Service.listingHasPreference('assistedHousing')
-    Service.application.STUB_householdPublicHousing == 'Yes'
+    Service.application.hasPublicHousing == 'Yes'
 
   Service.eligibleForRentBurden = ->
     return false unless Service.listingHasPreference('rentBurden')
@@ -460,7 +460,7 @@ ShortFormApplicationService = (
     else
       ratio = (totalMonthlyRent * 12) / incomeTotal
     # must have answered "No" and rent > 50% of income
-    Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
+    Service.application.hasPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all

@@ -7,7 +7,7 @@ ShortFormDataService = (ListingService) ->
     'groupedHouseholdAddresses'
     # TODO: remove once these fields are no longer stubbed
     'STUB_TotalMonthlyRent'
-    'STUB_householdPublicHousing'
+    'hasPublicHousing'
     'STUB_prioritiesSelected'
     'STUB_qualifyingDevelopmentallyDisabled'
     'STUB_qualifyingServedInMilitary'

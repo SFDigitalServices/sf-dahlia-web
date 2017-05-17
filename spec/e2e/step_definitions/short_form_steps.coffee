@@ -118,11 +118,11 @@ module.exports = ->
     submitForm()
 
   @When 'I indicate living in public housing', ->
-    element(By.id('STUB_householdPublicHousing_yes')).click()
+    element(By.id('hasPublicHousing_yes')).click()
     submitForm()
 
   @When 'I indicate not living in public housing', ->
-    element(By.id('STUB_householdPublicHousing_no')).click()
+    element(By.id('hasPublicHousing_no')).click()
     submitForm()
 
   @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
