@@ -202,10 +202,10 @@ ShortFormApplicationController = (
 
   $scope.validateCommunityEligibility = ->
     $scope.communityScreeningInvalid = false
-    if $scope.application.communityScreening == 'No'
+    if $scope.application.answeredCommunityScreening == 'No'
       $scope.communityScreeningInvalid = true
       $scope.handleErrorState()
-    else if $scope.application.communityScreening ==  'Yes'
+    else if $scope.application.answeredCommunityScreening ==  'Yes'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
 
   $scope.addressInputInvalid = (identifier = '') ->

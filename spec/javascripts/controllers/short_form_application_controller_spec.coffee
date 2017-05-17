@@ -545,12 +545,12 @@ do ->
 
     describe 'validateCommunityEligibility', ->
       it 'expects state.go to be called with short form overview page if applicant answered Yes to screening question', ->
-        scope.application.communityScreening = 'Yes'
+        scope.application.answeredCommunityScreening = 'Yes'
         scope.validateCommunityEligibility()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview')
 
       it 'expects communityScreeningInvalid to be marked true if applicant answered No to screening question', ->
-        scope.application.communityScreening = 'No'
+        scope.application.answeredCommunityScreening = 'No'
         scope.validateCommunityEligibility()
         expect(scope.communityScreeningInvalid).toEqual true
 

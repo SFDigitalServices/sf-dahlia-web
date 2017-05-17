@@ -278,6 +278,7 @@ ShortFormDataService = (ListingService) ->
       'status'
       'lotteryNumber'
       'hasPublicHousing'
+      'answeredCommunityScreening'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
