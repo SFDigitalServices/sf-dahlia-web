@@ -1,13 +1,5 @@
 { "locations": [
     {
-      "name": "The Arc San Francisco",
-      "languages":["English", "Cantonese", "Spanish", "Tagalog", "American Sign Language"],
-      "address": "1500 Howard St",
-      "citystate": "San Francisco, CA 94103",
-      "phone": "(415) 255-7200",
-      "website": "http://www.thearcsf.org/"
-    },
-    {
       "name": "BALANCE (formerly Consumer Credit Counseling)",
       "languages": ["English", "Cantonese", "Spanish", "Tagalog", "Russian"],
       "address": "595 Market St, 9th Floor",
@@ -86,6 +78,14 @@
       "citystate": "San Francisco, CA 94102",
       "phone": "(415) 775-7110",
       "website": "http://www.thclinic.org"
+    },
+    {
+      "name": "The Arc San Francisco (focused on developmentally-disabled persons)",
+      "languages":["English", "Cantonese", "Spanish", "Tagalog", "American Sign Language"],
+      "address": "1500 Howard St",
+      "citystate": "San Francisco, CA 94103",
+      "phone": "(415) 255-7200, ext. 190",
+      "website": "http://www.thearcsf.org/"
     },
     {
       "name": "Veterans Equity Center",

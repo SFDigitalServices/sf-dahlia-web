@@ -202,7 +202,7 @@
     "E3B_RENT_BURDEN_PREFERENCE": {
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
         "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
-        "RENT_BURDEN_PREFERENCE": "Rent Burden Preference",
+        "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
         "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
