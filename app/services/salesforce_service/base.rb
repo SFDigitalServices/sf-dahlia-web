@@ -79,7 +79,7 @@ module SalesforceService
       while retries > 0 && status != 200
         response = post_with_headers(endpoint, body, headers)
         status = response.status
-        retries -= - 1
+        retries -= 1
         if status == 401
           # refresh oauth_token
           oauth_token(true)
