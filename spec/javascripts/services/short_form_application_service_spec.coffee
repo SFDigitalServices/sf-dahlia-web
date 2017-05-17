@@ -747,13 +747,13 @@ do ->
         expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
 
     describe 'hasHouseholdPublicHousingQuestion', ->
-      it 'should includes public housing question when listing has Assisted Housing / Rent Burden preference', ->
+      it 'should includes public housing question when listing has Rent Burdened / Assisted Housing Preference', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
         expect(showHouseholdPublicHousingQuestion).toEqual true
 
-      it 'should NOT include public housing question when listing doesn\'t have Assisted Housing / Rent Burden preference', ->
+      it 'should NOT include public housing question when listing doesn\'t have Rent Burdened / Assisted Housing Preference', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
         expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
