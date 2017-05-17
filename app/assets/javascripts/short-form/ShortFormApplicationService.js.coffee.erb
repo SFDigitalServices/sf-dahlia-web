@@ -301,10 +301,10 @@ ShortFormApplicationService = (
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
       Service.cancelOptOut('liveWorkInSf')
-    # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
-    if preference == 'rentBurden' || preference == 'assistedHousing'
-      Service.application.preferences.optOut.assistedHousing = false
-      Service.application.preferences.optOut.rentBurden = false
+    # # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
+    # if preference == 'rentBurden' || preference == 'assistedHousing'
+    #   Service.application.preferences.optOut.assistedHousing = false
+    #   Service.application.preferences.optOut.rentBurden = false
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
