@@ -34,12 +34,12 @@ module SalesforceService
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/Attachment/#{application['id']}"
       body = {
-        'fileName': filename,
-        'DocumentType': 'Word Doc',
-        'Body': Base64.encode64(file.file),
-        'ApplicationId': application['id'],
-        'ApplicationMemberID': file_pref(application, file).appMemberID,
-        'ApplicationPreferenceID': file_pref(application, file).shortformPreferenceID,
+        fileName: filename,
+        DocumentType: file.document_type,
+        Body: Base64.encode64(file.file),
+        ApplicationId: application['id'],
+        ApplicationMemberID: _short_form_pref_member_id(application, file),
+        ApplicationPreferenceID: _short_form_pref_id(application, file),
       }
       api_post_with_headers(endpoint, body, headers)
     end
@@ -67,11 +67,17 @@ module SalesforceService
       application['status'] == 'Submitted'
     end
 
-    private
+    def self._short_form_pref_id(application, file)
+      _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
+    end
 
-    def file_pref(application, file)
-      application.shortFormPreferences.select do |preference|
-        preference.listingPreferenceID == file.listing_preference_id
+    def self._short_form_pref_member_id(application, file)
+      _short_form_pref(application, file).try(:[], 'appMemberID')
+    end
+
+    def self._short_form_pref(application, file)
+      application['shortFormPreferences'].find do |preference|
+        preference['listingPreferenceID'] == file.listing_preference_id
       end
     end
   end
