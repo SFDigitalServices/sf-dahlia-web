@@ -396,6 +396,7 @@ class Api::V1::ShortFormController < ApiController
             :hasPublicHousing,
             :annualIncome,
             :monthlyIncome,
+            :totalMonthlyRent,
             :agreeToTerms,
             :surveyComplete,
             :applicationSubmissionType,

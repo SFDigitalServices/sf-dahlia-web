@@ -6,7 +6,6 @@ ShortFormDataService = (ListingService) ->
     'session_uid'
     'groupedHouseholdAddresses'
     # TODO: remove once these fields are no longer stubbed
-    'STUB_TotalMonthlyRent'
     'STUB_prioritiesSelected'
     'STUB_qualifyingDevelopmentallyDisabled'
     'STUB_qualifyingServedInMilitary'
@@ -234,9 +233,8 @@ ShortFormDataService = (ListingService) ->
     return application
 
   Service._calculateTotalMonthlyRent = (application) ->
-    # TODO: replace STUB with real field name once it exists
     # _.sumBy will count any `null` or `undefined` values as 0
-    application.STUB_TotalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
+    application.totalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
     return application
 
   Service._formatGeocodingData = (application) ->
