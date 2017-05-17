@@ -1,6 +1,13 @@
 # Model for storing temporary uploaded files in the DB
 class UploadedFile < ActiveRecord::Base
-  enum preference: %i(workInSf liveInSf neighborhoodResidence assistedHousing rentBurden)
+  enum preference: %i(
+    workInSf
+    liveInSf
+    neighborhoodResidence
+    antiDisplacement
+    assistedHousing
+    rentBurden
+  )
   enum rent_burden_type: %i(lease rent)
 
   def descriptive_name
