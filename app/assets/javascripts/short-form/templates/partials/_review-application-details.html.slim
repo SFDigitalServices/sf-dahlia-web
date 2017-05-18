@@ -80,10 +80,10 @@ div ng-if="prioritiesSelectedExists()"
     review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
       | {{application.STUB_qualifyingDevelopmentallyDisabled}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
-      span ng-repeat="priorityOption in priority_options" ng-if="application.STUB_prioritiesSelected[priorityOption[0]]"
+      span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}
         br
-      span ng-if="application.STUB_prioritiesSelected.no"
+      span ng-if="application.adaPrioritiesSelected.no"
         | {{'T.NO' | translate}}
 
 / Self-declared status

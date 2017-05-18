@@ -36,9 +36,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   ]
 
   Service.priority_options = [
-    ['Mobility', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
-    ['Vision', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
-    ['Hearing', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
+    ['Mobility impaired', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision impaired', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing impaired', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
   ]
 
   Service.proofOptions = (preference) ->

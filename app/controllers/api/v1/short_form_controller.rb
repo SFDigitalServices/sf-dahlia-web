@@ -390,7 +390,7 @@ class Api::V1::ShortFormController < ApiController
               ),
             },
             :answeredCommunityScreening,
-            :prioritiesSelected,
+            :adaPrioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
             :hasPublicHousing,
