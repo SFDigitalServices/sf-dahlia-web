@@ -9,9 +9,7 @@
 
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
 
-
-        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')" ng-if="showPreference('assistedHousing')" )
-
+        preference(preference="assistedHousing" has-proof="true" application="application" title="{{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}" proof-option-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" button-label="{{'LABEL.UPLOAD_COPY_OF_LEASE' | translate}}" proof-type="Copy of Lease" required="preferenceRequired('assistedHousing')")
 
       preference-opt-out preference="assistedHousing" application="application" invalid="inputInvalid('assistedHousing')" cancel-preference="cancelPreference('assistedHousing')"
 

@@ -362,7 +362,7 @@ do ->
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
 
-    describe 'neighborhoodResidenceMembers', ->
+    describe 'liveInTheNeighborhoodMembers', ->
       beforeEach ->
         setupFakeApplicant()
         setupFakeHouseholdMember()
@@ -372,22 +372,22 @@ do ->
 
       describe 'applicant doesn\'t have neighborhood preference', ->
         it 'returns array without applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
 
       describe 'applicant doesn\'t match neighborhood preference', ->
         beforeEach ->
           ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
 
         it 'returns array without applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
 
       describe 'applicant matches neighborhood preference', ->
         beforeEach ->
           ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
 
         it 'returns array with applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeApplicant)
 
       describe 'household member matches neighborhood preference', ->
         beforeEach ->
@@ -395,9 +395,9 @@ do ->
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
         it 'returns array with household member', ->
-          members = ShortFormApplicationService.neighborhoodResidenceMembers()
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeHouseholdMember)
+          members = ShortFormApplicationService.liveInTheNeighborhoodMembers()
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeHouseholdMember)
 
       describe 'applicant and household member match neighborhood preference', ->
         beforeEach ->
@@ -406,10 +406,10 @@ do ->
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
         it 'returns array with applicant and household member', ->
-          neighborhoodResidenceMembers = ShortFormApplicationService.neighborhoodResidenceMembers()
-          expect(neighborhoodResidenceMembers.length).toEqual(2)
-          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
-          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
+          liveInTheNeighborhoodMembers = ShortFormApplicationService.liveInTheNeighborhoodMembers()
+          expect(liveInTheNeighborhoodMembers.length).toEqual(2)
+          expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
+          expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
 
     describe 'eligibleForLiveWork', ->
       beforeEach ->
@@ -444,6 +444,23 @@ do ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
         ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
+
+    describe 'eligibleForADHP', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+      it 'returns true if someone is eligible for ADHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual true
+
+      it 'returns false if nobody is eligible for ADHP', ->
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
+
+      it 'returns false if listing does not have ADHP', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
 
     describe 'eligibleForAssistedHousing', ->
       it 'returns true if application said yes to public housing', ->
@@ -489,7 +506,7 @@ do ->
           ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
           expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
 
-    describe 'copyNRHPtoLiveInSf', ->
+    describe 'copyNeighborhoodToLiveInSf', ->
       beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
         ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
@@ -498,9 +515,10 @@ do ->
           file: {}
         }
 
-      it 'copies NRHP member to liveInSf', ->
-        ShortFormApplicationService.copyNRHPtoLiveInSf()
+      it 'copies Neighborhood member to liveInSf', ->
+        ShortFormApplicationService.copyNeighborhoodToLiveInSf('neighborhoodResidence')
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+        expect(ShortFormApplicationService.preferences.documents.liveInSf.proofOption).toEqual 'Gas Bill'
 
     describe 'preferenceRequired', ->
       beforeEach ->
