@@ -1,14 +1,16 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'D1_INCOME_VOUCHERS.TITLE' | translate: youOrHouseholdTranslateVariable()}}
+    h2#question-title.app-card_question ng-if="householdMembers.length == 0"
+      | {{'D1_INCOME_VOUCHERS.TITLE_YOU' | translate }}
+    h2#question-title.app-card_question ng-if="householdMembers.length > 0"
+      | {{'D1_INCOME_VOUCHERS.TITLE_HOUSEHOLD' | translate }}
     p.form-note.margin-bottom
       | {{'D1_INCOME_VOUCHERS.P1' | translate}}
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('householdVouchersSubsidies') }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
-      .radio-group.padding-top--half role="radiogroup" aria-label="{{'D1_INCOME_VOUCHERS.TITLE' | translate: youOrHouseholdTranslateVariable()}}"
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
         radio-block-item value='Yes' user='application' name='householdVouchersSubsidies' ng-required='true'
           | {{'T.YES' | translate}}
         radio-block-item value='No' user='application' name='householdVouchersSubsidies' ng-required='true' on-change="invalidateIncomeForm"

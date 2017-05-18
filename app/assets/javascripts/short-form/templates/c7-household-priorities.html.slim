@@ -1,7 +1,9 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'C7_HOUSEHOLD_PRIORITIES.QUESTION' | translate: youOrHouseholdTranslateVariable()}}
+    h2.app-card_question ng-if="householdMembers.length == 0"
+      | {{'C7_HOUSEHOLD_PRIORITIES.TITLE_YOU' | translate }}
+    h2.app-card_question ng-if="householdMembers.length > 0"
+      | {{'C7_HOUSEHOLD_PRIORITIES.TITLE_HOUSEHOLD' | translate }}
     p.form-note.margin-bottom
       | {{'C7_HOUSEHOLD_PRIORITIES.P1' | translate}}
 

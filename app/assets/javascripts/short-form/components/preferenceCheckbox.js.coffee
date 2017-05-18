@@ -16,7 +16,8 @@ angular.module('dahlia.components')
 
     @showDescription = false
     listingPreference = ListingService.getPreference(@preference)
-    @moreInfoLink = listingPreference.readMoreUrl
+    if listingPreference
+      @moreInfoLink = listingPreference.readMoreUrl
 
     gtmTags = {
       certOfPreference: 'cop'

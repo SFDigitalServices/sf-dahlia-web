@@ -30,6 +30,7 @@ ShortFormApplicationService = (
       liveInSf: null
       workInSf: null
       liveWorkInSf: null
+      antiDisplacement: null
       neighborhoodResidence: null
       assistedHousing: null
       rentBurden: null
@@ -272,8 +273,8 @@ ShortFormApplicationService = (
     Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
-    if preference == 'neighborhoodResidence'
-      # cancelling NRHP also cancels liveInSf
+    if _.includes(['neighborhoodResidence', 'antiDisplacement'], preference)
+      # cancelling Neighborhood also cancels liveInSf
       Service.cancelPreference('liveInSf')
     if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
       # cancels liveWork combo options
@@ -301,10 +302,10 @@ ShortFormApplicationService = (
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
       Service.cancelOptOut('liveWorkInSf')
-    # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
-    if preference == 'rentBurden' || preference == 'assistedHousing'
-      Service.application.preferences.optOut.assistedHousing = false
-      Service.application.preferences.optOut.rentBurden = false
+    # # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
+    # if preference == 'rentBurden' || preference == 'assistedHousing'
+    #   Service.application.preferences.optOut.assistedHousing = false
+    #   Service.application.preferences.optOut.rentBurden = false
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
@@ -325,8 +326,6 @@ ShortFormApplicationService = (
         Service.liveInSfMembers().length > 0 && Service.workInSfMembers().length == 0
       when 'workInSf'
         Service.workInSfMembers().length > 0 && Service.liveInSfMembers().length == 0
-      when 'neighborhoodResidence'
-        Service.neighborhoodResidenceMembers().length > 0
       else
         true
 
@@ -388,7 +387,9 @@ ShortFormApplicationService = (
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('workInSf', Service.workInSfMembers())
     else if type == 'neighborhoodResidence' || type == 'all'
-      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
+      Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
+    else if type == 'antiDisplacement' || type == 'all'
+      Service._updatePreference('antiDisplacement', Service.liveInTheNeighborhoodMembers())
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
 
@@ -398,8 +399,8 @@ ShortFormApplicationService = (
         Service.liveInSfMembers()
       when 'workInSf'
         Service.workInSfMembers()
-      when 'neighborhoodResidence'
-        Service.neighborhoodResidenceMembers()
+      when 'neighborhoodResidence', 'antiDisplacement'
+        Service.liveInTheNeighborhoodMembers()
       else
         Service.fullHousehold()
 
@@ -417,7 +418,8 @@ ShortFormApplicationService = (
     Service.fullHousehold().filter (member) ->
       member.workInSf == 'Yes'
 
-  Service.neighborhoodResidenceMembers = ->
+  Service.liveInTheNeighborhoodMembers = ->
+    # used by both NRHP / ADHP
     Service.fullHousehold().filter (member) ->
       # find all household members that match NRHP
       member.neighborhoodPreferenceMatch == 'Matched'
@@ -446,7 +448,11 @@ ShortFormApplicationService = (
 
   Service.eligibleForNRHP = ->
     return false unless Service.listingHasPreference('neighborhoodResidence')
-    Service.neighborhoodResidenceMembers().length > 0
+    Service.liveInTheNeighborhoodMembers().length > 0
+
+  Service.eligibleForADHP = ->
+    return false unless Service.listingHasPreference('antiDisplacement')
+    Service.liveInTheNeighborhoodMembers().length > 0
 
   Service.eligibleForAssistedHousing = ->
     return false unless Service.listingHasPreference('assistedHousing')
@@ -471,15 +477,16 @@ ShortFormApplicationService = (
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
 
-  Service.copyNRHPtoLiveInSf = ->
+  Service.copyNeighborhoodToLiveInSf = (preference) ->
+    # preference is either neighborhoodResidence or antiDisplacement
     # clear out any previously entered values for live/work
     Service.cancelPreference('liveWorkInSf')
     # reset the form so it's not in an "invalid" state
     Service.resetLiveWorkForm()
-    # copy NRHP values to liveInSf
-    neighborhoodMember = Service.preferences.neighborhoodResidence_household_member
+    # copy Neighborhood values to liveInSf
+    neighborhoodMember = Service.preferences["#{preference}_household_member"]
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
-    proofOption = Service.preferences.documents.neighborhoodResidence.proofOption
+    proofOption = Service.preferences.documents[preference].proofOption
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
@@ -785,8 +792,7 @@ ShortFormApplicationService = (
       Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
-      Service._updatePreference('liveInSf', Service.liveInSfMembers())
-      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
+      Service.refreshPreferences('all')
       callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
@@ -810,9 +816,8 @@ ShortFormApplicationService = (
       Service.householdMember.geocodingData = response.geocoding_data
       Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
       Service.addHouseholdMember(Service.householdMember)
-      # check if NRHP eligibility has changed
-      Service._updatePreference('liveInSf', Service.liveInSfMembers())
-      Service._updatePreference('neighborhoodResidence', Service.neighborhoodResidenceMembers())
+      # check if eligibility has changed
+      Service.refreshPreferences('all')
       callback()
     AddressValidationService.validate(
       address: Service.householdMember.home_address
