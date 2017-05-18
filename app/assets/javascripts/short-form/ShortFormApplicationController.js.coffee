@@ -335,6 +335,8 @@ ShortFormApplicationController = (
   $scope.checkIfPreferencesApply = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
+    else if ShortFormApplicationService.eligibleForADHP()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.adhp-preference')
     else if ShortFormApplicationService.eligibleForLiveWork()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
@@ -349,14 +351,15 @@ ShortFormApplicationController = (
       # otherwise go to the Review section
       $scope.goToLandingPage('Review')
 
-  $scope.checkAfterNeighborhood = ->
-    if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
-      # NRHP provides automatic liveInSf preference
-      ShortFormApplicationService.copyNRHPtoLiveInSf()
-      # you already selected NRHP, so skip live/work
+  $scope.checkAfterLiveInTheNeighborhood = (preference) ->
+    # preference is either neighborhoodResidence or antiDisplacement
+    if ShortFormApplicationService.applicationHasPreference(preference)
+      # Neighborhood provides automatic liveInSf preference
+      ShortFormApplicationService.copyNeighborhoodToLiveInSf(preference)
+      # you already selected Neighborhood, so skip live/work
       $scope.checkAfterLiveWork()
     else
-      # you opted out of NRHP, so go to live/work
+      # you opted out of Neighborhood, so go to live/work
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
@@ -411,19 +414,16 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.neighborhoodResidenceMembers = ->
-    ShortFormApplicationService.neighborhoodResidenceMembers()
-
-  $scope.neighborhoodResidenceAddresses = ->
+  $scope.liveInTheNeighborhoodAddresses = ->
     addresses = []
-    _.each $scope.neighborhoodResidenceMembers(), (member) ->
+    _.each ShortFormApplicationService.liveInTheNeighborhoodMembers(), (member) ->
       street = member.home_address.address1
       addresses.push(street) unless _.isNil(street)
     _.uniq(addresses)
 
-  $scope.neighborhoodResidenceAddress = ->
+  $scope.liveInTheNeighborhoodAddress = ->
     # turn the list of addresses into a string
-    $scope.neighborhoodResidenceAddresses().join(' and ')
+    $scope.liveInTheNeighborhoodAddresses().join(' and ')
 
   $scope.cancelPreference = (preference) ->
     $scope.clearRentBurdenError() if preference == 'rentBurden'
@@ -655,9 +655,6 @@ ShortFormApplicationController = (
 
   $scope.membersTranslationVariable = (members) ->
     ShortFormHelperService.membersTranslationVariable(members)
-
-  $scope.youOrHouseholdTranslateVariable = (wholeHousehold) ->
-    ShortFormHelperService.youOrHouseholdTranslateVariable($scope.householdMembers.length, wholeHousehold)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()

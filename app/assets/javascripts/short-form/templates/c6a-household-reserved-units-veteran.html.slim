@@ -1,13 +1,15 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{ 'C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN.TITLE' | translate: youOrHouseholdTranslateVariable() }}
+    h2#question-title.app-card_question ng-if="householdMembers.length == 0"
+      | {{ 'C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN.TITLE_YOU' | translate }}
+    h2#question-title.app-card_question ng-if="householdMembers.length > 0"
+      | {{ 'C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN.TITLE_HOUSEHOLD' | translate }}
     p.form-note.margin-bottom translate="C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN.P1"
 
   .app-inner.inset
     .form-group ng-class="{ error: inputInvalid('qualifyingServedInMilitary') }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
-      .radio-group.padding-top--half role="radiogroup" aria-label="{{'C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN.TITLE' | translate: youOrHouseholdTranslateVariable() }}"
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
         radio-block-item value='Yes' user='application' name='STUB_qualifyingServedInMilitary' ng-required='true'
           | {{'T.YES' | translate}}
         radio-block-item value='No' user='application' name='STUB_qualifyingServedInMilitary' ng-required='true'

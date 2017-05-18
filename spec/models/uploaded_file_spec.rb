@@ -10,10 +10,9 @@ describe UploadedFile, type: :model do
     # use Factory
     attrs = {
       name: 'foo.png',
-      preference: 'liveInSf',
       document_type: 'gas bill',
     }
     file = create(:uploaded_file, attrs)
-    expect(file.descriptive_name).to eql('liveInSf - gas bill.png')
+    expect(file.descriptive_name).to eql('gas bill.png')
   end
 end
