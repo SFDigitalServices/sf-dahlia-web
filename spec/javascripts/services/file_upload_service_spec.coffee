@@ -8,6 +8,10 @@ do ->
           liveInSf: {}
         }
       }
+    fakeListingPreference =
+      listingPreferenceID: '123xyz'
+    fakeListingService =
+      getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
     $translate = {}
     Upload =
       upload: ->
@@ -21,7 +25,7 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
-      $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+      $provide.value 'ListingService', fakeListingService
       return
     )
 
@@ -159,7 +163,7 @@ do ->
                   1: {file: 'some file'}
 
       it 'should delete all rent burden preference files', ->
-        stubAngularAjaxRequest httpBackend, "/api/v1/short-form/rent-burden-proof", 200
+        stubAngularAjaxRequest httpBackend, "/api/v1/short-form/proof", 200
         FileUploadService.deleteRentBurdenPreferenceFiles('listingID')
         httpBackend.flush()
         expectedResult = { lease: {  }, rent: {  } }
