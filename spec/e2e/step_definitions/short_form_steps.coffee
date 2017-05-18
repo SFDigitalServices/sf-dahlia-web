@@ -130,7 +130,7 @@ module.exports = ->
     submitForm()
 
   @When 'I indicate no priority', ->
-    element(By.id('adaPrioritiesSelected_no')).click()
+    element(By.id('adaPrioritiesSelected_none')).click()
     submitForm()
 
   @When 'I go to the income page', ->
