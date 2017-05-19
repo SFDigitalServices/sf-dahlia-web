@@ -3,7 +3,7 @@ class UploadedFile < ActiveRecord::Base
   enum preference: %i(workInSf liveInSf neighborhoodResidence)
 
   # override as_json to omit the actual binary file since it's big and unncessary
-  def as_json(_options)
+  def as_json(_options = {})
     super(except: %i(file))
   end
 
