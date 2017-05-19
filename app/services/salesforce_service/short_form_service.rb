@@ -26,6 +26,30 @@ module SalesforceService
       apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
+    def self.find_listing_application(opts = {})
+      applications = get_for_user(opts[:contact_id])
+      application = applications.find do |app|
+        app['listingID'] == opts[:listing_id]
+      end
+      if !application && opts[:autofill]
+        application = autofill(applications, opts[:listing_id])
+      end
+      application
+    end
+
+    def self.autofill(applications, listing_id)
+      # applications were already sorted by most recent in get_for_user
+      application = applications.find do |app|
+        app['status'] == 'Submitted'
+      end
+      if application
+        application['autofilled'] = true
+        application['listingID'] = listing_id
+        application['status'] = 'Draft'
+      end
+      application
+    end
+
     def self.delete(id)
       api_delete("/shortForm/delete/#{id}")
     end

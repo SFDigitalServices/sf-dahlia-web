@@ -537,7 +537,7 @@
             ShortFormApplicationService.refreshSessionUid()
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
-            ShortFormApplicationService.getMyApplicationForListing($stateParams.id).then ->
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
