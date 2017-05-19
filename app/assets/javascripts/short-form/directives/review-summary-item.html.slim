@@ -5,7 +5,11 @@
   p.info-item_name id="{{identifier}}" ng-transclude="" ng-class="{'margin-bottom-none': subLabel}"
   span.info-item_note ng-if="subLabel"
     | {{subLabel}}
-  span.info-item_note.t-bold ng-if="!!boldSubLabel"
+  span.info-item_note.t-bold ng-if="boldSubLabel"
     | {{boldSubLabel}}
-  span.info-item_note.t-bold ng-repeat="sublabel in boldSubLabels() track by $index" ng-if="!!boldSubLabels"
-    | {{sublabel}}
+
+  / specific loop for rentBurden
+  span.info-item_note ng-repeat-start="label in labels track by $index" ng-if="labels"
+    | {{label.subLabel}}
+  span.info-item_note.t-bold ng-repeat-end=""
+    | {{label.boldSubLabel}}
