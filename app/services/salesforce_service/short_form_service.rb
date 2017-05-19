@@ -42,12 +42,15 @@ module SalesforceService
       application = applications.find do |app|
         app['status'] == 'Submitted'
       end
-      if application
-        application['autofilled'] = true
-        application['listingID'] = listing_id
-        application['status'] = 'Draft'
-      end
+      autofill_reset!(application, listing_id) if application
       application
+    end
+
+    def self.autofill_reset!(application, listing_id)
+      application['autofilled'] = true
+      application['id'] = nil
+      application['listingID'] = listing_id
+      application['status'] = 'Draft'
     end
 
     def self.delete(id)
