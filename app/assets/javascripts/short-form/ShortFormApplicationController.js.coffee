@@ -646,14 +646,11 @@ ShortFormApplicationController = (
   $scope.addressTranslateVariable = (address) ->
     ShortFormHelperService.addressTranslateVariable(address)
 
-  $scope.fileAttachmentsForPreference = (pref_type) ->
-    ShortFormHelperService.fileAttachmentsForPreference($scope.application, pref_type)
-
-  $scope.addressTranslationVariable = (address) ->
-    ShortFormHelperService.addressTranslationVariable(address)
-
   $scope.membersTranslateVariable = (members) ->
     ShortFormHelperService.membersTranslateVariable(members)
+
+  $scope.fileAttachmentsForRentBurden = ->
+    ShortFormHelperService.fileAttachmentsForRentBurden($scope.application)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
