@@ -88,20 +88,25 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { user: application.preferences["#{pref_type}_household_member"] }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
-    return '' if application.status == 'Submitted'
+    return '' if application.status.match(/submitted/i)
     interpolate = { file: application.preferences.documents[pref_type].proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
-  Service.fileAttachmentsForPreference = (application, pref_type) ->
-    return '' if application.status == 'Submitted'
-    prefDocs = application.preferences.documents[pref_type]
-    leaseFileNames = _.map prefDocs, (address) ->
-      address.lease.file.name
-
-    rentFiles = _.map prefDocs, (address) -> address.rent
-    rentFileNames = _.map rentFiles, (file) ->
-      _.values(file)[0].file.name
-    _.concat(leaseFileNames, rentFileNames)
+  Service.fileAttachmentsForRentBurden = (application) ->
+    return '' if application.status.match(/submitted/i)
+    labels = []
+    # this one is a little bit complicated because it has to sort through each set of rentBurden
+    # address docs, and create an array of "For {{address}}: {{doc1}}, {{doc2}}... attached"
+    _.each application.preferences.documents.rentBurden, (docs, address) ->
+      proofOptions = [docs.lease.proofOption]
+      rentOptions = _.compact _.map docs.rent, (file) ->
+        file.proofOption if file.file
+      proofOptions = $filter('listify')(_.concat(proofOptions, rentOptions))
+      labels.push({
+        subLabel: $translate.instant('LABEL.FOR_USER', user: address)
+        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
+      })
+    return labels
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
@@ -118,7 +123,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.addressTranslateVariable = (address) ->
     { address: address }
 
-  Service.membersTranslationVariable = (members) ->
+  Service.membersTranslateVariable = (members) ->
     { user: $filter('listify')(members, "firstName")}
 
   return Service

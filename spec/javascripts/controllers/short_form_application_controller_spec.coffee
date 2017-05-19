@@ -92,7 +92,7 @@ do ->
     fakeAccountService = {}
     fakeShortFormNavigationService = undefined
     fakeShortFormHelperService =
-      fileAttachmentsForPreference: jasmine.createSpy()
+      fileAttachmentsForRentBurden: jasmine.createSpy()
     fakeAccountService =
       loggedIn: () ->
     fakeAddressValidationService =
@@ -608,7 +608,7 @@ do ->
         scope.cancelPreference()
         expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
 
-    describe 'fileAttachmentsForPreference', ->
-      it 'called on fileAttachmentsForPreference on ShortFormHelperService', ->
-        scope.fileAttachmentsForPreference()
-        expect(fakeShortFormHelperService.fileAttachmentsForPreference).toHaveBeenCalled()
+    describe 'fileAttachmentsForRentBurden', ->
+      it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
+        scope.fileAttachmentsForRentBurden()
+        expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
