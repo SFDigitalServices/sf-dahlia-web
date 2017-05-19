@@ -13,7 +13,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     = render partial: '/layouts/favicons'
     = csrf_meta_tags
 
-    link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}"
+    / multilingual alt links currently only relevant for short form pages
+    link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}" ng-if="isShortFormPage()"
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
