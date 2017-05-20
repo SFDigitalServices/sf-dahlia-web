@@ -42,15 +42,27 @@ module SalesforceService
       application = applications.find do |app|
         app['status'] == 'Submitted'
       end
-      autofill_reset!(application, listing_id) if application
+      application = autofill_reset(application, listing_id) if application
       application
     end
 
-    def self.autofill_reset!(application, listing_id)
-      application['autofilled'] = true
-      application['id'] = nil
-      application['listingID'] = listing_id
-      application['status'] = 'Draft'
+    def self.autofill_reset(application, listing_id)
+      application = Hashie::Mash.new(application.as_json)
+      reset = {
+        id: nil,
+        listingID: listing_id,
+        status: 'Draft',
+        applicationSubmittedDate: nil,
+        answeredCommunityScreening: nil,
+        shortFormPreferences: [],
+      }
+      # reset income fields on apps > 30 days old
+      if Date.parse(application[:applicationSubmittedDate]) < 30.days.ago
+        reset[:householdVouchersSubsidies] = nil
+        reset[:annualIncome] = nil
+        reset[:monthlyIncome] = nil
+      end
+      application.merge(reset)
     end
 
     def self.delete(id)
