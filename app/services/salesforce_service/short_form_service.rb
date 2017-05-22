@@ -26,6 +26,45 @@ module SalesforceService
       apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
+    def self.find_listing_application(opts = {})
+      applications = get_for_user(opts[:contact_id])
+      application = applications.find do |app|
+        app['listingID'] == opts[:listing_id]
+      end
+      if !application && opts[:autofill]
+        application = autofill(applications, opts[:listing_id])
+      end
+      application
+    end
+
+    def self.autofill(applications, listing_id)
+      # applications were already sorted by most recent in get_for_user
+      application = applications.find do |app|
+        app['status'] == 'Submitted'
+      end
+      application = autofill_reset(application, listing_id) if application
+      application
+    end
+
+    def self.autofill_reset(application, listing_id)
+      application = Hashie::Mash.new(application.as_json)
+      reset = {
+        id: nil,
+        listingID: listing_id,
+        status: 'Draft',
+        applicationSubmittedDate: nil,
+        answeredCommunityScreening: nil,
+        shortFormPreferences: [],
+      }
+      # reset income fields on apps > 30 days old
+      if Date.parse(application[:applicationSubmittedDate]) < 30.days.ago
+        reset[:householdVouchersSubsidies] = nil
+        reset[:annualIncome] = nil
+        reset[:monthlyIncome] = nil
+      end
+      application.merge(reset)
+    end
+
     def self.delete(id)
       api_delete("/shortForm/delete/#{id}")
     end
