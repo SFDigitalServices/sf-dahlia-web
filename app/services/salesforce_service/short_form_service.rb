@@ -49,6 +49,7 @@ module SalesforceService
     def self.autofill_reset(application, listing_id)
       application = Hashie::Mash.new(application.as_json)
       reset = {
+        autofill: true,
         id: nil,
         listingID: listing_id,
         status: 'Draft',
