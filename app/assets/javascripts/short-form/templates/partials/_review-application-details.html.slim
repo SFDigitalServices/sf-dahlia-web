@@ -75,10 +75,10 @@ div ng-if="prioritiesSelectedExists()"
       span ng-if="!groupedAddress.monthlyRent"
         ' {{ 0 | currency : $ : 0 }}
       span translate="LABEL.PER_MONTH"
-    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.STUB_qualifyingServedInMilitary"
-      | {{application.STUB_qualifyingServedInMilitary}}
-    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
-      | {{application.STUB_qualifyingDevelopmentallyDisabled}}
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.hasMilitaryService"
+      | {{application.hasMilitaryService}}
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.hasDevelopmentalDisability"
+      | {{application.hasDevelopmentalDisability}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
       span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}

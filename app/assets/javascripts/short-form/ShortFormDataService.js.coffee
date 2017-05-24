@@ -5,9 +5,6 @@ ShortFormDataService = (ListingService) ->
     'completedSections'
     'session_uid'
     'groupedHouseholdAddresses'
-    # TODO: remove once these fields are no longer stubbed
-    'STUB_qualifyingDevelopmentallyDisabled'
-    'STUB_qualifyingServedInMilitary'
   ]
 
   Service.formatApplication = (listingId, shortFormApplication) ->
@@ -40,6 +37,7 @@ ShortFormDataService = (ListingService) ->
     delete application.primaryApplicant.mailingGeocoding_data
     delete application.validatedForms
     delete application.lotteryNumber
+    delete application.surveyComplete
     return application
 
   Service.formatUserDOB = (user) ->
@@ -275,6 +273,8 @@ ShortFormDataService = (ListingService) ->
       'status'
       'lotteryNumber'
       'hasPublicHousing'
+      'hasMilitaryService'
+      'hasDevelopmentalDisability'
       'answeredCommunityScreening'
     ]
     data = _.pick sfApp, whitelist

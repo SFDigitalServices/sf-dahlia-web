@@ -10,9 +10,9 @@
     .form-group ng-class="{ error: inputInvalid('qualifyingServedInMilitary') }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
-        radio-block-item value='Yes' user='application' name='STUB_qualifyingServedInMilitary' ng-required='true'
+        radio-block-item value='Yes' user='application' name='hasMilitaryService' ng-required='true'
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='application' name='STUB_qualifyingServedInMilitary' ng-required='true'
+        radio-block-item value='No' user='application' name='hasMilitaryService' ng-required='true'
           | {{'T.NO' | translate}}
 
   short-form-save-and-submit
