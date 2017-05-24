@@ -3,6 +3,7 @@ module SalesforceService
   class ListingService < SalesforceService::Base
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
+
     def self.listings(ids = nil)
       params = ids.present? ? { ids: ids } : nil
       cached_api_get('/ListingDetails', params, true)
@@ -66,6 +67,14 @@ module SalesforceService
         params[k] = params[k].to_i if params[k].present?
       end
       api_get(endpoint, params, false)
+    end
+
+    def self.clean_listings_for_browse(listings_result)
+      listings_result.map do |listing|
+        listing.select do |key|
+          whitelist.includes(key)
+        end
+      end
     end
   end
 end
