@@ -42,15 +42,6 @@ class Api::V1::ShortFormController < ApiController
     end
   end
 
-  def delete_all_rent_burden_proof
-    success = destroy_rent_burden_files
-    if success
-      render json: { success: true }
-    else
-      render json: { success: false, errors: 'not found' }
-    end
-  end
-
   ####### - Short Form Application RESTful actions
   def show_application
     @application = ShortFormService.get(params[:id])
@@ -127,7 +118,7 @@ class Api::V1::ShortFormController < ApiController
     if application_params[:status].casecmp('draft').zero? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
-      send_attached_files(response['id'])
+      send_attached_files(response)
       send_submit_app_confirmation(response)
     end
   end
@@ -137,7 +128,7 @@ class Api::V1::ShortFormController < ApiController
     application_params[:status] == 'submitted'
   end
 
-  def send_attached_files(application_id)
+  def send_attached_files(application)
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
@@ -150,7 +141,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application_id, files)
+    ShortFormService.attach_files(application, files)
     # now that files are saved in SF, remove temp uploads
     files.destroy_all
   end
@@ -248,35 +239,20 @@ class Api::V1::ShortFormController < ApiController
     file_params = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
-      address: uploaded_file_params[:address],
-      rent_burden_type: uploaded_file_params[:rent_burden_type],
-      rent_burden_index: uploaded_file_params[:rent_burden_index],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
     }
-    preference = file_params.delete(:preference)
-    rent_burden_type = file_params.delete(:rent_burden_type)
+    %i(address rent_burden_index).each do |field|
+      if uploaded_file_params[field]
+        file_params[field] = uploaded_file_params[field]
+      end
+    end
+    rent_burden_type = uploaded_file_params[:rent_burden_type]
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
-    uploaded_files = UploadedFile.send(preference).where(file_params)
+    uploaded_files = UploadedFile.where(file_params)
     uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type
-    uploaded_files.destroy_all
-  end
-
-  def destroy_rent_burden_files
-    file_params = {
-      session_uid: uploaded_file_params[:session_uid],
-      listing_id: uploaded_file_params[:listing_id],
-    }
-    if uploaded_file_params[:address]
-      file_params[:address] = uploaded_file_params[:address]
-    end
-    if user_signed_in?
-      file_params.delete(:session_uid)
-      file_params[:user_id] = current_user.id
-    end
-    uploaded_files = UploadedFile.rentBurden.where(file_params)
     uploaded_files.destroy_all
   end
 
@@ -287,8 +263,8 @@ class Api::V1::ShortFormController < ApiController
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(%i(file session_uid listing_id
-                     document_type preference address rent_burden_type rent_burden_index))
+          .permit(%i(file session_uid listing_id listing_preference_id
+                     document_type address rent_burden_type rent_burden_index))
   end
 
   def application_params
@@ -410,7 +386,7 @@ class Api::V1::ShortFormController < ApiController
     attrs = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
       document_type: uploaded_file_params[:document_type],
       file: uploaded_file_params[:file].read,
       name: uploaded_file_params[:file].original_filename,

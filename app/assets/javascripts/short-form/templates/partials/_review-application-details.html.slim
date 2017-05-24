@@ -108,7 +108,10 @@ review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.s
   review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
     | {{'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.rentBurden" get-sub-labels="fileAttachmentsForPreference('rentBurden')"
+  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.assistedHousing" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('assistedHousing') }}" bold-sub-label="{{fileAttachmentForPreference('assistedHousing')}}"
+    | {{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}
+
+  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.rentBurden" get-labels="fileAttachmentsForRentBurden()"
     | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
 / Income
