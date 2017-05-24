@@ -7,7 +7,9 @@ class Api::V1::ListingsController < ApiController
     # params[:ids] is a comma-separated list of ids
     params[:ids] = params[:ids] if params[:ids].present?
     @listings = ListingService.listings(params[:ids])
-    render json: { listings: @listings }
+    # should come from most recent modified date from @listings
+    fresh_when(etag: Date.today, last_modified: Date.today, public: true)
+    render json: { listings: @listings } unless request.fresh?(response)
   end
 
   def show
