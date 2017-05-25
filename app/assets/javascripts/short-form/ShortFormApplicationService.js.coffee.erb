@@ -587,9 +587,7 @@ ShortFormApplicationService = (
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
   Service._resetCompletedSections = ->
-    sections = ['Intro', 'You', 'Household', 'Preferences', 'Income']
-    _.each sections, (section) ->
-      Service.application.completedSections[section] = false
+    angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
 
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
