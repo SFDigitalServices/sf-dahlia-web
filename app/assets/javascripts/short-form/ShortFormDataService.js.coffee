@@ -277,7 +277,8 @@ ShortFormDataService = (ListingService) ->
       'listing'
       'applicationSubmittedDate'
       'status'
-      'lotteryNumber'
+      'lotteryNumber',
+      'autofill'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
@@ -484,7 +485,6 @@ ShortFormDataService = (ListingService) ->
 
 
   Service._autofillReset = (data) ->
-    delete data.autofill
     data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
     unless data.surveyComplete
       # clear out demographics if you hadn't already completed them all

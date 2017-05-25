@@ -541,12 +541,20 @@
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
+              else if ShortFormApplicationService.application.autofill == true
+                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
         ]
     })
     # Short form: "You" section
+    .state('dahlia.short-form-application.autofill-preview', {
+      url: '/autofill-preview'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b0-autofill-preview.html'
+    })
     .state('dahlia.short-form-application.name', {
       url: '/name'
       views:
