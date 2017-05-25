@@ -59,8 +59,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     liveInSf: "Live or Work in San Francisco Preference"
     workInSf: "Live or Work in San Francisco Preference"
     neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
-    assistedHousing: "Assisted Housing / Rent Burden Preference"
-    rentBurden: "Assisted Housing / Rent Burden Preference"
+    assistedHousing: "Rent Burdened / Assisted Housing Preference"
+    rentBurden: "Rent Burdened / Assisted Housing Preference"
+    antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
 
   # Create a mapping to Salesforce naming conventions
   Service.RESERVED_TYPES = {

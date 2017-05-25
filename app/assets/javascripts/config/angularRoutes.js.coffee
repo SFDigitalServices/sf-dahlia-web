@@ -719,6 +719,15 @@
         ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
       ]
     })
+    .state('dahlia.short-form-application.adhp-preference', {
+      url: '/adhp-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e2b-adhp-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('antiDisplacement')
+      ]
+    })
     .state('dahlia.short-form-application.live-work-preference', {
       url: '/live-work-preference'
       views:

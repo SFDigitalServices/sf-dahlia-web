@@ -23,22 +23,30 @@ module SalesforceService
 
     def self.get_for_user(contact_id)
       apps = api_get("/shortForm/list/#{contact_id}")
-      apps.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
+      apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
     def self.delete(id)
       api_delete("/shortForm/delete/#{id}")
     end
 
-    def self.attach_file(application_id, file, filename)
+    def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/file/#{application_id}"
-      api_post_with_headers(endpoint, file.file, headers)
+      endpoint = "/shortForm/Attachment/#{application['id']}"
+      body = {
+        fileName: filename,
+        DocumentType: file.document_type,
+        Body: Base64.encode64(file.file),
+        ApplicationId: application['id'],
+        ApplicationMemberID: _short_form_pref_member_id(application, file),
+        ApplicationPreferenceID: _short_form_pref_id(application, file),
+      }
+      api_post_with_headers(endpoint, body, headers)
     end
 
-    def self.attach_files(application_id, files)
+    def self.attach_files(application, files)
       files.each do |file|
-        attach_file(application_id, file, file.descriptive_name)
+        attach_file(application, file, file.descriptive_name)
       end
     end
 
@@ -57,6 +65,20 @@ module SalesforceService
 
     def self.submitted?(application)
       application['status'] == 'Submitted'
+    end
+
+    def self._short_form_pref_id(application, file)
+      _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
+    end
+
+    def self._short_form_pref_member_id(application, file)
+      _short_form_pref(application, file).try(:[], 'appMemberID')
+    end
+
+    def self._short_form_pref(application, file)
+      application['shortFormPreferences'].find do |preference|
+        preference['listingPreferenceID'] == file.listing_preference_id
+      end
     end
   end
 end

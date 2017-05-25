@@ -35,14 +35,14 @@ module SalesforceService
       else
         response.body
       end
-    rescue Restforce::UnauthorizedError
+    rescue Restforce::UnauthorizedError, Restforce::AuthenticationError => e
       if retries > 0
         retries = retries.to_i - 1
         oauth_token(true)
         retry
       else
-        p 'UH OH -- Restforce error'
-        self.error = 'Restforce::UnauthorizedError'
+        p "UH OH -- #{e.class.name}"
+        self.error = e.class.name
         []
       end
     rescue StandardError => e
@@ -72,14 +72,16 @@ module SalesforceService
     end
 
     # NOTE: Have to use custom Faraday connection to send headers.
-    def self.api_post_with_headers(endpoint, body = '', headers = {})
+    def self.api_post_with_headers(endpoint, body, headers = {})
       retries = 1
       status = nil
       response = nil
       while retries > 0 && status != 200
+        # NOTE: status will be 500 if there was an error with submission
+        # e.g. DocumentType does not match Salesforce picklist
         response = post_with_headers(endpoint, body, headers)
         status = response.status
-        retries -= - 1
+        retries -= 1
         if status == 401
           # refresh oauth_token
           oauth_token(true)
@@ -88,14 +90,14 @@ module SalesforceService
       response
     end
 
-    def self.post_with_headers(endpoint, body = '', headers = {})
+    def self.post_with_headers(endpoint, body, headers = {})
       conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
       conn.post "/services/apexrest#{endpoint}" do |req|
         headers.each do |k, v|
           req.headers[k] = v
         end
         req.headers['Authorization'] = "OAuth #{oauth_token}"
-        req.body = body
+        req.body = body.to_json
       end
     end
 
