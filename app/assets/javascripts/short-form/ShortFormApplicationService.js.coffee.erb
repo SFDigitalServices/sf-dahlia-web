@@ -586,6 +586,11 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
+  Service._resetCompletedSections = ->
+    sections = ['Intro', 'You', 'Household', 'Preferences', 'Income']
+    _.each sections, (section) ->
+      Service.application.completedSections[section] = false
+
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
     Service.application.groupedHouseholdAddresses = []
@@ -670,6 +675,7 @@ ShortFormApplicationService = (
     autofill = if opts.autofill then '?autofill=true' else ''
     $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
+      Service._resetCompletedSections() if opts.autofill
     ).error((data, status) ->
       return
     )

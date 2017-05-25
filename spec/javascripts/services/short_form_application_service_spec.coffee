@@ -640,6 +640,18 @@ do ->
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
 
+      it 'should reset completed sections when on autofill', ->
+        ShortFormApplicationService.application =
+          completedSections: {}
+        sections = ['Intro', 'You', 'Household', 'Preferences', 'Income']
+        _.each sections, (section) ->
+          ShortFormApplicationService.application.completedSections[section] = true
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyApplicationForListing('xyz', {autofill: true})
+        httpBackend.flush()
+        expect(ShortFormApplicationService.application.completedSections['Intro']).toEqual false
+
     describe 'getMyAccountApplication', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
