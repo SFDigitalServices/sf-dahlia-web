@@ -271,37 +271,43 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     )
 
   Service.groupListings = (listings) ->
-    angular.copy([], Service.openListings)
-    angular.copy([], Service.openMatchListings)
-    angular.copy([], Service.openNotMatchListings)
-    angular.copy([], Service.closedListings)
-    angular.copy([], Service.lotteryResultsListings)
+    openListings = []
+    openMatchListings = []
+    openNotMatchListings = []
+    closedListings = []
+    lotteryResultsListings = []
+
     listings.forEach (listing) ->
       if Service.listingIsOpen(listing)
         # All Open Listings Array
-        Service.openListings.push(listing)
+        openListings.push(listing)
         if listing.Does_Match
-          Service.openMatchListings.push(listing)
+          openMatchListings.push(listing)
         else
-          Service.openNotMatchListings.push(listing)
+          openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
         if Service.lotteryDatePassed(listing)
-          Service.lotteryResultsListings.push(listing)
+          lotteryResultsListings.push(listing)
         else
-          Service.closedListings.push(listing)
-    Service.sortListings()
+          closedListings.push(listing)
 
-  Service.sortListings = ->
+    angular.copy(Service.sortListings(openListings, 'openListings'), Service.openListings)
+    angular.copy(Service.sortListings(openMatchListings, 'openMatchListings'), Service.openMatchListings)
+    angular.copy(Service.sortListings(openNotMatchListings, 'openNotMatchListings'), Service.openNotMatchListings)
+    angular.copy(Service.sortListings(closedListings, 'closedListings'), Service.closedListings)
+    angular.copy(Service.sortListings(lotteryResultsListings, 'lotteryResultsListings'), Service.lotteryResultsListings)
+
+  Service.sortListings = (listings, type) ->
     # openListing types
-    ['openListings', 'openMatchListings', 'openNotMatchListings'].forEach (type) ->
-      Service[type] = _.sortBy Service[type], (i) -> moment(i.Application_Due_Date)
+    if ['openListings', 'openMatchListings', 'openNotMatchListings'].indexOf(type) > -1
+      _.sortBy listings, (i) -> moment(i.Application_Due_Date)
     # closedListing types
-    ['closedListings', 'lotteryResultsListings'].forEach (type) ->
-      Service[type] = _.sortBy Service[type], (i) ->
+    else if ['closedListings', 'lotteryResultsListings'].indexOf(type) > -1
+      listings = _.sortBy listings, (i) ->
         # fallback to Application_Due_Date, really only for the special case of First Come First Serve
         moment(i.Lottery_Results_Date || i.Application_Due_Date)
-    # lotteryResults get reversed (latest lottery results date first)
-    Service.lotteryResultsListings = _.reverse(Service.lotteryResultsListings)
+      # lotteryResults get reversed (latest lottery results date first)
+      if type == 'lotteryResultsListings' then _.reverse listings else listings
 
 
   # retrieves only the listings specified by the passed in array of ids
