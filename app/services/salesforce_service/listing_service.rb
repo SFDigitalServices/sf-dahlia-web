@@ -1,12 +1,30 @@
 module SalesforceService
   # encapsulate all Salesforce Listing querying functions
   class ListingService < SalesforceService::Base
+    WHITELIST_BROWSE_FIELDS = %i(
+      Id
+      Name
+      Building_URL
+      Application_Due_Date
+      Accepting_Online_Applications
+      Lottery_Date
+      Lottery_Results
+      Lottery_Results_Date
+      Reserved_community_type
+      Reserved_community_minimum_age
+      hasWaitlist
+      Units_Available
+      unitSummaries
+      Does_Match
+      LastModifiedDate
+    ).freeze
+
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
-
     def self.listings(ids = nil)
       params = ids.present? ? { ids: ids } : nil
-      cached_api_get('/ListingDetails', params, true)
+      results = cached_api_get('/ListingDetails', params, true)
+      clean_listings_for_browse(results)
     end
 
     # get listings with eligibility matches applied
@@ -16,6 +34,7 @@ module SalesforceService
     #  childrenUnder6: n
     def self.eligible_listings(filters)
       results = cached_api_get('/ListingDetails', filters, true)
+      results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
     end
@@ -69,12 +88,20 @@ module SalesforceService
       api_get(endpoint, params, false)
     end
 
-    def self.clean_listings_for_browse(listings_result)
-      listings_result.map do |listing|
+    def self.clean_listings_for_browse(results)
+      results.map do |listing|
         listing.select do |key|
-          whitelist.includes(key)
+          WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
         end
       end
+    end
+
+    def self.last_modified(result)
+      result = result.max_by { |l| l['LastModifiedDate'] } if result.is_a? Array
+      mod_date = result.try(:[], 'LastModifiedDate')
+      DateTime.parse(mod_date)
+    rescue
+      DateTime.now
     end
   end
 end

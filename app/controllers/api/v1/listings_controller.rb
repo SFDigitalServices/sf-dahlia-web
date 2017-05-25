@@ -5,16 +5,17 @@ class Api::V1::ListingsController < ApiController
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    params[:ids] = params[:ids] if params[:ids].present?
     @listings = ListingService.listings(params[:ids])
-    # should come from most recent modified date from @listings
-    fresh_when(etag: Date.today, last_modified: Date.today, public: true)
+    last_modified = ListingService.last_modified(@listings)
+    fresh_when(etag: last_modified, last_modified: last_modified, public: true)
     render json: { listings: @listings } unless request.fresh?(response)
   end
 
   def show
     @listing = ListingService.listing(params[:id])
-    render json: { listing: @listing }
+    last_modified = ListingService.last_modified(@listing)
+    fresh_when(etag: last_modified, last_modified: last_modified, public: false)
+    render json: { listing: @listing } unless request.fresh?(response)
   end
 
   def units

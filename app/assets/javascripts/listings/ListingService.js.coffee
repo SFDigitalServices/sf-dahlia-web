@@ -234,13 +234,27 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # check for eligibility options being set in the session
     if opts.checkEligibility && Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
-    $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
+    deferred = $q.defer()
+    $http.get("/api/v1/listings.json", {
+      etagCache: true
+    }).success(
+      Service.getListingsResponse(deferred)
+    ).cached(
+      Service.getListingsResponse(deferred)
+    ).error((data, status, headers, config) ->
+      return
+    )
+    return deferred.promise
+
+  Service.getListingsResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      # console.log status
+      itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
-    ).error( (data, status, headers, config) ->
-      return
-    )
+      deferred.resolve()
+
 
   Service.getListingsWithEligibility = ->
     params =
