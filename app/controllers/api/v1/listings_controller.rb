@@ -6,16 +6,12 @@ class Api::V1::ListingsController < ApiController
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
     @listings = ListingService.listings(params[:ids])
-    last_modified = ListingService.last_modified(@listings)
-    fresh_when(etag: last_modified, last_modified: last_modified, public: true)
-    render json: { listings: @listings } unless request.fresh?(response)
+    render json: { listings: @listings }
   end
 
   def show
     @listing = ListingService.listing(params[:id])
-    last_modified = ListingService.last_modified(@listing)
-    fresh_when(etag: last_modified, last_modified: last_modified, public: false)
-    render json: { listing: @listing } unless request.fresh?(response)
+    render json: { listing: @listing }
   end
 
   def units
@@ -42,12 +38,11 @@ class Api::V1::ListingsController < ApiController
   end
 
   def eligibility
-    e = params[:eligibility]
     # have to massage params into number values
     filters = {
-      householdsize: e[:householdsize].to_i,
-      incomelevel: e[:incomelevel].to_f,
-      childrenUnder6: e[:childrenUnder6].to_i,
+      householdsize: params[:householdsize].to_i,
+      incomelevel: params[:incomelevel].to_f,
+      childrenUnder6: params[:childrenUnder6].to_i,
     }
     @listings = ListingService.eligible_listings(filters)
     render json: { listings: @listings }

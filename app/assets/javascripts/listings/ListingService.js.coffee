@@ -219,16 +219,28 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
     angular.copy({}, Service.listing)
-    $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
+    deferred = $q.defer()
+    $http.get("/api/v1/listings/#{_id}.json",
+      { etagCache: true }
+    ).success(
+      Service.getListingResponse(deferred)
+    ).cached(
+      Service.getListingResponse(deferred)
+    ).error( (data, status, headers, config) ->
+      return
+    )
+    return deferred.promise
+
+  Service.getListingResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      itemCache.set(data) unless status == 'cached'
+      deferred.resolve()
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
-    ).error( (data, status, headers, config) ->
-      return
-    )
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
@@ -248,7 +260,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingsResponse = (deferred) ->
     (data, status, headers, config, itemCache) ->
-      # console.log status
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
       Service.groupListings(listings)
@@ -258,17 +269,28 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingsWithEligibility = ->
     params =
-      eligibility:
-        householdsize: Service.eligibility_filters.household_size
-        incomelevel: Service.eligibilityYearlyIncome()
-        includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
-        childrenUnder6: Service.eligibility_filters.children_under_6
-    $http.post("/api/v1/listings/eligibility.json", params).success((data, status, headers, config) ->
-      listings = (if data and data.listings then data.listings else [])
-      Service.groupListings(listings)
+      householdsize: Service.eligibility_filters.household_size
+      incomelevel: Service.eligibilityYearlyIncome()
+      includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
+      childrenUnder6: Service.eligibility_filters.children_under_6
+    deferred = $q.defer()
+    $http.get("/api/v1/listings/eligibility.json?#{Service.toQueryString(params)}",
+      { etagCache: true }
+    ).success(
+      Service.getListingsWithEligibilityResponse(deferred)
+    ).cached(
+      Service.getListingsWithEligibilityResponse(deferred)
     ).error( (data, status, headers, config) ->
       return
     )
+    return deferred.promise
+
+  Service.getListingsWithEligibilityResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      itemCache.set(data) unless status == 'cached'
+      listings = (if data and data.listings then data.listings else [])
+      Service.groupListings(listings)
+      deferred.resolve()
 
   Service.groupListings = (listings) ->
     openListings = []
@@ -559,6 +581,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish
     tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
     angular.copy(urls, Service.listingDownloadURLs)
+
+  Service.toQueryString = (params) ->
+    Object.keys(params).reduce(((a, k) ->
+      a.push k + '=' + encodeURIComponent(params[k])
+      a
+    ), []).join '&'
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {

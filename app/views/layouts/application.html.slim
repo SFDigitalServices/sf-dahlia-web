@@ -48,5 +48,6 @@ html lang="en"
     / icon collection
     ng-include src="'shared/templates/icons.html'"
 
-    = javascript_include_tag 'application'
+
+    = javascript_include_tag 'application', async: Rails.env.production?
     = yield :javascript

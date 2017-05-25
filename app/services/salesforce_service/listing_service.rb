@@ -95,13 +95,5 @@ module SalesforceService
         end
       end
     end
-
-    def self.last_modified(result)
-      result = result.max_by { |l| l['LastModifiedDate'] } if result.is_a? Array
-      mod_date = result.try(:[], 'LastModifiedDate')
-      DateTime.parse(mod_date)
-    rescue
-      DateTime.now
-    end
   end
 end

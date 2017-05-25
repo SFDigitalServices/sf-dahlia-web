@@ -27,7 +27,7 @@ Rails.application.routes.draw do
         end
         collection do
           post 'ami' => 'listings#ami'
-          post 'eligibility' => 'listings#eligibility'
+          get 'eligibility' => 'listings#eligibility'
         end
       end
       scope '/short-form' do
