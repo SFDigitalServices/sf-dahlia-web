@@ -290,6 +290,7 @@ ShortFormDataService = (ListingService) ->
     data.householdIncome = Service._reformatIncome(sfApp)
     Service._reformatMetadata(sfApp, data)
     data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
+    Service._autofillReset(data) if sfApp.autofill
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -482,10 +483,37 @@ ShortFormDataService = (ListingService) ->
     }
 
 
+  Service._autofillReset = (data) ->
+    delete data.autofill
+    data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
+    unless data.surveyComplete
+      # clear out demographics if you hadn't already completed them all
+      data.applicant.gender = null
+      data.applicant.genderOther = null
+      data.applicant.ethnicity = null
+      data.applicant.race = null
+      data.applicant.sexualOrientation = null
+      data.applicant.sexualOrientationOther = null
+      data.applicant.referral = {}
+
+    # reset completedSections
+    angular.copy(Service.defaultCompletedSections, data.completedSections)
+
+
 
   #############################################
   # Helper functions
   #############################################
+
+  Service.checkSurveyComplete = (applicant, opts = {}) ->
+    responses = [
+      applicant.gender,
+      applicant.ethnicity,
+      applicant.race,
+      applicant.sexualOrientation,
+      if opts.skipReferral then true else _.some(applicant.referral),
+    ]
+    return _.every(responses)
 
   Service.DOBValid = (field = 'day', values) ->
     month = values.month

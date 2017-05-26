@@ -68,6 +68,7 @@ ShortFormApplicationService = (
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
+    ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
   Service.resetUserData = (data = {}) ->
@@ -742,14 +743,7 @@ ShortFormApplicationService = (
     angular.copy(formattedApp, Service.accountApplication)
 
   Service.checkSurveyComplete = ->
-    app = Service.applicant
-    responses = [
-      _.some(app.gender),
-      app.ethnicity,
-      app.race,
-      _.some(app.referral),
-    ]
-    Service.application.surveyComplete = _.every(responses)
+    Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
     fields = [
