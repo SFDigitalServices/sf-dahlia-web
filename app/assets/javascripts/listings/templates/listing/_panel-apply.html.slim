@@ -16,20 +16,20 @@
   / Section 1: Get a Paper Application
   .content-group.has-divider
     h2.h-caps-lined ng-if="!listing.Accepting_Online_Applications"
-      | How to Apply
+      | {{'LISTINGS.APPLY.HOW_TO_APPLY' | translate}}
     .t-delta.t-serif.margin-bottom
       span.c-primary
         ' 1
-      | Get a Paper Application
+      | {{'LISTINGS.APPLY.GET_A_PAPER_APPLICATION' | translate}}
     p.c-charcoal.t-small.margin-bottom ng-if="!listing.Accepting_applications_at_leasing_agent"
-      |  Paper applications must be sent by US Mail and cannot be submitted in person.
+      |  {{'LISTINGS.APPLY.PAPER_APPLICATIONS_MUST_BE_MAILED' | translate}}
     ng-include src="'listings/templates/listing/_download_application.html'"
     .option-divider ng-if="listing.Blank_paper_application_can_be_picked_up"
       span.or
-        | or
+        | {{'T.OR' | translate}}
   .content-group.has-divider ng-if="listing.Blank_paper_application_can_be_picked_up"
     h3.content-group_title
-      | Pickup an application
+      | {{'LISTINGS.APPLY.PICK_UP_AN_APPLICATION' | translate}}
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
 
   / Section 2: Submit a Paper Application
@@ -37,14 +37,14 @@
     .t-delta.t-serif ng-class="{'margin-bottom': listing.SASE_Required_for_Lottery_Ticket}"
       span.c-primary
         ' 2
-      | Submit a Paper Application
+      | {{'LISTINGS.APPLY.SUBMIT_A_PAPER_APPLICATION' | translate}}
     p.c-charcoal.t-small ng-if="listing.SASE_Required_for_Lottery_Ticket"
-      | In order to receive your lottery number, include a self addressed stamped envelope, otherwise one will not be mailed to you.
+      | {{'LISTINGS.APPLY.INCLUDE_AN_ENVELOPE' | translate}}
 
   / Section 2a: Send by Mail
   .content-group.bg-snow ng-if="listing.Accepting_applications_by_PO_Box" ng-class="{'has-divider': listing.Accepting_applications_at_leasing_agent}"
     h3.content-group_title
-      | Send Application by US Mail
+      | {{'LISTINGS.APPLY.SEND_BY_US_MAIL' | translate}}
     p.content-group_address.no-margin
       | {{listing.Application_Organization}}
     p.content-group_address
@@ -52,33 +52,33 @@
       br
       | {{ listing.Application_City }} {{ listing.Application_State }} {{ listing.Application_Postal_Code }}
     p.c-charcoal.t-small
-      | Applications must be received by the deadline and postmarks will not be considered.
+      | {{'LISTINGS.APPLY.APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE' | translate}}
 
     .option-divider ng-if="listing.Accepting_applications_at_leasing_agent"
       span.or.bg-snow
-        | or
+        | {{'T.OR' | translate}}
 
   / Section 2b: Drop Off
   .content-group.bg-snow ng-if="listing.Accepting_applications_at_leasing_agent"
     h3.content-group_title ng-if="listing.Accepting_applications_by_PO_Box"
-      | Drop Off Application
+      | {{'LISTINGS.APPLY.DROP_OFF_APPLICATION' | translate}}
     h3.content-group_title ng-if="!listing.Accepting_applications_by_PO_Box"
-      | Drop Off Application or Send by US Mail
+      | {{'LISTINGS.APPLY.DROP_OFF_APPLICATION_OR_MAIL' | translate}}
     ng-include src="'listings/templates/listing/_panel-apply-leasing-agent.html'"
     p.c-charcoal.t-small ng-if="!listing.Accepting_applications_by_PO_Box"
-      | Applications must be received by the deadline and postmarks will not be considered.
+      | {{'LISTINGS.APPLY.APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE' | translate}}
 
   .content-group.bg-snow
     p.c-charcoal.t-small
       span ng-if="listing.Accepting_Online_Applications"
-        ' {{'LISTINGS.DO_NOT_APPLY_ONLINE_AND_PAPER' | translate}}
-      | {{'LISTINGS.DO_NOT_DO_MULTIPLE_APPLICATIONS' | translate}}
+        ' {{'LISTINGS.APPLY.DO_NOT_APPLY_ONLINE_AND_PAPER' | translate}}
+      | {{'LISTINGS.APPLY.DO_NOT_DO_MULTIPLE_APPLICATIONS' | translate}}
 
   / Section 3: Find a Housing Counselor
   .content-group
     h4.h-caps-lined
-      | Need Help?
+      | {{'LISTINGS.APPLY.NEED_HELP' | translate}}
     p.c-charcoal.t-small.margin-bottom
-      | Visit a local housing counselor for help with your online or paper application.
+      | {{'LISTINGS.APPLY.VISIT_A_HOUSING_COUNSELOR' | translate}}
     a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"
-      | Find a Housing Counselor
+      | {{'LISTINGS.APPLY.FIND_A_HOUSING_COUNSELOR' | translate}}

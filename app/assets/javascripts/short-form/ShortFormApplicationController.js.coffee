@@ -203,10 +203,10 @@ ShortFormApplicationController = (
 
   $scope.validateCommunityEligibility = ->
     $scope.communityScreeningInvalid = false
-    if $scope.application.communityScreening == 'No'
+    if $scope.application.answeredCommunityScreening == 'No'
       $scope.communityScreeningInvalid = true
       $scope.handleErrorState()
-    else if $scope.application.communityScreening ==  'Yes'
+    else if $scope.application.answeredCommunityScreening ==  'Yes'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
 
   $scope.addressInputInvalid = (identifier = '') ->
@@ -233,22 +233,22 @@ ShortFormApplicationController = (
       $scope.applicant[fieldName] = '' if form[fieldName].$invalid
 
   $scope.noPrioritiesSelected = ->
-    selected = $scope.application.STUB_prioritiesSelected
-    !_.some([selected.Mobility, selected.Vision, selected.Hearing, selected.no])
+    selected = $scope.application.adaPrioritiesSelected
+    !_.some([selected['Mobility impaired'], selected['Vision impaired'], selected['Hearing impaired'], selected.None])
 
   $scope.prioritiesSelectedExists = ->
-    !_.isEmpty($scope.application.STUB_prioritiesSelected)
+    !_.isEmpty($scope.application.adaPrioritiesSelected)
 
   $scope.clearPriorityOptions = ->
-    selected = $scope.application.STUB_prioritiesSelected
+    selected = $scope.application.adaPrioritiesSelected
     _.map selected, (val, k) ->
-      selected[k] = false unless k == 'no'
+      selected[k] = false unless k == 'None'
 
   $scope.clearPriorityNoOption = ->
-    $scope.application.STUB_prioritiesSelected.no = false
+    $scope.application.adaPrioritiesSelected.None = false
 
   $scope.priorityNoSelected = ->
-    $scope.application.STUB_prioritiesSelected.no
+    $scope.application.adaPrioritiesSelected.None
 
   $scope.clearPhoneData = (type) ->
     ShortFormApplicationService.clearPhoneData(type)
@@ -539,7 +539,7 @@ ShortFormApplicationController = (
     $scope.eligibilityErrors = [message]
 
   $scope.checkIfPublicHousing = ->
-    if $scope.application.STUB_householdPublicHousing == 'No'
+    if $scope.application.hasPublicHousing == 'No'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.household-monthly-rent')
     else
       $scope.checkIfReservedUnits()

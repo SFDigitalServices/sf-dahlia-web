@@ -469,19 +469,19 @@ do ->
       it 'returns true if application said yes to public housing', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'Yes'
+        ShortFormApplicationService.application.hasPublicHousing = 'Yes'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
 
       it 'returns false if application does not have assistedHousing', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual false
 
     describe 'eligibleForRentBurden', ->
       beforeEach ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
         ShortFormApplicationService.application.householdIncome.incomeTimeframe = 'per_month'
         ShortFormApplicationService.application.groupedHouseholdAddresses = [
           {

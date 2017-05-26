@@ -17,6 +17,7 @@ ShortFormApplicationService = (
     status: 'draft'
     applicationSubmittedDate: null
     surveyComplete: false
+    answeredCommunityScreening: null
     applicationSubmissionType: "Electronic"
     applicant:
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -40,7 +41,7 @@ ShortFormApplicationService = (
       }
     householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
     groupedHouseholdAddresses: []
-    STUB_prioritiesSelected: {}
+    adaPrioritiesSelected: {}
     completedSections:
       Intro: false
       You: false
@@ -467,7 +468,7 @@ ShortFormApplicationService = (
 
   Service.eligibleForAssistedHousing = ->
     return false unless Service.listingHasPreference('assistedHousing')
-    Service.application.STUB_householdPublicHousing == 'Yes'
+    Service.application.hasPublicHousing == 'Yes'
 
   Service.eligibleForRentBurden = ->
     return false unless Service.listingHasPreference('rentBurden')
@@ -478,7 +479,7 @@ ShortFormApplicationService = (
     else
       ratio = (totalMonthlyRent * 12) / incomeTotal
     # must have answered "No" and rent > 50% of income
-    Service.application.STUB_householdPublicHousing == 'No' && ratio >= .5
+    Service.application.hasPublicHousing == 'No' && ratio >= .5
 
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
@@ -743,7 +744,8 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.loadApplication = (data) ->
-    formattedApp = {}
+    formattedApp =
+      answeredCommunityScreening: Service.application.answeredCommunityScreening
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)

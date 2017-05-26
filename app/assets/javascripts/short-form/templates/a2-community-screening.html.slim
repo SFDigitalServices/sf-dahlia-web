@@ -2,12 +2,12 @@
   community-screening-header
 
   .app-inner.inset
-    .form-group ng-class="{ error: inputInvalid('communityScreening') || communityScreeningInvalid }"
+    .form-group ng-class="{ error: inputInvalid('answeredCommunityScreening') || communityScreeningInvalid }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
       .radio-group.padding-top--half role="radiogroup" aria-label="mustchange"
-        radio-block-item value='Yes' user='application' name='communityScreening' ng-required='true' on-change='checkCommunityScreening'
+        radio-block-item value='Yes' user='application' name='answeredCommunityScreening' ng-required='true' on-change='checkCommunityScreening'
           | {{labels.communityScreeningYes}}
-        radio-block-item value='No' user='application' name='communityScreening' ng-required='true'
+        radio-block-item value='No' user='application' name='answeredCommunityScreening' ng-required='true'
           | {{'T.NO' | translate}}
   .button-pager
     .button-pager_row.primary.text-center
