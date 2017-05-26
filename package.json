@@ -24,8 +24,8 @@
     "dotenv": "^2.0.0"
   },
   "engines": {
-    "node": "6.2.2",
-    "npm": "3.9.5"
+    "node": "6.10.3",
+    "npm": "3.10.10"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -33,7 +33,7 @@
     "protractor": "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
     "e2e": "npm-run-all -s -p -r webdriver-start protractor"
   },
-  "license": "GNU GENERAL PUBLIC LICENSE",
+  "license": "GPL-3.0",
   "keywords": [
     "angular",
     "rails"
@@ -43,5 +43,5 @@
     "type": "git",
     "url": "https://github.com/Exygy/sf-dahlia-web"
   },
-  "version": "0.2.0"
+  "version": "1.0.0"
 }
