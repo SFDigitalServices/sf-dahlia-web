@@ -65,7 +65,7 @@ module.exports = ->
         element(By.id('submit-en')).click()
 
   @When 'I continue past the community screening and welcome overview', ->
-    element(By.id('communityScreening_yes')).click()
+    element(By.id('answeredCommunityScreening_yes')).click()
     # community screening
     submitForm()
     # welcome overview
