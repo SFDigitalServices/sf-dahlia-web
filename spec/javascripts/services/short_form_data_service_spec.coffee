@@ -72,4 +72,4 @@ do ->
           {monthlyRent: 1000}
         ]
         ShortFormDataService._calculateTotalMonthlyRent(fakeApplication)
-        expect(fakeApplication.STUB_TotalMonthlyRent).toEqual(1750)
+        expect(fakeApplication.totalMonthlyRent).toEqual(1750)

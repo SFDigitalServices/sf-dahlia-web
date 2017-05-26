@@ -5,12 +5,6 @@ ShortFormDataService = (ListingService) ->
     'completedSections'
     'session_uid'
     'groupedHouseholdAddresses'
-    # TODO: remove once these fields are no longer stubbed
-    'STUB_TotalMonthlyRent'
-    'STUB_householdPublicHousing'
-    'STUB_prioritiesSelected'
-    'STUB_qualifyingDevelopmentallyDisabled'
-    'STUB_qualifyingServedInMilitary'
   ]
 
   Service.formatApplication = (listingId, shortFormApplication) ->
@@ -43,6 +37,7 @@ ShortFormDataService = (ListingService) ->
     delete application.primaryApplicant.mailingGeocoding_data
     delete application.validatedForms
     delete application.lotteryNumber
+    delete application.surveyComplete
     return application
 
   Service.formatUserDOB = (user) ->
@@ -182,10 +177,10 @@ ShortFormDataService = (ListingService) ->
 
   Service._formatPrioritiesSelected = (application) ->
     prioritiesSelected = ""
-    _.forEach application.STUB_prioritiesSelected, (value, key) ->
+    _.forEach application.adaPrioritiesSelected, (value, key) ->
       prioritiesSelected += (key + ";") if value
       return
-    application.STUB_prioritiesSelected = prioritiesSelected
+    application.adaPrioritiesSelected = prioritiesSelected
     return application
 
   Service._formatReferrals = (application) ->
@@ -235,9 +230,8 @@ ShortFormDataService = (ListingService) ->
     return application
 
   Service._calculateTotalMonthlyRent = (application) ->
-    # TODO: replace STUB with real field name once it exists
     # _.sumBy will count any `null` or `undefined` values as 0
-    application.STUB_TotalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
+    application.totalMonthlyRent = _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
     return application
 
   Service._formatGeocodingData = (application) ->
@@ -278,12 +272,15 @@ ShortFormDataService = (ListingService) ->
       'applicationSubmittedDate'
       'status'
       'lotteryNumber'
+      'hasPublicHousing'
+      'hasMilitaryService'
+      'hasDevelopmentalDisability'
+      'answeredCommunityScreening'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
-    # TODO: implement once this field exists in SF
-    # data.prioritiesSelected = Service._reformatMultiSelect(sfApp.prioritiesSelected)
+    data.adaPrioritiesSelected = Service._reformatMultiSelect(sfApp.adaPrioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
@@ -469,8 +466,6 @@ ShortFormDataService = (ListingService) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
     metadata = _.pick(formMetadata, Service.metaFields)
-    # TODO: remove after stubbing is done, prioritiesSelected will not be in metadata
-    metadata.STUB_prioritiesSelected = Service._reformatMultiSelect(metadata.STUB_prioritiesSelected)
     _.merge(data, metadata)
 
   Service.initRentBurdenDocs = (address, data) ->
