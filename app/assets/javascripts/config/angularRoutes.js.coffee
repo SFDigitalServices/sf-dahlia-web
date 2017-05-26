@@ -535,6 +535,10 @@
           ($stateParams, $state, ShortFormApplicationService, listing) ->
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
+
+            # if we have an autofilled application that means we're just trying to get to the preview page
+            return if ShortFormApplicationService.application.autofill
+
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
