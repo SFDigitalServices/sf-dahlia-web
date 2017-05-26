@@ -3,6 +3,7 @@ module SalesforceService
   class ListingService < SalesforceService::Base
     WHITELIST_BROWSE_FIELDS = %i(
       Id
+      listingID
       Name
       Building_URL
       Application_Due_Date
