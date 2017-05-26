@@ -7,6 +7,7 @@ do ->
     fakeListingId = 'a0WU000000CkiM3MAJ'
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
+    fakeApplicant = undefined
     fakeListingService =
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
@@ -53,6 +54,29 @@ do ->
 
       it 'reformats stringified JSON formMetadata', ->
         expect(reformattedApp.completedSections.Intro).toEqual(true)
+
+    describe 'checkSurveyComplete', ->
+      beforeEach ->
+        fakeApplicant = angular.copy(fakeApplication.applicant)
+        fakeApplicant.gender = 'Fake'
+        fakeApplicant.ethnicity = 'Fake'
+        fakeApplicant.race = 'Fake'
+        fakeApplicant.sexualOrientation = 'Fake'
+        fakeApplicant.referral = {FakeAnswer: true}
+
+      it 'should check if survey is complete', ->
+        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual true
+
+      it 'should check if survey is incomplete', ->
+        fakeApplicant.gender = null
+        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
+        fakeApplicant.gender = 'Fake'
+        fakeApplicant.referral = {FakeAnswer: false}
+        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant)).toEqual false
+
+      it 'should check if only demographics are complete, if skipReferral is true', ->
+        fakeApplicant.referral = {FakeAnswer: false}
+        expect(ShortFormDataService.checkSurveyComplete(fakeApplicant, {skipReferral: true})).toEqual true
 
     describe 'maxDOBDay', ->
       it 'gives max of 30 for appropriate months', ->
