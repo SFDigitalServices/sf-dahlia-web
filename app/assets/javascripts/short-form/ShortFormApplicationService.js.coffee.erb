@@ -68,6 +68,7 @@ ShortFormApplicationService = (
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
+    ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
   Service.resetUserData = (data = {}) ->
@@ -586,9 +587,6 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
-  Service._resetCompletedSections = ->
-    angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
-
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
     Service.application.groupedHouseholdAddresses = []
@@ -673,7 +671,6 @@ ShortFormApplicationService = (
     autofill = if opts.autofill then '?autofill=true' else ''
     $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
-      Service._resetCompletedSections() if opts.autofill
     ).error((data, status) ->
       return
     )

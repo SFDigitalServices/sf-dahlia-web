@@ -88,6 +88,30 @@ do ->
       it 'gives max of 29 for leap year', ->
         expect(ShortFormDataService.maxDOBDay(2, 2000)).toEqual(29)
 
+    describe '_autofillReset', ->
+      it 'should check if demographic survey was completed', ->
+        fakeApplication.surveyComplete = null
+        fakeApplication.applicant.gender = 'X'
+        fakeApplication.applicant.ethnicity = 'X'
+        fakeApplication.applicant.race = 'X'
+        fakeApplication.applicant.sexualOrientation = 'X'
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.surveyComplete).toEqual true
+
+      it 'should reset completed sections', ->
+        sections = ['Intro', 'You', 'Household', 'Preferences', 'Income']
+        _.each sections, (section) ->
+          fakeApplication.completedSections[section] = true
+        ShortFormDataService.defaultCompletedSections =
+          Intro: false
+          You: false
+          Household: false
+          Preferences: false
+          Income: false
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.completedSections['Intro']).toEqual false
+
+
     describe '_calculateTotalMonthlyRent', ->
       it 'adds up rent values from groupedHouseholdAddresses', ->
         fakeApplication.groupedHouseholdAddresses = [
