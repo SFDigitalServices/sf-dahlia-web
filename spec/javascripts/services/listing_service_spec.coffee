@@ -28,7 +28,9 @@ do ->
     minMax = undefined
 
     beforeEach module('ui.router')
-    beforeEach module('dahlia.services', ($provide)->
+    # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
+    beforeEach module('http-etag')
+    beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$modal', modalMock
       $provide.value '$translate', $translate
       return
@@ -77,17 +79,16 @@ do ->
         ListingService.getListings({checkEligibility: true})
         expect(ListingService.getListingsWithEligibility).toHaveBeenCalled()
 
-    # -- Disabled due to $http angular-http-etag decorator
-    # describe 'Service.getListing', ->
-    #   afterEach ->
-    #     httpBackend.verifyNoOutstandingExpectation()
-    #     httpBackend.verifyNoOutstandingRequest()
-    #   it 'assigns Service.listing with an individual listing', ->
-    #     fakeListing.listing.Units_Available = 0
-    #     stubAngularAjaxRequest httpBackend, requestURL, fakeListing
-    #     ListingService.getListing 'abc123'
-    #     httpBackend.flush()
-    #     expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
+    describe 'Service.getListing', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'assigns Service.listing with an individual listing', ->
+        fakeListing.listing.Units_Available = 0
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListing
+        ListingService.getListing 'abc123'
+        httpBackend.flush()
+        expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
 
     describe 'Service.getListingAMI', ->
       afterEach ->
@@ -258,19 +259,18 @@ do ->
         httpBackend.flush()
         expect(ListingService.listings).toEqual fakeListings.listings
 
-    # -- Disabled due to $http angular-http-etag decorator
-    # describe 'Service.getListingsWithEligibility', ->
-    #   afterEach ->
-    #     httpBackend.verifyNoOutstandingExpectation()
-    #     httpBackend.verifyNoOutstandingRequest()
-    #
-    #   it 'calls groupListings function with returned listings', ->
-    #     ListingService.groupListings = jasmine.createSpy()
-    #     ListingService.setEligibilityFilters(fakeEligibilityFilters)
-    #     stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
-    #     ListingService.getListingsWithEligibility()
-    #     httpBackend.flush()
-    #     expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
+    describe 'Service.getListingsWithEligibility', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+
+      it 'calls groupListings function with returned listings', ->
+        ListingService.groupListings = jasmine.createSpy()
+        ListingService.setEligibilityFilters(fakeEligibilityFilters)
+        stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
+        ListingService.getListingsWithEligibility()
+        httpBackend.flush()
+        expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
 
     describe 'Service.getLotteryBuckets', ->
       afterEach ->
