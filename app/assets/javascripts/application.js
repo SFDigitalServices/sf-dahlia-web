@@ -41,6 +41,7 @@
 //= require angular-uuids
 //= require angular-linkify
 //= require angular-loading-overlay
+//= require angular-http-etag
 //= require config/angularModules.js
 //= require config/angularRoutes.js
 //= require config/angularInitialize.js

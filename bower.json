@@ -34,6 +34,7 @@
     "ng-idle": "1.2.2",
     "ng-text-truncate": "Exygy/ng-text-truncate",
     "ng-token-auth": "0.0.29",
-    "ngstorage": "0.3.11"
+    "ngstorage": "0.3.11",
+    "angular-http-etag": "2.0.17"
   }
 }
