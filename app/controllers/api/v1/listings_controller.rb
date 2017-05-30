@@ -5,7 +5,6 @@ class Api::V1::ListingsController < ApiController
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    params[:ids] = params[:ids] if params[:ids].present?
     @listings = ListingService.listings(params[:ids])
     render json: { listings: @listings }
   end
@@ -39,12 +38,11 @@ class Api::V1::ListingsController < ApiController
   end
 
   def eligibility
-    e = params[:eligibility]
     # have to massage params into number values
     filters = {
-      householdsize: e[:householdsize].to_i,
-      incomelevel: e[:incomelevel].to_f,
-      childrenUnder6: e[:childrenUnder6].to_i,
+      householdsize: params[:householdsize].to_i,
+      incomelevel: params[:incomelevel].to_f,
+      childrenUnder6: params[:childrenUnder6].to_i,
     }
     @listings = ListingService.eligible_listings(filters)
     render json: { listings: @listings }

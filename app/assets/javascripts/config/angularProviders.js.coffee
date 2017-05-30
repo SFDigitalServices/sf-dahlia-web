@@ -9,6 +9,7 @@
   delete $httpProvider.defaults.headers.common["X-Requested-With"]
   $httpProvider.defaults.headers.common["Accept"] = "application/json"
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
+  $httpProvider.defaults.headers.get = {}
 
   $httpProvider.interceptors.push ["$location", "$rootScope", "$q", ($location, $rootScope, $q) ->
     success = (response) ->
@@ -68,6 +69,11 @@
     defaultTitle = 'DAHLIA San Francisco Housing Portal'
     if $rootScope.$title then "#{$rootScope.$title}  |  #{defaultTitle}" else defaultTitle
   ]
+]
+
+@dahlia.config ['httpEtagProvider', (httpEtagProvider) ->
+  httpEtagProvider.defineCache 'persistentCache',
+    cacheService: 'localStorage'
 ]
 
 
