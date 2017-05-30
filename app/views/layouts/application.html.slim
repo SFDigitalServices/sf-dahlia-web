@@ -51,5 +51,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     / icon collection
     ng-include src="'shared/templates/icons.html'"
 
-    = javascript_include_tag 'application'
+
+    = javascript_include_tag 'application', async: Rails.env.production?
     = yield :javascript

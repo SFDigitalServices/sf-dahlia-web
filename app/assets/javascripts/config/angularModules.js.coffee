@@ -31,5 +31,6 @@ angular.module('dahlia.components', [])
   'ng-token-auth',
   'angular-uuid',
   'linkify',
-  'bsLoadingOverlay'
+  'bsLoadingOverlay',
+  'http-etag'
 ]

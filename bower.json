@@ -35,6 +35,7 @@
     "ng-text-truncate": "Exygy/ng-text-truncate",
     "ng-token-auth": "0.0.29",
     "ngstorage": "0.3.11",
-    "angular-messages": "1.5.11"
+    "angular-messages": "1.5.11",
+    "angular-http-etag": "2.0.17"
   }
 }
