@@ -1,7 +1,9 @@
 .app-card.form-card
   .app-inner.leader
-    h2.app-card_question Save time by using the details from your last application.
-    p.form-note We'll simply pre-fill your application with the following details, and you can  make updates as you go.
+    h2.app-card_question
+      | {{'B0_AUTOFILL_PREVIEW.TITLE' | translate}}
+    p.form-note
+      | {{'B0_AUTOFILL_PREVIEW.DESCRIPTION' | translate}}
 
   / You
   review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
@@ -94,8 +96,8 @@
     .button-pager
       .button-pager_row.primary
         button.button.primary ui-sref="dahlia.short-form-application.name"
-          | Start with these details
+          | {{'B0_AUTOFILL_PREVIEW.START_WITH_AUTOFILL' | translate}}
       .button-pager_row
         button.button.button-link.button-lined.small-text-center.expand-small ng-click="resetAndStartNewApp()"
-          | Reset and start from scratch
+          | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}
 
