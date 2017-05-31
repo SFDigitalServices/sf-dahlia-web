@@ -39,6 +39,12 @@ do ->
           Preferences: {}
           Income: {}
           Review: {}
+      applicationDefaults:
+        applicant:
+          home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          phone: null
+          mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          terms: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -84,6 +90,7 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -136,6 +143,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -612,3 +620,16 @@ do ->
       it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
         scope.fileAttachmentsForRentBurden()
         expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
+
+    describe 'resetAndStartNewApp', ->
+      beforeEach ->
+        scope.resetAndStartNewApp()
+
+      it 'calls resetUserData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+
+      it 'sets application autofill value to false', ->
+        expect(scope.application.autofill).toEqual false
+
+      it 'send user to You section of short form', ->
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')

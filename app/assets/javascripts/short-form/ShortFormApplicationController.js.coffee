@@ -105,7 +105,7 @@ ShortFormApplicationController = (
   $scope.submitDisabled = false
 
   $scope.resetAndStartNewApp = ->
-    ShortFormApplicationService.resetAndStartNewApp()
+    ShortFormApplicationService.resetUserData()
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.application.autofill = false
     $state.go('dahlia.short-form-application.name')

@@ -129,9 +129,6 @@ ShortFormApplicationService = (
       else
         false
 
-  Service.resetAndStartNewApp = ->
-    Service.resetUserData()
-
   Service.copyHomeToMailingAddress = ->
     unless Service.applicant.hasAltMailingAddress
       angular.copy(Service.applicant.home_address, Service.applicant.mailing_address)
@@ -541,7 +538,6 @@ ShortFormApplicationService = (
       Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
-    return true
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
     # they're "jumping ahead" if they're not coming from a short form page or create-account
