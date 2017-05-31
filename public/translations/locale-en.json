@@ -183,7 +183,7 @@
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Anti-Displacement Housing Preference</strong> This preference applies only to new projects. At least one household member must live within a census tract that has been identified as having the greatest risk of economic displacement.",
-            "NAME": "Neighborhood Resident Housing Preference",
+            "NAME": "Anti-Displacement Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in a neighborhood where people are at the greatest risk of being displaced.",
             "TITLE": "Live in the Neighborhood"
         },
