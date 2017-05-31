@@ -68,6 +68,7 @@ ShortFormApplicationService = (
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
+    ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
   Service.resetUserData = (data = {}) ->

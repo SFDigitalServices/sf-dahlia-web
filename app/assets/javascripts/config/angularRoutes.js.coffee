@@ -139,6 +139,7 @@
         expiredUnconfirmed: null
         expiredConfirmed: null
         redirectTo: null
+        fromShortFormIntro: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'

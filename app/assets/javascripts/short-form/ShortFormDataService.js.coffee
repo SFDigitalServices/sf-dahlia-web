@@ -496,7 +496,8 @@ ShortFormDataService = (ListingService) ->
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
 
-
+    # reset completedSections
+    angular.copy(Service.defaultCompletedSections, data.completedSections)
 
   #############################################
   # Helper functions

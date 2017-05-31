@@ -48,7 +48,7 @@ module SalesforceService
 
     def self.autofill_reset(application, listing_id)
       application = Hashie::Mash.new(application.as_json)
-      reset_params = {
+      reset = {
         autofill: true,
         id: nil,
         listingID: listing_id,
@@ -59,11 +59,11 @@ module SalesforceService
       }
       # reset income fields on apps > 30 days old
       if Date.parse(application[:applicationSubmittedDate]) < 30.days.ago
-        reset_params[:householdVouchersSubsidies] = nil
-        reset_params[:annualIncome] = nil
-        reset_params[:monthlyIncome] = nil
+        reset[:householdVouchersSubsidies] = nil
+        reset[:annualIncome] = nil
+        reset[:monthlyIncome] = nil
       end
-      application.merge(reset_params)
+      application.merge(reset)
     end
 
     def self.delete(id)
