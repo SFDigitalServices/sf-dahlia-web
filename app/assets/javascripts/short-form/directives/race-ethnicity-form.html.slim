@@ -5,13 +5,13 @@
   select#user_ethnicity ng-model="user.ethnicity" data-width="auto" name="ethnicity"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
-    option ng-repeat="option in ethnicity_options" value="{{option}}"
-      | {{option}}
+    option ng-repeat="option in ethnicity_options" value="{{option[0]}}"
+      | {{option[1] | translate}}
 
   label.form-label.caps for="user_race"
     | {{'LABEL.APPLICANT_RACE' | translate}}
   select#user_race ng-model="user.race" data-width="auto" name="race"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
-    option ng-repeat="option in race_options" value="{{option}}"
-      | {{option}}
+    option ng-repeat="option in race_options" value="{{option[0]}}"
+      | {{option[1] | translate}}
