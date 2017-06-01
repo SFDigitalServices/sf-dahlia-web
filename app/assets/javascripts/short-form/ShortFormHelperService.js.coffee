@@ -17,7 +17,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.relationship_options = [
     ['Spouse', $translate.instant('LABEL.SPOUSE')]
     ['Registered Domestic Partner', $translate.instant('LABEL.REGISTERED_DOMESTIC_PARTNER')]
-    ['Parent', $translate.instant('LABEL.PARTNER')]
+    ['Parent', $translate.instant('LABEL.PARENT')]
     ['Child', $translate.instant('LABEL.CHILD')]
     ['Sibling', $translate.instant('LABEL.SIBLING')]
     ['Cousin', $translate.instant('LABEL.COUSIN')]
