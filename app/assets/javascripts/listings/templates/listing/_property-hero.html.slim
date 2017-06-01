@@ -79,6 +79,10 @@
 
       ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
+  .content-card ng-if="listingHasSROUnits()"
+    h4.content-card_title SINGLE ROOM OCCUPANCY
+    p.c-steel This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.
+
   / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print
     div ng-if="!listingApplicationClosed(listing)"

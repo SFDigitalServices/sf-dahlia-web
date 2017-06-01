@@ -498,6 +498,19 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
 
+  Service.listingHasSROUnits = (listing) ->
+    hasSRO = false
+    _.forEach listing.unitSummaries.general, (summary) ->
+      if summary.Unit_Type == 'SRO'
+        hasSRO = true
+        return
+    if !hasSRO
+      _.forEach listing.unitSummaries.reserved, (summary) ->
+        if summary.Unit_Type == 'SRO'
+          hasSRO = true
+          return
+    hasSRO
+
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 
