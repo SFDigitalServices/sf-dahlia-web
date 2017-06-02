@@ -14,6 +14,7 @@ do ->
     fakeSharedService = {}
     fakeShortFormApplicationService = {}
     fakeAnalyticsService = {}
+    $translate = {}
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingFavorites = {}
@@ -58,6 +59,7 @@ do ->
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value '$translate', $translate
       return
     )
 
