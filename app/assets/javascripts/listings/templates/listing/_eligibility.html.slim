@@ -160,3 +160,7 @@ accordion-heading.lead
             ' Qualified applicants with criminal history will be considered for
               housing in compliance with <a target="_blank" href="http://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
           p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20")
+
+        p ng-if="listing.Building_Selection_Criteria"
+          a target="_blank" href="{{listing.Building_Selection_Criteria}}"
+            | Find out more about Building Selection Criteria
