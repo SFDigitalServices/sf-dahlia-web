@@ -220,14 +220,6 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
-  $scope.reservedForLabels = (listing) ->
-    types = []
-    _.each listing.reservedDescriptor, (descriptor) ->
-      if descriptor.name
-        type = descriptor.name
-        types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
-    if types.length then types.join(', ') else ''
-
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
       'Senior':
