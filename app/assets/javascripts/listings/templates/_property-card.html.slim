@@ -63,10 +63,10 @@
         tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = listing.unitSummaries.general"
       / Reserved
       table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="listing.unitSummaries.reserved"
-        caption ng-if="listingIsReservedCommunity(listing)" ng-repeat="descriptor in listing.reservedDescriptor"
-          span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{reservedLabel(listing, descriptor.name, 'reservedForWhoAre')}}"
-        caption ng-if="!listingIsReservedCommunity(listing)" ng-repeat="descriptor in listing.reservedDescriptor"
-          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedLabel(listing, descriptor.name, 'reservedForWhoAre')}}"
+        caption ng-if="listingIsReservedCommunity(listing)"
+          span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{reservedForLabels(listing)}}"
+        caption ng-if="!listingIsReservedCommunity(listing)"
+          span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedForLabels(listing)}}"
 
         tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = listing.unitSummaries.reserved"
 
