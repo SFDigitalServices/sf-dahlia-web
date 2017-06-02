@@ -57,13 +57,19 @@
       .message.is-reserved ng-if="listingHasReservedUnits() && listingIsReservedCommunity()" ng-repeat="descriptor in listing.reservedDescriptor"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
-            use xlink:href="#i-star"
+            use xlink:href="#i-star" ng-show="$index == 0"
+            use xlink:href="#i-cross" ng-show="$index == 1"
+            use xlink:href="#i-oval" ng-show="$index == 2"
+            use xlink:href="#i-polygon" ng-show="$index == 3"
         span.message-text translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{reservedLabel(listing, descriptor.name, 'reservedForWhoAre')}}"
 
       .message.is-reserved ng-if="listingHasReservedUnits() && !listingIsReservedCommunity()" ng-repeat="descriptor in listing.reservedDescriptor"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
-            use xlink:href="#i-star"
+            use xlink:href="#i-star" ng-show="$index == 0"
+            use xlink:href="#i-cross" ng-show="$index == 1"
+            use xlink:href="#i-oval" ng-show="$index == 2"
+            use xlink:href="#i-polygon" ng-show="$index == 3"
         span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedLabel(listing, descriptor.name, 'reservedForWhoAre')}}"
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
