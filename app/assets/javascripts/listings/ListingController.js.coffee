@@ -220,6 +220,9 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
+  $scope.reservedDescriptorIndex = (listing, descriptor) ->
+    _.findIndex(listing.reservedDescriptor, ['name', descriptor])
+
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
       'Senior':
