@@ -308,10 +308,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         else
           openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
-        if Service.lotteryDatePassed(listing)
-          lotteryResultsListings.push(listing)
-        else
+        if Service.lotteryIsUpcoming(listing)
           closedListings.push(listing)
+        else
+          lotteryResultsListings.push(listing)
 
     angular.copy(Service.sortListings(openListings, 'openListings'), Service.openListings)
     angular.copy(Service.sortListings(openMatchListings, 'openMatchListings'), Service.openMatchListings)
@@ -360,6 +360,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
     # listing is open if deadline is in the future
     return today > lotteryDate
+
+  Service.lotteryIsUpcoming = (listing) ->
+    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
 
   Service.listingIsReservedCommunity = (listing) ->
     !! listing.Reserved_community_type
