@@ -532,22 +532,27 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
-          ($stateParams, $state, ShortFormApplicationService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+            deferred = $q.defer()
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
 
             # if we have an autofilled application that means we're just trying to get to the preview page
-            return if ShortFormApplicationService.application.autofill
+            if ShortFormApplicationService.application.autofill
+              deferred.resolve(ShortFormApplicationService.application)
+              return deferred.promise
 
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
+              deferred.resolve(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+            return deferred.promise
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
@@ -559,6 +564,28 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b0-autofill-preview.html'
+      resolve:
+        # autofill-preview requires you to be logged in
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+        autofill: [
+          'application', '$timeout', '$state', '$stateParams',
+          (application, $timeout, $state, $stateParams) ->
+            # this is to handle the case where you opted out of autofill
+            # and then clicked 'back' in the browser from short form
+            $timeout ->
+              # autofill would not be `true` if you opted out
+              unless application.autofill
+                $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
+        ]
+      onEnter: [
+        'ShortFormApplicationService', 'AccountService',
+        (ShortFormApplicationService, AccountService) ->
+          ShortFormApplicationService.completeSection('Intro')
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+      ]
     })
     .state('dahlia.short-form-application.name', {
       url: '/name'

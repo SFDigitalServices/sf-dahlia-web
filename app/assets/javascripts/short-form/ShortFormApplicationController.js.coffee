@@ -107,7 +107,11 @@ ShortFormApplicationController = (
   $scope.resetAndStartNewApp = ->
     ShortFormApplicationService.resetUserData()
     $scope.applicant = ShortFormApplicationService.applicant
-    $scope.application.autofill = false
+    $scope.preferences = ShortFormApplicationService.preferences
+    $scope.alternateContact = ShortFormApplicationService.alternateContact
+    $scope.householdMember = ShortFormApplicationService.householdMember
+    $scope.householdMembers = ShortFormApplicationService.householdMembers
+    delete $scope.application.autofill
     $state.go('dahlia.short-form-application.name')
 
   $scope.atAutofillPreview = ->

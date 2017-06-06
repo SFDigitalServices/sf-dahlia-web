@@ -43,6 +43,7 @@ ShortFormDataService = (ListingService) ->
     delete application.primaryApplicant.mailingGeocoding_data
     delete application.validatedForms
     delete application.lotteryNumber
+    delete application.autofill
     return application
 
   Service.formatUserDOB = (user) ->
@@ -291,6 +292,8 @@ ShortFormDataService = (ListingService) ->
     data.householdIncome = Service._reformatIncome(sfApp)
     Service._reformatMetadata(sfApp, data)
     data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
+    # if sfApp.autofill == true that means the API returned an autofilled application
+    # to be used as a new draft (i.e. some fields need to be cleared out)
     Service._autofillReset(data) if sfApp.autofill
     return data
 
@@ -495,6 +498,21 @@ ShortFormDataService = (ListingService) ->
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
+
+    # reset contact + neighborhood data
+    resetContactFields = [
+      'appMemberId'
+      'contactId'
+      'neighborhoodPreferenceMatch'
+      'xCoordinate'
+      'yCoordinate'
+      'whichComponentOfLocatorWasUsed'
+      'candidateScore'
+    ]
+
+    angular.copy(_.omit(data.applicant, resetContactFields), data.applicant)
+    _.each data.householdMembers, (member) ->
+      angular.copy(_.omit(member, resetContactFields), member)
 
     # reset completedSections
     angular.copy(Service.defaultCompletedSections, data.completedSections)

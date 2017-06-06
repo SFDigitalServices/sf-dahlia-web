@@ -111,6 +111,13 @@ do ->
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.completedSections['Intro']).toEqual false
 
+      it 'should reset appMemberId and neighborhoodPreferenceMatch fields', ->
+        fakeApplication.applicant.appMemberId = '123XYZ'
+        fakeApplication.applicant.neighborhoodPreferenceMatch = 'Matched'
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.applicant.appMemberId).toBeUndefined()
+        expect(fakeApplication.applicant.neighborhoodPreferenceMatch).toBeUndefined()
+
 
     describe '_calculateTotalMonthlyRent', ->
       it 'adds up rent values from groupedHouseholdAddresses', ->
