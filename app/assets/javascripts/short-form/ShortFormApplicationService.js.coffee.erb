@@ -393,6 +393,14 @@ ShortFormApplicationService = (
     else if income.incomeTimeframe == 'per_month'
       income.incomeTotal * 12
 
+  Service.clearAddressRelatedProofForMember = (member) ->
+    addressPreferences = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
+    full_name = "#{member.firstName} #{member.lastName}"
+    addressPreferences.forEach (preference) ->
+      selectedMemberName = Service.preferences[preference + '_household_member']
+      if full_name == selectedMemberName
+        FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+
   # update lists of eligible people for the dropdowns for these preferences
   Service.refreshPreferences = (type = 'all') ->
     if type == 'liveWorkInSf' || type == 'all'
@@ -807,6 +815,7 @@ ShortFormApplicationService = (
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
       Service.refreshPreferences('all')
+      Service.clearAddressRelatedProofForMember(Service.applicant)
       callback()
     AddressValidationService.validate(
       address: Service.applicant.home_address
@@ -832,6 +841,7 @@ ShortFormApplicationService = (
       Service.addHouseholdMember(Service.householdMember)
       # check if eligibility has changed
       Service.refreshPreferences('all')
+      Service.clearAddressRelatedProofForMember(Service.householdMember)
       callback()
     AddressValidationService.validate(
       address: Service.householdMember.home_address

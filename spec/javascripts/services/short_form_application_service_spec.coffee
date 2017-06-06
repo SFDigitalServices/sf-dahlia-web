@@ -245,6 +245,28 @@ do ->
         correctValue = { fullName: 'Bob Williams (You)', firstName: 'You' }
         expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual [correctValue]
 
+    describe 'clearAddressRelatedProofForMember', ->
+      beforeEach ->
+        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson' })
+        ShortFormApplicationService.applicant = fakeApplicant
+        # reset the spy so that we can check for "not" toHaveBeenCalled
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+      afterEach ->
+        resetFakePeople()
+
+      it 'clears the proof file for a preference if the indicated member is selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Frank Robinson'
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Frank Robinson'
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+
+      it 'does not clear the proof file for a preference if the indicated member is not selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Joseph Mann'
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Joseph Mann'
+        expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
+
+
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
@@ -276,6 +298,7 @@ do ->
         describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
             fakeApplicant.home_address = fakeNonSFAddress
+            fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
             ShortFormApplicationService.application.completedSections['Preferences'] = true
@@ -729,6 +752,7 @@ do ->
 
     describe 'cancelPreference', ->
       beforeEach ->
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
         ShortFormApplicationService.preferences.liveInSf = true
         ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
         ShortFormApplicationService.preferences.documents.liveInSf = {

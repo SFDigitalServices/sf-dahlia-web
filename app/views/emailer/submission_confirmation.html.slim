@@ -12,10 +12,6 @@ p
   = t '.should_your_application_be_chosen'
 p
   = t '.see_below_for_contact_information'
-p
-  =' t '.how_are_we_doing'
-  = link_to t('.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
-  | .
 
 p
   = @listing.Leasing_Agent_Name
@@ -34,3 +30,8 @@ p
     = t '.office_hours'
     | :
   == simple_format strip_tags(@listing.Office_Hours)
+
+p
+  =' t '.how_are_we_doing'
+  = link_to t('.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
+  | .
