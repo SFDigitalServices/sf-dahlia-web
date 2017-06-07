@@ -26,6 +26,18 @@
           $translate.use($stateParams.lang)
         ]
     })
+    # Home page
+    .state('dahlia.welcome', {
+      url: '/'
+      views:
+        'container@':
+          controller: 'ListingController'
+          templateUrl: 'pages/templates/welcome.html'
+      resolve:
+        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
+          ListingService.getListings({checkEligibility: false})
+        ]
+    })
     .state('dahlia.housing-counselors', {
       url: '/housing-counselors'
       views:
@@ -332,17 +344,6 @@
         ]
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.FAVORITES')
-        ]
-    })
-    .state('dahlia.welcome', {
-      url: '/'
-      views:
-        'container@':
-          controller: 'ListingController'
-          templateUrl: 'pages/templates/welcome.html'
-      resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings({checkEligibility: false})
         ]
     })
     .state('dahlia.welcome-chinese', {

@@ -67,59 +67,64 @@ div ng-if="prioritiesSelectedExists()"
   review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
   .app-inner
-    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.STUB_householdPublicHousing"
-      | {{application.STUB_householdPublicHousing}}
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.hasPublicHousing"
+      | {{application.hasPublicHousing}}
     review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslateVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
       span ng-if="!groupedAddress.monthlyRent"
         ' {{ 0 | currency : $ : 0 }}
       span translate="LABEL.PER_MONTH"
-    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.STUB_qualifyingServedInMilitary"
-      | {{application.STUB_qualifyingServedInMilitary}}
-    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
-      | {{application.STUB_qualifyingDevelopmentallyDisabled}}
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.hasMilitaryService"
+      | {{application.hasMilitaryService}}
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.hasDevelopmentalDisability"
+      | {{application.hasDevelopmentalDisability}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
-      span ng-repeat="priorityOption in priority_options" ng-if="application.STUB_prioritiesSelected[priorityOption[0]]"
+      span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}
         br
-      span ng-if="application.STUB_prioritiesSelected.no"
+      span ng-if="application.adaPrioritiesSelected.no"
         | {{'T.NO' | translate}}
 
-/ Self-declared status
-review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
+/ Preferences
+div ng-if="!atAutofillPreview()"
+  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
 
-.app-inner
-  p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
-    | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
+  .app-inner
+    p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
+      | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
-    | {{'E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
+      | {{'E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
-    | {{'E7_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
+      | {{'E7_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
-    | {{'E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
+      | {{'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
-    | {{'E2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.antiDisplacement" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('antiDisplacement') }}" bold-sub-label="{{ fileAttachmentForPreference('antiDisplacement')}}"
+      | {{'E2B_ADHP_PREFERENCE.PREFERENCE.NAME' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
-    | {{'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
+      | {{'E2C_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.assistedHousing" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('assistedHousing') }}" bold-sub-label="{{fileAttachmentForPreference('assistedHousing')}}"
-    | {{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
+      | {{'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.rentBurden" get-labels="fileAttachmentsForRentBurden()"
-    | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.assistedHousing" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('assistedHousing') }}" bold-sub-label="{{fileAttachmentForPreference('assistedHousing')}}"
+      | {{'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE' | translate}}
+
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.rentBurden" get-labels="fileAttachmentsForRentBurden()"
+      | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
 / Income
-review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
+div ng-if="application.householdIncome.incomeTotal"
+  review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
 
-.app-inner
-  review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
-    | {{applicationVouchersSubsidies()}}
+  .app-inner
+    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
+      | {{applicationVouchersSubsidies()}}
 
-  review-summary-item label="{{'LABEL.INCOME' | translate}}"
-    | {{ applicationIncomeAmount() }}
+    review-summary-item label="{{'LABEL.INCOME' | translate}}"
+      | {{ applicationIncomeAmount() }}
