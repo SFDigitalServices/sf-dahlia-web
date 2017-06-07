@@ -22,8 +22,8 @@
           templateUrl: 'shared/templates/footer.html'
       data:
         meta:
-          'author': 'SF MOHCD'
-          'og:title': 'DAHLIA Housing Portal'
+          'og:image': 'https://housing.sfgov.org/images/logo-portal.png'
+          'og:title': 'DAHLIA San Francisco Housing Portal'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
           # this should happen after preferredLanguage is initially set
