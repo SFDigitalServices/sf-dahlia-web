@@ -628,8 +628,8 @@ do ->
       it 'calls resetUserData on ShortFormApplicationService', ->
         expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
 
-      it 'sets application autofill value to false', ->
-        expect(scope.application.autofill).toEqual false
+      it 'unsets application autofill value', ->
+        expect(scope.application.autofill).toBeUndefined()
 
       it 'send user to You section of short form', ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
