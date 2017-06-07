@@ -20,6 +20,10 @@
           controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
+      data:
+        meta:
+          'author': 'SF MOHCD'
+          'og:title': 'DAHLIA Housing Portal'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
           # this should happen after preferredLanguage is initially set

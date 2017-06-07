@@ -25,6 +25,8 @@ module SfDahliaWeb
     # if ENV['SIDEKIQ'] is not specified, will use default inline processor
     config.active_job.queue_adapter = :sidekiq if ENV['SIDEKIQ']
 
+    config.middleware.use Rack::Prerender
+
     ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates'
     ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query'
 
