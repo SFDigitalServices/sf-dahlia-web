@@ -1,0 +1,16 @@
+.app-card.form-card
+  .app-inner.leader
+    h2.app-card_question
+      | {{'B0_AUTOFILL_PREVIEW.TITLE' | translate}}
+    p.form-note
+      | {{'B0_AUTOFILL_PREVIEW.DESCRIPTION' | translate}}
+
+  ng-include src="'short-form/templates/partials/_review-application-details.html'"
+
+  .button-pager
+    .button-pager_row.primary
+      button.button.primary ui-sref="dahlia.short-form-application.name"
+        | {{'B0_AUTOFILL_PREVIEW.START_WITH_AUTOFILL' | translate}}
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ng-click="resetAndStartNewApp()"
+        | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}

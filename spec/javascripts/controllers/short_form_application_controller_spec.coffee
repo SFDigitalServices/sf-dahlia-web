@@ -37,6 +37,12 @@ do ->
           Preferences: {}
           Income: {}
           Review: {}
+      applicationDefaults:
+        applicant:
+          home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          phone: null
+          mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          terms: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -67,6 +73,15 @@ do ->
       checkHouseholdEligiblity: (listing) ->
       submitApplication: (options={}) ->
       inputInvalid: (fieldName, identifier, form = scope.form.applicationForm) ->
+      listingHasPreference: ->
+      applicationHasPreference: ->
+      eligibleForAssistedHousing: ->
+      eligibleForRentBurden: ->
+      eligibleForADHP: ->
+      hasCompleteRentBurdenFiles: ->
+      hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
+      cancelPreference: jasmine.createSpy()
+      resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -113,6 +128,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -452,3 +468,21 @@ do ->
         scope.householdMember.dob_day = 1
         scope.householdMember.dob_year = year
         expect(scope.householdMemberValidAge()).toEqual true
+
+    describe 'cancelPreference', ->
+      it 'calls cancelPreference on ShortFormApplicationService', ->
+        scope.cancelPreference()
+        expect(fakeShortFormApplicationService.cancelPreference).toHaveBeenCalled()
+
+    describe 'resetAndStartNewApp', ->
+      beforeEach ->
+        scope.resetAndStartNewApp()
+
+      it 'calls resetUserData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+
+      it 'unsets application autofill value', ->
+        expect(scope.application.autofill).toBeUndefined()
+
+      it 'send user to You section of short form', ->
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')

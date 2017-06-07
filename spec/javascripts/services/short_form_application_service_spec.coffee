@@ -29,6 +29,7 @@ do ->
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
+      checkSurveyComplete: jasmine.createSpy()
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -464,23 +465,10 @@ do ->
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
     describe 'checkSurveyComplete', ->
-      beforeEach ->
-        setupFakeApplicant()
-      afterEach ->
-        resetFakePeople()
-
-      it 'should check if survey is incomplete', ->
+      it 'should call function on ShortFormDataService', ->
         ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.applicant.gender = {Female: true}
-        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual false
-
-      it 'should check if survey is complete', ->
-        ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.applicant.gender = {Fake: true}
-        ShortFormApplicationService.applicant.ethnicity = 'Fake'
-        ShortFormApplicationService.applicant.race = 'Fake'
-        ShortFormApplicationService.applicant.referral = {Fake: true}
-        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
+        ShortFormApplicationService.checkSurveyComplete()
+        expect(fakeDataService.checkSurveyComplete).toHaveBeenCalledWith(fakeApplicant)
 
     describe 'submitApplication', ->
       beforeEach ->

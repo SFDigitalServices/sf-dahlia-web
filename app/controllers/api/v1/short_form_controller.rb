@@ -167,13 +167,12 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def find_listing_application
-    @application = nil
-    applications = ShortFormService.get_for_user(user_contact_id)
-    applications.each do |application|
-      if application['listingID'] == params[:listing_id]
-        @application = application
-      end
-    end
+    opts = {
+      contact_id: user_contact_id,
+      listing_id: params[:listing_id],
+      autofill: params[:autofill],
+    }
+    @application = ShortFormService.find_listing_application(opts)
   end
 
   def find_application_files
