@@ -43,6 +43,7 @@ ShortFormDataService = (ListingService) ->
     delete application.primaryApplicant.mailingGeocoding_data
     delete application.validatedForms
     delete application.lotteryNumber
+    delete application.autofill
     return application
 
   Service.formatUserDOB = (user) ->
@@ -277,7 +278,8 @@ ShortFormDataService = (ListingService) ->
       'listing'
       'applicationSubmittedDate'
       'status'
-      'lotteryNumber'
+      'lotteryNumber',
+      'autofill'
     ]
     data = _.pick sfApp, whitelist
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
@@ -290,6 +292,8 @@ ShortFormDataService = (ListingService) ->
     data.householdIncome = Service._reformatIncome(sfApp)
     Service._reformatMetadata(sfApp, data)
     data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
+    # if sfApp.autofill == true that means the API returned an autofilled application
+    # to be used as a new draft (i.e. some fields need to be cleared out)
     Service._autofillReset(data) if sfApp.autofill
     return data
 
@@ -484,7 +488,6 @@ ShortFormDataService = (ListingService) ->
 
 
   Service._autofillReset = (data) ->
-    delete data.autofill
     data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
     unless data.surveyComplete
       # clear out demographics if you hadn't already completed them all
@@ -496,10 +499,23 @@ ShortFormDataService = (ListingService) ->
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
 
+    # reset contact + neighborhood data
+    resetContactFields = [
+      'appMemberId'
+      'contactId'
+      'neighborhoodPreferenceMatch'
+      'xCoordinate'
+      'yCoordinate'
+      'whichComponentOfLocatorWasUsed'
+      'candidateScore'
+    ]
+
+    angular.copy(_.omit(data.applicant, resetContactFields), data.applicant)
+    _.each data.householdMembers, (member) ->
+      angular.copy(_.omit(member, resetContactFields), member)
+
     # reset completedSections
     angular.copy(Service.defaultCompletedSections, data.completedSections)
-
-
 
   #############################################
   # Helper functions

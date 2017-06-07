@@ -55,6 +55,9 @@ module SalesforceService
         status: 'Draft',
         applicationSubmittedDate: nil,
         answeredCommunityScreening: nil,
+        lotteryNumber: nil,
+        name: nil,
+        agreeToTerms: nil,
         shortFormPreferences: [],
       }
       # reset income fields on apps > 30 days old

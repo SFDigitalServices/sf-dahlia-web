@@ -1,0 +1,103 @@
+.app-card.form-card
+  .app-inner.leader
+    h2.app-card_question
+      | {{'B0_AUTOFILL_PREVIEW.TITLE' | translate}}
+    p.form-note
+      | {{'B0_AUTOFILL_PREVIEW.DESCRIPTION' | translate}}
+
+  / You
+  review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
+
+  .app-inner
+    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
+      | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
+    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
+      | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+    review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="applicant.phone && !applicant.noPhone" sub-label="{{applicant.phoneType}}"
+      | {{applicant.phone | tel}}
+    review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" sub-label="{{applicant.alternatePhoneType}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
+      | {{applicant.alternatePhone | tel}}
+    review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
+      | {{applicant.email}}
+    review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="applicant.home_address.address1"
+      | {{applicant.home_address.address1}}
+      br
+      ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
+      | {{applicant.home_address.zip}}
+
+    review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="applicant.hasAltMailingAddress"
+      | {{applicant.mailing_address.address1}}
+      br
+      ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
+      | {{applicant.mailing_address.zip}}
+
+  / Alternate Contact
+  span ng-hide="!alternateContact.alternateContactType || alternateContact.alternateContactType == 'None'"
+    review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" to="dahlia.short-form-application.alternate-contact-type"
+
+    .app-inner
+      review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{alternateContactRelationship()}}" bold-sub-label="{{ alternateContact.agency }}"
+        | {{alternateContact.firstName}} {{alternateContact.lastName}}
+      review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" ng-if="alternateContact.email"
+        | {{alternateContact.email}}
+      review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone"
+        | {{alternateContact.phone | tel}}
+      review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="alternateContact.mailing_address.address1"
+        | {{alternateContact.mailing_address.address1}}
+        br
+        ' {{alternateContact.mailing_address.city}}, {{alternateContact.mailing_address.state}}
+        | {{alternateContact.mailing_address.zip}}
+
+  / Household Members
+  review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="dahlia.short-form-application.{{getLandingPage({name: 'Household'})}}"
+
+  .app-inner
+    .info-item.margin-bottom ng-if="!householdMembers || householdMembers.length == 0"
+      h4.info-item_name
+        | {{'T.NONE' | translate}}
+
+    .info-item ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
+      review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{member.relationship}}"
+        | {{member.firstName}} {{member.middleName}} {{member.lastName}}
+
+      review-summary-item label="{{'LABEL.DOB' | translate}}"
+        | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
+
+      review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="member.hasSameAddressAsApplicant == 'No'"
+        | {{member.home_address.address1}}
+        br
+        ' {{member.home_address.city}}, {{member.home_address.state}}
+        | {{member.home_address.zip}}
+
+  / TODO: enable once Autofill + Multifamily are merged, remove 'STUB'
+  / / Household Details
+  / div ng-if="prioritiesSelectedExists()"
+  /   review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
+  /
+  /   .app-inner
+  /     review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.STUB_householdPublicHousing"
+  /       | {{application.STUB_householdPublicHousing}}
+  /     review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslateVariable(groupedAddress.members)}}"
+  /       span ng-if="groupedAddress.monthlyRent"
+  /         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
+  /       span ng-if="!groupedAddress.monthlyRent"
+  /         ' {{ 0 | currency : $ : 0 }}
+  /       span translate="LABEL.PER_MONTH"
+  /     review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.STUB_qualifyingServedInMilitary"
+  /       | {{application.STUB_qualifyingServedInMilitary}}
+  /     review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.STUB_qualifyingDevelopmentallyDisabled"
+  /       | {{application.STUB_qualifyingDevelopmentallyDisabled}}
+  /     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
+  /       span ng-repeat="priorityOption in priority_options" ng-if="application.STUB_prioritiesSelected[priorityOption[0]]"
+  /         | {{priorityOption[1]}}
+  /         br
+  /       span ng-if="application.STUB_prioritiesSelected.no"
+  /         | {{'T.NO' | translate}}
+
+  .button-pager
+    .button-pager_row.primary
+      button.button.primary ui-sref="dahlia.short-form-application.name"
+        | {{'B0_AUTOFILL_PREVIEW.START_WITH_AUTOFILL' | translate}}
+    .button-pager_row
+      button.button.button-link.button-lined.small-text-center.expand-small ng-click="resetAndStartNewApp()"
+        | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}
