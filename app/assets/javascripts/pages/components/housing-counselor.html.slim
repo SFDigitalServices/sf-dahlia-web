@@ -1,0 +1,28 @@
+div
+  h3.t-delta.t-sans.margin-bottom--half
+    a.a-oil href="{{ $ctrl.counselor.website }}" target="_blank"
+      | {{ $ctrl.counselor.name }}
+  p.t-tiny.c-steel ng-if="$ctrl.counselor.languages"
+    | Language Services:
+    span ng-repeat="language in $ctrl.counselor.languages"
+      span.label.radius.secondary
+        | {{ language }}
+  .a-icon-left.d-block ng-if="$ctrl.counselor.address || $ctrl.counselor.citystate"
+    span.ui-icon.ui-medium
+      svg
+        use xlink:href="#i-map"
+    p.offset-icon.margin-bottom--half
+      | {{ $ctrl.counselor.address }}
+      br
+      | {{ $ctrl.counselor.citystate }}
+  p
+    a.button-on-small title="Call {{ $ctrl.counselor.phone }}" href="tel:+1{{$ctrl.counselor.phone}}"
+      span.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-phone"
+      | Call {{ $ctrl.counselor.phone }}
+    a.button-on-small target="_blank" href="{{$ctrl.counselor.website}}"
+      span.ui-icon.ui-medium
+        svg
+          use xlink:href="#i-link"
+      | Visit {{ $ctrl.counselor.name}}

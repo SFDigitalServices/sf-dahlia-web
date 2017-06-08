@@ -12,30 +12,4 @@ section.row
       h2.h-caps-lined Featured Resources
     ul.resources-list.block-list
       li.block-item ng-repeat="counselor in housing_counselors"
-        h3.t-delta.t-sans.margin-bottom--half
-          a.a-oil
-            | {{ counselor.name }}
-        p.t-tiny.c-steel ng-if="counselor.languages"
-          | Language Services:
-          span ng-repeat="language in counselor.languages"
-            span.label.radius.secondary
-              | {{ language }}
-        .a-icon-left.d-block ng-if="counselor.address || counselor.citystate"
-          span.ui-icon.ui-medium
-            svg
-              use xlink:href="#i-map"
-          p.offset-icon.margin-bottom--half
-            | {{ counselor.address }}
-            br
-            | {{ counselor.citystate }}
-        p
-          a.button-on-small title="Call {{ counselor.phone }}" href="tel:+1{{counselor.phone}}"
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-phone"
-            | Call {{ counselor.phone }}
-          a.button-on-small target="_blank" href="{{counselor.website}}"
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-link"
-            | Visit {{ counselor.name}}
+        housing-counselor counselor="counselor"
