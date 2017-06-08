@@ -25,7 +25,7 @@ section.row
 
         .block-item.no-border ng-repeat="counselor in spanish_counselors"
           h3.t-delta.t-sans.margin-bottom--half
-            a.a-oil href="{{ counselor.website }}" target="_blank" {{ counselor.name }}
+            a.a-oil href="{{ counselor.website }}" target="_blank" {{ placeholderTranslate('Spanish', counselor.name) }}
           p
             | Idiomas: {{ languages('Spanish', counselor.languages) }}
           .a-icon-left.d-block
@@ -46,7 +46,7 @@ section.row
               span.ui-icon.ui-medium
                 svg
                   use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Visite {{ counselor.name }}
+              | Visite {{ counselor.name }} en línea
       hr.tall
       .content-section
         p.t-delta.t-light
