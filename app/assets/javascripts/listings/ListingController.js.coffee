@@ -44,6 +44,13 @@ ListingController = (
   $scope.loading = ListingService.loading
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
+  $scope.reservedUnitIcons = [
+    $sce.trustAsResourceUrl('#i-star')
+    $sce.trustAsResourceUrl('#i-cross')
+    $sce.trustAsResourceUrl('#i-oval')
+    $sce.trustAsResourceUrl('#i-polygon')
+  ]
+
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
 
@@ -220,8 +227,9 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
-  $scope.reservedDescriptorIndex = (listing, descriptor) ->
-    _.findIndex(listing.reservedDescriptor, ['name', descriptor])
+  $scope.reservedDescriptorIcon = (listing, descriptor) ->
+    index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
+    $scope.reservedUnitIcons[index]
 
   $scope.reservedForLabels = (listing) ->
     types = []
