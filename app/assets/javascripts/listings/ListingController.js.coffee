@@ -9,7 +9,6 @@ ListingController = (
   $sanitize,
   $timeout,
   $filter,
-  $translate,
   Carousel,
   SharedService,
   ListingService,
@@ -230,7 +229,7 @@ ListingController = (
       if descriptor.name
         type = descriptor.name
         types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
-    if types.length then types.join(" #{ $translate.instant('T.OR') } ") else ''
+    if types.length then types.join(' or ') else ''
 
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
@@ -313,7 +312,6 @@ ListingController.$inject = [
   '$sanitize',
   '$timeout',
   '$filter',
-  '$translate',
   'Carousel',
   'SharedService',
   'ListingService',
