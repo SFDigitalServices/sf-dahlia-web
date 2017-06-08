@@ -23,30 +23,30 @@ section.row
           | Además, para obtener información y recursos adicionales, visite:
           a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952" Guía de recursos de vivienda de San Francisco
 
-        .block-item.no-border ng-repeat="counselor in spanish_counselors"
-          h3.t-delta.t-sans.margin-bottom--half
-            a.a-oil href="{{ counselor.website }}" target="_blank" {{ placeholderTranslate('Spanish', counselor.name) }}
-          p
-            | Idiomas: {{ languages('Spanish', counselor.languages) }}
-          .a-icon-left.d-block
+      .block-item.no-border ng-repeat="counselor in spanish_counselors"
+        h3.t-delta.t-sans.margin-bottom--half
+          a.a-oil href="{{ counselor.website }}" target="_blank" {{ placeholderTranslate('Spanish', counselor.name) }}
+        p
+          | Idiomas: {{ languages('Spanish', counselor.languages) }}
+        .a-icon-left.d-block
+          span.ui-icon.ui-medium
+            svg
+              use xlink:href="#i-map" xmlns:xlink="http://www.w3.org/1999/xlink"
+          p.offset-icon.margin-bottom--half
+            | {{ counselor.address }}
+            br
+            | {{ counselor.citystate }}
+        p
+          a.button-on-small title="Call {{ counselor.phone }}" href="tel:+{{ counselor.phone }}"
             span.ui-icon.ui-medium
               svg
-                use xlink:href="#i-map" xmlns:xlink="http://www.w3.org/1999/xlink"
-            p.offset-icon.margin-bottom--half
-              | {{ counselor.address }}
-              br
-              | {{ counselor.citystate }}
-          p
-            a.button-on-small title="Call {{ counselor.phone }}" href="tel:+{{ counselor.phone }}"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-phone" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Llame {{ counselor.phone }}
-            a.button-on-small href="{{ counselor.website }}" target="_blank"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Visite {{ counselor.name }} en línea
+                use xlink:href="#i-phone" xmlns:xlink="http://www.w3.org/1999/xlink"
+            | Llame {{ counselor.phone }}
+          a.button-on-small href="{{ counselor.website }}" target="_blank"
+            span.ui-icon.ui-medium
+              svg
+                use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
+            | Visite {{ counselor.name }} en línea
       hr.tall
       .content-section
         p.t-delta.t-light

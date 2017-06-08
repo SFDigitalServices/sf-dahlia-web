@@ -13,7 +13,8 @@ WelcomeController = ($http, $scope) ->
       _.includes o.languages, 'Spanish'
   )
 
-  # TODO: these rules seem overcomplicated; consider replacing with POEditor to translate
+  # TODO: these rules seem overcomplicated
+  # consider replacing with POEditor to translate entire phrases
   $scope.languages = (pageLanguage, assistanceLanguages) ->
 
     # none of the lists actually mention English; pull
@@ -29,15 +30,28 @@ WelcomeController = ($http, $scope) ->
 
       # add other languages
       languages += ' (' + $scope.placeholderTranslate(pageLanguage, 'and') + ' '
-      i = 0
-      while i < _.size(assistanceLanguages)
-        if i == _.size(assistanceLanguages) - 1
-          languages += $scope.placeholderTranslate(pageLanguage, 'and') + ' '
-          languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[i])
-          languages += ')'
-        else
-          languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[i]) + ', '
-        i++
+
+      # if only one other language
+      if _.size(assistanceLanguages) == 1
+        languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[0]) + ')'
+
+      # if two others
+      else if _.size(assistanceLanguages) == 2
+        languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[0])
+        languages += ' ' + $scope.placeholderTranslate(pageLanguage, 'and') + ' '
+        languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[1]) + ')'
+
+      # if three or more others
+      else
+        i = 0
+        while i < _.size(assistanceLanguages)
+          if i == _.size(assistanceLanguages) - 1
+            languages += $scope.placeholderTranslate(pageLanguage, 'and') + ' '
+            languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[i])
+            languages += ')'
+          else
+            languages += $scope.placeholderTranslate(pageLanguage, assistanceLanguages[i]) + ', '
+          i++
       languages
 
   # TODO: Replace with POEditor and translate like the rest of the app
