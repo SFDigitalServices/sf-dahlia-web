@@ -2,7 +2,6 @@ ModalInstanceController = ($scope, $modalInstance, ModalService) ->
   $scope.messages = ModalService.messages
 
   $scope.closeModal = () ->
-    ModalService.callbacks.onCancel() if ModalService.callbacks.onCancel
     $modalInstance.close()
 
   $scope.confirm = ->

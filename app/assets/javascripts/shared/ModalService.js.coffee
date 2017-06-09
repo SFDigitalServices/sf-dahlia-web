@@ -8,10 +8,9 @@ ModalService = ($modal) ->
   Service.messages = {}
   Service.callbacks = {}
 
-  Service.alert = (message, onConfirm, onCancel) ->
+  Service.alert = (message, onConfirm) ->
     Service.messages.alert = message
     Service.callbacks.onConfirm = onConfirm
-    Service.callbacks.onCancel = onCancel
     if (!Service.modalInstance)
       Service.modalInstance = $modal.open(
         templateUrl: 'shared/templates/alert_modal.html',
@@ -19,10 +18,9 @@ ModalService = ($modal) ->
         windowClass: 'modal-large'
       )
       Service.modalInstance.result.then( ->
-        modalInstance = null
+        Service.modalInstance = null
       ).catch( ->
-        modalInstance = null
-        Service.callbacks.onCancel() if Service.callbacks.onCancel
+        Service.modalInstance = null
       )
 
   return Service
