@@ -266,6 +266,10 @@ module.exports = ->
   # --- Expectations --- #
   ########################
 
+  @Then 'I should see the successful file upload info', ->
+    attachmentUploaded = element(By.id('successfulUpload'))
+    @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
+
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
     @expect(lotteryNumberMarkup.isPresent()).to.eventually.equal(true)
