@@ -18,41 +18,15 @@ section.row
       .content-section
         p.t-delta.t-light
           | Para ayuda adicional en navegar el Housing Portal, o si tiene otras preguntas sobre como encontrar vivienda asequible en San Francisco, favor de contactar una de las agencias de consejería de vivienda que hablen español.
-          br
-          br
-          | Además, para obtener información y recursos adicionales, visite:
-          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952" Guía de recursos de vivienda de San Francisco
-
-      .block-item.no-border ng-repeat="counselor in spanish_counselors"
-        h3.t-delta.t-sans.margin-bottom--half
-          a.a-oil href="{{ counselor.website }}" target="_blank" {{ placeholderTranslate('Spanish', counselor.name) }}
-        p
-          | Idiomas: {{ languages('Spanish', counselor.languages) }}
-        .a-icon-left.d-block
-          span.ui-icon.ui-medium
-            svg
-              use xlink:href="#i-map" xmlns:xlink="http://www.w3.org/1999/xlink"
-          p.offset-icon.margin-bottom--half
-            | {{ counselor.address }}
-            br
-            | {{ counselor.citystate }}
-        p
-          a.button-on-small title="Call {{ counselor.phone }}" href="tel:+{{ counselor.phone }}"
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-phone" xmlns:xlink="http://www.w3.org/1999/xlink"
-            | Llame {{ counselor.phone }}
-          a.button-on-small href="{{ counselor.website }}" target="_blank"
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
-            | Visite {{ counselor.name }} en línea
       hr.tall
       .content-section
         p.t-delta.t-light
-          | Para obtener recursos adicionales de vivienda, visite:
-          br
-          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952" http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952
+          | Además, para obtener información y recursos adicionales, visite:
+          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952"  Guía de recursos de vivienda de San Francisco
+      hr.tall
+      ul.resources-list.block-list
+        li.block-item ng-repeat="counselor in spanish_counselors"
+          housing-counselor counselor="counselor"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"
