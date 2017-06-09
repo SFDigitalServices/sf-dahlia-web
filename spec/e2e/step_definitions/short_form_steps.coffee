@@ -138,6 +138,20 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
+  @When /^I upload a "([^"]*)" as my proof of preference$/, (documentType) ->
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id("liveInSf_proof_option")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    filePath = '/Users/mattluedke/Desktop/projects/dahlia/sf-dahlia-web/public/images/arrow-down.png'
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
     element(By.id('submit')).click()
