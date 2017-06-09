@@ -1,0 +1,15 @@
+div
+  header.modal-header
+    h1.modal-title.t-gamma.no-margin
+      | Notice
+  section.modal-inner.bg-dust
+    p.c-steel
+      | {{ messages.alert }}
+
+    .button-stack.text-center.row.padding-top
+      .small-12.medium-6.columns
+        button.button.primary.right-on-medium translate="T.OK" ng-click="confirm()"
+      .small-12.medium-6.columns
+        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="closeModal()" translate="LABEL.CANCEL"
+
+  ng-include src="'account/templates/partials/_modal_close.html'"

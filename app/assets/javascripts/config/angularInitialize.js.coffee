@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService'
+  'SharedService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService) ->
+  SharedService, ModalService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -21,13 +21,14 @@
 
     $rootScope.$on 'IdleStart', ->
       if AccountService.loggedIn()
-        $window.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
       else if $state.is('dahlia.short-form-application.confirmation')
-        $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
       else
-        $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+        ModalService.alert()
 
     $rootScope.$on 'IdleTimeout', ->
+      ModalService.alert($translate.instant('T.SESSION_EXPIRED'))
       if AccountService.loggedIn()
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
@@ -65,21 +66,21 @@
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
-        if (skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
-          # disable the onbeforeunload so that you are no longer bothered if you
-          # try to reload the listings page, for example
-          $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
-          if toParams.timeout
-            AnalyticsService.trackTimeout('Application')
-          else
-            AnalyticsService.trackFormAbandon('Application')
+
+        onConfirm = ->
+          ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
+
+        if (skipConfirm || loggedInConfirmation)
+          onConfirm()
         else
-          # prevent page transition if user did not confirm
+          # TODO: One and only one of the onConfirm or onCancel logic needs to be called
+          # If the modal onConfirm happens later, it needs new logic to force navigate to a page
+          ModalService.alert(leaveMessage, onConfirm)
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
+
       else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
         # track if they are leaving create account to go somewhere else
         AnalyticsService.trackFormAbandon('Accounts')
