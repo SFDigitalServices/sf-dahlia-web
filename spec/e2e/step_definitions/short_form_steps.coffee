@@ -152,6 +152,11 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When 'I click the Next button on the Live/Work Preference page', ->
+    element.all(By.id("submit")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
     element(By.id('submit')).click()
@@ -265,6 +270,10 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see the Preferences Programs screen', ->
+    certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
+    @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
     attachmentUploaded = element(By.id('successfulUpload'))
