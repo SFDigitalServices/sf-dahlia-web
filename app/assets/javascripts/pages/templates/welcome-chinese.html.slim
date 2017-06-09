@@ -8,12 +8,12 @@ section.row
   .medium-8.columns
     article.page-content
       .content-section
-        p.t-delta.t-light
-          | 本網站目前提供下列功能：
-          | -尋找和申請可負擔房屋
-          | -低於市價租或買房屋上市名單
-          | -綱上申請
-          | -其他工能-如檢查抽簽結果, 計算家庭收入和評估住屋資格。
+        h2.t-sans.t-ch 本網站目前提供下列功能：
+        ul.t-delta.t-light
+          li 尋找和申請可負擔房屋
+          li 低於市價租或買房屋上市名單
+          li 綱上申請
+          li 其他工能-如檢查抽簽結果, 計算家庭收入和評估住屋資格。
       hr.tall
       .content-section
         p.t-delta.t-light
@@ -26,7 +26,9 @@ section.row
       .content-section
         p.t-delta.t-light
           | 另外，欲尋找其他可負擔房屋信息和資源請看：
-          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8953" 三藩市住房資源指南（中文): San Francisco Housing Resource Guide
+          br
+          a target="_blank" href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8953"
+            | 三藩市住房資源指南（中文): San Francisco Housing Resource Guide
       hr.tall
       ul.resources-list.block-list
         li.block-item ng-repeat="counselor in chinese_counselors"
