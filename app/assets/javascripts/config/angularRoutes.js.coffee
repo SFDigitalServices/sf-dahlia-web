@@ -10,6 +10,7 @@
       abstract: true
       params:
         lang: { squash: true, value: 'en' }
+        skipConfirm: { squash: true, value: false }
       views:
         'translate@':
           templateUrl: 'shared/templates/translate.html'

@@ -67,16 +67,16 @@
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
 
-        onConfirm = ->
+        if (skipConfirm || loggedInConfirmation)
+          # reset skipConfirm for future page actions
+          toParams.skipConfirm = false
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
-
-        if (skipConfirm || loggedInConfirmation)
-          onConfirm()
         else
-          # TODO: One and only one of the onConfirm or onCancel logic needs to be called
-          # If the modal onConfirm happens later, it needs new logic to force navigate to a page
-          ModalService.alert(leaveMessage, onConfirm)
+          ModalService.alert(leaveMessage, ->
+            toParams.skipConfirm = true
+            $state.go(toState.name, toParams)
+          )
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
