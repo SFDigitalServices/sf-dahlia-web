@@ -74,9 +74,12 @@
           AccountService.rememberShortFormState(null)
         else
           ModalService.alert(leaveMessage, ->
+            # fires only if user clicks 'ok' to leave page
+            # reloads this stateChangeStart method with skipConfirm true
             toParams.skipConfirm = true
             $state.go(toState.name, toParams)
           )
+          # prevent user from leaving page while viewing modal
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
