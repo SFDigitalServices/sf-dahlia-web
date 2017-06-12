@@ -1,2 +1,2 @@
 redis: redis-server
-sidekiq: bundle exec sidekiq -c 1 -v -q default -q mailers
+sidekiq: bundle exec sidekiq -C config/sidekiq.yml
