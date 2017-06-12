@@ -24,6 +24,14 @@ Feature: Short Form Application
       # error: preference option not chosen
       Then I should see an error about selecting an option
 
+    Scenario: Leaving the application pops up a modal
+      Given I go to the first page of the Test Listing application
+      When I try to navigate to the Favorites page
+      And I cancel the modal pop-up
+      Then I should still be on a Test Listing application page
+      Given I try to navigate to the Favorites page
+      When I confirm the modal
+      Then I should see the Favorites page
 
     Scenario: Submitting a basic application, creating an account on the confirmation page
       Given I go to the first page of the Test Listing application

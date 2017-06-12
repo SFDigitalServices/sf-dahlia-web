@@ -43,6 +43,20 @@ module.exports = ->
     url = "/listings/#{listingId}/apply/name"
     getUrlAndCatchPopup(url)
 
+  @When 'I try to navigate to the Favorites page', ->
+    browser.waitForAngular()
+    element.all(By.cssContainingText('a', 'My Favorites')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When 'I cancel the modal pop-up', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Cancel')).click()
+
+  @When 'I confirm the modal', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'OK')).click()
+
   @Given 'I have a confirmed account', ->
     # confirm the account
     browser.ignoreSynchronization = true
@@ -283,6 +297,12 @@ module.exports = ->
     @expect(appDob.getText()).to.eventually.equal('2/22/1990')
     appEmail = element(By.id('email'))
     @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
+
+  @Then 'I should still be on a Test Listing application page', ->
+    browser.wait(EC.urlContains('apply'), 6000)
+
+  @Then 'I should see the Favorites page', ->
+    browser.wait(EC.urlContains('favorites'), 6000)
 
   @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
