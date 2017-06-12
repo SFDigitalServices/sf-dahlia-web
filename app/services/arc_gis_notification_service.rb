@@ -17,10 +17,10 @@ class ArcGISNotificationService
 
   def send_address_notification
     GeocodingLog.create(@log_params)
-    Emailer.geocoding_log_notification(@log_params).deliver_now
+    Emailer.geocoding_log_notification(@log_params).deliver_later
   end
 
   def send_error_notification
-    Emailer.geocoding_error_notification(@service_data, @log_params).deliver_now
+    Emailer.geocoding_error_notification(@service_data, @log_params).deliver_later
   end
 end
