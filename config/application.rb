@@ -19,6 +19,9 @@ module SfDahliaWeb
 
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    # set up ActiveJob to use Sidekiq
+    config.active_job.queue_adapter = :sidekiq if ENV['SIDEKIQ']
+
     ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates'
     ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query'
   end

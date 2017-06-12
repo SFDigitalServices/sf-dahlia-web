@@ -69,6 +69,8 @@ gem 'nokogiri', '~> 1.7.1'
 # http requests made easy
 gem 'http', require: false
 
+gem 'sidekiq', '~> 5.0.2'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
@@ -102,6 +104,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'thor-rails'
   gem 'database_cleaner'
+  gem 'foreman'
 end
 
 group :production do
