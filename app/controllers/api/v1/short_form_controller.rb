@@ -158,7 +158,7 @@ class Api::V1::ShortFormController < ApiController
       lottery_number: response['lotteryNumber'],
       firstName: response['primaryApplicant']['firstName'],
       lastName: response['primaryApplicant']['lastName'],
-    ).deliver_now
+    ).deliver_later
   end
 
   def map_listing_to_application
