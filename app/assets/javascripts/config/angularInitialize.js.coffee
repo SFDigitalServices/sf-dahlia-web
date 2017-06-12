@@ -25,7 +25,7 @@
       else if $state.is('dahlia.short-form-application.confirmation')
         ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
       else
-        ModalService.alert()
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'))
 
     $rootScope.$on 'IdleTimeout', ->
       ModalService.alert($translate.instant('T.SESSION_EXPIRED'))
