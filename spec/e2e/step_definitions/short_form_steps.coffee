@@ -146,7 +146,7 @@ module.exports = ->
     element.all(By.cssContainingText('option', documentType)).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
-    filePath = '/Users/mattluedke/Desktop/projects/dahlia/sf-dahlia-web/public/images/arrow-down.png'
+    filePath = '/not-testing-for-actual-file-here.png'
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
@@ -276,7 +276,9 @@ module.exports = ->
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
-    attachmentUploaded = element(By.id('successfulUpload'))
+    attachmentUploaded = element.all(By.id('successfulUpload')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
     @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my lottery number on the confirmation page', ->
