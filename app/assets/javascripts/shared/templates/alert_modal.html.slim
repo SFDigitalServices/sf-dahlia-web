@@ -8,8 +8,8 @@ div
 
     .button-stack.text-center.row.padding-top
       .small-12.medium-6.columns
-        button.button.primary.right-on-medium translate="T.OK" ng-click="confirm()"
+        button.button.primary.right-on-medium translate="T.OK" ng-click="confirm()" ng-if="showButtons"
       .small-12.medium-6.columns
-        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="closeModal()" translate="LABEL.CANCEL"
+        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="closeModal()" translate="LABEL.CANCEL" ng-if="showButtons"
 
   ng-include src="'account/templates/partials/_modal_close.html'"
