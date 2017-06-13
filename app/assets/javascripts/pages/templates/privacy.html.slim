@@ -56,6 +56,13 @@ section.row
       hr.tall
       .content-section
         h3
+          | {{'PRIVACY_POLICY.ANALYTICS_TITLE' | translate}}
+        ul
+          li translate="PRIVACY_POLICY.ANALYTICS_P1"
+
+      hr.tall
+      .content-section
+        h3
           | {{'PRIVACY_POLICY.LINKS_TITLE' | translate}}
         ul
           li
@@ -82,4 +89,12 @@ section.row
         ul
           li
             | {{'PRIVACY_POLICY.POLICY_CHANGES_P1' | translate}}
+
+      hr.tall
+      .content-section
+        h3
+          | {{ 'PRIVACY_POLICY.QUESTIONS_TITLE' | translate }}
+        ul
+          li translate="PRIVACY_POLICY.QUESTIONS_P1"
+
 ng-include src="'pages/templates/_email-updates.html'"

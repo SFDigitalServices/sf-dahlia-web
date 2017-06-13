@@ -530,8 +530,10 @@
         "WELCOME_SPANISH": "Español"
     },
     "PRIVACY_POLICY": {
-        "COOKIES_P1": "We use cookies when providing online services such as online applications. We use cookies to improve quality of our service.",
-        "COOKIES_P2": "The use of 'cookies' is a standard practice among Internet websites and most Internet web browsers may be customized to reject cookies, to only accept or reject cookies by user intervention, or to delete cookies. However, some features may not function properly without cookies.",
+        "ANALYTICS_P1": "We use a tool called \"Google Analytics\" to help understand how visitors interact with our website so that the site can be improved. You can read <a href=\"http://www.google.com/analytics/terms/us.html\">Google Analytics Terms of Use</a> and the <a href=\"http://www.google.com/policies/privacy/\">Google Privacy Policy</a> for Google Analytics. You can choose not to have your data collected by Google Analytics by downloading their <a href=\"https://tools.google.com/dlpage/gaoptout?hl=en\">opt-out browser add-on</a>.",
+        "ANALYTICS_TITLE": "Site Analytics",
+        "COOKIES_P1": "We use \"cookies\" when providing online services such as online applications. We use cookies to improve quality of our service.",
+        "COOKIES_P2": "The use of cookies is a standard practice among Internet websites and most Internet web browsers may be customized to reject cookies, to only accept or reject cookies by user intervention, or to delete cookies. However, some features may not function properly without cookies.",
         "COOKIES_TITLE": "Cookies",
         "INFO_COLLECTION_P1": "We do not collect personal information about you when you visit our website unless you choose to provide that information to us.",
         "INFO_COLLECTION_P2": "We collect limited non-personally identifying information your browser makes available automatically whenever you visit a website. This information includes the Internet Address of your computer or network, the date, time, and page you visited on our site, your browser and operating system, and the referring page (the last webpage you visited before clicking on a link to our site).",
@@ -551,6 +553,8 @@
         "LINKS_TITLE": "Links",
         "POLICY_CHANGES_P1": "Please note this Privacy Policy can change from time to time. We expect most such changes to be minor, but we will post those changes as they occur.",
         "POLICY_CHANGES_TITLE": "Policy Changes",
+        "QUESTIONS_P1": "If you have any questions about this Privacy Policy, you can contact us at <a href=\"tel:4157015500\">415-701-5500</a> or <a href=\"mailto:sfhousing.info@sfgov.org\">sfhousing.info@sfgov.org</a>",
+        "QUESTIONS_TITLE": "Questions",
         "SITE_SECURITY_P1": "We monitor network traffic to identify unauthorized attempts to upload or change information or to otherwise cause damage to the site. Anyone using this website expressly consents to such monitoring.",
         "SITE_SECURITY_P2": "We take appropriate security measures to protect unauthorized access, alteration or destruction of data.",
         "SITE_SECURITY_TITLE": "Site Security",
