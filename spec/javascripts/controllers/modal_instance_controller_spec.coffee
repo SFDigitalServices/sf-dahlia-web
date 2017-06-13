@@ -5,7 +5,8 @@ do ->
     scope = undefined
     state = undefined
     fakeModalInstance = undefined
-    fakeModalService = {}
+    fakeModalService =
+      callbacks: {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value 'ModalService', fakeModalService
