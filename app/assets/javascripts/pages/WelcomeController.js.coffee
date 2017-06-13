@@ -8,7 +8,7 @@ WelcomeController = ($http, $scope) ->
     $scope.chinese_counselors = _.filter data.locations, (o) ->
       _.includes o.languages, 'Cantonese'
     $scope.filipino_counselors = _.filter data.locations, (o) ->
-      _.includes o.languages, 'Tagalog'
+      _.includes o.languages, 'Filipino'
     $scope.spanish_counselors = _.filter data.locations, (o) ->
       _.includes o.languages, 'Spanish'
   )
