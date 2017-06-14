@@ -312,6 +312,12 @@ ListingController = (
     ListingService.listingIs(name)
   # ---
 
+  # TODO MATEO
+  $scope.showListing = (listing) ->
+    false
+    #console.log listing.Id
+    #_.includes(ENV['MAINTENANCE_LISTINGS'], listing.Id)
+
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
