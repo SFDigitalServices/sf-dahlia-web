@@ -501,6 +501,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.listingHasReservedUnits = (listing) ->
     !_.isEmpty(listing.reservedUnits)
 
+  Service.listingHasSROUnits = (listing) ->
+    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
+    !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
+
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 

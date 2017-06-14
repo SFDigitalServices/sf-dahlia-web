@@ -214,6 +214,9 @@ ListingController = (
   $scope.listingHasReservedUnits = ->
     ListingService.listingHasReservedUnits($scope.listing)
 
+  $scope.listingHasSROUnits = ->
+    ListingService.listingHasSROUnits($scope.listing)
+
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
 
