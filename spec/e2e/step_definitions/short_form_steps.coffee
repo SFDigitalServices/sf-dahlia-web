@@ -276,7 +276,7 @@ module.exports = ->
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
-    attachmentUploaded = element.all(By.id('successfulUpload')).filter((elem) ->
+    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
