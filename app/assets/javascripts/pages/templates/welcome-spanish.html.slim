@@ -8,51 +8,23 @@ section.row
   .medium-8.columns
     article.page-content
       .content-section
-        h2 En la actualidad, esta página web presenta:
-        ul.t-delta.t-light
-          li Listas de propiedades económicas para alquiler.
-          li Una herramienta para calcular su elegibilidad, con una calculadora de ingresos por grupo familiar.
-          li Herramientas para marcar las propiedades favoritas y compartirlas con otras personas.
-      hr.tall
+        p.t-delta.t-light
+          | El DAHLIA San Francisco Housing Portal es un recurso para encontrar y solicitar vivienda asequible. El Housing Portal incluye un listado de oportunidades de vivienda, aplicaciones electrónicas, y otras herramientas como ver resultados de las loterías y una calculadora para determinar elegibilidad.
       .content-section
         p.t-delta.t-light
-          | ¡Pronto se añadirán otras funciones y otras listas!
-        p.t-delta.t-light
-          | Excepto por esta página y por el formulario de solicitud traducido, el Portal de Vivienda está en inglés, pero esperamos aumentar poco a poco la información en español, chino y tagalo.
-      hr.tall
+          | Una de las funciones más útiles del Housing Portal es la aplicación electrónica. Además de inglés, aplicaciones electrónicas dentro de poco estarán disponibles en los tres otros idiomas oficiales de San Francisco:  chino, español, y filipino. Mientras tanto, siempre se aceptarán aplicaciones en forma de papel.  Gradualmente agregaremos más funcionalidad e información en los otros idiomas oficiales. Visite el Housing Portal regularmente para enterarse de estas actualizaciones.
       .content-section
         p.t-delta.t-light
-          | Si necesita ayuda, le recomendamos que se comunique con la Corporación de Desarrollo Económico de Mission (Mission Economic Development Corporation, MEDA) para programar una cita con un consejero de vivienda que hable español.
-        .block-item.no-border
-          h3.t-delta.t-sans.margin-bottom--half
-            a.a-oil href="http://medasf.org" target="_blank" Mission Economic Development Agency
-          .a-icon-left.d-block
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-map" xmlns:xlink="http://www.w3.org/1999/xlink"
-            p.offset-icon.margin-bottom--half
-              | 2301 Mission Street, Suite 301,
-              br
-              | San Francisco, CA 94103
-          p
-            a.button-on-small title="Call 415-282-3334" href="tel:+1415-282-3334"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-phone" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Call 415-282-3334
-            a.button-on-small href="http://medasf.org" target="_blank"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Visit Mission Economic Development Agency
-        p.t-delta.t-light
-          | MEDA es una agencia certificada por el Departamento de Vivienda y Desarrollo Urbano de EE.UU. (HUD) que ofrece servicios de consejería para alquiler y propiedad de viviendas, en español. Además, sus consejeros están capacitados para ofrecer información sobre los programas de vivienda de la Oficina de Desarrollo Comunitario y Vivienda del Alcalde.
-      hr.tall
+          | Para ayuda adicional en navegar el Housing Portal, o si tiene otras preguntas sobre como encontrar vivienda asequible en San Francisco, favor de contactar una de las agencias de consejería de vivienda que hablen español.
       .content-section
         p.t-delta.t-light
-          | Para obtener recursos adicionales de vivienda, visite:
+          | Además, para obtener información y recursos adicionales, visite:
           br
-          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952" http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952
+          a target="_blank" href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952"
+            | Guía de recursos de vivienda de San Francisco
+      ul.resources-list.block-list
+        li.block-item ng-repeat="counselor in spanish_counselors"
+          housing-counselor counselor="counselor"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"
