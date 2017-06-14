@@ -71,7 +71,13 @@
         timeout: { squash: true, value: false }
       views:
         'container@':
-          templateUrl: 'listings/templates/listing.html'
+          templateUrl: ($stateParams) ->
+            # templateUrl is a special function that only takes $stateParams
+            # which is why we can't include ListingService here
+            if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
+              'listings/templates/listing-maintenance.html'
+            else
+              'listings/templates/listing.html'
           controller: 'ListingController'
       resolve:
         listing: [
@@ -83,6 +89,8 @@
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
                 return $state.go('dahlia.listings')
+              if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
+                return deferred.promise
 
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
