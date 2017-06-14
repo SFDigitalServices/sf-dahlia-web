@@ -146,7 +146,7 @@ module.exports = ->
     element.all(By.cssContainingText('option', documentType)).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
-    filePath = '/not-testing-for-actual-file-here.png'
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
