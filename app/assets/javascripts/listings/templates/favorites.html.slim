@@ -1,20 +1,21 @@
-header.lead-header.bg-image.bg-gradient
-  .row
+div style="max-width:100vw;"
+  header.lead-header.bg-image.bg-gradient
+    .row
+      .large-12.columns
+        hgroup.lead-header_group
+          h1.lead-header_title.t-beta.c-white My Favorites
+
+  section.row ng-show="!favorites.length"
     .large-12.columns
-      hgroup.lead-header_group
-        h1.lead-header_title.t-beta.c-white My Favorites
+      .block.bg-mist.margin-top--2x.text-center
+        figure.block-icon
+          img src="/images/icon-heart.png" alt="Heart Icon"
+        p.t-delta.t-serif.c-oil It looks like you haven't favorited any listings yet.
+        a.button ui-sref="dahlia.listings" Browse Listings
 
-section.row ng-show="!favorites.length"
-  .large-12.columns
-    .block.bg-mist.margin-top--2x.text-center
-      figure.block-icon
-        img src="/images/icon-heart.png" alt="Heart Icon"
-      p.t-delta.t-serif.c-oil It looks like you haven't favorited any listings yet.
-      a.button ui-sref="dahlia.listings" Browse Listings
+  .results-section
+    .row
+      .large-12.columns
+        ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listings" ng-show="isFavorited(listing.Id)"
 
-.results-section
-  .row
-    .large-12.columns
-      ng-include src="'listings/templates/_property-card.html'" ng-repeat="listing in listings" ng-show="isFavorited(listing.Id)"
-
-ng-include src="'pages/templates/_email-updates.html'"
+  ng-include src="'pages/templates/_email-updates.html'"
