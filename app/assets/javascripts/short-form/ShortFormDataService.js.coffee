@@ -494,6 +494,17 @@ ShortFormDataService = (ListingService) ->
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
 
+    # reset fields that don't apply to this application
+    LS = ListingService
+    unless LS.hasPreference('assistedHousing')
+      delete data.hasPublicHousing
+      delete data.totalMonthlyRent
+      data.groupedHouseholdAddresses = []
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.VETERAN)
+      delete data.hasMilitaryService
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.DISABLED)
+      delete data.hasDevelopmentalDisability
+
     # reset contact + neighborhood data
     resetContactFields = [
       'appMemberId'
@@ -504,7 +515,6 @@ ShortFormDataService = (ListingService) ->
       'whichComponentOfLocatorWasUsed'
       'candidateScore'
     ]
-
     angular.copy(_.omit(data.applicant, resetContactFields), data.applicant)
     _.each data.householdMembers, (member) ->
       angular.copy(_.omit(member, resetContactFields), member)
