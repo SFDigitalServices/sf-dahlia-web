@@ -44,6 +44,13 @@ ListingController = (
   $scope.loading = ListingService.loading
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
+  $scope.reservedUnitIcons = [
+    $sce.trustAsResourceUrl('#i-star')
+    $sce.trustAsResourceUrl('#i-cross')
+    $sce.trustAsResourceUrl('#i-oval')
+    $sce.trustAsResourceUrl('#i-polygon')
+  ]
+
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
 
@@ -223,13 +230,17 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
+  $scope.reservedDescriptorIcon = (listing, descriptor) ->
+    index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
+    $scope.reservedUnitIcons[index]
+
   $scope.reservedForLabels = (listing) ->
     types = []
     _.each listing.reservedDescriptor, (descriptor) ->
       if descriptor.name
         type = descriptor.name
         types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
-    if types.length then types.join(', ') else ''
+    if types.length then types.join(' or ') else ''
 
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
