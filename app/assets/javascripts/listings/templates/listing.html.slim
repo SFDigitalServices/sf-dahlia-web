@@ -1,65 +1,66 @@
-.page-accordion-container.p-relative.clearfix
-  section.section-hero
-    .accordion-offset.accordion-offset--hero
-      ng-include src="'listings/templates/listing/_property-hero.html'"
+div style="max-width:100vw;"
+  .page-accordion-container.p-relative.clearfix
+    section.section-hero
+      .accordion-offset.accordion-offset--hero
+        ng-include src="'listings/templates/listing/_property-hero.html'"
 
-  accordion.page-accordion close-others="false"
-    / sidebar for closed listing
-    accordion-group.medium-right-column data-event="gtm-accordion-lottery" ng-if="listingApplicationClosed(listing)"
-      ng-include src="'listings/templates/listing/_lottery_info.html'"
+    accordion.page-accordion close-others="false"
+      / sidebar for closed listing
+      accordion-group.medium-right-column data-event="gtm-accordion-lottery" ng-if="listingApplicationClosed(listing)"
+        ng-include src="'listings/templates/listing/_lottery_info.html'"
 
-    accordion-group.bg-dust data-event="gtm-accordion-eligibility"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon src="/images/listing-eligibility.svg" alt="eligibility-notebook"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Eligibility
-          span.listing-header_subheader
-            | Income, occupancy, preferences, and subsidies
-      ng-include src="'listings/templates/listing/_eligibility.html'"
+      accordion-group.bg-dust data-event="gtm-accordion-eligibility"
+        header.listing-header.show-for-medium-up
+          img.listing-header_icon src="/images/listing-eligibility.svg" alt="eligibility-notebook"
+          hgroup.listing-header_group
+            h3.listing-header_name
+              | Eligibility
+            span.listing-header_subheader
+              | Income, occupancy, preferences, and subsidies
+        ng-include src="'listings/templates/listing/_eligibility.html'"
 
-    / sidebar for open listing (larger browser sizes)
-    accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="!listingApplicationClosed(listing)"
-      ng-include src="'listings/templates/listing/_process.html'"
+      / sidebar for open listing (larger browser sizes)
+      accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="!listingApplicationClosed(listing)"
+        ng-include src="'listings/templates/listing/_process.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-features"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon src="/images/listing-features.svg" alt="features-options"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Features
-          span.listing-header_subheader
-            | Amenities, unit details and additional fees
-      ng-include src="'listings/templates/listing/_features.html'"
+      accordion-group.bg-white data-event="gtm-accordion-features"
+        header.listing-header.show-for-medium-up
+          img.listing-header_icon src="/images/listing-features.svg" alt="features-options"
+          hgroup.listing-header_group
+            h3.listing-header_name
+              | Features
+            span.listing-header_subheader
+              | Amenities, unit details and additional fees
+        ng-include src="'listings/templates/listing/_features.html'"
 
-    accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="formattedBuildingAddress(listing)"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon src="/images/listing-neighborhood.svg" alt="neighborhood-building"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Neighborhood
-          span.listing-header_subheader
-            | Location and transportation
-      ng-include src="'listings/templates/listing/_neighborhood.html'"
+      accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="formattedBuildingAddress(listing)"
+        header.listing-header.show-for-medium-up
+          img.listing-header_icon src="/images/listing-neighborhood.svg" alt="neighborhood-building"
+          hgroup.listing-header_group
+            h3.listing-header_name
+              | Neighborhood
+            span.listing-header_subheader
+              | Location and transportation
+        ng-include src="'listings/templates/listing/_neighborhood.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-information"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon src="/images/listing-legal.svg" alt="legal-documents"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Additional Information
-          / span.content-header_subheader
-          /   | Required documents and selection criteria
-      ng-include src="'listings/templates/listing/_legal.html'"
+      accordion-group.bg-white data-event="gtm-accordion-information"
+        header.listing-header.show-for-medium-up
+          img.listing-header_icon src="/images/listing-legal.svg" alt="legal-documents"
+          hgroup.listing-header_group
+            h3.listing-header_name
+              | Additional Information
+            / span.content-header_subheader
+            /   | Required documents and selection criteria
+        ng-include src="'listings/templates/listing/_legal.html'"
 
-    .content-panel.accordion-offset.margin-bottom--2x
-      .content-card
-        .row
-          .medium-9.columns
-            p.t-base.t-serif Monitored by the Mayor's Office of Housing & Community Development
-          .medium-3.columns
-            img.right alt=("Equal Housing Opportunity Logo") src="/images/logo-equal.png"
+      .content-panel.accordion-offset.margin-bottom--2x
+        .content-card
+          .row
+            .medium-9.columns
+              p.t-base.t-serif Monitored by the Mayor's Office of Housing & Community Development
+            .medium-3.columns
+              img.right alt=("Equal Housing Opportunity Logo") src="/images/logo-equal.png"
 
-  .bg-dust
-    .accordion-offset
-      ng-include src="'pages/templates/_email-updates.html'"
+    .bg-dust
+      .accordion-offset
+        ng-include src="'pages/templates/_email-updates.html'"
