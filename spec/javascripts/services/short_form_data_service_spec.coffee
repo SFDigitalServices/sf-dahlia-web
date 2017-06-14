@@ -11,6 +11,12 @@ do ->
     fakeListingService =
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
+      hasPreference: ->
+      listingHasReservedUnitType: ->
+      RESERVED_TYPES:
+        VETERAN: 'Veteran'
+        DISABLED: 'Developmental disabilities'
+        SENIOR: 'Senior'
       preferenceMap:
         certOfPreference: "Certificate of Preference (COP)"
         displaced: "Displaced Tenant Housing Preference (DTHP)"
@@ -118,6 +124,18 @@ do ->
         expect(fakeApplication.applicant.appMemberId).toBeUndefined()
         expect(fakeApplication.applicant.neighborhoodPreferenceMatch).toBeUndefined()
 
+      it 'should reset housing fields if assistedHousing pref not available on this listing', ->
+        spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+        fakeApplication.hasPublicHousing = 'Yes'
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.hasPublicHousing).toBeUndefined()
+        expect(fakeApplication.totalMonthlyRent).toBeUndefined()
+
+      it 'should not reset housing fields if assistedHousing pref is available on this listing', ->
+        spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+        fakeApplication.hasPublicHousing = 'Yes'
+        ShortFormDataService._autofillReset(fakeApplication)
+        expect(fakeApplication.hasPublicHousing).toEqual 'Yes'
 
     describe '_calculateTotalMonthlyRent', ->
       it 'adds up rent values from groupedHouseholdAddresses', ->
