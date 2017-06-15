@@ -35,7 +35,7 @@ accordion-heading
             svg
               use xlink:href="#i-arrow-down"
 
-      .stats ng-show="isActiveTable(unitGroup.unitType)" style="overflow-x: auto;"
+      .stats.scrollable-table-container ng-show="isActiveTable(unitGroup.unitType)"
         table role="grid"
           thead
             tr

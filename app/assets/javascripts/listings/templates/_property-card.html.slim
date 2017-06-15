@@ -52,7 +52,7 @@
 
       // -- Unit Summary Table(s)
       / General
-      div style="overflow-x: auto;"
+      .scrollable-table-container
         table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': listingIsReservedCommunity(listing), 'td-bw': !listingIsReservedCommunity(listing)}"
           caption ng-if="listingIsReservedCommunity(listing)"
             span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{reservedLabel(listing, listing.Reserved_community_type, 'reservedFor')}}"
