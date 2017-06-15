@@ -350,6 +350,7 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-chinese.html'
+          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
@@ -360,6 +361,7 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
+          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
@@ -370,6 +372,7 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-filipino.html'
+          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')

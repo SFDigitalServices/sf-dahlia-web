@@ -11,7 +11,7 @@ table.pricing-table.table-flex.no-margin
         ' {{group.Unit_Type}}
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="group.Reserved_Type"
           svg
-            use xlink:href="#i-star"
+            use xlink:href="{{reservedDescriptorIcon(listing, group.Reserved_Type)}}"
     td data-th="Min. Income"
       span ng-if="group.BMR_Rental_Minimum_Monthly_Income_Needed"
         | {{group.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
