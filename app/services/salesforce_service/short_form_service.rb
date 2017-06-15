@@ -87,9 +87,9 @@ module SalesforceService
       api_post_with_headers(endpoint, body, headers)
     end
 
-    def self.attach_files(application, files)
+    def self.queue_file_attachments(application_id, files)
       files.each do |file|
-        attach_file(application, file, file.descriptive_name)
+        ShortFormAttachmentJob.perform_later(application_id, file.id)
       end
     end
 
