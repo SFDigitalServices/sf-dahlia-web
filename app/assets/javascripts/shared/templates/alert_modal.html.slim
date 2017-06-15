@@ -3,10 +3,10 @@ div
     h1.modal-title.t-gamma.no-margin
       | Notice
   section.modal-inner.bg-dust
-    p.c-steel
+    p.c-charcoal
       | {{ messages.alert }}
 
-    .button-stack.text-center.row.padding-top
+    .button-stack.text-center.row.padding-top.collapse
       .small-12.columns ng-class="{'medium-6': showCancelButton}"
         button.button.primary ng-class="{'right-on-medium': showCancelButton}" translate="T.OK" ng-click="confirm()"
       .small-12.medium-6.columns ng-if="showCancelButton"
