@@ -464,6 +464,8 @@
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
         "SHOWING_MATCHES_FOR": "Showing matches for",
+        "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
+        "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "SMOKING_POLICY": "Smoking Policy",
         "SPECIAL_NOTES": "Special Notes",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",

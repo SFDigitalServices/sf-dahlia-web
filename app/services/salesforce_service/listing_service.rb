@@ -13,6 +13,8 @@ module SalesforceService
       Lottery_Results_Date
       Reserved_community_type
       Reserved_community_minimum_age
+      reservedDescriptor
+      prioritiesDescriptor
       hasWaitlist
       Units_Available
       unitSummaries

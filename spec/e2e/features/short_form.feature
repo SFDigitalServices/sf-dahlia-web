@@ -49,7 +49,7 @@ Feature: Short Form Application
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
-    Scenario: Opting in to live/work then saying no to workInSf
+    Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
       And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
@@ -61,6 +61,10 @@ Feature: Short Form Application
       And I go back to the Contact page and change WorkInSF to No
       And I go back to the Live/Work preference page
       Then I should still see the single Live in San Francisco preference selected
+      When I upload a "Gas bill" as my proof of preference
+      Then I should see the successful file upload info
+      When I click the Next button on the Live/Work Preference page
+      Then I should see the Preferences Programs screen
 
     Scenario: Selecting live/work member, then going back and forth from previous page
       Given I go to the first page of the Test Listing application
