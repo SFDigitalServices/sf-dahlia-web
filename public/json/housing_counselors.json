@@ -1,7 +1,7 @@
 { "locations": [
     {
       "name": "BALANCE (formerly Consumer Credit Counseling)",
-      "languages": ["English", "Cantonese", "Spanish", "Tagalog", "Russian"],
+      "languages": ["English", "Cantonese", "Spanish", "Filipino", "Russian"],
       "address": "595 Market St, 9th Floor",
       "citystate": "San Francisco, CA 94105",
       "phone": "(800) 777-7526",
@@ -49,7 +49,7 @@
     },
     {
       "name": "San Francisco Housing Development Corporation",
-      "languages": ["English", "Cantonese", "Spanish", "Tagalog", "Samoan"],
+      "languages": ["English", "Cantonese", "Spanish", "Filipino", "Samoan"],
       "address": "4439 3rd St",
       "citystate": "San Francisco, CA 94124",
       "phone": "(415) 822-1022",
@@ -81,7 +81,7 @@
     },
     {
       "name": "The Arc San Francisco (focused on developmentally-disabled persons)",
-      "languages":["English", "Cantonese", "Spanish", "Tagalog", "American Sign Language"],
+      "languages":["English", "Cantonese", "Spanish", "Filipino", "American Sign Language"],
       "address": "1500 Howard St",
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 255-7200, ext. 190",
@@ -89,7 +89,7 @@
     },
     {
       "name": "Veterans Equity Center",
-      "languages":["English", "Spanish", "Tagalog"],
+      "languages":["English", "Spanish", "Filipino"],
       "address": "1010 Mission St",
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 255-2347",
