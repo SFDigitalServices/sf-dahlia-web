@@ -555,7 +555,7 @@
         "LINKS_TITLE": "Links",
         "POLICY_CHANGES_P1": "Please note this Privacy Policy can change from time to time. We expect most such changes to be minor, but we will post those changes as they occur.",
         "POLICY_CHANGES_TITLE": "Policy Changes",
-        "QUESTIONS_P1": "If you have any questions about this Privacy Policy, you can contact us at {{telLink}}415-701-5500{{linkEnd}} or {{emailLink}}sfhousing.info@sfgov.org{{linkEnd}}",
+        "QUESTIONS_P1": "If you have any questions about this Privacy Policy, you can contact us at {{telLink}} or {{emailLink}}",
         "QUESTIONS_TITLE": "Questions",
         "SITE_SECURITY_P1": "We monitor network traffic to identify unauthorized attempts to upload or change information or to otherwise cause damage to the site. Anyone using this website expressly consents to such monitoring.",
         "SITE_SECURITY_P2": "We take appropriate security measures to protect unauthorized access, alteration or destruction of data.",
