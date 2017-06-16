@@ -1,4 +1,4 @@
-header.lead-header.bg-image.bg-gradient
+klj;header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
       hgroup.lead-header_group
@@ -58,7 +58,7 @@ section.row
         h3
           | {{'PRIVACY_POLICY.ANALYTICS_TITLE' | translate}}
         ul
-          li translate="PRIVACY_POLICY.ANALYTICS_P1"
+          li translate="PRIVACY_POLICY.ANALYTICS_P1" translate-values="{ termsLink: '<a href="http://www.google.com/analytics/terms/us.html" target="_blank">', privacyLink: '<a href="http://www.google.com/policies/privacy/" target="_blank">', optOutLink: '<a href="https://tools.google.com/dlpage/gaoptout?hl=en" target="_blank">',  linkEnd: '</a>' }"
 
       hr.tall
       .content-section
@@ -95,6 +95,6 @@ section.row
         h3
           | {{ 'PRIVACY_POLICY.QUESTIONS_TITLE' | translate }}
         ul
-          li translate="PRIVACY_POLICY.QUESTIONS_P1"
+          li translate="PRIVACY_POLICY.QUESTIONS_P1" translate-values="{ telLink: '<a href="tel:4157015500">', emailLink: '<a href="mailto:sfhousing.info@sfgov.org">', linkEnd: '</a>' }"
 
 ng-include src="'pages/templates/_email-updates.html'"
