@@ -71,6 +71,8 @@ gem 'http', require: false
 
 gem 'sidekiq', '~> 5.0.2'
 
+gem 'hashdiff', '~> 0.3.0'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'

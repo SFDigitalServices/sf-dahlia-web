@@ -371,6 +371,7 @@ DEPENDENCIES
   facets
   factory_girl_rails
   foreman
+  hashdiff (~> 0.3.0)
   hashie
   http
   jasmine!
