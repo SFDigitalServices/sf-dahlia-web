@@ -24,9 +24,11 @@ module SalesforceService
 
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
-    def self.listings(ids = nil)
+    # `clean` determines whether to slim down the results
+    def self.listings(ids = nil, clean = true)
       params = ids.present? ? { ids: ids } : nil
       results = cached_api_get('/ListingDetails', params, true)
+      return results unless clean
       clean_listings_for_browse(results)
     end
 
@@ -95,6 +97,14 @@ module SalesforceService
       results.map do |listing|
         listing.select do |key|
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
+        end
+      end
+    end
+
+    def self.array_sort!(listing)
+      listing.each do |k, v|
+        if v.is_a?(Array) && v[0] && v[0]['Id']
+          listing[k] = v.sort_by { |i| i['Id'] }
         end
       end
     end
