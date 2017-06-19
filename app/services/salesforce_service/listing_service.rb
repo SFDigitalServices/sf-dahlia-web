@@ -71,6 +71,7 @@ module SalesforceService
     def self.lottery_buckets(listing_id)
       data = cached_api_get("/Listing/LotteryResult/#{listing_id}", nil, false)
       # cut down the bucketResults so it's not a huge JSON
+      data['lotteryBuckets'] ||= []
       data['lotteryBuckets'].each do |bucket|
         bucket['preferenceResults'] = bucket['preferenceResults'].slice(0, 1)
       end

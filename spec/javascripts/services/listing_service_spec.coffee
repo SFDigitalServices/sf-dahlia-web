@@ -277,11 +277,11 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'assigns Service.listing.Lottery_Buckets with bucket results', ->
+      it 'assigns Service.lotteryBuckets with bucket results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
         ListingService.getLotteryBuckets()
         httpBackend.flush()
-        expect(ListingService.listing.Lottery_Buckets).toEqual fakeLotteryBuckets.lottery_buckets
+        expect(ListingService.lotteryBuckets).toEqual fakeLotteryBuckets.lotteryBuckets
 
     describe 'Service.getLotteryRanking', ->
       afterEach ->
@@ -290,9 +290,9 @@ do ->
 
       it 'assigns Service.lotteryRanking with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
-        ListingService.getLotteryRanking('00002612')
+        ListingService.getLotteryRanking('00042084')
         httpBackend.flush()
-        expect(ListingService.lotteryRanking).toEqual fakeLotteryRanking.lottery_ranking
+        expect(ListingService.lotteryRanking).toEqual fakeLotteryRanking.lotteryBuckets
 
     describe 'Service.showNeighborhoodPreferences', ->
       it 'returns true if URL is available and the lottery results are not yet available', ->
@@ -300,7 +300,7 @@ do ->
         listing = fakeListing.listing
 
         # clear any lottery results
-        ListingService.listing.Lottery_Buckets = null
+        ListingService.lotteryBuckets = []
         ListingService.listing.LotteryResultsURL = null
 
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
@@ -311,7 +311,7 @@ do ->
         listing = fakeListing.listing
 
         # clear any lottery results
-        ListingService.listing.Lottery_Buckets = null
+        ListingService.lotteryBuckets = []
         ListingService.listing.LotteryResultsURL = null
 
         listing.NeighborHoodPreferenceUrl = null
@@ -385,9 +385,7 @@ do ->
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be true if lottery buckets are available', ->
-        ListingService.listing.Lottery_Buckets = {bucketResults: [
-          {preferenceName: 'COP', bucketResults: [{preferenceRank: 1, lotteryNumber: '1223'}]}
-        ]}
+        ListingService.lotteryBuckets = fakeLotteryBuckets.lotteryBuckets
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be false if lottery buckets and PDF are *not* available', ->
