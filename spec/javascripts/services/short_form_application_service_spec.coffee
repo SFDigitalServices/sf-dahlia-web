@@ -242,6 +242,28 @@ do ->
         correctValue = { fullName: 'Bob Williams (You)', firstName: 'You' }
         expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual [correctValue]
 
+    describe 'clearAddressRelatedProofForMember', ->
+      beforeEach ->
+        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson' })
+        ShortFormApplicationService.applicant = fakeApplicant
+        # reset the spy so that we can check for "not" toHaveBeenCalled
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+      afterEach ->
+        resetFakePeople()
+
+      it 'clears the proof file for a preference if the indicated member is selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Frank Robinson'
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Frank Robinson'
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+
+      it 'does not clear the proof file for a preference if the indicated member is not selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Joseph Mann'
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Joseph Mann'
+        expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
+
+
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
@@ -273,6 +295,7 @@ do ->
         describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
             fakeApplicant.home_address = fakeNonSFAddress
+            fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
             ShortFormApplicationService.application.completedSections['Preferences'] = true
@@ -466,19 +489,19 @@ do ->
       it 'returns true if application said yes to public housing', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'Yes'
+        ShortFormApplicationService.application.hasPublicHousing = 'Yes'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
 
       it 'returns false if application does not have assistedHousing', ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual false
 
     describe 'eligibleForRentBurden', ->
       beforeEach ->
         fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
-        ShortFormApplicationService.application.STUB_householdPublicHousing = 'No'
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
         ShortFormApplicationService.application.householdIncome.incomeTimeframe = 'per_month'
         ShortFormApplicationService.application.groupedHouseholdAddresses = [
           {
@@ -722,6 +745,7 @@ do ->
 
     describe 'cancelPreference', ->
       beforeEach ->
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
         ShortFormApplicationService.preferences.liveInSf = true
         ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
         ShortFormApplicationService.preferences.documents.liveInSf = {

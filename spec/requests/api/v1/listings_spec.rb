@@ -44,13 +44,11 @@ describe 'Listings API' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
         params = {
-          eligibility: {
-            householdsize: 2,
-            incomelevel: 20_000,
-            childrenUnder6: 1,
-          },
+          householdsize: 2,
+          incomelevel: 20_000,
+          childrenUnder6: 1,
         }
-        post '/api/v1/listings/eligibility.json', params
+        get '/api/v1/listings/eligibility.json', params
       end
     end
   end
@@ -111,13 +109,11 @@ describe 'Listings API' do
   it 'gets eligibility matches' do
     VCR.use_cassette('listings/eligibility') do
       params = {
-        eligibility: {
-          householdsize: 2,
-          incomelevel: 20_000,
-          childrenUnder6: 1,
-        },
+        householdsize: 2,
+        incomelevel: 20_000,
+        childrenUnder6: 1,
       }
-      post '/api/v1/listings/eligibility.json', params
+      get '/api/v1/listings/eligibility.json', params
     end
 
     json = JSON.parse(response.body)

@@ -28,7 +28,9 @@ do ->
     minMax = undefined
 
     beforeEach module('ui.router')
-    beforeEach module('dahlia.services', ($provide)->
+    # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
+    beforeEach module('http-etag')
+    beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$modal', modalMock
       $provide.value '$translate', $translate
       return
@@ -50,14 +52,9 @@ do ->
       it 'initializes defaults', ->
         expect(ListingService.openListings).toEqual []
 
-    describe 'Service.getListings', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
+    describe 'Service.groupListings', ->
       it 'assigns ListingService listing buckets with grouped arrays of listings', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
+        ListingService.groupListings(fakeListings.listings)
         combinedLength =
           ListingService.openListings.length +
           ListingService.closedListings.length +
@@ -70,14 +67,13 @@ do ->
         expect(openLength).toEqual ListingService.openListings.length
 
       it 'sorts groupedListings based on their dates', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeListings
-        ListingService.getListings()
-        httpBackend.flush()
+        ListingService.groupListings(fakeListings.listings)
         date1 = ListingService.lotteryResultsListings[3].Lottery_Results_Date
         date2 = ListingService.lotteryResultsListings[4].Lottery_Results_Date
         expect(date1 >= date2).toEqual true
 
-      it 'returns Service.getListingsWithEligibility if eligibilty options are set', ->
+    describe 'Service.getListings', ->
+      it 'returns Service.getListingsWithEligibility if eligibility options are set', ->
         ListingService.getListingsWithEligibility = jasmine.createSpy()
         ListingService.setEligibilityFilters(fakeEligibilityFilters)
         ListingService.getListings({checkEligibility: true})
