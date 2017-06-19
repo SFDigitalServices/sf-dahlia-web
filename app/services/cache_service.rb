@@ -2,13 +2,14 @@
 class CacheService
   def self.cache_all_listings(opts = {})
     if opts[:daily]
-      # on daily run, don't even bother grabbing old listings for comparison
+      # on daily run, don't grab old listings for comparison
+      # to force cache write for all listings
       old_listings = []
     else
       # grab previous cached result
       old_listings = ListingService.listings(nil, false)
     end
-    # now set all requests to force cache
+    # set requests to force cache write (if we `cache_single_listing`)
     ListingService.force = true
     new_listings = ListingService.listings(nil, false)
 
@@ -19,9 +20,9 @@ class CacheService
       if old.present?
         old = ListingService.array_sort!(old)
         listing = ListingService.array_sort!(listing)
-        # NOTE: This comparison is not perfect, as it will not find differences
-        # in some relations e.g. individual unit or preference details that may
-        # have changed. That's why we more aggressively re-cache open listings.
+        # NOTE: This comparison isn't perfect, as the browse listings API endpoint doesn't
+        # contain some relational data e.g. some individual unit/preference details.
+        # That's why we more aggressively re-cache open listings.
         unchanged = HashDiff.diff(old, listing).empty?
       end
       begin
