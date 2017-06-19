@@ -19,6 +19,9 @@ class CacheService
       if old.present?
         old = ListingService.array_sort!(old)
         listing = ListingService.array_sort!(listing)
+        # NOTE: This comparison is not perfect, as it will not find differences
+        # in some relations e.g. individual unit or preference details that may
+        # have changed. That's why we more aggressively re-cache open listings.
         unchanged = HashDiff.diff(old, listing).empty?
       end
       begin
