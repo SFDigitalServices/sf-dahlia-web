@@ -60,7 +60,11 @@ module SalesforceService
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
-      expires_in = params ? 10.minutes : 1.day
+      if ENV['FREEZE_SALESFORCE_CACHE']
+        expires_in = 10.years
+      else
+        expires_in = params ? 10.minutes : 1.day
+      end
       Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         api_call(:get, endpoint, params, parse_response)
       end

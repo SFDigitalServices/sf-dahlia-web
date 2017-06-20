@@ -1,7 +1,7 @@
-# service class for pre-caching salesforce listings
+# service class for pre-fetching + caching salesforce data
 class CacheService
-  def self.cache_all_listings(opts = {})
-    if opts[:daily]
+  def self.prefetch_listings(opts = {})
+    if opts[:refresh_all]
       # on daily run, don't grab old listings for comparison
       # to force cache write for all listings
       old_listings = []
