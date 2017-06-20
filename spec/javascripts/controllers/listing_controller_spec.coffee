@@ -251,27 +251,27 @@ do ->
     describe '$scope.applicantSelectedForPreference', ->
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
-          scope.lotteryResultsRanking =
-            bucketResults:[{bucketResults: [{preferenceRank: 1}]}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.applicantSelectedForPreference()).toEqual(true)
 
       describe 'applicant was not selected for lottery preference', ->
         it 'returns false', ->
-          scope.lotteryResultsRanking =
-            bucketResults:[{bucketResults: []}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.applicantSelectedForPreference()).toEqual(false)
 
     describe '$scope.lotteryNumberValid', ->
       describe 'invalid', ->
         it 'returns false', ->
-          scope.lotteryResultsRanking =
-            bucketResults:[{bucketResults: []}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.lotteryNumberValid()).toEqual(false)
 
       describe 'valid', ->
         it 'returns true', ->
-          scope.lotteryResultsRanking =
-            bucketResults:[{bucketResults: [{lotteryRank: 1}]}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.lotteryNumberValid()).toEqual(true)
 
     describe 'showLotteryRanking', ->

@@ -277,22 +277,22 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'assigns Service.lotteryBuckets with bucket results', ->
+      it 'assigns Service.lotteryBucketInfo with bucket results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
         ListingService.getLotteryBuckets()
         httpBackend.flush()
-        expect(ListingService.lotteryBuckets).toEqual fakeLotteryBuckets.lotteryBuckets
+        expect(ListingService.lotteryBucketInfo).toEqual fakeLotteryBuckets
 
     describe 'Service.getLotteryRanking', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'assigns Service.lotteryRanking with ranking results', ->
+      it 'assigns Service.lotteryRankingInfo with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00042084')
         httpBackend.flush()
-        expect(ListingService.lotteryRanking).toEqual fakeLotteryRanking.lotteryBuckets
+        expect(ListingService.lotteryRankingInfo).toEqual fakeLotteryRanking
 
     describe 'Service.showNeighborhoodPreferences', ->
       it 'returns true if URL is available and the lottery results are not yet available', ->
@@ -385,10 +385,10 @@ do ->
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be true if lottery buckets are available', ->
-        ListingService.lotteryBuckets = fakeLotteryBuckets.lotteryBuckets
+        ListingService.lotteryBucketInfo = fakeLotteryBuckets
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be false if lottery buckets and PDF are *not* available', ->
         ListingService.listing.LotteryResultsURL = null
-        ListingService.listing.Lottery_Buckets = {bucketResults: []}
+        ListingService.lotteryBucketInfo = {bucketResults: []}
         expect(ListingService.listingHasLotteryResults()).toEqual false

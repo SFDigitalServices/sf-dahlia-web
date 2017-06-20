@@ -14,8 +14,7 @@ span ng-if="applicantSelectedForPreference()"
       | {{'LOTTERY.RANKING_PREFERENCE_CONSIDERATION_NOTE' | translate}}
 
   section.buckets
-    span ng-repeat="bucketResult in lotteryResultsRanking.bucketResults"
-      lottery-results-row item-type="rank" bucket-result="bucketResult"
+    lottery-results-row ng-repeat="bucketResult in lotteryRankingInfo.lotteryBuckets" item-type="rank" bucket-result="bucketResult" ng-if="bucketResult.preferenceName != 'generalLottery'"
 
 span ng-if="!applicantSelectedForPreference()"
   span ng-if="lotteryNumberValid()"
@@ -26,9 +25,9 @@ span ng-if="!applicantSelectedForPreference()"
       p.alert-body
         | {{'LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE' | translate}}
 
-    / NEED TO FIX after we figure out how to get General Lottery in the new format
-    / section.buckets
-    /   lottery-results-row item-type="rank" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" abbr-pref-name="generalLottery"
+    section.buckets
+      / we `ng-repeat` again but this time just to grab the generalLottery bucket
+      lottery-results-row ng-repeat="bucketResult in lotteryRankingInfo.lotteryBuckets" item-type="rank" bucket-result="bucketResult" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
 
   span ng-if="!loading.lotteryRank && !lotteryNumberValid()"
     .alert-box.alert.no-margin

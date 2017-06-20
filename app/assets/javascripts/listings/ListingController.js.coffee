@@ -24,8 +24,8 @@ ListingController = (
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
-  $scope.lotteryBuckets = $scope.lotteryBuckets
-  $scope.lotteryResultsRanking = ListingService.lotteryRanking
+  $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
+  $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
   $scope.AMICharts = ListingService.AMICharts
   $scope.lotteryPreferences = ListingService.lotteryPreferences
@@ -134,13 +134,13 @@ ListingController = (
     $scope.lotterySearchNumber = ''
 
   $scope.preferenceBucketResults = (prefName) ->
-    preferenceBucketResults = _.find($scope.lotteryResultsRanking.bucketResults, { 'preferenceName': prefName })
-    if preferenceBucketResults then preferenceBucketResults.bucketResults else []
+    preferenceBucketResults = _.find($scope.lotteryRankingInfo.lotteryBuckets, { 'preferenceName': prefName })
+    if preferenceBucketResults then preferenceBucketResults.preferenceResults else []
 
   $scope.applicantSelectedForPreference = ->
-    preferenceBucketResults = _.filter($scope.lotteryResultsRanking.bucketResults, (preferenceBucketResult) ->
-      return false unless preferenceBucketResult.bucketResults[0]
-      preferenceBucketResult.bucketResults[0].preferenceRank != null
+    preferenceBucketResults = _.filter($scope.lotteryRankingInfo.lotteryBuckets, (bucket) ->
+      return false unless bucket.preferenceResults[0]
+      bucket.preferenceName != 'generalLottery' && bucket.preferenceResults[0].preferenceRank != null
     )
     preferenceBucketResults.length > 0
 
@@ -152,9 +152,9 @@ ListingController = (
     ListingService.showNeighborhoodPreferences($scope.listing)
 
   $scope.lotteryNumberValid = ->
-    return unless $scope.lotteryResultsRanking && $scope.lotteryResultsRanking.bucketResults
-    # true if if there is a general lottery ranking
-    !_.isEmpty($scope.lotteryResultsRanking.bucketResults[0].bucketResults)
+    return unless $scope.lotteryRankingInfo && $scope.lotteryRankingInfo.lotteryBuckets
+    # true if there are any lotteryBuckets
+    _.some($scope.lotteryRankingInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->

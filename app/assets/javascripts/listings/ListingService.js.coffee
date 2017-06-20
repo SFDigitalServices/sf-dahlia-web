@@ -16,8 +16,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.loading = {}
   Service.displayLotteryResultsListings = false
   Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
-  Service.lotteryRanking = []
-  Service.lotteryBuckets = []
+  Service.lotteryRankingInfo = {}
+  Service.lotteryBucketInfo = {}
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -175,8 +175,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     })
 
   Service.listingHasLotteryBuckets = ->
-    Service.lotteryBuckets &&
-    _.some(Service.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
+    Service.lotteryBucketInfo &&
+    _.some(Service.lotteryBucketInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
   # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = ->
@@ -546,25 +546,23 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     )
 
   Service.getLotteryBuckets = ->
-    angular.copy([], Service.lotteryBuckets)
+    angular.copy({}, Service.lotteryBucketInfo)
     Service.loading.lotteryResults = true
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
       Service.loading.lotteryResults = false
-      if data && data.lotteryBuckets
-        angular.copy(data.lotteryBuckets, Service.lotteryBuckets)
+      angular.copy(data, Service.lotteryBucketInfo)
     ).error( (data, status, headers, config) ->
       Service.loading.lotteryResults = false
       return
     )
 
   Service.getLotteryRanking = (lotteryNumber) ->
-    angular.copy([], Service.lotteryRanking)
+    angular.copy({}, Service.lotteryRankingInfo)
     params =
       params:
         lottery_number: lotteryNumber
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      if data && data.lotteryBuckets
-        angular.copy(data.lotteryBuckets, Service.lotteryRanking)
+      angular.copy(data, Service.lotteryRankingInfo)
     ).error( (data, status, headers, config) ->
       return
     )
