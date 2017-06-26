@@ -13,12 +13,11 @@ accountPassword = 'password123'
 fillOutContactPage = (opts = {}) ->
   opts.address1 ||= '4053 18th St.'
   element(By.model('applicant.phone')).clear().sendKeys('2222222222')
-  element(By.model('applicant.phoneType')).click()
-  element(By.cssContainingText('option', 'Home')).click()
+  element(By.model('applicant.phoneType')).sendKeys('home')
   element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
   element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
   element(By.id('applicant_home_address_city')).clear().sendKeys('San Francisco')
-  element(By.cssContainingText('option', 'California')).click()
+  element(By.id('applicant_home_address_state')).sendKeys('california')
   element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
   element(By.id('workInSf_yes')).click()
 
@@ -33,7 +32,7 @@ getUrlAndCatchPopup = (url) ->
   browser.get(url).catch ->
     browser.switchTo().alert().then (alert) ->
       alert.accept()
-      browser.get url
+      browser.get(url)
 
 module.exports = ->
   # import global cucumber options
