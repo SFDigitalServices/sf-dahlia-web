@@ -126,6 +126,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       liveInSf: "Live or Work in San Francisco Preference"
       workInSf: "Live or Work in San Francisco Preference"
       neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+      antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
 
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
     preferenceName = preferenceMap[preference]
