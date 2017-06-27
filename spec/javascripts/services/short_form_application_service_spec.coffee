@@ -147,7 +147,7 @@ do ->
       describe 'new household member', ->
         it 'adds an ID to the householdMember object', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.id).toEqual(1)
+          expect(householdMember.id).toEqual(2)
 
         it 'adds household member to Service.householdMembers', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
@@ -182,19 +182,6 @@ do ->
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
-
-        it 'updates the name for any preferences attached to the member', ->
-          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          householdMember = angular.copy(householdMember)
-          currentName = "#{householdMember.firstName} #{householdMember.lastName}"
-          # attach household member to the preference
-          ShortFormApplicationService.preferences['liveInSf_household_member'] = currentName
-          # now update
-          householdMember.firstName = 'Robert'
-          newName = "#{householdMember.firstName} #{householdMember.lastName}"
-          ShortFormApplicationService.addHouseholdMember(householdMember)
-          # the name attached to the preference should also update
-          expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
 
     describe 'cancelHouseholdMember', ->
       beforeEach ->
@@ -266,7 +253,7 @@ do ->
               liveInSf: true
               liveInSf_file: 'somefile'
               liveInSf_proof_option: 'proofOption'
-              liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+              liveInSf_household_member: 1
 
           it 'clear liveInSf preference data', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
@@ -414,9 +401,9 @@ do ->
     describe 'copyNRHPtoLiveInSf', ->
       it 'copies NRHP member to liveInSf', ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
-        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 10
         ShortFormApplicationService.copyNRHPtoLiveInSf()
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 10
 
     describe 'preferenceRequired', ->
       it 'returns true if optOutField is not marked', ->
@@ -563,10 +550,10 @@ do ->
             firstName: 'Janice'
             lastName: 'Jane'
           ShortFormApplicationService.application.preferences =
-            liveInSf_household_member: 'Janice Jane'
+            liveInSf_household_member: 1
           ShortFormApplicationService.importUserData(loggedInUser)
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
-            .toEqual('Jane Doe')
+            .toEqual(1)
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
@@ -596,7 +583,7 @@ do ->
     describe 'cancelPreference', ->
       beforeEach ->
         ShortFormApplicationService.preferences["liveInSf"] = true
-        ShortFormApplicationService.preferences["liveInSf_household_member"] = 'Jane Doe'
+        ShortFormApplicationService.preferences["liveInSf_household_member"] = 1
         ShortFormApplicationService.preferences["liveInSf_proof_option"] = 'Telephone Bill'
         ShortFormApplicationService.preferences["liveInSf_proof_file"] = 'Some file'
 
