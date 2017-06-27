@@ -70,7 +70,6 @@ ShortFormDataService = () ->
     application.householdMembers.forEach( (member) ->
       member.dob = Service.formatUserDOB(member)
       angular.copy(Service.removeDOBFields(member), member)
-      delete member.id
       return
     )
     return application
@@ -130,10 +129,9 @@ ShortFormDataService = () ->
     allMembers.push(application.applicant)
     preferences = angular.copy(Service.preferences)
     preferences.forEach( (preference) ->
-      memberName = application.preferences[preference + '_household_member']
-      member = _.find(allMembers, (m) ->
-        return memberName == (m.firstName + ' ' + m.lastName)
-      )
+      memberId = application.preferences[preference + '_household_member']
+      member = _.find(allMembers, { id: memberId })
+      # something's wrong if we didn't find the person marked for the preference...
       return unless member
       memberDOB = member.dob.replace(/\//g, '.')
       if preference == 'certOfPreference'
@@ -148,6 +146,10 @@ ShortFormDataService = () ->
       application.householdVouchersSubsidies = true
     else if application.householdVouchersSubsidies == 'No'
       application.householdVouchersSubsidies = false
+    # delete tempIds that were used for linking member <-> preference
+    delete application.applicant.id
+    application.householdMembers.forEach (member) ->
+      delete member.id
     delete application.preferences
     return application
 
@@ -239,7 +241,9 @@ ShortFormDataService = () ->
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
-    data.preferences = Service._reformatPreferences(sfApp, uploadedFiles)
+    allHousehold = angular.copy(data.householdMembers)
+    allHousehold.unshift(data.applicant)
+    data.preferences = Service._reformatPreferences(sfApp, allHousehold, uploadedFiles)
     Service._reformatMetadata(sfApp, data)
     # if sfApp.autofill == true that means the API returned an autofilled application
     # to be used as a new draft (i.e. some fields need to be cleared out)
@@ -279,12 +283,14 @@ ShortFormDataService = () ->
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.additionalPhone = !! contact.alternatePhone
+    # we use this tempId to identify people in the preference dropdown
+    applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
 
   Service._reformatHousehold = (contacts) ->
     household = []
-    i = 0
+    i = 1
     contacts.forEach (contact) ->
       i++
       member = Service._reformatHouseholdMember(contact)
@@ -306,11 +312,9 @@ ShortFormDataService = () ->
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
 
-  Service._reformatPreferences = (sfApp, files) ->
+  Service._reformatPreferences = (sfApp, allHousehold, files) ->
     preferences = {}
     prefList = angular.copy(Service.preferences)
-    allHousehold = sfApp.householdMembers
-    allHousehold.unshift(sfApp.primaryApplicant)
     prefList.forEach( (preference) ->
       preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
       appMemberId = sfApp["#{preferenceName}ID"]
@@ -323,7 +327,7 @@ ShortFormDataService = () ->
         member = _.find(allHousehold, {appMemberId: appMemberId})
         # if we don't find a household member matching the preference that's probably bad.
         if member
-          preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
+          preferences["#{preference}_household_member"] = member.id
           preferences[preference] = true
           file = _.find(files, {preference: preference})
           if file
