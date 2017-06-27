@@ -138,6 +138,25 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
+  @When /^I upload a "([^"]*)" as my proof of preference$/, (documentType) ->
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id("liveInSf_proof_option")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
+  @When 'I click the Next button on the Live/Work Preference page', ->
+    element.all(By.id("submit")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
     element(By.id('submit')).click()
@@ -251,6 +270,16 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see the Preferences Programs screen', ->
+    certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
+    @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the successful file upload info', ->
+    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
