@@ -5,6 +5,6 @@ angular.module('dahlia.directives')
 
   link: (scope, elem, attrs, ngModel) ->
     ngModel.$parsers.push (val) ->
-      if val then Number.parseInt(val, 10) else ''
+      if val then parseInt(val, 10) else ''
     ngModel.$formatters.push (val) ->
       if val then '' + val else ''
