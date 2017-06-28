@@ -40,7 +40,7 @@ html lang="en"
       section(ui-view="version")
       section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
-        section#main-content(ui-view="container")
+        section#main-content.main-content(ui-view="container")
     .footer-section
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
@@ -51,3 +51,9 @@ html lang="en"
 
     = javascript_include_tag 'application', async: Rails.env.production?
     = yield :javascript
+
+    / MAINTENANCE_LISTINGS can be set to a comma-separated list of listing Ids
+    / to force those listings to display a maintenance page, e.g.
+    / ENV['MAINTENANCE_LISTINGS'] = 'a0W4B0000050b5gUAA,a0W4B0000050b5gUBB'
+    javascript:
+      var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
