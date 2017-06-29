@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 07 Mar 2017 17:56:37 GMT
+      - Thu, 29 Jun 2017 00:12:56 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=8bHVYQb1S3W2-liMGD0g3A;Path=/;Domain=.salesforce.com;Expires=Sat,
-        06-May-2017 17:56:37 GMT
+      - BrowserId=c5YCGaxgRw2EW0UfHi-jJw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        28-Aug-2017 00:12:56 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008g3xUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1488909398136","signature":"3x1ESL/Z/70gKA+fieJeSjnNxgdIGKc1na246xvMVps="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008fvwUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1498695176449","signature":"7x3AqMa87YOcFA4j+jEH8n6mf/QUnId1zb3GQJdFG20="}'
     http_version: 
-  recorded_at: Tue, 07 Mar 2017 17:56:37 GMT
+  recorded_at: Thu, 29 Jun 2017 00:12:56 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE
+    uri: https://sfhousing--full.cs71.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE
     body:
       encoding: US-ASCII
       string: ''
@@ -74,23 +74,17 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 07 Mar 2017 17:56:38 GMT
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
-        ''self'' *.salesforce.com *.force.com; font-src https: data:; connect-src
-        ''self'' https:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain; base-uri
-        http://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE'
-      Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008g3x";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - Thu, 29 Jun 2017 00:12:56 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008fvw";
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=DtgIz9LhR2q3leqwNXF_ng;Path=/;Domain=.salesforce.com;Expires=Sat,
-        06-May-2017 17:56:38 GMT
+      - BrowserId=TUluVhiOTjyKHIYsYcEyZg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        28-Aug-2017 00:12:56 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Transfer-Encoding:
@@ -99,5 +93,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 07 Mar 2017 17:56:38 GMT
+  recorded_at: Thu, 29 Jun 2017 00:12:57 GMT
 recorded_with: VCR 3.0.3
