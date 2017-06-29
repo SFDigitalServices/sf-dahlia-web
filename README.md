@@ -1,82 +1,79 @@
-# Dahlia #
+# Dahlia
 
 [![Code Climate](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/gpa.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web)
 [![Test Coverage](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/coverage.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web/coverage)
 [![Build Status](https://semaphoreci.com/api/v1/projects/53186731-1e6c-43a4-9d43-860e0759ea9a/558206/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web)
 
-## Purpose ##
+## Purpose
 
 DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created by the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
 
-## Dependencies ##
+## Dependencies
 Before you install DAHLIA, your system should have the following:
 
-- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (see Gemfile for version)
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.2.3
+- [Bundler](https://github.com/bundler/bundler) `gem install bundler -v 1.12.5`
 - [Homebrew](http://brew.sh)
-- bundler `gem install bundler`
-- [PostgreSQL](http://exponential.io/blog/2015/02/21/install-postgresql-on-mac-os-x-via-brew/)
-- `brew install node`
-- npm install -g grunt-cli (To run grunt commands globally)
-- npm install bower
+- [PostgreSQL](https://postgresapp.com/)
+- [Node.js](https://nodejs.org/en/) 6.2.2
+  - can use installer from [nodejs.org](https://nodejs.org/en/) or see: [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495)
 
-### Getting started ###
-We will create a Boxen for this project, but for now to get started:
+## Getting started
 
-## How to Install ##
-1. Clone the repo `git clone https://github.com/Exygy/sf-dahlia-web.git`
-2. Open a terminal window
-3. Run `bundle install` in command line to download all necessary gems
-3. Run `npm install` to run the js style and code linters
-4. Run `overcommit --install` to install git hooks into the repo
-5. Run `bower install`
-6. Run `grunt`. Ensure that the *latest* pattern library is in the same folder as this repo.
-Running grunt will migrate the css over from the pattern library. You can ignore the warning that says `Unable to match 1 pattern.`.
-7. Run `rake bower:install`
-8. Open a separate terminal tab and run `postgres -D /usr/local/var/postgres` to start Postgres.
-9. Run `rake db:create`, followed by `rake db:migrate` to create the app database.
-10. If you have access to the correct environment values, create a file named `.env` and copy in the values. It will look similar to `.env.sample`.
-11. Run `rails s` to start the server.
+1. Make sure your PostgreSQL server is running (e.g. using [Postgres.app](https://postgresapp.com/) listed above)
+1. Open a terminal window
+1. `git clone https://github.com/Exygy/sf-dahlia-web.git` to create the project directory
+1. `cd sf-dahlia-web` to open the directory
+1. `bundle install` to download all necessary gems
+    - see [here](https://stackoverflow.com/a/19850273/260495) if you have issues installing `pg` gem with Postgres.app, you may need to use: `gem install pg -v 0.18.4 -- --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config
+`
+1. `npm install` to install bower, grunt and other dependencies (which will also automatically `bower install` to load front-end JS libraries)
+1. `overcommit --install` to install git hooks into the repo
+1. `rake db:create && rake db:migrate` to create the dev database and migrate the DB tables
+1. copy `.env.sample` into a file called `.env`, and copy correct Salesforce environment credentials (not shared publicly in this repo)
+1. `rails s` to start the server, which will now be running at http://localhost:3000 by default
 
-## Running Tests ##
+## Running Tests
 
 Run:
 - `rake spec`
 - `rake jasmine:ci`
 
 To run E2E tests:
-- On a tab run `rails s`
-- On another tab, run `npm run e2e` -- this will start the selenium webdriver in the background and run the protractor tests
+- Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update` to get the selenium webdriver installed
+- On one tab have your Rails server running: `rails s`
+- On another tab, run `npm run protractor` to run the selenium webdriver and protractor tests. A Chrome browser will pop up and you will see it step through each of the tests.
 
 Note: These tests will run on Semaphore (our CI) as well for every review app and QA deploy.
 
-### Acceptance/Feature Apps ###
+### Acceptance/Feature Apps
 
 Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.
 
-## Contributing changes ##
+## Contributing changes
 
-<3 Use the engineering workflow and coding style standards established below. <3
+Use the engineering workflow and coding style standards established below. :smiley:
 
-### Engineering Workflow Overview ###
+### Engineering Workflow Overview
 
 Dahlia's current engineering workflow has been fully documented and can be found [here](https://docs.google.com/a/exygy.com/presentation/d/1Y5yAVUcKMFoNobutOH_Sehm69ZCZoTZzJZewupR-5KI/edit?usp=sharing).
 
 Dahlia's project backlog is in [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/1405352).
 
-### Code style and quality ###
+### Code style and quality
 
-#### Javascript ####
+#### Javascript
 
 Javascript code quality is ensured by two npm packages: JsHint and JSCS. They will run automatically as a pre-commit hooks. Follow the [Airbnb JavaScript Style guide](http://nerds.airbnb.com/our-javascript-style-guide/).
 
-#### Ruby ####
+#### Ruby
 [Rubocop](https://github.com/bbatsov/rubocop) is configured in `.rubocop.yml` to enforce code quality and style standards based on the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide) and runs every time you commit using a pre-commit hook. Refer to the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide) for all Ruby style questions.
 To identify and have Rubocop automatically correct violations when possible, run:
 
 * `rubocop -a [path_to_file]` for individual files
 * `rubocop -a` for all Ruby files
 
-#### JavaScript File Structure ####
+#### JavaScript File Structure
 
 When adding new modules to the JavaScript dirctory, please follow the example structure below to mantain a modular component structure.
 
@@ -107,10 +104,10 @@ When adding new modules to the JavaScript dirctory, please follow the example st
 ### Changing the Style Guide settings
 Any changes to Rubocop, JSCS, etc. affect the entire team, so it should be a group decision before commiting any changes. Please don't commit changes without discussing with the team first.
 
-### Credits ###
+### Credits
 
 
-### License ###
+### License
 Copyright (C) 2015 City and County of San Francisco
 
 DAHLIA is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
