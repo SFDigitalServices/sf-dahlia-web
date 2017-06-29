@@ -57,7 +57,11 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { name: if name then ', ' + name else '' }
 
   Service.householdMemberForPreference = (application, pref_type) ->
-    { user: application.preferences["#{pref_type}_household_member"] }
+    allMembers = angular.copy(application.householdMembers)
+    allMembers.push(application.applicant)
+    memberId = application.preferences["#{pref_type}_household_member"]
+    member = _.find(allMembers, { id: memberId })
+    { user: "#{member.firstName} #{member.lastName}" }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status == 'Submitted'
