@@ -1,7 +1,7 @@
 # basic emailer class
 class Emailer < Devise::Mailer
   include ActionMailer::Text
-  default from: 'DAHLIA <dahlia@housing.sfgov.org>'
+  default from: 'DAHLIA <donotreply@sfgov.org>'
   layout 'email'
 
   ### service external methods
