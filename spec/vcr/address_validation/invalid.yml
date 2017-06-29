@@ -14,7 +14,7 @@ http_interactions:
       User-Agent:
       - EasyPost/v2 RubyClient/2.1.11
       Authorization:
-      - Bearer <<EASYPOST_API_KEY>>
+      - "<<ACCESS_TOKEN>>"
       Content-Type:
       - application/x-www-form-urlencoded
       Content-Length:
@@ -31,7 +31,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       X-Ep-Request-Uuid:
-      - 9d662082-2def-40eb-8c74-633d2ff727e5
+      - 1b8dbda0-cd4d-4ed7-b940-90ac703df0f9
       Cache-Control:
       - no-cache, no-store, must-revalidate, private
       Pragma:
@@ -39,39 +39,39 @@ http_interactions:
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_ba3f0e7f813a44448908e503a5579142"
+      - "/api/v2/addresses/adr_047a6fc61443480a9927474b670ed343"
       Content-Type:
       - application/json; charset=utf-8
-      X-Request-Id:
-      - 21950ff5-ff97-4cab-b403-ed1611f72ab2
       X-Runtime:
-      - '0.334818'
+      - '0.136291'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - e8e9178a41
+      - 9840d170ee
       - easypost
       - web11sj
       X-Backend:
       - easypost
       X-Proxied:
-      - lb5sj, 95ad0152de
+      - extlb1wdc, f4973b60d1
+      - intlb1wdc f4973b60d1
+      - intlb2sj f4973b60d1
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA5SR0U/CMBDG/5Wlz0A6xoTtDUUfNRF40ZjlWG9Q07Wk7YxI
-        9r97HRlGYyQuWba7fN/1d1+PTAqWMxC22EBScZxWsziBCT2zjM8w5Qmk6TSL
-        J2M2YGbziqUn/VwIi85Rq7QIHkUBoT3m8dWQZ0M+XfE050me8ifSNHtxUaOh
-        RpbrRimaaeo96ENfOm8RfUzeeJxlcRZH1wp2G3oj50esF4zPdunJy5agozsL
-        upSuNJ2KIKh/M6fiQ+67eckkDUuYRnsbTOsllfud0WcYrEGqvqiNCCM8Oh9s
-        YK1EW1RQStUdelJRNFKg9hLOxgoFWlCFh/ciJN5vRkg/em9oZSVL8NJox/Ij
-        E6gkNQ/h3zVlGXLPK1AOCc5aY6l8PtIOHdrtaL5YPN4ul6P7h1Vx97C+XxBp
-        JVGd7rm/t5o+sMWvu4y08VFFQYiQVbPd0o6EcMJqXwbE4SmJgNS2XYCTC0T/
-        O+I3yD92+kbUIbbtJwAAAP//AwDJuGFnzQIAAA==
-    http_version:
-  recorded_at: Wed, 07 Sep 2016 05:03:50 GMT
+        H4sIAAAAAAAAA8xRy07DMBD8lcjntsrDNCS3QtsjSBQuIBRt7U0xcuzKdhBQ
+        5d9ZpwpIXLhyiJIZzWxmZ09MSVYzkK5JeQnLViwzzgt+mUJV5SUv+X5ZpigL
+        XrAZs/tXFIH0Kykdek+UcAgBZQORztOsnKfLeV7dp2mdFXV6+Uia/ij/1Bjo
+        kNWm15pm2u4I5mOCPjjEkJE3y6sqq7LkSsPLnp7EhwWbBPm3XQXysh2YZOvA
+        COWFHVUUgvjrFYFPdRznFfwiLmF7E1w0PewIHl+s+Q6DHSg9gc7KOCKgD9EG
+        zil0TQtC6fGnZxVVoySaoICMLWiPM9aiRAe6CfDexMqn1SjTL+4NnWqVgKCs
+        8aw+MYlaEfkRv30vRCx+GovOWUfw6URLjNk2i9V6fbfZ7RY3t/fN9vbhZk1R
+        W4X6fOjpcB294IA/x0yMDUlLTchYVn840JIU4RxreJ5RjkBVxEjDMDbI/02i
+        kRiGLwAAAP//AwA4nZ0jzgIAAA==
+    http_version: 
+  recorded_at: Thu, 29 Jun 2017 00:13:08 GMT
 recorded_with: VCR 3.0.3
