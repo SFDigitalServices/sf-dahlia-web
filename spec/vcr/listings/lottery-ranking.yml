@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:19 GMT
+      - Thu, 29 Jun 2017 00:13:18 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=AHDfE417QKWdsQckd-z5pw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:19 GMT
+      - BrowserId=Id6OP7kARaaZ5J4qQKzcww;Path=/;Domain=.salesforce.com;Expires=Mon,
+        28-Aug-2017 00:13:18 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1489512799274","signature":"Y1d+qVFEbQnpBAEr+U/fYThuKPMMpqQTFR4yWPHBMYs="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008fvwUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1498695199243","signature":"FM2ahFKxh6Veh2xW2Ti4Tn0bMT4p/fL5fdNX6yF/6a4="}'
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:19 GMT
+  recorded_at: Thu, 29 Jun 2017 00:13:19 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000DYiwiUAD/00008639
+    uri: https://sfhousing--full.cs71.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000DYiwiUAD/00008639
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:19 GMT
-      Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - Thu, 29 Jun 2017 00:13:19 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008fvw";
+      Content-Security-Policy:
+      - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=vZZFNACAR-2QHMH-aq8YIw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:19 GMT
+      - BrowserId=4PGe5H0eRaa8rCgmibrrXA;Path=/;Domain=.salesforce.com;Expires=Mon,
+        28-Aug-2017 00:13:19 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -119,5 +119,5 @@ http_interactions:
         cmVuY2VSYW5rIjpudWxsLCJjZXJ0T2ZQcmVmZXJlbmNlIjpmYWxzZSwiYXBw
         bGljYXRpb25JZCI6ImEwbzBQMDAwMDA5MmlSY1FBSSJ9XX0=
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:20 GMT
+  recorded_at: Thu, 29 Jun 2017 00:13:22 GMT
 recorded_with: VCR 3.0.3
