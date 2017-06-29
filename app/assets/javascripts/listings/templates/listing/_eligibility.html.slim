@@ -62,23 +62,24 @@ accordion-heading.lead
           p.custom-counter_text
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION' | translate}}
 
-        table role="grid"
-          thead
-            tr
-              th scope="col"
-                | {{'T.UNIT_TYPE' | translate}}
-              th scope="col"
-                | {{'T.OCCUPANCY' | translate}}
-          tbody
-            tr ng-repeat="unit_summary in listing.unitSummary"
-              td scope="row"
-                | {{unit_summary.Unit_Type}}
-              td ng-if="unit_summary.Unit_Type == 'Flex'"
-                | Flex people
-              td ng-if="unit_summary.Unit_Type != 'Flex'"
-                ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
-                small
-                  | people
+        .scrollable-table-container
+          table role="grid"
+            thead
+              tr
+                th scope="col"
+                  | {{'T.UNIT_TYPE' | translate}}
+                th scope="col"
+                  | {{'T.OCCUPANCY' | translate}}
+            tbody
+              tr ng-repeat="unit_summary in listing.unitSummary"
+                td scope="row"
+                  | {{unit_summary.Unit_Type}}
+                td ng-if="unit_summary.Unit_Type == 'Flex'"
+                  | Flex people
+                td ng-if="unit_summary.Unit_Type != 'Flex'"
+                  ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
+                  small
+                    | people
 
     li.custom-counter_item
       .content-tile
