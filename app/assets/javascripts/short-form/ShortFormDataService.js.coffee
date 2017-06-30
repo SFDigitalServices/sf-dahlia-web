@@ -313,7 +313,7 @@ ShortFormDataService = (ListingService) ->
     whitelist = [
       'appMemberId', 'contactId',
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-      'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
+      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
@@ -340,7 +340,7 @@ ShortFormDataService = (ListingService) ->
   Service._reformatHouseholdMember = (contact) ->
     whitelist = [
       'appMemberId', 'firstName', 'middleName', 'lastName',
-      'relationship', 'neighborhoodPreferenceMatch', 'noAddress',
+      'relationship', 'preferenceAddressMatch', 'noAddress',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     member = _.pick contact, whitelist
