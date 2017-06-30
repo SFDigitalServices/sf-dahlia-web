@@ -149,6 +149,7 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.8.1)
+    image_optimizer (1.7.0)
     iniparse (1.4.2)
     jasmine-core (2.6.1)
     jasmine-jquery-rails (2.0.3)
@@ -361,6 +362,7 @@ DEPENDENCIES
   factory_girl_rails
   hashie
   http
+  image_optimizer (~> 1.7.0)
   jasmine!
   jasmine-jquery-rails
   jbuilder (~> 2.0)

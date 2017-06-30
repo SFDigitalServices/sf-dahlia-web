@@ -2,6 +2,15 @@
 class UploadedFile < ActiveRecord::Base
   enum preference: %i(workInSf liveInSf neighborhoodResidence)
 
+  def self.create_and_resize(attrs)
+    mb1 = File.size(attrs[:file].tempfile.path) / 1_000_000.0
+    ImageOptimizer.new(attrs[:file].tempfile.path, level: 2, quality: 75).optimize
+    mb2 = File.size(attrs[:file].tempfile.path) / 1_000_000.0
+    puts "before: #{mb1}, after: #{mb2}"
+    attrs[:file] = attrs[:file].read
+    create(attrs)
+  end
+
   # override as_json to omit the actual binary file since it's big and unncessary
   def as_json(_options = {})
     super(except: %i(file))

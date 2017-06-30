@@ -66,6 +66,9 @@ gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
 gem 'nokogiri', '~> 1.7.1'
 
+# image manipulation
+gem 'image_optimizer', '~> 1.7.0'
+
 # http requests made easy
 gem 'http', require: false
 
