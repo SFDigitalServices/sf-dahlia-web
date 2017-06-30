@@ -3,11 +3,22 @@ class UploadedFile < ActiveRecord::Base
   enum preference: %i(workInSf liveInSf neighborhoodResidence)
 
   def self.create_and_resize(attrs)
-    mb1 = File.size(attrs[:file].tempfile.path) / 1_000_000.0
-    ImageOptimizer.new(attrs[:file].tempfile.path, level: 2, quality: 75).optimize
-    mb2 = File.size(attrs[:file].tempfile.path) / 1_000_000.0
-    puts "before: #{mb1}, after: #{mb2}"
-    attrs[:file] = attrs[:file].read
+    tempfile_path = attrs[:file].tempfile.path
+    unless attrs[:content_type] == 'application/pdf'
+      mb1 = File.size(tempfile_path) / 1_000_000.0
+      if attrs[:content_type] == 'image/png'
+        image = MiniMagick::Image.new(tempfile_path)
+        image.format 'jpg'
+        attrs[:content_type] = 'image/jpeg'
+      end
+      ImageOptimizer.new(tempfile_path, quality: 75).optimize
+      mb2 = File.size(tempfile_path) / 1_000_000.0
+      puts "before: #{mb1}, after: #{mb2}"
+    end
+    # read file data into :file attribute
+    attrs[:file] = File.read(tempfile_path)
+    # simplify uploaded filename to remove extension
+    attrs[:name] = File.basename(attrs[:name], File.extname(attrs[:name]))
     create(attrs)
   end
 
@@ -17,7 +28,9 @@ class UploadedFile < ActiveRecord::Base
   end
 
   def descriptive_name
-    "#{preference_name} - #{document_type}#{File.extname(name)}"
+    ext = content_type.rpartition('/').last
+    ext = 'jpg' if ext == 'jpeg'
+    "#{preference_name} - #{document_type}.#{ext}"
   end
 
   def preference_name

@@ -168,6 +168,7 @@ GEM
     memcachier (0.0.2)
     method_source (0.8.2)
     mime-types (2.99.3)
+    mini_magick (4.7.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -368,6 +369,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   memcachier
+  mini_magick (~> 4.7.2)
   newrelic_rpm
   nokogiri (~> 1.7.1)
   oj
