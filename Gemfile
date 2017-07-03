@@ -67,7 +67,6 @@ gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 gem 'nokogiri', '~> 1.7.1'
 
 # image manipulation
-# gem 'rmagick', '~> 2.16.0'
 gem 'mini_magick', '~> 4.7.2'
 gem 'image_optimizer', '~> 1.7.0'
 
