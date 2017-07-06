@@ -105,7 +105,11 @@ ShortFormApplicationController = (
   $scope.submitDisabled = false
 
   $scope.resetAndStartNewApp = ->
-    ShortFormApplicationService.resetUserData()
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    data =
+      # will be null if the listing didn't have a screening Q
+      answeredCommunityScreening: $scope.application.answeredCommunityScreening
+    ShortFormApplicationService.resetUserData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
     $scope.alternateContact = ShortFormApplicationService.alternateContact

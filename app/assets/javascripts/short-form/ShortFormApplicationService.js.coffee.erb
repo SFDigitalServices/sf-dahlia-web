@@ -743,11 +743,12 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.loadApplication = (data) ->
-    formattedApp =
-      answeredCommunityScreening: Service.application.answeredCommunityScreening
+    formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
     Service.resetUserData(formattedApp)
 
   Service.loadAccountApplication = (data) ->
