@@ -22,6 +22,7 @@ Feature: Short Form Application - Live/Work Preference
       When I upload a "Gas bill" as my proof of preference
       Then I should see the successful file upload info
       When I click the Next button on the Live/Work Preference page
+      And I opt out of Assisted Housing preference
       Then I should see the Preferences Programs screen
 
     Scenario: Selecting live/work member, going back and forth from previous page, changing name
@@ -43,6 +44,8 @@ Feature: Short Form Application - Live/Work Preference
       Then I should still see the preference options and uploader input visible
       # Finish the application and make sure a name change doesn't unclaim the preference
       When I upload a "Gas bill" as my proof of preference
+      And I click the Next button on the Live/Work Preference page
+      And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
       And I fill out the optional survey
       And I navigate to the "You" section

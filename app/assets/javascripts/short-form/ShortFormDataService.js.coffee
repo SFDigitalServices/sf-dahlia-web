@@ -146,7 +146,7 @@ ShortFormDataService = (ListingService) ->
       # if you optOut then you wouldn't have a memberName or proofOption
       # rentBurden also doesn't have a specific member
       unless optOut || prefKey == 'rentBurden'
-        memberId = application.preferences[preference + '_household_member']
+        memberId = application.preferences[prefKey + '_household_member']
         member = _.find(allMembers, { id: memberId })
 
         if !member && application.status.match(/draft/i)

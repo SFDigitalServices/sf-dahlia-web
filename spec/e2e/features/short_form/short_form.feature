@@ -43,6 +43,7 @@ Feature: Short Form Application
       And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
+      And I continue past the general lottery notice
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
