@@ -10,22 +10,48 @@ janedoeEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
+fillOutNamePage = (fullName, opts = {}) ->
+  firstName = fullName.split(' ')[0]
+  lastName  = fullName.split(' ')[1]
+  month = opts.month || '02'
+  day = opts.day || '22'
+  year = opts.year || '1990'
+
+  element(By.model('applicant.firstName')).clear().sendKeys(firstName)
+  element(By.model('applicant.lastName')).clear().sendKeys(lastName)
+  element(By.model('applicant.dob_month')).clear().sendKeys(month)
+  element(By.model('applicant.dob_day')).clear().sendKeys(day)
+  element(By.model('applicant.dob_year')).clear().sendKeys(year)
+  submitPage()
+
 fillOutContactPage = (opts = {}) ->
   opts.address1 ||= '4053 18th St.'
   element(By.model('applicant.phone')).clear().sendKeys('2222222222')
-  element(By.model('applicant.phoneType')).click()
-  element(By.cssContainingText('option', 'Home')).click()
+  element(By.model('applicant.phoneType')).sendKeys('home')
   element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
   element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
   element(By.id('applicant_home_address_city')).clear().sendKeys('San Francisco')
-  element(By.cssContainingText('option', 'California')).click()
+  element(By.id('applicant_home_address_state')).sendKeys('california')
   element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
   element(By.id('workInSf_yes')).click()
+  submitPage()
+
+fillOutSurveyPage = ->
+  element(By.id('referral_newspaper')).click()
+  submitPage()
+
+getSelectedLiveMember = () ->
+  liveInSfMember = element.all(By.id('liveInSf_household_member')).filter((elem) ->
+    elem.isDisplayed()
+  ).first()
+
+submitPage = ->
+  element(By.id('submit')).click()
 
 optOutAndSubmit = ->
   # opt out + submit preference page (e.g. NRHP, Live/Work)
   element(By.id('preference-optout')).click()
-  element(By.id('submit')).click()
+  submitPage()
 
 getUrlAndCatchPopup = (url) ->
   # always catch and confirm popup alert in case we are leaving an existing application
@@ -33,9 +59,9 @@ getUrlAndCatchPopup = (url) ->
   browser.get(url).catch ->
     browser.switchTo().alert().then (alert) ->
       alert.accept()
-      browser.get url
+      browser.get(url)
 
-submitForm = () ->
+submitPage = () ->
   element(By.id('submit')).click()
 
 module.exports = ->
@@ -72,37 +98,27 @@ module.exports = ->
     submitForm()
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    firstName = fullName.split(' ')[0]
-    lastName  = fullName.split(' ')[1]
-    element(By.model('applicant.firstName')).clear().sendKeys(firstName)
-    element(By.model('applicant.lastName')).clear().sendKeys(lastName)
-    element(By.model('applicant.dob_month')).clear().sendKeys('02')
-    element(By.model('applicant.dob_day')).clear().sendKeys('22')
-    element(By.model('applicant.dob_year')).clear().sendKeys('1990')
-    submitForm()
+    fillOutNamePage(fullName)
 
   @When 'I submit the Name page with my account info', ->
-    submitForm()
+    submitPage()
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail})
-    submitForm()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
-    submitForm()
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage()
-    submitForm()
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I don\'t indicate an alternate contact', ->
     element(By.id('alternate_contact_none')).click()
-    submitForm()
+    submitPage()
 
   @When 'I indicate I will live alone', ->
     element(By.id('live-alone')).click()
@@ -110,7 +126,7 @@ module.exports = ->
   @When 'I indicate other people will live with me', ->
     element(By.id('other-people')).click()
     # also submit the household overview page
-    submitForm()
+    submitPage()
 
   @When /^I add another household member named "([^"]*)"$/, (fullName) ->
     # click into the Add Household Member form
@@ -130,50 +146,52 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
     # finish adding member
-    submitForm()
+    submitPage()
 
   @When 'I indicate being done adding other people', ->
-    submitForm()
+    submitPage()
 
   @When 'I indicate living in public housing', ->
     element(By.id('hasPublicHousing_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I indicate not living in public housing', ->
     element(By.id('hasPublicHousing_no')).click()
-    submitForm()
+    submitPage()
 
   @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
     element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
-    submitForm()
+    submitPage()
 
   @When 'I indicate no priority', ->
     element(By.id('adaPrioritiesSelected_none')).click()
-    submitForm()
+    submitPage()
 
   @When 'I go to the income page', ->
-    submitForm()
+    submitPage()
 
   @When 'I indicate having vouchers', ->
     element(By.id('householdVouchersSubsidies_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I fill out my income', ->
     element(By.id('incomeTotal')).sendKeys('22000')
     element(By.id('per_year')).click()
-    submitForm()
+    submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
-    submitForm()
+    submitPage()
 
   @When 'I opt out of Assisted Housing preference', ->
     optOutAndSubmit()
 
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
-    submitForm()
+    submitPage()
+
+  @When 'I continue past the general lottery notice', ->
     # also skip general lottery notice
-    submitForm()
+    submitPage()
 
   @When 'I opt out of Live/Work preference', ->
     optOutAndSubmit()
@@ -204,7 +222,7 @@ module.exports = ->
     ).last().click()
 
   @When 'I go to the income page', ->
-    submitForm()
+    submitPage()
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
@@ -222,35 +240,53 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
+  @When /^I upload a "([^"]*)" as my proof of preference$/, (documentType) ->
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id("liveInSf_proofDocument")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
+  @When 'I click the Next button on the Live/Work Preference page', ->
+    element.all(By.id("submit")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
-    submitForm()
+    submitPage()
     element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Live/Work preference page', ->
     element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
     # skip intro
-    submitForm()
+    submitPage()
     # skip NRHP (if exists)
     if element(By.id('preferences-neighborhoodResidence'))
-      submitForm()
+      submitPage()
 
   @When 'I submit my preferences', ->
-    submitForm()
+    submitPage()
 
   @When 'I fill out the optional survey', ->
-    element(By.id('referral_newspaper')).click()
-    submitForm()
+    fillOutSurveyPage()
 
   @When 'I confirm details on the review page', ->
-    submitForm()
+    submitPage()
 
   @When 'I continue confirmation without signing in', ->
     element(By.id('confirm_no_account')).click()
 
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
@@ -270,7 +306,7 @@ module.exports = ->
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
   @When 'I submit the Create Account form', ->
-    submitForm()
+    submitPage()
     browser.waitForAngular()
 
   @When /^I wait "([^"]*)" seconds/, (delay) ->
@@ -305,36 +341,51 @@ module.exports = ->
   @When 'I go to the listings page in Spanish', ->
     getUrlAndCatchPopup('/es/listings')
 
+  @When /^I navigate to the "([^"]*)" section$/, (section) ->
+    element.all(By.css('.progress-nav'))
+      .all(By.linkText(section.toUpperCase()))
+      .first()
+      .click()
+    browser.waitForAngular()
+
   #######################
   # --- Error cases --- #
   #######################
 
   @When "I don't fill out the Name page", ->
-    element(By.id('submit')).click()
+    submitPage()
 
   @When "I fill out the Name page with non-latin characters", ->
     element(By.model('applicant.firstName')).sendKeys('Jane中文')
     element(By.id('submit')).click()
 
   @When "I fill out the Name page with an invalid DOB", ->
-    element(By.model('applicant.firstName')).clear().sendKeys('Jane')
-    element(By.model('applicant.lastName')).clear().sendKeys('Doe')
-    element(By.model('applicant.dob_month')).clear().sendKeys('12')
-    element(By.model('applicant.dob_day')).clear().sendKeys('33')
-    element(By.model('applicant.dob_year')).clear().sendKeys('2019')
-    element(By.id('submit')).click()
+    fillOutNamePage( 'Jane Doe', {
+      month: '12'
+      day: '33'
+      year: '2019'
+    })
 
   @When "I fill out the Contact page with an address that isn't found", ->
     fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
-    element(By.id('submit')).click()
 
   @When "I don't select opt out or Live/Work preference", ->
-    element(By.id('submit')).click()
+    submitPage()
 
 
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see the Preferences Programs screen', ->
+    certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
+    @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the successful file upload info', ->
+    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
@@ -350,9 +401,7 @@ module.exports = ->
 
   @Then 'I should still see the preference options and uploader input visible', ->
     # there are multiple liveInSf_household_members, click the visible one
-    liveInSfMember = element.all(By.id('liveInSf_household_member')).filter((elem) ->
-      elem.isDisplayed()
-    ).first()
+    liveInSfMember = getSelectedLiveMember()
     # expect the member selection field to still be there
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
@@ -384,6 +433,16 @@ module.exports = ->
   @Then 'I should be redirected back to the listings page in English', ->
     # we check that it is at the ":3000/listings" URL rather than ":3000/es/listings"
     browser.wait(EC.urlContains(':3000/listings'), 6000)
+
+  @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
+    claimedPreference = element(By.cssContainingText('.info-item_name', preference))
+    @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+    claimedMember = element(By.cssContainingText('.info-item_note', name))
+    @expect(claimedMember.isPresent()).to.eventually.equal(true)
+
+    preferenceMember = element(By.cssContainingText('.info-item_note', name))
+    @expect(preferenceMember.isPresent()).to.eventually.equal(true)
+
 
   ###################################
   # --- Error case expectations --- #

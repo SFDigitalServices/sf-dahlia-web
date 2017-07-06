@@ -1,0 +1,27 @@
+header class="lead-header bg-dust" id="main-content"
+  div class="row"
+    div class="medium-12 columns"
+
+      div class="lead-header_group"
+        h1 class="lead-header_title c-steel"
+          | Page Updating: {{listing.Name}}
+
+section class="results-section border-top border-bottom"
+  article class="row"
+    div class="large-12 columns"
+      header class="status-header status--closed has-button has-button"
+        div class="status-header_content"
+          div class="status-header_icon"
+            span class="ui-icon ui-xlarge"
+              svg
+                use xlink:href="#i-clock"
+
+          hgroup class="status-header_group"
+            h2 class="status-header_title gamma"
+              | Check back soon
+            p class="no-margin"
+              | We are in the process of updating this page right now.
+
+          div class="status-header_action"
+            a ui-sref="dahlia.welcome" class="button ghost-white expand-small right toggler"
+              | Back to Homepage

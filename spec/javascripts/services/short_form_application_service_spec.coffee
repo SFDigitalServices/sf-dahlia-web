@@ -153,7 +153,7 @@ do ->
       describe 'new household member', ->
         it 'adds an ID to the householdMember object', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.id).toEqual(1)
+          expect(householdMember.id).toEqual(2)
 
         it 'adds household member to Service.householdMembers', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
@@ -188,19 +188,6 @@ do ->
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
-
-        it 'updates the name for any preferences attached to the member', ->
-          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          householdMember = angular.copy(householdMember)
-          currentName = "#{householdMember.firstName} #{householdMember.lastName}"
-          # attach household member to the preference
-          ShortFormApplicationService.preferences['liveInSf_household_member'] = currentName
-          # now update
-          householdMember.firstName = 'Robert'
-          newName = "#{householdMember.firstName} #{householdMember.lastName}"
-          ShortFormApplicationService.addHouseholdMember(householdMember)
-          # the name attached to the preference should also update
-          expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
 
     describe 'cancelHouseholdMember', ->
       beforeEach ->
@@ -304,7 +291,7 @@ do ->
             ShortFormApplicationService.application.completedSections['Preferences'] = true
             ShortFormApplicationService.preferences =
               liveInSf: true
-              liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+              liveInSf_household_member: 1
               documents: {
                 liveInSf: {
                   file: {name: 'img.jpg'}
@@ -535,7 +522,7 @@ do ->
     describe 'copyNeighborhoodToLiveInSf', ->
       beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
-        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 10
         ShortFormApplicationService.preferences.documents.neighborhoodResidence = {
           proofOption: 'Gas Bill'
           file: {}
@@ -543,7 +530,7 @@ do ->
 
       it 'copies Neighborhood member to liveInSf', ->
         ShortFormApplicationService.copyNeighborhoodToLiveInSf('neighborhoodResidence')
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 10
         expect(ShortFormApplicationService.preferences.documents.liveInSf.proofOption).toEqual 'Gas Bill'
 
     describe 'preferenceRequired', ->
@@ -720,10 +707,10 @@ do ->
             firstName: 'Janice'
             lastName: 'Jane'
           ShortFormApplicationService.application.preferences =
-            liveInSf_household_member: 'Janice Jane'
+            liveInSf_household_member: 1
           ShortFormApplicationService.importUserData(loggedInUser)
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
-            .toEqual('Jane Doe')
+            .toEqual(1)
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
@@ -754,7 +741,7 @@ do ->
       beforeEach ->
         fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
         ShortFormApplicationService.preferences.liveInSf = true
-        ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.preferences.documents.liveInSf = {
           proofOption: 'Telephone Bill'
           file: {name: 'somefile.pdf'}

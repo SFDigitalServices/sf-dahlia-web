@@ -55,6 +55,7 @@ Feature: Short Form Application
       And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
+      And I continue past the general lottery notice
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
@@ -66,41 +67,6 @@ Feature: Short Form Application
       And I wait "18" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
-
-    Scenario: Opting in to live/work then saying no to workInSf
-      Given I go to the first page of the Test Listing application
-      When I fill out the Name page as "Jane Doe"
-      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
-      And I indicate I will live alone
-      And I indicate living in public housing
-      And I indicate no priority
-      And I indicate having vouchers
-      And I fill out my income
-      And I continue past the Lottery Preferences intro
-      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I go back to the Contact page and change WorkInSF to No
-      And I go back to the Live/Work preference page
-      Then I should still see the single Live in San Francisco preference selected
-
-    Scenario: Selecting live/work member, then going back and forth from previous page
-      Given I go to the first page of the Test Listing application
-      When I fill out the Name page as "Jane Doe"
-      And I fill out the Contact page with an address (NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
-      And I indicate I will live alone
-      And I indicate living in public housing
-      And I indicate no priority
-      And I indicate having vouchers
-      And I fill out my income
-      And I continue past the Lottery Preferences intro
-      And I opt out of NRHP preference
-      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I use the browser back button
-      And I go back to the Live/Work preference page
-      Then I should still see the preference options and uploader input visible
 
     Scenario: Being eligible for Rent Burden preference with a single address
       Given I go to the first page of the Test Listing application
