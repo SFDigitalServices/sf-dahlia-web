@@ -35,7 +35,7 @@ getUrlAndCatchPopup = (url) ->
       alert.accept()
       browser.get url
 
-submitForm = () ->
+submitPage = () ->
   element(By.id('submit')).click()
 
 module.exports = ->
@@ -61,30 +61,30 @@ module.exports = ->
     element(By.model('applicant.dob_month')).clear().sendKeys('02')
     element(By.model('applicant.dob_day')).clear().sendKeys('22')
     element(By.model('applicant.dob_year')).clear().sendKeys('1990')
-    submitForm()
+    submitPage()
 
   @When 'I submit the Name page with my account info', ->
-    submitForm()
+    submitPage()
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail})
-    submitForm()
+    submitPage()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
-    submitForm()
+    submitPage()
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage()
-    submitForm()
+    submitPage()
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I don\'t indicate an alternate contact', ->
     element(By.id('alternate_contact_none')).click()
-    submitForm()
+    submitPage()
 
   @When 'I indicate I will live alone', ->
     element(By.id('live-alone')).click()
@@ -92,7 +92,7 @@ module.exports = ->
   @When 'I indicate other people will live with me', ->
     element(By.id('other-people')).click()
     # also submit the household overview page
-    submitForm()
+    submitPage()
 
   @When /^I add another household member named "([^"]*)"$/, (fullName) ->
     # click into the Add Household Member form
@@ -112,50 +112,50 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
     # finish adding member
-    submitForm()
+    submitPage()
 
   @When 'I indicate being done adding other people', ->
-    submitForm()
+    submitPage()
 
   @When 'I indicate living in public housing', ->
     element(By.id('hasPublicHousing_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I indicate not living in public housing', ->
     element(By.id('hasPublicHousing_no')).click()
-    submitForm()
+    submitPage()
 
   @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
     element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
-    submitForm()
+    submitPage()
 
   @When 'I indicate no priority', ->
     element(By.id('adaPrioritiesSelected_none')).click()
-    submitForm()
+    submitPage()
 
   @When 'I go to the income page', ->
-    submitForm()
+    submitPage()
 
   @When 'I indicate having vouchers', ->
     element(By.id('householdVouchersSubsidies_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I fill out my income', ->
     element(By.id('incomeTotal')).sendKeys('22000')
     element(By.id('per_year')).click()
-    submitForm()
+    submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
-    submitForm()
+    submitPage()
 
   @When 'I opt out of Assisted Housing preference', ->
     optOutAndSubmit()
 
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
-    submitForm()
+    submitPage()
     # also skip general lottery notice
-    submitForm()
+    submitPage()
 
   @When 'I opt out of Live/Work preference', ->
     optOutAndSubmit()
@@ -186,7 +186,7 @@ module.exports = ->
     ).last().click()
 
   @When 'I go to the income page', ->
-    submitForm()
+    submitPage()
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
@@ -206,33 +206,33 @@ module.exports = ->
 
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
-    submitForm()
+    submitPage()
     element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Live/Work preference page', ->
     element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
     # skip intro
-    submitForm()
+    submitPage()
     # skip NRHP (if exists)
     if element(By.id('preferences-neighborhoodResidence'))
-      submitForm()
+      submitPage()
 
   @When 'I submit my preferences', ->
-    submitForm()
+    submitPage()
 
   @When 'I fill out the optional survey', ->
     element(By.id('referral_newspaper')).click()
-    submitForm()
+    submitPage()
 
   @When 'I confirm details on the review page', ->
-    submitForm()
+    submitPage()
 
   @When 'I continue confirmation without signing in', ->
     element(By.id('confirm_no_account')).click()
 
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click()
-    submitForm()
+    submitPage()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
@@ -252,7 +252,7 @@ module.exports = ->
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
   @When 'I submit the Create Account form', ->
-    submitForm()
+    submitPage()
     browser.waitForAngular()
 
   @When /^I wait "([^"]*)" seconds/, (delay) ->
