@@ -125,13 +125,16 @@ ShortFormDataService = (ListingService) ->
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
     angular.copy(Service.preferences).forEach( (prefKey) ->
+      listingPref = ListingService.getPreference(prefKey)
+      return unless listingPref
+
       # prefKey is the short name like liveInSf
       naturalKey = null
       individualPref = null
       optOut = application.preferences.optOut[prefKey] || false
 
       # only proceed if we optedOut or marked this pref as `true`
-      return unless optOut || application.preferences[prefKey]
+      # return unless optOut || application.preferences[prefKey]
 
       if prefKey == 'liveWorkInSf'
         # combo liveWork pref only relevant if the individual ones are not set
@@ -157,10 +160,8 @@ ShortFormDataService = (ListingService) ->
           return unless member
           naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
 
-      listingPref = ListingService.getPreference(prefKey)
-      return unless listingPref
-
       shortFormPref =
+        shortformPreferenceID: application.preferences["#{prefKey}_shortformPreferenceID"]
         listingPreferenceID: listingPref.listingPreferenceID
         naturalKey: naturalKey
         optOut: optOut
@@ -391,8 +392,8 @@ ShortFormDataService = (ListingService) ->
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
 
+      preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
       preferences.optOut[prefKey] = shortFormPref.optOut
-
       unless shortFormPref.optOut
         # now that we have prefKey, reconstruct the fields on preferences
         if member
