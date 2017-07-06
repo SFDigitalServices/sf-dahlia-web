@@ -124,44 +124,56 @@ ShortFormDataService = (ListingService) ->
     application.shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-    angular.copy(Service.preferences).forEach( (prefKey) ->
-      listingPref = ListingService.getPreference(prefKey)
-      return unless listingPref
 
+    angular.copy(ListingService.listing.preferences).forEach( (listingPref) ->
       # prefKey is the short name like liveInSf
+      prefKey = null
       naturalKey = null
       individualPref = null
-      optOut = application.preferences.optOut[prefKey] || false
+      optOut = false
+      shortformPreferenceID = null
+      appPrefs = application.preferences
 
-      # only proceed if we optedOut or marked this pref as `true`
-      # return unless optOut || application.preferences[prefKey]
-
-      if prefKey == 'liveWorkInSf'
-        # combo liveWork pref only relevant if the individual ones are not set
-        return if application.preferences.workInSf || application.preferences.liveInSf
-      if _.includes(['liveInSf', 'workInSf'], prefKey)
-        # for liveWorkInSf, need to indicate individual pref (live or work)
-        individualPref = if (prefKey == 'workInSf') then 'Work in SF' else 'Live in SF'
-      if _.includes(['rentBurden', 'assistedHousing'], prefKey)
-        # for liveWorkInSf, need to indicate individual pref (live or work)
-        individualPref = if (prefKey == 'assistedHousing') then 'Assisted Housing' else 'Rent Burdened'
+      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+        shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        if appPrefs.liveInSf || appPrefs.optOut.liveInSf
+          individualPref = 'Live in SF'
+          prefKey = 'liveInSf'
+          optOut = appPrefs.optOut.liveInSf
+        else if appPrefs.workInSf || appPrefs.optOut.workInSf
+          individualPref = 'Work in SF'
+          prefKey = 'workInSf'
+          optOut = appPrefs.optOut.workInSf
+      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+        shortformPreferenceID = appPrefs.rentBurden_shortformPreferenceID
+        if appPrefs.rentBurden || appPrefs.optOut.rentBurden
+          individualPref = 'Rent Burdened'
+          prefKey = 'rentBurden'
+          optOut = appPrefs.optOut.rentBurden
+        else if appPrefs.assistedHousing || appPrefs.optOut.assistedHousing
+          individualPref = 'Assisted Housing'
+          prefKey = 'assistedHousing'
+          optOut = appPrefs.optOut.assistedHousing
+      else
+        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
+        optOut = appPrefs.optOut[prefKey]
 
       # if you optOut then you wouldn't have a memberName or proofOption
-      # rentBurden also doesn't have a specific member
-      unless optOut || prefKey == 'rentBurden'
-        memberId = application.preferences[prefKey + '_household_member']
+      unless optOut
+        memberId = appPrefs[prefKey + '_household_member']
         member = _.find(allMembers, { id: memberId })
 
-        if !member && application.status.match(/draft/i)
-          # this scenario is OK, if saving a draft
-          memberName = null
-        else
-          # if member was marked for a preference, but not found, this seems like a bug/mistake
-          return unless member
+        if !member && prefKey == 'rentBurden'
+          # set a default member in the case of rentBurden where none was indicated
+          member = application.applicant
+
+        if member
+          # there might not be a member indicated if it's a draft
           naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
 
       shortFormPref =
-        shortformPreferenceID: application.preferences["#{prefKey}_shortformPreferenceID"]
+        shortformPreferenceID: shortformPreferenceID
         listingPreferenceID: listingPref.listingPreferenceID
         naturalKey: naturalKey
         optOut: optOut
@@ -378,6 +390,7 @@ ShortFormDataService = (ListingService) ->
 
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+        preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.ifCombinedIndividualPreference == 'Live in SF'
           prefKey = 'liveInSf'
         else if shortFormPref.ifCombinedIndividualPreference == 'Work in SF'
@@ -385,23 +398,26 @@ ShortFormDataService = (ListingService) ->
         else
           prefKey = 'liveWorkInSf'
       else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+        preferences.rentBurden_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.ifCombinedIndividualPreference == 'Assisted Housing'
           prefKey = 'assistedHousing'
         else if shortFormPref.ifCombinedIndividualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
 
-      preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
       preferences.optOut[prefKey] = shortFormPref.optOut
       unless shortFormPref.optOut
         # now that we have prefKey, reconstruct the fields on preferences
         if member
-          # some shortFormPrefs don't need a householdMember, e.g. rentBurden
           preferences["#{prefKey}_household_member"] = member.id
-        preferences[prefKey] = true
+          preferences[prefKey] = true
 
         _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
+          # mark preference as true if they've uploaded any files (e.g. for a draft)
+          preferences[prefKey] = true
+
           if prefKey == 'rentBurden'
             if file.rent_burden_type == 'lease'
               preferences.documents.rentBurden[file.address].lease = {
