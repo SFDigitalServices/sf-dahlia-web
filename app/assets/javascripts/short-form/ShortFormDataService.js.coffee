@@ -66,7 +66,6 @@ ShortFormDataService = (ListingService) ->
     application.householdMembers.forEach( (member) ->
       member.dob = Service.formatUserDOB(member)
       angular.copy(Service.removeDOBFields(member), member)
-      delete member.id
       return
     )
     return application
@@ -147,13 +146,13 @@ ShortFormDataService = (ListingService) ->
       # if you optOut then you wouldn't have a memberName or proofOption
       # rentBurden also doesn't have a specific member
       unless optOut || prefKey == 'rentBurden'
-        memberName = application.preferences["#{prefKey}_household_member"]
-        if !memberName && application.status.match(/draft/i)
+        memberId = application.preferences[preference + '_household_member']
+        member = _.find(allMembers, { id: memberId })
+
+        if !member && application.status.match(/draft/i)
           # this scenario is OK, if saving a draft
           memberName = null
         else
-          return unless memberName
-          member = _.find(allMembers, (m) -> "#{m.firstName} #{m.lastName}" == memberName)
           # if member was marked for a preference, but not found, this seems like a bug/mistake
           return unless member
           naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
@@ -322,12 +321,14 @@ ShortFormDataService = (ListingService) ->
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.additionalPhone = !! contact.alternatePhone
+    # we use this tempId to identify people in the preference dropdown
+    applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
 
   Service._reformatHousehold = (contacts) ->
     household = []
-    i = 0
+    i = 1
     contacts.forEach (contact) ->
       i++
       member = Service._reformatHouseholdMember(contact)
@@ -396,7 +397,7 @@ ShortFormDataService = (ListingService) ->
         # now that we have prefKey, reconstruct the fields on preferences
         if member
           # some shortFormPrefs don't need a householdMember, e.g. rentBurden
-          preferences["#{prefKey}_household_member"] = "#{member.firstName} #{member.lastName}"
+          preferences["#{prefKey}_household_member"] = member.id
         preferences[prefKey] = true
 
         _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->

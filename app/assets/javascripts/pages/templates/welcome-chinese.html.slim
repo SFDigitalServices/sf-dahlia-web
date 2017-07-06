@@ -2,61 +2,33 @@ header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
       hgroup.lead-header_group
-        h1.lead-header_title.t-beta.c-white.t-ch 歡迎光臨舊金山住房門戶網站！
+        h1.lead-header_title.t-beta.c-white.t-ch 歡迎來到三藩市DAHLIA房屋網站!
 
-section.row.t-ch
+section.row
   .medium-8.columns
     article.page-content
       .content-section
-        h2.t-sans.t-ch 本網站目前提供下列功能:
-        ul.t-delta.t-light
-          li 平價租屋列表.
-          li 資格評估工具及家庭收入計算器.
-          li 用於標記及與他人分享喜愛列表項目的工具.
-      hr.tall
+        h2.t-sans.t-ch 本網站目前提供下列功能：
+        ul.bullet-list.t-delta.t-light
+          li 尋找和申請可負擔房屋
+          li 低於市價租或買房屋上市名單
+          li 綱上申請
+          li 其他工能-如檢查抽簽結果, 計算家庭收入和評估住屋資格。
       .content-section
         p.t-delta.t-light
-          | 不久後會再增加更多功能及列表!
-        p.t-delta.t-light
-          | 除本頁面及翻譯完成的申請表以外，住房入口網站一律採用英文，但我們計劃將陸續增加中文、西班牙文以及菲律賓文等語言服務。
-      hr.tall
+          | DAHLIA最令人興奮的功能之一就是能夠在網上申請可負擔房屋。除英文外，綱上申請表格將很快提供其他三種三藩市官方語言：中文，西班牙文和菲律賓文。請注意,我們仍然接受紙張申請表格。我們將繼續添加其他語言功能和服務。請留意將來其他新增功能。
       .content-section
         p.t-delta.t-light
-          | 如需協助，建議您與 Asian, Inc. 聯絡並預約安排會說中文的住房諮詢人員。
-        .block-item.no-border
-          h3.t-delta.t-sans.margin-bottom--half
-            a.a-oil href="http://asianinc.org" target="_blank" Asian, Inc.
-          p.t-tiny.c-steel
-            | Language Services:
-            span.label.radius.secondary.i-block Cantonese
-            span.label.radius.secondary.i-block Vietnamese
-          .a-icon-left.d-block
-            span.ui-icon.ui-medium
-              svg
-                use xlink:href="#i-map" xmlns:xlink="http://www.w3.org/1999/xlink"
-            p.offset-icon.margin-bottom--half
-              | 167 Mission Street, 4th Floor,
-              br
-              | San Francisco, CA 94103
-          p
-            a.button-on-small title="Call 415-928-5910" href="tel:+1415-928-5910"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-phone" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Call 415-928-5910
-            a.button-on-small href="http://asianinc.org" target="_blank"
-              span.ui-icon.ui-medium
-                svg
-                  use xlink:href="#i-link" xmlns:xlink="http://www.w3.org/1999/xlink"
-              | Visit Asian, Inc.
-        p.t-delta.t-light
-          | Asian Inc. 是 HUD 評鑑合格機構，負責提供中文的房屋租售諮詢服務，其諮詢人員均受過專業訓練，能夠提供與 市長住房與社區發展辦公室 (Mayor's Office of Housing and Community Development) 住房計畫相關的資訊。
-      hr.tall
+          | 如需協助有關於在三藩市尋找可負擔房屋的問題，請聯繫以下列出廣東話或國語的房屋顧問機構。
       .content-section
         p.t-delta.t-light
-          | 如需瞭解其他住房資源，請參閱：
+          | 另外，欲尋找其他可負擔房屋信息和資源請看：
           br
-          a href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8953" http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8953
+          a target="_blank" href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8953"
+            | 三藩市住房資源指南（中文): San Francisco Housing Resource Guide
+      ul.resources-list.block-list
+        li.block-item ng-repeat="counselor in chinese_counselors"
+          housing-counselor counselor="counselor"
 
 / email updates callout
 ng-include src="'pages/templates/_email-updates.html'"

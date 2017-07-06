@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:19 GMT
+      - Thu, 06 Jul 2017 17:33:12 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=AHDfE417QKWdsQckd-z5pw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:19 GMT
+      - BrowserId=lWve3ZCyROedXgrPbKMhfQ;Path=/;Domain=.salesforce.com;Expires=Mon,
+        04-Sep-2017 17:33:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,9 +50,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1489512799274","signature":"Y1d+qVFEbQnpBAEr+U/fYThuKPMMpqQTFR4yWPHBMYs="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499362392385","signature":"HKK5XFZO48+Ci2qa+DZvY3E715sMB9v6+Btrp9uAVME="}'
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:19 GMT
+  recorded_at: Thu, 06 Jul 2017 17:33:12 GMT
 - request:
     method: get
     uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000DYiwiUAD/00008639
@@ -74,17 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:19 GMT
+      - Thu, 06 Jul 2017 17:33:12 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
         max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=vZZFNACAR-2QHMH-aq8YIw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:19 GMT
+      - BrowserId=qHI-GRvqT0yFbT--Y_J6pg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        04-Sep-2017 17:33:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -98,26 +98,24 @@ http_interactions:
       string: !binary |-
         eyJVUkwiOm51bGwsIm9mZmljZUhvdXJzIjoiPHA+TW9uZGF54oCTRnJpZGF5
         XHJcbjxzdHJvbmc+OTowMGFt4oCTNTowMHBtPC9zdHJvbmc+XHJcbjwvcD4i
-        LCJuZWlnaGJvcmhvb2RQcmVmZXJlbmNlVW5pdHNBdmFpbGFibGUiOjAsIm5l
-        aWdoYm9yaG9vZFByZWZlcmVuY2VBcHBUb3RhbCI6MSwibG90dGVyeVJlc3Vs
-        dHNVUkwiOm51bGwsImxvdHRlcnlSZXN1bHRzIjp0cnVlLCJsb3R0ZXJ5UHJl
-        ZmVyZW5jZXMiOm51bGwsImxvdHRlcnlFbmRUaW1lIjpudWxsLCJsb3R0ZXJ5
-        RGF0ZSI6IjIwMTYtMTEtMDJUMjA6MDA6MDAuMDAwWiIsImxvdHRlcnlDaXR5
-        IjoiU2FuIEZyYW5jaXNjbyIsImxpdmVXb3JrUHJlZmVyZW5jZVVuaXRzQXZh
-        aWxhYmxlIjoxLCJsaXZlV29ya1ByZWZlcmVuY2VBcHBUb3RhbCI6MTM3LCJs
-        aXN0aW5nSWQiOiJhMFcwUDAwMDAwRFlpd2lVQUQiLCJnZW5lcmFsTG90dGVy
-        eUFwcFRvdGFsIjoyNywiZGlzcGxhY2VkUHJlZmVyZW5jZVVuaXRzQXZhaWxh
-        YmxlIjoxLCJkaXNwbGFjZWRQcmVmZXJlbmNlQXBwVG90YWwiOjMsImNlcnRP
-        ZlByZWZlcmVuY2VVbml0c0F2YWlsYWJsZSI6MSwiY2VydE9mUHJlZmVyZW5j
-        ZUFwcFRvdGFsIjowLCJidWNrZXRSZXN1bHRzIjpudWxsLCJhcHBsaWNhdGlv
-        blJlc3VsdHMiOlt7Im5laWdoYm9yaG9vZFByZWZlcmVuY2VSYW5rIjpudWxs
-        LCJuZWlnaGJvcmhvb2RQcmVmZXJlbmNlIjpmYWxzZSwibG90dGVyeVJhbmsi
-        OjEsImxvdHRlcnlOdW1iZXIiOiIwMDAwODYzOSIsImxpdmVXb3JrUHJlZmVy
-        ZW5jZVJhbmsiOjEsImxpdmVXb3JrUHJlZmVyZW5jZSI6dHJ1ZSwiZ2VuZXJh
-        bExvdHRlcnlSYW5rIjpudWxsLCJkaXNwbGFjZWRQcmVmZXJlbmNlUmFuayI6
-        bnVsbCwiZGlzcGxhY2VkUHJlZmVyZW5jZSI6ZmFsc2UsImNlcnRPZlByZWZl
-        cmVuY2VSYW5rIjpudWxsLCJjZXJ0T2ZQcmVmZXJlbmNlIjpmYWxzZSwiYXBw
-        bGljYXRpb25JZCI6ImEwbzBQMDAwMDA5MmlSY1FBSSJ9XX0=
+        LCJsb3R0ZXJ5UmVzdWx0c1VSTCI6bnVsbCwibG90dGVyeVJlc3VsdHMiOnRy
+        dWUsImxvdHRlcnlQcmVmZXJlbmNlcyI6bnVsbCwibG90dGVyeUVuZFRpbWUi
+        Om51bGwsImxvdHRlcnlEYXRlIjoiMjAxNi0xMS0wMlQyMDowMDowMC4wMDBa
+        IiwibG90dGVyeUNpdHkiOiJTYW4gRnJhbmNpc2NvIiwibG90dGVyeUJ1Y2tl
+        dHMiOlt7InVuaXRzQXZhaWxhYmxlIjoxLCJ0b3RhbFN1Ym1pdHRlZEFwcHMi
+        Om51bGwsInByZWZlcmVuY2VSZXN1bHRzIjpbXSwicHJlZmVyZW5jZU9yZGVy
+        IjoxLCJwcmVmZXJlbmNlTmFtZSI6IkNlcnRpZmljYXRlIG9mIFByZWZlcmVu
+        Y2UgKENPUCkifSx7InVuaXRzQXZhaWxhYmxlIjoxLCJ0b3RhbFN1Ym1pdHRl
+        ZEFwcHMiOjMsInByZWZlcmVuY2VSZXN1bHRzIjpbXSwicHJlZmVyZW5jZU9y
+        ZGVyIjoyLCJwcmVmZXJlbmNlTmFtZSI6IkRpc3BsYWNlZCBUZW5hbnQgSG91
+        c2luZyBQcmVmZXJlbmNlIChEVEhQKSJ9LHsidW5pdHNBdmFpbGFibGUiOjEs
+        InRvdGFsU3VibWl0dGVkQXBwcyI6MTM3LCJwcmVmZXJlbmNlUmVzdWx0cyI6
+        W10sInByZWZlcmVuY2VPcmRlciI6MywicHJlZmVyZW5jZU5hbWUiOiJMaXZl
+        IG9yIFdvcmsgaW4gU2FuIEZyYW5jaXNjbyBQcmVmZXJlbmNlIn0seyJ1bml0
+        c0F2YWlsYWJsZSI6MSwidG90YWxTdWJtaXR0ZWRBcHBzIjo5MSwicHJlZmVy
+        ZW5jZVJlc3VsdHMiOltdLCJwcmVmZXJlbmNlT3JkZXIiOm51bGwsInByZWZl
+        cmVuY2VOYW1lIjoiZ2VuZXJhbExvdHRlcnkifV0sImxvdHRlcnlBcHBUb3Rh
+        bCI6MTY0LCJsaXN0aW5nSWQiOiJhMFcwUDAwMDAwRFlpd2lVQUQifQ==
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:20 GMT
+  recorded_at: Thu, 06 Jul 2017 17:33:13 GMT
 recorded_with: VCR 3.0.3
