@@ -26,6 +26,11 @@ do ->
     requestURL = undefined
     incomeLevels = undefined
     minMax = undefined
+    tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    lastWeek = new Date()
+    lastWeek.setDate(lastWeek.getDate() - 7)
+    listing = undefined
 
     beforeEach module('ui.router')
     # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
@@ -68,9 +73,8 @@ do ->
 
       it 'sorts groupedListings based on their dates', ->
         ListingService.groupListings(fakeListings.listings)
-        date1 = ListingService.lotteryResultsListings[3].Lottery_Results_Date
-        date2 = ListingService.lotteryResultsListings[4].Lottery_Results_Date
-        expect(date1 >= date2).toEqual true
+        dates = _.compact(_.map(ListingService.lotteryResultsListings, 'Lottery_Results_Date'))
+        expect(dates[0] >= dates[1]).toEqual true
 
     describe 'Service.getListings', ->
       it 'returns Service.getListingsWithEligibility if eligibility options are set', ->
@@ -104,23 +108,41 @@ do ->
     describe 'Service.listingIsOpen', ->
       it 'checks if listing application due date has passed', ->
         listing = fakeListing.listing
-        tomorrow = new Date()
-        tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.listingIsOpen(listing)).toEqual true
+
+    describe 'Service.lotteryIsUpcoming', ->
+      beforeEach ->
+        listing = fakeListing.listing
+
+      it 'returns false when the listing has results and lottery date has not passed', ->
+        listing.Lottery_Results = true
+        listing.Lottery_Date = tomorrow.toString()
+        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
+
+      it 'returns false when the listing has results and lottery date has passed', ->
+        listing.Lottery_Results = true
+        listing.Lottery_Date = lastWeek.toString()
+        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
+
+      it 'returns false when the listing has no results and lottery date has passed', ->
+        listing.Lottery_Results = false
+        listing.Lottery_Date = lastWeek.toString()
+        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
+
+      it 'returns true when the listing has no results and lottery date has not passed', ->
+        listing.Lottery_Results = false
+        listing.Lottery_Date = tomorrow.toString()
+        expect(ListingService.lotteryIsUpcoming(listing)).toEqual true
 
     describe 'Service.lotteryDatePassed', ->
       it 'checks if listing lottery date has passed', ->
         listing = fakeListing.listing
-        tomorrow = new Date()
-        tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Lottery_Date = tomorrow.toString()
         expect(ListingService.lotteryDatePassed(listing)).toEqual false
 
       it 'checks if listing lottery date has not passed', ->
         listing = fakeListing.listing
-        lastWeek = new Date()
-        lastWeek.setDate(lastWeek.getDate() - 7)
         listing.Lottery_Date = lastWeek.toString()
         expect(ListingService.lotteryDatePassed(listing)).toEqual true
 
@@ -138,8 +160,6 @@ do ->
       it 'returns true if due date in future and Accepting_Online_Applications', ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
-        tomorrow = new Date()
-        tomorrow.setDate(tomorrow.getDate() + 1)
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 
