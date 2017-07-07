@@ -1,6 +1,6 @@
 Feature: Short Form Application - Live/Work Preference
     As a web user
-    I should be able to claim the Live/Work preference while filling out a short form application
+    I should be able to claim the Live/Work preference on my application
     In order to increase my chances of getting an affordable housing unit
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
