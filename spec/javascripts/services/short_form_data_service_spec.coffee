@@ -8,6 +8,8 @@ do ->
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
     fakeListingService =
+      listing:
+        preferences: getJSONFixture('listings-api-listing-preferences.json').preferences
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
       preferenceMap:

@@ -363,6 +363,7 @@ class Api::V1::ShortFormController < ApiController
                 preferenceProof
                 optOut
                 ifCombinedIndividualPreference
+                shortformPreferenceID
               ),
             },
             :answeredCommunityScreening,
