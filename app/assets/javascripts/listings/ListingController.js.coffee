@@ -148,8 +148,8 @@ ListingController = (
   $scope.applicantHasCertOfPreference = ->
     $scope.listing.Lottery_Ranking.applicationResults[0].certOfPreference
 
-  $scope.showNeighborhoodPreferences = ->
-    ListingService.showNeighborhoodPreferences($scope.listing)
+  $scope.showPreferenceListPDF = ->
+    ListingService.showPreferenceListPDF($scope.listing)
 
   $scope.lotteryNumberValid = ->
     !!$scope.listing.Lottery_Ranking.applicationResults[0]
@@ -196,6 +196,9 @@ ListingController = (
 
   $scope.listingHasPreferences = ->
     $scope.listing.preferences && $scope.listing.preferences.length
+
+  $scope.listingHasPreference = (preference) ->
+    ListingService.hasPreference(preference)
 
   $scope.closedAndLotteryListingsCount = ->
     $scope.lotteryResultsListings.length + $scope.closedListings.length

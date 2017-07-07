@@ -314,7 +314,7 @@ do ->
         httpBackend.flush()
         expect(ListingService.listing.Lottery_Ranking).toEqual fakeLotteryRanking.lottery_ranking
 
-    describe 'Service.showNeighborhoodPreferences', ->
+    describe 'Service.showPreferenceListPDF', ->
       it 'returns true if URL is available and the lottery results are not yet available', ->
         # have to populate listing first
         listing = fakeListing.listing
@@ -324,7 +324,7 @@ do ->
         ListingService.listing.LotteryResultsURL = null
 
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
-        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual true
+        expect(ListingService.showPreferenceListPDF(listing)).toEqual true
 
       it 'returns false if URL is unavailable', ->
         # have to populate listing first
@@ -335,7 +335,7 @@ do ->
         ListingService.listing.LotteryResultsURL = null
 
         listing.NeighborHoodPreferenceUrl = null
-        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
+        expect(ListingService.showPreferenceListPDF(listing)).toEqual false
 
       it 'returns false if the lottery results are available', ->
         # have to populate listing first
@@ -344,7 +344,7 @@ do ->
         ListingService.listing.LotteryResultsURL = "http://anotherurl.com"
 
         listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
-        expect(ListingService.showNeighborhoodPreferences(listing)).toEqual false
+        expect(ListingService.showPreferenceListPDF(listing)).toEqual false
 
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
