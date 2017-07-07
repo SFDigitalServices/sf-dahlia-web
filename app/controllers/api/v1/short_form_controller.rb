@@ -307,7 +307,7 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
@@ -347,7 +347,7 @@ class Api::V1::ShortFormController < ApiController
                 city
                 state
                 zip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
@@ -363,6 +363,7 @@ class Api::V1::ShortFormController < ApiController
                 preferenceProof
                 optOut
                 ifCombinedIndividualPreference
+                shortformPreferenceID
               ),
             },
             :answeredCommunityScreening,

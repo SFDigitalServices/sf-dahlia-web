@@ -19,6 +19,7 @@ ShortFormApplicationService = (
     answeredCommunityScreening: null
     applicationSubmissionType: "Electronic"
     applicant:
+      id: 1
       home_address: { address1: null, address2: "", city: null, state: null, zip: null }
       phone: null
       mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -58,7 +59,7 @@ ShortFormApplicationService = (
       Review: {}
 
   Service.currentRentBurdenAddress = {}
-  Service.current_id = 0
+  Service.current_id = 1
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
@@ -165,19 +166,12 @@ ShortFormApplicationService = (
 
   Service.addHouseholdMember = (householdMember) ->
     if householdMember.hasSameAddressAsApplicant == 'Yes'
-      # copy applicant's neighborhoodPreferenceMatch to householdMember
-      householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+      # copy applicant's preferenceAddressMatch to householdMember
+      householdMember.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
     else
-      # search through all xxx_household_member items in preferences matching the full name
-      full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
-      _.each Service.preferences, (v,k) ->
-        if k.indexOf('_household_member') > 0 and v == full_name
-          # update the name of the preference to the new name
-          new_full_name = "#{householdMember.firstName} #{householdMember.lastName}"
-          Service.preferences[k] = new_full_name
       # update existing householdMember
       householdMemberToUpdate = _.find(Service.householdMembers, {id: householdMember.id})
       angular.copy(householdMember, householdMemberToUpdate)
@@ -193,11 +187,9 @@ ShortFormApplicationService = (
     # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
-    # clear out preferences where this householdMember was selected
-    full_name = "#{Service.householdMember.firstName} #{Service.householdMember.lastName}"
-    # search through all xxx_household_member items in preferences matching the full name
+    # search through all xxx_household_member items in preferences marked for this member
     _.each Service.preferences, (v,k) ->
-      if k.indexOf('_household_member') > 0 and v == full_name
+      if k.indexOf('_household_member') > 0 and v == Service.householdMember.id
         preference = k.split('_household_member')[0]
         Service.cancelPreference(preference)
 
@@ -209,8 +201,8 @@ ShortFormApplicationService = (
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
       if member.hasSameAddressAsApplicant == 'Yes'
-        # copy applicant's neighborhoodPreferenceMatch to householdMember
-        member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+        # copy applicant's preferenceAddressMatch to householdMember
+        member.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     )
 
 
@@ -430,7 +422,7 @@ ShortFormApplicationService = (
     # used by both NRHP / ADHP
     Service.fullHousehold().filter (member) ->
       # find all household members that match NRHP
-      member.neighborhoodPreferenceMatch == 'Matched'
+      member.preferenceAddressMatch == 'Matched'
 
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant
@@ -500,7 +492,7 @@ ShortFormApplicationService = (
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    members = eligibleMembers.map (member) -> "#{member.firstName} #{member.lastName}"
+    members = eligibleMembers.map (member) -> member.id
     selectedMember = Service.preferences[preference + '_household_member']
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
     if _.isEmpty(members) || selectedMember && !_.includes(members, selectedMember)
@@ -541,7 +533,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.neighborhoodPreferenceMatch
+        addressValid = !!applicant.preferenceAddressMatch
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -797,7 +789,7 @@ ShortFormApplicationService = (
     # errors are handled in the controller
     afterGeocode = (response) ->
       Service.applicant.geocodingData = response.geocoding_data
-      Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.applicant.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
       Service.refreshPreferences('all')
@@ -814,7 +806,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success(afterGeocode)
-      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
       .error(afterGeocode)
     )
 
@@ -823,7 +815,7 @@ ShortFormApplicationService = (
     # errors are handled in the controller
     afterGeocode = (response) ->
       Service.householdMember.geocodingData = response.geocoding_data
-      Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.householdMember.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
       Service.addHouseholdMember(Service.householdMember)
       # check if eligibility has changed
       Service.refreshPreferences('all')
@@ -839,7 +831,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success(afterGeocode)
-      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
     )
 
