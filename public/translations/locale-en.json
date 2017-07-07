@@ -425,6 +425,8 @@
         "AVAILABLE_UNITS": "Available Units",
         "AVAILABLE_UNITS_AND_WAITLIST": "Available units and waitlist",
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
+        "CONFIRMED_ADHP_LIST": "Confirmed Anti-Displacement Housing Preference List",
+        "CONFIRMED_NRHP_LIST": "Confirmed Neighborhood Resident Housing Preference List",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
