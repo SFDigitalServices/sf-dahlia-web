@@ -3,28 +3,6 @@ Feature: Short Form Application
     I should be able to fill out the short form application
     In order to apply online to a listing
 
-    Scenario: Seeing errors while filling out the form with missing or bad data
-      Given I go to the first page of the Test Listing application
-      When I don't fill out the Name page
-      # error: not filling out the first page
-      Then I should see name field errors on the Name page
-      When I fill out the Name page with an invalid DOB
-      # error: invalid DOB
-      Then I should see DOB field errors on the Name page
-      When I fill out the Name page as "Jane Doe"
-      And I fill out the Contact page with an address that isn't found
-      # error: address not found
-      Then I should see an address error on the Contact page
-      When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
-      And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I don't select opt out or Live/Work preference
-      # error: preference option not chosen
-      Then I should see an error about selecting an option
-
-
     Scenario: Submitting a basic application, creating an account on the confirmation page
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
@@ -48,37 +26,6 @@ Feature: Short Form Application
       And I wait "10" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
-
-    Scenario: Opting in to live/work then saying no to workInSf then uploading proof
-      Given I go to the first page of the Test Listing application
-      When I fill out the Name page as "Jane Doe"
-      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
-      And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I go back to the Contact page and change WorkInSF to No
-      And I go back to the Live/Work preference page
-      Then I should still see the single Live in San Francisco preference selected
-      When I upload a "Gas bill" as my proof of preference
-      Then I should see the successful file upload info
-      When I click the Next button on the Live/Work Preference page
-      Then I should see the Preferences Programs screen
-
-    Scenario: Selecting live/work member, then going back and forth from previous page
-      Given I go to the first page of the Test Listing application
-      When I fill out the Name page as "Jane Doe"
-      And I fill out the Contact page with an address (NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
-      And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I opt out of NRHP preference
-      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I use the browser back button
-      And I go back to the Live/Work preference page
-      Then I should still see the preference options and uploader input visible
 
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application

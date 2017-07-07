@@ -1,4 +1,5 @@
 require('coffee-script').register()
+var projectDir = process.cwd()
 
 exports.config = {
   getPageTimeout: 20000,
@@ -10,11 +11,11 @@ exports.config = {
   },
   baseUrl: 'http://localhost:3000/',
   // path relative to the current config file
-  specs: [ 'features/*.feature' ],
+  specs: [ './features/**/*.feature' ],
   cucumberOpts: {
     require: [
-      'env.coffee',
-      'step_definitions/*.coffee'
+      projectDir + '/spec/e2e/env.coffee',
+      projectDir + '/spec/e2e/step_definitions/**/*.coffee'
     ],
     tags: false,
     format: 'pretty',
@@ -22,3 +23,4 @@ exports.config = {
     'no-source': true
   }
 }
+
