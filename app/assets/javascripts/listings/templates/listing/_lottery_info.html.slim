@@ -33,9 +33,11 @@ section.content-wrap
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
   / neighborhood preference list
-  .content-group ng-if="showNeighborhoodPreferences()"
-    h4.content-group_title
-      | Confirmed Neighborhood Resident Housing Preference List
+  .content-group ng-if="showPreferenceListPDF()"
+    h4.content-group_title ng-if="listingHasPreference('neighborhoodResidence')"
+      | {{'LISTINGS.CONFIRMED_NRHP_LIST' | translate}}
+    h4.content-group_title ng-if="listingHasPreference('antiDisplacement')"
+      | {{'LISTINGS.CONFIRMED_ADHP_LIST' | translate}}
     a.button.primary.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"
       | View Preference List
     p.c-steel.t-small
