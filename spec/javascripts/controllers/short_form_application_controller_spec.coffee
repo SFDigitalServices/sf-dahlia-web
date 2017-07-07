@@ -203,13 +203,13 @@ do ->
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
     describe '$scope.addressChange', ->
-      it 'unsets neighborhoodPreferenceMatch on member', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+      it 'unsets preferenceAddressMatch on member', ->
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.addressChange('applicant')
-        expect(scope.applicant.neighborhoodPreferenceMatch).toEqual null
+        expect(scope.applicant.preferenceAddressMatch).toEqual null
 
       it 'calls copyHomeToMailingAddress if member == applicant', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.addressChange('applicant')
         expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
@@ -224,7 +224,7 @@ do ->
       describe 'user does not have same address applicant', ->
         it 'calls validateHouseholdMemberAddress in ShortFormApplicationService', ->
           scope.householdMember.hasSameAddressAsApplicant = 'No'
-          scope.householdMember.neighborhoodPreferenceMatch = false
+          scope.householdMember.preferenceAddressMatch = false
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.validateHouseholdMemberAddress).toHaveBeenCalled()
 
@@ -254,13 +254,13 @@ do ->
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
       it 'navigates ahead to alt contact type if verification already happened', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.application.validatedForms.You['verify-address'] = true
         scope.checkIfAddressVerificationNeeded()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
 
       it 'navigates ahead to verify address page if verification had not happened', ->
-        scope.applicant.neighborhoodPreferenceMatch = null
+        scope.applicant.preferenceAddressMatch = null
         scope.application.validatedForms.You['verify-address'] = null
         scope.checkIfAddressVerificationNeeded()
         expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
