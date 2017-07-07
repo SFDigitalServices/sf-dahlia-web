@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Mar 2017 16:25:03 GMT
+      - Thu, 06 Jul 2017 17:33:14 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,17 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=l_aZ7BSfQBSmkmS1A0SpmQ;Path=/;Domain=.salesforce.com;Expires=Sun,
-        14-May-2017 16:25:03 GMT
+      - BrowserId=FM-MLL2GTXS6viD50ZRMQQ;Path=/;Domain=.salesforce.com;Expires=Mon,
+        04-Sep-2017 17:33:14 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store
+      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,9 +50,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1489595103646","signature":"mXkmX/h4sce9ThZSX3QsRRIP+AabjuzMOdJjZa+vZ9U="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499362394640","signature":"avtaiG9OUUWXRj2lwrbtyE6Nz0hJRH0ohYNNGj9hj1o="}'
     http_version: 
-  recorded_at: Wed, 15 Mar 2017 16:25:03 GMT
+  recorded_at: Thu, 06 Jul 2017 17:33:14 GMT
 - request:
     method: get
     uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000DZ4dTUAT
@@ -74,17 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Mar 2017 16:25:04 GMT
+      - Thu, 06 Jul 2017 17:33:15 GMT
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
         max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
       Set-Cookie:
-      - BrowserId=Ru7D0c0WRHqehuIqBbjhvw;Path=/;Domain=.salesforce.com;Expires=Sun,
-        14-May-2017 16:25:04 GMT
+      - BrowserId=-1GgNTJgRDSfZbQYsBdP0g;Path=/;Domain=.salesforce.com;Expires=Mon,
+        04-Sep-2017 17:33:15 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -115,5 +115,5 @@ http_interactions:
         in San Francisco. In order to claim Work Preference, you or a household member
         must currently work in San Francisco at least 75% of your working hours.","appTotal":null}]'
     http_version: 
-  recorded_at: Wed, 15 Mar 2017 16:25:04 GMT
+  recorded_at: Thu, 06 Jul 2017 17:33:15 GMT
 recorded_with: VCR 3.0.3

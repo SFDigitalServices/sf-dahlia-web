@@ -9,6 +9,8 @@ do ->
     fakeApplication = getJSONFixture('sample-web-short-form.json')
     fakeApplicant = undefined
     fakeListingService =
+      listing:
+        preferences: getJSONFixture('listings-api-listing-preferences.json').preferences
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
       hasPreference: ->

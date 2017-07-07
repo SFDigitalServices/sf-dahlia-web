@@ -27,7 +27,7 @@ AccountController = (
   $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
 
-  $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/
+  $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)

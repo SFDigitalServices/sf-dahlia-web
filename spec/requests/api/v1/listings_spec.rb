@@ -173,7 +173,7 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['lottery_ranking']['applicationResults'].length).to eq(1)
+    expect(json['lottery_ranking']['lotteryBuckets'].length).to eq(4)
   end
 
   it 'gets lottery buckets for a Listing' do
