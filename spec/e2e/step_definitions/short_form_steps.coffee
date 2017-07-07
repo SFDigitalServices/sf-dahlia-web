@@ -93,9 +93,9 @@ module.exports = ->
   @When 'I continue past the community screening and welcome overview', ->
     element(By.id('answeredCommunityScreening_yes')).click()
     # community screening
-    submitForm()
+    submitPage()
     # welcome overview
-    submitForm()
+    submitPage()
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     fillOutNamePage(fullName)
