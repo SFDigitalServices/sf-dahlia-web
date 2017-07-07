@@ -136,6 +136,7 @@ ShortFormDataService = (ListingService) ->
 
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        optOut = appPrefs.optOut.liveWorkInSf
         if appPrefs.liveInSf || appPrefs.optOut.liveInSf
           individualPref = 'Live in SF'
           prefKey = 'liveInSf'
