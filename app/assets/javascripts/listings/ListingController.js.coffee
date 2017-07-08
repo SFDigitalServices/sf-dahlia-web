@@ -206,6 +206,14 @@ ListingController = (
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
 
+  $scope.occupancy = (unitSummary) ->
+    return '1' if unitSummary.maxOccupancy == 1
+    unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+
+  $scope.occupancyUnit = (unitSummary) ->
+    return 'person' if unitSummary.maxOccupancy == 1
+    'people'
+
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
 
