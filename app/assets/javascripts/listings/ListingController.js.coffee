@@ -210,8 +210,8 @@ ListingController = (
     return '1' if unitSummary.maxOccupancy == 1
     unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
 
-  $scope.occupancyUnit = (unitSummary) ->
-    return 'person' if unitSummary.maxOccupancy == 1
+  $scope.occupancyUnit = (maxOccupancy) ->
+    return 'person' if maxOccupancy == 1
     'people'
 
   $scope.formatBaths = (numberOfBathrooms) ->
