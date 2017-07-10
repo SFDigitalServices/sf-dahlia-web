@@ -59,8 +59,12 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
-          p.custom-counter_text
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION' | translate}}
+          p.custom-counter_text ng-if="listingHasOnlySROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
+          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && listingHasSROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
+          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && !listingHasSROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
           table role="grid"
