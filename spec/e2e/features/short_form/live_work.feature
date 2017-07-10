@@ -37,7 +37,7 @@ Feature: Short Form Application - Live/Work Preference
       When I upload a "Gas bill" as my proof of preference
       And I don't choose COP/DTHP preferences
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I fill out the optional survey
       And I navigate to the "You" section
       And I fill out the Name page as "Harper Lee"

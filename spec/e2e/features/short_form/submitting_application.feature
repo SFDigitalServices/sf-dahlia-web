@@ -14,7 +14,7 @@ Feature: Short Form Application
       And I opt out of Live/Work preference
       And I don't choose COP/DTHP preferences
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
@@ -53,7 +53,7 @@ Feature: Short Form Application
       And I select "Jane Doe" for DTHP preference
       And I go to the income page
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I fill out the optional survey
       And I confirm details on the review page
       And I agree to the terms and submit
