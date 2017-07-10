@@ -217,7 +217,14 @@ ListingController = (
   $scope.formatBaths = (numberOfBathrooms) ->
     return 'Shared' if numberOfBathrooms == 0
     return '1/2 bath' if numberOfBathrooms == 0.5
-    numberOfBathrooms
+
+    fullBaths = Math.floor numberOfBathrooms
+    andAHalf = numberOfBathrooms - fullBaths == 0.5
+
+    if andAHalf
+      return fullBaths + ' 1/2 bath'
+    else
+      numberOfBathrooms
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
     ListingService.occupancyIncomeLevels(amiLevel)
