@@ -222,7 +222,7 @@ ListingController = (
     andAHalf = numberOfBathrooms - fullBaths == 0.5
 
     if andAHalf
-      return fullBaths + ' 1/2 bath'
+      fullBaths + ' 1/2 bath'
     else
       numberOfBathrooms
 
