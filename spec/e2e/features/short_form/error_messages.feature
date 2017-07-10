@@ -28,7 +28,9 @@ Feature: Short Form Application
       Then I should see an error on the household member form
 
       When I cancel the household member
-      And I add "3" household members
+      And I add household member "1"
+      And I add household member "2"
+      And I add household member "3"
       And I indicate being done adding people
       # error: household too big
       Then I should see an error about household size being too big

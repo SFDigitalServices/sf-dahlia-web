@@ -131,14 +131,10 @@ module.exports = ->
       elem.isDisplayed()
     ).last().click()
 
-  @When /^I add "([^"]*)" household members$/, (numOfMembers) ->
-    num = parseInt(numOfMembers)
-    while num > 0
-      # open the form
-      element(By.id('add-household-member')).click()
-      # fill out and submit
-      fillOutHouseholdMemberForm(num)
-      num--
+  @When /^I add household member "([^"]*)"$/, (index) ->
+    index = parseInt(index) - 1
+    element(By.id('add-household-member')).click().then ->
+      fillOutHouseholdMemberForm(index)
 
   @When 'I indicate being done adding people', ->
     submitPage()
