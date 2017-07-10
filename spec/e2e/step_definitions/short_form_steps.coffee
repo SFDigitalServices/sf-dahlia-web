@@ -124,6 +124,7 @@ module.exports = ->
     element(By.id('add-household-member')).click()
 
   @When 'I cancel the household member', ->
+    browser.waitForAngular() # sometimes it says the button is not clickable, this helps?
     element(By.id('cancel-member')).click()
 
   @When 'I edit the last household member', ->
