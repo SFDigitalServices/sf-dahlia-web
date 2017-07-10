@@ -133,6 +133,7 @@ module.exports = ->
 
   @When /^I add household member "([^"]*)"$/, (index) ->
     index = parseInt(index) - 1
+    browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
       fillOutHouseholdMemberForm(index)
 
