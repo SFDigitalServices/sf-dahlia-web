@@ -227,7 +227,7 @@ ListingController = (
       numberOfBathrooms
 
   $scope.occupancyIncomeLevels = (amiLevel) ->
-    ListingService.occupancyIncomeLevels(amiLevel)
+    ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
 
   $scope.householdAMIChartCutoff = ->
     ListingService.householdAMIChartCutoff()
@@ -248,7 +248,7 @@ ListingController = (
     ListingService.listingHasSROUnits($scope.listing)
 
   $scope.listingHasOnlySROUnits = ->
-    ListingService.listingHasOnlySROUnits()
+    ListingService.listingHasOnlySROUnits($scope.listing)
 
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)

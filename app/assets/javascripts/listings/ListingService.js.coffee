@@ -506,8 +506,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
 
-  Service.listingHasOnlySROUnits = ->
-    combined = _.concat(Service.listing.unitSummaries.reserved, Service.listing.unitSummaries.general)
+  Service.listingHasOnlySROUnits = (listing) ->
+    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
@@ -553,12 +553,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
-  Service.occupancyIncomeLevels = (amiLevel) ->
+  Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
     max = occupancyMinMax[1] + 2
-    max = 1 if Service.listingHasOnlySROUnits()
+    max = 1 if Service.listingHasOnlySROUnits(listing)
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
@@ -571,7 +571,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.minYearlyIncome = ->
     return if _.isEmpty(Service.AMICharts)
-    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    incomeLevels = Service.occupancyIncomeLevels(Service.listing, _.first(Service.AMICharts))
     # get the first (lowest) income level amount
     _.first(incomeLevels).amount
 

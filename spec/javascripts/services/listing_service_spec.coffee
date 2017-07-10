@@ -374,7 +374,7 @@ do ->
       beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
-        incomeLevels = ListingService.occupancyIncomeLevels(fakeAMI.ami[0])
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, fakeAMI.ami[0])
         minMax = ListingService.occupancyMinMax(ListingService.listing)
       it 'should filter the incomeLevels to start from min household', ->
         expect(incomeLevels[0].numOfHousehold).toEqual minMax[0]
@@ -383,8 +383,9 @@ do ->
 
     describe 'Service.minYearlyIncome', ->
       it 'should get the minimum yearly income for the first (and only) AMI Chart', ->
+        ListingService.listing = fakeListing.listing
         ListingService.AMICharts = ListingService._consolidatedAMICharts(fakeAMI.ami)
-        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.AMICharts[0])
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, ListingService.AMICharts[0])
         expect(ListingService.minYearlyIncome()).toEqual incomeLevels[0].amount
 
     describe 'Service.incomeForHouseholdSize', ->
