@@ -506,6 +506,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
     !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
 
+  Service.listingHasOnlySROUnits = ->
+    combined = _.concat(Service.listing.unitSummaries.reserved, Service.listing.unitSummaries.general)
+    _.every(combined, { Unit_Type: 'SRO' })
+
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 
@@ -554,6 +558,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     min = occupancyMinMax[0]
     max = occupancyMinMax[1] + 2
+    max = 1 if Service.listingHasOnlySROUnits()
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
