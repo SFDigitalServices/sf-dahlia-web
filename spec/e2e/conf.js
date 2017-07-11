@@ -23,4 +23,3 @@ exports.config = {
     'no-source': true
   }
 }
-

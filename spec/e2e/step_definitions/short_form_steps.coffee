@@ -36,6 +36,19 @@ fillOutContactPage = (opts = {}) ->
   element(By.id('workInSf_yes')).click()
   submitPage()
 
+fillOutHouseholdMemberForm = (fullName) ->
+  firstName = fullName.split(' ')[0]
+  lastName  = fullName.split(' ')[1]
+  element(By.model('householdMember.firstName')).clear().sendKeys(firstName)
+  element(By.model('householdMember.lastName')).clear().sendKeys(lastName)
+  element(By.model('householdMember.dob_month')).clear().sendKeys('10')
+  element(By.model('householdMember.dob_day')).clear().sendKeys('15')
+  element(By.model('householdMember.dob_year')).clear().sendKeys('1985')
+  element(By.id('hasSameAddressAsApplicant_yes')).click()
+  element(By.id('workInSf_no')).click()
+  element(By.model('householdMember.relationship')).sendKeys('Cousin')
+  submitPage()
+
 fillOutSurveyPage = ->
   element(By.id('referral_newspaper')).click()
   submitPage()
@@ -123,32 +136,29 @@ module.exports = ->
   @When 'I indicate I will live alone', ->
     element(By.id('live-alone')).click()
 
-  @When 'I indicate other people will live with me', ->
+  @When 'I indicate living with other people', ->
     element(By.id('other-people')).click()
-    # also submit the household overview page
+    # also skip past household-overview
     submitPage()
+
+  @When 'I open the household member form', ->
+    element(By.id('add-household-member')).click()
+
+  @When 'I cancel the household member', ->
+    browser.waitForAngular() # sometimes it says the button is not clickable, this helps?
+    element(By.id('cancel-member')).click()
+
+  @When 'I edit the last household member', ->
+    element.all(By.cssContainingText('.edit-link', 'Edit')).filter((elem) ->
+      elem.isDisplayed()
+    ).last().click()
 
   @When /^I add another household member named "([^"]*)"$/, (fullName) ->
-    # click into the Add Household Member form
-    element(By.id('add-member')).click()
+    browser.waitForAngular()
+    element(By.id('add-household-member')).click().then ->
+      fillOutHouseholdMemberForm(fullName)
 
-
-    firstName = fullName.split(' ')[0]
-    lastName  = fullName.split(' ')[1]
-    element(By.model('householdMember.firstName')).sendKeys(firstName)
-    element(By.model('householdMember.lastName')).sendKeys(lastName)
-    element(By.model('householdMember.dob_month')).sendKeys('10')
-    element(By.model('householdMember.dob_day')).sendKeys('04')
-    element(By.model('householdMember.dob_year')).sendKeys('1985')
-    element(By.id('hasSameAddressAsApplicant_yes')).click()
-    element(By.id('workInSf_no')).click()
-    element.all(By.cssContainingText('option', 'Spouse')).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
-    # finish adding member
-    submitPage()
-
-  @When 'I indicate being done adding other people', ->
+  @When 'I indicate being done adding people', ->
     submitPage()
 
   @When 'I indicate living in public housing', ->
@@ -167,17 +177,6 @@ module.exports = ->
     element(By.id('adaPrioritiesSelected_none')).click()
     submitPage()
 
-  @When 'I go to the income page', ->
-    submitPage()
-
-  @When 'I indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_yes')).click()
-    submitPage()
-
-  @When 'I fill out my income', ->
-    element(By.id('incomeTotal')).sendKeys('22000')
-    element(By.id('per_year')).click()
-    submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
@@ -255,9 +254,7 @@ module.exports = ->
     browser.sleep(5000)
 
   @When 'I click the Next button on the Live/Work Preference page', ->
-    element.all(By.id("submit")).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
+    submitPage()
 
   @When 'I go back to the Contact page and change WorkInSF to No', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
@@ -273,6 +270,19 @@ module.exports = ->
       submitPage()
 
   @When 'I submit my preferences', ->
+    submitPage()
+
+  @When 'I indicate having vouchers', ->
+    element(By.id('householdVouchersSubsidies_yes')).click()
+    submitPage()
+
+  @When 'I do not indicate having vouchers', ->
+    element(By.id('householdVouchersSubsidies_no')).click()
+    submitPage()
+
+  @When /^I fill out my income as "([^"]*)"/, (income) ->
+    element(By.id('incomeTotal')).clear().sendKeys(income)
+    element(By.id('per_year')).click()
     submitPage()
 
   @When 'I fill out the optional survey', ->
@@ -369,7 +379,8 @@ module.exports = ->
   @When "I fill out the Contact page with an address that isn't found", ->
     fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
 
-  @When "I don't select opt out or Live/Work preference", ->
+  @When 'I fill out the household member form with missing data', ->
+    # don't fill anything out and just submit
     submitPage()
 
 
@@ -453,8 +464,8 @@ module.exports = ->
     alertBox = element(By.cssContainingText('.alert-box', errorText))
     context.expect(alertBox.isPresent()).to.eventually.equal(true)
 
-  expectError = (context, errorText) ->
-    error = element(By.cssContainingText('.error', errorText))
+  expectError = (context, errorText, className = '.error') ->
+    error = element(By.cssContainingText(className, errorText))
     context.expect(error.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see name field errors on the Name page', ->
@@ -476,3 +487,31 @@ module.exports = ->
   @Then 'I should see an error about selecting an option', ->
     expectAlertBox(@, 'Please select and complete one of the options below in order to continue')
     expectError(@, 'Please select one of the options above')
+
+  @Then 'I should see an error about uploading proof', ->
+    expectAlertBox(@,)
+    expectError(@, 'Please upload a valid document')
+
+  @Then 'I should see an error on the household member form', ->
+    browser.waitForAngular()
+    expectAlertBox(@)
+    expectError(@, 'Please enter a First Name')
+
+  @Then 'I should see an error about household size being too big', ->
+    browser.waitForAngular()
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household size is too big', '.c-alert')
+
+  @Then 'I should see an error about household income being too low', ->
+    browser.waitForAngular()
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too low', '.c-alert')
+
+  @Then 'I should see an error about household income being too high', ->
+    browser.waitForAngular()
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too high', '.c-alert')
+
+  @Then 'I should land on the optional survey page', ->
+    surveyTitle = element(By.cssContainingText('h2.app-card_question', 'Help us ensure we are meeting our goal'))
+    @expect(surveyTitle.isPresent()).to.eventually.equal(true)

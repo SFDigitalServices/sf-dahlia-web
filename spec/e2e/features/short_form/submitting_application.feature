@@ -13,7 +13,7 @@ Feature: Short Form Application
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
@@ -54,7 +54,7 @@ Feature: Short Form Application
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
