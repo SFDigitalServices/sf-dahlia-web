@@ -53,6 +53,7 @@ do ->
       fakeListingService.listingHasReservedUnits = jasmine.createSpy()
       fakeListingService.listingHasLotteryResults = jasmine.createSpy()
       fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
+      fakeListingService.listingHasOnlySROUnits = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -296,3 +297,30 @@ do ->
       it 'calls ListingService.allListingUnitsAvailable', ->
         scope.allListingUnitsAvailable()
         expect(fakeListingService.allListingUnitsAvailable).toHaveBeenCalledWith(scope.listing)
+
+    describe '$scope.occupancy', ->
+      it 'returns 1 for SRO', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 1 }
+        expect(scope.occupancy(unitSummary)).toEqual('1')
+      it 'returns a range for all other unit types', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 3 }
+        expect(scope.occupancy(unitSummary)).toEqual('1-3')
+
+    describe '$scope.occupancyUnit', ->
+      it 'returns person for 1', ->
+        expect(scope.occupancyUnit(1)).toEqual('person')
+      it 'returns people for more than 1', ->
+        expect(scope.occupancyUnit(2)).toEqual('people')
+
+    describe '$scope.formatBaths', ->
+      it 'returns Shared for 0', ->
+        expect(scope.formatBaths(0)).toEqual('Shared')
+      it 'returns a number for whole numbers', ->
+        expect(scope.formatBaths(1)).toEqual(1)
+      it 'appends 1/2 bath when needed', ->
+        expect(scope.formatBaths(1.5)).toEqual('1 1/2 bath')
+
+    describe '$scope.listingHasOnlySROUnits', ->
+      it 'calls ListingService.listingHasOnlySROUnits', ->
+        scope.listingHasOnlySROUnits()
+        expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
