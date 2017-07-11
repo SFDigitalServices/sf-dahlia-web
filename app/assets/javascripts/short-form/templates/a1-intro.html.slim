@@ -31,3 +31,10 @@ section.app-container
       '
       button#submit-tl.button.secondary.expand-small.primary type="button" ng-click="beginApplication('tl')"
         | Magsimula
+
+
+    .medium-8.medium-centered.columns.fixed-width.text-center.border-top.padding-top--2x ng-if="!loggedInUser.email"
+      h2.t-gamma translate="CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT"
+      p translate="A1_INTRO.SIGN_IN_SAVE_TIME"
+      p
+        a.button.no-margin ui-sref="dahlia.sign-in({fromShortFormIntro: true})" translate="LABEL.SIGN_IN"

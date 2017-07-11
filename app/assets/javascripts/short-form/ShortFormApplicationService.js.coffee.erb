@@ -78,6 +78,7 @@ ShortFormApplicationService = (
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
+    ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
   Service.resetUserData = (data = {}) ->
@@ -599,6 +600,9 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
+  Service._resetCompletedSections = ->
+    angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
+
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
     Service.application.groupedHouseholdAddresses = []
@@ -681,8 +685,9 @@ ShortFormApplicationService = (
       return
     )
 
-  Service.getMyApplicationForListing = (listing_id) ->
-    $http.get("/api/v1/short-form/listing-application/#{listing_id}").success((data, status) ->
+  Service.getMyApplicationForListing = (listing_id, opts = {}) ->
+    autofill = if opts.autofill then '?autofill=true' else ''
+    $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
     ).error((data, status) ->
       return
@@ -744,11 +749,12 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.loadApplication = (data) ->
-    formattedApp =
-      answeredCommunityScreening: Service.application.answeredCommunityScreening
+    formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
     Service.resetUserData(formattedApp)
 
   Service.loadAccountApplication = (data) ->
@@ -757,21 +763,13 @@ ShortFormApplicationService = (
     angular.copy(formattedApp, Service.accountApplication)
 
   Service.checkSurveyComplete = ->
-    app = Service.applicant
-    responses = [
-      _.some(app.gender),
-      app.ethnicity,
-      app.race,
-      _.some(app.referral),
-    ]
-    Service.application.surveyComplete = _.every(responses)
+    Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
     fields = [
       'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
-    # copy over all non-blank values e.g. omit middleName if null
-    userData = _.omitBy(_.pick(loggedInUser, fields), _.isNil)
+    userData = _.pick(loggedInUser, fields)
     original = angular.copy(Service.applicant)
     # merge the data into applicant
     _.merge Service.applicant, userData

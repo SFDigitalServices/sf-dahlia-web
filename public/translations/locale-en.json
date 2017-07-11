@@ -1,7 +1,8 @@
 {
     "A1_INTRO": {
         "CHOOSE_YOUR_LANGUAGE": "Choose your language",
-        "TITLE": "Let's get started on your application"
+        "TITLE": "Let's get started on your application",
+        "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime."
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
@@ -38,6 +39,12 @@
     "ALREADY_SUBMITTED": {
         "MESSAGE": "You have already submitted an application to this listing.",
         "TITLE": "Good news!"
+    },
+    "B0_AUTOFILL_PREVIEW": {
+        "DESCRIPTION": "We'll simply pre-fill your application with the following details, and you can  make updates as you go.",
+        "START_FROM_SCRATCH": "Reset and start from scratch",
+        "START_WITH_AUTOFILL": "Start with these details",
+        "TITLE": "Save time by using the details from your last application."
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",

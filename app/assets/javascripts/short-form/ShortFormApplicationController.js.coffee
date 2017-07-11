@@ -62,6 +62,23 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.resetAndStartNewApp = ->
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    data =
+      # will be null if the listing didn't have a screening Q
+      answeredCommunityScreening: $scope.application.answeredCommunityScreening
+    ShortFormApplicationService.resetUserData(data)
+    $scope.applicant = ShortFormApplicationService.applicant
+    $scope.preferences = ShortFormApplicationService.preferences
+    $scope.alternateContact = ShortFormApplicationService.alternateContact
+    $scope.householdMember = ShortFormApplicationService.householdMember
+    $scope.householdMembers = ShortFormApplicationService.householdMembers
+    delete $scope.application.autofill
+    $state.go('dahlia.short-form-application.name')
+
+  $scope.atAutofillPreview = ->
+    $state.current.name == "dahlia.short-form-application.autofill-preview"
+
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 

@@ -42,6 +42,12 @@ do ->
           Preferences: {}
           Income: {}
           Review: {}
+      applicationDefaults:
+        applicant:
+          home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          phone: null
+          mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          terms: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -88,6 +94,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
+      resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -136,6 +143,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -630,3 +638,16 @@ do ->
         lang = 'es'
         scope.onStateChangeSuccess(null, null, {lang: lang})
         expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(false)
+
+    describe 'resetAndStartNewApp', ->
+      beforeEach ->
+        scope.resetAndStartNewApp()
+
+      it 'calls resetUserData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+
+      it 'unsets application autofill value', ->
+        expect(scope.application.autofill).toBeUndefined()
+
+      it 'send user to You section of short form', ->
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
