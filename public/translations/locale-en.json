@@ -1,8 +1,8 @@
 {
     "A1_INTRO": {
         "CHOOSE_YOUR_LANGUAGE": "Choose your language",
-        "TITLE": "Let's get started on your application",
-        "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime."
+        "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
+        "TITLE": "Let's get started on your application"
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
