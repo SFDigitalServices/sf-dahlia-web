@@ -2,6 +2,7 @@
 class Emailer < Devise::Mailer
   include ActionMailer::Text
   default from: 'DAHLIA <donotreply@sfgov.org>'
+  default reply_to: 'DAHLIA <donotreply@sfgov.org>'
   layout 'email'
 
   ### service external methods
