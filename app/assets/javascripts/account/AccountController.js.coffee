@@ -101,12 +101,16 @@ AccountController = (
         if success
           form.$setUntouched()
           form.$setPristine()
+          # user signs in and saves an application
           if $scope.userInShortFormSession()
             ShortFormApplicationService.signInSubmitApplication(
               loggedInUser: AccountService.loggedInUser
               submitCallback: (changed) ->
                 $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
             )
+          # if user hasn't started the application at all and signs in from welcome page
+          else if $state.params.fromShortFormIntro
+            $state.go('dahlia.short-form-welcome.intro', {id: ShortFormApplicationService.listing.Id})
           else
             $scope._signInRedirect()
       ).catch( ->
