@@ -10,6 +10,8 @@ do ->
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     fakeListingService = {}
+    $translate =
+      instant: ->
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
     fakeShortFormApplicationService = {}
@@ -59,6 +61,7 @@ do ->
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value '$translate', $translate
       return
     )
 
@@ -307,10 +310,14 @@ do ->
         expect(scope.occupancy(unitSummary)).toEqual('1-3')
 
     describe '$scope.occupancyUnit', ->
-      it 'returns person for 1', ->
-        expect(scope.occupancyUnit(1)).toEqual('person')
-      it 'returns people for more than 1', ->
-        expect(scope.occupancyUnit(2)).toEqual('people')
+      it 'calls translate person for 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyUnit(1)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
+      it 'calls translate people for more than 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyUnit(2)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
 
     describe '$scope.formatBaths', ->
       it 'returns Shared for 0', ->
@@ -318,7 +325,10 @@ do ->
       it 'returns a number for whole numbers', ->
         expect(scope.formatBaths(1)).toEqual(1)
       it 'appends 1/2 bath when needed', ->
-        expect(scope.formatBaths(1.5)).toEqual('1 1/2 bath')
+        spyOn($translate, 'instant')
+        output = scope.formatBaths(1.5)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.BATH')
+        expect(output).toEqual('1 1/2 ' + $translate.instant('LISTINGS.BATH'))
 
     describe '$scope.listingHasOnlySROUnits', ->
       it 'calls ListingService.listingHasOnlySROUnits', ->
