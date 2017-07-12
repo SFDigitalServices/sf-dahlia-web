@@ -380,6 +380,12 @@ do ->
         expect(incomeLevels[0].numOfHousehold).toEqual minMax[0]
       it 'should filter the incomeLevels to end at max household + 2', ->
         expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual minMax[1] + 2
+      it 'should filter the incomeLevels to only show 1 person if all SROs', ->
+        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
+        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, fakeAMI.ami[0])
+        minMax = ListingService.occupancyMinMax(ListingService.listing)
+        expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual 1
 
     describe 'Service.minYearlyIncome', ->
       it 'should get the minimum yearly income for the first (and only) AMI Chart', ->
@@ -414,3 +420,16 @@ do ->
         ListingService.listing.LotteryResultsURL = null
         ListingService.listing.Lottery_Buckets = {bucketResults: []}
         expect(ListingService.listingHasLotteryResults()).toEqual false
+
+    describe 'Service.listingHasOnlySROUnits', ->
+      it 'returns no if not all units are SROs', ->
+        ListingService.listing = fakeListing.listing
+        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
+        unitSummary = _.head(combined)
+        unitSummary.Unit_Type = 'Studio'
+        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(false)
+      it 'returns yes if all units are SROs', ->
+        ListingService.listing = fakeListing.listing
+        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
+        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(true)
