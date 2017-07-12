@@ -785,6 +785,12 @@
         'container':
           templateUrl: 'short-form/templates/e7-preferences-programs.html'
     })
+    .state('dahlia.short-form-application.custom-preferences', {
+      url: '/custom-preferences'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7b-custom-preferences.html'
+    })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:
