@@ -180,7 +180,7 @@ module.exports = ->
   @When 'I opt out of NRHP preference', ->
     optOutAndSubmit()
 
-  @When 'I select Rent Burden Preference', ->
+  @When 'I select Rent Burdened Preference', ->
     element(By.id('preferences-rentBurden')).click()
 
 

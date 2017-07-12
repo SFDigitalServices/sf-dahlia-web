@@ -13,7 +13,7 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I go back to the Contact page and change WorkInSF to No
