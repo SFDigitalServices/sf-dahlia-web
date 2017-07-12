@@ -552,8 +552,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     )
 
   Service._extractCustomPreferences = ->
-    Service.listing.customPreferences = _.filter Service.listing.preferences, (listingPref) ->
+    customPreferences = _.filter Service.listing.preferences, (listingPref) ->
       !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
 
   Service.getLotteryBuckets = ->
     Service.listing.Lottery_Buckets = {}
