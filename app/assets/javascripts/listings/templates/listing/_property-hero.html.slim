@@ -5,16 +5,17 @@
         slidecontainer
           slide ng-repeat="image in ::listingImages(listing) track by $index"
             img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{listing.Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{image}}")
-        .carousel-arrow.carousel-arrow-left
-          button ng-click="Carousel.get('hero-carousel').previous()" tabindex="-1"
-            span.ui-icon.ui-static.ui-large.i-white
-              svg
-                use xlink:href="#i-left"
-        .carousel-arrow.carousel-arrow-right
-          button ng-click="Carousel.get('hero-carousel').next()" tabindex="-1"
-            span.ui-icon.ui-static.ui-large.i-white
-              svg
-                use xlink:href="#i-right"
+        div ng-if="listingImages(listing).length > 1"
+          .carousel-arrow.carousel-arrow-left
+            button ng-click="Carousel.get('hero-carousel').previous()" tabindex="-1"
+              span.ui-icon.ui-static.ui-large.i-white
+                svg
+                  use xlink:href="#i-left"
+          .carousel-arrow.carousel-arrow-right
+            button ng-click="Carousel.get('hero-carousel').next()" tabindex="-1"
+              span.ui-icon.ui-static.ui-large.i-white
+                svg
+                  use xlink:href="#i-right"
 
     h1.property-hero_title.offset
       | {{listing.Name}}
@@ -24,7 +25,7 @@
     hgroup.clearfix
       p.property-hero_address
         | {{formattedBuildingAddress(listing)}}
-        br
+      p.content-group_address.c-steel
         | {{listing.Developer}}
       a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{formattedBuildingAddress(listing)}}"
         | View on Map

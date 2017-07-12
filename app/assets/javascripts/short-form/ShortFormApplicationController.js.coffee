@@ -104,6 +104,23 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.resetAndStartNewApp = ->
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    data =
+      # will be null if the listing didn't have a screening Q
+      answeredCommunityScreening: $scope.application.answeredCommunityScreening
+    ShortFormApplicationService.resetUserData(data)
+    $scope.applicant = ShortFormApplicationService.applicant
+    $scope.preferences = ShortFormApplicationService.preferences
+    $scope.alternateContact = ShortFormApplicationService.alternateContact
+    $scope.householdMember = ShortFormApplicationService.householdMember
+    $scope.householdMembers = ShortFormApplicationService.householdMembers
+    delete $scope.application.autofill
+    $state.go('dahlia.short-form-application.name')
+
+  $scope.atAutofillPreview = ->
+    $state.current.name == "dahlia.short-form-application.autofill-preview"
+
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 
@@ -260,8 +277,8 @@ ShortFormApplicationController = (
 
   $scope.addressChange = (model) ->
     member = $scope[model]
-    # invalidate neighborhoodPreferenceMatch to ensure that they re-confirm address
-    member.neighborhoodPreferenceMatch = null
+    # invalidate preferenceAddressMatch to ensure that they re-confirm address
+    member.preferenceAddressMatch = null
     if member == $scope.applicant
       $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
@@ -283,10 +300,10 @@ ShortFormApplicationController = (
     $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.neighborhoodPreferenceMatch && $scope.application.validatedForms.You['verify-address'] != false
+    if $scope.applicant.preferenceAddressMatch && $scope.application.validatedForms.You['verify-address'] != false
       ###
       skip ahead if their current address has already been confirmed.
-      $scope.applicant.neighborhoodPreferenceMatch doesn't have to == 'Matched',
+      $scope.applicant.preferenceAddressMatch doesn't have to be 'Matched',
        just that it has a value
       ###
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alternate-contact-type')
@@ -452,7 +469,7 @@ ShortFormApplicationController = (
       return
     else
       $scope.clearEligibilityErrors()
-    if noAddress || $scope.householdMember.neighborhoodPreferenceMatch
+    if noAddress || $scope.householdMember.preferenceAddressMatch
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)
@@ -565,11 +582,6 @@ ShortFormApplicationController = (
     ShortFormApplicationService.invalidateMonthlyRentForm()
     ShortFormApplicationService.resetAssistedHousingForm()
     ShortFormApplicationService.resetPreference('assistedHousing')
-
-  $scope.visitResourcesLink = ->
-    linkText = $translate.instant('LABEL.VISIT_ADDITIONAL_RESOURCES')
-    link = $state.href('dahlia.additional-resources')
-    {visitResourcesLink: "<a href='#{link}'>#{linkText}</a>"}
 
   $scope.listingLink = ->
     linkText = $translate.instant('LABEL.ON_THE_LISTING')

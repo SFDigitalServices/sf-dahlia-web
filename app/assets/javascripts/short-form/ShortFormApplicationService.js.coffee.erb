@@ -70,6 +70,7 @@ ShortFormApplicationService = (
     FileUploadService.preferences = Service.preferences
     FileUploadService.session_uid = ->
       Service.session_uid
+    ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
   Service.resetUserData = (data = {}) ->
@@ -166,8 +167,8 @@ ShortFormApplicationService = (
 
   Service.addHouseholdMember = (householdMember) ->
     if householdMember.hasSameAddressAsApplicant == 'Yes'
-      # copy applicant's neighborhoodPreferenceMatch to householdMember
-      householdMember.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+      # copy applicant's preferenceAddressMatch to householdMember
+      householdMember.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     if !householdMember.id
       householdMember.id = Service._nextId()
       Service.householdMembers.push(angular.copy(householdMember))
@@ -201,8 +202,8 @@ ShortFormApplicationService = (
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
       if member.hasSameAddressAsApplicant == 'Yes'
-        # copy applicant's neighborhoodPreferenceMatch to householdMember
-        member.neighborhoodPreferenceMatch = Service.applicant.neighborhoodPreferenceMatch
+        # copy applicant's preferenceAddressMatch to householdMember
+        member.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     )
 
 
@@ -422,7 +423,7 @@ ShortFormApplicationService = (
     # used by both NRHP / ADHP
     Service.fullHousehold().filter (member) ->
       # find all household members that match NRHP
-      member.neighborhoodPreferenceMatch == 'Matched'
+      member.preferenceAddressMatch == 'Matched'
 
   Service.fullHousehold = ->
     # return an array with the Household and Primary Applicant
@@ -535,7 +536,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.neighborhoodPreferenceMatch
+        addressValid = !!applicant.preferenceAddressMatch
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -588,6 +589,9 @@ ShortFormApplicationService = (
   Service.resetLiveWorkForm = ->
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
+
+  Service._resetCompletedSections = ->
+    angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
 
   Service.resetMonthlyRentForm = ->
     return unless Service.application.validatedForms['Household']
@@ -669,8 +673,9 @@ ShortFormApplicationService = (
       return
     )
 
-  Service.getMyApplicationForListing = (listing_id) ->
-    $http.get("/api/v1/short-form/listing-application/#{listing_id}").success((data, status) ->
+  Service.getMyApplicationForListing = (listing_id, opts = {}) ->
+    autofill = if opts.autofill then '?autofill=true' else ''
+    $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
     ).error((data, status) ->
       return
@@ -732,11 +737,12 @@ ShortFormApplicationService = (
     Service.submitApplication()
 
   Service.loadApplication = (data) ->
-    formattedApp =
-      answeredCommunityScreening: Service.application.answeredCommunityScreening
+    formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+    # always pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
     Service.resetUserData(formattedApp)
 
   Service.loadAccountApplication = (data) ->
@@ -745,21 +751,13 @@ ShortFormApplicationService = (
     angular.copy(formattedApp, Service.accountApplication)
 
   Service.checkSurveyComplete = ->
-    app = Service.applicant
-    responses = [
-      _.some(app.gender),
-      app.ethnicity,
-      app.race,
-      _.some(app.referral),
-    ]
-    Service.application.surveyComplete = _.every(responses)
+    Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
     fields = [
       'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
-    # copy over all non-blank values e.g. omit middleName if null
-    userData = _.omitBy(_.pick(loggedInUser, fields), _.isNil)
+    userData = _.pick(loggedInUser, fields)
     original = angular.copy(Service.applicant)
     # merge the data into applicant
     _.merge Service.applicant, userData
@@ -791,7 +789,7 @@ ShortFormApplicationService = (
     # errors are handled in the controller
     afterGeocode = (response) ->
       Service.applicant.geocodingData = response.geocoding_data
-      Service.applicant.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.applicant.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
       Service.refreshPreferences('all')
@@ -808,7 +806,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success(afterGeocode)
-      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
       .error(afterGeocode)
     )
 
@@ -817,7 +815,7 @@ ShortFormApplicationService = (
     # errors are handled in the controller
     afterGeocode = (response) ->
       Service.householdMember.geocodingData = response.geocoding_data
-      Service.householdMember.neighborhoodPreferenceMatch = GeocodingService.neighborhoodPreferenceMatch
+      Service.householdMember.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
       Service.addHouseholdMember(Service.householdMember)
       # check if eligibility has changed
       Service.refreshPreferences('all')
@@ -833,7 +831,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
       ).success(afterGeocode)
-      # if there is an error you will be 'Not Matched' but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
     )
 

@@ -1,5 +1,6 @@
 {
     "A1_INTRO": {
+        "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
         "TITLE": "Let's get started on your application:"
     },
     "A2_COMMUNITY_SCREENING": {
@@ -37,6 +38,12 @@
     "ALREADY_SUBMITTED": {
         "MESSAGE": "You have already submitted an application to this listing.",
         "TITLE": "Good news!"
+    },
+    "B0_AUTOFILL_PREVIEW": {
+        "DESCRIPTION": "We'll simply pre-fill your application with the following details, and you can  make updates as you go.",
+        "START_FROM_SCRATCH": "Reset and start from scratch",
+        "START_WITH_AUTOFILL": "Start with these details",
+        "TITLE": "Save time by using the details from your last application."
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
@@ -259,11 +266,9 @@
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
         "GET_ASSISTANCE": "Get Assistance",
-        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to {{visitResourcesLink}}, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to {{visitResourcesLink}}, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
@@ -482,7 +487,6 @@
         "VIEW_APPLICATION": "View Application",
         "VIEW_MAP": "View Map",
         "VISION_IMPAIRMENTS": "For Vision Impairments",
-        "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WORK_IN_SF": "Do you work in San Francisco?",
@@ -530,6 +534,8 @@
         "AVAILABLE_UNITS": "Available Units",
         "AVAILABLE_UNITS_AND_WAITLIST": "Available units and waitlist",
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
+        "CONFIRMED_ADHP_LIST": "Confirmed Anti-Displacement Housing Preference List",
+        "CONFIRMED_NRHP_LIST": "Confirmed Neighborhood Resident Housing Preference List",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",

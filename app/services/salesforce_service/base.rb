@@ -79,6 +79,8 @@ module SalesforceService
       while retries > 0 && status != 200
         # NOTE: status will be 500 if there was an error with submission
         # e.g. DocumentType does not match Salesforce picklist
+        # QUICK FIX: always force oauth_token refresh for these calls
+        oauth_token(true)
         response = post_with_headers(endpoint, body, headers)
         status = response.status
         retries -= 1

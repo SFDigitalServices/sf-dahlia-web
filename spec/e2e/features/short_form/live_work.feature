@@ -1,6 +1,6 @@
 Feature: Short Form Application - Live/Work Preference
     As a web user
-    I should be able to claim the Live/Work preference while filling out a short form application
+    I should be able to claim the Live/Work preference on my application
     In order to increase my chances of getting an affordable housing unit
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
@@ -13,7 +13,7 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I go back to the Contact page and change WorkInSF to No
@@ -35,7 +35,7 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
-      And I fill out my income
+      And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
       And I opt out of NRHP preference
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference

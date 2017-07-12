@@ -39,6 +39,12 @@ do ->
           Preferences: {}
           Income: {}
           Review: {}
+      applicationDefaults:
+        applicant:
+          home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          phone: null
+          mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+          terms: {}
       alternateContact: {}
       householdMember: {
         firstName: "Oberon"
@@ -84,6 +90,7 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -136,6 +143,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -203,13 +211,13 @@ do ->
           expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
     describe '$scope.addressChange', ->
-      it 'unsets neighborhoodPreferenceMatch on member', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+      it 'unsets preferenceAddressMatch on member', ->
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.addressChange('applicant')
-        expect(scope.applicant.neighborhoodPreferenceMatch).toEqual null
+        expect(scope.applicant.preferenceAddressMatch).toEqual null
 
       it 'calls copyHomeToMailingAddress if member == applicant', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.addressChange('applicant')
         expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
@@ -224,7 +232,7 @@ do ->
       describe 'user does not have same address applicant', ->
         it 'calls validateHouseholdMemberAddress in ShortFormApplicationService', ->
           scope.householdMember.hasSameAddressAsApplicant = 'No'
-          scope.householdMember.neighborhoodPreferenceMatch = false
+          scope.householdMember.preferenceAddressMatch = false
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.validateHouseholdMemberAddress).toHaveBeenCalled()
 
@@ -254,13 +262,13 @@ do ->
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
       it 'navigates ahead to alt contact type if verification already happened', ->
-        scope.applicant.neighborhoodPreferenceMatch = 'Matched'
+        scope.applicant.preferenceAddressMatch = 'Matched'
         scope.application.validatedForms.You['verify-address'] = true
         scope.checkIfAddressVerificationNeeded()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.alternate-contact-type')
 
       it 'navigates ahead to verify address page if verification had not happened', ->
-        scope.applicant.neighborhoodPreferenceMatch = null
+        scope.applicant.preferenceAddressMatch = null
         scope.application.validatedForms.You['verify-address'] = null
         scope.checkIfAddressVerificationNeeded()
         expect(fakeShortFormApplicationService.validateApplicantAddress).toHaveBeenCalled()
@@ -612,3 +620,16 @@ do ->
       it 'called on fileAttachmentsForRentBurden on ShortFormHelperService', ->
         scope.fileAttachmentsForRentBurden()
         expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
+
+    describe 'resetAndStartNewApp', ->
+      beforeEach ->
+        scope.resetAndStartNewApp()
+
+      it 'calls resetUserData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+
+      it 'unsets application autofill value', ->
+        expect(scope.application.autofill).toBeUndefined()
+
+      it 'send user to You section of short form', ->
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')

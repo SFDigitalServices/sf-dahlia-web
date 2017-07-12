@@ -37,6 +37,7 @@ ShortFormDataService = (ListingService) ->
     delete application.primaryApplicant.mailingGeocoding_data
     delete application.validatedForms
     delete application.lotteryNumber
+    delete application.autofill
     delete application.surveyComplete
     return application
 
@@ -136,6 +137,7 @@ ShortFormDataService = (ListingService) ->
 
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        optOut = appPrefs.optOut.liveWorkInSf
         if appPrefs.liveInSf || appPrefs.optOut.liveInSf
           individualPref = 'Live in SF'
           prefKey = 'liveInSf'
@@ -285,7 +287,8 @@ ShortFormDataService = (ListingService) ->
       'listing'
       'applicationSubmittedDate'
       'status'
-      'lotteryNumber'
+      'lotteryNumber',
+      'autofill'
       'hasPublicHousing'
       'hasMilitaryService'
       'hasDevelopmentalDisability'
@@ -301,6 +304,9 @@ ShortFormDataService = (ListingService) ->
     data.householdIncome = Service._reformatIncome(sfApp)
     Service._reformatMetadata(sfApp, data)
     data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
+    # if sfApp.autofill == true that means the API returned an autofilled application
+    # to be used as a new draft (i.e. some fields need to be cleared out)
+    Service._autofillReset(data) if sfApp.autofill
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -326,7 +332,7 @@ ShortFormDataService = (ListingService) ->
     whitelist = [
       'appMemberId', 'contactId',
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-      'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
+      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
@@ -355,7 +361,7 @@ ShortFormDataService = (ListingService) ->
   Service._reformatHouseholdMember = (contact) ->
     whitelist = [
       'appMemberId', 'firstName', 'middleName', 'lastName',
-      'relationship', 'neighborhoodPreferenceMatch', 'noAddress',
+      'relationship', 'preferenceAddressMatch', 'noAddress',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     member = _.pick contact, whitelist
@@ -497,10 +503,59 @@ ShortFormDataService = (ListingService) ->
     }
 
 
+  Service._autofillReset = (data) ->
+    data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
+    unless data.surveyComplete
+      # clear out demographics if you hadn't already completed them all
+      data.applicant.gender = null
+      data.applicant.genderOther = null
+      data.applicant.ethnicity = null
+      data.applicant.race = null
+      data.applicant.sexualOrientation = null
+      data.applicant.sexualOrientationOther = null
+      data.applicant.referral = {}
+
+    # reset fields that don't apply to this application
+    LS = ListingService
+    unless LS.hasPreference('assistedHousing')
+      delete data.hasPublicHousing
+      delete data.totalMonthlyRent
+      data.groupedHouseholdAddresses = []
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.VETERAN)
+      delete data.hasMilitaryService
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.DISABLED)
+      delete data.hasDevelopmentalDisability
+
+    # reset contact + neighborhood data
+    resetContactFields = [
+      'appMemberId'
+      'contactId'
+      'neighborhoodPreferenceMatch'
+      'xCoordinate'
+      'yCoordinate'
+      'whichComponentOfLocatorWasUsed'
+      'candidateScore'
+    ]
+    angular.copy(_.omit(data.applicant, resetContactFields), data.applicant)
+    _.each data.householdMembers, (member) ->
+      angular.copy(_.omit(member, resetContactFields), member)
+
+    # reset completedSections
+    angular.copy(Service.defaultCompletedSections, data.completedSections)
 
   #############################################
   # Helper functions
   #############################################
+
+  Service.checkSurveyComplete = (applicant, opts = {}) ->
+    responses = [
+      applicant.gender,
+      applicant.ethnicity,
+      applicant.race,
+      applicant.sexualOrientation,
+      if opts.skipReferral then true else _.some(applicant.referral),
+    ]
+    return _.every(responses)
 
   Service.DOBValid = (field = 'day', values) ->
     month = values.month

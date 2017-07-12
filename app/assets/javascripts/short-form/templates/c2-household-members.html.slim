@@ -3,11 +3,6 @@
     h2.app-card_question
       | {{'C2_HOUSEHOLD_MEMBERS.TITLE' | translate}}
 
-  / alert-box(invert="true" custom-message="householdEligibilityErrorMessage" hide-alert="hideAlert")
-
-  .alert-notice.alert ng-show="householdEligibilityErrorMessage && !hideAlert"
-    p.c-steel translate="ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT" translate-values="visitResourcesLink()"
-
   .app-inner.short.focus-container
     .form-group
       .info-item.tall.border-bottom
@@ -28,7 +23,7 @@
             | {{'T.EDIT' | translate}}
 
       .text-center.padding--2x
-        button#add-member.has-icon.no-margin ui-sref="dahlia.short-form-application.household-member-form"
+        button#add-household-member.has-icon.no-margin ui-sref="dahlia.short-form-application.household-member-form"
           span.ui-icon.ui-medium
             svg
               use xlink:href="#i-plus"
