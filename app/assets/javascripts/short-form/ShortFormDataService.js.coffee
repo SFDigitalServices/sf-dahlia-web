@@ -414,6 +414,9 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'rentBurden'
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        unless prefKey
+          # must be a customPreference... just identify by ID much like on e7b-custom-preferences
+          prefKey = listingPref.listingPreferenceID
         preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
 
       preferences.optOut[prefKey] = shortFormPref.optOut
