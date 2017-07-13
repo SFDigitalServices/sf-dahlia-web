@@ -60,8 +60,7 @@ Feature: Short Form Application
 
       # error: L/W preference option not chosen (optOut / preference both blank)
       And I continue past the Lottery Preferences intro
-      # error: preference option not chosen
-      And I don't select opt out or Live/Work preference
+      And I click the Next button on the Live/Work Preference page
       Then I should see an error about selecting an option
 
       # error: preference document not uploaded
