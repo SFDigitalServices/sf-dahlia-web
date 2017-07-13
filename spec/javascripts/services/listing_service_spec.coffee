@@ -433,3 +433,10 @@ do ->
         combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
         _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
         expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(true)
+
+    describe 'Service.householdAMIChartCutoff', ->
+      it 'returns 1 if all units are SROs', ->
+        ListingService.listing = fakeListing.listing
+        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
+        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        expect(ListingService.householdAMIChartCutoff()).toEqual(1)

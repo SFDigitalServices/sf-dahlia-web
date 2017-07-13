@@ -564,6 +564,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
+    return 1 if Service.listingHasSROUnits(Service.listing)
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
