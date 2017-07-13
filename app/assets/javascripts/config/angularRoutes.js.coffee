@@ -546,6 +546,7 @@
           # 'listing' is part of the params so that application waits for listing (above) to resolve
           '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+            # if the user just clicked the language switcher, don't reload the whole route
             return if ShortFormApplicationService.switchingLanguage()
 
             deferred = $q.defer()
@@ -562,12 +563,13 @@
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
               deferred.resolve(ShortFormApplicationService.application)
               lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
+
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: lang})
-              else if lang != $stateParams.lang
+              else if lang && lang != $stateParams.lang
                 # check if draft application language matches the lang set in the route, if not then redirect
                 $state.go('dahlia.short-form-application.name', { id: $stateParams.id, lang: lang })
             return deferred.promise
