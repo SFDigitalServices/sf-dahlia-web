@@ -21,7 +21,7 @@ class Api::V1::ShortFormController < ApiController
     # get rid of any previous uploads for this preference
     # (e.g. from an abandoned session or if you unchecked the box)
     destroy_files_for_listing_preference
-    @uploaded_file = UploadedFile.create(uploaded_file_attrs)
+    @uploaded_file = UploadedFile.create_and_resize(uploaded_file_attrs)
     if @uploaded_file
       render json: {
         success: true,
@@ -389,7 +389,7 @@ class Api::V1::ShortFormController < ApiController
       listing_id: uploaded_file_params[:listing_id],
       listing_preference_id: uploaded_file_params[:listing_preference_id],
       document_type: uploaded_file_params[:document_type],
-      file: uploaded_file_params[:file].read,
+      file: uploaded_file_params[:file],
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
       address: uploaded_file_params[:address],
