@@ -83,7 +83,7 @@ div ng-if="prioritiesSelectedExists()"
       span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}
         br
-      span ng-if="application.adaPrioritiesSelected.no"
+      span ng-if="application.adaPrioritiesSelected.None"
         | {{'T.NO' | translate}}
 
 / Preferences
