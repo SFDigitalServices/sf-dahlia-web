@@ -8,7 +8,7 @@
     tbody
       tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])" ng-show="amiChartExpanded || householdIncomeLevel.numOfHousehold <= householdAMIChartCutoff()"
         td scope="row"
-          | {{householdIncomeLevel.numOfHousehold}} <small>{{ occupancyUnit(householdIncomeLevel.numOfHousehold) }}</small>
+          | {{householdIncomeLevel.numOfHousehold}} <small>{{ occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
         td
           | {{householdIncomeLevel.amount | divideAndRoundDown : 12 | currency : $ : 0}}<small>/month</small>
         td

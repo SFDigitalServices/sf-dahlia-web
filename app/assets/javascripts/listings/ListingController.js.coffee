@@ -211,7 +211,7 @@ ListingController = (
     return '1' if unitSummary.maxOccupancy == 1
     unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
 
-  $scope.occupancyUnit = (maxOccupancy) ->
+  $scope.occupancyLabel = (maxOccupancy) ->
     return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
     $translate.instant('LISTINGS.PEOPLE')
 

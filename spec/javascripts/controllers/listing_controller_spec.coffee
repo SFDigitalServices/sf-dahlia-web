@@ -309,14 +309,14 @@ do ->
         unitSummary = { minOccupancy: 1 , maxOccupancy: 3 }
         expect(scope.occupancy(unitSummary)).toEqual('1-3')
 
-    describe '$scope.occupancyUnit', ->
+    describe '$scope.occupancyLabel', ->
       it 'calls translate person for 1', ->
         spyOn($translate, 'instant')
-        scope.occupancyUnit(1)
+        scope.occupancyLabel(1)
         expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
       it 'calls translate people for more than 1', ->
         spyOn($translate, 'instant')
-        scope.occupancyUnit(2)
+        scope.occupancyLabel(2)
         expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
 
     describe '$scope.formatBaths', ->
