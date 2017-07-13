@@ -546,10 +546,13 @@
           # 'listing' is part of the params so that application waits for listing (above) to resolve
           '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
-            # if the user just clicked the language switcher, don't reload the whole route
-            return if ShortFormApplicationService.switchingLanguage()
-
             deferred = $q.defer()
+
+            # if the user just clicked the language switcher, don't reload the whole route
+            if ShortFormApplicationService.switchingLanguage()
+              deferred.resolve(ShortFormApplicationService.application)
+              return deferred.promise
+
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
 
@@ -596,7 +599,7 @@
             # and then clicked 'back' in the browser from short form
             $timeout ->
               # autofill would not be `true` if you opted out
-              unless application.autofill
+              unless application && application.autofill
                 $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
         ]
       onEnter: [
