@@ -301,7 +301,10 @@ ShortFormDataService = (ListingService) ->
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
     Service._reformatMetadata(sfApp, data)
-    data.preferences = Service._reformatPreferences(sfApp, data, uploadedFiles)
+
+    allHousehold = angular.copy(data.householdMembers)
+    allHousehold.unshift(data.applicant)
+    data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
     # if sfApp.autofill == true that means the API returned an autofilled application
     # to be used as a new draft (i.e. some fields need to be cleared out)
     Service._autofillReset(data) if sfApp.autofill
@@ -381,10 +384,8 @@ ShortFormDataService = (ListingService) ->
 
     data.preferences
 
-  Service._reformatPreferences = (sfApp, data, files) ->
+  Service._reformatPreferences = (sfApp, data, allHousehold, files) ->
     preferences = Service._initPreferences(data)
-    allHousehold = sfApp.householdMembers
-    allHousehold.unshift(sfApp.primaryApplicant)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
     shortFormPrefs.forEach( (shortFormPref) ->
 
