@@ -1,16 +1,19 @@
+require('dotenv').config()
 require('coffee-script').register()
+var projectDir = process.cwd()
 
 exports.config = {
   // ---- SauceLabs config
   sauceUser: 'sf-dahlia',
-  sauceKey: ENV.SAUCE_KEY,
+  sauceKey: process.env.SAUCE_KEY,
   // needs to use publicly accessible URL (or configure SauceConnect)
-  baseUrl: 'http://dahlia-qa.herokuapp.com/',
+  baseUrl: process.env.TEST_URL,
   multiCapabilities: [
-    // {
-    //   browserName: 'internet explorer',
-    //   version: '11',
-    // },
+    {
+      browserName: 'internet explorer',
+      platform: 'Windows 10',
+      version: '11.103',
+    },
     // {
     //   browserName: 'firefox',
     //   version: '50',
@@ -24,9 +27,9 @@ exports.config = {
     //   browserName: 'safari',
     //   platform: 'MAC'
     // },
-    {
-      browserName: 'iPhone'
-    },
+    // {
+    //   browserName: 'iPhone'
+    // },
     // {
     //   browserName: 'iPad'
     // },
@@ -37,16 +40,16 @@ exports.config = {
   // ----
 
   // might need to set these timeouts higher e.g. for iPhone simulator which takes a while to boot up
-  getPageTimeout: 20000,
-  allScriptsTimeout: 20000,
+  getPageTimeout: 30000,
+  allScriptsTimeout: 30000,
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   // path relative to the current config file
-  specs: [ 'features/*.feature' ],
+  specs: [ './features/**/*.feature' ],
   cucumberOpts: {
     require: [
-      'env.coffee',
-      'step_definitions/*.coffee'
+      projectDir + '/spec/e2e/env.coffee',
+      projectDir + '/spec/e2e/step_definitions/**/*.coffee'
     ],
     tags: false,
     format: 'pretty',

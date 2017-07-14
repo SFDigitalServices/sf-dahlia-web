@@ -21,5 +21,14 @@ exports.config = {
     format: 'pretty',
     profile: false,
     'no-source': true
-  }
+  },
+  onPrepare: function() {
+    // console.log('PREPARE')
+    // browser.driver.executeScript('window.protractor = true');
+    // browser.executeScript(function() {
+    //   console.log('PREPARE')
+    //   window.protractor = true
+    // });
+    browser.driver.get('http://localhost:3000/get-assistance');
+  },
 }
