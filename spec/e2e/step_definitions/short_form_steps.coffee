@@ -237,10 +237,13 @@ module.exports = ->
   @When 'I click the Next button on the Live in the Neighborhood page', ->
     submitPage()
 
-  @When 'I go back to the Contact page and change WorkInSF to No', ->
+  @When /^I go back to the Contact page and change WorkInSF to "([^"]*)"$/, (workInSf) ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
     submitPage()
-    element(By.id('workInSf_no')).click()
+    if workInSf == 'Yes'
+      element(By.id('workInSf_yes')).click()
+    else
+      element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Household page', ->
     element(By.cssContainingText('.progress-nav_item', 'Household')).click()
@@ -361,6 +364,10 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see the Work Preference', ->
+    workPref = element(By.id('preferences-workInSf'))
+    @expect(workPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Preferences Programs screen', ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))

@@ -11,7 +11,7 @@ exports.config = {
   },
   baseUrl: 'http://localhost:3000/',
   // path relative to the current config file
-  specs: [ './features/**/*.feature' ],
+  specs: [ './features/short_form/live_work.feature' ],
   cucumberOpts: {
     require: [
       projectDir + '/spec/e2e/env.coffee',

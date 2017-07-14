@@ -12,6 +12,9 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       Then I should see the Preferences Programs screen
+      When I go back to the Contact page and change WorkInSF to "Yes"
+      And I go back to the Live/Work preference page
+      Then I should see the Work Preference
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
@@ -22,7 +25,7 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I go back to the Contact page and change WorkInSF to No
+      And I go back to the Contact page and change WorkInSF to "No"
       And I go back to the Live/Work preference page
       Then I should still see the single Live in San Francisco preference selected
       When I upload a "Gas bill" as my proof of preference for "liveInSf"
