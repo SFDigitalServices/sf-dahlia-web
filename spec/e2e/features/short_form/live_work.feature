@@ -3,6 +3,16 @@ Feature: Short Form Application - Live/Work Preference
     I should be able to claim the Live/Work preference while filling out a short form application
     In order to increase my chances of getting an affordable housing unit
 
+    Scenario: Applicant and/or household member living or working in SF, different combinations
+      Given I go to the first page of the Test Listing application
+      When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with a non-SF address, no WorkInSF
+      And I confirm my address
+      And I don't indicate an alternate contact
+      And I indicate I will live alone
+      And I continue past the Lottery Preferences intro
+      Then I should see the Preferences Programs screen
+
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"

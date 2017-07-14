@@ -26,14 +26,19 @@ fillOutNamePage = (fullName, opts = {}) ->
 
 fillOutContactPage = (opts = {}) ->
   opts.address1 ||= '4053 18th St.'
+  opts.city ||= 'San Francisco'
+  opts.workInSf ||= 'yes'
   element(By.model('applicant.phone')).clear().sendKeys('2222222222')
   element(By.model('applicant.phoneType')).sendKeys('home')
   element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
   element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
-  element(By.id('applicant_home_address_city')).clear().sendKeys('San Francisco')
+  element(By.id('applicant_home_address_city')).clear().sendKeys(opts.city)
   element(By.id('applicant_home_address_state')).sendKeys('california')
   element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
-  element(By.id('workInSf_yes')).click()
+  if opts.workInSf == 'yes'
+    element(By.id('workInSf_yes')).click()
+  else
+    element(By.id('workInSf_no')).click()
   submitPage()
 
 fillOutHouseholdMemberForm = (opts = {}) ->
@@ -103,6 +108,9 @@ module.exports = ->
 
   @When 'I submit the Name page with my account info', ->
     submitPage()
+
+  @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
+    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail})
