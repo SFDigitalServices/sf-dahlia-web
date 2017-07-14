@@ -2,6 +2,7 @@ World = require('../world.coffee').World
 Chance = require('chance')
 chance = new Chance()
 EC = protractor.ExpectedConditions
+remote = require('selenium-webdriver/remote')
 
 # QA "280 Fell"
 listingId = 'a0W0P00000DZTkAUAX'
@@ -66,13 +67,8 @@ optOutAndSubmit = ->
   element(By.id('preference-optout')).click()
   submitPage()
 
-getUrlAndCatchPopup = (url) ->
-  # always catch and confirm popup alert in case we are leaving an existing application
-  # (i.e. from a previous test)
-  browser.get(url).catch ->
-    browser.switchTo().alert().then (alert) ->
-      alert.accept()
-      browser.get(url)
+getUrl = (url) ->
+  browser.get(url)
 
 module.exports = ->
   # import global cucumber options
@@ -80,13 +76,13 @@ module.exports = ->
 
   @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
-    getUrlAndCatchPopup(url)
+    getUrl(url)
 
   @Given 'I have a confirmed account', ->
     # confirm the account
     browser.ignoreSynchronization = true
     url = "/api/v1/account/confirm/?email=#{sessionEmail}"
-    getUrlAndCatchPopup(url)
+    getUrl(url)
     browser.ignoreSynchronization = false
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
@@ -201,6 +197,10 @@ module.exports = ->
     element.all(By.cssContainingText('option', documentType)).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
+
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
     filePath = "#{process.env.PWD}/public/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
@@ -277,7 +277,7 @@ module.exports = ->
 
   @When 'I sign in', ->
     signInUrl = "/sign-in"
-    getUrlAndCatchPopup(signInUrl)
+    getUrl(signInUrl)
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
