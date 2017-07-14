@@ -36,16 +36,16 @@ fillOutContactPage = (opts = {}) ->
   element(By.id('workInSf_yes')).click()
   submitPage()
 
-fillOutHouseholdMemberForm = (num = 0) ->
-  firstNames = ['Jane', 'John', 'Jill', 'Jack', 'Jim', 'Jem', 'Jean']
-  firstName = firstNames[num]
+fillOutHouseholdMemberForm = (fullName) ->
+  firstName = fullName.split(' ')[0]
+  lastName  = fullName.split(' ')[1]
   element(By.model('householdMember.firstName')).clear().sendKeys(firstName)
-  element(By.model('householdMember.lastName')).clear().sendKeys('McPerson')
+  element(By.model('householdMember.lastName')).clear().sendKeys(lastName)
   element(By.model('householdMember.dob_month')).clear().sendKeys('10')
   element(By.model('householdMember.dob_day')).clear().sendKeys('15')
   element(By.model('householdMember.dob_year')).clear().sendKeys('1985')
   element(By.id('hasSameAddressAsApplicant_yes')).click()
-  element(By.id('workInSf_yes')).click()
+  element(By.id('workInSf_no')).click()
   element(By.model('householdMember.relationship')).sendKeys('Cousin')
   submitPage()
 
@@ -132,11 +132,10 @@ module.exports = ->
       elem.isDisplayed()
     ).last().click()
 
-  @When /^I add household member "([^"]*)"$/, (index) ->
-    index = parseInt(index) - 1
+  @When /^I add another household member named "([^"]*)"$/, (fullName) ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm(index)
+      fillOutHouseholdMemberForm(fullName)
 
   @When 'I indicate being done adding people', ->
     submitPage()

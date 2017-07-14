@@ -29,9 +29,9 @@ Feature: Short Form Application
 
       When I cancel the household member
       # error: household too big (280 Fell allows for 1-3 people, 4 is too big)
-      And I add household member "1"
-      And I add household member "2"
-      And I add household member "3"
+      And I add another household member named "Jonny Doe"
+      And I add another household member named "Karen Lee"
+      And I add another household member named "Alex McGee"
       And I indicate being done adding people
       Then I should see an error about household size being too big
 
