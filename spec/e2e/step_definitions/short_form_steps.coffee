@@ -183,7 +183,7 @@ module.exports = ->
     element.all(By.id("#{preference}_household_member")).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
-    element.all(By.cssContainingText('option', fullName)).filter((elem) ->
+    element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
 

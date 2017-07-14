@@ -36,6 +36,7 @@ Feature: Short Form Application - Live/Work Preference
       # Finish the application and make sure a name change doesn't unclaim the preference
       When I upload a "Gas bill" as my proof of preference for "liveInSf"
       And I don't choose COP/DTHP preferences
+      And I click the Next button on the Live/Work Preference page
       And I indicate having vouchers
       And I fill out my income as "25000"
       And I fill out the optional survey
