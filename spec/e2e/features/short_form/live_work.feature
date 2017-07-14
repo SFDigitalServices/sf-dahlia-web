@@ -15,7 +15,7 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Contact page and change WorkInSF to No
       And I go back to the Live/Work preference page
       Then I should still see the single Live in San Francisco preference selected
-      When I upload a "Gas bill" as my proof of preference
+      When I upload a "Gas bill" as my proof of preference for "liveInSf"
       Then I should see the successful file upload info
       When I click the Next button on the Live/Work Preference page
       Then I should see the Preferences Programs screen
@@ -34,7 +34,7 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Live/Work preference page
       Then I should still see the preference options and uploader input visible
       # Finish the application and make sure a name change doesn't unclaim the preference
-      When I upload a "Gas bill" as my proof of preference
+      When I upload a "Gas bill" as my proof of preference for "liveInSf"
       And I don't choose COP/DTHP preferences
       And I indicate having vouchers
       And I fill out my income as "25000"

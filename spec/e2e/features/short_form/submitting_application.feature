@@ -13,6 +13,7 @@ Feature: Short Form Application
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
       And I don't choose COP/DTHP preferences
+      And I continue past the general lottery notice
       And I indicate having vouchers
       And I fill out my income as "25000"
       And I fill out the optional survey
@@ -49,8 +50,8 @@ Feature: Short Form Application
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       And I opt out of Live/Work preference
-      And I select "Jane Doe" for COP preference
-      And I select "Jane Doe" for DTHP preference
+      And I select "Jane Doe" for "certOfPreference" preference
+      And I select "Jane Doe" for "displaced" preference
       And I go to the income page
       And I indicate having vouchers
       And I fill out my income as "25000"
