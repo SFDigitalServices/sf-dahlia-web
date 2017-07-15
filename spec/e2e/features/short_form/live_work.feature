@@ -28,6 +28,11 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate being done adding people
       And I continue past the Lottery Preferences intro
       Then I should see the Live Preference
+      When I go back to the Contact page
+      And I fill out the Contact page with a non-SF address, no WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live Preference
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
