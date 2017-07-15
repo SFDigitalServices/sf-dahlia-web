@@ -17,6 +17,11 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Live/Work preference page
       Then I should see the Work Preference
       When I go back to the Contact page
+      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live and Work Preferences
+      When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page

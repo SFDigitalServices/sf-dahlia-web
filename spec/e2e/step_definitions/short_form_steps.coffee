@@ -383,6 +383,10 @@ module.exports = ->
     workPref = element(By.model('workInSfPref'))
     @expect(workPref.isDisplayed()).to.eventually.equal(true)
 
+  @Then 'I should see the Live and Work Preferences', ->
+    liveWorkPref = element(By.model('liveWorkInSfPref'))
+    @expect(liveWorkPref.isDisplayed()).to.eventually.equal(true)
+
   @Then 'I should see the Preferences Programs screen', ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
