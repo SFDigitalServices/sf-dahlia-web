@@ -174,6 +174,9 @@ module.exports = ->
     element(By.id('add-household-member')).click().then ->
       fillOutHouseholdMemberForm({fullName: fullName, address1: address1})
 
+  @When 'I change them to live inside SF, work in SF', ->
+    fillOutHouseholdMemberForm({address1: '4053 18th St.', workInSf: 'yes'})
+
   @When 'I change them to live outside SF, work in SF', ->
     fillOutHouseholdMemberForm({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
