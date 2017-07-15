@@ -42,6 +42,8 @@ fillOutContactPage = (opts = {}) ->
   submitPage()
 
 fillOutHouseholdMemberForm = (opts = {}) ->
+  opts.city ||= 'San Francisco'
+  opts.workInSf ||= 'no'
   if opts.fullName
     fullName = opts.fullName
     firstName = fullName.split(' ')[0]
@@ -54,12 +56,15 @@ fillOutHouseholdMemberForm = (opts = {}) ->
   if opts.address1
     element(By.id('hasSameAddressAsApplicant_no')).click()
     element(By.id('householdMember_home_address_address1')).clear().sendKeys(opts.address1)
-    element(By.id('householdMember_home_address_city')).clear().sendKeys('San Francisco')
+    element(By.id('householdMember_home_address_city')).clear().sendKeys(opts.city)
     element(By.id('householdMember_home_address_state')).sendKeys('california')
     element(By.id('householdMember_home_address_zip')).clear().sendKeys('94114')
   else
     element(By.id('hasSameAddressAsApplicant_yes')).click()
-  element(By.id('workInSf_no')).click()
+  if opts.workInSf == 'yes'
+    element(By.id('workInSf_yes')).click()
+  else
+    element(By.id('workInSf_no')).click()
   element(By.model('householdMember.relationship')).sendKeys('Cousin')
   submitPage()
 
@@ -108,6 +113,9 @@ module.exports = ->
 
   @When 'I submit the Name page with my account info', ->
     submitPage()
+
+  @When 'I fill out the Contact page with a non-SF address', ->
+    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
     fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
@@ -165,6 +173,9 @@ module.exports = ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
       fillOutHouseholdMemberForm({fullName: fullName, address1: address1})
+
+  @When 'I change them to live outside SF, work in SF', ->
+    fillOutHouseholdMemberForm({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When /^I change their address to "([^"]*)"$/, (address1) ->
     fillOutHouseholdMemberForm({address1: address1})

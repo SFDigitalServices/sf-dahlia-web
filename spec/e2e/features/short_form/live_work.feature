@@ -4,6 +4,7 @@ Feature: Short Form Application - Live/Work Preference
     In order to increase my chances of getting an affordable housing unit
 
     Scenario: Applicant and/or household member living or working in SF, different combinations
+      # neither live nor work in SF, alone
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
       And I fill out the Contact page with a non-SF address, no WorkInSF
@@ -12,32 +13,57 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       Then I should see the Preferences Programs screen
+      # I work but not live in SF, alone
       When I go back to the Contact page
       And I change WorkInSF to "Yes"
       And I go back to the Live/Work preference page
       Then I should see the Work Preference
+      # I work and live in SF, alone
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
+      # I live but not work in SF, alone
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Live Preference
+      # I neither work nor live in SF, household member lives in SF
       When I go back to the Household page
       And I indicate living with other people
-      And I add another household member named "Karen Lee" who lives at "4053 18th St."
+      And I add another household member named "Coleman Francis" who lives at "4053 18th St."
       And I confirm their address
       And I indicate being done adding people
       And I continue past the Lottery Preferences intro
       Then I should see the Live Preference
+      # I live in SF, household member lives in SF
       When I go back to the Contact page
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Live Preference
+      # I work in SF, household member lives in SF
+      When I go back to the Contact page
+      And I fill out the Contact page with a non-SF address
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live and Work Preferences
+      # I work and live in SF, household member lives in SF
+      When I go back to the Contact page
+      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live and Work Preferences
+      # I work and live in SF, household member works in SF
+      When I go back to the Household page
+      And I edit the last household member
+      And I change them to live outside SF, work in SF
+      And I confirm their address
+      And I indicate being done adding people
+      And I continue past the Lottery Preferences intro
+      Then I should see the Live and Work Preferences
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
