@@ -112,6 +112,9 @@ module.exports = ->
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
     fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
 
+  @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
+    fillOutContactPage({email: janedoeEmail, workInSf: 'no'})
+
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     fillOutContactPage({email: janedoeEmail})
 
@@ -237,9 +240,11 @@ module.exports = ->
   @When 'I click the Next button on the Live in the Neighborhood page', ->
     submitPage()
 
-  @When /^I go back to the Contact page and change WorkInSF to "([^"]*)"$/, (workInSf) ->
+  @When 'I go back to the Contact page', ->
     element(By.cssContainingText('.progress-nav_item', 'You')).click()
     submitPage()
+
+  @When /^I change WorkInSF to "([^"]*)"$/, (workInSf) ->
     if workInSf == 'Yes'
       element(By.id('workInSf_yes')).click()
     else
@@ -249,6 +254,11 @@ module.exports = ->
     element(By.cssContainingText('.progress-nav_item', 'Household')).click()
 
   @When 'I go back to the Live/Work preference page', ->
+    element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
+    # skip intro
+    submitPage()
+
+  @When 'I go back to the Live/Work preference page, skipping NRHP if exists', ->
     element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
     # skip intro
     submitPage()
@@ -364,6 +374,10 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see the Live Preference', ->
+    livePref = element(By.id('preferences-liveInSf'))
+    @expect(livePref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Work Preference', ->
     workPref = element(By.id('preferences-workInSf'))

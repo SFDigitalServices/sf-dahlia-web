@@ -12,9 +12,22 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       Then I should see the Preferences Programs screen
-      When I go back to the Contact page and change WorkInSF to "Yes"
+      When I go back to the Contact page
+      And I change WorkInSF to "Yes"
       And I go back to the Live/Work preference page
       Then I should see the Work Preference
+      When I go back to the Contact page
+      And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live Preference
+      When I go back to the Household page
+      And I indicate living with other people
+      And I add another household member named "Karen Lee" who lives at "4053 18th St."
+      And I confirm their address
+      And I indicate being done adding people
+      And I continue past the Lottery Preferences intro
+      Then I should see the Live Preference
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
@@ -25,8 +38,9 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I go back to the Contact page and change WorkInSF to "No"
-      And I go back to the Live/Work preference page
+      And I go back to the Contact page
+      And I change WorkInSF to "No"
+      And I go back to the Live/Work preference page, skipping NRHP if exists
       Then I should still see the single Live in San Francisco preference selected
       When I upload a "Gas bill" as my proof of preference for "liveInSf"
       Then I should see the successful file upload info
@@ -44,7 +58,7 @@ Feature: Short Form Application - Live/Work Preference
       And I opt out of NRHP preference
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I use the browser back button
-      And I go back to the Live/Work preference page
+      And I go back to the Live/Work preference page, skipping NRHP if exists
       Then I should still see the preference options and uploader input visible
       # Finish the application and make sure a name change doesn't unclaim the preference
       When I upload a "Gas bill" as my proof of preference for "liveInSf"
