@@ -32,14 +32,12 @@ section.content-wrap
   .content-group
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
-  / neighborhood preference list
+  // lottery preference URL
   .content-group ng-if="showPreferenceListPDF()"
-    h4.content-group_title ng-if="listingHasPreference('neighborhoodResidence')"
-      | {{'LISTINGS.CONFIRMED_NRHP_LIST' | translate}}
-    h4.content-group_title ng-if="listingHasPreference('antiDisplacement')"
-      | {{'LISTINGS.CONFIRMED_ADHP_LIST' | translate}}
-    a.button.primary.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"
-      | View Preference List
+    span ng-repeat="lotteryPreference in listing.Listing_Lottery_Preferences" ng-if="lotteryPreference.PDF_URL"
+      h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{lotteryPreference.Lottery_Preference.Name}}"
+      a.button.primary.expand ng-href="{{lotteryPreference.PDF_URL}}" target="_blank"
+        | View Preference List
     p.c-steel.t-small
       | Applications that qualify for this preference will be given a higher priority in the lottery.
 
