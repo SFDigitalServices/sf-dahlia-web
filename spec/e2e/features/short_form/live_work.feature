@@ -38,7 +38,7 @@ Feature: Short Form Application - Live/Work Preference
       And I indicate being done adding people
       And I continue past the Lottery Preferences intro
       Then I should see the Live Preference
-      # I live in SF, household member lives in SF
+      # I neither live nor work in SF, household member lives in SF
       When I go back to the Contact page
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
