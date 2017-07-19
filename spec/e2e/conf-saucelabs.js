@@ -7,16 +7,16 @@ if (!process.env.SAUCE_KEY) {
 }
 
 // ---- SauceLabs config
-config.sauceUser = 'sf-dahlia',
-config.sauceKey = process.env.SAUCE_KEY,
+config.sauceUser = 'sf-dahlia'
+config.sauceKey = process.env.SAUCE_KEY
 // needs to use publicly accessible URL (or configure SauceConnect)
-config.baseUrl = process.env.SAUCE_URL || 'https://dahlia-qa.herokuapp.com/',
+config.baseUrl = process.env.SAUCE_URL || 'https://dahlia-qa.herokuapp.com/'
 config.multiCapabilities = [
   {
     browserName: 'internet explorer',
     platform: 'Windows 10',
-    version: '11.103',
-  },
+    version: '11.103'
+  }
   // {
   //   browserName: 'firefox',
   //   version: '50',
@@ -39,9 +39,9 @@ config.multiCapabilities = [
   // {
   //   browserName: 'android'
   // },
-],
+]
 // Set these higher since tests run more slowly through Sauce Labs
-config.getPageTimeout = 60000,
-config.allScriptsTimeout = 60000,
+config.getPageTimeout = 60000
+config.allScriptsTimeout = 60000
 
 exports.config = config
