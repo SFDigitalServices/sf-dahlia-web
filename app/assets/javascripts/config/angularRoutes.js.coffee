@@ -791,6 +791,12 @@
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
+      resolve:
+        application: [
+          '$state', 'ShortFormApplicationService', 'AccountService'
+          ($state, ShortFormApplicationService, AccountService) ->
+            AccountService.checkForAccount(ShortFormApplicationService.applicant.email)
+        ]
     })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms?loginMessage'

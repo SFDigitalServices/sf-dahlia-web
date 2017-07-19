@@ -51,6 +51,7 @@ Rails.application.routes.draw do
         get 'my-applications' => 'account#my_applications'
         put 'update' => 'account#update'
         get 'confirm' => 'account#confirm'
+        get 'check-account' => 'account#check_account'
       end
     end
   end

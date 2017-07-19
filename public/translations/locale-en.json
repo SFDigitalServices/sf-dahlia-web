@@ -225,7 +225,12 @@
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
     },
     "F1A_REVIEW_SIGN_IN": {
+        "ACCOUNT_EXISTS": {
+            "P1": "It looks like you may already have an account. Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
+            "TITLE": "Welcome back!"
+        },
         "CONTINUE_WITHOUT_AN_ACCOUNT": "Continue without an account",
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continue without signing in",
         "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
         "TITLE": "You're almost done!"
     },

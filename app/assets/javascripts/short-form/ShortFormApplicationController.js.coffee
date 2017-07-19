@@ -555,6 +555,10 @@ ShortFormApplicationController = (
   $scope.loggedIn = ->
     AccountService.loggedIn()
 
+  $scope.shortFormAccountExists = ->
+    AccountService.shortFormAccountExists()
+
+
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
     switch pref_type

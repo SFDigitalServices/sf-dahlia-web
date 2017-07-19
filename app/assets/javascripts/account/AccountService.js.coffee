@@ -22,6 +22,7 @@ AccountService = (
   Service.myApplications = []
   Service.currentApplication = {}
   Service.createdAccount = {}
+  Service.accountExists = false
   Service.rememberedShortFormState = null
   Service.accountError =
     messages: {}
@@ -126,6 +127,16 @@ AccountService = (
       else
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
+
+  Service.checkForAccount = (email) ->
+    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
+      Service.accountExists = data.account_exists
+    ).catch( (data, status, headers, config) ->
+      Service.accountExists = false
+    )
+
+  Service.shortFormAccountExists = ->
+    Service.accountExists
 
   Service.signOut = ->
     # reset the user data immediately, then call signOut
