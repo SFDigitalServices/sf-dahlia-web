@@ -18,7 +18,7 @@
 
 .form-group.text-center ng-if="show_preference_uploader()"
   / type="button" tells it not to act as a submit button
-  button.button.ghost-white.expand type="button" ngf-select="uploadProof($file, preference, application.preferences[preference_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{preference_proof_file}}" ngf-max-size="2MB" ng-required="application.preferences[preference]" aria-describedby="{{preference_proof_file}}_error" ng-model="application.preferences[preference_proof_file]"
+  button.button.ghost-white.expand type="button" ngf-select="uploadProof($file, preference, application.preferences[preference_proof_option])" ngf-accept="'image/jpg, image/jpeg, image/png, application/pdf'" name="file_{{preference_proof_file}}" ngf-max-size="5MB" ng-required="application.preferences[preference]" aria-describedby="{{preference_proof_file}}_error" ng-model="application.preferences[preference_proof_file]"
     | {{'D2_LIVE_WORK_PREFERENCE.UPLOAD_PROOF' | translate}}
   small.error id="{{preference_proof_option}}_error" ng-if="inputInvalid('file_'+preference_proof_file) && !preferenceFileError(preference_proof_file)"
     | {{'ERROR.FILE_MISSING' | translate}}

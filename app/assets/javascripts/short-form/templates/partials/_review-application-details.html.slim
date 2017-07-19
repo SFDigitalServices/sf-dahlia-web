@@ -62,34 +62,36 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
       ' {{member.home_address.city}}, {{member.home_address.state}}
       | {{member.home_address.zip}}
 
-/ Self-declared status
-review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
+/ Preferences
+div ng-if="!atAutofillPreview()"
+  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
 
-.app-inner
-  p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
-    | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
+  .app-inner
+    p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
+      | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
-    | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
+      | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
-    | {{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
+      | {{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
-    | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
+      | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
-    | {{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
+      | {{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
 
-  review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
-    | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
+      | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
 / Income
-review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
+div ng-if="application.householdIncome.incomeTotal"
+  review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
 
-.app-inner
-  review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
-    | {{applicationVouchersSubsidies()}}
+  .app-inner
+    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
+      | {{applicationVouchersSubsidies()}}
 
-  review-summary-item label="{{'LABEL.INCOME' | translate}}"
-    | {{ applicationIncomeAmount() }}
+    review-summary-item label="{{'LABEL.INCOME' | translate}}"
+      | {{ applicationIncomeAmount() }}
