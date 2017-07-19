@@ -31,22 +31,7 @@ accordion-heading.lead
         .stats-card.bg-tint ng-show="AMICharts.length > 0"
           / single chart / BMR style
           div ng-if="!hasMultipleAMICharts()"
-            .stats-toggle.toggle-box.toggler.has-toggle.show-for-small-only ng-click="toggleTable('Income')" ng-class="activeIncomeClass"
-              .stats-list_value.highlight
-                span.value-label
-                  ' Starts at
-                | {{minYearlyIncome() | divideAndRoundDown : 12 | currency : $ : 0}}
-                span.value-label
-                  | /month
-              span.stats-list_label
-                | based on household size
-
-              span.ui-control.ui-icon.ui-small
-                svg
-                  use xlink:href="#i-arrow-down"
-
-            .toggled ng-class="[activeIncomeClass, smallDisplayClass]"
-              ng-include src="'listings/templates/listing/_income-table.html'"
+            ng-include src="'listings/templates/listing/_income-table.html'"
 
           / multiple chart / MF style
           div ng-if="hasMultipleAMICharts()"
