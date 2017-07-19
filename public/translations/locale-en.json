@@ -190,7 +190,7 @@
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
         "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
-        "FILE_MISSING": "Please upload your proof of preference",
+        "FILE_MISSING": "Please upload a valid document",
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
