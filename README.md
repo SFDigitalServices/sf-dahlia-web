@@ -8,6 +8,14 @@
 
 DAHLIA is the affordable housing portal for the City and County of San Francisco. It was created by the Mayor's Office of Housing and Community Development (MOHCD). This application streamlines the process of searching and applying for affordable housing, making it easier to rent, buy and stay in our City.
 
+## Technical Architecture
+
+This repository contains the source code for [housing.sfgov.org](https://housing.sfgov.org), which is the user-facing web application of the DAHLIA platform. It is a [Ruby on Rails](http://rubyonrails.org/) application that serves up a single page [AngularJS](https://angularjs.org/) app. The web application connects to a Salesforce backend (you can find the source code for that [here](https://github.com/Exygy/sf-dahlia-salesforce)), which is where the listings are actually created and administered. The primary purpose of the PostgreSQL database on the web application is to serve as user authentication (using [Devise](https://github.com/plataformatec/devise) + [Devise Token Auth](https://github.com/lynndylanhurley/devise_token_auth)), with every user in the database getting a `salesforce_contact_id` which corresponds to their record in the Salesforce database.
+
+![Architecture Diagram](https://www.lucidchart.com/publicSegments/view/61f66aec-5d56-442b-8e46-9b2ff8316f97/image.jpeg)
+See [here](https://www.lucidchart.com/documents/view/53cd191b-3ca5-4b23-832d-28a6591500f2) for the original Lucidchart of the above diagram
+
+
 ## Dependencies
 Before you install DAHLIA, your system should have the following:
 
@@ -114,4 +122,4 @@ DAHLIA is free software; you can redistribute it and/or modify it under the term
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with DAHLIA. If not, see [http://choosealicense.com/licenses/gpl-2.0/](http://choosealicense.com/licenses/gpl-2.0/)
+You should have received a copy of the GNU General Public License along with DAHLIA. If not, see [http://choosealicense.com/licenses/gpl-3.0/](http://choosealicense.com/licenses/gpl-3.0/)

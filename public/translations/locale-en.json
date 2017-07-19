@@ -41,7 +41,7 @@
     },
     "B0_AUTOFILL_PREVIEW": {
         "DESCRIPTION": "We'll simply pre-fill your application with the following details, and you can  make updates as you go.",
-        "START_FROM_SCRATCH": "Reset and start from scratch",
+        "START_FROM_SCRATCH": "Reset and start fresh",
         "START_WITH_AUTOFILL": "Start with these details",
         "TITLE": "Save time by using the details from your last application."
     },
