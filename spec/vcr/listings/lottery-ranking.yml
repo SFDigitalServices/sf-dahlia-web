@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Jul 2017 17:33:12 GMT
+      - Fri, 07 Jul 2017 19:01:11 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=lWve3ZCyROedXgrPbKMhfQ;Path=/;Domain=.salesforce.com;Expires=Mon,
-        04-Sep-2017 17:33:12 GMT
+      - BrowserId=eWI5WtomQ3iOmpxxi9Nauw;Path=/;Domain=.salesforce.com;Expires=Tue,
+        05-Sep-2017 19:01:11 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499362392385","signature":"HKK5XFZO48+Ci2qa+DZvY3E715sMB9v6+Btrp9uAVME="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499454071750","signature":"lxSHYaue4VMW3i2k6oIeRVLIfQvXDJBm+C2QqSP3H2g="}'
     http_version: 
-  recorded_at: Thu, 06 Jul 2017 17:33:12 GMT
+  recorded_at: Fri, 07 Jul 2017 19:01:11 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000DYiwiUAD/00008639
+    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W4B0000050WOaUAM/00042084
     body:
       encoding: US-ASCII
       string: ''
@@ -74,7 +74,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 06 Jul 2017 17:33:12 GMT
+      - Fri, 07 Jul 2017 19:01:12 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=qHI-GRvqT0yFbT--Y_J6pg;Path=/;Domain=.salesforce.com;Expires=Mon,
-        04-Sep-2017 17:33:12 GMT
+      - BrowserId=VZFwHC9ZQuCP-4mB1LfxZA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        05-Sep-2017 19:01:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -95,27 +95,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJVUkwiOm51bGwsIm9mZmljZUhvdXJzIjoiPHA+TW9uZGF54oCTRnJpZGF5
-        XHJcbjxzdHJvbmc+OTowMGFt4oCTNTowMHBtPC9zdHJvbmc+XHJcbjwvcD4i
-        LCJsb3R0ZXJ5UmVzdWx0c1VSTCI6bnVsbCwibG90dGVyeVJlc3VsdHMiOnRy
-        dWUsImxvdHRlcnlQcmVmZXJlbmNlcyI6bnVsbCwibG90dGVyeUVuZFRpbWUi
-        Om51bGwsImxvdHRlcnlEYXRlIjoiMjAxNi0xMS0wMlQyMDowMDowMC4wMDBa
-        IiwibG90dGVyeUNpdHkiOiJTYW4gRnJhbmNpc2NvIiwibG90dGVyeUJ1Y2tl
-        dHMiOlt7InVuaXRzQXZhaWxhYmxlIjoxLCJ0b3RhbFN1Ym1pdHRlZEFwcHMi
-        Om51bGwsInByZWZlcmVuY2VSZXN1bHRzIjpbXSwicHJlZmVyZW5jZU9yZGVy
-        IjoxLCJwcmVmZXJlbmNlTmFtZSI6IkNlcnRpZmljYXRlIG9mIFByZWZlcmVu
-        Y2UgKENPUCkifSx7InVuaXRzQXZhaWxhYmxlIjoxLCJ0b3RhbFN1Ym1pdHRl
-        ZEFwcHMiOjMsInByZWZlcmVuY2VSZXN1bHRzIjpbXSwicHJlZmVyZW5jZU9y
-        ZGVyIjoyLCJwcmVmZXJlbmNlTmFtZSI6IkRpc3BsYWNlZCBUZW5hbnQgSG91
-        c2luZyBQcmVmZXJlbmNlIChEVEhQKSJ9LHsidW5pdHNBdmFpbGFibGUiOjEs
-        InRvdGFsU3VibWl0dGVkQXBwcyI6MTM3LCJwcmVmZXJlbmNlUmVzdWx0cyI6
-        W10sInByZWZlcmVuY2VPcmRlciI6MywicHJlZmVyZW5jZU5hbWUiOiJMaXZl
-        IG9yIFdvcmsgaW4gU2FuIEZyYW5jaXNjbyBQcmVmZXJlbmNlIn0seyJ1bml0
-        c0F2YWlsYWJsZSI6MSwidG90YWxTdWJtaXR0ZWRBcHBzIjo5MSwicHJlZmVy
-        ZW5jZVJlc3VsdHMiOltdLCJwcmVmZXJlbmNlT3JkZXIiOm51bGwsInByZWZl
-        cmVuY2VOYW1lIjoiZ2VuZXJhbExvdHRlcnkifV0sImxvdHRlcnlBcHBUb3Rh
-        bCI6MTY0LCJsaXN0aW5nSWQiOiJhMFcwUDAwMDAwRFlpd2lVQUQifQ==
+      string: '{"URL":null,"officeHours":null,"lotteryResultsURL":null,"lotteryResults":true,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-06-01T18:21:00.000Z","lotteryCity":"San
+        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":2,"preferenceResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00042084","applicationID":"a0o4B000000J2SKQA0"}],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":2,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":3,"totalSubmittedApps":1,"preferenceResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00042084","applicationID":"a0o4B000000J2SKQA0"}],"preferenceOrder":3,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":2,"totalSubmittedApps":2,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":3,"listingId":"a0W4B0000050WOaUAM"}'
     http_version: 
-  recorded_at: Thu, 06 Jul 2017 17:33:13 GMT
+  recorded_at: Fri, 07 Jul 2017 19:01:12 GMT
 recorded_with: VCR 3.0.3
