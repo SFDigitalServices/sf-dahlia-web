@@ -208,14 +208,11 @@ ShortFormDataService = () ->
         delete member.geocodingData
     return application
 
+  # move all metaFields off the application object and into formMetadata JSON string
   Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
-
-    application.formMetadata = JSON.stringify(formMetadata)
-    delete application.completedSections
-    delete application.session_uid
+    application.formMetadata = JSON.stringify(_.pick(application, Service.metaFields))
+    _.each Service.metaFields, (metaField) ->
+      delete application[metaField]
     return application
 
   #############################################
