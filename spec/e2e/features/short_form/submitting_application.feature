@@ -49,7 +49,9 @@ Feature: Short Form Application
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
-      And I opt out of Live/Work preference
+      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
+      And I upload a "Gas bill" as my proof of preference for "liveInSf"
+      And I click the Next button on the Live/Work Preference page
       And I select "Jane Doe" for "certOfPreference" preference
       And I select "Jane Doe" for "displaced" preference
       And I go to the income page
@@ -59,7 +61,7 @@ Feature: Short Form Application
       And I confirm details on the review page
       And I agree to the terms and submit
       And I view the application from My Applications
-      Then I should see my name, DOB, email, COP and DTHP options all displayed as expected
+      Then I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected
       #
       # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
       #

@@ -447,13 +447,15 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my name, DOB, email, COP and DTHP options all displayed as expected', ->
+  @Then 'I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected', ->
     appName = element(By.id('full-name'))
     @expect(appName.getText()).to.eventually.equal('JANE DOE')
     appDob = element(By.id('dob'))
     @expect(appDob.getText()).to.eventually.equal('2/22/1990')
     appEmail = element(By.id('email'))
     @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
+    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
+    @expect(liveInSf.isPresent()).to.eventually.equal(true)
     certOfPref = element(By.cssContainingText('.info-item_name', 'Certificate of Preference (COP)'))
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
