@@ -73,6 +73,9 @@
     },
     "GOOGLE_TAG_MANAGER_KEY":{
       "required":true
+    },
+    "DISALLOW_ALL_WEB_CRAWLERS":{
+      "required":true
     }
   }
 }
