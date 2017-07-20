@@ -218,6 +218,18 @@ module.exports = ->
   @When 'I click the Live in the Neighborhood checkbox', ->
     element(By.id('preferences-neighborhoodResidence')).click()
 
+  @When 'I click the Live or Work in SF checkbox', ->
+    element(By.id('preferences-liveWorkInSf')).click()
+
+  @When 'I open the Live or Work in SF dropdown', ->
+    element(By.id('liveWorkPrefOption')).click()
+
+  @When 'I select the Live in SF preference', ->
+    element(By.cssContainingText('option', 'Live in San Francisco')).click()
+
+  @When 'I select the Work in SF preference', ->
+    element(By.cssContainingText('option', 'Work in San Francisco')).click()
+
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
     element(By.id('preferences-liveWorkInSf')).click()
@@ -390,16 +402,22 @@ module.exports = ->
   ########################
 
   @Then 'I should see the Live Preference', ->
-    livePref = element(By.model('liveInSfPref'))
-    @expect(livePref.isDisplayed()).to.eventually.equal(true)
+    livePref = element.all(By.cssContainingText('strong', 'Live in San Francisco Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(livePref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Work Preference', ->
-    workPref = element(By.model('workInSfPref'))
-    @expect(workPref.isDisplayed()).to.eventually.equal(true)
+    workPref = element.all(By.cssContainingText('strong', 'Work in San Francisco Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(workPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live and Work Preferences', ->
-    liveWorkPref = element(By.model('liveWorkInSfPref'))
-    @expect(liveWorkPref.isDisplayed()).to.eventually.equal(true)
+    liveWorkPref = element.all(By.cssContainingText('strong', 'Live or Work in San Francisco Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Preferences Programs screen', ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
