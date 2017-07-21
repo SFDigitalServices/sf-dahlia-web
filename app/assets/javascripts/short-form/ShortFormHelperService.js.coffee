@@ -15,6 +15,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
     ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
   ]
+  Service.sex_at_birth_options = [
+    ['Female', $translate.instant('LABEL.FEMALE')]
+    ['Male', $translate.instant('LABEL.MALE')]
+  ]
   Service.relationship_options = [
     ['Spouse', $translate.instant('LABEL.SPOUSE')]
     ['Registered Domestic Partner', $translate.instant('LABEL.REGISTERED_DOMESTIC_PARTNER')]

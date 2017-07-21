@@ -5,8 +5,8 @@
   select#user_sex_at_birth ng-model="user.sexAtBirth" data-width="auto" name="sexAtBirth" ng-change="user.sexAtBirthOther = null"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
-    option ng-repeat="sex in sex_at_birth_options" value="{{sex}}"
-      | {{ sex }}
+    option ng-repeat="sex in sex_at_birth_options" value="{{sex[0]}}"
+      | {{ sex[1] | translate }}
 
   small.error#user_sex_at_birth_other_error ng-if="inputInvalid('sexAtBirthOther')"
     | {{'ERROR.SEX_AT_BIRTH' | translate}}

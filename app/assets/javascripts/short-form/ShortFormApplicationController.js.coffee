@@ -42,15 +42,11 @@ ShortFormApplicationController = (
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
   $scope.priority_options = ShortFormHelperService.priority_options
   $scope.gender_options = ShortFormHelperService.gender_options
+  $scope.sex_at_birth_options = ShortFormHelperService.sex_at_birth_options
   $scope.relationship_options = ShortFormHelperService.relationship_options
   $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
   $scope.race_options = ShortFormHelperService.race_options
   $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
-
-  $scope.sex_at_birth_options = [
-    'Female',
-    'Male'
-  ]
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
