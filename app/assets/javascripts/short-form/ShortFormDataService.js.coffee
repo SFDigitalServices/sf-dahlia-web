@@ -402,9 +402,6 @@ ShortFormDataService = () ->
       data.applicant.ethnicity = null
       data.applicant.race = null
       data.applicant.sexAtBirth = null
-
-      # TODO MATEO: remove all sex at birth other
-      data.applicant.sexAtBirthOther = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
