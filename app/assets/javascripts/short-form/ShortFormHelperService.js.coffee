@@ -10,8 +10,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service.gender_options = [
     ['Male', $translate.instant('LABEL.MALE')]
     ['Female', $translate.instant('LABEL.FEMALE')]
-    ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
+    ['Genderqueer/Gender Non-binary', $translate.instant('LABEL.GENDERQUEER_NON_BINARY')]
     ['Trans Female', $translate.instant('LABEL.TRANS_FEMALE')]
+    ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
     ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
   ]
   Service.relationship_options = [
@@ -48,11 +49,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Other/Multiracial', $translate.instant('LABEL.OTHER_MULTIRACIAL')]
   ]
   Service.sexual_orientation_options = [
-    ['Straight/Heterosexual', $translate.instant('LABEL.STRAIGHT_HETEROSEXUAL')]
-    ['Gay', $translate.instant('LABEL.GAY')]
-    ['Lesbian', $translate.instant('LABEL.LESBIAN')]
     ['Bisexual', $translate.instant('LABEL.BISEXUAL')]
+    ['Gay/Lesbian/Same-Gender Loving', $translate.instant('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
     ['Questioning/Unsure', $translate.instant('LABEL.QUESTIONING_UNSURE')]
+    ['Straight/Heterosexual', $translate.instant('LABEL.STRAIGHT_HETEROSEXUAL')]
     ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
   ]
   Service.preference_proof_options_default = [
