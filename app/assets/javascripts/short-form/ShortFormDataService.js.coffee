@@ -275,7 +275,7 @@ ShortFormDataService = () ->
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
       'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'gender', 'genderOther', 'race', 'sexAtBirth', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     applicant = _.pick contact, whitelist
@@ -401,6 +401,10 @@ ShortFormDataService = () ->
       data.applicant.genderOther = null
       data.applicant.ethnicity = null
       data.applicant.race = null
+      data.applicant.sexAtBirth = null
+
+      # TODO MATEO: remove all sex at birth other
+      data.applicant.sexAtBirthOther = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
@@ -443,6 +447,7 @@ ShortFormDataService = () ->
       applicant.gender,
       applicant.ethnicity,
       applicant.race,
+      applicant.sexAtBirth,
       applicant.sexualOrientation,
       if opts.skipReferral then true else _.some(applicant.referral),
     ]
