@@ -10,6 +10,7 @@ ShortFormDataService = () ->
   Service.metaFields = [
     'completedSections'
     'session_uid'
+    'lastPage'
   ]
 
   Service.formatApplication = (listingId, shortFormApplication) ->

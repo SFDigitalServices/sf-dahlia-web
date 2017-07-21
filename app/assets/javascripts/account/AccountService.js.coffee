@@ -155,7 +155,8 @@ AccountService = (
   Service.getMyApplications = ->
     $http.get('/api/v1/account/my-applications').success((data) ->
       if data.applications
-        angular.copy(data.applications, Service.myApplications)
+        myApplications = _.map(data.applications, ShortFormDataService.reformatApplication)
+        angular.copy(myApplications, Service.myApplications)
     )
 
   Service.updateAccount = (infoType) ->

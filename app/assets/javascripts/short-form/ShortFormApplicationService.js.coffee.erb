@@ -47,6 +47,8 @@ ShortFormApplicationService = (
       Preferences: {}
       Income: {}
       Review: {}
+    # for storing last page of your draft, to return to. default to first page
+    lastPage: 'dahlia.short-form-application.name'
 
   Service.optOutFields =
     workInSf: 'liveWorkOptOut'
@@ -123,6 +125,10 @@ ShortFormApplicationService = (
         _.every(validated['Income'], (i) -> i)
       else
         false
+
+  Service.storeLastPage = (stateName) ->
+    lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
+    Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
     unless Service.applicant.hasAltMailingAddress
@@ -376,10 +382,12 @@ ShortFormApplicationService = (
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
     # they're "jumping ahead" if they're not coming from a short form page or create-account
-    # and they're trying to go to a short form section ahead of "name" (1st page)
+    # and they're trying to go to a page that's not either the first page, or their stored lastPage
+    namePage = 'dahlia.short-form-application.name'
+    lastPage = "dahlia.short-form-application.#{Service.application.lastPage}"
     jumpAhead = Service.isShortFormPage(toState) &&
                 !Service.isShortFormPage(fromState) &&
-                toState.name != 'dahlia.short-form-application.name'
+                !_.includes([namePage, lastPage], toState.name)
     return !jumpAhead
 
   Service.isLeavingShortForm = (toState, fromState) ->
@@ -554,6 +562,22 @@ ShortFormApplicationService = (
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+
+    # TODO: update for multifamily
+    proofPrefs = [
+      'liveInSf',
+      'workInSf',
+      'neighborhoodResidence'
+    ]
+    # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
+    _.each proofPrefs, (prefType) ->
+      hasPref = formattedApp.preferences[prefType]
+      if hasPref && _.isEmpty(formattedApp.preferences["#{prefType}_proof_file"])
+        formattedApp.completedSections['Preferences'] = false
+        # TODO: update for multifamily -- if they're on a later page but with prefs in a broken state, kick them back
+        if _.includes ['preferences-programs'], formattedApp.lastPage
+          formattedApp.lastPage = 'preferences-intro'
+
     Service.resetUserData(formattedApp)
 
   Service.loadAccountApplication = (data) ->
