@@ -488,9 +488,10 @@ ShortFormApplicationService = (
     neighborhoodMember = Service.preferences["#{preference}_household_member"]
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
     proofOption = Service.preferences.documents[preference].proofOption
+    file = Service.preferences.documents[preference].file
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
-    Service.preferences.documents.liveInSf = {proofOption: proofOption}
+    Service.preferences.documents.liveInSf = {proofOption: proofOption, file: file}
 
   Service._updatePreference = (preference, eligibleMembers) ->
     members = eligibleMembers.map (member) -> member.id
