@@ -289,6 +289,8 @@ class Api::V1::ShortFormController < ApiController
                 genderOther
                 ethnicity
                 race
+                sexAtBirth
+                sexAtBirthOther
                 sexualOrientation
                 sexualOrientationOther
                 hiv

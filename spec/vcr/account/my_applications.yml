@@ -51,7 +51,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008fvwUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1498695178235","signature":"+UKgxGghuRD23U93/KG+DK6uJ1ryxrCQaNxNDjIm4RE="}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 29 Jun 2017 00:12:58 GMT
 - request:
     method: get
@@ -95,9 +95,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '[{"worksInSfPreferenceID":null,"workInSfPreferenceProof":null,"workInSfPreferenceNatKey":null,"status":"Draft","referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":null,"race":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"LSeven","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Test","ethnicity":null,"email":"dave+lseven@exygy.com","DOB":"1985-04-04","contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"appMemberType":"Primary
+      string: '[{"worksInSfPreferenceID":null,"workInSfPreferenceProof":null,"workInSfPreferenceNatKey":null,"status":"Draft","referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexAtBirthOther":null,"sexAtBirth":null,"sexualOrientationOther":null,"sexualOrientation":null,"relationship":null,"race":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"LSeven","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Test","ethnicity":null,"email":"dave+lseven@exygy.com","DOB":"1985-04-04","contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"appMemberType":"Primary
         Applicant","appMemberId":"a0n0P00000AONbEQAX","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"neighborhoodResidencePreferenceNatKey":null,"neighborhoodPreferenceProof":null,"neighborhoodPreferenceOptOut":false,"neighborhoodPreferenceID":null,"name":"APP-00016070","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00016070","liveWorkOptOut":false,"liveInSfPreferenceProof":null,"liveInSfPreferencePaper":false,"liveInSfPreferenceNatKey":null,"liveInSfPreferenceID":null,"listingID":"a0W0P00000DZ4dTUAT","id":"a0o0P0000093OZEQA2","householdVouchersSubsidies":null,"householdMembers":[],"formMetadata":"{\"completedSections\":{\"Intro\":true,\"You\":false,\"Household\":false,\"Preferences\":false,\"Income\":false}}","displacedPreferenceOptOut":false,"displacedPreferenceNatKey":null,"displacedPreferenceID":null,"certOfPreferenceOptOut":false,"certOfPreferenceNatKey":null,"certOfPreferenceID":null,"applicationSubmittedDate":"2016-12-19","applicationSubmissionType":"Electronic","applicationLanguage":"English","annualIncome":null,"alternateContact":null,"agreeToTerms":false}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 29 Jun 2017 00:12:58 GMT
 - request:
     method: get
@@ -951,6 +951,6 @@ http_interactions:
         dFR5cGUiOiJIVUQgVW5hZGp1c3RlZCIsImFtb3VudCI6bnVsbH0seyJ5ZWFy
         IjoyMDE2LCJwZXJjZW50Ijo1NSwibnVtT2ZIb3VzZWhvbGQiOm51bGwsImNo
         YXJ0VHlwZSI6IkhVRCBVbmFkanVzdGVkIiwiYW1vdW50IjpudWxsfV19XQ==
-    http_version: 
+    http_version:
   recorded_at: Thu, 29 Jun 2017 00:12:59 GMT
 recorded_with: VCR 3.0.3

@@ -47,6 +47,10 @@ ShortFormApplicationController = (
     'Trans Female',
     'Not Listed'
   ]
+  $scope.sex_at_birth_options = [
+    'Female',
+    'Male'
+  ]
   $scope.relationship_options = [
     'Spouse',
     'Registered Domestic Partner',
