@@ -8,8 +8,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Other', $translate.instant('LABEL.OTHER')]
   ]
   Service.gender_options = [
-    ['Male', $translate.instant('LABEL.MALE')]
     ['Female', $translate.instant('LABEL.FEMALE')]
+    ['Male', $translate.instant('LABEL.MALE')]
     ['Genderqueer/Gender Non-binary', $translate.instant('LABEL.GENDERQUEER_NON_BINARY')]
     ['Trans Female', $translate.instant('LABEL.TRANS_FEMALE')]
     ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
