@@ -8,7 +8,5 @@
     option ng-repeat="sex in sex_at_birth_options" value="{{sex}}"
       | {{ sex }}
 
-  label.sr-only for="user_sex_at_birth_other" translate="LABEL.YOUR_SEX_AT_BIRTH"
-  input#user_sex_at_birth_other ng-model="user.sexAtBirthOther" name="sexAtBirthOther" placeholder="{{'LABEL.YOUR_SEX_AT_BIRTH' | translate}}" type="text" ng-class="{ error: inputInvalid('sexAtBirthOther') }" ng-if="user.sexAtBirth == 'Not Listed'" aria-describedby="user_sex_at_birth_other_error"
   small.error#user_sex_at_birth_other_error ng-if="inputInvalid('sexAtBirthOther')"
     | {{'ERROR.SEX_AT_BIRTH' | translate}}
