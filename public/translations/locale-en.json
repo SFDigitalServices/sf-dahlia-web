@@ -156,7 +156,7 @@
         "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
         "UPLOAD_PROOF": "Upload proof of preference",
         "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
-        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 2MB. Supported file types: PDF, JPG, PNG.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG.",
         "WORK_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must currently work in San Francisco at least 75% of their working hours.",
             "TITLE": "Work in San Francisco Preference"
