@@ -134,6 +134,23 @@ Feature: Short Form Application - Live/Work Preference
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
+      # Check that filling it out then changing required info removes from application
+      When I click the Live or Work in SF checkbox
+      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
+      And I upload a "Gas bill" as my proof of preference for "liveInSf"
+      And I don't choose COP/DTHP preferences
+      And I click the Next button on the Live/Work Preference page
+      And I go back to the Contact page
+      And I fill out the Contact page with a non-SF address, no WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      And I opt out of Live/Work preference
+      And I don't choose COP/DTHP preferences
+      And I continue past the general lottery notice
+      And I indicate having vouchers
+      And I fill out my income as "25000"
+      And I fill out the optional survey
+      Then I should see the general lottery notice
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application

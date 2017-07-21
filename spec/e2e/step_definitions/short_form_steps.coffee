@@ -490,6 +490,10 @@ module.exports = ->
     preferenceMember = element(By.cssContainingText('.info-item_note', name))
     @expect(preferenceMember.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should see the general lottery notice', ->
+    claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
+    @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+
 
   ###################################
   # --- Error case expectations --- #
