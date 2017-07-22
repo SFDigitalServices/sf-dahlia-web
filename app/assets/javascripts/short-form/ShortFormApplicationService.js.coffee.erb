@@ -481,7 +481,7 @@ ShortFormApplicationService = (
   Service.copyNeighborhoodToLiveInSf = (preference) ->
     # preference is either neighborhoodResidence or antiDisplacement
     # clear out any previously entered values for live/work
-    Service.cancelPreference('liveWorkInSf')
+    Service.cancelPreference('workInSf')
     # reset the form so it's not in an "invalid" state
     Service.resetLiveWorkForm()
     # copy Neighborhood values to liveInSf
