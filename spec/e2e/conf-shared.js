@@ -2,8 +2,8 @@ require('coffee-script').register()
 var projectDir = process.cwd()
 
 module.exports = {
-  getPageTimeout: 20000,
-  allScriptsTimeout: 20000,
+  getPageTimeout: 30000,
+  allScriptsTimeout: 30000,
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   // path relative to the current config file
