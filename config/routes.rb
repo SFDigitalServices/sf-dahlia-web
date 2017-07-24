@@ -64,5 +64,7 @@ Rails.application.routes.draw do
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'
   # required for Angular html5mode
-  get '*path' => 'home#index'
+  scope format: true, constraints: { format: 'html' } do
+    get '*path' => 'home#index'
+  end
 end
