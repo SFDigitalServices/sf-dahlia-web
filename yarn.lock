@@ -1481,7 +1481,7 @@ progress@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/progress/-/progress-1.1.8.tgz#e260c78f6161cdd9b0e56cc3e0a85de17c7a57be"
 
-protractor-cucumber-framework@^3.1.2:
+protractor-cucumber-framework@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/protractor-cucumber-framework/-/protractor-cucumber-framework-3.1.2.tgz#5637cb88b5777c965a0d3450d75acf08a763989f"
   dependencies:
