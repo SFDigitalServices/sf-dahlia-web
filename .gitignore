@@ -32,3 +32,4 @@ dump.rdb
 ssl.sh
 certs
 public/sitemap*
+public/robots*

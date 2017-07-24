@@ -21,7 +21,7 @@ class Api::V1::ShortFormController < ApiController
     # get rid of any previous uploads for this preference
     # (e.g. from an abandoned session or if you unchecked the box)
     destroy_files_for_listing_preference
-    @uploaded_file = UploadedFile.create(uploaded_file_attrs)
+    @uploaded_file = UploadedFile.create_and_resize(uploaded_file_attrs)
     if @uploaded_file
       render json: {
         success: true,
@@ -165,13 +165,12 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def find_listing_application
-    @application = nil
-    applications = ShortFormService.get_for_user(user_contact_id)
-    applications.each do |application|
-      if application['listingID'] == params[:listing_id]
-        @application = application
-      end
-    end
+    opts = {
+      contact_id: user_contact_id,
+      listing_id: params[:listing_id],
+      autofill: params[:autofill],
+    }
+    @application = ShortFormService.find_listing_application(opts)
   end
 
   def find_application_files
@@ -374,7 +373,7 @@ class Api::V1::ShortFormController < ApiController
       listing_id: uploaded_file_params[:listing_id],
       preference: uploaded_file_params[:preference],
       document_type: uploaded_file_params[:document_type],
-      file: uploaded_file_params[:file].read,
+      file: uploaded_file_params[:file],
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
     }
