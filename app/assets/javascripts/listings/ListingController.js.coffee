@@ -103,7 +103,7 @@ ListingController = (
   $scope.imageURL = (listing) ->
     # TODO: remove "or" case when we know we have real images
     # just a fallback for now
-    listing.Building_URL || 'https://placehold.it/474x316'
+    listing.imageURL || 'https://placehold.it/474x316'
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()

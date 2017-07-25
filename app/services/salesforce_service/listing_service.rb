@@ -20,6 +20,7 @@ module SalesforceService
       unitSummaries
       Does_Match
       LastModifiedDate
+      imageURL
     ).freeze
 
     # get all open listings or specific set of listings by id
@@ -27,7 +28,8 @@ module SalesforceService
     # `clean` determines whether to slim down the results
     def self.listings(ids = nil, clean = true)
       params = ids.present? ? { ids: ids } : nil
-      results = cached_api_get('/ListingDetails', params, true)
+      # results = cached_api_get('/ListingDetails', params, true)
+      results = get_listings(nil, params)
       return results unless clean
       clean_listings_for_browse(results)
     end
@@ -38,7 +40,8 @@ module SalesforceService
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = cached_api_get('/ListingDetails', filters, true)
+      # results = cached_api_get('/ListingDetails', filters, true)
+      results = get_listings(nil, filters)
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
@@ -46,7 +49,8 @@ module SalesforceService
 
     # get one detailed listing result by id
     def self.listing(id)
-      cached_api_get("/ListingDetails/#{id}", nil, true).first
+      # cached_api_get("/ListingDetails/#{id}", nil, true).first
+      get_listings(id).first
     end
 
     # get all units for a given listing
@@ -91,6 +95,20 @@ module SalesforceService
         params[k] = params[k].to_i if params[k].present?
       end
       api_get(endpoint, params, false)
+    end
+
+    def self.get_listings(id = nil, params = nil)
+      endpoint = '/ListingDetails'
+      endpoint += "/#{id}" if id
+      results = cached_api_get(endpoint, params, true)
+      add_image_urls(results)
+    end
+
+    def self.add_image_urls(listings)
+      listings.each do |listing|
+        listing['imageURL'] = ImageService.listing_image_url(listing)
+      end
+      listings
     end
 
     def self.clean_listings_for_browse(results)
