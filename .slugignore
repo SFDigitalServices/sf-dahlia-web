@@ -1,0 +1,2 @@
+# ignore yarn.lock in favor of package-lock.json
+yarn.lock

@@ -29,9 +29,9 @@ Feature: Short Form Application
 
       When I cancel the household member
       # error: household too big (280 Fell allows for 1-3 people, 4 is too big)
-      And I add another household member named "Jonny Doe"
-      And I add another household member named "Karen Lee"
-      And I add another household member named "Alex McGee"
+      And I add another household member named "Jonny Doe" with same address as primary
+      And I add another household member named "Karen Lee" with same address as primary
+      And I add another household member named "Alex McGee" with same address as primary
       And I indicate being done adding people
       Then I should see an error about household size being too big
 
@@ -41,6 +41,20 @@ Feature: Short Form Application
       And I indicate being done adding people
       And I indicate living in public housing
       And I indicate no priority
+
+      # error: L/W preference option not chosen (optOut / preference both blank)
+      And I continue past the Lottery Preferences intro
+      And I click the Next button on the Live/Work Preference page
+      Then I should see an error about selecting an option
+
+      # error: preference document not uploaded
+      When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
+      And I click the Next button on the Live/Work Preference page
+      Then I should see an error about uploading proof
+
+      When I opt out of Live/Work preference
+      And I select "Jane Doe" for "certOfPreference" preference
+      And I go to the income page
       And I do not indicate having vouchers
 
       # error: income too low
