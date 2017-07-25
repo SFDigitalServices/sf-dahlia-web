@@ -563,20 +563,20 @@ ShortFormApplicationService = (
       files = data.files || []
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
 
-    # TODO: update for multifamily
-    proofPrefs = [
-      'liveInSf',
-      'workInSf',
-      'neighborhoodResidence'
-    ]
-    # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
-    _.each proofPrefs, (prefType) ->
-      hasPref = formattedApp.preferences[prefType]
-      if hasPref && _.isEmpty(formattedApp.preferences["#{prefType}_proof_file"])
-        formattedApp.completedSections['Preferences'] = false
-        # TODO: update for multifamily -- if they're on a later page but with prefs in a broken state, kick them back
-        if _.includes ['preferences-programs'], formattedApp.lastPage
-          formattedApp.lastPage = 'preferences-intro'
+      # NOTE: update for multifamily
+      proofPrefs = [
+        'liveInSf',
+        'workInSf',
+        'neighborhoodResidence'
+      ]
+      # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
+      _.each proofPrefs, (prefType) ->
+        hasPref = formattedApp.preferences[prefType]
+        if hasPref && _.isEmpty(formattedApp.preferences["#{prefType}_proof_file"])
+          formattedApp.completedSections['Preferences'] = false
+          # NOTE: update for multifamily -- if they're on a later page but with prefs in a broken state, kick them back
+          if _.includes ['preferences-programs'], formattedApp.lastPage
+            formattedApp.lastPage = 'preferences-intro'
 
     Service.resetUserData(formattedApp)
 
