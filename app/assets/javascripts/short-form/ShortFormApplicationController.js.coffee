@@ -540,6 +540,7 @@ ShortFormApplicationController = (
         $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
       )
     else
+      # by going to My Applications without saving, we are choosing their old draft
       $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
 
   $scope.chooseAccountSettings = ->
