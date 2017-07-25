@@ -117,7 +117,7 @@ ShortFormApplicationController = (
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 
-  if $scope.atShortFormState() && !$window.jasmine
+  if $scope.atShortFormState() && !$window.jasmine && !window.protractor
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
