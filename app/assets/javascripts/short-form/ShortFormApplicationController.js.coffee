@@ -365,6 +365,9 @@ ShortFormApplicationController = (
     else
       $scope.checkIfNoPreferencesSelected()
 
+  $scope.customPreferencesClaimed = ->
+    ShortFormApplicationService.customPreferencesClaimed()
+
   # this is called after custom-preferences or preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
