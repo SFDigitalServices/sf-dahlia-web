@@ -5,7 +5,6 @@ module SalesforceService
       Id
       listingID
       Name
-      Building_URL
       Application_Due_Date
       Accepting_Online_Applications
       Lottery_Date
