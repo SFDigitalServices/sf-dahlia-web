@@ -282,7 +282,9 @@ ShortFormApplicationController = (
     if member == $scope.applicant
       $scope.copyHomeToMailingAddress()
       ShortFormApplicationService.invalidateContactForm()
-    ShortFormApplicationService.invalidateHouseholdForm()
+    if ShortFormApplicationService.eligibleForRentBurden()
+      # make sure they step back through the household section to update groupedHouseholdAddresses + rents
+      ShortFormApplicationService.invalidateHouseholdForm()
 
   $scope.copyHomeToMailingAddress = ->
     ShortFormApplicationService.copyHomeToMailingAddress()

@@ -41,20 +41,6 @@ Feature: Short Form Application
       And I indicate being done adding people
       And I indicate living in public housing
       And I indicate no priority
-
-      # error: L/W preference option not chosen (optOut / preference both blank)
-      And I continue past the Lottery Preferences intro
-      And I click the Next button on the Live/Work Preference page
-      Then I should see an error about selecting an option
-
-      # error: preference document not uploaded
-      When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I click the Next button on the Live/Work Preference page
-      Then I should see an error about uploading proof
-
-      When I opt out of Live/Work preference
-      And I select "Jane Doe" for "certOfPreference" preference
-      And I go to the income page
       And I do not indicate having vouchers
 
       # error: income too low
