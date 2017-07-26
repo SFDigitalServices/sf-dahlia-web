@@ -32,31 +32,46 @@ FileUploadService = ($http, Upload, uuid) ->
   Service.preferenceFileIsLoading = (fileType) ->
     !! Service.preferences["#{fileType}_loading"]
 
+  Service._processProofFile = (file, upload) ->
+    if file.size > 5 * 1000 * 1000 # 5MB
+      options =
+        width: 2112,
+        height: 2112,
+        quality: 0.8
+      Upload.resize(file, options).then( (resizedFile) ->
+        upload(resizedFile)
+      )
+    else
+      upload(file)
+
   Service.uploadProof = (file, prefType, docType, listing_id) ->
     fileType = "#{prefType}_proof_file"
     if (!file)
       Service.preferences["#{fileType}_error"] = true
       return
     Service.preferences["#{fileType}_loading"] = true
-    Upload.upload(
-      url: '/api/v1/short-form/proof'
-      method: 'POST'
-      data:
-        uploaded_file:
-          file: file
-          session_uid: Service.session_uid()
-          listing_id: listing_id
-          document_type: docType
-          preference: prefType
-    ).then( ((resp) ->
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = false
-      Service.preferences["#{fileType}"] = resp.data
-    ), ((resp) ->
-      # error handler
-      Service.preferences["#{fileType}_loading"] = false
-      Service.preferences["#{fileType}_error"] = true
-    ))
+
+    Service._processProofFile(file, (resizedFile) ->
+      Upload.upload(
+        url: '/api/v1/short-form/proof'
+        method: 'POST'
+        data:
+          uploaded_file:
+            file: resizedFile
+            session_uid: Service.session_uid()
+            listing_id: listing_id
+            document_type: docType
+            preference: prefType
+      ).then( ((resp) ->
+        Service.preferences["#{fileType}_loading"] = false
+        Service.preferences["#{fileType}_error"] = false
+        Service.preferences["#{fileType}"] = resp.data
+      ), ((resp) ->
+        # error handler
+        Service.preferences["#{fileType}_loading"] = false
+        Service.preferences["#{fileType}_error"] = true
+      ))
+    )
 
   return Service
 
