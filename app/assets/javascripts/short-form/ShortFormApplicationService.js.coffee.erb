@@ -387,12 +387,12 @@ ShortFormApplicationService = (
     if type == 'liveWorkInSf' || type == 'all'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('workInSf', Service.workInSfMembers())
-    else if type == 'neighborhoodResidence' || type == 'all'
-      Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
-    else if type == 'antiDisplacement' || type == 'all'
-      Service._updatePreference('antiDisplacement', Service.liveInTheNeighborhoodMembers())
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
+    if type == 'neighborhoodResidence' || type == 'all'
+      Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
+    if type == 'antiDisplacement' || type == 'all'
+      Service._updatePreference('antiDisplacement', Service.liveInTheNeighborhoodMembers())
 
   Service.eligibleMembers = (preference) ->
     switch preference

@@ -234,13 +234,13 @@ module.exports = ->
     optOutAndSubmit()
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
-    element(By.id("preferences-#{preference}")).click()
-    element.all(By.id("#{preference}_household_member")).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
-    element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
+    checkCheckbox "preferences-#{preference}", ->
+      element.all(By.id("#{preference}_household_member")).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
 
   @When 'I go to the income page', ->
     submitPage()
@@ -324,6 +324,9 @@ module.exports = ->
     # skip NRHP (if exists)
     if element(By.id('preferences-neighborhoodResidence'))
       submitPage()
+
+  @When 'I select Rent Burdened Preference', ->
+    checkCheckbox('preferences-rentBurden')
 
   @When 'I submit my preferences', ->
     submitPage()
