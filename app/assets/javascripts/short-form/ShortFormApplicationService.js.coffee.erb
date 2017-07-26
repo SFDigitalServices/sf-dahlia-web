@@ -509,7 +509,7 @@ ShortFormApplicationService = (
       if !_.isEmpty(previousApplication)
         # if user already had an application for this listing
         if opts.type == 'review-sign-in' && previousApplication.status.match(/draft/i)
-          # override draft ID and proceed, so that we eventually call submitApplication...
+          # because we are finished/confirmed with the current draft, override the old one
           Service.overridePreviousDraftId()
         else if Service._previousIsSubmittedOrBothDrafts(previousApplication)
           return Service._signInAndSkipSubmit(previousApplication)
