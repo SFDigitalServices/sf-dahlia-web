@@ -69,6 +69,7 @@ do ->
         fakeApplicant.gender = 'Fake'
         fakeApplicant.ethnicity = 'Fake'
         fakeApplicant.race = 'Fake'
+        fakeApplicant.sexAtBirth = 'Fake'
         fakeApplicant.sexualOrientation = 'Fake'
         fakeApplicant.referral = {FakeAnswer: true}
 
@@ -102,6 +103,7 @@ do ->
         fakeApplication.applicant.gender = 'X'
         fakeApplication.applicant.ethnicity = 'X'
         fakeApplication.applicant.race = 'X'
+        fakeApplication.applicant.sexAtBirth = 'X'
         fakeApplication.applicant.sexualOrientation = 'X'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.surveyComplete).toEqual true
