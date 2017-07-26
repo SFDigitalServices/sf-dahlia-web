@@ -460,10 +460,6 @@ do ->
           expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'checkAfterLiveInTheNeighborhood', ->
-      it 'calls copyNeighborhoodToLiveInSf method if you selected the preference', ->
-        spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
-        scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
-        expect(fakeShortFormApplicationService.copyNeighborhoodToLiveInSf).toHaveBeenCalledWith('neighborhoodResidence')
       it 'goes to live-work-preference page if you did not select the preference', ->
         spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
         scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
