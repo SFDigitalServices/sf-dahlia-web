@@ -24,14 +24,16 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
-      if @rentBurdenType
-        @selectorName = "#{@preference}_#{@rentBurdenType}Document"
-        @fileInputName = "#{@preference}_#{@rentBurdenType}File"
-      else
-        @selectorName = "#{@preference}_proofDocument"
-        @fileInputName = "#{@preference}_proofFile"
       @listingId = ShortFormApplicationService.listing.Id
+
+      @$onChanges = =>
+        @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
+        if @rentBurdenType
+          @selectorName = "#{@preference}_#{@rentBurdenType}Document"
+          @fileInputName = "#{@preference}_#{@rentBurdenType}File"
+        else
+          @selectorName = "#{@preference}_proofDocument"
+          @fileInputName = "#{@preference}_proofFile"
 
       @setProofType = =>
         # @proofType means that proofOption gets hardcoded to the set value

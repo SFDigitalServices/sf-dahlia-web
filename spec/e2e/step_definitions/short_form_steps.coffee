@@ -81,10 +81,15 @@ getSelectedLiveMember = () ->
 submitPage = ->
   element(By.id('submit')).click()
 
+checkCheckbox = (checkboxId, callback) ->
+  checkbox = element(By.id(checkboxId))
+  checkbox.isSelected().then (selected) ->
+    checkbox.click() unless selected
+    callback() if callback
+
 optOutAndSubmit = ->
   # opt out + submit preference page (e.g. NRHP, Live/Work)
-  element(By.id('preference-optout')).click()
-  submitPage()
+  checkCheckbox('preference-optout', -> submitPage())
 
 getUrl = (url) ->
   browser.get(url)
@@ -124,6 +129,12 @@ module.exports = ->
     submitPage()
     # welcome overview
     submitPage()
+
+  @When /^I hit the Next button "([^"]*)" times$/, (buttonClicks) ->
+    i = parseInt(buttonClicks)
+    while i > 0
+      submitPage()
+      i--
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     fillOutNamePage(fullName)
@@ -230,7 +241,7 @@ module.exports = ->
     # skip preferences programs
     submitPage()
 
-  @When 'I continue past the general lottery notice', ->
+  @When 'I continue past the general lottery notice page', ->
     # skip general lottery notice
     submitPage()
 
@@ -253,13 +264,13 @@ module.exports = ->
     submitPage()
 
   @When 'I click the Live in the Neighborhood checkbox', ->
-    element(By.id('preferences-neighborhoodResidence')).click()
+    checkCheckbox('preferences-neighborhoodResidence')
 
   @When 'I click the Live or Work in SF checkbox', ->
-    element(By.id('preferences-liveWorkInSf')).click()
+    checkCheckbox('preferences-liveWorkInSf')
 
   @When 'I open the Live or Work in SF dropdown', ->
-    element(By.id('liveWorkPrefOption')).click()
+    checkCheckbox('liveWorkPrefOption')
 
   @When 'I select the Live in SF preference', ->
     element(By.cssContainingText('option', 'Live in San Francisco')).click()
@@ -269,23 +280,22 @@ module.exports = ->
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
-    element(By.id('preferences-liveWorkInSf')).click()
-    element(By.id('liveWorkPrefOption')).click()
-    element(By.cssContainingText('option', preference)).click()
-    # select the correct HH member in the dropdown
-    pref = (if preference == 'Live in San Francisco' then 'liveInSf' else 'workInSf')
-    # there are multiple liveInSf_household_members, click the visible one
-    element.all(By.id("#{pref}_household_member")).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
-    # there are multiple Jane Doe options, click the visible one matching fullName
-    element.all(By.cssContainingText('option', fullName)).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
+    checkCheckbox 'preferences-liveWorkInSf', ->
+      element(By.id('liveWorkPrefOption')).click()
+      element(By.cssContainingText('option', preference)).click()
+      pref = (if preference == 'Live in San Francisco' then 'liveInSf' else 'workInSf')
+      # there are multiple liveInSf_household_members, click the visible one
+      element.all(By.id("#{pref}_household_member")).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      # there are multiple Jane Doe options, click the visible one matching fullName
+      element.all(By.cssContainingText('option', fullName)).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
 
   @When /^I upload a "([^"]*)" as my proof of preference for "([^"]*)"$/, (documentType, preference) ->
     # open the proof option selector and pick the indicated documentType
-    element.all(By.id("#{preference}_proof_option")).filter((elem) ->
+    element.all(By.id("#{preference}_proofDocument")).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
     element.all(By.cssContainingText('option', documentType)).filter((elem) ->
@@ -453,25 +463,25 @@ module.exports = ->
   ########################
 
   @Then 'I should see the Live Preference', ->
-    livePref = element.all(By.cssContainingText('strong', 'Live in San Francisco Preference')).filter((elem) ->
+    livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(livePref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Work Preference', ->
-    workPref = element.all(By.cssContainingText('strong', 'Work in San Francisco Preference')).filter((elem) ->
+    workPref = element.all(By.cssContainingText('strong.form-label', 'Work in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(workPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live and Work Preferences', ->
-    liveWorkPref = element.all(By.cssContainingText('strong', 'Live or Work in San Francisco Preference')).filter((elem) ->
+    liveWorkPref = element.all(By.cssContainingText('strong.form-label', 'Live or Work in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Preferences Programs screen', ->
-    certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
+    certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
@@ -547,6 +557,9 @@ module.exports = ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))
     @expect(checkbox.isSelected()).to.eventually.equal(false)
 
+  @Then 'I should see the Live or Work in SF checkbox un-checked', ->
+    checkbox = element(By.id('preferences-liveWorkInSf'))
+    @expect(checkbox.isSelected()).to.eventually.equal(false)
 
   @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
     claimedPreference = element(By.cssContainingText('.info-item_name', preference))
@@ -557,7 +570,7 @@ module.exports = ->
     preferenceMember = element(By.cssContainingText('.info-item_note', name))
     @expect(preferenceMember.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the general lottery notice', ->
+  @Then 'I should see the general lottery notice on the review page', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 

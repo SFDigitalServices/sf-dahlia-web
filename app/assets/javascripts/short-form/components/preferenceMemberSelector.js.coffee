@@ -14,7 +14,8 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @preferenceHouseholdMember = "#{@preference}_household_member"
+      @$onChanges = =>
+        @preferenceHouseholdMember = "#{@preference}_household_member"
 
       return ctrl
   ]

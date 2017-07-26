@@ -11,7 +11,12 @@ Feature: Short Form Application - Live/Work Preference
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
+      And I indicate living in public housing
+      And I indicate no priority
+      And I indicate having vouchers
+      And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
+      And I opt out of Assisted Housing preference
       Then I should see the Preferences Programs screen
       # I work but not live in SF, alone
       When I go back to the Contact page
@@ -43,6 +48,8 @@ Feature: Short Form Application - Live/Work Preference
       And I add another household member named "Coleman Francis" who lives at "4053 18th St."
       And I confirm their address
       And I indicate being done adding people
+      And I indicate living in public housing
+      And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       Then I should see the Live Preference
       # I neither live nor work in SF, household member lives in SF
@@ -76,6 +83,8 @@ Feature: Short Form Application - Live/Work Preference
       And I change them to live outside SF, work in SF
       And I confirm their address
       And I indicate being done adding people
+      And I indicate living in public housing
+      And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       Then I should see the Live and Work Preferences
       # I work in SF, household member works in SF
@@ -91,7 +100,8 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
       # Make sure the dropdowns are correct
-      When I open the Live or Work in SF dropdown
+      When I click the Live or Work in SF checkbox
+      And I open the Live or Work in SF dropdown
       And I select the Live in SF preference
       Then I should see "Jane Doe" in the preference dropdown and not "Coleman Francis"
       When I select the Work in SF preference
@@ -108,10 +118,13 @@ Feature: Short Form Application - Live/Work Preference
       And I change them to live inside SF, work in SF
       And I confirm their address
       And I indicate being done adding people
+      And I indicate living in public housing
+      And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       Then I should see the Live and Work Preferences
       # Make sure the dropdowns are correct
-      When I open the Live or Work in SF dropdown
+      When I click the Live or Work in SF checkbox
+      And I open the Live or Work in SF dropdown
       And I select the Live in SF preference
       Then I should see "Coleman Francis" in the preference dropdown and not "Jane Doe"
       When I select the Work in SF preference
@@ -135,8 +148,7 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
       # Check that filling it out then changing required info removes from application
-      When I click the Live or Work in SF checkbox
-      And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
+      When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I upload a "Gas bill" as my proof of preference for "liveInSf"
       And I don't choose COP/DTHP preferences
       And I click the Next button on the Live/Work Preference page
@@ -144,13 +156,12 @@ Feature: Short Form Application - Live/Work Preference
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      And I opt out of Live/Work preference
-      And I don't choose COP/DTHP preferences
-      And I continue past the general lottery notice
-      And I indicate having vouchers
-      And I fill out my income as "25000"
-      And I fill out the optional survey
-      Then I should see the general lottery notice
+      Then I should see the Live or Work in SF checkbox un-checked
+      # see general lottery notice
+      When I opt out of Live/Work preference
+      And I opt out of Assisted Housing preference
+      And I hit the Next button "3" times
+      Then I should see the general lottery notice on the review page
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
       Given I go to the first page of the Test Listing application
