@@ -54,6 +54,7 @@ FileUploadService = ($http, Upload, uuid) ->
     Service._processProofFile(file, (resizedFile) ->
       if resizedFile.size > 5 * 1000 * 1000 # 5MB
         # error handler
+        Service.preferences[fileType] = null
         Service.preferences["#{fileType}_loading"] = false
         Service.preferences["#{fileType}_error"] = true
       else
