@@ -158,7 +158,6 @@ ShortFormDataService = (ListingService) ->
           optOut = appPrefs.optOut.assistedHousing
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
-        # TODO: testing out for custom prefs
         prefKey = listingPref.listingPreferenceID if !prefKey
         shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
         optOut = appPrefs.optOut[prefKey]
