@@ -506,6 +506,8 @@ ShortFormApplicationService = (
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
+    # only check to reset this preference if it has been selected
+    return unless Service.preferences[preference]
     members = eligibleMembers.map (member) -> member.id
     selectedMember = Service.preferences[preference + '_household_member']
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again

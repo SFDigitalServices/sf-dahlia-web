@@ -121,12 +121,12 @@ do ->
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.completedSections['Intro']).toEqual false
 
-      it 'should reset appMemberId and neighborhoodPreferenceMatch fields', ->
+      it 'should reset appMemberId and preferenceAddressMatch fields', ->
         fakeApplication.applicant.appMemberId = '123XYZ'
-        fakeApplication.applicant.neighborhoodPreferenceMatch = 'Matched'
+        fakeApplication.applicant.preferenceAddressMatch = 'Matched'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.applicant.appMemberId).toBeUndefined()
-        expect(fakeApplication.applicant.neighborhoodPreferenceMatch).toBeUndefined()
+        expect(fakeApplication.applicant.preferenceAddressMatch).toBeUndefined()
 
       it 'should reset housing fields if assistedHousing pref not available on this listing', ->
         spyOn(fakeListingService, 'hasPreference').and.returnValue(false)

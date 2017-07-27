@@ -38,8 +38,7 @@ Feature: Short Form Application - Live/Work Preference
       Then I should see "Jane Doe" in the preference dropdown and not "Coleman Francis"
       # I live but not work in SF, alone
       When I go back to the Contact page
-      And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
-      And I confirm my address
+      And I change WorkInSF to "No"
       And I go back to the Live/Work preference page
       Then I should see the Live Preference
       # I live in SF, household member lives in SF
@@ -60,8 +59,7 @@ Feature: Short Form Application - Live/Work Preference
       Then I should see the Live Preference
       # I work in SF, household member lives in SF
       When I go back to the Contact page
-      And I fill out the Contact page with a non-SF address
-      And I confirm my address
+      And I change WorkInSF to "Yes"
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
       # Make sure the dropdowns are correct
@@ -89,7 +87,7 @@ Feature: Short Form Application - Live/Work Preference
       Then I should see the Live and Work Preferences
       # I work in SF, household member works in SF
       When I go back to the Contact page
-      And I fill out the Contact page with a non-SF address
+      And I fill out the Contact page with a non-SF address, yes to WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Work Preference
@@ -129,21 +127,15 @@ Feature: Short Form Application - Live/Work Preference
       Then I should see "Coleman Francis" in the preference dropdown and not "Jane Doe"
       When I select the Work in SF preference
       Then I should see "Coleman Francis" in the preference dropdown and not "Jane Doe"
+      # I work in SF, household member lives and works in SF
+      When I go back to the Contact page
+      And I fill out the Contact page with a non-SF address, yes to WorkInSF
+      And I confirm my address
+      And I go back to the Live/Work preference page
+      Then I should see the Live and Work Preferences
       # I live in SF, household member lives and works in SF
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
-      And I confirm my address
-      And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
-      # I work in SF, household member lives and works in SF
-      When I go back to the Contact page
-      And I fill out the Contact page with a non-SF address
-      And I confirm my address
-      And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
-      # I live and work in SF, household member lives and works in SF
-      When I go back to the Contact page
-      And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
       Then I should see the Live and Work Preferences
