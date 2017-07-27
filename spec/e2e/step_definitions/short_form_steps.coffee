@@ -107,7 +107,7 @@ module.exports = ->
 
   @Given 'I go to the welcome page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply-welcome/intro"
-    getUrlAndCatchPopup(url)
+    getUrl(url)
 
   @Given 'I have a confirmed account', ->
     # confirm the account
@@ -426,7 +426,7 @@ module.exports = ->
     browser.navigate().back()
 
   @When 'I go to the listings page in Spanish', ->
-    getUrlAndCatchPopup('/es/listings')
+    getUrl('/es/listings')
 
   @When /^I navigate to the "([^"]*)" section$/, (section) ->
     element.all(By.css('.progress-nav'))
