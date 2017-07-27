@@ -126,7 +126,7 @@ module.exports = ->
     fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage()
+    fillOutContactPage({email: sessionEmail})
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -325,7 +325,6 @@ module.exports = ->
     element(By.id('create-account')).click()
 
   @When 'I fill out my account info', ->
-    element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
@@ -358,8 +357,7 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I go to My Applications', ->
-    element(By.cssContainingText('.dash-item', 'My Applications')).click()
-    browser.waitForAngular()
+    getUrl('/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
@@ -493,6 +491,12 @@ module.exports = ->
   @Then 'I should see the general lottery notice', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should be on the Household Intro page', ->
+    liveAloneButton = element(By.id('live-alone'))
+    @expect(liveAloneButton.isPresent()).to.eventually.equal(true)
+    otherPeopleButton = element(By.id('other-people'))
+    @expect(otherPeopleButton.isPresent()).to.eventually.equal(true)
 
 
   ###################################
