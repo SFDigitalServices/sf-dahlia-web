@@ -1,3 +1,3 @@
 module.exports = ->
-  # change default cucumber.js timeout from 5 to 30 seconds
-  @setDefaultTimeout 30 * 1000
+  # change default cucumber.js timeout from 5 to 60 seconds
+  @setDefaultTimeout 60 * 1000

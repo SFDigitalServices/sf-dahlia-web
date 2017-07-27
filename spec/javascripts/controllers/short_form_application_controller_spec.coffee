@@ -221,6 +221,11 @@ do ->
         scope.addressChange('applicant')
         expect(fakeShortFormApplicationService.copyHomeToMailingAddress).toHaveBeenCalled()
 
+      it 'calls invalidateHouseholdForm if eligibleForRentBurden', ->
+        spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(true)
+        scope.addressChange('applicant')
+        expect(fakeShortFormApplicationService.invalidateHouseholdForm).toHaveBeenCalled()
+
     describe '$scope.addHouseholdMember', ->
       describe 'user has same address applicant', ->
         it 'directly calls addHouseholdMember in ShortFormApplicationService', ->

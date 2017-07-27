@@ -184,8 +184,6 @@ ShortFormDataService = (ListingService) ->
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       application.shortFormPreferences.push(shortFormPref)
     )
-    # ensure we don't send combo prefs (e.g. assistedHousing / rentBurden) twice
-    application.shortFormPreferences = _.uniqBy(application.shortFormPreferences, 'listingPreferenceID')
     delete application.preferences
     return application
 
@@ -262,11 +260,6 @@ ShortFormDataService = (ListingService) ->
         delete member.geocodingData
     return application
 
-  Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
-
   # move all metaFields off the application object and into formMetadata JSON string
   Service._formatMetadata = (application) ->
     application.formMetadata = JSON.stringify(_.pick(application, Service.metaFields))
@@ -335,7 +328,7 @@ ShortFormDataService = (ListingService) ->
       'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
       'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'gender', 'genderOther', 'race', 'sexAtBirth', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
     ]
     applicant = _.pick contact, whitelist
@@ -510,6 +503,7 @@ ShortFormDataService = (ListingService) ->
       data.applicant.genderOther = null
       data.applicant.ethnicity = null
       data.applicant.race = null
+      data.applicant.sexAtBirth = null
       data.applicant.sexualOrientation = null
       data.applicant.sexualOrientationOther = null
       data.applicant.referral = {}
@@ -529,7 +523,7 @@ ShortFormDataService = (ListingService) ->
     resetContactFields = [
       'appMemberId'
       'contactId'
-      'neighborhoodPreferenceMatch'
+      'preferenceAddressMatch'
       'xCoordinate'
       'yCoordinate'
       'whichComponentOfLocatorWasUsed'
@@ -551,6 +545,7 @@ ShortFormDataService = (ListingService) ->
       applicant.gender,
       applicant.ethnicity,
       applicant.race,
+      applicant.sexAtBirth,
       applicant.sexualOrientation,
       if opts.skipReferral then true else _.some(applicant.referral),
     ]
