@@ -40,6 +40,8 @@ GEM
       rack-test (~> 0.6.2)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    actionpack-page_caching (1.1.0)
+      actionpack (>= 4.0.0, < 6)
     actionview (4.2.8)
       activesupport (= 4.2.8)
       builder (~> 3.1)
@@ -149,6 +151,7 @@ GEM
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
     i18n (0.8.1)
+    image_optimizer (1.7.0)
     iniparse (1.4.2)
     jasmine-core (2.6.1)
     jasmine-jquery-rails (2.0.3)
@@ -167,6 +170,7 @@ GEM
     memcachier (0.0.2)
     method_source (0.8.2)
     mime-types (2.99.3)
+    mini_magick (4.7.2)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
@@ -343,6 +347,7 @@ PLATFORMS
 DEPENDENCIES
   StreetAddress!
   actionmailer-text
+  actionpack-page_caching (~> 1.1.0)
   active_model-errors_details
   angular-rails-templates
   awesome_print
@@ -361,11 +366,13 @@ DEPENDENCIES
   factory_girl_rails
   hashie
   http
+  image_optimizer (~> 1.7.0)
   jasmine!
   jasmine-jquery-rails
   jbuilder (~> 2.0)
   jquery-rails
   memcachier
+  mini_magick (~> 4.7.2)
   newrelic_rpm
   nokogiri (~> 1.7.1)
   oj

@@ -17,6 +17,9 @@
     },
     {
       "url": "https://github.com/heroku/heroku-buildpack-ruby"
+    },
+    {
+      "url": "https://github.com/bobbus/image-optim-buildpack"
     }
   ],
   "env":{
@@ -69,6 +72,9 @@
       "required":true
     },
     "GOOGLE_TAG_MANAGER_KEY":{
+      "required":true
+    },
+    "DISALLOW_ALL_WEB_CRAWLERS":{
       "required":true
     }
   }
