@@ -18,7 +18,7 @@ Feature: Short Form Application
       And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
-      And I continue past the general lottery notice
+      And I continue past the general lottery notice page
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
@@ -59,6 +59,7 @@ Feature: Short Form Application
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I upload a "Gas bill" as my proof of preference for "liveInSf"
       And I click the Next button on the Live/Work Preference page
+      And I opt out of Assisted Housing preference
       And I select "Jane Doe" for "certOfPreference" preference
       And I select "Jane Doe" for "displaced" preference
       And I submit my preferences

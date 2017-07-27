@@ -25,9 +25,9 @@ angular.module('dahlia.components')
         ShortFormApplicationService.inputInvalid(fieldName)
 
       @listingId = ShortFormApplicationService.listing.Id
+      @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
 
       @$onChanges = =>
-        @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
         if @rentBurdenType
           @selectorName = "#{@preference}_#{@rentBurdenType}Document"
           @fileInputName = "#{@preference}_#{@rentBurdenType}File"
@@ -39,7 +39,7 @@ angular.module('dahlia.components')
         # @proofType means that proofOption gets hardcoded to the set value
         if @proofType
           @proofDocument.proofOption = @proofType
-        else if !@proofDocument && !@proofDocument.file
+        else if !@proofDocument || !@proofDocument.file
           @proofDocument.proofOption = null
 
       @liveOrNeighborhoodPreference = =>
