@@ -25,7 +25,9 @@ class Api::V1::AccountController < ApiController
   end
 
   def confirm
-    return unless Rails.env.development?
+    unless Rails.env.development? || ENV['SAUCE_URL']
+      return render plain: 'Forbidden', status: 403
+    end
     user = User.find_by_email(params[:email])
     if user
       user.confirm
