@@ -38,6 +38,15 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      # catch multilingual route on a non-short-form page: currently not supported
+      if toParams.lang != 'en' &&
+        !ShortFormApplicationService.isShortFormPage(toState) &&
+        !ShortFormApplicationService.isWelcomePage(toState)
+          # redirect them to English version of the same page
+          e.preventDefault()
+          toParams.lang = 'en'
+          return $state.go(toState, toParams)
+
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
         # start Apply Online timer, tracking if the first state that is arrived at is
@@ -87,6 +96,8 @@
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
+
+      SharedService.updateAlternateLanguageLinks()
 
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''

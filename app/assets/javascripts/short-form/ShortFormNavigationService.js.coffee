@@ -1,19 +1,28 @@
 ShortFormNavigationService = (
-  $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
+  $state,
+  bsLoadingOverlayService,
+  ShortFormApplicationService,
+  AccountService
 ) ->
   Service = {}
   Service.loading = false
   Service.sections = [
-    { name: 'You', pages: [
-        'name',
-        'contact',
-        'verify-address',
-        'alternate-contact-type',
-        'alternate-contact-name',
-        'alternate-contact-phone-address',
+    {
+      name: 'You',
+      translatedLabel: 'SHORT_FORM_NAV.YOU',
+      pages: [
+        'name'
+        'contact'
+        'verify-address'
+        'alternate-contact-type'
+        'alternate-contact-name'
+        'alternate-contact-phone-address'
       ]
     },
-    { name: 'Household', pages: [
+    {
+      name: 'Household',
+      translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
+      pages: [
         'household-intro',
         'household-overview',
         'household-members',
@@ -21,7 +30,10 @@ ShortFormNavigationService = (
         'household-member-form-edit'
       ]
     },
-    { name: 'Preferences', pages: [
+    {
+      name: 'Preferences',
+      translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
+      pages: [
         'preferences-intro',
         'neighborhood-preference',
         'live-work-preference',
@@ -29,15 +41,21 @@ ShortFormNavigationService = (
         'general-lottery-notice'
       ]
     },
-    { name: 'Income', pages: [
-        'income-vouchers',
+    {
+      name: 'Income',
+      translatedLabel: 'SHORT_FORM_NAV.INCOME',
+      pages: [
+        'income-vouchers'
         'income'
       ]
     },
-    { name: 'Review', pages: [
-        'review-optional',
-        'review-summary',
-        'review-sign-in',
+    {
+      name: 'Review',
+      translatedLabel: 'SHORT_FORM_NAV.REVIEW',
+      pages: [
+        'review-optional'
+        'review-summary'
+        'review-sign-in'
         'review-terms'
       ]
     }
@@ -227,7 +245,10 @@ ShortFormNavigationService = (
   return Service
 
 ShortFormNavigationService.$inject = [
-  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService', 'AccountService'
+  '$state',
+  'bsLoadingOverlayService',
+  'ShortFormApplicationService',
+  'AccountService'
 ]
 
 angular

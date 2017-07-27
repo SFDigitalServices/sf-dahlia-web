@@ -3,6 +3,9 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    translate = {
+      instant: jasmine.createSpy().and.returnValue('newmessage')
+    }
     fakeIdle = undefined
     fakeTitle = undefined
     eligibilityResponse = undefined
@@ -81,6 +84,7 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      setApplicationLanguage: jasmine.createSpy()
       resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -119,10 +123,6 @@ do ->
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
 
-      $translate = {
-        instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
-      }
-
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
@@ -141,7 +141,7 @@ do ->
         $document: _$document_
         Idle: fakeIdle
         Title: fakeTitle
-        $translate: $translate
+        $translate: translate
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -468,6 +468,19 @@ do ->
         scope.householdMember.dob_day = 1
         scope.householdMember.dob_year = year
         expect(scope.householdMemberValidAge()).toEqual true
+
+    describe 'beginApplication', ->
+      it 'expects state.go to be called with community screening page if listing is a community building', ->
+        scope.listing.Reserved_community_type = 'Veteran'
+        lang = 'en'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening', {lang: lang})
+
+      it 'expects state.go to be called with overview page and language param', ->
+        scope.listing.Reserved_community_type = null
+        lang = 'es'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview', {lang: lang})
 
     describe 'cancelPreference', ->
       it 'calls cancelPreference on ShortFormApplicationService', ->

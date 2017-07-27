@@ -1,14 +1,11 @@
 # for previewing emailer in browser
 class EmailerPreview < ActionMailer::Preview
   def submission_confirmation
-    params = {
-      lottery_number: '3888078',
-      email: 'test@person.com',
-      firstName: 'Mister',
-      lastName: 'Tester',
-      listing_id: 'a0WU000000ClNXGMA3',
-    }
-    Emailer.submission_confirmation(params)
+    _submission_confirmation
+  end
+
+  def submission_confirmation_es
+    _submission_confirmation('es')
   end
 
   def account_update
@@ -45,6 +42,18 @@ class EmailerPreview < ActionMailer::Preview
   end
 
   private
+
+  def _submission_confirmation(locale = 'en')
+    params = {
+      locale: locale,
+      lottery_number: '3888078',
+      email: 'test@person.com',
+      firstName: 'Mister',
+      lastName: 'Tester',
+      listing_id: 'a0WU000000ClNXGMA3',
+    }
+    Emailer.submission_confirmation(params)
+  end
 
   def service_data
     {

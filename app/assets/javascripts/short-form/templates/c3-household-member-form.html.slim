@@ -6,22 +6,20 @@
       | {{'C3_HOUSEHOLD_MEMBER_FORM.P1' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
+    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName') || inputInvalid('middleName')) }"
       h3.form-label.caps
         | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
       label.sr-only for="houshold_member_first_name"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
-      small.error#houshold_member_first_name_error ng-show="inputInvalid('firstName')"
-        | {{'ERROR.FIRST_NAME' | translate}}
+      input#houshold_member_first_name(ng-model="householdMember.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+
       label.sr-only for="household_member_middle_name"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#household_member_middle_name ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+      input#household_member_middle_name(ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-class="{ error: inputInvalid('middleName') }" ng-pattern="latinRegex" input-error)
+
       label.sr-only for="household_member_last_name"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#household_member_last_name ng-model="householdMember.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
-      small.error#household_member_last_name_error ng-show="inputInvalid('lastName')"
-        | {{'ERROR.LAST_NAME' | translate}}
+      input#household_member_last_name(ng-model="householdMember.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
 
   .app-inner.inset.border-bottom
     .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"

@@ -4,9 +4,10 @@
 
 SharedController = ($rootScope, $scope, $state, SharedService) ->
 
-  $scope.hasCenterBody = () ->
-    if $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
-      return 'center-body'
+  $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
+
+  $scope.isShortFormPage = () ->
+    $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
   $scope.focusOnMainContent = ->
     SharedService.focusOnMainContent()

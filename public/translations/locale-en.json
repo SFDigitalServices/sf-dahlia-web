@@ -1,7 +1,8 @@
 {
     "A1_INTRO": {
+        "CHOOSE_YOUR_LANGUAGE": "Choose your language",
         "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
-        "TITLE": "Let's get started on your application:"
+        "TITLE": "Let's get started on your application"
     },
     "A2_OVERVIEW": {
         "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
@@ -211,6 +212,8 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
+        "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -344,6 +347,7 @@
         "INCOME_PLACEHOLDER": "Total all of your income sources",
         "IN_LAW": "In-Law",
         "LAST_NAME": "Last Name",
+        "LESBIAN": "Lesbian",
         "LIVE_ALONE": "I will live alone",
         "MAILING_ADDRESS": "Mailing address",
         "MALE": "Male",
@@ -620,6 +624,13 @@
         "VIEW_ORIGINAL_LISTING": "View the original listing",
         "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "Household",
+        "INCOME": "Income",
+        "PREFERENCES": "Preferences",
+        "REVIEW": "Review",
+        "YOU": "You"
+    },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
@@ -642,7 +653,6 @@
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
         "EDIT": "Edit",
-        "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
         "NEVER_SUBMITTED": "Never Submitted",

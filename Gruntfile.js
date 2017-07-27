@@ -58,8 +58,10 @@ module.exports = function(grunt) {
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
+         'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
-         'translated-short-description="([A-Z\.\-\_]*)"'
+         'translated-short-description="([A-Z\.\-\_]*)"',
+         'translatedLabel: \'([A-Z\.\-\_]*)\''
        ],
       namespace: true,
       lang:     ['locale-en'],

@@ -21,6 +21,19 @@
 
 en:
   hello: "Hello %{name}"
-  dear: "Dear"
   thank_you: "Thank you"
   email_signature: "The San Francisco Mayor's Office of Housing and Community Development"
+
+  emailer:
+    submission_confirmation:
+      thanks_for_applying_to_listing: "Thanks for applying. We have received your application for %{link}."
+      here_is_your_lottery_number: "Here is your lottery number: %{lottery_number}"
+      what_to_expect_next: "What to expect next"
+      lottery_will_be_held: "The lottery will be held on %{lottery_date}. Housing lottery results will be posted %{link}."
+      on_the_listing: "on the listing"
+      applicants_will_be_contacted: "Applicants will be contacted by the leasing agent in lottery rank order until vacancies are filled."
+      should_your_application_be_chosen: "Should your application be chosen, be prepared to fill out a more detailed application and provide required supporting documents."
+      see_below_for_contact_information: "See below for contact information for the Leasing Agent for this listing."
+      how_are_we_doing: "How are we doing?"
+      we_would_like_your_feedback: "We'd like to get your feedback"
+      office_hours: "Office Hours"

@@ -1,8 +1,9 @@
 .translate-bar.bar.bg-tuatara
-  .row
+  .row ng-if="!isShortFormPage()"
     .medium-12.columns
       ul.inline-list.no-margin.t-small.right
-        li.c-iron.show-for-medium-up Select Language
+        li.c-iron.show-for-medium-up
+          | Select Language
         li
           a.c-white ui-sref="dahlia.welcome-spanish"
             | Español

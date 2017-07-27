@@ -1,7 +1,10 @@
-section.app-container.focus-container
+section.app-container.focus-container ng-class="{'t-zh': application.applicationLanguage == 'Chinese'}"
   .row.collapse
     .medium-6.medium-centered.columns.fixed-width
+
+      short-form-language-switcher
       short-form-nav
+
       .app-card.form-card
         short-form-header
           h2.app-card_question
@@ -17,5 +20,5 @@ section.app-container.focus-container
             | {{'A2_OVERVIEW.WARNING' | translate}}
         .button-pager
           .button-pager_row.primary
-            button.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
+            button#submit.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
               | {{'T.NEXT' | translate}}

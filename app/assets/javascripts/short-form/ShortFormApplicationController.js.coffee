@@ -38,6 +38,18 @@ ShortFormApplicationController = (
   $scope.currentLiveWorkType = null
   $scope.currentPreferenceType = null
 
+  # NOTE: check these! vvvv
+  $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
+  $scope.eligibilityErrors = []
+  $scope.latinRegex = ShortFormApplicationService.latinRegex
+  # read more toggler
+  $scope.readMoreDevelopmentalDisabilities = false
+  # store label values that get overwritten by child directives
+  $scope.labels = {}
+  $scope.customInvalidMessage = null
+  # ^^^^^^
+
+
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
   $scope.priority_options = ShortFormHelperService.priority_options
@@ -138,9 +150,9 @@ ShortFormApplicationController = (
     $scope.form.signIn ||
     $scope.form.applicationForm
 
-  $scope.inputInvalid = (fieldName, identifier = '') ->
+  $scope.inputInvalid = (fieldName) ->
     form = $scope.currentForm()
-    ShortFormApplicationService.inputInvalid(fieldName, identifier, form)
+    ShortFormApplicationService.inputInvalid(fieldName, form)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -148,6 +160,9 @@ ShortFormApplicationController = (
     # e.g. "phone" --> "noPhone"
     fieldToDisable = "no#{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}"
     $scope.applicant[fieldToDisable] = false
+
+  $scope.beginApplication = (lang = 'en') ->
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview', {lang: lang})
 
   $scope.addressInputInvalid = (identifier = '') ->
     if $scope.addressFailedValidation(identifier)
@@ -535,6 +550,12 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.addressTranslateVariable = (address) ->
+    ShortFormHelperService.addressTranslateVariable(address)
+
+  $scope.membersTranslateVariable = (members) ->
+    ShortFormHelperService.membersTranslateVariable(members)
+
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
 
@@ -604,6 +625,11 @@ ShortFormApplicationController = (
       year: parseInt($scope[model].dob_year)
     }
 
+  $scope.applicantDOB_hasError = ->
+    $scope.inputInvalid('date_of_birth_day') ||
+    $scope.inputInvalid('date_of_birth_month') ||
+    $scope.inputInvalid('date_of_birth_year')
+
   $scope.primaryApplicantUnder18 = ->
     values = $scope.DOBValues('applicant')
     form = $scope.form.applicationForm
@@ -654,6 +680,12 @@ ShortFormApplicationController = (
     form.$setPristine() if form
     # --
     ShortFormNavigationService.isLoading(false)
+
+  $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
+    $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)
+
+  $scope.stateChangeStart = (e, toState, toParams, fromState, fromParams) ->
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->
