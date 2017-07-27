@@ -10,15 +10,73 @@ sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
 
+sampleApplication = {
+  firstName: 'Coleman',
+  middleName: 'Mystery',
+  lastName: 'Francis',
+  birthMonth = '02',
+  birthDay = '22',
+  birthYear = '1990',
+  phoneNumber = '2222222222',
+  phoneType = 'home',
+  emailAddress = 'coleman@eurignfjnbgjrio.uifndj',
+  address1 = '4053 18th St',
+  address2 = 'Suite 1979',
+  city = 'San Francisco',
+  state = 'California',
+  zip = '94110',
+  sendMailToDifferentAddress = 'yes',
+  mailAddress1 = '123 Main St.',
+  mailAddress2 = 'Suite 300',
+  mailCity = 'San Francisco',
+  mailState = 'California',
+  mailZip = '94110',
+  workInSf = 'yes',
+  alternativeContactType = 'friend',
+  contactFirstName = 'Chet',
+  contactLastName = 'Beansworthy',
+  contactPhone = '3333333333',
+  contactEmail = 'chet@eurignfjnbgjrio.uifndj',
+  contactAddress1 = '2601 Mission St.',
+  contactAddress2 = 'Suite 300',
+  contactCity = 'San Francisco',
+  contactState = 'California',
+  contactZip = '94110',
+  addHouseholdMember = 'yes',
+  householdMemberFirstName = 'Frampton',
+  householdMemberLastName = 'Soapmaster',
+  householdMemberBirthMonth = '06',
+  householdMemberBirthDay = '11',
+  householdMemberBirthYear = '1981',
+  householdMemberCity = 'San Francisco',
+  householdMemberState = 'California',
+  householdMemberZip = '94110',
+  householdMemberWorkInSf = 'true',
+  householdMemberRelationship = 'Cousin',
+  publicHousing = 'true',
+  monthlyRent = '2000',
+  veteran = 'true',
+  developmentalDisability = 'true',
+  adaAccessibilityFeature1 = 'ramp',
+  adaAccessibilityFeature2 = 'elevator',
+  incomeVoucher = 'no',
+  income = '55555',
+  neighborhoodPref = 'true',
+  rentBurdenPref = 'true',
+  copPref = 'true',
+  dthpPref = 'true'
+}
+
 # reusable functions
-fillOutNamePage = (fullName, opts = {}) ->
-  firstName = fullName.split(' ')[0]
-  lastName  = fullName.split(' ')[1]
+fillOutNamePage = (opts = {}) ->
+  firstName = opts.fullName.split(' ')[0] || sampleApplication.firstName
+  lastName = opts.fullName.split(' ')[1] || sampleApplication.lastName
   month = opts.month || '02'
   day = opts.day || '22'
   year = opts.year || '1990'
 
   element(By.model('applicant.firstName')).clear().sendKeys(firstName)
+  element(By.model('applicant.middleName')).clear().sendKeys(sampleApplication.middleName)
   element(By.model('applicant.lastName')).clear().sendKeys(lastName)
   element(By.model('applicant.dob_month')).clear().sendKeys(month)
   element(By.model('applicant.dob_day')).clear().sendKeys(day)
@@ -117,6 +175,9 @@ module.exports = ->
     while i > 0
       submitPage()
       i--
+
+  @When 'I fill out the Name page with default info', ->
+    fillOutNamePage()
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     fillOutNamePage(fullName)

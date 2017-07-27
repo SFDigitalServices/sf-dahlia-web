@@ -33,19 +33,9 @@ Feature: Short Form Application
 
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application
-      When I fill out the Name page as "Jane Doe"
-      And I click the Save and Finish Later button
-      And I fill out my account info
-      And I submit the Create Account form
-      Then I should be on the login page with the email confirmation popup
+      When I fill out the Name page with default info
+      # fill in the rest of the steps
 
-    Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
-      Given I have a confirmed account
-      When I sign in
-      And I go to My Applications
-      Then I should see my draft application with a Continue Application button
-      # now submit the application
-      When I click the Continue Application button
       And I submit the Name page with my account info
       And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
       And I confirm my address
@@ -64,6 +54,23 @@ Feature: Short Form Application
       And I select "Jane Doe" for "displaced" preference
       And I submit my preferences
       And I fill out the optional survey
+
+      # original end to test
+      And I click the Save and Finish Later button
+      And I fill out my account info
+      And I submit the Create Account form
+      Then I should be on the login page with the email confirmation popup
+
+    Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
+      Given I have a confirmed account
+      When I sign in
+      And I go to My Applications
+      Then I should see my draft application with a Continue Application button
+      # now submit the application
+      When I click the Continue Application button
+
+
+      # skip to however far the test takes you
       And I confirm details on the review page
       And I agree to the terms and submit
       And I view the application from My Applications
