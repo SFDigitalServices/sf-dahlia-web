@@ -184,8 +184,6 @@ ShortFormDataService = (ListingService) ->
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       application.shortFormPreferences.push(shortFormPref)
     )
-    # ensure we don't send combo prefs (e.g. assistedHousing / rentBurden) twice
-    application.shortFormPreferences = _.uniqBy(application.shortFormPreferences, 'listingPreferenceID')
     delete application.preferences
     return application
 
@@ -525,7 +523,7 @@ ShortFormDataService = (ListingService) ->
     resetContactFields = [
       'appMemberId'
       'contactId'
-      'neighborhoodPreferenceMatch'
+      'preferenceAddressMatch'
       'xCoordinate'
       'yCoordinate'
       'whichComponentOfLocatorWasUsed'
