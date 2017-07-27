@@ -289,7 +289,6 @@
         "SENIOR_ANYONE": "At least one member of your household must be a Senior {{minAge}}+",
         "SENIOR_EVERYONE": "Everyone in your household must be a Senior {{minAge}}+",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
-        "SEX_AT_BIRTH": "Please enter your sex at birth",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
         "VETERAN_ANYONE": "At least one member of your household must be a Veteran",
