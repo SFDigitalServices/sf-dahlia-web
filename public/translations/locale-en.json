@@ -109,7 +109,6 @@
     },
     "D1_INCOME_VOUCHERS": {
         "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
-        "TITLE": "",
         "TITLE_HOUSEHOLD": "Do you or anyone on this application receive any housing vouchers or rental subsidies?",
         "TITLE_YOU": "Do you receive any housing vouchers or rental subsidies?"
     },
