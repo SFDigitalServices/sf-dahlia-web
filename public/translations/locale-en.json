@@ -395,7 +395,6 @@
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
-        "PROOF_OF_ADDRESS": "Proof of address",
         "QUESTIONING_UNSURE": "Questioning/Unsure",
         "RECENT_APPLICATION": "Recent Application",
         "REGISTERED_DOMESTIC_PARTNER": "Registered Domestic Partner",
@@ -528,11 +527,8 @@
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
-        "CERT_OF_PREFERENCE": "Certificate of Preference",
-        "DTHP": "Displaced Tenants Housing Preference",
         "GENERAL_POOL": "General Pool",
         "HOUSING_PREFERENCES": "Housing Preferences",
-        "LIVE_WORK": "Live/Work Preference",
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
@@ -542,7 +538,6 @@
         "NEXT_STEPS_P2": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.",
         "NEXT_STEPS_P3": "If all vacancies are filled for a preference, you will still be eligible for units in your following preference.",
         "NEXT_STEPS_TITLE": "What happens next?",
-        "NRHP": "Neighborhood Resident Housing Preference",
         "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "{{number}} applicants are on this list.",
         "RANK": "Rank",
         "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order shown here.",
