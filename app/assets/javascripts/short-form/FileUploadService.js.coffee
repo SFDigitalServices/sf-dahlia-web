@@ -33,7 +33,7 @@ FileUploadService = ($http, Upload, uuid) ->
     !! Service.preferences["#{fileType}_loading"]
 
   Service._processProofFile = (file, upload) ->
-    if file.size > 5 * 1000 * 1000 # 5MB
+    if file.size > 2 * 1000 * 1000 # 2MB
       options =
         width: 2112,
         height: 2112,
