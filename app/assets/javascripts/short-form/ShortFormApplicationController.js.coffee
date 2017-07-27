@@ -37,17 +37,7 @@ ShortFormApplicationController = (
   # liveWorkInSf (combo), liveInSf, or workInSf (single)
   $scope.currentLiveWorkType = null
   $scope.currentPreferenceType = null
-
-  # NOTE: check these! vvvv
-  $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
-  $scope.eligibilityErrors = []
   $scope.latinRegex = ShortFormApplicationService.latinRegex
-  # read more toggler
-  $scope.readMoreDevelopmentalDisabilities = false
-  # store label values that get overwritten by child directives
-  $scope.labels = {}
-  $scope.customInvalidMessage = null
-  # ^^^^^^
 
 
   ## form options

@@ -41,7 +41,7 @@
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length  }" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
+          input#date_of_birth_year.no-margin(ng-model="applicant.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year')}" ng-disabled="loggedIn()" pattern="\d*" ui-validate="'DOBValid(\'year\', $value) && !primaryApplicantUnder18()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('applicant')" aria-describedby="date_of_birth_error")
 
       small.error#date_of_birth_error ng-if="applicantDOB_hasError()"
         span ng-if="!primaryApplicantUnder18()" translate="ERROR.DOB"

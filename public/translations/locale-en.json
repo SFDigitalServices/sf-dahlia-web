@@ -107,21 +107,11 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "E1_PREFERENCES_INTRO": {
-        "GET_STARTED": "Get started",
-        "STEPS_TITLE": "Just 3 simple steps:",
-        "STEP_1": "See if you qualify for each lottery preference.",
-        "STEP_2": "Check each box to claim your lottery preference.",
-        "STEP_3": "Upload the required documents from your computer or phone.",
-        "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
-    },
-    "E7_PREFERENCES_PROGRAMS": {
-        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
-        "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
-        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
-        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
-        "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
-        "TITLE": "There are lottery preferences for people who already have special certificates."
+    "D1_INCOME_VOUCHERS": {
+        "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
+        "TITLE": "",
+        "TITLE_HOUSEHOLD": "Do you or anyone on this application receive any housing vouchers or rental subsidies?",
+        "TITLE_YOU": "Do you receive any housing vouchers or rental subsidies?"
     },
     "D2A_NEIGHBORHOOD_PREFERENCE": {
         "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
@@ -135,9 +125,23 @@
         },
         "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
-    "E8_GENERAL_LOTTERY_NOTICE": {
-        "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
-        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
+    "D2_INCOME": {
+        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
+        "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
+        "TITLE": "Let's move to income."
+    },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
+        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
+        "TITLE": "An application has already been submitted to this listing using this account."
+    },
+    "E1_PREFERENCES_INTRO": {
+        "GET_STARTED": "Get started",
+        "STEPS_TITLE": "Just 3 simple steps:",
+        "STEP_1": "See if you qualify for each lottery preference.",
+        "STEP_2": "Check each box to claim your lottery preference.",
+        "STEP_3": "Upload the required documents from your computer or phone.",
+        "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
     },
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
@@ -160,20 +164,17 @@
             "TITLE": "Work in San Francisco Preference"
         }
     },
-    "D1_INCOME_VOUCHERS": {
-        "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
-        "TITLE_HOUSEHOLD": "Do you or anyone on this application receive any housing vouchers or rental subsidies?",
-        "TITLE_YOU": "Do you receive any housing vouchers or rental subsidies?"
+    "E7_PREFERENCES_PROGRAMS": {
+        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
+        "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
+        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
+        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
+        "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
+        "TITLE": "There are lottery preferences for people who already have special certificates."
     },
-    "DOUBLE_SUBMITTED": {
-        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
-        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
-        "TITLE": "An application has already been submitted to this listing using this account."
-    },
-    "D2_INCOME": {
-        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
-        "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
-        "TITLE": "Let's move to income."
+    "E8_GENERAL_LOTTERY_NOTICE": {
+        "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
+        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
@@ -211,7 +212,6 @@
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
-        "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -345,7 +345,6 @@
         "INCOME_PLACEHOLDER": "Total all of your income sources",
         "IN_LAW": "In-Law",
         "LAST_NAME": "Last Name",
-        "LESBIAN": "Lesbian",
         "LIVE_ALONE": "I will live alone",
         "MAILING_ADDRESS": "Mailing address",
         "MALE": "Male",
