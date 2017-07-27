@@ -113,18 +113,6 @@
         "TITLE_HOUSEHOLD": "Do you or anyone on this application receive any housing vouchers or rental subsidies?",
         "TITLE_YOU": "Do you receive any housing vouchers or rental subsidies?"
     },
-    "D2A_NEIGHBORHOOD_PREFERENCE": {
-        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
-        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
-        "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
-        "PREFERENCE": {
-            "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
-            "NAME": "Neighborhood Resident Housing Preference",
-            "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
-            "TITLE": "Live in the Neighborhood"
-        },
-        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
-    },
     "D2_INCOME": {
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
@@ -142,6 +130,18 @@
         "STEP_2": "Check each box to claim your lottery preference.",
         "STEP_3": "Upload the required documents from your computer or phone.",
         "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
+    },
+    "E2A_NEIGHBORHOOD_PREFERENCE": {
+        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
+        "PREFERENCE": {
+            "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
+            "NAME": "Neighborhood Resident Housing Preference",
+            "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
+            "TITLE": "Live in the Neighborhood"
+        },
+        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
