@@ -52,25 +52,30 @@ FileUploadService = ($http, Upload, uuid) ->
     Service.preferences["#{fileType}_loading"] = true
 
     Service._processProofFile(file, (resizedFile) ->
-      Upload.upload(
-        url: '/api/v1/short-form/proof'
-        method: 'POST'
-        data:
-          uploaded_file:
-            file: resizedFile
-            session_uid: Service.session_uid()
-            listing_id: listing_id
-            document_type: docType
-            preference: prefType
-      ).then( ((resp) ->
-        Service.preferences["#{fileType}_loading"] = false
-        Service.preferences["#{fileType}_error"] = false
-        Service.preferences["#{fileType}"] = resp.data
-      ), ((resp) ->
+      if resizedFile.size > 5 * 1000 * 1000 # 5MB
         # error handler
         Service.preferences["#{fileType}_loading"] = false
         Service.preferences["#{fileType}_error"] = true
-      ))
+      else
+        Upload.upload(
+          url: '/api/v1/short-form/proof'
+          method: 'POST'
+          data:
+            uploaded_file:
+              file: resizedFile
+              session_uid: Service.session_uid()
+              listing_id: listing_id
+              document_type: docType
+              preference: prefType
+        ).then( ((resp) ->
+          Service.preferences["#{fileType}_loading"] = false
+          Service.preferences["#{fileType}_error"] = false
+          Service.preferences["#{fileType}"] = resp.data
+        ), ((resp) ->
+          # error handler
+          Service.preferences["#{fileType}_loading"] = false
+          Service.preferences["#{fileType}_error"] = true
+        ))
     )
 
   return Service
