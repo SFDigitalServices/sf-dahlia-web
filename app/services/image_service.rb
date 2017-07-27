@@ -3,32 +3,39 @@ class ImageService
   REMOTE_BUCKET = 'sf-dahlia'.freeze
   REMOTE_IMAGE_PATH = 'images/listings'.freeze
 
-  def self.listing_image_url(listing)
+  # def initialize(listing)
+  #   @listing = listing
+  #   @image_url = listing['Building_URL']
+
+  def self.store_listing_image_url(listing)
     return '' unless listing['Building_URL']
 
-    timestamp = DateTime.parse(listing['LastModifiedDate']).to_i
-    image_name = "#{listing['Id']}-#{timestamp}.jpg"
+    image_name = listing_image_name(listing)
     unless resized_image?(image_name)
-      resize_and_upload(listing['Building_URL'], image_name, '753')
+      if resize_and_upload(listing['Building_URL'], image_name, '753')
+        listing_image =
+          ListingImage.find_or_initialize_by(salesforce_listing_id: listing['Id'])
+        listing_image.update(image_url: image_url(image_name))
+      end
     end
-    image_url(image_name)
+  end
+
+  def self.listing_image_url(listing)
+    image_url(listing_image_name(listing))
   end
 
   def self.resize_and_upload(image_url, filename, width)
-    Dir.mktmpdir do |tempdir|
-      image_path = "#{tempdir}/#{filename}"
-      image = MiniMagick::Image.open(image_url)
-      # set width only and height is adjusted to maintain aspect ratio
-      image.resize(width)
-      # using jpg file extension will convert to jpg
-      image.write(image_path)
-      # ImageOptimizer.new(image_path, quality: 75).optimize
-      remote_storage.create(
-        key: "#{REMOTE_IMAGE_PATH}/#{filename}",
-        body: File.open(image_path),
-        public: true,
-      )
-    end
+    image = MiniMagick::Image.open(image_url)
+    return unless image.valid?
+    # set width only and height is adjusted to maintain aspect ratio
+    image.resize(width)
+    image.format 'jpg'
+    # ImageOptimizer.new(image_path, quality: 75).optimize
+    remote_storage.create(
+      key: "#{REMOTE_IMAGE_PATH}/#{filename}",
+      body: image.to_blob,
+      public: true,
+    )
   end
 
   def self.resized_image?(image_name)
@@ -38,6 +45,11 @@ class ImageService
   def self.image_url(image_name)
     base_image_url = ENV['RESOURCE_URL'] || 'https://d3047bfujujwqc.cloudfront.net'
     "#{base_image_url}/#{REMOTE_IMAGE_PATH}/#{image_name}"
+  end
+
+  def self.listing_image_name(listing)
+    cache_string = Base64.urlsafe_encode(listing['Id'] + listing['Building_URL'])
+    "#{cache_string}.jpg"
   end
 
   def self.remote_images

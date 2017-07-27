@@ -104,8 +104,12 @@ module SalesforceService
     end
 
     def self.add_image_urls(listings)
+      listing_images = ListingImage.all
       listings.each do |listing|
-        listing['imageURL'] = ImageService.listing_image_url(listing)
+        # TODO: if listing image not found
+        listing['imageURL'] = listing_images.select do |listing_image|
+          listing_image.saleforce_listing_id == listing['Id']
+        end.image_url
       end
       listings
     end
