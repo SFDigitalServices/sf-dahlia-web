@@ -7,11 +7,6 @@
     p.form-note.margin-bottom
       | {{'D2_INCOME.P2' | translate}}
 
-  / alert-box(invert="true" custom-message="householdEligibilityErrorMessage" hide-alert="hideAlert")
-
-  .alert-notice.alert ng-show="householdEligibilityErrorMessage && !hideAlert"
-    p.c-steel translate="ERROR.HOUSEHOLD_INCOME_ERROR_CONTENT" translate-values="visitResourcesLink()"
-
   .app-inner.inset
     .form-group ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"
       label.form-label.margin-bottom--half

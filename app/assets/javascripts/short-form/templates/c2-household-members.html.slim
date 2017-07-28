@@ -3,11 +3,6 @@
     h2.app-card_question
       | {{'C2_HOUSEHOLD_MEMBERS.TITLE' | translate}}
 
-  / alert-box(invert="true" custom-message="householdEligibilityErrorMessage" hide-alert="hideAlert")
-
-  .alert-notice.alert ng-show="householdEligibilityErrorMessage && !hideAlert"
-    p.c-steel translate="ERROR.HOUSEHOLD_SIZE_ERROR_CONTENT" translate-values="visitResourcesLink()"
-
   .app-inner.short.focus-container
     .form-group
       .info-item.tall.border-bottom
