@@ -6,7 +6,7 @@ p
   = t '.what_to_expect_next'
   | :
   br
-  ==' t '.lottery_will_be_held', lottery_date: @lottery_date, link: link_to(t('.on_the_listing'), @listing_url)
+  ==> t '.lottery_will_be_held', lottery_date: @lottery_date, link: link_to(t('.on_the_listing'), @listing_url)
   = t '.applicants_will_be_contacted'
 p
   = t '.should_your_application_be_chosen'
@@ -32,6 +32,6 @@ p
   == simple_format strip_tags(@listing.Office_Hours)
 
 p
-  =' t '.how_are_we_doing'
+  => t '.how_are_we_doing'
   = link_to t('.we_would_like_your_feedback'), 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform'
   | .
