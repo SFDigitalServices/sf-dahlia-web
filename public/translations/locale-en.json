@@ -1,26 +1,8 @@
 {
     "A1_INTRO": {
-<<<<<<< HEAD
         "CHOOSE_YOUR_LANGUAGE": "Choose your language",
         "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
         "TITLE": "Let's get started on your application"
-=======
-        "TITLE": "Let's get started on your application:"
-    },
-    "A2_COMMUNITY_SCREENING": {
-        "SENIOR": {
-            "YOU_AND_EVERYONE": "Are you and everyone on this application a senior?",
-            "YOU_AND_EVERYONE_DESC": "This is a senior building and all applicants must be {{minAge}}+.",
-            "YOU_AND_EVERYONE_LABEL": "Yes, everyone is {{minAge}}+",
-            "YOU_OR_ANYONE": "Are you or anyone on this application a senior?",
-            "YOU_OR_ANYONE_DESC": "This is a senior building and at least one applicant must be {{minAge}}+.",
-            "YOU_OR_ANYONE_LABEL": "Yes, at least one person is {{minAge}}+"
-        },
-        "VETERAN": {
-            "YOU_OR_ANYONE": "Are you or anyone on this application a veteran?",
-            "YOU_OR_ANYONE_DESC": "This is a veterans building and at least one applicant must have served in the U.S. Military.<br><br>Should your application be chosen, be prepared to provide more information."
-        }
->>>>>>> f032f42... Multifamily: You/Household Error for Senior Buildings #136991865 (#689)
     },
     "A4_OVERVIEW": {
         "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
@@ -224,8 +206,6 @@
         "LAST_NAME": "Please enter a Last Name",
         "NOT_ELIGIBLE": "Unfortunately it appears you do not qualify for this listing.",
         "NOT_ELIGIBLE_DESCRIPTION": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
-        "NOT_ELIGIBLE_HOUSEHOLD": "It appears that you wouldn't qualify for this listing due to household size.",
-        "NOT_ELIGIBLE_INCOME": "It appears that you wouldn't qualify for this listing due to your household income.",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
@@ -236,12 +216,9 @@
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
         "RELATIONSHIP": "Please enter a relationship.",
-        "SENIOR_ANYONE": "At least one member of your household must be a Senior {{minAge}}+",
-        "SENIOR_EVERYONE": "Everyone in your household must be a Senior {{minAge}}+",
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
-        "VETERAN_ANYONE": "t least one member of your household must be a Veteran",
         "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {
