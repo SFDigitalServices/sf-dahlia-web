@@ -89,6 +89,9 @@ optOutAndSubmit = ->
 getUrl = (url) ->
   browser.get(url)
 
+scrollToElement = (element) ->
+  browser.actions().mouseMove(element).perform()
+
 module.exports = ->
   # import global cucumber options
   @World = World
@@ -318,7 +321,9 @@ module.exports = ->
     submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
-    element(By.id('incomeTotal')).clear().sendKeys(income)
+    incomeTotal = element(By.id('incomeTotal'))
+    scrollToElement(incomeTotal)
+    incomeTotal.clear().sendKeys(income)
     element(By.id('per_year')).click()
     submitPage()
 
@@ -536,8 +541,8 @@ module.exports = ->
     alertBox = element(By.cssContainingText('.alert-box', errorText))
     context.expect(alertBox.isPresent()).to.eventually.equal(true)
 
-  expectError = (context, errorText) ->
-    error = element(By.cssContainingText('.error', errorText))
+  expectError = (context, errorText, className = '.error') ->
+    error = element(By.cssContainingText(className, errorText))
     context.expect(error.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see name field errors on the Name page', ->
@@ -562,7 +567,7 @@ module.exports = ->
 
   @Then 'I should see an error about uploading proof', ->
     expectAlertBox(@,)
-    expectError(@, 'Please upload your proof of preference')
+    expectError(@, 'Please upload a valid document')
 
   @Then 'I should see an error on the household member form', ->
     browser.waitForAngular()
@@ -571,15 +576,18 @@ module.exports = ->
 
   @Then 'I should see an error about household size being too big', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household size is too big')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household size is too big', '.c-alert')
 
   @Then 'I should see an error about household income being too low', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household income is too low')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too low', '.c-alert')
 
   @Then 'I should see an error about household income being too high', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household income is too high')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too high', '.c-alert')
 
   @Then 'I should land on the optional survey page', ->
     surveyTitle = element(By.cssContainingText('h2.app-card_question', 'Help us ensure we are meeting our goal'))
