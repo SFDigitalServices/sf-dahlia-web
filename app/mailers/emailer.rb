@@ -93,6 +93,28 @@ class Emailer < Devise::Mailer
     end
   end
 
+  def draft_application_saved
+    @listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
+    @email = params[:email]
+    @first_name = params[:first_name]
+    @last_name = params[:last_name]
+    continue_draft_path = '/continue-draft-sign-in/' + params[:listing_id]
+    mail(to: @email, subject: 'Your Draft Application Has Been Saved') do |format|
+      format.html do
+        render(
+          'draft_application_saved',
+          locals: {
+            email: @email,
+            listing_name: @listing.Name,
+            first_name: @first_name,
+            last_name: @last_name,
+            saved_application_url: "#{base_url}/#{continue_draft_path}",
+          },
+        )
+      end
+    end
+  end
+
   private
 
   def setup_geocoding_notification

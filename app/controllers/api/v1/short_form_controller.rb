@@ -117,10 +117,16 @@ class Api::V1::ShortFormController < ApiController
   def attach_files_and_send_confirmation(response)
     if application_params[:status].casecmp('draft').zero? && user_signed_in?
       attach_temp_files_to_user
+    elsif initial_saved_draft?
+      email_draft_link(response)
     elsif initial_submission?
       send_attached_files(response['id'])
       send_submit_app_confirmation(response)
     end
+  end
+
+  def initial_saved_draft?
+    !application_params['id'] && user_signed_in?
   end
 
   def initial_submission?
@@ -158,6 +164,15 @@ class Api::V1::ShortFormController < ApiController
       lottery_number: response['lotteryNumber'],
       firstName: response['primaryApplicant']['firstName'],
       lastName: response['primaryApplicant']['lastName'],
+    ).deliver_now
+  end
+
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
     ).deliver_now
   end
 

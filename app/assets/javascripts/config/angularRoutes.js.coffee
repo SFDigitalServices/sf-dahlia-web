@@ -212,6 +212,14 @@
         AccountService.clearAccountMessages()
       ]
     })
+    .state('dahlia.continue-draft-sign-in', {
+      url: '/continue-draft-sign-in/:listing_id'
+      views:
+        'container@':
+          # use same template as usual sign-in route
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
+    })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
       # will be accessed at '/listings/{id}/apply/forgot-password'
