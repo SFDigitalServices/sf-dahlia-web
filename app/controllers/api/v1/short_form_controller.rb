@@ -183,6 +183,15 @@ class Api::V1::ShortFormController < ApiController
     ).deliver_now
   end
 
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_now
+  end
+
   def map_listing_to_application
     listing = ListingService.listing(@application['listingID'])
     @application['listing'] = listing
