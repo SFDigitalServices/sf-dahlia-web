@@ -99,6 +99,10 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
+      when 'Income'
+        'income-vouchers'
+      when 'Preferences'
+        'preferences-intro'
       when 'Review'
         if application.surveyComplete
           'review-summary'
