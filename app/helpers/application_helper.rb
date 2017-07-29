@@ -9,9 +9,9 @@ module ApplicationHelper
         asset_paths[filename] = asset_path(filename)
       end
     else
-      Rails.application.assets_manifest.assets.each do |f, fullpath|
+      Rails.application.assets_manifest.assets.each do |f, hashpath|
         next if !f.match(/jpg|png|svg/) || f.match(/favicon|apple\-icon|android\-icon/)
-        asset_paths[f] = fullpath
+        asset_paths[f] = "/assets/#{hashpath}"
       end
     end
     asset_paths
