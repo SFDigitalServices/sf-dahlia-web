@@ -14,63 +14,68 @@ sampleApplication = {
   firstName: 'Coleman',
   middleName: 'Mystery',
   lastName: 'Francis',
-  birthMonth = '02',
-  birthDay = '22',
-  birthYear = '1990',
-  phoneNumber = '2222222222',
-  phoneType = 'home',
-  emailAddress = 'coleman@eurignfjnbgjrio.uifndj',
-  address1 = '4053 18th St',
-  address2 = 'Suite 1979',
-  city = 'San Francisco',
-  state = 'California',
-  zip = '94110',
-  sendMailToDifferentAddress = 'yes',
-  mailAddress1 = '123 Main St.',
-  mailAddress2 = 'Suite 300',
-  mailCity = 'San Francisco',
-  mailState = 'California',
-  mailZip = '94110',
-  workInSf = 'yes',
-  alternativeContactType = 'friend',
-  contactFirstName = 'Chet',
-  contactLastName = 'Beansworthy',
-  contactPhone = '3333333333',
-  contactEmail = 'chet@eurignfjnbgjrio.uifndj',
-  contactAddress1 = '2601 Mission St.',
-  contactAddress2 = 'Suite 300',
-  contactCity = 'San Francisco',
-  contactState = 'California',
-  contactZip = '94110',
-  addHouseholdMember = 'yes',
-  householdMemberFirstName = 'Frampton',
-  householdMemberLastName = 'Soapmaster',
-  householdMemberBirthMonth = '06',
-  householdMemberBirthDay = '11',
-  householdMemberBirthYear = '1981',
-  householdMemberCity = 'San Francisco',
-  householdMemberState = 'California',
-  householdMemberZip = '94110',
-  householdMemberWorkInSf = 'true',
-  householdMemberRelationship = 'Cousin',
-  publicHousing = 'true',
-  monthlyRent = '2000',
-  veteran = 'true',
-  developmentalDisability = 'true',
-  adaAccessibilityFeature1 = 'ramp',
-  adaAccessibilityFeature2 = 'elevator',
-  incomeVoucher = 'no',
-  income = '55555',
-  neighborhoodPref = 'true',
-  rentBurdenPref = 'true',
-  copPref = 'true',
-  dthpPref = 'true'
+  birthMonth: '02',
+  birthDay: '22',
+  birthYear: '1990',
+  phone: '2222222222',
+  phoneType: 'home',
+  phone2: '4444444444',
+  phoneType2: 'cell',
+  email: 'coleman@eurignfjnbgjrio.uifndj',
+  address1: '4053 18th St',
+  address2: 'Suite 1979',
+  city: 'San Francisco',
+  state: 'california',
+  zip: '94110',
+  sendMailToDifferentAddress: 'yes',
+  mailAddress1: '123 Main St.',
+  mailAddress2: 'Suite 300',
+  mailCity: 'San Francisco',
+  mailState: 'california',
+  mailZip: '94110',
+  workInSf: 'yes',
+  contactFirstName: 'Chet',
+  contactLastName: 'Beansworthy',
+  contactPhone: '3333333333',
+  contactEmail: 'chet@eurignfjnbgjrio.uifndj',
+  contactAddress1: '2601 Mission St.',
+  contactAddress2: 'Suite 300',
+  contactCity: 'San Francisco',
+  contactState: 'California',
+  contactZip: '94110',
+  addHouseholdMember: 'yes',
+  householdMemberFirstName: 'Frampton',
+  householdMemberLastName: 'Soapmaster',
+  householdMemberBirthMonth: '06',
+  householdMemberBirthDay: '11',
+  householdMemberBirthYear: '1981',
+  householdMemberCity: 'San Francisco',
+  householdMemberState: 'California',
+  householdMemberZip: '94110',
+  householdMemberWorkInSf: 'true',
+  householdMemberRelationship: 'Cousin',
+  publicHousing: 'true',
+  monthlyRent: '2000',
+  veteran: 'true',
+  developmentalDisability: 'true',
+  adaAccessibilityFeature1: 'ramp',
+  adaAccessibilityFeature2: 'elevator',
+  incomeVoucher: 'no',
+  income: '55555',
+  neighborhoodPref: 'true',
+  rentBurdenPref: 'true',
+  copPref: 'true',
+  dthpPref: 'true'
 }
 
 # reusable functions
 fillOutNamePage = (opts = {}) ->
-  firstName = opts.fullName.split(' ')[0] || sampleApplication.firstName
-  lastName = opts.fullName.split(' ')[1] || sampleApplication.lastName
+  if opts.fullName
+    firstName = opts.fullName.split(' ')[0]
+    lastName = opts.fullName.split(' ')[1]
+  else
+    firstName = sampleApplication.firstName
+    lastName = sampleApplication.lastName
   month = opts.month || '02'
   day = opts.day || '22'
   year = opts.year || '1990'
@@ -84,16 +89,30 @@ fillOutNamePage = (opts = {}) ->
   submitPage()
 
 fillOutContactPage = (opts = {}) ->
-  opts.address1 ||= '4053 18th St.'
-  opts.city ||= 'San Francisco'
-  opts.workInSf ||= 'yes'
-  element(By.model('applicant.phone')).clear().sendKeys('2222222222')
-  element(By.model('applicant.phoneType')).sendKeys('home')
-  element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
+  opts.address1 ||= sampleApplication.address1
+  opts.address2 ||= sampleApplication.address2
+  opts.city ||= sampleApplication.city
+  opts.workInSf ||= sampleApplication.workInSf
+  element(By.model('applicant.phone')).clear().sendKeys(sampleApplication.phone)
+  element(By.model('applicant.phoneType')).sendKeys(sampleApplication.phoneType)
+  element(By.model('applicant.additionalPhone')).click()
+  element(By.model('applicant.alternatePhone')).clear().sendKeys(sampleApplication.phone2)
+  element(By.model('applicant.alternatePhoneType')).sendKeys(sampleApplication.phoneType2)
+  if opts.email
+    element(By.model('applicant.email')).clear().sendKeys(opts.email)
+  else
+    element(By.model('applicant.email')).clear().sendKeys(sampleApplication.email)
   element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
+  element(By.id('applicant_home_address_address2')).clear().sendKeys(opts.address2)
   element(By.id('applicant_home_address_city')).clear().sendKeys(opts.city)
-  element(By.id('applicant_home_address_state')).sendKeys('california')
-  element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
+  element(By.id('applicant_home_address_state')).sendKeys(sampleApplication.state)
+  element(By.id('applicant_home_address_zip')).clear().sendKeys(sampleApplication.zip)
+  element(By.model('applicant.hasAltMailingAddress')).click()
+  element(By.id('applicant_mailing_address_address1')).clear().sendKeys(sampleApplication.mailAddress1)
+  element(By.id('applicant_mailing_address_address2')).clear().sendKeys(sampleApplication.mailAddress2)
+  element(By.id('applicant_mailing_address_city')).clear().sendKeys(sampleApplication.mailCity)
+  element(By.id('applicant_mailing_address_state')).sendKeys(sampleApplication.mailState)
+  element(By.id('applicant_mailing_address_zip')).clear().sendKeys(sampleApplication.mailZip)
   if opts.workInSf == 'yes'
     element(By.id('workInSf_yes')).click()
   else
@@ -180,10 +199,13 @@ module.exports = ->
     fillOutNamePage()
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    fillOutNamePage(fullName)
+    fillOutNamePage( {fullName: fullName} )
 
   @When 'I submit the Name page with my account info', ->
     submitPage()
+
+  @When 'I fill out the Contact page with default info', ->
+    fillOutContactPage()
 
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
     fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
@@ -209,6 +231,25 @@ module.exports = ->
 
   @When 'I confirm their address', ->
     element(By.id('confirmed_home_address_yes')).click()
+    submitPage()
+
+  @When 'I fill out my alternate contact\'s name', ->
+    element(By.model('alternateContact.firstName')).clear().sendKeys(sampleApplication.contactFirstName)
+    element(By.model('alternateContact.lastName')).clear().sendKeys(sampleApplication.contactLastName)
+    submitPage()
+
+  @When 'I fill out my alternate contact\'s info', ->
+    element(By.model('alternateContact.phone')).clear().sendKeys(sampleApplication.contactPhone)
+    element(By.model('alternateContact.email')).clear().sendKeys(sampleApplication.contactEmail)
+    element(By.id('alternateContact_mailing_address_address1')).clear().sendKeys(sampleApplication.contactAddress1)
+    element(By.id('alternateContact_mailing_address_address2')).clear().sendKeys(sampleApplication.contactAddress2)
+    element(By.id('alternateContact_mailing_address_city')).clear().sendKeys(sampleApplication.contactCity)
+    element(By.id('alternateContact_mailing_address_state')).sendKeys(sampleApplication.contactState)
+    element(By.id('alternateContact_mailing_address_zip')).clear().sendKeys(sampleApplication.contactZip)
+    submitPage()
+
+  @When 'I select a friend as an alternate contact', ->
+    element(By.id('alternateContactType_friend')).click()
     submitPage()
 
   @When 'I don\'t indicate an alternate contact', ->

@@ -34,12 +34,12 @@ Feature: Short Form Application
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application
       When I fill out the Name page with default info
-      # fill in the rest of the steps
-
-      And I submit the Name page with my account info
-      And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
+      And I fill out the Contact page with default info
       And I confirm my address
-      And I don't indicate an alternate contact
+      And I select a friend as an alternate contact
+      And I fill out my alternate contact's name
+      And I fill out my alternate contact's info
+      # fill in the rest of the steps
       And I indicate I will live alone
       And I indicate living in public housing
       And I indicate no priority
