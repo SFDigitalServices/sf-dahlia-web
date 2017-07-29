@@ -3,6 +3,7 @@
 ############################################################################################
 
 SharedController = ($rootScope, $scope, $state, SharedService) ->
+  $scope.assetPath = SharedService.assetPath
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
@@ -10,7 +11,6 @@ SharedController = ($rootScope, $scope, $state, SharedService) ->
 
   $scope.focusOnMainContent = ->
     SharedService.focusOnMainContent()
-
 
 ############################################################################################
 ######################################## CONFIG ############################################

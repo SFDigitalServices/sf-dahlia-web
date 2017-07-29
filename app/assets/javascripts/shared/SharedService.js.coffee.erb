@@ -4,6 +4,16 @@
 
 SharedService = ($http, $state) ->
   Service = {}
+  Service.assetPath =
+    # NOTE: this looks commented out to make coffee-lint happy, but it's functioning ERB.
+    # Generates a hash object of all asset images e.g.
+    # { 'icon-heart.png': ' /assets/icon-heart-c3cabe7c42cfe.png' }
+    # ------
+    # <% Rails.application.assets.each_file do |f| %>
+    # <% next if !f.include?('images/') || f.include?('favicon') %>
+    # <% filename = Pathname(f).basename.to_s %>
+    '<%= filename %>': "<%= asset_path(filename) %>"
+    # <% end %>
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
