@@ -26,5 +26,8 @@ module SfDahliaWeb
     config.middleware.use Rack::XRobotsTag
     # write cached robots.txt into public dir
     config.action_controller.page_cache_directory = "#{Rails.root}/public"
+
+    # for serving gzipped assets
+    config.middleware.use Rack::Deflater
   end
 end

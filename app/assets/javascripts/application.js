@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require lodash/lodash
+//= require app_assets
 //= require angular
 //= require angular-foundation
 //= require angular-ui-router

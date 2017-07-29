@@ -9178,7 +9178,7 @@ table {
       position: relative;
       z-index: 103; } }
   .name-logo a {
-    background: url("../images/logo-portal.png") no-repeat;
+    background: url(asset-path('logo-portal.png')) no-repeat;
     overflow: hidden;
     text-indent: -9999px;
     background-position: center left;
@@ -9469,7 +9469,7 @@ select {
   -webkit-appearance: none;
   appearance: none;
   background-color: #f9f9f9;
-  background-image: none, url("../images/arrow-down.svg"), url("../images/arrow-down.png");
+  background-image: none, url(asset-path('arrow-down.svg')), url(asset-path('arrow-down.png'));
   background-position: right .75rem center;
   background-repeat: no-repeat;
   background-size: .75rem;
@@ -9528,8 +9528,8 @@ input[type="radio"]:focus + label::before {
   box-shadow: 0 0 0 2px #fff, 0 0 0 3px #0077da, 0 0 3px 4px #3e94cf, 0 0 7px 4px #3e94cf; }
 
 input[type="checkbox"]:checked + label::before {
-  background-image: url("../images/check.png");
-  background-image: url("../images/check.svg");
+  background-image: url(asset-path('check.png'));
+  background-image: url(asset-path('check.svg'));
   background-position: 50%;
   background-repeat: no-repeat; }
 
@@ -9781,7 +9781,7 @@ input.icon-input-field {
     background-color: #205493; }
     @media only screen and (min-width: 48.0625em) {
       .lead-header.bg-image {
-        background-image: url("../images/sf-homes-wide.jpg");
+        background-image: url(asset-path('sf-homes-wide.jpg'));
         background-size: cover;
         background-position: bottom left; } }
 
@@ -10168,7 +10168,7 @@ input.icon-input-field {
   position: absolute;
   top: 50%;
   right: 1rem;
-  background-image: none, url("../images/arrow-down.svg"), url("../images/arrow-down.png");
+  background-image: none, url(asset-path('arrow-down.svg')), url(asset-path('arrow-down.png'));
   background-position: right 0 center;
   background-repeat: no-repeat;
   background-size: .75rem;
@@ -11015,7 +11015,7 @@ body.body-block {
 .splash-header {
   position: relative; }
   .splash-header.bg-image {
-    background-image: url("../images/sf-homes-wide.jpg");
+    background-image: url(asset-path('sf-homes-wide.jpg'));
     background-size: cover;
     background-position: bottom left; }
   .splash-header:before {
