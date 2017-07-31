@@ -653,6 +653,11 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     form.$setPristine() if form
     # --
+
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+
     ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 

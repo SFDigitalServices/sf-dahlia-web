@@ -4,7 +4,7 @@ button.button.primary.expand.no-margin type="button" data-event="gtm-apply" titl
   | {{'LABEL.APPLY_ONLINE' | translate}}
 .print-only.show-for-print
   | at housing.sfgov.org
-button.button.primary.expand.no-margin type="button" data-event="gtm-continue-application" title="{{'LABEL.CONTINUE_APPLICATION' | translate}}" ui-sref="dahlia.short-form-application.{{application.lastPage}}({id: listing.Id})" ng-if="hasDraftApplication()"
+button.button.primary.expand.no-margin type="button" data-event="gtm-continue-application" title="{{'LABEL.CONTINUE_APPLICATION' | translate}}" ui-sref="dahlia.short-form-application.name({id: listing.Id})" ng-if="hasDraftApplication()"
   | {{'LABEL.CONTINUE_APPLICATION' | translate}}
 .option-divider
   span.or
