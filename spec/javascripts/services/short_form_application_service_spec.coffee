@@ -10,6 +10,7 @@ do ->
     $translate = {}
     $state =
       go: jasmine.createSpy()
+      href: ->
       current: { name: 'dahlia' }
     fakeSFAddress =
       address1: '123 Main St.'
@@ -695,3 +696,13 @@ do ->
         fakePrevApplication = { status: 'draft' }
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+    describe 'sendToLastPageofApp', ->
+      describe 'entering short form section that is not the last page of application', ->
+        it 'sends user to last page of application', ->
+          spyOn($state, 'href').and.returnValue(true)
+          ShortFormApplicationService.application.lastPage = 'review-terms'
+          ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
+          lastPageRoute = 'dahlia.short-form-application.review-terms'
+          expect($state.go).toHaveBeenCalledWith(lastPageRoute)
+
