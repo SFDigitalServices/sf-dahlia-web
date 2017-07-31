@@ -89,6 +89,9 @@ optOutAndSubmit = ->
 getUrl = (url) ->
   browser.get(url)
 
+scrollToElement = (element) ->
+  browser.actions().mouseMove(element).perform()
+
 module.exports = ->
   # import global cucumber options
   @World = World
@@ -301,7 +304,9 @@ module.exports = ->
     submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
-    element(By.id('incomeTotal')).clear().sendKeys(income)
+    incomeTotal = element(By.id('incomeTotal'))
+    scrollToElement(incomeTotal)
+    incomeTotal.clear().sendKeys(income)
     element(By.id('per_year')).click()
     submitPage()
 
