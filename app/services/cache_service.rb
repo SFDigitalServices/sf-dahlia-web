@@ -48,6 +48,7 @@ class CacheService
     ListingService.lottery_buckets(id) if due_date_passed
     # NOTE: there is no call to ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
-    ImageService.store_listing_image_url(listing)
+    image_processor = ListingImageService.new(listing).process_image
+    Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
   end
 end

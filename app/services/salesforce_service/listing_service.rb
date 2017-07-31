@@ -27,7 +27,6 @@ module SalesforceService
     # `clean` determines whether to slim down the results
     def self.listings(ids = nil, clean = true)
       params = ids.present? ? { ids: ids } : nil
-      # results = cached_api_get('/ListingDetails', params, true)
       results = get_listings(nil, params)
       return results unless clean
       clean_listings_for_browse(results)
@@ -39,7 +38,6 @@ module SalesforceService
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      # results = cached_api_get('/ListingDetails', filters, true)
       results = get_listings(nil, filters)
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
@@ -48,7 +46,6 @@ module SalesforceService
 
     # get one detailed listing result by id
     def self.listing(id)
-      # cached_api_get("/ListingDetails/#{id}", nil, true).first
       get_listings(id).first
     end
 
@@ -106,10 +103,10 @@ module SalesforceService
     def self.add_image_urls(listings)
       listing_images = ListingImage.all
       listings.each do |listing|
-        # TODO: if listing image not found
-        listing['imageURL'] = listing_images.select do |listing_image|
-          listing_image.saleforce_listing_id == listing['Id']
-        end.image_url
+        listing_image = listing_images.select do |li|
+          li.salesforce_listing_id == listing['Id']
+        end.first
+        listing['imageURL'] = listing_image ? listing_image.image_url : nil
       end
       listings
     end
