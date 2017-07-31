@@ -1,19 +1,7 @@
-WelcomeController = ($http, $scope) ->
+WelcomeController = ($scope, SharedService) ->
+  $scope.housingCounselors = SharedService.housingCounselors
 
-  $scope.chinese_counselors = []
-  $scope.filipino_counselors = []
-  $scope.spanish_counselors = []
-
-  $http.get("/json/housing_counselors.json").success((data, status, headers, config) ->
-    $scope.chinese_counselors = _.filter data.locations, (o) ->
-      _.includes o.languages, 'Cantonese'
-    $scope.filipino_counselors = _.filter data.locations, (o) ->
-      _.includes o.languages, 'Filipino'
-    $scope.spanish_counselors = _.filter data.locations, (o) ->
-      _.includes o.languages, 'Spanish'
-  )
-
-WelcomeController.$inject = ['$http','$scope']
+WelcomeController.$inject = ['$scope', 'SharedService']
 
 angular
   .module('dahlia.controllers')

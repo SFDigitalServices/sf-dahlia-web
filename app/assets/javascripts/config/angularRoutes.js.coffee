@@ -48,6 +48,9 @@
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.HOUSING_COUNSELORS')
         ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
+        ]
     })
     .state('dahlia.listings', {
       url: '/listings'
@@ -364,6 +367,9 @@
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
         ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
+        ]
     })
     .state('dahlia.welcome-spanish', {
       url: '/welcome-spanish'
@@ -375,6 +381,9 @@
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
         ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
+        ]
     })
     .state('dahlia.welcome-filipino', {
       url: '/welcome-filipino'
@@ -385,6 +394,9 @@
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.disclaimer', {

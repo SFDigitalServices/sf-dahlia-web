@@ -1,12 +1,7 @@
-HousingCounselorsController = ($http, $scope) ->
+HousingCounselorsController = ($scope, SharedService) ->
+  $scope.housingCounselors = SharedService.housingCounselors
 
-  $scope.housing_counselors = []
-
-  $http.get("/json/housing_counselors.json").success((data, status, headers, config) ->
-    $scope.housing_counselors = data.locations
-  )
-
-HousingCounselorsController.$inject = ['$http','$scope']
+HousingCounselorsController.$inject = ['$scope', 'SharedService']
 
 angular
   .module('dahlia.controllers')

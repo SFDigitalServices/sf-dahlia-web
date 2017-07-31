@@ -2,8 +2,9 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($rootScope, $scope, $state, SharedService) ->
-  $scope.assetPath = SharedService.assetPath
+SharedController = ($scope, $state, SharedService) ->
+  $scope.assetPaths = SharedService.assetPaths
+  $scope.housingCounselors = SharedService.housingCounselors
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
@@ -17,7 +18,7 @@ SharedController = ($rootScope, $scope, $state, SharedService) ->
 ############################################################################################
 
 SharedController.$inject = [
-  '$rootScope', '$scope', '$state', 'SharedService'
+  '$scope', '$state', 'SharedService'
 ]
 
 angular
