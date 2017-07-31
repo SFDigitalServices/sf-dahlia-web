@@ -500,18 +500,6 @@ do ->
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
 
-    describe 'getMyAccountApplication', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'should load application into accountApplication', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
-        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.getMyAccountApplication()
-        httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
-
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
         setupFakeApplicant()
