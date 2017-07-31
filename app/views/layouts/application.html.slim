@@ -57,4 +57,4 @@ html lang="en"
     / ENV['MAINTENANCE_LISTINGS'] = 'a0W4B0000050b5gUAA,a0W4B0000050b5gUBB'
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
-      var IMAGE_ASSET_PATHS = #{image_asset_paths.to_json.html_safe}
+      var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
