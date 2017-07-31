@@ -701,19 +701,15 @@ ShortFormApplicationService = (
     )
 
   Service.getMyApplicationForListing = (listing_id, opts = {}) ->
+    listingId = listing_id || Service.listing.Id
     autofill = if opts.autofill then '?autofill=true' else ''
-    $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
+    $http.get("/api/v1/short-form/listing-application/#{listingId}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
-    )
-
-  Service.getMyAccountApplication = ->
-    $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
-      Service.loadAccountApplication(data)
     )
 
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
-    Service.getMyAccountApplication().success((data) ->
+    Service.getMyApplicationForListing().success((data) ->
       if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
         return Service._signInAndSkipSubmit(data.application)
