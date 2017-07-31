@@ -22,6 +22,7 @@ sampleApplication = {
   phone2: '4444444444',
   phoneType2: 'cell',
   email: 'coleman@eurignfjnbgjrio.uifndj',
+  password: 'test1234',
   address1: '4053 18th St',
   address2: 'Suite 1979',
   city: 'San Francisco',
@@ -58,14 +59,9 @@ sampleApplication = {
     workInSf: 'true',
     relationship: 'Cousin',
   },
-  publicHousing: 'true',
+  publicHousing: 'no',
   monthlyRent: '2000',
-  veteran: 'true',
-  developmentalDisability: 'true',
-  adaAccessibilityFeature1: 'ramp',
-  adaAccessibilityFeature2: 'elevator',
-  incomeVoucher: 'no',
-  income: '55555',
+  income: '25000',
   neighborhoodPref: 'true',
   rentBurdenPref: 'true',
   copPref: 'true',
@@ -200,6 +196,12 @@ module.exports = ->
     getUrl(url)
     browser.ignoreSynchronization = false
 
+  @When 'I confirm the account for the default email', ->
+    browser.ignoreSynchronization = true
+    url = "/api/v1/account/confirm/?email=#{sampleApplication.email}"
+    getUrl(url)
+    browser.ignoreSynchronization = false
+
   @When /^I hit the Next button "([^"]*)" times$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
     while i > 0
@@ -212,7 +214,7 @@ module.exports = ->
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
     fillOutNamePage( {fullName: fullName} )
 
-  @When 'I submit the Name page with my account info', ->
+  @When 'I submit the page', ->
     submitPage()
 
   @When 'I fill out the Contact page with default info', ->
@@ -326,6 +328,19 @@ module.exports = ->
     element(By.id('hasPublicHousing_no')).click()
     submitPage()
 
+  @When 'I indicate being a veteran', ->
+    element(By.id('hasMilitaryService_yes')).click()
+    submitPage()
+
+  @When 'I indicate having a developmental disability', ->
+    element(By.id('hasDevelopmentalDisability_yes')).click()
+    submitPage()
+
+  @When 'I indicate need ADA features for vision and hearing', ->
+    element(By.id('adaPrioritiesSelected_vision-impaired')).click()
+    element(By.id('adaPrioritiesSelected_hearing-impaired')).click()
+    submitPage()
+
   @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
     element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
     submitPage()
@@ -333,7 +348,6 @@ module.exports = ->
   @When 'I indicate no priority', ->
     element(By.id('adaPrioritiesSelected_none')).click()
     submitPage()
-
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
@@ -415,7 +429,38 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When 'I upload a copy of the lease', ->
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
+  @When 'I upload proof of rent payment', ->
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id("rentBurden_rentDocument")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', 'Money order')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[1].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
   @When 'I click the Next button on the Live/Work Preference page', ->
+    submitPage()
+
+  @When 'I click the Next button on the Rent Burdened Preference page', ->
     submitPage()
 
   @When 'I click the Next button on the Live in the Neighborhood page', ->
@@ -469,6 +514,9 @@ module.exports = ->
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
 
+  @When 'I go to the review page', ->
+    element(By.cssContainingText('.a', 'Review')).click()
+
   @When 'I confirm details on the review page', ->
     submitPage()
 
@@ -491,6 +539,12 @@ module.exports = ->
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
+  @When 'I fill out the default account info', ->
+    element(By.id('auth_email')).sendKeys(sampleApplication.email)
+    element(By.id('auth_email_confirmation')).sendKeys(sampleApplication.email)
+    element(By.id('auth_password')).sendKeys(sampleApplication.password)
+    element(By.id('auth_password_confirmation')).sendKeys(sampleApplication.password)
+
   @When 'I fill out my account info with my locked-in application email', ->
     element(By.id('auth_email_confirmation')).sendKeys(janedoeEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
@@ -510,6 +564,14 @@ module.exports = ->
     getUrl(signInUrl)
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('sign-in')).click()
+    browser.waitForAngular()
+
+  @When 'I sign in with default info', ->
+    signInUrl = "/sign-in"
+    getUrl(signInUrl)
+    element(By.id('auth_email')).sendKeys(sampleApplication.email)
+    element(By.id('auth_password')).sendKeys(sampleApplication.password)
     element(By.id('sign-in')).click()
     browser.waitForAngular()
 
@@ -564,6 +626,57 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see my name and DOB', ->
+    firstName = element(By.model('applicant.firstName'))
+    @expect(firstName.getText()).to.eventually.equal(sampleApplication.firstName)
+    middleName = element(By.model('applicant.middleName'))
+    @expect(middleName.getText()).to.eventually.equal(sampleApplication.middleName)
+    lastName = element(By.model('applicant.lastName'))
+    @expect(lastName.getText()).to.eventually.equal(sampleApplication.lastName)
+    birthMonth = element(By.model('applicant.dob_month'))
+    @expect(birthMonth.getText()).to.eventually.equal(sampleApplication.birthMonth)
+    birthDay = element(By.model('applicant.dob_day'))
+    @expect(birthDay.getText()).to.eventually.equal(sampleApplication.birthDay)
+    birthYear = element(By.model('applicant.dob_year'))
+    @expect(birthYear.getText()).to.eventually.equal(sampleApplication.birthYear)
+
+  @Then 'I should see my contact info', ->
+    phone = element(By.model('applicant.phone'))
+    @expect(phone.getText()).to.eventually.equal(sampleApplication.phone)
+    phoneType = element(By.model('applicant.phoneType'))
+    @expect(phoneType.getText()).to.eventually.equal(sampleApplication.phoneType)
+    phone2 = element(By.model('applicant.alternatePhone'))
+    @expect(phone2.getText()).to.eventually.equal(sampleApplication.phone2)
+    phoneType2 = element(By.model('applicant.alternatePhoneType'))
+    @expect(phoneType2.getText()).to.eventually.equal(sampleApplication.phoneType2)
+    email = element(By.model('applicant.email'))
+    @expect(email.getText()).to.eventually.equal(sampleApplication.email)
+    address1 = element(By.id('applicant_home_address_address1'))
+    @expect(address1.getText()).to.eventually.equal(sampleApplication.address1)
+    address2 = element(By.id('applicant_home_address_address2'))
+    @expect(address2.getText()).to.eventually.equal(sampleApplication.address2)
+    city = element(By.id('applicant_home_address_city'))
+    @expect(city.getText()).to.eventually.equal(sampleApplication.city)
+    state = element(By.id('applicant_home_address_state'))
+    @expect(state.getText()).to.eventually.equal(sampleApplication.state)
+    zip = element(By.id('applicant_home_address_zip'))
+    @expect(zip.getText()).to.eventually.equal(sampleApplication.zip)
+    mailAddress1 = element(By.id('applicant_mailing_address_address1'))
+    @expect(mailAddress1.getText()).to.eventually.equal(sampleApplication.mailAddress1)
+    mailAddress2 = element(By.id('applicant_mailing_address_address2'))
+    @expect(mailAddress2.getText()).to.eventually.equal(sampleApplication.mailAddress2)
+    mailCity = element(By.id('applicant_mailing_address_city'))
+    @expect(mailCity.getText()).to.eventually.equal(sampleApplication.mailCity)
+    mailState = element(By.id('applicant_mailing_address_state'))
+    @expect(mailState.getText()).to.eventually.equal(sampleApplication.mailState)
+    mailZip = element(By.id('applicant_mailing_address_zip'))
+    @expect(mailZip.getText()).to.eventually.equal(sampleApplication.mailZip)
+    workInSf = element(By.id('workInSf_yes'))
+    if sampleApplication.workInSf == 'yes'
+      @expect(workInSf.isSelected()).to.eventually.equal(true)
+    else
+      @expect(workInSf.isSelected()).to.eventually.equal(false)
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
