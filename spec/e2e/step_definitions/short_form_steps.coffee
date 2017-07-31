@@ -43,17 +43,21 @@ sampleApplication = {
   contactCity: 'San Francisco',
   contactState: 'California',
   contactZip: '94110',
-  addHouseholdMember: 'yes',
-  householdMemberFirstName: 'Frampton',
-  householdMemberLastName: 'Soapmaster',
-  householdMemberBirthMonth: '06',
-  householdMemberBirthDay: '11',
-  householdMemberBirthYear: '1981',
-  householdMemberCity: 'San Francisco',
-  householdMemberState: 'California',
-  householdMemberZip: '94110',
-  householdMemberWorkInSf: 'true',
-  householdMemberRelationship: 'Cousin',
+  householdMember: {
+    firstName: 'Frampton',
+    middleName: 'Blue',
+    lastName: 'Soapmaster',
+    birthMonth: '06',
+    birthDay: '11',
+    birthYear: '1981',
+    address1: '429 Castro St.',
+    address2: 'Door 1',
+    city: 'San Francisco',
+    state: 'California',
+    zip: '94114',
+    workInSf: 'true',
+    relationship: 'Cousin',
+  },
   publicHousing: 'true',
   monthlyRent: '2000',
   veteran: 'true',
@@ -120,23 +124,30 @@ fillOutContactPage = (opts = {}) ->
   submitPage()
 
 fillOutHouseholdMemberForm = (opts = {}) ->
-  opts.city ||= 'San Francisco'
+  opts.address2 ||= sampleApplication.householdMember.address2
+  opts.city ||= sampleApplication.householdMember.city
+  opts.state ||= sampleApplication.householdMember.state
+  opts.zip ||= sampleApplication.householdMember.zip
   opts.workInSf ||= 'no'
-  if opts.fullName
-    fullName = opts.fullName
-    firstName = fullName.split(' ')[0]
-    lastName  = fullName.split(' ')[1]
-    element(By.model('householdMember.firstName')).clear().sendKeys(firstName)
-    element(By.model('householdMember.lastName')).clear().sendKeys(lastName)
-    element(By.model('householdMember.dob_month')).clear().sendKeys('10')
-    element(By.model('householdMember.dob_day')).clear().sendKeys('15')
-    element(By.model('householdMember.dob_year')).clear().sendKeys('1985')
+  opts.zip ||= sampleApplication.householdMember.zip
+
+  if opts.firstName
+    element(By.model('householdMember.firstName')).clear().sendKeys(opts.firstName)
+    if opts.middleName
+      element(By.model('householdMember.middleName')).clear().sendKeys(opts.middleName)
+    element(By.model('householdMember.lastName')).clear().sendKeys(opts.lastName)
+  if opts.birthMonth
+    element(By.model('householdMember.dob_month')).clear().sendKeys(opts.birthMonth)
+    element(By.model('householdMember.dob_day')).clear().sendKeys(opts.birthDay)
+    element(By.model('householdMember.dob_year')).clear().sendKeys(opts.birthYear)
   if opts.address1
     element(By.id('hasSameAddressAsApplicant_no')).click()
     element(By.id('householdMember_home_address_address1')).clear().sendKeys(opts.address1)
+    if opts.address2
+      element(By.id('householdMember_home_address_address2')).clear().sendKeys(opts.address2)
     element(By.id('householdMember_home_address_city')).clear().sendKeys(opts.city)
-    element(By.id('householdMember_home_address_state')).sendKeys('california')
-    element(By.id('householdMember_home_address_zip')).clear().sendKeys('94114')
+    element(By.id('householdMember_home_address_state')).sendKeys(opts.state)
+    element(By.id('householdMember_home_address_zip')).clear().sendKeys(opts.zip)
   else
     element(By.id('hasSameAddressAsApplicant_yes')).click()
   if opts.workInSf == 'yes'
@@ -276,15 +287,24 @@ module.exports = ->
       elem.isDisplayed()
     ).last().click()
 
-  @When /^I add another household member named "([^"]*)" with same address as primary$/, (fullName) ->
+  @When 'I add a default household member', ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName})
+      fillOutHouseholdMemberForm(sampleApplication.householdMember)
+
+  @When /^I add another household member named "([^"]*)" with same address as primary$/, (fullName) ->
+    browser.waitForAngular()
+    firstName = fullName.split(' ')[0]
+    lastName  = fullName.split(' ')[1]
+    element(By.id('add-household-member')).click().then ->
+      fillOutHouseholdMemberForm({firstName: firstName, lastName: lastName})
 
   @When /^I add another household member named "([^"]*)" who lives at "([^"]*)"$/, (fullName, address1) ->
     browser.waitForAngular()
+    firstName = fullName.split(' ')[0]
+    lastName  = fullName.split(' ')[1]
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName, address1: address1})
+      fillOutHouseholdMemberForm({firstName: firstName, lastName: lastName, address1: address1})
 
   @When 'I change them to live inside SF, work in SF', ->
     fillOutHouseholdMemberForm({address1: '4053 18th St.', workInSf: 'yes'})

@@ -39,8 +39,13 @@ Feature: Short Form Application
       And I select a friend as an alternate contact
       And I fill out my alternate contact's name
       And I fill out my alternate contact's info
+      And I indicate living with other people
+      And I add a default household member
+      And I confirm their address
+      And I indicate being done adding people
+
+
       # fill in the rest of the steps
-      And I indicate I will live alone
       And I indicate living in public housing
       And I indicate no priority
       And I indicate having vouchers
