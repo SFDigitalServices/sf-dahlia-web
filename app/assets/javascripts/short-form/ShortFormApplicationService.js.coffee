@@ -537,6 +537,12 @@ ShortFormApplicationService = (
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)
 
+  Service.sendToLastPageofApp = (toState) ->
+    appLastPage = Service.application.lastPage
+    if toState.name != "dahlia.short-form-application.#{appLastPage}" &&
+      $state.href("dahlia.short-form-application.#{appLastPage}")
+        $state.go("dahlia.short-form-application.#{appLastPage}")
+
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
@@ -566,6 +572,9 @@ ShortFormApplicationService = (
 
   Service.isLeavingShortForm = (toState, fromState) ->
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.isEnteringShortForm = (toState, fromState) ->
+    !Service.isShortFormPage(fromState) && Service.isShortFormPage(toState)
 
   Service.isLeavingConfirmationToSignIn = (toState, fromState) ->
     fromState.name == 'dahlia.short-form-application.create-account' &&
@@ -701,7 +710,6 @@ ShortFormApplicationService = (
     $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
       Service.loadAccountApplication(data)
     )
-
 
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing

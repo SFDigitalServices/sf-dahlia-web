@@ -112,10 +112,7 @@ AccountController = (
           else if $state.params.fromShortFormIntro
             $state.go('dahlia.short-form-welcome.intro', {id: ShortFormApplicationService.listing.Id})
           else if $state.current.name == 'dahlia.continue-draft-sign-in'
-            ShortFormApplicationService.getMyApplicationForListing($state.params.listing_id).then( ->
-              lastPage = ShortFormApplicationService.application.lastPage
-              $state.go('dahlia.short-form-application.#{lastPage}', id: $state.params.listing_id)
-            )
+            $state.go('dahlia.short-form-application.name', id: $state.params.listing_id)
           else
             $scope._signInRedirect()
       ).catch( ->

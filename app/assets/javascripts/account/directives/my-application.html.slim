@@ -27,7 +27,7 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
         p.feed-item-status
           ' {{'T.STATUS' | translate}}:
           | {{'T.IN_PROGRESS' | translate}}
-        a.button.small.primary ui-sref="dahlia.short-form-application.{{lastPage}}({id: listing.Id})"
+        a.button.small.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
           | {{'LABEL.CONTINUE_APPLICATION' | translate}}
 
       .feed-item-action ng-if="!isSubmitted() && isPastDue()"
