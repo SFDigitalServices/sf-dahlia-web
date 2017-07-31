@@ -327,7 +327,9 @@ module.exports = ->
     element(By.id('save_and_finish_later')).click()
 
   @When 'I click the Create Account button', ->
-    element(By.id('create-account')).click()
+    createAccount = element(By.id('create-account'))
+    scrollToElement(createAccount)
+    createAccount.click()
 
   @When 'I fill out my account info', ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
