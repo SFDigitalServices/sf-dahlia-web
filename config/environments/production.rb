@@ -23,6 +23,8 @@ Rails.application.configure do
 
   # this automatically gets set to true via `rails_12factor` gem
   config.serve_static_files = true
+  # cache for 1 year
+  config.static_cache_control = 'public, max-age=31536000'
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
