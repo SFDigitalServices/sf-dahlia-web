@@ -81,13 +81,13 @@ Feature: Short Form Application
       Then I should see the info of my alternate contact
       When I submit the page
       Then I should see my household members
-      When I edit the household member
+      When I edit the last household member
       Then I should see the info of my household member
       When I submit the page
       And I indicate being done adding people
       Then I should see not living in public housing
       When I submit the page
-      Then I should see "2500" for my monthly rent
+      Then I should see "2500" for my monthly rent and the rent of my housemate
       When I submit the page
       Then I should see veteran selected
       When I submit the page
@@ -100,6 +100,7 @@ Feature: Short Form Application
       Then I should see my income as "33333"
       When I submit the page
       And I continue past the Lottery Preferences intro
+      # gets this far at the moment
       Then I should see the Live in SF preference chosen with proof
       When I submit the page
       Then I should see the Rent Burdened Preference

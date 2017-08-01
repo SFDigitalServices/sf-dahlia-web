@@ -48,6 +48,7 @@ sampleApplication = {
     email: 'chet@eurignfjnbgjrio.uifndj',
     address1: '2601 Mission St.',
     address2: 'Suite 300',
+    condensedAddress: '2601 Mission St. Suite 300',
     city: 'SAN FRANCISCO',
     state: 'CA',
     zip: '94110'
@@ -56,20 +57,21 @@ sampleApplication = {
     firstName: 'Frampton',
     middleName: 'Blue',
     lastName: 'Soapmaster',
-    birthMonth: '06',
+    birthMonth: '10',
     birthDay: '11',
     birthYear: '1981',
     address1: '429 Castro St.',
     address2: 'Door 1',
+    condensedAddress: '429 CASTRO ST DOOR 1',
     city: 'SAN FRANCISCO',
     state: 'CA',
-    zip: '94114',
-    workInSf: 'true',
+    zip: '94114-2019',
+    workInSf: 'yes',
     relationship: 'Cousin',
   },
   publicHousing: 'no',
-  monthlyRent: '2000',
-  income: '25000',
+  monthlyRent: '2,500.00',
+  income: '33,333.00',
   neighborhoodPref: 'true',
   rentBurdenPref: 'true',
   copPref: 'true',
@@ -694,6 +696,107 @@ module.exports = ->
       @expect(workInSf.isSelected()).to.eventually.equal(true)
     else
       @expect(workInSf.isSelected()).to.eventually.equal(false)
+
+  @Then 'I should see my alternate contact', ->
+    friendChoice = element(By.id('alternateContactType_friend'))
+    @expect(friendChoice.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see the name of my alternate contact', ->
+    firstName = element(By.model('alternateContact.firstName'))
+    @expect(firstName.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.firstName)
+    lastName = element(By.model('alternateContact.lastName'))
+    @expect(lastName.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.lastName)
+
+  @Then 'I should see the info of my alternate contact', ->
+    phone = element(By.model('alternateContact.phone'))
+    @expect(phone.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.phone)
+    email = element(By.model('alternateContact.email'))
+    @expect(email.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.email)
+    address1 = element(By.id('alternateContact_mailing_address_address1'))
+    @expect(address1.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.condensedAddress)
+    city = element(By.id('alternateContact_mailing_address_city'))
+    @expect(city.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.city)
+    state = element(By.id('alternateContact_mailing_address_state'))
+    @expect(state.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.state)
+    zip = element(By.id('alternateContact_mailing_address_zip'))
+    @expect(zip.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.zip)
+
+  @Then 'I should see my household members', ->
+    applicant = element.all(By.cssContainingText('p.info-item_name', sampleApplication.nameInfo.firstName)).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(applicant.isPresent()).to.eventually.equal(true)
+    householdMember = element.all(By.cssContainingText('p.info-item_name', sampleApplication.householdMember.firstName)).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(householdMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the info of my household member', ->
+    firstName = element(By.model('householdMember.firstName'))
+    @expect(firstName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.firstName)
+    middleName = element(By.model('householdMember.middleName'))
+    @expect(middleName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.middleName)
+    lastName = element(By.model('householdMember.lastName'))
+    @expect(lastName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.lastName)
+    birthMonth = element(By.model('householdMember.dob_month'))
+    @expect(birthMonth.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthMonth)
+    birthDay = element(By.model('householdMember.dob_day'))
+    @expect(birthDay.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthDay)
+    birthYear = element(By.model('householdMember.dob_year'))
+    @expect(birthYear.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthYear)
+    birthYear = element(By.model('householdMember.dob_year'))
+    @expect(birthYear.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthYear)
+    address1 = element(By.id('householdMember_home_address_address1'))
+    @expect(address1.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.condensedAddress)
+    city = element(By.id('householdMember_home_address_city'))
+    @expect(city.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.city)
+    state = element(By.id('householdMember_home_address_state'))
+    @expect(state.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.state)
+    zip = element(By.id('householdMember_home_address_zip'))
+    @expect(zip.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.zip)
+    workInSf = element(By.id('workInSf_yes'))
+    @expect(workInSf.isSelected()).to.eventually.equal(true)
+    relationship = element(By.model('householdMember.relationship'))
+    @expect(relationship.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.relationship)
+
+  @Then 'I should see not living in public housing', ->
+    notInPublicHousing = element(By.id('hasPublicHousing_no'))
+    @expect(notInPublicHousing.isSelected()).to.eventually.equal(true)
+
+  @Then /^I should see "([^"]*)" for my monthly rent and the rent of my housemate$/, (rent) ->
+    myRent = element(By.id('monthlyRent_0'))
+    @expect(myRent.getAttribute('value')).to.eventually.equal(sampleApplication.monthlyRent)
+    theirRent = element(By.id('monthlyRent_1'))
+    @expect(theirRent.getAttribute('value')).to.eventually.equal(sampleApplication.monthlyRent)
+
+  @Then 'I should see veteran selected', ->
+    veteran = element(By.id('hasMilitaryService_yes'))
+    @expect(veteran.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see having a developmental disability selected', ->
+    disability = element(By.id('hasDevelopmentalDisability_yes'))
+    @expect(disability.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see need ADA features for vision and hearing', ->
+    vision = element(By.id('adaPrioritiesSelected_vision-impaired'))
+    @expect(vision.isSelected()).to.eventually.equal(true)
+    hearing = element(By.id('adaPrioritiesSelected_hearing-impaired'))
+    @expect(hearing.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see not having vouchers', ->
+    noVouchers = element(By.id('householdVouchersSubsidies_no'))
+    @expect(noVouchers.isSelected()).to.eventually.equal(true)
+
+  @Then /^I should see my income as "([^"]*)"$/, (income) ->
+    myIncome = element(By.id('incomeTotal'))
+    @expect(myIncome.getAttribute('value')).to.eventually.equal(sampleApplication.income)
+
+  @Then 'I should see the Live in SF preference chosen with proof', ->
+    livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(livePref.isPresent()).to.eventually.equal(true)
+
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
