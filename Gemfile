@@ -113,6 +113,6 @@ group :production do
   gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
-  gem 'heroku-deflater', github: 'romanbsd/heroku-deflater'
+  gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
   gem 'rails_12factor'
 end
