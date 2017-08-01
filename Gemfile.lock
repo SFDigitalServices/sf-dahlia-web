@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/Exygy/heroku-deflater.git
-  revision: 47bac56d8f9c469e71f6383f11b70ed2c6a08bc0
+  revision: ea986e017a56b882d32e8989f4959e5f1af5d50c
   specs:
     heroku-deflater (0.6.3)
       rack (>= 1.4.5)
@@ -206,7 +206,7 @@ GEM
     puma (3.6.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.5)
+    rack (1.6.8)
     rack-rewrite (1.5.1)
     rack-test (0.6.3)
       rack (>= 1.0)
