@@ -12,8 +12,8 @@
   $httpProvider.defaults.headers.get = {}
 
   $httpProvider.interceptors.push [
-    '$location', '$rootScope', '$injector', '$q',
-    ($location, $rootScope, $injector, $q) ->
+    '$location', '$rootScope', '$injector', '$q', '$translate',
+    ($location, $rootScope, $injector, $q, $translate) ->
 
       return {
         responseError: (error) ->
@@ -24,7 +24,8 @@
               ($http, ModalService, bsLoadingOverlayService) ->
                 # if error.status == 408
                 bsLoadingOverlayService.stop()
-                ModalService.alert('Oops! Looks like something went wrong. Please try again.')
+                alertMessage = $translate.instant('ERROR.TIMEOUT')
+                ModalService.alert(alertMessage)
                 error
             ]
             return $q.reject(error)
