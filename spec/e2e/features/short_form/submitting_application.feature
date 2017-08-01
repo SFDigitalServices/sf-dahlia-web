@@ -45,6 +45,7 @@ Feature: Short Form Application
       And I indicate being done adding people
       And I indicate not living in public housing
       And I enter "2500" for my monthly rent
+      And I enter "2500" for the rent of my housemate
       And I indicate being a veteran
       And I indicate having a developmental disability
       And I indicate need ADA features for vision and hearing
@@ -55,15 +56,15 @@ Feature: Short Form Application
       And I upload a "Gas bill" as my proof of preference for "liveInSf"
       And I click the Next button on the Live/Work Preference page
       And I select Rent Burdened Preference
-      And I upload a copy of the lease
-      And I upload proof of rent payment
+      And I upload rent burdened proof
+      And I upload rent burdened proof
       And I click the Next button on the Rent Burdened Preference page
       And I select "Coleman Francis" for "certOfPreference" preference
       And I select "Coleman Francis" for "displaced" preference
       And I submit my preferences
       And I fill out the optional survey
       And I click the Save and Finish Later button
-      And I fill out my account info
+      And I complete my account info
       And I submit the Create Account form
       And I confirm the account for the default email
       And I sign in with default info
@@ -73,7 +74,6 @@ Feature: Short Form Application
       When I submit the page
       Then I should see my contact info
       When I submit the page
-      And I confirm my address
       Then I should see my alternate contact
       When I submit the page
       Then I should see the name of my alternate contact
@@ -85,38 +85,30 @@ Feature: Short Form Application
       Then I should see the info of my household member
       When I submit the page
       And I indicate being done adding people
-
-
-      # check all things step by step here
-
-      And I go to the review step
+      Then I should see not living in public housing
+      When I submit the page
+      Then I should see "2500" for my monthly rent
+      When I submit the page
+      Then I should see veteran selected
+      When I submit the page
+      Then I should see having a developmental disability selected
+      When I submit the page
+      Then I should see need ADA features for vision and hearing
+      When I submit the page
+      Then I should see not having vouchers
+      When I submit the page
+      Then I should see my income as "33333"
+      When I submit the page
+      And I continue past the Lottery Preferences intro
+      Then I should see the Live in SF preference chosen with proof
+      When I submit the page
+      Then I should see the Rent Burdened Preference
+      When I submit the page
+      Then I should see the certOfPreference and displaced preferences
+      When I submit the page
       And I fill out the optional survey
       And I confirm details on the review page
       And I agree to the terms and submit
       And I go to My Applications
       And I view the application from My Applications
       Then I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected
-
-      # original end to test
-      And I click the Save and Finish Later button
-      And I fill out my account info
-      And I submit the Create Account form
-      And I confirm the account for the default email
-
-    # Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
-    #   Given I have a confirmed account
-    #   When I sign in
-    #   And I go to My Applications
-    #   Then I should see my draft application with a Continue Application button
-    #   # now submit the application
-    #   When I click the Continue Application button
-    #
-    #
-    #   # skip to however far the test takes you
-    #   And I confirm details on the review page
-    #   And I agree to the terms and submit
-    #   And I view the application from My Applications
-    #   Then I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected
-    #   #
-    #   # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
-    #   #
