@@ -21,6 +21,13 @@ GIT
       rack (>= 1.2.1)
       rake
 
+GIT
+  remote: https://github.com/romanbsd/heroku-deflater.git
+  revision: 41645205533cc17bd5097d7823b0f084c735a285
+  specs:
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -365,6 +372,7 @@ DEPENDENCIES
   facets
   factory_girl_rails
   hashie
+  heroku-deflater!
   http
   image_optimizer (~> 1.7.0)
   jasmine!
