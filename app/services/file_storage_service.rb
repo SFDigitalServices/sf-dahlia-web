@@ -18,6 +18,10 @@ class FileStorageService
     @files ||= connection.directories.get(REMOTE_BUCKET).files
   end
 
+  def self.find(prefix)
+    files.all(prefix: prefix)
+  end
+
   def self.upload(file_blob, filename)
     files.create(
       key: filename,

@@ -12,7 +12,7 @@ class ListingImageService
     @listing = listing_hash
     @listing_id = listing_hash['Id']
     @raw_image_url = listing_hash['Building_URL']
-    @resized_listing_images = FileStorageService.files.all(prefix: REMOTE_IMAGE_PATH)
+    @resized_listing_images = FileStorageService.find(REMOTE_IMAGE_PATH)
   end
 
   def process_image
@@ -62,17 +62,17 @@ class ListingImageService
     FileStorageService.upload(image_blob, image_path) if image_blob
   end
 
-  def resize_image(image, width = IMAGE_WIDTH)
+  def resize_image(image)
     image = MiniMagick::Image.open(image)
-    unless image.valid?
-      add_error("Image for listing #{listing_id} is unreadable")
-      return false
-    end
+    throw MiniMagick::Invalid unless image.valid?
     # set width only and height is adjusted to maintain aspect ratio
-    image.resize width.to_s
+    image.resize IMAGE_WIDTH.to_s
     image.format 'jpg'
     image.to_blob
     # ImageOptimizer.new(image_path, quality: 75).optimize
+  rescue MiniMagick::Invalid
+    add_error("Image for listing #{listing_id} is unreadable")
+    return false
   end
 
   def add_error(error_message)
