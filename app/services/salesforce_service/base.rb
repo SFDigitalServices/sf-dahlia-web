@@ -9,7 +9,7 @@ module SalesforceService
     self.retries = 1
 
     def self.client
-      Restforce.new
+      Restforce.new(timeout: 5)
     end
 
     def self.oauth_client
@@ -18,6 +18,7 @@ module SalesforceService
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
+        timeout: 5,
       )
     end
 
@@ -45,10 +46,6 @@ module SalesforceService
         self.error = 'Restforce::UnauthorizedError'
         []
       end
-    rescue StandardError => e
-      p "UH OH -- StandardError #{e.message}" if Rails.env.development?
-      self.error = e.message
-      []
     end
 
     def self.api_get(endpoint, params = nil, parse_response = false)
