@@ -84,7 +84,7 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
-            ListingService.getListing($stateParams.id).then ->
+            ListingService.getListing($stateParams.id).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
@@ -98,6 +98,9 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
               setTimeout(ListingService.getListingDownloadURLs)
+            ).catch( (err) ->
+              deferred.reject(err)
+            )
             return deferred.promise
         ]
         application: [

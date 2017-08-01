@@ -11,17 +11,24 @@
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
   $httpProvider.defaults.headers.get = {}
 
-  $httpProvider.interceptors.push ["$location", "$rootScope", "$q", ($location, $rootScope, $q) ->
-    success = (response) ->
-      response
-    error = (response) ->
-      if _([400, 401]).includes(response.status)
-        $rootScope.$broadcast "event:unauthorized"
-        $location.path ""
-        return response
-      $q.reject response
-    return (promise) ->
-      promise.then success, error
+  $httpProvider.interceptors.push [
+    '$location', '$rootScope', '$injector', '$q',
+    ($location, $rootScope, $injector, $q) ->
+
+      return {
+        responseError: (error) ->
+
+          if error.status == 408
+            $injector.invoke [
+              '$http', 'ModalService', 'bsLoadingOverlayService',
+              ($http, ModalService, bsLoadingOverlayService) ->
+                # if error.status == 408
+                bsLoadingOverlayService.stop()
+                ModalService.alert('Oops! Looks like something went wrong. Please try again.')
+                error
+            ]
+            return $q.reject(error)
+      }
   ]
 ]
 
