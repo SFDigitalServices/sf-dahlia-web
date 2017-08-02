@@ -25,7 +25,9 @@ module ApplicationHelper
     Rails.application.assets_manifest.assets.each do |f, hashpath|
       next if f !~ /jpg|png|svg|json/ || f =~ /favicon|apple\-icon|android\-icon/
       f = f.gsub('translations/', '') if f =~ %r{translations/}
-      asset_paths[f] = "/assets/#{hashpath}"
+      cdn_host = Rails.application.config.action_controller.asset_host
+      base_url = cdn_host ? "https://#{cdn_host}" : ''
+      asset_paths[f] = "#{base_url}/assets/#{hashpath}"
     end
     asset_paths
   end
