@@ -218,6 +218,7 @@
         "SEXUAL_ORIENTATION": "Please enter your sexual orientation",
         "STATE": "Please enter a state",
         "TERMS": "You must agree to the terms in order to continue",
+        "TIMEOUT": "Oops! Looks like something went wrong. Please try again.",
         "ZIP": "Please enter a zipcode"
     },
     "F0_REVIEW_OPTIONAL": {

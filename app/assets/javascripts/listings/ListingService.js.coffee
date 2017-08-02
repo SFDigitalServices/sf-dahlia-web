@@ -216,10 +216,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListing = (_id) ->
     _id = Service.mapSlugToId(_id)
+
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
     angular.copy({}, Service.listing)
+
     deferred = $q.defer()
     $http.get("/api/v1/listings/#{_id}.json",
       { etagCache: true }
@@ -228,6 +230,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingResponse(deferred)
     ).error( (data, status, headers, config) ->
+      deferred.reject(_id)
       return
     )
     return deferred.promise
@@ -374,13 +377,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
-    Service.getListing(id).then ->
+    deferred = $q.defer()
+    Service.getListing(id).then( ->
+      deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
         return $state.go('dahlia.welcome')
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
+      Service.getListingPreferences()
+    ).catch( (error) ->
+      deferred.reject(error)
+    )
+    deferred.promise
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
