@@ -94,8 +94,8 @@ optOutAndSubmit = ->
 getUrl = (url) ->
   browser.get(url)
 
-submitPage = () ->
-  element(By.id('submit')).click()
+scrollToElement = (element) ->
+  browser.actions().mouseMove(element).perform()
 
 module.exports = ->
   # import global cucumber options
@@ -340,7 +340,9 @@ module.exports = ->
     submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
-    element(By.id('incomeTotal')).clear().sendKeys(income)
+    incomeTotal = element(By.id('incomeTotal'))
+    scrollToElement(incomeTotal)
+    incomeTotal.clear().sendKeys(income)
     element(By.id('per_year')).click()
     submitPage()
 
@@ -361,7 +363,9 @@ module.exports = ->
     element(By.id('save_and_finish_later')).click()
 
   @When 'I click the Create Account button', ->
-    element(By.id('create-account')).click()
+    createAccount = element(By.id('create-account'))
+    scrollToElement(createAccount)
+    createAccount.click()
 
   @When 'I fill out my account info', ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
