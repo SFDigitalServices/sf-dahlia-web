@@ -2,8 +2,8 @@
 class FileStorageService
   attr_reader :errors
 
-  REMOTE_BUCKET = 'sf-dahlia'.freeze
-  REGION = 'us-west-1'.freeze
+  REMOTE_BUCKET = ENV['S3_BUCKET']
+  REGION = ENV['S3_REGION'] || 'us-west-1'.freeze
 
   def self.connection
     @connection ||= Fog::Storage.new(
@@ -22,11 +22,12 @@ class FileStorageService
     files.all(prefix: prefix)
   end
 
-  def self.upload(file_blob, filename)
-    files.create(
-      key: filename,
-      body: file_blob,
-      public: true,
-    )
+  def self.upload(filename, file_blob, options = {})
+    options[:key] = filename
+    options[:body] = file_blob
+    # Files are accessed through cloudfront so don't need to be public
+    options[:public] = false
+
+    files.create(options)
   end
 end

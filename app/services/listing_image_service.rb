@@ -22,13 +22,19 @@ class ListingImageService
     end
 
     unless resized_image?
-      if resize_and_upload_image
-        listing_image =
-          ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id)
-        listing_image.update(image_url: image_url)
-      end
+      create_or_update_listing_image if resize_and_upload_image
     end
 
+    self
+  end
+
+  def save_image_url
+    unless raw_image_url
+      add_error("No image provided for listing #{listing_id}")
+      return self
+    end
+
+    create_or_update_listing_image if resized_image?
     self
   end
 
@@ -49,7 +55,7 @@ class ListingImageService
   end
 
   def image_url
-    base_image_url = ENV['RESOURCE_URL'] || 'https://d3047bfujujwqc.cloudfront.net'
+    base_image_url = ENV['RESOURCE_URL']
     "#{base_image_url}/#{image_path}"
   end
 
@@ -59,7 +65,14 @@ class ListingImageService
 
   def resize_and_upload_image
     image_blob = resize_image(raw_image_url)
-    FileStorageService.upload(image_blob, image_path) if image_blob
+    if image_blob
+      # cache images for 100 yrs since we change the filename when image changes
+      FileStorageService.upload(
+        image_path,
+        image_blob,
+        cache_control: 'max-age=3153600000',
+      )
+    end
   end
 
   def resize_image(image)
@@ -73,6 +86,12 @@ class ListingImageService
   rescue MiniMagick::Invalid
     add_error("Image for listing #{listing_id} is unreadable")
     return false
+  end
+
+  def create_or_update_listing_image
+    listing_image =
+      ListingImage.find_or_initialize_by(salesforce_listing_id: listing_id)
+    listing_image.update(image_url: image_url)
   end
 
   def add_error(error_message)

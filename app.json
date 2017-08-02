@@ -2,7 +2,7 @@
   "name":"sf-dahlia-web",
   "description":"",
   "scripts":{
-    "postdeploy": "rake db:setup && rake db:migrate"
+    "postdeploy": "rake db:setup && rake db:migrate && rake listing_images:update_urls"
   },
   "addons":[
     "newrelic",
