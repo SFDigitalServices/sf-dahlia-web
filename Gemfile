@@ -42,6 +42,8 @@ gem 'facets', require: false
 
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
+# for CORS requests (specifically for CDN handling)
+gem 'rack-cors', '~> 1.0.1'
 
 # address validation
 gem 'easypost'

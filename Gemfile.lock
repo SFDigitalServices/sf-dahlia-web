@@ -207,6 +207,7 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.8)
+    rack-cors (1.0.1)
     rack-rewrite (1.5.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -392,6 +393,7 @@ DEPENDENCIES
   pry-rails
   puma
   quiet_assets
+  rack-cors (~> 1.0.1)
   rack-rewrite (~> 1.5.0)
   rails (~> 4.2.8)
   rails-api
