@@ -18,6 +18,7 @@ sampleApplication = {
     month: '11',
     day: '22',
     year: '1990',
+    dob: '11/22/1990',
   },
   contactInfo: {
     phone: '(222) 222-2222',
@@ -792,11 +793,17 @@ module.exports = ->
     @expect(myIncome.getAttribute('value')).to.eventually.equal(sampleApplication.income)
 
   @Then 'I should see the Live in SF preference chosen with proof', ->
-    livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
+    livePref = element.all(By.cssContainingText('option', 'Live in San Francisco')).filter((elem) ->
       elem.isDisplayed()
     ).first()
-    @expect(livePref.isPresent()).to.eventually.equal(true)
-
+    @expect(livePref.isSelected()).to.eventually.equal(true)
+    uploaded = element.all(By.cssContainingText('.media-body', 'Uploaded')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    uploaded = element.all(By.id('successful-upload')).filter((elem) ->
+      elem.isDisplayed()
+    )
+    @expect(uploaded.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
@@ -816,9 +823,28 @@ module.exports = ->
     ).first()
     @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should see the Rent Burdened Preference with proofs', ->
+    # strong.form-label
+    rentBurdenPref = element(By.id('preferences-rentBurden'))
+    @expect(rentBurdenPref.isSelected()).to.eventually.equal(true)
+    leaseUpload = element.all(By.cssContainingText('.info-item_doc', 'Copy of Lease')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    rentUpload = element.all(By.cssContainingText('.info-item_doc', 'Proof of Rent')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(leaseUpload.isPresent()).to.eventually.equal(true)
+    @expect(rentUpload.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the certOfPreference and displaced preferences', ->
+    certOfPref = element(By.id('preferences-certOfPreference'))
+    @expect(certOfPref.isSelected()).to.eventually.equal(true)
+    displacedPref = element(By.id('preferences-displaced'))
+    @expect(displacedPref.isSelected()).to.eventually.equal(true)
+
   @Then 'I should see the Preferences Programs screen', ->
-    certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
-    @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
+    certificateOfPrefBox = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
+    @expect(certificateOfPrefBox.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
     attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
@@ -867,19 +893,75 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected', ->
+  @Then 'I should see my application info displayed as expected', ->
     appName = element(By.id('full-name'))
-    @expect(appName.getText()).to.eventually.equal('JANE DOE')
+    firstName = sampleApplication.nameInfo.firstName.toUpperCase()
+    middleName = sampleApplication.nameInfo.middleName.toUpperCase()
+    lastName = sampleApplication.nameInfo.lastName.toUpperCase()
+    @expect(appName.getText()).to.eventually.equal(firstName + ' ' + middleName + ' ' + lastName)
     appDob = element(By.id('dob'))
-    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
-    appEmail = element(By.id('email'))
-    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
-    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
-    @expect(liveInSf.isPresent()).to.eventually.equal(true)
+    @expect(appDob.getText()).to.eventually.equal(sampleApplication.nameInfo.dob)
+    phone = element(By.cssContainingText('span', sampleApplication.contactInfo.phone))
+    @expect(phone.isPresent()).to.eventually.equal(true)
+    phoneType = element(By.cssContainingText('.info-item_note', sampleApplication.contactInfo.phoneType))
+    @expect(phoneType.isPresent()).to.eventually.equal(true)
+    # good ^
+    phone2 = element(By.cssContainingText('span', sampleApplication.contactInfo.phone2))
+    @expect(phone2.isPresent()).to.eventually.equal(true)
+    phoneType2 = element(By.cssContainingText('.info-item_note', sampleApplication.contactInfo.phoneType2))
+    @expect(phoneType2.isPresent()).to.eventually.equal(true)
+    appEmail = element(By.cssContainingText('#email', sampleApplication.contactInfo.email))
+    @expect(appEmail.isPresent()).to.eventually.equal(true)
+    address = element(By.cssContainingText('span', sampleApplication.contactInfo.condensedAddress))
+    @expect(address.isPresent()).to.eventually.equal(true)
+    city = sampleApplication.contactInfo.city.toUpperCase()
+    state = sampleApplication.contactInfo.state
+    zip = sampleApplication.contactInfo.zip
+    cityState = element(By.cssContainingText('span', city + ', ' + state + ' ' + zip))
+    @expect(cityState.isPresent()).to.eventually.equal(true)
+    altFirstName = sampleApplication.alternateContact.firstName.toUpperCase()
+    altLastName = sampleApplication.alternateContact.lastName.toUpperCase()
+    alternateContactName = element(By.cssContainingText('span', altFirstName + ' ' + altLastName))
+    @expect(alternateContactName.isPresent()).to.eventually.equal(true)
+    alternateContactType = element(By.cssContainingText('.info-item_note', 'Friend'))
+    @expect(alternateContactType.isPresent()).to.eventually.equal(true)
+    alternateContactEmail = element(By.cssContainingText('span', sampleApplication.alternateContact.email.toUpperCase()))
+    @expect(alternateContactEmail.isPresent()).to.eventually.equal(true)
+    alternateContactPhone = element(By.cssContainingText('span', sampleApplication.alternateContact.phone))
+    @expect(alternateContactPhone.isPresent()).to.eventually.equal(true)
+    alternateContactAddress = element(By.cssContainingText('span', sampleApplication.alternateContact.condensedAddress.toUpperCase()))
+    @expect(alternateContactAddress.isPresent()).to.eventually.equal(true)
+    altCity = sampleApplication.alternateContact.city.toUpperCase()
+    altState = sampleApplication.alternateContact.state.toUpperCase()
+    altZip = sampleApplication.alternateContact.zip
+    alternateContactCityState = element(By.cssContainingText('span', altCity + ', ' + altState + ' ' + altZip))
+    @expect(alternateContactCityState.isPresent()).to.eventually.equal(true)
+    publicHousingNo = element(By.cssContainingText('#publicHousing', 'NO'))
+    @expect(publicHousingNo.isPresent()).to.eventually.equal(true)
+    yourMonthlyRent = element(By.cssContainingText('#monthlyRent0', sampleApplication.monthlyRent))
+    @expect(yourMonthlyRent.isPresent()).to.eventually.equal(true)
+    theirMonthlyRent = element(By.cssContainingText('#monthlyRent1', sampleApplication.monthlyRent))
+    @expect(theirMonthlyRent.isPresent()).to.eventually.equal(true)
+    veterans = element(By.cssContainingText('#veteran', 'YES'))
+    @expect(veterans.isPresent()).to.eventually.equal(true)
+    developmentalDisability = element(By.cssContainingText('#developmentalDisability', 'YES'))
+    @expect(developmentalDisability.isPresent()).to.eventually.equal(true)
+    accessibility1 = element(By.cssContainingText('#accessibility0', 'VISION'))
+    @expect(accessibility1.isPresent()).to.eventually.equal(true)
+    accessibility2 = element(By.cssContainingText('#accessibility1', 'HEARING'))
+    @expect(accessibility2.isPresent()).to.eventually.equal(true)
     certOfPref = element(By.cssContainingText('.info-item_name', 'Certificate of Preference (COP)'))
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
     @expect(DTHP.isPresent()).to.eventually.equal(true)
+    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
+    @expect(liveInSf.isPresent()).to.eventually.equal(true)
+    rentBurden = element(By.cssContainingText('.info-item_name', 'Rent Burdened Preference'))
+    @expect(rentBurden.isPresent()).to.eventually.equal(true)
+    noVouchers = element(By.cssContainingText('#vouchers', 'NONE'))
+    @expect(noVouchers.isPresent()).to.eventually.equal(true)
+    income = element(By.cssContainingText('#incomeTotal', sampleApplication.income))
+    @expect(income.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))

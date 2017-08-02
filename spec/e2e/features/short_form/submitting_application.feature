@@ -103,13 +103,12 @@ Feature: Short Form Application
       # gets this far at the moment
       Then I should see the Live in SF preference chosen with proof
       When I submit the page
-      Then I should see the Rent Burdened Preference
+      Then I should see the Rent Burdened Preference with proofs
       When I submit the page
       Then I should see the certOfPreference and displaced preferences
       When I submit the page
       And I fill out the optional survey
       And I confirm details on the review page
       And I agree to the terms and submit
-      And I go to My Applications
       And I view the application from My Applications
-      Then I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected
+      Then I should see my application info displayed as expected
