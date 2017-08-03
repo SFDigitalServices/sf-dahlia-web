@@ -33,6 +33,10 @@
     "protractor": "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
     "saucelabs": "./node_modules/protractor/bin/protractor spec/e2e/conf-saucelabs.js"
   },
+  "cacheDirectories": [
+    "node_modules",
+    "lib/assets/bower_components"
+  ],
   "keywords": [
     "angular",
     "rails"
