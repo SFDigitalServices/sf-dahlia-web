@@ -21,20 +21,12 @@ class ListingImageService
       return self
     end
 
-    unless resized_image?
+    if !resized_image?
       create_or_update_listing_image if resize_and_upload_image
+    elsif !listing_image_current?
+      create_or_update_listing_image
     end
 
-    self
-  end
-
-  def save_image_url
-    unless raw_image_url
-      add_error("No image provided for listing #{listing_id}")
-      return self
-    end
-
-    create_or_update_listing_image if resized_image?
     self
   end
 
@@ -61,6 +53,11 @@ class ListingImageService
 
   def resized_image?
     resized_listing_images.count { |file| file.key.end_with?(image_name) } > 0
+  end
+
+  def listing_image_current?
+    listing_image = ListingImage.where(salesforce_listing_id: listing_id).first
+    listing_image && listing_image.image_url == image_url
   end
 
   def resize_and_upload_image
