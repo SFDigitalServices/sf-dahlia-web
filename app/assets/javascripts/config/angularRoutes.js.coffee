@@ -541,6 +541,12 @@
           '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
             deferred = $q.defer()
+
+            # if the user just clicked the language switcher, don't reload the whole route
+            if ShortFormApplicationService.switchingLanguage()
+              deferred.resolve(ShortFormApplicationService.application)
+              return deferred.promise
+
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
 
@@ -553,11 +559,16 @@
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
               deferred.resolve(ShortFormApplicationService.application)
+              lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
+
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
-                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: lang})
+              else if lang && lang != $stateParams.lang
+                # check if draft application language matches the lang set in the route, if not then redirect
+                $state.go('dahlia.short-form-application.name', { id: $stateParams.id, lang: lang })
             return deferred.promise
         ]
     })
@@ -579,7 +590,7 @@
             # and then clicked 'back' in the browser from short form
             $timeout ->
               # autofill would not be `true` if you opted out
-              unless application.autofill
+              unless application && application.autofill
                 $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
         ]
       onEnter: [

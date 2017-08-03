@@ -17,6 +17,9 @@ class Emailer < Devise::Mailer
   end
 
   def submission_confirmation(params)
+    # set language based on params
+    I18n.locale = params[:locale]
+
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
     @name = "#{params[:firstName]} #{params[:lastName]}"
     return false unless listing.present? && params[:email].present?

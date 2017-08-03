@@ -3,13 +3,8 @@ Chance = require('chance')
 chance = new Chance()
 EC = protractor.ExpectedConditions
 
-getUrlAndCatchPopup = (url) ->
-  # always catch and confirm popup alert in case we are leaving an existing application
-  # (i.e. from a previous test)
-  browser.get(url).catch ->
-    browser.switchTo().alert().then (alert) ->
-      alert.accept()
-      browser.get url
+getUrl = (url) ->
+  browser.get(url)
 
 module.exports = ->
   # import global cucumber options
@@ -17,7 +12,7 @@ module.exports = ->
 
   @Given 'I try to go to a listing page with an invalid ID', ->
     url = "/listings/foofoofoofoo"
-    getUrlAndCatchPopup(url)
+    getUrl(url)
 
   ######################
   # --- Expectations --- #

@@ -14,45 +14,6 @@ do ->
     fakeLoadingOverlayService =
       start: -> null
       stop: -> null
-    sections = [
-      { name: 'You', pages: [
-          'name',
-          'contact',
-          'verify-address',
-          'alternate-contact-type',
-          'alternate-contact-name',
-          'alternate-contact-phone-address',
-        ]
-      },
-      { name: 'Household', pages: [
-          'household-intro',
-          'household-overview',
-          'household-members',
-          'household-member-form',
-          'household-member-form-edit'
-        ]
-      },
-      { name: 'Preferences', pages: [
-          'preferences-intro',
-          'neighborhood-preference',
-          'live-work-preference',
-          'preferences-programs',
-          'general-lottery-notice'
-        ]
-      },
-      { name: 'Income', pages: [
-          'income-vouchers',
-          'income'
-        ]
-      },
-      { name: 'Review', pages: [
-          'review-optional',
-          'review-summary',
-          'review-sign-in',
-          'review-terms'
-        ]
-      }
-    ]
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
@@ -71,10 +32,6 @@ do ->
       ShortFormNavigationService = _ShortFormNavigationService_
       return
     )
-
-    describe 'Service setup', ->
-      it 'initializes defaults', ->
-        expect(ShortFormNavigationService.sections).toEqual sections
 
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->

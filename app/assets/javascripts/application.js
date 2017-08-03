@@ -40,6 +40,7 @@
 //= require angular-ui-validate
 //= require angular-uuids
 //= require angular-linkify
+//= require angular-messages
 //= require angular-loading-overlay
 //= require angular-http-etag
 //= require config/angularModules.js

@@ -18,9 +18,9 @@ git push origin translations --force
 curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=en&operation=sync_terms_and_translations
 
 ### enable when other languages have been translated
-# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=es&operation=sync_terms_and_translations
-# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=zh-CN&operation=sync_terms_and_translations
-# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=tl&operation=sync_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=es&operation=import_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=zh-CN&operation=import_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=tl&operation=import_terms_and_translations
 
 # commit latest translations from POE -> Github
 curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=en&operation=export_terms_and_translations

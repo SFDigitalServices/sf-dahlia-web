@@ -153,6 +153,7 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     Emailer.submission_confirmation(
+      locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
@@ -265,6 +266,7 @@ class Api::V1::ShortFormController < ApiController
     params.require(:application)
           .permit(
             :id,
+            :applicationLanguage,
             {
               primaryApplicant: %i(
                 contactId

@@ -5,6 +5,12 @@
     "T": {
         "APPLICATION": "Aplicación",
         "APPLICATION_DUE": "Fecha de Vencimiento",
-        "GET_STARTED": "Empezar"
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Estás seguro de que te gustaría navegar lejos de esta página? Perderá toda la información que haya introducido en la aplicación para este listado. Si desea guardar su información para finalizar la aplicación más adelante, haga clic en el botón 'Guardar y terminar más tarde'.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Estás seguro de que quieres salir de esta página? Si vincula su aplicación a una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Estás seguro de que quieres salir de esta página? Si crea una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
+        "GET_STARTED": "Empezar",
+        "SESSION_INACTIVITY": "Su sesión expirará en un minuto debido a la inactividad. Usted perderá toda la información que haya ingresado en la aplicación para este listado si decide no responder.",
+        "SESSION_INACTIVITY_CONFIRMATION": "Su sesión expirará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta aplicación en una cuenta en la que pueda realizar un seguimiento del estado de su aplicación en cualquier momento.",
+        "SESSION_INACTIVITY_LOGGED_IN": "Su sesión expirará en un minuto debido a la inactividad. Usted perderá cualquier información no guardada y será desconectado si decide no responder."
     }
 }

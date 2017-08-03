@@ -5,23 +5,33 @@ section.app-container
         | {{'A1_INTRO.TITLE' | translate}}
       form.app-card.form-card.focus-container
         h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
-          a ui-sref="dahlia.short-form-welcome.overview"
-            | {{listing.Name}}
+          | {{listing.Name}}
         figure.property-card_figure.radius
-          a.property-card_overlay ui-sref="dahlia.short-form-welcome.overview" tabindex="-1"
-            img.property-card_thumb alt="Listing Name:{{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
+          .property-card_overlay
+            img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.Building_URL}}"
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
           figcaption.property-card_info
             h1.property-card_title.show-for-medium-up
-              a ui-sref="dahlia.short-form-welcome.overview"
-                | {{listing.Name}}
+              | {{listing.Name}}
             p.property-card_address
               | {{formattedBuildingAddress(listing)}}
-    .text-center.padding
-      a#submit.button.expand-small.primary type="button" ui-sref="dahlia.short-form-welcome.overview"
-        | {{'T.GET_STARTED' | translate}}
+    .text-center.padding.margin-top--2x
+      h3.h-caps.t-base.d-block
+        | {{'A1_INTRO.CHOOSE_YOUR_LANGUAGE' | translate}}
+      button#submit-en.button.secondary.expand-small.primary type="button" ng-click="beginApplication('en')"
+        | Begin
+      '
+      button#submit-es.button.secondary.expand-small.primary type="button" ng-click="beginApplication('es')"
+        | Empezar
+      '
+      button#submit-zh.button.t-ch.t-ch-button.secondary.expand-small.primary type="button" ng-click="beginApplication('zh')"
+        | 開始
+      '
+      button#submit-tl.button.secondary.expand-small.primary type="button" ng-click="beginApplication('tl')"
+        | Magsimula
+
 
     .medium-8.medium-centered.columns.fixed-width.text-center.border-top.padding-top--2x ng-if="!loggedInUser.email"
       h2.t-gamma translate="CREATE_ACCOUNT.ALREADY_HAVE_ACCOUNT"

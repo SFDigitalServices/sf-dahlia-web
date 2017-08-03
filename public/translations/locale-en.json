@@ -1,9 +1,10 @@
 {
     "A1_INTRO": {
+        "CHOOSE_YOUR_LANGUAGE": "Choose your language",
         "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
-        "TITLE": "Let's get started on your application:"
+        "TITLE": "Let's get started on your application"
     },
-    "A2_OVERVIEW": {
+    "A4_OVERVIEW": {
         "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
         "P2": "You'll get a chance to review your application before you submit it.",
         "P3": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
@@ -106,7 +107,22 @@
         "PASSWORD_INSTRUCTIONS": "Must be at least 8 characters and include at least 1 letter and at least 1 number.",
         "PASSWORD_SHORT_INSTRUCTIONS": "Must be 8 characters"
     },
-    "D0_PREFERENCES_INTRO": {
+    "D1_INCOME_VOUCHERS": {
+        "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
+        "TITLE_HOUSEHOLD": "Do you or anyone on this application receive any housing vouchers or rental subsidies?",
+        "TITLE_YOU": "Do you receive any housing vouchers or rental subsidies?"
+    },
+    "D2_INCOME": {
+        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
+        "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
+        "TITLE": "Let's move to income."
+    },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
+        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
+        "TITLE": "An application has already been submitted to this listing using this account."
+    },
+    "E1_PREFERENCES_INTRO": {
         "GET_STARTED": "Get started",
         "STEPS_TITLE": "Just 3 simple steps:",
         "STEP_1": "See if you qualify for each lottery preference.",
@@ -114,15 +130,7 @@
         "STEP_3": "Upload the required documents from your computer or phone.",
         "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
     },
-    "D1_PREFERENCES_PROGRAMS": {
-        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
-        "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
-        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
-        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
-        "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
-        "TITLE": "There are lottery preferences for people who already have special certificates."
-    },
-    "D2A_NEIGHBORHOOD_PREFERENCE": {
+    "E2A_NEIGHBORHOOD_PREFERENCE": {
         "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
         "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
@@ -134,11 +142,7 @@
         },
         "TITLE": "Good news! You qualify for a higher ranking in the lottery."
     },
-    "D2F_GENERAL_LOTTERY_NOTICE": {
-        "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
-        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
-    },
-    "D2_LIVE_WORK_PREFERENCE": {
+    "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
         "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
         "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
@@ -154,27 +158,22 @@
             "WORK_SF_PREFERENCE": "Work in San Francisco"
         },
         "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences.",
-        "UPLOAD_PROOF": "Upload proof of preference",
-        "UPLOAD_PROOF_INSTRUCTIONS_1": "Please make sure the image is clear and you can read the address.",
-        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 5MB. Supported file types: PDF, JPG, PNG.",
         "WORK_SF_PREFERENCE": {
             "DESCRIPTION": "At least one household member must currently work in San Francisco at least 75% of their working hours.",
             "TITLE": "Work in San Francisco Preference"
         }
     },
-    "D6_PREFERENCES_VOUCHERS": {
-        "P1": "For example: Section 8, VASH, HSA, HOPWA, Catholic Charities, AIDS Foundation, etc.",
-        "TITLE": "Does anyone in your household receive any housing vouchers or rental subsidies?"
+    "E7_PREFERENCES_PROGRAMS": {
+        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
+        "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
+        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
+        "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
+        "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
+        "TITLE": "There are lottery preferences for people who already have special certificates."
     },
-    "DOUBLE_SUBMITTED": {
-        "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
-        "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
-        "TITLE": "An application has already been submitted to this listing using this account."
-    },
-    "E1_INCOME": {
-        "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
-        "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
-        "TITLE": "Let's move to income."
+    "E8_GENERAL_LOTTERY_NOTICE": {
+        "TITLE": "Based on the information you have entered, your household has not claimed any housing lottery preferences.",
+        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "You will be in the general lottery."
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
@@ -190,27 +189,27 @@
         "EMAIL_ALREADY_IN_USE": "Email is already in use.",
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
         "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
-        "FILE_MISSING": "Please upload your proof of preference",
+        "FILE_MISSING": "Please upload a valid document",
         "FILE_UPLOAD": "The file is too large or not a supported file type",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
-        "HOUSEHOLD_INCOME_ERROR_CONTENT": "We encourage you to {{visitResourcesLink}}, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
+        "GET_ASSISTANCE": "Get Assistance",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Your household income is too high.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Your household income is too low.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Please select your relationship to the household member",
-        "HOUSEHOLD_SIZE_ERROR_CONTENT": "We encourage you to {{visitResourcesLink}}, and check back in the future as more listings become available. <br><br>If you've made a mistake, you can edit your application below. Remember that if you falsify information on your application, you'll be disqualified.",
         "HOUSEHOLD_TOO_BIG": "Your household size is too big.",
         "HOUSEHOLD_TOO_SMALL": "Your household size is too small.",
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
         "LAST_NAME": "Please enter a Last Name",
-        "NOT_ELIGIBLE_HOUSEHOLD": "It appears that you wouldn't qualify for this listing due to household size.",
-        "NOT_ELIGIBLE_INCOME": "It appears that you wouldn't qualify for this listing due to your household income.",
+        "NOT_ELIGIBLE": "Unfortunately it appears you do not qualify for this listing.",
+        "NOT_ELIGIBLE_DESCRIPTION": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
         "PASSWORD": "Please enter a valid password",
         "PASSWORD_CONFIRMATION": "Password confirmation does not match",
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -321,7 +320,7 @@
         "FAMILY_MEMBER": "Family member",
         "FEMALE": "Female",
         "FILE_ATTACHED": "{{file}} attached",
-        "FIND_OUT_MORE_ABOUT_PREFERENCES": "Find out more about housing lottery preferences.",
+        "FIND_OUT_MORE_ABOUT_PREFERENCES": "Find out more about this preference",
         "FIRST_NAME": "First Name",
         "FOR_USER": "for {{user}}",
         "FRIEND": "Friend",
@@ -332,7 +331,7 @@
         "GREAT_GRANDPARENT": "Great Grandparent",
         "HISPANIC_LATINO": "Hispanic/Latino",
         "HOUSEHOLD_MEMBER": "Household Member",
-        "HOUSEHOLD_MEMBERS": "Household members",
+        "HOUSEHOLD_MEMBERS": "Household Members",
         "HOUSEHOLD_MEMBER_CANCEL": "Cancel adding this person",
         "HOUSEHOLD_MEMBER_DELETE": "Delete this person",
         "HOUSEHOLD_MEMBER_NAME": "Household Member's Name",
@@ -395,7 +394,6 @@
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
-        "PROOF_OF_ADDRESS": "Proof of address",
         "QUESTIONING_UNSURE": "Questioning/Unsure",
         "RECENT_APPLICATION": "Recent Application",
         "REGISTERED_DOMESTIC_PARTNER": "Registered Domestic Partner",
@@ -418,9 +416,11 @@
         "UPDATE": "Update",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
+        "UPLOAD_PROOF_INSTRUCTIONS_1": "If you're on a smartphone, you can take a picture.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "Maximum file size is 5MB.<br>Supported file types: PDF, JPG, PNG.",
+        "UPLOAD_PROOF_OF_PREFERENCE": "Upload proof of preference",
         "VIEW_APPLICATION": "View Application",
         "VIEW_MAP": "View Map",
-        "VISIT_ADDITIONAL_RESOURCES": "visit our additional resources page",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WHITE": "White",
@@ -525,11 +525,8 @@
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
-        "CERT_OF_PREFERENCE": "Certificate of Preference",
-        "DTHP": "Displaced Tenants Housing Preference",
         "GENERAL_POOL": "General Pool",
         "HOUSING_PREFERENCES": "Housing Preferences",
-        "LIVE_WORK": "Live/Work Preference",
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
@@ -539,7 +536,6 @@
         "NEXT_STEPS_P2": "Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents.",
         "NEXT_STEPS_P3": "If all vacancies are filled for a preference, you will still be eligible for units in your following preference.",
         "NEXT_STEPS_TITLE": "What happens next?",
-        "NRHP": "Neighborhood Resident Housing Preference",
         "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "{{number}} applicants are on this list.",
         "RANK": "Rank",
         "RANKING_ORDER_NOTE": "Ranking in these lists is considered in the order shown here.",
@@ -620,6 +616,13 @@
         "VIEW_ORIGINAL_LISTING": "View the original listing",
         "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "Household",
+        "INCOME": "Income",
+        "PREFERENCES": "Preferences",
+        "REVIEW": "Review",
+        "YOU": "You"
+    },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
@@ -642,7 +645,6 @@
         "CONFIRM": "Confirm",
         "DELETE": "Delete",
         "EDIT": "Edit",
-        "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree",
         "NEVER_SUBMITTED": "Never Submitted",

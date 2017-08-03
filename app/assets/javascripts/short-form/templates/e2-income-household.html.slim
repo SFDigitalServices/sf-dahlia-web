@@ -1,16 +1,11 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'E1_INCOME.TITLE' | translate}}
+      | {{'D2_INCOME.TITLE' | translate}}
     p.form-note.margin-bottom
-      | {{'E1_INCOME.P1' | translate}}
+      | {{'D2_INCOME.P1' | translate}}
     p.form-note.margin-bottom
-      | {{'E1_INCOME.P2' | translate}}
-
-  alert-box(invert="true" custom-message="householdEligibilityErrorMessage" hide-alert="hideAlert")
-
-  .alert-notice.alert ng-show="householdEligibilityErrorMessage && !hideAlert"
-    p.c-steel translate="ERROR.HOUSEHOLD_INCOME_ERROR_CONTENT" translate-values="visitResourcesLink()"
+      | {{'D2_INCOME.P2' | translate}}
 
   .app-inner.inset
     .form-group ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"

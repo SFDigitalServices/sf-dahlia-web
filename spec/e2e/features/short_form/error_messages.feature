@@ -13,6 +13,10 @@ Feature: Short Form Application
       When I fill out the Name page with an invalid DOB
       Then I should see DOB field errors on the Name page
 
+      # error: using non-latin characters
+      When I fill out the Name page with non-latin characters
+      Then I should see an error about providing answers in English on the Name page
+
       When I fill out the Name page as "Jane Doe"
       # error: address not found
       And I fill out the Contact page with an address that isn't found
