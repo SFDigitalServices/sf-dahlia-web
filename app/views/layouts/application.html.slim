@@ -43,7 +43,7 @@ html lang="en"
       }
 
     / async load CSS via Javascript
-    link rel="preload" media="all" href=asset_path('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
+    link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
     noscript
       / if no JS available load as usual
       = stylesheet_link_tag 'application', media: 'all'
