@@ -98,8 +98,8 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
               setTimeout(ListingService.getListingDownloadURLs)
-            ).catch( (error) ->
-              deferred.reject(error)
+            ).catch( (response) ->
+              deferred.reject(response)
             )
             return deferred.promise
         ]
@@ -554,8 +554,8 @@
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
-            ).catch( (error) ->
-              deferred.reject(error)
+            ).catch( (response) ->
+              deferred.reject(response)
             )
             return deferred.promise
         ]
@@ -844,8 +844,8 @@
               if !ShortFormApplicationService.applicationWasSubmitted()
                 $state.go('dahlia.my-applications')
               deferred.resolve(ShortFormApplicationService.application)
-            ).catch( (error) ->
-              deferred.reject(error)
+            ).catch( (response) ->
+              deferred.reject(response)
             )
             return deferred.promise
         ]
