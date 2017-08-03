@@ -203,7 +203,9 @@ module.exports = ->
     optOutAndSubmit()
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
-    element(By.id("preferences-#{preference}")).click()
+    prefCheckbox = element(By.id("preferences-#{preference}"))
+    scrollToElement(prefCheckbox)
+    prefCheckbox.click()
     element.all(By.id("#{preference}_household_member")).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
