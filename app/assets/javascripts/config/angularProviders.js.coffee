@@ -20,12 +20,12 @@
 
           if error.status == 408
             $injector.invoke [
-              '$http', 'ModalService', 'bsLoadingOverlayService',
-              ($http, ModalService, bsLoadingOverlayService) ->
+              '$http', 'bsLoadingOverlayService',
+              ($http, bsLoadingOverlayService) ->
                 # if error.status == 408
                 bsLoadingOverlayService.stop()
                 alertMessage = $translate.instant('ERROR.TIMEOUT')
-                ModalService.alert(alertMessage)
+                alert(alertMessage)
                 error
             ]
             return $q.reject(error)
