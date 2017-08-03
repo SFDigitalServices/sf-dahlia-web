@@ -31,22 +31,29 @@ Feature: Short Form Application
     Scenario: Creating an account in order to "Save and Finish Later"
       Given I go to the first page of the Test Listing application
       When I fill out the Name page as "Jane Doe"
+      And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
+      And I confirm my address
+      And I don't indicate an alternate contact
+      # clicks "save and finish" from the Household Intro page
       And I click the Save and Finish Later button
       And I fill out my account info
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
-    Scenario: Logging into account (created in earlier scenario), submitting and viewing saved application
+    Scenario: Logging into account (created in earlier scenario), continuing application
       Given I have a confirmed account
       When I sign in
       And I go to My Applications
+      And I click the Continue Application button
+      # I should land on the same page that I clicked "save and finish later"
+      Then I should be on the Household Intro page
+
+    Scenario: Continuing draft (using same account), submitting and viewing saved application
+      Given I go to My Applications
       Then I should see my draft application with a Continue Application button
       # now submit the application
       When I click the Continue Application button
-      And I submit the Name page with my account info
-      And I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF
-      And I confirm my address
-      And I don't indicate an alternate contact
+      # starts off from household page
       And I indicate I will live alone
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference

@@ -14,6 +14,12 @@ do ->
     fakeLoadingOverlayService =
       start: jasmine.createSpy()
       stop: jasmine.createSpy()
+    fakeShortForm = getJSONFixture('short-form-example.json')
+    fakeShortFormDataService =
+      formatApplication: -> fakeShortForm
+      reformatApplication: -> fakeShortForm
+      formatUserDOB: ->
+      removeDOBFields: ->
     fakeAuthResponse =
       id: 99
       email: 'applicant@email.com'
@@ -46,7 +52,7 @@ do ->
       dob_year: '1970'
       email: 'contact@info.com'
     fakeApplicationsData =
-      applications: [{listingID: '123'}]
+      applications: [fakeShortForm]
 
     beforeEach module('ui.router')
     beforeEach module('ng-token-auth')
@@ -55,6 +61,7 @@ do ->
       $provide.value '$modal', modalMock
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+      $provide.value 'ShortFormDataService', fakeShortFormDataService
       return
     )
 

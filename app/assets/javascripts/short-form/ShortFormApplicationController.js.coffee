@@ -653,6 +653,7 @@ ShortFormApplicationController = (
     form = $scope.form.applicationForm
     form.$setPristine() if form
     # --
+    ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
