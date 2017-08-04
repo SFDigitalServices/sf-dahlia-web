@@ -45,14 +45,12 @@ describe ListingImageService do
 
       expect(FileStorageService).to have_received(:upload)
     end
-  end
 
-  describe '.save_image_url' do
     it 'should save a reference to the uploaded file' do
       image_processor = ListingImageService.new(listing)
       allow(image_processor).to receive(:resized_image?).and_return(true)
 
-      image_processor.save_image_url
+      image_processor.process_image
       listing_image = ListingImage.where(salesforce_listing_id: listing_id).first
 
       expect(listing_image.image_url).to include(listing_id)
