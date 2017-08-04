@@ -28,7 +28,7 @@
                 alert(alertMessage)
                 error
             ]
-            return $q.reject(error)
+          return $q.reject(error)
       }
   ]
 ]

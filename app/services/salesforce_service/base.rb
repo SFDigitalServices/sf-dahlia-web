@@ -5,11 +5,13 @@ module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
+    class_attribute :timeout
     class_attribute :error
     self.retries = 1
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 5
 
     def self.client
-      Restforce.new(timeout: 5)
+      Restforce.new(timeout: timeout)
     end
 
     def self.oauth_client
@@ -18,7 +20,7 @@ module SalesforceService
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
-        timeout: 5,
+        timeout: timeout,
       )
     end
 
