@@ -4,6 +4,7 @@
 class ListingImageService
   attr_reader :errors
 
+  TMP_DIR = 'tmp/images'.freeze
   REMOTE_IMAGE_PATH = 'images/listings'.freeze
   IMAGE_WIDTH = 768
 
@@ -42,13 +43,17 @@ class ListingImageService
     "#{listing_id}-#{cache_string}.jpg"
   end
 
-  def image_path
+  def remote_image_path
     "#{REMOTE_IMAGE_PATH}/#{image_name}"
   end
 
   def image_url
     base_image_url = ENV['RESOURCE_URL']
-    "#{base_image_url}/#{image_path}"
+    "#{base_image_url}/#{remote_image_path}"
+  end
+
+  def tmp_image_path
+    "#{TMP_DIR}/#{image_name}"
   end
 
   def resized_image?
@@ -61,28 +66,36 @@ class ListingImageService
   end
 
   def resize_and_upload_image
-    image_blob = resize_image(raw_image_url)
-    if image_blob
-      # cache images for 100 yrs since we change the filename when image changes
-      FileStorageService.upload(
-        image_path,
-        image_blob,
-        cache_control: 'max-age=3153600000',
-      )
+    if resize_image(raw_image_url)
+      uploaded = false
+      File.open(tmp_image_path) do |file|
+        # cache images for 1 yr since we change the filename when image changes
+        uploaded = FileStorageService.upload(
+          remote_image_path,
+          file,
+          cache_control: 'max-age=31536000',
+        )
+      end
+      File.delete(tmp_image_path)
+      uploaded
+    else
+      false
     end
   end
 
   def resize_image(image)
+    Dir.mkdir(TMP_DIR) unless Dir.exist?(TMP_DIR)
     image = MiniMagick::Image.open(image)
     throw MiniMagick::Invalid unless image.valid?
     # set width only and height is adjusted to maintain aspect ratio
-    image.resize IMAGE_WIDTH.to_s
-    image.format 'jpg'
-    image.to_blob
-    # ImageOptimizer.new(image_path, quality: 75).optimize
+    image.resize(IMAGE_WIDTH.to_s)
+    image.format('jpg')
+    image.write(tmp_image_path)
+    ImageOptimizer.new(tmp_image_path, quality: 75).optimize
+    true
   rescue MiniMagick::Invalid
     add_error("Image for listing #{listing_id} is unreadable")
-    return false
+    false
   end
 
   def create_or_update_listing_image
