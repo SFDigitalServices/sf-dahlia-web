@@ -11,6 +11,8 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "50000"
@@ -30,18 +32,19 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I add another household member named "Jonny Doe" with same address as primary
       And I indicate being done adding people
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
       # the first preference I see should be NRHP
       Then I should be on the "Live in the Neighborhood" preference page
-
       When I click the Live in the Neighborhood checkbox
       # members who live within the eligible area should be in the dropdown, others should not
       Then I should see "Jane Doe, Jonny Doe" in the preference dropdown and not "Karen Lee"
 
-      When I select "Jonny Doe" for "neighborhoodResidence" preference
+      When I select "Jonny Doe" for "antiDisplacement" preference
       And I go back to the Household page
       # last household member == Jonny
       And I edit the last household member
@@ -49,7 +52,12 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I confirm their address
       And I indicate being done adding people
       And I indicate living in public housing
-      And I hit the Next button "4" times
+      And I indicate not veteran
+      And I indicate no developmental disability
+      And I indicate no priority
+      And I indicate having vouchers
+      And I fill out my income as "50000"
+      And I continue past the Lottery Preferences intro
       # now that Jonny changed his address, ensure that preference is un-checked but Jane is still eligible
       Then I should see the Live in the Neighborhood checkbox un-checked
       When I click the Live in the Neighborhood checkbox
@@ -57,10 +65,10 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
 
       # have to unselect it because the next step clicks it again
       When I click the Live in the Neighborhood checkbox
-      When I select "Jane Doe" for "neighborhoodResidence" preference
-      And I upload a "School record" as my proof of preference for "neighborhoodResidence"
+      When I select "Jane Doe" for "antiDisplacement" preference
+      And I upload a "School record" as my proof of preference for "antiDisplacement"
       And I click the Next button on the Live in the Neighborhood page
       And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
       And I fill out the optional survey
-      Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jane Doe"
+      Then I should see "Anti-Displacement Housing" preference claimed for "Jane Doe"

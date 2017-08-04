@@ -11,6 +11,8 @@ Feature: Short Form Application
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "25000"
@@ -27,7 +29,7 @@ Feature: Short Form Application
       # now that we've submitted, also create an account
       When I click the Create Account button
       And I fill out my account info with my locked-in application email
-      And I wait "18" seconds
+      And I wait "1" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
@@ -110,5 +112,6 @@ Feature: Short Form Application
       And I fill out the optional survey
       And I confirm details on the review page
       And I agree to the terms and submit
+      And I wait "1" seconds
       And I view the application from My Applications
       Then I should see my application info displayed as expected
