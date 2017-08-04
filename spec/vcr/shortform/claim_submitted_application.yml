@@ -51,7 +51,7 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1501688534028","signature":"u2znlggsbRgnb1sGlVp6lfS2qn7vTNJC+w4wv4Z9og4="}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 02 Aug 2017 15:42:14 GMT
 - request:
     method: get
@@ -70,7 +70,7 @@ http_interactions:
       - "*/*"
   response:
     status:
-      code: 400
+      code: 200
       message: Bad Request
     headers:
       Date:
@@ -92,7 +92,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Wed, 02 Aug 2017 15:42:14 GMT
 - request:
     method: post
@@ -141,6 +141,6 @@ http_interactions:
       string: '{"worksInSfPreferenceID":null,"workInSfPreferenceProof":null,"workInSfPreferenceNatKey":null,"status":"Submitted","referral":null,"primaryApplicant":{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":"1","state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":null,"race":null,"phoneType":"Home","phone":"2222222222","noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Dolendo","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":"Male","firstName":"Christine","ethnicity":null,"email":null,"DOB":"1990-02-02","contactId":"0030P00001y3eLHQAY","city":null,"candidateScore":null,"appMemberType":"Primary
         Applicant","appMemberId":"a0n1b000000Qyn5AAC","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null},"neighborhoodResidencePreferenceNatKey":null,"neighborhoodPreferenceProof":null,"neighborhoodPreferenceOptOut":false,"neighborhoodPreferenceID":null,"name":"APP-00092225","monthlyIncome":null,"lotteryNumberManual":null,"lotteryNumber":"00092225","liveWorkOptOut":false,"liveInSfPreferenceProof":null,"liveInSfPreferencePaper":false,"liveInSfPreferenceNatKey":null,"liveInSfPreferenceID":null,"listingID":"a0WU000000ClNXGMA3","id":"a0o1b0000001QV6AAM","householdVouchersSubsidies":null,"householdMembers":[{"zip":null,"yCoordinate":null,"xCoordinate":null,"workInSf":null,"whichComponentOfLocatorWasUsed":null,"webAppID":null,"state":null,"sexualOrientationOther":null,"sexualOrientation":null,"sexAtBirth":null,"relationship":"Spouse","race":null,"phoneType":null,"phone":null,"noPhone":false,"noEmail":false,"noAddress":false,"neighborhoodPreferenceMatch":null,"middleName":null,"mailingZip":null,"mailingState":null,"mailingCity":null,"mailingAddress":null,"lastName":"Kanobi","languageOther":null,"language":null,"hiv":false,"hasSameAddressAsApplicant":null,"hasAltMailingAddress":false,"genderOther":null,"gender":null,"firstName":"Obie","ethnicity":null,"email":null,"DOB":"1990-07-23","contactId":null,"city":null,"candidateScore":null,"appMemberType":"Household
         Member","appMemberId":"a0n1b000000Qyn4AAC","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":null,"agency":null,"address":null}],"formMetadata":null,"displacedPreferenceOptOut":false,"displacedPreferenceNatKey":null,"displacedPreferenceID":null,"certOfPreferenceOptOut":false,"certOfPreferenceNatKey":null,"certOfPreferenceID":null,"applicationSubmittedDate":"2016-09-07","applicationSubmissionType":"Electronic","applicationLanguage":"English","annualIncome":20000.00,"alternateContact":null,"agreeToTerms":false}'
-    http_version: 
+    http_version:
   recorded_at: Wed, 02 Aug 2017 15:42:16 GMT
 recorded_with: VCR 3.0.3
