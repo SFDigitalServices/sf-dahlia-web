@@ -4,38 +4,109 @@ chance = new Chance()
 EC = protractor.ExpectedConditions
 remote = require('selenium-webdriver/remote')
 
-# QA "280 Fell"
-listingId = 'a0W0P00000DZTkAUAX'
+# QA "Abaca"
+listingId = 'a0W0P00000DZKPdUAP' # 280 Fell: 'a0W0P00000DZTkAUAX'
 sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
 
-# reusable functions
-fillOutNamePage = (fullName, opts = {}) ->
-  firstName = fullName.split(' ')[0]
-  lastName  = fullName.split(' ')[1]
-  month = opts.month || '02'
-  day = opts.day || '22'
-  year = opts.year || '1990'
+sampleApplication = {
+  nameInfo: {
+    firstName: 'Coleman',
+    middleName: 'Mystery',
+    lastName: 'Francis',
+    month: '11',
+    day: '22',
+    year: '1990',
+    dob: '11/22/1990',
+  },
+  contactInfo: {
+    phone: '(222) 222-2222',
+    phoneType: 'Home',
+    phone2: '(444) 444-4444',
+    phoneType2: 'Cell',
+    email: chance.email(),
+    address1: '4053 18th St',
+    address2: 'Suite 1979',
+    condensedAddress: '4053 18TH ST STE 1979',
+    city: 'SAN FRANCISCO',
+    state: 'CA',
+    zip: '94114-2535',
+    sendMailToDifferentAddress: 'yes',
+    mailAddress1: '123 Main St.',
+    mailAddress2: 'Suite 300',
+    condensedMailAddress: '123 Main St. Suite 300',
+    mailCity: 'SAN FRANCISCO',
+    mailState: 'CA',
+    mailZip: '94110',
+    workInSf: 'yes',
+  },
+  password: 'test1234',
+  alternateContact: {
+    firstName: 'Chet',
+    lastName: 'Beansworthy',
+    phone: '(333) 333-3333',
+    email: 'chet@eurignfjnbgjrio.uifndj',
+    address1: '2601 Mission St.',
+    address2: 'Suite 300',
+    condensedAddress: '2601 Mission St. Suite 300',
+    city: 'SAN FRANCISCO',
+    state: 'CA',
+    zip: '94110'
+  },
+  householdMember: {
+    firstName: 'Frampton',
+    middleName: 'Blue',
+    lastName: 'Soapmaster',
+    birthMonth: '10',
+    birthDay: '11',
+    birthYear: '1981',
+    address1: '429 Castro St.',
+    address2: 'Door 1',
+    condensedAddress: '429 CASTRO ST DOOR 1',
+    city: 'SAN FRANCISCO',
+    state: 'CA',
+    zip: '94114-2019',
+    workInSf: 'yes',
+    relationship: 'Cousin',
+  },
+  publicHousing: 'no',
+  monthlyRent: '2,500.00',
+  income: '33,333.00',
+  neighborhoodPref: 'true',
+  rentBurdenPref: 'true',
+  copPref: 'true',
+  dthpPref: 'true'
+}
 
-  element(By.model('applicant.firstName')).clear().sendKeys(firstName)
-  element(By.model('applicant.lastName')).clear().sendKeys(lastName)
-  element(By.model('applicant.dob_month')).clear().sendKeys(month)
-  element(By.model('applicant.dob_day')).clear().sendKeys(day)
-  element(By.model('applicant.dob_year')).clear().sendKeys(year)
+# reusable functions
+fillOutNamePage = (opts = {}) ->
+  element(By.model('applicant.firstName')).clear().sendKeys(opts.firstName)
+  element(By.model('applicant.middleName')).clear().sendKeys(opts.middleName)
+  element(By.model('applicant.lastName')).clear().sendKeys(opts.lastName)
+  element(By.model('applicant.dob_month')).clear().sendKeys(opts.month)
+  element(By.model('applicant.dob_day')).clear().sendKeys(opts.day)
+  element(By.model('applicant.dob_year')).clear().sendKeys(opts.year)
   submitPage()
 
 fillOutContactPage = (opts = {}) ->
-  opts.address1 ||= '4053 18th St.'
-  opts.city ||= 'San Francisco'
-  opts.workInSf ||= 'yes'
-  element(By.model('applicant.phone')).clear().sendKeys('2222222222')
-  element(By.model('applicant.phoneType')).sendKeys('home')
-  element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
+  element(By.model('applicant.phone')).clear().sendKeys(opts.phone)
+  element(By.model('applicant.phoneType')).sendKeys(opts.phoneType)
+  checkCheckbox 'applicant_additional_phone', ->
+    element(By.model('applicant.alternatePhone')).clear().sendKeys(opts.phone2)
+    element(By.model('applicant.alternatePhoneType')).sendKeys(opts.phoneType2)
+  element(By.model('applicant.email')).clear().sendKeys(opts.email)
   element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
+  element(By.id('applicant_home_address_address2')).clear().sendKeys(opts.address2)
   element(By.id('applicant_home_address_city')).clear().sendKeys(opts.city)
-  element(By.id('applicant_home_address_state')).sendKeys('california')
-  element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
+  element(By.id('applicant_home_address_state')).sendKeys(opts.state)
+  element(By.id('applicant_home_address_zip')).clear().sendKeys(opts.zip)
+  checkCheckbox 'applicant_separate_address', ->
+    element(By.id('applicant_mailing_address_address1')).clear().sendKeys(opts.mailAddress1)
+    element(By.id('applicant_mailing_address_address2')).clear().sendKeys(opts.mailAddress2)
+    element(By.id('applicant_mailing_address_city')).clear().sendKeys(opts.mailCity)
+    element(By.id('applicant_mailing_address_state')).sendKeys(opts.mailState)
+    element(By.id('applicant_mailing_address_zip')).clear().sendKeys(opts.mailZip)
   if opts.workInSf == 'yes'
     element(By.id('workInSf_yes')).click()
   else
@@ -43,23 +114,23 @@ fillOutContactPage = (opts = {}) ->
   submitPage()
 
 fillOutHouseholdMemberForm = (opts = {}) ->
-  opts.city ||= 'San Francisco'
-  opts.workInSf ||= 'no'
-  if opts.fullName
-    fullName = opts.fullName
-    firstName = fullName.split(' ')[0]
-    lastName  = fullName.split(' ')[1]
-    element(By.model('householdMember.firstName')).clear().sendKeys(firstName)
-    element(By.model('householdMember.lastName')).clear().sendKeys(lastName)
-    element(By.model('householdMember.dob_month')).clear().sendKeys('10')
-    element(By.model('householdMember.dob_day')).clear().sendKeys('15')
-    element(By.model('householdMember.dob_year')).clear().sendKeys('1985')
+  if opts.firstName
+    element(By.model('householdMember.firstName')).clear().sendKeys(opts.firstName)
+    if opts.middleName
+      element(By.model('householdMember.middleName')).clear().sendKeys(opts.middleName)
+    element(By.model('householdMember.lastName')).clear().sendKeys(opts.lastName)
+  if opts.birthMonth
+    element(By.model('householdMember.dob_month')).clear().sendKeys(opts.birthMonth)
+    element(By.model('householdMember.dob_day')).clear().sendKeys(opts.birthDay)
+    element(By.model('householdMember.dob_year')).clear().sendKeys(opts.birthYear)
   if opts.address1
     element(By.id('hasSameAddressAsApplicant_no')).click()
     element(By.id('householdMember_home_address_address1')).clear().sendKeys(opts.address1)
+    if opts.address2
+      element(By.id('householdMember_home_address_address2')).clear().sendKeys(opts.address2)
     element(By.id('householdMember_home_address_city')).clear().sendKeys(opts.city)
-    element(By.id('householdMember_home_address_state')).sendKeys('california')
-    element(By.id('householdMember_home_address_zip')).clear().sendKeys('94114')
+    element(By.id('householdMember_home_address_state')).sendKeys(opts.state)
+    element(By.id('householdMember_home_address_zip')).clear().sendKeys(opts.zip)
   else
     element(By.id('hasSameAddressAsApplicant_yes')).click()
   if opts.workInSf == 'yes'
@@ -112,35 +183,67 @@ module.exports = ->
     getUrl(url)
     browser.ignoreSynchronization = false
 
+  @When 'I confirm the account for the default email', ->
+    browser.ignoreSynchronization = true
+    url = "/api/v1/account/confirm/?email=#{sampleApplication.contactInfo.email}"
+    getUrl(url)
+    browser.ignoreSynchronization = false
+
   @When /^I hit the Next button "([^"]*)" times$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
     while i > 0
       submitPage()
       i--
 
-  @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    fillOutNamePage(fullName)
+  @When 'I fill out the Name page with default info', ->
+    fillOutNamePage(sampleApplication.nameInfo)
 
-  @When 'I submit the Name page with my account info', ->
+  @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
+    opts = Object.assign({}, sampleApplication.nameInfo)
+    opts.firstName = fullName.split(' ')[0]
+    opts.lastName = fullName.split(' ')[1]
+    fillOutNamePage(opts)
+
+  @When 'I submit the page', ->
     submitPage()
 
+  @When 'I fill out the Contact page with default info', ->
+    fillOutContactPage(sampleApplication.contactInfo)
+
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.email = janedoeEmail
+    opts.address1 = '1120 Mar West G'
+    opts.city = 'Tiburon'
+    fillOutContactPage(opts)
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.email = janedoeEmail
+    opts.address1 = '1120 Mar West G'
+    opts.city = 'Tiburon'
+    opts.workInSf = 'no'
+    fillOutContactPage(opts)
 
   @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, workInSf: 'no'})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.email = janedoeEmail
+    opts.workInSf = 'no'
+    fillOutContactPage(opts)
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.email = janedoeEmail
+    fillOutContactPage(opts)
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.email = janedoeEmail
+    opts.address1 = '1222 Harrison St.'
+    fillOutContactPage(opts)
 
   @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage()
+    fillOutContactPage(sampleApplication.contactInfo)
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -148,6 +251,25 @@ module.exports = ->
 
   @When 'I confirm their address', ->
     element(By.id('confirmed_home_address_yes')).click()
+    submitPage()
+
+  @When 'I fill out my alternate contact\'s name', ->
+    element(By.model('alternateContact.firstName')).clear().sendKeys(sampleApplication.alternateContact.firstName)
+    element(By.model('alternateContact.lastName')).clear().sendKeys(sampleApplication.alternateContact.lastName)
+    submitPage()
+
+  @When 'I fill out my alternate contact\'s info', ->
+    element(By.model('alternateContact.phone')).clear().sendKeys(sampleApplication.alternateContact.phone)
+    element(By.model('alternateContact.email')).clear().sendKeys(sampleApplication.alternateContact.email)
+    element(By.id('alternateContact_mailing_address_address1')).clear().sendKeys(sampleApplication.alternateContact.address1)
+    element(By.id('alternateContact_mailing_address_address2')).clear().sendKeys(sampleApplication.alternateContact.address2)
+    element(By.id('alternateContact_mailing_address_city')).clear().sendKeys(sampleApplication.alternateContact.city)
+    element(By.id('alternateContact_mailing_address_state')).sendKeys(sampleApplication.alternateContact.state)
+    element(By.id('alternateContact_mailing_address_zip')).clear().sendKeys(sampleApplication.alternateContact.zip)
+    submitPage()
+
+  @When 'I select a friend as an alternate contact', ->
+    element(By.id('alternateContactType_friend')).click()
     submitPage()
 
   @When 'I don\'t indicate an alternate contact', ->
@@ -174,24 +296,39 @@ module.exports = ->
       elem.isDisplayed()
     ).last().click()
 
-  @When /^I add another household member named "([^"]*)" with same address as primary$/, (fullName) ->
+  @When 'I add a default household member', ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName})
+      fillOutHouseholdMemberForm(sampleApplication.householdMember)
+
+  @When /^I add another household member named "([^"]*)" with same address as primary$/, (fullName) ->
+    browser.waitForAngular()
+    opts = Object.assign({}, sampleApplication.householdMember)
+    opts.firstName = fullName.split(' ')[0]
+    opts.lastName  = fullName.split(' ')[1]
+    opts.address1 = ''
+    opts.workInSf = 'no'
+    element(By.id('add-household-member')).click().then ->
+      fillOutHouseholdMemberForm(opts)
 
   @When /^I add another household member named "([^"]*)" who lives at "([^"]*)"$/, (fullName, address1) ->
     browser.waitForAngular()
+    opts = Object.assign({}, sampleApplication.householdMember)
+    opts.firstName = fullName.split(' ')[0]
+    opts.lastName  = fullName.split(' ')[1]
+    opts.address1 = address1
+    opts.workInSf = 'no'
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName, address1: address1})
+      fillOutHouseholdMemberForm(opts)
 
   @When 'I change them to live inside SF, work in SF', ->
-    fillOutHouseholdMemberForm({address1: '4053 18th St.', workInSf: 'yes'})
+    fillOutHouseholdMemberForm({address1: '4053 18th St.', city: 'San Francisco', state: 'CA', zip: '94121', workInSf: 'yes'})
 
   @When 'I change them to live outside SF, work in SF', ->
-    fillOutHouseholdMemberForm({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
+    fillOutHouseholdMemberForm({address1: '1120 Mar West G', city: 'Tiburon', state: 'CA', zip: '94121', workInSf: 'yes'})
 
   @When /^I change their address to "([^"]*)"$/, (address1) ->
-    fillOutHouseholdMemberForm({address1: address1})
+    fillOutHouseholdMemberForm({address1: address1, city: 'San Francisco', state: 'CA', zip: '94121'})
 
   @When 'I indicate being done adding people', ->
     submitPage()
@@ -204,14 +341,38 @@ module.exports = ->
     element(By.id('hasPublicHousing_no')).click()
     submitPage()
 
+  @When 'I indicate being a veteran', ->
+    element(By.id('hasMilitaryService_yes')).click()
+    submitPage()
+
+  @When 'I indicate not veteran', ->
+    element(By.id('hasMilitaryService_no')).click()
+    submitPage()
+
+  @When 'I indicate having a developmental disability', ->
+    element(By.id('hasDevelopmentalDisability_yes')).click()
+    submitPage()
+
+  @When 'I indicate no developmental disability', ->
+    element(By.id('hasDevelopmentalDisability_no')).click()
+    submitPage()
+
+  @When 'I indicate need ADA features for vision and hearing', ->
+    element(By.id('adaPrioritiesSelected_vision-impaired')).click()
+    element(By.id('adaPrioritiesSelected_hearing-impaired')).click()
+    submitPage()
+
   @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
     element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
     submitPage()
 
-  @When 'I indicate no priority', ->
-    element(By.id('adaPrioritiesSelected_none')).click()
+  @When /^I enter "([^"]*)" for the rent of my housemate$/, (monthlyRent) ->
+    element(By.id('monthlyRent_1')).sendKeys(monthlyRent)
     submitPage()
 
+  @When 'I indicate no priority', ->
+    checkCheckbox 'adaPrioritiesSelected_none', ->
+      submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
@@ -246,7 +407,7 @@ module.exports = ->
     submitPage()
 
   @When 'I click the Live in the Neighborhood checkbox', ->
-    checkCheckbox('preferences-neighborhoodResidence')
+    checkCheckbox('preferences-antiDisplacement')
 
   @When 'I click the Live or Work in SF checkbox', ->
     checkCheckbox('preferences-liveWorkInSf')
@@ -293,7 +454,35 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When 'I upload rent burdened proof', ->
+    element.all(By.cssContainingText('a', 'Start Upload')).then( (items) ->
+      items[0].click()
+    )
+
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+
+    element.all(By.cssContainingText('option', 'Money order')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+    element.all(By.css('.button')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
   @When 'I click the Next button on the Live/Work Preference page', ->
+    submitPage()
+
+  @When 'I click the Next button on the Rent Burdened Preference page', ->
     submitPage()
 
   @When 'I click the Next button on the Live in the Neighborhood page', ->
@@ -349,6 +538,9 @@ module.exports = ->
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
 
+  @When 'I go to the review page', ->
+    element(By.cssContainingText('.a', 'Review')).click()
+
   @When 'I confirm details on the review page', ->
     submitPage()
 
@@ -373,6 +565,17 @@ module.exports = ->
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
+  @When 'I complete my account info', ->
+    element(By.id('auth_email_confirmation')).sendKeys(sampleApplication.contactInfo.email)
+    element(By.id('auth_password')).sendKeys(sampleApplication.password)
+    element(By.id('auth_password_confirmation')).sendKeys(sampleApplication.password)
+
+  @When 'I fill out the default account info', ->
+    element(By.id('auth_email')).sendKeys(sampleApplication.email)
+    element(By.id('auth_email_confirmation')).sendKeys(sampleApplication.email)
+    element(By.id('auth_password')).sendKeys(sampleApplication.password)
+    element(By.id('auth_password_confirmation')).sendKeys(sampleApplication.password)
+
   @When 'I fill out my account info with my locked-in application email', ->
     element(By.id('auth_email_confirmation')).sendKeys(janedoeEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
@@ -392,6 +595,14 @@ module.exports = ->
     getUrl(signInUrl)
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('sign-in')).click()
+    browser.waitForAngular()
+
+  @When 'I sign in with default info', ->
+    signInUrl = "/sign-in"
+    getUrl(signInUrl)
+    element(By.id('auth_email')).sendKeys(sampleApplication.contactInfo.email)
+    element(By.id('auth_password')).sendKeys(sampleApplication.password)
     element(By.id('sign-in')).click()
     browser.waitForAngular()
 
@@ -429,14 +640,19 @@ module.exports = ->
     submitPage()
 
   @When "I fill out the Name page with an invalid DOB", ->
-    fillOutNamePage( 'Jane Doe', {
-      month: '12'
-      day: '33'
-      year: '2019'
-    })
+    opts = Object.assign({}, sampleApplication.nameInfo)
+    opts.firstName = 'Jane'
+    opts.lastName = 'Doe'
+    opts.month = '12'
+    opts.day = '33'
+    opts.year = '2019'
+    fillOutNamePage(opts)
 
   @When "I fill out the Contact page with an address that isn't found", ->
-    fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
+    opts = Object.assign({}, sampleApplication.contactInfo)
+    opts.address1 = '38383 Philz Way'
+    # opts.address2 = ''
+    fillOutContactPage(opts)
 
   @When 'I fill out the household member form with missing data', ->
     # don't fill anything out and just submit
@@ -446,6 +662,160 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+
+  @Then 'I should see my name and DOB', ->
+    firstName = element(By.model('applicant.firstName'))
+    @expect(firstName.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.firstName)
+    middleName = element(By.model('applicant.middleName'))
+    @expect(middleName.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.middleName)
+    lastName = element(By.model('applicant.lastName'))
+    @expect(lastName.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.lastName)
+    birthMonth = element(By.model('applicant.dob_month'))
+    @expect(birthMonth.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.month)
+    birthDay = element(By.model('applicant.dob_day'))
+    @expect(birthDay.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.day)
+    birthYear = element(By.model('applicant.dob_year'))
+    @expect(birthYear.getAttribute('value')).to.eventually.equal(sampleApplication.nameInfo.year)
+
+  @Then 'I should see my contact info', ->
+    phone = element(By.model('applicant.phone'))
+    @expect(phone.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.phone)
+    phoneType = element(By.model('applicant.phoneType'))
+    @expect(phoneType.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.phoneType)
+    phone2 = element(By.model('applicant.alternatePhone'))
+    @expect(phone2.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.phone2)
+    phoneType2 = element(By.model('applicant.alternatePhoneType'))
+    @expect(phoneType2.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.phoneType2)
+    email = element(By.model('applicant.email'))
+    @expect(email.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.email)
+    address1 = element(By.id('applicant_home_address_address1'))
+    @expect(address1.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.condensedAddress)
+    city = element(By.id('applicant_home_address_city'))
+    @expect(city.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.city)
+    state = element(By.id('applicant_home_address_state'))
+    @expect(state.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.state)
+    zip = element(By.id('applicant_home_address_zip'))
+    @expect(zip.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.zip)
+    mailAddress1 = element(By.id('applicant_mailing_address_address1'))
+    @expect(mailAddress1.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.condensedMailAddress)
+    mailCity = element(By.id('applicant_mailing_address_city'))
+    @expect(mailCity.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.mailCity)
+    mailState = element(By.id('applicant_mailing_address_state'))
+    @expect(mailState.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.mailState)
+    mailZip = element(By.id('applicant_mailing_address_zip'))
+    @expect(mailZip.getAttribute('value')).to.eventually.equal(sampleApplication.contactInfo.mailZip)
+    workInSf = element(By.id('workInSf_yes'))
+    if sampleApplication.contactInfo.workInSf == 'yes'
+      @expect(workInSf.isSelected()).to.eventually.equal(true)
+    else
+      @expect(workInSf.isSelected()).to.eventually.equal(false)
+
+  @Then 'I should see my alternate contact', ->
+    friendChoice = element(By.id('alternateContactType_friend'))
+    @expect(friendChoice.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see the name of my alternate contact', ->
+    firstName = element(By.model('alternateContact.firstName'))
+    @expect(firstName.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.firstName)
+    lastName = element(By.model('alternateContact.lastName'))
+    @expect(lastName.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.lastName)
+
+  @Then 'I should see the info of my alternate contact', ->
+    phone = element(By.model('alternateContact.phone'))
+    @expect(phone.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.phone)
+    email = element(By.model('alternateContact.email'))
+    @expect(email.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.email)
+    address1 = element(By.id('alternateContact_mailing_address_address1'))
+    @expect(address1.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.condensedAddress)
+    city = element(By.id('alternateContact_mailing_address_city'))
+    @expect(city.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.city)
+    state = element(By.id('alternateContact_mailing_address_state'))
+    @expect(state.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.state)
+    zip = element(By.id('alternateContact_mailing_address_zip'))
+    @expect(zip.getAttribute('value')).to.eventually.equal(sampleApplication.alternateContact.zip)
+
+  @Then 'I should see my household members', ->
+    applicant = element.all(By.cssContainingText('p.info-item_name', sampleApplication.nameInfo.firstName)).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(applicant.isPresent()).to.eventually.equal(true)
+    householdMember = element.all(By.cssContainingText('p.info-item_name', sampleApplication.householdMember.firstName)).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(householdMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the info of my household member', ->
+    firstName = element(By.model('householdMember.firstName'))
+    @expect(firstName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.firstName)
+    middleName = element(By.model('householdMember.middleName'))
+    @expect(middleName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.middleName)
+    lastName = element(By.model('householdMember.lastName'))
+    @expect(lastName.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.lastName)
+    birthMonth = element(By.model('householdMember.dob_month'))
+    @expect(birthMonth.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthMonth)
+    birthDay = element(By.model('householdMember.dob_day'))
+    @expect(birthDay.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthDay)
+    birthYear = element(By.model('householdMember.dob_year'))
+    @expect(birthYear.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthYear)
+    birthYear = element(By.model('householdMember.dob_year'))
+    @expect(birthYear.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.birthYear)
+    address1 = element(By.id('householdMember_home_address_address1'))
+    @expect(address1.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.condensedAddress)
+    city = element(By.id('householdMember_home_address_city'))
+    @expect(city.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.city)
+    state = element(By.id('householdMember_home_address_state'))
+    @expect(state.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.state)
+    zip = element(By.id('householdMember_home_address_zip'))
+    @expect(zip.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.zip)
+    workInSf = element(By.id('workInSf_yes'))
+    @expect(workInSf.isSelected()).to.eventually.equal(true)
+    relationship = element(By.model('householdMember.relationship'))
+    @expect(relationship.getAttribute('value')).to.eventually.equal(sampleApplication.householdMember.relationship)
+
+  @Then 'I should see not living in public housing', ->
+    notInPublicHousing = element(By.id('hasPublicHousing_no'))
+    @expect(notInPublicHousing.isSelected()).to.eventually.equal(true)
+
+  @Then /^I should see "([^"]*)" for my monthly rent and the rent of my housemate$/, (rent) ->
+    myRent = element(By.id('monthlyRent_0'))
+    @expect(myRent.getAttribute('value')).to.eventually.equal(sampleApplication.monthlyRent)
+    theirRent = element(By.id('monthlyRent_1'))
+    @expect(theirRent.getAttribute('value')).to.eventually.equal(sampleApplication.monthlyRent)
+
+  @Then 'I should see veteran selected', ->
+    veteran = element(By.id('hasMilitaryService_yes'))
+    @expect(veteran.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see having a developmental disability selected', ->
+    disability = element(By.id('hasDevelopmentalDisability_yes'))
+    @expect(disability.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see need ADA features for vision and hearing', ->
+    vision = element(By.id('adaPrioritiesSelected_vision-impaired'))
+    @expect(vision.isSelected()).to.eventually.equal(true)
+    hearing = element(By.id('adaPrioritiesSelected_hearing-impaired'))
+    @expect(hearing.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see not having vouchers', ->
+    noVouchers = element(By.id('householdVouchersSubsidies_no'))
+    @expect(noVouchers.isSelected()).to.eventually.equal(true)
+
+  @Then /^I should see my income as "([^"]*)"$/, (income) ->
+    myIncome = element(By.id('incomeTotal'))
+    @expect(myIncome.getAttribute('value')).to.eventually.equal(sampleApplication.income)
+
+  @Then 'I should see the Live in SF preference chosen with proof', ->
+    livePref = element.all(By.cssContainingText('option', 'Live in San Francisco')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(livePref.isSelected()).to.eventually.equal(true)
+    uploaded = element.all(By.cssContainingText('.media-body', 'Uploaded')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    uploaded = element.all(By.id('successful-upload')).filter((elem) ->
+      elem.isDisplayed()
+    )
+    @expect(uploaded.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
@@ -465,9 +835,28 @@ module.exports = ->
     ).first()
     @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should see the Rent Burdened Preference with proofs', ->
+    # strong.form-label
+    rentBurdenPref = element(By.id('preferences-rentBurden'))
+    @expect(rentBurdenPref.isSelected()).to.eventually.equal(true)
+    leaseUpload = element.all(By.cssContainingText('.info-item_doc', 'Copy of Lease')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    rentUpload = element.all(By.cssContainingText('.info-item_doc', 'Proof of Rent')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(leaseUpload.isPresent()).to.eventually.equal(true)
+    @expect(rentUpload.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the certOfPreference and displaced preferences', ->
+    certOfPref = element(By.id('preferences-certOfPreference'))
+    @expect(certOfPref.isSelected()).to.eventually.equal(true)
+    displacedPref = element(By.id('preferences-displaced'))
+    @expect(displacedPref.isSelected()).to.eventually.equal(true)
+
   @Then 'I should see the Preferences Programs screen', ->
-    certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
-    @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
+    certificateOfPrefBox = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
+    @expect(certificateOfPrefBox.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the successful file upload info', ->
     attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
@@ -516,22 +905,81 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected', ->
+  @Then 'I should see my application info displayed as expected', ->
     appName = element(By.id('full-name'))
-    @expect(appName.getText()).to.eventually.equal('JANE DOE')
+    firstName = sampleApplication.nameInfo.firstName.toUpperCase()
+    middleName = sampleApplication.nameInfo.middleName.toUpperCase()
+    lastName = sampleApplication.nameInfo.lastName.toUpperCase()
+    @expect(appName.getText()).to.eventually.equal(firstName + ' ' + middleName + ' ' + lastName)
     appDob = element(By.id('dob'))
-    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
-    appEmail = element(By.id('email'))
-    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
-    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
-    @expect(liveInSf.isPresent()).to.eventually.equal(true)
+    @expect(appDob.getText()).to.eventually.equal(sampleApplication.nameInfo.dob)
+    phone = element(By.cssContainingText('span', sampleApplication.contactInfo.phone))
+    @expect(phone.isPresent()).to.eventually.equal(true)
+    phoneType = element(By.cssContainingText('.info-item_note', sampleApplication.contactInfo.phoneType))
+    @expect(phoneType.isPresent()).to.eventually.equal(true)
+    # good ^
+    phone2 = element(By.cssContainingText('span', sampleApplication.contactInfo.phone2))
+    @expect(phone2.isPresent()).to.eventually.equal(true)
+    phoneType2 = element(By.cssContainingText('.info-item_note', sampleApplication.contactInfo.phoneType2))
+    @expect(phoneType2.isPresent()).to.eventually.equal(true)
+    appEmail = element(By.cssContainingText('#email', sampleApplication.contactInfo.email))
+    @expect(appEmail.isPresent()).to.eventually.equal(true)
+    address = element(By.cssContainingText('span', sampleApplication.contactInfo.condensedAddress))
+    @expect(address.isPresent()).to.eventually.equal(true)
+    city = sampleApplication.contactInfo.city.toUpperCase()
+    state = sampleApplication.contactInfo.state
+    zip = sampleApplication.contactInfo.zip
+    cityState = element(By.cssContainingText('span', city + ', ' + state + ' ' + zip))
+    @expect(cityState.isPresent()).to.eventually.equal(true)
+
+    # altFirstName = sampleApplication.alternateContact.firstName.toUpperCase()
+    # altLastName = sampleApplication.alternateContact.lastName.toUpperCase()
+    # alternateContactName = element(By.cssContainingText('span', altFirstName + ' ' + altLastName))
+    # @expect(alternateContactName.isPresent()).to.eventually.equal(true)
+    # alternateContactType = element(By.cssContainingText('.info-item_note', 'Friend'))
+    # @expect(alternateContactType.isPresent()).to.eventually.equal(true)
+    # alternateContactEmail = element(By.cssContainingText('span', sampleApplication.alternateContact.email.toUpperCase()))
+    # @expect(alternateContactEmail.isPresent()).to.eventually.equal(true)
+    # alternateContactPhone = element(By.cssContainingText('span', sampleApplication.alternateContact.phone))
+    # @expect(alternateContactPhone.isPresent()).to.eventually.equal(true)
+    # alternateContactAddress = element(By.cssContainingText('span', sampleApplication.alternateContact.condensedAddress.toUpperCase()))
+    # @expect(alternateContactAddress.isPresent()).to.eventually.equal(true)
+    # altCity = sampleApplication.alternateContact.city.toUpperCase()
+    # altState = sampleApplication.alternateContact.state.toUpperCase()
+    # altZip = sampleApplication.alternateContact.zip
+    # alternateContactCityState = element(By.cssContainingText('span', altCity + ', ' + altState + ' ' + altZip))
+    # @expect(alternateContactCityState.isPresent()).to.eventually.equal(true)
+    # publicHousingNo = element(By.cssContainingText('#publicHousing', 'NO'))
+    # @expect(publicHousingNo.isPresent()).to.eventually.equal(true)
+    # yourMonthlyRent = element(By.cssContainingText('#monthlyRent0', sampleApplication.monthlyRent))
+    # @expect(yourMonthlyRent.isPresent()).to.eventually.equal(true)
+    # theirMonthlyRent = element(By.cssContainingText('#monthlyRent1', sampleApplication.monthlyRent))
+    # @expect(theirMonthlyRent.isPresent()).to.eventually.equal(true)
+    # veterans = element(By.cssContainingText('#veteran', 'YES'))
+    # @expect(veterans.isPresent()).to.eventually.equal(true)
+    # developmentalDisability = element(By.cssContainingText('#developmentalDisability', 'YES'))
+    # @expect(developmentalDisability.isPresent()).to.eventually.equal(true)
+    # accessibility1 = element(By.cssContainingText('#accessibility0', 'VISION'))
+    # @expect(accessibility1.isPresent()).to.eventually.equal(true)
+    # accessibility2 = element(By.cssContainingText('#accessibility1', 'HEARING'))
+    # @expect(accessibility2.isPresent()).to.eventually.equal(true)
+
     certOfPref = element(By.cssContainingText('.info-item_name', 'Certificate of Preference (COP)'))
     @expect(certOfPref.isPresent()).to.eventually.equal(true)
     DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
     @expect(DTHP.isPresent()).to.eventually.equal(true)
+    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
+    @expect(liveInSf.isPresent()).to.eventually.equal(true)
+    rentBurden = element(By.cssContainingText('.info-item_name', 'Rent Burdened Preference'))
+    @expect(rentBurden.isPresent()).to.eventually.equal(true)
+
+    # noVouchers = element(By.cssContainingText('#vouchers', 'NONE'))
+    # @expect(noVouchers.isPresent()).to.eventually.equal(true)
+    # income = element(By.cssContainingText('#incomeTotal', sampleApplication.income))
+    # @expect(income.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
-    checkbox = element(By.id('preferences-neighborhoodResidence'))
+    checkbox = element(By.id('preferences-antiDisplacement'))
     @expect(checkbox.isSelected()).to.eventually.equal(false)
 
   @Then 'I should see the Live or Work in SF checkbox un-checked', ->
@@ -539,7 +987,7 @@ module.exports = ->
     @expect(checkbox.isSelected()).to.eventually.equal(false)
 
   @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
-    claimedPreference = element(By.cssContainingText('.info-item_name', preference))
+    claimedPreference = element(By.cssContainingText('span', preference))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
     claimedMember = element(By.cssContainingText('.info-item_note', name))
     @expect(claimedMember.isPresent()).to.eventually.equal(true)
@@ -548,7 +996,7 @@ module.exports = ->
     @expect(preferenceMember.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the general lottery notice on the review page', ->
-    claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
+    claimedPreference = element(By.cssContainingText('p', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
 

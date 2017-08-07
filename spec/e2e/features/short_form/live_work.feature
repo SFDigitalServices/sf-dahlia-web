@@ -12,6 +12,8 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "50000"
@@ -48,7 +50,11 @@ Feature: Short Form Application - Live/Work Preference
       And I confirm their address
       And I indicate being done adding people
       And I indicate living in public housing
-      And I hit the Next button "3" times
+      And I indicate not veteran
+      And I indicate no developmental disability
+      And I indicate no priority
+      And I do not indicate having vouchers
+      And I fill out my income as "33000"
       And I continue past the Lottery Preferences intro
       Then I should see the Live Preference
       # I neither live nor work in SF, household member lives in SF
@@ -82,9 +88,15 @@ Feature: Short Form Application - Live/Work Preference
       And I confirm their address
       And I indicate being done adding people
       And I indicate living in public housing
-      And I hit the Next button "3" times
+      And I indicate not veteran
+      And I indicate no developmental disability
+      And I indicate no priority
+      And I do not indicate having vouchers
+      And I fill out my income as "33000"
       And I continue past the Lottery Preferences intro
+      And I submit the page
       Then I should see the Live and Work Preferences
+      When I wait "1" seconds
       # I work in SF, household member works in SF
       When I go back to the Contact page
       And I fill out the Contact page with a non-SF address, yes to WorkInSF
@@ -117,7 +129,11 @@ Feature: Short Form Application - Live/Work Preference
       And I confirm their address
       And I indicate being done adding people
       And I indicate living in public housing
-      And I hit the Next button "3" times
+      And I indicate not veteran
+      And I indicate no developmental disability
+      And I indicate no priority
+      And I do not indicate having vouchers
+      And I fill out my income as "33000"
       And I continue past the Lottery Preferences intro
       Then I should see the Live and Work Preferences
       # Make sure the dropdowns are correct
@@ -152,7 +168,7 @@ Feature: Short Form Application - Live/Work Preference
       # see general lottery notice
       When I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
-      And I hit the Next button "3" times
+      And I submit the page
       Then I should see the general lottery notice on the review page
 
     Scenario: Opting in to live/work then saying no to workInSf then uploading proof
@@ -163,6 +179,8 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "25000"
@@ -186,6 +204,8 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "25000"

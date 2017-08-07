@@ -14,6 +14,8 @@ Feature: Short Form Application - Rent Burdened Preference
       And I indicate being done adding people
       And I indicate not living in public housing
       And I enter "2000" for my monthly rent
+      And I indicate not veteran
+      And I indicate no developmental disability
       And I indicate no priority
       And I indicate having vouchers
       And I fill out my income as "35000"
