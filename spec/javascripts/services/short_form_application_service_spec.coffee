@@ -521,6 +521,7 @@ do ->
       beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
         ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 10
+        ShortFormApplicationService.preferences.neighborhoodResidence_proofOption = 'Gas Bill'
         ShortFormApplicationService.preferences.documents.neighborhoodResidence = {
           proofOption: 'Gas Bill'
           file: {}
@@ -529,6 +530,7 @@ do ->
       it 'copies Neighborhood member to liveInSf', ->
         ShortFormApplicationService.copyNeighborhoodToLiveInSf('neighborhoodResidence')
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 10
+        expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual 'Gas Bill'
         expect(ShortFormApplicationService.preferences.documents.liveInSf.proofOption).toEqual 'Gas Bill'
 
     describe 'preferenceRequired', ->
