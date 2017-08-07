@@ -177,6 +177,7 @@ ShortFormDataService = (ListingService) ->
       shortFormPref =
         shortformPreferenceID: shortformPreferenceID
         listingPreferenceID: listingPref.listingPreferenceID
+        preferenceProof: appPrefs[prefKey + '_proofOption']
         naturalKey: naturalKey
         optOut: optOut
         ifCombinedIndividualPreference: individualPref

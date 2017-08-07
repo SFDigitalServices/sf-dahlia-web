@@ -68,6 +68,12 @@ angular.module('dahlia.components')
           docType: @proofDocument.proofOption
         }
 
+      @saveProofOptionToPref = =>
+        proofOption = @proofDocument.proofOption
+        if @preference == 'rentBurden'
+          proofOption = 'Lease and rent proof'
+        ShortFormApplicationService.application.preferences[@preference + '_proofOption'] = proofOption
+
       @uploadProofFile = ($file) =>
         opts = {}
         if @preference == 'rentBurden'
