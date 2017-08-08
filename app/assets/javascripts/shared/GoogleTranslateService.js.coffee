@@ -24,9 +24,7 @@ GoogleTranslateService = ($q, $timeout) ->
     document.getElementsByTagName('head')[0].appendChild(node)
 
   Service.setLanguage = (language) ->
-    # TODO: Figure out how to do this without a timeout
-    # (googleTranslateOption is null unless you wait for a bit)
-    $timeout ->
+    if Service.translateElement
       googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
       if googleTranslateOption
         googleTranslateOption.selected = true
@@ -35,7 +33,8 @@ GoogleTranslateService = ($q, $timeout) ->
             'cancelable': true
         )
         googleTranslateOption.dispatchEvent(event)
-    , 500
+    else
+      Service.setLanguage(language)
 
   Service.init = ->
     Service.translateElement = new window.google.translate.TranslateElement(
