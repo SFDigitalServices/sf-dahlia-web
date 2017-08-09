@@ -23,7 +23,15 @@ GoogleTranslateService = ($q, $timeout) ->
     node.type = 'text/javascript'
     document.getElementsByTagName('head')[0].appendChild(node)
 
+  Service.hideShowTranslateBanner = (language) ->
+    googleTranslateBanner = document.querySelector(".goog-te-banner > table:first-child")
+    if language = 'en'
+      googleTranslateBanner.style.display = "none"
+    else
+      googleTranslateBanner.style.display = "table"
+
   Service.setLanguage = (language) ->
+    Service.hideShowTranslateBanner(language)
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
