@@ -32,7 +32,7 @@ class HouseholdMemberForm extends AngularPage
       @hasSameAddressAsApplicant_no.click()
       @householdMember_home_address_address1.clear().sendKeys(opts.address1)
       @householdMember_home_address_city.clear().sendKeys(opts.city)
-      @householdMember_home_address_state.sendKeys('california')
+      @householdMember_home_address_state.sendKeys('California')
       @householdMember_home_address_zip.clear().sendKeys('94114')
     else
       @hasSameAddressAsApplicant_yes.click()

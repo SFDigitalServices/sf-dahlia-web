@@ -9,8 +9,7 @@ Pages = require('../pages/short-form/index').Pages
 
 # QA "280 Fell"
 listingId = 'a0W0P00000DZTkAUAX'
-# sessionEmail = chance.email()
-sessionEmail = 'tu@fu.km'
+sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
 
@@ -383,6 +382,18 @@ module.exports = ->
     el.getText().then (elText) ->
       context.expect(elText.toLowerCase()).to.equal(text.toLowerCase())
 
+  expectInputValue = (context, id, value) ->
+    el = element(By.id(id))
+    context.expect(el.getAttribute('value')).to.eventually.equal(value)
+
+  expectRadioValue = (context, name, value) ->
+    el = element(By.css("input[name='#{name}']:checked"))
+    context.expect(el.getAttribute('value')).to.eventually.equal(value)
+
+  expectCheckboxChecked = (context, id) ->
+    checkbox = element(By.id(id))
+    context.expect(checkbox.isSelected()).to.eventually.equal(true)
+
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong', 'Live in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
@@ -491,12 +502,14 @@ module.exports = ->
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
   @Then 'on the Review Page I should see my preference details', ->
+  @Then /^on the Review Page I should see my preference details "([^"]*)" files$/, (expectFiles) ->
+    expectFiles = (expectFiles == 'with')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached')
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if expectFiles
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if expectFiles
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
@@ -516,7 +529,32 @@ module.exports = ->
   @Then 'on the Alternate Contact pages I should see my correct info', ->
     Pages.AlternateContact.expectToMatch(@)
 
+  @Then 'on the Household page I should see my correct info', ->
+    expectByCss(@, '#household-primary .info-item_name', 'Jane Doe')
+    expectByCss(@, '#household-primary .info-item_value', 'Primary Applicant')
+    expectByCss(@, '#household-member-0 .info-item_name', 'Coleman Francis')
+    expectByCss(@, '#household-member-0 .info-item_value', 'Household Member')
 
+  @Then 'on the Live in the Neighborhood page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-neighborhoodResidence')
+    # Jane Doe == '1'
+    expectInputValue(@, 'neighborhoodResidence_household_member', '1')
+    expectInputValue(@, 'neighborhoodResidence_proof_option', 'Gas bill')
+    expectByCss(@, '#successful-upload .media-body strong', 'logo-city')
+    submitPage()
+
+  @Then 'on the Preferences Programs page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-certOfPreference')
+    expectInputValue(@, 'certOfPreference_household_member', '1')
+    expectCheckboxChecked(@, 'preferences-displaced')
+    expectInputValue(@, 'displaced_household_member', '2')
+    submitPage()
+
+  @Then 'on the Income pages I should see my correct info', ->
+    expectRadioValue(@, 'householdVouchersSubsidies', 'No')
+    submitPage()
+    expectInputValue(@, 'incomeTotal', '72,000.00')
+    submitPage()
 
   ###################################
   # --- Error case expectations --- #

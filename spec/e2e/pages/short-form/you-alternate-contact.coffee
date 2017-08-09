@@ -24,7 +24,7 @@ class AlternateContact extends AngularPage
       formattedPhone: '(123) 123-1234'
       address: '100 Van Ness Ave'
       city: 'San Francisco'
-      state: 'california'
+      state: 'California'
       zip: '94110'
 
     @defaults.fullName = "#{@defaults.firstName} #{@defaults.lastName}"
@@ -56,8 +56,12 @@ class AlternateContact extends AngularPage
     context.expect(@lastName.getAttribute('value')).to.eventually.equal(@defaults.lastName)
     @submitPage()
 
-    # TODO......
-    # expect last page
+    context.expect(@phone.getAttribute('value')).to.eventually.equal(@defaults.formattedPhone)
+    context.expect(@email.getAttribute('value')).to.eventually.equal(@defaults.email)
+    context.expect(@mailingAddress1.getAttribute('value')).to.eventually.equal(@defaults.address)
+    context.expect(@mailingAddressCity.getAttribute('value')).to.eventually.equal(@defaults.city)
+    context.expect(@mailingAddressZip.getAttribute('value')).to.eventually.equal(@defaults.zip)
+    @submitPage()
 
 
 module.exports.AlternateContact = AlternateContact

@@ -31,11 +31,13 @@ class Contact extends AngularPage
       formattedAltPhone: '(555) 111-1111'
       homeAddress1: '4053 18th St.'
       homeAddressCity: 'San Francisco'
-      homeAddressState: 'california'
+      homeAddressState: 'California'
+      homeAddressStateValue: 'CA'
       homeAddressZip: '94114'
       mailingAddress1: '1651 Tiburon Blvd'
       mailingAddressCity: 'Tiburon'
-      mailingAddressState: 'california'
+      mailingAddressState: 'California'
+      mailingAddressStateValue: 'CA'
       mailingAddressZip: '94920'
 
   fill: (opts = {}) ->
@@ -79,11 +81,12 @@ class Contact extends AngularPage
     context.expect(@homeAddress1.getAttribute('value')).to.eventually.equal(opts.address1)
     context.expect(@homeAddress2.getAttribute('value')).to.eventually.equal('')
     context.expect(@homeAddressCity.getAttribute('value')).to.eventually.equal(@defaults.homeAddressCity.toUpperCase())
+    context.expect(@homeAddressState.getAttribute('value')).to.eventually.equal(@defaults.homeAddressStateValue)
     context.expect(@homeAddressZip.getAttribute('value')).to.eventually.equal('94103-4463')
     context.expect(@mailingAddress1.getAttribute('value')).to.eventually.equal(@defaults.mailingAddress1)
     context.expect(@mailingAddressCity.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressCity)
+    context.expect(@mailingAddressState.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressStateValue)
     context.expect(@mailingAddressZip.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressZip)
-    # addressState ommitted for lack of documentation on how to match <select> selected value
     @submitPage()
 
 
