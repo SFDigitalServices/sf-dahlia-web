@@ -24,11 +24,14 @@ GoogleTranslateService = ($q, $timeout) ->
     document.getElementsByTagName('head')[0].appendChild(node)
 
   Service.hideShowTranslateBanner = (language) ->
-    googleTranslateBanner = document.querySelector(".goog-te-banner > table:first-child")
-    if language = 'en'
-      googleTranslateBanner.style.display = "none"
-    else
-      googleTranslateBanner.style.display = "table"
+    googleTranslateBanner = document.getElementById(':1.container')
+    if googleTranslateBanner
+      if language == 'en'
+        googleTranslateBanner.style.display = 'none'
+        document.getElementById('ng-app').style.top = '0'
+      else
+        googleTranslateBanner.style.display = "block"
+        document.getElementById('ng-app').style.top = '40px'
 
   Service.setLanguage = (language) ->
     Service.hideShowTranslateBanner(language)
