@@ -20,7 +20,7 @@ class Contact extends AngularPage
     @mailingAddressState = element(By.id('applicant_mailing_address_state'))
     @mailingAddressZip = element(By.id('applicant_mailing_address_zip'))
     @workInSfYes = element(By.id('workInSf_yes'))
-    @workInSfNo = element(By.id('workInSf_yes'))
+    @workInSfNo = element(By.id('workInSf_no'))
 
     @defaults =
       phone: '2222222222'
@@ -39,6 +39,7 @@ class Contact extends AngularPage
       mailingAddressState: 'California'
       mailingAddressStateValue: 'CA'
       mailingAddressZip: '94920'
+      workInSf: 'yes'
 
   fill: (opts = {}) ->
     opts.address1 ||= @defaults.homeAddress1
