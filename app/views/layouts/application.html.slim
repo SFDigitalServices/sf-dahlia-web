@@ -34,6 +34,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
   body id="ng-app" ng-class="{'center-body': isShortFormPage()}"
+    / TODO: Move this into translation template and add angular controller?
+    #google_translate_element style="display: none"
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}

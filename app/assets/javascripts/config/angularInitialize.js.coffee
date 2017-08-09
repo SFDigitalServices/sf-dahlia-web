@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService'
+  'SharedService', 'GoogleTranslateService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService) ->
+  SharedService, GoogleTranslateService) ->
 
     # check if user is logged in on page load
     AccountService.validateUser()
@@ -38,14 +38,13 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      # catch multilingual route on a non-short-form page: currently not supported
-      if toParams.lang != 'en' &&
-        !ShortFormApplicationService.isShortFormPage(toState) &&
-        !ShortFormApplicationService.isWelcomePage(toState)
-          # redirect them to English version of the same page
-          e.preventDefault()
-          toParams.lang = 'en'
-          return $state.go(toState, toParams)
+      if ShortFormApplicationService.isShortFormPage(toState) || ShortFormApplicationService.isWelcomePage(toState)
+        language = 'en'
+      else
+        language = if toParams.lang == 'zh' then 'zh-CN' else toParams.lang
+
+      GoogleTranslateService.loadAPI().then ->
+        GoogleTranslateService.setLanguage(language)
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
