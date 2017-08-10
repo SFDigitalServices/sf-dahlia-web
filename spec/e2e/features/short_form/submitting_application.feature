@@ -11,7 +11,7 @@ Feature: Short Form Application
     #   And I don't indicate an alternate contact
     #   And I indicate I will live alone
     #   And I indicate living in public housing
-    #   And I indicate no priority
+    #   And I indicate no ADA priority
     #   And I indicate having vouchers
     #   And I fill out my income as "25000"
     #   And I continue past the Lottery Preferences intro
@@ -40,12 +40,11 @@ Feature: Short Form Application
       And I fill out an alternate contact
       # household
       And I indicate living with other people
-      And I add another household member named "Coleman Francis" who lives at "123 Main St."
-      And I confirm their address
+      And I add another household member named "Coleman Francis" with same address as primary
       And I indicate being done adding people
-      # TODO: public housing NO, priorities
-      And I indicate living in public housing
-      And I indicate no priority
+      And I indicate not living in public housing
+      And I enter "4000" for each of my monthly rents
+      And I indicate ADA Mobility and Vision impairments
       # income
       And I do not indicate having vouchers
       And I fill out my income as "72000"
@@ -54,7 +53,12 @@ Feature: Short Form Application
       And I select "Jane Doe" for "neighborhoodResidence" preference
       And I upload a "Gas bill" as my proof of preference for "neighborhoodResidence"
       And I click the Next button on the Live in the Neighborhood page
-      And I opt out of Assisted Housing preference
+
+      And I select Rent Burdened Preference
+      And I upload a Copy of Lease and "Money order" as my proof for Rent Burden
+      And I hit the Next button "1" time
+
+
       And I select "Jane Doe" for "certOfPreference" preference
       And I select "Coleman Francis" for "displaced" preference
       And I submit my preferences
@@ -87,15 +91,15 @@ Feature: Short Form Application
       # household
       Then on the Household page I should see my correct info
       And I indicate being done adding people
-      # TODO: public housing, priority
-      And I hit the Next button "2" times
-
+      Then on the Public Housing page I should see my correct info
+      Then on the Monthly Rent page I should see my correct info
+      Then on the ADA Priorities page I should see my correct info
       # income
       Then on the Income pages I should see my correct info
       # preferences
       And I continue past the Lottery Preferences intro
       Then on the Live in the Neighborhood page I should see my correct info
-      And I opt out of Assisted Housing preference
+      Then on the Rent Burdened page I should see my correct info
       Then on the Preferences Programs page I should see my correct info
 
       # review

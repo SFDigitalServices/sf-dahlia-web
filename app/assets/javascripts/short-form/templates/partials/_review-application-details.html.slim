@@ -67,19 +67,19 @@ div ng-if="prioritiesSelectedExists()"
   review-summary-section header="{{'LABEL.HOUSEHOLD_DETAILS' | translate}}" to="dahlia.short-form-application.{{getStartOfHouseholdDetails()}}"
 
   .app-inner
-    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" ng-if="application.hasPublicHousing"
+    review-summary-item label="{{'LABEL.LIVE_IN_PUBLIC_HOUSING_OR_HUD' | translate}}" identifier="hasPublicHousing" ng-if="application.hasPublicHousing"
       | {{application.hasPublicHousing}}
-    review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslateVariable(groupedAddress.members)}}"
+    review-summary-item ng-repeat="groupedAddress in application.groupedHouseholdAddresses" identifier="groupedAddress-{{$index}}" label="{{'LABEL.RENT_AT_ADDRESS' | translate: addressTranslateVariable(groupedAddress.address) }}" sub-label="{{'LABEL.FOR_USER' | translate: membersTranslateVariable(groupedAddress.members)}}"
       span ng-if="groupedAddress.monthlyRent"
         ' {{ groupedAddress.monthlyRent | currency : $ : 2 }}
       span ng-if="!groupedAddress.monthlyRent"
         ' {{ 0 | currency : $ : 0 }}
       span translate="LABEL.PER_MONTH"
-    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" ng-if="application.hasMilitaryService"
+    review-summary-item label="{{'LABEL.VETERANS_IN_HOUSEHOLD' | translate}}" identifier="hasMilitaryService" ng-if="application.hasMilitaryService"
       | {{application.hasMilitaryService}}
-    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" ng-if="application.hasDevelopmentalDisability"
+    review-summary-item label="{{'LABEL.PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES' | translate}}" identifier="hasDevelopmentalDisability" ng-if="application.hasDevelopmentalDisability"
       | {{application.hasDevelopmentalDisability}}
-    review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}"
+    review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}" identifier="adaPrioritiesSelected"
       span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
         | {{priorityOption[1]}}
         br

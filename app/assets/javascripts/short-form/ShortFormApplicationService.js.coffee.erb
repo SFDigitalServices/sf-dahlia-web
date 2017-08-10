@@ -743,9 +743,9 @@ ShortFormApplicationService = (
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
+    # if Service.applicationHasPreference('neighborhoodResidence')
+    #   Service.copyNeighborhoodToLiveInSf()
     Service.resetUserData(formattedApp)
-    if Service.hasPreference('neighborhoodResidence')
-      Service.copyNRHPtoLiveInSf()
 
   Service.loadAccountApplication = (data) ->
     return false if _.isEmpty(data.application)

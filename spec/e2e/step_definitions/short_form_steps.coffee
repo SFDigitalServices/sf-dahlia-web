@@ -46,6 +46,9 @@ module.exports = ->
   # import global cucumber options
   @World = World
 
+  # need this for uploading file to sauce labs
+  browser.setFileDetector new remote.FileDetector()
+
   @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
     getUrl(url)
@@ -152,13 +155,20 @@ module.exports = ->
     element(By.id('hasPublicHousing_no')).click()
     submitPage()
 
-  @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
-    element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
-    submitPage()
+  @When /^I enter "([^"]*)" for each of my monthly rents$/, (monthlyRent) ->
+    element.all(By.css('.form-income_input')).each((elem) ->
+      # we just fill out the same rent value for each rent input
+      elem.sendKeys(monthlyRent)
+    ).then ->
+      submitPage()
 
-  @When 'I indicate no priority', ->
+  @When 'I indicate no ADA priority', ->
     checkCheckbox 'adaPrioritiesSelected_none', -> submitPage()
 
+  @When 'I indicate ADA Mobility and Vision impairments', ->
+    checkCheckbox 'adaPrioritiesSelected_mobility-impaired', ->
+      checkCheckbox 'adaPrioritiesSelected_vision-impaired', ->
+        submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
@@ -231,14 +241,28 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
-    # need this for uploading file to sauce labs
-    browser.setFileDetector new remote.FileDetector()
-
     filePath = "#{process.env.PWD}/public/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
     browser.sleep(5000)
+
+  @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
+    filePath = "#{process.env.PWD}/public/images/logo-portal.png"
+    element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
+    browser.sleep(1000)
+
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id('rentBurden_rentDocument')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
+    browser.sleep(3000)
 
   @When 'I click the Next button on the Live/Work Preference page', ->
     submitPage()
@@ -442,8 +466,8 @@ module.exports = ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the successful file upload info', ->
-    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
+  @Then /^I should see the successful file upload info for "([^"]*)"/, (preference) ->
+    attachmentUploaded = element.all(By.id("uploaded-#{preference}_proofFile")).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
@@ -532,7 +556,6 @@ module.exports = ->
   @Then 'on the Review Page I should see my household member details', ->
     expectByIdAndText(@, 'household-member-0-name', 'Coleman Francis')
     expectByIdAndText(@, 'household-member-0-dob', '10/15/1985')
-    expectByCss(@, '#review-household-member-0-address .info-item_name', '123 MAIN ST')
 
   @Then 'on the Review Page I should see my income details', ->
     expectByIdAndText(@, 'income-vouchers', 'NONE')
@@ -551,6 +574,9 @@ module.exports = ->
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
+    expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
+    expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
+    expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached') if expectFiles
 
 
   #################################################
@@ -576,9 +602,19 @@ module.exports = ->
     expectCheckboxChecked(@, 'preferences-neighborhoodResidence')
     # Jane Doe == '1'
     expectInputValue(@, 'neighborhoodResidence_household_member', '1')
-    expectByCss(@, '#successful-upload .media-body strong', 'Gas bill')
-    expectByCss(@, '#successful-upload .media-body .t-micro', 'logo-city')
-    expectByCss(@, '#successful-upload .media-body .t-small', 'Uploaded')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body strong', 'Gas bill')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-small', 'Uploaded')
+    submitPage()
+
+  @Then 'on the Rent Burdened page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-rentBurden')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body strong', 'Copy of Lease')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-micro', 'logo-portal')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-small', 'Uploaded')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body strong', 'Money order')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-small', 'Uploaded')
     submitPage()
 
   @Then 'on the Preferences Programs page I should see my correct info', ->
@@ -586,6 +622,19 @@ module.exports = ->
     expectInputValue(@, 'certOfPreference_household_member', '1')
     expectCheckboxChecked(@, 'preferences-displaced')
     expectInputValue(@, 'displaced_household_member', '2')
+    submitPage()
+
+  @Then 'on the Public Housing page I should see my correct info', ->
+    expectRadioValue(@, 'hasPublicHousing', 'No')
+    submitPage()
+
+  @Then 'on the Monthly Rent page I should see my correct info', ->
+    expectInputValue(@, 'monthlyRent_0', '4,000.00')
+    submitPage()
+
+  @Then 'on the ADA Priorities page I should see my correct info', ->
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_mobility-impaired')
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_vision-impaired')
     submitPage()
 
   @Then 'on the Income pages I should see my correct info', ->
