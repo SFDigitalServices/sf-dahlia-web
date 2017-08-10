@@ -1,19 +1,14 @@
-.translate-bar.bar.bg-tuatara.skiptranslate
-  .row
-    .medium-12.columns
-      ul.inline-list.no-margin.t-small.right
-        li.c-iron.show-for-medium-up
-          | Select Language
-        li
-          a.c-white ng-href="{{$ctrl.switchToLanguage('en')}}"
-            | English
-        li
-          a.c-white ng-href="{{$ctrl.switchToLanguage('es')}}"
-            | Español
-        li
-          a.c-white.t-ch ng-href="{{$ctrl.switchToLanguage('zh')}}"
-            | 中文
-            span.sr-only Chinese
-        li
-          a.c-white ng-href="{{$ctrl.switchToLanguage('tl')}}"
-            | Filipino
+ul.inline-list.no-margin.t-reg.t-semi.right
+  li
+    a ng-class="{active: $ctrl.isSelectedLanguage('en')}" ng-href="{{$ctrl.switchToLanguage('en')}}"
+      | English
+  li
+    a ng-class="{active: $ctrl.isSelectedLanguage('es')}" ng-href="{{$ctrl.switchToLanguage('es')}}"
+      | Español
+  li
+    a ng-class="{active: $ctrl.isSelectedLanguage('zh')}" ng-href="{{$ctrl.switchToLanguage('zh')}}"
+      | 中文
+      span.sr-only Chinese
+  li
+    a ng-class="{active: $ctrl.isSelectedLanguage('tl')}" ng-href="{{$ctrl.switchToLanguage('tl')}}"
+      | Filipino

@@ -335,6 +335,10 @@
         "TITLE": "Thanks. We have received your application for",
         "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
     },
+    "HEADER": {
+        "LEARN_MORE": "Learn more.",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "This page has been translated with Google Translate."
+    },
     "LABEL": {
         "ADA_ACCESSIBLE_UNITS": "ADA Accessible Units",
         "ADDITIONAL_PHONE": "Additional Phone",

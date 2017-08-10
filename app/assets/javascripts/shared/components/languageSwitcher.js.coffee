@@ -10,5 +10,8 @@ angular.module('dahlia.components')
         href = href + "/"
       href
 
+    @isSelectedLanguage = (lang) ->
+      $state.params.lang == lang
+
     return ctrl
   ]

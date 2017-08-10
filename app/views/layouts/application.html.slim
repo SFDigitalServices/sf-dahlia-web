@@ -40,12 +40,14 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
     .site-container ng-class="{'skiptranslate': isShortFormPageOrEnglish()}"
-      section(ui-view="translate")
-      section(ui-view="version")
-      section(ui-view="navigation")
+      / always skip translations for the header + navigation
+      .skiptranslate
+        section(ui-view="translate")
+        section(ui-view="version")
+        section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
         section#main-content.main-content(ui-view="container")
-    .footer-section ng-class="{'skiptranslate': isShortFormPageOrEnglish()}"
+    .footer-section.skiptranslate
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 
