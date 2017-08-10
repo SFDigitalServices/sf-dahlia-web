@@ -581,6 +581,8 @@ ShortFormApplicationService = (
             formattedApp.lastPage = 'preferences-intro'
 
     Service.resetUserData(formattedApp)
+    if Service.hasPreference('neighborhoodResidence')
+      Service.copyNRHPtoLiveInSf()
 
   Service.loadAccountApplication = (data) ->
     return false if _.isEmpty(data.application)
