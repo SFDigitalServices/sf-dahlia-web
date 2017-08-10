@@ -9,6 +9,9 @@ SharedController = ($rootScope, $scope, $state, SharedService) ->
   $scope.isShortFormPage = () ->
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
+  $scope.isShortFormPageOrEnglish = () ->
+    $scope.isShortFormPage() || $state.params.lang == 'en'
+
   $scope.focusOnMainContent = ->
     SharedService.focusOnMainContent()
 

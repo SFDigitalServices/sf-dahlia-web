@@ -38,10 +38,7 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      if ShortFormApplicationService.isShortFormPage(toState) || ShortFormApplicationService.isWelcomePage(toState)
-        language = 'en'
-      else
-        language = if toParams.lang == 'zh' then 'zh-CN' else toParams.lang
+      language = if toParams.lang == 'zh' then 'zh-CN' else toParams.lang
 
       GoogleTranslateService.loadAPI().then ->
         GoogleTranslateService.setLanguage(language)

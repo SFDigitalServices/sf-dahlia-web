@@ -23,18 +23,7 @@ GoogleTranslateService = ($q, $timeout) ->
     node.type = 'text/javascript'
     document.getElementsByTagName('head')[0].appendChild(node)
 
-  Service.hideShowTranslateBanner = (language) ->
-    googleTranslateBanner = document.getElementById(':1.container')
-    if googleTranslateBanner
-      if language == 'en'
-        googleTranslateBanner.style.display = 'none'
-        document.getElementById('ng-app').style.top = '0'
-      else
-        googleTranslateBanner.style.display = "block"
-        document.getElementById('ng-app').style.top = '40px'
-
   Service.setLanguage = (language) ->
-    Service.hideShowTranslateBanner(language)
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
@@ -44,7 +33,7 @@ GoogleTranslateService = ($q, $timeout) ->
       )
       googleTranslateOption.dispatchEvent(event)
     else
-      $timeout Service.setLanguage, 50, true, language
+      $timeout Service.setLanguage, 100, true, language
 
   Service.init = ->
     Service.translateElement = new window.google.translate.TranslateElement(
