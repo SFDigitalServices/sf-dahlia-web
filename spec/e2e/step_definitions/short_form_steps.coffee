@@ -538,8 +538,8 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then /^I should see "([^"]*)" selected in the short form language switcher$/, (language) ->
-    activeLang = element(By.cssContainingText('li.active.lined-nav_item', language))
+  @Then /^I should see "([^"]*)" selected in the translate bar language switcher$/, (language) ->
+    activeLang = element(By.cssContainingText('.translate-bar li a.active', language))
     @expect(activeLang.isPresent()).to.eventually.equal(true)
 
   @Then 'I should be redirected back to the listings page in English', ->

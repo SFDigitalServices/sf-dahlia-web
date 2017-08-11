@@ -7,4 +7,4 @@ Feature: Short Form Application
       Given I go to the welcome page of the Test Listing application
       And I select "Spanish" as my language
       And I continue past the community screening and welcome overview
-      Then I should see "Español" selected in the short form language switcher
+      Then I should see "Español" selected in the translate bar language switcher
