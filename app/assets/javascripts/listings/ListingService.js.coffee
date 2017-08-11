@@ -574,6 +574,17 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
+  # used by My Applications -- when you load an application we also parse the attached listing data
+  Service.loadListing = (listing) ->
+    return if Service.listing && Service.listing.Id == listing.Id
+    # TODO: won't be needed if we ever consolidate Listing_Lottery_Preferences and /preferences API
+    listing.preferences = _.map listing.Listing_Lottery_Preferences, (lotteryPref) ->
+      {
+        listingPreferenceID: lotteryPref.Id
+        preferenceName: lotteryPref.Lottery_Preference.Name
+      }
+    angular.copy(listing, Service.listing)
+
   Service.occupancyIncomeLevels = (amiLevel) ->
     return [] unless amiLevel
     occupancyMinMax = Service.occupancyMinMax(Service.listing)

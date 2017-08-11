@@ -148,7 +148,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.fileAttachmentsForRentBurden = (application) ->
-    return '' if application.status.match(/submitted/i)
+    if application.status.match(/submitted/i)
+      return [
+        subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
+      ]
     labels = []
     # this one is a little bit complicated because it has to sort through each set of rentBurden
     # address docs, and create an array of "For {{address}}: {{doc1}}, {{doc2}}... attached"
