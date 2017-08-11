@@ -73,7 +73,7 @@ module.exports = ->
     submitPage()
 
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
+    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
