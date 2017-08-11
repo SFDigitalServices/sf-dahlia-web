@@ -69,7 +69,7 @@ Feature: Short Form Application
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details
+      Then on the Review Page I should see my preference details on my "draft" application
       And I click the Save and Finish Later button
       And I fill out my account info
       And I submit the Create Account form
@@ -109,7 +109,7 @@ Feature: Short Form Application
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details "with" files
+      Then on the Review Page I should see my preference details on my "draft" application
 
       When I confirm details on the review page
       And I agree to the terms and submit
@@ -120,7 +120,7 @@ Feature: Short Form Application
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details "without" files
+      Then on the Review Page I should see my preference details on my "submitted" application
       #
       # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
       #

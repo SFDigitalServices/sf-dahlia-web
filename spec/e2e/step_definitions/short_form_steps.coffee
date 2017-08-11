@@ -561,22 +561,24 @@ module.exports = ->
     expectByIdAndText(@, 'income-vouchers', 'NONE')
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
-  @Then 'on the Review Page I should see my preference details', ->
-  @Then /^on the Review Page I should see my preference details "([^"]*)" files$/, (expectFiles) ->
-    expectFiles = (expectFiles == 'with')
+  @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
+    withFiles = (status == 'draft')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if expectFiles
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if expectFiles
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
-    expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
-    expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached') if expectFiles
+    if withFiles
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
+      expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
+    else
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
 
 
   #################################################
