@@ -11,7 +11,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
@@ -30,7 +30,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I add another household member named "Jonny Doe" with same address as primary
       And I indicate being done adding people
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro

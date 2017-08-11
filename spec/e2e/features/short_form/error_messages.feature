@@ -44,7 +44,7 @@ Feature: Short Form Application
       # now should be valid with 3 people
       And I indicate being done adding people
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I do not indicate having vouchers
 
       # error: income too low

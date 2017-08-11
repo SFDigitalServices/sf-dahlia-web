@@ -29,6 +29,7 @@ do ->
       listing:
         Id: ''
       hasPreference: ->
+      loadListing: ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
@@ -791,6 +792,16 @@ do ->
         ShortFormApplicationService.loadApplication(data)
         expect(fakeDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application, [])
+
+      it 'loads the listing into Service.listing for viewing submitted applications', ->
+        spyOn(fakeListingService, 'loadListing').and.callThrough()
+        data =
+          application: fakeShortForm
+        data.application.status = 'Submitted'
+        data.application.listing = {Id: 'XYZ'}
+        ShortFormApplicationService.loadApplication(data)
+        expect(fakeListingService.loadListing)
+          .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->
         spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
