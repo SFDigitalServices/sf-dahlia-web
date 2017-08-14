@@ -9,6 +9,7 @@ ListingController = (
   $sanitize,
   $timeout,
   $filter,
+  $translate,
   Carousel,
   SharedService,
   ListingService,
@@ -75,6 +76,10 @@ ListingController = (
 
   $scope.formattedLeasingAgentAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Leasing_Agent', display)
+
+  $scope.leasingAgentInfoAvailable = ->
+    l = $scope.listing
+    l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -155,9 +160,6 @@ ListingController = (
     results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]
     results && results.preferenceRank
 
-  $scope.showPreferenceListPDF = ->
-    ListingService.showPreferenceListPDF($scope.listing)
-
   $scope.lotteryNumberValid = ->
     return unless $scope.lotteryRankingInfo && $scope.lotteryRankingInfo.lotteryBuckets
     # true if there are any lotteryBuckets
@@ -215,8 +217,28 @@ ListingController = (
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
 
+  $scope.occupancy = (unitSummary) ->
+    return '1' if unitSummary.maxOccupancy == 1
+    unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+
+  $scope.occupancyLabel = (maxOccupancy) ->
+    return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
+    $translate.instant('LISTINGS.PEOPLE')
+
+  $scope.formatBaths = (numberOfBathrooms) ->
+    return 'Shared' if numberOfBathrooms == 0
+    return '1/2 ' + $translate.instant('LISTINGS.BATH') if numberOfBathrooms == 0.5
+
+    fullBaths = Math.floor numberOfBathrooms
+    andAHalf = numberOfBathrooms - fullBaths == 0.5
+
+    if andAHalf
+      fullBaths + ' 1/2 ' + $translate.instant('LISTINGS.BATH')
+    else
+      numberOfBathrooms
+
   $scope.occupancyIncomeLevels = (amiLevel) ->
-    ListingService.occupancyIncomeLevels(amiLevel)
+    ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
 
   $scope.householdAMIChartCutoff = ->
     ListingService.householdAMIChartCutoff()
@@ -235,6 +257,9 @@ ListingController = (
 
   $scope.listingHasSROUnits = ->
     ListingService.listingHasSROUnits($scope.listing)
+
+  $scope.listingHasOnlySROUnits = ->
+    ListingService.listingHasOnlySROUnits($scope.listing)
 
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
@@ -335,6 +360,7 @@ ListingController.$inject = [
   '$sanitize',
   '$timeout',
   '$filter',
+  '$translate',
   'Carousel',
   'SharedService',
   'ListingService',

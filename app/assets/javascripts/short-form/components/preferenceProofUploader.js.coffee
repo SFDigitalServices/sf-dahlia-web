@@ -24,20 +24,22 @@ angular.module('dahlia.components')
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
 
-      @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
-      if @rentBurdenType
-        @selectorName = "#{@preference}_#{@rentBurdenType}Document"
-        @fileInputName = "#{@preference}_#{@rentBurdenType}File"
-      else
-        @selectorName = "#{@preference}_proofDocument"
-        @fileInputName = "#{@preference}_proofFile"
       @listingId = ShortFormApplicationService.listing.Id
+      @buttonLabel ?= $translate.instant('LABEL.UPLOAD_PROOF_OF_PREFERENCE') unless @buttonLabel
+
+      @$onChanges = =>
+        if @rentBurdenType
+          @selectorName = "#{@preference}_#{@rentBurdenType}Document"
+          @fileInputName = "#{@preference}_#{@rentBurdenType}File"
+        else
+          @selectorName = "#{@preference}_proofDocument"
+          @fileInputName = "#{@preference}_proofFile"
 
       @setProofType = =>
         # @proofType means that proofOption gets hardcoded to the set value
         if @proofType
           @proofDocument.proofOption = @proofType
-        else if !@proofDocument && !@proofDocument.file
+        else if !@proofDocument || !@proofDocument.file
           @proofDocument.proofOption = null
 
       @liveOrNeighborhoodPreference = =>
@@ -65,6 +67,12 @@ angular.module('dahlia.components')
           index: @proofDocument.id
           docType: @proofDocument.proofOption
         }
+
+      @saveProofOptionToPref = =>
+        proofOption = @proofDocument.proofOption
+        if @preference == 'rentBurden'
+          proofOption = 'Lease and rent proof'
+        ShortFormApplicationService.application.preferences[@preference + '_proofOption'] = proofOption
 
       @uploadProofFile = ($file) =>
         opts = {}

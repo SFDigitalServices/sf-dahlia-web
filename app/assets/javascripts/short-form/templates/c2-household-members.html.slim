@@ -5,7 +5,7 @@
 
   .app-inner.short.focus-container
     .form-group
-      .info-item.tall.border-bottom
+      .info-item.tall.border-bottom id="household-primary"
         p.info-item_name
           | {{ applicant.firstName }} {{ applicant.lastName }}
         p.info-item_value
@@ -13,14 +13,13 @@
         a.edit-link.info-item_link ui-sref="dahlia.short-form-application.name"
           | {{'T.EDIT' | translate}}
 
-      span ng-repeat="member in householdMembers"
-        .info-item.tall.border-bottom
-          p.info-item_name
-            | {{ member.firstName }} {{ member.lastName }}
-          p.info-item_value
-            | {{'LABEL.HOUSEHOLD_MEMBER' | translate}}
-          a.edit-link.info-item_link ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
-            | {{'T.EDIT' | translate}}
+      .info-item.tall.border-bottom ng-repeat="member in householdMembers" id="household-member-{{$index}}"
+        p.info-item_name
+          | {{ member.firstName }} {{ member.lastName }}
+        p.info-item_value
+          | {{'LABEL.HOUSEHOLD_MEMBER' | translate}}
+        a.edit-link.info-item_link ui-sref="dahlia.short-form-application.household-member-form-edit({member_id: member.id})"
+          | {{'T.EDIT' | translate}}
 
       .text-center.padding--2x
         button#add-household-member.has-icon.no-margin ui-sref="dahlia.short-form-application.household-member-form"

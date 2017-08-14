@@ -288,6 +288,7 @@ ShortFormApplicationService = (
       FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
     else
       Service.preferences["#{preference}_household_member"] = null
+      Service.preferences["#{preference}_proofOption"] = null
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   Service.cancelOptOut = (preference) ->
@@ -387,12 +388,12 @@ ShortFormApplicationService = (
     if type == 'liveWorkInSf' || type == 'all'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('workInSf', Service.workInSfMembers())
-    else if type == 'neighborhoodResidence' || type == 'all'
-      Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
-    else if type == 'antiDisplacement' || type == 'all'
-      Service._updatePreference('antiDisplacement', Service.liveInTheNeighborhoodMembers())
     else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
+    if type == 'neighborhoodResidence' || type == 'all'
+      Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
+    if type == 'antiDisplacement' || type == 'all'
+      Service._updatePreference('antiDisplacement', Service.liveInTheNeighborhoodMembers())
 
   Service.eligibleMembers = (preference) ->
     switch preference
@@ -473,7 +474,14 @@ ShortFormApplicationService = (
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
     prefList = ShortFormDataService.preferences
+    customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
+    prefList = prefList.concat(customPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
+
+  Service.customPreferencesClaimed = ->
+    customPrefClaims = _.map Service.listing.customPreferences, (customPref) ->
+      Service.applicationHasPreference(customPref.listingPreferenceID)
+    return _.includes(customPrefClaims, true)
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
@@ -486,14 +494,18 @@ ShortFormApplicationService = (
     Service.resetLiveWorkForm()
     # copy Neighborhood values to liveInSf
     neighborhoodMember = Service.preferences["#{preference}_household_member"]
+    proofOption = Service.preferences["#{preference}_proofOption"]
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
     proofOption = Service.preferences.documents[preference].proofOption
     file = Service.preferences.documents[preference].file
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
-    Service.preferences.documents.liveInSf = {proofOption: proofOption, file: file}
+    Service.preferences.liveInSf_proofOption = proofOption
+    Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
+    # only check to reset this preference if it has been selected
+    return unless Service.preferences[preference]
     members = eligibleMembers.map (member) -> member.id
     selectedMember = Service.preferences[preference + '_household_member']
     # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
@@ -739,6 +751,9 @@ ShortFormApplicationService = (
     formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
+      if data.application.status.match(/submitted/i) && data.application.listing
+        # on submitted app the listing is loaded along with it
+        ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening

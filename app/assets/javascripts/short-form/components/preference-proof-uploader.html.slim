@@ -10,7 +10,7 @@
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
 
   div ng-if="$ctrl.showProofOptionSelector()"
-    select id="{{$ctrl.selectorName}}" ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]"
+    select id="{{$ctrl.selectorName}}" ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-model="$ctrl.proofDocument.proofOption" data-width="auto" name="{{$ctrl.selectorName}}" ng-required="$ctrl.application.preferences[$ctrl.preference]" ng-change="$ctrl.saveProofOptionToPref()"
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
@@ -45,7 +45,7 @@
         | {{'LABEL.UPLOADING' | translate}}...
 
 .form-group ng-if="$ctrl.hasPreferenceFile()"
-  article.attachment.media.margin-bottom id="successful-upload"
+  article.attachment.media.margin-bottom id="uploaded-{{$ctrl.fileInputName}}"
     figure.media-img
       img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
     .media-body

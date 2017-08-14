@@ -29,9 +29,9 @@ Feature: Short Form Application
 
       When I cancel the household member
       # error: household too big (280 Fell allows for 1-3 people, 4 is too big)
-      And I add another household member named "Jonny Doe"
-      And I add another household member named "Karen Lee"
-      And I add another household member named "Alex McGee"
+      And I add another household member named "Jonny Doe" with same address as primary
+      And I add another household member named "Karen Lee" with same address as primary
+      And I add another household member named "Alex McGee" with same address as primary
       And I indicate being done adding people
       Then I should see an error about household size being too big
 
@@ -40,7 +40,7 @@ Feature: Short Form Application
       # now should be valid with 3 people
       And I indicate being done adding people
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I do not indicate having vouchers
 
       # error: income too low

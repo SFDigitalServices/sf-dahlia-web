@@ -4,6 +4,7 @@ do ->
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
+    fakeCustomPreference = {}
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
@@ -26,6 +27,7 @@ do ->
       listing:
         Id: ''
       hasPreference: ->
+      loadListing: ->
     fakeDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
@@ -521,6 +523,7 @@ do ->
       beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
         ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 10
+        ShortFormApplicationService.preferences.neighborhoodResidence_proofOption = 'Gas Bill'
         ShortFormApplicationService.preferences.documents.neighborhoodResidence = {
           proofOption: 'Gas Bill'
           file: {}
@@ -529,6 +532,7 @@ do ->
       it 'copies Neighborhood member to liveInSf', ->
         ShortFormApplicationService.copyNeighborhoodToLiveInSf('neighborhoodResidence')
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 10
+        expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual 'Gas Bill'
         expect(ShortFormApplicationService.preferences.documents.liveInSf.proofOption).toEqual 'Gas Bill'
 
     describe 'preferenceRequired', ->
@@ -785,6 +789,16 @@ do ->
         expect(fakeDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application, [])
 
+      it 'loads the listing into Service.listing for viewing submitted applications', ->
+        spyOn(fakeListingService, 'loadListing').and.callThrough()
+        data =
+          application: fakeShortForm
+        data.application.status = 'Submitted'
+        data.application.listing = {Id: 'XYZ'}
+        ShortFormApplicationService.loadApplication(data)
+        expect(fakeListingService.loadListing)
+          .toHaveBeenCalledWith(data.application.listing)
+
       it 'resets user data', ->
         spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
         data =
@@ -905,7 +919,6 @@ do ->
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual false
 
-
     describe 'hasCompleteRentBurdenFiles', ->
       beforeEach ->
         ShortFormApplicationService.application.groupedHouseholdAddresses = [{"address": "123 Main St"}]
@@ -924,3 +937,21 @@ do ->
           '123 Main St':
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
+
+    describe 'customPreferencesClaimed', ->
+      beforeEach ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
+        ShortFormApplicationService.listing = fakeListing
+        fakeCustomPreference =
+          listingPreferenceID: '123456'
+        ShortFormApplicationService.listing.customPreferences = [fakeCustomPreference]
+
+      it 'returns true if custom preferences were claimed', ->
+        ShortFormApplicationService.preferences = {'123456': true}
+        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual true
+
+      it 'returns false if custom preferences were not claimed', ->
+        ShortFormApplicationService.preferences = {'liveInSf': true}
+        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual false
+
+

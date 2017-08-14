@@ -5,8 +5,8 @@
   select#user_sexual_orientation ng-model="user.sexualOrientation" data-width="auto" name="sexualOrientation" ng-change="user.sexualOrientationOther = null"
     option disabled="" selected="" value=""
       | {{'LABEL.SELECT_ONE' | translate}}
-    option ng-repeat="orientation in sexual_orientation_options" value="{{orientation}}"
-      | {{ orientation }}
+    option ng-repeat="orientation in sexual_orientation_options" value="{{orientation[0]}}"
+      | {{ orientation[1] | translate }}
 
   label.sr-only for="user_sexual_orientation_other" translate="LABEL.YOUR_SEXUAL_ORIENTATION"
   input#user_sexual_orientation_other ng-model="user.sexualOrientationOther" name="sexualOrientationOther" placeholder="{{'LABEL.YOUR_SEXUAL_ORIENTATION' | translate}}" type="text" ng-class="{ error: inputInvalid('sexualOrientationOther') }" ng-if="user.sexualOrientation == 'Not Listed'" aria-describedby="user_sexual_orientation_other_error"

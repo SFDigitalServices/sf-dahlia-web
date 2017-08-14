@@ -7,7 +7,58 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Social Worker or Housing Counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
     ['Other', $translate.instant('LABEL.OTHER')]
   ]
-
+  Service.gender_options = [
+    ['Female', $translate.instant('LABEL.FEMALE')]
+    ['Male', $translate.instant('LABEL.MALE')]
+    ['Genderqueer/Gender Non-binary', $translate.instant('LABEL.GENDERQUEER_NON_BINARY')]
+    ['Trans Female', $translate.instant('LABEL.TRANS_FEMALE')]
+    ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
+    ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
+  ]
+  Service.sex_at_birth_options = [
+    ['Female', $translate.instant('LABEL.FEMALE')]
+    ['Male', $translate.instant('LABEL.MALE')]
+  ]
+  Service.relationship_options = [
+    ['Spouse', $translate.instant('LABEL.SPOUSE')]
+    ['Registered Domestic Partner', $translate.instant('LABEL.REGISTERED_DOMESTIC_PARTNER')]
+    ['Parent', $translate.instant('LABEL.PARENT')]
+    ['Child', $translate.instant('LABEL.CHILD')]
+    ['Sibling', $translate.instant('LABEL.SIBLING')]
+    ['Cousin', $translate.instant('LABEL.COUSIN')]
+    ['Aunt', $translate.instant('LABEL.AUNT')]
+    ['Uncle', $translate.instant('LABEL.UNCLE')]
+    ['Nephew', $translate.instant('LABEL.NEPHEW')]
+    ['Niece', $translate.instant('LABEL.NIECE')]
+    ['Grandparent', $translate.instant('LABEL.GRANDPARENT')]
+    ['Great Grandparent', $translate.instant('LABEL.GREAT_GRANDPARENT')]
+    ['In-Law', $translate.instant('LABEL.IN_LAW')]
+    ['Friend', $translate.instant('LABEL.FRIEND')]
+    ['Other', $translate.instant('LABEL.OTHER')]
+  ]
+  Service.ethnicity_options = [
+    ['Hispanic/Latino', $translate.instant('LABEL.HISPANIC_LATINO')]
+    ['Not Hispanic/Latino', $translate.instant('LABEL.NOT_HISPANIC_LATINO')]
+  ]
+  Service.race_options = [
+    ['American Indian/Alaskan Native', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE')]
+    ['Asian', $translate.instant('LABEL.ASIAN')]
+    ['Black/African American', $translate.instant('LABEL.BLACK_AFRICAN_AMERICAN')]
+    ['Native Hawaiian/Other Pacific Islander', $translate.instant('LABEL.NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER')]
+    ['White', $translate.instant('LABEL.WHITE')]
+    ['American Indian/Alaskan Native and Black/African American', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK')]
+    ['American Indian/Alaskan Native and White', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE')]
+    ['Asian and White', $translate.instant('LABEL.ASIAN_WHITE')]
+    ['Black/African American and White', $translate.instant('LABEL.BLACK_AFRICAN_AMERICAN_WHITE')]
+    ['Other/Multiracial', $translate.instant('LABEL.OTHER_MULTIRACIAL')]
+  ]
+  Service.sexual_orientation_options = [
+    ['Bisexual', $translate.instant('LABEL.BISEXUAL')]
+    ['Gay/Lesbian/Same-Gender Loving', $translate.instant('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
+    ['Questioning/Unsure', $translate.instant('LABEL.QUESTIONING_UNSURE')]
+    ['Straight/Heterosexual', $translate.instant('LABEL.STRAIGHT_HETEROSEXUAL')]
+    ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
+  ]
   Service.preference_proof_options_default = [
     ['Telephone bill', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
     ['Cable and internet bill', $translate.instant('LABEL.PROOF.CABLE_BILL')],
@@ -97,7 +148,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.fileAttachmentsForRentBurden = (application) ->
-    return '' if application.status.match(/submitted/i)
+    if application.status.match(/submitted/i)
+      return [
+        subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
+      ]
     labels = []
     # this one is a little bit complicated because it has to sort through each set of rentBurden
     # address docs, and create an array of "For {{address}}: {{doc1}}, {{doc2}}... attached"

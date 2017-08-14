@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 07 Jul 2017 00:44:29 GMT
+      - Wed, 26 Jul 2017 20:37:30 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=oKUSIo1NTDKi8Yg6w5sDoA;Path=/;Domain=.salesforce.com;Expires=Tue,
-        05-Sep-2017 00:44:29 GMT
+      - BrowserId=wEVc3TYvTiyoi0aqmXYcEg;Path=/;Domain=.salesforce.com;Expires=Sun,
+        24-Sep-2017 20:37:30 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,9 +50,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499388269583","signature":"AYJ4CXtbZFNABTHst9jVwwUDrG82oBLsOjVEhwGevJ8="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1501101450628","signature":"x2JwQIQ6pUh4U1IqLIu3VZxEGJtNsUNw6FH9lPFmn+I="}'
     http_version: 
-  recorded_at: Fri, 07 Jul 2017 00:44:29 GMT
+  recorded_at: Wed, 26 Jul 2017 20:37:32 GMT
 - request:
     method: get
     uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/shortForm/
@@ -74,17 +74,17 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 07 Jul 2017 00:44:30 GMT
+      - Wed, 26 Jul 2017 20:37:30 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
+        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=UViYN3eFS22Gsc03-0J20g;Path=/;Domain=.salesforce.com;Expires=Tue,
-        05-Sep-2017 00:44:30 GMT
+      - BrowserId=pbq_fnN9ReGpzB1LLkjdnw;Path=/;Domain=.salesforce.com;Expires=Sun,
+        24-Sep-2017 20:37:30 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Transfer-Encoding:
@@ -93,5 +93,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 07 Jul 2017 00:44:30 GMT
+  recorded_at: Wed, 26 Jul 2017 20:37:32 GMT
 recorded_with: VCR 3.0.3

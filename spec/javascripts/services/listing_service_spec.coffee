@@ -6,6 +6,16 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
+    # fakeListingAllSRO has only one unit summary, in general, for SRO
+    fakeListingAllSRO = angular.copy(fakeListing.listing)
+    fakeListingAllSRO.unitSummaries =
+      reserved: null
+      general: [angular.copy(fakeListing.listing.unitSummaries.general[0])]
+    fakeListingAllSRO.unitSummaries.general[0].unitType = 'SRO'
+    fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
+    # fakeListingSomeSRO has two unit summaries in general, one for SRO, one for 1 BR
+    fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
+    fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
@@ -314,38 +324,6 @@ do ->
         httpBackend.flush()
         expect(ListingService.lotteryRankingInfo).toEqual fakeLotteryRanking
 
-    describe 'Service.showPreferenceListPDF', ->
-      it 'returns true if URL is available and the lottery results are not yet available', ->
-        # have to populate listing first
-        listing = fakeListing.listing
-
-        # clear any lottery results
-        ListingService.lotteryBuckets = []
-        ListingService.listing.LotteryResultsURL = null
-
-        listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
-        expect(ListingService.showPreferenceListPDF(listing)).toEqual true
-
-      it 'returns false if URL is unavailable', ->
-        # have to populate listing first
-        listing = fakeListing.listing
-
-        # clear any lottery results
-        ListingService.lotteryBuckets = []
-        ListingService.listing.LotteryResultsURL = null
-
-        listing.NeighborHoodPreferenceUrl = null
-        expect(ListingService.showPreferenceListPDF(listing)).toEqual false
-
-      it 'returns false if the lottery results are available', ->
-        # have to populate listing first
-        listing = fakeListing.listing
-        # presence of LotteryResultsURL means lottery results are available
-        ListingService.listing.LotteryResultsURL = "http://anotherurl.com"
-
-        listing.NeighborHoodPreferenceUrl = 'http://www.url.com'
-        expect(ListingService.showPreferenceListPDF(listing)).toEqual false
-
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
         listing = fakeListing.listing
@@ -369,21 +347,38 @@ do ->
           ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
 
+    describe 'Service.loadListing', ->
+      beforeEach ->
+        ListingService.loadListing(fakeListing.listing)
+      it 'should populate Service.listing', ->
+        expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
+      it 'should populate Service.listing.preferences', ->
+        count = fakeListing.listing.Listing_Lottery_Preferences.length
+        expect(ListingService.listing.preferences.length).toEqual count
+        prefId = fakeListing.listing.Listing_Lottery_Preferences[0].Id
+        expect(ListingService.listing.preferences[0].listingPreferenceID).toEqual prefId
+
     describe 'Service.occupancyIncomeLevels', ->
       beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
-        incomeLevels = ListingService.occupancyIncomeLevels(fakeAMI.ami[0])
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, fakeAMI.ami[0])
         minMax = ListingService.occupancyMinMax(ListingService.listing)
       it 'should filter the incomeLevels to start from min household', ->
         expect(incomeLevels[0].numOfHousehold).toEqual minMax[0]
       it 'should filter the incomeLevels to end at max household + 2', ->
         expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual minMax[1] + 2
+      it 'should filter the incomeLevels to only show 1 person if all SROs', ->
+        ListingService.listing = fakeListingAllSRO
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, fakeAMI.ami[0])
+        minMax = ListingService.occupancyMinMax(ListingService.listing)
+        expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual 1
 
     describe 'Service.minYearlyIncome', ->
       it 'should get the minimum yearly income for the first (and only) AMI Chart', ->
+        ListingService.listing = fakeListing.listing
         ListingService.AMICharts = ListingService._consolidatedAMICharts(fakeAMI.ami)
-        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.AMICharts[0])
+        incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, ListingService.AMICharts[0])
         expect(ListingService.minYearlyIncome()).toEqual incomeLevels[0].amount
 
     describe 'Service.incomeForHouseholdSize', ->
@@ -412,3 +407,17 @@ do ->
         ListingService.listing.LotteryResultsURL = null
         ListingService.lotteryBucketInfo = {bucketResults: []}
         expect(ListingService.listingHasLotteryResults()).toEqual false
+
+    describe 'Service.listingHasOnlySROUnits', ->
+      it 'returns no if not all units are SROs', ->
+        ListingService.listing = fakeListing.listing
+        ListingService.listing.unitSummaries.general[0].Unit_Type = 'Studio'
+        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(false)
+      it 'returns yes if all units are SROs', ->
+        ListingService.listing = fakeListingAllSRO
+        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(true)
+
+    describe 'Service.householdAMIChartCutoff', ->
+      it 'returns 1 if all units are SROs', ->
+        ListingService.listing = fakeListingAllSRO
+        expect(ListingService.householdAMIChartCutoff()).toEqual(1)

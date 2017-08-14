@@ -22,7 +22,10 @@ angular.module('dahlia.components')
       @initVariables = =>
         @memberSelectorLabel = $translate.instant('LABEL.APPLICANT_PREFERENCES_DOCUMENT_NAME')
         prefs = @application.preferences
-        return unless prefs.liveWorkInSf_preference
+        unless prefs.liveWorkInSf_preference
+          prefs.workInSf = false
+          prefs.liveInSf = false
+          return
 
         @liveWorkInSf_preference = prefs.liveWorkInSf_preference
         @proofOptions = ShortFormHelperService.proofOptions(prefs.liveWorkInSf_preference)
