@@ -7,7 +7,7 @@ module.exports = {
   framework: 'custom',
   frameworkPath: require.resolve('protractor-cucumber-framework'),
   // path relative to the current config file
-  specs: [ './features/**/submitting_application.feature' ],
+  specs: [ './features/**/*.feature' ],
   cucumberOpts: {
     require: [
       projectDir + '/spec/e2e/env.coffee',

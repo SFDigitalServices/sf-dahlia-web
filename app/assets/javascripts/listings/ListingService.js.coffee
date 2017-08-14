@@ -525,8 +525,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     _.includes(types, type)
 
   Service.listingHasSROUnits = (listing) ->
-    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
-    !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
+    combined = Service.combineUnitSummaries(listing)
+    _.some(combined, { Unit_Type: 'SRO' })
+
+  Service.listingHasOnlySROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
@@ -576,16 +580,18 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return if Service.listing && Service.listing.Id == listing.Id
     angular.copy(listing, Service.listing)
 
-  Service.occupancyIncomeLevels = (amiLevel) ->
+  Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
     max = occupancyMinMax[1] + 2
+    max = 1 if Service.listingHasOnlySROUnits(listing)
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
+    return 1 if Service.listingHasOnlySROUnits(Service.listing)
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
@@ -593,7 +599,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.minYearlyIncome = ->
     return if _.isEmpty(Service.AMICharts)
-    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    incomeLevels = Service.occupancyIncomeLevels(Service.listing, _.first(Service.AMICharts))
     # get the first (lowest) income level amount
     _.first(incomeLevels).amount
 

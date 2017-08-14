@@ -38,5 +38,5 @@ section.content-wrap
       | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
     p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
 
-  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+  .content-group ng-if="leasingAgentInfoAvailable()"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
