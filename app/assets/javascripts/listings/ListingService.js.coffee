@@ -219,9 +219,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
-  Service.showPreferenceListPDF = (listing) ->
-    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
-
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
     _.sortBy sessions, (session) ->

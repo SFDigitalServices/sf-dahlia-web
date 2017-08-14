@@ -160,9 +160,6 @@ ListingController = (
     results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]
     results && results.preferenceRank
 
-  $scope.showPreferenceListPDF = ->
-    ListingService.showPreferenceListPDF($scope.listing)
-
   $scope.lotteryNumberValid = ->
     return unless $scope.lotteryRankingInfo && $scope.lotteryRankingInfo.lotteryBuckets
     # true if there are any lotteryBuckets

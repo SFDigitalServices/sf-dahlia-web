@@ -551,6 +551,7 @@
         },
         "ALL_UNITS": "All Units",
         "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
+        "APPLICATIONS_CLOSED": "Applications Closed {{date}}",
         "APPLY": {
             "APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE": "Applications must be received by the deadline and postmarks will not be considered.",
             "DO_NOT_APPLY_ONLINE_AND_PAPER": "Do not apply online and also send in a paper application.",
@@ -573,8 +574,7 @@
         "AVAILABLE_UNITS_AND_WAITLIST": "Available units and waitlist",
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
         "BATH": "bath",
-        "CONFIRMED_ADHP_LIST": "Confirmed Anti-Displacement Housing Preference List",
-        "CONFIRMED_NRHP_LIST": "Confirmed Neighborhood Resident Housing Preference List",
+        "CONFIRMED_PREFERENCE_LIST": "Confirmed {{preference}} List",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
@@ -594,8 +594,8 @@
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
-        "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
+        "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
@@ -632,9 +632,13 @@
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
+        "APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE": "Applications that qualify for this preference will be given a higher priority in the lottery.",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
+        "COMPLETE_RESULTS_WILL_BE_POSTED": "Complete lottery results will be posted on this date by 5pm.",
         "GENERAL_POOL": "General Pool",
         "HOUSING_PREFERENCES": "Housing Preferences",
+        "LOTTERY": "Lottery",
+        "LOTTERY_INFO_SUBHEADER": "Lottery selection, important dates and contact",
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
@@ -653,7 +657,8 @@
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
         "RESULTS_FROM": "Results from {{date}}",
         "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
-        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units"
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units",
+        "VIEW_PREFERENCE_LIST": "View Preference List"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
