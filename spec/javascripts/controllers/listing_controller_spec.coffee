@@ -12,6 +12,8 @@ do ->
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     fakeListingService = {}
+    $translate =
+      instant: ->
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
     fakeShortFormApplicationService =
@@ -56,6 +58,7 @@ do ->
         listingHasReservedUnits: jasmine.createSpy()
         listingHasLotteryResults: jasmine.createSpy()
         allListingUnitsAvailable: jasmine.createSpy()
+        listingHasOnlySROUnits: jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
