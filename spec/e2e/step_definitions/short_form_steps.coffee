@@ -586,8 +586,8 @@ module.exports = ->
     expectError(@, 'Please select one of the options above')
 
   @Then 'I should see an error about uploading proof', ->
-    expectAlertBox(@,)
-    expectError(@, 'Please upload your proof of preference')
+    expectAlertBox(@, 'Please complete uploading documents or select that you don\'t want this preference.')
+    expectError(@, 'Please upload a valid document')
 
   @Then 'I should see an error on the household member form', ->
     browser.waitForAngular()
