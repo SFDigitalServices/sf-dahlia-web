@@ -349,7 +349,9 @@ ShortFormApplicationController = (
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
-    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id).then ->
+      if prefType == 'neighborhoodResidence'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
 
   $scope.hasPreferenceFile = (fileType) ->
     FileUploadService.hasPreferenceFile(fileType)
