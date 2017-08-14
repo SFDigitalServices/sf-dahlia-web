@@ -6,19 +6,19 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
     | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
   review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
     | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
-  review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="!applicant.noPhone" sub-label="{{applicant.phoneType}}"
+  review-summary-item label="{{'LABEL.PHONE' | translate}}" identifier="phone" ng-if="!applicant.noPhone" sub-label="{{applicant.phoneType}}"
     | {{applicant.phone | tel}}
-  review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" sub-label="{{applicant.alternatePhoneType}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
+  review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" identifier="alt-phone" sub-label="{{applicant.alternatePhoneType}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
     | {{applicant.alternatePhone | tel}}
   review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
-  review-summary-item label="{{'LABEL.ADDRESS' | translate}}"
+  review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="home-address"
     | {{applicant.home_address.address1}}
     br
     ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
     | {{applicant.home_address.zip}}
 
-  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="applicant.hasAltMailingAddress"
+  review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="mailing-address" ng-if="applicant.hasAltMailingAddress"
     | {{applicant.mailing_address.address1}}
     br
     ' {{applicant.mailing_address.city}}, {{applicant.mailing_address.state}}
@@ -29,13 +29,13 @@ span ng-hide="alternateContact.alternateContactType == 'None'"
   review-summary-section header="{{'LABEL.ALTERNATE_CONTACT' | translate}}" to="dahlia.short-form-application.alternate-contact-type"
 
   .app-inner
-    review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{alternateContactRelationship()}}" bold-sub-label="{{ alternateContact.agency }}"
+    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="alt-contact-name" sub-label="{{alternateContactRelationship()}}" bold-sub-label="{{ alternateContact.agency }}"
       | {{alternateContact.firstName}} {{alternateContact.lastName}}
-    review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" ng-if="alternateContact.email"
+    review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}" identifier="alt-contact-email" ng-if="alternateContact.email"
       | {{alternateContact.email}}
-    review-summary-item label="{{'LABEL.PHONE' | translate}}" ng-if="alternateContact.phone"
+    review-summary-item label="{{'LABEL.PHONE' | translate}}" identifier="alt-contact-phone" ng-if="alternateContact.phone"
       | {{alternateContact.phone | tel}}
-    review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" ng-if="alternateContact.mailing_address.address1"
+    review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="alt-contact-mailing-address" ng-if="alternateContact.mailing_address.address1"
       | {{alternateContact.mailing_address.address1}}
       br
       ' {{alternateContact.mailing_address.city}}, {{alternateContact.mailing_address.state}}
@@ -50,13 +50,13 @@ review-summary-section header="{{'LABEL.HOUSEHOLD_MEMBERS' | translate}}" to="da
       | {{'T.NONE' | translate}}
 
   .info-item ng-class="{'border-bottom margin-bottom': !$last}" ng-repeat="member in householdMembers"
-    review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{member.relationship}}"
+    review-summary-item label="{{'LABEL.NAME' | translate}}" sub-label="{{member.relationship}}" identifier="household-member-{{$index}}-name"
       | {{member.firstName}} {{member.middleName}} {{member.lastName}}
 
-    review-summary-item label="{{'LABEL.DOB' | translate}}"
+    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="household-member-{{$index}}-dob"
       | {{member.dob_month}}/{{member.dob_day}}/{{member.dob_year}}
 
-    review-summary-item label="{{'LABEL.ADDRESS' | translate}}" ng-if="member.hasSameAddressAsApplicant == 'No'"
+    review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="household-member-{{$index}}-address" ng-if="member.hasSameAddressAsApplicant == 'No'"
       | {{member.home_address.address1}}
       br
       ' {{member.home_address.city}}, {{member.home_address.state}}
@@ -70,19 +70,19 @@ div ng-if="!atAutofillPreview()"
     p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
       | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.certOfPreference" identifier="certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
       | {{'D1_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.displaced" identifier="displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
       | {{'D1_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.liveInSf" identifier="liveInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('liveInSf') }}" bold-sub-label="{{fileAttachmentForPreference('liveInSf')}}"
       | {{'D2_LIVE_WORK_PREFERENCE.LIVE_SF_PREFERENCE.TITLE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.neighborhoodResidence" identifier="neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
       | {{'D2A_NEIGHBORHOOD_PREFERENCE.PREFERENCE.NAME' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" ng-if="preferences.workInSf" identifier="workInSf" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('workInSf') }}" bold-sub-label="{{fileAttachmentForPreference('workInSf')}}"
       | {{'D2_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE' | translate}}
 
 / Income
@@ -90,8 +90,8 @@ div ng-if="application.householdIncome.incomeTotal"
   review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"
 
   .app-inner
-    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}"
+    review-summary-item label="{{'LABEL.VOUCHERS_AND_SUBSIDIES' | translate}}" identifier="income-vouchers"
       | {{applicationVouchersSubsidies()}}
 
-    review-summary-item label="{{'LABEL.INCOME' | translate}}"
+    review-summary-item label="{{'LABEL.INCOME' | translate}}" identifier="income-amount"
       | {{ applicationIncomeAmount() }}
