@@ -44,8 +44,12 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
-          p.custom-counter_text
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION' | translate}}
+          p.custom-counter_text ng-if="listingHasOnlySROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
+          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && listingHasSROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
+          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && !listingHasSROUnits()"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
           table role="grid"
@@ -62,9 +66,9 @@ accordion-heading.lead
                 td ng-if="unit_summary.Unit_Type == 'Flex'"
                   | Flex people
                 td ng-if="unit_summary.Unit_Type != 'Flex'"
-                  ' {{unit_summary.minOccupancy}}&ndash;{{unit_summary.maxOccupancy}}
+                  ' {{ occupancy(unit_summary) }}
                   small
-                    | people
+                    | {{ occupancyLabel(unit_summary.maxOccupancy) }}
 
     li.custom-counter_item
       .content-tile
