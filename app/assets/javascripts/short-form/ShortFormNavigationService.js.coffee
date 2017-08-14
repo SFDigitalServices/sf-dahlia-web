@@ -41,6 +41,7 @@ ShortFormNavigationService = (
         'rent-burden-preference'
         'rent-burden-preference-edit'
         'preferences-programs'
+        'custom-preferences'
         'general-lottery-notice'
       ]
     },
@@ -80,7 +81,8 @@ ShortFormNavigationService = (
     'assisted-housing-preference': {path: 'preferences-programs'}
     'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
     'rent-burden-preference-edit': {path: 'rent-burden-preference'}
-    'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
+    'preferences-programs': {callback: ['checkForCustomPreferences']}
+    'custom-preferences': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {callback: ['confirmReviewedApplication']}
@@ -216,8 +218,10 @@ ShortFormNavigationService = (
         Service.getPrevPageOfPreferencesSection()
       when 'preferences-programs'
         Service.getPrevPageOfPreferencesSection()
-      when 'general-lottery-notice'
+      when 'custom-preferences'
         'preferences-programs'
+      when 'general-lottery-notice'
+        Service.getPrevPageOfPreferencesSection()
       # -- Review
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
@@ -275,6 +279,10 @@ ShortFormNavigationService = (
       'assisted-housing-preference'
     else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
       'rent-burden-preference'
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length > 0
+      'custom-preferences'
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length == 0
+      'preferences-programs'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.applicationHasPreference('antiDisplacement')

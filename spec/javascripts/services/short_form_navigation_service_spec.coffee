@@ -57,6 +57,7 @@ do ->
           'rent-burden-preference'
           'rent-burden-preference-edit'
           'preferences-programs'
+          'custom-preferences'
           'general-lottery-notice'
         ]
       },

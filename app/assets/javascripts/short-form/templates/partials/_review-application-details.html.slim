@@ -118,6 +118,9 @@ div ng-if="!atAutofillPreview()"
     review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="rentBurden" ng-if="preferences.rentBurden" get-labels="fileAttachmentsForRentBurden()"
       | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customPreferences" ng-if="customPreferencesClaimed()"
+      | {{ preference.preferenceName }}
+
 / Income
 div ng-if="application.householdIncome.incomeTotal"
   review-summary-section header="{{'LABEL.INCOME' | translate}}" to="dahlia.short-form-application.income-vouchers"

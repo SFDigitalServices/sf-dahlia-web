@@ -318,7 +318,17 @@ ShortFormApplicationController = (
     else
       $scope.checkAfterLiveWork()
 
-  # this is called after preferences-programs
+  # this called after preferences programs
+  $scope.checkForCustomPreferences = ->
+    if $scope.listing.customPreferences.length > 0
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
+    else
+      $scope.checkIfNoPreferencesSelected()
+
+  $scope.customPreferencesClaimed = ->
+    ShortFormApplicationService.customPreferencesClaimed()
+
+  # this is called after custom-preferences or preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
       # only show general lottery notice if they have no preferences
