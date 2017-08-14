@@ -1,24 +1,12 @@
-require('coffee-script').register()
+var config = require('./conf-shared')
 
-exports.config = {
-  getPageTimeout: 20000,
-  allScriptsTimeout: 20000,
-  framework: 'custom',
-  frameworkPath: require.resolve('protractor-cucumber-framework'),
-  capabilities: {
-    'browserName': 'chrome'
-  },
-  baseUrl: 'http://localhost:3000/',
-  // path relative to the current config file
-  specs: [ 'features/*.feature' ],
-  cucumberOpts: {
-    require: [
-      'env.coffee',
-      'step_definitions/*.coffee'
-    ],
-    tags: false,
-    format: 'pretty',
-    profile: false,
-    'no-source': true
-  }
+config.baseUrl = 'http://localhost:3000/'
+config.capabilities = {
+  browserName: 'chrome',
+  chromeOptions: {
+    // tall, skinny window. trying to avoid errors where it says button is not visible/clickable
+     args: [ '--window-size=800,1200' ]
+   }
 }
+
+exports.config = config

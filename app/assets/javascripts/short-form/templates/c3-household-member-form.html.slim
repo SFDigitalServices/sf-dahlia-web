@@ -85,17 +85,17 @@
       select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" ng-required="true" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
-        option ng-repeat="relationship in relationship_options" value="{{relationship}}"
-          | {{ relationship }}
+        option ng-repeat="relationship in relationship_options" value="{{relationship[0]}}"
+          | {{relationship[1] | translate}}
       small.error#household_member_relationship_error ng-show="inputInvalid('relationship')"
        | {{'ERROR.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
 
   .button-pager
     .button-pager_row.primary
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_SAVE' | translate}}" ng-if="!householdMember.id"
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_SAVE' | translate}}" ng-if="!householdMember.id"
     .button-pager_row
-      button.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
+      button#cancel-member.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
           | {{'LABEL.HOUSEHOLD_MEMBER_CANCEL' | translate}}
         span ng-if="householdMember.id"

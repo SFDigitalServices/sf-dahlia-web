@@ -40,54 +40,13 @@ ShortFormApplicationController = (
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
-  $scope.gender_options = [
-    'Male',
-    'Female',
-    'Trans Male',
-    'Trans Female',
-    'Not Listed'
-  ]
-  $scope.relationship_options = [
-    'Spouse',
-    'Registered Domestic Partner',
-    'Parent',
-    'Child',
-    'Sibling',
-    'Cousin',
-    'Aunt',
-    'Uncle',
-    'Nephew',
-    'Niece',
-    'Grandparent',
-    'Great Grandparent',
-    'In-Law',
-    'Friend',
-    'Other'
-  ]
-  $scope.ethnicity_options = [
-    'Hispanic/Latino',
-    'Not Hispanic/Latino'
-  ]
-  $scope.race_options = [
-    'American Indian/Alaskan Native',
-    'Asian',
-    'Black/African American',
-    'Native Hawaiian/Other Pacific Islander',
-    'White',
-    'American Indian/Alaskan Native and Black/African American',
-    'American Indian/Alaskan Native and White',
-    'Asian and White',
-    'Black/African American and White',
-    'Other/Multiracial'
-  ]
-  $scope.sexual_orientation_options = [
-    'Straight/Heterosexual',
-    'Gay',
-    'Lesbian',
-    'Bisexual',
-    'Questioning/Unsure',
-    'Not Listed'
-  ]
+  $scope.priority_options = ShortFormHelperService.priority_options
+  $scope.gender_options = ShortFormHelperService.gender_options
+  $scope.sex_at_birth_options = ShortFormHelperService.sex_at_birth_options
+  $scope.relationship_options = ShortFormHelperService.relationship_options
+  $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
+  $scope.race_options = ShortFormHelperService.race_options
+  $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -101,10 +60,23 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.resetAndStartNewApp = ->
+    ShortFormApplicationService.resetUserData()
+    $scope.applicant = ShortFormApplicationService.applicant
+    $scope.preferences = ShortFormApplicationService.preferences
+    $scope.alternateContact = ShortFormApplicationService.alternateContact
+    $scope.householdMember = ShortFormApplicationService.householdMember
+    $scope.householdMembers = ShortFormApplicationService.householdMembers
+    delete $scope.application.autofill
+    $state.go('dahlia.short-form-application.name')
+
+  $scope.atAutofillPreview = ->
+    $state.current.name == "dahlia.short-form-application.autofill-preview"
+
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 
-  if $scope.atShortFormState() && !$window.jasmine
+  if $scope.atShortFormState() && !$window.jasmine && !window.protractor
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 

@@ -30,3 +30,4 @@ lib/assets/bower_components
 ssl.sh
 certs
 public/sitemap*
+public/robots*
