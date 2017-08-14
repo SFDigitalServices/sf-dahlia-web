@@ -4,6 +4,9 @@ chance = new Chance()
 EC = protractor.ExpectedConditions
 remote = require('selenium-webdriver/remote')
 
+# import Page objects for interacting with short form pages
+Pages = require('../pages/short-form/index').Pages
+
 # QA "280 Fell"
 listingId = 'a0W0P00000DZTkAUAX'
 sessionEmail = chance.email()
@@ -11,64 +14,6 @@ janedoeEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
-fillOutNamePage = (fullName, opts = {}) ->
-  firstName = fullName.split(' ')[0]
-  lastName  = fullName.split(' ')[1]
-  month = opts.month || '02'
-  day = opts.day || '22'
-  year = opts.year || '1990'
-
-  element(By.model('applicant.firstName')).clear().sendKeys(firstName)
-  element(By.model('applicant.lastName')).clear().sendKeys(lastName)
-  element(By.model('applicant.dob_month')).clear().sendKeys(month)
-  element(By.model('applicant.dob_day')).clear().sendKeys(day)
-  element(By.model('applicant.dob_year')).clear().sendKeys(year)
-  submitPage()
-
-fillOutContactPage = (opts = {}) ->
-  opts.address1 ||= '4053 18th St.'
-  opts.city ||= 'San Francisco'
-  opts.workInSf ||= 'yes'
-  element(By.model('applicant.phone')).clear().sendKeys('2222222222')
-  element(By.model('applicant.phoneType')).sendKeys('home')
-  element(By.model('applicant.email')).clear().sendKeys(opts.email) if opts.email
-  element(By.id('applicant_home_address_address1')).clear().sendKeys(opts.address1)
-  element(By.id('applicant_home_address_city')).clear().sendKeys(opts.city)
-  element(By.id('applicant_home_address_state')).sendKeys('california')
-  element(By.id('applicant_home_address_zip')).clear().sendKeys('94114')
-  if opts.workInSf == 'yes'
-    element(By.id('workInSf_yes')).click()
-  else
-    element(By.id('workInSf_no')).click()
-  submitPage()
-
-fillOutHouseholdMemberForm = (opts = {}) ->
-  opts.city ||= 'San Francisco'
-  opts.workInSf ||= 'no'
-  if opts.fullName
-    fullName = opts.fullName
-    firstName = fullName.split(' ')[0]
-    lastName  = fullName.split(' ')[1]
-    element(By.model('householdMember.firstName')).clear().sendKeys(firstName)
-    element(By.model('householdMember.lastName')).clear().sendKeys(lastName)
-    element(By.model('householdMember.dob_month')).clear().sendKeys('10')
-    element(By.model('householdMember.dob_day')).clear().sendKeys('15')
-    element(By.model('householdMember.dob_year')).clear().sendKeys('1985')
-  if opts.address1
-    element(By.id('hasSameAddressAsApplicant_no')).click()
-    element(By.id('householdMember_home_address_address1')).clear().sendKeys(opts.address1)
-    element(By.id('householdMember_home_address_city')).clear().sendKeys(opts.city)
-    element(By.id('householdMember_home_address_state')).sendKeys('california')
-    element(By.id('householdMember_home_address_zip')).clear().sendKeys('94114')
-  else
-    element(By.id('hasSameAddressAsApplicant_yes')).click()
-  if opts.workInSf == 'yes'
-    element(By.id('workInSf_yes')).click()
-  else
-    element(By.id('workInSf_no')).click()
-  element(By.model('householdMember.relationship')).sendKeys('Cousin')
-  submitPage()
-
 fillOutSurveyPage = ->
   element(By.id('referral_newspaper')).click()
   submitPage()
@@ -94,12 +39,15 @@ optOutAndSubmit = ->
 getUrl = (url) ->
   browser.get(url)
 
-submitPage = () ->
-  element(By.id('submit')).click()
+scrollToElement = (element) ->
+  browser.actions().mouseMove(element).perform()
 
 module.exports = ->
   # import global cucumber options
   @World = World
+
+  # need this for uploading file to sauce labs
+  browser.setFileDetector new remote.FileDetector()
 
   @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
@@ -112,35 +60,35 @@ module.exports = ->
     getUrl(url)
     browser.ignoreSynchronization = false
 
-  @When /^I hit the Next button "([^"]*)" times$/, (buttonClicks) ->
+  @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
     while i > 0
       submitPage()
       i--
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    fillOutNamePage(fullName)
+    Pages.Name.fill({ fullName })
 
   @When 'I submit the Name page with my account info', ->
     submitPage()
 
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
+    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
+    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
 
   @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, workInSf: 'no'})
+    Pages.Contact.fill({email: janedoeEmail, workInSf: 'no'})
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail})
+    Pages.Contact.fill({email: janedoeEmail})
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    fillOutContactPage({email: janedoeEmail, address1: '1222 Harrison St.'})
+    Pages.Contact.fill({email: janedoeEmail, address1: '1222 Harrison St.'})
 
-  @When 'I fill out the Contact page with my account email, an address (non-NRHP match) and WorkInSF', ->
-    fillOutContactPage()
+  @When 'I fill out the Contact page with my account email, address (NRHP match), mailing address', ->
+    Pages.Contact.fill({email: sessionEmail, address1: '1222 Harrison St.', address2: '#100', extra: true})
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -153,6 +101,9 @@ module.exports = ->
   @When 'I don\'t indicate an alternate contact', ->
     element(By.id('alternate_contact_none')).click()
     submitPage()
+
+  @When 'I fill out an alternate contact', ->
+    Pages.AlternateContact.fillAllSections()
 
   @When 'I indicate I will live alone', ->
     element(By.id('live-alone')).click()
@@ -177,21 +128,21 @@ module.exports = ->
   @When /^I add another household member named "([^"]*)" with same address as primary$/, (fullName) ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName})
+      Pages.HouseholdMemberForm.fill({ fullName })
 
   @When /^I add another household member named "([^"]*)" who lives at "([^"]*)"$/, (fullName, address1) ->
     browser.waitForAngular()
     element(By.id('add-household-member')).click().then ->
-      fillOutHouseholdMemberForm({fullName: fullName, address1: address1})
+      Pages.HouseholdMemberForm.fill({ fullName, address1 })
 
   @When 'I change them to live inside SF, work in SF', ->
-    fillOutHouseholdMemberForm({address1: '4053 18th St.', workInSf: 'yes'})
+    Pages.HouseholdMemberForm.fill({address1: '4053 18th St.', workInSf: 'yes'})
 
   @When 'I change them to live outside SF, work in SF', ->
-    fillOutHouseholdMemberForm({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
+    Pages.HouseholdMemberForm.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When /^I change their address to "([^"]*)"$/, (address1) ->
-    fillOutHouseholdMemberForm({address1: address1})
+    Pages.HouseholdMemberForm.fill({ address1 })
 
   @When 'I indicate being done adding people', ->
     submitPage()
@@ -204,14 +155,20 @@ module.exports = ->
     element(By.id('hasPublicHousing_no')).click()
     submitPage()
 
-  @When /^I enter "([^"]*)" for my monthly rent$/, (monthlyRent) ->
-    element(By.id('monthlyRent_0')).sendKeys(monthlyRent)
-    submitPage()
+  @When /^I enter "([^"]*)" for each of my monthly rents$/, (monthlyRent) ->
+    element.all(By.css('.form-income_input')).each((elem) ->
+      # we just fill out the same rent value for each rent input
+      elem.sendKeys(monthlyRent)
+    ).then ->
+      submitPage()
 
-  @When 'I indicate no priority', ->
-    element(By.id('adaPrioritiesSelected_none')).click()
-    submitPage()
+  @When 'I indicate no ADA priority', ->
+    checkCheckbox 'adaPrioritiesSelected_none', -> submitPage()
 
+  @When 'I indicate ADA Mobility and Vision impairments', ->
+    checkCheckbox 'adaPrioritiesSelected_mobility-impaired', ->
+      checkCheckbox 'adaPrioritiesSelected_vision-impaired', ->
+        submitPage()
 
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
@@ -284,14 +241,28 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
-    # need this for uploading file to sauce labs
-    browser.setFileDetector new remote.FileDetector()
-
     filePath = "#{process.env.PWD}/public/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
     browser.sleep(5000)
+
+  @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
+    filePath = "#{process.env.PWD}/public/images/logo-portal.png"
+    element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
+    browser.sleep(1000)
+
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id('rentBurden_rentDocument')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
+    browser.sleep(3000)
 
   @When 'I click the Next button on the Live/Work Preference page', ->
     submitPage()
@@ -340,12 +311,17 @@ module.exports = ->
     submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
-    element(By.id('incomeTotal')).clear().sendKeys(income)
+    incomeTotal = element(By.id('incomeTotal'))
+    scrollToElement(incomeTotal)
+    incomeTotal.clear().sendKeys(income)
     element(By.id('per_year')).click()
     submitPage()
 
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
+
+  @When 'I wait', ->
+    browser.pause()
 
   @When 'I confirm details on the review page', ->
     submitPage()
@@ -354,17 +330,18 @@ module.exports = ->
     element(By.id('confirm_no_account')).click()
 
   @When 'I agree to the terms and submit', ->
-    element(By.id('terms_yes')).click()
-    submitPage()
+    element(By.id('terms_yes')).click().then ->
+      submitPage()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
 
   @When 'I click the Create Account button', ->
-    element(By.id('create-account')).click()
+    createAccount = element(By.id('create-account'))
+    scrollToElement(createAccount)
+    createAccount.click()
 
   @When 'I fill out my account info', ->
-    element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
@@ -397,8 +374,7 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I go to My Applications', ->
-    element(By.cssContainingText('.dash-item', 'My Applications')).click()
-    browser.waitForAngular()
+    getUrl('/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
@@ -425,14 +401,15 @@ module.exports = ->
     submitPage()
 
   @When "I fill out the Name page with an invalid DOB", ->
-    fillOutNamePage( 'Jane Doe', {
+    Pages.Name.fill({
+      fullName: 'Jane Doe'
       month: '12'
       day: '33'
       year: '2019'
     })
 
   @When "I fill out the Contact page with an address that isn't found", ->
-    fillOutContactPage({email: janedoeEmail, address1: '38383 Philz Way'})
+    Pages.Contact.fill({email: janedoeEmail, address1: '38383 Philz Way'})
 
   @When 'I fill out the household member form with missing data', ->
     # don't fill anything out and just submit
@@ -442,6 +419,30 @@ module.exports = ->
   ########################
   # --- Expectations --- #
   ########################
+  # helper functions
+  expectByCss = (context, selector, text) ->
+    el = element(By.cssContainingText(selector, text))
+    # make it case-insensitive to account for text transforms
+    el.getText().then (elText) ->
+      context.expect(elText.toLowerCase()).to.contain(text.toLowerCase())
+
+  expectByIdAndText = (context, id, text) ->
+    el = element(By.id(id))
+    # make it case-insensitive to account for text transforms
+    el.getText().then (elText) ->
+      context.expect(elText.toLowerCase()).to.equal(text.toLowerCase())
+
+  expectInputValue = (context, id, value) ->
+    el = element(By.id(id))
+    context.expect(el.getAttribute('value')).to.eventually.equal(value)
+
+  expectRadioValue = (context, name, value) ->
+    el = element(By.css("input[name='#{name}']:checked"))
+    context.expect(el.getAttribute('value')).to.eventually.equal(value)
+
+  expectCheckboxChecked = (context, id) ->
+    checkbox = element(By.id(id))
+    context.expect(checkbox.isSelected()).to.eventually.equal(true)
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
@@ -465,8 +466,8 @@ module.exports = ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the successful file upload info', ->
-    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
+  @Then /^I should see the successful file upload info for "([^"]*)"/, (preference) ->
+    attachmentUploaded = element.all(By.id("uploaded-#{preference}_proofFile")).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
@@ -512,20 +513,6 @@ module.exports = ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my name, DOB, email, Live in SF Preference, COP and DTHP options all displayed as expected', ->
-    appName = element(By.id('full-name'))
-    @expect(appName.getText()).to.eventually.equal('JANE DOE')
-    appDob = element(By.id('dob'))
-    @expect(appDob.getText()).to.eventually.equal('2/22/1990')
-    appEmail = element(By.id('email'))
-    @expect(appEmail.getText()).to.eventually.equal(sessionEmail.toUpperCase())
-    liveInSf = element(By.cssContainingText('.info-item_name', 'Live in San Francisco Preference'))
-    @expect(liveInSf.isPresent()).to.eventually.equal(true)
-    certOfPref = element(By.cssContainingText('.info-item_name', 'Certificate of Preference (COP)'))
-    @expect(certOfPref.isPresent()).to.eventually.equal(true)
-    DTHP = element(By.cssContainingText('.info-item_name', 'Displaced Tenant Housing Preference (DTHP)'))
-    @expect(DTHP.isPresent()).to.eventually.equal(true)
-
   @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))
     @expect(checkbox.isSelected()).to.eventually.equal(false)
@@ -547,6 +534,116 @@ module.exports = ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
+  ###################################
+  # --- Review Page expectations --- #
+  ###################################
+
+  @Then 'on the Review Page I should see my contact details', ->
+    expectByIdAndText(@, 'full-name', 'Jane Valerie Doe')
+    expectByIdAndText(@, 'dob', Pages.Name.defaults.formattedDOB)
+    expectByIdAndText(@, 'email', sessionEmail)
+    expectByIdAndText(@, 'phone', Pages.Contact.defaults.formattedPhone)
+    expectByIdAndText(@, 'alt-phone', Pages.Contact.defaults.formattedAltPhone)
+    expectByCss(@, '.info-item_name', '1222 HARRISON ST # 100')
+    expectByCss(@, '.info-item_name', Pages.Contact.defaults.mailingAddress1)
+
+  @Then 'on the Review Page I should see my alternate contact details', ->
+    expectByIdAndText(@, 'alt-contact-name', Pages.AlternateContact.defaults.fullName)
+    expectByIdAndText(@, 'alt-contact-email', Pages.AlternateContact.defaults.email)
+    expectByIdAndText(@, 'alt-contact-phone', Pages.AlternateContact.defaults.formattedPhone)
+    expectByCss(@, '#review-alt-contact-mailing-address .info-item_name', Pages.AlternateContact.defaults.address)
+
+  @Then 'on the Review Page I should see my household member details', ->
+    expectByIdAndText(@, 'household-member-0-name', 'Coleman Francis')
+    expectByIdAndText(@, 'household-member-0-dob', '10/15/1985')
+
+  @Then 'on the Review Page I should see my income details', ->
+    expectByIdAndText(@, 'income-vouchers', 'NONE')
+    expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
+
+  @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
+    withFiles = (status == 'draft')
+    expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
+    expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
+    expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
+    expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
+    expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
+    expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
+    if withFiles
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
+      expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
+    else
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
+
+
+  #################################################
+  # --- Confirming draft details expectations --- #
+  #################################################
+
+  @Then /^on the Name page I should see my correct info for "([^"]*)"$/, (fullName) ->
+    Pages.Name.expectToMatch(@, { fullName })
+
+  @Then 'on the Contact page I should see my correct info', ->
+    Pages.Contact.expectToMatch(@, {email: sessionEmail, address1: '1222 HARRISON ST # 100'})
+
+  @Then 'on the Alternate Contact pages I should see my correct info', ->
+    Pages.AlternateContact.expectToMatch(@)
+
+  @Then 'on the Household page I should see my correct info', ->
+    expectByCss(@, '#household-primary .info-item_name', 'Jane Doe')
+    expectByCss(@, '#household-primary .info-item_value', 'Primary Applicant')
+    expectByCss(@, '#household-member-0 .info-item_name', 'Coleman Francis')
+    expectByCss(@, '#household-member-0 .info-item_value', 'Household Member')
+
+  @Then 'on the Live in the Neighborhood page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-neighborhoodResidence')
+    # Jane Doe == '1'
+    expectInputValue(@, 'neighborhoodResidence_household_member', '1')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body strong', 'Gas bill')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-small', 'Uploaded')
+    submitPage()
+
+  @Then 'on the Rent Burdened page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-rentBurden')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body strong', 'Copy of Lease')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-micro', 'logo-portal')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-small', 'Uploaded')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body strong', 'Money order')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-small', 'Uploaded')
+    submitPage()
+
+  @Then 'on the Preferences Programs page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-certOfPreference')
+    expectInputValue(@, 'certOfPreference_household_member', '1')
+    expectCheckboxChecked(@, 'preferences-displaced')
+    expectInputValue(@, 'displaced_household_member', '2')
+    submitPage()
+
+  @Then 'on the Public Housing page I should see my correct info', ->
+    expectRadioValue(@, 'hasPublicHousing', 'No')
+    submitPage()
+
+  @Then 'on the Monthly Rent page I should see my correct info', ->
+    expectInputValue(@, 'monthlyRent_0', '4,000.00')
+    submitPage()
+
+  @Then 'on the ADA Priorities page I should see my correct info', ->
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_mobility-impaired')
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_vision-impaired')
+    submitPage()
+
+  @Then 'on the Income pages I should see my correct info', ->
+    expectRadioValue(@, 'householdVouchersSubsidies', 'No')
+    submitPage()
+    expectInputValue(@, 'incomeTotal', '72,000.00')
+    submitPage()
 
   ###################################
   # --- Error case expectations --- #

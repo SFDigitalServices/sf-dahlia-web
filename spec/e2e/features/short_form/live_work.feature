@@ -12,7 +12,7 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
@@ -163,7 +163,7 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
@@ -173,7 +173,7 @@ Feature: Short Form Application - Live/Work Preference
       And I go back to the Live/Work preference page, skipping NRHP if exists
       Then I should still see the single Live in San Francisco preference selected
       When I upload a "Gas bill" as my proof of preference for "liveInSf"
-      Then I should see the successful file upload info
+      Then I should see the successful file upload info for "liveInSf"
       When I click the Next button on the Live/Work Preference page
       And I opt out of Assisted Housing preference
       Then I should see the Preferences Programs screen
@@ -186,7 +186,7 @@ Feature: Short Form Application - Live/Work Preference
       And I don't indicate an alternate contact
       And I indicate I will live alone
       And I indicate living in public housing
-      And I indicate no priority
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro

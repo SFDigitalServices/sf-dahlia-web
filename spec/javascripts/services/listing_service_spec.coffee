@@ -337,6 +337,17 @@ do ->
           ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
 
+    describe 'Service.loadListing', ->
+      beforeEach ->
+        ListingService.loadListing(fakeListing.listing)
+      it 'should populate Service.listing', ->
+        expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
+      it 'should populate Service.listing.preferences', ->
+        count = fakeListing.listing.Listing_Lottery_Preferences.length
+        expect(ListingService.listing.preferences.length).toEqual count
+        prefId = fakeListing.listing.Listing_Lottery_Preferences[0].Id
+        expect(ListingService.listing.preferences[0].listingPreferenceID).toEqual prefId
+
     describe 'Service.occupancyIncomeLevels', ->
       beforeEach ->
         # have to populate listing first

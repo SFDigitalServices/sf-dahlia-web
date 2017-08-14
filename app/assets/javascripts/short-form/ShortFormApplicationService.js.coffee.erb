@@ -740,6 +740,9 @@ ShortFormApplicationService = (
     formattedApp = {}
     if data.application && !_.isEmpty(data.application)
       files = data.files || []
+      if data.application.status.match(/submitted/i) && data.application.listing
+        # on submitted app the listing is loaded along with it
+        ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
