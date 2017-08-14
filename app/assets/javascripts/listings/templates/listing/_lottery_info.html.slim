@@ -32,9 +32,9 @@ section.content-wrap
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
   / lottery preference URL
-  .content-group ng-repeat="lotteryPreference in listing.Listing_Lottery_Preferences" ng-if="!listingHasLotteryResults() && lotteryPreference.PDF_URL"
-    h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{lotteryPreference.Lottery_Preference.Name}}"
-    a.button.primary.expand ng-href="{{lotteryPreference.PDF_URL}}" target="_blank"
+  .content-group ng-repeat="lotteryPreference in listing.preferences" ng-if="!listingHasLotteryResults() && lotteryPreference.pdfUrl"
+    h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{lotteryPreference.preferenceName}}"
+    a.button.primary.expand ng-href="{{lotteryPreference.pdfUrl}}" target="_blank"
       | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
     p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
 
