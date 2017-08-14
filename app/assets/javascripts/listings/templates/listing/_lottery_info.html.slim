@@ -43,5 +43,5 @@ section.content-wrap
     p.c-steel.t-small
       | Applications that qualify for this preference will be given a higher priority in the lottery.
 
-  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+  .content-group ng-if="leasingAgentInfoAvailable()"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
