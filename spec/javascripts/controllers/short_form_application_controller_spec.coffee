@@ -95,7 +95,8 @@ do ->
     fakeAddressValidationService =
       failedValidation: jasmine.createSpy()
     fakeFileUploadService =
-      uploadProof: jasmine.createSpy()
+      uploadProof: ->
+        then: ->
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -394,6 +395,7 @@ do ->
 
     describe 'uploadProof', ->
       it 'calls uploadProof on FileUploadService', ->
+        spyOn(fakeFileUploadService, 'uploadProof').and.callThrough()
         file = {}
         pref = 'liveInSf'
         docType = 'water bill'
