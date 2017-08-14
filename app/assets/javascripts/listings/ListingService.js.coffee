@@ -552,9 +552,15 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
+        Service._extractCustomPreferences()
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service._extractCustomPreferences = ->
+    customPreferences = _.filter Service.listing.preferences, (listingPref) ->
+      !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
 
   Service.getLotteryBuckets = ->
     angular.copy({}, Service.lotteryBucketInfo)

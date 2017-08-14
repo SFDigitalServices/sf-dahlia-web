@@ -4,6 +4,7 @@ do ->
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
+    fakeCustomPreference = {}
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
@@ -916,7 +917,6 @@ do ->
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual false
 
-
     describe 'hasCompleteRentBurdenFiles', ->
       beforeEach ->
         ShortFormApplicationService.application.groupedHouseholdAddresses = [{"address": "123 Main St"}]
@@ -935,3 +935,21 @@ do ->
           '123 Main St':
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
+
+    describe 'customPreferencesClaimed', ->
+      beforeEach ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
+        ShortFormApplicationService.listing = fakeListing
+        fakeCustomPreference =
+          listingPreferenceID: '123456'
+        ShortFormApplicationService.listing.customPreferences = [fakeCustomPreference]
+
+      it 'returns true if custom preferences were claimed', ->
+        ShortFormApplicationService.preferences = {'123456': true}
+        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual true
+
+      it 'returns false if custom preferences were not claimed', ->
+        ShortFormApplicationService.preferences = {'liveInSf': true}
+        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual false
+
+

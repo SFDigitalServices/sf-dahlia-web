@@ -473,7 +473,14 @@ ShortFormApplicationService = (
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
     prefList = ShortFormDataService.preferences
+    customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
+    prefList = prefList.concat(customPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
+
+  Service.customPreferencesClaimed = ->
+    customPrefClaims = _.map Service.listing.customPreferences, (customPref) ->
+      Service.applicationHasPreference(customPref.listingPreferenceID)
+    return _.includes(customPrefClaims, true)
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
