@@ -292,6 +292,18 @@ ShortFormApplicationController = (
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 
+  $scope.preferenceWarning = ->
+    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
+    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+      $scope.form.applicationForm.$invalid &&
+      $scope.form.applicationForm.$submitted
+    if preferenceNotSelected
+      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+    else if preferenceIncomplete
+      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+    else
+      false
+
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
@@ -349,7 +361,9 @@ ShortFormApplicationController = (
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
-    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id).then ->
+      if prefType == 'neighborhoodResidence'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
 
   $scope.hasPreferenceFile = (fileType) ->
     FileUploadService.hasPreferenceFile(fileType)
