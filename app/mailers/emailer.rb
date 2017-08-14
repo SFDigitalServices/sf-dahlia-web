@@ -48,8 +48,9 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log)
+  def geocoding_log_notification(log, has_nrhp_adhp = false)
     @log = log
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
@@ -70,10 +71,11 @@ class Emailer < Devise::Mailer
     end
   end
 
-  def geocoding_error_notification(data, log)
+  def geocoding_error_notification(data, log, has_nrhp_adhp = false)
     @data = data
     @log = log
     @error = data[:errors].first
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
@@ -108,9 +110,10 @@ class Emailer < Devise::Mailer
     # all heroku apps have Rails.env.production
     # but ENV['PRODUCTION'] is only on dahlia-production
     if Rails.env.production? and ENV['PRODUCTION']
-      'dahlia-admins@exygy.com'
+      # if listing has_nrhp_adhp it goes to the set of admins that includes HBMR staff
+      @has_nrhp_adhp ? 'dahlia-admins-hbmr@exygy.com' : 'dahlia-admins@exygy.com'
     else
-      'dahlia-test@exygy.com'
+      @has_nrhp_adhp ? 'dahlia-test-hbmr@exygy.com' : 'dahlia-test@exygy.com'
     end
   end
 

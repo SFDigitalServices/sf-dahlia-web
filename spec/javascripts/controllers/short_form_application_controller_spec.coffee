@@ -94,6 +94,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
+      customPreferencesClaimed: jasmine.createSpy()
       resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -112,6 +113,8 @@ do ->
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
+      uploadProof: ->
+        then: ->
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -495,6 +498,15 @@ do ->
           scope.checkAfterLiveWork()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
+    describe 'uploadProof', ->
+      it 'calls uploadProof on FileUploadService', ->
+        spyOn(fakeFileUploadService, 'uploadProof').and.callThrough()
+        file = {}
+        pref = 'liveInSf'
+        docType = 'water bill'
+        scope.uploadProof(file, pref, docType)
+        expect(fakeFileUploadService.uploadProof).toHaveBeenCalledWith(file, pref, docType, scope.listing.Id)
+
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
         beforeEach ->
@@ -656,3 +668,15 @@ do ->
 
       it 'send user to You section of short form', ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+    describe 'checkForCustomPreferences', ->
+      describe 'listing has custom preferences', ->
+        it 'takes user to custom preferences page', ->
+          scope.listing.customPreferences = [{preferenceName: 'customPreference', listingPreferenceID: '123456'}]
+          scope.checkForCustomPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
+
+    describe 'customPreferencesClaimed', ->
+      it ' calls customPreferencesClaimed on ShortFormApplicationService', ->
+        scope.customPreferencesClaimed()
+        expect(fakeShortFormApplicationService.customPreferencesClaimed).toHaveBeenCalled()

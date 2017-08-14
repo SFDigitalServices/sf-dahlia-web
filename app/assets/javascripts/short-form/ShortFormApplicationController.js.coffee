@@ -319,7 +319,17 @@ ShortFormApplicationController = (
     else
       $scope.checkAfterLiveWork()
 
-  # this is called after preferences-programs
+  # this called after preferences programs
+  $scope.checkForCustomPreferences = ->
+    if $scope.listing.customPreferences.length > 0
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
+    else
+      $scope.checkIfNoPreferencesSelected()
+
+  $scope.customPreferencesClaimed = ->
+    ShortFormApplicationService.customPreferencesClaimed()
+
+  # this is called after custom-preferences or preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
       # only show general lottery notice if they have no preferences
@@ -354,11 +364,17 @@ ShortFormApplicationController = (
     # this mainly gets used as one of the submit callbacks for relevant pages in ShortFormNavigationService
     ShortFormApplicationService.refreshPreferences(type)
 
-  $scope.preferenceCheckboxInvalid = ->
-    # this gets used to determine whether the alertBox should show the
-    # "we strongly encourage..." error that is specific to preferences.
-    # $scope.form.currentPreferenceType gets set in the onEnter for the preference page routes
-    $scope.inputInvalid($scope.form.currentPreferenceType)
+  $scope.preferenceWarning = ->
+    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
+    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+      $scope.form.applicationForm.$invalid &&
+      $scope.form.applicationForm.$submitted
+    if preferenceNotSelected
+      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+    else if preferenceIncomplete
+      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+    else
+      false
 
   $scope.checkForRentBurdenFiles = ->
     if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()

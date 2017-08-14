@@ -301,6 +301,7 @@ ShortFormApplicationService = (
       FileUploadService.deleteRentBurdenPreferenceFiles(Service.listing.Id)
     else
       Service.preferences["#{preference}_household_member"] = null
+      Service.preferences["#{preference}_proofOption"] = null
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   Service.cancelOptOut = (preference) ->
@@ -454,6 +455,9 @@ ShortFormApplicationService = (
   Service.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
 
+  Service.listingHasNRHP_or_ADHP = ->
+    Service.listingHasPreference('neighborhoodResidence') || Service.listingHasPreference('antiDisplacement')
+
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
     liveInSfEligible = Service.liveInSfMembers().length > 0
@@ -486,7 +490,14 @@ ShortFormApplicationService = (
   Service.applicantHasNoPreferences = ->
     # true if no preferences are selected at all
     prefList = ShortFormDataService.preferences
+    customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
+    prefList = prefList.concat(customPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
+
+  Service.customPreferencesClaimed = ->
+    customPrefClaims = _.map Service.listing.customPreferences, (customPref) ->
+      Service.applicationHasPreference(customPref.listingPreferenceID)
+    return _.includes(customPrefClaims, true)
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
@@ -499,10 +510,12 @@ ShortFormApplicationService = (
     Service.resetLiveWorkForm()
     # copy Neighborhood values to liveInSf
     neighborhoodMember = Service.preferences["#{preference}_household_member"]
+    proofOption = Service.preferences["#{preference}_proofOption"]
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
     proofOption = Service.preferences.documents[preference].proofOption
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
+    Service.preferences.liveInSf_proofOption = proofOption
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
@@ -823,6 +836,7 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
+        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
       .error(afterGeocode)
@@ -848,6 +862,7 @@ ShortFormApplicationService = (
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
+        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
