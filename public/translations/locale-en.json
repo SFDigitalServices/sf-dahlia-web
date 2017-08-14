@@ -231,6 +231,7 @@
         "TITLE": "You're almost done!"
     },
     "F1_REVIEW_SUMMARY": {
+        "NOTE": "This is your last chance to edit before submitting.",
         "TITLE": "Take a moment to review your information before submitting your application."
     },
     "F2_REVIEW_TERMS": {
@@ -250,6 +251,9 @@
         "BROWSE_MORE_LISTINGS": "Browse more listings",
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
+        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you did not receive an email confirmation.",
+        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you have any questions.",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "Do not submit another application",
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
@@ -650,7 +654,7 @@
         "EDIT": "Edit",
         "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
-        "I_AGREE": "I agree",
+        "I_AGREE": "I agree and understand that I cannot change anything after I submit.",
         "NEVER_SUBMITTED": "Never Submitted",
         "NEXT": "Next",
         "NO": "No",
@@ -661,6 +665,7 @@
         "OR": "or",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
+        "SAVE_AND_COME_BACK_LATER": "Save and come back later",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
         "SESSION_INACTIVITY_CONFIRMATION": "Your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
