@@ -5,7 +5,6 @@ angular.module('dahlia.directives')
     formObject: '=?'
     addressError: '=?'
     hideAlert: '=?'
-    # preferenceWarning T/F gets set by $scope.preferenceCheckboxInvalid()
     preferenceWarning: '=?'
     customMessage: '=?'
     customSubMessage: '=?'
@@ -39,7 +38,7 @@ angular.module('dahlia.directives')
       if scope.customMessage
         return scope.customMessage
       else if scope.preferenceWarning
-        $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+        return scope.preferenceWarning
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 
