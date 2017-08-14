@@ -106,7 +106,9 @@ module SalesforceService
         listing_image = listing_images.select do |li|
           li.salesforce_listing_id == listing['Id']
         end.first
-        listing['imageURL'] = listing_image ? listing_image.image_url : nil
+        # fallback to Building_URL for the case where ListingImages have not been set up
+        url = listing_image ? listing_image.image_url : listing['Building_URL']
+        listing['imageURL'] = url
       end
       listings
     end
