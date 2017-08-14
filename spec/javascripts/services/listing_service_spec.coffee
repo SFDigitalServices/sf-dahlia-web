@@ -6,6 +6,16 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
+    # fakeListingAllSRO has only one unit summary, in general, for SRO
+    fakeListingAllSRO = angular.copy(fakeListing.listing)
+    fakeListingAllSRO.unitSummaries =
+      reserved: null
+      general: [angular.copy(fakeListing.listing.unitSummaries.general[0])]
+    fakeListingAllSRO.unitSummaries.general[0].unitType = 'SRO'
+    fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
+    # fakeListingSomeSRO has two unit summaries in general, one for SRO, one for 1 BR
+    fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
+    fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
     fakeAMI = getJSONFixture('listings-api-ami.json')
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
@@ -381,8 +391,7 @@ do ->
       it 'should filter the incomeLevels to end at max household + 2', ->
         expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual minMax[1] + 2
       it 'should filter the incomeLevels to only show 1 person if all SROs', ->
-        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
-        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        ListingService.listing = fakeListingAllSRO
         incomeLevels = ListingService.occupancyIncomeLevels(ListingService.listing, fakeAMI.ami[0])
         minMax = ListingService.occupancyMinMax(ListingService.listing)
         expect(incomeLevels.slice(-1)[0].numOfHousehold).toEqual 1
@@ -424,19 +433,13 @@ do ->
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns no if not all units are SROs', ->
         ListingService.listing = fakeListing.listing
-        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
-        unitSummary = _.head(combined)
-        unitSummary.Unit_Type = 'Studio'
+        ListingService.listing.unitSummaries.general[0].Unit_Type = 'Studio'
         expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(false)
       it 'returns yes if all units are SROs', ->
-        ListingService.listing = fakeListing.listing
-        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
-        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        ListingService.listing = fakeListingAllSRO
         expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(true)
 
     describe 'Service.householdAMIChartCutoff', ->
       it 'returns 1 if all units are SROs', ->
-        ListingService.listing = fakeListing.listing
-        combined = _.concat(ListingService.listing.unitSummaries.reserved, ListingService.listing.unitSummaries.general)
-        _.forEach(combined, (unitSummary) -> unitSummary.Unit_Type = 'SRO')
+        ListingService.listing = fakeListingAllSRO
         expect(ListingService.householdAMIChartCutoff()).toEqual(1)

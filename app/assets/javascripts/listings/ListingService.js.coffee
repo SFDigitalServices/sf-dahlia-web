@@ -503,11 +503,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.listingHasSROUnits = (listing) ->
-    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
-    !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
+    combined = Service.combineUnitSummaries(listing)
+    _.some(combined, { Unit_Type: 'SRO' })
 
   Service.listingHasOnlySROUnits = (listing) ->
-    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
+    combined = Service.combineUnitSummaries(listing)
     _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
@@ -564,7 +564,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
-    return 1 if Service.listingHasSROUnits(Service.listing)
+    return 1 if Service.listingHasOnlySROUnits(Service.listing)
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
