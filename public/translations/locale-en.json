@@ -248,7 +248,9 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_INSUFFICIENT": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
         "COMPLETE_UPLOADING_DOCUMENTS": "Please complete uploading documents above.",

@@ -39,7 +39,6 @@ ListingController = (
   $scope.whatHappens = false
   # for searching lottery number
   $scope.lotterySearchNumber = ''
-  $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
@@ -60,7 +59,6 @@ ListingController = (
 
   $scope.toggleTable = (table) ->
     $scope["active#{table}Class"] = if $scope["active#{table}Class"] then '' else 'active'
-    $scope.smallDisplayClass = if $scope.smallDisplayClass then '' else 'small-display-none'
 
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
