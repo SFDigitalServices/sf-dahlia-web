@@ -21,19 +21,19 @@ section.app-container
       h3.h-caps.t-base.d-block ng-if="application.applicationLanguage == 'English'"
         | {{'A1_INTRO.CHOOSE_YOUR_LANGUAGE' | translate}}
       span ng-if="application.applicationLanguage == 'English'"
-        button#submit-en.button.secondary.expand-small.primary type="button" ng-click="beginApplication('en')"
+        button#submit-en.button.secondary.expand-small.primary.margin-bottom--3halves type="button" ng-click="beginApplication('en')"
           | Begin
         '
       span ng-if="application.applicationLanguage == 'English' || application.applicationLanguage == 'Spanish'"
-        button#submit-es.button.secondary.expand-small.primary type="button" ng-click="beginApplication('es')"
+        button#submit-es.button.secondary.expand-small.primary.margin-bottom--3halves type="button" ng-click="beginApplication('es')" ng-class="{'margin-top--3halves': application.applicationLanguage != 'English'}"
           | Empezar
         '
       span ng-if="application.applicationLanguage == 'English' || application.applicationLanguage == 'Chinese'"
-        button#submit-zh.button.t-ch.t-ch-button.secondary.expand-small.primary type="button" ng-click="beginApplication('zh')"
+        button#submit-zh.button.t-ch.t-ch-button.secondary.expand-small.primary.margin-bottom--3halves type="button" ng-click="beginApplication('zh')" ng-class="{'margin-top--3halves': application.applicationLanguage != 'English'}"
           | 開始
         '
       span ng-if="application.applicationLanguage == 'English' || application.applicationLanguage == 'Filipino'"
-        button#submit-tl.button.secondary.expand-small.primary type="button" ng-click="beginApplication('tl')"
+        button#submit-tl.button.secondary.expand-small.primary.margin-bottom--3halves type="button" ng-click="beginApplication('tl')" ng-class="{'margin-top--3halves': application.applicationLanguage != 'English'}"
           | Magsimula
 
 
