@@ -528,7 +528,7 @@ do ->
     describe 'preferenceWarning', ->
       it 'calls inputInvalid with currentPreferenceType', ->
         spyOn(fakeShortFormApplicationService, 'inputInvalid')
-        scope.currentPreferenceType = 'liveInSf'
+        scope.form.currentPreferenceType = 'liveInSf'
         scope.preferenceWarning()
         expect(fakeShortFormApplicationService.inputInvalid).toHaveBeenCalled()
 
