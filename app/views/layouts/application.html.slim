@@ -39,7 +39,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
-    .site-container ng-class="{'skiptranslate': isShortFormPageOrEnglish()}"
+    .site-container ng-class="{'skiptranslate': doNotGoogleTranslate()}"
       / always skip translations for the header + navigation
       .skiptranslate
         section(ui-view="translate")
