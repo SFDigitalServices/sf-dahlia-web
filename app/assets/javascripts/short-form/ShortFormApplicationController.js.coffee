@@ -150,17 +150,16 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.addressInputInvalid = (identifier = '') ->
-    if $scope.addressFailedValidation(identifier)
-      return true
+    return true if $scope.addressValidationError(identifier)
     $scope.inputInvalid('address1', identifier) ||
     $scope.inputInvalid('city', identifier) ||
     $scope.inputInvalid('state', identifier) ||
     $scope.inputInvalid('zip', identifier)
 
-  $scope.addressFailedValidation = (identifier = '') ->
+  $scope.addressValidationError = (identifier = '') ->
     return false unless $scope.addressError
     validated = $scope["validated_#{identifier}"]
-    return AddressValidationService.failedValidation(validated)
+    return AddressValidationService.validationError(validated)
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
