@@ -340,8 +340,6 @@ ShortFormApplicationController = (
   $scope.checkAfterLiveInTheNeighborhood = (preference) ->
     # preference is either neighborhoodResidence or antiDisplacement
     if ShortFormApplicationService.applicationHasPreference(preference)
-      # Neighborhood provides automatic liveInSf preference
-      ShortFormApplicationService.copyNeighborhoodToLiveInSf(preference)
       # you already selected Neighborhood, so skip live/work
       $scope.checkAfterLiveWork()
     else

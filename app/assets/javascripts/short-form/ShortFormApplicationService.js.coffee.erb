@@ -492,7 +492,7 @@ ShortFormApplicationService = (
   Service.copyNeighborhoodToLiveInSf = (preference) ->
     # preference is either neighborhoodResidence or antiDisplacement
     # clear out any previously entered values for live/work
-    Service.cancelPreference('liveWorkInSf')
+    Service.cancelPreference('workInSf')
     # reset the form so it's not in an "invalid" state
     Service.resetLiveWorkForm()
     # copy Neighborhood values to liveInSf
@@ -500,6 +500,7 @@ ShortFormApplicationService = (
     proofOption = Service.preferences["#{preference}_proofOption"]
     # copy e.g. "Water Bill" so that it shows up properly on the review screen
     proofOption = Service.preferences.documents[preference].proofOption
+    file = Service.preferences.documents[preference].file
     Service.preferences.liveInSf = true
     Service.preferences.liveInSf_household_member = neighborhoodMember
     Service.preferences.liveInSf_proofOption = proofOption
