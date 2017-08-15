@@ -108,7 +108,7 @@ do ->
     fakeAccountService =
       loggedIn: () ->
     fakeAddressValidationService =
-      failedValidation: jasmine.createSpy()
+      validationError: jasmine.createSpy()
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
@@ -251,20 +251,20 @@ do ->
         scope.cancelHouseholdMember()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-members')
 
-    describe '$scope.addressFailedValidation', ->
-      it 'calls failedValidation in AddressValidationService', ->
+    describe '$scope.addressValidationError', ->
+      it 'calls validationError in AddressValidationService', ->
         scope.validated_home_address = {street1: 'x'}
         scope.addressError = true
-        scope.addressFailedValidation('home_address')
-        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
+        scope.addressValidationError('home_address')
+        expect(fakeAddressValidationService.validationError).toHaveBeenCalled()
 
     describe '$scope.addressInputInvalid', ->
-      it 'calls failedValidation in AddressValidationService', ->
+      it 'calls validationError in AddressValidationService', ->
         scope.form = {applicationForm: {}}
         scope.validated_home_address = {street1: 'x'}
         scope.addressError = true
         scope.addressInputInvalid('home_address')
-        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
+        expect(fakeAddressValidationService.validationError).toHaveBeenCalled()
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
       it 'navigates ahead to alt contact type if verification already happened', ->
@@ -466,10 +466,6 @@ do ->
           expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'checkAfterLiveInTheNeighborhood', ->
-      it 'calls copyNeighborhoodToLiveInSf method if you selected the preference', ->
-        spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
-        scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
-        expect(fakeShortFormApplicationService.copyNeighborhoodToLiveInSf).toHaveBeenCalledWith('neighborhoodResidence')
       it 'goes to live-work-preference page if you did not select the preference', ->
         spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
         scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')

@@ -77,8 +77,7 @@
 
       address-form address-type="home_address" model='applicant' model-name='applicant' is-required="true" on-change="addressChange('applicant')"
 
-      small.error ng-if="addressFailedValidation('home_address')"
-        | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+      address-error error="addressValidationError('home_address')"
 
       .form-item.padding-bottom
         .checkbox

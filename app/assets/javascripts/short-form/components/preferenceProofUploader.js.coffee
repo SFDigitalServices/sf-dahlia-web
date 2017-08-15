@@ -80,6 +80,10 @@ angular.module('dahlia.components')
           opts = @rentBurdenOpts()
         FileUploadService.uploadProof($file, @preference, @listingId, opts).then =>
           @afterUpload()
+        if @preference == 'neighborhoodResidence' || @preference == 'antiDisplacement'
+          # if we're uploading for NRHP/ADHP, it also copys info and uploads for liveInSf so that the file info is saved into DB
+          ShortFormApplicationService.copyNeighborhoodToLiveInSf(@preference)
+          FileUploadService.uploadProof($file, 'liveInSf', @listingId, opts)
 
       @deletePreferenceFile = =>
         opts = {}
