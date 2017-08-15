@@ -10,7 +10,11 @@ div
   ng-transclude ng-if="featuredLeader"
 
   #short-form-alerts
-    alert-box(short-form="true" preference-warning="preferenceCheckboxInvalid()" address-error="addressError" custom-message="customInvalidMessage")
+<<<<<<< HEAD
+    alert-box(short-form="true" preference-warning="preferenceWarning()" address-error="addressError" custom-message="customInvalidMessage")
+=======
+    alert-box(short-form="true" preference-warning="preferenceWarning()" address-error="addressError")
+>>>>>>> master
 
     alert-box(primary="true" hide-alert="hideMessage" custom-message="loggedInMessage" ng-if="loggedIn() && loggedInMessage")
 
