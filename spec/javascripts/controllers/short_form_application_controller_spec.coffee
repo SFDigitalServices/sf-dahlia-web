@@ -23,7 +23,7 @@ do ->
         applicationForm:
           $valid: true
           $setPristine: -> undefined
-      inputInvalid: jasmine.createSpy()
+      inputInvalid: ->
       listing: fakeListing
       applicant:
         home_address: { address1: null, city: null, state: null, zip: null }
@@ -113,8 +113,6 @@ do ->
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
-      uploadProof: ->
-        then: ->
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -498,15 +496,6 @@ do ->
           scope.checkAfterLiveWork()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
-    describe 'uploadProof', ->
-      it 'calls uploadProof on FileUploadService', ->
-        spyOn(fakeFileUploadService, 'uploadProof').and.callThrough()
-        file = {}
-        pref = 'liveInSf'
-        docType = 'water bill'
-        scope.uploadProof(file, pref, docType)
-        expect(fakeFileUploadService.uploadProof).toHaveBeenCalledWith(file, pref, docType, scope.listing.Id)
-
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
         beforeEach ->
@@ -536,10 +525,11 @@ do ->
         scope.preferenceRequired('liveInSf')
         expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith 'liveInSf'
 
-    describe 'preferenceCheckboxInvalid', ->
+    describe 'preferenceWarning', ->
       it 'calls inputInvalid with currentPreferenceType', ->
+        spyOn(fakeShortFormApplicationService, 'inputInvalid')
         scope.form.currentPreferenceType = 'liveInSf'
-        scope.preferenceCheckboxInvalid()
+        scope.preferenceWarning()
         expect(fakeShortFormApplicationService.inputInvalid).toHaveBeenCalled()
 
     describe 'primaryApplicantUnder18', ->
