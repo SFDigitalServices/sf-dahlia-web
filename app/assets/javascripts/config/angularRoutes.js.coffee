@@ -86,7 +86,7 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
-            ListingService.getListing($stateParams.id).then ->
+            ListingService.getListing($stateParams.id).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
@@ -100,6 +100,9 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
               setTimeout(ListingService.getListingDownloadURLs)
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
         application: [
@@ -499,10 +502,7 @@
           '$stateParams', '$q', 'ListingService',
           ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            deferred = $q.defer()
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              deferred.resolve(ListingService.listing)
-            return deferred.promise
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
@@ -535,11 +535,7 @@
           '$stateParams', '$q', 'ListingService',
           ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            deferred = $q.defer()
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              deferred.resolve(ListingService.listing)
-              ListingService.getListingPreferences()
-            return deferred.promise
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
@@ -559,13 +555,16 @@
 
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
-            ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
               deferred.resolve(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
     })
@@ -849,10 +848,13 @@
           '$stateParams', '$state', '$q', 'ShortFormApplicationService',
           ($stateParams, $state, $q, ShortFormApplicationService) ->
             deferred = $q.defer()
-            ShortFormApplicationService.getApplication($stateParams.id).then ->
+            ShortFormApplicationService.getApplication($stateParams.id).then( ->
               if !ShortFormApplicationService.applicationWasSubmitted()
                 $state.go('dahlia.my-applications')
               deferred.resolve(ShortFormApplicationService.application)
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
         $title: [

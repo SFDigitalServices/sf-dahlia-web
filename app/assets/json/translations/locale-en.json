@@ -178,9 +178,13 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_INSUFFICIENT": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
+        "ALERT": {
+            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
+            "TIMEOUT_PLEASE_TRY_AGAIN": "Oops! Looks like something went wrong. Please try again."
+        },
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
         "CONFIRMED_ADDRESS": "Please confirm the suggested address.",
@@ -498,8 +502,8 @@
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
-        "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
+        "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",

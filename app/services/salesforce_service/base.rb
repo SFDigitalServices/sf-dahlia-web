@@ -5,13 +5,15 @@ module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
+    class_attribute :timeout
     class_attribute :error
     class_attribute :force
     self.retries = 1
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
     self.force = false
 
     def self.client
-      Restforce.new
+      Restforce.new(timeout: timeout)
     end
 
     def self.oauth_client
@@ -20,6 +22,7 @@ module SalesforceService
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
+        timeout: timeout,
       )
     end
 
@@ -47,10 +50,6 @@ module SalesforceService
         self.error = 'Restforce::UnauthorizedError'
         []
       end
-    rescue StandardError => e
-      p "UH OH -- StandardError #{e.message}" if Rails.env.development?
-      self.error = e.message
-      []
     end
 
     def self.api_get(endpoint, params = nil, parse_response = false)
