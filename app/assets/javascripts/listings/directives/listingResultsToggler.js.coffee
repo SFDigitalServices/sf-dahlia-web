@@ -1,15 +1,15 @@
 angular.module('dahlia.directives')
 .directive 'listingResultsToggler', ['$translate', ($translate) ->
+  toggleStates = {}
+
   restrict: 'E'
   scope: true
   templateUrl: 'listings/directives/listing-results-toggler.html'
-
   link: (scope, elem, attrs) ->
     scope.listingResults = scope[attrs.listingResults]
     scope.sectionName = attrs.sectionName
     scope.icon = attrs.icon || '#i-result'
-    # toggler defaults to closed
-    scope.displayToggledSection = false
+    scope.displayToggledSection = toggleStates[scope.sectionName] ? false
     scope.togglerId = "#{scope.sectionName}-toggler"
     scope.text = {}
 
@@ -48,4 +48,5 @@ angular.module('dahlia.directives')
       return if e.constructor.name == 'KeyboardEvent' and angular.element(e.target).hasClass('button')
       e.currentTarget.blur() if e
       scope.displayToggledSection = !scope.displayToggledSection
+      toggleStates[scope.sectionName] = scope.displayToggledSection
 ]
