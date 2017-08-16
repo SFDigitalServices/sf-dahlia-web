@@ -316,6 +316,16 @@
         "P5": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
     },
+    "FOOTER": {
+        "CITY_COUNTY_OF_SF": "City & County of San Francisco",
+        "CONTACT": "Contact",
+        "DAHLIA_DESCRIPTION": "<p class='c-iron'>DAHLIA: San Francisco Housing Portal is a project of the <br><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Mayor's Office of Housing and Community Development</a></p><p class='t-small c-iron margin-top'>in partnership with<br><a class='a-white' href='{{sfDeptUrl}}' target='_blank'>San Francisco Department of Technology</a><br><a class='a-white' href='{{mayorUrl}}' target='_blank'>Mayor's Office of Civic Innovation</a></p>",
+        "DISCLAIMER": "Disclaimer",
+        "FOR_GENERAL_QUESTIONS": "For general program inquiries, you may call MOHCD at 415-701-5500.",
+        "GIVE_FEEDBACK": "Give Feedback",
+        "LISTING_QUESTIONS": "For listing and application questions, please contact the Leasing Agent displayed on the LISTING.",
+        "PRIVACY_POLICY": "Privacy Policy"
+    },
     "FORGOT_PASSWORD": {
         "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password.",
         "EMAIL_SENT_TITLE": "We've sent you an email.",
@@ -662,6 +672,18 @@
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "NAV": {
+        "ACCOUNT_SETTINGS": "Account Settings",
+        "BROWSE_PROPERTIES": "Browse Properties",
+        "GET_ASSISTANCE": "Get Assistance",
+        "GET_FEEDBACK": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
+        "MY_ACCOUNT": "My Account",
+        "MY_APPLICATIONS": "My Applications",
+        "MY_DASHBOARD": "My Dashboard",
+        "MY_FAVORITES": "My Favorites",
+        "SIGN_IN": "Sign In",
+        "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
         "ACCOUNT_SETTINGS": "Account Settings",
