@@ -13,11 +13,14 @@ html lang="en"
       .sr-only{
         position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
 
-    / async load CSS via Javascript onload
+    / ---- async load CSS via Javascript onload ----
     link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
     noscript
       / if no JS available load as usual
       = stylesheet_link_tag 'application', media: 'all'
+    / polyfill for CSS async methods
+    = javascript_include_tag 'https://cdn.jsdelivr.net/loadcss/1.3.1/loadCSS.js', async: true, onload: "loadCSS('#{asset_url('application.css')}')"
+    / ----> end load CSS
 
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta charset="utf-8"
