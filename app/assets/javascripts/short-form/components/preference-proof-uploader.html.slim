@@ -47,7 +47,7 @@
 .form-group ng-if="$ctrl.hasPreferenceFile()"
   article.attachment.media.margin-bottom id="uploaded-{{$ctrl.fileInputName}}"
     figure.media-img
-      img src="/images/image_file.png" style="height:80px; margin-right: 6px;" alt="Uploaded File"
+      img ng-src="{{assetPaths['image_file.png']}}" style="height:80px; margin-right: 6px;"   alt="Uploaded File"
     .media-body
       strong
         | {{$ctrl.proofDocument.proofOption}}
