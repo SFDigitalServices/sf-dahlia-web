@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Aug 2017 15:41:34 GMT
+      - Thu, 03 Aug 2017 23:16:26 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=Rtq3NWpeSmaefHY1CxUQkA;Path=/;Domain=.salesforce.com;Expires=Sun,
-        01-Oct-2017 15:41:34 GMT
+      - BrowserId=PHZ7k4yZTj6TDyCnBELPTA;Path=/;Domain=.salesforce.com;Expires=Mon,
+        02-Oct-2017 23:16:26 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,9 +50,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1501688494658","signature":"+zPhTwU6UhRvDhhG2t6dQUY9lATOPHWBD29G4gtvC6k="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1501802186301","signature":"SOzgy+ceEYlCTfrUDnh+CtS4Zk/p7UnurBiQbZMoIJg="}'
     http_version: 
-  recorded_at: Wed, 02 Aug 2017 15:41:34 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:26 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/ListingDetails/a0W0P00000DYiwiUAD
@@ -74,7 +74,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Aug 2017 15:41:35 GMT
+      - Thu, 03 Aug 2017 23:16:26 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=RpQYKTFUR4qQd1BW7x8phA;Path=/;Domain=.salesforce.com;Expires=Sun,
-        01-Oct-2017 15:41:35 GMT
+      - BrowserId=XvR5vobcSlG__cDdxU2qzQ;Path=/;Domain=.salesforce.com;Expires=Mon,
+        02-Oct-2017 23:16:26 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -264,5 +264,5 @@ http_interactions:
         b2xkIjpudWxsLCJjaGFydFR5cGUiOiJIVUQgVW5hZGp1c3RlZCIsImFtb3Vu
         dCI6bnVsbH1dfV0=
     http_version: 
-  recorded_at: Wed, 02 Aug 2017 15:41:35 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:27 GMT
 recorded_with: VCR 3.0.3

@@ -33,13 +33,14 @@ class CacheService
       # move on if there is no difference between the old and new listing object
       # but always refresh open listings
       next if unchanged && due_date_passed
-      cache_single_listing(id, due_date_passed)
+      cache_single_listing(listing, due_date_passed)
     end
 
     ListingService.force = false
   end
 
-  def self.cache_single_listing(id, due_date_passed = true)
+  def self.cache_single_listing(listing, due_date_passed = true)
+    id = listing['Id']
     # cache this listing from API
     ListingService.listing(id)
     ListingService.units(id)
@@ -47,5 +48,7 @@ class CacheService
     ListingService.lottery_buckets(id) if due_date_passed
     # NOTE: there is no call to ListingService.ami
     # because it is parameter-based and values will rarely change (1x/year?)
+    image_processor = ListingImageService.new(listing).process_image
+    Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
   end
 end

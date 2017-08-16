@@ -78,6 +78,8 @@ gem 'sidekiq', '~> 5.0.2'
 
 gem 'hashdiff', '~> 0.3.0'
 
+gem 'fog-aws'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
