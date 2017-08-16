@@ -15,7 +15,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.AMICharts = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
+  Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
 
@@ -25,22 +26,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     {
       'language': 'English'
       'label': 'English'
-      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+      'url': Service.mohcdEnglishApplicationURL
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Chinese')
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Tagalog')
     }
   ]
 
