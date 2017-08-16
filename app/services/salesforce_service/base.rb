@@ -6,7 +6,9 @@ module SalesforceService
   class Base
     class_attribute :retries
     class_attribute :error
+    class_attribute :force
     self.retries = 1
+    self.force = false
 
     def self.client
       Restforce.new
@@ -57,8 +59,13 @@ module SalesforceService
 
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
-      cache_disabled = ENV['CACHE_SALESFORCE_REQUESTS'] != 'true'
-      Rails.cache.fetch(key, force: cache_disabled) do
+      force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
+      if ENV['FREEZE_SALESFORCE_CACHE']
+        expires_in = 10.years
+      else
+        expires_in = params ? 10.minutes : 1.day
+      end
+      Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         api_call(:get, endpoint, params, parse_response)
       end
     end
