@@ -3,6 +3,7 @@ GoogleTranslateService = ($q, $timeout) ->
   Service.URL = '//translate.google.com/translate_a/element.js?cb=initGoogleTranslate'
   Service.translateElement = {}
   Service.loaded = false
+  Service.language = 'en'
 
   Service.loadAPI = ->
     deferred = $q.defer()
@@ -24,6 +25,7 @@ GoogleTranslateService = ($q, $timeout) ->
     document.getElementsByTagName('head')[0].appendChild(node)
 
   Service.setLanguage = (language) ->
+    Service.language = language
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true

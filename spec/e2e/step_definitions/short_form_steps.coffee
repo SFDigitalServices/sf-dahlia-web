@@ -321,19 +321,19 @@ module.exports = ->
     submitPage()
 
   @When 'I indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_yes')).click()
-    submitPage()
+    element(By.id('householdVouchersSubsidies_yes')).click().then ->
+      submitPage()
 
   @When 'I do not indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_no')).click()
-    submitPage()
+    element(By.id('householdVouchersSubsidies_no')).click().then ->
+      submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
     incomeTotal = element(By.id('incomeTotal'))
     scrollToElement(incomeTotal)
     incomeTotal.clear().sendKeys(income)
-    element(By.id('per_year')).click()
-    submitPage()
+    element(By.id('per_year')).click().then ->
+      submitPage()
 
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
@@ -712,7 +712,7 @@ module.exports = ->
     expectError(@, 'Please select one of the options above')
 
   @Then 'I should see an error about uploading proof', ->
-    expectAlertBox(@,)
+    expectAlertBox(@, 'Please complete uploading documents or select that you don\'t want this preference.')
     expectError(@, 'Please upload a valid document')
 
   @Then 'I should see an error on the household member form', ->

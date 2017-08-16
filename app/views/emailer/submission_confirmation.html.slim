@@ -15,15 +15,12 @@ p
 
 p
   = @listing.Leasing_Agent_Name
-  - fields = %w(Leasing_Agent_Title Leasing_Agent_Phone Leasing_Agent_Email Application_Organization Leasing_Agent_Street)
+  - fields = %w(Leasing_Agent_Title Leasing_Agent_Phone Leasing_Agent_Email)
   - fields.each do |field|
     - val = @listing.send(field)
     - if val
       br
       = val
-  - if @listing.Leasing_Agent_City
-    br
-    | #{@listing.Leasing_Agent_City} #{@listing.Leasing_Agent_State} #{@listing.Leasing_Agent_Zip}
 
 - if @listing.Office_Hours || true
   p

@@ -1,8 +1,7 @@
 accordion-heading
   img.accordion-icon src="/images/listing-units.svg" alt="neighborhood-building"
-  h3.accordion-name
-    | Lottery
-  span.accordion-subheader Lottery selection, important dates and contact
+  h3.accordion-name translate="LOTTERY.LOTTERY"
+  span.accordion-subheader translate="LOTTERY.LOTTERY_INFO_SUBHEADER"
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
@@ -14,17 +13,17 @@ section.content-wrap
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-clock"
-        | Applications Closed {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+        span translate="LISTINGS.APPLICATIONS_CLOSED" translate-value-date="{{listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
 
   span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
   .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
-    h4.h-caps-lined Lottery Results
+    h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
     p.content-group_date
       span.content-group_day
         | {{ listing.Lottery_Results_Date | date : 'longDate' }}
-    p.c-steel.t-small Complete lottery results will be posted on this date by 5pm.
+    p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
 
   .content-group.expand.text-center ng-if="listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
@@ -32,16 +31,12 @@ section.content-wrap
   .content-group
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
-  / neighborhood preference list
-  .content-group ng-if="showPreferenceListPDF()"
-    h4.content-group_title ng-if="listingHasPreference('neighborhoodResidence')"
-      | {{'LISTINGS.CONFIRMED_NRHP_LIST' | translate}}
-    h4.content-group_title ng-if="listingHasPreference('antiDisplacement')"
-      | {{'LISTINGS.CONFIRMED_ADHP_LIST' | translate}}
-    a.button.primary.expand ng-href="{{listing.NeighborHoodPreferenceUrl}}" target="_blank"
-      | View Preference List
-    p.c-steel.t-small
-      | Applications that qualify for this preference will be given a higher priority in the lottery.
+  / lottery preference URL
+  .content-group ng-repeat="lotteryPreference in listing.preferences" ng-if="!listingHasLotteryResults() && lotteryPreference.pdfUrl"
+    h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{lotteryPreference.preferenceName}}"
+    a.button.primary.expand ng-href="{{lotteryPreference.pdfUrl}}" target="_blank"
+      | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
+    p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
 
-  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+  .content-group ng-if="leasingAgentInfoAvailable()"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"

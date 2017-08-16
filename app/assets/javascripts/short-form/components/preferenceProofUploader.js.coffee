@@ -68,12 +68,22 @@ angular.module('dahlia.components')
           docType: @proofDocument.proofOption
         }
 
+      @saveProofOptionToPref = =>
+        proofOption = @proofDocument.proofOption
+        if @preference == 'rentBurden'
+          proofOption = 'Lease and rent proof'
+        ShortFormApplicationService.application.preferences[@preference + '_proofOption'] = proofOption
+
       @uploadProofFile = ($file) =>
         opts = {}
         if @preference == 'rentBurden'
           opts = @rentBurdenOpts()
         FileUploadService.uploadProof($file, @preference, @listingId, opts).then =>
           @afterUpload()
+        if @preference == 'neighborhoodResidence' || @preference == 'antiDisplacement'
+          # if we're uploading for NRHP/ADHP, it also copys info and uploads for liveInSf so that the file info is saved into DB
+          ShortFormApplicationService.copyNeighborhoodToLiveInSf(@preference)
+          FileUploadService.uploadProof($file, 'liveInSf', @listingId, opts)
 
       @deletePreferenceFile = =>
         opts = {}

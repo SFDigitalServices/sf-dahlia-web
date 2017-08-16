@@ -23,7 +23,7 @@ do ->
         applicationForm:
           $valid: true
           $setPristine: -> undefined
-      inputInvalid: jasmine.createSpy()
+      inputInvalid: ->
       listing: fakeListing
       applicant:
         home_address: { address1: null, city: null, state: null, zip: null }
@@ -94,6 +94,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
+      customPreferencesClaimed: jasmine.createSpy()
       resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -107,7 +108,7 @@ do ->
     fakeAccountService =
       loggedIn: () ->
     fakeAddressValidationService =
-      failedValidation: jasmine.createSpy()
+      validationError: jasmine.createSpy()
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
@@ -250,20 +251,20 @@ do ->
         scope.cancelHouseholdMember()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-members')
 
-    describe '$scope.addressFailedValidation', ->
-      it 'calls failedValidation in AddressValidationService', ->
+    describe '$scope.addressValidationError', ->
+      it 'calls validationError in AddressValidationService', ->
         scope.validated_home_address = {street1: 'x'}
         scope.addressError = true
-        scope.addressFailedValidation('home_address')
-        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
+        scope.addressValidationError('home_address')
+        expect(fakeAddressValidationService.validationError).toHaveBeenCalled()
 
     describe '$scope.addressInputInvalid', ->
-      it 'calls failedValidation in AddressValidationService', ->
+      it 'calls validationError in AddressValidationService', ->
         scope.form = {applicationForm: {}}
         scope.validated_home_address = {street1: 'x'}
         scope.addressError = true
         scope.addressInputInvalid('home_address')
-        expect(fakeAddressValidationService.failedValidation).toHaveBeenCalled()
+        expect(fakeAddressValidationService.validationError).toHaveBeenCalled()
 
     describe '$scope.checkIfAddressVerificationNeeded', ->
       it 'navigates ahead to alt contact type if verification already happened', ->
@@ -465,10 +466,6 @@ do ->
           expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'checkAfterLiveInTheNeighborhood', ->
-      it 'calls copyNeighborhoodToLiveInSf method if you selected the preference', ->
-        spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
-        scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
-        expect(fakeShortFormApplicationService.copyNeighborhoodToLiveInSf).toHaveBeenCalledWith('neighborhoodResidence')
       it 'goes to live-work-preference page if you did not select the preference', ->
         spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
         scope.checkAfterLiveInTheNeighborhood('neighborhoodResidence')
@@ -524,10 +521,11 @@ do ->
         scope.preferenceRequired('liveInSf')
         expect(fakeShortFormApplicationService.preferenceRequired).toHaveBeenCalledWith 'liveInSf'
 
-    describe 'preferenceCheckboxInvalid', ->
+    describe 'preferenceWarning', ->
       it 'calls inputInvalid with currentPreferenceType', ->
+        spyOn(fakeShortFormApplicationService, 'inputInvalid')
         scope.form.currentPreferenceType = 'liveInSf'
-        scope.preferenceCheckboxInvalid()
+        scope.preferenceWarning()
         expect(fakeShortFormApplicationService.inputInvalid).toHaveBeenCalled()
 
     describe 'primaryApplicantUnder18', ->
@@ -656,3 +654,15 @@ do ->
 
       it 'send user to You section of short form', ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+    describe 'checkForCustomPreferences', ->
+      describe 'listing has custom preferences', ->
+        it 'takes user to custom preferences page', ->
+          scope.listing.customPreferences = [{preferenceName: 'customPreference', listingPreferenceID: '123456'}]
+          scope.checkForCustomPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
+
+    describe 'customPreferencesClaimed', ->
+      it ' calls customPreferencesClaimed on ShortFormApplicationService', ->
+        scope.customPreferencesClaimed()
+        expect(fakeShortFormApplicationService.customPreferencesClaimed).toHaveBeenCalled()

@@ -2,5 +2,8 @@
   .button-pager_row.primary ng-if="hasNextButton"
     input#submit.button.primary.radius type="submit" value="{{submitValue}}" ng-disabled="isLoading()"
   .button-pager_row
-    button#save_and_finish_later.button.button-link.button-lined.small-text-center.expand-small data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)' ng-disabled="isLoading()"
-      | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+    button#save_and_finish_later.button.expand-small ng-class="{'button-link button-lined small-text-center': !secondaryButton, 'secondary': secondaryButton}" data-event="gtm-finish-later" ng-click='saveAndFinishLater($event)' ng-disabled="isLoading()"
+      span ng-if="!secondaryButton"
+        | {{'T.SAVE_AND_FINISH_LATER' | translate}}
+      span ng-if="secondaryButton"
+        | {{'T.SAVE_AND_COME_BACK_LATER' | translate}}

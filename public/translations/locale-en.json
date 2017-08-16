@@ -249,7 +249,9 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_INSUFFICIENT": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
         "COMPLETE_UPLOADING_DOCUMENTS": "Please complete uploading documents above.",
@@ -284,6 +286,7 @@
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
         "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
+        "PLEASE_COMPLETE_PREFERENCE": "Please complete uploading documents or select that you don't want this preference.",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",
@@ -306,6 +309,7 @@
         "TITLE": "You're almost done!"
     },
     "F1_REVIEW_SUMMARY": {
+        "NOTE": "This is your last chance to edit before submitting.",
         "TITLE": "Take a moment to review your information before submitting your application."
     },
     "F2_REVIEW_TERMS": {
@@ -316,6 +320,16 @@
         "P5": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
     },
+    "FOOTER": {
+        "CITY_COUNTY_OF_SF": "City & County of San Francisco",
+        "CONTACT": "Contact",
+        "DAHLIA_DESCRIPTION": "<p class='c-iron'>DAHLIA: San Francisco Housing Portal is a project of the <br><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Mayor's Office of Housing and Community Development</a></p><p class='t-small c-iron margin-top'>in partnership with<br><a class='a-white' href='{{sfDeptUrl}}' target='_blank'>San Francisco Department of Technology</a><br><a class='a-white' href='{{mayorUrl}}' target='_blank'>Mayor's Office of Civic Innovation</a></p>",
+        "DISCLAIMER": "Disclaimer",
+        "FOR_GENERAL_QUESTIONS": "For general program inquiries, you may call MOHCD at 415-701-5500.",
+        "GIVE_FEEDBACK": "Give Feedback",
+        "LISTING_QUESTIONS": "For listing and application questions, please contact the Leasing Agent displayed on the LISTING.",
+        "PRIVACY_POLICY": "Privacy Policy"
+    },
     "FORGOT_PASSWORD": {
         "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password.",
         "EMAIL_SENT_TITLE": "We've sent you an email.",
@@ -325,6 +339,9 @@
         "BROWSE_MORE_LISTINGS": "Browse more listings",
         "CREATE_ACCOUNT_BODY": "Creating an account will save your information for future applications, and you can check the status of this application anytime.",
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
+        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you did not receive an email confirmation.",
+        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you have any questions.",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "Do not submit another application",
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
@@ -337,6 +354,7 @@
     },
     "HEADER": {
         "LEARN_MORE": "Learn more.",
+        "TRANSLATE_BAR_EXPERT_NOTICE": "This page has been translated by a native speaker.",
         "TRANSLATE_BAR_GOOGLE_NOTICE": "This page has been translated with Google Translate."
     },
     "LABEL": {
@@ -557,6 +575,7 @@
         },
         "ALL_UNITS": "All Units",
         "ALL_UNITS_RESERVED_FOR": "All units reserved for {{type}}",
+        "APPLICATIONS_CLOSED": "Applications Closed {{date}}",
         "APPLY": {
             "APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE": "Applications must be received by the deadline and postmarks will not be considered.",
             "DO_NOT_APPLY_ONLINE_AND_PAPER": "Do not apply online and also send in a paper application.",
@@ -578,8 +597,8 @@
         "AVAILABLE_UNITS": "Available Units",
         "AVAILABLE_UNITS_AND_WAITLIST": "Available units and waitlist",
         "AVAILABLE_UNITS_AND_WAITLIST_DESC": "Once lottery winners fill all available units, additional lottery winners will be placed on the waitlist for <span class='t-italic'>{{number}} units</span>",
-        "CONFIRMED_ADHP_LIST": "Confirmed Anti-Displacement Housing Preference List",
-        "CONFIRMED_NRHP_LIST": "Confirmed Neighborhood Resident Housing Preference List",
+        "BATH": "bath",
+        "CONFIRMED_PREFERENCE_LIST": "Confirmed {{preference}} List",
         "CURRENT_WAITLIST_SIZE": "Current Waitlist Size",
         "DOWNLOAD_LOTTERY_RESULTS": "Download Lottery Results",
         "ENTER_LOTTERY_FOR_WAITLIST": "Enter the lottery for an open slot on the waitlist for <span class='t-italic'>{{number}} units</span>.",
@@ -598,9 +617,13 @@
         "NO_AVAILABLE_UNITS": "There are no available units at this time.",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
-        "OCCUPANCY_DESCRIPTION": "Occupancy for this building differs from household size and does not include children under 6. For the types of units available in this listing please see above.",
+        "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
+        "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
+        "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
+        "PEOPLE": "people",
+        "PERSON": "person",
         "PETS_POLICY": "Pets Policy",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
@@ -633,9 +656,13 @@
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
+        "APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE": "Applications that qualify for this preference will be given a higher priority in the lottery.",
         "BUCKETS_INTRO": "Lottery results are divided into multiple lists. Please see below for general information about each preference. For your specific results, please enter your lottery number.",
+        "COMPLETE_RESULTS_WILL_BE_POSTED": "Complete lottery results will be posted on this date by 5pm.",
         "GENERAL_POOL": "General Pool",
         "HOUSING_PREFERENCES": "Housing Preferences",
+        "LOTTERY": "Lottery",
+        "LOTTERY_INFO_SUBHEADER": "Lottery selection, important dates and contact",
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
@@ -654,13 +681,26 @@
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
         "RESULTS_FROM": "Results from {{date}}",
         "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
-        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units"
+        "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units",
+        "VIEW_PREFERENCE_LIST": "View Preference List"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "NAV": {
+        "ACCOUNT_SETTINGS": "Account Settings",
+        "BROWSE_PROPERTIES": "Browse Properties",
+        "GET_ASSISTANCE": "Get Assistance",
+        "GET_FEEDBACK": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
+        "MY_ACCOUNT": "My Account",
+        "MY_APPLICATIONS": "My Applications",
+        "MY_DASHBOARD": "My Dashboard",
+        "MY_FAVORITES": "My Favorites",
+        "SIGN_IN": "Sign In",
+        "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
         "ACCOUNT_SETTINGS": "Account Settings",
@@ -755,7 +795,7 @@
         "DELETE": "Delete",
         "EDIT": "Edit",
         "IN_PROGRESS": "In Progress",
-        "I_AGREE": "I agree",
+        "I_AGREE": "I agree and understand that I cannot change anything after I submit.",
         "NEVER_SUBMITTED": "Never Submitted",
         "NEXT": "Next",
         "NO": "No",
@@ -766,6 +806,7 @@
         "OR": "or",
         "PER_MONTH": "per month",
         "PER_YEAR": "per year",
+        "SAVE_AND_COME_BACK_LATER": "Save and come back later",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
         "SESSION_INACTIVITY_CONFIRMATION": "Your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",

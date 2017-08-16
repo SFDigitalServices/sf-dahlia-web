@@ -37,6 +37,11 @@ class EmailerPreview < ActionMailer::Preview
     Emailer.geocoding_log_notification(log_params)
   end
 
+  def geocoding_log_notification_hbmr
+    has_nrhp_adhp = true
+    Emailer.geocoding_log_notification(log_params, has_nrhp_adhp)
+  end
+
   def geocoding_error_notification
     Emailer.geocoding_error_notification(service_data, log_params)
   end
