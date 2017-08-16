@@ -5,40 +5,40 @@ pageslide ps-class="ng-pageslide hide-for-print" ps-open="showNavMobile" ps-side
         svg
           use xlink:href="#i-right"
 
-  ul.nav-mobile
+  ul.nav-mobile.skiptranslate
     li.has-icon
       a.nav-mobile-focus ui-sref="dahlia.listings" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-browse"
-        | Browse Listings
+      | {{ "NAV.BROWSE_PROPERTIES" | translate}}
     li.has-icon
       a.nav-mobile-focus ui-sref="dahlia.favorites" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-favorite"
-        | My Favorites
+      | {{ "NAV.MY_FAVORITES" | translate}}
     li.has-icon
       a.nav-mobile-focus ui-sref="dahlia.get-assistance" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-assistance"
-        | Get Assistance
+        | {{ "NAV.GET_ASSISTANCE" | translate}}
     li.has-icon ng-if="!loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.sign-in" ng-blur="trapFocus($event)"
-        | Sign In
+        | {{ "NAV.SIGN_IN" | translate}}
     li.has-icon ng-if="loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.my-applications" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-application"
-        | My Applications
+        | {{ "NAV.MY_APPLICATIONS" | translate}}
     li.has-icon ng-if="loggedIn()"
       a.nav-mobile-focus ui-sref="dahlia.account-settings" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-settings"
-        | Account Settings
+        | {{ "NAV.ACCOUNT_SETTINGS" | translate}}
     li.has-icon ng-if="loggedIn()"
       a.nav-mobile-focus ng-click="signOut()" ng-blur="trapFocus($event)"
-        | Sign Out
+        | {{ "NAV.SIGN_OUT" | translate}}
