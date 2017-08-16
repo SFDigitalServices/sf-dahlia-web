@@ -16,15 +16,19 @@
     ($location, $rootScope, $injector, $q, $translate) ->
 
       return {
+        # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
+        # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
         responseError: (error) ->
-
-          if error.status == 408
+          if _([503, 504]).includes(error.status)
             $injector.invoke [
-              '$http', 'bsLoadingOverlayService',
-              ($http, bsLoadingOverlayService) ->
-                # if error.status == 408
-                bsLoadingOverlayService.stop()
-                alertMessage = $translate.instant('ERROR.TIMEOUT')
+              '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService',
+              ($http, bsLoadingOverlayService, ShortFormNavigationService) ->
+                # this will call bsLoadingOverlayService.stop(), even if not on short form
+                ShortFormNavigationService.isLoading(false)
+                if error.status == 504
+                  alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                else
+                  alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
                 alert(alertMessage)
                 error
             ]

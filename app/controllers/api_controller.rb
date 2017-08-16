@@ -4,13 +4,14 @@ class ApiController < ActionController::API
   respond_to :json
 
   rescue_from StandardError do |e|
-    p "UH OH -- StandardError #{e.message}, #{e.class.name}" if Rails.env.development?
-    render json: { error: e.message }, status: 503
+    message = "#{e.class.name}, #{e.message}"
+    logger.error "<< Error captured >> #{message}"
+    render json: { message: message }, status: 503
   end
 
   rescue_from Faraday::ConnectionFailed,
-              Faraday::TimeoutError,
-              Faraday::ClientError do |e|
-    render json: { error: e.message }, status: 408
+              Faraday::TimeoutError do |e|
+    logger.error "<< Timeout! >> #{e.class.name}, #{e.message}"
+    render json: { message: 'timeout' }, status: 504
   end
 end

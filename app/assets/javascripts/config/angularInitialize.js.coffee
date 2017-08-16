@@ -7,6 +7,8 @@
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
   SharedService) ->
 
+    timeoutRetries = 2
+
     # check if user is logged in on page load
     AccountService.validateUser()
 
@@ -133,7 +135,14 @@
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
 
+      # fromState.name is empty on initial page load
       if fromState.name == ''
+        if _.isObject(error) && error.message == 'timeout'
+          timeoutRetries -= 1
+          # if timing out on initial page load, retry a couple times before giving up
+          return e.preventDefault() if timeoutRetries <= 0
+
+        # redirect to homepage when there's an error
         return $state.go('dahlia.welcome')
 
 ]
