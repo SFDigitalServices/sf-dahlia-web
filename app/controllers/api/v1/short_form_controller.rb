@@ -141,9 +141,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application_id, files)
-    # now that files are saved in SF, remove temp uploads
-    files.destroy_all
+    ShortFormService.queue_file_attachments(application_id, files)
   end
 
   def attach_temp_files_to_user
@@ -158,7 +156,7 @@ class Api::V1::ShortFormController < ApiController
       lottery_number: response['lotteryNumber'],
       firstName: response['primaryApplicant']['firstName'],
       lastName: response['primaryApplicant']['lastName'],
-    ).deliver_now
+    ).deliver_later
   end
 
   def map_listing_to_application

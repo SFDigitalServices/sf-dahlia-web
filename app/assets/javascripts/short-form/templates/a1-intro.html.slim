@@ -9,7 +9,7 @@ section.app-container
             | {{listing.Name}}
         figure.property-card_figure.radius
           a.property-card_overlay ui-sref="dahlia.short-form-welcome.overview" tabindex="-1"
-            img.property-card_thumb alt="Listing Name:{{listing.Name}}" role="link" ng-src="{{listing.Building_URL}}"
+            img.property-card_thumb alt="Listing Name:{{listing.Name}}" role="link" ng-src="{{listing.imageURL}}"
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}
