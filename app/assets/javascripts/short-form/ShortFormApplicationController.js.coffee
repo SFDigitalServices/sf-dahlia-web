@@ -556,12 +556,14 @@ ShortFormApplicationController = (
 
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
-    unless ShortFormApplicationService.eligibleForRentBurden()
-      ShortFormApplicationService.resetPreference('rentBurden')
+    return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
+              ShortFormApplicationService.eligibleForRentBurden()
+    ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.onMonthlyRentChange = ->
-    unless ShortFormApplicationService.eligibleForRentBurden()
-      ShortFormApplicationService.resetPreference('rentBurden')
+    return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
+              ShortFormApplicationService.eligibleForRentBurden()
+    ShortFormApplicationService.resetPreference('rentBurden')
 
   $scope.invalidateAltContactTypeForm = ->
     ShortFormApplicationService.invalidateAltContactTypeForm()
