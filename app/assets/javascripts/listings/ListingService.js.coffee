@@ -254,7 +254,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
-
+      # fallback for fixing the layout when a listing is missing an image
+      Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
@@ -279,6 +280,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
+      _.map listings, (listing) ->
+        # fallback for fixing the layout when a listing is missing an image
+        listing.imageURL ?= 'https://unsplash.it/g/780/438'
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()

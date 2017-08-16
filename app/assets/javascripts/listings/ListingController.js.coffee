@@ -102,11 +102,6 @@ ListingController = (
     (listing.Lottery_Date != undefined &&
       listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
-  $scope.imageURL = (listing) ->
-    # TODO: remove "or" case when we know we have real images
-    # just a fallback for now
-    listing.Building_URL || 'https://placehold.it/474x316'
-
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
 
@@ -136,7 +131,7 @@ ListingController = (
   $scope.listingImages = (listing) ->
     # TODO: update when we are getting multiple images from Salesforce
     # right now it's just an array of one
-    [$scope.imageURL(listing)]
+    [listing.imageURL]
 
   # lottery search
   $scope.clearLotterySearchNumber = ->
