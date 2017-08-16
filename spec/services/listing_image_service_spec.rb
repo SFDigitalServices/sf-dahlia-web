@@ -5,7 +5,7 @@ describe ListingImageService do
   listing_json = File.read(json_path)
   listing = JSON.parse(listing_json)['listing']
   listing_id = listing['Id']
-  image_path = "#{Rails.root}/public/images/logo-city.png"
+  image_path = "#{Rails.root}/app/assets/images/logo-city.png"
 
   before do
     # mock remote storage connection

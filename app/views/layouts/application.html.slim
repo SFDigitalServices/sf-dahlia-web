@@ -5,7 +5,20 @@ html lang="en"
   /! <![endif]
   head
     title DAHLIA San Francisco Housing Portal
-    = stylesheet_link_tag 'application', media: 'all'
+
+    / load critical CSS in head
+    css:
+      body{
+        background:#fff;color:#222;font-family:"Open Sans",Helvetica,Arial,Verdana,sans-serif;font-style:normal;font-size:16px;font-weight:400;line-height:24px;margin:0;padding:0;position:relative;display:table;width:100%;height:100%}
+      .sr-only{
+        position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
+    / async load CSS via Javascript onload
+    link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
+    noscript
+      / if no JS available load as usual
+      = stylesheet_link_tag 'application', media: 'all'
+
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1"
@@ -57,3 +70,4 @@ html lang="en"
     / ENV['MAINTENANCE_LISTINGS'] = 'a0W4B0000050b5gUAA,a0W4B0000050b5gUBB'
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
+      var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
