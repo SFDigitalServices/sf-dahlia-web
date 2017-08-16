@@ -43,10 +43,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/housing-counselors.html',
-          controller: 'HousingCounselorsController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.HOUSING_COUNSELORS')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.listings', {
@@ -359,10 +361,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-chinese.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.welcome-spanish', {
@@ -370,10 +374,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.welcome-filipino', {
@@ -381,10 +387,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-filipino.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.disclaimer', {

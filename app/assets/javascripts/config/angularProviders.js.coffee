@@ -52,16 +52,23 @@
 ]
 
 @dahlia.config ['$translateProvider', ($translateProvider) ->
-  # will generate new timestamp every hour
-  timestamp = Math.floor(new Date().getTime() / (1000 * 60 * 60))
   $translateProvider
     .preferredLanguage('en')
     .fallbackLanguage('en')
     .useSanitizeValueStrategy('sceParameters')
-    .useStaticFilesLoader(
-      prefix: '/translations/locale-'
-      suffix: ".json?t=#{timestamp}"
+    .useLoader('assetPathLoader') # custom loader, see below
+]
+
+@dahlia.factory 'assetPathLoader', ['$q', '$http', ($q, $http) ->
+  (options) ->
+    deferred = $q.defer()
+    # asset paths have unpredictable hash suffixes, which is why we need the custom loader
+    $http.get(STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
+      deferred.resolve(data)
+    ).error( ->
+      deferred.reject(options.key)
     )
+    return deferred.promise
 ]
 
 @dahlia.config ['$titleProvider', ($titleProvider) ->

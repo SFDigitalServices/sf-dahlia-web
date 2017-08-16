@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/Exygy/heroku-deflater.git
+  revision: ea986e017a56b882d32e8989f4959e5f1af5d50c
+  specs:
+    heroku-deflater (0.6.3)
+      rack (>= 1.4.5)
+
+GIT
   remote: https://github.com/Exygy/sitemap_generator.git
   revision: 804c7e44070c63c27ddd373a8116e50596a37524
   specs:
@@ -220,7 +227,8 @@ GEM
     puma (3.6.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.5)
+    rack (1.6.8)
+    rack-cors (1.0.1)
     rack-protection (2.0.0)
       rack
     rack-rewrite (1.5.1)
@@ -397,6 +405,7 @@ DEPENDENCIES
   foreman
   hashdiff (~> 0.3.0)
   hashie
+  heroku-deflater!
   http
   image_optimizer (~> 1.7.0)
   jasmine!
@@ -416,6 +425,7 @@ DEPENDENCIES
   pry-rails
   puma
   quiet_assets
+  rack-cors (~> 1.0.1)
   rack-rewrite (~> 1.5.0)
   rails (~> 4.2.8)
   rails-api
