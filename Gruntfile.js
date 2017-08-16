@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       files: [
         {
           src: '<%= patternLibraryPath %>/dist/assets/toolkit/styles/toolkit.css',
-          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.css'
+          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.scss'
         }
       ],
     },
@@ -32,6 +32,10 @@ module.exports = function(grunt) {
           {
             match: 'http://fonts.googleapis.com',
             replacement: '//fonts.googleapis.com'
+          },
+          {
+            match: /"\.\.\/images\/([a-zA-Z0-9\-_]*\.(png|jpg|svg))"/g,
+            replacement: "asset-path('$1')"
           }
         ],
         usePrefix: false
@@ -39,7 +43,7 @@ module.exports = function(grunt) {
       files: [
         {
           expand: true, flatten: true,
-          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.css'],
+          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.scss'],
           dest: '<%= applicationAssetsPath %>/stylesheets/'
         }
       ]

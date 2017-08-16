@@ -2,7 +2,9 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($rootScope, $scope, $state, SharedService) ->
+SharedController = ($scope, $state, SharedService) ->
+  $scope.assetPaths = SharedService.assetPaths
+  $scope.housingCounselors = SharedService.housingCounselors
 
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
 
@@ -12,13 +14,12 @@ SharedController = ($rootScope, $scope, $state, SharedService) ->
   $scope.focusOnMainContent = ->
     SharedService.focusOnMainContent()
 
-
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
 SharedController.$inject = [
-  '$rootScope', '$scope', '$state', 'SharedService'
+  '$scope', '$state', 'SharedService'
 ]
 
 angular
