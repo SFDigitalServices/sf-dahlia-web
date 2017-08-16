@@ -249,9 +249,13 @@
     },
     "ERROR": {
         "ADDRESS": "Please enter an address",
-        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_INSUFFICIENT": "This address was not found. Please check the house number, street, and city entered. Make sure to include the street type, for example, \"ST\" or \"AVE\". PO Boxes are not allowed.",
+        "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
+        "ALERT": {
+            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
+            "TIMEOUT_PLEASE_TRY_AGAIN": "Oops! Looks like something went wrong. Please try again."
+        },
         "ALTERNATE_CONTACT": "Please select an alternate contact",
         "CITY": "Please enter a city",
         "COMPLETE_UPLOADING_DOCUMENTS": "Please complete uploading documents above.",
@@ -284,9 +288,9 @@
         "PASSWORD_UPDATE": "Error updating your password. Please try again or contact us.",
         "PHONE_NUMBER": "Please enter a phone number",
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
+        "PLEASE_COMPLETE_PREFERENCE": "Please complete uploading documents or select that you don't want this preference.",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
         "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
-        "PLEASE_COMPLETE_PREFERENCE": "Please complete uploading documents or select that you don't want this preference.",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
         "PLEASE_SELECT_PREFERENCE_OPTION": "Please select and complete one of the options below in order to continue.",

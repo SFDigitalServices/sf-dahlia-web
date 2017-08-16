@@ -130,7 +130,9 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
         angular.copy({}, rentBurdenDocs.rent)
 
   Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
-    pref_id = ListingService.getPreference('rentBurden').listingPreferenceID
+    pref = ListingService.getPreference('rentBurden')
+    return unless pref
+    pref_id = pref.listingPreferenceID
     unless Service.hasRentBurdenFiles(address)
       return $q.resolve()
     params =

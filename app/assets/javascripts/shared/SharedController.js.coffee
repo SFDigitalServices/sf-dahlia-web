@@ -2,8 +2,9 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($rootScope, $scope, $state, SharedService, GoogleTranslateService) ->
-
+SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
+  $scope.assetPaths = SharedService.assetPaths
+  $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
 
   $scope.isShortFormPage = ->
@@ -34,7 +35,7 @@ SharedController = ($rootScope, $scope, $state, SharedService, GoogleTranslateSe
 ############################################################################################
 
 SharedController.$inject = [
-  '$rootScope', '$scope', '$state', 'SharedService', 'GoogleTranslateService'
+  '$scope', '$state', 'SharedService', 'GoogleTranslateService'
 ]
 
 angular

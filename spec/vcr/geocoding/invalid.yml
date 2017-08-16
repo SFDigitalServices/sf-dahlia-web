@@ -9,8 +9,6 @@ http_interactions:
     headers:
       Connection:
       - close
-      Host:
-      - sfgis-svc.sfgov.org
       User-Agent:
       - http.rb/2.0.2
   response:
@@ -19,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 02 Aug 2017 15:41:29 GMT
+      - Thu, 03 Aug 2017 23:16:19 GMT
       Server:
       - ''
       Cache-Control:
@@ -37,5 +35,5 @@ http_interactions:
       string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
         3857\n },\n \"candidates\": [\n  \n ]\n}"
     http_version: 
-  recorded_at: Wed, 02 Aug 2017 15:41:30 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:22 GMT
 recorded_with: VCR 3.0.3

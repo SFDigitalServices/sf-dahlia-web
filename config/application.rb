@@ -11,6 +11,7 @@ module SfDahliaWeb
   # setting up config for application
   class Application < Rails::Application
     config.assets.paths << Rails.root.join('lib', 'assets', 'bower_components')
+    config.assets.paths << Rails.root.join('app', 'assets', 'json', 'translations')
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
@@ -26,11 +27,18 @@ module SfDahliaWeb
     # will use English translation if none found
     config.i18n.fallbacks = true
 
+    # set up ActiveJob to use Sidekiq
+    # if ENV['SIDEKIQ'] is not specified, will use default inline processor
+    config.active_job.queue_adapter = :sidekiq if ENV['SIDEKIQ']
+
     ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates'
     ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query'
 
     config.middleware.use Rack::XRobotsTag
     # write cached robots.txt into public dir
     config.action_controller.page_cache_directory = "#{Rails.root}/public"
+
+    # for serving gzipped assets
+    config.middleware.use Rack::Deflater
   end
 end

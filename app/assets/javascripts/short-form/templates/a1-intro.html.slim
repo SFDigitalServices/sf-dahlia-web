@@ -8,7 +8,7 @@ section.app-container
           | {{listing.Name}}
         figure.property-card_figure.radius
           .property-card_overlay
-            img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.Building_URL}}"
+            img.property-card_thumb alt="Listing Name: {{listing.Name}}" ng-src="{{listing.imageURL}}"
             span.application-label.label.label--flag.primary
               ' {{'T.APPLICATION_DUE' | translate}}
               | {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' ha" }}

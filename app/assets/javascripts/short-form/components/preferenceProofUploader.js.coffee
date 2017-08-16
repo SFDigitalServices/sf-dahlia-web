@@ -18,8 +18,8 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/preference-proof-uploader.html'
 
   controller:
-    ['ShortFormApplicationService', 'FileUploadService', '$translate'
-    (ShortFormApplicationService, FileUploadService, $translate) ->
+    ['ShortFormApplicationService', 'FileUploadService', 'SharedService', '$translate'
+    (ShortFormApplicationService, FileUploadService, SharedService, $translate) ->
       ctrl = @
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -39,6 +39,7 @@ angular.module('dahlia.components')
         # @proofType means that proofOption gets hardcoded to the set value
         if @proofType
           @proofDocument.proofOption = @proofType
+          @saveProofOptionToPref()
         else if !@proofDocument || !@proofDocument.file
           @proofDocument.proofOption = null
 
@@ -72,7 +73,9 @@ angular.module('dahlia.components')
         proofOption = @proofDocument.proofOption
         if @preference == 'rentBurden'
           proofOption = 'Lease and rent proof'
-        ShortFormApplicationService.application.preferences[@preference + '_proofOption'] = proofOption
+        else if proofOption = 'Copy of Lease'
+          proofOption = 'Lease'
+        @application.preferences[@preference + '_proofOption'] = proofOption
 
       @uploadProofFile = ($file) =>
         opts = {}
@@ -92,6 +95,8 @@ angular.module('dahlia.components')
         FileUploadService.deletePreferenceFile(@preference, @listingId, opts).then =>
           @afterDelete()
           @setProofType()
+
+      @assetPaths = SharedService.assetPaths
 
       @setProofType()
       return ctrl

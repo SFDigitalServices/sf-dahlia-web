@@ -118,7 +118,7 @@ class Api::V1::ShortFormController < ApiController
     if application_params[:status].casecmp('draft').zero? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
-      send_attached_files(response)
+      send_attached_files(response.try(:[], 'id'))
       send_submit_app_confirmation(response)
     end
   end
@@ -128,7 +128,7 @@ class Api::V1::ShortFormController < ApiController
     application_params[:status] == 'submitted'
   end
 
-  def send_attached_files(application)
+  def send_attached_files(application_id)
     if user_signed_in?
       files = UploadedFile.where(
         user_id: current_user.id,
@@ -141,9 +141,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application, files)
-    # now that files are saved in SF, remove temp uploads
-    files.destroy_all
+    ShortFormService.queue_file_attachments(application_id, files)
   end
 
   def attach_temp_files_to_user
@@ -159,7 +157,7 @@ class Api::V1::ShortFormController < ApiController
       lottery_number: response['lotteryNumber'],
       firstName: response['primaryApplicant']['firstName'],
       lastName: response['primaryApplicant']['lastName'],
-    ).deliver_now
+    ).deliver_later
   end
 
   def map_listing_to_application

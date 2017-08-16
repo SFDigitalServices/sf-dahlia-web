@@ -355,8 +355,6 @@ ShortFormApplicationService = (
       # assigning value to object for now to make function unit testable
       angular.copy(data, Service._householdEligibility)
       return Service.householdEligibility
-    ).error( (data, status, headers, config) ->
-      return
     )
 
   Service.hasCompleteRentBurdenFiles = ->
@@ -683,38 +681,29 @@ ShortFormApplicationService = (
         Service.application.lotteryNumber = data.lotteryNumber
         Service.application.id = data.id
     ).error( (data, status, headers, config) ->
-      alert("Error with submission: #{data.error}")
+      # error alert is handled by httpProvider.interceptor in angularProviders
       return
     )
 
   Service.deleteApplication = (id) ->
     $http.delete("/api/v1/short-form/application/#{id}").success((data, status) ->
       true
-    ).error( (data, status) ->
-      alert("Error deleting application.")
-      return
     )
 
   Service.getApplication = (id) ->
     $http.get("/api/v1/short-form/application/#{id}").success((data, status) ->
       Service.loadApplication(data)
-    ).error((data, status) ->
-      return
     )
 
   Service.getMyApplicationForListing = (listing_id, opts = {}) ->
     autofill = if opts.autofill then '?autofill=true' else ''
     $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
-    ).error((data, status) ->
-      return
     )
 
   Service.getMyAccountApplication = ->
     $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
       Service.loadAccountApplication(data)
-    ).error((data, status) ->
-      return
     )
 
 

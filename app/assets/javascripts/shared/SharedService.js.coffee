@@ -5,6 +5,12 @@
 SharedService = ($http, $state) ->
   Service = {}
   Service.alternateLanguageLinks = []
+  Service.assetPaths = STATIC_ASSET_PATHS
+  Service.housingCounselors =
+    all: []
+    chinese: []
+    filipino: []
+    spanish: []
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
@@ -43,6 +49,20 @@ SharedService = ($http, $state) ->
         lang: lang
         href: href.slice(1)
       )
+  Service.getHousingCounselors = ->
+    housingCounselorJsonPath = Service.assetPaths['housing_counselors.json']
+    # if we've already loaded this asset, no need to reload
+    return if Service.housingCounselors.loaded == housingCounselorJsonPath
+    $http.get(housingCounselorJsonPath).success((data, status, headers, config) ->
+      Service.housingCounselors.all = data.locations
+      Service.housingCounselors.loaded = housingCounselorJsonPath
+      Service.housingCounselors.chinese = _.filter data.locations, (o) ->
+        _.includes o.languages, 'Cantonese'
+      Service.housingCounselors.filipino = _.filter data.locations, (o) ->
+        _.includes o.languages, 'Filipino'
+      Service.housingCounselors.spanish = _.filter data.locations, (o) ->
+        _.includes o.languages, 'Spanish'
+    )
 
   return Service
 

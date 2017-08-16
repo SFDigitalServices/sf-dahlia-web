@@ -231,10 +231,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListing = (_id) ->
     _id = Service.mapSlugToId(_id)
+
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
     angular.copy({}, Service.listing)
+
     deferred = $q.defer()
     $http.get("/api/v1/listings/#{_id}.json",
       { etagCache: true }
@@ -243,7 +245,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingResponse(deferred)
     ).error( (data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 
@@ -254,7 +256,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
-
+      # fallback for fixing the layout when a listing is missing an image
+      Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
@@ -271,7 +274,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingsResponse(deferred)
     ).error((data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 
@@ -279,6 +282,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
+      _.map listings, (listing) ->
+        # fallback for fixing the layout when a listing is missing an image
+        listing.imageURL ?= 'https://unsplash.it/g/780/438'
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
@@ -298,7 +304,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingsWithEligibilityResponse(deferred)
     ).error( (data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 
@@ -390,13 +396,20 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
-    Service.getListing(id).then ->
+    deferred = $q.defer()
+    Service.getListing(id).then( ->
+      deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
         return $state.go('dahlia.welcome')
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
+      Service.getListingPreferences()
+    ).catch( (response) ->
+      deferred.reject(response)
+    )
+    deferred.promise
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
