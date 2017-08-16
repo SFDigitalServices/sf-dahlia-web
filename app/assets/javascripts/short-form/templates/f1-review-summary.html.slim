@@ -5,4 +5,7 @@
 
   ng-include src="'short-form/templates/partials/_review-application-details.html'"
 
-  short-form-save-and-submit submit-value="{{'T.CONFIRM' | translate}}"
+  .app-inner.text-center.border-top
+    p.t-small.no-margin.c-charcoal.t-bold translate="F1_REVIEW_SUMMARY.NOTE"
+
+  short-form-save-and-submit submit-value="{{'T.CONFIRM' | translate}}" secondary-button="true"

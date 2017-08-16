@@ -8,7 +8,7 @@ a.has-icon.margin-bottom--half title="Call {{ listing.Leasing_Agent_Phone }}" ng
     svg
       use xlink:href="#i-phone"
   | Call {{ listing.Leasing_Agent_Phone }}
-p.t-small.c-steel translate="LEASING_AGENT.DUE_TO_HIGH_CALL_VOLUME"
+p.t-small.c-steel translate="LEASING_AGENT.DUE_TO_HIGH_CALL_VOLUME" ng-if="listing.Leasing_Agent_Phone"
 a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg

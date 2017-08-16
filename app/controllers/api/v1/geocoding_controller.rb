@@ -22,6 +22,7 @@ class Api::V1::GeocodingController < ApiController
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
+        params[:has_nrhp_adhp],
       ).send_notifications
       # default response
       { boundary_match: false }
@@ -45,6 +46,7 @@ class Api::V1::GeocodingController < ApiController
         service_name: NeighborhoodBoundaryService::NAME,
       },
       log_params,
+      params[:has_nrhp_adhp],
     ).send_notifications
     # default response
     false

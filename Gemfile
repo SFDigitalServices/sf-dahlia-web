@@ -76,6 +76,12 @@ gem 'image_optimizer', '~> 1.7.0'
 # http requests made easy
 gem 'http', require: false
 
+gem 'sidekiq', '~> 5.0.2'
+
+gem 'hashdiff', '~> 0.3.0'
+
+gem 'fog-aws'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
@@ -109,6 +115,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'thor-rails'
   gem 'database_cleaner'
+  gem 'foreman'
 end
 
 group :production do
