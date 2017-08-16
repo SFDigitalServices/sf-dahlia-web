@@ -769,6 +769,9 @@
           templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
     .state('dahlia.short-form-application.adhp-preference', {
@@ -778,6 +781,9 @@
           templateUrl: 'short-form/templates/e2b-adhp-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('antiDisplacement')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
     .state('dahlia.short-form-application.live-work-preference', {
@@ -787,6 +793,9 @@
           templateUrl: 'short-form/templates/e2c-live-work-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
     .state('dahlia.short-form-application.assisted-housing-preference', {
@@ -796,6 +805,9 @@
           templateUrl: 'short-form/templates/e3a-assisted-housing-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('assistedHousing')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
     .state('dahlia.short-form-application.rent-burden-preference', {
@@ -805,6 +817,9 @@
           templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
     .state('dahlia.short-form-application.rent-burden-preference-edit', {
