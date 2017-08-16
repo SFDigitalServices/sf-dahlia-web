@@ -39,6 +39,7 @@ angular.module('dahlia.components')
         # @proofType means that proofOption gets hardcoded to the set value
         if @proofType
           @proofDocument.proofOption = @proofType
+          @saveProofOptionToPref()
         else if !@proofDocument || !@proofDocument.file
           @proofDocument.proofOption = null
 
@@ -72,7 +73,9 @@ angular.module('dahlia.components')
         proofOption = @proofDocument.proofOption
         if @preference == 'rentBurden'
           proofOption = 'Lease and rent proof'
-        ShortFormApplicationService.application.preferences[@preference + '_proofOption'] = proofOption
+        else if proofOption = 'Copy of Lease'
+          proofOption = 'Lease'
+        @application.preferences[@preference + '_proofOption'] = proofOption
 
       @uploadProofFile = ($file) =>
         opts = {}
