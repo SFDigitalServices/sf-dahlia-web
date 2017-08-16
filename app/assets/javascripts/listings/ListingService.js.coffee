@@ -230,8 +230,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingResponse(deferred)
     ).error( (data, status, headers, config) ->
-      deferred.reject(_id)
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 
@@ -258,7 +257,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingsResponse(deferred)
     ).error((data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 
@@ -285,7 +284,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     ).cached(
       Service.getListingsWithEligibilityResponse(deferred)
     ).error( (data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
     return deferred.promise
 

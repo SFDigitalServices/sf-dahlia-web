@@ -19,12 +19,14 @@
         # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
         # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
         responseError: (error) ->
-          if _([503, 504]).includes(error.status)
+          if error.status >= 500
             $injector.invoke [
               '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService',
               ($http, bsLoadingOverlayService, ShortFormNavigationService) ->
                 # this will call bsLoadingOverlayService.stop(), even if not on short form
                 ShortFormNavigationService.isLoading(false)
+                # don't display alerts in E2E tests
+                return if window.protractor
                 if error.status == 504
                   alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
                 else

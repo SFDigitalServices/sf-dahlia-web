@@ -137,12 +137,15 @@
 
       # fromState.name is empty on initial page load
       if fromState.name == ''
-        if _.isObject(error) && error.message == 'timeout'
+        if _.isObject(error) && error.status == 504
           timeoutRetries -= 1
           # if timing out on initial page load, retry a couple times before giving up
           return e.preventDefault() if timeoutRetries <= 0
 
-        # redirect to homepage when there's an error
-        return $state.go('dahlia.welcome')
+        # redirect when there's an error
+        if toState.name == 'dahlia.listing' && error.status == 404
+          return $state.go('dahlia.listings')
+        else
+          return $state.go('dahlia.welcome')
 
 ]
