@@ -60,8 +60,7 @@
 
       address-form address-type="home_address" model='householdMember' model-name='householdMember' is-required="true" on-change="addressChange('householdMember')"
 
-      small.error ng-if="addressFailedValidation('home_address')"
-        | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+      address-error error="addressValidationError('home_address')"
 
   .app-inner.inset.border-bottom
     .form-group ng-class="{ error: inputInvalid('workInSf') }"
@@ -85,8 +84,8 @@
       select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" ng-required="true" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
-        option ng-repeat="relationship in relationship_options" value="{{relationship}}"
-          | {{ relationship }}
+        option ng-repeat="relationship in relationship_options" value="{{relationship[0]}}"
+          | {{relationship[1] | translate}}
       small.error#household_member_relationship_error ng-show="inputInvalid('relationship')"
        | {{'ERROR.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
 

@@ -3,7 +3,7 @@
     a ui-sref="dahlia.listing({id: listing.Id})" {{listing.Name}}
   figure.property-card_figure
     a.property-card_overlay ui-sref="dahlia.listing({id: listing.Id})" tabindex="-1"
-      img.property-card_thumb alt="Listing Name:{{listing.Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{imageURL(listing)}}" role="link"
+      img.property-card_thumb alt="Listing Name:{{listing.Name}}, Address:{{formattedBuildingAddress(listing)}}" ng-src="{{listing.imageURL}}" role="link"
 
       / Matched & Not Matched Labels
       span.status-label.label.label--flag.success ng-if="showMatches() && isOpenMatchListing(listing)"

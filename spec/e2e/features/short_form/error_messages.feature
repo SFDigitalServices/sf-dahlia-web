@@ -29,9 +29,9 @@ Feature: Short Form Application
 
       When I cancel the household member
       # error: household too big (280 Fell allows for 1-3 people, 4 is too big)
-      And I add household member "1"
-      And I add household member "2"
-      And I add household member "3"
+      And I add another household member named "Jonny Doe" with same address as primary
+      And I add another household member named "Karen Lee" with same address as primary
+      And I add another household member named "Alex McGee" with same address as primary
       And I indicate being done adding people
       Then I should see an error about household size being too big
 
@@ -49,7 +49,7 @@ Feature: Short Form Application
       Then I should see an error about uploading proof
 
       When I opt out of Live/Work preference
-      And I select "Jane Doe" for COP preference
+      And I select "Jane Doe" for "certOfPreference" preference
       And I go to the income page
       And I do not indicate having vouchers
       # error: income too low

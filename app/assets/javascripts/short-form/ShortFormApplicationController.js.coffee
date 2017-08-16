@@ -40,54 +40,13 @@ ShortFormApplicationController = (
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
-  $scope.gender_options = [
-    'Male',
-    'Female',
-    'Trans Male',
-    'Trans Female',
-    'Not Listed'
-  ]
-  $scope.relationship_options = [
-    'Spouse',
-    'Registered Domestic Partner',
-    'Parent',
-    'Child',
-    'Sibling',
-    'Cousin',
-    'Aunt',
-    'Uncle',
-    'Nephew',
-    'Niece',
-    'Grandparent',
-    'Great Grandparent',
-    'In-Law',
-    'Friend',
-    'Other'
-  ]
-  $scope.ethnicity_options = [
-    'Hispanic/Latino',
-    'Not Hispanic/Latino'
-  ]
-  $scope.race_options = [
-    'American Indian/Alaskan Native',
-    'Asian',
-    'Black/African American',
-    'Native Hawaiian/Other Pacific Islander',
-    'White',
-    'American Indian/Alaskan Native and Black/African American',
-    'American Indian/Alaskan Native and White',
-    'Asian and White',
-    'Black/African American and White',
-    'Other/Multiracial'
-  ]
-  $scope.sexual_orientation_options = [
-    'Straight/Heterosexual',
-    'Gay',
-    'Lesbian',
-    'Bisexual',
-    'Questioning/Unsure',
-    'Not Listed'
-  ]
+  $scope.priority_options = ShortFormHelperService.priority_options
+  $scope.gender_options = ShortFormHelperService.gender_options
+  $scope.sex_at_birth_options = ShortFormHelperService.sex_at_birth_options
+  $scope.relationship_options = ShortFormHelperService.relationship_options
+  $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
+  $scope.race_options = ShortFormHelperService.race_options
+  $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -117,7 +76,7 @@ ShortFormApplicationController = (
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 
-  if $scope.atShortFormState() && !$window.jasmine
+  if $scope.atShortFormState() && !$window.jasmine && !window.protractor
     # don't add this onbeforeunload inside of jasmine tests
     $window.addEventListener 'beforeunload', ShortFormApplicationService.onExit
 
@@ -191,17 +150,16 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.addressInputInvalid = (identifier = '') ->
-    if $scope.addressFailedValidation(identifier)
-      return true
+    return true if $scope.addressValidationError(identifier)
     $scope.inputInvalid('address1', identifier) ||
     $scope.inputInvalid('city', identifier) ||
     $scope.inputInvalid('state', identifier) ||
     $scope.inputInvalid('zip', identifier)
 
-  $scope.addressFailedValidation = (identifier = '') ->
+  $scope.addressValidationError = (identifier = '') ->
     return false unless $scope.addressError
     validated = $scope["validated_#{identifier}"]
-    return AddressValidationService.failedValidation(validated)
+    return AddressValidationService.validationError(validated)
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -333,6 +291,18 @@ ShortFormApplicationController = (
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 
+  $scope.preferenceWarning = ->
+    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
+    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+      $scope.form.applicationForm.$invalid &&
+      $scope.form.applicationForm.$submitted
+    if preferenceNotSelected
+      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+    else if preferenceIncomplete
+      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+    else
+      false
+
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
@@ -390,7 +360,9 @@ ShortFormApplicationController = (
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
-    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id).then ->
+      if prefType == 'neighborhoodResidence'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
 
   $scope.hasPreferenceFile = (fileType) ->
     FileUploadService.hasPreferenceFile(fileType)

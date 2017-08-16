@@ -239,6 +239,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
+      # fallback for fixing the layout when a listing is missing an image
+      Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
@@ -263,6 +265,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
+      _.map listings, (listing) ->
+        # fallback for fixing the layout when a listing is missing an image
+        listing.imageURL ?= 'https://unsplash.it/g/780/438'
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
@@ -503,8 +508,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.reservedUnits)
 
   Service.listingHasSROUnits = (listing) ->
-    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
-    !_.isEmpty(_.find(combined, { Unit_Type: 'SRO' }))
+    combined = Service.combineUnitSummaries(listing)
+    _.some(combined, { Unit_Type: 'SRO' })
+
+  Service.listingHasOnlySROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
@@ -549,16 +558,18 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
-  Service.occupancyIncomeLevels = (amiLevel) ->
+  Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
     max = occupancyMinMax[1] + 2
+    max = 1 if Service.listingHasOnlySROUnits(listing)
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
+    return 1 if Service.listingHasOnlySROUnits(Service.listing)
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
@@ -566,7 +577,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.minYearlyIncome = ->
     return if _.isEmpty(Service.AMICharts)
-    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    incomeLevels = Service.occupancyIncomeLevels(Service.listing, _.first(Service.AMICharts))
     # get the first (lowest) income level amount
     _.first(incomeLevels).amount
 
