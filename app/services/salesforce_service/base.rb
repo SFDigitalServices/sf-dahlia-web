@@ -8,7 +8,7 @@ module SalesforceService
     class_attribute :timeout
     class_attribute :error
     self.retries = 1
-    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 5
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
 
     def self.client
       Restforce.new(timeout: timeout)
