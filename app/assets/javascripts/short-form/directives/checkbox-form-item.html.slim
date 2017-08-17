@@ -1,6 +1,6 @@
-.form-item.padding-bottom  ng-class="{error: inputInvalid(name)}"
-  .checkbox
-    input id="{{id}}" name="{{name}}" type="checkbox" ng-model="user[name][option]" ng-disabled='isDisabled(user)' ng-required="isRequired()" aria-describedby="{{id}}_error"
+.form-item.padding-bottom ng-class="{error: inputInvalid(name)}"
+  .checkbox ng-class="{'checkbox-inset margin-top--2x': (name == 'terms')}"
+    input id="{{id}}" name="{{name}}" type="checkbox" ng-model="user[name][option]" ng-disabled='isDisabled(user)' ng-required="isRequired()" aria-describedby="{{id}}_error" ng-class="{error: inputInvalid(name)}"
     label for="{{id}}"
       | {{label}}
 

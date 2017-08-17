@@ -5,11 +5,15 @@ module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
+    class_attribute :timeout
     class_attribute :error
+    class_attribute :force
     self.retries = 1
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
+    self.force = false
 
     def self.client
-      Restforce.new
+      Restforce.new(timeout: timeout)
     end
 
     def self.oauth_client
@@ -18,6 +22,7 @@ module SalesforceService
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
+        timeout: timeout,
       )
     end
 
@@ -45,10 +50,6 @@ module SalesforceService
         self.error = 'Restforce::UnauthorizedError'
         []
       end
-    rescue StandardError => e
-      p "UH OH -- StandardError #{e.message}" if Rails.env.development?
-      self.error = e.message
-      []
     end
 
     def self.api_get(endpoint, params = nil, parse_response = false)
@@ -57,8 +58,13 @@ module SalesforceService
 
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
-      cache_disabled = ENV['CACHE_SALESFORCE_REQUESTS'] != 'true'
-      Rails.cache.fetch(key, force: cache_disabled) do
+      force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
+      if ENV['FREEZE_SALESFORCE_CACHE']
+        expires_in = 10.years
+      else
+        expires_in = params ? 10.minutes : 1.day
+      end
+      Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         api_call(:get, endpoint, params, parse_response)
       end
     end

@@ -91,7 +91,7 @@ describe 'ShortForm API' do
 
     it 'returns an application object' do
       VCR.use_cassette('shortform/show_application') do
-        get '/api/v1/short-form/application/a0tf0000000xw9pAAA.json', {}, @auth_headers
+        get '/api/v1/short-form/application/a0o1b0000001UhnAAE.json', {}, @auth_headers
       end
       json = JSON.parse(response.body)
       expect(response).to be_success
@@ -99,6 +99,8 @@ describe 'ShortForm API' do
     end
   end
 
+  # NOTE: if you want to re-generate the 'delete_application' cassette,
+  # you have to find another real application to delete!
   describe 'delete_application' do
     before do
       allow_any_instance_of(Api::V1::ShortFormController)
@@ -108,7 +110,7 @@ describe 'ShortForm API' do
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/delete_application') do
-        delete '/api/v1/short-form/application/a0tf0000000xw9pAAA.json', {}, @auth_headers
+        delete '/api/v1/short-form/application/a0o1b0000001UhnAAE.json', {}, @auth_headers
       end
       expect(response).to be_success
     end

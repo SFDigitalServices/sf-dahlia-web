@@ -245,8 +245,6 @@ ShortFormApplicationService = (
       # assigning value to object for now to make function unit testable
       angular.copy(data, Service._householdEligibility)
       return Service.householdEligibility
-    ).error( (data, status, headers, config) ->
-      return
     )
 
   Service.householdSize = ->
@@ -302,6 +300,12 @@ ShortFormApplicationService = (
     # return an array with the Household and Primary Applicant
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
+
+  Service.listingHasPreference = (preference) ->
+    ListingService.hasPreference(preference)
+
+  Service.listingHasNRHP_or_ADHP = ->
+    Service.listingHasPreference('neighborhoodResidence') || Service.listingHasPreference('antiDisplacement')
 
   Service.eligibleForLiveWork = ->
     liveInSfEligible = Service.liveInSfMembers().length > 0
@@ -477,38 +481,29 @@ ShortFormApplicationService = (
         Service.application.lotteryNumber = data.lotteryNumber
         Service.application.id = data.id
     ).error( (data, status, headers, config) ->
-      alert("Error with submission: #{data.error}")
+      # error alert is handled by httpProvider.interceptor in angularProviders
       return
     )
 
   Service.deleteApplication = (id) ->
     $http.delete("/api/v1/short-form/application/#{id}").success((data, status) ->
       true
-    ).error( (data, status) ->
-      alert("Error deleting application.")
-      return
     )
 
   Service.getApplication = (id) ->
     $http.get("/api/v1/short-form/application/#{id}").success((data, status) ->
       Service.loadApplication(data)
-    ).error((data, status) ->
-      return
     )
 
   Service.getMyApplicationForListing = (listing_id, opts = {}) ->
     autofill = if opts.autofill then '?autofill=true' else ''
     $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
-    ).error((data, status) ->
-      return
     )
 
   Service.getMyAccountApplication = ->
     $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
       Service.loadAccountApplication(data)
-    ).error((data, status) ->
-      return
     )
 
 
@@ -626,6 +621,7 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
+        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
       # if there is an error you will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
@@ -651,6 +647,7 @@ ShortFormApplicationService = (
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
+        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
       # if there is an error you will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
