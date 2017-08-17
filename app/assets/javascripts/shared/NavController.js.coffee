@@ -7,8 +7,8 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.showNavMobile = false
 
   $scope.signOut = ->
-    $state.go('dahlia.welcome')
-    AccountService.signOut()
+    $state.go('dahlia.welcome').then ->
+      AccountService.signOut()
 
   $scope.closeNavMobile = ->
     $scope.showNavMobile = false
