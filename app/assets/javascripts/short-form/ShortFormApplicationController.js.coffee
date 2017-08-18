@@ -28,6 +28,7 @@ ShortFormApplicationController = (
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
+  $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address

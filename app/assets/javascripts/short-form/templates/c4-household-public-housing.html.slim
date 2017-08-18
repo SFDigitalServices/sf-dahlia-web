@@ -11,9 +11,12 @@
     .form-group ng-class="{ error: inputInvalid('hasPublicHousing') }"
       p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
-        radio-block-item value='Yes' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingYes"
+        radio-block-item value='Yes' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingYes" aria-describedby="hasPublicHousing_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingNo"
+        radio-block-item value='No' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingNo" aria-describedby="hasPublicHousing_error"
           | {{'T.NO' | translate}}
+
+      small.error#hasPublicHousing_error ng-show="inputInvalid('hasPublicHousing')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit
