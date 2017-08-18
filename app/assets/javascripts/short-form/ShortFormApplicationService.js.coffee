@@ -10,6 +10,7 @@ ShortFormApplicationService = (
   Service.application = {}
   Service._householdEligibility = {}
   Service.activeSection = {}
+  emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -17,15 +18,15 @@ ShortFormApplicationService = (
     applicationSubmittedDate: null
     surveyComplete: false
     answeredCommunityScreening: null
-    applicationSubmissionType: "Electronic"
+    applicationSubmissionType: 'Electronic'
     applicant:
       id: 1
-      home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      home_address: angular.copy(emptyAddress)
       phone: null
-      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      mailing_address: angular.copy(emptyAddress)
       terms: {}
     alternateContact:
-      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      mailing_address: angular.copy(emptyAddress)
     householdMembers: []
     preferences:
       liveInSf: null
@@ -36,10 +37,11 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       optOut: {}
-      documents: {
+      documents:
         rentBurden: {}
-      }
-    householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
+    householdIncome:
+      incomeTotal: null
+      incomeTimeframe: null
     groupedHouseholdAddresses: []
     adaPrioritiesSelected: {}
     completedSections:
