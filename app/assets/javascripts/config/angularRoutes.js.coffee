@@ -566,6 +566,13 @@
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
+
+              # TODO: start autosave timer, something like this:
+              # if AccountService.loggedIn()
+              #   Autosave.startTimer()
+
+
+
               deferred.resolve(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
@@ -616,11 +623,14 @@
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
       onEnter: [
-        'ShortFormApplicationService', 'AccountService',
-        (ShortFormApplicationService, AccountService) ->
+        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
+        (ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            # always autosave when you start a new application
+            AutosaveService.save() unless ShortFormApplicationService.application.id
+
       ]
     })
     .state('dahlia.short-form-application.contact', {
