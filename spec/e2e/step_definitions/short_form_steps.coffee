@@ -210,14 +210,14 @@ module.exports = ->
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
     prefCheckboxId = "preferences-#{preference}"
-    scrollToElement(element(By.id(prefCheckboxId)))
-    checkCheckbox prefCheckboxId, ->
-      element.all(By.id("#{preference}_household_member")).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
-      element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
+    scrollToElement(element(By.id(prefCheckboxId))).then ->
+      checkCheckbox prefCheckboxId, ->
+        element.all(By.id("#{preference}_household_member")).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
+        element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
 
   @When 'I go to the income page', ->
     submitPage()
@@ -332,10 +332,10 @@ module.exports = ->
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
     incomeTotal = element(By.id('incomeTotal'))
-    scrollToElement(incomeTotal)
-    incomeTotal.clear().sendKeys(income)
-    element(By.id('per_year')).click().then ->
-      submitPage()
+    scrollToElement(incomeTotal).then ->
+      incomeTotal.clear().sendKeys(income)
+      element(By.id('per_year')).click().then ->
+        submitPage()
 
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
@@ -355,8 +355,8 @@ module.exports = ->
 
   @When 'I click the Create Account button', ->
     createAccount = element(By.id('create-account'))
-    scrollToElement(createAccount)
-    createAccount.click()
+    scrollToElement(createAccount).then ->
+      createAccount.click()
 
   @When 'I fill out my account info', ->
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
