@@ -316,7 +316,7 @@ module.exports = ->
     incomeTotal = element(By.id('incomeTotal'))
     scrollToElement(incomeTotal).then ->
       incomeTotal.clear().sendKeys(income)
-      element(By.id('per_year')).click().then ->
+      element(By.id('incomeTimeframe_per-year')).click().then ->
         submitPage()
 
   @When 'I fill out the optional survey', ->
