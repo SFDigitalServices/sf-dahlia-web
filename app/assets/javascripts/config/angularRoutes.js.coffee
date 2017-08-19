@@ -575,8 +575,8 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, listing) ->
             deferred = $q.defer()
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
@@ -589,12 +589,8 @@
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
-
-              # TODO: start autosave timer, something like this:
-              # if AccountService.loggedIn()
-              #   Autosave.startTimer()
-
-
+              if AccountService.loggedIn()
+                AutosaveService.startTimer()
 
               deferred.resolve(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
