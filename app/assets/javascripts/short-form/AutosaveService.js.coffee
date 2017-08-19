@@ -3,12 +3,21 @@
 ############################################################################################
 
 AutosaveService = (
-  ShortFormApplicationService,
+  $interval, ShortFormApplicationService
 ) ->
   Service = {}
+  Service.timer = null
 
   Service.save = ->
     ShortFormApplicationService.submitApplication({autosave: true})
+
+  Service.startTimer = ->
+    if !Service.timer
+      Service.timer = $interval(Service.save, 15000)
+
+  Service.stopTimer = ->
+    $interval.cancel(Service.timer)
+    Service.timer = null
 
   return Service
 
@@ -18,7 +27,7 @@ AutosaveService = (
 ############################################################################################
 
 AutosaveService.$inject = [
-  'ShortFormApplicationService',
+  '$interval', 'ShortFormApplicationService',
 ]
 
 angular
