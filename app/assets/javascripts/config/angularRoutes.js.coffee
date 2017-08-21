@@ -22,7 +22,6 @@
           templateUrl: 'shared/templates/footer.html'
       data:
         meta:
-          'og:title': 'DAHLIA San Francisco Housing Portal'
           'description': 'Search and apply for affordable housing on the City of San Francisco\'s DAHLIA Housing Portal.'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->

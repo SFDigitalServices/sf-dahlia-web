@@ -31,10 +31,11 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
 
     / prerender.io + metatags
     meta name="fragment" content="!"
-    meta property="og:title" content="{{ngMeta['og:title']}}"
+    meta property="og:title" content="{{$title || 'DAHLIA San Francisco Housing Portal'}}"
     meta property="og:image" content="{{ngMeta['og:image']}}"
     meta property="og:description" content="{{ngMeta.description}}"
     meta name="description" content="{{ngMeta.description}}"
+    meta property="og:type" content="website"
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
