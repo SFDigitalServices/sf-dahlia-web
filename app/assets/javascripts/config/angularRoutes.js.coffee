@@ -22,12 +22,16 @@
           templateUrl: 'shared/templates/footer.html'
       data:
         meta:
-          'og:image': 'https://housing.sfgov.org/images/logo-portal.png'
           'og:title': 'DAHLIA San Francisco Housing Portal'
+          'description': 'Search and apply for affordable housing on the City of San Francisco\'s DAHLIA Housing Portal.'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
           # this should happen after preferredLanguage is initially set
           $translate.use($stateParams.lang)
+        ]
+        data: ['ngMeta', 'SharedService', (ngMeta, SharedService) ->
+          img = SharedService.assetPaths['dahlia_social-media-preview.jpg']
+          ngMeta.setTag('og:image', img)
         ]
     })
     # Home page
@@ -118,6 +122,14 @@
         $title: ['$title', 'listing', ($title, listing) ->
           listing.Name
         ]
+        data: ['ngMeta', 'listing', (ngMeta, listing) ->
+          desc = "Apply for affordable housing at #{listing.Name} on the City of San Francisco's DAHLIA Housing Portal."
+          ngMeta.setTag('description', desc)
+          ngMeta.setTag('og:image', listing.imageURL)
+        ]
+      # https://github.com/vinaygopinath/ngMeta#using-custom-data-resolved-by-ui-router
+      meta:
+        disableUpdate: true
     })
     ##########################
     # < Account/Login pages >
