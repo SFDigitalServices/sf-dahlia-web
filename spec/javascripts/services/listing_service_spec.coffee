@@ -421,3 +421,15 @@ do ->
       it 'returns 1 if all units are SROs', ->
         ListingService.listing = fakeListingAllSRO
         expect(ListingService.householdAMIChartCutoff()).toEqual(1)
+
+    describe 'Service.formatLotteryNumber', ->
+      it 'removes any extraneous formatting from lottery numbers', ->
+        formatted = '00041990'
+        val = ListingService.formatLotteryNumber('# 41990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber('#041990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber('41990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber(formatted)
+        expect(val).toEqual(formatted)
