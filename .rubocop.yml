@@ -57,4 +57,5 @@ Metrics/LineLength:
   Max: 90
   Exclude:
     - 'config/routes.rb'
+    - 'config/application.rb'
     - 'app/models/user.rb'
