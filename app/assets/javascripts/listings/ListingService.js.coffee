@@ -4,6 +4,7 @@
 
 ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
+  MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
   Service.listings = []
   Service.openListings = []

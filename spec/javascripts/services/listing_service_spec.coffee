@@ -294,13 +294,15 @@ do ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'calls groupListings function with returned listings', ->
+      it 'calls groupListings and cleanListings functions with returned listings', ->
+        ListingService.cleanListings = jasmine.createSpy()
         ListingService.groupListings = jasmine.createSpy()
         ListingService.setEligibilityFilters(fakeEligibilityFilters)
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
         ListingService.getListingsWithEligibility()
         httpBackend.flush()
-        expect(ListingService.groupListings).toHaveBeenCalledWith(fakeEligibilityListings.listings)
+        expect(ListingService.cleanListings).toHaveBeenCalled()
+        expect(ListingService.groupListings).toHaveBeenCalled()
 
     describe 'Service.getLotteryBuckets', ->
       afterEach ->
