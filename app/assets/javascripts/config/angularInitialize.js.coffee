@@ -23,14 +23,14 @@
 
     $rootScope.$on 'IdleStart', ->
       if AccountService.loggedIn()
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'), null, true)
       else if $state.is('dahlia.short-form-application.confirmation')
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'), null, true)
       else
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'), null, true)
 
     $rootScope.$on 'IdleTimeout', ->
-      ModalService.alert($translate.instant('T.SESSION_EXPIRED'))
+      ModalService.alert($translate.instant('T.SESSION_EXPIRED'), null, true)
       if AccountService.loggedIn()
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
