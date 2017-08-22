@@ -4,6 +4,7 @@
 
 ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
+  MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
@@ -16,6 +17,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.loading = {}
   Service.displayLotteryResultsListings = false
   Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.lotteryRankingInfo = {}
+  Service.lotteryBucketInfo = {}
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -51,6 +54,23 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'Status',
   ]
 
+  Service.preferenceMap =
+    certOfPreference: "Certificate of Preference (COP)"
+    displaced: "Displaced Tenant Housing Preference (DTHP)"
+    liveWorkInSf: "Live or Work in San Francisco Preference"
+    liveInSf: "Live or Work in San Francisco Preference"
+    workInSf: "Live or Work in San Francisco Preference"
+    neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+    assistedHousing: "Rent Burdened / Assisted Housing Preference"
+    rentBurden: "Rent Burdened / Assisted Housing Preference"
+    antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
+
+  # Create a mapping to Salesforce naming conventions
+  Service.RESERVED_TYPES = {
+    VETERAN: 'Veteran'
+    DISABLED: 'Developmental disabilities'
+    SENIOR: 'Senior'
+  }
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -119,18 +139,17 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.hasPreference = (preference) ->
     preferenceNames = _.map(Service.listing.preferences, (pref) -> pref.preferenceName)
-    preferenceMap =
-      certOfPreference: "Certificate of Preference (COP)"
-      displaced: "Displaced Tenant Housing Preference (DTHP)"
-      liveWorkInSf: "Live or Work in San Francisco Preference"
-      liveInSf: "Live or Work in San Francisco Preference"
-      workInSf: "Live or Work in San Francisco Preference"
-      neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
-      antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
-
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
-    preferenceName = preferenceMap[preference]
+    preferenceName = Service.preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
+
+  Service.getPreference = (preference) ->
+    # looks up full preference object via the short name e.g. 'liveInSf'
+    preferenceName = Service.preferenceMap[preference]
+    _.find(Service.listing.preferences, { preferenceName: preferenceName })
+
+  Service.getPreferenceById = (listingPreferenceID) ->
+    _.find(Service.listing.preferences, { listingPreferenceID: listingPreferenceID })
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
@@ -157,8 +176,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     })
 
   Service.listingHasLotteryBuckets = ->
-    Service.listing.Lottery_Buckets &&
-    _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
+    Service.lotteryBucketInfo &&
+    _.some(Service.lotteryBucketInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
   # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = ->
@@ -200,9 +219,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return "#{City} #{State}, #{Zip_Code}"
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
-
-  Service.showPreferenceListPDF = (listing) ->
-    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
 
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
@@ -267,9 +283,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
-      _.map listings, (listing) ->
-        # fallback for fixing the layout when a listing is missing an image
-        listing.imageURL ?= 'https://unsplash.it/g/780/438'
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
@@ -297,8 +311,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = (if data and data.listings then data.listings else [])
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       deferred.resolve()
+
+  Service.cleanListings = (listings) ->
+    _.map listings, (listing) ->
+      # fallback for fixing the layout when a listing is missing an image
+      listing.imageURL ?= 'https://unsplash.it/g/780/438'
+    _.filter listings, (listing) ->
+      !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
   Service.groupListings = (listings) ->
     openListings = []
@@ -514,7 +536,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.priorityUnits)
 
   Service.listingHasReservedUnits = (listing) ->
-    !_.isEmpty(listing.reservedUnits)
+    !_.isEmpty(listing.unitSummaries.reserved)
+
+  # `type` should match what we get from Salesforce e.g. "Veteran"
+  Service.listingHasReservedUnitType = (listing, type) ->
+    return false unless Service.listingHasReservedUnits(listing)
+    types = _.map Service.listing.reservedDescriptor, (descriptor) -> descriptor.name
+    _.includes(types, type)
 
   Service.listingHasSROUnits = (listing) ->
     combined = Service.combineUnitSummaries(listing)
@@ -535,37 +563,54 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
-    return if !_.isEmpty(Service.listing.preferences)
+    if !_.isEmpty(Service.listing.preferences)
+      return $q.when(Service.listing.preferences)
     ## <--
     $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
+        Service._extractCustomPreferences()
     ).error( (data, status, headers, config) ->
       return
     )
 
+  Service._extractCustomPreferences = ->
+    customPreferences = _.filter Service.listing.preferences, (listingPref) ->
+      !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
+
   Service.getLotteryBuckets = ->
-    Service.listing.Lottery_Buckets = {}
+    angular.copy({}, Service.lotteryBucketInfo)
     Service.loading.lotteryResults = true
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
       Service.loading.lotteryResults = false
-      if data && data.lottery_buckets.bucketResults
-        angular.copy(data.lottery_buckets, Service.listing.Lottery_Buckets)
+      angular.copy(data, Service.lotteryBucketInfo)
     ).error( (data, status, headers, config) ->
       Service.loading.lotteryResults = false
       return
     )
 
   Service.getLotteryRanking = (lotteryNumber) ->
+    angular.copy({}, Service.lotteryRankingInfo)
     params =
       params:
         lottery_number: lotteryNumber
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      if data && data.lottery_ranking
-        Service.listing.Lottery_Ranking = data.lottery_ranking
+      angular.copy(data, Service.lotteryRankingInfo)
     ).error( (data, status, headers, config) ->
       return
     )
+
+  # used by My Applications -- when you load an application we also parse the attached listing data
+  Service.loadListing = (listing) ->
+    return if Service.listing && Service.listing.Id == listing.Id
+    # TODO: won't be needed if we ever consolidate Listing_Lottery_Preferences and /preferences API
+    listing.preferences = _.map listing.Listing_Lottery_Preferences, (lotteryPref) ->
+      {
+        listingPreferenceID: lotteryPref.Id
+        preferenceName: lotteryPref.Lottery_Preference.Name
+      }
+    angular.copy(listing, Service.listing)
 
   Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
@@ -638,6 +683,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
     'a0W6C000000DbnZUAS': 'Test Listing'
+    'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
+    'a0W0P00000DZKPdUAP': 'Abaca'
   }
 
   Service.mapSlugToId = (id) ->

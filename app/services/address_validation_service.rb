@@ -34,6 +34,7 @@ class AddressValidationService
   def error
     return nil unless @validation.present? &&
                       @validation.verifications.delivery.errors.present?
+    return 'Missing required info' unless @validation.street1.present?
     return 'PO BOX' if @validation.street1.include?('PO BOX')
     @validation.verifications.delivery.errors.first.message
   end

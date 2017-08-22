@@ -25,9 +25,8 @@ ListingController = (
   $scope.closedListings = ListingService.closedListings
   $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
-  $scope.lotteryBuckets = $scope.listing.Lottery_Buckets
-  # TO DO: debug why this isn't working:
-  # $scope.lotteryResultsRanking = $scope.listing.Lottery_Ranking
+  $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
+  $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
   $scope.AMICharts = ListingService.AMICharts
   $scope.lotteryPreferences = ListingService.lotteryPreferences
@@ -139,18 +138,25 @@ ListingController = (
     $scope.lotteryRankingSubmitted = false
     $scope.lotterySearchNumber = ''
 
+  $scope.preferenceBucketResults = (prefName) ->
+    preferenceBucketResults = _.find($scope.lotteryRankingInfo.lotteryBuckets, { 'preferenceName': prefName })
+    if preferenceBucketResults then preferenceBucketResults.preferenceResults else []
+
   $scope.applicantSelectedForPreference = ->
-    applicationResults = $scope.listing.Lottery_Ranking.applicationResults[0]
-    return _.includes(applicationResults, true)
+    preferenceBucketResults = _.filter($scope.lotteryRankingInfo.lotteryBuckets, (bucket) ->
+      return false unless bucket.preferenceResults[0]
+      bucket.preferenceName != 'generalLottery' && bucket.preferenceResults[0].preferenceRank != null
+    )
+    preferenceBucketResults.length > 0
 
   $scope.applicantHasCertOfPreference = ->
-    $scope.listing.Lottery_Ranking.applicationResults[0].certOfPreference
-
-  $scope.showPreferenceListPDF = ->
-    ListingService.showPreferenceListPDF($scope.listing)
+    results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]
+    results && results.preferenceRank
 
   $scope.lotteryNumberValid = ->
-    !!$scope.listing.Lottery_Ranking.applicationResults[0]
+    return unless $scope.lotteryRankingInfo && $scope.lotteryRankingInfo.lotteryBuckets
+    # true if there are any lotteryBuckets
+    _.some($scope.lotteryRankingInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
@@ -268,19 +274,19 @@ ListingController = (
 
   $scope.reservedLabel = (listing, type,  modifier) ->
     labelMap =
-      'Senior':
+      "#{ListingService.RESERVED_TYPES.SENIOR}":
         building: 'Senior'
         eligibility: 'Seniors'
         reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
         reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
         unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
-      'Veteran':
+      "#{ListingService.RESERVED_TYPES.VETERAN}":
         building: 'Veterans'
         eligibility: 'Veterans'
         reservedFor: 'veterans'
         reservedForWhoAre: 'veterans'
         unitDescription: 'veterans of the U.S. Armed Forces'
-      'Developmental disabilities':
+      "#{ListingService.RESERVED_TYPES.DISABLED}":
         building: 'Developmental Disability'
         eligibility: 'People with developmental disabilities'
         reservedFor: 'people with developmental disabilities'

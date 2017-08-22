@@ -10,12 +10,15 @@ Feature: Short Form Application
       And I confirm my address
       And I don't indicate an alternate contact
       And I indicate I will live alone
-      And I continue past the Lottery Preferences intro
-      And I opt out of Live/Work preference
-      And I don't choose COP/DTHP preferences
-      And I continue past the general lottery notice
+      And I indicate living in public housing
+      And I indicate no ADA priority
       And I indicate having vouchers
       And I fill out my income as "25000"
+      And I continue past the Lottery Preferences intro
+      And I opt out of Live/Work preference
+      And I opt out of Assisted Housing preference
+      And I don't choose COP/DTHP preferences
+      And I continue past the general lottery notice page
       And I fill out the optional survey
       And I confirm details on the review page
       And I continue confirmation without signing in
@@ -24,7 +27,7 @@ Feature: Short Form Application
       # now that we've submitted, also create an account
       When I click the Create Account button
       And I fill out my account info with my locked-in application email
-      And I wait "10" seconds
+      And I wait "18" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
@@ -39,30 +42,43 @@ Feature: Short Form Application
 
     Scenario: Filling out all details of application and saving draft
       Given I go to the first page of the Test Listing application
+      # you
       When I fill out the Name page as "Jane Valerie Doe"
       And I fill out the Contact page with my account email, address (NRHP match), mailing address
       And I confirm my address
       And I fill out an alternate contact
+      # household
       And I indicate living with other people
-      And I add another household member named "Coleman Francis" who lives at "123 Main St."
-      And I confirm their address
+      And I add another household member named "Coleman Francis" with same address as primary
       And I indicate being done adding people
+      And I indicate not living in public housing
+      And I enter "4000" for each of my monthly rents
+      And I indicate ADA Mobility and Vision impairments
+      # income
+      And I do not indicate having vouchers
+      And I fill out my income as "72000"
+      # preferences
       And I continue past the Lottery Preferences intro
       And I select "Jane Doe" for "neighborhoodResidence" preference
       And I upload a "Gas bill" as my proof of preference for "neighborhoodResidence"
       And I click the Next button on the Live in the Neighborhood page
+
+      And I select Rent Burdened Preference
+      And I upload a Copy of Lease and "Money order" as my proof for Rent Burden
+      And I hit the Next button "1" time
+
+
       And I select "Jane Doe" for "certOfPreference" preference
       And I select "Coleman Francis" for "displaced" preference
-      And I go to the income page
-      And I do not indicate having vouchers
-      And I fill out my income as "72000"
+      And I submit my preferences
+      # review
       And I fill out the optional survey
       # confirm everything has shown up
       Then on the Review Page I should see my contact details
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details
+      Then on the Review Page I should see my preference details on my "draft" application
       And I click the Save and Finish Later button
       And I fill out my account info
       And I submit the Create Account form
@@ -77,23 +93,32 @@ Feature: Short Form Application
     Scenario: Continuing draft, confirming all previously entered details and submitting
       Given I go to My Applications
       And I click the Continue Application button
+      # you
       Then on the Name page I should see my correct info for "Jane Valerie Doe"
       Then on the Contact page I should see my correct info
       Then on the Alternate Contact pages I should see my correct info
+      # household
       Then on the Household page I should see my correct info
       And I indicate being done adding people
+      Then on the Public Housing page I should see my correct info
+      Then on the Monthly Rent page I should see my correct info
+      Then on the ADA Priorities page I should see my correct info
+      # income
+      Then on the Income pages I should see my correct info
+      # preferences
       And I continue past the Lottery Preferences intro
       Then on the Live in the Neighborhood page I should see my correct info
+      Then on the Rent Burdened page I should see my correct info
       Then on the Preferences Programs page I should see my correct info
-      Then on the Income pages I should see my correct info
-      And I fill out the optional survey
 
+      # review
+      And I fill out the optional survey
       # confirm everything has shown up (again)
       Then on the Review Page I should see my contact details
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details "with" files
+      Then on the Review Page I should see my preference details on my "draft" application
 
       When I confirm details on the review page
       And I agree to the terms and submit
@@ -104,7 +129,7 @@ Feature: Short Form Application
       Then on the Review Page I should see my alternate contact details
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
-      Then on the Review Page I should see my preference details "without" files
+      Then on the Review Page I should see my preference details on my "submitted" application
       #
       # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
       #

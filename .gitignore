@@ -13,6 +13,7 @@
 
 # Ignore all node modules
 node_modules/
+npm-debug.log
 
 # Ingore Bower components
 lib/assets/bower_components

@@ -5,6 +5,7 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
   include ActiveJob::TestHelper
 
   let(:application_id) { 'ABC123' }
+  let(:application) { { 'id' => 'ABC123' } }
   let(:file) { create(:uploaded_file) }
 
   subject(:job) { described_class.perform_later(application_id, file.id) }
@@ -17,8 +18,10 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
 
   describe '#perform' do
     it 'submits attachment file and marks it as delivered' do
-      args = [application_id, file, file.descriptive_name]
+      args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 200)
+      id = application_id
+      expect(ShortFormService).to receive(:get).with(id).and_return(application)
       expect(ShortFormService).to receive(:attach_file).with(*args).and_return(response)
       perform_enqueued_jobs { job }
       # check that file has now been marked as delivered
@@ -29,8 +32,10 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
     end
 
     it 'logs errors if ShortFormService receives a bad response' do
-      args = [application_id, file, file.descriptive_name]
+      args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 500)
+      id = application_id
+      expect(ShortFormService).to receive(:get).with(id).and_return(application)
       expect(ShortFormService).to receive(:attach_file).with(*args).and_return(response)
       perform_enqueued_jobs { job }
       # check that file has now been marked with error

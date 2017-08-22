@@ -18,7 +18,7 @@ class ArcGISNotificationService
 
   def send_address_notification
     GeocodingLog.create(@log_params)
-    Emailer.geocoding_log_notification(@log_params).deliver_later
+    Emailer.geocoding_log_notification(@log_params, @has_nrhp_adhp).deliver_later
   end
 
   def send_error_notification

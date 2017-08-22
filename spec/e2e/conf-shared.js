@@ -14,7 +14,7 @@ module.exports = {
       projectDir + '/spec/e2e/step_definitions/**/*.coffee'
     ],
     tags: false,
-    format: 'pretty',
+    format: ['progress', 'pretty'],
     profile: false,
     'no-source': true
   },

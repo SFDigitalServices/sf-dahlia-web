@@ -4,6 +4,8 @@ do ->
 
     scope = undefined
     state = {current: {name: undefined}}
+    $translate =
+      instant: jasmine.createSpy()
     listing = undefined
     yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
@@ -252,27 +254,27 @@ do ->
     describe '$scope.applicantSelectedForPreference', ->
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults:[{somePreference: true}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.applicantSelectedForPreference()).toEqual(true)
 
       describe 'applicant was not selected for lottery preference', ->
         it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults:[{somePreference: false}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.applicantSelectedForPreference()).toEqual(false)
 
     describe '$scope.lotteryNumberValid', ->
       describe 'invalid', ->
         it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults: []
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.lotteryNumberValid()).toEqual(false)
 
       describe 'valid', ->
-        it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults: [{somePreference: false}]
+        it 'returns true', ->
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.lotteryNumberValid()).toEqual(true)
 
     describe 'showLotteryRanking', ->

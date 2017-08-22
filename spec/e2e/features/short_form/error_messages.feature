@@ -37,21 +37,12 @@ Feature: Short Form Application
 
       When I edit the last household member
       And I cancel the household member
+      # now should be valid with 3 people
       And I indicate being done adding people
-      # error: L/W preference option not chosen (optOut / preference both blank)
-      And I continue past the Lottery Preferences intro
-      And I click the Next button on the Live/Work Preference page
-      Then I should see an error about selecting an option
-
-      # error: preference document not uploaded
-      When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-      And I click the Next button on the Live/Work Preference page
-      Then I should see an error about uploading proof
-
-      When I opt out of Live/Work preference
-      And I select "Jane Doe" for "certOfPreference" preference
-      And I go to the income page
+      And I indicate living in public housing
+      And I indicate no ADA priority
       And I do not indicate having vouchers
+
       # error: income too low
       And I fill out my income as "25000"
       Then I should see an error about household income being too low
@@ -62,4 +53,13 @@ Feature: Short Form Application
 
       # no error - income should pass
       When I fill out my income as "75000"
-      Then I should land on the optional survey page
+
+      # error: L/W preference option not chosen (optOut / preference both blank)
+      And I continue past the Lottery Preferences intro
+      And I click the Next button on the Live/Work Preference page
+      Then I should see an error about selecting an option
+
+      # error: preference document not uploaded
+      When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
+      And I click the Next button on the Live/Work Preference page
+      Then I should see an error about uploading proof

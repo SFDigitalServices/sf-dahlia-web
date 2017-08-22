@@ -34,8 +34,7 @@ checkCheckbox = (checkboxId, callback) ->
 
 optOutAndSubmit = ->
   # opt out + submit preference page (e.g. NRHP, Live/Work)
-  element(By.id('preference-optout')).click()
-  submitPage()
+  checkCheckbox('preference-optout', -> submitPage())
 
 getUrl = (url) ->
   browser.get(url)
@@ -46,6 +45,9 @@ scrollToElement = (element) ->
 module.exports = ->
   # import global cucumber options
   @World = World
+
+  # need this for uploading file to sauce labs
+  browser.setFileDetector new remote.FileDetector()
 
   @Given 'I go to the first page of the Test Listing application', ->
     url = "/listings/#{listingId}/apply/name"
@@ -84,8 +86,8 @@ module.exports = ->
   @When 'I submit the Name page with my account info', ->
     submitPage()
 
-  @When 'I fill out the Contact page with a non-SF address', ->
-    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon'})
+  @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
+    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
@@ -129,7 +131,7 @@ module.exports = ->
     element(By.id('add-household-member')).click()
 
   @When 'I cancel the household member', ->
-    browser.waitForAngular() # sometimes it says the button is not clickable, this helps?
+    browser.sleep(1000) # sometimes it says the button is not clickable, this helps?
     element(By.id('cancel-member')).click()
 
   @When 'I edit the last household member', ->
@@ -159,14 +161,40 @@ module.exports = ->
   @When 'I indicate being done adding people', ->
     submitPage()
 
+  @When 'I indicate living in public housing', ->
+    element(By.id('hasPublicHousing_yes')).click()
+    submitPage()
+
+  @When 'I indicate not living in public housing', ->
+    element(By.id('hasPublicHousing_no')).click()
+    submitPage()
+
+  @When /^I enter "([^"]*)" for each of my monthly rents$/, (monthlyRent) ->
+    element.all(By.css('.form-income_input')).each((elem) ->
+      # we just fill out the same rent value for each rent input
+      elem.sendKeys(monthlyRent)
+    ).then ->
+      submitPage()
+
+  @When 'I indicate no ADA priority', ->
+    checkCheckbox 'adaPrioritiesSelected_none', -> submitPage()
+
+  @When 'I indicate ADA Mobility and Vision impairments', ->
+    checkCheckbox 'adaPrioritiesSelected_mobility-impaired', ->
+      checkCheckbox 'adaPrioritiesSelected_vision-impaired', ->
+        submitPage()
+
   @When 'I continue past the Lottery Preferences intro', ->
     submitPage()
+
+  @When 'I opt out of Assisted Housing preference', ->
+    optOutAndSubmit()
 
   @When 'I don\'t choose COP/DTHP preferences', ->
     # skip preferences programs
     submitPage()
 
-  @When 'I continue past the general lottery notice', ->
+  @When 'I continue past the general lottery notice page', ->
     # skip general lottery notice
     submitPage()
 
@@ -178,26 +206,26 @@ module.exports = ->
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
     prefCheckboxId = "preferences-#{preference}"
-    scrollToElement(element(By.id(prefCheckboxId)))
-    checkCheckbox prefCheckboxId, ->
-      element.all(By.id("#{preference}_household_member")).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
-      element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
+    scrollToElement(element(By.id(prefCheckboxId))).then ->
+      checkCheckbox prefCheckboxId, ->
+        element.all(By.id("#{preference}_household_member")).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
+        element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
 
   @When 'I go to the income page', ->
     submitPage()
 
   @When 'I click the Live in the Neighborhood checkbox', ->
-    element(By.id('preferences-neighborhoodResidence')).click()
+    checkCheckbox('preferences-neighborhoodResidence')
 
   @When 'I click the Live or Work in SF checkbox', ->
-    element(By.id('preferences-liveWorkInSf')).click()
+    checkCheckbox('preferences-liveWorkInSf')
 
   @When 'I open the Live or Work in SF dropdown', ->
-    element(By.id('liveWorkPrefOption')).click()
+    checkCheckbox('liveWorkPrefOption')
 
   @When 'I select the Live in SF preference', ->
     element(By.cssContainingText('option', 'Live in San Francisco')).click()
@@ -207,23 +235,22 @@ module.exports = ->
 
   @When /^I select "([^"]*)" for "([^"]*)" in Live\/Work preference$/, (fullName, preference) ->
     # select either Live or Work preference in the combo Live/Work checkbox
-    element(By.id('preferences-liveWorkInSf')).click()
-    element(By.id('liveWorkPrefOption')).click()
-    element(By.cssContainingText('option', preference)).click()
-    # select the correct HH member in the dropdown
-    pref = (if preference == 'Live in San Francisco' then 'liveInSf' else 'workInSf')
-    # there are multiple liveInSf_household_members, click the visible one
-    element.all(By.id("#{pref}_household_member")).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
-    # there are multiple Jane Doe options, click the visible one matching fullName
-    element.all(By.cssContainingText('option', fullName)).filter((elem) ->
-      elem.isDisplayed()
-    ).first().click()
+    checkCheckbox 'preferences-liveWorkInSf', ->
+      element(By.id('liveWorkPrefOption')).click()
+      element(By.cssContainingText('option', preference)).click()
+      pref = (if preference == 'Live in San Francisco' then 'liveInSf' else 'workInSf')
+      # there are multiple liveInSf_household_members, click the visible one
+      element.all(By.id("#{pref}_household_member")).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
+      # there are multiple Jane Doe options, click the visible one matching fullName
+      element.all(By.cssContainingText('option', fullName)).filter((elem) ->
+        elem.isDisplayed()
+      ).first().click()
 
   @When /^I upload a "([^"]*)" as my proof of preference for "([^"]*)"$/, (documentType, preference) ->
     # open the proof option selector and pick the indicated documentType
-    element.all(By.id("#{preference}_proof_option")).filter((elem) ->
+    element.all(By.id("#{preference}_proofDocument")).filter((elem) ->
       elem.isDisplayed()
     ).first().click()
     element.all(By.cssContainingText('option', documentType)).filter((elem) ->
@@ -233,11 +260,28 @@ module.exports = ->
     # need this for uploading file to sauce labs
     browser.setFileDetector new remote.FileDetector()
 
-    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
     browser.sleep(5000)
+
+  @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
+    filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
+    element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
+    browser.sleep(1000)
+
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id('rentBurden_rentDocument')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
+    element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
+    browser.sleep(3000)
 
   @When 'I click the Next button on the Live/Work Preference page', ->
     submitPage()
@@ -271,26 +315,29 @@ module.exports = ->
     if element(By.id('preferences-neighborhoodResidence'))
       submitPage()
 
-  @When 'I indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_yes')).click()
+  @When 'I select Rent Burdened Preference', ->
+    checkCheckbox('preferences-rentBurden')
+
+  @When 'I submit my preferences', ->
     submitPage()
 
+  @When 'I indicate having vouchers', ->
+    element(By.id('householdVouchersSubsidies_yes')).click().then ->
+      submitPage()
+
   @When 'I do not indicate having vouchers', ->
-    element(By.id('householdVouchersSubsidies_no')).click()
-    submitPage()
+    element(By.id('householdVouchersSubsidies_no')).click().then ->
+      submitPage()
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
     incomeTotal = element(By.id('incomeTotal'))
-    scrollToElement(incomeTotal)
-    incomeTotal.clear().sendKeys(income)
-    element(By.id('per_year')).click()
-    submitPage()
+    scrollToElement(incomeTotal).then ->
+      incomeTotal.clear().sendKeys(income)
+      element(By.id('per_year')).click().then ->
+        submitPage()
 
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
-
-  @When 'I wait', ->
-    browser.pause()
 
   @When 'I confirm details on the review page', ->
     submitPage()
@@ -307,8 +354,8 @@ module.exports = ->
 
   @When 'I click the Create Account button', ->
     createAccount = element(By.id('create-account'))
-    scrollToElement(createAccount)
-    createAccount.click()
+    scrollToElement(createAccount).then ->
+      createAccount.click()
 
   @When 'I fill out my account info', ->
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
@@ -323,11 +370,6 @@ module.exports = ->
   @When 'I submit the Create Account form', ->
     submitPage()
     browser.waitForAngular()
-
-  @When /^I wait "([^"]*)" seconds/, (delay) ->
-    # pause before continuing
-    delay = parseInt(delay) * 1000
-    browser.sleep(delay)
 
   @When 'I sign in', ->
     signInUrl = "/sign-in"
@@ -358,6 +400,14 @@ module.exports = ->
       .first()
       .click()
     browser.waitForAngular()
+
+  @When /^I wait "([^"]*)" seconds/, (delay) ->
+    # pause before continuing
+    delay = parseInt(delay) * 1000
+    browser.sleep(delay)
+
+  @When 'I wait', ->
+    browser.pause()
 
   #######################
   # --- Error cases --- #
@@ -411,29 +461,29 @@ module.exports = ->
     context.expect(checkbox.isSelected()).to.eventually.equal(true)
 
   @Then 'I should see the Live Preference', ->
-    livePref = element.all(By.cssContainingText('strong', 'Live in San Francisco Preference')).filter((elem) ->
+    livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(livePref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Work Preference', ->
-    workPref = element.all(By.cssContainingText('strong', 'Work in San Francisco Preference')).filter((elem) ->
+    workPref = element.all(By.cssContainingText('strong.form-label', 'Work in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(workPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live and Work Preferences', ->
-    liveWorkPref = element.all(By.cssContainingText('strong', 'Live or Work in San Francisco Preference')).filter((elem) ->
+    liveWorkPref = element.all(By.cssContainingText('strong.form-label', 'Live or Work in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Preferences Programs screen', ->
-    certificateOfPreferenceLabel = element(By.cssContainingText('strong', 'Certificate of Preference (COP)'))
+    certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
     @expect(certificateOfPreferenceLabel.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the successful file upload info', ->
-    attachmentUploaded = element.all(By.id('successful-upload')).filter((elem) ->
+  @Then /^I should see the successful file upload info for "([^"]*)"/, (preference) ->
+    attachmentUploaded = element.all(By.id("uploaded-#{preference}_proofFile")).filter((elem) ->
       elem.isDisplayed()
     ).first()
     @expect(attachmentUploaded.isPresent()).to.eventually.equal(true)
@@ -455,6 +505,11 @@ module.exports = ->
     liveInSfMember = getSelectedLiveMember()
     # expect the member selection field to still be there
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see proof uploaders for rent burden files', ->
+    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    uploader = element(By.model('$ctrl.proofDocument.file.name'))
+    @expect(uploader.isPresent()).to.eventually.equal(true)
 
   @Then /^I should be on the "([^"]*)" preference page$/, (preference) ->
     preference = element(By.cssContainingText('.form-label', preference))
@@ -478,14 +533,20 @@ module.exports = ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))
     @expect(checkbox.isSelected()).to.eventually.equal(false)
 
+  @Then 'I should see the Live or Work in SF checkbox un-checked', ->
+    checkbox = element(By.id('preferences-liveWorkInSf'))
+    @expect(checkbox.isSelected()).to.eventually.equal(false)
+
   @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
     claimedPreference = element(By.cssContainingText('.info-item_name', preference))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+    claimedMember = element(By.cssContainingText('.info-item_note', name))
+    @expect(claimedMember.isPresent()).to.eventually.equal(true)
 
     preferenceMember = element(By.cssContainingText('.info-item_note', name))
     @expect(preferenceMember.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the general lottery notice', ->
+  @Then 'I should see the general lottery notice on the review page', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
@@ -517,25 +578,29 @@ module.exports = ->
   @Then 'on the Review Page I should see my household member details', ->
     expectByIdAndText(@, 'household-member-0-name', 'Coleman Francis')
     expectByIdAndText(@, 'household-member-0-dob', '10/15/1985')
-    expectByCss(@, '#review-household-member-0-address .info-item_name', '123 MAIN ST')
 
   @Then 'on the Review Page I should see my income details', ->
     expectByIdAndText(@, 'income-vouchers', 'NONE')
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
-  @Then 'on the Review Page I should see my preference details', ->
-  @Then /^on the Review Page I should see my preference details "([^"]*)" files$/, (expectFiles) ->
-    expectFiles = (expectFiles == 'with')
+  @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
+    withFiles = (status == 'draft')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if expectFiles
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if expectFiles
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
+    expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
+    if withFiles
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
+      expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
+    else
+      expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
 
 
   #################################################
@@ -561,8 +626,19 @@ module.exports = ->
     expectCheckboxChecked(@, 'preferences-neighborhoodResidence')
     # Jane Doe == '1'
     expectInputValue(@, 'neighborhoodResidence_household_member', '1')
-    expectInputValue(@, 'neighborhoodResidence_proof_option', 'Gas bill')
-    expectByCss(@, '#successful-upload .media-body strong', 'logo-city')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body strong', 'Gas bill')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-neighborhoodResidence_proofFile .media-body .t-small', 'Uploaded')
+    submitPage()
+
+  @Then 'on the Rent Burdened page I should see my correct info', ->
+    expectCheckboxChecked(@, 'preferences-rentBurden')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body strong', 'Copy of Lease')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-micro', 'logo-portal')
+    expectByCss(@, '#uploaded-rentBurden_leaseFile .media-body .t-small', 'Uploaded')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body strong', 'Money order')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-micro', 'logo-city')
+    expectByCss(@, '#uploaded-rentBurden_rentFile .media-body .t-small', 'Uploaded')
     submitPage()
 
   @Then 'on the Preferences Programs page I should see my correct info', ->
@@ -570,6 +646,19 @@ module.exports = ->
     expectInputValue(@, 'certOfPreference_household_member', '1')
     expectCheckboxChecked(@, 'preferences-displaced')
     expectInputValue(@, 'displaced_household_member', '2')
+    submitPage()
+
+  @Then 'on the Public Housing page I should see my correct info', ->
+    expectRadioValue(@, 'hasPublicHousing', 'No')
+    submitPage()
+
+  @Then 'on the Monthly Rent page I should see my correct info', ->
+    expectInputValue(@, 'monthlyRent_0', '4,000.00')
+    submitPage()
+
+  @Then 'on the ADA Priorities page I should see my correct info', ->
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_mobility-impaired')
+    expectCheckboxChecked(@, 'adaPrioritiesSelected_vision-impaired')
     submitPage()
 
   @Then 'on the Income pages I should see my correct info', ->
@@ -587,8 +676,8 @@ module.exports = ->
     alertBox = element(By.cssContainingText('.alert-box', errorText))
     context.expect(alertBox.isPresent()).to.eventually.equal(true)
 
-  expectError = (context, errorText) ->
-    error = element(By.cssContainingText('.error', errorText))
+  expectError = (context, errorText, className = '.error') ->
+    error = element(By.cssContainingText(className, errorText))
     context.expect(error.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see name field errors on the Name page', ->
@@ -618,15 +707,18 @@ module.exports = ->
 
   @Then 'I should see an error about household size being too big', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household size is too big')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household size is too big', '.c-alert')
 
   @Then 'I should see an error about household income being too low', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household income is too low')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too low', '.c-alert')
 
   @Then 'I should see an error about household income being too high', ->
     browser.waitForAngular()
-    expectAlertBox(@, 'Your household income is too high')
+    expectAlertBox(@, 'Unfortunately it appears you do not qualify')
+    expectError(@, 'Your household income is too high', '.c-alert')
 
   @Then 'I should land on the optional survey page', ->
     surveyTitle = element(By.cssContainingText('h2.app-card_question', 'Help us ensure we are meeting our goal'))

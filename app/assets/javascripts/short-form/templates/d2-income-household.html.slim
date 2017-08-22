@@ -1,0 +1,34 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'D2_INCOME.TITLE' | translate}}
+    p.form-note.margin-bottom
+      | {{'D2_INCOME.P1' | translate}}
+    p.form-note.margin-bottom
+      | {{'D2_INCOME.P2' | translate}}
+
+  .app-inner.inset
+    .form-group ng-class="{ error: (inputInvalid('incomeTotal') || inputInvalid('incomeTimeframe')) }"
+      label.form-label.margin-bottom--half
+        | {{'LABEL.APPLICANT_INCOME_TOTAL' | translate}}
+      .form-income
+        label.sr-only for="incomeTotal"
+          | {{'LABEL.INCOME' | translate}}
+        span.label-dollar $
+        input#incomeTotal.form-income_input ng-model="application.householdIncome.incomeTotal" name="incomeTotal" ng-required="true" placeholder="{{'LABEL.INCOME_PLACEHOLDER' | translate}}" type="text" ng-currency="" currency-symbol="" ng-class="{ error: inputInvalid('incomeTotal') }" ng-change="onIncomeValueChange()" aria-describedby="incomeTotal_error"
+        small.error#incomeTotal_error ng-show="inputInvalid('incomeTotal')"
+            | {{'ERROR.INCOME' | translate}}
+
+      .radio-group ng-class="{ error: inputInvalid('incomeTimeframe') }" role="radiogroup" aria-label="{{'LABEL.INCOME' | translate}}"
+        p.radio-block
+          input#per_month name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_month" ng-required="true" ng-click="onIncomeValueChange()"
+          label.radio-block_label for="per_month"
+            | {{'LABEL.PER_MONTH' | translate}}
+        p.radio-block
+          input#per_year name="incomeTimeframe" ng-model="application.householdIncome.incomeTimeframe" type="radio" value="per_year" ng-required="true" ng-click="onIncomeValueChange()" aria-describedby="per_year_error"
+          label.radio-block_label for="per_year"
+            | {{'LABEL.PER_YEAR' | translate}}
+        small.error#per_year_error ng-show="inputInvalid('incomeTimeframe')"
+          | {{'ERROR.INCOME_TIMEFRAME' | translate}}
+
+  short-form-save-and-submit

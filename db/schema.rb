@@ -43,17 +43,22 @@ ActiveRecord::Schema.define(version: 20170726222046) do
     t.string   "name"
     t.string   "content_type"
     t.string   "session_uid"
-    t.integer  "preference"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.string   "listing_id"
     t.string   "document_type"
     t.integer  "user_id"
+    t.integer  "preference"
+    t.string   "address"
+    t.integer  "rent_burden_type"
+    t.string   "rent_burden_index"
+    t.string   "listing_preference_id"
     t.string   "application_id"
     t.datetime "delivered_at"
     t.string   "error"
   end
 
+  add_index "uploaded_files", ["rent_burden_type", "rent_burden_index", "address"], name: "rent_burden_idx", using: :btree
   add_index "uploaded_files", ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree
   add_index "uploaded_files", ["user_id"], name: "index_uploaded_files_on_user_id", using: :btree
 

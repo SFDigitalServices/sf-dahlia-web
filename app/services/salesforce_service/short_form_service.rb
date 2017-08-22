@@ -9,7 +9,7 @@ module SalesforceService
       %i(incomelevel).each do |k|
         params[k] = params[k].present? ? params[k].to_f : 0
       end
-      api_get(endpoint, params)
+      cached_api_get(endpoint, params)
     end
 
     def self.create_or_update(params, contact_attrs)
@@ -73,10 +73,18 @@ module SalesforceService
       api_delete("/shortForm/delete/#{id}")
     end
 
-    def self.attach_file(application_id, file, filename)
+    def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
-      endpoint = "/shortForm/file/#{application_id}"
-      api_post_with_headers(endpoint, file.file, headers)
+      endpoint = "/shortForm/Attachment/#{application['id']}"
+      body = {
+        fileName: filename,
+        DocumentType: file.document_type,
+        Body: Base64.encode64(file.file),
+        ApplicationId: application['id'],
+        ApplicationMemberID: _short_form_pref_member_id(application, file),
+        ApplicationPreferenceID: _short_form_pref_id(application, file),
+      }
+      api_post_with_headers(endpoint, body, headers)
     end
 
     def self.queue_file_attachments(application_id, files)
@@ -100,6 +108,20 @@ module SalesforceService
 
     def self.submitted?(application)
       application['status'] == 'Submitted'
+    end
+
+    def self._short_form_pref_id(application, file)
+      _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
+    end
+
+    def self._short_form_pref_member_id(application, file)
+      _short_form_pref(application, file).try(:[], 'appMemberID')
+    end
+
+    def self._short_form_pref(application, file)
+      application['shortFormPreferences'].find do |preference|
+        preference['listingPreferenceID'] == file.listing_preference_id
+      end
     end
   end
 end
