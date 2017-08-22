@@ -261,6 +261,9 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
     filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
