@@ -110,6 +110,11 @@ do ->
         httpBackend.verifyNoOutstandingRequest()
       it 'assigns Service.AMI with the consolidated AMI results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        ListingService.listing.chartTypes = [{
+          year: 2016
+          percent: 50
+          chartType: "Non-HERA"
+        }]
         ListingService.getListingAMI()
         httpBackend.flush()
         consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)

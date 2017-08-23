@@ -15,6 +15,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   # these get loaded after the listing is loaded
   Service.AMICharts = []
   Service.loading = {}
+  Service.error = {}
   Service.displayLotteryResultsListings = false
   Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
   Service.lotteryRankingInfo = {}
@@ -419,18 +420,23 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
-    if Service.listing.chartTypes
-      params =
-        ami: _.sortBy(Service.listing.chartTypes, 'percent')
-    else
-      # TODO: do we actually want/need this fallback?
-      # listing.chartTypes *should* always exist now
-      percent = Service.listing.AMI_Percentage || 100
-      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
-    $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
+    Service.loading.ami = true
+    Service.error.ami = false
+    # shouldn't happen, but safe to have a guard clause
+    return $q.when() unless Service.listing.chartTypes
+    allChartTypes = _.sortBy(Service.listing.chartTypes, 'percent')
+    data =
+      'year[]': _.map(allChartTypes, 'year')
+      'chartType[]': _.map(allChartTypes, 'chartType')
+      'percent[]': _.map(allChartTypes, 'percent')
+    # console.log data
+    $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
+      Service.loading.ami = false
     ).error( (data, status, headers, config) ->
+      Service.loading.ami = false
+      Service.error.ami = true
       return
     )
 

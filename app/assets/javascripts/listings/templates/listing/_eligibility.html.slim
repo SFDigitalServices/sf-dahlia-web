@@ -28,16 +28,28 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
             | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
-        .stats-card.bg-tint ng-show="AMICharts.length > 0"
-          / single chart / BMR style
-          div ng-if="!hasMultipleAMICharts()"
-            ng-include src="'listings/templates/listing/_income-table.html'"
 
-          / multiple chart / MF style
-          div ng-if="hasMultipleAMICharts()"
-            ng-include src="'listings/templates/listing/_income-table-multiple.html'"
 
-        show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show"
+        .content-card.padding--2x ng-show="loading.ami"
+          .padding--2x ng-include="'shared/templates/spinner.html'"
+
+        .content-card.padding--2x ng-show="error.ami"
+          .padding--2x.text-center
+            button.button-link ng-click="getListingAMI()"
+              | {{'LISTINGS.SEE_MAXIMUM_INCOME_INFORMATION' | translate}}
+
+
+        div ng-show="!loading.ami && !error.ami"
+          .stats-card.bg-tint
+            / single chart / BMR style
+            div ng-if="!hasMultipleAMICharts()"
+              ng-include src="'listings/templates/listing/_income-table.html'"
+
+            / multiple chart / MF style
+            div ng-if="hasMultipleAMICharts()"
+              ng-include src="'listings/templates/listing/_income-table-multiple.html'"
+
+          show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show"
 
     li.custom-counter_item
       .content-tile

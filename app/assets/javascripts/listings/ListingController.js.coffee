@@ -41,6 +41,7 @@ ListingController = (
   $scope.lotterySearchNumber = ''
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
+  $scope.error = ListingService.error
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.reservedUnitIcons = [
@@ -209,6 +210,9 @@ ListingController = (
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
+
+  $scope.getListingAMI = ->
+    ListingService.getListingAMI()
 
   $scope.occupancy = (unitSummary) ->
     return '1' if unitSummary.maxOccupancy == 1
