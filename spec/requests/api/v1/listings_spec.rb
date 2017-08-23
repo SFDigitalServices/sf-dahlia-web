@@ -23,13 +23,11 @@ describe 'Listings API' do
     save_fixture do
       VCR.use_cassette('listings/ami') do
         params = {
-          ami: [
-            { year: '2016', chartType: 'Non-HERA', percent: '50' },
-            { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
-            { year: '2016', chartType: 'Non-HERA', percent: '60' },
-          ],
+          chartType: %w[Non-HERA HCD/TCAC Non-HERA],
+          percent: %w[50 50 60],
+          year: %w[2016 2016 2016],
         }
-        post '/api/v1/listings/ami.json', params
+        get '/api/v1/listings/ami.json', params
       end
     end
   end
@@ -128,13 +126,11 @@ describe 'Listings API' do
   it 'gets AMI results' do
     VCR.use_cassette('listings/ami') do
       params = {
-        ami: [
-          { year: '2016', chartType: 'Non-HERA', percent: '50' },
-          { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
-          { year: '2016', chartType: 'Non-HERA', percent: '60' },
-        ],
+        chartType: %w[Non-HERA HCD/TCAC Non-HERA],
+        percent: %w[50 50 60],
+        year: %w[2016 2016 2016],
       }
-      post '/api/v1/listings/ami.json', params
+      get '/api/v1/listings/ami.json', params
     end
 
     json = JSON.parse(response.body)
