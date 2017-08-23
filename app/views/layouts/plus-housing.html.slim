@@ -9,13 +9,19 @@ html lang="en"
 
     javascript:
       window.jQuery || document.write('<script src="//code.jquery.com/jquery-2.2.3.min.js"><\/script>')
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      }
 
     link href="//d3q1ytufopwvkq.cloudfront.net/1/formrenderer.css" rel="stylesheet"
     / css pulled from https://sfgov.forms.fm/mohcd-plus-housing-application/responses/new
     link href="https://d3bt6306j428ad.cloudfront.net/assets/respondent_view-7988ec2ee87f5c73bdb9135ca4a95e3db56eb37eedaeac29a0d154d82b2a798e.css" rel="stylesheet"
     link href="https://sfgov.forms.fm/stylesheets/88/-20170415001718682913/colors.css" rel="stylesheet"
     script src="//d3q1ytufopwvkq.cloudfront.net/1/formrenderer.js"
+    script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" type="text/javascript"
 
   body
+    #google_translate_element
+
     = yield
 
