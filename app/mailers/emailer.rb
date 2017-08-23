@@ -45,12 +45,12 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log, has_nrhp_adhp = false)
-    @log = log
+  def geocoding_log_notification(log_id, has_nrhp_adhp = false)
+    @log = GeocodingLog.find(log_id)
     @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
-    @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
+    @listing_url = "#{base_url}/listings/#{@log.listing_id}"
 
     subject = '[SF-DAHLIA] Address not found in ArcGIS service'
     mail(to: admin_email, subject: subject) do |format|
@@ -69,15 +69,15 @@ class Emailer < Devise::Mailer
   end
 
   def geocoding_error_notification(data, log, has_nrhp_adhp = false)
-    @data = data
-    @log = log
-    @error = data[:errors].first
+    @data = Hashie::Mash.new(data)
+    @log = Hashie::Mash.new(log)
+    @error = Hashie::Mash.new(@data[:errors].first)
     @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
 
-    subject = "[SF-DAHLIA] ArcGIS #{data[:service_name]} service error"
+    subject = "[SF-DAHLIA] ArcGIS #{@data[:service_name]} service error"
     mail(to: admin_email, subject: subject) do |format|
       format.html do
         render(
