@@ -27,6 +27,8 @@
                 ShortFormNavigationService.isLoading(false)
                 # don't display alerts in E2E tests
                 return if window.protractor
+                # AMI has its own timeout handler in the view, no need to also pop alert
+                return if _.includes(error.config.url, 'listings/ami')
                 if error.status == 504
                   alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
                 else

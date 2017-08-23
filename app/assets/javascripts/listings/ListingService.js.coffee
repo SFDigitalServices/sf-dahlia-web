@@ -429,7 +429,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       'year[]': _.map(allChartTypes, 'year')
       'chartType[]': _.map(allChartTypes, 'chartType')
       'percent[]': _.map(allChartTypes, 'percent')
-    # console.log data
     $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
