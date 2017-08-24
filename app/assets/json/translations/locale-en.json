@@ -667,6 +667,7 @@
         "RANKING_TITLE": "Your preference ranking",
         "READ_ABOUT_PREFERENCES": "Read About Housing Preferences",
         "RESULTS_FROM": "Results from {{date}}",
+        "RESULTS_WILL_BE_POSTED_ON": "Complete lottery results will be posted in pdf format on {{date}}",
         "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
         "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units",
         "VIEW_PREFERENCE_LIST": "View Preference List"
