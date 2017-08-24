@@ -94,6 +94,8 @@ module SalesforceService
       status = nil
       response = nil
       while retries > 0 && status != 200
+        # QUICK FIX: always force oauth_token refresh for these calls
+        oauth_token(true)
         response = post_with_headers(endpoint, body, headers)
         status = response.status
         self.retries -= 1
