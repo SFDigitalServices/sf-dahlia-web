@@ -13,7 +13,7 @@ AutosaveService = (
 
   Service.startTimer = ->
     if !Service.timer
-      Service.timer = $interval(Service.save, 15000)
+      Service.timer = $interval(Service.save, 60000)
 
   Service.stopTimer = ->
     $interval.cancel(Service.timer)
