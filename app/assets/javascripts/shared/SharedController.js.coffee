@@ -7,8 +7,9 @@ SharedController = ($scope, $state, SharedService) ->
   $scope.housingCounselors = SharedService.housingCounselors
 
   $scope.hasCenterBody = () ->
-    if $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
-      return 'center-body'
+    if $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application') ||
+       $state.includes('dahlia.account')
+         return 'center-body'
 
   $scope.focusOnMainContent = ->
     SharedService.focusOnMainContent()

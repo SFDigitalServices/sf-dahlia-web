@@ -80,7 +80,7 @@ AccountController = (
           if $scope.userInShortFormSession()
             $scope._createAccountSubmitApplication()
           else
-            $state.go('dahlia.sign-in', {newAccount: true})
+            $state.go('dahlia.account.sign-in', {newAccount: true})
           $scope.userDataForContact = {}
       ).catch( ->
         $scope.handleErrorState()
@@ -106,7 +106,7 @@ AccountController = (
             ShortFormApplicationService.signInSubmitApplication(
               loggedInUser: AccountService.loggedInUser
               submitCallback: (changed) ->
-                $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
+                $state.go('dahlia.account.my-applications', {skipConfirm: true, infoChanged: changed})
             )
           # if user hasn't started the application at all and signs in from welcome page
           else if $state.params.fromShortFormIntro
@@ -192,14 +192,14 @@ AccountController = (
     if AccountService.loginRedirect
       AccountService.goToLoginRedirect()
     else
-      $state.go('dahlia.my-account')
+      $state.go('dahlia.account.my-account')
 
   $scope._createAccountSubmitApplication = ->
     # make sure short form data inherits created account user data
     ShortFormApplicationService.importUserData($scope.userDataForContact)
     ShortFormApplicationService.submitApplication({attachToAccount: true}).then ->
       # send to sign in state if user created account from saving application
-      $state.go('dahlia.sign-in', {skipConfirm: true, newAccount: true})
+      $state.go('dahlia.account.sign-in', {skipConfirm: true, newAccount: true})
 
   $scope.userInShortFormSession = ->
     $state.current.name.indexOf('dahlia.short-form-application') > -1

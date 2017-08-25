@@ -32,7 +32,7 @@ module Overrides
         # provide a more helpful error than just redirecting them?
         # although we can't determine their user/email, or if
         # their account has already been confirmed or not.
-        redirect_to '/sign-in'
+        redirect_to '/account/sign-in'
       end
     end
 
@@ -52,9 +52,9 @@ module Overrides
       error_details = @resource.error_details(:email)
       email = ERB::Util.url_encode(@resource.email)
       if error_details.include?(:confirmation_period_expired)
-        redirect_to "/sign-in?expiredUnconfirmed=#{email}"
+        redirect_to "/account/sign-in?expiredUnconfirmed=#{email}"
       else
-        redirect_to "/sign-in?expiredConfirmed=#{email}"
+        redirect_to "/account/sign-in?expiredConfirmed=#{email}"
       end
     end
 
@@ -62,7 +62,7 @@ module Overrides
       if params[:redirect_url].present?
         params[:redirect_url]
       else
-        root_url + 'my-account'
+        root_url + 'account/my-account'
       end
     end
 

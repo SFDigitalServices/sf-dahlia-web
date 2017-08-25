@@ -168,7 +168,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
-    link = $state.href('dahlia.account-settings')
+    link = $state.href('dahlia.account.account-settings')
     markup = null
     if page == 'b1-name'
       nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
