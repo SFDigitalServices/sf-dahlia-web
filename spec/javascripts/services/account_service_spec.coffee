@@ -250,13 +250,13 @@ do ->
 
     describe 'afterLoginRedirect', ->
       it 'assigns loginRedirect with path', ->
-        path = 'dahlia.account-settings'
+        path = 'dahlia.account.account-settings'
         AccountService.afterLoginRedirect(path)
         expect(AccountService.loginRedirect).toEqual path
 
     describe 'goToLoginRedirect', ->
       it 'takes you to redirect path', ->
-        path = 'dahlia.account-settings'
+        path = 'dahlia.account.account-settings'
         AccountService.afterLoginRedirect(path)
         AccountService.goToLoginRedirect()
         expect($state.go).toHaveBeenCalledWith(path)

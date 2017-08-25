@@ -25,16 +25,16 @@ pageslide ps-class="ng-pageslide hide-for-print" ps-open="showNavMobile" ps-side
             use xlink:href="#i-assistance"
         | Get Assistance
     li.has-icon ng-if="!loggedIn()"
-      a.nav-mobile-focus ui-sref="dahlia.sign-in" ng-blur="trapFocus($event)"
+      a.nav-mobile-focus ui-sref="dahlia.account.sign-in" ng-blur="trapFocus($event)"
         | Sign In
     li.has-icon ng-if="loggedIn()"
-      a.nav-mobile-focus ui-sref="dahlia.my-applications" ng-blur="trapFocus($event)"
+      a.nav-mobile-focus ui-sref="dahlia.account.my-applications" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-application"
         | My Applications
     li.has-icon ng-if="loggedIn()"
-      a.nav-mobile-focus ui-sref="dahlia.account-settings" ng-blur="trapFocus($event)"
+      a.nav-mobile-focus ui-sref="dahlia.account.account-settings" ng-blur="trapFocus($event)"
         span.ui-icon
           svg
             use xlink:href="#i-settings"

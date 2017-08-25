@@ -115,9 +115,9 @@ AccountService = (
       if type == 'change'
         msg = $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED')
         Service.accountSuccess.messages.password = msg
-        $state.go('dahlia.account-settings')
+        $state.go('dahlia.account.account-settings')
       else
-        $state.go('dahlia.my-applications')
+        $state.go('dahlia.account.my-applications')
     ).catch (response) ->
       response = response.data if response.data
       msg = response.errors.full_messages[0]
