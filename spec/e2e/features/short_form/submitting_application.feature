@@ -60,7 +60,9 @@ Feature: Short Form Application
 
 
       And I select "Jane Doe" for "certOfPreference" preference
+      And I fill out my "certOfPreference" certificate number
       And I select "Coleman Francis" for "displaced" preference
+      And I fill out my "displaced" certificate number
       And I submit my preferences
       # review
       And I fill out the optional survey
