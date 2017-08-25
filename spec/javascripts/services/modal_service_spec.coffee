@@ -5,13 +5,15 @@ do ->
     modalMock =
       open: ->
         {result: {then: -> { catch: -> }}}
+    $window = undefined
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
       return
     )
 
-    beforeEach inject((_ModalService_) ->
+    beforeEach inject((_$window_, _ModalService_) ->
+      $window = _$window_
       ModalService = _ModalService_
     )
 
@@ -31,3 +33,13 @@ do ->
         ModalService.alert('yo')
         expect(ModalService.messages.alert).toEqual 'yo'
         expect(modalMock.open).not.toHaveBeenCalled()
+
+      it 'adds onConfirm callback if passed in', ->
+        fakeCallback = -> 'hi'
+        ModalService.alert('yo', {onConfirm: fakeCallback})
+        expect(ModalService.callbacks.onConfirm).toEqual fakeCallback
+
+      it 'uses native browser alert if specified', ->
+        spyOn($window, 'alert')
+        ModalService.alert('yo', {nativeAlert: true})
+        expect($window.alert).toHaveBeenCalledWith('yo')

@@ -8,11 +8,11 @@ ModalService = ($modal, $window) ->
   Service.messages = {}
   Service.callbacks = {}
 
-  Service.alert = (message, onConfirm, useAlert) ->
+  Service.alert = (message, opts = {}) ->
     Service.messages.alert = message
-    Service.callbacks.onConfirm = onConfirm
-    useAlert = false if !useAlert?
-    if useAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
+    Service.callbacks.onConfirm = opts.onConfirm if opts.onConfirm
+    nativeAlert = !!opts.nativeAlert
+    if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(message)
     else
       if (!Service.modalInstance)
