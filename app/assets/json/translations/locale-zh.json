@@ -2,6 +2,10 @@
     "A1_INTRO": {
         "TITLE": "让我们开始对您的应用程序"
     },
+    "HEADER": {
+        "TRANSLATE_BAR_EXPERT_NOTICE": "此頁由母語人員翻譯。",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "本頁由 Google 翻譯。"
+    },
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "家庭",
         "INCOME": "优先",

@@ -2,6 +2,10 @@
     "A1_INTRO": {
         "TITLE": "Vamos a empezar en la aplicación:"
     },
+    "HEADER": {
+        "TRANSLATE_BAR_EXPERT_NOTICE": "Esta página fue traducida por un hablante nativo.",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "Esta página ha sido traducida por Google Translate."
+    },
     "T": {
         "APPLICATION": "Aplicación",
         "APPLICATION_DUE": "Fecha de Vencimiento",

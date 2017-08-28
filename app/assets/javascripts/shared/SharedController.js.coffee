@@ -7,13 +7,16 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
   $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
 
-  $scope.doNotGoogleTranslate = () ->
+  $scope.doNotGoogleTranslate = ->
     $scope.isShortFormPage() || $scope.isWelcomePage() || $scope.isEnglish()
+
+  $scope.showTranslationExpertMessage = ->
+    $scope.isShortFormPage() || $scope.isWelcomePage()
 
   $scope.isShortFormPage = ->
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
-  $scope.isWelcomePage = () ->
+  $scope.isWelcomePage = ->
     $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-chinese') ||
     $state.includes('dahlia.welcome-filipino')
 
@@ -32,7 +35,7 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
      'tl': 'welcome-filipino'
 
     stateName = translateWelcomeMap[GoogleTranslateService.language]
-    return "dahlia." + stateName
+    return "dahlia.#{stateName}({'#': 'translation-disclaimer'})"
 
 ############################################################################################
 ######################################## CONFIG ############################################
