@@ -296,14 +296,12 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceWarning = ->
-    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
-    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+    if $scope.inputInvalid($scope.currentPreferenceType)
+      return 'preferenceNotSelected'
+    else if $scope.preferences[$scope.currentPreferenceType] &&
       $scope.form.applicationForm.$invalid &&
       $scope.form.applicationForm.$submitted
-    if preferenceNotSelected
-      'ERROR.PLEASE_SELECT_PREFERENCE_OPTION'
-    else if preferenceIncomplete
-      'ERROR.PLEASE_COMPLETE_PREFERENCE'
+        return 'preferenceIncomplete'
     else
       false
 
