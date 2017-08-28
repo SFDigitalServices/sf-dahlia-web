@@ -301,9 +301,9 @@ ShortFormApplicationController = (
       $scope.form.applicationForm.$invalid &&
       $scope.form.applicationForm.$submitted
     if preferenceNotSelected
-      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+      'ERROR.PLEASE_SELECT_PREFERENCE_OPTION'
     else if preferenceIncomplete
-      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+      'ERROR.PLEASE_COMPLETE_PREFERENCE'
     else
       false
 

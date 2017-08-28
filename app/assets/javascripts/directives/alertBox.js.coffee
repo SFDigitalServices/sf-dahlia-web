@@ -37,7 +37,7 @@ angular.module('dahlia.directives')
       if scope.customMessage
         return scope.customMessage
       else if scope.preferenceWarning
-        return scope.preferenceWarning
+        return $translate.instant(scope.preferenceWarning)
       else
         $translate.instant("ERROR.FORM_SUBMISSION")
 
