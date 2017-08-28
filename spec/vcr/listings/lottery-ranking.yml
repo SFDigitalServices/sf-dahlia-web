@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:53:55 GMT
+      - Fri, 07 Jul 2017 19:01:11 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=0qJ3j-8qTx29Wf98c_y7Og;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:53:55 GMT
+      - BrowserId=eWI5WtomQ3iOmpxxi9Nauw;Path=/;Domain=.salesforce.com;Expires=Tue,
+        05-Sep-2017 19:01:11 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503784435877","signature":"ELdcCI1fCWCwtjQCvsaD8V7GvAVd76BXG0isZOcLPRk="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1499454071750","signature":"lxSHYaue4VMW3i2k6oIeRVLIfQvXDJBm+C2QqSP3H2g="}'
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:53:55 GMT
+  recorded_at: Fri, 07 Jul 2017 19:01:11 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000DZTkAUAX/00042084
+    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W4B0000050WOaUAM/00042084
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:53:56 GMT
+      - Fri, 07 Jul 2017 19:01:12 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
-        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1b0000000hVg";
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
+        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=lSPk2cvNTR2WwIcLuJudIQ;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:53:56 GMT
+      - BrowserId=VZFwHC9ZQuCP-4mB1LfxZA;Path=/;Domain=.salesforce.com;Expires=Tue,
+        05-Sep-2017 19:01:12 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -95,12 +95,11 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"URL":null,"officeHours":null,"lotteryResultsURL":"http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/280%20Fell%20Street%20Ranked%20List-%203-22-2017.pdf","lotteryResults":false,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-03-22T18:00:00.000Z","lotteryCity":"San
-        Francisco","lotteryBuckets":[{"unitsAvailable":2,"totalSubmittedApps":28,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
-        of Preference (COP)"},{"unitsAvailable":3,"totalSubmittedApps":28,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Displaced
-        Tenant Housing Preference (DTHP)"},{"unitsAvailable":2,"totalSubmittedApps":264,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Live
-        or Work in San Francisco Preference"},{"unitsAvailable":null,"totalSubmittedApps":0,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
-        Resident Housing Preference (NRHP)"},{"unitsAvailable":1,"totalSubmittedApps":153,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":377,"listingId":"a0W0P00000DZTkAUAX"}'
+      string: '{"URL":null,"officeHours":null,"lotteryResultsURL":null,"lotteryResults":true,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-06-01T18:21:00.000Z","lotteryCity":"San
+        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":2,"preferenceResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00042084","applicationID":"a0o4B000000J2SKQA0"}],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":2,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":3,"totalSubmittedApps":1,"preferenceResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00042084","applicationID":"a0o4B000000J2SKQA0"}],"preferenceOrder":3,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":2,"totalSubmittedApps":2,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":3,"listingId":"a0W4B0000050WOaUAM"}'
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:53:56 GMT
+  recorded_at: Fri, 07 Jul 2017 19:01:12 GMT
 recorded_with: VCR 3.0.3
