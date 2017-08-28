@@ -210,14 +210,14 @@ module.exports = ->
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
     prefCheckboxId = "preferences-#{preference}"
-    scrollToElement(element(By.id(prefCheckboxId)))
-    checkCheckbox prefCheckboxId, ->
-      element.all(By.id("#{preference}_household_member")).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
-      element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
-        elem.isDisplayed()
-      ).first().click()
+    scrollToElement(element(By.id(prefCheckboxId))).then ->
+      checkCheckbox prefCheckboxId, ->
+        element.all(By.id("#{preference}_household_member")).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
+        element.all(By.cssContainingText("##{preference}_household_member option", fullName)).filter((elem) ->
+          elem.isDisplayed()
+        ).first().click()
 
   @When 'I go to the income page', ->
     submitPage()
@@ -261,14 +261,17 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
-    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
+    filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
     )
     browser.sleep(5000)
 
   @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
-    filePath = "#{process.env.PWD}/public/images/logo-portal.png"
+    filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
     element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
     browser.sleep(1000)
 
@@ -280,7 +283,7 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
-    filePath = "#{process.env.PWD}/public/images/logo-city.png"
+    filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
     element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
     browser.sleep(3000)
 
@@ -332,16 +335,13 @@ module.exports = ->
 
   @When /^I fill out my income as "([^"]*)"/, (income) ->
     incomeTotal = element(By.id('incomeTotal'))
-    scrollToElement(incomeTotal)
-    incomeTotal.clear().sendKeys(income)
-    element(By.id('per_year')).click().then ->
-      submitPage()
+    scrollToElement(incomeTotal).then ->
+      incomeTotal.clear().sendKeys(income)
+      element(By.id('per_year')).click().then ->
+        submitPage()
 
   @When 'I fill out the optional survey', ->
     fillOutSurveyPage()
-
-  @When 'I wait', ->
-    browser.pause()
 
   @When 'I confirm details on the review page', ->
     submitPage()
@@ -358,8 +358,8 @@ module.exports = ->
 
   @When 'I click the Create Account button', ->
     createAccount = element(By.id('create-account'))
-    scrollToElement(createAccount)
-    createAccount.click()
+    scrollToElement(createAccount).then ->
+      createAccount.click()
 
   @When 'I fill out my account info', ->
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
@@ -374,11 +374,6 @@ module.exports = ->
   @When 'I submit the Create Account form', ->
     submitPage()
     browser.waitForAngular()
-
-  @When /^I wait "([^"]*)" seconds/, (delay) ->
-    # pause before continuing
-    delay = parseInt(delay) * 1000
-    browser.sleep(delay)
 
   @When 'I sign in', ->
     signInUrl = "/sign-in"
@@ -412,6 +407,11 @@ module.exports = ->
       .first()
       .click()
     browser.waitForAngular()
+
+  @When /^I wait "([^"]*)" seconds/, (delay) ->
+    # pause before continuing
+    delay = parseInt(delay) * 1000
+    browser.sleep(delay)
 
   @When 'I wait', ->
     browser.pause()

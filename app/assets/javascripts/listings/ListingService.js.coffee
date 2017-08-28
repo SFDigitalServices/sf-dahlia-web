@@ -4,6 +4,7 @@
 
 ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
+  MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
@@ -282,9 +283,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
-      _.map listings, (listing) ->
-        # fallback for fixing the layout when a listing is missing an image
-        listing.imageURL ?= 'https://unsplash.it/g/780/438'
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
@@ -312,8 +311,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = (if data and data.listings then data.listings else [])
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       deferred.resolve()
+
+  Service.cleanListings = (listings) ->
+    _.map listings, (listing) ->
+      # fallback for fixing the layout when a listing is missing an image
+      listing.imageURL ?= 'https://unsplash.it/g/780/438'
+    _.filter listings, (listing) ->
+      !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
   Service.groupListings = (listings) ->
     openListings = []
@@ -405,7 +412,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
-      Service.getListingPreferences()
     ).catch( (response) ->
       deferred.reject(response)
     )

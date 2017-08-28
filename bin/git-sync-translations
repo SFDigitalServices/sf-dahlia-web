@@ -33,5 +33,5 @@ curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f
 # re-sort the file and push again
 git pull origin translations
 grunt translations
-git commit public/translations/* -m '[translations] sorted translations after POEditor merge'
+git commit app/assets/json/translations/* -m '[translations] sorted translations after POEditor merge'
 git push origin translations

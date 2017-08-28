@@ -63,6 +63,9 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.trackAutofill = ->
+    AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+
   $scope.resetAndStartNewApp = ->
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     data =
@@ -75,6 +78,7 @@ ShortFormApplicationController = (
     $scope.householdMember = ShortFormApplicationService.householdMember
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
+    AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
     $state.go('dahlia.short-form-application.name')
 
   $scope.atAutofillPreview = ->
