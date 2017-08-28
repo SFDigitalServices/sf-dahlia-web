@@ -7,11 +7,15 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
   $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
 
+  $scope.doNotGoogleTranslate = () ->
+    $scope.isShortFormPage() || $scope.isWelcomePage() || $scope.isEnglish()
+
   $scope.isShortFormPage = ->
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
-  $scope.isShortFormPageOrEnglish = ->
-    $scope.isShortFormPage() || $scope.isEnglish()
+  $scope.isWelcomePage = () ->
+    $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-chinese') ||
+    $state.includes('dahlia.welcome-filipino')
 
   $scope.isEnglish = ->
     $state.params.lang == 'en'
