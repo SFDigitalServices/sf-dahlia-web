@@ -5,7 +5,7 @@
       br
         | {{listing.Name}}
   figure.full-figure
-    img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.Building_URL}}"
+    img.property-thumb alt="Listing Name:{{listing.Name}}" ng-src="{{listing.imageURL}}"
 
   .app-inner.inset.border-bottom
     .form-group.text-center
@@ -24,6 +24,22 @@
       '
       ' {{ listing.Lottery_Date | date : 'longDate'}}.
       span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2" translate-values="listingLink()"
+
+  .app-inner.inset.border-bottom
+    .form-group
+      h3.form-label.caps
+        | {{'G1_CONFIRMATION.DONT_SUBMIT_ANOTHER_APP_TITLE' | translate}}
+      p.form-note.margin-bottom ng-if="applicant.email"
+        | {{'G1_CONFIRMATION.DONT_SUBMIT_ANOTHER_APP_P1_EMAIL' | translate}}
+      p.form-note.margin-bottom ng-if="!applicant.email"
+        | {{'G1_CONFIRMATION.DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL' | translate}}
+
+      p.form-note
+        | {{ listing.Leasing_Agent_Name }}
+        br
+          | {{ listing.Application_Organization }}
+        br
+          | {{ listing.Leasing_Agent_Phone }}
 
   .app-inner.inset ng-if="!loggedIn()"
     label.form-label.caps translate="G1_CONFIRMATION.CREATE_ACCOUNT_TITLE"

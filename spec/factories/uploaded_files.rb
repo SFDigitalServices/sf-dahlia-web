@@ -4,7 +4,7 @@ FactoryGirl.define do
     listing_id '123'
     preference 'liveInSf'
     document_type 'gas bill'
-    file ''
+    file '<binarydata>'
     name 'foo'
     content_type 'png'
   end

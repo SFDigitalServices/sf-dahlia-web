@@ -60,6 +60,9 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.trackAutofill = ->
+    AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+
   $scope.resetAndStartNewApp = ->
     ShortFormApplicationService.resetUserData()
     $scope.applicant = ShortFormApplicationService.applicant
@@ -68,6 +71,7 @@ ShortFormApplicationController = (
     $scope.householdMember = ShortFormApplicationService.householdMember
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
+    AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
     $state.go('dahlia.short-form-application.name')
 
   $scope.atAutofillPreview = ->
@@ -150,17 +154,16 @@ ShortFormApplicationController = (
     $scope.applicant[fieldToDisable] = false
 
   $scope.addressInputInvalid = (identifier = '') ->
-    if $scope.addressFailedValidation(identifier)
-      return true
+    return true if $scope.addressValidationError(identifier)
     $scope.inputInvalid('address1', identifier) ||
     $scope.inputInvalid('city', identifier) ||
     $scope.inputInvalid('state', identifier) ||
     $scope.inputInvalid('zip', identifier)
 
-  $scope.addressFailedValidation = (identifier = '') ->
+  $scope.addressValidationError = (identifier = '') ->
     return false unless $scope.addressError
     validated = $scope["validated_#{identifier}"]
-    return AddressValidationService.failedValidation(validated)
+    return AddressValidationService.validationError(validated)
 
   $scope.inputValid = (fieldName, formName = 'applicationForm') ->
     form = $scope.form.applicationForm
@@ -292,6 +295,18 @@ ShortFormApplicationController = (
       $scope.currentPreferenceType = 'neighborhoodResidence'
     ShortFormApplicationService.refreshPreferences(type)
 
+  $scope.preferenceWarning = ->
+    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
+    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+      $scope.form.applicationForm.$invalid &&
+      $scope.form.applicationForm.$submitted
+    if preferenceNotSelected
+      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+    else if preferenceIncomplete
+      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+    else
+      false
+
   $scope.liveInSfMembers = ->
     ShortFormApplicationService.liveInSfMembers()
 
@@ -349,7 +364,9 @@ ShortFormApplicationController = (
 
   ###### Attachment File Uploads ########
   $scope.uploadProof = (file, prefType, docType) ->
-    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id)
+    FileUploadService.uploadProof(file, prefType, docType, $scope.listing.Id).then ->
+      if prefType == 'neighborhoodResidence'
+        ShortFormApplicationService.copyNRHPtoLiveInSf()
 
   $scope.hasPreferenceFile = (fileType) ->
     FileUploadService.hasPreferenceFile(fileType)

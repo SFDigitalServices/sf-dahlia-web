@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       files: [
         {
           src: '<%= patternLibraryPath %>/dist/assets/toolkit/styles/toolkit.css',
-          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.css'
+          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.scss'
         }
       ],
     },
@@ -32,6 +32,10 @@ module.exports = function(grunt) {
           {
             match: 'http://fonts.googleapis.com',
             replacement: '//fonts.googleapis.com'
+          },
+          {
+            match: /"\.\.\/images\/([a-zA-Z0-9\-_]*\.(png|jpg|svg))"/g,
+            replacement: "asset-path('$1')"
           }
         ],
         usePrefix: false
@@ -39,7 +43,7 @@ module.exports = function(grunt) {
       files: [
         {
           expand: true, flatten: true,
-          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.css'],
+          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.scss'],
           dest: '<%= applicationAssetsPath %>/stylesheets/'
         }
       ]
@@ -63,15 +67,15 @@ module.exports = function(grunt) {
        ],
       namespace: true,
       lang:     ['locale-en'],
-      dest:     'public/translations'
+      dest:     'app/assets/json/translations'
     }
   },
   sortJSON: {
     src: [
-      'public/translations/locale-en.json',
-      'public/translations/locale-es.json',
-      'public/translations/locale-tl.json',
-      'public/translations/locale-zh.json'
+      'app/assets/json/translations/locale-en.json',
+      'app/assets/json/translations/locale-es.json',
+      'app/assets/json/translations/locale-tl.json',
+      'app/assets/json/translations/locale-zh.json'
     ],
     // options: {
     //   spacing: 2

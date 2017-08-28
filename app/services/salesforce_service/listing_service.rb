@@ -5,7 +5,6 @@ module SalesforceService
       Id
       listingID
       Name
-      Building_URL
       Application_Due_Date
       Accepting_Online_Applications
       Lottery_Date
@@ -20,13 +19,16 @@ module SalesforceService
       unitSummaries
       Does_Match
       LastModifiedDate
+      imageURL
     ).freeze
 
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
-    def self.listings(ids = nil)
+    # `clean` determines whether to slim down the results
+    def self.listings(ids = nil, clean = true)
       params = ids.present? ? { ids: ids } : nil
-      results = cached_api_get('/ListingDetails', params, true)
+      results = get_listings(nil, params)
+      return results unless clean
       clean_listings_for_browse(results)
     end
 
@@ -36,7 +38,7 @@ module SalesforceService
     #  incomelevel: n
     #  childrenUnder6: n
     def self.eligible_listings(filters)
-      results = cached_api_get('/ListingDetails', filters, true)
+      results = get_listings(nil, filters)
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
@@ -44,7 +46,7 @@ module SalesforceService
 
     # get one detailed listing result by id
     def self.listing(id)
-      cached_api_get("/ListingDetails/#{id}", nil, true).first
+      get_listings(id).first
     end
 
     # get all units for a given listing
@@ -91,10 +93,38 @@ module SalesforceService
       api_get(endpoint, params, false)
     end
 
+    def self.get_listings(id = nil, params = nil)
+      endpoint = '/ListingDetails'
+      endpoint += "/#{id}" if id
+      results = cached_api_get(endpoint, params, true)
+      add_image_urls(results)
+    end
+
+    def self.add_image_urls(listings)
+      listing_images = ListingImage.all
+      listings.each do |listing|
+        listing_image = listing_images.select do |li|
+          li.salesforce_listing_id == listing['Id']
+        end.first
+        # fallback to Building_URL for the case where ListingImages have not been set up
+        url = listing_image ? listing_image.image_url : listing['Building_URL']
+        listing['imageURL'] = url
+      end
+      listings
+    end
+
     def self.clean_listings_for_browse(results)
       results.map do |listing|
         listing.select do |key|
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
+        end
+      end
+    end
+
+    def self.array_sort!(listing)
+      listing.each do |k, v|
+        if v.is_a?(Array) && v[0] && v[0]['Id']
+          listing[k] = v.sort_by { |i| i['Id'] }
         end
       end
     end

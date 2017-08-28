@@ -5,6 +5,10 @@ class Api::V1::GeocodingController < ApiController
 
   def geocode
     render json: { geocoding_data: geocoding_data }
+  rescue StandardError => e
+    logger.error "<< GeocodingController Error >> #{e.class.name}, #{e.message}"
+    # in this case, no need to throw an error alert, just allow the user to proceed
+    render json: { geocoding_data: { boundary_match: false } }
   end
 
   private
@@ -22,6 +26,7 @@ class Api::V1::GeocodingController < ApiController
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
+        params[:has_nrhp_adhp],
       ).send_notifications
       # default response
       { boundary_match: false }
@@ -45,6 +50,7 @@ class Api::V1::GeocodingController < ApiController
         service_name: NeighborhoodBoundaryService::NAME,
       },
       log_params,
+      params[:has_nrhp_adhp],
     ).send_notifications
     # default response
     false
