@@ -29,7 +29,7 @@ do ->
       hasPreference: ->
       loadListing: ->
     fakeDataService =
-      formatApplication: -> fakeShortForm
+      formatApplication: -> fakeSalesforceApplication
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
       initRentBurdenDocs: jasmine.createSpy()
@@ -953,5 +953,3 @@ do ->
       it 'returns false if custom preferences were not claimed', ->
         ShortFormApplicationService.preferences = {'liveInSf': true}
         expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual false
-
-

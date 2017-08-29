@@ -14,7 +14,7 @@ do ->
     fakeLoadingOverlayService =
       start: jasmine.createSpy()
       stop: jasmine.createSpy()
-    fakeShortForm = getJSONFixture('short-form-example.json')
+    fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeShortFormDataService =
       formatApplication: -> fakeShortForm
       reformatApplication: -> fakeShortForm
