@@ -23,11 +23,13 @@ SharedService = ($http, $state, $window) ->
 
   Service.focusOnShortFormContent = ->
     mobileView = $window.innerWidth < 768
-    shortFormNavElement = angular.element(document.getElementById('short-form-nav'))
+    shortFormNavElement = document.getElementById('short-form-wrapper')
     if mobileView && shortFormNavElement
-      Service.focusOnElement(shortFormNavElement)
+      angularElement = angular.element(shortFormNavElement)
+      Service.focusOnElement(angularElement)
 
   Service.focusOnElement = (el) ->
+    return unless el
     # Setting 'tabindex' to -1 takes an element out of normal tab flow
     # but allows it to be focused via javascript
     el.attr 'tabindex', -1

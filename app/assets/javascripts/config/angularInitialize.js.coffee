@@ -128,8 +128,8 @@
       # After elements are rendered, make sure to re-focus keyboard input
       # on elements at the top of the page
       $timeout ->
-        SharedService.focusOnShortFormContent()
         SharedService.focusOnBody()
+        SharedService.focusOnShortFormContent()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay
