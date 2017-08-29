@@ -125,10 +125,10 @@
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
       $document.scrollTop(0)
-
       # After elements are rendered, make sure to re-focus keyboard input
       # on elements at the top of the page
       $timeout ->
+        SharedService.focusOnShortFormContent()
         SharedService.focusOnBody()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->

@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state) ->
+SharedService = ($http, $state, $window) ->
   Service = {}
   Service.assetPaths = STATIC_ASSET_PATHS
   Service.housingCounselors =
@@ -20,6 +20,12 @@ SharedService = ($http, $state) ->
     main = angular.element(document.getElementById('main-content'))
     return unless main
     Service.focusOnElement(main)
+
+  Service.focusOnShortFormContent = ->
+    mobileView = $window.innerWidth < 768
+    shortFormNavElement = angular.element(document.getElementById('short-form-nav'))
+    if mobileView && shortFormNavElement
+      Service.focusOnElement(shortFormNavElement)
 
   Service.focusOnElement = (el) ->
     # Setting 'tabindex' to -1 takes an element out of normal tab flow
@@ -58,7 +64,7 @@ SharedService = ($http, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state']
+SharedService.$inject = ['$http', '$state', '$window']
 
 angular
   .module('dahlia.services')
