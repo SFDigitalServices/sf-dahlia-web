@@ -41,6 +41,7 @@ module SalesforceService
         response.body
       end
     rescue Restforce::UnauthorizedError,
+           Restforce::AuthenticationError,
            Faraday::ConnectionFailed,
            Faraday::TimeoutError => e
       if retries > 0
@@ -94,7 +95,10 @@ module SalesforceService
       status = nil
       response = nil
       while retries > 0 && status != 200
-        # QUICK FIX: always force oauth_token refresh for these calls
+        # NOTE: status will be 500 if there was an error with submission
+        # e.g. DocumentType does not match Salesforce picklist
+        # --
+        # QUICK FIX for 401 issues: always force oauth_token refresh for these calls
         oauth_token(true)
         response = post_with_headers(endpoint, body, headers)
         status = response.status
@@ -107,14 +111,14 @@ module SalesforceService
       response
     end
 
-    def self.post_with_headers(endpoint, body = '', headers = {})
+    def self.post_with_headers(endpoint, body, headers = {})
       conn = Faraday.new(url: ENV['SALESFORCE_INSTANCE_URL'])
       conn.post "/services/apexrest#{endpoint}" do |req|
         headers.each do |k, v|
           req.headers[k] = v
         end
         req.headers['Authorization'] = "OAuth #{oauth_token}"
-        req.body = body
+        req.body = body.to_json
       end
     end
 

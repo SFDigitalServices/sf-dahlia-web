@@ -79,6 +79,33 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
   )
 
+  Service.preference_proof_options_rent_burden = [
+    ['Money order', $translate.instant('LABEL.PROOF.MONEY_ORDER')]
+    ['Cancelled check', $translate.instant('LABEL.PROOF.CANCELLED_CHECK')]
+    ['Debit from your bank account', $translate.instant('LABEL.PROOF.DEBIT_FROM_BANK')]
+    ['Screenshot of online payment', $translate.instant('LABEL.PROOF.ONLINE_PAYMENT')]
+  ]
+
+  Service.priority_options = [
+    ['Mobility impaired', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision impaired', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing impaired', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
+  ]
+
+  Service.proofOptions = (preference) ->
+    switch preference
+      when 'workInSf'
+        Service.preference_proof_options_work
+      when 'liveInSf'
+        Service.preference_proof_options_live
+      when 'neighborhoodResidence'
+        Service.preference_proof_options_live
+      when 'rentBurden'
+        Service.preference_proof_options_rent_burden
+      else
+        Service.preference_proof_options_default
+
+
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
     if alternateContact.alternateContactType == 'Other'
@@ -102,6 +129,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     yearly_income = $filter('currency')(income, '$', 2)
     "#{yearly_income} #{phrase}"
 
+
   ## Translation Helpers
   Service.applicantFirstName = (applicant) ->
     name = applicant.firstName
@@ -115,9 +143,28 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { user: "#{member.firstName} #{member.lastName}" }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
-    return '' if application.status == 'Submitted'
-    interpolate = { file: application.preferences["#{pref_type}_proof_option"] }
+    return '' if application.status.match(/submitted/i)
+    interpolate = { file: application.preferences.documents[pref_type].proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+
+  Service.fileAttachmentsForRentBurden = (application) ->
+    if application.status.match(/submitted/i)
+      return [
+        subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
+      ]
+    labels = []
+    # this one is a little bit complicated because it has to sort through each set of rentBurden
+    # address docs, and create an array of "For {{address}}: {{doc1}}, {{doc2}}... attached"
+    _.each application.preferences.documents.rentBurden, (docs, address) ->
+      proofOptions = [docs.lease.proofOption]
+      rentOptions = _.compact _.map docs.rent, (file) ->
+        file.proofOption if file.file
+      proofOptions = $filter('listify')(_.concat(proofOptions, rentOptions))
+      labels.push({
+        subLabel: $translate.instant('LABEL.FOR_USER', user: address)
+        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
+      })
+    return labels
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
@@ -130,6 +177,12 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
+
+  Service.addressTranslateVariable = (address) ->
+    { address: address }
+
+  Service.membersTranslateVariable = (members) ->
+    { user: $filter('listify')(members, "firstName")}
 
   return Service
 

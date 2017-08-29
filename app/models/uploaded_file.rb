@@ -1,6 +1,6 @@
 # Model for storing temporary uploaded files in the DB
 class UploadedFile < ActiveRecord::Base
-  enum preference: %i(workInSf liveInSf neighborhoodResidence)
+  enum rent_burden_type: %i(lease rent)
 
   def self.create_and_resize(attrs)
     tempfile_path = attrs[:file].tempfile.path
@@ -29,16 +29,6 @@ class UploadedFile < ActiveRecord::Base
   def descriptive_name
     ext = content_type.rpartition('/').last
     ext = 'jpg' if ext == 'jpeg'
-    "#{preference_name} - #{document_type}.#{ext}"
-  end
-
-  def preference_name
-    # for neighborhoodResidence we combine NRHP and liveInSf in the filename
-    # because NRHP proof doubles as liveInSf proof
-    if preference.to_s == 'neighborhoodResidence'
-      'NRHP-liveInSf'
-    else
-      preference
-    end
+    "#{document_type}.#{ext}"
   end
 end
