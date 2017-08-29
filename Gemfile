@@ -42,6 +42,8 @@ gem 'facets', require: false
 
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
+# for CORS requests (specifically for CDN handling)
+gem 'rack-cors', '~> 1.0.1'
 
 # address validation
 gem 'easypost'
@@ -73,6 +75,12 @@ gem 'image_optimizer', '~> 1.7.0'
 
 # http requests made easy
 gem 'http', require: false
+
+gem 'sidekiq', '~> 5.0.2'
+
+gem 'hashdiff', '~> 0.3.0'
+
+gem 'fog-aws'
 
 group :test do
   gem 'codeclimate-test-reporter'
@@ -107,11 +115,13 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'thor-rails'
   gem 'database_cleaner'
+  gem 'foreman'
 end
 
 group :production do
   gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
+  gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
   gem 'rails_12factor'
 end

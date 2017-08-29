@@ -9,6 +9,7 @@ ListingController = (
   $sanitize,
   $timeout,
   $filter,
+  $translate,
   Carousel,
   SharedService,
   ListingService,
@@ -39,7 +40,6 @@ ListingController = (
   $scope.whatHappens = false
   # for searching lottery number
   $scope.lotterySearchNumber = ''
-  $scope.smallDisplayClass = "small-display-none"
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
@@ -60,7 +60,6 @@ ListingController = (
 
   $scope.toggleTable = (table) ->
     $scope["active#{table}Class"] = if $scope["active#{table}Class"] then '' else 'active'
-    $scope.smallDisplayClass = if $scope.smallDisplayClass then '' else 'small-display-none'
 
   $scope.isActiveTable = (table) ->
     $scope["active#{table}Class"] == 'active'
@@ -76,6 +75,10 @@ ListingController = (
 
   $scope.formattedLeasingAgentAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Leasing_Agent', display)
+
+  $scope.leasingAgentInfoAvailable = ->
+    l = $scope.listing
+    l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -99,11 +102,6 @@ ListingController = (
   $scope.lotteryDateVenueAvailable = (listing) ->
     (listing.Lottery_Date != undefined &&
       listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
-
-  $scope.imageURL = (listing) ->
-    # TODO: remove "or" case when we know we have real images
-    # just a fallback for now
-    listing.Building_URL || 'https://placehold.it/474x316'
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
@@ -134,7 +132,7 @@ ListingController = (
   $scope.listingImages = (listing) ->
     # TODO: update when we are getting multiple images from Salesforce
     # right now it's just an array of one
-    [$scope.imageURL(listing)]
+    [listing.imageURL]
 
   # lottery search
   $scope.clearLotterySearchNumber = ->
@@ -206,8 +204,28 @@ ListingController = (
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
 
+  $scope.occupancy = (unitSummary) ->
+    return '1' if unitSummary.maxOccupancy == 1
+    unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+
+  $scope.occupancyLabel = (maxOccupancy) ->
+    return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
+    $translate.instant('LISTINGS.PEOPLE')
+
+  $scope.formatBaths = (numberOfBathrooms) ->
+    return 'Shared' if numberOfBathrooms == 0
+    return '1/2 ' + $translate.instant('LISTINGS.BATH') if numberOfBathrooms == 0.5
+
+    fullBaths = Math.floor numberOfBathrooms
+    andAHalf = numberOfBathrooms - fullBaths == 0.5
+
+    if andAHalf
+      fullBaths + ' 1/2 ' + $translate.instant('LISTINGS.BATH')
+    else
+      numberOfBathrooms
+
   $scope.occupancyIncomeLevels = (amiLevel) ->
-    ListingService.occupancyIncomeLevels(amiLevel)
+    ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
 
   $scope.householdAMIChartCutoff = ->
     ListingService.householdAMIChartCutoff()
@@ -226,6 +244,9 @@ ListingController = (
 
   $scope.listingHasSROUnits = ->
     ListingService.listingHasSROUnits($scope.listing)
+
+  $scope.listingHasOnlySROUnits = ->
+    ListingService.listingHasOnlySROUnits($scope.listing)
 
   $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
     ListingService.listingIsReservedCommunity(listing)
@@ -326,6 +347,7 @@ ListingController.$inject = [
   '$sanitize',
   '$timeout',
   '$filter',
+  '$translate',
   'Carousel',
   'SharedService',
   'ListingService',

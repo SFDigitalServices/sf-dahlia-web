@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 29 Jun 2017 00:13:18 GMT
+      - Thu, 03 Aug 2017 23:16:33 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -31,8 +31,8 @@ http_interactions:
       Content-Security-Policy:
       - referrer origin-when-cross-origin; upgrade-insecure-requests
       Set-Cookie:
-      - BrowserId=5EpG62UGS2i9SaTp4JV_ug;Path=/;Domain=.salesforce.com;Expires=Mon,
-        28-Aug-2017 00:13:18 GMT
+      - BrowserId=xLEp_BadS9O4C05Snd22eg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        02-Oct-2017 23:16:33 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Pragma:
@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008fvwUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1498695198191","signature":"V2c9pqPZUEdztojPCJvZfkkPzPqs7so3A3lh1gAyheI="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1501802194158","signature":"pANzRwI7YueaeoCoGrLBHIO494U5iANAuYTSfmcDvS4="}'
     http_version: 
-  recorded_at: Thu, 29 Jun 2017 00:13:18 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:35 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs71.my.salesforce.com/services/apexrest/Listing/Units/a0W0P00000DYiwiUAD
+    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/Listing/Units/a0W0P00000DYiwiUAD
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +74,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 29 Jun 2017 00:13:18 GMT
+      - Thu, 03 Aug 2017 23:16:35 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008fvw";
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
+        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1b0000000hVg";
       Content-Security-Policy:
       - referrer origin-when-cross-origin
       Set-Cookie:
-      - BrowserId=han_Hv73Tv6k9zqDs5AGnw;Path=/;Domain=.salesforce.com;Expires=Mon,
-        28-Aug-2017 00:13:18 GMT
+      - BrowserId=9gQY8omoQn6G3mmt8VjlDw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        02-Oct-2017 23:16:35 GMT
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -99,5 +99,5 @@ http_interactions:
         BR","BMR_Rent_Monthly__c":2102.00,"BMR_Rental_Minimum_Monthly_Income_Needed__c":5255.00,"Unit_Square_Footage__c":822,"Unit_Number__c":"909","Unit_Floor__c":"9","Number_of_Bathrooms__c":1.00,"Status__c":"Available","isReservedCommunity__c":false,"AMI_chart_type__c":"HUD
         Unadjusted","AMI_chart_year__c":2016,"of_AMI_for_Pricing_Unit__c":100,"Id":"a0b0P00001Bw5t8QAB"}]'
     http_version: 
-  recorded_at: Thu, 29 Jun 2017 00:13:18 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:35 GMT
 recorded_with: VCR 3.0.3

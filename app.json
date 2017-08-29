@@ -2,7 +2,7 @@
   "name":"sf-dahlia-web",
   "description":"",
   "scripts":{
-    "postdeploy": "rake db:setup && rake db:migrate"
+    "postdeploy": "rake db:setup && rake db:migrate && rake listing_images:process_images"
   },
   "addons":[
     "newrelic",
@@ -75,6 +75,18 @@
       "required":true
     },
     "DISALLOW_ALL_WEB_CRAWLERS":{
+      "required":true
+    },
+    "RESOURCE_URL":{
+      "required":true
+    },
+    "S3_BUCKET":{
+      "required":true
+    },
+    "S3_ACCESS_KEY":{
+      "required":true
+    },
+    "S3_ACCESS_KEY_ID":{
       "required":true
     }
   }

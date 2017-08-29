@@ -11,17 +11,31 @@
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
   $httpProvider.defaults.headers.get = {}
 
-  $httpProvider.interceptors.push ["$location", "$rootScope", "$q", ($location, $rootScope, $q) ->
-    success = (response) ->
-      response
-    error = (response) ->
-      if _([400, 401]).includes(response.status)
-        $rootScope.$broadcast "event:unauthorized"
-        $location.path ""
-        return response
-      $q.reject response
-    return (promise) ->
-      promise.then success, error
+  $httpProvider.interceptors.push [
+    '$location', '$rootScope', '$injector', '$q', '$translate',
+    ($location, $rootScope, $injector, $q, $translate) ->
+
+      return {
+        # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
+        # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
+        responseError: (error) ->
+          if error.status >= 500
+            $injector.invoke [
+              '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService',
+              ($http, bsLoadingOverlayService, ShortFormNavigationService) ->
+                # this will call bsLoadingOverlayService.stop(), even if not on short form
+                ShortFormNavigationService.isLoading(false)
+                # don't display alerts in E2E tests
+                return if window.protractor
+                if error.status == 504
+                  alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                else
+                  alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
+                alert(alertMessage)
+                error
+            ]
+          return $q.reject(error)
+      }
   ]
 ]
 
@@ -52,16 +66,23 @@
 ]
 
 @dahlia.config ['$translateProvider', ($translateProvider) ->
-  # will generate new timestamp every hour
-  timestamp = Math.floor(new Date().getTime() / (1000 * 60 * 60))
   $translateProvider
     .preferredLanguage('en')
     .fallbackLanguage('en')
     .useSanitizeValueStrategy('sceParameters')
-    .useStaticFilesLoader(
-      prefix: '/translations/locale-'
-      suffix: ".json?t=#{timestamp}"
+    .useLoader('assetPathLoader') # custom loader, see below
+]
+
+@dahlia.factory 'assetPathLoader', ['$q', '$http', ($q, $http) ->
+  (options) ->
+    deferred = $q.defer()
+    # asset paths have unpredictable hash suffixes, which is why we need the custom loader
+    $http.get(STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
+      deferred.resolve(data)
+    ).error( ->
+      deferred.reject(options.key)
     )
+    return deferred.promise
 ]
 
 @dahlia.config ['$titleProvider', ($titleProvider) ->
