@@ -9,8 +9,6 @@ http_interactions:
     headers:
       Connection:
       - close
-      Host:
-      - sfgis-svc.sfgov.org
       User-Agent:
       - http.rb/2.0.2
   response:
@@ -19,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 29 Jun 2017 00:13:06 GMT
+      - Thu, 03 Aug 2017 23:16:19 GMT
       Server:
       - ''
       Cache-Control:
@@ -77,7 +75,7 @@ http_interactions:
          ]
         }
     http_version: 
-  recorded_at: Thu, 29 Jun 2017 00:13:08 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:21 GMT
 - request:
     method: get
     uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284101073,4547486.548344336&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%272012-021%27
@@ -87,8 +85,6 @@ http_interactions:
     headers:
       Connection:
       - close
-      Host:
-      - sfgis-svc.sfgov.org
       User-Agent:
       - http.rb/2.0.2
   response:
@@ -97,7 +93,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 29 Jun 2017 00:13:06 GMT
+      - Thu, 03 Aug 2017 23:16:19 GMT
       Server:
       - ''
       Cache-Control:
@@ -117,5 +113,5 @@ http_interactions:
          "count": 1
         }
     http_version: 
-  recorded_at: Thu, 29 Jun 2017 00:13:09 GMT
+  recorded_at: Thu, 03 Aug 2017 23:16:21 GMT
 recorded_with: VCR 3.0.3

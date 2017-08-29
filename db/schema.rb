@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170327171854) do
+ActiveRecord::Schema.define(version: 20170726222046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,17 +29,29 @@ ActiveRecord::Schema.define(version: 20170327171854) do
     t.string   "state"
   end
 
+  create_table "listing_images", force: :cascade do |t|
+    t.string   "salesforce_listing_id"
+    t.string   "image_url"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "listing_images", ["salesforce_listing_id"], name: "index_listing_images_on_salesforce_listing_id", using: :btree
+
   create_table "uploaded_files", force: :cascade do |t|
     t.binary   "file"
     t.string   "name"
     t.string   "content_type"
     t.string   "session_uid"
     t.integer  "preference"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "listing_id"
     t.string   "document_type"
     t.integer  "user_id"
+    t.string   "application_id"
+    t.datetime "delivered_at"
+    t.string   "error"
   end
 
   add_index "uploaded_files", ["session_uid"], name: "index_uploaded_files_on_session_uid", using: :btree

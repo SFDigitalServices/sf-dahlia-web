@@ -5,11 +5,15 @@ module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
     class_attribute :retries
+    class_attribute :timeout
     class_attribute :error
-    self.retries = 1
+    class_attribute :force
+    self.retries = 0
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
+    self.force = false
 
     def self.client
-      Restforce.new
+      Restforce.new(timeout: timeout)
     end
 
     def self.oauth_client
@@ -18,6 +22,7 @@ module SalesforceService
         oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
+        timeout: timeout,
       )
     end
 
@@ -28,43 +33,55 @@ module SalesforceService
 
     def self.api_call(method = :get, endpoint, params, parse_response)
       self.error = nil
-      endpoint = "/services/apexrest#{endpoint}"
-      response = oauth_client.send(method, endpoint, params)
+      apex_endpoint = "/services/apexrest#{endpoint}"
+      response = oauth_client.send(method, apex_endpoint, params)
       if parse_response
         massage(flatten_response(response.body))
       else
         response.body
       end
-    rescue Restforce::UnauthorizedError
+    rescue Restforce::UnauthorizedError,
+           Faraday::ConnectionFailed,
+           Faraday::TimeoutError => e
       if retries > 0
-        retries = retries.to_i - 1
-        oauth_token(true)
+        self.retries = retries.to_i - 1
+        oauth_token(true) if e.is_a? Restforce::UnauthorizedError
         retry
       else
-        p 'UH OH -- Restforce error'
-        self.error = 'Restforce::UnauthorizedError'
-        []
+        self.error = e.class.name
+        # re-raise the same error
+        raise
       end
-    rescue StandardError => e
-      p "UH OH -- StandardError #{e.message}" if Rails.env.development?
-      self.error = e.message
-      []
     end
 
     def self.api_get(endpoint, params = nil, parse_response = false)
+      self.retries = 1
       api_call(:get, endpoint, params, parse_response)
     end
 
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
+      self.retries = 1
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
-      cache_disabled = ENV['CACHE_SALESFORCE_REQUESTS'] != 'true'
-      Rails.cache.fetch(key, force: cache_disabled) do
+      force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
+      if ENV['FREEZE_SALESFORCE_CACHE']
+        expires_in = 10.years
+      else
+        expires_in = params ? 10.minutes : 1.day
+      end
+      Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         api_call(:get, endpoint, params, parse_response)
       end
     end
 
     def self.api_post(endpoint, params = nil, parse_response = false)
-      api_call(:post, endpoint, params, parse_response)
+      self.retries = 0
+      # set the timeout to higher for POST methods
+      prev_timeout = timeout
+      self.timeout = 25
+      result = api_call(:post, endpoint, params, parse_response)
+      # set it back again to the default
+      self.timeout = prev_timeout
+      result
     end
 
     def self.api_delete(endpoint, params = nil, parse_response = false)
@@ -73,13 +90,15 @@ module SalesforceService
 
     # NOTE: Have to use custom Faraday connection to send headers.
     def self.api_post_with_headers(endpoint, body = '', headers = {})
-      retries = 1
+      self.retries = 1
       status = nil
       response = nil
       while retries > 0 && status != 200
+        # QUICK FIX: always force oauth_token refresh for these calls
+        oauth_token(true)
         response = post_with_headers(endpoint, body, headers)
         status = response.status
-        retries -= 1
+        self.retries -= 1
         if status == 401
           # refresh oauth_token
           oauth_token(true)
