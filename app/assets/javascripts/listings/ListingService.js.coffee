@@ -412,7 +412,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
-      Service.getListingPreferences()
     ).catch( (response) ->
       deferred.reject(response)
     )
