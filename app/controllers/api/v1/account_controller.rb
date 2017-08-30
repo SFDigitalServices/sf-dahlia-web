@@ -36,7 +36,7 @@ class Api::V1::AccountController < ApiController
   end
 
   def map_listings_to_applications(applications)
-    listing_ids = applications.collect { |a| a['listingID'] }.uniq
+    listing_ids = applications.collect { |a| a['listingID'] }.uniq.sort
     listings = ListingService.listings(listing_ids.join(','))
     applications.each do |app|
       app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }
