@@ -63,10 +63,12 @@ module SalesforceService
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
       self.retries = 1
       # TODO: remove this line, only for testing purposes
-      self.timeout = (endpoint.include?('/ami') && rand > 0.5) ? 0.05 : 10
+      fake_timeout = (endpoint.include?('/ami') || endpoint.include?('LotteryResult/a0W4B0000050WOaUAM/')) && rand > 0.5
+      self.timeout = fake_timeout ? 0.05 : 10
       # ----
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
+      puts "calling #{endpoint} ; #{timeout}"
       if ENV['FREEZE_SALESFORCE_CACHE']
         expires_in = 10.years
       else
