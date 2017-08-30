@@ -118,8 +118,6 @@
     ##########################
     # < Account/Login pages >
     ##########################
-    # TODO: refactor "my account" pages to be under the same namespace/controller
-    ############
     .state('dahlia.account', {
       url: '/account'
       abstract: true
@@ -131,9 +129,8 @@
     .state('dahlia.account.create-account', {
       url: '/create-account'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/create-account.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -149,9 +146,8 @@
       # will be accessed at '/listings/{id}/apply/create-account'
       url: '/create-account'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/create-account.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -174,9 +170,8 @@
         redirectTo: null
         fromShortFormIntro: null
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -201,9 +196,8 @@
       # will be accessed at '/listings/{id}/apply/sign-in'
       url: '/sign-in'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -230,9 +224,8 @@
       # will be accessed at '/listings/{id}/apply/forgot-password'
       url: '/forgot-password'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/forgot-password.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
@@ -240,9 +233,8 @@
     .state('dahlia.account.reset-password', {
       url: '/reset-password'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/reset-password.html'
-          controller: 'AccountController'
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
@@ -258,9 +250,8 @@
       params:
         reconfirmed: null
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/account-settings.html'
-          controller: 'AccountController'
       resolve:
         auth: ['$auth', 'AccountService', ($auth, AccountService) ->
           $auth.validateUser().then ->
@@ -272,16 +263,6 @@
         if $stateParams.reconfirmed
           AccountService.showReconfirmedMessage()
       ]
-    })
-    .state('dahlia.account.eligibility-settings', {
-      url: '/eligibility-settings'
-      views:
-        'container@':
-          templateUrl: 'account/templates/eligibility-settings.html'
-      resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
-        ]
     })
     .state('dahlia.account.my-account', {
       url: '/my-account?accountConfirmed'
@@ -337,6 +318,18 @@
           AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId, $stateParams.doubleSubmit)
       ]
     })
+    # NOTE: placeholder -- not used yet
+    .state('dahlia.account.eligibility-settings', {
+      url: '/eligibility-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/eligibility-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    # NOTE: placeholder -- not used yet
     .state('dahlia.account.my-favorites', {
       url: '/my-favorites'
       views:
