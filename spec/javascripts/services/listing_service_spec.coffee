@@ -83,8 +83,8 @@ do ->
 
       it 'sorts groupedListings based on their dates', ->
         ListingService.groupListings(fakeListings.listings)
-        date1 = ListingService.lotteryResultsListings[0].Lottery_Results_Date
-        date2 = ListingService.lotteryResultsListings[1].Lottery_Results_Date
+        date1 = ListingService.lotteryResultsListings[3].Lottery_Results_Date
+        date2 = ListingService.lotteryResultsListings[4].Lottery_Results_Date
         expect(date1 >= date2).toEqual true
 
     describe 'Service.getListings', ->

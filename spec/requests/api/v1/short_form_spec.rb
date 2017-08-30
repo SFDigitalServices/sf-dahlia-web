@@ -5,15 +5,6 @@ require 'support/jasmine'
 
 describe 'ShortForm API' do
   login_user
-  listing_id = 'a0Wc00000064uY0EAI' # 280 Fell
-  application_show_id = 'a0oc0000002XxNfAAK'
-
-  # WARNING: application will be deleted!
-  # Hint: clone an existing application and use that id
-  application_delete_id = 'a0oc0000002XxW3AAK'
-  application_update_id = 'a0oc0000002XxO4AAK'
-  application_unauthorized_id = 'a0oc0000002Xv9e'
-  application_claim_id = 'a0oc0000002XxVoAAK'
 
   ### generate Jasmine fixtures
   describe 'validate_household' do
@@ -21,7 +12,7 @@ describe 'ShortForm API' do
       save_fixture do
         VCR.use_cassette('shortform/validate_household_match') do
           params = {
-            listing_id: listing_id,
+            listing_id: 'a0WU000000ClNXGMA3',
             eligibility: {
               householdsize: '2',
               incomelevel: 40_000,
@@ -35,7 +26,7 @@ describe 'ShortForm API' do
       save_fixture do
         VCR.use_cassette('shortform/validate_household_not_match') do
           params = {
-            listing_id: listing_id,
+            listing_id: 'a0WU000000ClNXGMA3',
             eligibility: {
               householdsize: '10',
               incomelevel: 10_000,
@@ -52,7 +43,7 @@ describe 'ShortForm API' do
   it 'gets eligibility matches' do
     VCR.use_cassette('shortform/validate_household_match') do
       params = {
-        listing_id: listing_id,
+        listing_id: 'a0WU000000ClNXGMA3',
         eligibility: {
           householdsize: '2',
           incomelevel: 40_000,
@@ -100,11 +91,7 @@ describe 'ShortForm API' do
 
     it 'returns an application object' do
       VCR.use_cassette('shortform/show_application') do
-        get(
-          "/api/v1/short-form/application/#{application_show_id}.json",
-          {},
-          @auth_headers,
-        )
+        get '/api/v1/short-form/application/a0o1b0000001UhnAAE.json', {}, @auth_headers
       end
       json = JSON.parse(response.body)
       expect(response).to be_success
@@ -123,11 +110,7 @@ describe 'ShortForm API' do
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/delete_application') do
-        delete(
-          "/api/v1/short-form/application/#{application_delete_id}.json",
-          {},
-          @auth_headers,
-        )
+        delete '/api/v1/short-form/application/a0o1b0000001UhnAAE.json', {}, @auth_headers
       end
       expect(response).to be_success
     end
@@ -144,10 +127,10 @@ describe 'ShortForm API' do
     end
 
     it 'returns success response' do
-      url = "/api/v1/short-form/application/#{application_update_id}"
+      url = '/api/v1/short-form/application/a0o0P0000093OZE'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
-      params['application']['id'] = application_update_id
+      params['application']['id'] = 'a0o0P0000093OZE'
       params['application']['status'] = 'draft'
       params = clean_json_for_vcr(params)
 
@@ -159,7 +142,7 @@ describe 'ShortForm API' do
 
     it 'does not return success response for an unauthorized application' do
       # this application ID does not belong to the "login_user"
-      url = "/api/v1/short-form/application/#{application_unauthorized_id}"
+      url = '/api/v1/short-form/application/a0o0P0000093KJ0'
       file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
       params = JSON.parse(File.read(file))
       params = clean_json_for_vcr(params)
@@ -184,10 +167,9 @@ describe 'ShortForm API' do
     end
     it 'returns success response' do
       VCR.use_cassette('shortform/claim_submitted_application') do
-        url = "/api/v1/short-form/claim-application/#{application_claim_id}.json"
+        url = '/api/v1/short-form/claim-application/a0o0P0000093KJ0.json'
         file = './spec/javascripts/fixtures/json/valid-short-form-example.json'
         params = JSON.parse(File.read(file))
-        params['application']['id'] = application_claim_id
         params['temp_session_id'] = 'xyz123'
         params = clean_json_for_vcr(params)
         put url, params, @auth_headers
@@ -205,7 +187,7 @@ describe 'ShortForm API' do
     end
 
     it 'returns successful response' do
-      url = "/api/v1/short-form/listing-application/#{listing_id}.json"
+      url = '/api/v1/short-form/listing-application/a0Wf0000003j03WEAQ.json'
       VCR.use_cassette('shortform/show_application') do
         get url, {}, @auth_headers
       end

@@ -8,7 +8,7 @@ remote = require('selenium-webdriver/remote')
 Pages = require('../pages/short-form/index').Pages
 
 # QA "280 Fell"
-listingId = 'a0Wc00000064uY0EAI'
+listingId = 'a0W0P00000DZTkAUAX'
 sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
