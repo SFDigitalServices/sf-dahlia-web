@@ -23,7 +23,7 @@ SharedService = ($http, $state, $window) ->
 
   Service.focusOnShortFormContent = ->
     mobileView = $window.innerWidth < 768
-    shortFormNavElement = document.getElementById('short-form-wrapper')
+    shortFormNavElement = document.getElementById('short-form-container')
     if mobileView && shortFormNavElement
       angularElement = angular.element(shortFormNavElement)
       Service.focusOnElement(angularElement)
