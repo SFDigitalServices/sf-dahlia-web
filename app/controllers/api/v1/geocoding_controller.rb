@@ -5,6 +5,10 @@ class Api::V1::GeocodingController < ApiController
 
   def geocode
     render json: { geocoding_data: geocoding_data }
+  rescue StandardError => e
+    logger.error "<< GeocodingController Error >> #{e.class.name}, #{e.message}"
+    # in this case, no need to throw an error alert, just allow the user to proceed
+    render json: { geocoding_data: { boundary_match: false } }
   end
 
   private

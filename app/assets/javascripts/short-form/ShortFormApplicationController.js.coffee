@@ -60,6 +60,9 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.trackAutofill = ->
+    AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+
   $scope.resetAndStartNewApp = ->
     ShortFormApplicationService.resetUserData()
     $scope.applicant = ShortFormApplicationService.applicant
@@ -68,6 +71,7 @@ ShortFormApplicationController = (
     $scope.householdMember = ShortFormApplicationService.householdMember
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
+    AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
     $state.go('dahlia.short-form-application.name')
 
   $scope.atAutofillPreview = ->
@@ -292,14 +296,12 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceWarning = ->
-    preferenceNotSelected = $scope.inputInvalid($scope.currentPreferenceType)
-    preferenceIncomplete = $scope.preferences[$scope.currentPreferenceType] &&
+    if $scope.inputInvalid($scope.currentPreferenceType)
+      return 'preferenceNotSelected'
+    else if $scope.preferences[$scope.currentPreferenceType] &&
       $scope.form.applicationForm.$invalid &&
       $scope.form.applicationForm.$submitted
-    if preferenceNotSelected
-      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
-    else if preferenceIncomplete
-      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+        return 'preferenceIncomplete'
     else
       false
 
