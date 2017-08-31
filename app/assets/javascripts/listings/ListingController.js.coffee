@@ -80,6 +80,11 @@ ListingController = (
     l = $scope.listing
     l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
 
+  $scope.AMIchartCutsOff = ->
+    lastAMILevel = AMICharts[AMICharts.length-1]
+    lastHouseholdIncomeLevel = $scope.occupancyIncomeLevels(lastAMILevel)
+    lastHouseholdIncomeLevel.numOfHousehold > $scope.householdAMIChartCutoff()
+
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
     api_key = 'AIzaSyCW_oXspwGsSlthw-MrPxjNvdH56El1pjM'
