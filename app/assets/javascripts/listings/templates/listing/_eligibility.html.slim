@@ -38,7 +38,7 @@ accordion-heading.lead
             ng-include src="'listings/templates/listing/_income-table-multiple.html'"
 
         / don't show toggler if the listing is SRO only since there will only be one row, for 1 person
-        show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show" ng-hide="listingHasOnlySROUnits()"
+        show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show" ng-show="showAMItoggler()"
 
     li.custom-counter_item
       .content-tile
