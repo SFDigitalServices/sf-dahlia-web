@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state, $window) ->
+SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.assetPaths = STATIC_ASSET_PATHS
   Service.housingCounselors =
@@ -22,11 +22,11 @@ SharedService = ($http, $state, $window) ->
     Service.focusOnElement(main)
 
   Service.focusOnShortFormContent = ->
-    mobileView = $window.innerWidth < 768
-    shortFormNavElement = document.getElementById('short-form-container')
-    if mobileView && shortFormNavElement
-      angularElement = angular.element(shortFormNavElement)
-      Service.focusOnElement(angularElement)
+    main = document.getElementById('main-content')
+    return unless main
+    angularElement = angular.element(main)
+    Service.focusOnElement(angularElement)
+    $document.scrollToElement(angularElement)
 
   Service.focusOnElement = (el) ->
     return unless el
@@ -66,7 +66,7 @@ SharedService = ($http, $state, $window) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state', '$window']
+SharedService.$inject = ['$http', '$state', '$window', '$document']
 
 angular
   .module('dahlia.services')
