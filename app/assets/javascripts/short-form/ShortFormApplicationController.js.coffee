@@ -296,6 +296,8 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceWarning = ->
+    return false unless $state.current.name.match(RegExp('neighborhood-preference|live-work-preference'))
+
     if $scope.inputInvalid($scope.currentPreferenceType)
       return 'preferenceNotSelected'
     else if $scope.preferences[$scope.currentPreferenceType] &&
