@@ -365,6 +365,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceWarning = ->
+    return false unless $scope.form.currentPreferenceType
     if $scope.inputInvalid($scope.form.currentPreferenceType)
       return 'preferenceNotSelected'
     else if $scope.preferences[$scope.form.currentPreferenceType] &&
