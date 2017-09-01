@@ -312,6 +312,14 @@ ShortFormApplicationController = (
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
+    if ShortFormApplicationService.eligibleForAssistedHousing()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else if ShortFormApplicationService.eligibleForRentBurden()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+    else
+      $scope.checkForNeighborhoodOrLiveWork()
+
+  $scope.checkForNeighborhoodOrLiveWork = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
     else if ShortFormApplicationService.eligibleForADHP()
@@ -320,6 +328,19 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
       $scope.checkAfterLiveWork()
+
+  $scope.checkAfterLiveInTheNeighborhood = (preference) ->
+    # preference is either neighborhoodResidence or antiDisplacement
+    if ShortFormApplicationService.applicationHasPreference(preference)
+      # you already selected Neighborhood, so skip live/work
+      $scope.checkAfterLiveWork()
+    else
+      # you opted out of Neighborhood, so go to live/work
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
+
+  $scope.checkAfterLiveWork = ->
+    # after Live/Work, go to preferences-programs
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   # this called after preferences programs
   $scope.checkForCustomPreferences = ->
@@ -339,23 +360,6 @@ ShortFormApplicationController = (
     else
       # otherwise go to the Review section
       $scope.goToLandingPage('Review')
-
-  $scope.checkAfterLiveInTheNeighborhood = (preference) ->
-    # preference is either neighborhoodResidence or antiDisplacement
-    if ShortFormApplicationService.applicationHasPreference(preference)
-      # you already selected Neighborhood, so skip live/work
-      $scope.checkAfterLiveWork()
-    else
-      # you opted out of Neighborhood, so go to live/work
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
-
-  $scope.checkAfterLiveWork = ->
-    if ShortFormApplicationService.eligibleForAssistedHousing()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
-    else if ShortFormApplicationService.eligibleForRentBurden()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
-    else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -377,7 +381,7 @@ ShortFormApplicationController = (
 
   $scope.checkForRentBurdenFiles = ->
     if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkForNeighborhoodOrLiveWork()
     else
       $scope.setRentBurdenError()
       $scope.handleErrorState()
