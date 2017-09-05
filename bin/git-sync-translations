@@ -8,8 +8,9 @@
 # the git operations.
 ######
 
-# reset the translations branch to == master
-git checkout master
+# reset the translations branch to == multilingual
+# NOTE: can change this back to "master" once multilingual is merged
+git checkout multilingual
 git branch -D translations
 git checkout -b translations
 git push origin translations --force
