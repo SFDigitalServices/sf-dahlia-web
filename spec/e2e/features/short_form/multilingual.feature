@@ -7,6 +7,4 @@ Feature: Short Form Application
       Given I go to the welcome page of the Test Listing application
       And I select "Spanish" as my language
       And I continue past the community screening and welcome overview
-      Then I should see "Español" selected in the short form language switcher
-      When I go to the listings page in Spanish
-      Then I should be redirected back to the listings page in English
+      Then I should see "Español" selected in the translate bar language switcher

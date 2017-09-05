@@ -47,17 +47,20 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController" 
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
   body id="ng-app" ng-class="{'center-body': isShortFormPage()}"
+    #google_translate_element
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
-    .site-container
-      section(ui-view="translate")
-      section(ui-view="version")
-      section(ui-view="navigation")
+    .site-container ng-class="{'skiptranslate': doNotGoogleTranslate()}"
+      / always skip translations for the header + navigation
+      .skiptranslate
+        section(ui-view="translate")
+        section(ui-view="version")
+        section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
         section#main-content.main-content(ui-view="container")
-    .footer-section
+    .footer-section.skiptranslate
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 

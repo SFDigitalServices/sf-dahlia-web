@@ -12,7 +12,7 @@
         lang: { squash: true, value: 'en' }
       views:
         'translate@':
-          templateUrl: 'shared/templates/translate.html'
+          templateUrl: 'shared/templates/translate-bar.html'
         'version@':
           templateUrl: 'shared/templates/version.html'
         'navigation@':

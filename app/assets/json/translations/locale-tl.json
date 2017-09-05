@@ -2,6 +2,10 @@
     "A1_INTRO": {
         "TITLE": "Sabihin makapagsimula sa iyong aplikasyon para sa"
     },
+    "HEADER": {
+        "TRANSLATE_BAR_EXPERT_NOTICE": "Ang pahina'ng ito ay isinalin ng katutubong tagasalita.",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "Ang pahina'ng ito ay isinalin ng Google Translate."
+    },
     "T": {
         "APPLICATION": "Aplikasyon",
         "APPLICATION_DUE": "Aplikasyon dahil",
