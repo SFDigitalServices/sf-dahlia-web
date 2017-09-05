@@ -182,7 +182,7 @@
             "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
             "TITLE": "Live in the Neighborhood"
         },
-        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
+        "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences."
     },
     "E2B_ADHP_PREFERENCE": {
         "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
@@ -194,7 +194,7 @@
             "SHORT_DESCRIPTION": "You said someone in your household lives in a neighborhood where people are at the greatest risk of being displaced.",
             "TITLE": "Live in the Neighborhood"
         },
-        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
+        "TITLE": "Based on the addresses you entered, your household may qualify for the following lottery preferences."
     },
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
@@ -218,18 +218,16 @@
         }
     },
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
-        "INSTRUCTIONS": "This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
+        "INSTRUCTIONS": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing.<br><br>This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
         "PREFERENCE": {
             "TITLE": "Assisted Housing Preference"
-        },
-        "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
+        }
     },
     "E3B_RENT_BURDEN_PREFERENCE": {
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
-        "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
+        "RENT_BURDEN_NOTES": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.<br><br>Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
-        "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
@@ -420,6 +418,7 @@
         "GAY_LESBIAN_SAME_GENDER_LOVING": "Gay/Lesbian/Same-Gender Loving",
         "GENDERQUEER_NON_BINARY": "Genderqueer/Gender Non-binary",
         "GET_DIRECTIONS": "Get Directions",
+        "GOOD_NEWS_FOR_HIGHER_RANKING": "Good news! You qualify for a higher ranking in the lottery.",
         "GRANDPARENT": "Grandparent",
         "GREAT_GRANDPARENT": "Great Grandparent",
         "HEARING_IMPAIRMENTS": "For Hearing Impairments",

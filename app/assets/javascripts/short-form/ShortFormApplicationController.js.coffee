@@ -352,6 +352,9 @@ ShortFormApplicationController = (
   $scope.customPreferencesClaimed = ->
     ShortFormApplicationService.customPreferencesClaimed()
 
+  $scope.eligibleForAssistedHousingOrRentBurden = ->
+    ShortFormApplicationService.eligibleForAssistedHousing() || ShortFormApplicationService.eligibleForRentBurden()
+
   # this is called after custom-preferences or preferences-programs
   $scope.checkIfNoPreferencesSelected = ->
     if ShortFormApplicationService.applicantHasNoPreferences()
