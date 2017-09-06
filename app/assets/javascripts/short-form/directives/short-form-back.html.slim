@@ -1,3 +1,7 @@
 .form-back ng-if="showBackButton"
-  a.lined ui-sref="{{backPageState}}"
+  a.lined ui-sref="{{backPageState}}" ng-if="!onCustomProofPreferencePage() && !onGeneralLotteryPage()"
+    | {{'T.BACK' | translate}}
+  a.lined ng-click="{{goBackFromCustomProofPref()}}" ng-if="onCustomProofPreferencePage()"
+    | {{'T.BACK' | translate}}
+  a.lined ng-click="{{goBackFromGeneralLottery()}}" ng-if="onGeneralLotteryPage()"
     | {{'T.BACK' | translate}}

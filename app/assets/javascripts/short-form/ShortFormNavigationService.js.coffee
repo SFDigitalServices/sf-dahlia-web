@@ -42,6 +42,7 @@ ShortFormNavigationService = (
         'rent-burden-preference-edit'
         'preferences-programs'
         'custom-preferences'
+        'custom-proof-preferences'
         'general-lottery-notice'
       ]
     },
@@ -220,8 +221,6 @@ ShortFormNavigationService = (
         Service.getPrevPageOfPreferencesSection()
       when 'custom-preferences'
         'preferences-programs'
-      when 'general-lottery-notice'
-        Service.getPrevPageOfPreferencesSection()
       # -- Review
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
@@ -279,10 +278,6 @@ ShortFormNavigationService = (
       'assisted-housing-preference'
     else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
       'rent-burden-preference'
-    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length > 0
-      'custom-preferences'
-    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length == 0
-      'preferences-programs'
     else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.applicationHasPreference('antiDisplacement')
