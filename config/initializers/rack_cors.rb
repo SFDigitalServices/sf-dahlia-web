@@ -6,7 +6,7 @@ if defined? Rack::Cors
     allow do
       origins [
         %r{^https?://dahlia-(production|exygy|full|qa|pre-prod|qa-pr-[0-9]*)
-            \.herokuapp\.com$},
+            \.herokuapp\.com$}x,
         'https://housing.sfgov.org',
       ]
       resource '/assets/*'
