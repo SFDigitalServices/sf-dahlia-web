@@ -67,6 +67,9 @@ Rails.application.routes.draw do
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'
 
+  # Redirect translations file requests to new location
+  get '/translations/:locale.json', to: redirect('/assets/%{locale}.json')
+
   # catch all to send all HTML requests to Angular (html5mode)
   get '*path', to: 'home#index', constraints: ->(req) { req.format == :html }
 end
