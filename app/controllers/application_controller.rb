@@ -1,3 +1,4 @@
+include ApplicationHelper
 # Root controller from which all our controllers inherit.
 class ApplicationController < ActionController::Base
   # not really used since we don't have any Rails-generated forms
@@ -7,6 +8,11 @@ class ApplicationController < ActionController::Base
   # Used for redirecting outdated asset urls
   # e.g. "/translations/locale-en.json" --> "/assets/locale-en-[hash].json"
   def asset_redirect
-    redirect_to ActionController::Base.helpers.asset_url(params[:locale])
+    asset = "#{params[:locale]}.json"
+    if Rails.env.development?
+      redirect_to ActionController::Base.helpers.asset_url(asset)
+    else
+      redirect_to static_asset_paths[asset]
+    end
   end
 end
