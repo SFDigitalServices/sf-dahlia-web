@@ -9,10 +9,10 @@ class ApplicationController < ActionController::Base
   # e.g. "/translations/locale-en.json" --> "/assets/locale-en-[hash].json"
   def asset_redirect
     asset = "#{params[:locale]}.json"
-    if Rails.env.development?
-      redirect_to ActionController::Base.helpers.asset_url(asset)
-    else
+    if static_asset_paths[asset]
       redirect_to static_asset_paths[asset]
+    else
+      render json: { message: 'Not Found', status: 404 }, status: 404
     end
   end
 end
