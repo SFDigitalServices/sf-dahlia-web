@@ -5,8 +5,7 @@ if defined? Rack::Cors
   Rails.configuration.middleware.insert_before 0, Rack::Cors do
     allow do
       origins [
-        %r{^https?://dahlia-(production|exygy|full|qa|pre-prod|qa-pr-[0-9]*)
-            \.herokuapp\.com$}x,
+        %r{^https?://dahlia-[a-zA-Z0-9\-]*\.herokuapp\.com$},
         'https://housing.sfgov.org',
       ]
       resource '/assets/*'
