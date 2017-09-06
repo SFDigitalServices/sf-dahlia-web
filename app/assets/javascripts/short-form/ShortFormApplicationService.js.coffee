@@ -58,6 +58,7 @@ ShortFormApplicationService = (
       Income: {}
       Review: {}
 
+  Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
   Service.refreshSessionUid = ->
