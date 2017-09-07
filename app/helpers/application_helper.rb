@@ -15,7 +15,7 @@ module ApplicationHelper
     Rails.application.assets.each_file do |f|
       next if f !~ %r{images/|json/} || f =~ %r{favicon/}
       filename = Pathname(f).basename.to_s
-      asset_paths[filename] = asset_path(filename)
+      asset_paths[filename] = ActionController::Base.helpers.asset_path(filename)
     end
     asset_paths
   end
