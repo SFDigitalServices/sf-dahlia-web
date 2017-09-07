@@ -333,7 +333,7 @@ ShortFormApplicationController = (
     else if hasCustomPreferences
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preference-programs')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
 
   ##### Custom Preferences Logic ####
@@ -349,20 +349,20 @@ ShortFormApplicationController = (
 
   $scope.goBackFromCustomProofPref = ->
     hasCustomPreferences = !!ShortFormApplicationService.listing.customPreferences.length
-    currentIndex = $state.params.prefIdx
+    currentIndex = parseInt($state.params.prefIdx)
     if currentIndex == 0 && hasCustomPreferences
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
     else if currentIndex == 0 && !hasCustomPreferences
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preference-programs')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else if currentIndex > 0
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: currentIndex - 1})
 
   $scope.checkForCustomProofPreferences = ->
     nextIndex = null
-    currentIndex = $state.params.prefIdx
+    currentIndex = parseInt($state.params.prefIdx)
     if currentIndex && currentIndex < $scope.listing.customProofPreferences.length - 1
       nextIndex = currentIndex + 1
-    else if $scope.listing.customProofPreferences.length
+    else if currentIndex != 0 && $scope.listing.customProofPreferences.length
       nextIndex = 0
     if nextIndex != null
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: nextIndex})

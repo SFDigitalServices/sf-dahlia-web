@@ -83,7 +83,8 @@ ShortFormNavigationService = (
     'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
     'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'preferences-programs': {callback: ['checkForCustomPreferences']}
-    'custom-preferences': {callback: ['checkIfNoPreferencesSelected']}
+    'custom-preferences': {callback: ['checkForCustomProofPreferences']}
+    'custom-proof-preferences': {callback: ['checkForCustomProofPreferences']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {callback: ['confirmReviewedApplication']}
