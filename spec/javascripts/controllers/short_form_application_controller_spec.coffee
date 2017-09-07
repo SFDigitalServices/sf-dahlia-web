@@ -310,11 +310,6 @@ do ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
-      it 'skips ahead if incomeMatch and vouchers', ->
-        scope.listing = fakeListing
-        scope.application.householdVouchersSubsidies = 'Yes'
-        scope.validateHouseholdEligibility('incomeMatch')
-        expect(state.go).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -408,6 +403,16 @@ do ->
           fakeIncomeOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
             value: fakeShortFormApplicationService.calculateHouseholdIncome()
+
+        it 'skips errors if applicant has vouchers and income is too low', ->
+          scope.application.householdVouchersSubsidies = 'Yes'
+          scope._respondToIncomeEligibilityResults(eligibility, 'too low')
+          expect(state.go).toHaveBeenCalled()
+
+        it 'proceeds with errors even if applicant has vouchers, if income is too high', ->
+          scope.application.householdVouchersSubsidies = 'No'
+          scope._respondToIncomeEligibilityResults(eligibility, 'too high')
+          expect(scope.eligibilityErrors).not.toEqual([])
 
         it 'expects income section to be invalidated', ->
           scope._respondToIncomeEligibilityResults(eligibility, error)
