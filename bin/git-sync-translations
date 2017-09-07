@@ -36,3 +36,6 @@ git pull origin translations
 grunt translations
 git commit app/assets/json/translations/* -m '[translations] sorted translations after POEditor merge'
 git push origin translations
+
+# start the process of opening the PR; view the diff
+open https://github.com/Exygy/sf-dahlia-web/compare/multilingual...translations?expand=1
