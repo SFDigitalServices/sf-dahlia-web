@@ -2,65 +2,88 @@ ShortFormNavigationService = (
   $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
 ) ->
   Service = {}
+  RESERVED_TYPES = ShortFormApplicationService.RESERVED_TYPES
   Service.loading = false
   Service.sections = [
     { name: 'You', pages: [
-        'name',
-        'contact',
-        'verify-address',
-        'alternate-contact-type',
-        'alternate-contact-name',
-        'alternate-contact-phone-address',
+        'name'
+        'contact'
+        'verify-address'
+        'alternate-contact-type'
+        'alternate-contact-name'
+        'alternate-contact-phone-address'
       ]
     },
     { name: 'Household', pages: [
-        'household-intro',
-        'household-overview',
-        'household-members',
-        'household-member-form',
+        'household-intro'
+        'household-overview'
+        'household-members'
+        'household-member-form'
         'household-member-form-edit'
-      ]
-    },
-    { name: 'Preferences', pages: [
-        'preferences-intro',
-        'neighborhood-preference',
-        'live-work-preference',
-        'preferences-programs',
-        'general-lottery-notice'
+        'household-public-housing'
+        'household-monthly-rent'
+        'household-reserved-units-veteran'
+        'household-reserved-units-disabled'
+        'household-priorities'
       ]
     },
     { name: 'Income', pages: [
-        'income-vouchers',
+        'income-vouchers'
         'income'
       ]
     },
+    { name: 'Preferences', pages: [
+        'preferences-intro'
+        'neighborhood-preference'
+        'adhp-preference'
+        'live-work-preference'
+        'assisted-housing-preference'
+        'rent-burden-preference'
+        'rent-burden-preference-edit'
+        'preferences-programs'
+        'custom-preferences'
+        'general-lottery-notice'
+      ]
+    },
     { name: 'Review', pages: [
-        'review-optional',
-        'review-summary',
-        'review-sign-in',
+        'review-optional'
+        'review-summary'
+        'review-sign-in'
         'review-terms'
       ]
     }
   ]
 
   Service.submitActions =
-    'name': {path: 'contact'}
+    'community-screening': {callback: ['validateCommunityEligibility']}
+    'name': {callback: ['checkPrimaryApplicantAge']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
-    'alternate-contact-phone-address': {callback: ['goToHouseholdLandingPage']}
+    'alternate-contact-phone-address': {callback: ['goToLandingPage'], params: 'Household'}
+    'household-intro': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-form-edit': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
     'household-member-verify-address': {path: 'household-members', callback: ['checkPreferenceEligibility']}
-    'preferences-intro': {callback: ['checkIfPreferencesApply']}
-    'neighborhood-preference': {callback: ['checkAfterNeighborhood']}
-    'live-work-preference': {path: 'preferences-programs'}
-    'preferences-programs': {callback: ['checkIfNoPreferencesSelected']}
-    'general-lottery-notice': {path: 'income-vouchers'}
+    'household-public-housing': {callback: ['checkIfPublicHousing']}
+    'household-monthly-rent': {callback: ['checkIfReservedUnits']}
+    'household-reserved-units-veteran': {callback: ['checkIfReservedUnits'], params: RESERVED_TYPES.DISABLED}
+    'household-reserved-units-disabled': {path: 'household-priorities'}
+    'household-priorities': {path: 'income-vouchers'}
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
+    'preferences-intro': {callback: ['checkIfPreferencesApply']}
+    'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
+    'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
+    'live-work-preference': {callback: ['checkAfterLiveWork']}
+    'assisted-housing-preference': {path: 'preferences-programs'}
+    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
+    'preferences-programs': {callback: ['checkForCustomPreferences']}
+    'custom-preferences': {callback: ['checkIfNoPreferencesSelected']}
+    'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {callback: ['confirmReviewedApplication']}
     'review-sign-in': {path: 'review-terms'}
@@ -81,6 +104,10 @@ ShortFormNavigationService = (
           'household-members'
         else
           'household-intro'
+      when 'Income'
+        'income-vouchers'
+      when 'Preferences'
+        'preferences-intro'
       when 'Review'
         if application.surveyComplete
           'review-summary'
@@ -114,6 +141,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
+      'rent-burden-preference-edit',
       'review-summary',
       'confirmation'
     ]
@@ -133,7 +161,7 @@ ShortFormNavigationService = (
     Service._sectionOfPage(Service._currentPage())
 
   Service.backPageState = ->
-    $state.href("dahlia.short-form-application.#{Service.previousPage()}")
+    "dahlia.short-form-application.#{Service.previousPage()}"
 
   Service.previousPage = ->
     application = ShortFormApplicationService.application
@@ -144,10 +172,9 @@ ShortFormNavigationService = (
         ,'alternate-contact-phone-address'
         ,'household-overview'
         ,'income'
-        ,'review-optional'
+        ,'preferences-intro'
         ,'review-summary'
         ,'review-sign-in'
-        ,'neighborhood-preference'
           Service._getPreviousPage()
       # -- Alt Contact
       when 'alternate-contact-type'
@@ -158,27 +185,45 @@ ShortFormNavigationService = (
           'alternate-contact-type'
         else
           'alternate-contact-phone-address'
-      # -- Preferences
-      when 'preferences-intro'
+      when 'household-public-housing'
         if application.householdMembers.length
           'household-members'
         else
           'household-intro'
-      when 'preferences-programs'
-        if ShortFormApplicationService.hasPreference('neighborhoodResidence')
-          'neighborhood-preference'
-        else if ShortFormApplicationService.eligibleForLiveWork()
-          'live-work-preference'
-        else
+      when 'household-monthly-rent'
+        'household-public-housing'
+      when 'household-reserved-units-veteran'
+        Service.getPrevPageOfHouseholdSection()
+      when 'household-reserved-units-disabled'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+      when 'household-priorities'
+        Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'prev')
+      # -- Income
+      when 'income-vouchers'
+        'household-priorities'
+      # -- Preferences
+      when 'neighborhood-preference'
+        , 'adhp-preference'
           'preferences-intro'
       when 'live-work-preference'
         if ShortFormApplicationService.eligibleForNRHP()
           'neighborhood-preference'
+        else if ShortFormApplicationService.eligibleForADHP()
+          'adhp-preference'
         else
           'preferences-intro'
-      when 'general-lottery-notice'
+      when 'assisted-housing-preference'
+        Service.getPrevPageOfPreferencesSection()
+      when 'rent-burden-preference'
+        Service.getPrevPageOfPreferencesSection()
+      when 'preferences-programs'
+        Service.getPrevPageOfPreferencesSection()
+      when 'custom-preferences'
         'preferences-programs'
-      when 'income-vouchers'
+      when 'general-lottery-notice'
+        Service.getPrevPageOfPreferencesSection()
+      # -- Review
+      when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
           'general-lottery-notice'
         else
@@ -194,6 +239,73 @@ ShortFormNavigationService = (
       else
         'intro'
     page
+
+  Service.getNextReservedPageIfAvailable = (type = RESERVED_TYPES.VETERAN, dir = 'next') ->
+    hasType = ShortFormApplicationService.listingHasReservedUnitType(type)
+    switch type
+      when RESERVED_TYPES.VETERAN
+        if hasType
+          'household-reserved-units-veteran'
+        else
+          if dir == 'next'
+            # move on to the next type
+            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.DISABLED, 'next')
+          else
+            Service.getPrevPageOfHouseholdSection()
+      when RESERVED_TYPES.DISABLED
+        if hasType
+          'household-reserved-units-disabled'
+        else
+          if dir == 'next'
+            # once we've gotten to the end of our types, go to Income
+            'household-priorities'
+          else
+            Service.getNextReservedPageIfAvailable(RESERVED_TYPES.VETERAN, 'prev')
+
+
+  Service.getPrevPageOfHouseholdSection = ->
+    application = ShortFormApplicationService.application
+    if application.hasPublicHousing == 'No'
+      'household-monthly-rent'
+    else if application.hasPublicHousing == 'Yes'
+      'household-public-housing'
+    else if application.householdMembers.length
+      'household-members'
+    else
+      'household-intro'
+
+  Service.getPrevPageOfPreferencesSection = ->
+    if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
+      'assisted-housing-preference'
+    else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
+      'rent-burden-preference'
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length > 0
+      'custom-preferences'
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length == 0
+      'preferences-programs'
+    else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
+      'neighborhood-preference'
+    else if ShortFormApplicationService.applicationHasPreference('antiDisplacement')
+      'adhp-preference'
+    else if ShortFormApplicationService.eligibleForLiveWork()
+      'live-work-preference'
+    else
+      'preferences-intro'
+
+  Service.getStartOfHouseholdDetails = ->
+    # This returns the page in the household section that comes directly after
+    # the household members page
+    application = ShortFormApplicationService.application
+    listing = ShortFormApplicationService.listing
+    return '' if application.status.toLowerCase() == 'submitted'
+    if application.hasPublicHousing
+      'household-public-housing'
+    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.VETERAN)
+      'household-reserved-units-veteran'
+    else if ShortFormApplicationService.listingHasReservedUnitType(RESERVED_TYPES.DISABLED)
+      'household-reserved-units-disabled'
+    else
+      'household-priorities'
 
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)
