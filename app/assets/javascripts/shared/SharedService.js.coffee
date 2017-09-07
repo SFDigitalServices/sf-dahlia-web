@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state) ->
+SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.assetPaths = STATIC_ASSET_PATHS
   Service.housingCounselors =
@@ -21,7 +21,15 @@ SharedService = ($http, $state) ->
     return unless main
     Service.focusOnElement(main)
 
+  Service.focusOnShortFormContent = ->
+    main = document.getElementById('main-content')
+    return unless main
+    angularElement = angular.element(main)
+    Service.focusOnElement(angularElement)
+    $document.scrollToElement(angularElement)
+
   Service.focusOnElement = (el) ->
+    return unless el
     # Setting 'tabindex' to -1 takes an element out of normal tab flow
     # but allows it to be focused via javascript
     el.attr 'tabindex', -1
@@ -58,7 +66,7 @@ SharedService = ($http, $state) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state']
+SharedService.$inject = ['$http', '$state', '$window', '$document']
 
 angular
   .module('dahlia.services')

@@ -24,7 +24,7 @@
         | {{'ERROR.LAST_NAME' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
+    .form-group ng-class="{ error: applicantDOB_hasError() }"
       h3.form-label.caps
         | {{'LABEL.DOB' | translate}}
       .form-date-of-birth.row.collapse
@@ -40,8 +40,8 @@
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\') && householdMemberValidAge($value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
-      small.error#date_of_birth_error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length}" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\') && !householdMemberUnder0()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+      small.error#date_of_birth_error ng-show="applicantDOB_hasError()"
         | {{'ERROR.DOB' | translate}}
 
   .app-inner.inset.border-bottom

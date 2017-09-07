@@ -28,7 +28,7 @@ class Api::V1::ListingsController < ApiController
 
   def lottery_buckets
     @lottery_buckets = ListingService.lottery_buckets(params[:id])
-    render json: { lottery_buckets: @lottery_buckets }
+    render json: @lottery_buckets
   end
 
   def lottery_ranking
@@ -36,7 +36,7 @@ class Api::V1::ListingsController < ApiController
       params[:id],
       params[:lottery_number],
     )
-    render json: { lottery_ranking: @lottery_ranking }
+    render json: @lottery_ranking
   end
 
   def preferences

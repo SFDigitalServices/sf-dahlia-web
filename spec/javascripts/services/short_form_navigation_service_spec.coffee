@@ -11,44 +11,60 @@ do ->
     fakeShortFormApplicationService =
       application:
         householdMembers: []
+        surveyComplete: false
+      listingHasReservedUnitType: jasmine.createSpy()
+      RESERVED_TYPES:
+        VETERAN: 'Veteran'
+        DISABLED: 'Developmental disabilities'
+        SENIOR: 'Senior'
     fakeLoadingOverlayService =
       start: -> null
       stop: -> null
     sections = [
       { name: 'You', pages: [
-          'name',
-          'contact',
-          'verify-address',
-          'alternate-contact-type',
-          'alternate-contact-name',
-          'alternate-contact-phone-address',
+          'name'
+          'contact'
+          'verify-address'
+          'alternate-contact-type'
+          'alternate-contact-name'
+          'alternate-contact-phone-address'
         ]
       },
       { name: 'Household', pages: [
-          'household-intro',
-          'household-overview',
-          'household-members',
-          'household-member-form',
+          'household-intro'
+          'household-overview'
+          'household-members'
+          'household-member-form'
           'household-member-form-edit'
-        ]
-      },
-      { name: 'Preferences', pages: [
-          'preferences-intro',
-          'neighborhood-preference',
-          'live-work-preference',
-          'preferences-programs',
-          'general-lottery-notice'
+          'household-public-housing'
+          'household-monthly-rent'
+          'household-reserved-units-veteran'
+          'household-reserved-units-disabled'
+          'household-priorities'
         ]
       },
       { name: 'Income', pages: [
-          'income-vouchers',
+          'income-vouchers'
           'income'
         ]
       },
+      { name: 'Preferences', pages: [
+          'preferences-intro'
+          'neighborhood-preference'
+          'adhp-preference'
+          'live-work-preference'
+          'assisted-housing-preference'
+          'rent-burden-preference'
+          'rent-burden-preference-edit'
+          'preferences-programs'
+          'custom-preferences'
+          'general-lottery-notice'
+        ]
+      },
       { name: 'Review', pages: [
-          'review-optional',
-          'review-summary',
-          'review-sign-in',
+          'review-optional'
+          'review-summary'
+          'review-sign-in'
           'review-terms'
         ]
       }
@@ -106,13 +122,23 @@ do ->
       it 'gets the previous page href to be used by the back button', ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousState = ShortFormNavigationService.backPageState()
-        expect(previousState).toEqual $state.href('dahlia.short-form-application.name')
+        expect(previousState).toEqual 'dahlia.short-form-application.name'
 
     describe 'previousPage', ->
       it 'gets the name of the previous page based on your current page', ->
         $state.current.name = 'dahlia.short-form-application.contact'
         previousPage = ShortFormNavigationService.previousPage()
         expect(previousPage).toEqual 'name'
+
+    describe 'getNextReservedPageIfAvailable', ->
+      it 'calls ShortFormApplicationService to check for the preference', ->
+        type = 'Veteran'
+        ShortFormNavigationService.getNextReservedPageIfAvailable(type)
+        expect(fakeShortFormApplicationService.listingHasReservedUnitType).toHaveBeenCalledWith(type)
+      it 'moves on to the priorities page if no reserved types found', ->
+        type = 'Veteran'
+        page = ShortFormNavigationService.getNextReservedPageIfAvailable(type)
+        expect(page).toEqual 'household-priorities'
 
     describe 'getLandingPage', ->
       it 'gets the first page of the section if it\'s not Household', ->
@@ -128,3 +154,16 @@ do ->
         fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getLandingPage(householdSection)
         expect(page).toEqual 'household-members'
+      it 'gets income landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Income'})
+        expect(page).toEqual 'income-vouchers'
+      it 'gets preference landing page', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Preferences'})
+        expect(page).toEqual 'preferences-intro'
+      it 'gets review survey if survey is incomplete', ->
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-optional'
+      it 'gets review summary if survey is complete', ->
+        fakeShortFormApplicationService.application.surveyComplete = true
+        page = ShortFormNavigationService.getLandingPage({name: 'Review'})
+        expect(page).toEqual 'review-summary'

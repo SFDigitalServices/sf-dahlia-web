@@ -1,14 +1,14 @@
-.bucket ng-if="show()" ng-class="{'has-stat': isRank()}"
-  .bucket-stat ng-if="isRank()"
+.bucket ng-if="visible" ng-class="{'has-stat': isRank}"
+  .bucket-stat ng-if="isRank"
     span.bucket-stat_label translate="LOTTERY.RANK"
     span.bucket-stat_value
       | {{ rankForPreference() }}
   h3.bucket-title
     | {{ prefName }}
-  p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{unitsAvailable()}}" ng-if="!isGeneral() && unitsAvailable()"
-  p.bucket-subtitle translate="LOTTERY.ANY_REMAINING_UNITS" ng-if="isGeneral()"
+  p.bucket-subtitle translate="LOTTERY.UP_TO_X_UNITS_AVAILABLE" translate-value-units="{{unitsAvailable}}" ng-if="!isGeneral && unitsAvailable"
+  p.bucket-subtitle translate="LOTTERY.ANY_REMAINING_UNITS" ng-if="isGeneral"
 
   p.t-tiny.c-steel.no-margin
-    span translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{appTotal()}}"
+    span translate="LOTTERY.NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE" translate-value-number="{{totalSubmittedApps}}"
     '
-    span translate="LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE" ng-if="showGeneralNotice()"
+    span translate="LOTTERY.RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE" ng-if="showGeneralNotice"
