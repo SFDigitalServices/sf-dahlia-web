@@ -4,7 +4,7 @@ describe ListingImageService do
   json_path = "#{Rails.root}/spec/javascripts/fixtures/json/listings-api-show.json"
   listing_json = File.read(json_path)
   listing = JSON.parse(listing_json)['listing']
-  listing_id = listing['Id'] if listing
+  listing_id = listing['Id']
   image_path = "#{Rails.root}/app/assets/images/logo-city.png"
 
   before do
