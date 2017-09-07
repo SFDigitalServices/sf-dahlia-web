@@ -360,9 +360,9 @@ ShortFormApplicationController = (
   $scope.checkForCustomProofPreferences = ->
     nextIndex = null
     currentIndex = parseInt($state.params.prefIdx)
-    if currentIndex && currentIndex < $scope.listing.customProofPreferences.length - 1
+    if currentIndex >= 0 && currentIndex < $scope.listing.customProofPreferences.length - 1
       nextIndex = currentIndex + 1
-    else if currentIndex != 0 && $scope.listing.customProofPreferences.length
+    else if isNaN(currentIndex) && $scope.listing.customProofPreferences.length
       nextIndex = 0
     if nextIndex != null
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: nextIndex})
