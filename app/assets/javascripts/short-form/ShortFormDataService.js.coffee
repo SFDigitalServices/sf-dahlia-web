@@ -4,6 +4,7 @@ ShortFormDataService = (ListingService) ->
   Service.metaFields = [
     'completedSections'
     'session_uid'
+    'lastPage'
     'groupedHouseholdAddresses'
   ]
 
