@@ -858,7 +858,7 @@
           templateUrl: 'short-form/templates/e7b-custom-preferences.html'
     })
     .state('dahlia.short-form-application.custom-proof-preferences', {
-      url: '/custom-preferences-proof/:prefIdx'
+      url: '/custom-proof-preferences/:prefIdx'
       views:
         'container':
           templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
