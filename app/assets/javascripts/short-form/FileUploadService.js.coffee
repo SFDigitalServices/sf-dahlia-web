@@ -46,7 +46,8 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
     )
 
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    pref_id = ListingService.getPreference(pref_type).listingPreferenceID
+    preference = ListingService.getPreference(pref_type)
+    pref_id = if preference then preference.listingPreferenceID else pref_type
     uploadedFileParams =
       file: file
       session_uid: Service.session_uid()
