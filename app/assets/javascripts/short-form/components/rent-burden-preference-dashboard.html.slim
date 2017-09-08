@@ -7,7 +7,7 @@
     .info-item.tall ng-class="{'border-bottom': !$last, error: $ctrl.addressInvalid(address.address)}" ng-repeat="address in $ctrl.groupedHouseholdAddresses"
       p.info-item_name
         | {{ address.address }}
-      p.info-item_value
+      p.info-item_value.small-7
         | {{ address.members | listify : 'fullName' }}
       a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burden-preference-edit({index: $index})"
         | {{ $ctrl.addressLinkText[address.address] }}
