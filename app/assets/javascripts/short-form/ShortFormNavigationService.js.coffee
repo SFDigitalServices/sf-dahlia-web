@@ -222,6 +222,10 @@ ShortFormNavigationService = (
         Service.getPrevPageOfPreferencesSection()
       when 'custom-preferences'
         'preferences-programs'
+      when 'custom-proof-preferences'
+        Service.getPrevPageOfCustomProofPref()
+      when 'general-lottery-notice'
+        Service.getPrevPageOfGeneralLottery()
       # -- Review
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
@@ -287,6 +291,26 @@ ShortFormNavigationService = (
       'live-work-preference'
     else
       'preferences-intro'
+
+  Service.getPrevPageOfCustomProofPref = ->
+    hasCustomPreferences = !!ShortFormApplicationService.listing.customPreferences.length
+    currentIndex = parseInt($state.params.prefIdx)
+    if currentIndex == 0 && hasCustomPreferences
+      'custom-preferences'
+    else if currentIndex == 0 && !hasCustomPreferences
+      'preferences-programs'
+    else if currentIndex > 0
+      "custom-proof-preferences({prefIdx: #{currentIndex - 1}})"
+
+  Service.getPrevPageOfGeneralLottery = ->
+    customProofPreferences = ShortFormApplicationService.listing.customProofPreferences
+    hasCustomPreferences = !!ShortFormApplicationService.listing.customPreferences.length
+    if customProofPreferences.length
+      "custom-proof-preferences({prefIdx: #{customProofPreferences.length - 1}})"
+    else if hasCustomPreferences
+      'custom-preferences'
+    else
+      'preferences-programs'
 
   Service.getStartOfHouseholdDetails = ->
     # This returns the page in the household section that comes directly after
