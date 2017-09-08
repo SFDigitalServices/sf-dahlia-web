@@ -1,7 +1,7 @@
 p
-  - if error[:type] == :connection_error
+  - if error[:type] == 'connection_error'
     | The ArcGIS #{data[:service_name]} service was unreachable when DAHLIA searched for this address.
-  - elsif error[:type] == :invalid_response || error[:type] == :http_error
+  - elsif error[:type] == 'invalid_response' || error[:type] == 'http_error'
     | The ArcGIS #{data[:service_name]} service was not returning a valid response when DAHLIA searched for this address.
 
   - if error[:message].present?

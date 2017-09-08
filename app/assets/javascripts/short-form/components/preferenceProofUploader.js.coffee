@@ -18,8 +18,8 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/preference-proof-uploader.html'
 
   controller:
-    ['ShortFormApplicationService', 'FileUploadService', '$translate'
-    (ShortFormApplicationService, FileUploadService, $translate) ->
+    ['ShortFormApplicationService', 'FileUploadService', 'SharedService', '$translate'
+    (ShortFormApplicationService, FileUploadService, SharedService, $translate) ->
       ctrl = @
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -95,6 +95,8 @@ angular.module('dahlia.components')
         FileUploadService.deletePreferenceFile(@preference, @listingId, opts).then =>
           @afterDelete()
           @setProofType()
+
+      @assetPaths = SharedService.assetPaths
 
       @setProofType()
       return ctrl
