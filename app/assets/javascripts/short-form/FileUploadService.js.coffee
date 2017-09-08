@@ -10,8 +10,8 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
   Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
     pref = ListingService.getPreference(pref_type)
     # might be calling deletePreferenceFile on a preference that this listing doesn't have
-    return unless pref
-    pref_id = pref.listingPreferenceID
+    pref_id = if pref then pref.listingPreferenceID else pref_type
+    return $q.reject() unless ListingService.getPreferenceById(pref_id)
     params =
       uploaded_file:
         session_uid: Service.session_uid()
@@ -48,6 +48,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
     preference = ListingService.getPreference(pref_type)
     pref_id = if preference then preference.listingPreferenceID else pref_type
+    return $q.reject() unless ListingService.getPreferenceById(pref_id)
     uploadedFileParams =
       file: file
       session_uid: Service.session_uid()
