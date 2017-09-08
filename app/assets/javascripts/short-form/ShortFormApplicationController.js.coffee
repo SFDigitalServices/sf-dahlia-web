@@ -413,16 +413,18 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.liveInTheNeighborhoodAddresses = ->
+  $scope.liveInTheNeighborhoodAddresses = (opts = {}) ->
     addresses = []
     _.each ShortFormApplicationService.liveInTheNeighborhoodMembers(), (member) ->
       street = member.home_address.address1
       addresses.push(street) unless _.isNil(street)
-    _.uniq(addresses)
+    addresses = _.uniq(addresses)
+    addresses = _.map(addresses, (x) -> "<strong>#{x}</strong>") if opts.strong
+    addresses
 
-  $scope.liveInTheNeighborhoodAddress = ->
+  $scope.liveInTheNeighborhoodAddress = (opts = {}) ->
     # turn the list of addresses into a string
-    $scope.liveInTheNeighborhoodAddresses().join(' and ')
+    $scope.liveInTheNeighborhoodAddresses(opts).join(' and ')
 
   $scope.cancelPreference = (preference) ->
     $scope.clearRentBurdenError() if preference == 'rentBurden'
