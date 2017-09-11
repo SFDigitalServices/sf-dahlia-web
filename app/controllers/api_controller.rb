@@ -1,3 +1,4 @@
+require 'faraday'
 # Root controller from which all our API controllers inherit.
 class ApiController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
@@ -17,6 +18,7 @@ class ApiController < ActionController::API
     status = opts.status || :internal_server_error
     if opts.exception
       e = opts.exception
+      Raven.capture_exception(e)
       message = "#{e.class.name}, #{e.message}"
     else
       message = 'Not found.'

@@ -67,15 +67,15 @@ module.exports = function(grunt) {
        ],
       namespace: true,
       lang:     ['locale-en'],
-      dest:     'public/translations'
+      dest:     'app/assets/json/translations'
     }
   },
   sortJSON: {
     src: [
-      'public/translations/locale-en.json',
-      'public/translations/locale-es.json',
-      'public/translations/locale-tl.json',
-      'public/translations/locale-zh.json'
+      'app/assets/json/translations/locale-en.json',
+      'app/assets/json/translations/locale-es.json',
+      'app/assets/json/translations/locale-tl.json',
+      'app/assets/json/translations/locale-zh.json'
     ],
     // options: {
     //   spacing: 2

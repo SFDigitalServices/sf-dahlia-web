@@ -124,12 +124,15 @@
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
-      $document.scrollTop(0)
+      $document.scrollTop(0) unless ShortFormApplicationService.isShortFormPage($state.current)
 
       # After elements are rendered, make sure to re-focus keyboard input
       # on elements at the top of the page
       $timeout ->
-        SharedService.focusOnBody()
+        if ShortFormApplicationService.isShortFormPage($state.current)
+          SharedService.focusOnShortFormContent()
+        else
+          SharedService.focusOnBody()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay

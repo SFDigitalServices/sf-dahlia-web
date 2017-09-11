@@ -4,6 +4,7 @@
 
 ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service = {}
+  MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
@@ -15,7 +16,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.AMICharts = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
+  Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
 
@@ -25,22 +27,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     {
       'language': 'English'
       'label': 'English'
-      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+      'url': Service.mohcdEnglishApplicationURL
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Chinese')
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Tagalog')
     }
   ]
 
@@ -282,9 +284,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
-      _.map listings, (listing) ->
-        # fallback for fixing the layout when a listing is missing an image
-        listing.imageURL ?= 'https://unsplash.it/g/780/438'
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
@@ -312,8 +312,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = (if data and data.listings then data.listings else [])
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       deferred.resolve()
+
+  Service.cleanListings = (listings) ->
+    _.map listings, (listing) ->
+      # fallback for fixing the layout when a listing is missing an image
+      listing.imageURL ?= 'https://unsplash.it/g/780/438'
+    _.filter listings, (listing) ->
+      !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
   Service.groupListings = (listings) ->
     openListings = []
@@ -405,7 +413,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
-      Service.getListingPreferences()
     ).catch( (response) ->
       deferred.reject(response)
     )
