@@ -857,6 +857,18 @@
         'container':
           templateUrl: 'short-form/templates/e7b-custom-preferences.html'
     })
+    .state('dahlia.short-form-application.custom-proof-preferences', {
+      url: '/custom-proof-preferences/:prefIdx'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService',
+        ($stateParams, ShortFormApplicationService) ->
+          customPref = ShortFormApplicationService.listing.customProofPreferences[$stateParams.prefIdx]
+          angular.copy(customPref, ShortFormApplicationService.currentCustomProofPreference)
+        ]
+    })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:

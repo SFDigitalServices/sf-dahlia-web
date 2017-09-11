@@ -262,18 +262,29 @@ do ->
         expect(ListingService.listing.groupedUnits).toEqual ListingService.groupUnitDetails(fakeUnits.units)
 
     describe 'Service.getListingPreferences', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.listing.preferences with the Preference results', ->
+      beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
         # just to divert from our hardcoding
         ListingService.listing.Id = 'fakeId-123'
         stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
         ListingService.getListingPreferences()
+
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+
+      it 'assigns Service.listing.preferences with the Preference results', ->
         httpBackend.flush()
         expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
+
+      it 'assigns Service.listing.customPreferences with the customPreferences without proof', ->
+        expect(ListingService.listing.customPreferences.length).toEqual 1
+        expect(ListingService.listing.customPreferences[0].preferenceName).toEqual 'DACA Fund'
+
+      it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->
+        expect(ListingService.listing.customProofPreferences.length).toEqual 1
+        expect(ListingService.listing.customProofPreferences[0].preferenceName).toEqual 'Artist Fund'
 
     describe 'Service.getListingsByIds', ->
       afterEach ->

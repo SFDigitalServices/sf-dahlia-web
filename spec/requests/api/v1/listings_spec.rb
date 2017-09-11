@@ -199,6 +199,6 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['preferences'].length).to eq(5)
+    expect(json['preferences'].length).to eq(7)
   end
 end
