@@ -114,9 +114,9 @@
         "TITLE_YOU": "Are you developmentally disabled?"
     },
     "C7_HOUSEHOLD_PRIORITIES": {
-        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability.",
-        "TITLE_HOUSEHOLD": "Are you or anyone on this application a person who needs any of the following ADA accessibility features?",
-        "TITLE_YOU": "Are you a person who needs any of the following ADA accessibility features?"
+        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability. Should your application be chosen, be prepared to provide supporting documentation from your physician.",
+        "TITLE_HOUSEHOLD": "Do you or anyone in your household need any of the following ADA accessibility features?",
+        "TITLE_YOU": "Do you need any of the following ADA accessibility features?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
