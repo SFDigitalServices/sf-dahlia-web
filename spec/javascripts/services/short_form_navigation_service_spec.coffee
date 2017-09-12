@@ -50,12 +50,12 @@ do ->
       },
       { name: 'Preferences', pages: [
           'preferences-intro'
-          'neighborhood-preference'
-          'adhp-preference'
-          'live-work-preference'
           'assisted-housing-preference'
           'rent-burden-preference'
           'rent-burden-preference-edit'
+          'neighborhood-preference'
+          'adhp-preference'
+          'live-work-preference'
           'preferences-programs'
           'custom-preferences'
           'general-lottery-notice'
