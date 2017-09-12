@@ -90,7 +90,7 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
-      customPreferencesClaimed: jasmine.createSpy()
+      claimedCustomPreference: jasmine.createSpy()
       resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -644,7 +644,7 @@ do ->
           scope.checkForCustomPreferences()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
 
-    describe 'customPreferencesClaimed', ->
-      it ' calls customPreferencesClaimed on ShortFormApplicationService', ->
-        scope.customPreferencesClaimed()
-        expect(fakeShortFormApplicationService.customPreferencesClaimed).toHaveBeenCalled()
+    describe 'claimedCustomPreference', ->
+      it ' calls claimedCustomPreference on ShortFormApplicationService', ->
+        scope.claimedCustomPreference()
+        expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
