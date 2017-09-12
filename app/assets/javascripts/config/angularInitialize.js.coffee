@@ -60,7 +60,7 @@
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
-        if (fromState.name == 'dahlia.short-form-application.confirmation')
+        if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
           leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
@@ -125,12 +125,15 @@
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
-      $document.scrollTop(0)
+      $document.scrollTop(0) unless ShortFormApplicationService.isShortFormPage($state.current)
 
       # After elements are rendered, make sure to re-focus keyboard input
       # on elements at the top of the page
       $timeout ->
-        SharedService.focusOnBody()
+        if ShortFormApplicationService.isShortFormPage($state.current)
+          SharedService.focusOnShortFormContent()
+        else
+          SharedService.focusOnBody()
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay

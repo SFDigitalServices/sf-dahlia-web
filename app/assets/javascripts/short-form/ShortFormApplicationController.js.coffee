@@ -62,6 +62,9 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.trackAutofill = ->
+    AnalyticsService.trackFormSuccess('Application', 'Start with these details')
+
   $scope.resetAndStartNewApp = ->
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     data =
@@ -74,6 +77,7 @@ ShortFormApplicationController = (
     $scope.householdMember = ShortFormApplicationService.householdMember
     $scope.householdMembers = ShortFormApplicationService.householdMembers
     delete $scope.application.autofill
+    AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
     $state.go('dahlia.short-form-application.name')
 
   $scope.atAutofillPreview = ->
@@ -308,6 +312,14 @@ ShortFormApplicationController = (
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
+    if ShortFormApplicationService.eligibleForAssistedHousing()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else if ShortFormApplicationService.eligibleForRentBurden()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+    else
+      $scope.checkForNeighborhoodOrLiveWork()
+
+  $scope.checkForNeighborhoodOrLiveWork = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
     else if ShortFormApplicationService.eligibleForADHP()
@@ -316,25 +328,6 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
       $scope.checkAfterLiveWork()
-
-  # this called after preferences programs
-  $scope.checkForCustomPreferences = ->
-    if $scope.listing.customPreferences.length > 0
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
-    else
-      $scope.checkIfNoPreferencesSelected()
-
-  $scope.customPreferencesClaimed = ->
-    ShortFormApplicationService.customPreferencesClaimed()
-
-  # this is called after custom-preferences or preferences-programs
-  $scope.checkIfNoPreferencesSelected = ->
-    if ShortFormApplicationService.applicantHasNoPreferences()
-      # only show general lottery notice if they have no preferences
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
-    else
-      # otherwise go to the Review section
-      $scope.goToLandingPage('Review')
 
   $scope.checkAfterLiveInTheNeighborhood = (preference) ->
     # preference is either neighborhoodResidence or antiDisplacement
@@ -346,12 +339,30 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    if ShortFormApplicationService.eligibleForAssistedHousing()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
-    else if ShortFormApplicationService.eligibleForRentBurden()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+    # after Live/Work, go to preferences-programs
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+
+  # this called after preferences programs
+  $scope.checkForCustomPreferences = ->
+    if $scope.listing.customPreferences.length > 0
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkIfNoPreferencesSelected()
+
+  $scope.claimedCustomPreference = (preference) ->
+    ShortFormApplicationService.claimedCustomPreference(preference)
+
+  $scope.eligibleForAssistedHousingOrRentBurden = ->
+    ShortFormApplicationService.eligibleForAssistedHousing() || ShortFormApplicationService.eligibleForRentBurden()
+
+  # this is called after custom-preferences or preferences-programs
+  $scope.checkIfNoPreferencesSelected = ->
+    if ShortFormApplicationService.applicantHasNoPreferences()
+      # only show general lottery notice if they have no preferences
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
+    else
+      # otherwise go to the Review section
+      $scope.goToLandingPage('Review')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -361,20 +372,19 @@ ShortFormApplicationController = (
     ShortFormApplicationService.refreshPreferences(type)
 
   $scope.preferenceWarning = ->
-    preferenceNotSelected = $scope.inputInvalid($scope.form.currentPreferenceType)
-    preferenceIncomplete = $scope.preferences[$scope.form.currentPreferenceType] &&
+    return false unless $scope.form.currentPreferenceType
+    if $scope.inputInvalid($scope.form.currentPreferenceType)
+      return 'preferenceNotSelected'
+    else if $scope.preferences[$scope.form.currentPreferenceType] &&
       $scope.form.applicationForm.$invalid &&
       $scope.form.applicationForm.$submitted
-    if preferenceNotSelected
-      $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
-    else if preferenceIncomplete
-      $translate.instant("ERROR.PLEASE_COMPLETE_PREFERENCE")
+        return 'preferenceIncomplete'
     else
       false
 
   $scope.checkForRentBurdenFiles = ->
     if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkForNeighborhoodOrLiveWork()
     else
       $scope.setRentBurdenError()
       $scope.handleErrorState()
@@ -403,16 +413,18 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.liveInTheNeighborhoodAddresses = ->
+  $scope.liveInTheNeighborhoodAddresses = (opts = {}) ->
     addresses = []
     _.each ShortFormApplicationService.liveInTheNeighborhoodMembers(), (member) ->
       street = member.home_address.address1
       addresses.push(street) unless _.isNil(street)
-    _.uniq(addresses)
+    addresses = _.uniq(addresses)
+    addresses = _.map(addresses, (x) -> "<strong>#{x}</strong>") if opts.strong
+    addresses
 
-  $scope.liveInTheNeighborhoodAddress = ->
+  $scope.liveInTheNeighborhoodAddress = (opts = {}) ->
     # turn the list of addresses into a string
-    $scope.liveInTheNeighborhoodAddresses().join(' and ')
+    $scope.liveInTheNeighborhoodAddresses(opts).join(' and ')
 
   $scope.cancelPreference = (preference) ->
     $scope.clearRentBurdenError() if preference == 'rentBurden'

@@ -1,9 +1,8 @@
 .app-card.form-card
-  short-form-header
-    h2.app-card_question
-      | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_TITLE' | translate}}
-    p.form-note.margin-bottom
-      | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_NOTES' | translate}}
+  short-form-header featured-leader="true"
+    h2.app-card_question translate="LABEL.GOOD_NEWS_FOR_HIGHER_RANKING"
+    .form-group
+      p.form-note.margin-bottom translate="E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_NOTES"
 
   .app-inner
     .form-group ng-class="{ error: inputInvalid('rentBurden') }"

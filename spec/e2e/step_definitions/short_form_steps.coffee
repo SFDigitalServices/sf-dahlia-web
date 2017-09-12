@@ -24,7 +24,8 @@ getSelectedLiveMember = () ->
   ).first()
 
 submitPage = ->
-  element(By.id('submit')).click()
+  btn = element(By.id('submit'))
+  scrollToElement(btn).then -> btn.click()
 
 checkCheckbox = (checkboxId, callback) ->
   checkbox = element(By.id(checkboxId))
@@ -243,6 +244,9 @@ module.exports = ->
       elem.isDisplayed()
     ).first().click()
 
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
     filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
     element.all(By.css('input[type="file"]')).then( (items) ->
       items[0].sendKeys(filePath)
@@ -273,8 +277,10 @@ module.exports = ->
     submitPage()
 
   @When 'I go back to the Contact page', ->
-    element(By.cssContainingText('.progress-nav_item', 'You')).click()
-    submitPage()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'You'))
+    scrollToElement(navItem).then ->
+      navItem.click()
+      submitPage()
 
   @When /^I change WorkInSF to "([^"]*)"$/, (workInSf) ->
     if workInSf == 'Yes'
@@ -283,20 +289,24 @@ module.exports = ->
       element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Household page', ->
-    element(By.cssContainingText('.progress-nav_item', 'Household')).click()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'Household'))
+    scrollToElement(navItem).then ->
+      navItem.click()
 
   @When 'I go back to the Live/Work preference page', ->
-    element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
-    # skip intro
-    submitPage()
-
-  @When 'I go back to the Live/Work preference page, skipping NRHP if exists', ->
-    element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
-    # skip intro
-    submitPage()
-    # skip NRHP (if exists)
-    if element(By.id('preferences-neighborhoodResidence'))
-      submitPage()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'Preferences'))
+    scrollToElement(navItem).then ->
+      navItem.click()
+      # skip intro
+      submitPage().then ->
+        # skip RB/AH (if exists)
+        rentBurden = element(By.id('preferences-rentBurden'))
+        assistedHousing = element(By.id('preferences-assistedHousing'))
+        if rentBurden || assistedHousing
+          submitPage()
+        # skip NRHP (if exists)
+        if element(By.id('preferences-neighborhoodResidence'))
+          submitPage()
 
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
@@ -391,6 +401,11 @@ module.exports = ->
 
   @When 'I wait', ->
     browser.pause()
+
+  # helper method to delineate tests
+  @When /^--I reach the "([^"]*)" step--/, (stepName) ->
+    # do nothing in particular
+    browser.waitForAngular()
 
   #######################
   # --- Error cases --- #

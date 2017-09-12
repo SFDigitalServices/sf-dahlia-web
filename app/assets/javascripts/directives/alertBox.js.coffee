@@ -38,9 +38,12 @@ angular.module('dahlia.directives')
       if scope.customMessage
         return scope.customMessage
       else if scope.preferenceWarning
-        return scope.preferenceWarning
+        if scope.preferenceWarning == 'preferenceNotSelected'
+          $translate.instant('ERROR.PLEASE_SELECT_PREFERENCE_OPTION')
+        else
+          $translate.instant('ERROR.PLEASE_COMPLETE_PREFERENCE')
       else
-        $translate.instant("ERROR.FORM_SUBMISSION")
+        $translate.instant('ERROR.FORM_SUBMISSION')
 
     scope.close = (e) ->
       e.preventDefault()
