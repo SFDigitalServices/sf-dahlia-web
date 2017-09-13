@@ -1,10 +1,25 @@
 .dash-container.tall
   section.row.collapse
+    / TO DO: Revert back to normal pattern when sign in works
     .medium-6.medium-centered.columns.fixed-width
+      / .small-10.small-centered.medium-6.medium-centered.columns.fixed-width.margin-top
       / back-to-application-link
+      form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
+        header.dash-header
+          span.header-badge
+            span.ui-icon.ui-static.ui-medium.i-color
+              svg
+                use xlink:href="#i-profile"
+          h1.dash-title.no-margin Sign In
 
-      p We are in process of adding new features to the site. Sign in is not available right now. Please try back later.
-      / form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
+        .block--short.bg-dust style="text-align: left;"
+            .ui-icon.ui-static.ui-large.i-color.left.margin-right style="min-height:100px;"
+              svg
+                use xlink:href="#i-warning"
+
+            .form-note.margin-bottom
+              p We are in process of adding new features to the site. <br>Sign in is not available right now.
+              p Please try back later.
       /   header.dash-header
       /     span.header-badge
       /       span.ui-icon.ui-static.ui-medium.i-color
