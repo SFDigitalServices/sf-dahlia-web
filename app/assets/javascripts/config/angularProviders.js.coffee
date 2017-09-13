@@ -1,9 +1,3 @@
-# allow trailing slashes and don't force case sensitivity on routes
-@dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
-  $urlMatcherFactoryProvider.caseInsensitive(true)
-  $urlMatcherFactoryProvider.strictMode(false)
-]
-
 @dahlia.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.useXDomain = true
   delete $httpProvider.defaults.headers.common["X-Requested-With"]

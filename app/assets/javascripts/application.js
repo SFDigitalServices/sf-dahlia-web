@@ -44,5 +44,6 @@
 //= require angular-http-etag
 //= require config/angularModules.js
 //= require config/angularRoutes.js
+//= require config/angularProviders.js
 //= require config/angularInitialize.js
 //= require_tree .
