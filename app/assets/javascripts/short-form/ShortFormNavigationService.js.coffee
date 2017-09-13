@@ -49,12 +49,12 @@ ShortFormNavigationService = (
       translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
       pages: [
         'preferences-intro'
-        'neighborhood-preference'
-        'adhp-preference'
-        'live-work-preference'
         'assisted-housing-preference'
         'rent-burden-preference'
         'rent-burden-preference-edit'
+        'neighborhood-preference'
+        'adhp-preference'
+        'live-work-preference'
         'preferences-programs'
         'custom-preferences'
         'general-lottery-notice'
@@ -73,13 +73,16 @@ ShortFormNavigationService = (
   ]
 
   Service.submitActions =
+    # intro
     'community-screening': {callback: ['validateCommunityEligibility']}
+    # you
     'name': {callback: ['checkPrimaryApplicantAge']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
     'alternate-contact-name': {path: 'alternate-contact-phone-address'}
     'alternate-contact-phone-address': {callback: ['goToLandingPage'], params: 'Household'}
+    # household
     'household-intro': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-members': {callback: ['validateHouseholdEligibility'], params: 'householdMatch'}
     'household-member-form': {callback: ['addHouseholdMember', 'checkPreferenceEligibility']}
@@ -90,22 +93,26 @@ ShortFormNavigationService = (
     'household-reserved-units-veteran': {callback: ['checkIfReservedUnits'], params: RESERVED_TYPES.DISABLED}
     'household-reserved-units-disabled': {path: 'household-priorities'}
     'household-priorities': {path: 'income-vouchers'}
+    # income
     'income-vouchers': {path: 'income'}
     'income': {callback: ['validateHouseholdEligibility'], params: 'incomeMatch'}
+    # preferences
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
+    'assisted-housing-preference': {callback: ['checkForNeighborhoodOrLiveWork']}
+    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
-    'assisted-housing-preference': {path: 'preferences-programs'}
-    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
-    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
     'preferences-programs': {callback: ['checkForCustomPreferences']}
     'custom-preferences': {callback: ['checkIfNoPreferencesSelected']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
+    # review
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
     'review-summary': {callback: ['confirmReviewedApplication']}
     'review-sign-in': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
+    # save + finish workflow
     'choose-draft': {callback: ['chooseDraft']}
     'choose-account-settings': {callback: ['chooseAccountSettings']}
 
@@ -220,26 +227,24 @@ ShortFormNavigationService = (
       when 'income-vouchers'
         'household-priorities'
       # -- Preferences
+      when 'rent-burden-preference'
+        , 'assisted-housing-preference'
+          'preferences-programs'
       when 'neighborhood-preference'
         , 'adhp-preference'
-          'preferences-intro'
+          Service.goBackToRentBurden()
       when 'live-work-preference'
         if ShortFormApplicationService.eligibleForNRHP()
           'neighborhood-preference'
         else if ShortFormApplicationService.eligibleForADHP()
           'adhp-preference'
         else
-          'preferences-intro'
-      when 'assisted-housing-preference'
-        Service.getPrevPageOfPreferencesSection()
-      when 'rent-burden-preference'
-        Service.getPrevPageOfPreferencesSection()
+          Service.goBackToRentBurden()
       when 'preferences-programs'
-        Service.getPrevPageOfPreferencesSection()
+        , 'general-lottery-notice'
+          Service.getPrevPageOfPreferencesSection()
       when 'custom-preferences'
         'preferences-programs'
-      when 'general-lottery-notice'
-        Service.getPrevPageOfPreferencesSection()
       # -- Review
       when 'review-optional'
         if ShortFormApplicationService.applicantHasNoPreferences()
@@ -292,23 +297,31 @@ ShortFormNavigationService = (
     else
       'household-intro'
 
-  Service.getPrevPageOfPreferencesSection = ->
-    if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForAssistedHousing()
+  Service.goBackToRentBurden = ->
+    if ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
-    else if Service._currentPage() == 'preferences-programs' && ShortFormApplicationService.eligibleForRentBurden()
+    else if ShortFormApplicationService.eligibleForRentBurden()
       'rent-burden-preference'
-    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length > 0
-      'custom-preferences'
-    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length == 0
-      'preferences-programs'
-    else if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
+    else
+      'preferences-intro'
+
+  Service.goBackToLiveWorkNeighborhood = ->
+    if ShortFormApplicationService.applicationHasPreference('neighborhoodResidence')
       'neighborhood-preference'
     else if ShortFormApplicationService.applicationHasPreference('antiDisplacement')
       'adhp-preference'
     else if ShortFormApplicationService.eligibleForLiveWork()
       'live-work-preference'
     else
-      'preferences-intro'
+      Service.goBackToRentBurden()
+
+  Service.getPrevPageOfPreferencesSection = ->
+    if Service._currentPage() == 'preferences-programs'
+      Service.goBackToLiveWorkNeighborhood()
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length > 0
+      'custom-preferences'
+    else if Service._currentPage() == 'general-lottery-notice' && ShortFormApplicationService.listing.customPreferences.length == 0
+      'preferences-programs'
 
   Service.getStartOfHouseholdDetails = ->
     # This returns the page in the household section that comes directly after

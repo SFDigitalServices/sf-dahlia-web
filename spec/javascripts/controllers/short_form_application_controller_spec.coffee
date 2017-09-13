@@ -94,7 +94,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
-      customPreferencesClaimed: jasmine.createSpy()
+      claimedCustomPreference: jasmine.createSpy()
       resetUserData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
@@ -441,15 +441,25 @@ do ->
         spyOn(fakeShortFormApplicationService, 'workInSfMembers').and.returnValue(members)
         spyOn(fakeShortFormApplicationService, 'liveInTheNeighborhoodMembers').and.returnValue([])
 
-      describe 'household is eligible for liveWork preferences',->
-        it 'routes user to neighborhood preference page', ->
-          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
+      describe 'household is eligible for RB/AH preferences',->
+        it 'routes user to assistedHousing preference page', ->
+          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.neighborhood-preference'
+          path = 'dahlia.short-form-application.assisted-housing-preference'
+          expect(state.go).toHaveBeenCalledWith(path)
+
+        it 'routes user to rentBurden preference page', ->
+          fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
+          scope.checkIfPreferencesApply()
+          path = 'dahlia.short-form-application.rent-burden-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
       describe 'preferences do not apply to household',->
         it 'routes user to general lottery notice page', ->
+          fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
+          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.applicantHasNoPreferences = jasmine.createSpy().and.returnValue(true)
@@ -457,8 +467,9 @@ do ->
           path = 'dahlia.short-form-application.preferences-programs'
           expect(state.go).toHaveBeenCalledWith(path)
 
-      describe 'household is not eligible for neighborhood but has live/work',->
+      describe 'household is not eligible for RB/AH, neighborhood but has live/work',->
         it 'routes user to live work preferences page', ->
+          fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForLiveWork = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
@@ -472,25 +483,10 @@ do ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.live-work-preference')
 
     describe 'checkAfterLiveWork', ->
-      describe 'when eligible for assisted housing', ->
-        it 'routes to assisted housing preference page', ->
-          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(true)
-          scope.checkAfterLiveWork()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.assisted-housing-preference')
-
-      describe 'eligible for rent burden', ->
-        it 'routes to rent burden preference page', ->
-          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(false)
-          spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(true)
-          scope.checkAfterLiveWork()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.rent-burden-preference')
-
-      describe 'not eligible for assisted housing or rent burden', ->
-        it 'routes to preferences-programs page', ->
-          spyOn(fakeShortFormApplicationService, 'eligibleForAssistedHousing').and.returnValue(false)
-          spyOn(fakeShortFormApplicationService, 'eligibleForRentBurden').and.returnValue(false)
-          scope.checkAfterLiveWork()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+      it 'goes to preferences-programs page', ->
+        scope.checkAfterLiveWork()
+        path = 'dahlia.short-form-application.preferences-programs'
+        expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
@@ -586,17 +582,19 @@ do ->
 
     describe 'checkForRentBurdenFiles', ->
       describe 'with rent burden opted out', ->
-        it 'expects state.go to be called with preference-programs', ->
+        it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
           scope.preferences.optOut.rentBurden = true
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
           scope.checkForRentBurdenFiles()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.neighborhood-preference')
 
       describe 'with complete rent burden files', ->
-        it 'expects state.go to be called with preference-programs', ->
+        it 'expects scope.checkForNeighborhoodOrLiveWork to be called to determine next page', ->
           scope.preferences.optOut.rentBurden = false
+          fakeShortFormApplicationService.eligibleForNRHP = jasmine.createSpy().and.returnValue(true)
           fakeShortFormApplicationService.hasCompleteRentBurdenFiles = -> true
           scope.checkForRentBurdenFiles()
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.neighborhood-preference')
 
       describe 'with incomplete rent burden files', ->
         it 'sets custom invalid message', ->
@@ -662,7 +660,7 @@ do ->
           scope.checkForCustomPreferences()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
 
-    describe 'customPreferencesClaimed', ->
-      it ' calls customPreferencesClaimed on ShortFormApplicationService', ->
-        scope.customPreferencesClaimed()
-        expect(fakeShortFormApplicationService.customPreferencesClaimed).toHaveBeenCalled()
+    describe 'claimedCustomPreference', ->
+      it ' calls claimedCustomPreference on ShortFormApplicationService', ->
+        scope.claimedCustomPreference()
+        expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()

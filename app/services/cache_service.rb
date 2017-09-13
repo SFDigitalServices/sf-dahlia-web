@@ -1,5 +1,7 @@
 # service class for pre-fetching + caching salesforce data
 class CacheService
+  ListingService = SalesforceService::ListingService
+
   def self.prefetch_listings(opts = {})
     if opts[:refresh_all]
       # on daily run, don't grab old listings for comparison
@@ -9,6 +11,8 @@ class CacheService
       # grab previous cached result
       old_listings = ListingService.listings(nil, false)
     end
+    # refresh oauth_token before beginnning
+    ListingService.oauth_token(true)
     # set requests to force cache write (if we `cache_single_listing`)
     ListingService.force = true
     new_listings = ListingService.listings(nil, false)

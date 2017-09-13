@@ -492,10 +492,8 @@ ShortFormApplicationService = (
     prefList = prefList.concat(customPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
 
-  Service.customPreferencesClaimed = ->
-    customPrefClaims = _.map Service.listing.customPreferences, (customPref) ->
-      Service.applicationHasPreference(customPref.listingPreferenceID)
-    return _.includes(customPrefClaims, true)
+  Service.claimedCustomPreference = (preference) ->
+    Service.applicationHasPreference(preference.listingPreferenceID)
 
   Service.applicationHasPreference = (preference) ->
     !! Service.preferences[preference]
@@ -582,6 +580,15 @@ ShortFormApplicationService = (
     fromState.name == 'dahlia.short-form-application.create-account' &&
       toState.name == 'dahlia.sign-in' &&
       Service.application.status.match(/submitted/i)
+
+  Service.isLeavingConfirmation = (toState, fromState) ->
+    Service.application.status.match(/submitted/i) &&
+      toState.name != 'dahlia.sign-in' &&
+      !Service.isShortFormPage(toState) &&
+      (fromState.name == 'dahlia.short-form-application.confirmation' ||
+      fromState.name == 'dahlia.short-form-application.review-submitted' ||
+      fromState.name == 'dahlia.short-form-application.create-account')
+
 
   Service.hittingBackFromConfirmation = (fromState, toState) ->
     # going from confirmation to a short form page that ISN'T "create-account" or "review"
@@ -765,6 +772,8 @@ ShortFormApplicationService = (
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
     Service.resetUserData(formattedApp)
+    # one last step, reconcile any uploaded files with your saved member + preference data
+    Service.refreshPreferences('all')
 
   Service.loadAccountApplication = (data) ->
     return false if _.isEmpty(data.application)
