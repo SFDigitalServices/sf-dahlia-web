@@ -1,20 +1,544 @@
 {
     "A1_INTRO": {
-        "TITLE": "Vamos a empezar en la aplicación:"
+        "CHOOSE_YOUR_LANGUAGE": "Elija su idioma",
+        "SIGN_IN_SAVE_TIME": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría controlar el estado de esta solicitud en cualquier momento.",
+        "TITLE": "Comencemos con su solicitud"
+    },
+    "A2_COMMUNITY_SCREENING": {
+        "SENIOR": {
+            "YOU_AND_EVERYONE": "¿Usted y todas las personas que figuran en esta solicitud son adultos mayores?",
+            "YOU_AND_EVERYONE_DESC": "Este es un edificio para adultos mayores y todos los solicitantes deben tener {{minAge}}+ años.",
+            "YOU_AND_EVERYONE_LABEL": "Sí, todas las personas tienen {{minAge}}+ años.",
+            "YOU_OR_ANYONE": "¿Usted o alguna de las personas que figuran en esta solicitud son adultos mayores?",
+            "YOU_OR_ANYONE_DESC": "Este es un edificio para adultos mayores y al menos un solicitante debe tener {{minAge}}+ años.",
+            "YOU_OR_ANYONE_LABEL": "Sí, al menos una persona tiene {{minAge}}+ años."
+        },
+        "VETERAN": {
+            "YOU_OR_ANYONE": "¿Usted o alguna de las personas que figuran en esta solicitud son veteranos de guerra?",
+            "YOU_OR_ANYONE_DESC": "Este es un edificio para veteranos de guerra y al menos un solicitante debe haber prestado servicios en las Fuerzas Armadas de los Estados Unidos.<br><br>Si se acepta su solicitud, tenga en cuenta que deberá proporcionar más información."
+        }
+    },
+    "A4_OVERVIEW": {
+        "P1": "Primero, le haremos preguntas sobre usted y las personas con quienes va a vivir. Luego, veremos si cumple con los requisitos necesarios para alguna de las preferencias de sorteo de viviendas asequibles y, en caso afirmativo, le solicitaremos que cargue archivos que demuestren dichas preferencias. Por último, le preguntaremos sobre sus ingresos.",
+        "P2": "Podrá revisar su solicitud antes de presentarla.",
+        "P3": "Tenga en cuenta que cada integrante del grupo familiar puede aparecer solamente en una solicitud para cada anuncio de vivienda. Si su solicitud incluye integrantes de la familia que figuran en otras solicitudes para este anuncio de vivienda, todos serán descalificados.",
+        "TITLE": "En qué consiste esta solicitud.",
+        "WARNING": "Cualquier declaración fraudulenta hará que su solicitud sea eliminada del sorteo."
+    },
+    "ALREADY_SUBMITTED": {
+        "MESSAGE": "Ya ha enviado una solicitud para este anuncio de vivienda.",
+        "TITLE": "¡Buenas noticias!"
+    },
+    "B0_AUTOFILL_PREVIEW": {
+        "START_FROM_SCRATCH": "Reinicie y comience de nuevo",
+        "START_WITH_AUTOFILL": "Comience con estos detalles"
+    },
+    "B1_NAME": {
+        "NAME_EDITABLE_VIA": "Estos campos pueden editarse mediante su",
+        "TITLE": "Primero, ¿cuál es su nombre?"
+    },
+    "B2A_VERIFY_ADDRESS": {
+        "TITLE": "Hemos localizado la siguiente dirección. Confirme si es correcta."
+    },
+    "B2_CONTACT": {
+        "APPLICANT_ADDRESS_DESC": "Necesitamos la dirección del lugar donde usted vive actualmente. Si no tiene vivienda, ingrese la dirección del refugio donde se aloja o una dirección cercana a su ubicación.",
+        "CLAIM_WORK_IN_SF": "Para solicitar esto como preferencia para el sorteo, deberá cargar la documentación probatoria que se indica en una pantalla posterior.",
+        "EMAIL_EDITABLE_VIA": "Puede editar su dirección de correo electrónico mediante su",
+        "ONLY_USE_YOUR_EMAIL": "Solo utilizaremos su dirección de correo electrónico para comunicarnos con usted en lo que respecta a su solicitud.",
+        "PROVIDE_AN_ADDRESS": "Proporcione una dirección donde pueda recibir actualizaciones y materiales sobre su solicitud.",
+        "TITLE": "Gracias, {{name}}. Ahora necesitamos saber cómo comunicarnos con usted.",
+        "WORK_IN_SF_DESC": "Esto significa que usted trabaja actualmente en San Francisco por lo menos el 75 % de sus horas laborales."
+    },
+    "B3_ALTERNATE_CONTACT_TYPE": {
+        "GOOD_ALTERNATE_CONTACT": "Un buen contacto alternativo es una persona que sabe cómo comunicarse con usted.",
+        "TITLE": "¿Hay alguna otra persona que usted nos autorice a contactar en caso de que no podamos comunicarnos con usted?"
+    },
+    "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
+        "CHOOSE_AN_ADDRESS": "Elija una dirección donde puedan recibir actualizaciones y materiales sobre su solicitud.",
+        "ONLY_USE_INFO": "Solo utilizaremos esta información para comunicarnos con dichas personas en lo que respecta a su solicitud.",
+        "TITLE": "Díganos cómo podemos comunicarnos con su contacto alternativo."
+    },
+    "B4_ALTERNATE_CONTACT_NAME": {
+        "TITLE": "¿Quién es su contacto alternativo?"
+    },
+    "C1A_HOUSEHOLD_OVERVIEW": {
+        "TITLE1": "Antes de agregar a otras personas, asegúrese de que no figuren en otras solicitudes para este anuncio de vivienda.",
+        "TITLE2": "Si incluye a una persona que ya ha enviado una solicitud, se descalificarán todas sus solicitudes."
+    },
+    "C1_HOUSEHOLD_INTRO": {
+        "TITLE": "A continuación, quisiéramos saber acerca de las demás personas que van a vivir con usted en la vivienda."
+    },
+    "C2_HOUSEHOLD_MEMBERS": {
+        "TITLE": "Infórmenos acerca de su grupo familiar."
+    },
+    "C3_HOUSEHOLD_MEMBER_FORM": {
+        "MEMBER_ADDRESS_DESC": "Necesitamos la dirección del lugar donde viven actualmente. Si no tienen vivienda, ingrese la dirección del refugio donde se alojan o una dirección cercana a donde se encuentren.",
+        "P1": "Podrá agregar más integrantes del grupo familiar en la próxima pantalla.",
+        "TITLE": "Infórmenos acerca de esta persona.",
+        "WORK_IN_SF_DESC": "Esto significa que dicha persona trabaja actualmente en San Francisco por lo menos el 75 % de sus horas laborales."
+    },
+    "C4_HOUSEHOLD_PUBLIC_HOUSING": {
+        "P1": "Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).",
+        "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud viven actualmente en una vivienda pública o de un proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD)?",
+        "TITLE_YOU": "¿Usted vive actualmente en una vivienda pública o de un proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD)?"
+    },
+    "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "HOW_MUCH_DOES_MEMBER_PAY": "¿Cuánto paga {{member}} en {{address}}?",
+        "HOW_MUCH_DO_MEMBERS_PAY": "¿Cuánto pagan {{members}} en {{address}}?",
+        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "¿Cuánto pagan {{members}} en {{address}}?",
+        "HOW_MUCH_DO_YOU_PAY": "¿Cuánto paga Usted en {{address}}?",
+        "TITLE_HOUSEHOLD": "¿Cuánto paga de alquiler mensual su grupo familiar?",
+        "TITLE_YOU": "¿Cuánto paga usted de alquiler mensual?"
+    },
+    "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
+        "P1": "Existen unidades reservadas disponibles en este edificio si al menos un solicitante ha prestado servicios en las Fuerzas Armadas de los Estados Unidos.<br><br>Si se acepta su solicitud, tenga en cuenta que deberá proporcionar más información.",
+        "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud son veteranos de guerra que han prestado servicios en las Fuerzas Armadas de los Estados Unidos?",
+        "TITLE_YOU": "¿Es usted un veterano que ha prestado servicios en las Fuerzas Armadas de los Estados Unidos?"
+    },
+    "C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
+        "P1": "Existen unidades reservadas disponibles en este edificio si uno o más solicitantes tienen una discapacidad del desarrollo.<br><br>Si se acepta su solicitud, tenga en cuenta que deberá proporcionar más información.",
+        "READ_MORE": "Existen unidades reservadas disponibles si uno o más solicitantes adultos cumplen con la definición de discapacidad del desarrollo indicada en el manual del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD), 4350.3, Capítulo 3, Sección 2, Figuras 2-5 y 3-6.<br><br>Una persona con una discapacidad del desarrollo, según se define en la sección 102(7) de la Ley de Asistencia para Discapacidades del Desarrollo y Declaración de Derechos (título 42 del United States Code [Código de los Estados Unidos, U.S.C.], sección 6001(8)), es decir, una persona con una discapacidad crónica grave que:<br><br>se atribuye a una deficiencia mental o física, o a ambas;<br><br>se manifiesta antes de que la persona tenga 22 años de edad;<br><br>probablemente continúe de manera indefinida;<br><br>ocasiona una limitación funcional considerable en tres o más de las siguientes áreas principales de la vida cotidiana:<br><br><ul><li>cuidado personal;</li><li>lenguaje receptivo-expresivo;</li><li>aprendizaje;</li><li>movilidad;</li><li>autonomía;</li><li>capacidad para vivir de manera independiente y con autosuficiencia económica;</li></ul>evidencia que la persona necesita una combinación y una serie de servicios de atención o tratamiento generales, especiales o interdisciplinarios, u otros servicios de duración prolongada o de por vida, planificados y coordinados de manera individual.<br><br>Las condiciones mencionadas anteriormente serán comprobadas por una verificación de discapacidad del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD) cuando la elegibilidad de la admisión se base en el formulario de discapacidad provisto en el momento de la entrevista inicial.",
+        "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud tienen una discapacidad del desarrollo?",
+        "TITLE_YOU": "¿Usted tiene una discapacidad del desarrollo?"
+    },
+    "C7_HOUSEHOLD_PRIORITIES": {
+        "P1": "Si usted es seleccionado para una unidad, la propiedad se adaptará a sus necesidades de la mejor manera posible.",
+        "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud necesitan alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?",
+        "TITLE_YOU": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?"
+    },
+    "CHOOSE_ACCOUNT_SETTINGS": {
+        "PRIMARY_CONTACT_OPTIONS": "Opciones de contacto principal"
+    },
+    "CREATE_ACCOUNT": {
+        "ALREADY_HAVE_ACCOUNT": "¿Ya tiene una cuenta?",
+        "CONTINUE_WITH_APPLICATION": "Continuar con la solicitud",
+        "CREATE_AN_ACCOUNT": "Crear una cuenta"
+    },
+    "D1_INCOME_VOUCHERS": {
+        "P1": "Por ejemplo: sección 8, programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH), Human Services Agencies (Agencias de Servicios Humanos, HSA), Housing Opportunities for Persons with AIDS Program (Programa de Oportunidades de Vivienda para Personas con Sida, HOPWA), Catholic Charities, AIDS Foundation, etc.",
+        "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud reciben vales para la vivienda o subsidios para la renta?",
+        "TITLE_YOU": "¿Usted recibe vales para la vivienda o subsidios para la renta?"
+    },
+    "D2_INCOME": {
+        "P1": "Agregue los ingresos del grupo familiar totales brutos (sin la deducción de impuestos) provenientes de salarios, beneficios y otras fuentes de todos los integrantes de la familia.",
+        "P2": "En este momento, solo debe indicar un monto total estimado. El total real se calculará si usted sale sorteado.",
+        "TITLE": "Pasemos a los ingresos."
+    },
+    "DOUBLE_SUBMITTED": {
+        "P1": "Tenga en cuenta que si una persona figura en dos o más solicitudes para el mismo aviso de vivienda, esas solicitudes serán descalificadas.",
+        "P2": "Para obtener más información o asistencia, comuníquese con el agente inmobiliario que figura en el anuncio de la vivienda o envíe un mensaje de correo electrónico a {{email}}.",
+        "TITLE": "Ya se ha enviado una solicitud para este aviso de vivienda desde esta cuenta."
+    },
+    "E1_PREFERENCES_INTRO": {
+        "GET_STARTED": "Comience",
+        "STEPS_TITLE": "Son solo 3 pasos sencillos:",
+        "STEP_1": "Fíjese si cumple con los requisitos para cada preferencia del sorteo.",
+        "STEP_2": "Marque las casillas para solicitar sus preferencias para el sorteo.",
+        "STEP_3": "Cargue los documentos requeridos desde su computadora o teléfono.",
+        "TITLE": "Las preferencias para el sorteo lo posicionan más arriba en la lista y le permiten una clasificación más alta en el sorteo."
+    },
+    "E2A_NEIGHBORHOOD_PREFERENCE": {
+        "INSTRUCTIONS_P1_PLURAL": "{{address}} le permite una mejor clasificación porque usted vive muy cerca de esta vivienda.",
+        "INSTRUCTIONS_P1_SINGULAR": "{{address}} le permite una mejor clasificación porque usted vive muy cerca de esta vivienda.",
+        "INSTRUCTIONS_P2": "Solo cargue un comprobante válido de esta dirección y <strong>también le daremos preferencia por ser residente de San Francisco.</strong>",
+        "PREFERENCE": {
+            "DESCRIPTION": "<strong>Preferencia por ser residente del vecindario</strong> significa que al menos un integrante del grupo familiar vive en el mismo distrito de inspección o en un área de ½ milla alrededor del lugar del proyecto.",
+            "NAME": "Preferencia por ser residente del vecindario",
+            "SHORT_DESCRIPTION": "Usted afirmó que un integrante de su grupo familiar vive en el mismo vecindario de la vivienda del anuncio.",
+            "TITLE": "Vivir en el vecindario"
+        }
+    },
+    "E2B_ADHP_PREFERENCE": {
+        "INSTRUCTIONS_P1_PLURAL": "{{address}} le permite cumplir con los requisitos para una mejor clasificación porque usted vive en un vecindario donde corre un mayor riesgo de ser desplazado.",
+        "INSTRUCTIONS_P1_SINGULAR": "{{address}} le permite cumplir con los requisitos para una mejor clasificación porque usted vive en un vecindario donde corre un mayor riesgo de ser desplazado.",
+        "INSTRUCTIONS_P2": "Solo cargue un comprobante válido de esta dirección y <strong>también le daremos preferencia por ser residente de San Francisco.</strong>",
+        "PREFERENCE": {
+            "DESCRIPTION": "<strong>Preferencia para vivienda por riesgo de desplazamiento</strong> Esta preferencia se aplica solo a proyectos nuevos. Al menos un integrante del grupo familiar debe vivir en una zona censal que se haya identificado como la que corre mayor riesgo de desplazamiento económico.",
+            "NAME": "Preferencia para vivienda por riesgo de desplazamiento",
+            "SHORT_DESCRIPTION": "Usted indicó que una persona de su grupo familiar vive en un vecindario en el cual las personas corren el mayor riesgo de ser desplazadas.",
+            "TITLE": "Vivir en el vecindario"
+        }
+    },
+    "E2C_LIVE_WORK_PREFERENCE": {
+        "DOCUMENT_MUST_SHOW_CORRECT_NAME": "El documento debe mostrar el nombre correcto, la dirección donde usted vive en San Francisco y una fecha dentro de los 45 días posteriores a su solicitud.",
+        "INSTRUCTIONS": "Para recibir la preferencia de sorteo que usted indica, debe cargar documentación válida que muestre el nombre correcto, una fecha dentro de los 45 días posteriores a su solicitud y la dirección donde usted vive o trabaja en San Francisco.<br><br>Si no puede verificarse la elegibilidad, su grupo familiar no recibirá la preferencia (pero usted no recibirá ninguna sanción).",
+        "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "La carta debe indicar la dirección del refugio donde se aloja o una dirección cercana a donde usted se encuentra y estar firmada por un trabajador social en papel membretado.",
+        "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "La carta debe verificar el empleo en San Francisco, con un mínimo del 75 % de horas laborales en la ciudad.",
+        "LIVE_SF_PREFERENCE": {
+            "DESCRIPTION": "Por lo menos un integrante del grupo familiar debe vivir en San Francisco.",
+            "TITLE": "Preferencia por vivir en San Francisco"
+        },
+        "LIVE_WORK_SF_PREFERENCE": {
+            "DESCRIPTION": "Al menos un integrante del grupo familiar debe vivir en San Francisco <b>o</b> trabajar en San Francisco por lo menos el 75 % de sus horas laborales.",
+            "LIVE_SF_PREFERENCE": "Vivir en San Francisco",
+            "TITLE": "Preferencia por vivir o trabajar en San Francisco",
+            "WORK_SF_PREFERENCE": "Trabajar en San Francisco"
+        },
+        "TITLE": "Según la dirección que usted haya ingresado, su grupo familiar podría cumplir con los requisitos para las siguientes preferencias de sorteo.",
+        "WORK_SF_PREFERENCE": {
+            "DESCRIPTION": "Al menos un integrante del grupo familiar debe trabajar en San Francisco por lo menos el 75 % de sus horas laborales.",
+            "TITLE": "Preferencia por trabajar en San Francisco"
+        }
+    },
+    "E3A_ASSISTED_HOUSING_PREFERENCE": {
+        "INSTRUCTIONS": "Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).<br><br>Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido.",
+        "PREFERENCE": {
+            "TITLE": "Preferencia por vivienda asistencial"
+        }
+    },
+    "E3B_RENT_BURDEN_PREFERENCE": {
+        "FORM_ERROR": "Complete la carga de los documentos o indique que no desea esta preferencia.",
+        "RENT_BURDEN_NOTES": "Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido y un comprobante del pago del alquiler.",
+        "RENT_BURDEN_PREFERENCE": "Preferencia por pago excesivo de alquiler",
+        "RENT_BURDEN_PREFERENCE_DESC": "Para grupos familiares que actualmente destinan más del 50 % de sus ingresos al pago del alquiler.",
+        "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "¿Necesita cargar otro documento para demostrar el monto total de alquiler que se paga en esta dirección?",
+        "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Cargar documentos para {{address}}",
+        "UPLOAD_FOR_EACH_ADDRESS": "Cargar documentos para cada dirección"
+    },
+    "E7_PREFERENCES_PROGRAMS": {
+        "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
+        "CERT_OF_PREFERENCE_DESC": "Si usted posee un Certificate of Preference (COP) de la antigua San Francisco Redevelopment Agency (Agencia de Reurbanización de San Francisco). La Agencia desplazó a los poseedores de COP durante las décadas de 1960 y 1970.",
+        "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
+        "DISPLACED_TENANTS_DESC": "Si usted posee un certificado de Displaced Tenant Housing Preference (DTHP). Los poseedores de certificados DTHP son inquilinos que fueron desalojados en virtud de la Ellis Act u Owner Move-In, o que fueron desplazados por un incendio.",
+        "HAVE_NOT_HEARD_OF_PREFERENCES": "Si no está enterado de estas preferencias, es probable que no tenga ninguna.",
+        "TITLE": "Existen preferencias de sorteo para personas que ya tienen certificados especiales."
+    },
+    "E8_GENERAL_LOTTERY_NOTICE": {
+        "TITLE": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda.",
+        "YOU_WILL_BE_IN_GENERAL_LOTTERY": "Usted participará en el sorteo general."
+    },
+    "ERROR": {
+        "ADDRESS": "Ingrese una dirección",
+        "ALTERNATE_CONTACT": "Indique un contacto alternativo",
+        "CITY": "Ingrese una ciudad",
+        "COMPLETE_UPLOADING_DOCUMENTS": "Complete la carga de los documentos indicados anteriormente.",
+        "CONFIRMED_ADDRESS": "Confirme la dirección sugerida.",
+        "DOB": "Ingrese una fecha de nacimiento válida.",
+        "DOB_PRIMARY_APPLICANT_AGE": "El solicitante principal debe tener 18 años de edad como mínimo.",
+        "EMAIL": "Ingrese una dirección de correo electrónico",
+        "FILE_MISSING": "Cargue un documento válido",
+        "FILE_UPLOAD": "El archivo es demasiado grande o no es un tipo de archivo admitido",
+        "FIRST_NAME": "Ingrese el primer nombre",
+        "FORM_SUBMISSION": "Deberá resolver algunos errores antes de avanzar.",
+        "HOUSEHOLD_INCOME_TOO_HIGH": "Sus ingresos familiares son muy altos.",
+        "HOUSEHOLD_INCOME_TOO_LOW": "Sus ingresos familiares son muy bajos.",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "Indique su parentesco con el integrante del grupo familiar",
+        "HOUSEHOLD_TOO_BIG": "El tamaño de su grupo familiar es demasiado grande.",
+        "HOUSEHOLD_TOO_SMALL": "El tamaño de su grupo familiar es demasiado pequeño.",
+        "INCOME": "Ingrese el monto de ingresos",
+        "INCOME_TIMEFRAME": "Ingrese el período de ingresos",
+        "LAST_NAME": "Ingrese el apellido",
+        "NOT_ELIGIBLE": "Lamentablemente, usted parece no reunir los requisitos necesarios para este anuncio de vivienda.",
+        "NOT_ELIGIBLE_DESCRIPTION": "Si cree que puede haber cometido un error, revise y corrija la información. Tenga en cuenta que si ingresa información falsa, su solicitud será descalificada.<br><br>Si la información que ingresó es correcta, lo invitamos a volver a visitar el sitio en el futuro para saber si hay más propiedades disponibles.",
+        "PHONE_NUMBER": "Ingrese un número de teléfono",
+        "PHONE_NUMBER_TYPE": "Indique el tipo de número de teléfono",
+        "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Proporcione sus respuestas en inglés",
+        "PLEASE_PUT_IN_A_RENT": "Ingrese un valor de alquiler",
+        "PLEASE_SELECT_AN_OPTION": "Seleccione una de las opciones de arriba.",
+        "PLEASE_SELECT_PREFERENCE_CONTENT": "Para tener mejores probabilidades en el sorteo, le recomendamos cargar los documentos que validen la preferencia.",
+        "PLEASE_SELECT_PREFERENCE_OPTION": "Para avanzar, seleccione y complete una de las opciones a continuación.",
+        "RELATIONSHIP": "Ingrese el parentesco.",
+        "SENIOR_ANYONE": "Al menos un integrante de su grupo familiar debe ser un adulto mayor de {{minAge}}+",
+        "SENIOR_EVERYONE": "Todos los integrantes de su grupo familiar deben ser adultos mayores de {{minAge}}+",
+        "SEXUAL_ORIENTATION": "Ingrese su orientación sexual",
+        "STATE": "Ingrese el estado",
+        "TERMS": "Para poder continuar, debe aceptar los términos.",
+        "VETERAN_ANYONE": "Al menos un integrante de su grupo familiar debe ser un veterano de guerra.",
+        "ZIP": "Ingrese un código postal"
+    },
+    "F0_REVIEW_OPTIONAL": {
+        "P1": "Estas preguntas son opcionales y no afectarán su elegibilidad para acceder a la vivienda. Se mantendrá la privacidad de sus respuestas.",
+        "TITLE": "Ayúdenos a garantizar que cumplamos con nuestro objetivo de prestar servicio a todas las personas."
+    },
+    "F1A_REVIEW_SIGN_IN": {
+        "CONTINUE_WITHOUT_AN_ACCOUNT": "Continuar sin ninguna cuenta",
+        "INSTRUCTIONS": "Registrarse le permitirá guardar su información en su cuenta y verificar el estado de esta solicitud en cualquier momento.",
+        "TITLE": "¡Ya casi está por finalizar!"
+    },
+    "F1_REVIEW_SUMMARY": {
+        "TITLE": "Dedique unos momentos a revisar su información antes de enviar su solicitud."
+    },
+    "F2_REVIEW_TERMS": {
+        "P1": "Esta solicitud debe enviarse antes del {{fecha}}.",
+        "P2": "El agente de arrendamiento se comunicará con los solicitantes según la clasificación que hayan obtenido en el sorteo y el orden de preferencia hasta que se hayan ocupado todas las vacantes.",
+        "P3": "Se verificará toda la información que haya proporcionado y se confirmará su elegibilidad. Si ha hecho declaraciones fraudulentas o si un integrante del grupo familiar aparece en más de una solicitud para este aviso de vivienda, su solicitud se eliminará del sorteo. Si no podemos verificar una preferencia que haya solicitado para el sorteo de la vivienda, usted no recibirá esa preferencia; sin embargo, no recibirá ninguna otra sanción.",
+        "P4": "Si su solicitud sale favorecida en la lotería, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la documentación de respaldo requerida. Para obtener más información, comuníquese con el promotor inmobiliario o el agente de arrendamiento que figura en el aviso de vivienda. El hecho de completar esta solicitud para el sorteo no le da derecho a una vivienda ni implica que usted reúne los requisitos para recibir una vivienda; todos los solicitantes serán evaluados tal como se detalla en los Criterios de Selección de los Residentes de la propiedad.<br><br>Una vez que envíe su solicitud en línea, ya no podrá modificarla.",
+        "P5": "Declaro que la información que antecede es verdadera y exacta, y acepto que cualquier declaración errónea, fraudulenta o negligente que figure en esta solicitud ocasionará que sea eliminado del sorteo.",
+        "TITLE": "Términos"
+    },
+    "G1_CONFIRMATION": {
+        "BROWSE_MORE_LISTINGS": "Ver más anuncios de viviendas",
+        "CREATE_ACCOUNT_BODY": "Crear una cuenta le permitirá guardar su información para solicitudes futuras y verificar el estado de esta solicitud en cualquier momento.",
+        "CREATE_ACCOUNT_TITLE": "¿Desea crear una cuenta?",
+        "GO_TO_MY_APPLICATIONS": "Ir a Mis solicitudes",
+        "LOTTERY_NUMBER": "Este es su número para el sorteo",
+        "NEXT_STEPS_BODY1": "El sorteo se realizará el",
+        "NEXT_STEPS_BODY2": "No es necesario que asista al lugar donde se realizará el sorteo. Los resultados se publicarán en {{listingLink}}. Consulte el anuncio de la vivienda para conocer la fecha de publicación de los resultados del sorteo. <br><br>El agente de arrendamiento se comunicará con los solicitantes en el orden de clasificación que hayan obtenido en el sorteo hasta que se ocupen las vacantes. Si su solicitud sale favorecida en el sorteo, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la documentación de respaldo requerida.",
+        "NEXT_STEPS_TITLE": "Qué esperar a continuación",
+        "NO_THANKS_IM_DONE": "No, gracias; ya finalicé.",
+        "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Anote su número del sorteo y manténgalo en un lugar seguro. También le enviaremos dicho número a su casilla de correo electrónico, en caso de que la haya proporcionado.",
+        "TITLE": "Gracias. Hemos recibido su solicitud para",
+        "VIEW_AND_PRINT_A_COPY": "Ver la solicitud presentada e imprimir una copia"
     },
     "HEADER": {
         "TRANSLATE_BAR_EXPERT_NOTICE": "Esta página fue traducida por un hablante nativo.",
         "TRANSLATE_BAR_GOOGLE_NOTICE": "Esta página ha sido traducida por Google Translate."
     },
+    "LABEL": {
+        "ADA_ACCESSIBLE_UNITS": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
+        "ADDITIONAL_PHONE": "Teléfono adicional",
+        "ADDRESS": "Domicilio",
+        "ADDRESS_1": "Dirección",
+        "ADDRESS_2": "Apartamento o unidad n.º",
+        "ADD_HOUSEHOLD_MEMBER": "Agregar integrante de la familia",
+        "AGENCY": "Agencia",
+        "ALTERNATE_CONTACT": "Contacto alternativo",
+        "ALTERNATE_CONTACT_AGENCY": "¿Dónde trabaja su trabajador social o su asesor de vivienda?",
+        "ALTERNATE_CONTACT_NAME": "Nombre del contacto alternativo",
+        "AMERICAN_INDIAN_ALASKAN_NATIVE": "Indígena estadounidense/Nativo de Alaska",
+        "AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK": "Indígena estadounidense/Nativo de Alaska y Negro/Afroamericano",
+        "AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE": "Indígena estadounidense/Nativo de Alaska y Blanco",
+        "APPLICANT_ADDITIONAL_PHONE": "Tengo un número de teléfono adicional",
+        "APPLICANT_EMAIL": "Su dirección de correo electrónico:",
+        "APPLICANT_ETHNICITY": "¿Cómo describiría su origen étnico?",
+        "APPLICANT_GENDER": "¿Cuál es su sexo?",
+        "APPLICANT_INCOME_TOTAL": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
+        "APPLICANT_NO_EMAIL": "No tengo dirección de correo electrónico",
+        "APPLICANT_NO_PHONE": "No tengo teléfono",
+        "APPLICANT_PHONE": "Su número de teléfono",
+        "APPLICANT_PREFERENCES_DOCUMENT_NAME": "¿A nombre de quién está el documento que va a cargar?",
+        "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "¿Qué integrante del grupo familiar tiene esta preferencia?",
+        "APPLICANT_RACE": "¿Cómo describiría su raza?",
+        "APPLICANT_SECOND_PHONE": "Su número de teléfono secundario",
+        "APPLICANT_SEPARATE_ADDRESS": "Envíen mi correspondencia a una dirección diferente",
+        "APPLICANT_SEXUAL_ORIENTATION": "¿Cómo describiría su orientación sexual o identidad sexual?",
+        "APPLICATION_CONTACT_DETAILS": "Detalles de contacto de la solicitud",
+        "ASIAN": "Asiático",
+        "ASIAN_WHITE": "Asiático y Blanco",
+        "AUNT": "Tía",
+        "BISEXUAL": "Bisexual",
+        "BLACK_AFRICAN_AMERICAN": "Negro/Afroamericano",
+        "BLACK_AFRICAN_AMERICAN_WHITE": "Negro/Afroamericano y Blanco",
+        "CANCEL": "Cancelar",
+        "CANCEL_ADDING_DOCUMENTS": "Cancelar la carga de documentos",
+        "CANCEL_UPLOAD": "Cancelar la carga",
+        "CHILD": "Hijo(a)",
+        "CITY": "Nombre de la ciudad",
+        "CLEAR": "Borrar",
+        "CONTACT_EMAIL": "Dirección de correo electrónico del contacto",
+        "CONTACT_MAILING_ADDRESS": "Dirección postal del contacto",
+        "CONTACT_PHONE_NUMBER": "Número de teléfono del contacto",
+        "CONTINUE_APPLICATION": "Continuar con la solicitud",
+        "COPY_OF_LEASE": "Copia del contrato de alquiler",
+        "COUSIN": "Primo",
+        "DOB": "Fecha de nacimiento",
+        "DOB_DAY": "Día",
+        "DOB_MONTH": "Mes",
+        "DOB_YEAR": "Año",
+        "DONE_ADDING_PEOPLE": "Ya he agregado a todas las personas",
+        "DONE_WITH_THIS_ADDRESS": "Ya he finalizado con esta dirección",
+        "DONT_WANT_PREFERENCE": "No deseo esta preferencia para el sorteo",
+        "EDITED": "Editado",
+        "EMAIL_ADDRESS": "Correo electrónico",
+        "FAMILY_MEMBER": "Integrante de la familia",
+        "FEMALE": "Femenino",
+        "FILE_ATTACHED": "{{file}} adjunto",
+        "FIND_OUT_MORE_ABOUT_PREFERENCES": "Más información sobre esta preferencia",
+        "FIRST_NAME": "Primer nombre",
+        "FRIEND": "Amigo(a)",
+        "GRANDPARENT": "Abuelo(a)",
+        "GREAT_GRANDPARENT": "Bisabuelo(a)",
+        "HISPANIC_LATINO": "Hispano/Latino",
+        "HOUSEHOLD_DETAILS": "Detalles del grupo familiar",
+        "HOUSEHOLD_MEMBER": "Integrante del grupo familiar",
+        "HOUSEHOLD_MEMBERS": "Integrantes del grupo familiar",
+        "HOUSEHOLD_MEMBER_CANCEL": "Cancelar la incorporación de esta persona",
+        "HOUSEHOLD_MEMBER_DELETE": "Borrar a esta persona",
+        "HOUSEHOLD_MEMBER_NAME": "Nombre del integrante del grupo familiar",
+        "HOUSEHOLD_MEMBER_RELATIONSHIP": "¿Qué parentesco tiene con usted?",
+        "HOUSEHOLD_MEMBER_SAVE": "Guardar al integrante del grupo familiar",
+        "HOUSEHOLD_MEMBER_UPDATE": "Actualizar al integrante del grupo familiar",
+        "HOW_DID_YOU_HEAR_ABOUT_THIS": "¿Cómo se enteró sobre este aviso de vivienda?",
+        "INCOME": "Ingresos",
+        "INCOME_PLACEHOLDER": "Total de todas las fuentes de ingresos",
+        "IN_LAW": "Pariente político",
+        "LAST_NAME": "Apellido",
+        "LIVE_ALONE": "Viviré solo",
+        "LIVE_IN_PUBLIC_HOUSING_OR_HUD": "Vive en vivienda asistencial",
+        "MAILING_ADDRESS": "Dirección postal",
+        "MALE": "Masculino",
+        "MATCHED": "Compatible",
+        "MEMBER_SAME_ADDRESS": "¿Tienen la misma dirección que usted?",
+        "MEMBER_WORK_IN_SF": "¿Trabajan en San Francisco?",
+        "MIDDLE_NAME": "Segundo nombre",
+        "MOBILITY_IMPAIRMENTS": "Para personas con problemas de movilidad",
+        "MONTHLY_RENT": "Alquiler mensual",
+        "MY_APPLICATION": "Mi solicitud",
+        "NAME": "Nombre",
+        "NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER": "Nativo de Hawái/Isleño del Pacífico",
+        "NEPHEW": "Sobrino",
+        "NIECE": "Sobrina",
+        "NOT_HISPANIC_LATINO": "No hispano/No latino",
+        "NOT_LISTED": "No especificado en la lista",
+        "NO_ALTERNATE_CONTACT": "No tengo un contacto alternativo",
+        "NO_RENT_PAID": "No pago alquiler",
+        "ON_THE_LISTING": "en el aviso de vivienda",
+        "ORIGINAL_APPLICATION": "Solicitud original",
+        "OTHER": "Otro",
+        "OTHER_MULTIRACIAL": "Otro/Multirracial",
+        "OTHER_PEOPLE": "Otras personas vivirán conmigo",
+        "PARENT": "Padre/madre",
+        "PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES": "Personas con discapacidades del desarrollo",
+        "PER_MONTH": "por mes",
+        "PER_YEAR": "por año",
+        "PHONE": "Teléfono",
+        "PHONE_CELL": "Teléfono celular",
+        "PHONE_HOME": "Particular",
+        "PHONE_WORK": "Laboral",
+        "PLEASE_SELECT_ALL_THAT_APPLY": "Marque todas las opciones que correspondan.",
+        "PLEASE_SELECT_ONE": "Seleccione una opción.",
+        "PLEASE_SELECT_PREFERENCE": "Seleccione la preferencia para el sorteo:",
+        "PREFERENCES": "Preferencias",
+        "PREFERENCE_OPTION_TO_CLAIM": "¿Qué preferencia desea solicitar?",
+        "PREFERENCE_PROOF_ADDRESS_DOCUMENTS": "¿Qué tipo de documento desea cargar para demostrar que vive en esa dirección?",
+        "PREFERENCE_PROOF_DOCUMENTS": "¿Qué documento va a cargar para demostrar su elegibilidad?",
+        "PRIMARY_USER": "Solicitante principal",
+        "PROOF": {
+            "CABLE_BILL": "Factura de internet y de cable",
+            "CANCELLED_CHECK": "Cheque cancelado",
+            "DEBIT_FROM_BANK": "Débito de su cuenta bancaria",
+            "ELECTRIC_BILL": "Factura de electricidad",
+            "GARBAGE_BILL": "Factura del servicio de recolección de basura",
+            "GAS_BILL": "Factura de gas",
+            "HOMELESSNESS": "Carta que certifica la falta de vivienda",
+            "LETTER_FROM_EMPLOYER": "Carta del empleador",
+            "MONEY_ORDER": "Giro postal",
+            "ONLINE_PAYMENT": "Captura de pantalla de pago por internet",
+            "PAYSTUB_EMPLOYER": "Recibo de sueldo con la dirección del empleador",
+            "PAYSTUB_HOME": "Recibo de sueldo (con la dirección de la vivienda)",
+            "PUBLIC_BENEFITS": "Registro de beneficios públicos",
+            "SCHOOL_RECORD": "Registro escolar",
+            "TELEPHONE_BILL": "Factura telefónica (solamente del teléfono fijo)",
+            "WATER_BILL": "Factura del servicio de agua"
+        },
+        "PROOF_OF_RENT": "Comprobante de alquiler",
+        "QUESTIONING_UNSURE": "En duda/No lo sabe aún",
+        "RECENT_APPLICATION": "Solicitud reciente",
+        "REGISTERED_DOMESTIC_PARTNER": "Pareja doméstica registrada",
+        "RENT_AT_ADDRESS": "Alquila en {{address}}",
+        "SELECT_ONE": "Seleccione uno",
+        "SIBLING": "Hermano(a)",
+        "SIGN_IN_TO_CONTINUE": "Inicie sesión para continuar",
+        "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Trabajador social o asesor de vivienda",
+        "SPOUSE": "Cónyuge",
+        "START_UPLOAD": "Iniciar la carga",
+        "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "Tendrá la oportunidad de solicitar otras preferencias.",
+        "STRAIGHT_HETEROSEXUAL": "Heterosexual",
+        "SUGGESTED_ADDRESS": "Dirección sugerida",
+        "TRANS_FEMALE": "Transgénero de sexo femenino",
+        "TRANS_MALE": "Transgénero de sexo masculino",
+        "UNCLE": "Tío",
+        "UPDATE": "Actualizar",
+        "UPLOADED": "Cargado",
+        "UPLOADING": "Cargando",
+        "UPLOAD_ADDITIONAL_PROOF": "Cargar comprobante adicional",
+        "UPLOAD_COPY_OF_LEASE": "Cargar copia del contrato de alquiler",
+        "UPLOAD_LEASE_DESCRIPTION": "Cargue la primera página o la página que muestre el monto del alquiler.",
+        "UPLOAD_PROOF_INSTRUCTIONS_1": "Si está utilizando un teléfono inteligente, puede tomar una fotografía.",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "El tamaño máximo del archivo es 5 MB.<br>Tipos de archivo admitidos: PDF, JPG, PNG.",
+        "UPLOAD_PROOF_OF_PREFERENCE": "Cargar comprobante de la preferencia",
+        "UPLOAD_PROOF_OF_RENT_PAYMENT": "Cargar comprobante del pago del alquiler",
+        "UPLOAD_RENT_DESCRIPTION": "Proporcione un comprobante de su alquiler mensual. Usted afirmó que su alquiler en esta dirección es de: {{rent}} <br/><br/>Puede cargar varios documentos si su grupo familiar paga con varios cheques, giros monetarios, etc.",
+        "VETERANS_IN_HOUSEHOLD": "Veteranos de guerra en el grupo familiar",
+        "VISION_IMPAIRMENTS": "Para personas con impedimentos visuales",
+        "VOUCHERS_AND_SUBSIDIES": "Vales para la vivienda o Subsidios para la renta",
+        "WHAT_TYPE_OF_NUMBER": "¿Qué tipo de número es este?",
+        "WHITE": "Blanco",
+        "WORK_IN_SF": "¿Trabaja usted en San Francisco?",
+        "YOUR_DOB": "Su fecha de nacimiento",
+        "YOUR_GENDER": "Especifique su sexo",
+        "YOUR_NAME": "Su nombre",
+        "YOUR_SEXUAL_ORIENTATION": "Especifique su orientación sexual",
+        "YOU_HAVE_CLAIMED": "Usted ha solicitado:",
+        "ZIP": "Código",
+        "ZIPCODE": "Código postal"
+    },
+    "LISTINGS": {
+        "FOR_INCOME_CALCULATIONS": "Para el cálculo de los ingresos, tenga en cuenta que el tamaño del grupo familiar incluye a todas las personas (de cualquier edad) que viven en la unidad.",
+        "HOUSEHOLD_MAXIMUM_INCOME": "Ingresos anuales del grupo familiar",
+        "TELL_US_YOUR_HOUSEHOLD_SIZE": "Infórmenos el tamaño y los ingresos del grupo familiar y destacaremos los anuncios de vivienda que podrían ser aptos para usted."
+    },
+    "MY_APPLICATIONS": {
+        "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "¿Está seguro de que desea eliminar su solicitud para este aviso de vivienda?",
+        "NO_APPLICATIONS": "Parece que usted aún no ha enviado ninguna solicitud para un aviso de vivienda.",
+        "TITLE": "Mis solicitudes",
+        "YOUR_LOTTERY_NUMBER_IS": "Su número de sorteo es el #{{lotteryNumber}}"
+    },
+    "PAGE_TITLE": {
+        "MY_APPLICATIONS": "Mis solicitudes"
+    },
+    "PRIVACY_POLICY": {
+        "QUESTIONS_P1": "Si tiene preguntas sobre esta Política de privacidad, puede comunicarse con nosotros llamando al {{telLink}} o enviando un mensaje a {{emailLink}}.",
+        "QUESTIONS_TITLE": "Preguntas",
+        "TITLE": "Política de privacidad"
+    },
+    "RESET_PASSWORD": {
+        "TITLE": "Restablecer la contraseña"
+    },
+    "REVIEW_APPLICATION": {
+        "BACK_TO_MY_APPLICATIONS": "Volver a Mis solicitudes",
+        "GENERAL_LOTTERY_NOTICE": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda. Usted ingresará al sorteo general.",
+        "PRINT_A_COPY": "Imprimir una copia para sus registros",
+        "TITLE": "Esta es la información que usted presentó.",
+        "VIEW_ORIGINAL_LISTING": "Ver el aviso de vivienda original",
+        "YOUR_LOTTERY_NUMBER": "Su número del sorteo"
+    },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "Grupo familiar",
+        "INCOME": "Ingresos",
+        "PREFERENCES": "Preferencias",
+        "REVIEW": "Revisar",
+        "YOU": "Usted"
+    },
+    "SIGN_IN": {
+        "DONT_HAVE_ACCOUNT": "¿No tiene una cuenta?",
+        "SIGNED_IN_SUCCESSFULLY": "Ha iniciado sesión satisfactoriamente.",
+        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
+    },
     "T": {
-        "APPLICATION": "Aplicación",
-        "APPLICATION_DUE": "Fecha de Vencimiento",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Estás seguro de que te gustaría navegar lejos de esta página? Perderá toda la información que haya introducido en la aplicación para este listado. Si desea guardar su información para finalizar la aplicación más adelante, haga clic en el botón 'Guardar y terminar más tarde'.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Estás seguro de que quieres salir de esta página? Si vincula su aplicación a una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Estás seguro de que quieres salir de esta página? Si crea una cuenta, hará más fácil comprobar el estado de la aplicación y completar las futuras aplicaciones.",
-        "GET_STARTED": "Empezar",
-        "SESSION_INACTIVITY": "Su sesión expirará en un minuto debido a la inactividad. Usted perderá toda la información que haya ingresado en la aplicación para este listado si decide no responder.",
-        "SESSION_INACTIVITY_CONFIRMATION": "Su sesión expirará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta aplicación en una cuenta en la que pueda realizar un seguimiento del estado de su aplicación en cualquier momento.",
-        "SESSION_INACTIVITY_LOGGED_IN": "Su sesión expirará en un minuto debido a la inactividad. Usted perderá cualquier información no guardada y será desconectado si decide no responder."
+        "APPLICATION": "Solicitud",
+        "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
+        "APPLICATION_DUE": "Vencimiento de la solicitud",
+        "APPLICATION_SUBMITTED": "Solicitud presentada",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Está seguro de que desea salir de esta página? Perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para completar la solicitud en otro momento, haga clic en el botón “Guardar y finalizar en otro momento”.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
+        "BACK": "Retroceder",
+        "CLOSE": "Cerrar",
+        "CONFIRM": "Confirmar",
+        "DELETE": "Eliminar",
+        "EDIT": "Editar",
+        "IN_PROGRESS": "En curso",
+        "I_AGREE": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
+        "NEVER_SUBMITTED": "Nunca se presentó",
+        "NEXT": "Siguiente",
+        "NO": "No",
+        "NONE": "Ninguno",
+        "OCCUPANCY": "Ocupación",
+        "OK": "Aceptar",
+        "OPTIONAL": "Opcional",
+        "OR": "o",
+        "PER_MONTH": "por mes",
+        "PER_YEAR": "por año",
+        "SAVE_AND_FINISH_LATER": "Guardar y finalizar en otro momento",
+        "SESSION_INACTIVITY": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda.",
+        "SESSION_INACTIVITY_CONFIRMATION": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta solicitud en una cuenta que le permite realizar un seguimiento del estado de su solicitud en cualquier momento.",
+        "SESSION_INACTIVITY_LOGGED_IN": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, su sesión se cerrará y perderá toda la información que no haya guardado.",
+        "SKIP_TO_MAIN_CONTENT": "Ir al contenido principal",
+        "STATUS": "Estado",
+        "SUBMIT": "Presentar",
+        "SUBMITTED": "Presentada",
+        "YES": "Sí",
+        "YOU": "Usted"
     }
 }

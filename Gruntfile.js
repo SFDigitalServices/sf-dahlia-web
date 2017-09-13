@@ -65,7 +65,8 @@ module.exports = function(grunt) {
          'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
          'translated-short-description="([A-Z\.\-\_]*)"',
-         'translatedLabel: \'([A-Z\.\-\_]*)\''
+         'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         /\', t\(\'([A-Z\.\-\_]*)\'\)/
        ],
       namespace: true,
       lang:     ['locale-en'],
