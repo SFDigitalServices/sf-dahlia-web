@@ -15,7 +15,15 @@ module ApplicationHelper
     Rails.application.assets.each_file do |f|
       next if f !~ %r{images/|json/} || f =~ %r{favicon/}
       filename = Pathname(f).basename.to_s
-      asset_paths[filename] = ActionController::Base.helpers.asset_path(filename)
+      f = if defined?(asset_path)
+            # this method is more "correct" in dev than the below one,
+            # which can require server restart to pickup locale-en.json changes
+            asset_path(filename)
+          else
+            # only needed for asset_redirect in ApplicationController
+            ActionController::Base.helpers.asset_path(filename)
+          end
+      asset_paths[filename] = f
     end
     asset_paths
   end
