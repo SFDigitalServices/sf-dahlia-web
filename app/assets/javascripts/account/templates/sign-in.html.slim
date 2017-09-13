@@ -1,31 +1,32 @@
 .dash-container.tall
   section.row.collapse
     .medium-6.medium-centered.columns.fixed-width
-      back-to-application-link
+      / back-to-application-link
 
-      form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
-        header.dash-header
-          span.header-badge
-            span.ui-icon.ui-static.ui-medium.i-color
-              svg
-                use xlink:href="#i-profile"
-          h1.dash-title.no-margin Sign In
+      p We are in process of adding new features to the site. Sign in is not available right now. Please try back later.
+      / form#form-wrapper.dash-card novalidate="" name="form.signIn" ng-submit="signIn()"
+      /   header.dash-header
+      /     span.header-badge
+      /       span.ui-icon.ui-static.ui-medium.i-color
+      /         svg
+      /           use xlink:href="#i-profile"
+      /     h1.dash-title.no-margin Sign In
 
-        alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
-        alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.redirect" ng-if="accountSuccess.messages.redirect")
+      /   alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
+      /   alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.redirect" ng-if="accountSuccess.messages.redirect")
 
-        .dash-card-inner.inset.border-bottom
+      /   .dash-card-inner.inset.border-bottom
 
-          sign-in-fields
+      /     sign-in-fields
 
-          .form-group
-            p.t-small.c-steel.text-center.padding-top.no-margin
-              input.button.no-margin.primary#sign-in type="submit" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN' | translate}}" ng-disabled="submitDisabled"
-        footer.dash-header
-          h2.dash-title
-            | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
-          p.t-small.c-steel
-            a.button.no-margin ui-sref="dahlia.short-form-application.create-account" data-event="gtm-create-account" ng-if="rememberedShortFormState"
-              | {{'LABEL.CREATE_ACCOUNT' | translate}}
-            a.button.no-margin ui-sref="dahlia.create-account" data-event="gtm-create-account" ng-if="!rememberedShortFormState"
-              | {{'LABEL.CREATE_ACCOUNT' | translate}}
+      /     .form-group
+      /       p.t-small.c-steel.text-center.padding-top.no-margin
+      /         input.button.no-margin.primary#sign-in type="submit" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN' | translate}}" ng-disabled="submitDisabled"
+      /   footer.dash-header
+      /     h2.dash-title
+      /       | {{'SIGN_IN.DONT_HAVE_ACCOUNT' | translate}}
+      /     p.t-small.c-steel
+      /       a.button.no-margin ui-sref="dahlia.short-form-application.create-account" data-event="gtm-create-account" ng-if="rememberedShortFormState"
+      /         | {{'LABEL.CREATE_ACCOUNT' | translate}}
+      /       a.button.no-margin ui-sref="dahlia.create-account" data-event="gtm-create-account" ng-if="!rememberedShortFormState"
+      /         | {{'LABEL.CREATE_ACCOUNT' | translate}}
