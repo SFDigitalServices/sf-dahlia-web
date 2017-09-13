@@ -135,10 +135,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
 
   ## Translation Helpers
-  Service.applicantFirstName = (applicant) ->
-    name = applicant.firstName
-    { name: if name then ', ' + name else '' }
-
   Service.householdMemberForPreference = (application, pref_type) ->
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)

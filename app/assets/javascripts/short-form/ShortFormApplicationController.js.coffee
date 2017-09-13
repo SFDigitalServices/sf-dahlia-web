@@ -634,9 +634,6 @@ ShortFormApplicationController = (
   $scope.preferenceProofOptions = (pref_type) ->
     ShortFormHelperService.proofOptions(pref_type)
 
-  $scope.applicantFirstName = ->
-    ShortFormHelperService.applicantFirstName($scope.applicant)
-
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 

@@ -1,7 +1,6 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'B2_CONTACT.TITLE' | translate: applicantFirstName()}}
+    h2.app-card_question translate="B2_CONTACT.TITLE" translate-value-name="{{applicant.firstName}}"
 
   .app-inner.inset.border-bottom
     .form-group.has-option ng-class="{ error: inputInvalid('phone') || inputInvalid('phoneType') }"
