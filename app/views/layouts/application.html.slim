@@ -55,7 +55,8 @@ html lang="en"
       section(ui-view="translate")
       section(ui-view="version")
       section(ui-view="navigation")
-      .loading-overlay(bs-loading-overlay)
+      / TO DO: Remove hardcoded style of loading-overlay
+      .loading-overlay(bs-loading-overlay style="min-height: auto;")
         section#main-content.main-content(ui-view="container")
     .footer-section
       .loading-overlay(bs-loading-overlay)
