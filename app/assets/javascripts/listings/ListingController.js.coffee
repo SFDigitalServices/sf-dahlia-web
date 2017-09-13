@@ -196,7 +196,9 @@ ListingController = (
     ListingService.listingHasLotteryBuckets()
 
   $scope.showDownloadLotteryResultsButton = ->
-    $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+    $scope.listing.LotteryResultsURL
+    # TO DO: Revert to real feature when working
+    # $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
   $scope.listingHasLotteryResults = ->
     ListingService.listingHasLotteryResults()
