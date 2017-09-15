@@ -1,0 +1,21 @@
+section.app-container.focus-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+      short-form-nav
+      .app-card.form-card
+        short-form-header
+          h2.app-card_question
+            | {{'A4_OVERVIEW.TITLE' | translate}}
+        .app-inner.inset
+          p.form-note.margin-bottom
+            | {{'A4_OVERVIEW.P1' | translate}}
+          p.form-note.margin-bottom
+            | {{'A4_OVERVIEW.P2' | translate}}
+          p.form-note.margin-bottom
+            | {{'A4_OVERVIEW.P3' | translate}}
+          p.form-note.margin-bottom
+            | {{'A4_OVERVIEW.WARNING' | translate}}
+        .button-pager
+          .button-pager_row.primary
+            button.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
+              | {{'T.NEXT' | translate}}

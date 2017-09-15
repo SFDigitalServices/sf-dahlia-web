@@ -12,6 +12,13 @@ class Api::V1::ListingsController < ApiController
   def show
     @listing = ListingService.listing(params[:id])
     render json: { listing: @listing }
+  rescue Faraday::ClientError => e
+    # Salesforce will throw an error if you request a listing ID that doesn't exist
+    if e.message.include? 'APEX_ERROR'
+      return render_error(exception: e, status: :not_found)
+    end
+    # else re-raise to default ApiController handler, e.g. for timeout
+    raise e.class, e.message
   end
 
   def units
@@ -21,7 +28,7 @@ class Api::V1::ListingsController < ApiController
 
   def lottery_buckets
     @lottery_buckets = ListingService.lottery_buckets(params[:id])
-    render json: { lottery_buckets: @lottery_buckets }
+    render json: @lottery_buckets
   end
 
   def lottery_ranking
@@ -29,7 +36,7 @@ class Api::V1::ListingsController < ApiController
       params[:id],
       params[:lottery_number],
     )
-    render json: { lottery_ranking: @lottery_ranking }
+    render json: @lottery_ranking
   end
 
   def preferences

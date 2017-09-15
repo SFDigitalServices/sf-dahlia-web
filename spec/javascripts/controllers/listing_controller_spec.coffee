@@ -4,12 +4,16 @@ do ->
 
     scope = undefined
     state = {current: {name: undefined}}
+    $translate =
+      instant: jasmine.createSpy()
     listing = undefined
     yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     fakeListingService = {}
+    $translate =
+      instant: ->
     fakeIncomeCalculatorService = {}
     fakeSharedService = {}
     fakeShortFormApplicationService = {}
@@ -53,11 +57,13 @@ do ->
       fakeListingService.listingHasReservedUnits = jasmine.createSpy()
       fakeListingService.listingHasLotteryResults = jasmine.createSpy()
       fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
+      fakeListingService.listingHasOnlySROUnits = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AnalyticsService', fakeAnalyticsService
+      $provide.value '$translate', $translate
       return
     )
 
@@ -248,27 +254,27 @@ do ->
     describe '$scope.applicantSelectedForPreference', ->
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults:[{somePreference: true}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.applicantSelectedForPreference()).toEqual(true)
 
       describe 'applicant was not selected for lottery preference', ->
         it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults:[{somePreference: false}]
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.applicantSelectedForPreference()).toEqual(false)
 
     describe '$scope.lotteryNumberValid', ->
       describe 'invalid', ->
         it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults: []
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: []}]
           expect(scope.lotteryNumberValid()).toEqual(false)
 
       describe 'valid', ->
-        it 'returns false', ->
-          scope.listing.Lottery_Ranking =
-            applicationResults: [{somePreference: false}]
+        it 'returns true', ->
+          scope.lotteryRankingInfo =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.lotteryNumberValid()).toEqual(true)
 
     describe 'showLotteryRanking', ->
@@ -296,3 +302,37 @@ do ->
       it 'calls ListingService.allListingUnitsAvailable', ->
         scope.allListingUnitsAvailable()
         expect(fakeListingService.allListingUnitsAvailable).toHaveBeenCalledWith(scope.listing)
+
+    describe '$scope.occupancy', ->
+      it 'returns 1 for SRO', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 1 }
+        expect(scope.occupancy(unitSummary)).toEqual('1')
+      it 'returns a range for all other unit types', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 3 }
+        expect(scope.occupancy(unitSummary)).toEqual('1-3')
+
+    describe '$scope.occupancyLabel', ->
+      it 'calls translate person for 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyLabel(1)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
+      it 'calls translate people for more than 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyLabel(2)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
+
+    describe '$scope.formatBaths', ->
+      it 'returns Shared for 0', ->
+        expect(scope.formatBaths(0)).toEqual('Shared')
+      it 'returns a number for whole numbers', ->
+        expect(scope.formatBaths(1)).toEqual(1)
+      it 'appends 1/2 bath when needed', ->
+        spyOn($translate, 'instant')
+        output = scope.formatBaths(1.5)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.BATH')
+        expect(output).toEqual('1 1/2 ' + $translate.instant('LISTINGS.BATH'))
+
+    describe '$scope.listingHasOnlySROUnits', ->
+      it 'calls ListingService.listingHasOnlySROUnits', ->
+        scope.listingHasOnlySROUnits()
+        expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()

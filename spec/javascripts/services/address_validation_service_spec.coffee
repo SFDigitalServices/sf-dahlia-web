@@ -67,5 +67,5 @@ do ->
           type: 'home'
         })
         httpBackend.flush()
-        result = AddressValidationService.failedValidation(AddressValidationService.validated_home_address)
-        expect(result).toEqual true
+        result = AddressValidationService.validationError(AddressValidationService.validated_home_address)
+        expect(result).toEqual 'Address not found'

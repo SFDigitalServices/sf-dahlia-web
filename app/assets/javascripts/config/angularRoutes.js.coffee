@@ -43,10 +43,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/housing-counselors.html',
-          controller: 'HousingCounselorsController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.HOUSING_COUNSELORS')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.listings', {
@@ -84,7 +86,7 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
-            ListingService.getListing($stateParams.id).then ->
+            ListingService.getListing($stateParams.id).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
@@ -98,6 +100,9 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets)
               setTimeout(ListingService.getListingDownloadURLs)
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
         application: [
@@ -367,10 +372,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-chinese.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_CHINESE')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.welcome-spanish', {
@@ -378,10 +385,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-spanish.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_SPANISH')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.welcome-filipino', {
@@ -389,10 +398,12 @@
       views:
         'container@':
           templateUrl: 'pages/templates/welcome-filipino.html'
-          controller: 'WelcomeController'
       resolve:
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.WELCOME_FILIPINO')
+        ]
+        counselors: ['SharedService', (SharedService) ->
+          SharedService.getHousingCounselors()
         ]
     })
     .state('dahlia.disclaimer', {
@@ -499,10 +510,7 @@
           '$stateParams', '$q', 'ListingService',
           ($stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
-            deferred = $q.defer()
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              deferred.resolve(ListingService.listing)
-            return deferred.promise
+            ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
@@ -515,11 +523,20 @@
           templateUrl: 'short-form/templates/a1-intro.html'
           controller: 'ShortFormApplicationController'
     })
+    .state('dahlia.short-form-welcome.community-screening', {
+      url: '/community-screening'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/layout.html'
+          controller: 'ShortFormApplicationController'
+        'container@dahlia.short-form-welcome.community-screening':
+          templateUrl: 'short-form/templates/a2-community-screening.html'
+    })
     .state('dahlia.short-form-welcome.overview', {
       url: '/overview'
       views:
         'container@':
-          templateUrl: 'short-form/templates/a2-overview.html'
+          templateUrl: 'short-form/templates/a4-overview.html'
           controller: 'ShortFormApplicationController'
     })
     ## -- Short Form Application pages -- ##
@@ -537,12 +554,9 @@
             # store the listing in ListingService and kick out if it's not open for applications
             deferred = $q.defer()
             ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
-              deferred.resolve(ListingService.listing)
-              ListingService.getListingPreferences()
+              ListingService.getListingPreferences().then ->
+                deferred.resolve(ListingService.listing)
             return deferred.promise
-        ]
-        $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
-          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
@@ -559,14 +573,20 @@
 
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
-            ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then ->
+            ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
               deferred.resolve(ShortFormApplicationService.application)
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
+        ]
+        $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
+          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
         ]
     })
     # Short form: "You" section
@@ -699,73 +719,157 @@
         'container':
           templateUrl: 'short-form/templates/c3a-household-member-verify-address.html'
     })
+    .state('dahlia.short-form-application.household-public-housing', {
+      url: '/household-public-housing'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c4-household-public-housing.html'
+    })
+    .state('dahlia.short-form-application.household-monthly-rent', {
+      url: '/household-monthly-rent'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c5-household-monthly-rent.html'
+      onEnter: [
+        'ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.groupHouseholdAddresses()
+      ]
+    })
+    .state('dahlia.short-form-application.household-reserved-units-veteran', {
+      url: '/household-reserved-units-veteran'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c6a-household-reserved-units-veteran.html'
+    })
+    .state('dahlia.short-form-application.household-reserved-units-disabled', {
+      url: '/household-reserved-units-disabled'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c6b-household-reserved-units-disabled.html'
+    })
+    .state('dahlia.short-form-application.household-priorities', {
+      url: '/household-priorities'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/c7-household-priorities.html'
+    })
+    # Short form: "Income" section
+    .state('dahlia.short-form-application.income-vouchers', {
+      url: '/income-vouchers'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d1-income-vouchers.html'
+      resolve:
+        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+          ShortFormApplicationService.completeSection('Household')
+        ]
+    })
+    .state('dahlia.short-form-application.income', {
+      url: '/income'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/d2-income-household.html'
+    })
     # Short form: "Preferences" section
     .state('dahlia.short-form-application.preferences-intro', {
       url: '/preferences-intro'
       views:
         'container':
-          templateUrl: 'short-form/templates/d0-preferences-intro.html'
+          templateUrl: 'short-form/templates/e1-preferences-intro.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
-        ]
-    })
-    .state('dahlia.short-form-application.preferences-programs', {
-      url: '/preferences-programs'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/d1-preferences-programs.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
-        ]
-    })
-    .state('dahlia.short-form-application.general-lottery-notice', {
-      url: '/general-lottery-notice'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/d2f-general-lottery-notice.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
-        ]
-    })
-    .state('dahlia.short-form-application.live-work-preference', {
-      url: '/live-work-preference'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/d2-live-work-preference.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
+          ShortFormApplicationService.completeSection('Income')
         ]
     })
     .state('dahlia.short-form-application.neighborhood-preference', {
       url: '/neighborhood-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/d2a-neighborhood-preference.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Household')
-        ]
+          templateUrl: 'short-form/templates/e2a-neighborhood-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('neighborhoodResidence')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
+      ]
     })
-    .state('dahlia.short-form-application.income-vouchers', {
-      url: '/income-vouchers'
+    .state('dahlia.short-form-application.adhp-preference', {
+      url: '/adhp-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e1-income-vouchers.html'
-      resolve:
-        completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Preferences')
-        ]
+          templateUrl: 'short-form/templates/e2b-adhp-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('antiDisplacement')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
+      ]
     })
-    # Short form: "Income" section
-    .state('dahlia.short-form-application.income', {
-      url: '/income'
+    .state('dahlia.short-form-application.live-work-preference', {
+      url: '/live-work-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e2-income-household.html'
+          templateUrl: 'short-form/templates/e2c-live-work-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('liveWorkInSf')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
+      ]
+    })
+    .state('dahlia.short-form-application.assisted-housing-preference', {
+      url: '/assisted-housing-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e3a-assisted-housing-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('assistedHousing')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
+      ]
+    })
+    .state('dahlia.short-form-application.rent-burden-preference', {
+      url: '/rent-burden-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
+      onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType('rentBurden')
+      ],
+      onExit: ['ShortFormApplicationService', (ShortFormApplicationService) ->
+        ShortFormApplicationService.setFormPreferenceType(null)
+      ]
+    })
+    .state('dahlia.short-form-application.rent-burden-preference-edit', {
+      url: '/rent-burden-preference/:index'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
+      resolve:
+        addressIndex: [
+          '$stateParams', 'ShortFormApplicationService',
+          ($stateParams, ShortFormApplicationService) ->
+            ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
+        ]
+    })
+    .state('dahlia.short-form-application.preferences-programs', {
+      url: '/preferences-programs'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7-preferences-programs.html'
+    })
+    .state('dahlia.short-form-application.custom-preferences', {
+      url: '/custom-preferences'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7b-custom-preferences.html'
+    })
+    .state('dahlia.short-form-application.general-lottery-notice', {
+      url: '/general-lottery-notice'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e8-general-lottery-notice.html'
     })
     # Short form: "Review" section
     .state('dahlia.short-form-application.review-optional', {
@@ -775,7 +879,7 @@
           templateUrl: 'short-form/templates/f0-review-optional.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     .state('dahlia.short-form-application.review-summary', {
@@ -785,7 +889,7 @@
           templateUrl: 'short-form/templates/f1-review-summary.html'
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
-          ShortFormApplicationService.completeSection('Income')
+          ShortFormApplicationService.completeSection('Preferences')
         ]
     })
     .state('dahlia.short-form-application.review-sign-in', {
@@ -849,10 +953,13 @@
           '$stateParams', '$state', '$q', 'ShortFormApplicationService',
           ($stateParams, $state, $q, ShortFormApplicationService) ->
             deferred = $q.defer()
-            ShortFormApplicationService.getApplication($stateParams.id).then ->
+            ShortFormApplicationService.getApplication($stateParams.id).then( ->
               if !ShortFormApplicationService.applicationWasSubmitted()
                 $state.go('dahlia.my-applications')
               deferred.resolve(ShortFormApplicationService.application)
+            ).catch( (response) ->
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
         $title: [

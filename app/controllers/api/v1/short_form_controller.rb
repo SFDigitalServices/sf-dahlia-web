@@ -119,7 +119,7 @@ class Api::V1::ShortFormController < ApiController
     if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
-      send_attached_files(response['id'])
+      send_attached_files(response.try(:[], 'id'))
       send_submit_app_confirmation(response)
     end
   end
@@ -150,9 +150,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application_id, files)
-    # now that files are saved in SF, remove temp uploads
-    files.destroy_all
+    ShortFormService.queue_file_attachments(application_id, files)
   end
 
   def attach_temp_files_to_user
@@ -167,7 +165,7 @@ class Api::V1::ShortFormController < ApiController
       lottery_number: response['lotteryNumber'],
       firstName: response['primaryApplicant']['firstName'],
       lastName: response['primaryApplicant']['lastName'],
-    ).deliver_now
+    ).deliver_later
   end
 
   def email_draft_link(response)
@@ -256,15 +254,20 @@ class Api::V1::ShortFormController < ApiController
     file_params = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
     }
-    preference = file_params.delete(:preference)
+    %i(address rent_burden_index).each do |field|
+      if uploaded_file_params[field]
+        file_params[field] = uploaded_file_params[field]
+      end
+    end
+    rent_burden_type = uploaded_file_params[:rent_burden_type]
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
-    uploaded_files = UploadedFile.send(preference).where(file_params)
-    return false unless uploaded_files.any?
+    uploaded_files = UploadedFile.where(file_params)
+    uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type
     uploaded_files.destroy_all
   end
 
@@ -275,8 +278,8 @@ class Api::V1::ShortFormController < ApiController
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(%i(file session_uid listing_id
-                     document_type preference))
+          .permit(%i(file session_uid listing_id listing_preference_id
+                     document_type address rent_burden_type rent_burden_index))
   end
 
   def application_params
@@ -320,7 +323,7 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
@@ -360,7 +363,7 @@ class Api::V1::ShortFormController < ApiController
                 city
                 state
                 zip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
@@ -368,19 +371,28 @@ class Api::V1::ShortFormController < ApiController
               ),
             },
             :listingID,
-            :displacedPreferenceNatKey,
-            :certOfPreferenceNatKey,
-            :liveInSfPreferenceNatKey,
-            :workInSfPreferenceNatKey,
-            :neighborhoodResidencePreferenceNatKey,
-            :liveWorkOptOut,
-            :neighborhoodPreferenceOptOut,
+            {
+              shortFormPreferences: %i(
+                listingPreferenceID
+                appMemberID
+                naturalKey
+                preferenceProof
+                optOut
+                ifCombinedIndividualPreference
+                shortformPreferenceID
+              ),
+            },
+            :answeredCommunityScreening,
+            :adaPrioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
+            :hasPublicHousing,
+            :hasMilitaryService,
+            :hasDevelopmentalDisability,
             :annualIncome,
             :monthlyIncome,
+            :totalMonthlyRent,
             :agreeToTerms,
-            :surveyComplete,
             :applicationSubmissionType,
             :applicationSubmittedDate,
             :status,
@@ -392,11 +404,14 @@ class Api::V1::ShortFormController < ApiController
     attrs = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
       document_type: uploaded_file_params[:document_type],
       file: uploaded_file_params[:file],
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs

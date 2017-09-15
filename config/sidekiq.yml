@@ -1,0 +1,16 @@
+---
+# Set timeout to 8 on Heroku, longer if you manage your own systems.
+:timeout: 8
+
+# Sidekiq will run this file through ERB when reading it so you can
+# even put in dynamic logic, like a host-specific queue.
+:queues:
+  - default
+  - mailers
+
+# you can override concurrency based on environment
+production:
+  :concurrency: 5
+development:
+  :verbose: true
+  :concurrency: 1

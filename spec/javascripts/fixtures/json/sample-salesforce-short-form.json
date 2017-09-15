@@ -136,5 +136,6 @@
     "workInSfPreferenceProof": null,
     "worksInSanFrancisco": true,
     "worksInSfPreferenceID": null,
+    "shortFormPreferences": [],
     "formMetadata": "{\"completedSections\":{\"Intro\":true,\"You\":true,\"Household\":false,\"Preferences\":false,\"Income\":false}}"
 }

@@ -39,7 +39,7 @@ module Overrides
     # easiest way to add this email hook without having to override the whole
     # update method from the gem
     def render_update_success
-      Emailer.account_update(current_user).deliver_now
+      Emailer.account_update(current_user).deliver_later
       super
     end
 

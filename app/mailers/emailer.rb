@@ -45,11 +45,12 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log)
-    @log = log
+  def geocoding_log_notification(log_id, has_nrhp_adhp = false)
+    @log = GeocodingLog.find(log_id)
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
-    @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
+    @listing_url = "#{base_url}/listings/#{@log.listing_id}"
 
     subject = '[SF-DAHLIA] Address not found in ArcGIS service'
     mail(to: admin_email, subject: subject) do |format|
@@ -67,15 +68,16 @@ class Emailer < Devise::Mailer
     end
   end
 
-  def geocoding_error_notification(data, log)
-    @data = data
-    @log = log
-    @error = data[:errors].first
+  def geocoding_error_notification(data, log, has_nrhp_adhp = false)
+    @data = Hashie::Mash.new(data)
+    @log = Hashie::Mash.new(log)
+    @error = Hashie::Mash.new(@data[:errors].first)
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
 
-    subject = "[SF-DAHLIA] ArcGIS #{data[:service_name]} service error"
+    subject = "[SF-DAHLIA] ArcGIS #{@data[:service_name]} service error"
     mail(to: admin_email, subject: subject) do |format|
       format.html do
         render(
@@ -135,9 +137,10 @@ class Emailer < Devise::Mailer
     # all heroku apps have Rails.env.production
     # but ENV['PRODUCTION'] is only on dahlia-production
     if Rails.env.production? and ENV['PRODUCTION']
-      'dahlia-admins@exygy.com'
+      # if listing has_nrhp_adhp it goes to the set of admins that includes HBMR staff
+      @has_nrhp_adhp ? 'dahlia-admins-hbmr@exygy.com' : 'dahlia-admins@exygy.com'
     else
-      'dahlia-test@exygy.com'
+      @has_nrhp_adhp ? 'dahlia-test-hbmr@exygy.com' : 'dahlia-test@exygy.com'
     end
   end
 

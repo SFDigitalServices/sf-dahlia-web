@@ -1,7 +1,7 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | {{'B2_CONTACT.TITLE' | translate:applicantFirstName()}}
+      | {{'B2_CONTACT.TITLE' | translate: applicantFirstName()}}
 
   .app-inner.inset.border-bottom
     .form-group.has-option ng-class="{ error: inputInvalid('phone') || inputInvalid('phoneType') }"
@@ -79,8 +79,7 @@
 
       address-form address-type="home_address" model='applicant' model-name='applicant' is-required="true" on-change="addressChange('applicant')"
 
-      small.error ng-if="addressFailedValidation('home_address')"
-        | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+      address-error error="addressValidationError('home_address')"
 
       .form-item.padding-bottom
         .checkbox

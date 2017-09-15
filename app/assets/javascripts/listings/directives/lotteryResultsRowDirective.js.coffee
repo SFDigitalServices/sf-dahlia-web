@@ -1,40 +1,26 @@
 angular.module('dahlia.directives')
 .directive 'lotteryResultsRow', ->
-  scope: true
-  replace: true
+  scope:
+    bucketResult: '<'
+    isGeneral: '<'
+    itemType: '@'
+    prefName: '@'
   templateUrl: 'listings/directives/lottery-results-row.html'
 
   link: (scope, elem, attrs) ->
-    scope.prefName = attrs.prefName
-    scope.abbrPrefName = attrs.abbrPrefName
-    scope.itemType = attrs.itemType
+    scope.isRank = (scope.itemType == 'rank')
+    scope.isBucket = (scope.itemType == 'bucket')
+    scope.showGeneralNotice = (scope.isGeneral && scope.isBucket)
 
-    scope.isRank = ->
-      scope.itemType == 'rank'
+    scope.rankForPreference = ->
+      results = scope.bucketResult.preferenceResults
+      if !_.isEmpty(results) then results[0].preferenceRank else undefined
 
-    scope.isBucket = ->
-      scope.itemType == 'bucket'
+    scope.prefName ?= scope.bucketResult.preferenceName
+    if scope.isBucket
+      scope.visible = scope.bucketResult.preferenceResults.length
+    else if scope.isRank
+      scope.visible = scope.rankForPreference()
 
-    scope.isGeneral = ->
-      scope.abbrPrefName == 'generalLottery'
-
-    scope.showGeneralNotice = ->
-      scope.isGeneral() && scope.isBucket()
-
-    scope.show = ->
-      return true if scope.isBucket() && scope.appTotal()
-      return true if scope.isRank() && scope.rankForPreference()
-      false
-
-    scope.unitsAvailable = () ->
-      scope.lotteryBuckets[scope.abbrPrefName + 'UnitsAvailable']
-
-    scope.rankForPreference = () ->
-      applicationResults = scope.listing.Lottery_Ranking.applicationResults[0]
-      if applicationResults
-        applicationResults[scope.abbrPrefName + 'Rank']
-      else
-        undefined
-
-    scope.appTotal = () ->
-      scope.lotteryBuckets[scope.abbrPrefName + 'AppTotal']
+    scope.unitsAvailable = scope.bucketResult.unitsAvailable
+    scope.totalSubmittedApps = scope.bucketResult.totalSubmittedApps
