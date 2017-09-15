@@ -447,7 +447,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         # if it exists, modify it with the max values
         i = 0
         amiPercentChart.values.forEach (incomeLevel) ->
-          incomeLevel.amount = Math.max(incomeLevel.amount, chart.values[i].amount)
+          chartAmount = if chart.values[i] then chart.values[i].amount else 0
+          incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
 
