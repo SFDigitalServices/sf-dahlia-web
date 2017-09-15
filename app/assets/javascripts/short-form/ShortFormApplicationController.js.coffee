@@ -823,6 +823,17 @@ ShortFormApplicationController = (
     $scope.handleErrorState()
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+    $scope.addressError = false
+    # -- this will get replaced when merging w/ multifamily
+    form = $scope.form.applicationForm
+    form.$setPristine() if form
+    # --
+
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+
+    ShortFormApplicationService.storeLastPage(toState.name)
     $scope.clearErrors()
     ShortFormNavigationService.isLoading(false)
 

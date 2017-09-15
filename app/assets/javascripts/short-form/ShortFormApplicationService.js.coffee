@@ -57,6 +57,8 @@ ShortFormApplicationService = (
       Preferences: {}
       Income: {}
       Review: {}
+    # for storing last page of your draft, to return to. default to first page
+    lastPage: 'dahlia.short-form-application.name'
 
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
@@ -130,6 +132,10 @@ ShortFormApplicationService = (
         _.every(validated['Preferences'], (i) -> i)
       else
         false
+
+  Service.storeLastPage = (stateName) ->
+    lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
+    Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
     unless Service.applicant.hasAltMailingAddress
@@ -535,6 +541,12 @@ ShortFormApplicationService = (
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)
 
+  Service.sendToLastPageofApp = (toState) ->
+    appLastPage = Service.application.lastPage
+    if toState.name != "dahlia.short-form-application.#{appLastPage}" &&
+      $state.href("dahlia.short-form-application.#{appLastPage}")
+        $state.go("dahlia.short-form-application.#{appLastPage}")
+
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
@@ -554,14 +566,19 @@ ShortFormApplicationService = (
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
     # they're "jumping ahead" if they're not coming from a short form page or create-account
-    # and they're trying to go to a short form section ahead of "name" (1st page)
+    # and they're trying to go to a page that's not either the first page, or their stored lastPage
+    namePage = 'dahlia.short-form-application.name'
+    lastPage = "dahlia.short-form-application.#{Service.application.lastPage}"
     jumpAhead = Service.isShortFormPage(toState) &&
                 !Service.isShortFormPage(fromState) &&
-                toState.name != 'dahlia.short-form-application.name'
+                !_.includes([namePage, lastPage], toState.name)
     return !jumpAhead
 
   Service.isLeavingShortForm = (toState, fromState) ->
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.isEnteringShortForm = (toState, fromState) ->
+    !Service.isShortFormPage(fromState) && Service.isShortFormPage(toState)
 
   Service.isLeavingConfirmationToSignIn = (toState, fromState) ->
     fromState.name == 'dahlia.short-form-application.create-account' &&
@@ -688,8 +705,9 @@ ShortFormApplicationService = (
     )
 
   Service.getMyApplicationForListing = (listing_id, opts = {}) ->
+    listingId = listing_id || Service.listing.Id
     autofill = if opts.autofill then '?autofill=true' else ''
-    $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
+    $http.get("/api/v1/short-form/listing-application/#{listingId}#{autofill}").success((data, status) ->
       Service.loadApplication(data)
     )
 
@@ -698,10 +716,9 @@ ShortFormApplicationService = (
       Service.loadAccountApplication(data)
     )
 
-
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
-    Service.getMyAccountApplication().success((data) ->
+    Service.getMyApplicationForListing().success((data) ->
       if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
         return Service._signInAndSkipSubmit(data.application)
@@ -754,6 +771,22 @@ ShortFormApplicationService = (
         # on submitted app the listing is loaded along with it
         ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
+
+      # NOTE: update for multifamily
+      proofPrefs = [
+        'liveInSf',
+        'workInSf',
+        'neighborhoodResidence'
+      ]
+      # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
+      _.each proofPrefs, (prefType) ->
+        hasPref = formattedApp.preferences[prefType]
+        if hasPref && _.isEmpty(formattedApp.preferences["#{prefType}_proof_file"])
+          formattedApp.completedSections['Preferences'] = false
+          # NOTE: update for multifamily -- if they're on a later page but with prefs in a broken state, kick them back
+          if _.includes ['preferences-programs'], formattedApp.lastPage
+            formattedApp.lastPage = 'preferences-intro'
+
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
     Service.resetUserData(formattedApp)

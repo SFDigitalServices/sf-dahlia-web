@@ -11,6 +11,7 @@ do ->
     $translate = {}
     $state =
       go: jasmine.createSpy()
+      href: ->
       current: { name: 'dahlia' }
     fakeSFAddress =
       address1: '123 Main St.'
@@ -654,18 +655,6 @@ do ->
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
 
-    describe 'getMyAccountApplication', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'should load application into accountApplication', ->
-        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
-        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.getMyAccountApplication()
-        httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
-
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
         setupFakeApplicant()
@@ -901,6 +890,15 @@ do ->
         fakePrevApplication = { status: 'draft' }
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+    describe 'sendToLastPageofApp', ->
+      describe 'entering short form section that is not the last page of application', ->
+        it 'sends user to last page of application', ->
+          spyOn($state, 'href').and.returnValue(true)
+          ShortFormApplicationService.application.lastPage = 'review-terms'
+          ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
+          lastPageRoute = 'dahlia.short-form-application.review-terms'
+          expect($state.go).toHaveBeenCalledWith(lastPageRoute)
 
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'returns true with lease and rent file', ->
