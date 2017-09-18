@@ -575,7 +575,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     )
 
   Service.hardcodeCustomProofPrefs =
-    ['Artist Fund']
+    ['Alice Griffith Housing Development Resident']
 
   Service._extractCustomPreferences = ->
     customPreferences = _.filter Service.listing.preferences, (listingPref) ->
