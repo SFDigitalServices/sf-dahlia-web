@@ -8,6 +8,6 @@
     .form-group
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
       .checkbox-group role="group"
-        preference(application="application" title="{{currentCustomProofPreference.preferenceName}}" preference="{{currentCustomProofPreference.listingPreferenceID}}" custom-description="{{currentCustomProofPreference.description}}"  has-proof="true")
+        preference(application="application" title="{{currentCustomProofPreference.preferenceName}}" preference="{{currentCustomProofPreference.listingPreferenceID}}" custom-description="{{currentCustomProofPreference.description}}"  has-proof="true" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}")
 
   short-form-save-and-submit
