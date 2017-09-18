@@ -40,7 +40,7 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      language = if toParams.lang == 'zh' then 'zh-CN' else toParams.lang
+      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
 
       GoogleTranslateService.loadAPI().then ->
         GoogleTranslateService.setLanguage(language)

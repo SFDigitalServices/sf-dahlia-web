@@ -40,7 +40,7 @@ GoogleTranslateService = ($q, $timeout) ->
   Service.init = ->
     Service.translateElement = new window.google.translate.TranslateElement(
       pageLanguage: 'en'
-      includedLanguages: 'en,es,tl,zh-CN'
+      includedLanguages: 'en,es,tl,zh-TW'
       layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL
       autoDisplay: false
       multilanguagePage: true
