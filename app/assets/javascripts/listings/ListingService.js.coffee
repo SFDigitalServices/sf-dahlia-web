@@ -686,6 +686,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000DbnZUAS': 'Test Listing'
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
+    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
   }
 
   Service.mapSlugToId = (id) ->
