@@ -16,7 +16,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.AMICharts = []
   Service.loading = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
+  Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
 
@@ -26,22 +27,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     {
       'language': 'English'
       'label': 'English'
-      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+      'url': Service.mohcdEnglishApplicationURL
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Chinese')
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Tagalog')
     }
   ]
 
@@ -446,7 +447,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         # if it exists, modify it with the max values
         i = 0
         amiPercentChart.values.forEach (incomeLevel) ->
-          incomeLevel.amount = Math.max(incomeLevel.amount, chart.values[i].amount)
+          chartAmount = if chart.values[i] then chart.values[i].amount else 0
+          incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
 
@@ -684,6 +686,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000DbnZUAS': 'Test Listing'
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
+    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
   }
 
   Service.mapSlugToId = (id) ->

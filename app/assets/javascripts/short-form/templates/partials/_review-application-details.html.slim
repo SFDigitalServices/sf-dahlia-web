@@ -88,7 +88,7 @@ div ng-if="prioritiesSelectedExists()"
 
 / Preferences
 div ng-if="!atAutofillPreview()"
-  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.preferences-programs"
+  review-summary-section header="{{'LABEL.PREFERENCES' | translate}}" to="dahlia.short-form-application.{{getLandingPage({name: 'Preferences'})}}"
 
   .app-inner
     p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
@@ -118,7 +118,7 @@ div ng-if="!atAutofillPreview()"
     review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="rentBurden" ng-if="preferences.rentBurden" get-labels="fileAttachmentsForRentBurden()"
       | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customPreferences" ng-if="customPreferencesClaimed()"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customPreferences" ng-if="claimedCustomPreference(preference)"
       | {{ preference.preferenceName }}
 
 / Income

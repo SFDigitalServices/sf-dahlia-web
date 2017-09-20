@@ -15,8 +15,8 @@ Feature: Short Form Application
       And I indicate having vouchers
       And I fill out my income as "25000"
       And I continue past the Lottery Preferences intro
-      And I opt out of Live/Work preference
       And I opt out of Assisted Housing preference
+      And I opt out of Live/Work preference
       And I don't choose COP/DTHP preferences
       And I continue past the general lottery notice page
       And I fill out the optional survey
@@ -50,14 +50,14 @@ Feature: Short Form Application
       And I fill out my income as "72000"
       # preferences
       And I continue past the Lottery Preferences intro
-      And I select "Jane Doe" for "neighborhoodResidence" preference
-      And I upload a "Gas bill" as my proof of preference for "neighborhoodResidence"
-      And I click the Next button on the Live in the Neighborhood page
 
       And I select Rent Burdened Preference
       And I upload a Copy of Lease and "Money order" as my proof for Rent Burden
       And I hit the Next button "1" time
 
+      And I select "Jane Doe" for "neighborhoodResidence" preference
+      And I upload a "Gas bill" as my proof of preference for "neighborhoodResidence"
+      And I click the Next button on the Live in the Neighborhood page
 
       And I select "Jane Doe" for "certOfPreference" preference
       And I fill out my "certOfPreference" certificate number
@@ -100,8 +100,8 @@ Feature: Short Form Application
       Then on the Income pages I should see my correct info
       # preferences
       And I continue past the Lottery Preferences intro
-      Then on the Live in the Neighborhood page I should see my correct info
       Then on the Rent Burdened page I should see my correct info
+      Then on the Live in the Neighborhood page I should see my correct info
       Then on the Preferences Programs page I should see my correct info
 
       # review
