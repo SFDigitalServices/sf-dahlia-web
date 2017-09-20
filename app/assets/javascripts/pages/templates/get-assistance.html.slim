@@ -30,13 +30,25 @@ section.row.p-relative
 
     .block--icon
       figure.block-icon
-        img alt="Home Icon" ng-src="{{assetPaths['icon-home.png']}}"
+        img alt="Document Icon" ng-src="{{assetPaths['icon-list.png']}}"
 
-      h2.t-gamma.margin-bottom--2x Additional Opportunites
+      h2.t-gamma.margin-bottom--2x Document Checklist
 
-      p.t-base.t-sans.c-oil.margin-bottom--2x See more rental and ownership affordable housing opportunities.
+      p.t-base.t-sans.c-oil.margin-bottom--2x See ore information about documents needed when applying for housing preferences.
 
-      a.button.large.ghost-white ui-sref="dahlia.additional-resources" View Additional Housing Opportunities
+      a.button.large.ghost-white ui-sref="dahlia.document-checklist" View Document Checklist
+
+
+    section.section--wide.bg-dust
+      .block--icon.text-center.bg-dust
+        figure.block-icon
+          img alt="Home Icon" ng-src="{{assetPaths['icon-home.png']}}"
+
+        h2.t-gamma.margin-bottom--2x Additional Opportunites
+
+        p.t-base.t-sans.c-oil.margin-bottom--2x See more rental and ownership affordable housing opportunities.
+
+        a.button.large.ghost-white ui-sref="dahlia.additional-resources" View Additional Housing Opportunities
 
   .medium-4.columns.padding-top.box-shadow.full-height.bg-white.small-no-padding
     ng-include src="'pages/templates/_contact-mayors-office.html'"
