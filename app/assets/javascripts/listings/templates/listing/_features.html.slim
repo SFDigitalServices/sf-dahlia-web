@@ -35,7 +35,7 @@ accordion-heading
             svg
               use xlink:href="#i-arrow-down"
 
-      .stats.scrollable-table-container ng-show="isActiveTable(unitGroup.unitType)"
+      .stats.scrollable-table-container ng-show="toggleStates[listing.Id][unitGroup.unitType]"
         table role="grid"
           thead
             tr
@@ -45,7 +45,7 @@ accordion-heading
               th scope="col" Floor
               th scope="col" Accessibility
           tbody
-            tr ng-show="isActiveTable(unitGroup.unitType)" ng-repeat="unit in unitGroup.units"
+            tr ng-repeat="unit in unitGroup.units"
               td scope="row"
                 | {{unit.Unit_Number}}
               td

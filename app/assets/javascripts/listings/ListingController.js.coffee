@@ -60,10 +60,7 @@ ListingController = (
     $scope.showApplicationOptions = !$scope.showApplicationOptions
 
   $scope.toggleTable = (table) ->
-    ListingService.toggleStates["active#{table}Class"] = if ListingService.toggleStates["active#{table}Class"] then '' else 'active'
-
-  $scope.isActiveTable = (table) ->
-    ListingService.toggleStates["active#{table}Class"] == 'active'
+    ListingService.toggleStates[$scope.listing.Id][table] = !ListingService.toggleStates[$scope.listing.Id][table]
 
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)

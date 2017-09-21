@@ -1,7 +1,7 @@
 angular.module('dahlia.directives')
 .directive 'keepScrollPosition',
-['$state', '$window', '$timeout', '$location', 'ListingService'
-($state, $window, $timeout, $location, ListingService) ->
+['$state', '$window', '$timeout', '$location',
+($state, $window, $timeout, $location) ->
   # cache scroll position of each route's templateUrl
   scrollPositions = {}
   locationPath = ''
@@ -24,6 +24,4 @@ angular.module('dahlia.directives')
       if usedBrowserNavigation && prevPosition
         $timeout ->
           $window.scrollTo prevPosition[0], prevPosition[1]
-      unless usedBrowserNavigation
-        ListingService.clearToggleStates()
 ]

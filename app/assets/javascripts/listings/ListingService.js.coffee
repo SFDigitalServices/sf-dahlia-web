@@ -20,9 +20,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
-  Service.toggleStates =
-    whatToExpectOpen: false
-    amiChartExpanded: false
+  Service.toggleStates = {}
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -266,6 +264,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+      Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
@@ -664,13 +663,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       a.push k + '=' + encodeURIComponent(params[k])
       a
     ), []).join '&'
-
-  Service.clearToggleStates = ->
-    defaultToggleStates =
-      whatToExpectOpen: false
-      amiChartExpanded: false
-    angular.copy(defaultToggleStates, Service.toggleStates)
-
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
