@@ -87,7 +87,8 @@ accordion-heading.lead
           p.custom-counter_text ng-if="listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
 
-        lottery-preference ng-repeat="preference in listing.preferences"
+        lottery-preference preference="preference" ng-repeat="preference in listing.preferences"
+
 
         div ng-if="listingHasPreferences()"
           p.custom-counter_text
