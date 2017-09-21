@@ -492,6 +492,8 @@
     })
     .state('dahlia.document-checklist',{
       url: '/document-checklist'
+      params:
+        section: null
       views:
         'container@':
           templateUrl: 'pages/templates/document-checklist.html'
