@@ -20,10 +20,10 @@
     "A4_OVERVIEW": {
         "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
         "P2": "If you are curious about which required docuemnts you may need for the application, please see our resource guide of required documents and claiming preferences.",
-        "VIEW_DOCUMENT_CHECKLIST": "View Document Checklist",
         "P3": "You may also start the application now and save it and upload documents later.",
         "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
+        "VIEW_DOCUMENT_CHECKLIST": "View Document Checklist",
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
@@ -160,6 +160,21 @@
         "P1": "Add up your total gross (pre-tax) household income from wages, benefits and other sources from all household members.",
         "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
         "TITLE": "Let's move to income."
+    },
+    "DOCUMENT_CHECKLIST": {
+        "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
+        "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
+        "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
+        "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
+        "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
+        "RENT_BURDEN_DOC_1": "You'll need a Copy of Lease showing the address where you live.",
+        "RENT_BURDEN_DOC_2": "You'll also need to show last months rent with 1 (one) of the following:.",
+        "RENT_BURDEN_TITLE": "Rent Burden Preference",
+        "RESIDENT_DESC": "You'll need 1 (one) of the showing with the address where you live in San Francisco:",
+        "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
+        "TITLE": "Document Checklist",
+        "WORK_SF_DESC": "You'll need 1 (one) of the showing with the address where you work in San Francisco:",
+        "WORK_SF_TITLE": "Work in San Francisco Preference"
     },
     "DOUBLE_SUBMITTED": {
         "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
