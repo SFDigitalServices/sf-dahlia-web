@@ -1,6 +1,7 @@
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
+  ListingService = SalesforceService::ListingService
   before_action :authenticate_user!,
                 only: %i(
                   show_application
@@ -357,6 +358,7 @@ class Api::V1::ShortFormController < ApiController
               shortFormPreferences: %i(
                 listingPreferenceID
                 appMemberID
+                additionalDetails
                 naturalKey
                 preferenceProof
                 optOut
