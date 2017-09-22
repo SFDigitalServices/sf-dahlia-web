@@ -292,6 +292,8 @@ ShortFormApplicationService = (
       Service.preferences["#{preference}_household_member"] = null
       Service.preferences["#{preference}_proofOption"] = null
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+      if preference == 'certOfPreference' || preference == 'displaced'
+        Service.preferences["#{preference}_certificateNumber"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
