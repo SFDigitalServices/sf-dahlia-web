@@ -1,10 +1,10 @@
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService',
-  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
   'SharedService'
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
-  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
   SharedService) ->
 
     timeoutRetries = 2
@@ -34,6 +34,7 @@
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
+        AutosaveService.save()
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
@@ -98,6 +99,9 @@
         Idle.watch()
       else
         Idle.unwatch()
+
+      unless ShortFormApplicationService.isShortFormPage($state.current) && AccountService.loggedIn()
+        AutosaveService.stopTimer()
 
       # check if we're on short form and trying to access a later section than the first section
       toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
