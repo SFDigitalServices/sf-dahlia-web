@@ -591,6 +591,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
+  Service.formatLotteryNumber = (lotteryNumber) ->
+    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    if (lotteryNumber.length < 8)
+      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
+    lotteryNumber
+
   Service.getLotteryRanking = (lotteryNumber) ->
     angular.copy({}, Service.lotteryRankingInfo)
     params =
