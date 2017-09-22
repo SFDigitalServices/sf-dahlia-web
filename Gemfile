@@ -82,6 +82,9 @@ gem 'hashdiff', '~> 0.3.0'
 
 gem 'fog-aws'
 
+# https://elements.heroku.com/addons/sentry
+gem 'sentry-raven', '~> 2.6.3'
+
 group :test do
   gem 'codeclimate-test-reporter'
   gem 'webmock'
