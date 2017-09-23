@@ -1,5 +1,8 @@
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
+  AccountService = SalesforceService::AccountService
+  ListingService = SalesforceService::ListingService
+
   before_action :authenticate_user!, except: [:confirm]
 
   def my_applications
@@ -36,7 +39,7 @@ class Api::V1::AccountController < ApiController
   end
 
   def map_listings_to_applications(applications)
-    listing_ids = applications.collect { |a| a['listingID'] }.uniq
+    listing_ids = applications.collect { |a| a['listingID'] }.uniq.sort
     listings = ListingService.listings(listing_ids.join(','))
     applications.each do |app|
       app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }

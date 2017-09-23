@@ -109,6 +109,9 @@
         radio-block-item value='No' user='applicant' name='workInSf' ng-required='true' aria-describedby="workInSf_error" on-change="checkPreferenceEligibility"
           | {{'T.NO' | translate}}
 
+      small.error#workInSf_error ng-show="inputInvalid('workInSf')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
+
       small.highlight ng-if="applicant.workInSf == 'Yes'"
         | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
 

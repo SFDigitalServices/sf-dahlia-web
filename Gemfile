@@ -73,6 +73,8 @@ gem 'actionpack-page_caching', '~> 1.1.0'
 gem 'mini_magick', '~> 4.7.2'
 gem 'image_optimizer', '~> 1.7.0'
 
+gem 'prerender_rails', '~> 1.5.1'
+
 # http requests made easy
 gem 'http', require: false
 
@@ -81,6 +83,9 @@ gem 'sidekiq', '~> 5.0.2'
 gem 'hashdiff', '~> 0.3.0'
 
 gem 'fog-aws'
+
+# https://elements.heroku.com/addons/sentry
+gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
   gem 'codeclimate-test-reporter'

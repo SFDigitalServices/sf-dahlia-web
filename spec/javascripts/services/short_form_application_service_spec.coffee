@@ -29,7 +29,7 @@ do ->
       hasPreference: ->
       loadListing: ->
     fakeDataService =
-      formatApplication: -> fakeShortForm
+      formatApplication: -> fakeSalesforceApplication
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
       initRentBurdenDocs: jasmine.createSpy()
@@ -938,7 +938,7 @@ do ->
             lease: {file: 'some file'}
         expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
 
-    describe 'customPreferencesClaimed', ->
+    describe 'claimedCustomPreference', ->
       beforeEach ->
         fakeListing = getJSONFixture('listings-api-show.json').listing
         ShortFormApplicationService.listing = fakeListing
@@ -948,10 +948,8 @@ do ->
 
       it 'returns true if custom preferences were claimed', ->
         ShortFormApplicationService.preferences = {'123456': true}
-        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual true
+        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual true
 
       it 'returns false if custom preferences were not claimed', ->
         ShortFormApplicationService.preferences = {'liveInSf': true}
-        expect(ShortFormApplicationService.customPreferencesClaimed()).toEqual false
-
-
+        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false

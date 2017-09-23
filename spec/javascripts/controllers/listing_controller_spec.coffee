@@ -42,6 +42,7 @@ do ->
         AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
+        formatLotteryNumber: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
         stubFeatures: () -> null
