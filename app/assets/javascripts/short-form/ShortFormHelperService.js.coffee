@@ -140,7 +140,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     allMembers.push(application.applicant)
     memberId = application.preferences["#{pref_type}_household_member"]
     member = _.find(allMembers, { id: memberId })
-    { user: "#{member.firstName} #{member.lastName}" }
+    name = if member then "#{member.firstName} #{member.lastName}" else ''
+    { user: name }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status.match(/submitted/i)
@@ -165,6 +166,11 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
       })
     return labels
+
+  Service.certificateNumberForPreference = (application, pref_type) ->
+    certificateNumber = application.preferences["#{pref_type}_certificateNumber"]
+    return '' unless certificateNumber
+    $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')

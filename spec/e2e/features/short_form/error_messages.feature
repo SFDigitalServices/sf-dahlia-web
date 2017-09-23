@@ -46,16 +46,25 @@ Feature: Short Form Application
       # error: income too low
       And I fill out my income as "25000"
       Then I should see an error about household income being too low
-
       # error: income too high
       When I fill out my income as "195000"
       Then I should see an error about household income being too high
-
       # no error - income should pass
       When I fill out my income as "75000"
 
+      # return to vouchers
+      And I navigate to the "Income" section
+      And I indicate having vouchers
+      # error: income too high should still fail
+      When I fill out my income as "195000"
+      Then I should see an error about household income being too high
+
+      # no error - income should pass, because of vouchers
+      And I fill out my income as "5000"
+
       # error: L/W preference option not chosen (optOut / preference both blank)
       And I continue past the Lottery Preferences intro
+      And I opt out of Assisted Housing preference
       And I click the Next button on the Live/Work Preference page
       Then I should see an error about selecting an option
 

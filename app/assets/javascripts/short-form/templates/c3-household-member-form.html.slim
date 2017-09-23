@@ -49,10 +49,13 @@
       label.form-label.caps id="hasSameAddressAsApplicant_label"
         | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.NO' | translate}}
+
+        small.error#household_member_same_address_error ng-show="inputInvalid('hasSameAddressAsApplicant')"
+         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
       p.form-note.margin-bottom
@@ -69,10 +72,13 @@
       p.form-note.margin-bottom
         | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
       .radio-group role="radiogroup" aria-labelledby="workInSf_label"
-        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.NO' | translate}}
+
+      small.error#household_member_workInSf_error ng-show="inputInvalid('workInSf')"
+       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
       small.highlight ng-if="householdMember.workInSf == 'Yes'"
         | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}

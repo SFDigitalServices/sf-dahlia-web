@@ -41,6 +41,7 @@ ListingController = (
   $scope.lotterySearchNumber = ''
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
+  $scope.error = ListingService.error
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
   $scope.reservedUnitIcons = [
@@ -78,6 +79,12 @@ ListingController = (
   $scope.leasingAgentInfoAvailable = ->
     l = $scope.listing
     l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
+
+  $scope.showAMItoggler = ->
+    return false if _.isEmpty($scope.AMICharts)
+    lastHouseholdIncomeLevel = $scope.occupancyIncomeLevels(_.last($scope.AMICharts))
+    maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
+    maxNumOfHousehold > $scope.householdAMIChartCutoff()
 
   $scope.googleMapSrc = (listing) ->
     # exygy google places API key -- should be unlimited use for this API
@@ -164,10 +171,10 @@ ListingController = (
       $scope.lotteryRankingSubmitted = false
     else
       $scope.loading.lotteryRank = true
+      $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
         $scope.lotteryRankingSubmitted = true
-        $scope.loading.lotteryRank = false
       )
 
   $scope.submittedApplication = ->
@@ -209,6 +216,9 @@ ListingController = (
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
+
+  $scope.getListingAMI = ->
+    ListingService.getListingAMI()
 
   $scope.occupancy = (unitSummary) ->
     return '1' if unitSummary.maxOccupancy == 1

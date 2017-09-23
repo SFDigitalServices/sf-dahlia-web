@@ -218,6 +218,9 @@ GEM
     pg (0.18.4)
     phantomjs (2.1.1.0)
     powerpack (0.1.1)
+    prerender_rails (1.5.1)
+      activesupport
+      rack
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -326,6 +329,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    sentry-raven (2.6.3)
+      faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.7.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
@@ -421,6 +426,7 @@ DEPENDENCIES
   overcommit
   pg
   phantomjs (~> 2.1.1)
+  prerender_rails (~> 1.5.1)
   pry
   pry-rails
   puma
@@ -437,6 +443,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  sentry-raven (~> 2.6.3)
   shoulda-matchers
   sidekiq (~> 5.0.2)
   sitemap_generator!

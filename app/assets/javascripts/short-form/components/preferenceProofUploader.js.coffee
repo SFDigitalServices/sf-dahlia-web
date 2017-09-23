@@ -73,7 +73,7 @@ angular.module('dahlia.components')
         proofOption = @proofDocument.proofOption
         if @preference == 'rentBurden'
           proofOption = 'Lease and rent proof'
-        else if proofOption = 'Copy of Lease'
+        else if proofOption == 'Copy of Lease'
           proofOption = 'Lease'
         @application.preferences[@preference + '_proofOption'] = proofOption
 

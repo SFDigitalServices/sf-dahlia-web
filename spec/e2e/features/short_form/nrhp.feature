@@ -15,7 +15,8 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
-      # the first preference I see should be Live/Work
+      And I opt out of Assisted Housing preference
+      # the first live/work/neighborhood preference I see should be Live/Work
       Then I should be on the "Live or Work in San Francisco Preference" preference page
 
     Scenario: Using an address inside the NRHP area, I should see the preference option
@@ -34,6 +35,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I indicate having vouchers
       And I fill out my income as "50000"
       And I continue past the Lottery Preferences intro
+      And I opt out of Assisted Housing preference
       # the first preference I see should be NRHP
       Then I should be on the "Live in the Neighborhood" preference page
 
@@ -50,6 +52,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I indicate being done adding people
       And I indicate living in public housing
       And I hit the Next button "4" times
+      And I opt out of Assisted Housing preference
       # now that Jonny changed his address, ensure that preference is un-checked but Jane is still eligible
       Then I should see the Live in the Neighborhood checkbox un-checked
       When I click the Live in the Neighborhood checkbox
@@ -60,7 +63,6 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       When I select "Jane Doe" for "neighborhoodResidence" preference
       And I upload a "School record" as my proof of preference for "neighborhoodResidence"
       And I click the Next button on the Live in the Neighborhood page
-      And I opt out of Assisted Housing preference
       And I don't choose COP/DTHP preferences
       And I fill out the optional survey
       Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jane Doe"

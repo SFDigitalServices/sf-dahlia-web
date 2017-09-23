@@ -114,9 +114,9 @@
         "TITLE_YOU": "Are you developmentally disabled?"
     },
     "C7_HOUSEHOLD_PRIORITIES": {
-        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability.",
-        "TITLE_HOUSEHOLD": "Are you or anyone on this application a person who needs any of the following ADA accessibility features?",
-        "TITLE_YOU": "Are you a person who needs any of the following ADA accessibility features?"
+        "P1": "If you are selected for a unit, the property will work to accommodate your need to the best of their ability. Should your application be chosen, be prepared to provide supporting documentation from your physician.",
+        "TITLE_HOUSEHOLD": "Do you or anyone in your household need any of the following ADA accessibility features?",
+        "TITLE_YOU": "Do you need any of the following ADA accessibility features?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
@@ -173,28 +173,26 @@
         "TITLE": "Lottery Preferences move you up in line and give you a higher ranking in the lottery."
     },
     "E2A_NEIGHBORHOOD_PREFERENCE": {
-        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking because you live so close to this listing.",
-        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P1_PLURAL": "{{address}} qualify you for a better ranking because you live so close to this listing.",
+        "INSTRUCTIONS_P1_SINGULAR": "{{address}} qualifies you for a better ranking because you live so close to this listing.",
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
             "NAME": "Neighborhood Resident Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
             "TITLE": "Live in the Neighborhood"
-        },
-        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
+        }
     },
     "E2B_ADHP_PREFERENCE": {
-        "INSTRUCTIONS_P1_PLURAL": "<strong>{{address}}</strong> qualify you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
-        "INSTRUCTIONS_P1_SINGULAR": "<strong>{{address}}</strong> qualifies you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
+        "INSTRUCTIONS_P1_PLURAL": "{{address}} qualify you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
+        "INSTRUCTIONS_P1_SINGULAR": "{{address}} qualifies you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Anti-Displacement Housing Preference</strong> This preference applies only to new projects. At least one household member must live within a census tract that has been identified as having the greatest risk of economic displacement.",
             "NAME": "Anti-Displacement Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in a neighborhood where people are at the greatest risk of being displaced.",
             "TITLE": "Live in the Neighborhood"
-        },
-        "TITLE": "Good news! You qualify for a higher ranking in the lottery."
+        }
     },
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
@@ -218,28 +216,29 @@
         }
     },
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
-        "INSTRUCTIONS": "This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
+        "INSTRUCTIONS": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing.<br><br>This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
         "PREFERENCE": {
             "TITLE": "Assisted Housing Preference"
-        },
-        "TITLE": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing."
+        }
     },
     "E3B_RENT_BURDEN_PREFERENCE": {
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
-        "RENT_BURDEN_NOTES": "Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
+        "RENT_BURDEN_NOTES": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.<br><br>Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
         "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
-        "RENT_BURDEN_TITLE": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
+        "CERT_OF_PREFERENCE_CERTIFICATE": "Do you know your COP Certificate Number?",
         "CERT_OF_PREFERENCE_DESC": "If you hold a Certificate of Preference (COP) from the former San Francisco Redevelopment Agency.  COP holders were displaced by Agency action generally during the 1960s and 1970s.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
+        "DISPLACED_CERTIFICATE": "Do you know your DTHP Certificate Number?",
         "DISPLACED_TENANTS_DESC": "If you hold a Displaced Tenant Housing Preference Certificate (DTHP). DTHP Certificate holders are tenants who were evicted through either an Ellis Act Eviction or an Owner Move In Eviction, or have been displaced by a fire.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "If you have not heard of these preferences, you most likely do not have one.",
+        "NEED_CERTIFICATE_FOR_PREFERENCE": "You need a certificate to get this preference. Enter your certificate number if you know it, or we'll look it up for you.",
         "TITLE": "There are lottery preferences for people who already have special certificates."
     },
     "E8_GENERAL_LOTTERY_NOTICE": {
@@ -280,6 +279,7 @@
         "INCOME": "Please enter an income amount",
         "INCOME_TIMEFRAME": "Please enter an income timeframe",
         "LAST_NAME": "Please enter a Last Name",
+        "LOTTERY_RANKING_SEARCH": "We seem to be having a connection issue. Please try your search again.",
         "NOT_ELIGIBLE": "Unfortunately it appears you do not qualify for this listing.",
         "NOT_ELIGIBLE_DESCRIPTION": "Please make changes if you believe you might have made a mistake. Be aware that if you falsify any information on your application you will be disqualified.<br><br>If the information you entered is accurate, we encourage you to check back in the future of as more properties become available.",
         "PASSWORD": "Please enter a valid password",
@@ -386,6 +386,7 @@
         "CANCEL": "Cancel",
         "CANCEL_ADDING_DOCUMENTS": "Cancel adding documents",
         "CANCEL_UPLOAD": "Cancel upload",
+        "CERTIFICATE_NUMBER": "Certificate Number",
         "CHILD": "Child",
         "CITY": "City Name",
         "CLEAR": "Clear",
@@ -420,6 +421,7 @@
         "GAY_LESBIAN_SAME_GENDER_LOVING": "Gay/Lesbian/Same-Gender Loving",
         "GENDERQUEER_NON_BINARY": "Genderqueer/Gender Non-binary",
         "GET_DIRECTIONS": "Get Directions",
+        "GOOD_NEWS_FOR_HIGHER_RANKING": "Good news! You qualify for a higher ranking in the lottery.",
         "GRANDPARENT": "Grandparent",
         "GREAT_GRANDPARENT": "Great Grandparent",
         "HEARING_IMPAIRMENTS": "For Hearing Impairments",
@@ -608,6 +610,7 @@
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
+        "OCCUPANCY_SEE_UNIT_INFO": "For the types of units available in this listing please see above.",
         "OPEN_WAITLIST": "Open Waitlist",
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
@@ -622,6 +625,7 @@
         "RESERVED_UNITS": "Reserved Units",
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
+        "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",

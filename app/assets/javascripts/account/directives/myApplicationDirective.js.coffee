@@ -10,6 +10,7 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
+      scope.lastPage = scope.application.lastPage || ShortFormApplicationService.applicationDefaults.lastPage
 
       scope.isDeleted = ->
         scope.application.deleted
