@@ -29,7 +29,7 @@ do ->
       hasPreference: ->
       loadListing: ->
     fakeDataService =
-      formatApplication: -> fakeShortForm
+      formatApplication: -> fakeSalesforceApplication
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
       initRentBurdenDocs: jasmine.createSpy()
