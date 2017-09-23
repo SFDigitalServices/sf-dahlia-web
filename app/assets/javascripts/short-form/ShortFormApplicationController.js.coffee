@@ -830,6 +830,7 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
