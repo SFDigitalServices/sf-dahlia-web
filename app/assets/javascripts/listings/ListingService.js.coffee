@@ -170,6 +170,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return incomeLevels
 
   Service.openLotteryResultsModal = ->
+    Service.loading.lotteryRank = false
+    Service.error.lotteryRank = false
     modalInstance = $modal.open({
       templateUrl: 'listings/templates/listing/_lottery_modal.html',
       controller: 'ModalInstanceController',
@@ -599,10 +601,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     params =
       params:
         lottery_number: lotteryNumber
+    Service.loading.lotteryRank = true
+    Service.error.lotteryRank = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
       angular.copy(data, Service.lotteryRankingInfo)
+      Service.loading.lotteryRank = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.lotteryRank = false
+      Service.error.lotteryRank = true
     )
 
   # used by My Applications -- when you load an application we also parse the attached listing data

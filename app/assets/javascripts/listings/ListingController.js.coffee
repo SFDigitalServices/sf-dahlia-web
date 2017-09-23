@@ -164,11 +164,9 @@ ListingController = (
     if $scope.lotterySearchNumber == ''
       $scope.lotteryRankingSubmitted = false
     else
-      $scope.loading.lotteryRank = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
         $scope.lotteryRankingSubmitted = true
-        $scope.loading.lotteryRank = false
       )
 
   $scope.submittedApplication = ->
