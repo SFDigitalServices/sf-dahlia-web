@@ -573,7 +573,7 @@ ShortFormApplicationService = (
 
   Service.isLeavingConfirmationToSignIn = (toState, fromState) ->
     fromState.name == 'dahlia.short-form-application.create-account' &&
-      toState.name == 'dahlia.sign-in' &&
+      toState.name == 'dahlia.account.sign-in' &&
       Service.application.status.match(/submitted/i)
 
   Service.isLeavingConfirmation = (toState, fromState) ->
@@ -735,7 +735,10 @@ ShortFormApplicationService = (
       # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
       # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
       doubleSubmit = !! Service.application.status.match(/submitted/i)
-      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
+      $state.go(
+        'dahlia.account.my-applications',
+        {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit}
+      )
     else
       # send them to choose which draft they want to keep
       $state.go('dahlia.short-form-application.choose-draft')

@@ -9,7 +9,7 @@ class Emailer < Devise::Mailer
     load_salesforce_contact(record)
     @email = record.email
     @subject = 'DAHLIA SF Housing Portal Account Updated'
-    sign_in_path = 'sign-in?redirectTo=dahlia.account-settings'
+    sign_in_path = 'sign-in?redirectTo=dahlia.account.account-settings'
     @account_settings_url = "#{base_url}/#{sign_in_path}"
     mail(to: @email, subject: @subject) do |format|
       format.html { render 'account_update' }

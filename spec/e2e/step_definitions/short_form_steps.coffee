@@ -368,7 +368,7 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I sign in', ->
-    signInUrl = "/sign-in"
+    signInUrl = "/account/sign-in"
     getUrl(signInUrl)
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
@@ -381,7 +381,7 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I go to My Applications', ->
-    getUrl('/my-applications')
+    getUrl('/account/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()

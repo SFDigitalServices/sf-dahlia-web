@@ -133,14 +133,19 @@
     ##########################
     # < Account/Login pages >
     ##########################
-    # TODO: refactor "my account" pages to be under the same namespace/controller
-    ############
-    .state('dahlia.create-account', {
-      url: '/create-account'
+    .state('dahlia.account', {
+      url: '/account'
+      abstract: true
       views:
         'container@':
-          templateUrl: 'account/templates/create-account.html'
+          templateUrl: 'account/templates/layout.html'
           controller: 'AccountController'
+    })
+    .state('dahlia.account.create-account', {
+      url: '/create-account'
+      views:
+        'container':
+          templateUrl: 'account/templates/create-account.html'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -156,9 +161,8 @@
       # will be accessed at '/listings/{id}/apply/create-account'
       url: '/create-account'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/create-account.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -170,7 +174,7 @@
           $translate('PAGE_TITLE.CREATE_ACCOUNT')
         ]
     })
-    .state('dahlia.sign-in', {
+    .state('dahlia.account.sign-in', {
       url: '/sign-in?expiredUnconfirmed&expiredConfirmed&redirectTo'
       params:
         newAccount: {squash: true}
@@ -181,9 +185,8 @@
         redirectTo: null
         fromShortFormIntro: null
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -208,9 +211,8 @@
       # will be accessed at '/listings/{id}/apply/sign-in'
       url: '/sign-in'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
@@ -222,7 +224,7 @@
           $translate('PAGE_TITLE.SIGN_IN')
         ]
     })
-    .state('dahlia.forgot-password', {
+    .state('dahlia.account.forgot-password', {
       url: '/forgot-password'
       views:
         'container@':
@@ -237,19 +239,17 @@
       # will be accessed at '/listings/{id}/apply/forgot-password'
       url: '/forgot-password'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/forgot-password.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
     })
-    .state('dahlia.reset-password', {
+    .state('dahlia.account.reset-password', {
       url: '/reset-password'
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/reset-password.html'
-          controller: 'AccountController'
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
@@ -257,17 +257,16 @@
       onEnter: ['$state', 'AccountService', ($state, AccountService) ->
         AccountService.clearAccountMessages()
         unless AccountService.loggedIn()
-          return $state.go('dahlia.sign-in')
+          return $state.go('dahlia.account.sign-in')
       ]
     })
-    .state('dahlia.account-settings', {
+    .state('dahlia.account.account-settings', {
       url: '/account-settings?reconfirmed'
       params:
         reconfirmed: null
       views:
-        'container@':
+        'container':
           templateUrl: 'account/templates/account-settings.html'
-          controller: 'AccountController'
       resolve:
         auth: ['$auth', 'AccountService', ($auth, AccountService) ->
           $auth.validateUser().then ->
@@ -280,17 +279,7 @@
           AccountService.showReconfirmedMessage()
       ]
     })
-    .state('dahlia.eligibility-settings', {
-      url: '/eligibility-settings'
-      views:
-        'container@':
-          templateUrl: 'account/templates/eligibility-settings.html'
-      resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
-        ]
-    })
-    .state('dahlia.my-account', {
+    .state('dahlia.account.my-account', {
       url: '/my-account?accountConfirmed'
       params:
         skipConfirm:
@@ -311,7 +300,7 @@
           AnalyticsService.trackAccountCreation()
       ]
     })
-    .state('dahlia.my-applications', {
+    .state('dahlia.account.my-applications', {
       url: '/my-applications'
       params:
         skipConfirm:
@@ -344,7 +333,19 @@
           AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId, $stateParams.doubleSubmit)
       ]
     })
-    .state('dahlia.my-favorites', {
+    # NOTE: placeholder -- not used yet
+    .state('dahlia.account.eligibility-settings', {
+      url: '/eligibility-settings'
+      views:
+        'container@':
+          templateUrl: 'account/templates/eligibility-settings.html'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    # NOTE: placeholder -- not used yet
+    .state('dahlia.account.my-favorites', {
       url: '/my-favorites'
       views:
         'container@':
@@ -962,7 +963,7 @@
             deferred = $q.defer()
             ShortFormApplicationService.getApplication($stateParams.id).then( ->
               if !ShortFormApplicationService.applicationWasSubmitted()
-                $state.go('dahlia.my-applications')
+                $state.go('dahlia.account.my-applications')
               deferred.resolve(ShortFormApplicationService.application)
             ).catch( (response) ->
               deferred.reject(response)
@@ -994,7 +995,7 @@
         '$state', 'ShortFormApplicationService',
         ($state, ShortFormApplicationService) ->
           if _.isEmpty(ShortFormApplicationService.accountApplication)
-            $state.go('dahlia.my-applications')
+            $state.go('dahlia.account.my-applications')
         ]
     })
     .state('dahlia.short-form-application.choose-account-settings', {
@@ -1014,7 +1015,7 @@
         '$state', 'ShortFormApplicationService',
         ($state, ShortFormApplicationService) ->
           if _.isEmpty(ShortFormApplicationService.application)
-            $state.go('dahlia.my-applications')
+            $state.go('dahlia.account.my-applications')
         ]
     })
 

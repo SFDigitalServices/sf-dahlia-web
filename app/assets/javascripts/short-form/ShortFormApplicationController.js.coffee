@@ -612,10 +612,10 @@ ShortFormApplicationController = (
     if ($scope.chosenApplicationToKeep == 'recent')
       user = AccountService.loggedInUser
       ShortFormApplicationService.keepCurrentDraftApplication(user).then( ->
-        $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
+        $scope.goToAndTrackFormSuccess('dahlia.account.my-applications', {skipConfirm: true})
       )
     else
-      $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
+      $scope.goToAndTrackFormSuccess('dahlia.account.my-applications', {skipConfirm: true})
 
   $scope.chooseAccountSettings = ->
     if ($scope.chosenAccountSettingsToKeep == 'account')
@@ -676,7 +676,7 @@ ShortFormApplicationController = (
       ShortFormApplicationService.submitApplication().then((response) ->
         # ShortFormNavigationService.isLoading(false) will happen after My Apps are loaded
         # go to my applications without tracking Form Success
-        $scope.go('dahlia.my-applications', {skipConfirm: true})
+        $scope.go('dahlia.account.my-applications', {skipConfirm: true})
       ).catch( ->
         ShortFormNavigationService.isLoading(false)
       )

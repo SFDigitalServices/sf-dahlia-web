@@ -64,7 +64,7 @@ module Overrides
     end
 
     def redirect_url
-      root_url + 'reset-password'
+      root_url + 'account/reset-password'
     end
 
     def render_edit_error

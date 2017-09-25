@@ -8,26 +8,26 @@ li
   a ui-sref="dahlia.get-assistance"
     | Get Assistance
 li ng-if="!loggedIn()"
-  a ui-sref="dahlia.sign-in"
+  a ui-sref="dahlia.account.sign-in"
     | Sign In
 li(has-dropdown ng-if="loggedIn()")
-  a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
+  a ui-sref="dahlia.account.my-account" dropdown-toggle="#my-account-dropdown"
     | My Account
   ul#my-account-dropdown.dropdown
     li.dropdown-item.has-icon
-      a ui-sref="dahlia.my-account"
+      a ui-sref="dahlia.account.my-account"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-profile"
         | My Dashboard
     li.dropdown-item.has-icon
-      a ui-sref="dahlia.my-applications"
+      a ui-sref="dahlia.account.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-application"
         | My Applications
     li.dropdown-item.has-icon
-      a ui-sref="dahlia.account-settings"
+      a ui-sref="dahlia.account.account-settings"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-settings"

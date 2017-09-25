@@ -106,7 +106,7 @@ do ->
         it 'routes user to sign-in', ->
           scope.createAccount()
           scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.sign-in', {skipConfirm: true, newAccount: true})
+          expect(state.go).toHaveBeenCalledWith('dahlia.account.sign-in', {skipConfirm: true, newAccount: true})
 
     describe '$scope.signIn', ->
       beforeEach ->
@@ -138,7 +138,7 @@ do ->
       describe 'user not in short form session', ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          state.current.name = 'dahlia.sign-in'
+          state.current.name = 'dahlia.account.sign-in'
           deferred.resolve(true)
 
         it 'sends user to AccountService.goToLoginRedirect if available', ->
@@ -148,17 +148,17 @@ do ->
           scope.$apply()
           expect(fakeAccountService.goToLoginRedirect).toHaveBeenCalled()
 
-        it 'sends user to dahlia.my-account by default', ->
+        it 'sends user to dahlia.account.my-account by default', ->
           state.params.fromShortFormIntro = null
           fakeAccountService.loginRedirect = null
           scope.signIn()
           scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-account')
+          expect(state.go).toHaveBeenCalledWith('dahlia.account.my-account')
 
       describe 'user signing in from short from intro page', ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          state.current.name = 'dahlia.sign-in'
+          state.current.name = 'dahlia.account.sign-in'
           state.params.fromShortFormIntro = true
           fakeShortFormApplicationService.listing =
             Id: "123"

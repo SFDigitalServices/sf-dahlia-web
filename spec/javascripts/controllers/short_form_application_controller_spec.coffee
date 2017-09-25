@@ -146,7 +146,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
-        state.go('dahlia.my-applications', {skipConfirm: true})
+        state.go('dahlia.account.my-applications', {skipConfirm: true})
         deferred.promise
 
       _$document_.scrollToElement = jasmine.createSpy()
@@ -503,7 +503,7 @@ do ->
           expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
 
         it 'routes user to my applications', ->
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
+          expect(state.go).toHaveBeenCalledWith('dahlia.account.my-applications', {skipConfirm: true})
 
       describe 'not logged in', ->
         it 'routes directly to create account', ->

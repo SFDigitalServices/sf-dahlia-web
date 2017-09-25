@@ -601,7 +601,7 @@ do ->
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
       it 'should not trigger if you\'re going to save and finish later', ->
-        toState = {name: 'dahlia.create-account'}
+        toState = {name: 'dahlia.account.create-account'}
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
@@ -876,7 +876,7 @@ do ->
           skipConfirm: true
           alreadySubmittedId: fakeSalesforceApplication.application.id
           doubleSubmit: true
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
+        expect($state.go).toHaveBeenCalledWith('dahlia.account.my-applications', stateOpts)
 
       it 'sends you to choose account settings if they were different', ->
         opts =
@@ -896,7 +896,7 @@ do ->
         fakePrevApplication = { status: 'submitted', id: '123' }
         params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
+        expect($state.go).toHaveBeenCalledWith('dahlia.account.my-applications', params)
       it 'sends you to choose draft', ->
         fakePrevApplication = { status: 'draft' }
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)

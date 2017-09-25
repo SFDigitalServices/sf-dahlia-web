@@ -24,8 +24,8 @@ class SitemapsController < ApplicationController
     @sitemap.add '/get-assistance', changefreq: 'monthly'
     @sitemap.add '/housing-counselors', changefreq: 'monthly'
     @sitemap.add '/additional-resources', changefreq: 'monthly'
-    @sitemap.add '/create-account', changefreq: 'monthly'
-    @sitemap.add '/sign-in', changefreq: 'monthly'
+    @sitemap.add '/account/create-account', changefreq: 'monthly'
+    @sitemap.add '/account/sign-in', changefreq: 'monthly'
     @sitemap.add '/disclaimer', changefreq: 'monthly'
     @sitemap.add '/privacy', changefreq: 'monthly'
     listings.each do |listing|
