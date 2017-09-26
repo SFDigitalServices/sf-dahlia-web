@@ -767,6 +767,7 @@
         "CLOSE": "close",
         "CONFIRM": "Confirm",
         "CONTINUE_WITH_YOUR_APPLICATION": "Continue with your application?",
+        "LEAVE_YOUR_APPLICATION": "Leave your application?",
         "CONTINUE": "Continue",
         "DELETE": "Delete",
         "EDIT": "Edit",
@@ -793,6 +794,8 @@
         "STATUS": "Status",
         "SUBMIT": "Submit",
         "SUBMITTED": "Submitted",
+        "STAY": "Stay",
+        "LEAVE": "Leave",
         "UNIT_TYPE": "Unit Type",
         "YES": "Yes",
         "YOU": "You"

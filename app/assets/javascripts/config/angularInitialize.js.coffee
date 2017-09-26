@@ -64,15 +64,20 @@
         $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
       else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+        content =
+          title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
+          cancel: $translate.instant('T.STAY')
+          continue:  $translate.instant('T.LEAVE')
+          alert: true
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
         else
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
 
@@ -82,7 +87,7 @@
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
         else
-          ModalService.alert(leaveMessage, ->
+          ModalService.alert(content, ->
             # fires only if user clicks 'ok' to leave page
             # reloads this stateChangeStart method with skipConfirm true
             toParams.skipConfirm = true
