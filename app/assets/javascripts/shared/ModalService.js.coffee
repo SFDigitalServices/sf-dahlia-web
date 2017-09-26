@@ -10,7 +10,8 @@ ModalService = ($modal) ->
 
   Service.alert = (content, onConfirm) ->
     Service.messages.title =  content.title
-    Service.messages.alert = content.message
+    Service.messages.alert = content.alert
+    Service.messages.message = content.message
     Service.messages.cancel = content.cancel
     Service.messages.continue = content.continue
     Service.callbacks.onConfirm = onConfirm
