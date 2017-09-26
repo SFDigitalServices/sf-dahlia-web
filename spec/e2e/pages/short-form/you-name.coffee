@@ -21,6 +21,9 @@ class Name extends AngularPage
     day = opts.day || @defaults.dob_day
     year = opts.year || @defaults.dob_year
 
+    # scroll to firstName
+    browser.actions().mouseMove(@firstName).perform()
+
     @firstName.clear().sendKeys(firstName)
     @middleName.clear().sendKeys(middleName)
     @lastName.clear().sendKeys(lastName)

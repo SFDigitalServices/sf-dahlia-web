@@ -15,8 +15,10 @@ accountPassword = 'password123'
 
 # reusable functions
 fillOutSurveyPage = ->
-  element(By.id('referral_newspaper')).click()
-  submitPage()
+  el = element(By.id('referral_newspaper'))
+  scrollToElement(el).then ->
+    el.click()
+    submitPage()
 
 getSelectedLiveMember = () ->
   liveInSfMember = element.all(By.id('liveInSf_household_member')).filter((elem) ->
