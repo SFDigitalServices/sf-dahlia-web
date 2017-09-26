@@ -46,6 +46,9 @@ class Contact extends AngularPage
     opts.city ||= @defaults.homeAddressCity
     opts.workInSf ||= @defaults.workInSf
 
+    # scroll to phone
+    browser.actions().mouseMove(@phone).perform()
+
     @phone.clear().sendKeys(@defaults.phone)
     @phoneType.sendKeys(@defaults.phoneType)
 
