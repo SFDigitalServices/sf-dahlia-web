@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 11 Sep 2017 19:37:22 GMT
+      - Tue, 26 Sep 2017 23:38:58 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=6YBB_vGUTVeSn9-Zy_dm4Q;Path=/;Domain=.salesforce.com;Expires=Fri,
-        10-Nov-2017 19:37:22 GMT;Max-Age=5184000
+      - BrowserId=qH6NnRA-QwSYHEib9OGL0w;Path=/;Domain=.salesforce.com;Expires=Sat,
+        25-Nov-2017 23:38:58 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,9 +47,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1505158643615","signature":"pyy7Zs5cif57n1KLmQ5/Y6Bug78vejc4wgwa+rqN5p8="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1506469138638","signature":"8YvqjdoEjI5NcxB+jY3vMugftjayT+lsu+BemkizFGY="}'
     http_version: 
-  recorded_at: Mon, 11 Sep 2017 19:37:24 GMT
+  recorded_at: Tue, 26 Sep 2017 23:38:58 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000DZTkAUAX
@@ -71,7 +71,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 11 Sep 2017 19:37:24 GMT
+      - Tue, 26 Sep 2017 23:38:59 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -80,8 +80,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=G_IJ2UtcTUCkI2d3jtUxWw;Path=/;Domain=.salesforce.com;Expires=Fri,
-        10-Nov-2017 19:37:24 GMT;Max-Age=5184000
+      - BrowserId=ez8SXJO9TbyHFvBK8z7E4w;Path=/;Domain=.salesforce.com;Expires=Sat,
+        25-Nov-2017 23:38:59 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -115,10 +115,7 @@ http_interactions:
         Burdened / Assisted Housing Preference","pdfUrl":null,"order":5,"NRHPDistrict":null,"name":"LP-00597","listingPreferenceID":"a0l1b000000M8HbAAK","listingId":"a0W0P00000DZTkAUAX","description":"For
         households who are currently paying more than 50% of income for housing costs
         or are living in public housing or project based Section 8 housing within
-        San Francisco.","appTotal":null},{"unitsAvailable":null,"readMoreUrl":null,"preferenceName":"Artist
-        Fund","pdfUrl":null,"order":null,"NRHPDistrict":null,"name":"LP-00667","listingPreferenceID":"a0l1b000000e81pAAA","listingId":"a0W0P00000DZTkAUAX","description":"For
-        local artists in the San Francisco city.","appTotal":null},{"unitsAvailable":null,"readMoreUrl":null,"preferenceName":"DACA
-        Fund","pdfUrl":null,"order":null,"NRHPDistrict":null,"name":"LP-00669","listingPreferenceID":"a0l1b000000e82iAAA","listingId":"a0W0P00000DZTkAUAX","description":null,"appTotal":null}]'
+        San Francisco.","appTotal":null}]'
     http_version: 
-  recorded_at: Mon, 11 Sep 2017 19:37:25 GMT
+  recorded_at: Tue, 26 Sep 2017 23:38:59 GMT
 recorded_with: VCR 3.0.3

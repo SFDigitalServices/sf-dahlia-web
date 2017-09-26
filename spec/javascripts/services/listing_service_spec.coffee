@@ -267,6 +267,11 @@ do ->
         ListingService.listing = fakeListing.listing
         # just to divert from our hardcoding
         ListingService.listing.Id = 'fakeId-123'
+        fakeCustomPrefs = [
+          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
+          {preferenceName: 'Alice Griffith Housing Development Resident', listingPreferenceID: '1234'}
+        ]
+        fakePreferences.preferences = fakePreferences.preferences.concat(fakeCustomPrefs)
         stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
         ListingService.getListingPreferences()
 
@@ -284,7 +289,7 @@ do ->
 
       it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->
         expect(ListingService.listing.customProofPreferences.length).toEqual 1
-        expect(ListingService.listing.customProofPreferences[0].preferenceName).toEqual 'Artist Fund'
+        expect(ListingService.listing.customProofPreferences[0].preferenceName).toEqual 'Alice Griffith Housing Development Resident'
 
     describe 'Service.getListingsByIds', ->
       afterEach ->
