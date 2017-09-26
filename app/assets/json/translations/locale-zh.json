@@ -2,7 +2,7 @@
     "A1_INTRO": {
         "CHOOSE_YOUR_LANGUAGE": "選擇您的語言",
         "SIGN_IN_SAVE_TIME": "登入可節省不少時間，其能讓您沿用上次申請時的詳細資料，並且能讓您隨時查看該申請的狀況。",
-        "TITLE": "让我们开始对您的应用程序"
+        "TITLE": "立即開始您的申請作業"
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
@@ -19,9 +19,9 @@
         }
     },
     "A4_OVERVIEW": {
-        "P1": "首先，我們會詢問您本人以及要同住之成員的相關資料。 接著，我們會看您是否符合任何可負擔之住房抽籤優先權利，若符合，便會要求您上傳這些優先權利的證明。 最後，我們會詢問您的收入情況。",
+        "P1": "首先，我們會詢問您本人以及要同住之成員的相關資料。接著，我們會看您是否符合任何可負擔之住房抽籤優先權利，若符合，便會要求您上傳這些優先權利的證明。最後，我們會詢問您的收入情況。",
         "P2": "在提交申請前，您可以先行審閱您的申請。",
-        "P3": "請留意，對於每個清單，每位家庭成員僅能在一個申請內出現。 對於本清單，若您的申請內列出之家庭成員，亦在其他申請上出現，這些申請全部會被判定喪失資格。",
+        "P3": "請留意，對於每個清單，每位家庭成員僅能在一個申請內出現。對於本清單，若您的申請內列出之家庭成員，亦在其他申請上出現，這些申請全部會被判定喪失資格。",
         "TITLE": "針對此申請，您需要完成以下作業。",
         "WARNING": "任何不實聲明將導致您的申請從抽籤中排除。"
     },
@@ -38,15 +38,15 @@
         "TITLE": "首先，您的名字是？"
     },
     "B2A_VERIFY_ADDRESS": {
-        "TITLE": "我們已經找到以下地址。 請確認是否正確。"
+        "TITLE": "我們已經找到以下地址。請確認是否正確。"
     },
     "B2_CONTACT": {
-        "APPLICANT_ADDRESS_DESC": "我們需要您目前居住地點的地址。 若您無家可歸，請輸入收容所地址或靠近您所在地點的地址。",
+        "APPLICANT_ADDRESS_DESC": "我們需要您目前居住地點的地址。若您無家可歸，請輸入收容所地址或靠近您所在地點的地址。",
         "CLAIM_WORK_IN_SF": "為主張此為抽籤優先權利，您將需要上傳佐證文件，在稍後的畫面中會有說明。",
         "EMAIL_EDITABLE_VIA": "您的電子郵件地址可以編輯，請透過您的",
         "ONLY_USE_YOUR_EMAIL": "您的電子郵件地址僅用於申請作業聯絡用途。",
         "PROVIDE_AN_ADDRESS": "請提供您可收件的地址，以便寄送與申請相關的更新及資料。",
-        "TITLE": "{{name}}，謝謝您。 現在我們需要知道如何能聯絡上您。",
+        "TITLE": "{{name}}，謝謝您。現在我們需要知道如何能聯絡上您。",
         "WORK_IN_SF_DESC": "這代表您目前的工作時數中，至少有 75% 的時間都在舊金山工作。"
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
@@ -72,7 +72,7 @@
         "TITLE": "請提供您家庭成員的相關資料。"
     },
     "C3_HOUSEHOLD_MEMBER_FORM": {
-        "MEMBER_ADDRESS_DESC": "我們需要他們目前居住地點的地址。 若他們無家可歸，請輸入他們的收容所地址或靠近他們所在地點的地址。",
+        "MEMBER_ADDRESS_DESC": "我們需要他們目前居住地點的地址。若他們無家可歸，請輸入他們的收容所地址或靠近他們所在地點的地址。",
         "P1": "在接下來的畫面中，您可以新增更多家庭成員。",
         "TITLE": "請提供該成員的個人資料。",
         "WORK_IN_SF_DESC": "這代表他們目前的工作時數中，至少有 75% 時間都在舊金山工作。"
@@ -115,13 +115,13 @@
         "CREATE_AN_ACCOUNT": "建立帳戶"
     },
     "D1_INCOME_VOUCHERS": {
-        "P1": "例如： 第 8 節、VASH、HSA、HOPWA、天主教慈善機構、AIDS 基金會等等。",
+        "P1": "例如：第 8 節、VASH、HSA、HOPWA、天主教慈善機構、AIDS 基金會等等。",
         "TITLE_HOUSEHOLD": "您本人或本申請中的任何一位領有任何住房優惠券或房租補貼嗎？",
         "TITLE_YOU": "您本人領有任何住房優惠券或房租補貼嗎？"
     },
     "D2_INCOME": {
         "P1": "請將您所有家庭成員的 (稅前) 總收入，包括薪資、福利及其他所得統統加總。",
-        "P2": "您目前只需提供預估總額。 若您在抽籤時獲選，屆時會再計算實際總額。",
+        "P2": "您目前只需提供預估總額。若您在抽籤時獲選，屆時會再計算實際總額。",
         "TITLE": "現在來談談收入。"
     },
     "DOUBLE_SUBMITTED": {
@@ -138,8 +138,8 @@
         "TITLE": "抽籤優先權利除了能賦予您參與資格，還能讓您獲得較高的抽籤順位。"
     },
     "E2A_NEIGHBORHOOD_PREFERENCE": {
-        "INSTRUCTIONS_P1_PLURAL": "因為您的居住地點離此清單相當近，所以 {{address}} 讓您符合較高順位的資格。",
-        "INSTRUCTIONS_P1_SINGULAR": "因為您的居住地點離此清單相當近，所以 {{address}} 讓您符合較高順位的資格。",
+        "INSTRUCTIONS_P1_PLURAL": "因為您的居住地點離此清單相當近，所以 <strong>{{address}}</strong> 讓您符合較高順位的資格。",
+        "INSTRUCTIONS_P1_SINGULAR": "因為您的居住地點離此清單相當近，所以 <strong>{{address}}</strong> 讓您符合較高順位的資格。",
         "INSTRUCTIONS_P2": "只需上傳此地址的有效證明，接著<strong>我們將會賦予您「住在舊金山優先權利」。</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>鄰居住宅優先權利</strong>代表至少有一名家庭成員必須住在相同的轄區，或離計劃所在處 1/2 英哩的緩衝區內。",
@@ -149,11 +149,11 @@
         }
     },
     "E2B_ADHP_PREFERENCE": {
-        "INSTRUCTIONS_P1_PLURAL": "因為您所居住的鄰里正面臨極大的搬遷風險，所以 {{address}} 讓您符合較高順位的資格。",
-        "INSTRUCTIONS_P1_SINGULAR": "因為您所居住的鄰里正面臨極大的搬遷風險，所以 {{address}} 讓您符合較高順位的資格。",
+        "INSTRUCTIONS_P1_PLURAL": "因為您所居住的鄰里正面臨極大的搬遷風險，所以 <strong>{{address}}</strong> 讓您符合較高順位的資格。",
+        "INSTRUCTIONS_P1_SINGULAR": "因為您所居住的鄰里正面臨極大的搬遷風險，所以 <strong>{{address}}</strong> 讓您符合較高順位的資格。",
         "INSTRUCTIONS_P2": "只需上傳此地址的有效證明，接著<strong>我們將會賦予您「住在舊金山優先權利」。</strong>",
         "PREFERENCE": {
-            "DESCRIPTION": "<strong>反搬遷住房優先權利</strong>此優先權利僅適用於新計劃。 至少有一名家庭成員，必須住在經證實現面臨極大經濟危機而需迫遷的人口普查區。",
+            "DESCRIPTION": "<strong>反搬遷住房優先權利</strong>此優先權利僅適用於新計劃。至少有一名家庭成員，必須住在經證實現面臨極大經濟危機而需迫遷的人口普查區。",
             "NAME": "反搬遷住房優先權利",
             "SHORT_DESCRIPTION": "您聲稱您的家庭成員中，有人居住在面臨極大搬遷風險的鄰里內。",
             "TITLE": "住在鄰里內"
@@ -161,7 +161,7 @@
     },
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "文件必須載明正確姓名、您在舊金山的居住地址，以及不得超過申請日期 45 天的日期。",
-        "INSTRUCTIONS": "為順利獲得您所聲明的抽籤優先權利，您必須上傳有效文件，其上載明正確姓名、不得超過申請日期 45 天的日期，以及您在舊金山的居住或工作地址。 <br><br>若無法證實符合資格與否，您的家庭將無法獲得優先權利 (您不會受到懲處)。",
+        "INSTRUCTIONS": "為順利獲得您所聲明的抽籤優先權利，您必須上傳有效文件，其上載明正確姓名、不得超過申請日期 45 天的日期，以及您在舊金山的居住或工作地址。<br><br>若無法證實符合資格與否，您的家庭將無法獲得優先權利 (您不會受到懲處)。",
         "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "信件上必須載明收容所地址或靠近您所在地點的地址，而且公文信頭需有個案工作人員的簽署。",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "信件必須能證明確實在舊金山受聘，且在該城市的工作時數至少達 75%。",
         "LIVE_SF_PREFERENCE": {
@@ -199,7 +199,7 @@
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "如果您持有由過去舊金山再發展機構核發的「Certificate of Preference (COP)」。  被機構命令搬遷的 COP 擁有者一般是在 1960 和 1970 年代。",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
-        "DISPLACED_TENANTS_DESC": "如果您持有「Displaced Tenant Housing Preference (DTHP)」。 DTHP 憑證擁有者是已因「Ellis Act Eviction」或「Owner Move In Eviction」而被迫搬遷，或因火災而已獲安置的房客。",
+        "DISPLACED_TENANTS_DESC": "如果您持有「Displaced Tenant Housing Preference (DTHP)」。DTHP 憑證擁有者是已因「Ellis Act Eviction」或「Owner Move In Eviction」而被迫搬遷，或因火災而已獲安置的房客。",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "如果您未曾聽過這些優先權利，則意味您可能沒有該權利。",
         "TITLE": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
     },
@@ -229,7 +229,7 @@
         "INCOME_TIMEFRAME": "請輸入收入時間範圍",
         "LAST_NAME": "請輸入姓氏",
         "NOT_ELIGIBLE": "很遺憾，您似乎不符合此清單的申請資格。",
-        "NOT_ELIGIBLE_DESCRIPTION": "若您相信您可能有地方弄錯，請加以修正。 請注意，若您在申請上偽造任何資訊，將導致您喪失資格。<br><br>若您所輸入的資訊正確，建議您可在日後有更多可入住的單位時，再回來看看。",
+        "NOT_ELIGIBLE_DESCRIPTION": "若您相信您可能有地方弄錯，請加以修正。請注意，若您在申請上偽造任何資訊，將導致您喪失資格。<br><br>若您所輸入的資訊正確，建議您可在日後有更多可入住的單位時，再回來看看。",
         "PHONE_NUMBER": "請輸入電話號碼",
         "PHONE_NUMBER_TYPE": "請選擇電話號碼類型",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "請用英文作答",
@@ -241,13 +241,13 @@
         "SENIOR_ANYONE": "您的家庭中必須至少有一位成員是大於 {{minAge}} 歲的年長者",
         "SENIOR_EVERYONE": "您家庭中的每位成員必須都是大於 {{minAge}} 歲的年長者",
         "SEXUAL_ORIENTATION": "請輸入您的性傾向",
-        "STATE": "請輸入州別",
+        "STATE": "請輸入州名",
         "TERMS": "您必須同意這些條款以繼續",
         "VETERAN_ANYONE": "您的家庭中必須至少有一位成員是退伍軍人",
         "ZIP": "請輸入郵遞區號"
     },
     "F0_REVIEW_OPTIONAL": {
-        "P1": "這些問題可選擇性作答，而且不會影響您的住房資格。 您的回答將予以保密。",
+        "P1": "這些問題可選擇性作答，而且不會影響您的住房資格。您的回答將予以保密。",
         "TITLE": "請幫我們確定我們已達成目標，以服務所有市民。"
     },
     "F1A_REVIEW_SIGN_IN": {
@@ -261,8 +261,8 @@
     "F2_REVIEW_TERMS": {
         "P1": "此申請必須在 {{date}} 之前提交。",
         "P2": "租賃機構將按抽籤評分及優先權利順序來聯繫申請者，直到空房額滿為止。",
-        "P3": "您提供的所有資訊將經過驗證，您的資格也會經過確認。  若您曾作出任何欺詐性的陳述，或是有任何家庭成員出現在此清單的多份申請中，您的申請將會從抽籤中移除。 若我們無法證實您所主張的住房抽籤優先權利為真，您便無法享有該優先權利，但您也不會受到懲處。",
-        "P4": "如果您的申請從抽籤中獲選，請準備填寫更詳細的申請資料並提供必要的支援文件。  如需詳細資訊，請與張貼在清單內的發展人員或租賃機構聯絡。 完成本抽籤申請並不代表您已有權住房，或是您已符合住房資格；所有申請人皆需依照物業的「住客遴選標準」所規範內容進行篩選。<br><br>在您的線上申請提交後，便無法再變更內容。",
+        "P3": "您提供的所有資訊將經過驗證，您的資格也會經過確認。  若您曾作出任何欺詐性的陳述，或是有任何家庭成員出現在此清單的多份申請中，您的申請將會從抽籤中移除。若我們無法證實您所主張的住房抽籤優先權利為真，您便無法享有該優先權利，但您也不會受到懲處。",
+        "P4": "如果您的申請從抽籤中獲選，請準備填寫更詳細的申請資料並提供必要的支援文件。  如需詳細資訊，請與張貼在清單內的發展人員或租賃機構聯絡。完成本抽籤申請並不代表您已有權住房，或是您已符合住房資格；所有申請人皆需依照物業的「住客遴選標準」所規範內容進行篩選。<br><br>在您的線上申請提交後，便無法再變更內容。",
         "P5": "我宣誓上述聲明既真實且精確，並且認可若本申請中有任何不實聲明或疏忽情況下之聲明，將導致本申請從抽籤中排除。",
         "TITLE": "條款"
     },
@@ -273,11 +273,11 @@
         "GO_TO_MY_APPLICATIONS": "前往「我的申請」",
         "LOTTERY_NUMBER": "這是您的抽籤票券號碼",
         "NEXT_STEPS_BODY1": "抽籤將於下列日期舉行：",
-        "NEXT_STEPS_BODY2": "您不需親自出席住房抽籤活動。 結果將會張貼在 {{listingLink}}。 請參閱清單內的抽籤結果公布日期。 <br><br>租賃機構將按中籤先後排序來聯繫申請者，直到空房額滿為止。 如果您的申請獲選，請準備填寫更詳細的申請資料並提供必要的支援文件。",
+        "NEXT_STEPS_BODY2": "您不需親自出席住房抽籤活動。結果將會張貼在 {{listingLink}}。請參閱清單內的抽籤結果公布日期。<br><br>租賃機構將按中籤先後排序來聯繫申請者，直到空房額滿為止。如果您的申請獲選，請準備填寫更詳細的申請資料並提供必要的支援文件。",
         "NEXT_STEPS_TITLE": "接下來還想做些什麼嗎",
         "NO_THANKS_IM_DONE": "不，謝謝，我已完成。",
-        "PLEASE_WRITE_DOWN_YOUR_NUMBER": "請記下您的籤號並妥善保管。 若您有提供電子郵件地址，我們也會將此號碼寄送給您。",
-        "TITLE": "謝謝。 我們已收到您針對以下清單的申請：",
+        "PLEASE_WRITE_DOWN_YOUR_NUMBER": "請記下您的籤號並妥善保管。若您有提供電子郵件地址，我們也會將此號碼寄送給您。",
+        "TITLE": "謝謝。我們已收到您針對以下清單的申請：",
         "VIEW_AND_PRINT_A_COPY": "檢視已提交的申請並列印副本"
     },
     "HEADER": {
@@ -304,7 +304,7 @@
         "APPLICANT_GENDER": "您的性別是？",
         "APPLICANT_INCOME_TOTAL": "您家庭的稅前收入總額是多少？",
         "APPLICANT_NO_EMAIL": "我沒有電子郵件地址",
-        "APPLICANT_NO_PHONE": "我沒有電話號碼",
+        "APPLICANT_NO_PHONE": "我沒有市話號碼",
         "APPLICANT_PHONE": "您的電話號碼",
         "APPLICANT_PREFERENCES_DOCUMENT_NAME": "您目前上傳的文件中，記載了誰的名字？",
         "APPLICANT_PREFERENCES_HOUSEHOLD_MEMBER": "哪一位家庭成員擁有此優先權利？",
@@ -445,10 +445,10 @@
         "UPLOAD_COPY_OF_LEASE": "上傳租約副本",
         "UPLOAD_LEASE_DESCRIPTION": "請上傳第一頁，或是載明租金總額的頁面。",
         "UPLOAD_PROOF_INSTRUCTIONS_1": "若您目前正使用手機，可以拍攝照片。",
-        "UPLOAD_PROOF_INSTRUCTIONS_2": "檔案大小上限為 5MB。<br>支援的檔案類型： PDF、JPG、PNG。",
+        "UPLOAD_PROOF_INSTRUCTIONS_2": "檔案大小上限為 5MB。<br>支援的檔案類型：PDF、JPG、PNG。",
         "UPLOAD_PROOF_OF_PREFERENCE": "上傳優先權利證明",
         "UPLOAD_PROOF_OF_RENT_PAYMENT": "上傳租金付款證明",
-        "UPLOAD_RENT_DESCRIPTION": "請提供您每月租金的證明。 您聲稱您在此地址的租金是： {{rent}}。<br/><br/>若您的家庭以多張支票、匯票等方式支付，您可以上傳多份文件。",
+        "UPLOAD_RENT_DESCRIPTION": "請提供您每月租金的證明。您聲稱您在此地址的租金是：{{rent}}。<br/><br/>若您的家庭以多張支票、匯票等方式支付，您可以上傳多份文件。",
         "VETERANS_IN_HOUSEHOLD": "家庭中的退伍軍人",
         "VISION_IMPAIRMENTS": "針對視力障礙",
         "VOUCHERS_AND_SUBSIDIES": "住房優惠券或房租補貼",
@@ -487,7 +487,7 @@
     },
     "REVIEW_APPLICATION": {
         "BACK_TO_MY_APPLICATIONS": "返回到「我的申請」",
-        "GENERAL_LOTTERY_NOTICE": "根據您所輸入的資訊，您的家庭未曾主張任何抽籤優先權利。 您將會列入一般抽籤名單。",
+        "GENERAL_LOTTERY_NOTICE": "根據您所輸入的資訊，您的家庭未曾主張任何抽籤優先權利。您將會列入一般抽籤名單。",
         "PRINT_A_COPY": "請列印副本做為記錄",
         "TITLE": "這是您提交的資訊。",
         "VIEW_ORIGINAL_LISTING": "檢視原始清單",
@@ -495,9 +495,9 @@
     },
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "家庭",
-        "INCOME": "优先",
-        "PREFERENCES": "收入",
-        "REVIEW": "评论",
+        "INCOME": "收入",
+        "PREFERENCES": "優先權利",
+        "REVIEW": "檢閱",
         "YOU": "您"
     },
     "SIGN_IN": {
@@ -506,13 +506,13 @@
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "您已成功登入，而且您的詳細聯絡資訊已經更新。"
     },
     "T": {
-        "APPLICATION": "应用",
+        "APPLICATION": "申請",
         "APPLICATION_DEADLINE": "申請截止日期",
-        "APPLICATION_DUE": "由于应用",
+        "APPLICATION_DUE": "申請到期日期",
         "APPLICATION_SUBMITTED": "已提交申請",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "確定要離開此網頁嗎？ 輸入至本清單的申請內的所有資訊將會遺失。 若想要儲存您的資訊供日後再完成申請，請按一下「儲存並稍後完成」按鈕。",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "確定要離開此網頁嗎？ 若將您的申請與帳戶連結，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "確定要離開此網頁嗎？ 若您建立一個帳戶，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "確定要離開此網頁嗎？輸入至本清單的申請內的所有資訊將會遺失。若想要儲存您的資訊供日後再完成申請，請按一下「儲存並稍後完成」按鈕。",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "確定要離開此網頁嗎？若將您的申請與帳戶連結，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "確定要離開此網頁嗎？若您建立一個帳戶，將會讓檢查申請狀態及日後完成申請作業變得更加容易。",
         "BACK": "返回",
         "CLOSE": "關閉",
         "CONFIRM": "確認",
@@ -531,9 +531,9 @@
         "PER_MONTH": "每月",
         "PER_YEAR": "每年",
         "SAVE_AND_FINISH_LATER": "儲存並稍後完成",
-        "SESSION_INACTIVITY": "由於閒置過久，您的工作階段將於一分鐘後過期。 若選擇不回應，您為本清單輸入至申請內的所有資訊將會遺失。",
-        "SESSION_INACTIVITY_CONFIRMATION": "由於閒置過久，您的工作階段將於一分鐘後過期。 若選擇不回應，您將會失去儲存本申請至帳戶的權益，帳戶可讓您隨時追蹤申請的目前狀態。",
-        "SESSION_INACTIVITY_LOGGED_IN": "由於閒置過久，您的工作階段將於一分鐘後過期。 若選擇不回應，您將遭到登出且會失去所有尚未儲存的資訊。",
+        "SESSION_INACTIVITY": "由於閒置過久，您的工作階段將於一分鐘後過期。若選擇不回應，您為本清單輸入至申請內的所有資訊將會遺失。",
+        "SESSION_INACTIVITY_CONFIRMATION": "由於閒置過久，您的工作階段將於一分鐘後過期。若選擇不回應，您將會失去儲存本申請至帳戶的權益，帳戶可讓您隨時追蹤申請的目前狀態。",
+        "SESSION_INACTIVITY_LOGGED_IN": "由於閒置過久，您的工作階段將於一分鐘後過期。若選擇不回應，您將遭到登出且會失去所有尚未儲存的資訊。",
         "SKIP_TO_MAIN_CONTENT": "跳到主要內容",
         "STATUS": "狀態",
         "SUBMIT": "提交",

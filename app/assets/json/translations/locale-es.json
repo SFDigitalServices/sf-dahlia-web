@@ -115,7 +115,7 @@
         "CREATE_AN_ACCOUNT": "Crear una cuenta"
     },
     "D1_INCOME_VOUCHERS": {
-        "P1": "Por ejemplo: sección 8, programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH), Human Services Agencies (Agencias de Servicios Humanos, HSA), Housing Opportunities for Persons with AIDS Program (Programa de Oportunidades de Vivienda para Personas con Sida, HOPWA), Catholic Charities, AIDS Foundation, etc.",
+        "P1": "Por ejemplo: Sección 8, Programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH), Human Services Agencies (Agencias de Servicios Humanos, HSA), Housing Opportunities for Persons with AIDS Program (Programa de Oportunidades de Vivienda para Personas con Sida, HOPWA), Catholic Charities (Grupos de Caridad Cristianos), AIDS Foundation (Fundación para el Sida), etc.",
         "TITLE_HOUSEHOLD": "¿Usted o alguna de las personas que figuran en esta solicitud reciben vales para la vivienda o subsidios para la renta?",
         "TITLE_YOU": "¿Usted recibe vales para la vivienda o subsidios para la renta?"
     },
@@ -142,7 +142,7 @@
         "INSTRUCTIONS_P1_SINGULAR": "{{address}} le permite una mejor clasificación porque usted vive muy cerca de esta vivienda.",
         "INSTRUCTIONS_P2": "Solo cargue un comprobante válido de esta dirección y <strong>también le daremos preferencia por ser residente de San Francisco.</strong>",
         "PREFERENCE": {
-            "DESCRIPTION": "<strong>Preferencia por ser residente del vecindario</strong> significa que al menos un integrante del grupo familiar vive en el mismo distrito de inspección o en un área de ½ milla alrededor del lugar del proyecto.",
+            "DESCRIPTION": "<strong>Preferencia por ser residente del vecindario</strong> Significa que al menos un integrante del grupo familiar vive en el mismo distrito de inspección o en un área de ½ milla alrededor del lugar del proyecto.",
             "NAME": "Preferencia por ser residente del vecindario",
             "SHORT_DESCRIPTION": "Usted afirmó que un integrante de su grupo familiar vive en el mismo vecindario de la vivienda del anuncio.",
             "TITLE": "Vivir en el vecindario"
@@ -181,14 +181,12 @@
         }
     },
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
-        "INSTRUCTIONS": "Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).<br><br>Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido.",
         "PREFERENCE": {
             "TITLE": "Preferencia por vivienda asistencial"
         }
     },
     "E3B_RENT_BURDEN_PREFERENCE": {
         "FORM_ERROR": "Complete la carga de los documentos o indique que no desea esta preferencia.",
-        "RENT_BURDEN_NOTES": "Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido y un comprobante del pago del alquiler.",
         "RENT_BURDEN_PREFERENCE": "Preferencia por pago excesivo de alquiler",
         "RENT_BURDEN_PREFERENCE_DESC": "Para grupos familiares que actualmente destinan más del 50 % de sus ingresos al pago del alquiler.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "¿Necesita cargar otro documento para demostrar el monto total de alquiler que se paga en esta dirección?",
@@ -262,7 +260,7 @@
         "P1": "Esta solicitud debe enviarse antes del {{date}}.",
         "P2": "El agente de arrendamiento se comunicará con los solicitantes según la clasificación que hayan obtenido en el sorteo y el orden de preferencia hasta que se hayan ocupado todas las vacantes.",
         "P3": "Se verificará toda la información que haya proporcionado y se confirmará su elegibilidad. Si ha hecho declaraciones fraudulentas o si un integrante del grupo familiar aparece en más de una solicitud para este aviso de vivienda, su solicitud se eliminará del sorteo. Si no podemos verificar una preferencia que haya solicitado para el sorteo de la vivienda, usted no recibirá esa preferencia; sin embargo, no recibirá ninguna otra sanción.",
-        "P4": "Si su solicitud sale favorecida en la lotería, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la documentación de respaldo requerida. Para obtener más información, comuníquese con el promotor inmobiliario o el agente de arrendamiento que figura en el aviso de vivienda. El hecho de completar esta solicitud para el sorteo no le da derecho a una vivienda ni implica que usted reúne los requisitos para recibir una vivienda; todos los solicitantes serán evaluados tal como se detalla en los Criterios de Selección de los Residentes de la propiedad.<br><br>Una vez que envíe su solicitud en línea, ya no podrá modificarla.",
+        "P4": "Si su solicitud sale favorecida en la lotería, tenga en cuenta que deberá completar una solicitud más detallada y proporcionar la documentación de respaldo requerida. Para obtener más información, comuníquese con el promotor inmobiliario o el agente de arrendamiento que figura en el aviso de vivienda. El hecho de completar esta solicitud para el sorteo no le da derecho a una vivienda ni implica que usted reúna los requisitos para recibir una vivienda; todos los solicitantes serán evaluados tal como se detalla en los Criterios de Selección de los Residentes de la propiedad.<br><br>Una vez que envíe su solicitud en línea, ya no podrá modificarla.",
         "P5": "Declaro que la información que antecede es verdadera y exacta, y acepto que cualquier declaración errónea, fraudulenta o negligente que figure en esta solicitud ocasionará que sea eliminado del sorteo.",
         "TITLE": "Términos"
     },
@@ -297,7 +295,7 @@
         "ALTERNATE_CONTACT_NAME": "Nombre del contacto alternativo",
         "AMERICAN_INDIAN_ALASKAN_NATIVE": "Indígena estadounidense/Nativo de Alaska",
         "AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK": "Indígena estadounidense/Nativo de Alaska y Negro/Afroamericano",
-        "AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE": "Indígena estadounidense/Nativo de Alaska y Blanco",
+        "AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE": "Indígena estadounidense/Nativo de Alaska y blanco",
         "APPLICANT_ADDITIONAL_PHONE": "Tengo un número de teléfono adicional",
         "APPLICANT_EMAIL": "Su dirección de correo electrónico:",
         "APPLICANT_ETHNICITY": "¿Cómo describiría su origen étnico?",
@@ -314,11 +312,11 @@
         "APPLICANT_SEXUAL_ORIENTATION": "¿Cómo describiría su orientación sexual o identidad sexual?",
         "APPLICATION_CONTACT_DETAILS": "Detalles de contacto de la solicitud",
         "ASIAN": "Asiático",
-        "ASIAN_WHITE": "Asiático y Blanco",
+        "ASIAN_WHITE": "Asiático y blanco",
         "AUNT": "Tía",
         "BISEXUAL": "Bisexual",
         "BLACK_AFRICAN_AMERICAN": "Negro/Afroamericano",
-        "BLACK_AFRICAN_AMERICAN_WHITE": "Negro/Afroamericano y Blanco",
+        "BLACK_AFRICAN_AMERICAN_WHITE": "Negro/Afroamericano y blanco",
         "CANCEL": "Cancelar",
         "CANCEL_ADDING_DOCUMENTS": "Cancelar la carga de documentos",
         "CANCEL_UPLOAD": "Cancelar la carga",
@@ -451,7 +449,7 @@
         "UPLOAD_RENT_DESCRIPTION": "Proporcione un comprobante de su alquiler mensual. Usted afirmó que su alquiler en esta dirección es de: {{rent}} <br/><br/>Puede cargar varios documentos si su grupo familiar paga con varios cheques, giros monetarios, etc.",
         "VETERANS_IN_HOUSEHOLD": "Veteranos de guerra en el grupo familiar",
         "VISION_IMPAIRMENTS": "Para personas con impedimentos visuales",
-        "VOUCHERS_AND_SUBSIDIES": "Vales para la vivienda o Subsidios para la renta",
+        "VOUCHERS_AND_SUBSIDIES": "Vales para la vivienda o subsidios para la renta",
         "WHAT_TYPE_OF_NUMBER": "¿Qué tipo de número es este?",
         "WHITE": "Blanco",
         "WORK_IN_SF": "¿Trabaja usted en San Francisco?",
@@ -460,7 +458,7 @@
         "YOUR_NAME": "Su nombre",
         "YOUR_SEXUAL_ORIENTATION": "Especifique su orientación sexual",
         "YOU_HAVE_CLAIMED": "Usted ha solicitado:",
-        "ZIP": "Código",
+        "ZIP": "Código postal",
         "ZIPCODE": "Código postal"
     },
     "LISTINGS": {

@@ -8,7 +8,6 @@
     },
     "T": {
         "APPLICATION": "Aplikasyon",
-        "APPLICATION_DUE": "Aplikasyon dahil",
-        "GET_STARTED": "Magsimula"
+        "APPLICATION_DUE": "Aplikasyon dahil"
     }
 }
