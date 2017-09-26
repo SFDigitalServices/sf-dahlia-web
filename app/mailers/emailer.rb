@@ -122,8 +122,8 @@ class Emailer < Devise::Mailer
 
   def format_app_due_date(listing)
     due = listing.Application_Due_Date.to_time
-    due_time = "#{due.strftime('%I')}:#{due.strftime('%M')} #{due.strftime('%p')}"
-    due_date = "#{due.strftime('%b')} #{due.strftime('%d')}"
+    due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
     @deadline = "#{due_time} on #{due_date}"
   end
 
