@@ -1,15 +1,17 @@
 div
   header.modal-header
     h1.modal-title.t-gamma.no-margin
-      | Notice
+      | {{ messages.title || 'Notice' }}
   section.modal-inner.bg-dust
     p.c-charcoal
       | {{ messages.alert }}
 
     .button-stack.text-center.row.padding-top.collapse
-      .small-12.columns ng-class="{'medium-6': showCancelButton}"
-        button.button.primary ng-class="{'right-on-medium': showCancelButton}" translate="T.OK" ng-click="confirm()"
-      .small-12.medium-6.columns ng-if="showCancelButton"
-        button.button.button-link.button-lined.small-text-center.left-on-medium translate="LABEL.CANCEL" ng-click="closeModal()"
+      .small-12.medium-4.columns.right
+        button.button.primary ng-click="confirm()"
+          | {{ messages.continue }}
+      .small-12.medium-4.columns ng-if="messages.cancel"
+        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="closeModal()"
+          | {{ messages.cancel }}
 
   ng-include src="'account/templates/partials/_modal_close.html'"

@@ -24,15 +24,20 @@
     })
 
     $rootScope.$on 'IdleStart', ->
+      content =
+        title: $translate.instant('T.CONTINUE_WITH_YOUR_APPLICATION')
+        continue: $translate.instant('T.CONTINUE')
       if AccountService.loggedIn()
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY_LOGGED_IN')
       else if $state.is('dahlia.short-form-application.confirmation')
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY_CONFIRMATION')
       else
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY')
+      ModalService.alert(content)
 
     $rootScope.$on 'IdleTimeout', ->
-      ModalService.alert($translate.instant('T.SESSION_EXPIRED'))
+      content.message = $translate.instant('T.SESSION_EXPIRED')
+      ModalService.alert(content)
       if AccountService.loggedIn()
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})

@@ -8,8 +8,11 @@ ModalService = ($modal) ->
   Service.messages = {}
   Service.callbacks = {}
 
-  Service.alert = (message, onConfirm) ->
-    Service.messages.alert = message
+  Service.alert = (content, onConfirm) ->
+    Service.messages.title =  content.title
+    Service.messages.alert = content.message
+    Service.messages.cancel = content.cancel
+    Service.messages.continue = content.continue
     Service.callbacks.onConfirm = onConfirm
     if (!Service.modalInstance)
       Service.modalInstance = $modal.open(

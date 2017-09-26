@@ -766,6 +766,8 @@
         "BACK": "Back",
         "CLOSE": "close",
         "CONFIRM": "Confirm",
+        "CONTINUE_WITH_YOUR_APPLICATION": "Continue with your application?",
+        "CONTINUE": "Continue",
         "DELETE": "Delete",
         "EDIT": "Edit",
         "GET_STARTED": "Get Started",
