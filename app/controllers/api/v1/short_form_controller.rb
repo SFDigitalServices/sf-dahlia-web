@@ -116,12 +116,16 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
-    if application_params[:status].casecmp('draft').zero? && user_signed_in?
+    if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
       send_attached_files(response.try(:[], 'id'))
       send_submit_app_confirmation(response)
     end
+  end
+
+  def draft_application?
+    application_params[:status].casecmp('draft').zero?
   end
 
   def initial_submission?
