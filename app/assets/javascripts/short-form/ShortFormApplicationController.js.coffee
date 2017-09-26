@@ -747,17 +747,20 @@ ShortFormApplicationController = (
 
   $scope.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
     listing = $scope.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
     age = $scope.applicantAge(member)
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement == 'Entire Household' &&
-    age < listing.Reserved_community_minimum_age
+    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
 
   $scope.householdDoesNotMeetSeniorRequirements = ->
     listing = $scope.listing
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement != 'Entire Household' &&
-    # check if the oldest person in the house does not meet the min requirements
-    ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    # senior, but not entire household
+    reservedType.match(/senior/i) && !requirement.match(/entire household/i) &&
+      # check if the oldest person in the house does not meet the min requirements
+      ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
     $scope.applicantAge('applicant') < 18

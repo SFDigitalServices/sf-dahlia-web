@@ -50,7 +50,10 @@ accordion-heading.lead
           p.custom-counter_text ng-if="!listingHasOnlySROUnits() && listingHasSROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
           p.custom-counter_text ng-if="!listingHasOnlySROUnits() && !listingHasSROUnits()"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
+            span ng-if="listingIs('Transbay Block 7')"
+              | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
+            span ng-if="!listingIs('Transbay Block 7')"
+              | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
           table role="grid"
