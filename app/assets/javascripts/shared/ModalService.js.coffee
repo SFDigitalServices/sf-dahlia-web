@@ -5,15 +5,11 @@
 ModalService = ($modal) ->
   Service = {}
   Service.modalInstance = null
-  Service.messages = {}
+  Service.content = {}
   Service.callbacks = {}
 
   Service.alert = (content, onConfirm) ->
-    Service.messages.title =  content.title
-    Service.messages.alert = content.alert
-    Service.messages.message = content.message
-    Service.messages.cancel = content.cancel
-    Service.messages.continue = content.continue
+    angular.copy(content, Service.content)
     Service.callbacks.onConfirm = onConfirm
     if (!Service.modalInstance)
       Service.modalInstance = $modal.open(
