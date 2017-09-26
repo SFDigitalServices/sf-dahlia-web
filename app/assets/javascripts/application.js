@@ -43,6 +43,7 @@
 //= require angular-messages
 //= require angular-loading-overlay
 //= require angular-http-etag
+//= require ngMeta
 //= require config/angularModules.js
 //= require config/angularRoutes.js
 //= require config/angularInitialize.js

@@ -28,6 +28,7 @@ ShortFormApplicationController = (
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
+  $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
@@ -472,10 +473,6 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
     form = $scope.form.applicationForm
-    # skip the check if we're doing an incomeMatch and the applicant has vouchers
-    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      $scope.goToLandingPage('Preferences')
-      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -506,6 +503,9 @@ ShortFormApplicationController = (
     if eligibility.incomeMatch
       $scope.goToLandingPage('Preferences')
     else
+      # if the applicant has vouchers, being "too low" is ok
+      if error == 'too low' && $scope.application.householdVouchersSubsidies == 'Yes'
+        return $scope.goToLandingPage('Preferences')
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
@@ -642,6 +642,9 @@ ShortFormApplicationController = (
 
   $scope.fileAttachmentsForRentBurden = ->
     ShortFormHelperService.fileAttachmentsForRentBurden($scope.application)
+
+  $scope.certificateNumberForPreference = (pref_type) ->
+    ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
 
   $scope.addressTranslateVariable = (address) ->
     ShortFormHelperService.addressTranslateVariable(address)
@@ -829,8 +832,12 @@ ShortFormApplicationController = (
   # separate this method out for better unit testing
   $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
-    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     ShortFormNavigationService.isLoading(false)
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+    ShortFormApplicationService.storeLastPage(toState.name)
 
   $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
     $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)

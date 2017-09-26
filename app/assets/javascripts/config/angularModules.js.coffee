@@ -32,5 +32,6 @@ angular.module('dahlia.components', [])
   'angular-uuid',
   'linkify',
   'bsLoadingOverlay',
-  'http-etag'
+  'http-etag',
+  'ngMeta'
 ]

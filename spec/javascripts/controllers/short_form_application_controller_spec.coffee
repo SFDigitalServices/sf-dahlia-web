@@ -96,6 +96,8 @@ do ->
       setApplicationLanguage: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
       resetUserData: ->
+      isEnteringShortForm: jasmine.createSpy()
+      storeLastPage: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -310,11 +312,6 @@ do ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
-      it 'skips ahead if incomeMatch and vouchers', ->
-        scope.listing = fakeListing
-        scope.application.householdVouchersSubsidies = 'Yes'
-        scope.validateHouseholdEligibility('incomeMatch')
-        expect(state.go).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -408,6 +405,16 @@ do ->
           fakeIncomeOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
             value: fakeShortFormApplicationService.calculateHouseholdIncome()
+
+        it 'skips errors if applicant has vouchers and income is too low', ->
+          scope.application.householdVouchersSubsidies = 'Yes'
+          scope._respondToIncomeEligibilityResults(eligibility, 'too low')
+          expect(state.go).toHaveBeenCalled()
+
+        it 'proceeds with errors even if applicant has vouchers, if income is too high', ->
+          scope.application.householdVouchersSubsidies = 'No'
+          scope._respondToIncomeEligibilityResults(eligibility, 'too high')
+          expect(scope.eligibilityErrors).not.toEqual([])
 
         it 'expects income section to be invalidated', ->
           scope._respondToIncomeEligibilityResults(eligibility, error)
@@ -632,12 +639,14 @@ do ->
     describe 'onStateChangeSuccess', ->
       it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
         lang = 'es'
-        scope.onStateChangeSuccess(null, null, {lang: lang})
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
         expect(fakeShortFormApplicationService.setApplicationLanguage).toHaveBeenCalledWith(lang)
 
       it 'expects isLoading to be set to false on ShortFormNavigationService', ->
         lang = 'es'
-        scope.onStateChangeSuccess(null, null, {lang: lang})
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
         expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(false)
 
     describe 'resetAndStartNewApp', ->

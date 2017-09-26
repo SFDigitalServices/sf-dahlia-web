@@ -98,7 +98,37 @@ class Emailer < Devise::Mailer
     end
   end
 
+  def draft_application_saved(params)
+    listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
+    @listing_name = listing.Name
+    @email = params[:email]
+    @name = "#{params[:first_name]} #{params[:last_name]}"
+    continue_draft_path = '/continue-draft-sign-in/' + params[:listing_id]
+    @saved_application_url = "#{base_url}#{continue_draft_path}"
+    format_app_due_date(listing)
+    subject = "Complete your application for #{@listing_name} by #{@deadline}"
+    mail(to: @email, subject: subject) do |format|
+      format.html do
+        render(
+          'draft_application_saved',
+          locals: {
+            listing_name: @listing_name,
+            saved_application_url: @saved_application_url,
+            deadline: @deadline,
+          },
+        )
+      end
+    end
+  end
+
   private
+
+  def format_app_due_date(listing)
+    due = listing.Application_Due_Date.to_time
+    due_time = "#{due.strftime('%I')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_date = "#{due.strftime('%b')} #{due.strftime('%d')}"
+    @deadline = "#{due_time} on #{due_date}"
+  end
 
   def setup_geocoding_notification
     @applicant = Hashie::Mash.new(@log[:applicant])

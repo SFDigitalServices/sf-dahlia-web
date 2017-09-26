@@ -4,6 +4,7 @@ ShortFormDataService = (ListingService) ->
   Service.metaFields = [
     'completedSections'
     'session_uid'
+    'lastPage'
     'groupedHouseholdAddresses'
   ]
 
@@ -133,9 +134,11 @@ ShortFormDataService = (ListingService) ->
       individualPref = null
       optOut = false
       shortformPreferenceID = null
+      certificateNumber = null # gets stored in additionalDetails field
       appPrefs = application.preferences
+      PREFS = ListingService.preferenceMap
 
-      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+      if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
         optOut = appPrefs.optOut.liveWorkInSf
         if appPrefs.liveInSf || appPrefs.optOut.liveInSf
@@ -146,7 +149,7 @@ ShortFormDataService = (ListingService) ->
           individualPref = 'Work in SF'
           prefKey = 'workInSf'
           optOut = appPrefs.optOut.workInSf
-      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+      else if listingPref.preferenceName == PREFS.rentBurden
         shortformPreferenceID = appPrefs.rentBurden_shortformPreferenceID
         if appPrefs.rentBurden || appPrefs.optOut.rentBurden
           individualPref = 'Rent Burdened'
@@ -157,10 +160,13 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
       else
-        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
         shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
         optOut = appPrefs.optOut[prefKey]
+        # pref_certificateNumber may or may not exist, which is ok
+        certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
+
 
       # if you optOut then you wouldn't have a memberName or proofOption
       unless optOut
@@ -182,6 +188,7 @@ ShortFormDataService = (ListingService) ->
         naturalKey: naturalKey
         optOut: optOut
         ifCombinedIndividualPreference: individualPref
+        additionalDetails: certificateNumber
       # remove blank values
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       application.shortFormPreferences.push(shortFormPref)
@@ -420,6 +427,9 @@ ShortFormDataService = (ListingService) ->
           preferences["#{prefKey}_household_member"] = member.id
           preferences[prefKey] = true
 
+        if shortFormPref.additionalDetails
+          preferences["#{prefKey}_certificateNumber"] = shortFormPref.additionalDetails
+
         _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
           # mark preference as true if they've uploaded any files (e.g. for a draft)
           preferences[prefKey] = true
@@ -470,7 +480,7 @@ ShortFormDataService = (ListingService) ->
         incomeTimeframe: 'per_month'
         incomeTotal: sfApp.monthlyIncome
       }
-    else
+    else if sfApp.annualIncome
       return {
         incomeTimeframe: 'per_year'
         incomeTotal: sfApp.annualIncome

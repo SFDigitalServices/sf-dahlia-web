@@ -220,6 +220,9 @@ module.exports = ->
           elem.isDisplayed()
         ).first().click()
 
+  @When /^I fill out my "([^"]*)" certificate number$/, (preference) ->
+    element(By.id("#{preference}-certificate")).sendKeys('11223344')
+
   @When 'I go to the income page', ->
     submitPage()
 
@@ -344,7 +347,7 @@ module.exports = ->
     incomeTotal = element(By.id('incomeTotal'))
     scrollToElement(incomeTotal).then ->
       incomeTotal.clear().sendKeys(income)
-      element(By.id('per_year')).click().then ->
+      element(By.id('incomeTimeframe_per-year')).click().then ->
         submitPage()
 
   @When 'I fill out the optional survey', ->
@@ -618,8 +621,10 @@ module.exports = ->
     expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
+    expectByCss(@, '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
+    expectByCss(@, '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
     if withFiles
       expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
@@ -669,8 +674,10 @@ module.exports = ->
   @Then 'on the Preferences Programs page I should see my correct info', ->
     expectCheckboxChecked(@, 'preferences-certOfPreference')
     expectInputValue(@, 'certOfPreference_household_member', '1')
+    expectInputValue(@, 'certOfPreference-certificate', '11223344')
     expectCheckboxChecked(@, 'preferences-displaced')
     expectInputValue(@, 'displaced_household_member', '2')
+    expectInputValue(@, 'displaced-certificate', '11223344')
     submitPage()
 
   @Then 'on the Public Housing page I should see my correct info', ->

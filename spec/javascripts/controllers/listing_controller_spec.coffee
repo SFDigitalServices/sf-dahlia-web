@@ -43,6 +43,7 @@ do ->
         AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
+        formatLotteryNumber: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
         stubFeatures: () -> null
@@ -59,6 +60,7 @@ do ->
         listingHasLotteryResults: jasmine.createSpy()
         allListingUnitsAvailable: jasmine.createSpy()
         listingHasOnlySROUnits: jasmine.createSpy()
+        getListingAMI: jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -309,3 +311,42 @@ do ->
         fakeApplication = {applicationLanguage: 'Spanish'}
         scope.getLanguageCode(fakeApplication)
         expect(fakeShortFormApplicationService.getLanguageCode).toHaveBeenCalledWith(fakeApplication)
+
+    describe '$scope.occupancy', ->
+      it 'returns 1 for SRO', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 1 }
+        expect(scope.occupancy(unitSummary)).toEqual('1')
+      it 'returns a range for all other unit types', ->
+        unitSummary = { minOccupancy: 1 , maxOccupancy: 3 }
+        expect(scope.occupancy(unitSummary)).toEqual('1-3')
+
+    describe '$scope.occupancyLabel', ->
+      it 'calls translate person for 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyLabel(1)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
+      it 'calls translate people for more than 1', ->
+        spyOn($translate, 'instant')
+        scope.occupancyLabel(2)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
+
+    describe '$scope.formatBaths', ->
+      it 'returns Shared for 0', ->
+        expect(scope.formatBaths(0)).toEqual('Shared')
+      it 'returns a number for whole numbers', ->
+        expect(scope.formatBaths(1)).toEqual(1)
+      it 'appends 1/2 bath when needed', ->
+        spyOn($translate, 'instant')
+        output = scope.formatBaths(1.5)
+        expect($translate.instant).toHaveBeenCalledWith('LISTINGS.BATH')
+        expect(output).toEqual('1 1/2 ' + $translate.instant('LISTINGS.BATH'))
+
+    describe '$scope.listingHasOnlySROUnits', ->
+      it 'calls ListingService.listingHasOnlySROUnits', ->
+        scope.listingHasOnlySROUnits()
+        expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
+
+    describe '$scope.getListingAMI', ->
+      it 'calls ListingService.getListingAMI', ->
+        scope.getListingAMI()
+        expect(fakeListingService.getListingAMI).toHaveBeenCalled()

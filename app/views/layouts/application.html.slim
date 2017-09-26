@@ -1,5 +1,5 @@
 doctype html
-html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController" keep-scroll-position=""
+html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
   head
     title DAHLIA San Francisco Housing Portal
 
@@ -29,6 +29,14 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController" 
     / multilingual alt links currently only relevant for short form pages
     link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}" ng-if="isShortFormPage()"
 
+    / prerender.io + metatags
+    meta name="fragment" content="!"
+    meta property="og:title" content="{{$title || 'DAHLIA San Francisco Housing Portal'}}"
+    meta property="og:image" content="{{ngMeta['og:image']}}"
+    meta property="og:description" content="{{ngMeta.description}}"
+    meta name="description" content="{{ngMeta.description}}"
+    meta property="og:type" content="website"
+
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
       javascript:
@@ -46,7 +54,7 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController" 
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body id="ng-app" ng-class="{'center-body': isShortFormPage()}"
+  body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
     #google_translate_element
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"

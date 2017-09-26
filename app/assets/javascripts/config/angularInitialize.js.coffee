@@ -1,13 +1,14 @@
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
-  'Idle', 'bsLoadingOverlayService',
+  'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
   'SharedService', 'GoogleTranslateService',
-  ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService,
+  ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
   SharedService, GoogleTranslateService) ->
 
     timeoutRetries = 2
+    ngMeta.init()
 
     # check if user is logged in on page load
     AccountService.validateUser()
