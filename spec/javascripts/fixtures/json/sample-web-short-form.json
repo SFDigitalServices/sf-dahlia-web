@@ -55,7 +55,11 @@
     "workInSf_household_member": null,
     "workInSf_proof_option": null,
     "workInSf_proof_file": null,
-    "optOut": {}
+    "optOut": {},
+    "documents": {
+      "rentBurden": {},
+      "liveInSf": {}
+    }
   },
   "householdIncome": {
     "incomeTotal": 20000,
