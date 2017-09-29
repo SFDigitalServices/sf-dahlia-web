@@ -150,7 +150,7 @@
 
       # fromState.name is empty on initial page load
       if fromState.name == ''
-        if _.isObject(error) && error.status == 504
+        if _.isObject(error) && error.status >= 500
           timeoutRetries -= 1
           # if timing out on initial page load, retry a couple times before giving up
           return e.preventDefault() if timeoutRetries <= 0

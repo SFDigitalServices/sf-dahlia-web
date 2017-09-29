@@ -82,7 +82,7 @@
     $http.get(STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
       deferred.resolve(data)
     ).error( ->
-      deferred.reject(options.key)
+      deferred.reject({status: 503})
     )
     return deferred.promise
 ]
