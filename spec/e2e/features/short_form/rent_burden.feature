@@ -19,7 +19,6 @@ Feature: Short Form Application - Rent Burdened Preference
       And I indicate having vouchers
       And I fill out my income as "35000"
       And I continue past the Lottery Preferences intro
-      And I opt out of Live/Work preference
       And I select Rent Burdened Preference
       Then I should see proof uploaders for rent burden files
       # as opposed to seeing rent burden dashboard, which could be its own test...

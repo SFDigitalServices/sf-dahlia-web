@@ -10,4 +10,4 @@ angular.module('dahlia.directives')
     scope.noBorder = attrs.noBorder
     scope.featuredLeader = attrs.featuredLeader
     scope.hasBorderBottom = ->
-      return 'border-bottom' unless scope.noBorder
+      return 'border-bottom' unless (scope.noBorder || scope.featuredLeader)

@@ -24,7 +24,8 @@ getSelectedLiveMember = () ->
   ).first()
 
 submitPage = ->
-  element(By.id('submit')).click()
+  btn = element(By.id('submit'))
+  scrollToElement(btn).then -> btn.click()
 
 checkCheckbox = (checkboxId, callback) ->
   checkbox = element(By.id(checkboxId))
@@ -215,6 +216,9 @@ module.exports = ->
           elem.isDisplayed()
         ).first().click()
 
+  @When /^I fill out my "([^"]*)" certificate number$/, (preference) ->
+    element(By.id("#{preference}-certificate")).sendKeys('11223344')
+
   @When 'I go to the income page', ->
     submitPage()
 
@@ -290,8 +294,10 @@ module.exports = ->
     submitPage()
 
   @When 'I go back to the Contact page', ->
-    element(By.cssContainingText('.progress-nav_item', 'You')).click()
-    submitPage()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'You'))
+    scrollToElement(navItem).then ->
+      navItem.click()
+      submitPage()
 
   @When /^I change WorkInSF to "([^"]*)"$/, (workInSf) ->
     if workInSf == 'Yes'
@@ -300,20 +306,24 @@ module.exports = ->
       element(By.id('workInSf_no')).click()
 
   @When 'I go back to the Household page', ->
-    element(By.cssContainingText('.progress-nav_item', 'Household')).click()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'Household'))
+    scrollToElement(navItem).then ->
+      navItem.click()
 
   @When 'I go back to the Live/Work preference page', ->
-    element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
-    # skip intro
-    submitPage()
-
-  @When 'I go back to the Live/Work preference page, skipping NRHP if exists', ->
-    element(By.cssContainingText('.progress-nav_item', 'Preferences')).click()
-    # skip intro
-    submitPage()
-    # skip NRHP (if exists)
-    if element(By.id('preferences-neighborhoodResidence'))
-      submitPage()
+    navItem = element(By.cssContainingText('.progress-nav_item', 'Preferences'))
+    scrollToElement(navItem).then ->
+      navItem.click()
+      # skip intro
+      submitPage().then ->
+        # skip RB/AH (if exists)
+        rentBurden = element(By.id('preferences-rentBurden'))
+        assistedHousing = element(By.id('preferences-assistedHousing'))
+        if rentBurden || assistedHousing
+          submitPage()
+        # skip NRHP (if exists)
+        if element(By.id('preferences-neighborhoodResidence'))
+          submitPage()
 
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
@@ -333,7 +343,7 @@ module.exports = ->
     incomeTotal = element(By.id('incomeTotal'))
     scrollToElement(incomeTotal).then ->
       incomeTotal.clear().sendKeys(income)
-      element(By.id('per_year')).click().then ->
+      element(By.id('incomeTimeframe_per-year')).click().then ->
         submitPage()
 
   @When 'I fill out the optional survey', ->
@@ -408,6 +418,11 @@ module.exports = ->
 
   @When 'I wait', ->
     browser.pause()
+
+  # helper method to delineate tests
+  @When /^--I reach the "([^"]*)" step--/, (stepName) ->
+    # do nothing in particular
+    browser.waitForAngular()
 
   #######################
   # --- Error cases --- #
@@ -593,8 +608,10 @@ module.exports = ->
     expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
+    expectByCss(@, '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-displaced .info-item_name', 'Displaced Tenant Housing Preference (DTHP)')
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
+    expectByCss(@, '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
     if withFiles
       expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
@@ -644,8 +661,10 @@ module.exports = ->
   @Then 'on the Preferences Programs page I should see my correct info', ->
     expectCheckboxChecked(@, 'preferences-certOfPreference')
     expectInputValue(@, 'certOfPreference_household_member', '1')
+    expectInputValue(@, 'certOfPreference-certificate', '11223344')
     expectCheckboxChecked(@, 'preferences-displaced')
     expectInputValue(@, 'displaced_household_member', '2')
+    expectInputValue(@, 'displaced-certificate', '11223344')
     submitPage()
 
   @Then 'on the Public Housing page I should see my correct info', ->

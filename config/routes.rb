@@ -26,7 +26,7 @@ Rails.application.routes.draw do
           get 'preferences'
         end
         collection do
-          post 'ami' => 'listings#ami'
+          get 'ami' => 'listings#ami'
           get 'eligibility' => 'listings#eligibility'
         end
       end
@@ -71,5 +71,5 @@ Rails.application.routes.draw do
   get '/translations/:locale.json', to: 'application#asset_redirect'
 
   # catch all to send all HTML requests to Angular (html5mode)
-  get '*path', to: 'home#index', constraints: ->(req) { req.format == :html }
+  get '*path', to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

@@ -28,6 +28,7 @@ ShortFormApplicationController = (
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
+  $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
@@ -312,6 +313,14 @@ ShortFormApplicationController = (
   ###### Proof of Preferences Logic ########
   # this is called after e0-preferences-intro
   $scope.checkIfPreferencesApply = ->
+    if ShortFormApplicationService.eligibleForAssistedHousing()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
+    else if ShortFormApplicationService.eligibleForRentBurden()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+    else
+      $scope.checkForNeighborhoodOrLiveWork()
+
+  $scope.checkForNeighborhoodOrLiveWork = ->
     if ShortFormApplicationService.eligibleForNRHP()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.neighborhood-preference')
     else if ShortFormApplicationService.eligibleForADHP()
@@ -320,25 +329,6 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
     else
       $scope.checkAfterLiveWork()
-
-  # this called after preferences programs
-  $scope.checkForCustomPreferences = ->
-    if $scope.listing.customPreferences.length > 0
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
-    else
-      $scope.checkIfNoPreferencesSelected()
-
-  $scope.customPreferencesClaimed = ->
-    ShortFormApplicationService.customPreferencesClaimed()
-
-  # this is called after custom-preferences or preferences-programs
-  $scope.checkIfNoPreferencesSelected = ->
-    if ShortFormApplicationService.applicantHasNoPreferences()
-      # only show general lottery notice if they have no preferences
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
-    else
-      # otherwise go to the Review section
-      $scope.goToLandingPage('Review')
 
   $scope.checkAfterLiveInTheNeighborhood = (preference) ->
     # preference is either neighborhoodResidence or antiDisplacement
@@ -350,12 +340,30 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    if ShortFormApplicationService.eligibleForAssistedHousing()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
-    else if ShortFormApplicationService.eligibleForRentBurden()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+    # after Live/Work, go to preferences-programs
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+
+  # this called after preferences programs
+  $scope.checkForCustomPreferences = ->
+    if $scope.listing.customPreferences.length > 0
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkIfNoPreferencesSelected()
+
+  $scope.claimedCustomPreference = (preference) ->
+    ShortFormApplicationService.claimedCustomPreference(preference)
+
+  $scope.eligibleForAssistedHousingOrRentBurden = ->
+    ShortFormApplicationService.eligibleForAssistedHousing() || ShortFormApplicationService.eligibleForRentBurden()
+
+  # this is called after custom-preferences or preferences-programs
+  $scope.checkIfNoPreferencesSelected = ->
+    if ShortFormApplicationService.applicantHasNoPreferences()
+      # only show general lottery notice if they have no preferences
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.general-lottery-notice')
+    else
+      # otherwise go to the Review section
+      $scope.goToLandingPage('Review')
 
   $scope.applicantHasNoPreferences = ->
     ShortFormApplicationService.applicantHasNoPreferences()
@@ -377,7 +385,7 @@ ShortFormApplicationController = (
 
   $scope.checkForRentBurdenFiles = ->
     if $scope.preferences.optOut.rentBurden || ShortFormApplicationService.hasCompleteRentBurdenFiles()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      $scope.checkForNeighborhoodOrLiveWork()
     else
       $scope.setRentBurdenError()
       $scope.handleErrorState()
@@ -406,16 +414,18 @@ ShortFormApplicationController = (
   $scope.workInSfMembers = ->
     ShortFormApplicationService.workInSfMembers()
 
-  $scope.liveInTheNeighborhoodAddresses = ->
+  $scope.liveInTheNeighborhoodAddresses = (opts = {}) ->
     addresses = []
     _.each ShortFormApplicationService.liveInTheNeighborhoodMembers(), (member) ->
       street = member.home_address.address1
       addresses.push(street) unless _.isNil(street)
-    _.uniq(addresses)
+    addresses = _.uniq(addresses)
+    addresses = _.map(addresses, (x) -> "<strong>#{x}</strong>") if opts.strong
+    addresses
 
-  $scope.liveInTheNeighborhoodAddress = ->
+  $scope.liveInTheNeighborhoodAddress = (opts = {}) ->
     # turn the list of addresses into a string
-    $scope.liveInTheNeighborhoodAddresses().join(' and ')
+    $scope.liveInTheNeighborhoodAddresses(opts).join(' and ')
 
   $scope.cancelPreference = (preference) ->
     $scope.clearRentBurdenError() if preference == 'rentBurden'
@@ -462,10 +472,6 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
     form = $scope.form.applicationForm
-    # skip the check if we're doing an incomeMatch and the applicant has vouchers
-    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      $scope.goToLandingPage('Preferences')
-      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -496,6 +502,9 @@ ShortFormApplicationController = (
     if eligibility.incomeMatch
       $scope.goToLandingPage('Preferences')
     else
+      # if the applicant has vouchers, being "too low" is ok
+      if error == 'too low' && $scope.application.householdVouchersSubsidies == 'Yes'
+        return $scope.goToLandingPage('Preferences')
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
@@ -633,6 +642,9 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.certificateNumberForPreference = (pref_type) ->
+    ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
+
   $scope.addressTranslateVariable = (address) ->
     ShortFormHelperService.addressTranslateVariable(address)
 
@@ -740,17 +752,20 @@ ShortFormApplicationController = (
 
   $scope.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
     listing = $scope.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
     age = $scope.applicantAge(member)
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement == 'Entire Household' &&
-    age < listing.Reserved_community_minimum_age
+    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
 
   $scope.householdDoesNotMeetSeniorRequirements = ->
     listing = $scope.listing
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement != 'Entire Household' &&
-    # check if the oldest person in the house does not meet the min requirements
-    ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    # senior, but not entire household
+    reservedType.match(/senior/i) && !requirement.match(/entire household/i) &&
+      # check if the oldest person in the house does not meet the min requirements
+      ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
     $scope.applicantAge('applicant') < 18
@@ -815,6 +830,10 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+    ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --

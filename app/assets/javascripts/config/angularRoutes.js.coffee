@@ -21,10 +21,17 @@
           controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
+      data:
+        meta:
+          'description': 'Search and apply for affordable housing on the City of San Francisco\'s DAHLIA Housing Portal.'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
           # this should happen after preferredLanguage is initially set
           $translate.use($stateParams.lang)
+        ]
+        data: ['ngMeta', 'SharedService', (ngMeta, SharedService) ->
+          img = SharedService.assetPaths['dahlia_social-media-preview.jpg']
+          ngMeta.setTag('og:image', img)
         ]
     })
     # Home page
@@ -115,6 +122,14 @@
         $title: ['$title', 'listing', ($title, listing) ->
           listing.Name
         ]
+        data: ['ngMeta', 'listing', (ngMeta, listing) ->
+          desc = "Apply for affordable housing at #{listing.Name} on the City of San Francisco's DAHLIA Housing Portal."
+          ngMeta.setTag('description', desc)
+          ngMeta.setTag('og:image', listing.imageURL)
+        ]
+      # https://github.com/vinaygopinath/ngMeta#using-custom-data-resolved-by-ui-router
+      meta:
+        disableUpdate: true
     })
     ##########################
     # < Account/Login pages >
@@ -217,6 +232,14 @@
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
+    })
+    .state('dahlia.continue-draft-sign-in', {
+      url: '/continue-draft-sign-in/:listing_id'
+      views:
+        'container@':
+          # use same template as usual sign-in route
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
     })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
