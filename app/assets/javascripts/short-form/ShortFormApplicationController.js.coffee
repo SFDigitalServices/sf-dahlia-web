@@ -29,6 +29,7 @@ ShortFormApplicationController = (
   $scope.currentCustomProofPreference = ShortFormApplicationService.currentCustomProofPreference
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
+  $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
@@ -485,10 +486,6 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
     form = $scope.form.applicationForm
-    # skip the check if we're doing an incomeMatch and the applicant has vouchers
-    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
-      $scope.goToLandingPage('Preferences')
-      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -519,6 +516,9 @@ ShortFormApplicationController = (
     if eligibility.incomeMatch
       $scope.goToLandingPage('Preferences')
     else
+      # if the applicant has vouchers, being "too low" is ok
+      if error == 'too low' && $scope.application.householdVouchersSubsidies == 'Yes'
+        return $scope.goToLandingPage('Preferences')
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
@@ -656,6 +656,9 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.certificateNumberForPreference = (pref_type) ->
+    ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
+
   $scope.addressTranslateVariable = (address) ->
     ShortFormHelperService.addressTranslateVariable(address)
 
@@ -763,17 +766,20 @@ ShortFormApplicationController = (
 
   $scope.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
     listing = $scope.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
     age = $scope.applicantAge(member)
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement == 'Entire Household' &&
-    age < listing.Reserved_community_minimum_age
+    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
 
   $scope.householdDoesNotMeetSeniorRequirements = ->
     listing = $scope.listing
-    listing.Reserved_community_type == 'Senior' &&
-    listing.Reserved_Community_Requirement != 'Entire Household' &&
-    # check if the oldest person in the house does not meet the min requirements
-    ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    # senior, but not entire household
+    reservedType.match(/senior/i) && !requirement.match(/entire household/i) &&
+      # check if the oldest person in the house does not meet the min requirements
+      ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
     $scope.applicantAge('applicant') < 18
@@ -838,6 +844,10 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+    ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --

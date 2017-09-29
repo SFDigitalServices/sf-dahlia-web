@@ -27,6 +27,8 @@
                 ShortFormNavigationService.isLoading(false)
                 # don't display alerts in E2E tests
                 return if window.protractor
+                # AMI, lottery_ranking have their own handler
+                return if error.config.url.match(RegExp('listings/ami|lottery_ranking'))
                 if error.status == 504
                   alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
                 else
@@ -96,7 +98,6 @@
   httpEtagProvider.defineCache 'persistentCache',
     cacheService: 'localStorage'
 ]
-
 
 getAvailableStorageType = ->
   # When Safari (OS X or iOS) is in private browsing mode, it appears as though localStorage and sessionStorage

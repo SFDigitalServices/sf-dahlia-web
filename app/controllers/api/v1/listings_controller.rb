@@ -59,10 +59,15 @@ class Api::V1::ListingsController < ApiController
     # loop through all the ami levels that you just sent me
     # call ListingService.ami with each set of opts
     @ami_levels = []
-    params[:ami].each do |opts|
+    params[:chartType].each_with_index do |chart_type, i|
+      data = {
+        chartType: chart_type,
+        percent: params[:percent][i],
+        year: params[:year][i],
+      }
       @ami_levels << {
-        percent: opts[:percent],
-        values: ListingService.ami(opts.permit(%i(chartType percent year))),
+        percent: data[:percent],
+        values: ListingService.ami(data),
       }
     end
     render json: { ami: @ami_levels }
