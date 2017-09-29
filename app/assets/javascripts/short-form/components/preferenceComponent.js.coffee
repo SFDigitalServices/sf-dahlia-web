@@ -4,6 +4,7 @@ angular.module('dahlia.components')
     preference: '@'
     application: '<'
     hasProof: '<'
+    hasCertificate: '<'
     title: '@'
     translatedDescription: '@'
     customDescription: '@'

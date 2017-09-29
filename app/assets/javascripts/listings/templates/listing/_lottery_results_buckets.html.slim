@@ -1,4 +1,11 @@
 // Lottery Results
+.alert-box.alert role="alert" ng-show="error.lotteryRank"
+  span.alert-icon
+    span.ui-icon.ui-static.ui-medium.i-oil
+      svg
+        use xlink:href="#i-warning"
+  p.alert-body translate="ERROR.LOTTERY_RANKING_SEARCH"
+
 .modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
   p.t-small
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
