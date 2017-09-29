@@ -68,12 +68,6 @@
     "EASYPOST_API_KEY":{
       "required":true
     },
-    "HEAP_ANALYTICS_KEY":{
-      "required":true
-    },
-    "GOOGLE_TAG_MANAGER_KEY":{
-      "required":true
-    },
     "DISALLOW_ALL_WEB_CRAWLERS":{
       "required":true
     },
