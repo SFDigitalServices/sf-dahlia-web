@@ -33,3 +33,9 @@ angular.module('dahlia.directives')
       scope.inputInvalid attrs.name
     ), (newVal) ->
       element.attr 'aria-invalid', newVal
+
+.directive 'target', ->
+  link: (scope, elem, attrs) ->
+    if attrs.target == '_blank'
+      elem.attr('aria-label', 'Opens in new window')
+

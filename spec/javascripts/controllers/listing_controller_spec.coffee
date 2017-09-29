@@ -42,6 +42,7 @@ do ->
         AMICharts: []
         lotteryPreferences: []
         getLotteryBuckets: () -> null
+        formatLotteryNumber: () -> null
         getLotteryRanking: () -> null
         hasEligibilityFilters: () -> null
         stubFeatures: () -> null
@@ -58,6 +59,7 @@ do ->
       fakeListingService.listingHasLotteryResults = jasmine.createSpy()
       fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
       fakeListingService.listingHasOnlySROUnits = jasmine.createSpy()
+      fakeListingService.getListingAMI = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -336,3 +338,8 @@ do ->
       it 'calls ListingService.listingHasOnlySROUnits', ->
         scope.listingHasOnlySROUnits()
         expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
+
+    describe '$scope.getListingAMI', ->
+      it 'calls ListingService.getListingAMI', ->
+        scope.getListingAMI()
+        expect(fakeListingService.getListingAMI).toHaveBeenCalled()
