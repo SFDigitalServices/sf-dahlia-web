@@ -94,10 +94,10 @@ div ng-if="!atAutofillPreview()"
     p.info-item_name.sentence ng-if="applicantHasNoPreferences()"
       | {{'REVIEW_APPLICATION.GENERAL_LOTTERY_NOTICE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="certOfPreference" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="certOfPreference" ng-if="preferences.certOfPreference" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('certOfPreference')}}" bold-sub-label="{{ certificateNumberForPreference('certOfPreference')}}"
       | {{'E7_PREFERENCES_PROGRAMS.CERT_OF_PREFERENCE' | translate}}
 
-    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="displaced" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}"
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="displaced" ng-if="preferences.displaced" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('displaced') }}" bold-sub-label="{{ certificateNumberForPreference('displaced')}}"
       | {{'E7_PREFERENCES_PROGRAMS.DISPLACED' | translate}}
 
     review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" identifier="neighborhoodResidence" ng-if="preferences.neighborhoodResidence" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference('neighborhoodResidence') }}" bold-sub-label="{{ fileAttachmentForPreference('neighborhoodResidence')}}"
