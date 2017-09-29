@@ -8,3 +8,7 @@
     / proof uploader
     div ng-if="$ctrl.hasProof"
       preference-proof-uploader(application="$ctrl.application" preference="{{$ctrl.preference}}" proof-option-label="{{$ctrl.proofOptionLabel}}" button-label="{{$ctrl.buttonLabel}}" proof-options="$ctrl.proofOptions" proof-document="$ctrl.proofDocument" proof-type="{{$ctrl.proofType}}")
+
+    / certificate number entry
+    div ng-if="$ctrl.hasCertificate"
+      preference-certificate-input(application="$ctrl.application" preference="{{$ctrl.preference}}")
