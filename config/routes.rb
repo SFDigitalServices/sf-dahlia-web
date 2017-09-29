@@ -26,7 +26,7 @@ Rails.application.routes.draw do
           get 'preferences'
         end
         collection do
-          post 'ami' => 'listings#ami'
+          get 'ami' => 'listings#ami'
           get 'eligibility' => 'listings#eligibility'
         end
       end
