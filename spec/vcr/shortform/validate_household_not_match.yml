@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503784442055","signature":"gy8tzDgZHTjrJLITJJTqOB6Gs3qZCU8+yqXiYhWTqQk="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503784442055","signature":"gy8tzDgZHTjrJLITJJTqOB6Gs3qZCU8+yqXiYhWTqQk="}'
     http_version: 
   recorded_at: Sat, 26 Aug 2017 21:54:02 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000DZTkAUAX?childrenUnder6=0&householdsize=10&incomelevel=10000.0
+    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000DZTkAUAX?childrenUnder6=0&householdsize=10&incomelevel=10000.0
     body:
       encoding: US-ASCII
       string: ''

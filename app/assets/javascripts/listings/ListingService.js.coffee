@@ -15,6 +15,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   # these get loaded after the listing is loaded
   Service.AMICharts = []
   Service.loading = {}
+  Service.error = {}
   Service.displayLotteryResultsListings = false
   Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
   Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
@@ -170,6 +171,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return incomeLevels
 
   Service.openLotteryResultsModal = ->
+    Service.loading.lotteryRank = false
+    Service.error.lotteryRank = false
     modalInstance = $modal.open({
       templateUrl: 'listings/templates/listing/_lottery_modal.html',
       controller: 'ModalInstanceController',
@@ -420,18 +423,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
-    if Service.listing.chartTypes
-      params =
-        ami: _.sortBy(Service.listing.chartTypes, 'percent')
-    else
-      # TODO: do we actually want/need this fallback?
-      # listing.chartTypes *should* always exist now
-      percent = Service.listing.AMI_Percentage || 100
-      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
-    $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
+    Service.loading.ami = true
+    Service.error.ami = false
+    # shouldn't happen, but safe to have a guard clause
+    return $q.when() unless Service.listing.chartTypes
+    allChartTypes = _.sortBy(Service.listing.chartTypes, 'percent')
+    data =
+      'year[]': _.map(allChartTypes, 'year')
+      'chartType[]': _.map(allChartTypes, 'chartType')
+      'percent[]': _.map(allChartTypes, 'percent')
+    $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
+      Service.loading.ami = false
     ).error( (data, status, headers, config) ->
+      Service.loading.ami = false
+      Service.error.ami = true
       return
     )
 
@@ -597,15 +604,25 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
+  Service.formatLotteryNumber = (lotteryNumber) ->
+    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    if (lotteryNumber.length < 8)
+      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
+    lotteryNumber
+
   Service.getLotteryRanking = (lotteryNumber) ->
     angular.copy({}, Service.lotteryRankingInfo)
     params =
       params:
         lottery_number: lotteryNumber
+    Service.loading.lotteryRank = true
+    Service.error.lotteryRank = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
       angular.copy(data, Service.lotteryRankingInfo)
+      Service.loading.lotteryRank = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.lotteryRank = false
+      Service.error.lotteryRank = true
     )
 
   # used by My Applications -- when you load an application we also parse the attached listing data
@@ -692,6 +709,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000DbnZUAS': 'Test Listing'
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
+    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
   }
 
   Service.mapSlugToId = (id) ->
