@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503786232435","signature":"eNs58YvYP4msce9trwseiGIFYt63wxOAYD/ImtFraXM="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503786232435","signature":"eNs58YvYP4msce9trwseiGIFYt63wxOAYD/ImtFraXM="}'
     http_version: 
   recorded_at: Sat, 26 Aug 2017 22:23:52 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/shortForm/a0o1b0000006S80
+    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/shortForm/a0o1b0000006S80
     body:
       encoding: US-ASCII
       string: ''
