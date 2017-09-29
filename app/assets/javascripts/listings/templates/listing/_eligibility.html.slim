@@ -28,17 +28,29 @@ accordion-heading.lead
           /! Each unit type available has its own requirements based on household size.
           p.custom-counter_text
             | {{'LISTINGS.FOR_INCOME_CALCULATIONS' | translate}}
-        .stats-card.bg-tint ng-show="AMICharts.length > 0"
-          / single chart / BMR style
-          div ng-if="!hasMultipleAMICharts()"
-            ng-include src="'listings/templates/listing/_income-table.html'"
 
-          / multiple chart / MF style
-          div ng-if="hasMultipleAMICharts()"
-            ng-include src="'listings/templates/listing/_income-table-multiple.html'"
 
-        / don't show toggler e.g. if the listing is SRO only which will only have 1 row
-        show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show" ng-show="showAMItoggler()"
+        .content-card.padding--2x ng-show="loading.ami"
+          .padding--2x ng-include="'shared/templates/spinner.html'"
+
+        .content-card.padding--2x ng-show="error.ami"
+          .padding--2x.text-center
+            button.button-link ng-click="getListingAMI()"
+              | {{'LISTINGS.SEE_MAXIMUM_INCOME_INFORMATION' | translate}}
+
+
+        div ng-show="!loading.ami && !error.ami"
+          .stats-card.bg-tint
+            / single chart / BMR style
+            div ng-if="!hasMultipleAMICharts()"
+              ng-include src="'listings/templates/listing/_income-table.html'"
+
+            / multiple chart / MF style
+            div ng-if="hasMultipleAMICharts()"
+              ng-include src="'listings/templates/listing/_income-table-multiple.html'"
+
+          / don't show toggler e.g. if the listing is SRO only which will only have 1 row
+          show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show" ng-show="showAMItoggler()"
 
     li.custom-counter_item
       .content-tile
@@ -50,7 +62,10 @@ accordion-heading.lead
           p.custom-counter_text ng-if="!listingHasOnlySROUnits() && listingHasSROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
           p.custom-counter_text ng-if="!listingHasOnlySROUnits() && !listingHasSROUnits()"
-            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
+            span ng-if="listingIs('Transbay Block 7')"
+              | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
+            span ng-if="!listingIs('Transbay Block 7')"
+              | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
           table role="grid"
