@@ -119,10 +119,10 @@
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id)
         ]
         $title: ['$title', 'listing', ($title, listing) ->
-          listing.Name
+          listing.Building_Name
         ]
         data: ['ngMeta', 'listing', (ngMeta, listing) ->
-          desc = "Apply for affordable housing at #{listing.Name} on the City of San Francisco's DAHLIA Housing Portal."
+          desc = "Apply for affordable housing at #{listing.Building_Name} on the City of San Francisco's DAHLIA Housing Portal."
           ngMeta.setTag('description', desc)
           ngMeta.setTag('og:image', listing.imageURL)
         ]
@@ -450,7 +450,7 @@
       resolve:
         $title: ['$title', '$translate', 'ListingService', ($title, $translate, ListingService) ->
           if !_.isEmpty(ListingService.listing)
-            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingService.listing.Name})
+            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingService.listing.Building_Name})
           else
             $translate('PAGE_TITLE.SHARE_LISTING', {listing: 'Listing'})
         ]
@@ -528,7 +528,7 @@
             ListingService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
-          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
+          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Building_Name})
         ]
     })
     .state('dahlia.short-form-welcome.intro', {
@@ -601,7 +601,7 @@
             return deferred.promise
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
-          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
+          $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Building_Name})
         ]
     })
     # Short form: "You" section
@@ -980,7 +980,7 @@
         $title: [
           '$title', '$translate', 'application',
           ($title, $translate, application) ->
-            $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
+            $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Building_Name})
         ]
       onExit: [
         'ShortFormApplicationService',

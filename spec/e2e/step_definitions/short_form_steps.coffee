@@ -418,7 +418,7 @@ module.exports = ->
     submitPage()
 
   @When "I fill out the Name page with an invalid DOB", ->
-    Pages.Name.fill({
+    Pages.Building_Name.fill({
       fullName: 'Jane Doe'
       month: '12'
       day: '33'
@@ -557,7 +557,7 @@ module.exports = ->
 
   @Then 'on the Review Page I should see my contact details', ->
     expectByIdAndText(@, 'full-name', 'Jane Valerie Doe')
-    expectByIdAndText(@, 'dob', Pages.Name.defaults.formattedDOB)
+    expectByIdAndText(@, 'dob', Pages.Building_Name.defaults.formattedDOB)
     expectByIdAndText(@, 'email', sessionEmail)
     expectByIdAndText(@, 'phone', Pages.Contact.defaults.formattedPhone)
     expectByIdAndText(@, 'alt-phone', Pages.Contact.defaults.formattedAltPhone)
@@ -605,7 +605,7 @@ module.exports = ->
   #################################################
 
   @Then /^on the Name page I should see my correct info for "([^"]*)"$/, (fullName) ->
-    Pages.Name.expectToMatch(@, { fullName })
+    Pages.Building_Name.expectToMatch(@, { fullName })
 
   @Then 'on the Contact page I should see my correct info', ->
     Pages.Contact.expectToMatch(@, {email: sessionEmail, address1: '1222 HARRISON ST # 100'})

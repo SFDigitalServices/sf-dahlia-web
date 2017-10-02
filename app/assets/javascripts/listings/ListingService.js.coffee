@@ -626,7 +626,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     listing.preferences = _.map listing.Listing_Lottery_Preferences, (lotteryPref) ->
       {
         listingPreferenceID: lotteryPref.Id
-        preferenceName: lotteryPref.Lottery_Preference.Name
+        preferenceName: lotteryPref.Lottery_Preference.Building_Name
       }
     angular.copy(listing, Service.listing)
 
