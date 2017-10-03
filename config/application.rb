@@ -40,5 +40,11 @@ module SfDahliaWeb
 
     # for serving gzipped assets
     config.middleware.use Rack::Deflater
+
+    # remove trailing slashes
+    # https://stackoverflow.com/a/3570233/260495
+    config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
+      r301 %r{(.+)/$}, '$1'
+    end
   end
 end
