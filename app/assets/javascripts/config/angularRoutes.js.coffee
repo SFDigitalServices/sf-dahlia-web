@@ -9,6 +9,17 @@
     $urlMatcherFactoryProvider.caseInsensitive(true)
     $urlMatcherFactoryProvider.strictMode(false)
 
+    # but remove trailing slashes if present to eliminate duplicate urls
+    $urlRouterProvider.rule ($injector, $location) ->
+        path = $location.url()
+
+        if path[path.length - 1] == '/'
+          path.slice(0, -1)
+        else if path.indexOf('/?') > -1
+          path.replace('/?', '?')
+        else
+          return
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
