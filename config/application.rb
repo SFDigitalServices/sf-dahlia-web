@@ -43,11 +43,9 @@ module SfDahliaWeb
 
     # remove trailing slashes
     # https://stackoverflow.com/a/3570233/260495
-    unless Rails.env.test?
-      config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
-        r301 %r{(.+)/$}, '$1'
-        r301 %r{(.+)/\?(.*)$}, '$1?$2'
-      end
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      r301 %r{(.+)/$}, '$1'
+      r301 %r{(.+)/\?(.*)$}, '$1?$2'
     end
   end
 end
