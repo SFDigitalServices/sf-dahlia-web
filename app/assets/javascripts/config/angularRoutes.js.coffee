@@ -2,8 +2,13 @@
 @dahlia.config [
   '$stateProvider',
   '$urlRouterProvider',
+  '$urlMatcherFactoryProvider',
   '$locationProvider',
-  ($stateProvider, $urlRouterProvider, $locationProvider) ->
+  ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) ->
+    # allow trailing slashes and don't force case sensitivity on routes
+    $urlMatcherFactoryProvider.caseInsensitive(true)
+    $urlMatcherFactoryProvider.strictMode(false)
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
