@@ -4,11 +4,20 @@ class Api::V1::ListingsController < ApiController
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
     @listings = Force::ListingService.listings(params[:ids])
-    render json: { listings: @listings }
+    if ENV['CACHE_FOR_DEMO']
+      render json: File.read("#{Rails.root}/public/cached-listings.json")
+    else
+      render json: { listings: @listings }
+    end
   end
 
   def show
     @listing = Force::ListingService.listing(params[:id], force: params[:force])
+    if ENV['CACHE_FOR_DEMO']
+      listings = JSON.parse(File.read("#{Rails.root}/public/cached-listings.json"))
+      cached = listings['listings'].find { |l| l['Id'] == params[:id] }
+      @listing.merge!(cached)
+    end
     render json: { listing: @listing }
   end
 

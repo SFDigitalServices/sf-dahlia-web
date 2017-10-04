@@ -4,7 +4,7 @@
 # https://gist.github.com/pixelhandler/5718585
 
 BRANCH=`git rev-parse --abbrev-ref HEAD`
-PROTECTED_BRANCHES="^(master|demo|staging|production)"
+PROTECTED_BRANCHES="^(master|production)"
 
 if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
 then
