@@ -119,7 +119,7 @@ Feature: Short Form Application
       Then on the Preferences Programs page I should see my correct info
 
       # review
-      And I fill out the optional survey
+      Then on the optional survey page I should see my correct info
       # confirm everything has shown up (again)
       Then on the Review Page I should see my contact details
       Then on the Review Page I should see my alternate contact details

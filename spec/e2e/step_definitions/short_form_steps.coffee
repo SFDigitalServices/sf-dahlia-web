@@ -14,10 +14,6 @@ janedoeEmail = chance.email()
 accountPassword = 'password123'
 
 # reusable functions
-fillOutSurveyPage = ->
-  element(By.id('referral_newspaper')).click()
-  submitPage()
-
 getSelectedLiveMember = () ->
   liveInSfMember = element.all(By.id('liveInSf_household_member')).filter((elem) ->
     elem.isDisplayed()
@@ -336,7 +332,7 @@ module.exports = ->
         submitPage()
 
   @When 'I fill out the optional survey', ->
-    fillOutSurveyPage()
+    Pages.DemographicSurvey.fill()
 
   @When 'I confirm details on the review page', ->
     submitPage()
@@ -686,6 +682,9 @@ module.exports = ->
     submitPage()
     expectInputValue(@, 'incomeTotal', '72,000.00')
     submitPage()
+
+  @Then 'on the optional survey page I should see my correct info', ->
+    Pages.DemographicSurvey.expectToMatch(@)
 
   ###################################
   # --- Error case expectations --- #
