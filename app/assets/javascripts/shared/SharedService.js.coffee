@@ -37,8 +37,6 @@ SharedService = ($http, $state, $window, $document) ->
       # when focus leaves this element, remove the tabindex
       angular.element(@).removeAttr('tabindex')
     el[0].focus()
-    # remove outline
-    el[0].blur()
 
   Service.focusOnBody = ->
     body = angular.element(document.body)
