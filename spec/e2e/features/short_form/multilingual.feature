@@ -6,5 +6,5 @@ Feature: Short Form Application
     Scenario: Using multilingual to select a non-english language
       Given I go to the welcome page of the Test Listing application
       And I select "Spanish" as my language
-      And I continue past the community screening and welcome overview
+      And I continue past the welcome overview
       Then I should see "Español" selected in the translate bar language switcher

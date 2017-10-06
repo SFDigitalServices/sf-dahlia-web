@@ -662,6 +662,14 @@ do ->
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
 
+      it 'should load accountApplication if forComparison opt is passed', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyApplicationForListing 'xyz', {forComparison: true}
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService.accountApplication.id).toEqual(fakeShortForm.id)
+
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
         setupFakeApplicant()

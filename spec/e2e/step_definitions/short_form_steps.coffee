@@ -72,10 +72,7 @@ module.exports = ->
       when "English"
         element(By.id('submit-en')).click()
 
-  @When 'I continue past the community screening and welcome overview', ->
-    element(By.id('answeredCommunityScreening_yes')).click()
-    # community screening
-    submitPage()
+  @When 'I continue past the welcome overview', ->
     # welcome overview
     submitPage()
 
@@ -371,6 +368,11 @@ module.exports = ->
     scrollToElement(createAccount).then ->
       createAccount.click()
 
+  @When 'I click the Sign In button', ->
+    signIn = element(By.id('sign-in'))
+    scrollToElement(signIn).then ->
+      signIn.click()
+
   @When 'I fill out my account info', ->
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
@@ -385,9 +387,11 @@ module.exports = ->
     submitPage()
     browser.waitForAngular()
 
-  @When 'I sign in', ->
+  @When 'I go to the Sign In page', ->
     signInUrl = "/sign-in"
     getUrl(signInUrl)
+
+  @When 'I sign in', ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
@@ -456,6 +460,10 @@ module.exports = ->
   @When 'I fill out the household member form with missing data', ->
     # don't fill anything out and just submit
     submitPage()
+
+  @When 'I select my original application and submit', ->
+    element(By.id('choose_draft_original')).click().then ->
+      submitPage()
 
 
   ########################
@@ -562,6 +570,13 @@ module.exports = ->
   @Then 'I should be redirected back to the listings page in English', ->
     # we check that it is at the ":3000/listings" URL rather than ":3000/es/listings"
     browser.wait(EC.urlContains(':3000/listings'), 6000)
+
+  @Then 'I should be on the Choose Draft page', ->
+    expectAlertBox(@, 'Please choose which version of the application you want to use.')
+
+  @Then 'I should land on the My Applications page', ->
+    el = element(By.cssContainingText('h1', 'My Applications'))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))
