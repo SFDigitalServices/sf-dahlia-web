@@ -4,11 +4,21 @@ class EmailerPreview < ActionMailer::Preview
     params = {
       lottery_number: '3888078',
       email: 'test@person.com',
-      firstName: 'Mister',
-      lastName: 'Tester',
-      listing_id: 'a0WU000000ClNXGMA3',
+      first_name: 'Mister',
+      last_name: 'Tester',
+      listing_id: 'a0W0P00000DZTkAUAX',
     }
     Emailer.submission_confirmation(params)
+  end
+
+  def draft_application_saved
+    params = {
+      email: 'test@person.com',
+      first_name: 'Mister',
+      last_name: 'Tester',
+      listing_id: 'a0W0P00000DZTkAUAX',
+    }
+    Emailer.draft_application_saved(params)
   end
 
   def account_update

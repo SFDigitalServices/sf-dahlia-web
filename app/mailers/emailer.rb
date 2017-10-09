@@ -18,7 +18,7 @@ class Emailer < Devise::Mailer
 
   def submission_confirmation(params)
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    @name = "#{params[:firstName]} #{params[:lastName]}"
+    @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],

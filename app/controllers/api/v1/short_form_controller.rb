@@ -164,8 +164,8 @@ class Api::V1::ShortFormController < ApiController
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
-      firstName: response['primaryApplicant']['firstName'],
-      lastName: response['primaryApplicant']['lastName'],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
     ).deliver_later
   end
 
