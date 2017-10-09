@@ -6,8 +6,8 @@ describe Emailer, type: :mailer do
       @params = {
         lottery_number: '3888078',
         email: 'test@person.com',
-        first_name: 'Mister',
-        last_name: 'Tester',
+        firstName: 'Mister',
+        lastName: 'Tester',
         listing_id: 'a0W0P00000DZTkAUAX',
       }
       @listing_name = '280 Fell (Fell Street Apartments)'
