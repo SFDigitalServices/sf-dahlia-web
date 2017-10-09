@@ -185,6 +185,7 @@
         expiredConfirmed: null
         redirectTo: null
         fromShortFormIntro: null
+        signedOut: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
@@ -202,6 +203,8 @@
           AccountService.openConfirmEmailModal()
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
+        if $stateParams.signedOut
+          AccountService.afterSignOut()
       ]
       resolve:
         $title: ['$translate', ($translate) ->

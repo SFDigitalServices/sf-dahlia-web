@@ -13,6 +13,7 @@
 
         alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
         alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.redirect" ng-if="accountSuccess.messages.redirect")
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.signedOut" ng-if="accountSuccess.messages.signedOut")
 
         .dash-card-inner.inset.border-bottom
 
