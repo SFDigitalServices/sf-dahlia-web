@@ -121,7 +121,7 @@ class Emailer < Devise::Mailer
   private
 
   def format_app_due_date(listing)
-    due = listing.Application_Due_Date.to_time
+    due = Time.zone.parse(listing['Application_Due_Date'])
     due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
     due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
     @deadline = "#{due_time} on #{due_date}"
@@ -158,7 +158,7 @@ class Emailer < Devise::Mailer
     @lottery_number = params[:lottery_number]
     @lottery_date = ''
     if @listing.Lottery_Date
-      @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
+      @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|
