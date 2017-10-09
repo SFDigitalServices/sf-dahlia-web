@@ -35,6 +35,10 @@ module SalesforceService
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, apex_endpoint, params)
+      # TODO: this error raise is for testing purposes, remove before merging
+      if params && params[:user_token_validation] && rand > 0.5
+        raise Faraday::TimeoutError
+      end
       if parse_response
         massage(flatten_response(response.body))
       else
@@ -51,7 +55,8 @@ module SalesforceService
       else
         self.error = e.class.name
         # re-raise the same error
-        raise
+        message = params && params[:user_token_validation] ? 'user_token_validation' : nil
+        raise e, message
       end
     end
 
