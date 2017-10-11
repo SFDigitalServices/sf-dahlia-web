@@ -10,6 +10,8 @@ SharedService = ($http, $state, $window, $document) ->
     chinese: []
     filipino: []
     spanish: []
+  Service.emailRegex =
+    /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
