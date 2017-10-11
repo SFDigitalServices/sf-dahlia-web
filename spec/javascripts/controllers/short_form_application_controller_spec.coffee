@@ -109,6 +109,7 @@ do ->
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
+    fakeSharedService = {}
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -165,6 +166,7 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        SharedService: fakeSharedService
       return
     )
 

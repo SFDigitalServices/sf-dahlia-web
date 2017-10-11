@@ -29,6 +29,7 @@ do ->
       importUserData: -> null
       submitApplication: -> null
       signInSubmitApplication: -> null
+    fakeSharedService = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -67,6 +68,7 @@ do ->
         AccountService: fakeAccountService
         AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
+        SharedService: fakeSharedService
     )
 
     describe '$scope.createAccount', ->
