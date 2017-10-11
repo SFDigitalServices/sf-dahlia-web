@@ -600,6 +600,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.formatLotteryNumber = (lotteryNumber) ->
     lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
     if (lotteryNumber.length < 8)
       lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
     lotteryNumber
