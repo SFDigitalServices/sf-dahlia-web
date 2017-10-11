@@ -6,7 +6,7 @@
         | {{'LOTTERY.LOTTERY_RESULTS' | translate}}
       h2#modalTitle.t-caps.t-small.t-alt-sans.t-bold
         | {{listing.Name}}
-      p.t-small.c-steel.t-semi.padding-horizontal--3halves
+      p.t-small.c-steel.t-semi.padding-horizontal--3halves ng-if="listing.Lottery_Summary"
         | {{listing.Lottery_Summary}}
 
     .modal-inner.bg-dust
