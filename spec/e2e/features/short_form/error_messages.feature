@@ -18,6 +18,10 @@ Feature: Short Form Application
       And I fill out the Contact page with an address that isn't found
       Then I should see an address error on the Contact page
 
+      # error: invalid email
+      When I fill out the Contact page with the email "grant@exygy"
+      Then I should see an email error on the Contact page
+
       When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I don't indicate an alternate contact
