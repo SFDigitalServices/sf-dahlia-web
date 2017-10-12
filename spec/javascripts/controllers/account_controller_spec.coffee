@@ -69,6 +69,7 @@ do ->
         AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
         SharedService: fakeSharedService
+        inputMaxLength: {}
     )
 
     describe '$scope.createAccount', ->
