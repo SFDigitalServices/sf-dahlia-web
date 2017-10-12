@@ -7,6 +7,7 @@
   address: 75
   city: 75
   alternateContactTypeOther: 50
+  alternateContactAgency: 50
   certificateNumber: 50
   genderOther: 50
   sexualOrientationOther: 50
