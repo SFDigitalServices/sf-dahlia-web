@@ -16,7 +16,8 @@ ShortFormApplicationController = (
   AnalyticsService,
   AddressValidationService,
   AccountService,
-  SharedService
+  SharedService,
+  inputMaxLength
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -41,6 +42,7 @@ ShortFormApplicationController = (
   # store label values that get overwritten by child directives
   $scope.labels = {}
   $scope.customInvalidMessage = null
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -850,7 +852,9 @@ ShortFormApplicationController.$inject = [
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
   'AddressValidationService',
-  'AccountService', 'SharedService'
+  'AccountService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular

@@ -7,6 +7,7 @@ AccountController = (
   AnalyticsService,
   ShortFormApplicationService,
   SharedService
+  inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
@@ -27,6 +28,7 @@ AccountController = (
   $scope.userDataForContact = {}
   $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
@@ -241,7 +243,9 @@ AccountController = (
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService', 'SharedService'
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular
