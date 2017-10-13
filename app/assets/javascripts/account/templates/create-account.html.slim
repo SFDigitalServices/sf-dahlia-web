@@ -25,17 +25,17 @@
 
             label.sr-only for="firstName"
               | {{'LABEL.FIRST_NAME' | translate}}
-            input#firstName ng-model="userAuth.contact.firstName" ng-required="true" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
+            input#firstName ng-model="userAuth.contact.firstName" ng-required="true" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" ng-disabled="isLocked('name')" aria-describedby="firstName_error"
             small.error#firstName_error ng-if="inputInvalid('firstName')"
               | {{'ERROR.FIRST_NAME' | translate}}
 
             label.sr-only for="middleName"
               | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-            input#middleName name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="isLocked('name')"
+            input#middleName maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-disabled="isLocked('name')"
 
             label.sr-only for="lastName"
               | {{'LABEL.LAST_NAME' | translate}}
-            input#lastName ng-required="true" ng-model="userAuth.contact.lastName" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
+            input#lastName ng-required="true" ng-model="userAuth.contact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="isLocked('name')" aria-describedby="lastName_error"
             small.error#lastName_error ng-if="inputInvalid('lastName')"
               | {{'ERROR.LAST_NAME' | translate}}
 
@@ -72,13 +72,13 @@
               lock-icon ng-if="isLocked('email')"
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
-            input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
+            input#auth_email ng-model="userAuth.user.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
             small.error#auth_email_error ng-if="inputInvalid('email')"
               | {{'ERROR.EMAIL' | translate}}
 
             label.label-secondary for="auth_email_confirmation"
               | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
-            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" ng-required="true" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
+            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" maxlength="{{::INPUT_MAX_LENGTH.email}}" ng-required="true" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
 
             small.error#auth_email_confirmation_error ng-if="inputInvalid('email_confirmation')"
               | {{'ERROR.EMAIL_CONFIRMATION' | translate}}
@@ -91,13 +91,13 @@
               | {{'CREATE_ACCOUNT.PASSWORD_INSTRUCTIONS' | translate}}
             label.sr-only for="auth_password"
               | {{'LABEL.PASSWORD' | translate}}
-            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
+            input#auth_password ng-model="userAuth.user.password" name="password" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password'), 'margin-bottom': !inputInvalid('password') }" ng-pattern="passwordRegex" aria-describedby="auth_password_error"
             small.error#auth_password_error ng-if="inputInvalid('password')"
               | {{'ERROR.PASSWORD' | translate}}
 
             label.label-secondary for="auth_password_confirmation"
               | {{'LABEL.RE_ENTER_PASSWORD' | translate}}
-            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
+            input#auth_password_confirmation ng-model="userAuth.user.password_confirmation" name="password_confirmation" placeholder="{{'CREATE_ACCOUNT.PASSWORD_SHORT_INSTRUCTIONS' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.password}}" type="password" ng-required="true" ng-class="{ error: inputInvalid('password_confirmation') }" ui-validate="'$value == userAuth.user.password'" ui-validate-watch="'userAuth.user.password'" aria-describedby="auth_password_confirmation_error"
 
             small.error#auth_password_confirmation_error ng-if="inputInvalid('password_confirmation')"
               | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}

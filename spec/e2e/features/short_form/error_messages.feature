@@ -13,7 +13,13 @@ Feature: Short Form Application
       When I fill out the Name page with an invalid DOB
       Then I should see DOB field errors on the Name page
 
-      When I fill out the Name page as "Jane Doe"
+      # maxlength check: name should cut off
+      When I fill out the Name page as "Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz"
+      And I navigate to the "You" section
+      Then on the Name page I should see my correct info for "Loremipsumloremipsumloremipsumloremipsum Loremipsumloremipsum Loremipsumloremipsumloremipsumloremipsum"
+
+      When I navigate to the "You" section
+      And I fill out the Name page as "Jane Doe"
       # error: address not found
       And I fill out the Contact page with an address that isn't found
       Then I should see an address error on the Contact page

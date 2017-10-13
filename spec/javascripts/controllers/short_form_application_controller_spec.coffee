@@ -167,6 +167,7 @@ do ->
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
         SharedService: fakeSharedService
+        inputMaxLength: {}
       return
     )
 
