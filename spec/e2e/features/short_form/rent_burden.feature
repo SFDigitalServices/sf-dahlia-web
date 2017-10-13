@@ -36,4 +36,4 @@ Feature: Short Form Application - Rent Burdened Preference
       And I go back to the Contact page
       And I fill out the Contact page with an address (NRHP match) and WorkInSF
       And I confirm my address
-      And I go back to the Rent Burdened preference page
+      And I go back to the RB/AH preference page

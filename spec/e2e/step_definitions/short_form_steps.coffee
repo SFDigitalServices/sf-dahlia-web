@@ -314,6 +314,13 @@ module.exports = ->
         if element(By.id('preferences-neighborhoodResidence'))
           submitPage()
 
+  @When 'I go back to the RB/AH preference page', ->
+    navItem = element(By.cssContainingText('.progress-nav_item', 'Preferences'))
+    scrollToElement(navItem).then ->
+      navItem.click()
+      # skip intro, either RB/AH should be the first preference
+      submitPage()
+
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
 
