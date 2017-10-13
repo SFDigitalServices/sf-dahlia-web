@@ -72,13 +72,13 @@
               lock-icon ng-if="isLocked('email')"
             label.sr-only for="auth_email"
               | {{'LABEL.EMAIL_ADDRESS' | translate}}
-            input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
+            input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" ng-disabled="isLocked('email')" autocomplete="off" aria-describedby="auth_email_error"
             small.error#auth_email_error ng-if="inputInvalid('email')"
               | {{'ERROR.EMAIL' | translate}}
 
             label.label-secondary for="auth_email_confirmation"
               | {{'LABEL.RE_ENTER_EMAIL_ADDRESS' | translate}}
-            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" ng-required="true" placeholder="example@web.com" type="email" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
+            input#auth_email_confirmation ng-model="userAuth.user.email_confirmation" name="email_confirmation" ng-required="true" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-class="{ error: inputInvalid('email_confirmation') }" ui-validate="'$value == userAuth.user.email'" ui-validate-watch="'userAuth.user.email'" ng-paste="$event.preventDefault()" autocomplete="off" aria-describedby="auth_email_confirmation_error"
 
             small.error#auth_email_confirmation_error ng-if="inputInvalid('email_confirmation')"
               | {{'ERROR.EMAIL_CONFIRMATION' | translate}}

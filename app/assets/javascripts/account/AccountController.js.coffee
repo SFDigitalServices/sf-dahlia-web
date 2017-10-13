@@ -5,7 +5,8 @@ AccountController = (
   $translate,
   AccountService,
   AnalyticsService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  SharedService
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
@@ -28,6 +29,7 @@ AccountController = (
   $scope.nameOrDOBChanged = false
 
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -239,7 +241,7 @@ AccountController = (
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService'
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService', 'SharedService'
 ]
 
 angular

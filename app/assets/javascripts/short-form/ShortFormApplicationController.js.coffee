@@ -15,7 +15,8 @@ ShortFormApplicationController = (
   FileUploadService,
   AnalyticsService,
   AddressValidationService,
-  AccountService
+  AccountService,
+  SharedService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -62,6 +63,8 @@ ShortFormApplicationController = (
   $scope.accountSuccess = AccountService.accountSuccess
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
+
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
@@ -846,7 +849,7 @@ ShortFormApplicationController.$inject = [
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
   'AddressValidationService',
-  'AccountService'
+  'AccountService', 'SharedService'
 ]
 
 angular
