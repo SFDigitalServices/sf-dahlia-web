@@ -475,23 +475,11 @@ module.exports = ->
     checkbox = element(By.id(id))
     context.expect(checkbox.isSelected()).to.eventually.equal(true)
 
-  @Then 'I should see the Live Preference', ->
-    livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
+  @Then /^I should see the "([^"]*)" preference checkbox$/, (prefName) ->
+    prefLabel = element.all(By.cssContainingText('strong.form-label', "#{prefName} Preference")).filter((elem) ->
       elem.isDisplayed()
     ).first()
-    @expect(livePref.isPresent()).to.eventually.equal(true)
-
-  @Then 'I should see the Work Preference', ->
-    workPref = element.all(By.cssContainingText('strong.form-label', 'Work in San Francisco Preference')).filter((elem) ->
-      elem.isDisplayed()
-    ).first()
-    @expect(workPref.isPresent()).to.eventually.equal(true)
-
-  @Then 'I should see the Live and Work Preferences', ->
-    liveWorkPref = element.all(By.cssContainingText('strong.form-label', 'Live or Work in San Francisco Preference')).filter((elem) ->
-      elem.isDisplayed()
-    ).first()
-    @expect(liveWorkPref.isPresent()).to.eventually.equal(true)
+    @expect(prefLabel.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Preferences Programs screen', ->
     certificateOfPreferenceLabel = element(By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))

@@ -23,14 +23,14 @@ Feature: Short Form Application - Live/Work Preference
       When I go back to the Contact page
       And I change WorkInSF to "Yes"
       And I go back to the Live/Work preference page
-      Then I should see the Work Preference
+      Then I should see the "Work in San Francisco" preference checkbox
       # I work and live in SF, alone
       When --I reach the "I work and live in SF, alone" step--
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # Make sure the dropdowns are correct
       When --I reach the "Make sure the dropdowns are correct" step--
       When I click the Live or Work in SF checkbox
@@ -44,7 +44,7 @@ Feature: Short Form Application - Live/Work Preference
       When I go back to the Contact page
       And I change WorkInSF to "No"
       And I go back to the Live/Work preference page
-      Then I should see the Live Preference
+      Then I should see the "Live in San Francisco" preference checkbox
       # I live in SF, household member lives in SF
       When --I reach the "I live in SF, household member lives in SF" step--
       When I go back to the Household page
@@ -56,20 +56,20 @@ Feature: Short Form Application - Live/Work Preference
       And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       And I opt out of Assisted Housing preference
-      Then I should see the Live Preference
+      Then I should see the "Live in San Francisco" preference checkbox
       # I neither live nor work in SF, household member lives in SF
       When --I reach the "I neither live nor work in SF, household member lives in SF" step--
       When I go back to the Contact page
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live Preference
+      Then I should see the "Live in San Francisco" preference checkbox
       # I work in SF, household member lives in SF
       When --I reach the "I work in SF, household member lives in SF" step--
       When I go back to the Contact page
       And I change WorkInSF to "Yes"
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # Make sure the dropdowns are correct
       When --I reach the "Make sure the dropdowns are correct" step--
       When I click the Live or Work in SF checkbox
@@ -84,7 +84,7 @@ Feature: Short Form Application - Live/Work Preference
       And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # I work and live in SF, household member works in SF
       When --I reach the "I work and live in SF, household member works in SF" step--
       When I go back to the Household page
@@ -96,21 +96,21 @@ Feature: Short Form Application - Live/Work Preference
       And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       And I opt out of Assisted Housing preference
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # I work in SF, household member works in SF
       When --I reach the "I work in SF, household member works in SF" step--
       When I go back to the Contact page
       And I fill out the Contact page with a non-SF address, yes to WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Work Preference
+      Then I should see the "Work in San Francisco" preference checkbox
       # I live in SF, household member works in SF
       When --I reach the "I live in SF, household member works in SF" step--
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # Make sure the dropdowns are correct
       When --I reach the "Make sure the dropdowns are correct" step--
       When I click the Live or Work in SF checkbox
@@ -125,7 +125,7 @@ Feature: Short Form Application - Live/Work Preference
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Work Preference
+      Then I should see the "Work in San Francisco" preference checkbox
       # I neither work nor live in SF, household member lives and works in SF
       When --I reach the "I neither work nor live in SF, household member lives and works in SF" step--
       When I go back to the Household page
@@ -137,7 +137,7 @@ Feature: Short Form Application - Live/Work Preference
       And I hit the Next button "3" times
       And I continue past the Lottery Preferences intro
       And I opt out of Assisted Housing preference
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # Make sure the dropdowns are correct
       When --I reach the "Make sure the dropdowns are correct" step--
       When I click the Live or Work in SF checkbox
@@ -152,14 +152,14 @@ Feature: Short Form Application - Live/Work Preference
       And I fill out the Contact page with a non-SF address, yes to WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # I live in SF, household member lives and works in SF
       When --I reach the "I live in SF, household member lives and works in SF" step--
       When I go back to the Contact page
       And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live and Work Preferences
+      Then I should see the "Live or Work in San Francisco" preference checkbox
       # Check that filling it out then changing required info removes from application
       When --I reach the "Check that filling it out then changing required info removes from application" step--
       When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
