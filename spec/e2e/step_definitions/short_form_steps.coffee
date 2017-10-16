@@ -73,6 +73,9 @@ module.exports = ->
   @When 'I submit the Name page with my account info', ->
     submitPage()
 
+  @When /^I fill out the Contact page with the email "([^"]*)"$/, (email) ->
+    Pages.Contact.fill({ email: email })
+
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
@@ -708,6 +711,10 @@ module.exports = ->
   @Then 'I should see an address error on the Contact page', ->
     expectAlertBox(@)
     expectError(@, 'This address was not found.')
+
+  @Then 'I should see an email error on the Contact page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter an email address')
 
   @Then 'I should see an error about selecting an option', ->
     expectAlertBox(@, 'Please select and complete one of the options below in order to continue')
