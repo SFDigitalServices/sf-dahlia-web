@@ -475,6 +475,12 @@ module.exports = ->
     checkbox = element(By.id(id))
     context.expect(checkbox.isSelected()).to.eventually.equal(true)
 
+  @Then 'I should see the Assisted Housing Preference', ->
+    workPref = element.all(By.cssContainingText('strong.form-label', 'Assisted Housing Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(workPref.isPresent()).to.eventually.equal(true)
+
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
       elem.isDisplayed()
