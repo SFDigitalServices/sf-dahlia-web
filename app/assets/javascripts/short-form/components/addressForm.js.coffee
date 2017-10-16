@@ -9,11 +9,13 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/address-form.html'
 
   controller:
-    ['ShortFormApplicationService', (ShortFormApplicationService) ->
+    ['ShortFormApplicationService', 'inputMaxLength', (ShortFormApplicationService, inputMaxLength) ->
       ctrl = @
 
       @inputInvalid = (fieldName, identifier) ->
         ShortFormApplicationService.inputInvalid(fieldName, identifier)
+
+      @INPUT_MAX_LENGTH = inputMaxLength
 
       return ctrl
 
