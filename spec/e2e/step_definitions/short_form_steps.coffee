@@ -259,6 +259,11 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When /^I upload a Copy of Lease as my proof for Assisted Housing$/, ->
+    filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
+    element(By.id('ngf-assistedHousing_proofFile')).sendKeys(filePath)
+    browser.sleep(1000)
+
   @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
     filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
     element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
@@ -317,6 +322,9 @@ module.exports = ->
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
 
+  @When 'I select Assisted Housing Preference', ->
+    checkCheckbox('preferences-assistedHousing')
+
   @When 'I submit my preferences', ->
     submitPage()
 
@@ -347,6 +355,11 @@ module.exports = ->
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click().then ->
       submitPage()
+
+  @When 'I click to view submitted application', ->
+    viewApp = element(By.id('view-app'))
+    scrollToElement(viewApp).then ->
+      viewApp.click()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
@@ -626,6 +639,11 @@ module.exports = ->
     else
       expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
 
+  ###################################
+  # --- View Submitted App Page expectations --- #
+  ###################################
+  @Then 'on the View Submitted App Page I should see Assisted Housing preference claimed', ->
+    expectByCss(@, '#review-assistedHousing .info-item_name', 'Assisted Housing Preference')
 
   #################################################
   # --- Confirming draft details expectations --- #
