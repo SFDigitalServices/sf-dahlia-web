@@ -35,15 +35,7 @@ module SalesforceService
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, apex_endpoint, params)
-      # TODO: this error raise is for testing purposes, remove before merging
-      if params && params[:user_token_validation] && rand > 0.5
-        raise Faraday::TimeoutError
-      end
-      if parse_response
-        massage(flatten_response(response.body))
-      else
-        response.body
-      end
+      process_response(response, parse_response)
     rescue Restforce::UnauthorizedError,
            Restforce::AuthenticationError,
            Faraday::ConnectionFailed,
@@ -54,8 +46,8 @@ module SalesforceService
         retry
       else
         self.error = e.class.name
-        # re-raise the same error
         message = params && params[:user_token_validation] ? 'user_token_validation' : nil
+        # re-raise the same error
         raise e, message
       end
     end
@@ -141,6 +133,14 @@ module SalesforceService
       return [] if body.blank?
       body.collect do |listing|
         listing.merge(listing['listing'] || {}).except('listing')
+      end
+    end
+
+    def self.process_response(response, parse_response)
+      if parse_response
+        massage(flatten_response(response.body))
+      else
+        response.body
       end
     end
 
