@@ -15,7 +15,9 @@ ShortFormApplicationController = (
   FileUploadService,
   AnalyticsService,
   AddressValidationService,
-  AccountService
+  AccountService,
+  SharedService,
+  inputMaxLength
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -40,6 +42,7 @@ ShortFormApplicationController = (
   # store label values that get overwritten by child directives
   $scope.labels = {}
   $scope.customInvalidMessage = null
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -62,6 +65,8 @@ ShortFormApplicationController = (
   $scope.accountSuccess = AccountService.accountSuccess
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
+
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
@@ -472,6 +477,10 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
     form = $scope.form.applicationForm
+    # skip the check if we're doing an incomeMatch and the applicant has vouchers
+    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
+      $scope.goToLandingPage('Preferences')
+      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -502,9 +511,6 @@ ShortFormApplicationController = (
     if eligibility.incomeMatch
       $scope.goToLandingPage('Preferences')
     else
-      # if the applicant has vouchers, being "too low" is ok
-      if error == 'too low' && $scope.application.householdVouchersSubsidies == 'Yes'
-        return $scope.goToLandingPage('Preferences')
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
@@ -851,7 +857,9 @@ ShortFormApplicationController.$inject = [
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
   'AddressValidationService',
-  'AccountService'
+  'AccountService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular
