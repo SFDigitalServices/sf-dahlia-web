@@ -23,7 +23,7 @@
                 ' {{'LABEL.EMAIL_ADDRESS' | translate}}
               label.sr-only for="auth_email"
                 | {{'LABEL.EMAIL_ADDRESS' | translate}}
-              input#auth_email ng-model="userAuth.user.email" name="email" placeholder="example@web.com" type="email" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" autocomplete="off" ng-change="displayChangeNotice('emailChanged')" aria-describedby="auth_email_error"
+              input#auth_email ng-model="userAuth.user.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="example@web.com" type="email" ng-pattern="emailRegex" ng-required="true" ng-class="{ error: inputInvalid('email'), 'margin-bottom': !inputInvalid('email') }" autocomplete="off" ng-change="displayChangeNotice('emailChanged')" aria-describedby="auth_email_error"
               small.error#auth_email_error ng-if="inputInvalid('email')"
                 | {{'ERROR.EMAIL' | translate}}
 
@@ -81,17 +81,17 @@
 
               label.sr-only for="firstName"
                 | {{'LABEL.FIRST_NAME' | translate}}
-              input#firstName type="text" ng-model="userAuth.contact.firstName" ng-required="true" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="firstName_error"
+              input#firstName type="text" ng-model="userAuth.contact.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" ng-required="true" name="firstName" placeholder="{{'LABEL.FIRST_NAME' | translate}}" ng-class="{ error: inputInvalid('firstName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="firstName_error"
               small.error#firstName_error ng-if="inputInvalid('firstName')"
                 | {{'ERROR.FIRST_NAME' | translate}}
 
               label.sr-only for="middleName"
                 | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-              input#middleName type="text" name="middleName" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-change="displayChangeNotice('nameOrDOBChanged')"
+              input#middleName type="text" name="middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" ng-model="userAuth.contact.middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-change="displayChangeNotice('nameOrDOBChanged')"
 
               label.sr-only for="lastName"
                 | {{'LABEL.LAST_NAME' | translate}}
-              input#lastName type="text" ng-model="userAuth.contact.lastName" ng-required="true" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="lastName_error"
+              input#lastName type="text" ng-model="userAuth.contact.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" ng-required="true" name="lastName" placeholder="{{'LABEL.LAST_NAME' | translate}}" ng-class="{ error: inputInvalid('lastName') }" ng-change="displayChangeNotice('nameOrDOBChanged')" aria-describedby="lastName_error"
               small.error#lastName_error ng-if="inputInvalid('lastName')"
                 | {{'ERROR.LAST_NAME' | translate}}
 
