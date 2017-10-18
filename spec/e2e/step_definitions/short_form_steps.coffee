@@ -73,6 +73,9 @@ module.exports = ->
   @When 'I submit the Name page with my account info', ->
     submitPage()
 
+  @When /^I fill out the Contact page with the email "([^"]*)"$/, (email) ->
+    Pages.Contact.fill({ email: email })
+
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
@@ -353,6 +356,11 @@ module.exports = ->
     scrollToElement(createAccount).then ->
       createAccount.click()
 
+  @When 'I click the Sign In button', ->
+    signIn = element(By.id('sign-in'))
+    scrollToElement(signIn).then ->
+      signIn.click()
+
   @When 'I fill out my account info', ->
     element(By.id('auth_email_confirmation')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
@@ -367,9 +375,11 @@ module.exports = ->
     submitPage()
     browser.waitForAngular()
 
-  @When 'I sign in', ->
+  @When 'I go to the Sign In page', ->
     signInUrl = "/sign-in"
     getUrl(signInUrl)
+
+  @When 'I sign in', ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
@@ -431,6 +441,10 @@ module.exports = ->
   @When 'I fill out the household member form with missing data', ->
     # don't fill anything out and just submit
     submitPage()
+
+  @When 'I select my original application and submit', ->
+    element(By.id('choose_draft_original')).click().then ->
+      submitPage()
 
 
   ########################
@@ -529,6 +543,13 @@ module.exports = ->
   @Then 'I should see my draft application with a Continue Application button', ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should be on the Choose Draft page', ->
+    expectAlertBox(@, 'Please choose which version of the application you want to use.')
+
+  @Then 'I should land on the My Applications page', ->
+    el = element(By.cssContainingText('h1', 'My Applications'))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
     checkbox = element(By.id('preferences-neighborhoodResidence'))
@@ -690,6 +711,10 @@ module.exports = ->
   @Then 'I should see an address error on the Contact page', ->
     expectAlertBox(@)
     expectError(@, 'This address was not found.')
+
+  @Then 'I should see an email error on the Contact page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter an email address')
 
   @Then 'I should see an error about selecting an option', ->
     expectAlertBox(@, 'Please select and complete one of the options below in order to continue')

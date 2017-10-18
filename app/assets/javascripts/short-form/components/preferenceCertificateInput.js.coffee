@@ -6,8 +6,8 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/preference-certificate-input.html'
 
   controller:
-    ['$translate', 'ShortFormApplicationService',
-    ($translate, ShortFormApplicationService) ->
+    ['$translate', 'ShortFormApplicationService', 'inputMaxLength'
+    ($translate, ShortFormApplicationService, inputMaxLength) ->
       ctrl = @
       @inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
@@ -18,6 +18,7 @@ angular.module('dahlia.components')
         @label = $translate.instant('E7_PREFERENCES_PROGRAMS.DISPLACED_CERTIFICATE')
 
       @preferenceCertificateNumber = "#{@preference}_certificateNumber"
+      @INPUT_MAX_LENGTH = inputMaxLength
 
       return ctrl
   ]
