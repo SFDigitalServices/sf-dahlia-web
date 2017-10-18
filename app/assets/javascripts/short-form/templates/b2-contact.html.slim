@@ -60,7 +60,7 @@
       p.form-note.margin-bottom
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
-        input#applicant_email ng-model="applicant.email" name="email" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
+        input#applicant_email ng-model="applicant.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-pattern="emailRegex" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
       small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
       small.error#applicant_email_error ng-if="inputInvalid('email')"
         | {{'ERROR.EMAIL' | translate}}

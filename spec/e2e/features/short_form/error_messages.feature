@@ -13,10 +13,20 @@ Feature: Short Form Application
       When I fill out the Name page with an invalid DOB
       Then I should see DOB field errors on the Name page
 
-      When I fill out the Name page as "Jane Doe"
+      # maxlength check: name should cut off
+      When I fill out the Name page as "Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz"
+      And I navigate to the "You" section
+      Then on the Name page I should see my correct info for "Loremipsumloremipsumloremipsumloremipsum Loremipsumloremipsum Loremipsumloremipsumloremipsumloremipsum"
+
+      When I navigate to the "You" section
+      And I fill out the Name page as "Jane Doe"
       # error: address not found
       And I fill out the Contact page with an address that isn't found
       Then I should see an address error on the Contact page
+
+      # error: invalid email
+      When I fill out the Contact page with the email "grant@exygy"
+      Then I should see an email error on the Contact page
 
       When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
       And I confirm my address
@@ -46,21 +56,13 @@ Feature: Short Form Application
       # error: income too low
       And I fill out my income as "25000"
       Then I should see an error about household income being too low
+
       # error: income too high
       When I fill out my income as "195000"
       Then I should see an error about household income being too high
+
       # no error - income should pass
       When I fill out my income as "75000"
-
-      # return to vouchers
-      And I navigate to the "Income" section
-      And I indicate having vouchers
-      # error: income too high should still fail
-      When I fill out my income as "195000"
-      Then I should see an error about household income being too high
-
-      # no error - income should pass, because of vouchers
-      And I fill out my income as "5000"
 
       # error: L/W preference option not chosen (optOut / preference both blank)
       And I continue past the Lottery Preferences intro
