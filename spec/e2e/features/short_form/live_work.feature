@@ -170,7 +170,7 @@ Feature: Short Form Application - Live/Work Preference
       And I fill out the Contact page with a non-SF address, no WorkInSF
       And I confirm my address
       And I go back to the Live/Work preference page
-      Then I should see the Live or Work in SF checkbox un-checked
+      Then I should see the "liveWorkInSf" checkbox un-checked
       # see general lottery notice
       When --I reach the "see general lottery notice" step--
       When I opt out of Live/Work preference

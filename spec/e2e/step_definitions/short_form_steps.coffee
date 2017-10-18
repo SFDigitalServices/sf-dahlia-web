@@ -276,6 +276,32 @@ module.exports = ->
     element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
     browser.sleep(3000)
 
+  @When /^I upload an additional "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
+    filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
+    # click the "upload additional proof" button
+    element(By.id('upload-additional-proof')).click()
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id('rentBurden_rentDocument')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    filePath = "#{process.env.PWD}/app/assets/images/logo-city.png"
+    element(By.id('ngf-rentBurden_rentFile')).sendKeys(filePath)
+    browser.sleep(3000)
+
+  @When 'I open the first address in my Rent Burden dashboard', ->
+    element.all(By.css('.edit-link.info-item_link')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When 'I open the last address in my Rent Burden dashboard', ->
+    element.all(By.css('.edit-link.info-item_link')).filter((elem) ->
+      elem.isDisplayed()
+    ).last().click()
+
   @When 'I click the Next button on the Live/Work Preference page', ->
     submitPage()
 
@@ -323,6 +349,9 @@ module.exports = ->
 
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
+
+  @When 'I indicate being done with this address', ->
+    submitPage()
 
   @When 'I submit my preferences', ->
     submitPage()
@@ -459,7 +488,7 @@ module.exports = ->
   ########################
   # helper functions
   expectByCss = (context, selector, text) ->
-    el = element(By.cssContainingText(selector, text))
+    el = element.all(By.cssContainingText(selector, text)).first()
     # make it case-insensitive to account for text transforms
     el.getText().then (elText) ->
       context.expect(elText.toLowerCase()).to.contain(text.toLowerCase())
@@ -546,12 +575,8 @@ module.exports = ->
     el = element(By.cssContainingText('h1', 'My Applications'))
     @expect(el.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the Live in the Neighborhood checkbox un-checked', ->
-    checkbox = element(By.id('preferences-neighborhoodResidence'))
-    @expect(checkbox.isSelected()).to.eventually.equal(false)
-
-  @Then 'I should see the Live or Work in SF checkbox un-checked', ->
-    checkbox = element(By.id('preferences-liveWorkInSf'))
+  @Then /^I should see the "([^"]*)" checkbox un-checked$/, (preference) ->
+    checkbox = element(By.id("preferences-#{preference}"))
     @expect(checkbox.isSelected()).to.eventually.equal(false)
 
   @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
@@ -562,6 +587,22 @@ module.exports = ->
 
     preferenceMember = element(By.cssContainingText('.info-item_note', name))
     @expect(preferenceMember.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see green checkmarks indicating my uploads for Lease and Rent', ->
+    lease = element.all(By.cssContainingText('.info-item_doc', 'Copy of Lease')).first()
+    @expect(lease.isPresent()).to.eventually.equal(true)
+    @expect(lease.isElementPresent(By.css('.i-check'))).to.eventually.equal(true)
+    rent = element.all(By.cssContainingText('.info-item_doc', 'Proof of Rent')).first()
+    @expect(rent.isPresent()).to.eventually.equal(true)
+    @expect(rent.isElementPresent(By.css('.i-check'))).to.eventually.equal(true)
+
+  @Then 'I should see a red X indicating missing uploads for Lease and Rent', ->
+    lease = element.all(By.cssContainingText('.info-item_doc', 'Copy of Lease')).last()
+    @expect(lease.isPresent()).to.eventually.equal(true)
+    @expect(lease.isElementPresent(By.css('.i-close'))).to.eventually.equal(true)
+    rent = element.all(By.cssContainingText('.info-item_doc', 'Proof of Rent')).last()
+    @expect(rent.isPresent()).to.eventually.equal(true)
+    @expect(rent.isElementPresent(By.css('.i-close'))).to.eventually.equal(true)
 
   @Then 'I should see the general lottery notice on the review page', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
@@ -614,6 +655,12 @@ module.exports = ->
       expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
     else
       expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
+
+  @Then 'on the Review Page I should see my Rent Burdened preference details', ->
+    expectByCss(@, '#review-rentBurden .info-item_note', 'for 4053 18TH ST')
+    expectByCss(@, '#review-rentBurden .info-item_note', 'for 2601 MISSION ST')
+    expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
+
 
 
   #################################################
@@ -718,6 +765,10 @@ module.exports = ->
   @Then 'I should see an error about uploading proof', ->
     expectAlertBox(@, 'Please complete uploading documents or select that you don\'t want this preference.')
     expectError(@, 'Please upload a valid document')
+
+  @Then 'I should see errors about uploading Rent Burdened proof', ->
+    expectAlertBox(@, 'Please complete uploading documents or select that you don\'t want this preference.')
+    expectError(@, 'Please complete uploading documents above.')
 
   @Then 'I should see an error on the household member form', ->
     browser.waitForAngular()
