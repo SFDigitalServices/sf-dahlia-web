@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 20170726222046) do
     t.string   "listing_id"
     t.string   "document_type"
     t.integer  "user_id"
-    t.integer  "preference"
     t.string   "address"
     t.integer  "rent_burden_type"
     t.string   "rent_burden_index"
