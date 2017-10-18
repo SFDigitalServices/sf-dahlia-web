@@ -103,6 +103,9 @@ ShortFormApplicationService = (
     return false unless form
     field = form[fieldName]
     if form && field
+      # special case: set "invalid email" error instead of "provide answers in english" when failing ng-pattern
+      if fieldName == 'email' && field.$error.pattern
+        field.$error.email = true
       field.$invalid && (field.$touched || form.$submitted)
     else
       false
