@@ -2,7 +2,7 @@
   .form-group-street.form-item.large-12.columns ng-class="{ error: $ctrl.inputInvalid('address1', $ctrl.addressType) }"
     label.sr-only for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1" translate="LABEL.ADDRESS_1"
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1" ng-model="$ctrl.model[$ctrl.addressType].address1"
-      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" type="text"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address1" placeholder="{{'LABEL.ADDRESS_1' | translate}}" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text"
       ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('address1', $ctrl.addressType) }"
       aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1_error")
     small.error id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1_error" ng-show="$ctrl.inputInvalid('address1', $ctrl.addressType)" translate="ERROR.ADDRESS"
@@ -10,11 +10,11 @@
   .form-group-apt.large-12.column
     label for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address2" ng-model="$ctrl.model[$ctrl.addressType].address2"
-      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " type="text")
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}} " maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text")
   .form-group-city.form-item.small-7.columns ng-class="{ error: $ctrl.inputInvalid('city', $ctrl.addressType) }"
     label for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city" translate="LABEL.CITY"
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city" ng-model="$ctrl.model[$ctrl.addressType].city"
-      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" type="text"
+      ng-change="$ctrl.onChange()" name="{{$ctrl.addressType}}_city" placeholder="{{'LABEL.CITY' | translate}}" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text"
       ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('city', $ctrl.addressType) }"
       aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city_error")
     small.error id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_city_error" ng-show="$ctrl.inputInvalid('city', $ctrl.addressType)" translate="ERROR.CITY"
