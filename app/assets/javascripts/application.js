@@ -48,4 +48,5 @@
 //= require config/angularRoutes.js
 //= require config/angularProviders.js
 //= require config/angularInitialize.js
+//= require config/angularConstants.js
 //= require_tree .

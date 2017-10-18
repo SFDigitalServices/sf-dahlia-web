@@ -9,8 +9,8 @@ angular.module('dahlia.components')
   templateUrl: 'short-form/components/address-form.html'
 
   controller:
-    ['ShortFormApplicationService', '$scope',
-    (ShortFormApplicationService, $scope) ->
+    ['ShortFormApplicationService', 'inputMaxLength', '$scope',
+    (ShortFormApplicationService, inputMaxLength, $scope) ->
       ctrl = @
       @latinRegex = ShortFormApplicationService.latinRegex
 
@@ -22,6 +22,8 @@ angular.module('dahlia.components')
       $scope.inputInvalid = (fieldName) ->
         ShortFormApplicationService.inputInvalid(fieldName)
       $scope.form = ShortFormApplicationService.form
+
+      @INPUT_MAX_LENGTH = inputMaxLength
 
       return ctrl
 

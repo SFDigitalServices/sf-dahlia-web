@@ -12,15 +12,15 @@
 
       label.sr-only for="applicantFirstName"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#applicant_first_name(ng-model="applicant.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+      input#applicant_first_name(ng-model="applicant.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName')}" ng-disabled="loggedIn()" aria-describedby="applicant_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
 
       label.sr-only for="applicantMiddleName"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#applicant_middle_name(ng-model="applicant.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
+      input#applicant_middle_name(ng-model="applicant.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" ng-class="{ error: inputInvalid('middleName')}" type="text" ng-disabled="loggedIn()" ng-pattern="latinRegex" input-error)
 
       label.sr-only for="applicantLastName"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#applicant_last_name(ng-model="applicant.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
+      input#applicant_last_name(ng-model="applicant.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" ng-disabled="loggedIn()" aria-describedby="applicant_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
 
     .form-group ng-class="{ error: applicantDOB_hasError() }"
       h3.form-label.caps

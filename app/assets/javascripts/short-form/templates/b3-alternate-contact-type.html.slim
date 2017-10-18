@@ -19,7 +19,7 @@
           | {{option[1] | translate}}
 
         .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
-          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="{{'LABEL.WHAT_IS_YOUR_RELATIONSHIP' | translate}}" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'" aria-describedby="alternate_contact_type_other_error"
+          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="{{'LABEL.WHAT_IS_YOUR_RELATIONSHIP' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.alternateContactTypeOther}}" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'" aria-describedby="alternate_contact_type_other_error"
           small.error#alternate_contact_type_other_error ng-show="inputInvalid('alternateContactTypeOther')"
             | {{'ERROR.RELATIONSHIP' | translate}}
 
