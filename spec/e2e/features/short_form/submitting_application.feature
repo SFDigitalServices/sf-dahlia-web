@@ -77,9 +77,20 @@ Feature: Short Form Application
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
-    Scenario: Logging into account (created in earlier scenario), continuing saved application
+    Scenario: Filling out anonymous draft, reaching Choose Draft page
       Given I have a confirmed account
-      When I sign in
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer"
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in
+      Then I should be on the Choose Draft page
+      When I select my original application and submit
+      Then I should land on the My Applications page
+
+    Scenario: Logging into account (created in earlier scenario), continuing saved application
+      Given I go to the Sign In page
+      And I sign in
       And I go to My Applications
       And I click the Continue Application button
       # I should land back on the Review page where I clicked "save and finish later"

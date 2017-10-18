@@ -1,5 +1,5 @@
 accordion-heading.lead
-  img.accordion-icon ng-src="{{assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
+  img.accordion-icon ng-src="{{::assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
   h3.accordion-name
     | Eligibility
   span.accordion-subheader Income, occupancy, preferences, and subsidies
@@ -9,7 +9,7 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
-    li.custom-counter_item ng-if="listingIsReservedCommunity()"
+    li.custom-counter_item ng-if="::listingIsReservedCommunity()"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{listing.Reserved_community_type}}"
@@ -18,7 +18,7 @@ accordion-heading.lead
             | {{reservedLabel(listing, listing.Reserved_community_type, 'eligibility')}}
           p.c-steel
             | {{'LISTINGS.ALL_UNITS' | translate}}
-          p.c-steel(ng-text-truncate="listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
+          p.c-steel(ng-text-truncate="::listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
 
     li.custom-counter_item
       .content-tile
@@ -57,14 +57,14 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
-          p.custom-counter_text ng-if="listingHasOnlySROUnits()"
+          p.custom-counter_text ng-if="::listingHasOnlySROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
-          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && listingHasSROUnits()"
+          p.custom-counter_text ng-if="::!listingHasOnlySROUnits() && listingHasSROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
-          p.custom-counter_text ng-if="!listingHasOnlySROUnits() && !listingHasSROUnits()"
-            span ng-if="listingIs('Transbay Block 7')"
+          p.custom-counter_text ng-if="::!listingHasOnlySROUnits() && !listingHasSROUnits()"
+            span ng-if="::listingIs('Transbay Block 7')"
               | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
-            span ng-if="!listingIs('Transbay Block 7')"
+            span ng-if="::!listingIs('Transbay Block 7')"
               | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
@@ -76,12 +76,12 @@ accordion-heading.lead
                 th scope="col"
                   | {{'T.OCCUPANCY' | translate}}
             tbody
-              tr ng-repeat="unit_summary in listing.unitSummary"
+              tr ng-repeat="unit_summary in ::listing.unitSummary"
                 td scope="row"
                   | {{unit_summary.Unit_Type}}
-                td ng-if="unit_summary.Unit_Type == 'Flex'"
+                td ng-if="::unit_summary.Unit_Type == 'Flex'"
                   | Flex people
-                td ng-if="unit_summary.Unit_Type != 'Flex'"
+                td ng-if="::unit_summary.Unit_Type != 'Flex'"
                   ' {{ occupancy(unit_summary) }}
                   small
                     | {{ occupancyLabel(unit_summary.maxOccupancy) }}
@@ -91,51 +91,51 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | Lottery Preferences
-          p.custom-counter_text ng-if="!listingHasPreferences()"
-            span ng-if="listingIsFirstComeFirstServe()"
+          p.custom-counter_text ng-if="::!listingHasPreferences()"
+            span ng-if="::listingIsFirstComeFirstServe()"
               | There will be no lottery. Applications will be reviewed in the order they are received.
-            span ng-if="!listingIsFirstComeFirstServe()"
+            span ng-if="::!listingIsFirstComeFirstServe()"
               | Preference holders will be given highest ranking in the lottery process.
-          p.custom-counter_text ng-if="listingHasPreferences()"
+          p.custom-counter_text ng-if="::listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
 
         lottery-preference ng-repeat="preference in listing.preferences"
 
-        div ng-if="listingHasPreferences()"
+        div ng-if="::listingHasPreferences()"
           p.custom-counter_text
             | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
 
-    li.custom-counter_item ng-if="listingHasReservedUnits()"
+    li.custom-counter_item ng-if="::listingHasReservedUnits()"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
             | {{'LISTINGS.RESERVED_UNITS' | translate}}
           p.custom-counter_text
             | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
-        .content-card ng-repeat="(type, units) in listing.reservedUnits"
+        .content-card ng-repeat="(type, units) in ::listing.reservedUnits"
           h4.content-card_title.no-margin
-            | {{reservedLabel(listing, type, 'eligibility')}}
+            | {{::reservedLabel(listing, type, 'eligibility')}}
           p.c-steel
-            | {{units.length}}
+            | {{::units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{reservedLabel(listing, type, 'unitDescription')}}"
+          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{::reservedLabel(listing, type, 'unitDescription')}}"
 
-    li.custom-counter_item ng-if="listingHasPriorityUnits()"
+    li.custom-counter_item ng-if="::listingHasPriorityUnits()"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
             | {{'LISTINGS.PRIORITY_UNITS' | translate}}
           p.custom-counter_text
             | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
-        .content-card ng-repeat="(type, units) in listing.priorityUnits"
+        .content-card ng-repeat="(type, units) in ::listing.priorityUnits"
           h4.content-card_title.no-margin
-            | {{priorityLabel(type, 'name')}}
+            | {{::priorityLabel(type, 'name')}}
           p.c-steel
-            | {{units.length}}
+            | {{::units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{priorityLabel(type, 'description')}}"
+          p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{::priorityLabel(type, 'description')}}"
 
     li.custom-counter_item
       .content-tile
@@ -146,27 +146,27 @@ accordion-heading.lead
             | Section 8 housing vouchers and other valid rental assistance programs can be used for this property.
           p.custom-counter_text In the case of a valid rental subsidy, the required minimum income will be based on the portion of the rent that the tenant pays after use of the subsidy.
 
-    li.custom-counter_item ng-if="listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
+    li.custom-counter_item ng-if="::listing.Credit_Rating || listing.Eviction_History || listing.Criminal_History"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title Additional Eligibility Rules
           p.custom-counter_text Applicants must also qualify under the rules of the building.
 
-        .content-card ng-if="listing.Credit_Rating"
+        .content-card ng-if="::listing.Credit_Rating"
           h4.content-card_title Credit History
-          p.c-steel(ng-text-truncate="listing.Credit_Rating | nl2br" ng-tt-words-threshold="60")
+          p.c-steel(ng-text-truncate="::listing.Credit_Rating | nl2br" ng-tt-words-threshold="60")
 
-        .content-card ng-if="listing.Eviction_History"
+        .content-card ng-if="::listing.Eviction_History"
           h4.content-card_title Rental History
-          p.c-steel(ng-text-truncate="listing.Eviction_History | nl2br" ng-tt-words-threshold="60")
+          p.c-steel(ng-text-truncate="::listing.Eviction_History | nl2br" ng-tt-words-threshold="60")
 
         .content-card
           h4.content-card_title Criminal Background
           p.c-steel
             ' Qualified applicants with criminal history will be considered for
               housing in compliance with <a target="_blank" href="http://sfgov.org/olse/sites/default/files/FileCenter/Documents/12136-FCO%20FAQs%20Final.pdf">Article 49</a> of the San Francisco Police Code: <a href="http://sfgov.org/olse/fair-chance-ordinance-fco" target="_blank">Fair Chance Ordinance</a>.
-          p.c-steel(ng-text-truncate="listing.Criminal_History | nl2br" ng-tt-words-threshold="20")
+          p.c-steel(ng-text-truncate="::listing.Criminal_History | nl2br" ng-tt-words-threshold="20")
 
-        p ng-if="listing.Building_Selection_Criteria"
+        p ng-if="::listing.Building_Selection_Criteria"
           a target="_blank" href="{{listing.Building_Selection_Criteria}}"
             | Find out more about Building Selection Criteria

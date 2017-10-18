@@ -13,10 +13,10 @@
       tr
         th scope="col" household size
         th scope="col" ng-repeat="amiChart in AMICharts"
-          | {{amiChart.percent}}% AMI UNITS
+          | {{::amiChart.percent}}% AMI UNITS
     tbody
       tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])" ng-show="toggleStates[listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= householdAMIChartCutoff()"
         td scope="row"
-          | {{householdIncomeLevel.numOfHousehold}} <small>{{ occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
+          | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
         td ng-repeat="amiChart in AMICharts"
-          | {{incomeForHouseholdSize(amiChart, householdIncomeLevel) | currency : $ : 0}}<small>/year</small>
+          | {{::incomeForHouseholdSize(amiChart, householdIncomeLevel) | currency : $ : 0}}<small>/year</small>
