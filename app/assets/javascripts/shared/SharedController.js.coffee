@@ -35,11 +35,11 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
 
   $scope.translateWelcomePath = ->
     translateWelcomeMap =
-     'zh-CN': 'welcome-chinese'
-     'zh': 'welcome-chinese'
-     'es': 'welcome-spanish'
-     'en': 'welcome'
-     'tl': 'welcome-filipino'
+      'zh-TW': 'welcome-chinese'
+      'zh': 'welcome-chinese'
+      'es': 'welcome-spanish'
+      'en': 'welcome'
+      'tl': 'welcome-filipino'
 
     stateName = translateWelcomeMap[GoogleTranslateService.language]
     return "dahlia.#{stateName}({'#': 'translation-disclaimer'})"
