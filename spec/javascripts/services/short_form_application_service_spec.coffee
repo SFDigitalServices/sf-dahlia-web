@@ -235,7 +235,7 @@ do ->
 
     describe 'clearAddressRelatedProofForMember', ->
       beforeEach ->
-        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson' })
+        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson', id: 1 })
         ShortFormApplicationService.applicant = fakeApplicant
         # reset the spy so that we can check for "not" toHaveBeenCalled
         fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
@@ -243,15 +243,15 @@ do ->
         resetFakePeople()
 
       it 'clears the proof file for a preference if the indicated member is selected', ->
-        ShortFormApplicationService.preferences.liveInSf_household_member = 'Frank Robinson'
+        ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Frank Robinson'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 1
         expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
 
       it 'does not clear the proof file for a preference if the indicated member is not selected', ->
-        ShortFormApplicationService.preferences.liveInSf_household_member = 'Joseph Mann'
+        ShortFormApplicationService.preferences.liveInSf_household_member = 2
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Joseph Mann'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
         expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
 
 

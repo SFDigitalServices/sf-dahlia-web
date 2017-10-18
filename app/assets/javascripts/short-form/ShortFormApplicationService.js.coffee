@@ -383,10 +383,9 @@ ShortFormApplicationService = (
 
   Service.clearAddressRelatedProofForMember = (member) ->
     addressPreferences = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
-    full_name = "#{member.firstName} #{member.lastName}"
     addressPreferences.forEach (preference) ->
-      selectedMemberName = Service.preferences[preference + '_household_member']
-      if full_name == selectedMemberName
+      selectedMember = Service.preferences[preference + '_household_member']
+      if member.id == selectedMember
         FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   # update lists of eligible people for the dropdowns for these preferences
