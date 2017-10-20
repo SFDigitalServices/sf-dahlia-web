@@ -144,7 +144,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { user: name }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
-    interpolate = { file: application.preferences.documents[pref_type].proofOption }
+    proof = application.preferences.documents[pref_type]
+    return '' unless proof
+    interpolate = { file: proof.proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.fileAttachmentsForRentBurden = (application) ->

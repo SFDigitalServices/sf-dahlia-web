@@ -136,6 +136,7 @@ ShortFormDataService = (ListingService) ->
       shortformPreferenceID = null
       certificateNumber = null # gets stored in additionalDetails field
       appPrefs = application.preferences
+      proofOption = null
       PREFS = ListingService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
@@ -149,6 +150,8 @@ ShortFormDataService = (ListingService) ->
           individualPref = 'Work in SF'
           prefKey = 'workInSf'
           optOut = appPrefs.optOut.workInSf
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
       else if listingPref.preferenceName == PREFS.rentBurden
         shortformPreferenceID = appPrefs.rentBurden_shortformPreferenceID
         if appPrefs.rentBurden || appPrefs.optOut.rentBurden
@@ -159,11 +162,14 @@ ShortFormDataService = (ListingService) ->
           individualPref = 'Assisted Housing'
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
+        proofOption = 'Lease and rent proof' unless optOut
       else
         prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
         shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
         optOut = appPrefs.optOut[prefKey]
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
         # pref_certificateNumber may or may not exist, which is ok
         certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
 
@@ -184,7 +190,7 @@ ShortFormDataService = (ListingService) ->
       shortFormPref =
         shortformPreferenceID: shortformPreferenceID
         listingPreferenceID: listingPref.listingPreferenceID
-        preferenceProof: appPrefs[prefKey + '_proofOption']
+        preferenceProof: proofOption
         naturalKey: naturalKey
         optOut: optOut
         ifCombinedIndividualPreference: individualPref
