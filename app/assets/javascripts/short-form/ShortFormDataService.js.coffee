@@ -429,33 +429,41 @@ ShortFormDataService = (ListingService) ->
         if shortFormPref.additionalDetails
           preferences["#{prefKey}_certificateNumber"] = shortFormPref.additionalDetails
 
-        _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
-          # mark preference as true if they've uploaded any files (e.g. for a draft)
-          preferences[prefKey] = true
-
-          if prefKey == 'rentBurden'
-            if file.rent_burden_type == 'lease'
-              preferences.documents.rentBurden[file.address].lease = {
-                proofOption: file.document_type
-                file: file
-              }
-            else
-              preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
-                id: file.rent_burden_index
-                proofOption: file.document_type
-                file: file
-              }
-          else
-            preferences.documents[prefKey] = {
-              proofOption: file.document_type
-              file: file
-            }
-
+        preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
     )
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
       preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
+
+  Service._reformatPreferenceProof = (preferences, prefKey, shortFormPref, files, status) ->
+    if status.match(/draft/i)
+      _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
+        # mark preference as true if they've uploaded any files (e.g. for a draft)
+        preferences[prefKey] = true
+
+        if prefKey == 'rentBurden'
+          if file.rent_burden_type == 'lease'
+            preferences.documents.rentBurden[file.address].lease = {
+              proofOption: file.document_type
+              file: file
+            }
+          else
+            preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
+              id: file.rent_burden_index
+              proofOption: file.document_type
+              file: file
+            }
+        else
+          preferences.documents[prefKey] = {
+            proofOption: file.document_type
+            file: file
+          }
+    else
+      preferences.documents[prefKey] = {
+        proofOption: shortFormPref.preferenceProof
+      }
+    return preferences
 
   Service._reformatMailingAddress = (contact) ->
     return {
