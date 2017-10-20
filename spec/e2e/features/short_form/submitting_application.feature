@@ -137,6 +137,8 @@ Feature: Short Form Application
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
       Then on the Review Page I should see my preference details on my "submitted" application
-      #
-      # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
-      #
+
+    Scenario: Signing out
+      When I sign out
+      Then I should land on the Sign In page
+      Then I should see the sign out success message
