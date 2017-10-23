@@ -45,4 +45,4 @@ class Name extends AngularPage
 
 
 
-module.exports.Building_Name = Name
+module.exports.Name = Name
