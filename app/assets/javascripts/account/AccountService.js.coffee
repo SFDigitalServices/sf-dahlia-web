@@ -294,6 +294,12 @@ AccountService = (
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
 
+  Service.afterSignOut = ->
+    Service.accountSuccess.messages.signedOut = $translate.instant('SIGN_IN.SIGNED_OUT_SUCCESSFULLY')
+
+  Service.afterUserTokenValidationTimeout = ->
+    Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
+
   Service.DOBValid = ShortFormDataService.DOBValid
 
   # run on page load
