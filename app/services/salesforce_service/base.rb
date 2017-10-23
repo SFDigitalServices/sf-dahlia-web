@@ -32,9 +32,6 @@ module SalesforceService
     end
 
     def self.api_call(method = :get, endpoint, params, parse_response)
-      if endpoint.include?('Person') && method == :post
-        raise Faraday::TimeoutError
-      end
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, apex_endpoint, params)
