@@ -8,6 +8,13 @@ module ApplicationHelper
     end
   end
 
+  def sentry_js_url
+    return '' unless ENV['SENTRY_DSN']
+    # scrub the password and just include the URL in the format of:
+    # https://abc123@sentry.io/123123
+    ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
+  end
+
   private
 
   def dev_asset_paths

@@ -82,3 +82,10 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+
+    - if ENV['SENTRY_DSN']
+      javascript:
+          Raven
+            .config('#{sentry_js_url}')
+            .addPlugin(Raven.Plugins.Angular)
+            .install();
