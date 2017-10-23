@@ -84,6 +84,8 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
 
     - if ENV['SENTRY_DSN']
+      / scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
+      - sentry_js_url = ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
       javascript:
           Raven
             .config('#{sentry_js_url}')
