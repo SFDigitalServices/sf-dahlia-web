@@ -385,6 +385,11 @@ module.exports = ->
     element(By.id('sign-in')).click()
     browser.waitForAngular()
 
+  @When 'I sign out', ->
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
+    element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
+    browser.waitForAngular()
+
   @When 'I view the application from My Applications', ->
     element(By.cssContainingText('.button', 'Go to My Applications')).click()
     element(By.cssContainingText('.button', 'View Application')).click()
@@ -571,6 +576,14 @@ module.exports = ->
   @Then 'I should see the general lottery notice on the review page', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should land on the Sign In page', ->
+    el = element(By.cssContainingText('h1', 'Sign In'))
+    @expect(el.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the sign out success message', ->
+    el = element(By.cssContainingText('p.alert-body', 'You have successfully logged out of your account.'))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   ###################################
   # --- Review Page expectations --- #
