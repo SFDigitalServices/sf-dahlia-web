@@ -9,7 +9,7 @@
         | {{ address.address }}
       p.info-item_value.small-7
         | {{ address.members | listify : 'fullName' }}
-      a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burden-preference-edit({index: $index})"
+      a.edit-link.info-item_link ui-sref="dahlia.short-form-application.rent-burdened-preference-edit({index: $index})"
         | {{ $ctrl.addressLinkText[address.address] }}
 
       p.info-item_doc ng-class="{error: !$ctrl.hasFileForType(address.address, 'lease')}" ng-if="$ctrl.addressInvalid(address.address) || $ctrl.hasFileForType(address.address, 'lease')"

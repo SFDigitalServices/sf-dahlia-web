@@ -219,7 +219,7 @@ ShortFormApplicationService = (
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
-  # - it's used to setup the monthly-rent page as well as rent-burden-preference pages
+  # - it's used to setup the monthly-rent page as well as rent-burdened-preference pages
   # - it will reset the addresses and Rent Burden if any members/addresses have changed
   Service.groupHouseholdAddresses = ->
     groupedAddresses = []
@@ -554,7 +554,7 @@ ShortFormApplicationService = (
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
       # special case for rentBurden subpages
-      return if stateName.match(/rent-burden-preference-edit/)
+      return if stateName.match(/rent-burdened-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)

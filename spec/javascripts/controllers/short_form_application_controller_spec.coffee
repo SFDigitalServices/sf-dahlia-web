@@ -456,7 +456,7 @@ do ->
           fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.rent-burden-preference'
+          path = 'dahlia.short-form-application.rent-burdened-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
       describe 'preferences do not apply to household',->
