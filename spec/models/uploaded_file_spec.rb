@@ -22,7 +22,7 @@ describe UploadedFile, type: :model do
     attrs = {
       file: file,
       document_type: 'copy of lease',
-      content_type: 'png',
+      content_type: 'image/png',
       name: 'imagename.png',
     }
 
