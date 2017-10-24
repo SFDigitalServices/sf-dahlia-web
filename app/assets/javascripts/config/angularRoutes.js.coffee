@@ -916,6 +916,7 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
+          ShortFormApplicationService.checkForProofPrefs()
         ]
     })
     .state('dahlia.short-form-application.review-sign-in', {

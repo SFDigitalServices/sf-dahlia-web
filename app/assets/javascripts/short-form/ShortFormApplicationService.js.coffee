@@ -139,6 +139,11 @@ ShortFormApplicationService = (
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
     return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    # don't save the fact that we're in the middle of verifying address, can end up in a weird state
+    if lastPage == 'verify-address'
+      lastPage = 'contact'
+    else if lastPage == 'household-member-verify-address'
+      lastPage = 'household-members'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -778,7 +783,7 @@ ShortFormApplicationService = (
     # one last step, reconcile any uploaded files with your saved member + preference data
     Service.refreshPreferences('all')
 
-  Service.checkForProofPrefs = (formattedApp) ->
+  Service.checkForProofPrefs = (formattedApp = Service.application) ->
     proofPrefs = [
       'liveInSf',
       'workInSf',
