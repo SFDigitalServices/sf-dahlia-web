@@ -36,6 +36,7 @@
     "ng-token-auth": "0.0.29",
     "ngstorage": "0.3.11",
     "angular-http-etag": "2.0.17",
-    "ngMeta": "1.0.0"
+    "ngMeta": "1.0.0",
+    "raven-js": "3.19.1"
   }
 }
