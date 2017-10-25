@@ -825,6 +825,12 @@ ShortFormApplicationController = (
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
+  $scope.today = ->
+    moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+
+  $scope.applicationCompletionPercentage = (application) ->
+    ShortFormApplicationService.applicationCompletionPercentage(application)
+
   $scope.$on 'auth:login-error', (ev, reason) ->
     $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
     $scope.handleErrorState()

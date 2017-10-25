@@ -891,6 +891,14 @@ ShortFormApplicationService = (
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
 
+  Service.applicationCompletionPercentage = (application) ->
+    pct = 5
+    pct += 30 if application.completedSections.You
+    pct += 25 if application.completedSections.Household
+    pct += 10 if application.completedSections.Income
+    pct += 30 if application.completedSections.Preferences
+    pct
+
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
 
