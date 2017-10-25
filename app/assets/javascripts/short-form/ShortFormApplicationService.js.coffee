@@ -771,8 +771,8 @@ ShortFormApplicationService = (
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
       Service.checkForProofPrefs(formattedApp)
 
-    # always pull answeredCommunityScreening from the current session since that Q is answered first
-    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
+    # pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
 
     Service.resetUserData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
