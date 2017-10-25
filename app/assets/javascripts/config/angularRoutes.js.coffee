@@ -185,6 +185,8 @@
         expiredConfirmed: null
         redirectTo: null
         fromShortFormIntro: null
+        signedOut: null
+        userTokenValidationTimeout: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
@@ -202,6 +204,10 @@
           AccountService.openConfirmEmailModal()
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
+        if $stateParams.signedOut
+          AccountService.afterSignOut()
+        if $stateParams.userTokenValidationTimeout
+          AccountService.afterUserTokenValidationTimeout()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
@@ -545,6 +551,8 @@
     })
     .state('dahlia.short-form-welcome.community-screening', {
       url: '/community-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'short-form/templates/layout.html'
@@ -600,6 +608,10 @@
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+              # check if community screening has been answered
+              if listing.Reserved_community_type &&
+                ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true})
             ).catch( (response) ->
               deferred.reject(response)
             )
