@@ -51,11 +51,13 @@ module SalesforceService
 
     # get all units for a given listing
     def self.units(listing_id)
+      listing_id = URI.encode(listing_id)
       cached_api_get("/Listing/Units/#{listing_id}", nil, true)
     end
 
     # get all preferences for a given listing
     def self.preferences(listing_id)
+      listing_id = URI.encode(listing_id)
       cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
     end
 
@@ -71,6 +73,7 @@ module SalesforceService
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
+      listing_id = URI.encode(listing_id)
       data = cached_api_get("/Listing/LotteryResult/#{listing_id}", nil, false)
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
@@ -82,11 +85,13 @@ module SalesforceService
 
     # get Individual Lottery Result with rankings
     def self.lottery_ranking(listing_id, lottery_number)
+      listing_id = URI.encode(listing_id)
       endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
       cached_api_get(endpoint, nil, false)
     end
 
     def self.check_household_eligibility(listing_id, params)
+      listing_id = URI.encode(listing_id)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
       %i(household_size incomelevel).each do |k|
         params[k] = params[k].to_i if params[k].present?
@@ -96,7 +101,7 @@ module SalesforceService
 
     def self.get_listings(id = nil, params = nil)
       endpoint = '/ListingDetails'
-      endpoint += "/#{id}" if id
+      endpoint += "/#{URI.encode(id)}" if id
       results = cached_api_get(endpoint, params, true)
       add_image_urls(results)
     end
