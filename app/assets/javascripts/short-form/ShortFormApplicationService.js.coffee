@@ -62,6 +62,7 @@ ShortFormApplicationService = (
     # for storing last page of your draft, to return to. default to first page
     lastPage: 'dahlia.short-form-application.name'
 
+  Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
   Service.refreshSessionUid = ->
@@ -771,8 +772,8 @@ ShortFormApplicationService = (
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
       Service.checkForProofPrefs(formattedApp)
 
-    # always pull answeredCommunityScreening from the current session since that Q is answered first
-    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
+    # pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
 
     Service.resetUserData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
@@ -890,6 +891,14 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.applicationCompletionPercentage = (application) ->
+    pct = 5
+    pct += 30 if application.completedSections.You
+    pct += 25 if application.completedSections.Household
+    pct += 10 if application.completedSections.Income
+    pct += 30 if application.completedSections.Preferences
+    pct
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid

@@ -8,6 +8,7 @@
     .form-group
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
       .checkbox-group role="group"
-        preference(application="application" title="{{preference.preferenceName}}" preference="{{preference.listingPreferenceID}}" custom-description="{{preference.description}}" ng-repeat="preference in listing.customPreferences" )
+        preference(application="application" title="{{preference.preferenceName}}" preference="{{preference.listingPreferenceID}}" custom-description="{{preference.description}}" ng-repeat="preference in listing.customPreferences")
+
 
   short-form-save-and-submit
