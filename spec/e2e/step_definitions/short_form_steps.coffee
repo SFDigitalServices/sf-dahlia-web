@@ -259,6 +259,11 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When /^I upload a Copy of Lease as my proof for Assisted Housing$/, ->
+    filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
+    element(By.id('ngf-assistedHousing_proofFile')).sendKeys(filePath)
+    browser.sleep(1000)
+
   @When /^I upload a Copy of Lease and "([^"]*)" as my proof for Rent Burden$/, (documentType) ->
     filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
     element(By.id('ngf-rentBurden_leaseFile')).sendKeys(filePath)
@@ -317,6 +322,9 @@ module.exports = ->
   @When 'I select Rent Burdened Preference', ->
     checkCheckbox('preferences-rentBurden')
 
+  @When 'I select Assisted Housing Preference', ->
+    checkCheckbox('preferences-assistedHousing')
+
   @When 'I submit my preferences', ->
     submitPage()
 
@@ -347,6 +355,11 @@ module.exports = ->
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click().then ->
       submitPage()
+
+  @When 'I click to view submitted application', ->
+    viewApp = element(By.id('view-app'))
+    scrollToElement(viewApp).then ->
+      viewApp.click()
 
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
@@ -383,6 +396,11 @@ module.exports = ->
     element(By.id('auth_email')).sendKeys(sessionEmail)
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
+    browser.waitForAngular()
+
+  @When 'I sign out', ->
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
+    element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
     browser.waitForAngular()
 
   @When 'I view the application from My Applications', ->
@@ -474,6 +492,12 @@ module.exports = ->
   expectCheckboxChecked = (context, id) ->
     checkbox = element(By.id(id))
     context.expect(checkbox.isSelected()).to.eventually.equal(true)
+
+  @Then 'I should see the Assisted Housing Preference', ->
+    workPref = element.all(By.cssContainingText('strong.form-label', 'Assisted Housing Preference')).filter((elem) ->
+      elem.isDisplayed()
+    ).first()
+    @expect(workPref.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see the Live Preference', ->
     livePref = element.all(By.cssContainingText('strong.form-label', 'Live in San Francisco Preference')).filter((elem) ->
@@ -572,6 +596,14 @@ module.exports = ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should land on the Sign In page', ->
+    el = element(By.cssContainingText('h1', 'Sign In'))
+    @expect(el.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should see the sign out success message', ->
+    el = element(By.cssContainingText('p.alert-body', 'You have successfully logged out of your account.'))
+    @expect(el.isPresent()).to.eventually.equal(true)
+
   ###################################
   # --- Review Page expectations --- #
   ###################################
@@ -620,6 +652,11 @@ module.exports = ->
     else
       expectByCss(@, '#review-rentBurden .info-item_note', 'for your household')
 
+  ###################################
+  # --- View Submitted App Page expectations --- #
+  ###################################
+  @Then 'on the View Submitted App Page I should see Assisted Housing preference claimed', ->
+    expectByCss(@, '#review-assistedHousing .info-item_name', 'Assisted Housing Preference')
 
   #################################################
   # --- Confirming draft details expectations --- #
