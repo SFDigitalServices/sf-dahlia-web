@@ -97,7 +97,7 @@ class Emailer < Devise::Mailer
 
   def draft_application_saved(params)
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    @listing_name = listing.Name
+    @listing_name = listing.Building_Name
     @email = params[:email]
     @name = "#{params[:first_name]} #{params[:last_name]}"
     continue_draft_path = '/continue-draft-sign-in/' + params[:listing_id]
@@ -153,7 +153,7 @@ class Emailer < Devise::Mailer
     # expects :email, :listing, :listing_url, :lottery_number
     @email = params[:email]
     @listing = params[:listing]
-    @listing_name = @listing.Name
+    @listing_name = @listing.Building_Name
     @listing_url = params[:listing_url]
     @lottery_number = params[:lottery_number]
     @lottery_date = ''

@@ -10,7 +10,7 @@ describe Emailer, type: :mailer do
         last_name: 'Tester',
         listing_id: 'a0W0P00000DZTkAUAX',
       }
-      @listing_name = '280 Fell (Fell Street Apartments)'
+      @listing_name = '280 Fell Street Apartments'
     end
 
     let(:mail) { Emailer.submission_confirmation(@params) }
