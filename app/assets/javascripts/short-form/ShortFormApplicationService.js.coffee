@@ -62,6 +62,7 @@ ShortFormApplicationService = (
     # for storing last page of your draft, to return to. default to first page
     lastPage: 'dahlia.short-form-application.name'
 
+  Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
   Service.refreshSessionUid = ->

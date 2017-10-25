@@ -28,6 +28,7 @@ ShortFormApplicationController = (
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
+  $scope.currentCustomProofPreference = ShortFormApplicationService.currentCustomProofPreference
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.householdIncome = ShortFormApplicationService.application.householdIncome
@@ -348,10 +349,23 @@ ShortFormApplicationController = (
     # after Live/Work, go to preferences-programs
     $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
+  ##### Custom Preferences Logic ####
   # this called after preferences programs
   $scope.checkForCustomPreferences = ->
     if $scope.listing.customPreferences.length > 0
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
+    else
+      $scope.checkForCustomProofPreferences()
+
+  $scope.checkForCustomProofPreferences = ->
+    nextIndex = null
+    currentIndex = parseInt($state.params.prefIdx)
+    if currentIndex >= 0 && currentIndex < $scope.listing.customProofPreferences.length - 1
+      nextIndex = currentIndex + 1
+    else if isNaN(currentIndex) && $scope.listing.customProofPreferences.length
+      nextIndex = 0
+    if nextIndex != null
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: nextIndex})
     else
       $scope.checkIfNoPreferencesSelected()
 
