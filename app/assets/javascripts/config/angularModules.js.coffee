@@ -5,6 +5,14 @@ angular.module('dahlia.services', ['ngStorage'])
 angular.module('dahlia.controllers',['ngSanitize', 'angular-carousel', 'ngFileUpload'])
 angular.module('dahlia.components', [])
 
+# Raven must be configured before including `ngRaven` module below
+# SENTRY_JS_URL is defined globally in application.html.slim
+Raven
+  .config(SENTRY_JS_URL)
+  .addPlugin(Raven.Plugins.Angular)
+  .install()
+
+
 @dahlia = angular.module 'dahlia', [
   'dahlia.directives',
   'dahlia.controllers',
