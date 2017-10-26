@@ -95,6 +95,7 @@
         "TITLE_YOU": "Do you currently live in public housing or HUD project-based housing?"
     },
     "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "DESCRIPTION": "Please enter the total amount that you personally pay toward rent.",
         "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
         "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
