@@ -128,10 +128,12 @@
       $document.scrollTop(0) unless ShortFormApplicationService.isShortFormPage($state.current)
 
       # After elements are rendered, make sure to re-focus keyboard input
-      # on elements at the top of the page
+      # on elements either at the top or on a designated section
       $timeout ->
-        if ShortFormApplicationService.isShortFormPage($state.current)
-          SharedService.focusOnShortFormContent()
+        if SharedService.onDocChecklistPage()
+          SharedService.focusOn($state.params.section)
+        else if ShortFormApplicationService.isShortFormPage($state.current)
+          SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
 

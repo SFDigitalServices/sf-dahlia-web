@@ -524,6 +524,18 @@
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
         ]
     })
+    .state('dahlia.document-checklist',{
+      url: '/document-checklist'
+      params:
+        section: null
+      views:
+        'container@':
+          templateUrl: 'pages/templates/document-checklist.html'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
+        ]
+    })
     ##########################
     # Short form application #
     ##########################
