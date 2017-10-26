@@ -82,3 +82,15 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+
+    / scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
+    - if ENV['SENTRY_DSN']
+      - sentry_js_url = ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
+    - else
+      / needed to prevent page errors with ngRaven e.g. for E2E tests
+      - sentry_js_url = 'https://foobar@sentry.io/123123'
+    javascript:
+        Raven
+          .config('#{sentry_js_url}')
+          .addPlugin(Raven.Plugins.Angular)
+          .install();

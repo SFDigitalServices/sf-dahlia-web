@@ -48,4 +48,6 @@
 //= require config/angularProviders.js
 //= require config/angularInitialize.js
 //= require config/angularConstants.js
+//= require raven-js/dist/raven
+//= require raven-js/dist/plugins/angular
 //= require_tree .

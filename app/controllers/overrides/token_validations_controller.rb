@@ -12,7 +12,8 @@ module Overrides
 
     def salesforce_contact_data
       return {} unless @resource.salesforce_contact_id.present?
-      AccountService.get(@resource.salesforce_contact_id) || {}
+      params = { user_token_validation: true }
+      AccountService.get(@resource.salesforce_contact_id, params) || {}
     end
   end
 end
