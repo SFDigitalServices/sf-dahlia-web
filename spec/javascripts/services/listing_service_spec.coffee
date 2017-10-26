@@ -110,6 +110,11 @@ do ->
         httpBackend.verifyNoOutstandingRequest()
       it 'assigns Service.AMI with the consolidated AMI results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeAMI
+        ListingService.listing.chartTypes = [{
+          year: 2016
+          percent: 50
+          chartType: "Non-HERA"
+        }]
         ListingService.getListingAMI()
         httpBackend.flush()
         consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)
@@ -262,18 +267,34 @@ do ->
         expect(ListingService.listing.groupedUnits).toEqual ListingService.groupUnitDetails(fakeUnits.units)
 
     describe 'Service.getListingPreferences', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.listing.preferences with the Preference results', ->
+      beforeEach ->
         # have to populate listing first
         ListingService.listing = fakeListing.listing
         # just to divert from our hardcoding
         ListingService.listing.Id = 'fakeId-123'
+        fakeCustomPrefs = [
+          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
+          {preferenceName: 'Alice Griffith Housing Development Resident', listingPreferenceID: '1234'}
+        ]
+        fakePreferences.preferences = fakePreferences.preferences.concat(fakeCustomPrefs)
         stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
         ListingService.getListingPreferences()
+
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+
+      it 'assigns Service.listing.preferences with the Preference results', ->
         httpBackend.flush()
         expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
+
+      it 'assigns Service.listing.customPreferences with the customPreferences without proof', ->
+        expect(ListingService.listing.customPreferences.length).toEqual 1
+        expect(ListingService.listing.customPreferences[0].preferenceName).toEqual 'DACA Fund'
+
+      it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->
+        expect(ListingService.listing.customProofPreferences.length).toEqual 1
+        expect(ListingService.listing.customProofPreferences[0].preferenceName).toEqual 'Alice Griffith Housing Development Resident'
 
     describe 'Service.getListingsByIds', ->
       afterEach ->
@@ -423,3 +444,15 @@ do ->
       it 'returns 1 if all units are SROs', ->
         ListingService.listing = fakeListingAllSRO
         expect(ListingService.householdAMIChartCutoff()).toEqual(1)
+
+    describe 'Service.formatLotteryNumber', ->
+      it 'removes any extraneous formatting from lottery numbers', ->
+        formatted = '00041990'
+        val = ListingService.formatLotteryNumber('# 41990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber('#041990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber('41990')
+        expect(val).toEqual(formatted)
+        val = ListingService.formatLotteryNumber(formatted)
+        expect(val).toEqual(formatted)

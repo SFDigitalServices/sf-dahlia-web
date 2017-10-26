@@ -11,15 +11,15 @@
         | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
       label.sr-only for="houshold_member_first_name"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
+      input#houshold_member_first_name ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
       small.error#houshold_member_first_name_error ng-show="inputInvalid('firstName')"
         | {{'ERROR.FIRST_NAME' | translate}}
       label.sr-only for="household_member_middle_name"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#household_member_middle_name ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+      input#household_member_middle_name ng-model="householdMember.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
       label.sr-only for="household_member_last_name"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#household_member_last_name ng-model="householdMember.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
+      input#household_member_last_name ng-model="householdMember.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
       small.error#household_member_last_name_error ng-show="inputInvalid('lastName')"
         | {{'ERROR.LAST_NAME' | translate}}
 
@@ -49,10 +49,13 @@
       label.form-label.caps id="hasSameAddressAsApplicant_label"
         | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.NO' | translate}}
+
+        small.error#household_member_same_address_error ng-show="inputInvalid('hasSameAddressAsApplicant')"
+         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
       p.form-note.margin-bottom
@@ -69,10 +72,13 @@
       p.form-note.margin-bottom
         | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
       .radio-group role="radiogroup" aria-labelledby="workInSf_label"
-        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.NO' | translate}}
+
+      small.error#household_member_workInSf_error ng-show="inputInvalid('workInSf')"
+       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
       small.highlight ng-if="householdMember.workInSf == 'Yes'"
         | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}

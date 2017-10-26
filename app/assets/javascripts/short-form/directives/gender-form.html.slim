@@ -13,4 +13,4 @@
 
   .radio-block ng-if="genderNotListed()"
     label.sr-only for="genderOther" translate="LABEL.YOUR_GENDER"
-    input#genderOther ng-model="user.genderOther" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"
+    input#genderOther ng-model="user.genderOther" maxlength="{{::INPUT_MAX_LENGTH.genderOther}}" name="genderOther" placeholder="{{'LABEL.YOUR_GENDER' | translate}}" type="text"

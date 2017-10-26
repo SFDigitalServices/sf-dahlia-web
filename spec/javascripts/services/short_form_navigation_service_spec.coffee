@@ -58,6 +58,7 @@ do ->
           'live-work-preference'
           'preferences-programs'
           'custom-preferences'
+          'custom-proof-preferences'
           'general-lottery-notice'
         ]
       },

@@ -15,7 +15,9 @@ ShortFormApplicationController = (
   FileUploadService,
   AnalyticsService,
   AddressValidationService,
-  AccountService
+  AccountService,
+  SharedService,
+  inputMaxLength
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -26,8 +28,10 @@ ShortFormApplicationController = (
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
+  $scope.currentCustomProofPreference = ShortFormApplicationService.currentCustomProofPreference
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
+  $scope.householdIncome = ShortFormApplicationService.application.householdIncome
   $scope.listing = ShortFormApplicationService.listing
   $scope.currentRentBurdenAddress = ShortFormApplicationService.currentRentBurdenAddress
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
@@ -39,6 +43,7 @@ ShortFormApplicationController = (
   # store label values that get overwritten by child directives
   $scope.labels = {}
   $scope.customInvalidMessage = null
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -61,6 +66,8 @@ ShortFormApplicationController = (
   $scope.accountSuccess = AccountService.accountSuccess
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
+
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
@@ -342,10 +349,23 @@ ShortFormApplicationController = (
     # after Live/Work, go to preferences-programs
     $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
+  ##### Custom Preferences Logic ####
   # this called after preferences programs
   $scope.checkForCustomPreferences = ->
     if $scope.listing.customPreferences.length > 0
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
+    else
+      $scope.checkForCustomProofPreferences()
+
+  $scope.checkForCustomProofPreferences = ->
+    nextIndex = null
+    currentIndex = parseInt($state.params.prefIdx)
+    if currentIndex >= 0 && currentIndex < $scope.listing.customProofPreferences.length - 1
+      nextIndex = currentIndex + 1
+    else if isNaN(currentIndex) && $scope.listing.customProofPreferences.length
+      nextIndex = 0
+    if nextIndex != null
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: nextIndex})
     else
       $scope.checkIfNoPreferencesSelected()
 
@@ -642,6 +662,9 @@ ShortFormApplicationController = (
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
 
+  $scope.certificateNumberForPreference = (pref_type) ->
+    ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
+
   $scope.addressTranslateVariable = (address) ->
     ShortFormHelperService.addressTranslateVariable(address)
 
@@ -816,6 +839,12 @@ ShortFormApplicationController = (
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
+  $scope.today = ->
+    moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+
+  $scope.applicationCompletionPercentage = (application) ->
+    ShortFormApplicationService.applicationCompletionPercentage(application)
+
   $scope.$on 'auth:login-error', (ev, reason) ->
     $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
     $scope.handleErrorState()
@@ -827,6 +856,10 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
+      ShortFormApplicationService.application.id
+        ShortFormApplicationService.sendToLastPageofApp(toState)
+    ShortFormApplicationService.storeLastPage(toState.name)
     ShortFormNavigationService.isLoading(false)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
@@ -839,7 +872,9 @@ ShortFormApplicationController.$inject = [
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
   'AddressValidationService',
-  'AccountService'
+  'AccountService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular

@@ -60,7 +60,9 @@ Feature: Short Form Application
       And I click the Next button on the Live in the Neighborhood page
 
       And I select "Jane Doe" for "certOfPreference" preference
+      And I fill out my "certOfPreference" certificate number
       And I select "Coleman Francis" for "displaced" preference
+      And I fill out my "displaced" certificate number
       And I submit my preferences
       # review
       And I fill out the optional survey
@@ -75,16 +77,30 @@ Feature: Short Form Application
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
-    Scenario: Logging into account (created in earlier scenario), viewing saved application
+    Scenario: Filling out anonymous draft, reaching Choose Draft page
       Given I have a confirmed account
-      When I sign in
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer"
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in
+      Then I should be on the Choose Draft page
+      When I select my original application and submit
+      Then I should land on the My Applications page
+
+    Scenario: Logging into account (created in earlier scenario), continuing saved application
+      Given I go to the Sign In page
+      And I sign in
       And I go to My Applications
-      Then I should see my draft application with a Continue Application button
+      And I click the Continue Application button
+      # I should land back on the Review page where I clicked "save and finish later"
+      Then on the Review Page I should see my contact details
 
     Scenario: Continuing draft, confirming all previously entered details and submitting
       Given I go to My Applications
       And I click the Continue Application button
       # you
+      And I navigate to the "You" section
       Then on the Name page I should see my correct info for "Jane Valerie Doe"
       Then on the Contact page I should see my correct info
       Then on the Alternate Contact pages I should see my correct info
@@ -103,7 +119,7 @@ Feature: Short Form Application
       Then on the Preferences Programs page I should see my correct info
 
       # review
-      And I fill out the optional survey
+      Then on the optional survey page I should see my correct info
       # confirm everything has shown up (again)
       Then on the Review Page I should see my contact details
       Then on the Review Page I should see my alternate contact details
@@ -121,6 +137,8 @@ Feature: Short Form Application
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
       Then on the Review Page I should see my preference details on my "submitted" application
-      #
-      # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
-      #
+
+    Scenario: Signing out
+      When I sign out
+      Then I should land on the Sign In page
+      Then I should see the sign out success message

@@ -50,12 +50,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs25.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1504193004882","signature":"0BZiP66g1vokO2VAD8kQRLVOPljpCYHaS/U9YgLDbu0="}'
-    http_version: 
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1504193004882","signature":"0BZiP66g1vokO2VAD8kQRLVOPljpCYHaS/U9YgLDbu0="}'
+    http_version:
   recorded_at: Thu, 31 Aug 2017 15:23:25 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/shortForm/list/0030P00001y3eLHQAY
+    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/shortForm/list/0030P00001y3eLHQAY
     body:
       encoding: US-ASCII
       string: ''
@@ -116,11 +116,11 @@ http_interactions:
         Contact","appMemberId":"a0n1b000000n7N3AAI","alternatePhoneType":null,"alternatePhone":null,"alternateContactTypeOther":null,"alternateContactType":"Family
         Member","agency":null,"address":null},"agreeToTerms":true,"adaPrioritiesSelected":"Vision
         impaired;Hearing impaired"}]'
-    http_version: 
+    http_version:
   recorded_at: Thu, 31 Aug 2017 15:23:26 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs25.my.salesforce.com/services/apexrest/ListingDetails?ids=a0W0P00000DZ4dTUAT,a0W0P00000DZTkAUAX,a0WU000000ClNXGMA3
+    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/ListingDetails?ids=a0W0P00000DZ4dTUAT,a0W0P00000DZTkAUAX,a0WU000000ClNXGMA3
     body:
       encoding: US-ASCII
       string: ''
@@ -1359,6 +1359,6 @@ http_interactions:
         bCwiY2hhcnRUeXBlcyI6W3sieWVhciI6MjAxNiwicGVyY2VudCI6NTUsIm51
         bU9mSG91c2Vob2xkIjpudWxsLCJjaGFydFR5cGUiOiJIVUQgVW5hZGp1c3Rl
         ZCIsImFtb3VudCI6bnVsbH1dfV0=
-    http_version: 
+    http_version:
   recorded_at: Thu, 31 Aug 2017 15:23:26 GMT
 recorded_with: VCR 3.0.3

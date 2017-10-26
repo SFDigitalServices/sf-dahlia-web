@@ -5,7 +5,9 @@ AccountController = (
   $translate,
   AccountService,
   AnalyticsService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  SharedService
+  inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
@@ -26,8 +28,10 @@ AccountController = (
   $scope.userDataForContact = {}
   $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -111,6 +115,8 @@ AccountController = (
           # if user hasn't started the application at all and signs in from welcome page
           else if $state.params.fromShortFormIntro
             $state.go('dahlia.short-form-welcome.intro', {id: ShortFormApplicationService.listing.Id})
+          else if $state.current.name == 'dahlia.continue-draft-sign-in'
+            $state.go('dahlia.short-form-application.name', id: $state.params.listing_id)
           else
             $scope._signInRedirect()
       ).catch( ->
@@ -237,7 +243,9 @@ AccountController = (
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService'
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular

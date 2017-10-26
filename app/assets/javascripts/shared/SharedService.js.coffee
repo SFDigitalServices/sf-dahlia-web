@@ -10,6 +10,13 @@ SharedService = ($http, $state, $window, $document) ->
     chinese: []
     filipino: []
     spanish: []
+  # email regex source: https://web.archive.org/web/20080927221709/http://www.regular-expressions.info/email.html
+  # using an RFC 2822 compliant regex, not RFC 5322, in order to match Salesforce's email regex which complies w/ 2822
+  Service.emailRegex = new RegExp([
+    "[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~-]+)*",
+    '@',
+    '(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?'
+  ].join(''))
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
@@ -32,8 +39,6 @@ SharedService = ($http, $state, $window, $document) ->
       # when focus leaves this element, remove the tabindex
       angular.element(@).removeAttr('tabindex')
     el[0].focus()
-    # remove outline
-    el[0].blur()
 
   Service.focusOnBody = ->
     body = angular.element(document.body)

@@ -2,8 +2,13 @@
 @dahlia.config [
   '$stateProvider',
   '$urlRouterProvider',
+  '$urlMatcherFactoryProvider',
   '$locationProvider',
-  ($stateProvider, $urlRouterProvider, $locationProvider) ->
+  ($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $locationProvider) ->
+    # allow trailing slashes and don't force case sensitivity on routes
+    $urlMatcherFactoryProvider.caseInsensitive(true)
+    $urlMatcherFactoryProvider.strictMode(false)
+
     $stateProvider
     .state('dahlia', {
       url: '/{lang:(?:en|es|tl|zh)}'
@@ -20,10 +25,17 @@
           controller: 'NavController'
         'footer@':
           templateUrl: 'shared/templates/footer.html'
+      data:
+        meta:
+          'description': 'Search and apply for affordable housing on the City of San Francisco\'s DAHLIA Housing Portal.'
       resolve:
         translations: ['$stateParams', '$translate', ($stateParams, $translate) ->
           # this should happen after preferredLanguage is initially set
           $translate.use($stateParams.lang)
+        ]
+        data: ['ngMeta', 'SharedService', (ngMeta, SharedService) ->
+          img = SharedService.assetPaths['dahlia_social-media-preview.jpg']
+          ngMeta.setTag('og:image', img)
         ]
     })
     # Home page
@@ -114,6 +126,14 @@
         $title: ['$title', 'listing', ($title, listing) ->
           listing.Name
         ]
+        data: ['ngMeta', 'listing', (ngMeta, listing) ->
+          desc = "Apply for affordable housing at #{listing.Name} on the City of San Francisco's DAHLIA Housing Portal."
+          ngMeta.setTag('description', desc)
+          ngMeta.setTag('og:image', listing.imageURL)
+        ]
+      # https://github.com/vinaygopinath/ngMeta#using-custom-data-resolved-by-ui-router
+      meta:
+        disableUpdate: true
     })
     ##########################
     # < Account/Login pages >
@@ -165,6 +185,8 @@
         expiredConfirmed: null
         redirectTo: null
         fromShortFormIntro: null
+        signedOut: null
+        userTokenValidationTimeout: null
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
@@ -182,6 +204,10 @@
           AccountService.openConfirmEmailModal()
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
+        if $stateParams.signedOut
+          AccountService.afterSignOut()
+        if $stateParams.userTokenValidationTimeout
+          AccountService.afterUserTokenValidationTimeout()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
@@ -216,6 +242,14 @@
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
       ]
+    })
+    .state('dahlia.continue-draft-sign-in', {
+      url: '/continue-draft-sign-in/:listing_id'
+      views:
+        'container@':
+          # use same template as usual sign-in route
+          templateUrl: 'account/templates/sign-in.html'
+          controller: 'AccountController'
     })
     .state('dahlia.short-form-application.forgot-password', {
       # duplicated from above but to differentiate state for "Save and finish later"
@@ -529,6 +563,8 @@
     })
     .state('dahlia.short-form-welcome.community-screening', {
       url: '/community-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'short-form/templates/layout.html'
@@ -584,6 +620,10 @@
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+              # check if community screening has been answered
+              if listing.Reserved_community_type &&
+                ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true})
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -868,6 +908,18 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e7b-custom-preferences.html'
+    })
+    .state('dahlia.short-form-application.custom-proof-preferences', {
+      url: '/custom-proof-preferences/:prefIdx'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService',
+        ($stateParams, ShortFormApplicationService) ->
+          customPref = ShortFormApplicationService.listing.customProofPreferences[$stateParams.prefIdx]
+          angular.copy(customPref, ShortFormApplicationService.currentCustomProofPreference)
+        ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'

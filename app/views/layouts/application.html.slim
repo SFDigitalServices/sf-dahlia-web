@@ -1,7 +1,7 @@
 doctype html
 /![if IE 9 ] <html class="ie9" lang="en">
 /! [if !(IE 9)]><!
-html lang="en"
+html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
   /! <![endif]
   head
     title DAHLIA San Francisco Housing Portal
@@ -29,6 +29,14 @@ html lang="en"
     = render partial: '/layouts/favicons'
     = csrf_meta_tags
 
+    / prerender.io + metatags
+    meta name="fragment" content="!"
+    meta property="og:title" content="{{$title || 'DAHLIA San Francisco Housing Portal'}}"
+    meta property="og:image" content="{{ngMeta['og:image']}}"
+    meta property="og:description" content="{{ngMeta.description}}"
+    meta name="description" content="{{ngMeta.description}}"
+    meta property="og:type" content="website"
+
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
       javascript:
@@ -46,7 +54,7 @@ html lang="en"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()" keep-scroll-position=""
+  body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
@@ -74,3 +82,15 @@ html lang="en"
     javascript:
       var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
       var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+
+    / scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
+    - if ENV['SENTRY_DSN']
+      - sentry_js_url = ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
+    - else
+      / needed to prevent page errors with ngRaven e.g. for E2E tests
+      - sentry_js_url = 'https://foobar@sentry.io/123123'
+    javascript:
+        Raven
+          .config('#{sentry_js_url}')
+          .addPlugin(Raven.Plugins.Angular)
+          .install();

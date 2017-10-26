@@ -57,7 +57,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Gay/Lesbian/Same-Gender Loving', $translate.instant('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
     ['Questioning/Unsure', $translate.instant('LABEL.QUESTIONING_UNSURE')]
     ['Straight/Heterosexual', $translate.instant('LABEL.STRAIGHT_HETEROSEXUAL')]
-    ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
+    ['Not listed', $translate.instant('LABEL.NOT_LISTED')]
   ]
   Service.preference_proof_options_default = [
     ['Telephone bill', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
@@ -140,7 +140,8 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     allMembers.push(application.applicant)
     memberId = application.preferences["#{pref_type}_household_member"]
     member = _.find(allMembers, { id: memberId })
-    { user: "#{member.firstName} #{member.lastName}" }
+    name = if member then "#{member.firstName} #{member.lastName}" else ''
+    { user: name }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status.match(/submitted/i)
@@ -165,6 +166,11 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: proofOptions })
       })
     return labels
+
+  Service.certificateNumberForPreference = (application, pref_type) ->
+    certificateNumber = application.preferences["#{pref_type}_certificateNumber"]
+    return '' unless certificateNumber
+    $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
 
   Service.translateLoggedInMessage = (page) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')

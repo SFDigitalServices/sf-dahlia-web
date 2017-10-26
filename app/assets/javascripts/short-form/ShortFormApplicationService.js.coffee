@@ -10,6 +10,7 @@ ShortFormApplicationService = (
   Service.application = {}
   Service._householdEligibility = {}
   Service.activeSection = {}
+  emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
     lotteryNumber: null
@@ -17,15 +18,15 @@ ShortFormApplicationService = (
     applicationSubmittedDate: null
     surveyComplete: false
     answeredCommunityScreening: null
-    applicationSubmissionType: "Electronic"
+    applicationSubmissionType: 'Electronic'
     applicant:
       id: 1
-      home_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      home_address: angular.copy(emptyAddress)
       phone: null
-      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      mailing_address: angular.copy(emptyAddress)
       terms: {}
     alternateContact:
-      mailing_address: { address1: null, address2: "", city: null, state: null, zip: null }
+      mailing_address: angular.copy(emptyAddress)
     householdMembers: []
     preferences:
       liveInSf: null
@@ -36,28 +37,32 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       optOut: {}
-      documents: {
+      documents:
         rentBurden: {}
-      }
-    householdIncome: { incomeTotal: null, incomeTimeframe: 'per_year' }
+    householdIncome:
+      incomeTotal: null
+      incomeTimeframe: null
     groupedHouseholdAddresses: []
     adaPrioritiesSelected: {}
     completedSections:
       Intro: false
       You: false
       Household: false
-      Preferences: false
       Income: false
+      Preferences: false
     # as you proceed through each page, validatedForms will store:
     #  [pagename]: T/F
     # to indicate if that form was left valid or invalid
     validatedForms:
       You: {}
       Household: {}
-      Preferences: {}
       Income: {}
+      Preferences: {}
       Review: {}
+    # for storing last page of your draft, to return to. default to first page
+    lastPage: 'dahlia.short-form-application.name'
 
+  Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
   Service.refreshSessionUid = ->
@@ -130,6 +135,12 @@ ShortFormApplicationService = (
         _.every(validated['Preferences'], (i) -> i)
       else
         false
+
+  Service.storeLastPage = (stateName) ->
+    lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
+    # don't save the fact that we landed on "choose-xxx" pages
+    return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
     unless Service.applicant.hasAltMailingAddress
@@ -290,16 +301,14 @@ ShortFormApplicationService = (
       Service.preferences["#{preference}_household_member"] = null
       Service.preferences["#{preference}_proofOption"] = null
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
+      if preference == 'certOfPreference' || preference == 'displaced'
+        Service.preferences["#{preference}_certificateNumber"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
     if preference == 'neighborhoodResidence'
       # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
       Service.cancelOptOut('liveWorkInSf')
-    # # TODO: can probably remove this once assistedHousing / rentBurden supports ifCombinedIndividualPreference
-    # if preference == 'rentBurden' || preference == 'assistedHousing'
-    #   Service.application.preferences.optOut.assistedHousing = false
-    #   Service.application.preferences.optOut.rentBurden = false
 
   Service.preferenceRequired = (preference) ->
     # pref is required if we are NOT opted out
@@ -375,10 +384,9 @@ ShortFormApplicationService = (
 
   Service.clearAddressRelatedProofForMember = (member) ->
     addressPreferences = [ 'liveInSf', 'neighborhoodResidence', 'antiDisplacement' ]
-    full_name = "#{member.firstName} #{member.lastName}"
     addressPreferences.forEach (preference) ->
-      selectedMemberName = Service.preferences[preference + '_household_member']
-      if full_name == selectedMemberName
+      selectedMember = Service.preferences[preference + '_household_member']
+      if member.id == selectedMember
         FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
 
   # update lists of eligible people for the dropdowns for these preferences
@@ -535,6 +543,12 @@ ShortFormApplicationService = (
   Service.isShortFormPage = (state) ->
     !!state.name.match(/short-form-application\./)
 
+  Service.sendToLastPageofApp = (toState) ->
+    appLastPage = Service.application.lastPage
+    if toState.name != "dahlia.short-form-application.#{appLastPage}" &&
+      $state.href("dahlia.short-form-application.#{appLastPage}")
+        $state.go("dahlia.short-form-application.#{appLastPage}")
+
   Service.checkFormState = (stateName, section) ->
     if Service.form.applicationForm
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
@@ -554,14 +568,19 @@ ShortFormApplicationService = (
     return true unless toState && fromState
     return false unless Service.userCanAccessSection(toSection.name)
     # they're "jumping ahead" if they're not coming from a short form page or create-account
-    # and they're trying to go to a short form section ahead of "name" (1st page)
+    # and they're trying to go to a page that's not either the first page, or their stored lastPage
+    namePage = 'dahlia.short-form-application.name'
+    lastPage = "dahlia.short-form-application.#{Service.application.lastPage}"
     jumpAhead = Service.isShortFormPage(toState) &&
                 !Service.isShortFormPage(fromState) &&
-                toState.name != 'dahlia.short-form-application.name'
+                !_.includes([namePage, lastPage], toState.name)
     return !jumpAhead
 
   Service.isLeavingShortForm = (toState, fromState) ->
     Service.isShortFormPage(fromState) && !Service.isShortFormPage(toState)
+
+  Service.isEnteringShortForm = (toState, fromState) ->
+    !Service.isShortFormPage(fromState) && Service.isShortFormPage(toState)
 
   Service.isLeavingConfirmationToSignIn = (toState, fromState) ->
     fromState.name == 'dahlia.short-form-application.create-account' &&
@@ -687,21 +706,18 @@ ShortFormApplicationService = (
       Service.loadApplication(data)
     )
 
-  Service.getMyApplicationForListing = (listing_id, opts = {}) ->
+  Service.getMyApplicationForListing = (listingId = Service.listing.Id, opts = {}) ->
     autofill = if opts.autofill then '?autofill=true' else ''
-    $http.get("/api/v1/short-form/listing-application/#{listing_id}#{autofill}").success((data, status) ->
-      Service.loadApplication(data)
+    $http.get("/api/v1/short-form/listing-application/#{listingId}#{autofill}").success((data, status) ->
+      if opts.forComparison
+        Service.loadAccountApplication(data)
+      else
+        Service.loadApplication(data)
     )
-
-  Service.getMyAccountApplication = ->
-    $http.get("/api/v1/short-form/listing-application/#{Service.listing.Id}").success((data, status) ->
-      Service.loadAccountApplication(data)
-    )
-
 
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
-    Service.getMyAccountApplication().success((data) ->
+    Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
       if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
         return Service._signInAndSkipSubmit(data.application)
@@ -754,11 +770,31 @@ ShortFormApplicationService = (
         # on submitted app the listing is loaded along with it
         ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
-    # always pull answeredCommunityScreening from the current session since that Q is answered first
-    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
+      Service.checkForProofPrefs(formattedApp)
+
+    # pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
+
     Service.resetUserData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
     Service.refreshPreferences('all')
+
+  Service.checkForProofPrefs = (formattedApp) ->
+    proofPrefs = [
+      'liveInSf',
+      'workInSf',
+      'neighborhoodResidence',
+      'antiDisplacement',
+      'assistedHousing',
+    ]
+    # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
+    _.each proofPrefs, (prefType) ->
+      hasPref = formattedApp.preferences[prefType]
+      docs = formattedApp.preferences.documents[prefType]
+      if hasPref && (_.isEmpty(docs) || _.isEmpty(docs.file))
+        formattedApp.completedSections['Preferences'] = false
+    if formattedApp.preferences.rentBurden && !Service.hasCompleteRentBurdenFiles()
+      formattedApp.completedSections['Preferences'] = false
 
   Service.loadAccountApplication = (data) ->
     return false if _.isEmpty(data.application)
@@ -855,6 +891,14 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.applicationCompletionPercentage = (application) ->
+    pct = 5
+    pct += 30 if application.completedSections.You
+    pct += 25 if application.completedSections.Household
+    pct += 10 if application.completedSections.Income
+    pct += 30 if application.completedSections.Preferences
+    pct
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
