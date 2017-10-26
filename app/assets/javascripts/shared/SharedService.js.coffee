@@ -23,7 +23,7 @@ SharedService = ($http, $state, $window, $document) ->
 
   # method adapted from:
   # https://www.bignerdranch.com/blog/web-accessibility-skip-navigation-links
-  Service.focus = (id) ->
+  Service.focusOn = (id) ->
     toFocus = document.getElementById(id)
     return unless toFocus
     angularElement = angular.element(toFocus)

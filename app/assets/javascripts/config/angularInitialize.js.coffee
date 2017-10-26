@@ -131,9 +131,9 @@
       # on elements either at the top or on a designated section
       $timeout ->
         if SharedService.onDocChecklistPage()
-          SharedService.focus($state.params.section)
+          SharedService.focusOn($state.params.section)
         else if ShortFormApplicationService.isShortFormPage($state.current)
-          SharedService.focus('main-content')
+          SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
 

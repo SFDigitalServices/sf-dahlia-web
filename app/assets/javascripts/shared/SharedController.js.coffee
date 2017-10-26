@@ -16,7 +16,7 @@ SharedController = ($scope, $state, SharedService) ->
         return 'center-body'
 
   $scope.focusOnMainContent = ->
-    SharedService.focus('main-content')
+    SharedService.focusOn('main-content')
 
 ############################################################################################
 ######################################## CONFIG ############################################

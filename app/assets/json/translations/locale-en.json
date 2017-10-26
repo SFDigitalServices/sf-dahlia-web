@@ -168,12 +168,12 @@
         "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
         "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
         "RENT_BURDEN_DOC_1": "You'll need a Copy of Lease showing the address where you live.",
-        "RENT_BURDEN_DOC_2": "You'll also need to show last months rent with 1 (one) of the following:.",
-        "RENT_BURDEN_TITLE": "Rent Burden Preference",
-        "RESIDENT_DESC": "You'll need 1 (one) of the showing with the address where you live in San Francisco:",
+        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with 1 (one) of the following:",
+        "RENT_BURDEN_TITLE": "Rent Burdened Preference",
+        "RESIDENT_DESC": "You'll need 1 (one) of the following documents showing the address where you live in San Francisco:",
         "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
         "TITLE": "Document Checklist",
-        "WORK_SF_DESC": "You'll need 1 (one) of the showing with the address where you work in San Francisco:",
+        "WORK_SF_DESC": "You'll need 1 (one) of the following documents showing the address where you work in San Francisco:",
         "WORK_SF_TITLE": "Work in San Francisco Preference"
     },
     "DOUBLE_SUBMITTED": {
