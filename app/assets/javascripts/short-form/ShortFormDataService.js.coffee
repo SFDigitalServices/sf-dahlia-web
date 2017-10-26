@@ -8,9 +8,33 @@ ShortFormDataService = (ListingService) ->
     'groupedHouseholdAddresses'
   ]
 
+  Service.WHITELIST_FIELDS =
+    application: [
+        'id'
+        'listingID'
+        'listing'
+        'applicationSubmittedDate'
+        'applicationSubmissionType'
+        'status'
+        'lotteryNumber',
+        'autofill'
+        'hasPublicHousing'
+        'hasMilitaryService'
+        'hasDevelopmentalDisability'
+        'answeredCommunityScreening'
+      ]
+
+
   Service.formatApplication = (listingId, shortFormApplication) ->
-    application = angular.copy(shortFormApplication)
-    application.listingID = listingId
+    shortFormApp = angular.copy(shortFormApplication)
+
+    application = _.pick shortFormApplication, Service.WHITELIST_FIELDS.application
+
+    application = {
+      listingID: listingId
+    }
+    application.merge()
+
     application = Service._formatDOB(application)
     application = Service._formatAddress(application, 'applicant', 'home_address')
     application = Service._formatAddress(application, 'applicant', 'mailing_address')
@@ -281,20 +305,7 @@ ShortFormDataService = (ListingService) ->
   #############################################
 
   Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
-    whitelist = [
-      'id'
-      'listingID'
-      'listing'
-      'applicationSubmittedDate'
-      'status'
-      'lotteryNumber',
-      'autofill'
-      'hasPublicHousing'
-      'hasMilitaryService'
-      'hasDevelopmentalDisability'
-      'answeredCommunityScreening'
-    ]
-    data = _.pick sfApp, whitelist
+    data = _.pick sfApp, Service.WHITELIST_FIELDS.application
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
     data.adaPrioritiesSelected = Service._reformatMultiSelect(sfApp.adaPrioritiesSelected)
