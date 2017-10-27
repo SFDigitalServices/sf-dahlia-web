@@ -196,7 +196,7 @@ ShortFormDataService = (ListingService) ->
 
         if member
           # there might not be a member indicated if it's a draft
-          naturalKey = "#{member.firstName},#{member.lastName},#{member.dob}"
+          naturalKey = "#{member.firstName},#{member.lastName},#{Service.formatUserDOB(member)}"
 
       shortFormPref =
         shortformPreferenceID: shortformPreferenceID
