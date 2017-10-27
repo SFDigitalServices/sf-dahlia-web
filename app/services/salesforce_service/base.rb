@@ -4,19 +4,15 @@ require 'facets/hash/rekey'
 module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
-    class_attribute :retries
-    class_attribute :timeout
     class_attribute :error
     class_attribute :force
-    self.retries = 0
-    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
     self.force = false
 
     def self.client
       Restforce.new(timeout: timeout)
     end
 
-    def self.oauth_client
+    def self.oauth_client(timeout)
       Restforce.new(
         authentication_retries: 1,
         oauth_token: oauth_token,
@@ -31,19 +27,26 @@ module SalesforceService
       client.query(q)
     end
 
-    def self.api_call(method = :get, endpoint, params, parse_response)
+    def self.api_call(method, endpoint, params, opts = {})
+      # WILL DO: Re-factor opts in salesforce refactor chore
+      opts[:retries] ||= 1
+      opts[:timeout] ||= ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
-      response = oauth_client.send(method, apex_endpoint, params)
-      process_response(response, parse_response)
+      response = oauth_client(opts[:timeout]).send(method, apex_endpoint, params)
+      process_response(response, opts[:parse_response])
     rescue Restforce::UnauthorizedError,
            Restforce::AuthenticationError,
            Faraday::ConnectionFailed,
            Faraday::TimeoutError => e
-      if retries > 0
-        self.retries = retries.to_i - 1
+      rescue_api_call(e, method, endpoint, params, opts)
+    end
+
+    def self.rescue_api_call(e, method, endpoint, params, opts)
+      if opts[:retries] > 0
         oauth_token(true) if e.is_a? Restforce::UnauthorizedError
-        retry
+        opts[:retries] -= 1
+        api_call(method, endpoint, params, opts)
       else
         self.error = e.class.name
         message = params && params[:user_token_validation] ? 'user_token_validation' : nil
@@ -53,12 +56,11 @@ module SalesforceService
     end
 
     def self.api_get(endpoint, params = nil, parse_response = false)
-      self.retries = 1
-      api_call(:get, endpoint, params, parse_response)
+      opts = { parse_response: parse_response, retries: 1 }
+      api_call(:get, endpoint, params, opts)
     end
 
     def self.cached_api_get(endpoint, params = nil, parse_response = false)
-      self.retries = 1
       key = "#{endpoint}#{params ? '?' + params.to_query : ''}"
       force_refresh = force || !ENV['CACHE_SALESFORCE_REQUESTS']
       if ENV['FREEZE_SALESFORCE_CACHE']
@@ -67,28 +69,24 @@ module SalesforceService
         expires_in = params ? 10.minutes : 1.day
       end
       Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
-        api_call(:get, endpoint, params, parse_response)
+        api_get(endpoint, params, parse_response)
       end
     end
 
     def self.api_post(endpoint, params = nil, parse_response = false)
-      self.retries = 0
-      # set the timeout to higher for POST methods
-      prev_timeout = timeout
-      self.timeout = 25
-      result = api_call(:post, endpoint, params, parse_response)
-      # set it back again to the default
-      self.timeout = prev_timeout
+      opts = { parse_response: parse_response, timeout: 25, retries: 0 }
+      result = api_call(:post, endpoint, params, opts)
       result
     end
 
     def self.api_delete(endpoint, params = nil, parse_response = false)
-      api_call(:delete, endpoint, params, parse_response)
+      opts = { parse_response: parse_response }
+      api_call(:delete, endpoint, params, opts)
     end
 
     # NOTE: Have to use custom Faraday connection to send headers.
     def self.api_post_with_headers(endpoint, body = '', headers = {})
-      self.retries = 1
+      retries = 1
       status = nil
       response = nil
       while retries > 0 && status != 200
@@ -99,7 +97,7 @@ module SalesforceService
         oauth_token(true)
         response = post_with_headers(endpoint, body, headers)
         status = response.status
-        self.retries -= 1
+        retries -= 1
         if status == 401
           # refresh oauth_token
           oauth_token(true)
