@@ -10,7 +10,7 @@
     {
       "name": "Bayview Hunters Point Multipurpose Senior Services",
       "languages": ["English", "Cantonese"],
-      "address": "1706 Yosemite Ave",
+      "address": "1753 Carroll Avenue",
       "citystate": "San Francisco, CA 94124",
       "phone": "(415) 822-1444",
       "website": "https://bhpmss.org/"
@@ -70,14 +70,6 @@
       "citystate": "San Francisco, CA 94111",
       "phone": "(415) 677-7600",
       "website": "https://www.selfhelpelderly.org/san-francisco"
-    },
-    {
-      "name": "Tenderloin Housing Clinic",
-      "languages":["English"],
-      "address": "126 Hyde St",
-      "citystate": "San Francisco, CA 94102",
-      "phone": "(415) 775-7110",
-      "website": "http://www.thclinic.org"
     },
     {
       "name": "The Arc San Francisco (focused on developmentally-disabled persons)",

@@ -37,6 +37,14 @@ AccountService = (
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.setLoggedInUser = (data) ->
+    if _.isEmpty(data)
+      # clear userContext
+      Raven.setUserContext()
+    else
+      Raven.setUserContext({
+        email: data.email,
+        id: data.id
+      })
     angular.copy(data, Service.loggedInUser)
 
   Service.importApplicantData = (applicant) ->

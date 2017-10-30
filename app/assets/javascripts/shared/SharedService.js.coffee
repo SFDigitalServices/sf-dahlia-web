@@ -23,15 +23,10 @@ SharedService = ($http, $state, $window, $document) ->
 
   # method adapted from:
   # https://www.bignerdranch.com/blog/web-accessibility-skip-navigation-links
-  Service.focusOnMainContent = ->
-    main = angular.element(document.getElementById('main-content'))
-    return unless main
-    Service.focusOnElement(main)
-
-  Service.focusOnShortFormContent = ->
-    main = document.getElementById('main-content')
-    return unless main
-    angularElement = angular.element(main)
+  Service.focusOn = (id) ->
+    toFocus = document.getElementById(id)
+    return unless toFocus
+    angularElement = angular.element(toFocus)
     Service.focusOnElement(angularElement)
     $document.scrollToElement(angularElement)
 
@@ -44,8 +39,6 @@ SharedService = ($http, $state, $window, $document) ->
       # when focus leaves this element, remove the tabindex
       angular.element(@).removeAttr('tabindex')
     el[0].focus()
-    # remove outline
-    el[0].blur()
 
   Service.focusOnBody = ->
     body = angular.element(document.body)
@@ -65,6 +58,9 @@ SharedService = ($http, $state, $window, $document) ->
       Service.housingCounselors.spanish = _.filter data.locations, (o) ->
         _.includes o.languages, 'Spanish'
     )
+
+  Service.onDocChecklistPage = ->
+    $state.current.name == "dahlia.document-checklist"
 
   return Service
 

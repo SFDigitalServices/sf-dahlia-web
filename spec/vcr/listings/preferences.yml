@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 28 Aug 2017 01:26:20 GMT
+      - Tue, 26 Sep 2017 23:38:58 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,14 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin; upgrade-insecure-requests
+      - upgrade-insecure-requests
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=v8Z_aRrFSeK-qvXkAeGvOw;Path=/;Domain=.salesforce.com;Expires=Fri,
-        27-Oct-2017 01:26:20 GMT
+      - BrowserId=qH6NnRA-QwSYHEib9OGL0w;Path=/;Domain=.salesforce.com;Expires=Sat,
+        25-Nov-2017 23:38:58 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
-      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -51,8 +48,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503883581394","signature":"2+tlGuq3wgGoeqoh8ftvPAoKegWFGFu4TfwaVEbpnxY="}'
-    http_version: 
-  recorded_at: Mon, 28 Aug 2017 01:26:18 GMT
+    http_version:
+  recorded_at: Tue, 26 Sep 2017 23:38:58 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000DZTkAUAX
@@ -74,17 +71,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 28 Aug 2017 01:26:21 GMT
+      - Tue, 26 Sep 2017 23:38:59 GMT
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
         report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1b0000000hVg";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=dt9l9mx0ShurGo2gsi0MsA;Path=/;Domain=.salesforce.com;Expires=Fri,
-        27-Oct-2017 01:26:21 GMT
+      - BrowserId=ez8SXJO9TbyHFvBK8z7E4w;Path=/;Domain=.salesforce.com;Expires=Sat,
+        25-Nov-2017 23:38:59 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -119,6 +116,6 @@ http_interactions:
         households who are currently paying more than 50% of income for housing costs
         or are living in public housing or project based Section 8 housing within
         San Francisco.","appTotal":null}]'
-    http_version: 
-  recorded_at: Mon, 28 Aug 2017 01:26:19 GMT
+    http_version:
+  recorded_at: Tue, 26 Sep 2017 23:38:59 GMT
 recorded_with: VCR 3.0.3
