@@ -9,7 +9,7 @@ module SalesforceService
     self.force = false
 
     def self.client
-      Restforce.new(timeout: timeout)
+      Restforce.new(timeout: 10)
     end
 
     def self.oauth_client(timeout)
@@ -20,11 +20,6 @@ module SalesforceService
         mashify: false,
         timeout: timeout,
       )
-    end
-
-    # run a Salesforce SOQL query
-    def self.query(q)
-      client.query(q)
     end
 
     def self.api_call(method, endpoint, params, opts = {})
