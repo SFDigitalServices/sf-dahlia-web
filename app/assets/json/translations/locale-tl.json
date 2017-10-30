@@ -1,6 +1,126 @@
 {
     "A1_INTRO": {
-        "TITLE": "Sabihin makapagsimula sa iyong aplikasyon para sa"
+        "CHOOSE_YOUR_LANGUAGE": "Piliin ang inyong wika ",
+        "SIGN_IN_SAVE_TIME": "Makatitipid kayo ng oras sa pagsa-sign in sa pamamagitan ng pagsisimula sa mga detalye ng huli ninyong aplikasyon, at mapahihintulutan kayo nito na makita ang estado ng aplikasyong ito sa anumang panahon.   ",
+        "TITLE": "Magsimula na tayo sa inyong aplikasyon\n"
+    },
+    "A2_COMMUNITY_SCREENING": {
+        "SENIOR": {
+            "YOU_AND_EVERYONE": "Senior o matanda na ba kayo o ang lahat ng tao na nasa aplikasyong ito?",
+            "YOU_AND_EVERYONE_DESC": "Isa itong senior building (gusali para sa matatanda) at lahat ng aplikante ay kailangang nasa edad na {{minAge}}+. \n",
+            "YOU_AND_EVERYONE_LABEL": "Opo, lahat ng tao ay {{minAge}}+",
+            "YOU_OR_ANYONE": "Senior o matanda na ba kayo o sinuman na nasa aplikasyong ito?",
+            "YOU_OR_ANYONE_DESC": "Isa itong senior building (gusali para sa matatanda) at lahat ng aplikante ay kailangang nasa edad na {{minAge}}+. \n",
+            "YOU_OR_ANYONE_LABEL": "Opo, may isang tao o higit pa na nasa edad na {{minAge}}+"
+        },
+        "VETERAN": {
+            "YOU_OR_ANYONE": "Beterano ba kayo o sinuman na nasa aplikasyong ito?",
+            "YOU_OR_ANYONE_DESC": "Isa itong veterans building (gusali para sa mga beterano) at kailangang nakapaglingkod ang isa o higit pang aplikante sa U.S. Military.<br><br>Sakaling mapili ang inyong aplikasyon, maging handa sa pagbibigay ng karagdagang impormasyon.  "
+        }
+    },
+    "A4_OVERVIEW": {
+        "P1": "Una, magtatanong kami tungkol sa inyo at sa mga taong titira kasama ninyo. Pagkatapos nito, titingnan namin kung kuwalipikado kayo para sa anumang preperensiya para sa lottery o palabunutan sa abot-kayang pabahay (affordable housing), at kung ganoon, hihilingin naming i-upload ninyo ang mga patunay para sa preperensiyang iyon. Panghuli, tatanungin namin kayo tungkol sa inyong kita. ",
+        "P2": "Magkakaroon kayo ng pagkakataon na repasuhin ang inyong aplikasyon bago ninyo isumite ito. ",
+        "P3": "Kailangang alam ninyo na sa iisang aplikasyon lamang puwedeng makasali ang bawat miyembro ng kabahayan para sa bawat nakalistang pabahay. Kung nagtataglay ang inyong aplikasyon ng mga miyembro ng kabahayan na nasa iba pang aplikasyon para sa nakalistang pabahay na ito, lahat sila ay hindi na magiging kuwalipikado. ",
+        "TITLE": "Heto ang maaasahan ninyo para sa aplikasyong ito. ",
+        "WARNING": "Anumang hindi totoong pahayag ay hahantong sa pagkakatanggal sa inyong aplikasyon mula sa lottery. "
+    },
+    "ACCOUNT_SETTINGS": {
+        "ACCOUNT_CHANGES_SAVED": "Na-save na ang inyong mga pagbabago. ",
+        "ACCOUNT_SETTINGS": "Mga Setting ng Account ",
+        "CONTACT_INFORMATION_UPDATED": "Na-update na o nabago ang Impormasyon sa Pagkontak",
+        "CONTACT_INFORMATION_UPDATED_MESSAGE": "Na-update na o nabago ang ilan sa impormasyon tungkol sa pangunahing paraan ng pagkontak, at nang tumugma ito sa inyong account settings. ",
+        "EMAIL_RECONFIRMED_UPDATED": "Na-update na o nabago ang inyong email dito at sa anumang hindi pa nasusumiteng aplikasyon. ",
+        "INFORMATION_CHANGE_NOTICE": "Babaguhin ang inyong impormasyon sa anumang aplikasyon na hindi pa ninyo naisusumite. ",
+        "REMEMBER_YOUR_PASSWORD": "Kung babaguhin ang inyong password, pakitiyak na masusulat ninyo ito, at nang maalala ninyo sa hinaharap. ",
+        "TITLE": "Mga Setting ng Account",
+        "VERIFY_EMAIL": "Paki-tsek ang inyong email inbox at nang matiyak ang pagbabagong ito. "
+    },
+    "ALREADY_SUBMITTED": {
+        "MESSAGE": "Nakapagsumite na kayo ng aplikasyon sa nakalistang pabahay na ito. ",
+        "TITLE": "Magandang balita!"
+    },
+    "B0_AUTOFILL_PREVIEW": {
+        "DESCRIPTION": "Bago pa man kayo magsimula, pupunan na namin ang inyong aplikasyon ng mga sumusunod na detalye, at puwede na lamang kayong gumawa ng mga pagbabago habang sinasagutan ang aplikasyon. ",
+        "START_FROM_SCRATCH": "Mag-reset at magsimula sa umpisa",
+        "START_WITH_AUTOFILL": "Magsimula sa mga detalyeng ito",
+        "TITLE": "Makatipid ng oras sa pamamagitan ng paggamit ng mga detalye mula sa inyong huling aplikasyon. "
+    },
+    "B1_NAME": {
+        "NAME_EDITABLE_VIA": "Puwede ma-edit ang mga field (kahon o patlang na dapat punan) sa pamamagitan ng inyong",
+        "TITLE": "Una, ano ang inyong pangalan? "
+    },
+    "B2A_VERIFY_ADDRESS": {
+        "TITLE": "Nahanap na namin ang sumusunod na address. Pakikumpirma kung tama ito. "
+    },
+    "B2_CONTACT": {
+        "APPLICANT_ADDRESS_DESC": "Kailangan namin ang address kung saan kayo kasalukuyang nakatira. Kung homeless kayo o walang tirahan, pakipasok ang address ng shelter o ang addres na malapit kung saan kayo nakatira. ",
+        "CLAIM_WORK_IN_SF": "Para magamit ito bilang preperensiya sa lottery, kailangan ninyong mag-upload ng dokumentasyong nagbibigay ng suporta, ayon sa mga instruksiyon sa susunod na screen. ",
+        "EMAIL_EDITABLE_VIA": "Puwedeng ma-edit o mabago ang inyong email addres sa pamamagitan ng inyong ",
+        "ONLY_USE_YOUR_EMAIL": "Gagamitin lamang namin ang inyong email address para makontak kayo tungkol sa inyong aplikasyon. ",
+        "PROVIDE_AN_ADDRESS": "Pakibigay ang address kung saan puwede kayong tumanggap ng mga update o bagong impormasyon at materyales tungkol sa inyong aplikasyon. ",
+        "TITLE": "Salamat, {{pangalan}}. Ngayon, kailangan naming malaman kung paano kayo makokontak. ",
+        "WORK_IN_SF_DESC": "Nangangahulugan ito na kasalukuyan kayong nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng inyong mga oras ng pagtatrabaho. "
+    },
+    "B3_ALTERNATE_CONTACT_TYPE": {
+        "GOOD_ALTERNATE_CONTACT": "Ang magandang kahaliling kontak ay ang taong alam kung paano namin kayo makakausap o mapadadalhan ng sulat. ",
+        "TITLE": "May iba pa bang tao na gusto ninyong bigyan ng awtorisasyon para makontak namin sakaling hindi namin kayo makausap o mapadalhan ng sulat? "
+    },
+    "B4A_ALTERNATE_CONTACT_PHONE_ADDRESS": {
+        "CHOOSE_AN_ADDRESS": "Pumili ng address kung saan makatatanggap sila ng mga update at materyales tungkol sa inyong aplikasyon. ",
+        "ONLY_USE_INFO": "Gagamitin lamang namin ang impormasyong ito sa pagkontak sa kanila kung tungkol sa inyong aplikasyon",
+        "TITLE": "Ipagbigay-alam sa amin kung paano namin makakausap o masusulatan ang inyong kahaliling kontak. "
+    },
+    "B4_ALTERNATE_CONTACT_NAME": {
+        "TITLE": "Sino ang inyong kahaliling kontak? "
+    },
+    "C1A_HOUSEHOLD_OVERVIEW": {
+        "TITLE1": "Bago kayo magdagdag ng iba pang tao, tiyaking wala ang pangalan nila sa anumang iba pang aplikasyon para sa nakalistang pabahay na ito. ",
+        "TITLE2": "Kapag nagsama kayo ng tao na nakapag-aplay na, ang lahat ng inyong aplikasyon ay hindi na magiging kuwalipikado. "
+    },
+    "C1_HOUSEHOLD_INTRO": {
+        "TITLE": "Kasunod nito, gusto naming malaman ang tungkol sa iba pang tao na titira kasama ninyo sa unit. "
+    },
+    "C2_HOUSEHOLD_MEMBERS": {
+        "TITLE": "Sabihin sa amin ang impormasyon tungkol sa inyong kabahayan. "
+    },
+    "C3_HOUSEHOLD_MEMBER_FORM": {
+        "MEMBER_ADDRESS_DESC": "Kailangan namin ang address kung saan sila kasalukuyang nakatira. Kung homeless sila o walang tahanan, pakipasok ang address ng kanilang shelter, o ang address na malapit sa tinitirhan nila. ",
+        "P1": "Magkakaroon kayo ng pagkakataon na magdagdag ng iba pang miyembro ng kabahayan sa susunod na screen. ",
+        "TITLE": "Sabihin sa amin ang impormasyon tungkol sa taong ito. ",
+        "WORK_IN_SF_DESC": "Nangangahulugan ito na kasalukuyan silang nagtatrabaho sa San Francisco nang hindi bababa sa 75% ng kanilang mga oras ng trabaho. "
+    },
+    "C4_HOUSEHOLD_PUBLIC_HOUSING": {
+        "P1": "Hindi kasama rito ang may Section 8 voucher (tulong dahil sa mababang kita) o VASH housing choice voucher (tulong sa mga beterano). ",
+        "TITLE_HOUSEHOLD": "Kasalukuyan bang nakatira kayo, o sinuman sa aplikasyong ito, sa pampublikong pabahay o sa HUD project-based housing (may tulong ang HUD batay sa mga espesipikong pabahay)?",
+        "TITLE_YOU": "Kasalukuyan ba kayong nakatira sa pampublikong pabahay o sa HUD project-based housing (may tulong ang HUD batay sa mga espesipikong pabahay)?"
+    },
+    "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "HOW_MUCH_DOES_MEMBER_PAY": "Magkano ang ibinibayad ni {{member}} sa {{address}}?",
+        "HOW_MUCH_DO_MEMBERS_PAY": "Magkano ang ibinibayad nina {{members}} sa {{address}}?",
+        "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "Magkano ang ibinibayad nina {{members}} sa {{address}}?",
+        "HOW_MUCH_DO_YOU_PAY": "Magkano ang ibinibayad Ninyo sa {{address}}?",
+        "TITLE_HOUSEHOLD": "Magkano ang ibinibayad ng inyong kabayahan para sa buwanang upa? ",
+        "TITLE_YOU": "Magkano ang ibinibayad ninyo para sa buwanang upa? "
+    },
+    "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
+        "P1": "May makukuhang mga nakareserbang unit sa building na ito kung may isa o higit pang aplikante ang nakapaglingkod na sa U.S. Military.<br><br>Sakaling mapili ang inyong aplikasyon, maging handa sa pagbibigay ng karagdagang impormasyon. ",
+        "TITLE_HOUSEHOLD": "Beterano ba kayo, o sinuman sa aplikasyong ito, na nakapaglingkod sa U.S. Military? ",
+        "TITLE_YOU": "Beterano ba kayong nakapaglingkod sa U.S. Military? "
+    },
+    "C6B_HOUSEHOLD_RESERVED_UNITS_DISABLED": {
+        "P1": "May makukuhang mga nakareserbang unit sa building na ito kung may isa o higit pang aplikante ang may developmental disability (mga kondisyong bunga ng kapansanang pisikal o kapansanan sa isip).<br><br>Sakaling mapili ang inyong aplikasyon, maging handa sa pagbibigay ng karagdagang impormasyon. ",
+        "READ_MORE": "May makukuhang mga nakareserbang unit kung may isa o higit pang aplikanteng nasa sapat na gulong na nakatutugon sa depinisyon ng developmental disability ayon sa pagbibigay-kahulugan ng HUD Handbook 4350.3, Tsapter 3, Seksiyon 2, Mga Pigura 2-5 at 3-6.<br><br>Ang taong may  developmental disability, ayon sa pagbibigay-depinisyon ng Seksiyon 102(7) ng Developmental Disabilities Assistance o Pagtulong sa mga Kondisyong Bunga ng Kapansanang Pisikal at Kapansanan sa Isip at Bill of Rights Act o Batas ukol sa mga Batayang Karapatan (42 U.S.C. 6001(8)), kung baga, indibidwal na may malala at hindi nalulunasang kapansanan na:<br><br>Bunga ng kapansanan sa isip o kapansanang pisikal o kombinasyon ng mga kapansanan sa isip at katawan; <br><br>Naipapakita bago pa humantong ang indibidwal sa edad na 22<br><br>Malamang na magpatuloy sa loob ng hindi tiyak na panahon <br><br>Humahantong sa malaking limitasyon sa paggampan ng mga gawain sa tatlo o higit pang sumusunod na larangan ng mahahalagang gawain sa buhay:<br><br><ul><li>Pangangalaga sa Sarili</li><li>wikang receptive (kakayahang makinig at maintindihan ang sinasabi) at wikang expressive (pagpapahayag) </li><li>Pagkatuto</li><li>Paggalaw</li><li>Pagbibigay ng Direksiyon sa Sarili</li><li>Kakayahan para sa independiyenteng pamumuhay at pagkakaroon ng kakayahang ekonomiko o sapat na pera para masustentuhan ang sarili</li></ul>Sinasalamin ang pangangailangan ng tao para sa kombinasyon o pagkakasunod-sunod ng espesyal, mula sa iba't ibang disiplina o generic (karaniwang) pangangalaga, paggamot o iba pang serbisyong panghambuhay o pinahaba ang panahon, at indibidwal na nakaplano at may koordinasyon.<br><br>Mabibigyan ng ebidensiya ang nasa itaas sa pamamagitan ng pagpapatunay ng Kapansanan (verification of Disability) ng HUD, kung nakabatay ang pagiging kuwalipikado sa pagkakatanggap sa form para sa May Kapansanan (Disability form) na ipinagkaloob sa panahon ng pinaka-unang interbyu.  ",
+        "TITLE_HOUSEHOLD": "May kapansanang developmental ba kayo o sinuman sa aplikasyong ito?\n",
+        "TITLE_YOU": "Mayroon ba kayong kapansanang developmental? "
+    },
+    "C7_HOUSEHOLD_PRIORITIES": {
+        "P1": "Kapag napili kayo para sa isang unit, makikipagtrabaho sa inyo ang may-ari ng gusali para mabigyan ng akomonidasyon ang inyong pangangailangan sa abot ng kanilang makakaya. Sakaling mapili ang inyong aplikasyon, maging handa sa pagkakaloob ng dokumentasyong nagbibigay ng suporta mula sa inyong doktor. ",
+        "TITLE_HOUSEHOLD": "Mayroon bang kayong pangangailangan, o sinuman sa inyong kabahayan, para sa mga sumusunod na katangian para sa paggamit batay sa ADA (batas sa pagkakaroon ng mga daraanan ng may kapansanan)?",
+        "TITLE_YOU": "Kailangna ba ninyo ng alinman sa mga sumusunod na na katangian para sa paggamit batay sa ADA (batas sa pagkakaroon ng mga daraanan ng may kapansanan)?"
+    },
+    "CHOOSE_ACCOUNT_SETTINGS": {
+        "ALERT_MESSAGE": "Mapapalitan ang lahat ng mga detalye ng pangunahing kontak sa aplikasyon sa"
     },
     "HEADER": {
         "TRANSLATE_BAR_EXPERT_NOTICE": "Ang pahina'ng ito ay isinalin ng katutubong tagasalita.",
@@ -8,6 +128,6 @@
     },
     "T": {
         "APPLICATION": "Aplikasyon",
-        "APPLICATION_DUE": "Aplikasyon dahil"
+        "APPLICATION_DUE": "Huling Araw ng Pagsusumite ng Aplikasyon"
     }
 }
