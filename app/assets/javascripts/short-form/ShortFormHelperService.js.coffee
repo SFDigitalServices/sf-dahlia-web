@@ -61,7 +61,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Gay/Lesbian/Same-Gender Loving', t('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
     ['Questioning/Unsure', t('LABEL.QUESTIONING_UNSURE')]
     ['Straight/Heterosexual', t('LABEL.STRAIGHT_HETEROSEXUAL')]
-    ['Not Listed', t('LABEL.NOT_LISTED')]
+    ['Not listed', t('LABEL.NOT_LISTED')]
   ]
   Service.preference_proof_options_default = [
     ['Telephone bill', t('LABEL.PROOF.TELEPHONE_BILL')],

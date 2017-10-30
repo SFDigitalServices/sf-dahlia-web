@@ -23,6 +23,8 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
   $scope.isEnglish = ->
     $state.params.lang == 'en'
 
+  $scope.feedbackUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
+
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
       $state.includes('dahlia.short-form-application') ||
@@ -31,7 +33,7 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
         return 'center-body'
 
   $scope.focusOnMainContent = ->
-    SharedService.focusOnMainContent()
+    SharedService.focusOn('main-content')
 
   $scope.translateWelcomePath = ->
     translateWelcomeMap =

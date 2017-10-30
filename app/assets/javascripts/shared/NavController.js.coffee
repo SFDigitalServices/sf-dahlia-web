@@ -7,7 +7,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.showNavMobile = false
 
   $scope.signOut = ->
-    $state.go('dahlia.welcome').then ->
+    $state.go('dahlia.sign-in', {signedOut: true}).then ->
       AccountService.signOut()
 
   $scope.homepagePath = ->

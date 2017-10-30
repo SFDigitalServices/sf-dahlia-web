@@ -667,6 +667,29 @@ do ->
           scope.checkForCustomPreferences()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
 
+    describe 'checkForCustomProofPreferences', ->
+      beforeEach ->
+        scope.listing.customProofPreferences = ['pref1', 'pref2']
+
+      describe 'checking custom proof preferences for the first time', ->
+        it 'sends user to custom proof pref page with index 0', ->
+          state.params.prefIdx = NaN
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 0})
+
+      describe 'paging thru custom preferences', ->
+        it 'sends user to custom proof pref page with the subsequent index', ->
+          state.params.prefIdx = 0
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 1})
+
+      describe 'at last page of custom preferences', ->
+        it 'checks if there are no preferences selected', ->
+          state.params.prefIdx = 1
+          scope.checkIfNoPreferencesSelected = jasmine.createSpy()
+          scope.checkForCustomProofPreferences()
+          expect(scope.checkIfNoPreferencesSelected).toHaveBeenCalled()
+
     describe 'claimedCustomPreference', ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
         scope.claimedCustomPreference()
