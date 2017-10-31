@@ -462,7 +462,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
+    Service.loading.units = true
+    Service.error.units = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = false
       if data && data.units
         units = data.units
         Service.listing.Units = units
@@ -471,6 +475,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = true
       return
     )
 

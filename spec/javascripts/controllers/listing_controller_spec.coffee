@@ -59,6 +59,7 @@ do ->
       fakeListingService.listingHasLotteryResults = jasmine.createSpy()
       fakeListingService.allListingUnitsAvailable = jasmine.createSpy()
       fakeListingService.listingHasOnlySROUnits = jasmine.createSpy()
+      fakeListingService.getListingUnits = jasmine.createSpy()
       fakeListingService.getListingAMI = jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
@@ -338,6 +339,11 @@ do ->
       it 'calls ListingService.listingHasOnlySROUnits', ->
         scope.listingHasOnlySROUnits()
         expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
+
+    describe '$scope.getListingUnits', ->
+      it 'calls ListingService.getListingUnits', ->
+        scope.getListingUnits()
+        expect(fakeListingService.getListingUnits).toHaveBeenCalled()
 
     describe '$scope.getListingAMI', ->
       it 'calls ListingService.getListingAMI', ->
