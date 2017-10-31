@@ -22,7 +22,7 @@
                 # don't display alerts in E2E tests
                 return if window.protractor
                 # AMI, lottery_ranking have their own handler
-                return if error.config.url.match(RegExp('listings/ami|lottery_ranking'))
+                return if error.config.url.match(RegExp('listings/ami|lottery_ranking|preferences'))
                 if error.status == 504
                   # if the timeout was encountered when trying to validatate user token,
                   # don't show alert, instead redirect to sign in page

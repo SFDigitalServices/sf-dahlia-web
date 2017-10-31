@@ -568,6 +568,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       descriptor.name
 
   Service.getListingPreferences = ->
+    Service.loading.preferences = true
+    Service.error.preferences = false
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
@@ -578,8 +580,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
         Service._extractCustomPreferences()
+        Service.loading.preferences = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.preferences = false
+      Service.error.preferences = true
     )
 
   Service.hardcodeCustomProofPrefs =

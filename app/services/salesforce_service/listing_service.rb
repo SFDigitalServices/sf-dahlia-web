@@ -57,8 +57,20 @@ module SalesforceService
 
     # get all preferences for a given listing
     def self.preferences(listing_id)
+      # WILL DO: REMOVE THIS AFTER ACCEPTED.
+      [method(:test_sleep), method(:test_fail)].sample.call
       listing_id = URI.encode(listing_id)
       cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
+    end
+
+    # WILL DO: REMOVE THIS AFTER ACCEPTED.
+    def self.test_sleep
+      sleep 2
+    end
+
+    # WILL DO: REMOVE THIS AFTER ACCEPTED.
+    def self.test_fail
+      raise
     end
 
     # get AMI: opts are percent, chartType, year
