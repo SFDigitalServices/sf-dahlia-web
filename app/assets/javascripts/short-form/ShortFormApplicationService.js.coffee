@@ -139,7 +139,7 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    return if _.includes(['choose-draft', 'choose-account-settings', 'welcome-back'], lastPage)
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->

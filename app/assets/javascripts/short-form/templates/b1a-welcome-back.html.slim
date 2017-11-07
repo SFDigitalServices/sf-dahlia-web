@@ -1,0 +1,25 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | {{'B1A_WELCOME_BACK.TITLE' | translate}}
+    p.form-note.margin-bottom translate="B1A_WELCOME_BACK.YOU_ALREADY_HAVE_AN_ACCOUNT"
+
+  alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
+
+  .app-inner.inset.border-bottom
+    ng-form novalidate="" name="form.signIn"
+
+      sign-in-fields
+
+      .form-group
+        p.t-small.c-steel.text-center.padding-top.no-margin
+          input.button.no-margin.primary#sign-in type="button" data-event="gtm-sign-in" value="{{'LABEL.SIGN_IN_TO_CONTINUE' | translate}}" ng-disabled="submitDisabled" ng-click="signIn()"
+
+  .app-inner.inset
+    .button-pager
+      a#confirm_no_account.button.secondary.radius ui-sref="dahlia.short-form-application.contact"
+        | {{'B1A_WELCOME_BACK.CONTINUE_WITHOUT_SIGNING_IN' | translate}}
+
+
+
+// stolen from f1a, the old sign in page at end of application

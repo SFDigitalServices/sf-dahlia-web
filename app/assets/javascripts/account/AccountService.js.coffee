@@ -28,6 +28,7 @@ AccountService = (
   Service.accountSuccess =
     messages: {}
   Service.loginRedirect = null
+  Service.accountExists = false
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -134,6 +135,16 @@ AccountService = (
       else
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
+
+  Service.checkForAccount = (email) ->
+    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
+      Service.accountExists = data.account_exists
+    ).catch( (data, status, headers, config) ->
+      Service.accountExists = false
+    )
+
+  Service.shortFormAccountExists = ->
+    Service.accountExists
 
   Service.signOut = ->
     # reset the user data immediately, then call signOut
@@ -307,6 +318,11 @@ AccountService = (
 
   Service.afterUserTokenValidationTimeout = ->
     Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
+
+  Service.emailAlreadyInUse = (email = '') ->
+    return email
+    # return false if !email
+
 
   Service.DOBValid = ShortFormDataService.DOBValid
 

@@ -3,7 +3,7 @@
     h2.app-card_question
       | {{'B1_NAME.TITLE' | translate}}
 
-  .app-inner.inset
+  .app-inner.inset.border-bottom
     .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
       h3.form-label.caps
         ' {{'LABEL.YOUR_NAME' | translate}}
@@ -43,5 +43,23 @@
       small.error#date_of_birth_error ng-if="applicantDOB_hasError()"
         span ng-if="!primaryApplicantUnder18()" translate="ERROR.DOB"
         span ng-if="primaryApplicantUnder18()" translate="ERROR.DOB_PRIMARY_APPLICANT_AGE"
+
+  .app-inner.inset
+    .form-group.has-option ng-class="{ error: inputInvalid('email'), 'is-locked': loggedIn() }"
+      label.form-label.caps for="applicant_email"
+        ' {{'LABEL.APPLICANT_EMAIL' | translate}}
+        lock-icon ng-if="loggedIn()"
+      p.form-note.margin-bottom
+        | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
+      .form-email
+        input#applicant_email ng-model="applicant.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-pattern="emailRegex" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
+      small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
+      small.error#applicant_email_error ng-if="inputInvalid('email')"
+        | {{'ERROR.EMAIL' | translate}}
+      .form-item.padding-bottom
+        .checkbox
+          input#applicant_no_email name="applicant_no_email" type="checkbox" data-event="gtm-applicant-no-email" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"
+          label for="applicant_no_email"
+            | {{'LABEL.APPLICANT_NO_EMAIL' | translate}}
 
   short-form-save-and-submit

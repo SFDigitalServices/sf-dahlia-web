@@ -118,7 +118,7 @@
       if (fromState.name == 'dahlia.short-form-application.confirmation')
         # clear out remembered state when coming from confirmation
         AccountService.rememberShortFormState(null)
-      if (toState.name == 'dahlia.short-form-application.review-sign-in')
+      if (toState.name == 'dahlia.short-form-application.welcome-back')
         # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
 
