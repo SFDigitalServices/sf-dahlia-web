@@ -12,25 +12,29 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
           | {{formattedAddress()}}
           br
           | {{unitSummary()}}
-        p.feed-item-number ng-if="isSubmitted()"
-          | {{'MY_APPLICATIONS.YOUR_LOTTERY_NUMBER_IS' | translate: lotteryNumber()}}
+        p.feed-item-number(ng-if="::isSubmitted()" translate="MY_APPLICATIONS.YOUR_LOTTERY_NUMBER_IS" translate-value-lottery-number="{{::lotteryNumber()}}" translate-compile)
 
-      .feed-item-action ng-if="isSubmitted()"
+      .feed-item-action ng-if="::isSubmitted()"
         p.feed-item-status
           span.feed-item-label.is-submitted
             ' {{'T.STATUS' | translate}}:
-            | {{'T.SUBMITTED' | translate}}
-        a.button.small ui-sref="dahlia.short-form-review({id: application.id})"
+            span ng-if="::!submittedWithLotteryResults()"
+              | {{'T.SUBMITTED' | translate}}
+            span ng-if="::submittedWithLotteryResults()"
+              | {{'MY_APPLICATIONS.RESULTS_POSTED' | translate}}
+        a.button.small ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::!submittedWithLotteryResults()"
           | {{'LABEL.VIEW_APPLICATION' | translate}}
+        button.button.small.primary ng-if="::submittedWithLotteryResults()"
+          | {{'LISTINGS.VIEW_LOTTERY_RESULTS' | translate}}
 
-      .feed-item-action ng-if="!isSubmitted() && !isPastDue()"
+      .feed-item-action ng-if="::!isSubmitted() && !isPastDue()"
         p.feed-item-status
           ' {{'T.STATUS' | translate}}:
           | {{'T.IN_PROGRESS' | translate}}
         a.button.small.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
           | {{'LABEL.CONTINUE_APPLICATION' | translate}}
 
-      .feed-item-action ng-if="!isSubmitted() && isPastDue()"
+      .feed-item-action ng-if="::!isSubmitted() && isPastDue()"
         p.feed-item-status
           span.feed-item-label.is-past-due
             ' {{'T.STATUS' | translate}}:
@@ -40,7 +44,9 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
       .feed-item-links
         a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
           | {{'LABEL.SEE_LISTING' | translate}}
-        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)"
+        a.feed-item-link.lined ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::submittedWithLotteryResults()"
+          | {{'LABEL.VIEW_APPLICATION' | translate}}
+        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="::!isSubmitted()" ng-click="deleteApplication(application.id)"
           | {{'T.DELETE' | translate}}
       .feed-item-meta
         p.feed-item-date

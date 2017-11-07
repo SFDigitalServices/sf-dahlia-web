@@ -1,7 +1,9 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
-  '$translate', '$window', 'ShortFormApplicationService', 'ListingService',
-  ($translate, $window, ShortFormApplicationService, ListingService) ->
+  '$translate', '$window', '$sce', '$compile',
+  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService',
+  ($translate, $window, $sce, $compile,
+  ShortFormApplicationService, ShortFormNavigationService, ListingService) ->
     replace: true
     scope:
       application: '=application'
@@ -26,7 +28,9 @@ angular.module('dahlia.directives')
 
       scope.deleteApplication = (id) ->
         if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
+          ShortFormNavigationService.isLoading(true)
           ShortFormApplicationService.deleteApplication(id).success ->
+            ShortFormNavigationService.isLoading(false)
             scope.application.deleted = true
 
       scope.formattedAddress = ->
@@ -42,10 +46,19 @@ angular.module('dahlia.directives')
       scope.isSubmitted = ->
         ShortFormApplicationService.applicationWasSubmitted(scope.application)
 
+      scope.submittedWithLotteryResults = ->
+        scope.isSubmitted() && scope.listing.Lottery_Results
+
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
+      scope.alert = (x) -> $window.alert(x)
+
       scope.lotteryNumber = ->
-        { lotteryNumber: scope.application.lotteryNumber }
+        if scope.listing.Lottery_Results
+          html = "<a class='lined' ng-click=\"alert('hola')\" href='#'>##{scope.application.lotteryNumber}</a>"
+          $sce.trustAsHtml(html)
+        else
+          "##{scope.application.lotteryNumber}"
 
 ]
