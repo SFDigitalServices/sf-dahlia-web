@@ -1046,6 +1046,18 @@
             $state.go('dahlia.my-applications')
         ]
     })
+    .state('dahlia.short-form-application.choose-applicant-details', {
+      url: '/choose-applicant-details'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-applicant-details.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    # NOTE: MAY DELETE SOON?
     .state('dahlia.short-form-application.choose-account-settings', {
       url: '/choose-account-settings'
       views:
