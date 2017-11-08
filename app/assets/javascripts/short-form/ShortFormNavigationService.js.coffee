@@ -99,6 +99,7 @@ ShortFormNavigationService = (
     # save + finish workflow
     'choose-draft': {callback: ['chooseDraft']}
     'choose-account-settings': {callback: ['chooseAccountSettings']}
+    'choose-applicant-details': {callback: ['chooseApplicantDetails']}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})

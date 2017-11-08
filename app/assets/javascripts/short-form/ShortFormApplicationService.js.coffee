@@ -199,16 +199,18 @@ ShortFormApplicationService = (
     # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
-    # search through all xxx_household_member items in preferences marked for this member
-    _.each Service.preferences, (v,k) ->
-      if k.indexOf('_household_member') > 0 and v == Service.householdMember.id
-        preference = k.split('_household_member')[0]
-        Service.cancelPreference(preference)
-
+    Service.cancelPreferencesForMember(Service.householdMember.id)
     # persist the changes to Service.householdMembers
     Service.resetHouseholdMember()
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
+
+  Service.cancelPreferencesForMember = (memberId) ->
+    # search through all xxx_household_member items in preferences marked for this member
+    _.each Service.preferences, (value, key) ->
+      if key.indexOf('_household_member') > 0 and value == memberId
+        preference = key.split('_household_member')[0]
+        Service.cancelPreference(preference)
 
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
@@ -628,7 +630,7 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
-  Service._resetCompletedSections = ->
+  Service.resetCompletedSections = ->
     angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
 
   Service.resetMonthlyRentForm = ->
@@ -808,12 +810,11 @@ ShortFormApplicationService = (
     fields = [
       'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
-    userData = _.pick(loggedInUser, fields)
-    original = angular.copy(Service.applicant)
+    accountData = _.pick(loggedInUser, fields)
+    applicant = angular.copy(Service.applicant)
     # merge the data into applicant
-    _.merge Service.applicant, userData
-    changed = !_.isEqual(Service.applicant, original)
-    Service._mapPrimaryApplicantPreferences(original, userData) if changed
+    _.merge Service.applicant, accountData
+    changed = !_.isEqual(Service.applicant, applicant)
     # return T/F if data was changed or not
     return changed
 
@@ -826,13 +827,6 @@ ShortFormApplicationService = (
     applicantData = _.omitBy(_.pick(applicant, fields), _.isNil)
     applicantData.DOB = ShortFormDataService.formatUserDOB(applicant)
     !_.isEqual(userData, applicantData)
-
-  Service._mapPrimaryApplicantPreferences = (original, userData) ->
-    originalFullName = original.firstName + " " + original.lastName
-    _.forEach Service.application.preferences, (value, key) ->
-      if value == originalFullName
-        Service.application.preferences[key] = userData.firstName + " " + userData.lastName
-      return
 
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->
