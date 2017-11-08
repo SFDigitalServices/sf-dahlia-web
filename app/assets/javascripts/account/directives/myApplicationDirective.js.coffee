@@ -12,6 +12,8 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
+      scope.loading = ListingService.loading
+      scope.error = ListingService.error
 
       scope.isDeleted = ->
         scope.application.deleted
@@ -55,7 +57,7 @@ angular.module('dahlia.directives')
       scope.lotteryNumber = ->
         if scope.listing.Lottery_Results
           html = """
-            <button class='button-link lined' ng-click='getLotteryRanking()'>
+            <button class='button-link lined' ng-click='viewLotteryResults()'>
               ##{scope.application.lotteryNumber}
             </button>
           """
@@ -63,14 +65,33 @@ angular.module('dahlia.directives')
         else
           "##{scope.application.lotteryNumber}"
 
-      scope.getLotteryRanking = ->
+      scope.viewLotteryResults = ->
+        # if the search failed, then viewLotteryResults becomes a button to open the PDF instead
+        if ListingService.error.lotteryRank && scope.listing.LotteryResultsURL
+          $window.open(scope.listing.LotteryResultsURL, '_blank')
+          return
+
         ShortFormNavigationService.isLoading(true)
-        # set the "current listing" and "current application" so that everything in ListingController (used by the modal) plays nicely
+        # have to setup our "current" listing and application in the Services for the modal to play nicely
         ListingService.loadListing(scope.listing)
         angular.copy(scope.application, ShortFormApplicationService.application)
         # lookup individual lottery ranking and then open the modal
-        ListingService.getLotteryRanking(scope.application.lotteryNumber).then ->
+        ListingService.getLotteryRanking(scope.application.lotteryNumber).then(->
           ListingService.openLotteryResultsModal()
           ShortFormNavigationService.isLoading(false)
+        ).catch(->
+          ###
+          # NOTE: Even though we have the listing already "loaded" via API AccountController `map_listings_to_applications`
+          # this has one limitation which is that by using ListingService.listings() ("browse" API) we do not get LotteryResultsURL.
+          # So in the event that getLotteryRanking fails and we want to fall back to LotteryResultsURL, we have to call getListing.
+          ###
+          ListingService.loadListing({})
+          # have to restart the loader because the error would have stopped it
+          ShortFormNavigationService.isLoading(true)
+          ListingService.getListing(scope.listing.Id).then ->
+            # alert message: "Oops! Please download lottery results instead..." ??
+            ShortFormNavigationService.isLoading(false)
+            scope.listing = ListingService.listing
+        )
 
 ]

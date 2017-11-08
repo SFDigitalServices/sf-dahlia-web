@@ -140,9 +140,8 @@ ListingController = (
     [listing.imageURL]
 
   # lottery search
-  $scope.clearLotterySearchNumber = ->
+  $scope.clearLotteryRankingInfo = ->
     angular.copy({}, $scope.lotteryRankingInfo)
-    $scope.lotterySearchNumber = ''
 
   $scope.preferenceBucketResults = (prefName) ->
     preferenceBucketResults = _.find($scope.lotteryRankingInfo.lotteryBuckets, { 'preferenceName': prefName })
@@ -167,10 +166,8 @@ ListingController = (
   # retrieve lottery ranking to display in lottery results modal
   $scope.showLotteryRanking = ->
     if $scope.lotterySearchNumber == ''
-      $scope.clearLotterySearchNumber()
+      $scope.clearLotteryRankingInfo()
     else
-      $scope.loading.lotteryRank = true
-      $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
       )
