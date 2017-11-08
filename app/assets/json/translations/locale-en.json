@@ -20,7 +20,7 @@
     },
     "A4_OVERVIEW": {
         "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
-        "P2": "If you are curious about which required docuemnts you may need for the application, please see our resource guide of required documents and claiming preferences.",
+        "P2": "If you are curious about which required documents you may need for the application, please see our resource guide of required documents and claiming preferences.",
         "P3": "You may also start the application now and save it and upload documents later.",
         "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
@@ -216,7 +216,7 @@
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, address where you live in San Francisco and a date within 45 days of your application.",
         "DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK": "Document must show the correct name, address where you work in San Francisco and a date within 45 days of your application.",
-        "INSTRUCTIONS": " Just upload valid proof of where you live or work in San Francisco and get a higher ranking in the lottery.",
+        "INSTRUCTIONS": "Just upload valid proof of where you live or work in San Francisco and get a higher ranking in the lottery.",
         "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
@@ -246,7 +246,7 @@
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
         "RENT_BURDEN_NOTES": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.<br><br>Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
-        "RENT_BURDEN_PREFERENCE_DESC": "  Rent Burdened households are those defined as paying more than 50% of their income for housing.",
+        "RENT_BURDEN_PREFERENCE_DESC": "Rent Burdened households are those defined as paying more than 50% of their income for housing.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"

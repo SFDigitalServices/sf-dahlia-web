@@ -112,7 +112,9 @@
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "¿Ya tiene una cuenta?",
         "CONTINUE_WITH_APPLICATION": "Continuar con la solicitud",
-        "CREATE_AN_ACCOUNT": "Crear una cuenta"
+        "CREATE_AN_ACCOUNT": "Crear una cuenta",
+        "PASSWORD_INSTRUCTIONS": "Debe tener al menos 8 caracteres e incluir al menos una letra y un número.",
+        "PASSWORD_SHORT_INSTRUCTIONS": "Debe tener 8 caracteres"
     },
     "D1_INCOME_VOUCHERS": {
         "P1": "Por ejemplo: Sección 8, Programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH), Human Services Agencies (Agencias de Servicios Humanos, HSA), Housing Opportunities for Persons with AIDS Program (Programa de Oportunidades de Vivienda para Personas con Sida, HOPWA), Catholic Charities (Grupos de Caridad Cristianos), AIDS Foundation (Fundación para el Sida), etc.",
@@ -181,12 +183,14 @@
         }
     },
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
+        "INSTRUCTIONS": "Usted cumple con los requisitos para esta preferencia porque afirmó que un integrante de su grupo familiar vive en una vivienda pública o del proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD).<br><br>Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).<br><br>Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido.",
         "PREFERENCE": {
             "TITLE": "Preferencia por vivienda asistencial"
         }
     },
     "E3B_RENT_BURDEN_PREFERENCE": {
         "FORM_ERROR": "Complete la carga de los documentos o indique que no desea esta preferencia.",
+        "RENT_BURDEN_NOTES": "Usted cumple con los requisitos para esta preferencia porque indicó que su grupo familiar actualmente destina más del 50 % de sus ingresos al pago del alquiler.<br><br>Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido y un comprobante del pago del alquiler.",
         "RENT_BURDEN_PREFERENCE": "Preferencia por pago excesivo de alquiler",
         "RENT_BURDEN_PREFERENCE_DESC": "Para grupos familiares que actualmente destinan más del 50 % de sus ingresos al pago del alquiler.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "¿Necesita cargar otro documento para demostrar el monto total de alquiler que se paga en esta dirección?",
@@ -218,16 +222,17 @@
         "FILE_UPLOAD": "El archivo es demasiado grande o no es un tipo de archivo admitido",
         "FIRST_NAME": "Ingrese el primer nombre",
         "FORM_SUBMISSION": "Deberá resolver algunos errores antes de avanzar.",
+        "GET_ASSISTANCE": "Obtener asistencia",
         "HOUSEHOLD_INCOME_TOO_HIGH": "Sus ingresos familiares son muy altos.",
         "HOUSEHOLD_INCOME_TOO_LOW": "Sus ingresos familiares son muy bajos.",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "Indique su parentesco con el integrante del grupo familiar",
         "HOUSEHOLD_TOO_BIG": "El tamaño de su grupo familiar es demasiado grande.",
         "HOUSEHOLD_TOO_SMALL": "El tamaño de su grupo familiar es demasiado pequeño.",
         "INCOME": "Ingrese el monto de ingresos",
-        "INCOME_TIMEFRAME": "Ingrese el período de ingresos",
         "LAST_NAME": "Ingrese el apellido",
         "NOT_ELIGIBLE": "Lamentablemente, usted parece no reunir los requisitos necesarios para este anuncio de vivienda.",
         "NOT_ELIGIBLE_DESCRIPTION": "Si cree que puede haber cometido un error, revise y corrija la información. Tenga en cuenta que si ingresa información falsa, su solicitud será descalificada.<br><br>Si la información que ingresó es correcta, lo invitamos a volver a visitar el sitio en el futuro para saber si hay más propiedades disponibles.",
+        "PASSWORD": "Ingrese el apellido",
         "PHONE_NUMBER": "Ingrese un número de teléfono",
         "PHONE_NUMBER_TYPE": "Indique el tipo de número de teléfono",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Proporcione sus respuestas en inglés",
@@ -254,6 +259,7 @@
         "TITLE": "¡Ya casi está por finalizar!"
     },
     "F1_REVIEW_SUMMARY": {
+        "NOTE": "Esta es su última oportunidad de editar antes de enviar.",
         "TITLE": "Dedique unos momentos a revisar su información antes de enviar su solicitud."
     },
     "F2_REVIEW_TERMS": {
@@ -300,6 +306,7 @@
         "APPLICANT_EMAIL": "Su dirección de correo electrónico:",
         "APPLICANT_ETHNICITY": "¿Cómo describiría su origen étnico?",
         "APPLICANT_GENDER": "¿Cuál es su sexo?",
+        "APPLICANT_GENDER_SUBTITLE": "Seleccione la opción que describa mejor su identidad de género actual.",
         "APPLICANT_INCOME_TOTAL": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
         "APPLICANT_NO_EMAIL": "No tengo dirección de correo electrónico",
         "APPLICANT_NO_PHONE": "No tengo teléfono",
@@ -310,6 +317,7 @@
         "APPLICANT_SECOND_PHONE": "Su número de teléfono secundario",
         "APPLICANT_SEPARATE_ADDRESS": "Envíen mi correspondencia a una dirección diferente",
         "APPLICANT_SEXUAL_ORIENTATION": "¿Cómo describiría su orientación sexual o identidad sexual?",
+        "APPLICANT_SEX_AT_BIRTH": "¿Cuál era su género al nacer?",
         "APPLICATION_CONTACT_DETAILS": "Detalles de contacto de la solicitud",
         "ASIAN": "Asiático",
         "ASIAN_WHITE": "Asiático y blanco",
@@ -329,6 +337,7 @@
         "CONTINUE_APPLICATION": "Continuar con la solicitud",
         "COPY_OF_LEASE": "Copia del contrato de alquiler",
         "COUSIN": "Primo",
+        "CREATE_ACCOUNT": "Crear cuenta",
         "DOB": "Fecha de nacimiento",
         "DOB_DAY": "Día",
         "DOB_MONTH": "Mes",
@@ -344,8 +353,12 @@
         "FIND_OUT_MORE_ABOUT_PREFERENCES": "Más información sobre esta preferencia",
         "FIRST_NAME": "Primer nombre",
         "FRIEND": "Amigo(a)",
+        "GAY_LESBIAN_SAME_GENDER_LOVING": "Gay/lesbiana/amor del mismo género",
+        "GENDERQUEER_NON_BINARY": "Género variante/Género binario",
+        "GOOD_NEWS_FOR_HIGHER_RANKING": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
         "GRANDPARENT": "Abuelo(a)",
         "GREAT_GRANDPARENT": "Bisabuelo(a)",
+        "HEARING_IMPAIRMENTS": "Para personas con impedimentos auditivos",
         "HISPANIC_LATINO": "Hispano/Latino",
         "HOUSEHOLD_DETAILS": "Detalles del grupo familiar",
         "HOUSEHOLD_MEMBER": "Integrante del grupo familiar",
@@ -386,6 +399,7 @@
         "OTHER_MULTIRACIAL": "Otro/Multirracial",
         "OTHER_PEOPLE": "Otras personas vivirán conmigo",
         "PARENT": "Padre/madre",
+        "PASSWORD": "Contraseña",
         "PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES": "Personas con discapacidades del desarrollo",
         "PER_MONTH": "por mes",
         "PER_YEAR": "por año",
@@ -420,12 +434,14 @@
             "WATER_BILL": "Factura del servicio de agua"
         },
         "PROOF_OF_RENT": "Comprobante de alquiler",
-        "QUESTIONING_UNSURE": "En duda/No lo sabe aún",
+        "QUESTIONING_UNSURE": "En duda/sin determinar",
         "RECENT_APPLICATION": "Solicitud reciente",
         "REGISTERED_DOMESTIC_PARTNER": "Pareja doméstica registrada",
         "RENT_AT_ADDRESS": "Alquila en {{address}}",
+        "RE_ENTER_PASSWORD": "Vuelve a ingresar su contraseña para confirmar",
         "SELECT_ONE": "Seleccione uno",
         "SIBLING": "Hermano(a)",
+        "SIGN_IN": "Inicie sesión",
         "SIGN_IN_TO_CONTINUE": "Inicie sesión para continuar",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Trabajador social o asesor de vivienda",
         "SPOUSE": "Cónyuge",
@@ -433,8 +449,8 @@
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "Tendrá la oportunidad de solicitar otras preferencias.",
         "STRAIGHT_HETEROSEXUAL": "Heterosexual",
         "SUGGESTED_ADDRESS": "Dirección sugerida",
-        "TRANS_FEMALE": "Transgénero de sexo femenino",
-        "TRANS_MALE": "Transgénero de sexo masculino",
+        "TRANS_FEMALE": "Transgénero femenino",
+        "TRANS_MALE": "Transgénero masculino",
         "UNCLE": "Tío",
         "UPDATE": "Actualizar",
         "UPLOADED": "Cargado",
@@ -450,6 +466,7 @@
         "VETERANS_IN_HOUSEHOLD": "Veteranos de guerra en el grupo familiar",
         "VISION_IMPAIRMENTS": "Para personas con impedimentos visuales",
         "VOUCHERS_AND_SUBSIDIES": "Vales para la vivienda o subsidios para la renta",
+        "WHAT_IS_YOUR_RELATIONSHIP": "¿Cuál es su relación?",
         "WHAT_TYPE_OF_NUMBER": "¿Qué tipo de número es este?",
         "WHITE": "Blanco",
         "WORK_IN_SF": "¿Trabaja usted en San Francisco?",
@@ -472,8 +489,14 @@
         "TITLE": "Mis solicitudes",
         "YOUR_LOTTERY_NUMBER_IS": "Su número de sorteo es el #{{lotteryNumber}}"
     },
+    "NAV": {
+        "GET_ASSISTANCE": "Obtener asistencia",
+        "SIGN_IN": "Inicie sesión"
+    },
     "PAGE_TITLE": {
-        "MY_APPLICATIONS": "Mis solicitudes"
+        "GET_ASSISTANCE": "Obtener asistencia",
+        "MY_APPLICATIONS": "Mis solicitudes",
+        "SIGN_IN": "Inicie sesión"
     },
     "PRIVACY_POLICY": {
         "QUESTIONS_P1": "Si tiene preguntas sobre esta Política de privacidad, puede comunicarse con nosotros llamando al {{telLink}} o enviando un mensaje a {{emailLink}}.",
@@ -500,6 +523,7 @@
     },
     "SIGN_IN": {
         "DONT_HAVE_ACCOUNT": "¿No tiene una cuenta?",
+        "FORGOT_PASSWORD": "¿Olvidó su contraseña?",
         "SIGNED_IN_SUCCESSFULLY": "Ha iniciado sesión satisfactoriamente.",
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
     },
@@ -528,6 +552,7 @@
         "OR": "o",
         "PER_MONTH": "por mes",
         "PER_YEAR": "por año",
+        "SAVE_AND_COME_BACK_LATER": "Guardar y regresar luego",
         "SAVE_AND_FINISH_LATER": "Guardar y finalizar en otro momento",
         "SESSION_INACTIVITY": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda.",
         "SESSION_INACTIVITY_CONFIRMATION": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta solicitud en una cuenta que le permite realizar un seguimiento del estado de su solicitud en cualquier momento.",

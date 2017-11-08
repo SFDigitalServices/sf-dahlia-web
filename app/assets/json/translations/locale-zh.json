@@ -102,7 +102,7 @@
         "TITLE_YOU": "您本人有發育性殘障的情況嗎？"
     },
     "C7_HOUSEHOLD_PRIORITIES": {
-        "P1": "若您獲得入住單位資格，業主將會盡最大的努力來配合您的需求。",
+        "P1": "若您獲得入住單位資格，業主將會盡最大的努力來配合您的需求。如果您的申請獲選，請將您醫師開立的佐證文件準備好。",
         "TITLE_HOUSEHOLD": "您本人或本申請中的任何一位需要下列任何 ADA 無障礙設施嗎？",
         "TITLE_YOU": "您本人需要下列任何 ADA 無障礙設施嗎？"
     },
@@ -112,7 +112,8 @@
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "已有帳戶？",
         "CONTINUE_WITH_APPLICATION": "繼續申請作業",
-        "CREATE_AN_ACCOUNT": "建立帳戶"
+        "CREATE_AN_ACCOUNT": "建立帳戶",
+        "PASSWORD_SHORT_INSTRUCTIONS": "必須有 8 個字元"
     },
     "D1_INCOME_VOUCHERS": {
         "P1": "例如：第 8 節、VASH、HSA、HOPWA、天主教慈善機構、AIDS 基金會等等。",
@@ -209,6 +210,7 @@
     },
     "ERROR": {
         "ADDRESS": "請輸入地址",
+        "ADDRESS_VALIDATION_NOT_FOUND": "找不到此地址。請檢查輸入的城市、街道和住家號碼是否正確。不接受郵政信箱。",
         "ALTERNATE_CONTACT": "請選取備用聯絡人",
         "CITY": "請輸入城市",
         "COMPLETE_UPLOADING_DOCUMENTS": "請完成上方的文件上傳作業。",
@@ -220,16 +222,17 @@
         "FILE_UPLOAD": "檔案太大或是不受支援的檔案類型",
         "FIRST_NAME": "請輸入名字",
         "FORM_SUBMISSION": "您需要先行排除所有錯誤才能繼續作業。",
+        "GET_ASSISTANCE": "取得協助",
         "HOUSEHOLD_INCOME_TOO_HIGH": "您的家庭收入過高。",
         "HOUSEHOLD_INCOME_TOO_LOW": "您的家庭收入過低。",
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "請選取您與該家庭成員的關係",
         "HOUSEHOLD_TOO_BIG": "您的家庭人口數太多。",
         "HOUSEHOLD_TOO_SMALL": "您的家庭人口數太少。",
         "INCOME": "請輸入收入金額",
-        "INCOME_TIMEFRAME": "請輸入收入時間範圍",
         "LAST_NAME": "請輸入姓氏",
         "NOT_ELIGIBLE": "很遺憾，您似乎不符合此清單的申請資格。",
         "NOT_ELIGIBLE_DESCRIPTION": "若您相信您可能有地方弄錯，請加以修正。請注意，若您在申請上偽造任何資訊，將導致您喪失資格。<br><br>若您所輸入的資訊正確，建議您可在日後有更多可入住的單位時，再回來看看。",
+        "PASSWORD": "請輸入有效的密碼",
         "PHONE_NUMBER": "請輸入電話號碼",
         "PHONE_NUMBER_TYPE": "請選擇電話號碼類型",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "請用英文作答",
@@ -256,6 +259,7 @@
         "TITLE": "就快完成了！"
     },
     "F1_REVIEW_SUMMARY": {
+        "NOTE": "提交之前，這是您最後的編輯機會。",
         "TITLE": "在提交申請前，花一點時間審閱您所提供的資訊。"
     },
     "F2_REVIEW_TERMS": {
@@ -302,6 +306,7 @@
         "APPLICANT_EMAIL": "您的電子郵件地址",
         "APPLICANT_ETHNICITY": "哪種說法最適合描述您的種族？",
         "APPLICANT_GENDER": "您的性別是？",
+        "APPLICANT_GENDER_SUBTITLE": "選擇一個最能描述您目前性別認同的選項。",
         "APPLICANT_INCOME_TOTAL": "您家庭的稅前收入總額是多少？",
         "APPLICANT_NO_EMAIL": "我沒有電子郵件地址",
         "APPLICANT_NO_PHONE": "我沒有市話號碼",
@@ -312,6 +317,7 @@
         "APPLICANT_SECOND_PHONE": "您的第二個電話號碼",
         "APPLICANT_SEPARATE_ADDRESS": "將我的郵件寄送到另一個地址",
         "APPLICANT_SEXUAL_ORIENTATION": "您如何描述自己的性傾向或性別認同？",
+        "APPLICANT_SEX_AT_BIRTH": "您出生時的性別為何？",
         "APPLICATION_CONTACT_DETAILS": "申請聯絡人詳細資訊",
         "ASIAN": "亞洲人",
         "ASIAN_WHITE": "亞洲人與白人",
@@ -346,8 +352,12 @@
         "FIND_OUT_MORE_ABOUT_PREFERENCES": "瞭解更多關於此優先權利的資訊",
         "FIRST_NAME": "名字",
         "FRIEND": "朋友",
+        "GAY_LESBIAN_SAME_GENDER_LOVING": "男同性戀/女同性戀/同性戀愛",
+        "GENDERQUEER_NON_BINARY": "性別酷兒/非二元性別",
+        "GOOD_NEWS_FOR_HIGHER_RANKING": "好消息！您符合較高抽籤順位的資格。",
         "GRANDPARENT": "(外) 祖父母",
         "GREAT_GRANDPARENT": "曾 (外) 祖父母",
+        "HEARING_IMPAIRMENTS": "針對聽力障礙",
         "HISPANIC_LATINO": "西班牙裔/拉美裔",
         "HOUSEHOLD_DETAILS": "家庭詳細資料",
         "HOUSEHOLD_MEMBER": "家庭成員",
@@ -388,6 +398,7 @@
         "OTHER_MULTIRACIAL": "其他/多族裔",
         "OTHER_PEOPLE": "會有其他人與我同住",
         "PARENT": "父母",
+        "PASSWORD": "密碼",
         "PEOPLE_WITH_DEVELOPMENTAL_DISABILITIES": "發育性殘障人士",
         "PER_MONTH": "每月",
         "PER_YEAR": "每年",
@@ -452,6 +463,7 @@
         "VETERANS_IN_HOUSEHOLD": "家庭中的退伍軍人",
         "VISION_IMPAIRMENTS": "針對視力障礙",
         "VOUCHERS_AND_SUBSIDIES": "住房優惠券或房租補貼",
+        "WHAT_IS_YOUR_RELATIONSHIP": "是何關係？",
         "WHAT_TYPE_OF_NUMBER": "這是哪種類型的號碼？",
         "WHITE": "白人",
         "WORK_IN_SF": "您在舊金山工作嗎？",
@@ -474,7 +486,11 @@
         "TITLE": "我的申請",
         "YOUR_LOTTERY_NUMBER_IS": "您的籤號是 #{{lotteryNumber}}"
     },
+    "NAV": {
+        "GET_ASSISTANCE": "取得協助"
+    },
     "PAGE_TITLE": {
+        "GET_ASSISTANCE": "取得協助",
         "MY_APPLICATIONS": "我的申請"
     },
     "PRIVACY_POLICY": {
@@ -502,6 +518,7 @@
     },
     "SIGN_IN": {
         "DONT_HAVE_ACCOUNT": "沒有帳戶？",
+        "FORGOT_PASSWORD": "忘記密碼？",
         "SIGNED_IN_SUCCESSFULLY": "您已成功登入。",
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "您已成功登入，而且您的詳細聯絡資訊已經更新。"
     },
@@ -530,6 +547,7 @@
         "OR": "或",
         "PER_MONTH": "每月",
         "PER_YEAR": "每年",
+        "SAVE_AND_COME_BACK_LATER": "儲存，並稍後返回",
         "SAVE_AND_FINISH_LATER": "儲存並稍後完成",
         "SESSION_INACTIVITY": "由於閒置過久，您的工作階段將於一分鐘後過期。若選擇不回應，您為本清單輸入至申請內的所有資訊將會遺失。",
         "SESSION_INACTIVITY_CONFIRMATION": "由於閒置過久，您的工作階段將於一分鐘後過期。若選擇不回應，您將會失去儲存本申請至帳戶的權益，帳戶可讓您隨時追蹤申請的目前狀態。",
