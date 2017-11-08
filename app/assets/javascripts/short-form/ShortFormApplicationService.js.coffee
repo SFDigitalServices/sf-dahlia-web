@@ -60,7 +60,7 @@ ShortFormApplicationService = (
       Preferences: {}
       Review: {}
     # for storing last page of your draft, to return to. default to first page
-    lastPage: 'dahlia.short-form-application.name'
+    lastPage: 'name'
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -139,7 +139,7 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    return if _.includes(['choose-draft', 'choose-applicant-details'], lastPage)
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -218,7 +218,6 @@ ShortFormApplicationService = (
         # copy applicant's preferenceAddressMatch to householdMember
         member.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     )
-
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
