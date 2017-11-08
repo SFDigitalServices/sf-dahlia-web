@@ -694,7 +694,8 @@
         "RESULTS_WILL_BE_POSTED_ON": "Complete lottery results will be posted in pdf format on {{date}}",
         "UNSORTED_RESULTS_NOTE": "This PDF contains the unsorted lottery results from the housing lottery held on {{date}}.",
         "UP_TO_X_UNITS_AVAILABLE": "Up to {{units}} units",
-        "VIEW_PREFERENCE_LIST": "View Preference List"
+        "VIEW_PREFERENCE_LIST": "View Preference List",
+        "YOUR_LOTTERY_NUMBER": "Your Lottery Number"
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",

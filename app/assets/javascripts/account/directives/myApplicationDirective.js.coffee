@@ -52,13 +52,25 @@ angular.module('dahlia.directives')
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
-      scope.alert = (x) -> $window.alert(x)
-
       scope.lotteryNumber = ->
         if scope.listing.Lottery_Results
-          html = "<a class='lined' ng-click=\"alert('hola')\" href='#'>##{scope.application.lotteryNumber}</a>"
+          html = """
+            <button class='button-link lined' ng-click='getLotteryRanking()'>
+              ##{scope.application.lotteryNumber}
+            </button>
+          """
           $sce.trustAsHtml(html)
         else
           "##{scope.application.lotteryNumber}"
+
+      scope.getLotteryRanking = ->
+        ShortFormNavigationService.isLoading(true)
+        # set the "current listing" and "current application" so that everything in ListingController (used by the modal) plays nicely
+        ListingService.loadListing(scope.listing)
+        angular.copy(scope.application, ShortFormApplicationService.application)
+        # lookup individual lottery ranking and then open the modal
+        ListingService.getLotteryRanking(scope.application.lotteryNumber).then ->
+          ListingService.openLotteryResultsModal()
+          ShortFormNavigationService.isLoading(false)
 
 ]

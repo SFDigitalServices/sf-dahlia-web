@@ -10,7 +10,7 @@
         | {{listing.Lottery_Summary}}
 
     .modal-inner.bg-dust
-      .icon-input.row.collapse
+      .icon-input.row.collapse ng-if="::!viewingMyApplications()"
         .large-12.columns
           form.row.collapse ng-submit="showLotteryRanking()"
             .small-10.columns
@@ -23,11 +23,17 @@
                   svg
                     use xlink:href="#i-right"
 
+      .text-center.padding--half ng-if="::viewingMyApplications()"
+        h2.t-caps.t-small.t-alt-sans.t-bold.margin-bottom--half
+          | {{'LOTTERY.YOUR_LOTTERY_NUMBER' | translate}}
+        h2.t-caps.margin-bottom--half
+          | {{'#' + application.lotteryNumber}}
+
     // Lottery Results Buckets
-    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingSubmitted"
+    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingInfo.lotteryBuckets"
 
     // Lottery Results Ranking
-    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRankingSubmitted"
+    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRankingInfo.lotteryBuckets"
 
     // Lottery Footer
     ng-include src="'listings/templates/listing/_lottery_modal_footer.html'"

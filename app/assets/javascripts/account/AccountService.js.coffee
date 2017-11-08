@@ -28,6 +28,7 @@ AccountService = (
   Service.accountSuccess =
     messages: {}
   Service.loginRedirect = null
+  Service.modalInstance = null
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -140,6 +141,9 @@ AccountService = (
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetUserData()
     $auth.signOut()
+    # close any open modalInstance, if it exists
+    # e.g. "Lottery Results" that may have been opened while you were on My Applications
+    Service.modalInstance.close() if Service.modalInstance && Service.modalInstance.close
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
@@ -205,7 +209,7 @@ AccountService = (
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
+    Service.modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirm_email_modal.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
@@ -215,14 +219,14 @@ AccountService = (
     Service.createdAccount.confirmed = confirmed
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
+    Service.modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
     })
 
   Service.openInfoChangedModal = () ->
-    modalInstance = $modal.open({
+    Service.modalInstance = $modal.open({
       templateUrl: 'account/templates/partials/_info_changed_modal.html',
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'
@@ -234,7 +238,7 @@ AccountService = (
     templateUrl = 'account/templates/partials/_already_submitted.html'
     if doubleSubmit
       templateUrl = 'account/templates/partials/_double_submitted.html'
-    modalInstance = $modal.open({
+    Service.modalInstance = $modal.open({
       templateUrl: templateUrl,
       controller: 'ModalInstanceController',
       windowClass: 'modal-large'

@@ -39,7 +39,6 @@ ListingController = (
   $scope.whatHappens = false
   # for searching lottery number
   $scope.lotterySearchNumber = ''
-  $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
   $scope.error = ListingService.error
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
@@ -142,7 +141,7 @@ ListingController = (
 
   # lottery search
   $scope.clearLotterySearchNumber = ->
-    $scope.lotteryRankingSubmitted = false
+    angular.copy({}, $scope.lotteryRankingInfo)
     $scope.lotterySearchNumber = ''
 
   $scope.preferenceBucketResults = (prefName) ->
@@ -165,17 +164,20 @@ ListingController = (
     # true if there are any lotteryBuckets
     _.some($scope.lotteryRankingInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
-  # Temp function to display ranking markup
+  # retrieve lottery ranking to display in lottery results modal
   $scope.showLotteryRanking = ->
     if $scope.lotterySearchNumber == ''
-      $scope.lotteryRankingSubmitted = false
+      $scope.clearLotterySearchNumber()
     else
       $scope.loading.lotteryRank = true
       $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
-        $scope.lotteryRankingSubmitted = true
       )
+
+  # used within lottery modal to determine some template variations
+  $scope.viewingMyApplications = ->
+    $state.current.name == 'dahlia.my-applications'
 
   $scope.submittedApplication = ->
     $scope.application &&
