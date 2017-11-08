@@ -13,44 +13,56 @@
         / this alert box displays "You'll need to resolve..." if there are form errors
         alert-box short-form="true" custom-sub-message="'CHOOSE_APPLICANT_DETAILS.ALERT_MESSAGE' | translate" ng-if="inputInvalid('chooseApplicantDetails')"
 
-        / this alert box displays the "choose draft" warning
-        alert-box short-form="true" custom-message="'CHOOSE_APPLICANT_DETAILS.ALERT_TITLE' | translate" custom-sub-message="'CHOOSE_APPLICANT_DETAILS.ALERT_MESSAGE' | translate"  ng-if="!inputInvalid('chooseApplicantDetails')"
-
         .dash-card-inner.inset
           .form-group.margin-bottom--2x ng-class="{ error: inputInvalid('chooseApplicantDetails')}"
             h3.form-label.caps
               | {{'CHOOSE_APPLICANT_DETAILS.YOUR_OPTIONS' | translate}}:
             p.form-note.margin-bottom
               | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
+
             .form-item.margin-bottom--2x
               .radio-block
                 input#choose-applicant-details(name="chooseApplicantDetails" type="radio" value="overwriteWithAccountInfo"  ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
                 label.radio-block_label for="choose-applicant-details"
-                  p SOME TEXT ON OLD AND NEW DATA
-                  p.form-label
-                    | {{'LABEL.CHANGE_APPLICATION_DETAILS' | translate}}:
-                  p.margin-bottom-none.t-base
-                    | {{applicantFullName(applicant)}}
-                    br
-                    ' {{'LABEL.DOB' | translate}}:
-                    | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
-                    br
-                    ' {{'LABEL.EMAIL_ADDRESS' | translate}}:
-                    | {{applicant.email}}
+                  p.form-label.caps
+                    | {{'LABEL.CHANGE_APPLICATION_DETAILS' | translate}}
+                  div.radio-block_note.margin-bottom-none
+                    p.c-deep
+                      | {{'CHOOSE_APPLICANT_DETAILS.SELECT_CHANGE_NOTE' | translate}}
+
+                    p.t-bold
+                      | {{loggedInUser.firstName}} {{loggedInUser.lastName}}
+                      br
+                      ' {{'LABEL.DOB' | translate}}:
+                      | {{loggedInUser.dob_month}}/{{loggedInUser.dob_day}}/{{loggedInUser.dob_year}}
+
+                    p
+                      span.t-italic
+                        | will replace:
+                      br
+                      | {{applicantFullName(applicant)}}
+                      span ng-if="applicant.dob_month && applicant.dob_day && applicant.dob_year"
+                        br
+                        ' {{'LABEL.DOB' | translate}}:
+                        | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
 
             .form-item
               .radio-block
                 input#create-account(name="chooseApplicantDetails" type="radio" value="createAccount" ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
                 label.radio-block_label for="create-account"
-                  p.form-label
-                    | CREATE A NEW ACCOUNT
+                  p.form-label.caps
+                    | {{'CHOOSE_APPLICANT_DETAILS.CREATE_NEW_ACCOUNT' | translate}}
+                  span.radio-block_note
+                    | {{'CHOOSE_APPLICANT_DETAILS.CREATE_ACCOUNT_NOTE' | translate}}
 
             .form-item
               .radio-block
                 input#continue-as-guest(name="chooseApplicantDetails" type="radio" value="continueAsGuest" ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
                 label.radio-block_label for="continue-as-guest"
-                  p.form-label
-                    | CONTINUE WITHOUT ACCOUNT
+                  p.form-label.caps
+                    | {{'CHOOSE_APPLICANT_DETAILS.CONTINUE_ANON_NOTE' | translate}}
+                  span.radio-block_note
+                    | {{'CHOOSE_APPLICANT_DETAILS.CONTINUE_ANON_NOTE' | translate}}
 
           .form-group
             p.t-small.c-steel.text-center.padding-top

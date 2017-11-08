@@ -135,7 +135,7 @@ AccountService = (
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
 
-  Service.signOut = (opts) ->
+  Service.signOut = (opts = {}) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetUserData() unless opts.preserveAppData
