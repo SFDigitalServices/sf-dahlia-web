@@ -88,6 +88,9 @@ Feature: Short Form Application
       When I select my original application and submit
       Then I should land on the My Applications page
 
+      # replicate scenario for overwriting account settings
+            # - test that you reach the new page
+
     Scenario: Logging into account (created in earlier scenario), continuing saved application
       Given I go to the Sign In page
       And I sign in
