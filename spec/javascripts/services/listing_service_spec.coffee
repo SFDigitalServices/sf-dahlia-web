@@ -344,8 +344,10 @@ do ->
       it 'assigns Service.lotteryRankingInfo with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00042084')
+        ranking = angular.copy(fakeLotteryRanking)
+        ranking.submitted = true
         httpBackend.flush()
-        expect(ListingService.lotteryRankingInfo).toEqual fakeLotteryRanking
+        expect(ListingService.lotteryRankingInfo).toEqual ranking
 
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->

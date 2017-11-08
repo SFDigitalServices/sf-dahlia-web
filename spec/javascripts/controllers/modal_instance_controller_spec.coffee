@@ -5,6 +5,8 @@ do ->
     scope = undefined
     state = undefined
     fakeModalInstance = undefined
+    fakeAccountService =
+      modalInstance: {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       return
@@ -23,6 +25,7 @@ do ->
         $scope: scope
         $state: state
         $modalInstance: fakeModalInstance
+        AccountService: fakeAccountService
     )
 
     describe '$scope.closeModal', ->
