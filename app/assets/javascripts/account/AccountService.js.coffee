@@ -135,10 +135,10 @@ AccountService = (
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
 
-  Service.signOut = ->
+  Service.signOut = (opts) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetUserData()
+    ShortFormApplicationService.resetUserData() unless opts.preserveAppData
     $auth.signOut()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
