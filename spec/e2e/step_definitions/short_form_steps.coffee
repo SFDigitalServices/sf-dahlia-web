@@ -496,6 +496,9 @@ module.exports = ->
     element(By.id('choose_draft_original')).click().then ->
       submitPage()
 
+  @When 'I select my recent application and submit', ->
+    element(By.id('choose_draft_recent')).click().then ->
+      submitPage()
 
   ########################
   # --- Expectations --- #
@@ -584,6 +587,11 @@ module.exports = ->
 
   @Then 'I should be on the Choose Draft page', ->
     expectAlertBox(@, 'Please choose which version of the application you want to use.')
+
+  @Then 'I should be on the Choose Applicant Details page', ->
+    text = "The primary contact details on your new application don't match your current account settings. What would you like to do?"
+    el = element(By.cssContainingText('h1',  text))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   @Then 'I should land on the My Applications page', ->
     el = element(By.cssContainingText('h1', 'My Applications'))

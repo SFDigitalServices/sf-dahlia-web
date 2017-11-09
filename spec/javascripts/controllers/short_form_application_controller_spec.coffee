@@ -92,17 +92,21 @@ do ->
       cancelPreference: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
       resetUserData: ->
+      hasDifferentInfo: ->
+      importUserData: jasmine.createSpy()
+      cancelPreferencesForMember: jasmine.createSpy()
+      resetCompletedSections: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
       fakeIsLoading: -> false
       fakeSubmitOptionsForCurrentPage: -> {}
-    fakeAccountService = {}
     fakeShortFormNavigationService = undefined
     fakeShortFormHelperService =
       fileAttachmentsForRentBurden: jasmine.createSpy()
     fakeAccountService =
-      loggedIn: () ->
+      signOut: ->
+      loggedIn: ->
     fakeAddressValidationService =
       validationError: jasmine.createSpy()
     fakeFileUploadService =
@@ -140,6 +144,7 @@ do ->
 
       deferred = $q.defer()
       deferred.resolve('resolveData')
+      spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
@@ -672,3 +677,50 @@ do ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
         scope.claimedCustomPreference()
         expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
+
+    describe 'chooseDraft', ->
+      describe 'user chooses recent application and has different account info', ->
+        it 'sends user to choose application details', ->
+          scope.application = {test: 'test'}
+          scope.chosenApplicationToKeep = 'recent'
+          fakeAccountService.loggedInUser = {firstName: 'Test', lastName: 'User'}
+          spyOn(fakeShortFormApplicationService, 'hasDifferentInfo').and.returnValue(true)
+          scope.chooseDraft()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
+
+    describe 'chooseApplicantDetails', ->
+      describe 'user chooses to create account', ->
+        it 'signs out user and sends them to create account page', ->
+          scope.chosenAccountOption = 'createAccount'
+          scope.chooseApplicantDetails()
+          expect(fakeAccountService.signOut).toHaveBeenCalled()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
+
+      describe 'user chooses to continue as guest', ->
+        it 'signs out user and sends them to the last page of the app', ->
+          scope.application.lastPage = 'name'
+          scope.chosenAccountOption = 'continueAsGuest'
+          scope.chooseApplicantDetails()
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({preserveAppData: true})
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+      describe 'user chooses to overwrite account info', ->
+        beforeEach ->
+          fakeAccountService.loggedInUser = {test: 'test'}
+          scope.applicant.id = 1
+          scope.chosenAccountOption = 'overwriteWithAccountInfo'
+          scope.chooseApplicantDetails()
+
+        it 'calls function to import user data', ->
+          expect(fakeShortFormApplicationService.importUserData).toHaveBeenCalledWith({test: 'test'})
+
+        it 'calls function to cancel preferences by the member', ->
+          expect(fakeShortFormApplicationService.cancelPreferencesForMember).toHaveBeenCalledWith(1)
+
+        it 'calls function to reset completed sections', ->
+          expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
+
+        it 'sends user to name section of the short form', ->
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+

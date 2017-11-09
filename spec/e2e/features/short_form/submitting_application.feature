@@ -88,8 +88,16 @@ Feature: Short Form Application
       When I select my original application and submit
       Then I should land on the My Applications page
 
-      # replicate scenario for overwriting account settings
-            # - test that you reach the new page
+    Scenario: Saving anonymous draft with different account details
+      Given I have a confirmed account
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer"
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in
+      Then I should be on the Choose Draft page
+      When I select my recent application and submit
+      Then I should be on the Choose Applicant Details page
 
     Scenario: Logging into account (created in earlier scenario), continuing saved application
       Given I go to the Sign In page
