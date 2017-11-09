@@ -145,7 +145,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     proof = application.preferences.documents[pref_type]
-    return '' unless proof
+    return '' unless proof && proof.proofOption
     interpolate = { file: proof.proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 

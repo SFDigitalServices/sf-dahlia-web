@@ -27,7 +27,6 @@ Feature: Short Form Application
       # now that we've submitted, also create an account
       When I click the Create Account button
       And I fill out my account info with my locked-in application email
-      And I wait "10" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
 
