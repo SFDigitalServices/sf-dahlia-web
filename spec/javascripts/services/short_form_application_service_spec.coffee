@@ -797,11 +797,11 @@ do ->
           .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->
-        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
     describe 'loadAccountApplication', ->
       beforeEach ->
