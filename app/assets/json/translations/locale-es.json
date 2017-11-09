@@ -23,6 +23,7 @@
         "P2": "Podrá revisar su solicitud antes de presentarla.",
         "P3": "Tenga en cuenta que cada integrante del grupo familiar puede aparecer solamente en una solicitud para cada anuncio de vivienda. Si su solicitud incluye integrantes de la familia que figuran en otras solicitudes para este anuncio de vivienda, todos serán descalificados.",
         "TITLE": "En qué consiste esta solicitud.",
+        "VIEW_DOCUMENT_CHECKLIST": "Ver lista de verificación de documentos",
         "WARNING": "Cualquier declaración fraudulenta hará que su solicitud sea eliminada del sorteo."
     },
     "ALREADY_SUBMITTED": {
@@ -211,6 +212,7 @@
     },
     "ERROR": {
         "ADDRESS": "Ingrese una dirección",
+        "ADDRESS_VALIDATION_NOT_FOUND": "No se encuentra esta dirección.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
         "ALTERNATE_CONTACT": "Indique un contacto alternativo",
         "CITY": "Ingrese una ciudad",
         "COMPLETE_UPLOADING_DOCUMENTS": "Complete la carga de los documentos indicados anteriormente.",
@@ -559,7 +561,7 @@
         "SESSION_INACTIVITY_LOGGED_IN": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, su sesión se cerrará y perderá toda la información que no haya guardado.",
         "SKIP_TO_MAIN_CONTENT": "Ir al contenido principal",
         "STATUS": "Estado",
-        "SUBMIT": "Presentar",
+        "SUBMIT": "Someter",
         "SUBMITTED": "Presentada",
         "YES": "Sí",
         "YOU": "Usted"

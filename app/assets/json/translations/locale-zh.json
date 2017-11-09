@@ -23,6 +23,7 @@
         "P2": "在提交申請前，您可以先行審閱您的申請。",
         "P3": "請留意，對於每個清單，每位家庭成員僅能在一個申請內出現。對於本清單，若您的申請內列出之家庭成員，亦在其他申請上出現，這些申請全部會被判定喪失資格。",
         "TITLE": "針對此申請，您需要完成以下作業。",
+        "VIEW_DOCUMENT_CHECKLIST": "查看文件檢查清單",
         "WARNING": "任何不實聲明將導致您的申請從抽籤中排除。"
     },
     "ALREADY_SUBMITTED": {
@@ -113,6 +114,7 @@
         "ALREADY_HAVE_ACCOUNT": "已有帳戶？",
         "CONTINUE_WITH_APPLICATION": "繼續申請作業",
         "CREATE_AN_ACCOUNT": "建立帳戶",
+        "PASSWORD_INSTRUCTIONS": "必須至少有 8 個字元，而且其中包括至少 1 個英文字母和 1 個數字。",
         "PASSWORD_SHORT_INSTRUCTIONS": "必須有 8 個字元"
     },
     "D1_INCOME_VOUCHERS": {
@@ -437,6 +439,7 @@
         "RECENT_APPLICATION": "近期申請",
         "REGISTERED_DOMESTIC_PARTNER": "已註冊的家庭伴侶",
         "RENT_AT_ADDRESS": "在 {{address}} 租房",
+        "RE_ENTER_PASSWORD": "請重新輸入您的密碼以確認",
         "SELECT_ONE": "選取一個",
         "SIBLING": "兄弟姐妹",
         "SIGN_IN_TO_CONTINUE": "登入並繼續",
@@ -512,8 +515,8 @@
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "家庭",
         "INCOME": "收入",
-        "PREFERENCES": "優先權利",
-        "REVIEW": "檢閱",
+        "PREFERENCES": "优先",
+        "REVIEW": "评论",
         "YOU": "您"
     },
     "SIGN_IN": {
