@@ -110,7 +110,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
-              setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
             ).catch( (response) ->
               deferred.reject(response)
@@ -1037,7 +1037,7 @@
       onExit: [
         'ShortFormApplicationService',
         (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {

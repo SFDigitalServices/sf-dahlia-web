@@ -95,7 +95,7 @@ do ->
       cancelPreference: jasmine.createSpy()
       setApplicationLanguage: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
-      resetUserData: ->
+      resetApplicationData: ->
       isEnteringShortForm: jasmine.createSpy()
       storeLastPage: jasmine.createSpy()
     fakeFunctions =
@@ -147,7 +147,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -651,8 +651,8 @@ do ->
       beforeEach ->
         scope.resetAndStartNewApp()
 
-      it 'calls resetUserData on ShortFormApplicationService', ->
-        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+      it 'calls resetApplicationData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
       it 'unsets application autofill value', ->
         expect(scope.application.autofill).toBeUndefined()

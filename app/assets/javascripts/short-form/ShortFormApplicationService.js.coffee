@@ -87,7 +87,7 @@ ShortFormApplicationService = (
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
-  Service.resetUserData = (data = {}) ->
+  Service.resetApplicationData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
     angular.copy(application, Service.application)
     Service.applicant = Service.application.applicant
@@ -97,7 +97,7 @@ ShortFormApplicationService = (
     Service.householdMembers = Service.application.householdMembers
     Service.initServices()
 
-  Service.resetUserData()
+  Service.resetApplicationData()
   # --- end initialization
 
   Service.inputInvalid = (fieldName, form = Service.form.applicationForm) ->
@@ -788,14 +788,15 @@ ShortFormApplicationService = (
         # on submitted app the listing is loaded along with it
         ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
-      Service.checkForProofPrefs(formattedApp)
+      Service.checkForProofPrefs(formattedApp) unless formattedApp.status.match(/submitted/i)
 
     # pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
-
-    Service.resetUserData(formattedApp)
+    # this will setup Service.application with the loaded data
+    Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
-    Service.refreshPreferences('all')
+    if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
+      Service.refreshPreferences('all')
 
   Service.checkForProofPrefs = (formattedApp) ->
     proofPrefs = [
@@ -805,6 +806,7 @@ ShortFormApplicationService = (
       'antiDisplacement',
       'assistedHousing',
     ]
+    formattedApp.completedSections ?= {}
     # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
     _.each proofPrefs, (prefType) ->
       hasPref = formattedApp.preferences[prefType]
