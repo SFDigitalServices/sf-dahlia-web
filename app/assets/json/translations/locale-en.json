@@ -129,6 +129,7 @@
     },
     "CHOOSE_APPLICANT_DETAILS": {
         "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
+        "CONTINUE_ANON": "Continue without an account",
         "CONTINUE_ANON_NOTE": "Skip sign-in and submit this application without an account.",
         "CREATE_ACCOUNT_NOTE": "If this is not you, create a new account with a different email address and you won't lost any of the information you've entered so far.",
         "CREATE_NEW_ACCOUNT": "Create a new account",
