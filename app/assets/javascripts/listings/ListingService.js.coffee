@@ -582,10 +582,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
+  Service.hardcodeCustomProofPrefs =
+    ['Alice Griffith Housing Development Resident']
+
   Service._extractCustomPreferences = ->
     customPreferences = _.filter Service.listing.preferences, (listingPref) ->
       !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    customProofPreferences = _.remove customPreferences, (customPref) ->
+      _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
     Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
+    Service.listing.customProofPreferences = customProofPreferences
 
   Service.getLotteryBuckets = ->
     angular.copy({}, Service.lotteryBucketInfo)

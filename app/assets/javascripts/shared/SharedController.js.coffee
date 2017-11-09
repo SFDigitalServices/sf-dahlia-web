@@ -5,6 +5,8 @@
 SharedController = ($scope, $state, SharedService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
+  $scope.feedbackUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
+
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
@@ -14,7 +16,7 @@ SharedController = ($scope, $state, SharedService) ->
         return 'center-body'
 
   $scope.focusOnMainContent = ->
-    SharedService.focusOnMainContent()
+    SharedService.focusOn('main-content')
 
 ############################################################################################
 ######################################## CONFIG ############################################

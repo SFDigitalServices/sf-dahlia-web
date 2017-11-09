@@ -18,10 +18,12 @@
         }
     },
     "A4_OVERVIEW": {
-        "P1": "First, we'll ask about you and the people you are going to live with. Then, we'll see if you qualify for any affordable housing lottery preferences, and if so, ask you to upload proof of those preferences. Finally, we'll ask about your income.",
-        "P2": "You'll get a chance to review your application before you submit it.",
-        "P3": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
+        "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
+        "P2": "If you are curious about which required docuemnts you may need for the application, please see our resource guide of required documents and claiming preferences.",
+        "P3": "You may also start the application now and save it and upload documents later.",
+        "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
+        "VIEW_DOCUMENT_CHECKLIST": "View Document Checklist",
         "WARNING": "Any fraudulent statements will cause your application to be removed from the lottery."
     },
     "ACCOUNT_SETTINGS": {
@@ -95,6 +97,7 @@
         "TITLE_YOU": "Do you currently live in public housing or HUD project-based housing?"
     },
     "C5_HOUSEHOLD_MONTHLY_RENT": {
+        "DESCRIPTION": "Please enter the total amount that you personally pay toward rent.",
         "HOW_MUCH_DOES_MEMBER_PAY": "How much does {{member}} pay at {{address}}?",
         "HOW_MUCH_DO_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
         "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "How much do {{members}} pay at {{address}}?",
@@ -159,6 +162,21 @@
         "P2": "You only need to provide an estimated total right now. The actual total will be calculated if you are selected in the lottery.",
         "TITLE": "Let's move to income."
     },
+    "DOCUMENT_CHECKLIST": {
+        "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
+        "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
+        "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
+        "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
+        "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
+        "RENT_BURDEN_DOC_1": "You'll need a Copy of Lease showing the address where you live.",
+        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with 1 (one) of the following:",
+        "RENT_BURDEN_TITLE": "Rent Burdened Preference",
+        "RESIDENT_DESC": "You'll need 1 (one) of the following documents showing the address where you live in San Francisco:",
+        "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
+        "TITLE": "Document Checklist",
+        "WORK_SF_DESC": "You'll need 1 (one) of the following documents showing the address where you work in San Francisco:",
+        "WORK_SF_TITLE": "Work in San Francisco Preference"
+    },
     "DOUBLE_SUBMITTED": {
         "P1": "Keep in mind that if an individual is on two or more applications to the same listing, those applications will be disqualified.",
         "P2": "For more details or assistance, please contact the listing agent shown on the property listing or email {{email}}.",
@@ -188,15 +206,16 @@
         "INSTRUCTIONS_P1_SINGULAR": "{{address}} qualifies you for a better ranking, because you live in a neighborhood where people are at the greatest risk of being displaced.",
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
-            "DESCRIPTION": "<strong>Anti-Displacement Housing Preference</strong> This preference applies only to new projects. At least one household member must live within a census tract that has been identified as having the greatest risk of economic displacement.",
+            "DESCRIPTION": "<strong>Anti-Displacement Housing Preference</strong> is designed to benefit residents living in neighborhoods undergoing extreme displacement pressure.",
             "NAME": "Anti-Displacement Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in a neighborhood where people are at the greatest risk of being displaced.",
             "TITLE": "Live in the Neighborhood"
         }
     },
     "E2C_LIVE_WORK_PREFERENCE": {
-        "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, the address where you live in San Francisco and a date within 45 days of your application.",
-        "INSTRUCTIONS": "To receive the lottery preference you indicate, you must upload valid documentation showing the correct name, a date within 45 days of your application, and the address where you either live or work in San Francisco. <br><br>If eligibility cannot be verified, your household will not receive the preference (you will not be otherwise penalized).",
+        "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, address where you live in San Francisco and a date within 45 days of your application.",
+        "DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK": "Document must show the correct name, address where you work in San Francisco and a date within 45 days of your application.",
+        "INSTRUCTIONS": " Just upload valid proof of where you live or work in San Francisco and get a higher ranking in the lottery.",
         "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
@@ -204,7 +223,7 @@
             "TITLE": "Live in San Francisco Preference"
         },
         "LIVE_WORK_SF_PREFERENCE": {
-            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours.",
+            "DESCRIPTION": "At least one household member must live in San Francisco <b>or</b> work in San Francisco at least 75% of their working hours for the live/work preference.",
             "LIVE_SF_PREFERENCE": "Live in San Francisco",
             "TITLE": "Live or Work in San Francisco Preference",
             "WORK_SF_PREFERENCE": "Work in San Francisco"
@@ -218,6 +237,7 @@
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
         "INSTRUCTIONS": "You qualify for this preference because you said someone in your household lives in public housing or HUD program housing.<br><br>This does not include Section 8 vouchers or VASH housing choice vouchers.<br><br>Just upload a copy of a valid lease for a higher ranking in the lottery.",
         "PREFERENCE": {
+            "DESCRIPTION": "Assisted Housing residents are persons residing in public housing or Project-Based Voucher Section 8 housing within the City of San Francisco. Note that this preference does not apply to Section 8 tenant-based voucher holders.",
             "TITLE": "Assisted Housing Preference"
         }
     },
@@ -225,7 +245,7 @@
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
         "RENT_BURDEN_NOTES": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.<br><br>Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
-        "RENT_BURDEN_PREFERENCE_DESC": "Households who are currently spending more than 50% of your income on rent.",
+        "RENT_BURDEN_PREFERENCE_DESC": "  Rent Burdened households are those defined as paying more than 50% of their income for housing.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
@@ -687,6 +707,7 @@
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
+        "DOCUMENT_CHECKLIST": "Document Checklist",
         "ELIGIBILITY_ESTIMATOR": "Estimate Your Eligibility",
         "FAVORITES": "My Favorites",
         "GET_ASSISTANCE": "Get Assistance",

@@ -84,6 +84,7 @@ module SalesforceService
         ApplicationMemberID: _short_form_pref_member_id(application, file),
         ApplicationPreferenceID: _short_form_pref_id(application, file),
       }
+      Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: #{body}"
       api_post_with_headers(endpoint, body, headers)
     end
 

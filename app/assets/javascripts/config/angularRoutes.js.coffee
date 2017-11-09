@@ -524,6 +524,18 @@
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
         ]
     })
+    .state('dahlia.document-checklist',{
+      url: '/document-checklist'
+      params:
+        section: null
+      views:
+        'container@':
+          templateUrl: 'pages/templates/document-checklist.html'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
+        ]
+    })
     ##########################
     # Short form application #
     ##########################
@@ -551,6 +563,8 @@
     })
     .state('dahlia.short-form-welcome.community-screening', {
       url: '/community-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'short-form/templates/layout.html'
@@ -606,6 +620,10 @@
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+              # check if community screening has been answered
+              if listing.Reserved_community_type &&
+                ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true})
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -890,6 +908,18 @@
       views:
         'container':
           templateUrl: 'short-form/templates/e7b-custom-preferences.html'
+    })
+    .state('dahlia.short-form-application.custom-proof-preferences', {
+      url: '/custom-proof-preferences/:prefIdx'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService',
+        ($stateParams, ShortFormApplicationService) ->
+          customPref = ShortFormApplicationService.listing.customProofPreferences[$stateParams.prefIdx]
+          angular.copy(customPref, ShortFormApplicationService.currentCustomProofPreference)
+        ]
     })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
