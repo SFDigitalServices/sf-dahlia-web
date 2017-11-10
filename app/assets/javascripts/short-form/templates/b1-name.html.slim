@@ -44,4 +44,6 @@
         span ng-if="!primaryApplicantUnder18()" translate="ERROR.DOB"
         span ng-if="primaryApplicantUnder18()" translate="ERROR.DOB_PRIMARY_APPLICANT_AGE"
 
-  short-form-save-and-submit
+  .button-pager
+    .button-pager_row.primary
+      input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}" ng-disabled="isLoading()"
