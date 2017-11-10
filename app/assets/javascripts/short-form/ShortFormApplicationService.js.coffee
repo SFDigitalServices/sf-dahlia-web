@@ -78,7 +78,7 @@ ShortFormApplicationService = (
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
-  Service.resetUserData = (data = {}) ->
+  Service.resetApplicationData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
     angular.copy(application, Service.application)
     Service.applicant = Service.application.applicant
@@ -88,7 +88,7 @@ ShortFormApplicationService = (
     Service.householdMembers = Service.application.householdMembers
     Service.initServices()
 
-  Service.resetUserData()
+  Service.resetApplicationData()
   # --- end initialization
 
   Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
@@ -775,10 +775,11 @@ ShortFormApplicationService = (
 
     # pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
-
-    Service.resetUserData(formattedApp)
+    # this will setup Service.application with the loaded data
+    Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
-    Service.refreshPreferences('all') unless formattedApp.status.match(/submitted/i)
+    if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
+      Service.refreshPreferences('all')
 
   Service.checkForProofPrefs = (formattedApp) ->
     proofPrefs = [
