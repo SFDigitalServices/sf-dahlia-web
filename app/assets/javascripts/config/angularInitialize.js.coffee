@@ -112,6 +112,7 @@
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         fromState.name != 'dahlia.short-form-application.confirmation' &&
+        fromState.name != 'dahlia.short-form-application.choose-applicant-details' &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)

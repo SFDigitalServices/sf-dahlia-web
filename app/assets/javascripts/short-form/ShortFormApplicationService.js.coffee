@@ -10,6 +10,7 @@ ShortFormApplicationService = (
   Service.application = {}
   Service._householdEligibility = {}
   Service.activeSection = {}
+  Service.eligibilityErrors = []
   emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
@@ -438,14 +439,6 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.memberAge = (member) ->
-    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
-    age = moment().diff(dob, 'years')
-    age
-
-  Service.maxHouseholdAge = ->
-    _.max(_.map(Service.fullHousehold(), Service.memberAge))
-
   Service.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
 
@@ -724,6 +717,10 @@ ShortFormApplicationService = (
         return Service._signInAndSkipSubmit(data.application)
       changed = null
       if Service.application.status.match(/draft/i)
+        if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
+          # ... then store this setting and kick them to the new page
+          Service.addSeniorEligibilityError()
+          return $state.go('dahlia.short-form-application.choose-applicant-details')
         if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
           return $state.go('dahlia.short-form-application.choose-account-settings')
         else
@@ -882,6 +879,55 @@ ShortFormApplicationService = (
       # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
     )
+
+  # this will only return true if the senior requirement is "everyone",
+  # meaning the primary applicant *must* be a senior
+  Service.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
+    listing = Service.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    if _.isString(member)
+      # are we evaluating a form value
+      age = Service.applicantAgeOnForm(member)
+    else
+      # or evaluating an appMember object
+      age = Service.memberAge(member)
+    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
+
+  Service.addSeniorEligibilityError = ->
+    age = { minAge: Service.listing.Reserved_community_minimum_age }
+    Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
+
+  Service.memberAge = (member) ->
+    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
+    age = moment().diff(dob, 'years')
+    age
+
+  Service.maxHouseholdAge = ->
+    _.max(_.map(Service.fullHousehold(), Service.memberAge))
+
+  # different function from memberAge above, this is used for validating
+  # what has been typed into the form, vs. what is stored in an applicant member object
+  Service.applicantAgeOnForm = (member = 'applicant') ->
+    dob = Service.applicantDOBMoment(member)
+    return unless dob
+    moment().diff(dob, 'years')
+
+  Service.applicantDOBMoment = (member = 'applicant') ->
+    values = Service.DOBValues(member)
+    form = Service.form.applicationForm
+    # have to grab viewValue because if the field is in error state the model will be undefined
+    year = parseInt(form['date_of_birth_year'].$viewValue)
+    return false unless values.month && values.day && year >= 1900
+    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+  Service.DOBValues = (member = 'applicant') ->
+    {
+      month: parseInt(Service[member].dob_month)
+      day: parseInt(Service[member].dob_day)
+      year: parseInt(Service[member].dob_year)
+    }
 
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones

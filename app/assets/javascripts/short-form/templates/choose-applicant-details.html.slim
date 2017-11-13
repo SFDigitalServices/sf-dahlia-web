@@ -7,20 +7,26 @@
             span.ui-icon.ui-static.ui-medium.i-color
               svg
                 use xlink:href="#i-profile" xmlns:xlink="http://www.w3.org/1999/xlink"
-          h1.dash-title.no-margin
+          h1.dash-title.no-margin ng-if="eligibilityErrors.length"
+            | {{'CHOOSE_APPLICANT_DETAILS.TITLE_DISQUALIFIED' | translate}}
+          h1.dash-title.no-margin ng-if="!eligibilityErrors.length"
             | {{'CHOOSE_APPLICANT_DETAILS.TITLE' | translate}}
 
         / this alert box displays "You'll need to resolve..." if there are form errors
-        alert-box short-form="true" custom-sub-message="'CHOOSE_APPLICANT_DETAILS.ALERT_MESSAGE' | translate" ng-if="inputInvalid('chooseApplicantDetails')"
+        alert-box short-form="true" custom-sub-message="'CHOOSE_APPLICANT_DETAILS.ALERT_MESSAGE' | translate" ng-if="!eligibilityErrors.length && inputInvalid('chooseApplicantDetails')"
+
+        alert-box(custom-message="notEligibleErrorMessage" eligibility-errors="eligibilityErrors" short-eligibility-error="true" hide-alert="hideAlert" ng-if="eligibilityErrors.length" invert="true")
 
         .form-group ng-class="{ error: inputInvalid('chooseApplicantDetails')}"
-          .dash-card-inner.inset
+          .dash-card-inner.inset ng-class="{ 'padding-bottom-none': eligibilityErrors.length }"
             h3.form-label.caps
               | {{'CHOOSE_APPLICANT_DETAILS.YOUR_OPTIONS' | translate}}:
             p.form-note.margin-bottom
               | {{'LABEL.PLEASE_SELECT_ONE' | translate}}
 
-          .dash-card-inner.full.bg-dust
+
+          / this option is only relevant for choosing account details, not for senior community disqualification
+          .dash-card-inner.full.bg-dust ng-if="!eligibilityErrors.length"
             .form-item
               .radio-block
                 input#choose-applicant-details(name="chooseApplicantDetails" type="radio" value="overwriteWithAccountInfo"  ng-model="chosenAccountOption" ng-required="true" ng-class="{ error: inputInvalid('chooseApplicantDetails')}")
@@ -39,7 +45,7 @@
 
                     p
                       span.t-italic
-                        | will replace:
+                        | {{'CHOOSE_APPLICANT_DETAILS.WILL_REPLACE' | translate}}:
                       br
                       | {{applicantFullName(applicant)}}
                       span ng-if="applicant.dob_month && applicant.dob_day && applicant.dob_year"
