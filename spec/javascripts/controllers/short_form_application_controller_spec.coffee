@@ -20,6 +20,7 @@ do ->
         applicationForm:
           $valid: true
           $setPristine: -> undefined
+      eligibilityErrors: []
       inputInvalid: ->
       listing: fakeListing
       applicant:
@@ -96,6 +97,8 @@ do ->
       importUserData: jasmine.createSpy()
       cancelPreferencesForMember: jasmine.createSpy()
       resetCompletedSections: jasmine.createSpy()
+      applicantDoesNotMeetSeniorRequirements: ->
+      applicantAgeOnForm: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -534,18 +537,11 @@ do ->
 
     describe 'primaryApplicantUnder18', ->
       it 'checks form values for primary applicant DOB that is under 18', ->
-        year = new Date().getFullYear()
-        scope.form.applicationForm.date_of_birth_year = {$viewValue: year}
-        scope.applicant.dob_month = 1
-        scope.applicant.dob_day = 1
-        scope.applicant.dob_year = year
+        spyOn(fakeShortFormApplicationService, 'applicantAgeOnForm').and.returnValue(15)
         expect(scope.primaryApplicantUnder18()).toEqual true
 
       it 'checks form values for primary applicant DOB that is over 18', ->
-        scope.form.applicationForm.date_of_birth_year = {$viewValue: '1995'}
-        scope.applicant.dob_month = 10
-        scope.applicant.dob_day = 10
-        scope.applicant.dob_year = 1995
+        spyOn(fakeShortFormApplicationService, 'applicantAgeOnForm').and.returnValue(25)
         expect(scope.primaryApplicantUnder18()).toEqual false
 
     describe 'householdMemberValidAge', ->
@@ -689,27 +685,30 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
 
     describe 'chooseApplicantDetails', ->
-      describe 'user chooses to create account', ->
+      describe 'when user chooses to create account', ->
         it 'signs out user and sends them to create account page', ->
           scope.chosenAccountOption = 'createAccount'
           scope.chooseApplicantDetails()
+          scope.$apply()
           expect(fakeAccountService.signOut).toHaveBeenCalled()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
 
-      describe 'user chooses to continue as guest', ->
+      describe 'when user chooses to continue as guest', ->
         it 'signs out user and sends them to the last page of the app', ->
           scope.application.lastPage = 'name'
           scope.chosenAccountOption = 'continueAsGuest'
           scope.chooseApplicantDetails()
+          scope.$apply()
           expect(fakeAccountService.signOut).toHaveBeenCalledWith({preserveAppData: true})
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
 
-      describe 'user chooses to overwrite account info', ->
+      describe 'when user chooses to overwrite account info', ->
         beforeEach ->
           fakeAccountService.loggedInUser = {test: 'test'}
           scope.applicant.id = 1
           scope.chosenAccountOption = 'overwriteWithAccountInfo'
           scope.chooseApplicantDetails()
+          scope.$apply()
 
         it 'calls function to import user data', ->
           expect(fakeShortFormApplicationService.importUserData).toHaveBeenCalledWith({test: 'test'})
