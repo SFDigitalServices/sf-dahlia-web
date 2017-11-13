@@ -431,21 +431,18 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I sign out', ->
-    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
-    element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
-    browser.waitForAngular()
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click().then ->
+      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
 
   @When 'I view the application from My Applications', ->
-    element(By.cssContainingText('.button', 'Go to My Applications')).click()
-    element(By.cssContainingText('.button', 'View Application')).click()
-    browser.waitForAngular()
+    element(By.cssContainingText('.button', 'Go to My Applications')).click().then ->
+      element(By.cssContainingText('.button', 'View Application')).click()
 
   @When 'I go to My Applications', ->
     getUrl('/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
-    browser.waitForAngular()
 
   @When 'I use the browser back button', ->
     browser.navigate().back()

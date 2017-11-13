@@ -89,7 +89,7 @@ Feature: Short Form Application
       Then I should land on the My Applications page
 
     Scenario: Saving anonymous draft with different account details
-      Given I have a confirmed account
+      Given I sign out
       And I go to the first page of the Test Listing application
       And I fill out the Name page as "Thomas Huckleberry Sawyer"
       And I click the Save and Finish Later button
