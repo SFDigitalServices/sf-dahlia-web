@@ -662,7 +662,7 @@ ShortFormApplicationController = (
       ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
       ShortFormApplicationService.resetCompletedSections()
-      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.name")
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
 
   ## account service
   $scope.loggedIn = ->
