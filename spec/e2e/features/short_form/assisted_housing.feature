@@ -30,7 +30,6 @@ Feature: Short Form Application - Assisted Housing Preference
       And I hit the Next button "2" times
       # Submit app and see preference claimed
       And I confirm details on the review page
-      And I continue confirmation without signing in
       And I agree to the terms and submit
       And I click to view submitted application
       Then on the View Submitted App Page I should see Assisted Housing preference claimed

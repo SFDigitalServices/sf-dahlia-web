@@ -23,6 +23,7 @@ do ->
     sections = [
       { name: 'You', pages: [
           'name'
+          'welcome-back'
           'contact'
           'verify-address'
           'alternate-contact-type'
@@ -65,7 +66,6 @@ do ->
       { name: 'Review', pages: [
           'review-optional'
           'review-summary'
-          'review-sign-in'
           'review-terms'
         ]
       }

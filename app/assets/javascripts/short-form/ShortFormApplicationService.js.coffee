@@ -556,6 +556,8 @@ ShortFormApplicationService = (
       return if stateName.match(/household-member-form/)
       # special case for rentBurden subpages
       return if stateName.match(/rent-burden-preference-edit/)
+      # special case for welcome back page
+      return if stateName.match(/welcome-back/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
