@@ -96,6 +96,19 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Hearing impaired', t('LABEL.HEARING_IMPAIRMENTS')]
   ]
 
+  Service.listing_referral_options = [
+    ['Newspaper', t('REFERRAL.NEWSPAPER')]
+    ['MOHCD Website', t('REFERRAL.MOHCD_WEBSITE')]
+    ['Developer Website', t('REFERRAL.DEVELOPER_WEBSITE')]
+    ['Flyer', t('REFERRAL.FLYER')]
+    ['Email Alert', t('REFERRAL.EMAIL_ALERT')]
+    ['Friend', t('REFERRAL.FRIEND')]
+    ['Housing Counselor', t('REFERRAL.HOUSING_COUNSELOR')]
+    ['Radio Ad', t('REFERRAL.RADIO_AD')]
+    ['Bus Ad', t('REFERRAL.BUS_AD')]
+    ['Other', t('LABEL.OTHER')]
+  ]
+
   Service.proofOptions = (preference) ->
     switch preference
       when 'workInSf'

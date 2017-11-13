@@ -789,6 +789,17 @@
         "SITE_SECURITY_TITLE": "Site Security",
         "TITLE": "Privacy Policy"
     },
+    "REFERRAL": {
+        "BUS_AD": "Bus Ad",
+        "DEVELOPER_WEBSITE": "Developer Website",
+        "EMAIL_ALERT": "Email Alert",
+        "FLYER": "Flyer",
+        "FRIEND": "Friend",
+        "HOUSING_COUNSELOR": "Housing Counselor",
+        "MOHCD_WEBSITE": "MOHCD Website",
+        "NEWSPAPER": "Newspaper",
+        "RADIO_AD": "Radio Ad"
+    },
     "RESET_PASSWORD": {
         "TITLE": "Reset Password",
         "UPDATE_PASSWORD": "Update password"
