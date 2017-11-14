@@ -55,6 +55,7 @@ ShortFormApplicationController = (
   $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
   $scope.race_options = ShortFormHelperService.race_options
   $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
+  $scope.listing_referral_options = ShortFormHelperService.listing_referral_options
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
