@@ -1,29 +1,27 @@
 # service class for pre-fetching + caching salesforce data
 class CacheService
-  ListingService = SalesforceService::ListingService
-
-  def self.prefetch_listings(opts = {})
+  def prefetch_listings(opts = {})
     if opts[:refresh_all]
       # on daily run, don't grab old listings for comparison
       # to force cache write for all listings
       old_listings = []
     else
       # grab previous cached result
-      old_listings = ListingService.listings(nil, false)
+      old_listings = Force::ListingService.new.listings(nil, false)
     end
     # refresh oauth_token before beginnning
-    ListingService.oauth_token(true)
+    Force::ListingService.new.oauth_token(true)
     # set requests to force cache write (if we `cache_single_listing`)
-    ListingService.force = true
-    new_listings = ListingService.listings(nil, false)
+    @service = Force::ListingService.new(force: true)
+    new_listings = @service.listings(nil, false)
 
     new_listings.each do |listing|
       id = listing['Id']
       old = old_listings.find { |l| l['Id'] == id }
       unchanged = false
       if old.present?
-        old = ListingService.array_sort!(old)
-        listing = ListingService.array_sort!(listing)
+        old = @service.array_sort!(old)
+        listing = @service.array_sort!(listing)
         # NOTE: This comparison isn't perfect, as the browse listings API endpoint doesn't
         # contain some relational data e.g. some individual unit/preference details.
         # That's why we more aggressively re-cache open listings.
@@ -39,18 +37,16 @@ class CacheService
       next if unchanged && due_date_passed
       cache_single_listing(listing, due_date_passed)
     end
-
-    ListingService.force = false
   end
 
-  def self.cache_single_listing(listing, due_date_passed = true)
+  def cache_single_listing(listing, due_date_passed = true)
     id = listing['Id']
     # cache this listing from API
-    ListingService.listing(id)
-    ListingService.units(id)
-    ListingService.preferences(id)
-    ListingService.lottery_buckets(id) if due_date_passed
-    # NOTE: there is no call to ListingService.ami
+    @service.listing(id)
+    @service.units(id)
+    @service.preferences(id)
+    @service.lottery_buckets(id) if due_date_passed
+    # NOTE: there is no call to @service.ami
     # because it is parameter-based and values will rarely change (1x/year?)
     image_processor = ListingImageService.new(listing).process_image
     Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?

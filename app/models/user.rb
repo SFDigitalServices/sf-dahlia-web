@@ -36,9 +36,9 @@ class User < ActiveRecord::Base
     if pending_reconfirmation? && persisted?
       # we have to grab the existing applicant first.
       # Salesforce requires that we repackage all of their info when making an update
-      contact = AccountService.get(salesforce_contact_id)
+      contact = Force::AccountService.new.get(salesforce_contact_id)
       return unless contact.present?
-      AccountService.create_or_update(
+      Force::AccountService.new.create_or_update(
         webAppID: id,
         contactId: salesforce_contact_id,
         # send unconfirmed_email because it's about to be confirmed

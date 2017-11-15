@@ -1,16 +1,14 @@
 # RESTful JSON API to query for listings
 class Api::V1::ListingsController < ApiController
-  ListingService = SalesforceService::ListingService
-
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    @listings = ListingService.listings(params[:ids])
+    @listings = Force::ListingService.new.listings(params[:ids])
     render json: { listings: @listings }
   end
 
   def show
-    @listing = ListingService.listing(params[:id])
+    @listing = Force::ListingService.new.listing(params[:id])
     render json: { listing: @listing }
   rescue Faraday::ClientError => e
     # Salesforce will throw an error if you request a listing ID that doesn't exist
@@ -22,17 +20,17 @@ class Api::V1::ListingsController < ApiController
   end
 
   def units
-    @units = ListingService.units(params[:id])
+    @units = Force::ListingService.new.units(params[:id])
     render json: { units: @units }
   end
 
   def lottery_buckets
-    @lottery_buckets = ListingService.lottery_buckets(params[:id])
+    @lottery_buckets = Force::ListingService.new.lottery_buckets(params[:id])
     render json: @lottery_buckets
   end
 
   def lottery_ranking
-    @lottery_ranking = ListingService.lottery_ranking(
+    @lottery_ranking = Force::ListingService.new.lottery_ranking(
       params[:id],
       params[:lottery_number],
     )
@@ -40,7 +38,7 @@ class Api::V1::ListingsController < ApiController
   end
 
   def preferences
-    @preferences = ListingService.preferences(params[:id])
+    @preferences = Force::ListingService.new.preferences(params[:id])
     render json: { preferences: @preferences }
   end
 
@@ -51,13 +49,13 @@ class Api::V1::ListingsController < ApiController
       incomelevel: params[:incomelevel].to_f,
       childrenUnder6: params[:childrenUnder6].to_i,
     }
-    @listings = ListingService.eligible_listings(filters)
+    @listings = Force::ListingService.new.eligible_listings(filters)
     render json: { listings: @listings }
   end
 
   def ami
     # loop through all the ami levels that you just sent me
-    # call ListingService.ami with each set of opts
+    # call Force::ListingService.new.ami with each set of opts
     @ami_levels = []
     params[:chartType].each_with_index do |chart_type, i|
       data = {
@@ -67,7 +65,7 @@ class Api::V1::ListingsController < ApiController
       }
       @ami_levels << {
         percent: data[:percent],
-        values: ListingService.ami(data),
+        values: Force::ListingService.new.ami(data),
       }
     end
     render json: { ami: @ami_levels }

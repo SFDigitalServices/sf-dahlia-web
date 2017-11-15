@@ -1,7 +1,7 @@
-module SalesforceService
+module Force
   # encapsulate all Salesforce ShortForm querying functions
-  class ShortFormService < SalesforceService::Base
-    def self.check_household_eligibility(listing_id, params)
+  class ShortFormService < Force::Base
+    def check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
       %i(householdsize childrenUnder6).each do |k|
         params[k] = params[k].present? ? params[k].to_i : 0
@@ -12,21 +12,21 @@ module SalesforceService
       cached_api_get(endpoint, params)
     end
 
-    def self.create_or_update(params, contact_attrs)
+    def create_or_update(params, contact_attrs)
       params[:primaryApplicant].merge!(contact_attrs)
       api_post('/shortForm', params)
     end
 
-    def self.get(id)
+    def get(id)
       api_get("/shortForm/#{id}")
     end
 
-    def self.get_for_user(contact_id)
+    def get_for_user(contact_id)
       apps = api_get("/shortForm/list/#{contact_id}")
       apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
-    def self.find_listing_application(opts = {})
+    def find_listing_application(opts = {})
       applications = get_for_user(opts[:contact_id])
       application = applications.find do |app|
         app['listingID'] == opts[:listing_id]
@@ -37,7 +37,7 @@ module SalesforceService
       application
     end
 
-    def self.autofill(applications, listing_id)
+    def autofill(applications, listing_id)
       # applications were already sorted by most recent in get_for_user
       application = applications.find do |app|
         app['status'] == 'Submitted'
@@ -46,7 +46,7 @@ module SalesforceService
       application
     end
 
-    def self.autofill_reset(application, listing_id)
+    def autofill_reset(application, listing_id)
       application = Hashie::Mash.new(application.as_json)
       reset = {
         autofill: true,
@@ -69,11 +69,11 @@ module SalesforceService
       application.merge(reset)
     end
 
-    def self.delete(id)
+    def delete(id)
       api_delete("/shortForm/delete/#{id}")
     end
 
-    def self.attach_file(application, file, filename)
+    def attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/Attachment/#{application['id']}"
       body = {
@@ -88,17 +88,17 @@ module SalesforceService
       api_post_with_headers(endpoint, body, headers)
     end
 
-    def self.queue_file_attachments(application_id, files)
+    def queue_file_attachments(application_id, files)
       files.each do |file|
         ShortFormAttachmentJob.perform_later(application_id, file.id)
       end
     end
 
-    def self.ownership?(contact_id, application)
+    def ownership?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
     end
 
-    def self.can_claim?(session_uid, application)
+    def can_claim?(session_uid, application)
       return false unless application['status'].casecmp('submitted').zero?
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
@@ -107,19 +107,19 @@ module SalesforceService
       false
     end
 
-    def self.submitted?(application)
+    def submitted?(application)
       application['status'] == 'Submitted'
     end
 
-    def self._short_form_pref_id(application, file)
+    def _short_form_pref_id(application, file)
       _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
     end
 
-    def self._short_form_pref_member_id(application, file)
+    def _short_form_pref_member_id(application, file)
       _short_form_pref(application, file).try(:[], 'appMemberID')
     end
 
-    def self._short_form_pref(application, file)
+    def _short_form_pref(application, file)
       application['shortFormPreferences'].find do |preference|
         preference['listingPreferenceID'] == file.listing_preference_id
       end
