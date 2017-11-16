@@ -178,6 +178,9 @@ AccountController = (
     interpolate = { email: $scope.createdAccount.email }
     $translate.instant('CONFIRM_ACCOUNT.EXPIRED_EMAIL_SENT_TO', interpolate)
 
+  $scope.chooseDifferentEmailMessage = ->
+    $translate.instant('CREATE_ACCOUNT.CHOOSE_DIFF_EMAIL')
+
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true
     $scope.resentConfirmationMessage = null

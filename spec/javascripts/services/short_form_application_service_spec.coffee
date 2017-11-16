@@ -797,11 +797,11 @@ do ->
           .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->
-        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
     describe 'loadAccountApplication', ->
       beforeEach ->
@@ -972,3 +972,25 @@ do ->
         }
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
         expect(pct).toEqual 60
+
+    describe 'applicantAgeOnForm', ->
+      beforeEach ->
+        ShortFormApplicationService.form.applicationForm = {}
+
+      it 'checks form values for primary applicant DOB that is under 18', ->
+        fakeAge = 12
+        year = new Date().getFullYear() - fakeAge
+        ShortFormApplicationService.form.applicationForm.date_of_birth_year = {$viewValue: year}
+        ShortFormApplicationService.applicant.dob_month = 1
+        ShortFormApplicationService.applicant.dob_day = 1
+        ShortFormApplicationService.applicant.dob_year = year
+        expect(ShortFormApplicationService.applicantAgeOnForm('applicant')).toEqual fakeAge
+
+      it 'checks form values for primary applicant DOB that is over 18', ->
+        fakeAge = 25
+        year = new Date().getFullYear() - fakeAge
+        ShortFormApplicationService.form.applicationForm.date_of_birth_year = {$viewValue: year}
+        ShortFormApplicationService.applicant.dob_month = 1
+        ShortFormApplicationService.applicant.dob_day = 1
+        ShortFormApplicationService.applicant.dob_year = year
+        expect(ShortFormApplicationService.applicantAgeOnForm('applicant')).toEqual fakeAge

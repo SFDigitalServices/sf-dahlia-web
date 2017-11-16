@@ -10,6 +10,7 @@ ShortFormApplicationService = (
   Service.application = {}
   Service._householdEligibility = {}
   Service.activeSection = {}
+  Service.eligibilityErrors = []
   emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
@@ -60,7 +61,7 @@ ShortFormApplicationService = (
       Preferences: {}
       Review: {}
     # for storing last page of your draft, to return to. default to first page
-    lastPage: 'dahlia.short-form-application.name'
+    lastPage: 'name'
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -78,7 +79,7 @@ ShortFormApplicationService = (
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
-  Service.resetUserData = (data = {}) ->
+  Service.resetApplicationData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
     angular.copy(application, Service.application)
     Service.applicant = Service.application.applicant
@@ -88,7 +89,7 @@ ShortFormApplicationService = (
     Service.householdMembers = Service.application.householdMembers
     Service.initServices()
 
-  Service.resetUserData()
+  Service.resetApplicationData()
   # --- end initialization
 
   Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
@@ -139,7 +140,12 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-account-settings', 'welcome-back'], lastPage)
+    return if _.includes([
+        'choose-draft',
+        'choose-applicant-details',
+        'choose-account-settings',
+        'welcome-back',
+      ], lastPage)
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -199,16 +205,18 @@ ShortFormApplicationService = (
     # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
-    # search through all xxx_household_member items in preferences marked for this member
-    _.each Service.preferences, (v,k) ->
-      if k.indexOf('_household_member') > 0 and v == Service.householdMember.id
-        preference = k.split('_household_member')[0]
-        Service.cancelPreference(preference)
-
+    Service.cancelPreferencesForMember(Service.householdMember.id)
     # persist the changes to Service.householdMembers
     Service.resetHouseholdMember()
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
+
+  Service.cancelPreferencesForMember = (memberId) ->
+    # search through all xxx_household_member items in preferences marked for this member
+    _.each Service.preferences, (value, key) ->
+      if key.indexOf('_household_member') > 0 and value == memberId
+        preference = key.split('_household_member')[0]
+        Service.cancelPreference(preference)
 
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
@@ -216,7 +224,6 @@ ShortFormApplicationService = (
         # copy applicant's preferenceAddressMatch to householdMember
         member.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     )
-
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
@@ -437,14 +444,6 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.memberAge = (member) ->
-    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
-    age = moment().diff(dob, 'years')
-    age
-
-  Service.maxHouseholdAge = ->
-    _.max(_.map(Service.fullHousehold(), Service.memberAge))
-
   Service.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
 
@@ -630,7 +629,7 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
-  Service._resetCompletedSections = ->
+  Service.resetCompletedSections = ->
     angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
 
   Service.resetMonthlyRentForm = ->
@@ -725,6 +724,10 @@ ShortFormApplicationService = (
         return Service._signInAndSkipSubmit(data.application)
       changed = null
       if Service.application.status.match(/draft/i)
+        if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
+          # ... then store this setting and kick them to the new page
+          Service.addSeniorEligibilityError()
+          return $state.go('dahlia.short-form-application.choose-applicant-details')
         if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
           return $state.go('dahlia.short-form-application.choose-account-settings')
         else
@@ -772,14 +775,15 @@ ShortFormApplicationService = (
         # on submitted app the listing is loaded along with it
         ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
-      Service.checkForProofPrefs(formattedApp)
+      Service.checkForProofPrefs(formattedApp) unless formattedApp.status.match(/submitted/i)
 
     # pull answeredCommunityScreening from the current session since that Q is answered first
     formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
-
-    Service.resetUserData(formattedApp)
+    # this will setup Service.application with the loaded data
+    Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
-    Service.refreshPreferences('all')
+    if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
+      Service.refreshPreferences('all')
 
   Service.checkForProofPrefs = (formattedApp) ->
     proofPrefs = [
@@ -789,6 +793,7 @@ ShortFormApplicationService = (
       'antiDisplacement',
       'assistedHousing',
     ]
+    formattedApp.completedSections ?= {}
     # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
     _.each proofPrefs, (prefType) ->
       hasPref = formattedApp.preferences[prefType]
@@ -810,12 +815,11 @@ ShortFormApplicationService = (
     fields = [
       'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
     ]
-    userData = _.pick(loggedInUser, fields)
-    original = angular.copy(Service.applicant)
+    accountData = _.pick(loggedInUser, fields)
+    applicant = angular.copy(Service.applicant)
     # merge the data into applicant
-    _.merge Service.applicant, userData
-    changed = !_.isEqual(Service.applicant, original)
-    Service._mapPrimaryApplicantPreferences(original, userData) if changed
+    _.merge Service.applicant, accountData
+    changed = !_.isEqual(Service.applicant, applicant)
     # return T/F if data was changed or not
     return changed
 
@@ -828,13 +832,6 @@ ShortFormApplicationService = (
     applicantData = _.omitBy(_.pick(applicant, fields), _.isNil)
     applicantData.DOB = ShortFormDataService.formatUserDOB(applicant)
     !_.isEqual(userData, applicantData)
-
-  Service._mapPrimaryApplicantPreferences = (original, userData) ->
-    originalFullName = original.firstName + " " + original.lastName
-    _.forEach Service.application.preferences, (value, key) ->
-      if value == originalFullName
-        Service.application.preferences[key] = userData.firstName + " " + userData.lastName
-      return
 
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->
@@ -889,6 +886,55 @@ ShortFormApplicationService = (
       # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
     )
+
+  # this will only return true if the senior requirement is "everyone",
+  # meaning the primary applicant *must* be a senior
+  Service.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
+    listing = Service.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    if _.isString(member)
+      # are we evaluating a form value
+      age = Service.applicantAgeOnForm(member)
+    else
+      # or evaluating an appMember object
+      age = Service.memberAge(member)
+    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
+
+  Service.addSeniorEligibilityError = ->
+    age = { minAge: Service.listing.Reserved_community_minimum_age }
+    Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
+
+  Service.memberAge = (member) ->
+    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
+    age = moment().diff(dob, 'years')
+    age
+
+  Service.maxHouseholdAge = ->
+    _.max(_.map(Service.fullHousehold(), Service.memberAge))
+
+  # different function from memberAge above, this is used for validating
+  # what has been typed into the form, vs. what is stored in an applicant member object
+  Service.applicantAgeOnForm = (member = 'applicant') ->
+    dob = Service.applicantDOBMoment(member)
+    return unless dob
+    moment().diff(dob, 'years')
+
+  Service.applicantDOBMoment = (member = 'applicant') ->
+    values = Service.DOBValues(member)
+    form = Service.form.applicationForm
+    # have to grab viewValue because if the field is in error state the model will be undefined
+    year = parseInt(form['date_of_birth_year'].$viewValue)
+    return false unless values.month && values.day && year >= 1900
+    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+  Service.DOBValues = (member = 'applicant') ->
+    {
+      month: parseInt(Service[member].dob_month)
+      day: parseInt(Service[member].dob_day)
+      year: parseInt(Service[member].dob_year)
+    }
 
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones

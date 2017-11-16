@@ -72,7 +72,7 @@
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          ShortFormApplicationService.resetApplicationData() unless toState.name == 'dahlia.short-form-review'
           if toParams.timeout
             AnalyticsService.trackTimeout('Application')
           else
@@ -112,6 +112,7 @@
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         fromState.name != 'dahlia.short-form-application.confirmation' &&
+        fromState.name != 'dahlia.short-form-application.choose-applicant-details' &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)

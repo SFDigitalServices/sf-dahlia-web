@@ -146,10 +146,10 @@ AccountService = (
   Service.shortFormAccountExists = ->
     Service.accountExists
 
-  Service.signOut = ->
+  Service.signOut = (opts = {}) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetUserData()
+    ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
     $auth.signOut()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in

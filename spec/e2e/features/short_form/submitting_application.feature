@@ -89,12 +89,21 @@ Feature: Short Form Application
       Then I should land on the My Applications page
 
     Scenario: Already logged into account (created and logged in earlier scenarios), continuing saved application
-      Given I go to the Sign In page
-      And I sign in
-      And I go to My Applications
+      Given I go to My Applications
       And I click the Continue Application button
       # I should land back on the Review page where I clicked "save and finish later"
       Then on the Review Page I should see my contact details
+
+    Scenario: Saving anonymous draft with different account details
+      Given I sign out
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer"
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in
+      Then I should be on the Choose Draft page
+      When I select my recent application and submit
+      Then I should be on the Choose Applicant Details page
 
     Scenario: Continuing draft, confirming all previously entered details and submitting
       Given I go to My Applications

@@ -442,21 +442,18 @@ module.exports = ->
     browser.waitForAngular()
 
   @When 'I sign out', ->
-    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
-    element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
-    browser.waitForAngular()
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click().then ->
+      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
 
   @When 'I view the application from My Applications', ->
-    element(By.cssContainingText('.button', 'Go to My Applications')).click()
-    element(By.cssContainingText('.button', 'View Application')).click()
-    browser.waitForAngular()
+    element(By.cssContainingText('.button', 'Go to My Applications')).click().then ->
+      element(By.cssContainingText('.button', 'View Application')).click()
 
   @When 'I go to My Applications', ->
     getUrl('/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
-    browser.waitForAngular()
 
   @When 'I use the browser back button', ->
     browser.navigate().back()
@@ -504,6 +501,9 @@ module.exports = ->
     element(By.id('choose_draft_original')).click().then ->
       submitPage()
 
+  @When 'I select my recent application and submit', ->
+    element(By.id('choose_draft_recent')).click().then ->
+      submitPage()
 
   ########################
   # --- Expectations --- #
@@ -592,6 +592,11 @@ module.exports = ->
 
   @Then 'I should be on the Choose Draft page', ->
     expectAlertBox(@, 'Please choose which version of the application you want to use.')
+
+  @Then 'I should be on the Choose Applicant Details page', ->
+    text = "The primary contact details on your new application don't match your current account settings. What would you like to do?"
+    el = element(By.cssContainingText('h1',  text))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   @Then 'I should land on the My Applications page', ->
     el = element(By.cssContainingText('h1', 'My Applications'))

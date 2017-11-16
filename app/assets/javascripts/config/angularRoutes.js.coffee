@@ -110,7 +110,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
-              setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
             ).catch( (response) ->
               deferred.reject(response)
@@ -1031,7 +1031,7 @@
       onExit: [
         'ShortFormApplicationService',
         (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {
@@ -1051,6 +1051,18 @@
             $state.go('dahlia.my-applications')
         ]
     })
+    .state('dahlia.short-form-application.choose-applicant-details', {
+      url: '/choose-applicant-details'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-applicant-details.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    # NOTE: MAY DELETE SOON?
     .state('dahlia.short-form-application.choose-account-settings', {
       url: '/choose-account-settings'
       views:
