@@ -144,6 +144,7 @@ ShortFormApplicationService = (
         'choose-draft',
         'choose-applicant-details',
         'choose-account-settings',
+        'continue-previous-draft',
         'welcome-back',
       ], lastPage)
     Service.application.lastPage = lastPage
@@ -721,7 +722,7 @@ ShortFormApplicationService = (
     Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
       if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data.application)
+        return Service._signInAndSkipSubmit(data)
       changed = null
       if Service.application.status.match(/draft/i)
         if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
@@ -742,7 +743,8 @@ ShortFormApplicationService = (
       $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
     )
 
-  Service._signInAndSkipSubmit = (previousApplication) ->
+  Service._signInAndSkipSubmit = (previousApplicationData) ->
+    previousApplication = previousApplicationData.application
     if (previousApplication.status.match(/submitted/i))
       # they've already submitted -- send them to "my applications", either with:
       # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
@@ -750,8 +752,14 @@ ShortFormApplicationService = (
       doubleSubmit = !! Service.application.status.match(/submitted/i)
       $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
     else
-      # send them to choose which draft they want to keep
-      $state.go('dahlia.short-form-application.choose-draft')
+      if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        # in this special case, we send them to a unique "autofill-like" page showing their previous draft
+        # we also override their current "draft" since it's basically blank
+        Service.loadApplication(previousApplicationData)
+        $state.go('dahlia.short-form-application.continue-previous-draft')
+      else
+        # send them to choose which draft they want to keep
+        $state.go('dahlia.short-form-application.choose-draft')
 
   Service._previousIsSubmittedOrBothDrafts = (previousApplication) ->
     previousApplication.status.match(/submitted/i) || (

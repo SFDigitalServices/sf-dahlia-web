@@ -1,0 +1,30 @@
+/ NOTE:
+/ This page reloads the whole ShortFormApplicationController because that makes the Service.loadApplication() play nicer,
+/ meaning that by overwriting your current draft with your previousApplication, all the $scope.applicant = Service.applicant (etc)
+/ references would otherwise get somewhat messed up, unless we allow the controller to reload.
+/ This is in reference to the loadApplication() that happens in Service._signInAndSkipSubmit() when you get sent to this page.
+
+section.app-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+
+      short-form-nav
+
+      form(novalidate="" name="form.applicationForm" ng-submit="submitForm()")
+        #short-form-wrapper.focus-container
+          .app-card.form-card
+            .app-inner.leader
+              h2.app-card_question
+                | {{'CONTINUE_PREVIOUS_DRAFT.TITLE' | translate}}
+              p.form-note.margin-bottom
+                | {{'CONTINUE_PREVIOUS_DRAFT.DESCRIPTION' | translate}}
+
+            ng-include src="'short-form/templates/partials/_review-application-details.html'"
+
+            .button-pager
+              .button-pager_row.primary
+                button.button.primary ui-sref="dahlia.short-form-application.contact" ng-click="trackContinuePreviousDraft()"
+                  | {{'CONTINUE_PREVIOUS_DRAFT.CONTINUE_WITH_THESE_DETAILS' | translate}}
+              .button-pager_row
+                button.button.button-link.button-lined.small-text-center.expand-small ng-click="resetAndStartNewApp()"
+                  | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}

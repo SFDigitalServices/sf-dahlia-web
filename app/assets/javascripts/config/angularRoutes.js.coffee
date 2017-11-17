@@ -1034,6 +1034,23 @@
           ShortFormApplicationService.resetApplicationData()
         ]
     })
+    .state('dahlia.short-form-application.continue-previous-draft', {
+      url: '/continue-previous-draft'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/continue-previous-draft.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.accountApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
     .state('dahlia.short-form-application.choose-draft', {
       url: '/choose-draft'
       views:

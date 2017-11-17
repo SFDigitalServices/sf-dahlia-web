@@ -160,6 +160,11 @@
         "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
     },
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "Continue with these details",
+        "DESCRIPTION": "It looks like you already started a draft for this application. Just review the following details, and then pick up where you left off.",
+        "TITLE": "Pick up where you left off"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
         "CHOOSE_DIFF_EMAIL": "Create a new account with a different email address and you won't lose any of the information you've entered so far.",

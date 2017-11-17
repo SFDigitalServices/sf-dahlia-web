@@ -72,6 +72,9 @@ ShortFormApplicationController = (
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
 
+  $scope.trackContinuePreviousDraft = ->
+    AnalyticsService.trackFormSuccess('Application', 'Continue with these details')
+
   $scope.resetAndStartNewApp = ->
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     data =
@@ -89,6 +92,9 @@ ShortFormApplicationController = (
 
   $scope.atAutofillPreview = ->
     $state.current.name == "dahlia.short-form-application.autofill-preview"
+
+  $scope.atContinuePreviousDraft = ->
+    $state.current.name == "dahlia.short-form-application.continue-previous-draft"
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
