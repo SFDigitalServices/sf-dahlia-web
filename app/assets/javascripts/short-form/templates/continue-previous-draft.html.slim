@@ -1,7 +1,7 @@
 / NOTE:
 / This page reloads the whole ShortFormApplicationController because that makes the Service.loadApplication() play nicer,
 / meaning that by overwriting your current draft with your previousApplication, all the $scope.applicant = Service.applicant (etc)
-/ references would otherwise get somewhat messed up, unless we allow the controller to reload.
+/ references otherwise seem to get somewhat messed up -- allowing the controller to reload fixes that.
 / This is in reference to the loadApplication() that happens in Service._signInAndSkipSubmit() when you get sent to this page.
 
 section.app-container

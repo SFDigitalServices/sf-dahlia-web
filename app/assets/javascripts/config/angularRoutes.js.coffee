@@ -667,12 +667,21 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
+      params:
+        infoChanged:
+          squash: true
       onEnter: [
-        'ShortFormApplicationService', 'AccountService',
-        (ShortFormApplicationService, AccountService) ->
+        '$stateParams', 'ShortFormApplicationService', 'AccountService',
+        ($stateParams, ShortFormApplicationService, AccountService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            # if $stateParams.infoChanged
+              # TODO: do something in ShortFormService / Controller so that the name page
+              # has something in $scope that knows to display the extended message at the top:
+              # "Your application details were updated to match your account settings."
+              # NOTE: for some reason infoChanged seems to be getting true even when the info didn't change...
+              # console.log('and our info changed!')
       ]
     })
     .state('dahlia.short-form-application.welcome-back', {
@@ -1077,27 +1086,6 @@
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
-        ]
-    })
-    # NOTE: MAY DELETE SOON?
-    .state('dahlia.short-form-application.choose-account-settings', {
-      url: '/choose-account-settings'
-      views:
-        'container@':
-          templateUrl: 'short-form/templates/choose-account-settings.html'
-          controller: 'ShortFormApplicationController'
-      resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
-        ]
-        $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.ACCOUNT_SETTINGS')
-        ]
-      onEnter: [
-        '$state', 'ShortFormApplicationService',
-        ($state, ShortFormApplicationService) ->
-          if _.isEmpty(ShortFormApplicationService.application)
-            $state.go('dahlia.my-applications')
         ]
     })
 

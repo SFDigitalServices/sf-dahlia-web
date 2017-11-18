@@ -96,6 +96,17 @@ ShortFormApplicationController = (
   $scope.atContinuePreviousDraft = ->
     $state.current.name == "dahlia.short-form-application.continue-previous-draft"
 
+  $scope.continueDraftHasUpdatedInfo = (field) ->
+    current = $scope.applicant
+    old = $scope.application.overwrittenApplicantInfo
+    if field == 'name'
+      fields = ['firstName', 'middleName', 'lastName']
+      !_.isEqual(_.pick(current, fields), _.pick(old, fields))
+    else if field == 'dob'
+      currentDOB = "#{current.dob_day}/#{current.dob_month}/#{current.dob_year}"
+      oldDOB = "#{old.dob_day}/#{old.dob_month}/#{old.dob_year}"
+      currentDOB != oldDOB
+
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
 
@@ -724,6 +735,7 @@ ShortFormApplicationController = (
       # go to Create Account without tracking Form Success
       $scope.go('dahlia.short-form-application.create-account')
 
+  # used for the welcome-back sign in
   $scope.signIn = ->
     form = $scope.form.signIn
     # have to manually set this because it's an ng-form
@@ -738,10 +750,10 @@ ShortFormApplicationController = (
           form.$setUntouched()
           form.$setPristine()
           ShortFormApplicationService.signInSubmitApplication(
-            type: 'review-sign-in'
+            type: 'welcome-back'
             loggedInUser: AccountService.loggedInUser
-            submitCallback: ->
-              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'sign-in'})
+            submitCallback: (changed) ->
+              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name', {loginMessage: 'sign-in', infoChanged: changed})
           )
       ).catch( ->
         $scope.handleErrorState()

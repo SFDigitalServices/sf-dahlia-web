@@ -562,6 +562,7 @@
         "TRANS_MALE": "Trans Male",
         "UNCLE": "Uncle",
         "UPDATE": "Update",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Updated based on your account settings.",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "UPLOAD_ADDITIONAL_PROOF": "Upload Additional Proof",
@@ -722,7 +723,6 @@
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
     },
     "PAGE_TITLE": {
-        "ACCOUNT_SETTINGS": "Account Settings",
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
