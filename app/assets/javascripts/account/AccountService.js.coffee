@@ -143,9 +143,6 @@ AccountService = (
       Service.accountExists = false
     )
 
-  Service.shortFormAccountExists = ->
-    Service.accountExists
-
   Service.signOut = ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
@@ -318,11 +315,6 @@ AccountService = (
 
   Service.afterUserTokenValidationTimeout = ->
     Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
-
-  Service.emailAlreadyInUse = (email = '') ->
-    return email
-    # return false if !email
-
 
   Service.DOBValid = ShortFormDataService.DOBValid
 

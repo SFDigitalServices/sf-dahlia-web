@@ -741,7 +741,7 @@ ShortFormApplicationController = (
       else
         ShortFormNavigationService.isLoading(true)
         AccountService.checkForAccount($scope.applicant.email).then ->
-          if AccountService.shortFormAccountExists()
+          if AccountService.accountExists
             $scope.goToAndTrackFormSuccess('dahlia.short-form-application.welcome-back')
           else
             $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
