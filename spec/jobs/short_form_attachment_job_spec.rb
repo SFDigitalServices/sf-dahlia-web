@@ -21,9 +21,13 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
       args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 200)
       id = application_id
-      expect(ShortFormService).to receive(:get).with(id).and_return(application)
-      expect(ShortFormService).to receive(:attach_file).with(*args).and_return(response)
-      perform_enqueued_jobs { job }
+      expect_any_instance_of(Force::ShortFormService)
+        .to receive(:get).with(id).and_return(application)
+      expect_any_instance_of(Force::ShortFormService)
+        .to receive(:attach_file).with(*args).and_return(response)
+      VCR.use_cassette('force/initialize') do
+        perform_enqueued_jobs { job }
+      end
       # check that file has now been marked as delivered
       file.reload
       expect(file.file).to be_nil
@@ -35,9 +39,13 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
       args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 500)
       id = application_id
-      expect(ShortFormService).to receive(:get).with(id).and_return(application)
-      expect(ShortFormService).to receive(:attach_file).with(*args).and_return(response)
-      perform_enqueued_jobs { job }
+      expect_any_instance_of(Force::ShortFormService)
+        .to receive(:get).with(id).and_return(application)
+      expect_any_instance_of(Force::ShortFormService)
+        .to receive(:attach_file).with(*args).and_return(response)
+      VCR.use_cassette('force/initialize') do
+        perform_enqueued_jobs { job }
+      end
       # check that file has now been marked with error
       file.reload
       # file.file should still be preserved
