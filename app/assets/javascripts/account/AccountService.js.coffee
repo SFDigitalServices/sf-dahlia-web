@@ -168,7 +168,6 @@ AccountService = (
     )
 
   Service.updateAccount = (infoType) ->
-    # have to later manually call overlay.stop() since this update doesn't result in a stateChange
     Service.clearAccountMessages()
     if infoType == 'email'
       params =
@@ -177,7 +176,6 @@ AccountService = (
       $http.put('/api/v1/auth', params).success((data) ->
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       ).error((response) ->
-        bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
           Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")

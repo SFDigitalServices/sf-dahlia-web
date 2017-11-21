@@ -131,7 +131,7 @@ AccountController = (
     form = $scope.form.passwordReset
     if form.$valid
       AnalyticsService.trackFormSuccess('Accounts')
-      $scope.submitDisabled = false
+      $scope.submitDisabled = true
       AccountService.requestPasswordReset().then( (success) ->
         $scope.submitDisabled = false
       )
