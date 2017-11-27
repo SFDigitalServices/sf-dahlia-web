@@ -571,10 +571,12 @@ do ->
         scope.validateCommunityEligibility()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview')
 
-      it 'expects communityScreeningInvalid to be marked true if applicant answered No to screening question', ->
+      it 'expects a community eligibility error if applicant answered No to screening question', ->
         scope.application.answeredCommunityScreening = 'No'
+        scope.eligibilityErrors = []
+        scope.communityEligibilityErrorMsg = ['At least one member of your household must be a Veteran']
         scope.validateCommunityEligibility()
-        expect(scope.communityScreeningInvalid).toEqual true
+        expect(scope.eligibilityErrors).toEqual scope.communityEligibilityErrorMsg
 
     describe 'checkForRentBurdenFiles', ->
       describe 'with rent burden opted out', ->
