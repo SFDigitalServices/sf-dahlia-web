@@ -39,10 +39,11 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
   review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
   review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="home-address"
-    | {{applicant.home_address.address1}}
-    br
-    ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
-    | {{applicant.home_address.zip}}
+    div ng-if="applicant.home_address.address1"
+      | {{applicant.home_address.address1}}
+      br
+      ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
+      | {{applicant.home_address.zip}}
 
   review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="mailing-address" ng-if="applicant.hasAltMailingAddress"
     | {{applicant.mailing_address.address1}}

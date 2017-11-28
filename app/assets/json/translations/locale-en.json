@@ -54,7 +54,8 @@
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
-        "TITLE": "First, what's your name?"
+        "TITLE": "First, what's your name?",
+        "APP_DETAILS_UPDATED": "Your application details were updated to match your account settings."
     },
     "B2A_VERIFY_ADDRESS": {
         "TITLE": "We have located the following address. Please confirm it's correct."

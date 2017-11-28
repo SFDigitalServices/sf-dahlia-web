@@ -738,8 +738,7 @@ ShortFormApplicationService = (
         opts.submitCallback(changed)
       )
     ).error( ->
-      # there was an error retrieving your account info, please try again
-      # TODO: add some helpful message to the user
+      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
       $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
     )
 

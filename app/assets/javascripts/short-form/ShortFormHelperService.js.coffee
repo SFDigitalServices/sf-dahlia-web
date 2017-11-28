@@ -172,14 +172,18 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     return '' unless certificateNumber
     $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
 
-  Service.translateLoggedInMessage = (page) ->
+  Service.translateLoggedInMessage = (params) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
     link = $state.href('dahlia.account-settings')
     markup = null
-    if page == 'b1-name'
+    if params.page == 'b1-name' && params.reset
+      nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
+      detailsUpdated = $translate.instant('B1_NAME.APP_DETAILS_UPDATED')
+      markup = "#{detailsUpdated} #{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
+    if params.page == 'b1-name' && !params.reset
       nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
       markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
-    else if page == 'b2-contact'
+    else if params.page == 'b2-contact'
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)
