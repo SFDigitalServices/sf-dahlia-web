@@ -751,7 +751,11 @@ ShortFormApplicationService = (
       doubleSubmit = !! Service.application.status.match(/submitted/i)
       $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
     else
-      if $state.current.name == 'dahlia.short-form-application.welcome-back'
+      if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
+        # ... then store this setting and kick them to the new page
+        Service.addSeniorEligibilityError()
+        $state.go('dahlia.short-form-application.choose-applicant-details')
+      else if $state.current.name == 'dahlia.short-form-application.welcome-back'
         # in this special case, we send them to a unique "autofill-like" page showing their previous draft
         # we store whatever they had for primaryApplicant as it's about to be overwritten
         overwrittenApplicantInfo = angular.copy(Service.applicant)
