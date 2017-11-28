@@ -80,7 +80,6 @@ ShortFormApplicationController = (
     data =
       # will be null if the listing didn't have a screening Q
       answeredCommunityScreening: $scope.application.answeredCommunityScreening
-      resettedApp: true
     ShortFormApplicationService.resetApplicationData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
@@ -636,7 +635,7 @@ ShortFormApplicationController = (
   $scope.translateLoggedInMessage = (page) ->
     params =
       page: page
-      reset: $scope.application.resettedApp
+      infoChanged: ShortFormApplicationService.infoChanged
     ShortFormHelperService.translateLoggedInMessage(params)
 
   $scope.applicantFullName = (applicant) ->

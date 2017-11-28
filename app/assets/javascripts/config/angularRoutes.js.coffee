@@ -676,12 +676,7 @@
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-            # if $stateParams.infoChanged
-              # TODO: do something in ShortFormService / Controller so that the name page
-              # has something in $scope that knows to display the extended message at the top:
-              # "Your application details were updated to match your account settings."
-              # NOTE: for some reason infoChanged seems to be getting true even when the info didn't change...
-              # console.log('and our info changed!')
+            ShortFormApplicationService.infoChanged = $stateParams.infoChanged
       ]
     })
     .state('dahlia.short-form-application.welcome-back', {
