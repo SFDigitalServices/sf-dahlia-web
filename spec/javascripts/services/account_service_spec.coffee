@@ -37,7 +37,7 @@ do ->
     fakeShortFormApplicationService =
       applicant: {}
       importUserData: ->
-      resetUserData: jasmine.createSpy()
+      resetApplicationData: jasmine.createSpy()
     modalMock =
       open: () ->
     fakeApplicant =
@@ -143,7 +143,7 @@ do ->
 
       it 'resets user data', ->
         AccountService.signOut()
-        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(fakeShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
         expect(AccountService.loggedInUser).toEqual {}
 
     describe 'validateUser', ->

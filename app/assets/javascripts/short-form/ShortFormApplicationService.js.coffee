@@ -78,7 +78,7 @@ ShortFormApplicationService = (
     ShortFormDataService.defaultCompletedSections = Service.applicationDefaults.completedSections
   ## -------
 
-  Service.resetUserData = (data = {}) ->
+  Service.resetApplicationData = (data = {}) ->
     application = _.merge({}, Service.applicationDefaults, data)
     angular.copy(application, Service.application)
     Service.applicant = Service.application.applicant
@@ -88,7 +88,7 @@ ShortFormApplicationService = (
     Service.householdMembers = Service.application.householdMembers
     Service.initServices()
 
-  Service.resetUserData()
+  Service.resetApplicationData()
   # --- end initialization
 
   Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
@@ -771,14 +771,15 @@ ShortFormApplicationService = (
         # on submitted app the listing is loaded along with it
         ListingService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
-      Service.checkForProofPrefs(formattedApp)
+      Service.checkForProofPrefs(formattedApp) unless formattedApp.status.match(/submitted/i)
 
-    # always pull answeredCommunityScreening from the current session since that Q is answered first
-    formattedApp.answeredCommunityScreening = Service.application.answeredCommunityScreening
-
-    Service.resetUserData(formattedApp)
+    # pull answeredCommunityScreening from the current session since that Q is answered first
+    formattedApp.answeredCommunityScreening ?= Service.application.answeredCommunityScreening
+    # this will setup Service.application with the loaded data
+    Service.resetApplicationData(formattedApp)
     # one last step, reconcile any uploaded files with your saved member + preference data
-    Service.refreshPreferences('all')
+    if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
+      Service.refreshPreferences('all')
 
   Service.checkForProofPrefs = (formattedApp) ->
     proofPrefs = [
@@ -788,6 +789,7 @@ ShortFormApplicationService = (
       'antiDisplacement',
       'assistedHousing',
     ]
+    formattedApp.completedSections ?= {}
     # make sure all files are present for proof-requiring preferences, otherwise don't let them jump ahead
     _.each proofPrefs, (prefType) ->
       hasPref = formattedApp.preferences[prefType]
@@ -892,6 +894,14 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.applicationCompletionPercentage = (application) ->
+    pct = 5
+    pct += 30 if application.completedSections.You
+    pct += 25 if application.completedSections.Household
+    pct += 10 if application.completedSections.Income
+    pct += 30 if application.completedSections.Preferences
+    pct
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid

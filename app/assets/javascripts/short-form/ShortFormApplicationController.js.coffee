@@ -77,7 +77,7 @@ ShortFormApplicationController = (
     data =
       # will be null if the listing didn't have a screening Q
       answeredCommunityScreening: $scope.application.answeredCommunityScreening
-    ShortFormApplicationService.resetUserData(data)
+    ShortFormApplicationService.resetApplicationData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
     $scope.alternateContact = ShortFormApplicationService.alternateContact
@@ -838,6 +838,12 @@ ShortFormApplicationController = (
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
+
+  $scope.today = ->
+    moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+
+  $scope.applicationCompletionPercentage = (application) ->
+    ShortFormApplicationService.applicationCompletionPercentage(application)
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')

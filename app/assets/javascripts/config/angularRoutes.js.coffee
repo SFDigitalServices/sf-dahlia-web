@@ -110,7 +110,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
-              setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
             ).catch( (response) ->
               deferred.reject(response)
@@ -524,6 +524,18 @@
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
         ]
     })
+    .state('dahlia.document-checklist',{
+      url: '/document-checklist'
+      params:
+        section: null
+      views:
+        'container@':
+          templateUrl: 'pages/templates/document-checklist.html'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
+        ]
+    })
     ##########################
     # Short form application #
     ##########################
@@ -551,6 +563,8 @@
     })
     .state('dahlia.short-form-welcome.community-screening', {
       url: '/community-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'short-form/templates/layout.html'
@@ -606,6 +620,10 @@
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
                 $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+              # check if community screening has been answered
+              if listing.Reserved_community_type &&
+                ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true})
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -1008,7 +1026,7 @@
       onExit: [
         'ShortFormApplicationService',
         (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {
