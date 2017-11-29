@@ -7,6 +7,7 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
   let(:application_id) { 'ABC123' }
   let(:application) { { 'id' => 'ABC123' } }
   let(:file) { create(:uploaded_file) }
+  let(:args) { [application, file, file.descriptive_name] }
 
   subject(:job) { described_class.perform_later(application_id, file.id) }
 
@@ -18,13 +19,15 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
 
   describe '#perform' do
     it 'submits attachment file and marks it as delivered' do
-      args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 200)
-      id = application_id
       expect_any_instance_of(Force::ShortFormService)
-        .to receive(:get).with(id).and_return(application)
+        .to receive(:get)
+        .with(application_id)
+        .and_return(application)
       expect_any_instance_of(Force::ShortFormService)
-        .to receive(:attach_file).with(*args).and_return(response)
+        .to receive(:attach_file)
+        .with(*args)
+        .and_return(response)
       VCR.use_cassette('force/initialize') do
         perform_enqueued_jobs { job }
       end
@@ -36,13 +39,15 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
     end
 
     it 'logs errors if ShortFormService receives a bad response' do
-      args = [application, file, file.descriptive_name]
       response = Hashie::Mash.new(status: 500)
-      id = application_id
       expect_any_instance_of(Force::ShortFormService)
-        .to receive(:get).with(id).and_return(application)
+        .to receive(:get)
+        .with(application_id)
+        .and_return(application)
       expect_any_instance_of(Force::ShortFormService)
-        .to receive(:attach_file).with(*args).and_return(response)
+        .to receive(:attach_file)
+        .with(*args)
+        .and_return(response)
       VCR.use_cassette('force/initialize') do
         perform_enqueued_jobs { job }
       end
