@@ -145,7 +145,6 @@ ShortFormApplicationService = (
     return if _.includes([
         'choose-draft',
         'choose-applicant-details',
-        'choose-account-settings',
         'continue-previous-draft',
         'welcome-back',
       ], lastPage)
