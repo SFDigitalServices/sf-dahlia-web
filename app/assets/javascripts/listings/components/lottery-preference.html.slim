@@ -13,7 +13,7 @@
   p.c-steel
     | {{$ctrl.preference.description}}
     br
-    a.margin-right ng-href="{{$ctrl.preference.readMoreUrl}}" target="_blank"
+    a.margin-right ng-href="{{$ctrl.preference.readMoreUrl}}" target="_blank" ng-if="$ctrl.preference.readMoreUrl"
       | Read More
     a ui-sref="dahlia.document-checklist({section: $ctrl.docSection()})" ng-if="$ctrl.isPrefWithProof()"
       | View Document Checklist
