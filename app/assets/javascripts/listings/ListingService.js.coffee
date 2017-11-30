@@ -591,7 +591,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     customProofPreferences = _.remove customPreferences, (customPref) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
     Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
-    Service.listing.customProofPreferences = customProofPreferences
+    Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
   Service.getLotteryBuckets = ->
     angular.copy({}, Service.lotteryBucketInfo)
