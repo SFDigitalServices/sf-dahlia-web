@@ -15,7 +15,9 @@ ShortFormApplicationController = (
   FileUploadService,
   AnalyticsService,
   AddressValidationService,
-  AccountService
+  AccountService,
+  SharedService,
+  inputMaxLength
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -26,6 +28,7 @@ ShortFormApplicationController = (
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
   $scope.alternateContact = ShortFormApplicationService.alternateContact
+  $scope.currentCustomProofPreference = ShortFormApplicationService.currentCustomProofPreference
   $scope.householdMember = ShortFormApplicationService.householdMember
   $scope.householdMembers = ShortFormApplicationService.householdMembers
   $scope.householdIncome = ShortFormApplicationService.application.householdIncome
@@ -40,6 +43,7 @@ ShortFormApplicationController = (
   # store label values that get overwritten by child directives
   $scope.labels = {}
   $scope.customInvalidMessage = null
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -63,6 +67,8 @@ ShortFormApplicationController = (
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.submitDisabled = false
 
+  $scope.emailRegex = SharedService.emailRegex
+
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
 
@@ -71,7 +77,7 @@ ShortFormApplicationController = (
     data =
       # will be null if the listing didn't have a screening Q
       answeredCommunityScreening: $scope.application.answeredCommunityScreening
-    ShortFormApplicationService.resetUserData(data)
+    ShortFormApplicationService.resetApplicationData(data)
     $scope.applicant = ShortFormApplicationService.applicant
     $scope.preferences = ShortFormApplicationService.preferences
     $scope.alternateContact = ShortFormApplicationService.alternateContact
@@ -343,10 +349,23 @@ ShortFormApplicationController = (
     # after Live/Work, go to preferences-programs
     $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
+  ##### Custom Preferences Logic ####
   # this called after preferences programs
   $scope.checkForCustomPreferences = ->
     if $scope.listing.customPreferences.length > 0
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
+    else
+      $scope.checkForCustomProofPreferences()
+
+  $scope.checkForCustomProofPreferences = ->
+    nextIndex = null
+    currentIndex = parseInt($state.params.prefIdx)
+    if currentIndex >= 0 && currentIndex < $scope.listing.customProofPreferences.length - 1
+      nextIndex = currentIndex + 1
+    else if isNaN(currentIndex) && $scope.listing.customProofPreferences.length
+      nextIndex = 0
+    if nextIndex != null
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-proof-preferences', {prefIdx: nextIndex})
     else
       $scope.checkIfNoPreferencesSelected()
 
@@ -472,6 +491,10 @@ ShortFormApplicationController = (
   $scope.validateHouseholdEligibility = (match) ->
     $scope.clearEligibilityErrors()
     form = $scope.form.applicationForm
+    # skip the check if we're doing an incomeMatch and the applicant has vouchers
+    if match == 'incomeMatch' && $scope.application.householdVouchersSubsidies == 'Yes'
+      $scope.goToLandingPage('Preferences')
+      return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
         eligibility = response.data
@@ -502,9 +525,6 @@ ShortFormApplicationController = (
     if eligibility.incomeMatch
       $scope.goToLandingPage('Preferences')
     else
-      # if the applicant has vouchers, being "too low" is ok
-      if error == 'too low' && $scope.application.householdVouchersSubsidies == 'Yes'
-        return $scope.goToLandingPage('Preferences')
       $scope._determineIncomeEligibilityErrors(error)
       $scope.handleErrorState()
 
@@ -819,6 +839,12 @@ ShortFormApplicationController = (
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
 
+  $scope.today = ->
+    moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+
+  $scope.applicationCompletionPercentage = (application) ->
+    ShortFormApplicationService.applicationCompletionPercentage(application)
+
   $scope.$on 'auth:login-error', (ev, reason) ->
     $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
     $scope.handleErrorState()
@@ -846,7 +872,9 @@ ShortFormApplicationController.$inject = [
   'ShortFormHelperService', 'FileUploadService',
   'AnalyticsService',
   'AddressValidationService',
-  'AccountService'
+  'AccountService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular

@@ -1,4 +1,6 @@
 require 'rails_helper'
+require 'json'
+require 'ostruct'
 
 describe ShortFormService do
   data = JSON.parse(File.read("#{Rails.root}/spec/support/sample-applications.json"))
@@ -23,6 +25,21 @@ describe ShortFormService do
       expect(autofilled[:status]).to eq('Draft')
       expect(autofilled[:answeredCommunityScreening]).to be_nil
       expect(autofilled[:shortFormPreferences]).to eq([])
+    end
+  end
+
+  describe '#attach_file' do
+    it 'should call an api_post with correct body' do
+      allow(ShortFormService).to receive(:api_post_with_headers)
+        .and_return(file: 'file')
+      allow(ShortFormService).to receive(:_short_form_pref)
+        .and_return('ID')
+      allow(Base64).to receive(:encode64).and_return('body')
+
+      application = { 'id' => '1235' }
+      file = OpenStruct.new(file: {}, document_type: 'type', content_type: 'type')
+      response = ShortFormService.attach_file(application, file, 'filename')
+      expect(response).to eq(file: 'file')
     end
   end
 end

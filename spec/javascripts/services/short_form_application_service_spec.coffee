@@ -797,11 +797,11 @@ do ->
           .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->
-        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
     describe 'loadAccountApplication', ->
       beforeEach ->
@@ -959,3 +959,16 @@ do ->
           ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
           lastPageRoute = 'dahlia.short-form-application.review-terms'
           expect($state.go).toHaveBeenCalledWith(lastPageRoute)
+
+    describe 'applicationCompletionPercentage', ->
+      it 'calculates a baseline percentage of 5% for new applications', ->
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 5
+
+      it 'calculates a percentage based on completedSections', ->
+        ShortFormApplicationService.application.completedSections = {
+          You: true # 30%
+          Household: true # 25%
+        }
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 60

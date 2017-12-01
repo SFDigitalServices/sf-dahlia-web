@@ -91,7 +91,7 @@ do ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
-      resetUserData: ->
+      resetApplicationData: ->
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -109,6 +109,7 @@ do ->
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
+    fakeSharedService = {}
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -144,7 +145,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -165,6 +166,8 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        SharedService: fakeSharedService
+        inputMaxLength: {}
       return
     )
 
@@ -310,6 +313,11 @@ do ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+      it 'skips ahead if incomeMatch and vouchers', ->
+        scope.listing = fakeListing
+        scope.application.householdVouchersSubsidies = 'Yes'
+        scope.validateHouseholdEligibility('incomeMatch')
+        expect(state.go).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -403,16 +411,6 @@ do ->
           fakeIncomeOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
             value: fakeShortFormApplicationService.calculateHouseholdIncome()
-
-        it 'skips errors if applicant has vouchers and income is too low', ->
-          scope.application.householdVouchersSubsidies = 'Yes'
-          scope._respondToIncomeEligibilityResults(eligibility, 'too low')
-          expect(state.go).toHaveBeenCalled()
-
-        it 'proceeds with errors even if applicant has vouchers, if income is too high', ->
-          scope.application.householdVouchersSubsidies = 'No'
-          scope._respondToIncomeEligibilityResults(eligibility, 'too high')
-          expect(scope.eligibilityErrors).not.toEqual([])
 
         it 'expects income section to be invalidated', ->
           scope._respondToIncomeEligibilityResults(eligibility, error)
@@ -631,8 +629,8 @@ do ->
       beforeEach ->
         scope.resetAndStartNewApp()
 
-      it 'calls resetUserData on ShortFormApplicationService', ->
-        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+      it 'calls resetApplicationData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
       it 'unsets application autofill value', ->
         expect(scope.application.autofill).toBeUndefined()
@@ -646,6 +644,29 @@ do ->
           scope.listing.customPreferences = [{preferenceName: 'customPreference', listingPreferenceID: '123456'}]
           scope.checkForCustomPreferences()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
+
+    describe 'checkForCustomProofPreferences', ->
+      beforeEach ->
+        scope.listing.customProofPreferences = ['pref1', 'pref2']
+
+      describe 'checking custom proof preferences for the first time', ->
+        it 'sends user to custom proof pref page with index 0', ->
+          state.params.prefIdx = NaN
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 0})
+
+      describe 'paging thru custom preferences', ->
+        it 'sends user to custom proof pref page with the subsequent index', ->
+          state.params.prefIdx = 0
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 1})
+
+      describe 'at last page of custom preferences', ->
+        it 'checks if there are no preferences selected', ->
+          state.params.prefIdx = 1
+          scope.checkIfNoPreferencesSelected = jasmine.createSpy()
+          scope.checkForCustomProofPreferences()
+          expect(scope.checkIfNoPreferencesSelected).toHaveBeenCalled()
 
     describe 'claimedCustomPreference', ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
