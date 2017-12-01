@@ -220,6 +220,9 @@ ListingController = (
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
 
+  $scope.getListingUnits = ->
+    ListingService.getListingUnits()
+
   $scope.getListingAMI = ->
     ListingService.getListingAMI()
 
