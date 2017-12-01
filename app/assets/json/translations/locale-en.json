@@ -163,6 +163,10 @@
         "TITLE": "Let's move to income."
     },
     "DOCUMENT_CHECKLIST": {
+        "ALICE_GRIFFITH_1": "You'll need 1 (one) of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+        "ALICE_GRIFFITH_OPT_1": "Letter from SFHA verifying applicant lived at the site on or after October 26, 2010",
+        "ALICE_GRIFFITH_OPT_2": "A California ID or Driver’s License showing Alice Griffith address",
+        "ALICE_GRIFFITH_TITLE": "Alice Griffith Housing Development Resident",
         "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
@@ -677,6 +681,7 @@
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
+        "LOTTERY_NUMBER_NOT_VALID": "Please enter a valid lottery number.",
         "LOTTERY_RESULTS": "Lottery Results",
         "LOTTERY_RESULTS_PDF_LINK": "Download Lottery Results PDF",
         "NEXT_STEPS_P1": "Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.",

@@ -484,7 +484,8 @@ ShortFormApplicationService = (
     # true if no preferences are selected at all
     prefList = ShortFormDataService.preferences
     customPrefs = _.map(Service.listing.customPreferences, 'listingPreferenceID')
-    prefList = prefList.concat(customPrefs)
+    customProofPrefs = _.map(Service.listing.customProofPreferences, 'listingPreferenceID')
+    prefList = prefList.concat(customPrefs, customProofPrefs)
     return !_.some(_.pick(Service.preferences, prefList))
 
   Service.claimedCustomPreference = (preference) ->
