@@ -163,6 +163,10 @@
         "TITLE": "Let's move to income."
     },
     "DOCUMENT_CHECKLIST": {
+        "ALICE_GRIFFITH_1": "You'll need 1 (one) of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+        "ALICE_GRIFFITH_OPT_1": "Letter from SFHA verifying applicant lived at the site on or after October 26, 2010",
+        "ALICE_GRIFFITH_OPT_2": "A California ID or Driver’s License showing Alice Griffith address",
+        "ALICE_GRIFFITH_TITLE": "Alice Griffith Housing Development Resident",
         "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
