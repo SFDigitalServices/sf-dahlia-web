@@ -682,6 +682,7 @@
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
+        "LOTTERY_NUMBER_NOT_VALID": "Please enter a valid lottery number.",
         "LOTTERY_RESULTS": "Lottery Results",
         "LOTTERY_RESULTS_PDF_LINK": "Download Lottery Results PDF",
         "NEXT_STEPS_P1": "Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.",
