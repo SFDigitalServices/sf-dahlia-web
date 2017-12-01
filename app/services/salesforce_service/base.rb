@@ -12,7 +12,6 @@ module SalesforceService
     self.retries = 0
     self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
     self.force = false
-    self.unit_data_tries = 0
 
     def self.client
       Restforce.new(timeout: timeout)
@@ -37,14 +36,6 @@ module SalesforceService
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, apex_endpoint, params)
-      if endpoint.include?('/Units')
-        if self.unit_data_tries % 3 < 2
-          self.unit_data_tries += 1
-          raise Faraday::TimeoutError
-        else
-          self.unit_data_tries += 1
-        end
-      end
       process_response(response, parse_response)
     rescue Restforce::UnauthorizedError,
            Restforce::AuthenticationError,
