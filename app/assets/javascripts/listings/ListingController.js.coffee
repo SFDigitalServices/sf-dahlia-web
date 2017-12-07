@@ -39,6 +39,7 @@ ListingController = (
   $scope.whatHappens = false
   # for searching lottery number
   $scope.lotterySearchNumber = ''
+  $scope.lotteryNumberFormatValid = true
   $scope.lotteryRankingSubmitted = false
   $scope.loading = ListingService.loading
   $scope.error = ListingService.error
@@ -167,11 +168,13 @@ ListingController = (
 
   # Temp function to display ranking markup
   $scope.showLotteryRanking = ->
+    $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
     if $scope.lotterySearchNumber == ''
+      $scope.lotteryNumberFormatValid = false
       $scope.lotteryRankingSubmitted = false
     else
       $scope.loading.lotteryRank = true
-      $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
+      $scope.lotteryNumberFormatValid = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
         $scope.lotteryRankingSubmitted = true
@@ -219,6 +222,9 @@ ListingController = (
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
+
+  $scope.getListingUnits = ->
+    ListingService.getListingUnits()
 
   $scope.getListingAMI = ->
     ListingService.getListingAMI()

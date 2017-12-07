@@ -61,6 +61,7 @@ do ->
         allListingUnitsAvailable: jasmine.createSpy()
         listingHasOnlySROUnits: jasmine.createSpy()
         getListingAMI: jasmine.createSpy()
+        getListingUnits: jasmine.createSpy()
       $provide.value 'ListingService', fakeListingService
       fakeIncomeCalculatorService.resetIncomeSources = jasmine.createSpy()
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
@@ -345,6 +346,11 @@ do ->
       it 'calls ListingService.listingHasOnlySROUnits', ->
         scope.listingHasOnlySROUnits()
         expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
+
+    describe '$scope.getListingUnits', ->
+      it 'calls ListingService.getListingUnits', ->
+        scope.getListingUnits()
+        expect(fakeListingService.getListingUnits).toHaveBeenCalled()
 
     describe '$scope.getListingAMI', ->
       it 'calls ListingService.getListingAMI', ->
