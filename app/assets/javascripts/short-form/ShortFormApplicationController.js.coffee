@@ -16,6 +16,7 @@ ShortFormApplicationController = (
   AnalyticsService,
   AddressValidationService,
   AccountService,
+  ListingService,
   SharedService,
   inputMaxLength
 ) ->
@@ -27,6 +28,7 @@ ShortFormApplicationController = (
   $scope.chosenApplicationToKeep = null
   $scope.applicant = ShortFormApplicationService.applicant
   $scope.preferences = ShortFormApplicationService.preferences
+  $scope.preferenceMap = ListingService.preferenceMap
   $scope.alternateContact = ShortFormApplicationService.alternateContact
   $scope.currentCustomProofPreference = ShortFormApplicationService.currentCustomProofPreference
   $scope.householdMember = ShortFormApplicationService.householdMember
@@ -873,6 +875,7 @@ ShortFormApplicationController.$inject = [
   'AnalyticsService',
   'AddressValidationService',
   'AccountService',
+  'ListingService',
   'SharedService',
   'inputMaxLength'
 ]
