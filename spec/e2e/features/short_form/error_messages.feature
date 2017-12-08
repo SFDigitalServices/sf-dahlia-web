@@ -13,10 +13,6 @@ Feature: Short Form Application
       When I fill out the Name page with an invalid DOB
       Then I should see DOB field errors on the Name page
 
-      # error: using non-latin characters
-      When I fill out the Name page with non-latin characters
-      Then I should see an error about providing answers in English on the Name page
-
       # maxlength check: name should cut off
       When I fill out the Name page as "Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz"
       And I navigate to the "You" section

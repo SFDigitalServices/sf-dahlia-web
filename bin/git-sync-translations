@@ -8,33 +8,30 @@
 # the git operations.
 ######
 
-# reset the translations branch to == multilingual
-# NOTE: can change this back to "master" once multilingual is merged
-git checkout multilingual
+# reset the translations branch to == master
+git checkout master
 git branch -D translations
 git checkout -b translations
 git push origin translations --force
 
-# sync translation terms Github (translations branch) -> POE
-# NOTE: Anything *new* that has been added to locale-en.json will get pulled into POE as a new term
-# but it won't overwrite anything, to preserve any updates the content editors may have made.
-# Before doing this: Check any new updates to existing strings in locale-en.json
-# e.g. from a content update feature that has been merged to master, and make sure that content
-# has been updated in POEditor.
+# sync translation terms Github <-> POE
 curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=en&operation=sync_terms_and_translations
 
-# commit latest translations from POE -> Github for all 4 languages
-# - an individual commit will be made on the translations branch per curl / language
+### enable when other languages have been translated
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=es&operation=sync_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=zh-CN&operation=sync_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=tl&operation=sync_terms_and_translations
+
+# commit latest translations from POE -> Github
 curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=en&operation=export_terms_and_translations
-curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=es-419&operation=export_terms_and_translations
-curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=tl&operation=export_terms_and_translations
-curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=zh-TW&operation=export_terms_and_translations
+
+### enable when other languages have been translated
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=es&operation=export_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=tl&operation=export_terms_and_translations
+# curl https://poeditor.com/api/webhooks/github?api_token=925b1c73349548271f2f228f8a7b3ce1&id_project=57183&language=zh-CN&operation=export_terms_and_translations
 
 # re-sort the file and push again
 git pull origin translations
 grunt translations
 git commit app/assets/json/translations/* -m '[translations] sorted translations after POEditor merge'
 git push origin translations
-
-# start the process of opening the PR; view the diff
-open https://github.com/Exygy/sf-dahlia-web/compare/multilingual...translations?expand=1

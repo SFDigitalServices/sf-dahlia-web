@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService', 'GoogleTranslateService',
+  'SharedService'
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService, GoogleTranslateService) ->
+  SharedService) ->
 
     timeoutRetries = 2
     ngMeta.init()
@@ -40,11 +40,6 @@
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
       bsLoadingOverlayService.start()
-
-      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
-
-      GoogleTranslateService.loadAPI().then ->
-        GoogleTranslateService.setLanguage(language)
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
@@ -95,8 +90,6 @@
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
-
-      SharedService.updateAlternateLanguageLinks()
 
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''

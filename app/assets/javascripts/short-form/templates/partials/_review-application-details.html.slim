@@ -81,7 +81,7 @@ div ng-if="prioritiesSelectedExists()"
       | {{application.hasDevelopmentalDisability}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}" identifier="adaPrioritiesSelected"
       span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
-        | {{priorityOption[1] | translate}}
+        | {{priorityOption[1]}}
         br
       span ng-if="application.adaPrioritiesSelected.None"
         | {{'T.NO' | translate}}

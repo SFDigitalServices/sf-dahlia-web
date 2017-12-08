@@ -19,10 +19,19 @@
 
   .app-inner.inset
     .form-group
-      label.form-label.caps.padding-bottom--half id="referral_label"
+      label.form-label.caps id="referral_label"
         | {{'LABEL.HOW_DID_YOU_HEAR_ABOUT_THIS' | translate}}
 
       .checkbox-group role="group"
-        checkbox-form-item ng-repeat="referralOption in listing_referral_options" name="referral" option="{{referralOption[0]}}" label="{{referralOption[1] | translate}}"
+        checkbox-form-item name='referral' option='Newspaper'
+        checkbox-form-item name='referral' option='MOHCD Website'
+        checkbox-form-item name='referral' option='Developer Website'
+        checkbox-form-item name='referral' option='Flyer'
+        checkbox-form-item name='referral' option='Email Alert'
+        checkbox-form-item name='referral' option='Friend'
+        checkbox-form-item name='referral' option='Housing Counselor'
+        checkbox-form-item name='referral' option='Radio Ad'
+        checkbox-form-item name='referral' option='Bus Ad'
+        checkbox-form-item name='referral' option='Other'
 
   short-form-save-and-submit

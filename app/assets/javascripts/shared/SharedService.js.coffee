@@ -4,7 +4,6 @@
 
 SharedService = ($http, $state, $window, $document) ->
   Service = {}
-  Service.alternateLanguageLinks = []
   Service.assetPaths = STATIC_ASSET_PATHS
   Service.housingCounselors =
     all: []
@@ -45,18 +44,6 @@ SharedService = ($http, $state, $window, $document) ->
     body = angular.element(document.body)
     Service.focusOnElement(body)
 
-  Service.updateAlternateLanguageLinks = ->
-    angular.copy([], Service.alternateLanguageLinks)
-    currentState = $state.current.name
-    _.each ['en', 'es', 'tl', 'zh'], (lang) ->
-      params = _.merge(angular.copy($state.current.params), {lang: lang})
-      # because the homepage 'en' route gives a blank result when using {absolute: true}
-      # we just use the relative href and append to the root_url printed by Rails in application.html
-      href = $state.href($state.current.name, params)
-      Service.alternateLanguageLinks.push(
-        lang: lang
-        href: href.slice(1)
-      )
   Service.getHousingCounselors = ->
     housingCounselorJsonPath = Service.assetPaths['housing_counselors.json']
     # if we've already loaded this asset, no need to reload

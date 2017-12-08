@@ -17,10 +17,10 @@
       .radio-group role="radiogroup" aria-label="{{'LABEL.ALTERNATE_CONTACT' | translate}}"
 
         radio-block-item ng-repeat="option in alternate_contact_options" value='{{option[0]}}' user='alternateContact' name='alternateContactType' ng-required='true' on-change='invalidateAltContactTypeForm' aria-describedby="alternateContactType_error"
-          | {{option[1] | translate}}
+          | {{option[1]}}
 
         .radio-block ng-show="alternateContact.alternateContactType == 'Other'"
-          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="{{'LABEL.WHAT_IS_YOUR_RELATIONSHIP' | translate}}" maxlength="{{::INPUT_MAX_LENGTH.alternateContactTypeOther}}" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'" aria-describedby="alternate_contact_type_other_error"
+          input#alternate_contact_type_other ng-model="alternateContact.alternateContactTypeOther" name="alternateContactTypeOther" placeholder="What is your relationship?" maxlength="{{::INPUT_MAX_LENGTH.alternateContactTypeOther}}" type="text" ng-class="{ error: inputInvalid('alternateContactTypeOther') }" ng-required="alternateContact.alternateContactType == 'Other'" aria-describedby="alternate_contact_type_other_error"
           small.error#alternate_contact_type_other_error ng-show="inputInvalid('alternateContactTypeOther')"
             | {{'ERROR.RELATIONSHIP' | translate}}
 
