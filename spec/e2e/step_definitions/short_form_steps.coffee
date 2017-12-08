@@ -50,27 +50,12 @@ module.exports = ->
     url = "/listings/#{listingId}/apply/name"
     getUrl(url)
 
-  @Given 'I go to the welcome page of the Test Listing application', ->
-    url = "/listings/#{listingId}/apply-welcome/intro"
-    getUrl(url)
-
   @Given 'I have a confirmed account', ->
     # confirm the account
     browser.ignoreSynchronization = true
     url = "/api/v1/account/confirm/?email=#{sessionEmail}"
     getUrl(url)
     browser.ignoreSynchronization = false
-
-  @When /^I select "([^"]*)" as my language$/, (language) ->
-    switch language
-      when "Spanish"
-        element(By.id('submit-es')).click()
-      when "English"
-        element(By.id('submit-en')).click()
-
-  @When 'I continue past the welcome overview', ->
-    # welcome overview
-    submitPage()
 
   @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
@@ -465,9 +450,6 @@ module.exports = ->
   @When 'I use the browser back button', ->
     browser.navigate().back()
 
-  @When 'I go to the listings page in Spanish', ->
-    getUrl('/es/listings')
-
   @When /^I navigate to the "([^"]*)" section$/, (section) ->
     element.all(By.css('.progress-nav'))
       .all(By.linkText(section.toUpperCase()))
@@ -494,10 +476,6 @@ module.exports = ->
 
   @When "I don't fill out the Name page", ->
     submitPage()
-
-  @When "I fill out the Name page with non-latin characters", ->
-    element(By.model('applicant.firstName')).sendKeys('Jane中文')
-    element(By.id('submit')).click()
 
   @When "I fill out the Name page with an invalid DOB", ->
     Pages.Name.fill({
@@ -603,14 +581,6 @@ module.exports = ->
   @Then 'I should see my draft application with a Continue Application button', ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
-
-  @Then /^I should see "([^"]*)" selected in the translate bar language switcher$/, (language) ->
-    activeLang = element(By.cssContainingText('.translate-bar li a.active', language))
-    @expect(activeLang.isPresent()).to.eventually.equal(true)
-
-  @Then 'I should be redirected back to the listings page in English', ->
-    # we check that it is at the ":3000/listings" URL rather than ":3000/es/listings"
-    browser.wait(EC.urlContains(':3000/listings'), 6000)
 
   @Then 'I should be on the Choose Draft page', ->
     expectAlertBox(@, 'Please choose which version of the application you want to use.')
@@ -804,10 +774,6 @@ module.exports = ->
   @Then 'I should see name field errors on the Name page', ->
     expectAlertBox(@)
     expectError(@, 'Please enter a First Name')
-
-  @Then 'I should see an error about providing answers in English on the Name page', ->
-    expectAlertBox(@)
-    expectError(@, 'Please provide your answers in English')
 
   @Then 'I should see DOB field errors on the Name page', ->
     expectAlertBox(@)
