@@ -6,13 +6,13 @@ require 'support/jasmine'
 describe 'ShortForm API' do
   login_user
   listing_id = 'a0W0P00000DZTkAUAX' # 280 Fell
-  application_show_id = 'a0o1b0000006S80'
+  application_show_id = 'a0o0P00000FEUwC'
 
   # WARNING: application will be deleted!
   # Hint: clone an existing application and use that id
-  application_delete_id = 'a0o1b0000006S7q'
-  application_update_id = 'a0o0P0000093OZE'
-  application_claim_id = 'a0o0P0000093OZE'
+  application_delete_id = 'a0o0x0000000a8Y'
+  application_update_id = 'a0o0P00000FEUwH'
+  application_claim_id = 'a0o0P00000FEUwH'
 
   ### generate Jasmine fixtures
   describe 'validate_household' do
@@ -140,6 +140,10 @@ describe 'ShortForm API' do
         .to receive(:delete_draft_application).and_return(true)
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:user_can_claim?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:user_can_access?).and_return(true)
+      allow_any_instance_of(Api::V1::ShortFormController)
+        .to receive(:submitted?).and_return(false)
     end
 
     it 'returns success response' do
