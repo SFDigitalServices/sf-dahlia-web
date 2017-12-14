@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:54:01 GMT
+      - Wed, 13 Dec 2017 19:23:16 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,14 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin; upgrade-insecure-requests
+      - upgrade-insecure-requests
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=v2Msn0IdSG24XI4DQD0I2g;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:54:01 GMT
+      - BrowserId=qbicMHCMRr6GqwC897H1tA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        11-Feb-2018 19:23:16 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
-      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503784442055","signature":"gy8tzDgZHTjrJLITJJTqOB6Gs3qZCU8+yqXiYhWTqQk="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs95.my.salesforce.com","id":"https://test.salesforce.com/id/00D0x0000008ja8EAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1513192997085","signature":"a0ngtbFoUQCwlcWgyrniAaVQUKPasrsmuHsI6/suoMs="}'
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:54:02 GMT
+  recorded_at: Wed, 13 Dec 2017 19:23:17 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000DZTkAUAX?childrenUnder6=0&householdsize=10&incomelevel=10000.0
+    uri: https://sfhousing--full.cs95.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000DZTkAUAX?childrenUnder6=0&householdsize=10&incomelevel=10000.0
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +71,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:54:02 GMT
+      - Wed, 13 Dec 2017 19:23:17 GMT
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
-        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1b0000000hVg";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
+        pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
+        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0x0000008ja8";
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=XmSRbLcXSb-XsH8y54OH6A;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:54:02 GMT
+      - BrowserId=neSCpD_aThe0VzIPMxrLCA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        11-Feb-2018 19:23:17 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -98,5 +96,5 @@ http_interactions:
       string: '{"listingId":"a0W0P00000DZTkAUAX","incomeMatch":false,"incomeEligibilityResult":"Too
         Low","householdMatch":false,"householdEligibilityResult":"Too Big"}'
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:54:02 GMT
+  recorded_at: Wed, 13 Dec 2017 19:23:17 GMT
 recorded_with: VCR 3.0.3

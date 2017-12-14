@@ -1,38 +1,38 @@
 li
   a ui-sref="dahlia.listings"
-    | Browse Properties
+    | {{ "NAV.BROWSE_PROPERTIES" | translate}}
 li
   a ui-sref="dahlia.favorites"
-    | My Favorites
+    | {{ "NAV.MY_FAVORITES" | translate}}
 li
   a ui-sref="dahlia.get-assistance"
-    | Get Assistance
+    | {{ "NAV.GET_ASSISTANCE" | translate}}
 li ng-if="!loggedIn()"
   a ui-sref="dahlia.sign-in"
-    | Sign In
+    | {{ "NAV.SIGN_IN" | translate}}
 li(has-dropdown ng-if="loggedIn()")
   a ui-sref="dahlia.my-account" dropdown-toggle="#my-account-dropdown"
-    | My Account
+    | {{ "NAV.MY_ACCOUNT" | translate}}
   ul#my-account-dropdown.dropdown
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-account"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-profile"
-        | My Dashboard
+        | {{ "NAV.MY_DASHBOARD" | translate}}
     li.dropdown-item.has-icon
       a ui-sref="dahlia.my-applications"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-application"
-        | My Applications
+        | {{ "NAV.MY_APPLICATIONS" | translate}}
     li.dropdown-item.has-icon
       a ui-sref="dahlia.account-settings"
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-settings"
-        | Account Settings
+        | {{ "NAV.ACCOUNT_SETTINGS" | translate}}
     li.dropdown-item
       / TODO: make into a button, properly styled
       a ng-click="signOut()"
-        | Sign Out
+        | {{ "NAV.SIGN_OUT" | translate}}

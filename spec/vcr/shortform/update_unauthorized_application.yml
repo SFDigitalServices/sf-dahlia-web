@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:54:21 GMT
+      - Wed, 13 Dec 2017 19:23:34 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,14 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin; upgrade-insecure-requests
+      - upgrade-insecure-requests
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=yZqvL9iTQNS9xLT1O8UgpA;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:54:21 GMT
+      - BrowserId=Kyk8qfUmTaiJCq3MBYMfAA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        11-Feb-2018 19:23:34 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
-      - no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D1b0000000hVgEAI/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1503784461498","signature":"CiCjjNXJPx9w5rT7218gt8SIjef1HsejbWTnd3y2Cbc="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs95.my.salesforce.com","id":"https://test.salesforce.com/id/00D0x0000008ja8EAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1513193015241","signature":"IV8vOawxHODi9KJyPGbMWNKKIXQbsEBzPErd+SlCsB0="}'
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:54:21 GMT
+  recorded_at: Wed, 13 Dec 2017 19:23:35 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/shortForm/
+    uri: https://sfhousing--full.cs95.my.salesforce.com/services/apexrest/shortForm/
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +71,18 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Sat, 26 Aug 2017 21:54:21 GMT
+      - Wed, 13 Dec 2017 19:23:35 GMT
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; max-age=86400;
-        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1b0000000hVg";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
+        pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
+        report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0x0000008ja8";
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=SWsLPBaATZOLWM2zUeMFiA;Path=/;Domain=.salesforce.com;Expires=Wed,
-        25-Oct-2017 21:54:21 GMT
+      - BrowserId=l1vP9tC4Sn6wr7AoM1pbmg;Path=/;Domain=.salesforce.com;Expires=Sun,
+        11-Feb-2018 19:23:35 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Transfer-Encoding:
@@ -93,5 +91,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sat, 26 Aug 2017 21:54:21 GMT
+  recorded_at: Wed, 13 Dec 2017 19:23:35 GMT
 recorded_with: VCR 3.0.3

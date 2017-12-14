@@ -6,13 +6,15 @@ require 'support/jasmine'
 describe 'ShortForm API' do
   login_user
   listing_id = 'a0W0P00000DZTkAUAX' # 280 Fell
-  application_show_id = 'a0o1b0000006S80'
+  application_show_id = 'a0o0P00000FEUwC'
 
   # WARNING: application will be deleted!
   # Hint: clone an existing application and use that id
-  application_delete_id = 'a0o1b0000006S7q'
-  application_update_id = 'a0o0P0000093OZE'
-  application_claim_id = 'a0o0P0000093OZE'
+  application_delete_id = 'a0o0x0000000a8Y'
+
+  # Application must have draft status
+  application_update_id = 'a0o0P00000FEUwH'
+  application_claim_id = 'a0o0P00000FEUwH'
 
   ### generate Jasmine fixtures
   describe 'validate_household' do
@@ -147,7 +149,7 @@ describe 'ShortForm API' do
       file = './spec/javascripts/fixtures/json/valid-short-form-params.json'
       params = JSON.parse(File.read(file))
       params['application']['id'] = application_update_id
-      params['application']['status'] = 'draft'
+      params['application']['status'] = 'Draft'
       params = clean_json_for_vcr(params)
 
       VCR.use_cassette('shortform/update_application') do
