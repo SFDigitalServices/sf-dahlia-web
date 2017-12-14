@@ -18,7 +18,7 @@ Feature: Short Form Application - Assisted Housing Preference
       And I fill out my income as "35000"
       And I continue past the Lottery Preferences intro
       # See page when selecting public housing
-      Then I should see the Assisted Housing Preference
+      Then I should see the "Assisted Housing" preference checkbox
       And I select Assisted Housing Preference
       And I hit the Next button "1" time
       Then I should see an error about uploading proof
