@@ -8,8 +8,11 @@ do ->
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
-    $translate = {}
+    $translate =
+      use: jasmine.createSpy()
     $state =
+      params:
+        lang: undefined
       go: jasmine.createSpy()
       href: ->
       current: { name: 'dahlia' }
@@ -621,6 +624,10 @@ do ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
 
+      it 'should call $translate.use() to get current locale', ->
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect($translate.use).toHaveBeenCalled()
+
       it 'should call formatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
@@ -950,6 +957,28 @@ do ->
       it 'returns false if custom preferences were not claimed', ->
         ShortFormApplicationService.preferences = {'liveInSf': true}
         expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false
+
+    # multilingual
+    describe 'setApplicationLanguage', ->
+      it 'sets application language to the full name version of the lang param', ->
+        ShortFormApplicationService.setApplicationLanguage('es')
+        expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
+
+    describe 'getLanguageCode', ->
+      it 'returns the 2-letter code for the given language', ->
+        code = ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
+        expect(code).toEqual 'es'
+
+    describe 'switchingLanguage', ->
+      it 'returns true if user is switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'English'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual true
+
+      it 'returns false if user is not switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'Spanish'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual false
 
     describe 'sendToLastPageofApp', ->
       describe 'entering short form section that is not the last page of application', ->

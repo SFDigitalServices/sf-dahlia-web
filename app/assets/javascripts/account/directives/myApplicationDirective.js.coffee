@@ -50,4 +50,7 @@ angular.module('dahlia.directives')
       scope.lotteryNumber = ->
         { lotteryNumber: scope.application.lotteryNumber }
 
+      scope.getLanguageCode = (application) ->
+        ShortFormApplicationService.getLanguageCode(application)
+
 ]

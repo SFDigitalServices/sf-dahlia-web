@@ -62,12 +62,26 @@ module.exports = function(grunt) {
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
+         'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
-         'translated-short-description="([A-Z\.\-\_]*)"'
+         'translated-short-description="([A-Z\.\-\_]*)"',
+         'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         /\', t\(\'([A-Z\.\-\_]*)\'\)/
        ],
       namespace: true,
       lang:     ['locale-en'],
       dest:     'app/assets/json/translations'
+    }
+  },
+  json_remove_fields: {
+    locale_es: {
+        src: 'app/assets/json/translations/locale-es.json'
+    },
+    locale_tl: {
+        src: 'app/assets/json/translations/locale-tl.json'
+    },
+    locale_zh: {
+        src: 'app/assets/json/translations/locale-zh.json'
     }
   },
   sortJSON: {
@@ -80,7 +94,7 @@ module.exports = function(grunt) {
     // options: {
     //   spacing: 2
     // }
-  }
+  },
 });
 
   // load tasks
@@ -89,6 +103,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-angular-translate');
   grunt.loadNpmTasks('grunt-sort-json');
+  grunt.loadNpmTasks('grunt-json-remove-fields');
 
 
   // register task
@@ -100,7 +115,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('translations', [
     'i18nextract',
-    'sortJSON'
+    'json_remove_fields',
+    'sortJSON',
   ]);
 
   grunt.registerTask('deploy', [
