@@ -17,7 +17,7 @@
         lang: { squash: true, value: 'en' }
       views:
         'translate@':
-          templateUrl: 'shared/templates/translate.html'
+          templateUrl: 'shared/templates/translate-bar.html'
         'version@':
           templateUrl: 'shared/templates/version.html'
         'navigation@':
@@ -110,7 +110,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
-              setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
             ).catch( (response) ->
               deferred.reject(response)
@@ -524,6 +524,18 @@
           $translate('PAGE_TITLE.ADDITIONAL_RESOURCES')
         ]
     })
+    .state('dahlia.document-checklist',{
+      url: '/document-checklist'
+      params:
+        section: null
+      views:
+        'container@':
+          templateUrl: 'pages/templates/document-checklist.html'
+      resolve:
+        $title: ['$translate', ($translate) ->
+          $translate('PAGE_TITLE.DOCUMENT_CHECKLIST')
+        ]
+    })
     ##########################
     # Short form application #
     ##########################
@@ -551,6 +563,8 @@
     })
     .state('dahlia.short-form-welcome.community-screening', {
       url: '/community-screening'
+      params:
+        skipConfirm: { squash: true, value: false }
       views:
         'container@':
           templateUrl: 'short-form/templates/layout.html'
@@ -589,6 +603,12 @@
           '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
           ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
             deferred = $q.defer()
+
+            # if the user just clicked the language switcher, don't reload the whole route
+            if ShortFormApplicationService.switchingLanguage()
+              deferred.resolve(ShortFormApplicationService.application)
+              return deferred.promise
+
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
 
@@ -601,11 +621,20 @@
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
               deferred.resolve(ShortFormApplicationService.application)
+              lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
+
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
-                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: lang})
+              else if lang && lang != $stateParams.lang
+                # check if draft application language matches the lang set in the route, if not then redirect
+                $state.go('dahlia.short-form-application.name', { id: $stateParams.id, lang: lang })
+              # check if community screening has been answered
+              if listing.Reserved_community_type &&
+                ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true, lang: lang})
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -633,7 +662,7 @@
             # and then clicked 'back' in the browser from short form
             $timeout ->
               # autofill would not be `true` if you opted out
-              unless application.autofill
+              unless application && application.autofill
                 $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
         ]
       onEnter: [
@@ -891,6 +920,18 @@
         'container':
           templateUrl: 'short-form/templates/e7b-custom-preferences.html'
     })
+    .state('dahlia.short-form-application.custom-proof-preferences', {
+      url: '/custom-proof-preferences/:prefIdx'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e7c-custom-proof-preferences.html'
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService',
+        ($stateParams, ShortFormApplicationService) ->
+          customPref = ShortFormApplicationService.listing.customProofPreferences[$stateParams.prefIdx]
+          angular.copy(customPref, ShortFormApplicationService.currentCustomProofPreference)
+        ]
+    })
     .state('dahlia.short-form-application.general-lottery-notice', {
       url: '/general-lottery-notice'
       views:
@@ -996,7 +1037,7 @@
       onExit: [
         'ShortFormApplicationService',
         (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {

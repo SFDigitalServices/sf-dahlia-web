@@ -1,0 +1,19 @@
+.content-card
+  header.content-card_ordered
+    span.content-card_number
+      ' {{$ctrl.preference.order}}
+      sup
+        | {{$ctrl.preference.order | ordinalSuffix}}
+    h4.content-card_title.no-margin
+      | {{$ctrl.preference.preferenceName}}
+    p.c-steel ng-if="$ctrl.preference.unitsAvailable != 'Remaining'"
+      | Up to {{$ctrl.preference.unitsAvailable}} units available
+    p.c-steel ng-if="$ctrl.preference.unitsAvailable == 'Remaining'"
+      | All remaining units
+  p.c-steel
+    | {{$ctrl.preference.description}}
+    br
+    a.margin-right ng-href="{{$ctrl.preference.readMoreUrl}}" target="_blank" ng-if="$ctrl.preference.readMoreUrl"
+      | Read More
+    a ui-sref="dahlia.document-checklist({section: $ctrl.docSection()})" ng-if="$ctrl.isPrefWithProof()"
+      | View Document Checklist
