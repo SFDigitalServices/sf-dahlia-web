@@ -16,7 +16,7 @@
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
-        | {{ option[1] }}
+        | {{ option[1] | translate }}
     small.error.margin-bottom-none id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
     p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"

@@ -11,6 +11,7 @@ ShortFormDataService = (ListingService) ->
   Service.WHITELIST_FIELDS =
     application: [
         'id'
+        'applicationLanguage'
         'listingID'
         'applicationSubmittedDate'
         'applicationSubmissionType'
