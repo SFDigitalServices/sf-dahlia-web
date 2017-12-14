@@ -98,7 +98,7 @@ module SalesforceService
     # get Individual Lottery Result with rankings
     def self.lottery_ranking(listing_id, lottery_number)
       listing_id = URI.encode(listing_id)
-      endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
+      endpoint = "/Listing/LotteryResult/#{listing_id}/#{URI.encode(lottery_number)}"
       cached_api_get(endpoint, nil, false)
     end
 
