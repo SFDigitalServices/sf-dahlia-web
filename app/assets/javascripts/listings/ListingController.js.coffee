@@ -190,6 +190,9 @@ ListingController = (
     $scope.application.id &&
     $scope.application.status.toLowerCase() == 'draft'
 
+  $scope.getLanguageCode = (application) ->
+    ShortFormApplicationService.getLanguageCode(application)
+
   $scope.sortedOpenHouses = ->
     ListingService.sortByDate($scope.listing.Open_Houses)
 
