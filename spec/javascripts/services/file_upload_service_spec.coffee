@@ -12,6 +12,7 @@ do ->
       listingPreferenceID: '123xyz'
     fakeListingService =
       getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
+      getPreferenceById: jasmine.createSpy().and.returnValue('1234')
     $translate = {}
     Upload =
       upload: ->

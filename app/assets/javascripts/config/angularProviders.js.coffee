@@ -15,16 +15,22 @@
         responseError: (error) ->
           if error.status >= 500
             $injector.invoke [
-              '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService',
-              ($http, bsLoadingOverlayService, ShortFormNavigationService) ->
+              '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService', '$state',
+              ($http, bsLoadingOverlayService, ShortFormNavigationService, $state) ->
                 # this will call bsLoadingOverlayService.stop(), even if not on short form
                 ShortFormNavigationService.isLoading(false)
                 # don't display alerts in E2E tests
                 return if window.protractor
-                # AMI, lottery_ranking have their own handler
-                return if error.config.url.match(RegExp('listings/ami|lottery_ranking'))
+                # AMI, lottery_ranking, unit data have their own handler
+                return if error.config.url.match(RegExp('listings/ami|lottery_ranking|units'))
                 if error.status == 504
-                  alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                  # if the timeout was encountered when trying to validatate user token,
+                  # don't show alert, instead redirect to sign in page
+                  if (error.data.message.indexOf('user_token_validation') >= 0)
+                    $state.go('dahlia.sign-in', {userTokenValidationTimeout: true})
+                    return
+                  else
+                    alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
                 else
                   alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
                 alert(alertMessage)

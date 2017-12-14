@@ -10,6 +10,7 @@ angular.module('dahlia.directives')
     customSubMessage: '=?'
     invert: '=?'
     primary: '=?'
+    info: '=?'
     shortForm: '=?'
     eligibilityErrors: '=?'
 
@@ -59,7 +60,9 @@ angular.module('dahlia.directives')
       if scope.invert
         styles += 'invert no-margin '
       if scope.primary
-        styles += 'primary no-icon '
+        styles += 'primary '
+        unless scope.info
+          styles += 'no-icon '
       styles
 
     scope.isIconInverted = ->
