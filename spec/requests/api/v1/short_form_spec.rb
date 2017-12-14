@@ -11,6 +11,8 @@ describe 'ShortForm API' do
   # WARNING: application will be deleted!
   # Hint: clone an existing application and use that id
   application_delete_id = 'a0o0x0000000a8Y'
+
+  # Application must have draft status
   application_update_id = 'a0o0P00000FEUwH'
   application_claim_id = 'a0o0P00000FEUwH'
 
@@ -140,10 +142,6 @@ describe 'ShortForm API' do
         .to receive(:delete_draft_application).and_return(true)
       allow_any_instance_of(Api::V1::ShortFormController)
         .to receive(:user_can_claim?).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:user_can_access?).and_return(true)
-      allow_any_instance_of(Api::V1::ShortFormController)
-        .to receive(:submitted?).and_return(false)
     end
 
     it 'returns success response' do
@@ -151,7 +149,7 @@ describe 'ShortForm API' do
       file = './spec/javascripts/fixtures/json/valid-short-form-params.json'
       params = JSON.parse(File.read(file))
       params['application']['id'] = application_update_id
-      params['application']['status'] = 'draft'
+      params['application']['status'] = 'Draft'
       params = clean_json_for_vcr(params)
 
       VCR.use_cassette('shortform/update_application') do
