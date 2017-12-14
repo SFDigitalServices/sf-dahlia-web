@@ -1,7 +1,6 @@
 .app-card.form-card
   short-form-header
-    h2.app-card_question
-      | {{'B2_CONTACT.TITLE' | translate: applicantFirstName()}}
+    h2.app-card_question translate="B2_CONTACT.TITLE" translate-value-name="{{applicant.firstName}}"
 
   .app-inner.inset.border-bottom
     .form-group.has-option ng-class="{ error: inputInvalid('phone') || inputInvalid('phoneType') }"
@@ -60,10 +59,8 @@
       p.form-note.margin-bottom
         | {{'B2_CONTACT.ONLY_USE_YOUR_EMAIL' | translate}}
       .form-email
-        input#applicant_email ng-model="applicant.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-pattern="emailRegex" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error"
+        input#applicant_email(ng-model="applicant.email" name="email" maxlength="{{::INPUT_MAX_LENGTH.email}}" placeholder="{{applicant.noEmail ? 'None' : 'you@myemail.com'}}" type="email" ng-required="!applicant.noEmail" ng-class="{ error: inputInvalid('email') }" ng-change="uncheckNoOption('email')" ng-disabled="loggedIn() || applicant.noEmail" aria-describedby="applicant_email_error" ng-pattern="emailRegex" translated-error="ERROR.EMAIL" input-error)
       small.lock-note ng-if="loggedIn()" ng-bind-html="translateLoggedInMessage('b2-contact')"
-      small.error#applicant_email_error ng-if="inputInvalid('email')"
-        | {{'ERROR.EMAIL' | translate}}
       .form-item.padding-bottom
         .checkbox
           input#applicant_no_email name="applicant_no_email" type="checkbox" data-event="gtm-applicant-no-email" ng-model="applicant.noEmail" ng-disabled="form.applicationForm.email.$valid && !applicant.noEmail" ng-click="blankIfInvalid('email')"

@@ -5,8 +5,8 @@ module SalesforceService
       api_post('/Person', params)
     end
 
-    def self.get(id)
-      contact = api_get("/Person/#{id}")
+    def self.get(id, params = nil)
+      contact = api_get("/Person/#{id}", params)
       contact.present? ? contact : nil
     end
   end
