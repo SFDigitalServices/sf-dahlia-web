@@ -119,7 +119,7 @@ Feature: Short Form Application
       Then on the Preferences Programs page I should see my correct info
 
       # review
-      And I fill out the optional survey
+      Then on the optional survey page I should see my correct info
       # confirm everything has shown up (again)
       Then on the Review Page I should see my contact details
       Then on the Review Page I should see my alternate contact details
@@ -137,6 +137,8 @@ Feature: Short Form Application
       Then on the Review Page I should see my household member details
       Then on the Review Page I should see my income details
       Then on the Review Page I should see my preference details on my "submitted" application
-      #
-      # NOTE: if any Scenarios are added after this one, you may have to create a "sign out" step
-      #
+
+    Scenario: Signing out
+      When I sign out
+      Then I should land on the Sign In page
+      Then I should see the sign out success message

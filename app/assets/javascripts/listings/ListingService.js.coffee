@@ -463,8 +463,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
+    Service.loading.units = true
+    Service.error.units = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/units#{if Service.forceRecache then '?force=true' else ''}")
     .success((data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = false
       if data && data.units
         units = data.units
         Service.listing.Units = units
@@ -473,6 +477,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = true
       return
     )
 
@@ -585,10 +591,16 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       return
     )
 
+  Service.hardcodeCustomProofPrefs =
+    ['Alice Griffith Housing Development Resident']
+
   Service._extractCustomPreferences = ->
     customPreferences = _.filter Service.listing.preferences, (listingPref) ->
       !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    customProofPreferences = _.remove customPreferences, (customPref) ->
+      _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
     Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
+    Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
   Service.getLotteryBuckets = ->
     angular.copy({}, Service.lotteryBucketInfo)
@@ -603,6 +615,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.formatLotteryNumber = (lotteryNumber) ->
     lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
     if (lotteryNumber.length < 8)
       lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
     lotteryNumber

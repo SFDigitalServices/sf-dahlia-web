@@ -1,5 +1,5 @@
 .checkbox-block
-  preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()" ng-if="$ctrl.showCheckbox")
+  preference-checkbox(application="$ctrl.application" preference="rentBurden" invalid="$ctrl.inputInvalid('rentBurden')" title="{{$ctrl.title}}" translated-description="{{$ctrl.translatedDescription}}" on-change="$ctrl.resetPreferenceData()" required="$ctrl.required()" ng-if="$ctrl.showCheckbox")
 
   .form-group.input-inset ng-if="$ctrl.application.preferences.rentBurden"
 
@@ -31,7 +31,7 @@
       label.form-label.caps.margin-bottom
         | {{'E3B_RENT_BURDEN_PREFERENCE.UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS' | translate}}
       .form-group.text-center
-        button.button.has-icon.secondary type="button" ng-click="$ctrl.additionalUploadActivated = true"
+        button#upload-additional-proof.button.has-icon.secondary type="button" ng-click="$ctrl.additionalUploadActivated = true"
           span.ui-icon.ui-medium
             svg
               use xlink:href="#i-plus"
