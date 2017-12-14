@@ -13,6 +13,8 @@
 
         alert-box(form-object="form.signIn" hide-alert="hideAlert" custom-message="accountError.messages.user")
         alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.redirect" ng-if="accountSuccess.messages.redirect")
+        alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.signedOut" ng-if="accountSuccess.messages.signedOut")
+        alert-box(primary="true" info="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.userTokenValidationTimeout" ng-if="accountSuccess.messages.userTokenValidationTimeout")
 
         .alert-box.primary.no-margin.no-close.alert-box ng-if="accountError.messages.timeout"
           span.alert-icon.ui-icon.ui-medium.ng-scope

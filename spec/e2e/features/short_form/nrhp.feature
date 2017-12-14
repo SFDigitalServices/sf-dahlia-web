@@ -54,7 +54,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
       And I hit the Next button "4" times
       And I opt out of Assisted Housing preference
       # now that Jonny changed his address, ensure that preference is un-checked but Jane is still eligible
-      Then I should see the Live in the Neighborhood checkbox un-checked
+      Then I should see the "neighborhoodResidence" checkbox un-checked
       When I click the Live in the Neighborhood checkbox
       Then I should see "Jane Doe" in the preference dropdown and not "Jonny Doe, Karen Lee"
 
