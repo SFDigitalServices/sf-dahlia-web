@@ -37,6 +37,14 @@ AccountService = (
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.setLoggedInUser = (data) ->
+    if _.isEmpty(data)
+      # clear userContext
+      Raven.setUserContext()
+    else
+      Raven.setUserContext({
+        email: data.email,
+        id: data.id
+      })
     angular.copy(data, Service.loggedInUser)
 
   Service.importApplicantData = (applicant) ->
@@ -130,7 +138,7 @@ AccountService = (
   Service.signOut = ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetUserData()
+    ShortFormApplicationService.resetApplicationData()
     $auth.signOut()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
@@ -293,6 +301,12 @@ AccountService = (
   Service.goToLoginRedirect = ->
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
+
+  Service.afterSignOut = ->
+    Service.accountSuccess.messages.signedOut = $translate.instant('SIGN_IN.SIGNED_OUT_SUCCESSFULLY')
+
+  Service.afterUserTokenValidationTimeout = ->
+    Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
 
   Service.DOBValid = ShortFormDataService.DOBValid
 
