@@ -2,7 +2,8 @@ header.lead-header.bg-image.bg-gradient
   .row
     .large-12.columns
       hgroup.lead-header_group
-        h1.lead-header_title.t-beta.c-white ¡Bienvenidos al Portal de Vivienda de San Francisco!
+        h1.lead-header_title.t-beta.c-white
+          | ¡Bienvenidos al Portal de Vivienda de San Francisco!
 
 section.row
   .medium-8.columns
@@ -22,6 +23,13 @@ section.row
           br
           a target="_blank" href="http://www.sfmohcd.org/modules/showdocument.aspx?documentid=8952"
             | Guía de recursos de vivienda de San Francisco
+
+      .content-section#translation-disclaimer
+        h3.t-delta.t-sans.margin-bottom--half.margin-top--2x
+          | Translation Disclaimer
+        p.t-delta.t-light
+          | La aplicación electrónica y ciertas otras páginas del sitio han sido traducidas por un hablante nativo. Las páginas restantes son traducidas por Google Translate, y pueden variar en calidad. Les pedimos su paciencia a medida que mejoramos nuestro soporte multilingüe.
+
       ul.resources-list.block-list
         li.block-item ng-repeat="counselor in housingCounselors.spanish"
           housing-counselor counselor="counselor"

@@ -1,8 +1,5 @@
 doctype html
-/![if IE 9 ] <html class="ie9" lang="en">
-/! [if !(IE 9)]><!
 html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
-  /! <![endif]
   head
     title DAHLIA San Francisco Housing Portal
 
@@ -28,6 +25,9 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg" name="google-site-verification"
     = render partial: '/layouts/favicons'
     = csrf_meta_tags
+
+    / multilingual alt links currently only relevant for short form pages
+    link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}" ng-if="isShortFormPage()"
 
     / prerender.io + metatags
     meta name="fragment" content="!"
@@ -55,23 +55,35 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
   body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
+    #google_translate_element
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
-    .site-container
-      section(ui-view="translate")
-      section(ui-view="version")
-      section(ui-view="navigation")
+    .site-container ng-class="{'skiptranslate': doNotGoogleTranslate()}"
+      / always skip translations for the header + navigation
+      .skiptranslate
+        section(ui-view="translate")
+        section(ui-view="version")
+        section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
         section#main-content.main-content(ui-view="container")
-    .footer-section
+    .footer-section.skiptranslate
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 
     / icon collection
     ng-include src="'shared/templates/icons.html'"
 
+
+    / RAVEN: scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
+    - if ENV['SENTRY_DSN']
+      - sentry_js_url = ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
+    - else
+      / needed to prevent page errors with ngRaven e.g. for E2E tests
+      - sentry_js_url = 'https://foobar@sentry.io/123123'
+    javascript:
+      var SENTRY_JS_URL = '#{sentry_js_url}'
 
     = javascript_include_tag 'application', async: Rails.env.production?
     = yield :javascript
