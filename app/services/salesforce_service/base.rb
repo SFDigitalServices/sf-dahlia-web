@@ -4,6 +4,8 @@ require 'facets/hash/rekey'
 module SalesforceService
   # encapsulate all Salesforce querying functions in one handy service
   class Base
+    class_attribute :retries
+    class_attribute :timeout
     class_attribute :error
     class_attribute :force
     class_attribute :unit_data_tries
