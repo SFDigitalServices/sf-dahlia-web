@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'home#index'
+  root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 
   mount_devise_token_auth_for(
     'User',

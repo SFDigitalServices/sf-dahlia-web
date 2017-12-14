@@ -8,6 +8,7 @@ module SalesforceService
     class_attribute :timeout
     class_attribute :error
     class_attribute :force
+    class_attribute :unit_data_tries
     self.retries = 0
     self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
     self.force = false
@@ -35,11 +36,7 @@ module SalesforceService
       self.error = nil
       apex_endpoint = "/services/apexrest#{endpoint}"
       response = oauth_client.send(method, apex_endpoint, params)
-      if parse_response
-        massage(flatten_response(response.body))
-      else
-        response.body
-      end
+      process_response(response, parse_response)
     rescue Restforce::UnauthorizedError,
            Restforce::AuthenticationError,
            Faraday::ConnectionFailed,
@@ -50,8 +47,9 @@ module SalesforceService
         retry
       else
         self.error = e.class.name
+        message = params && params[:user_token_validation] ? 'user_token_validation' : nil
         # re-raise the same error
-        raise
+        raise e, message
       end
     end
 
@@ -136,6 +134,14 @@ module SalesforceService
       return [] if body.blank?
       body.collect do |listing|
         listing.merge(listing['listing'] || {}).except('listing')
+      end
+    end
+
+    def self.process_response(response, parse_response)
+      if parse_response
+        massage(flatten_response(response.body))
+      else
+        response.body
       end
     end
 

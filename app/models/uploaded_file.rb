@@ -4,15 +4,21 @@ class UploadedFile < ActiveRecord::Base
 
   def self.create_and_resize(attrs)
     tempfile_path = attrs[:file].tempfile.path
-    unless attrs[:content_type] == 'application/pdf'
-      if attrs[:content_type] == 'image/png'
-        # convert png -> jpeg
-        image = MiniMagick::Image.new(tempfile_path)
-        image.format 'jpg'
-        attrs[:content_type] = 'image/jpeg'
+    begin
+      unless attrs[:content_type] == 'application/pdf'
+        if attrs[:content_type] == 'image/png'
+          # convert png -> jpeg
+          image = MiniMagick::Image.new(tempfile_path)
+          if image.valid?
+            image.format 'jpg'
+            attrs[:content_type] = 'image/jpeg'
+          end
+        end
+        # compress/optimize all jpegs
+        ImageOptimizer.new(tempfile_path, quality: 75).optimize
       end
-      # compress/optimize all jpegs
-      ImageOptimizer.new(tempfile_path, quality: 75).optimize
+    rescue
+      logger.error 'UploadedFile.create_and_resize error: png -> jpg conversion'
     end
     # read file data into :file attribute
     attrs[:file] = File.read(tempfile_path)

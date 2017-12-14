@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService'
+  'SharedService', 'GoogleTranslateService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService) ->
+  SharedService, GoogleTranslateService) ->
 
     timeoutRetries = 2
     ngMeta.init()
@@ -41,6 +41,11 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
+
+      GoogleTranslateService.loadAPI().then ->
+        GoogleTranslateService.setLanguage(language)
+
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
         # start Apply Online timer, tracking if the first state that is arrived at is
@@ -72,7 +77,7 @@
           # disable the onbeforeunload so that you are no longer bothered if you
           # try to reload the listings page, for example
           $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
+          ShortFormApplicationService.resetApplicationData() unless toState.name == 'dahlia.short-form-review'
           if toParams.timeout
             AnalyticsService.trackTimeout('Application')
           else
@@ -90,6 +95,8 @@
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
+
+      SharedService.updateAlternateLanguageLinks()
 
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''
@@ -128,10 +135,12 @@
       $document.scrollTop(0) unless ShortFormApplicationService.isShortFormPage($state.current)
 
       # After elements are rendered, make sure to re-focus keyboard input
-      # on elements at the top of the page
+      # on elements either at the top or on a designated section
       $timeout ->
-        if ShortFormApplicationService.isShortFormPage($state.current)
-          SharedService.focusOnShortFormContent()
+        if SharedService.onDocChecklistPage()
+          SharedService.focusOn($state.params.section)
+        else if ShortFormApplicationService.isShortFormPage($state.current)
+          SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
 

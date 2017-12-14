@@ -10,8 +10,8 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
   Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
     pref = ListingService.getPreference(pref_type)
     # might be calling deletePreferenceFile on a preference that this listing doesn't have
-    return unless pref
-    pref_id = pref.listingPreferenceID
+    pref_id = if pref then pref.listingPreferenceID else pref_type
+    return $q.reject() unless ListingService.getPreferenceById(pref_id)
     params =
       uploaded_file:
         session_uid: Service.session_uid()
@@ -45,10 +45,23 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
       return
     )
 
+  Service._processProofFile = (file, upload) ->
+    if file.size > 2 * 1000 * 1000 # 2MB
+      options =
+        width: 2112,
+        height: 2112,
+        quality: 0.8
+      Upload.resize(file, options).then( (resizedFile) ->
+        upload(resizedFile)
+      )
+    else
+      upload(file)
+
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    pref_id = ListingService.getPreference(pref_type).listingPreferenceID
+    preference = ListingService.getPreference(pref_type)
+    pref_id = if preference then preference.listingPreferenceID else pref_type
+    return $q.reject() unless ListingService.getPreferenceById(pref_id)
     uploadedFileParams =
-      file: file
       session_uid: Service.session_uid()
       listing_id: listing_id
       listing_preference_id: pref_id
@@ -69,21 +82,28 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
       return $q.reject()
 
     proofDocument.loading = true
-
-    Upload.upload(
-      url: '/api/v1/short-form/proof'
-      method: 'POST'
-      data:
-        uploaded_file: uploadedFileParams
-    ).then( ((resp) ->
-      proofDocument.loading = false
-      proofDocument.error = false
-      proofDocument.file = resp.data
-    ), ((resp) ->
-      # error handler
-      proofDocument.loading = false
-      proofDocument.error = true
-    ))
+    Service._processProofFile file, (resizedFile) ->
+      if resizedFile.size > 5 * 1000 * 1000 # 5MB
+        # error handler
+        Service.preferences[fileType] = null
+        Service.preferences["#{fileType}_loading"] = false
+        Service.preferences["#{fileType}_error"] = true
+      else
+        uploadedFileParams.file = resizedFile
+        Upload.upload(
+          url: '/api/v1/short-form/proof'
+          method: 'POST'
+          data:
+            uploaded_file: uploadedFileParams
+        ).then( ((resp) ->
+          proofDocument.loading = false
+          proofDocument.error = false
+          proofDocument.file = resp.data
+        ), ((resp) ->
+          # error handler
+          proofDocument.loading = false
+          proofDocument.error = true
+        ))
 
   # Rent Burden specific functions
   Service.uploadedRentBurdenRentFiles = (address) ->
