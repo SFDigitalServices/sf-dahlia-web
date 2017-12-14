@@ -6,6 +6,9 @@ module SalesforceService
   class Base
     class_attribute :error
     class_attribute :force
+    class_attribute :unit_data_tries
+    self.retries = 0
+    self.timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
     self.force = false
 
     def self.client

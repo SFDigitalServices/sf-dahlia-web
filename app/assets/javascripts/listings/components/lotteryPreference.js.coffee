@@ -12,6 +12,8 @@ angular.module('dahlia.components')
       "Neighborhood Resident Housing Preference (NRHP)": 'resident'
       "Anti-Displacement Housing Preference (ADHP)": 'resident'
       "Rent Burdened / Assisted Housing Preference": 'assisted-housing'
+      # harcoded for now
+      "Alice Griffith Housing Development Resident": 'alice-griffith'
 
     @isPrefWithProof = ->
       _.has(docSectionMap, @preference.preferenceName)
