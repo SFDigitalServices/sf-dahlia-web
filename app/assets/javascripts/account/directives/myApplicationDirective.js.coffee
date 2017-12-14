@@ -94,4 +94,7 @@ angular.module('dahlia.directives')
             scope.listing = ListingService.listing
         )
 
+      scope.getLanguageCode = (application) ->
+        ShortFormApplicationService.getLanguageCode(application)
+
 ]

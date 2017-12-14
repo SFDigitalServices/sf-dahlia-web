@@ -139,7 +139,7 @@ AccountService = (
   Service.signOut = ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetUserData()
+    ShortFormApplicationService.resetApplicationData()
     $auth.signOut()
     # close any open modalInstance, if it exists
     # e.g. "Lottery Results" that may have been opened while you were on My Applications

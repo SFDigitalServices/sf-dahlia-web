@@ -39,6 +39,7 @@ ListingController = (
   $scope.whatHappens = false
   # for searching lottery number
   $scope.lotterySearchNumber = ''
+  $scope.lotteryNumberFormatValid = true
   $scope.loading = ListingService.loading
   $scope.error = ListingService.error
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
@@ -165,9 +166,12 @@ ListingController = (
 
   # retrieve lottery ranking to display in lottery results modal
   $scope.showLotteryRanking = ->
+    $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
     if $scope.lotterySearchNumber == ''
+      $scope.lotteryNumberFormatValid = false
       $scope.clearLotteryRankingInfo()
     else
+      $scope.lotteryNumberFormatValid = true
       ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
       )
@@ -185,6 +189,9 @@ ListingController = (
     $scope.application &&
     $scope.application.id &&
     $scope.application.status.toLowerCase() == 'draft'
+
+  $scope.getLanguageCode = (application) ->
+    ShortFormApplicationService.getLanguageCode(application)
 
   $scope.sortedOpenHouses = ->
     ListingService.sortByDate($scope.listing.Open_Houses)
@@ -215,6 +222,9 @@ ListingController = (
 
   $scope.hasMultipleAMIUnits = ->
     _.keys($scope.listing.groupedUnits).length > 1
+
+  $scope.getListingUnits = ->
+    ListingService.getListingUnits()
 
   $scope.getListingAMI = ->
     ListingService.getListingAMI()

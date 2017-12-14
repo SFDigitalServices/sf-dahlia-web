@@ -30,6 +30,14 @@
         p.beta.t-serif.no-margin
           | &#35;{{ application.lotteryNumber }}
 
+    div ng-if="!lotteryNumberFormatValid"
+      .alert-box.alert.no-margin
+        span.alert-icon.ui-icon.ui-medium
+          svg
+            use xlink:href="#i-warning"
+        p.alert-body ng-if="!error.lotteryRank"
+          | {{'LOTTERY.LOTTERY_NUMBER_NOT_VALID' | translate}}
+
     // Lottery Results Buckets
     ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingInfo.submitted"
 
