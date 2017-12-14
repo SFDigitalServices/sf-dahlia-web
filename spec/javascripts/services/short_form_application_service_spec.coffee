@@ -8,8 +8,11 @@ do ->
     fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
-    $translate = {}
+    $translate =
+      use: jasmine.createSpy()
     $state =
+      params:
+        lang: undefined
       go: jasmine.createSpy()
       href: ->
       current: { name: 'dahlia' }
@@ -235,7 +238,7 @@ do ->
 
     describe 'clearAddressRelatedProofForMember', ->
       beforeEach ->
-        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson' })
+        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson', id: 1 })
         ShortFormApplicationService.applicant = fakeApplicant
         # reset the spy so that we can check for "not" toHaveBeenCalled
         fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
@@ -243,15 +246,15 @@ do ->
         resetFakePeople()
 
       it 'clears the proof file for a preference if the indicated member is selected', ->
-        ShortFormApplicationService.preferences.liveInSf_household_member = 'Frank Robinson'
+        ShortFormApplicationService.preferences.liveInSf_household_member = 1
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Frank Robinson'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 1
         expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
 
       it 'does not clear the proof file for a preference if the indicated member is not selected', ->
-        ShortFormApplicationService.preferences.liveInSf_household_member = 'Joseph Mann'
+        ShortFormApplicationService.preferences.liveInSf_household_member = 2
         ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Joseph Mann'
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
         expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
 
 
@@ -621,6 +624,10 @@ do ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
 
+      it 'should call $translate.use() to get current locale', ->
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect($translate.use).toHaveBeenCalled()
+
       it 'should call formatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
@@ -654,6 +661,14 @@ do ->
         ShortFormApplicationService.getMyApplicationForListing 'xyz'
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+
+      it 'should load accountApplication if forComparison opt is passed', ->
+        spyOn(fakeDataService, 'reformatApplication').and.callThrough()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
+        ShortFormApplicationService.getMyApplicationForListing 'xyz', {forComparison: true}
+        httpBackend.flush()
+        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService.accountApplication.id).toEqual(fakeShortForm.id)
 
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
@@ -789,11 +804,11 @@ do ->
           .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->
-        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
     describe 'loadAccountApplication', ->
       beforeEach ->
@@ -943,6 +958,28 @@ do ->
         ShortFormApplicationService.preferences = {'liveInSf': true}
         expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false
 
+    # multilingual
+    describe 'setApplicationLanguage', ->
+      it 'sets application language to the full name version of the lang param', ->
+        ShortFormApplicationService.setApplicationLanguage('es')
+        expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
+
+    describe 'getLanguageCode', ->
+      it 'returns the 2-letter code for the given language', ->
+        code = ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
+        expect(code).toEqual 'es'
+
+    describe 'switchingLanguage', ->
+      it 'returns true if user is switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'English'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual true
+
+      it 'returns false if user is not switching language', ->
+        ShortFormApplicationService.application.applicationLanguage = 'Spanish'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual false
+
     describe 'sendToLastPageofApp', ->
       describe 'entering short form section that is not the last page of application', ->
         it 'sends user to last page of application', ->
@@ -951,3 +988,16 @@ do ->
           ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
           lastPageRoute = 'dahlia.short-form-application.review-terms'
           expect($state.go).toHaveBeenCalledWith(lastPageRoute)
+
+    describe 'applicationCompletionPercentage', ->
+      it 'calculates a baseline percentage of 5% for new applications', ->
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 5
+
+      it 'calculates a percentage based on completedSections', ->
+        ShortFormApplicationService.application.completedSections = {
+          You: true # 30%
+          Household: true # 25%
+        }
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 60
