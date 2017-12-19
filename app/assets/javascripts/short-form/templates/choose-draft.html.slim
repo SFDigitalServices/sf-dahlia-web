@@ -28,11 +28,24 @@
                 label.radio-block_label for="choose_draft_recent"
                   p.form-label
                     | {{'LABEL.RECENT_APPLICATION' | translate}}:
-                  p.margin-bottom-none.t-base
-                    | {{applicantFullName(application.applicant)}}
+                  p.t-base.t-normal
+                    span.t-bold
+                      | {{applicantFullName(application.applicant)}}
                     br
-                    ' {{listing.Name}},
+                    ' {{listing.Name}}
+                    br
                     ' {{listing.Building_Street_Address}}
+
+                  p.margin-bottom--half.t-base.t-normal
+                    span.t-bold
+                      ' {{applicationCompletionPercentage(application)}}%
+                    | complete
+                  .progress.round
+                    span.meter style="width: {{applicationCompletionPercentage(application)}}%"
+
+                  p.t-small.t-normal
+                    ' {{'LABEL.EDITED' | translate}}:
+                    ' {{today() | date : "MMM d, yyyy" }}
 
             .form-item
               .radio-block
@@ -40,14 +53,24 @@
                 label.radio-block_label for="choose_draft_original"
                   p.form-label
                     | {{'LABEL.ORIGINAL_APPLICATION' | translate}}:
-                  p.margin-bottom-none.t-base
-                    | {{applicantFullName(accountApplication.applicant)}}
+                  p.t-base.t-normal
+                    span.t-bold
+                      | {{applicantFullName(accountApplication.applicant)}}
                     br
-                    ' {{listing.Name}},
+                    ' {{listing.Name}}
+                    br
                     ' {{listing.Building_Street_Address}}
+
+                  p.margin-bottom--half.t-base.t-normal
+                    span.t-bold
+                      ' {{applicationCompletionPercentage(accountApplication)}}%
+                    | complete
+                  .progress.round
+                    span.meter style="width: {{applicationCompletionPercentage(accountApplication)}}%"
+
                   p.t-small.t-normal
                     ' {{'LABEL.EDITED' | translate}}:
                     ' {{accountApplication.applicationSubmittedDate | date : "MMM d, yyyy" }}
           .form-group
             p.t-small.c-steel.text-center.padding-top
-              input.button.primary.no-margin type="submit" value="{{'T.NEXT' | translate}}"
+              input.button.primary.no-margin#submit type="submit" value="{{'T.NEXT' | translate}}"

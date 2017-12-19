@@ -2,11 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService',
-  'ModalService',
+  'SharedService', 'GoogleTranslateService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService, ModalService) ->
+  SharedService, GoogleTranslateService, ModalService) ->
 
     timeoutRetries = 2
     ngMeta.init()
@@ -42,6 +41,11 @@
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
       bsLoadingOverlayService.start()
+
+      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
+
+      GoogleTranslateService.loadAPI().then ->
+        GoogleTranslateService.setLanguage(language)
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
@@ -96,6 +100,8 @@
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
 
+      SharedService.updateAlternateLanguageLinks()
+
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''
 
@@ -133,10 +139,12 @@
       $document.scrollTop(0) unless ShortFormApplicationService.isShortFormPage($state.current)
 
       # After elements are rendered, make sure to re-focus keyboard input
-      # on elements at the top of the page
+      # on elements either at the top or on a designated section
       $timeout ->
-        if ShortFormApplicationService.isShortFormPage($state.current)
-          SharedService.focusOnShortFormContent()
+        if SharedService.onDocChecklistPage()
+          SharedService.focusOn($state.params.section)
+        else if ShortFormApplicationService.isShortFormPage($state.current)
+          SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
 

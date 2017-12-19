@@ -3,6 +3,9 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    translate = {
+      instant: jasmine.createSpy().and.returnValue('newmessage')
+    }
     fakeIdle = undefined
     fakeTitle = undefined
     eligibility = undefined
@@ -90,8 +93,11 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      setApplicationLanguage: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
-      resetUserData: ->
+      resetApplicationData: ->
+      isEnteringShortForm: jasmine.createSpy()
+      storeLastPage: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -109,6 +115,7 @@ do ->
       deletePreferenceFile: jasmine.createSpy()
       hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
+    fakeSharedService = {}
     fakeEvent =
       preventDefault: ->
     fakeHHOpts = {}
@@ -133,10 +140,6 @@ do ->
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
 
-      $translate = {
-        instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
-      }
-
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
@@ -144,7 +147,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -157,7 +160,7 @@ do ->
         $document: _$document_
         Idle: fakeIdle
         Title: fakeTitle
-        $translate: $translate
+        $translate: translate
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -165,6 +168,8 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        SharedService: fakeSharedService
+        inputMaxLength: {}
       return
     )
 
@@ -310,6 +315,11 @@ do ->
         scope.listing = fakeListing
         scope.validateHouseholdEligibility('householdMatch')
         expect(fakeShortFormApplicationService.checkHouseholdEligiblity).toHaveBeenCalledWith(fakeListing)
+      it 'skips ahead if incomeMatch and vouchers', ->
+        scope.listing = fakeListing
+        scope.application.householdVouchersSubsidies = 'Yes'
+        scope.validateHouseholdEligibility('incomeMatch')
+        expect(state.go).toHaveBeenCalled()
 
     describe 'checkIfPublicHousing', ->
       it 'goes to household-monthly-rent page if publicHousing answer is "No"', ->
@@ -403,16 +413,6 @@ do ->
           fakeIncomeOpts =
             householdSize: fakeShortFormApplicationService.householdSize()
             value: fakeShortFormApplicationService.calculateHouseholdIncome()
-
-        it 'skips errors if applicant has vouchers and income is too low', ->
-          scope.application.householdVouchersSubsidies = 'Yes'
-          scope._respondToIncomeEligibilityResults(eligibility, 'too low')
-          expect(state.go).toHaveBeenCalled()
-
-        it 'proceeds with errors even if applicant has vouchers, if income is too high', ->
-          scope.application.householdVouchersSubsidies = 'No'
-          scope._respondToIncomeEligibilityResults(eligibility, 'too high')
-          expect(scope.eligibilityErrors).not.toEqual([])
 
         it 'expects income section to be invalidated', ->
           scope._respondToIncomeEligibilityResults(eligibility, error)
@@ -561,11 +561,18 @@ do ->
         # Expect route path that is set up in FakeShortFormNavigationService, above
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
 
-    describe 'determineCommunityScreening', ->
+    describe 'beginApplication', ->
       it 'expects state.go to be called with community screening page if listing is a community building', ->
         scope.listing.Reserved_community_type = 'Veteran'
-        scope.determineCommunityScreening()
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening')
+        lang = 'en'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening', {lang: lang})
+
+      it 'expects state.go to be called with overview page and language param', ->
+        scope.listing.Reserved_community_type = null
+        lang = 'es'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview', {lang: lang})
 
     describe 'validateCommunityEligibility', ->
       it 'expects state.go to be called with short form overview page if applicant answered Yes to screening question', ->
@@ -627,12 +634,25 @@ do ->
         scope.fileAttachmentsForRentBurden()
         expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
 
+    describe 'onStateChangeSuccess', ->
+      it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
+        lang = 'es'
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
+        expect(fakeShortFormApplicationService.setApplicationLanguage).toHaveBeenCalledWith(lang)
+
+      it 'expects isLoading to be set to false on ShortFormNavigationService', ->
+        lang = 'es'
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
+        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(false)
+
     describe 'resetAndStartNewApp', ->
       beforeEach ->
         scope.resetAndStartNewApp()
 
-      it 'calls resetUserData on ShortFormApplicationService', ->
-        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+      it 'calls resetApplicationData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
       it 'unsets application autofill value', ->
         expect(scope.application.autofill).toBeUndefined()
@@ -646,6 +666,29 @@ do ->
           scope.listing.customPreferences = [{preferenceName: 'customPreference', listingPreferenceID: '123456'}]
           scope.checkForCustomPreferences()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-preferences')
+
+    describe 'checkForCustomProofPreferences', ->
+      beforeEach ->
+        scope.listing.customProofPreferences = ['pref1', 'pref2']
+
+      describe 'checking custom proof preferences for the first time', ->
+        it 'sends user to custom proof pref page with index 0', ->
+          state.params.prefIdx = NaN
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 0})
+
+      describe 'paging thru custom preferences', ->
+        it 'sends user to custom proof pref page with the subsequent index', ->
+          state.params.prefIdx = 0
+          scope.checkForCustomProofPreferences()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.custom-proof-preferences', {prefIdx: 1})
+
+      describe 'at last page of custom preferences', ->
+        it 'checks if there are no preferences selected', ->
+          state.params.prefIdx = 1
+          scope.checkIfNoPreferencesSelected = jasmine.createSpy()
+          scope.checkForCustomProofPreferences()
+          expect(scope.checkIfNoPreferencesSelected).toHaveBeenCalled()
 
     describe 'claimedCustomPreference', ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
