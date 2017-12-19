@@ -24,14 +24,14 @@
 
     $rootScope.$on 'IdleStart', ->
       if AccountService.loggedIn()
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'), {nativeAlert: true})
       else if $state.is('dahlia.short-form-application.confirmation')
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'), {nativeAlert: true})
       else
-        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'))
+        ModalService.alert($translate.instant('T.SESSION_INACTIVITY'), {nativeAlert: true})
 
     $rootScope.$on 'IdleTimeout', ->
-      ModalService.alert($translate.instant('T.SESSION_EXPIRED'))
+      ModalService.alert($translate.instant('T.SESSION_EXPIRED'), {nativeAlert: true})
       if AccountService.loggedIn()
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
@@ -81,11 +81,12 @@
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
         else
-          ModalService.alert(leaveMessage, ->
-            # fires only if user clicks 'ok' to leave page
-            # reloads this stateChangeStart method with skipConfirm true
-            toParams.skipConfirm = true
-            $state.go(toState.name, toParams)
+          ModalService.alert(leaveMessage,
+            onConfirm: ->
+              # fires only if user clicks 'ok' to leave page
+              # reloads this stateChangeStart method with skipConfirm true
+              toParams.skipConfirm = true
+              $state.go(toState.name, toParams)
           )
           # prevent user from leaving page while viewing modal
           bsLoadingOverlayService.stop()
