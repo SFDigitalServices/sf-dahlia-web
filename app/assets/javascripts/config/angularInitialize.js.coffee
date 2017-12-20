@@ -91,7 +91,7 @@
           ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
         else
-          ModalService.alert(content, ->
+          ModalService.alert(content,
             onConfirm: ->
               # fires only if user clicks 'ok' to leave page
               # reloads this stateChangeStart method with skipConfirm true
