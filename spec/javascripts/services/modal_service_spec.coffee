@@ -45,5 +45,7 @@ do ->
 
       it 'uses native browser alert if specified', ->
         spyOn($window, 'alert')
-        ModalService.alert('yo', {nativeAlert: true})
+        content =
+          message: 'yo'
+        ModalService.alert(content, {nativeAlert: true})
         expect($window.alert).toHaveBeenCalledWith('yo')
