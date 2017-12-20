@@ -148,5 +148,5 @@ do ->
           {monthlyRent: null, dontPayRent: true}
           {monthlyRent: 1000}
         ]
-        ShortFormDataService._calculateTotalMonthlyRent(fakeApplication)
-        expect(fakeApplication.totalMonthlyRent).toEqual(1750)
+        totalMonthlyRent = ShortFormDataService._calculateTotalMonthlyRent(fakeApplication)
+        expect(totalMonthlyRent).toEqual(1750)

@@ -1,5 +1,5 @@
 accordion-heading
-  img.accordion-icon ng-src="{{assetPaths['listing-units.svg']}}" alt="neighborhood-building"
+  img.accordion-icon ng-src="{{::assetPaths['listing-units.svg']}}" alt="neighborhood-building"
   h3.accordion-name
     | Process
   span.accordion-subheader Important dates and contact information
@@ -13,39 +13,39 @@ accordion-heading
       span.ui-icon.ui-medium
         svg
           use xlink:href="#i-clock"
-      span ng-if="!listingIsFirstComeFirstServe(listing)"
-        | Application Deadline {{listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
-      span ng-if="listingIsFirstComeFirstServe(listing)"
+      span ng-if="::!listingIsFirstComeFirstServe(listing)"
+        | Application Deadline {{::listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      span ng-if="::listingIsFirstComeFirstServe(listing)"
         / # TODO: -- REMOVE HARDCODED FEATURES --
         | Application Available: December 6, 2016
 
-  .content-group ng-if="listing.Information_Sessions"
+  .content-group ng-if="::listing.Information_Sessions"
     h4.content-group_title
       | Information Sessions
     ul.content-list
       li.margin-bottom ng-repeat="session in sortedInformationSessions()"
         p.content-group_date.no-margin
           span.content-group_day
-            | {{session.Date | dateSuffix}}
+            | {{::session.Date | dateSuffix}}
           span.content-group_time
-            | {{session.Start_Time}}
-        p.content-group_address.c-steel.no-margin ng-if="session.Venue"
-          | {{session.Venue}}
-        p.content-group_address.c-steel ng-if="session.Street_Address"
-          | {{session.Street_Address}}, {{session.City}}
+            | {{::session.Start_Time}}
+        p.content-group_address.c-steel.no-margin ng-if="::session.Venue"
+          | {{::session.Venue}}
+        p.content-group_address.c-steel ng-if="::session.Street_Address"
+          | {{::session.Street_Address}}, {{::session.City}}
 
-  .content-group ng-if="listing.Open_Houses"
+  .content-group ng-if="::listing.Open_Houses"
     h4.content-group_title
       | Open Houses
     ul.content-list
       li ng-repeat="session in sortedOpenHouses()"
         p.content-group_date
           span.content-group_day
-            | {{session.Date | dateSuffix}}
+            | {{::session.Date | dateSuffix}}
           span.content-group_time
-            | {{session.Start_Time}}
-            span ng-if="session.End_Time"
-              | &mdash;{{session.End_Time}}
+            | {{::session.Start_Time}}
+            span ng-if="::session.End_Time"
+              | &mdash;{{::session.End_Time}}
 
   .show-for-medium-up
     ng-include src="'listings/templates/listing/_waitlist-info.html'"
@@ -53,27 +53,27 @@ accordion-heading
   .show-for-medium-up
     ng-include src="'listings/templates/listing/_panel-apply.html'"
 
-  .content-group ng-if="!listingIsFirstComeFirstServe()"
+  .content-group ng-if="::!listingIsFirstComeFirstServe()"
     h4.h-caps-lined Public Lottery
-    ul ng-if="lotteryDateVenueAvailable(listing)"
+    ul ng-if="::lotteryDateVenueAvailable(listing)"
       li
         p.content-group_date
           span.content-group_day
-            | {{ listing.Lottery_Date | date : 'longDate' }}
+            | {{ ::listing.Lottery_Date | date : 'longDate' }}
           span.content-group_time
-            | {{ listing.Lottery_Date | date : 'shortTime' | lowercase }}
+            | {{ ::listing.Lottery_Date | date : 'shortTime' | lowercase }}
         p.content-group_address.no-margin
-          |  {{ listing.Lottery_Venue }}
+          |  {{ ::listing.Lottery_Venue }}
         p.content-group_address.c-steel
-          | {{ listing.Lottery_Street_Address }} {{ listing.Lottery_City }}
-    p.t-small.c-steel ng-if="!lotteryDateVenueAvailable(listing)"
+          | {{ ::listing.Lottery_Street_Address }} {{ ::listing.Lottery_City }}
+    p.t-small.c-steel ng-if="::!lotteryDateVenueAvailable(listing)"
       | Lottery date, time and venue to be scheduled.
 
   .content-group
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
-  .content-group ng-if="listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
+  .content-group ng-if="::listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
 
   .content-group
-    p.t-small Listing Updated: {{listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
+    p.t-small Listing Updated: {{::listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
