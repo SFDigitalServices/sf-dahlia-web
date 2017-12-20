@@ -32,11 +32,11 @@
         content.message = $translate.instant('T.SESSION_INACTIVITY_CONFIRMATION')
       else
         content.message = $translate.instant('T.SESSION_INACTIVITY')
-      ModalService.alert(content)
+      ModalService.alert(content, {nativeAlert: true})
 
     $rootScope.$on 'IdleTimeout', ->
       content.message = $translate.instant('T.SESSION_EXPIRED')
-      ModalService.alert(content)
+      ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
@@ -92,10 +92,11 @@
           AccountService.rememberShortFormState(null)
         else
           ModalService.alert(content, ->
-            # fires only if user clicks 'ok' to leave page
-            # reloads this stateChangeStart method with skipConfirm true
-            toParams.skipConfirm = true
-            $state.go(toState.name, toParams)
+            onConfirm: ->
+              # fires only if user clicks 'ok' to leave page
+              # reloads this stateChangeStart method with skipConfirm true
+              toParams.skipConfirm = true
+              $state.go(toState.name, toParams)
           )
           # prevent user from leaving page while viewing modal
           bsLoadingOverlayService.stop()

@@ -32,8 +32,9 @@ angular.module('dahlia.directives')
           message: $translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE')
           alert: true
         ModalService.alert(content, ->
-          ShortFormApplicationService.deleteApplication(id).success ->
-            scope.application.deleted = true
+          onConfirm: ->
+            ShortFormApplicationService.deleteApplication(id).success ->
+              scope.application.deleted = true
         )
 
       scope.formattedAddress = ->
