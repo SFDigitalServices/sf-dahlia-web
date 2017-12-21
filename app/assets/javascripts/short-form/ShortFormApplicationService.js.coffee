@@ -13,6 +13,8 @@ ShortFormApplicationService = (
   emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
+    # defaults to `null` so that we differentiate "setting" vs. "switching" language
+    applicationLanguage: null
     lotteryNumber: null
     status: 'draft'
     applicationSubmittedDate: null
@@ -69,6 +71,13 @@ ShortFormApplicationService = (
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
   Service.refreshSessionUid()
 
+  Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
+  Service.languageMap =
+    en: 'English'
+    es: 'Spanish'
+    tl: 'Filipino'
+    zh: 'Chinese'
+
   ## initialize other related services
   Service.initServices = ->
     # initialize FileUploadService to have access to preferences / session_uid
@@ -91,14 +100,21 @@ ShortFormApplicationService = (
   Service.resetApplicationData()
   # --- end initialization
 
-  Service.inputInvalid = (fieldName, form = Service.form.applicationForm, identifier) ->
+  Service.inputInvalid = (fieldName, form = Service.form.applicationForm) ->
     return false unless form
-    fieldName = if identifier then "#{identifier}_#{fieldName}" else fieldName
     field = form[fieldName]
     if form && field
+      # special case: set "invalid email" error instead of "provide answers in english" when failing ng-pattern
+      if fieldName == 'email' && field.$error.pattern
+        field.$error.email = true
       field.$invalid && (field.$touched || form.$submitted)
     else
       false
+
+  Service.switchingLanguage = ->
+    toLang = $state.params.lang
+    fromLang = Service.getLanguageCode(Service.application)
+    !!fromLang && (toLang != fromLang)
 
   Service.completeSection = (section) ->
     Service.application.completedSections[section] = true
@@ -669,6 +685,8 @@ ShortFormApplicationService = (
     # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
     Service.application.session_uid = Service.session_uid
     params =
+      # $translate.use() with no arguments is a getter for the current lang setting
+      locale: $translate.use()
       application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
@@ -894,6 +912,13 @@ ShortFormApplicationService = (
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
     _.includes(['Submitted', 'Removed'], application.status)
+
+  Service.setApplicationLanguage = (lang) ->
+    Service.application.applicationLanguage = Service.languageMap[lang]
+
+  Service.getLanguageCode = (application) ->
+    # will take "English" and return "en"
+    _.invert(Service.languageMap)[application.applicationLanguage]
 
   Service.applicationCompletionPercentage = (application) ->
     pct = 5

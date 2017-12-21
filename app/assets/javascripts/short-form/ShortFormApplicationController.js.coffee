@@ -40,6 +40,7 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
+  $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
   $scope.readMoreDevelopmentalDisabilities = false
   # store label values that get overwritten by child directives
@@ -56,6 +57,7 @@ ShortFormApplicationController = (
   $scope.ethnicity_options = ShortFormHelperService.ethnicity_options
   $scope.race_options = ShortFormHelperService.race_options
   $scope.sexual_orientation_options = ShortFormHelperService.sexual_orientation_options
+  $scope.listing_referral_options = ShortFormHelperService.listing_referral_options
 
   # hideAlert tracks if the user has manually closed the alert "X"
   $scope.hideAlert = false
@@ -164,9 +166,9 @@ ShortFormApplicationController = (
     $scope.form.signIn ||
     $scope.form.applicationForm
 
-  $scope.inputInvalid = (fieldName, identifier = '') ->
+  $scope.inputInvalid = (fieldName) ->
     form = $scope.currentForm()
-    ShortFormApplicationService.inputInvalid(fieldName, form, identifier)
+    ShortFormApplicationService.inputInvalid(fieldName, form)
 
   # uncheck the "no" option e.g. noPhone or noEmail if you're filling out a valid value
   $scope.uncheckNoOption = (fieldName) ->
@@ -175,11 +177,11 @@ ShortFormApplicationController = (
     fieldToDisable = "no#{fieldName.charAt(0).toUpperCase() + fieldName.slice(1)}"
     $scope.applicant[fieldToDisable] = false
 
-  $scope.determineCommunityScreening = ->
+  $scope.beginApplication = (lang = 'en') ->
     if $scope.listing.Reserved_community_type
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.community-screening')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.community-screening', {lang: lang})
     else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview', {lang: lang})
 
   $scope.onCommunityScreeningPage = ->
     $state.current.name == 'dahlia.short-form-welcome.community-screening'
@@ -655,14 +657,14 @@ ShortFormApplicationController = (
   $scope.preferenceProofOptions = (pref_type) ->
     ShortFormHelperService.proofOptions(pref_type)
 
-  $scope.applicantFirstName = ->
-    ShortFormHelperService.applicantFirstName($scope.applicant)
-
   $scope.householdMemberForPreference = (pref_type) ->
     ShortFormHelperService.householdMemberForPreference($scope.application, pref_type)
 
   $scope.fileAttachmentForPreference = (pref_type) ->
     ShortFormHelperService.fileAttachmentForPreference($scope.application, pref_type)
+
+  $scope.fileAttachmentsForRentBurden = ->
+    ShortFormHelperService.fileAttachmentsForRentBurden($scope.application)
 
   $scope.certificateNumberForPreference = (pref_type) ->
     ShortFormHelperService.certificateNumberForPreference($scope.application, pref_type)
@@ -672,9 +674,6 @@ ShortFormApplicationController = (
 
   $scope.membersTranslateVariable = (members) ->
     ShortFormHelperService.membersTranslateVariable(members)
-
-  $scope.fileAttachmentsForRentBurden = ->
-    ShortFormHelperService.fileAttachmentsForRentBurden($scope.application)
 
   $scope.isLoading = ->
     ShortFormNavigationService.isLoading()
@@ -857,12 +856,23 @@ ShortFormApplicationController = (
     $scope.handleErrorState()
 
   $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
+    $scope.onStateChangeSuccess(e, toState, toParams, fromState, fromParams)
+
+  # separate this method out for better unit testing
+  $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
     $scope.clearErrors()
+    ShortFormNavigationService.isLoading(false)
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
       ShortFormApplicationService.application.id
         ShortFormApplicationService.sendToLastPageofApp(toState)
     ShortFormApplicationService.storeLastPage(toState.name)
-    ShortFormNavigationService.isLoading(false)
+
+  $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
+    $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)
+
+  $scope.stateChangeStart = (e, toState, toParams, fromState, fromParams) ->
+    ShortFormApplicationService.setApplicationLanguage(toParams.lang)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

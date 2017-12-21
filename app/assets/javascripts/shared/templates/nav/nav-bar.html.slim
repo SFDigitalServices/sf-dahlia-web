@@ -1,13 +1,13 @@
-nav#nav-top-bar.top-bar(top-bar role="navigation")
+nav#nav-top-bar.skiptranslate.top-bar(top-bar role="navigation")
   .row#nav-top-bar-row
     ul.title-area
       li.name
         .name-logo.t-alt-sans
-          a.topfocus ui-sref="dahlia.welcome" title="DAHLIA San Francisco Housing Portal"
-            | DAHLIA San Francisco Housing Portal
+          a.topfocus ng-href="{{homepagePath()}}" title="{{'T.DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL' | translate}}"
+            | {{'T.DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL' | translate}}
       li.toggle-topbar.menu-icon
         button.button-link.t-caps.open-nav-mobile ng-click="openNavMobile();focusOnNavMobile()" aria-label="Open Menu"
-          | Menu
+          | {{'T.MENU' | translate}}
           span.ui-icon.ui-static.ui-large.i-primary
             svg
               use xlink:href="#i-menu"
