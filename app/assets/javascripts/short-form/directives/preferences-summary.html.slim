@@ -7,9 +7,3 @@ div
 
     review-summary-item ng-repeat="pref in sortedApplicationPrefs" identifier="{{pref.identifier}}" label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{pref.subLabel}}" bold-sub-label="{{pref.boldSubLabel}}" rent-burden-sub-labels="pref.rentBurdenSubLabels"
       | {{pref.displayName}}
-
-    / review-summary-item sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customPreferences" ng-if="claimedCustomPreference(preference)"
-    /   | {{ preference.preferenceName }}
-    /
-    / review-summary-item sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customProofPreferences" ng-if="claimedCustomPreference(preference)" bold-sub-label="{{fileAttachmentForPreference(preference.listingPreferenceID)}}"
-    /   | {{ preference.preferenceName }}

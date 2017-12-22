@@ -8,7 +8,7 @@ angular.module('dahlia.directives')
   link: (scope, elem, attrs) ->
     # Using the keys from the preferenceMap, check which preferences the
     # applicant has selected on this application. Create a list of info
-    # about the selected preferences.
+    # for the selected preferences.
     selectedApplicationPrefs = []
     _.each scope.preferenceMap, (name, key) ->
       if scope.preferences[key]
@@ -26,21 +26,25 @@ angular.module('dahlia.directives')
           when 'workInSf' then 'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE'
           when 'assistedHousing' then 'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE'
           when 'rentBurden' then 'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE'
+
+        # If we didn't find a display name for this key, skip over it
+        return unless displayNameTranslateKey
+
         displayName = $translate.instant(displayNameTranslateKey)
 
         # Gather the sublabels for this pref
         if key == 'rentBurden'
           rentBurdenSubLabels = scope.fileAttachmentsForRentBurden()
-          subLabel = false
-          boldSubLabel = false
+          subLabel = null
+          boldSubLabel = null
         else
-          rentBurdenSubLabels = false
+          rentBurdenSubLabels = null
           subLabel = $translate.instant('LABEL.FOR_USER', scope.householdMemberForPreference(key))
 
-          if ['certOfPreference', 'displaced'].indexOf(key) < 0
-            boldSubLabel = scope.fileAttachmentForPreference(key)
-          else
+          if ['certOfPreference', 'displaced'].indexOf(key) >= 0
             boldSubLabel = scope.certificateNumberForPreference(key)
+          else
+            boldSubLabel = scope.fileAttachmentForPreference(key)
 
         selectedPrefInfo = {
           identifier: key,
@@ -51,6 +55,34 @@ angular.module('dahlia.directives')
           rentBurdenSubLabels: rentBurdenSubLabels
         }
 
+        selectedApplicationPrefs.push(selectedPrefInfo)
+
+    # Check which of the custom preferences the applicant has selected. Add
+    # info for each selected custom pref to the list of selected prefs.
+    _.each scope.listing.customPreferences, (pref) ->
+      if scope.claimedCustomPreference(pref)
+        selectedPrefInfo = {
+          identifier: null,
+          displayName: pref.preferenceName,
+          order: pref.order,
+          subLabel: $translate.instant('LABEL.FOR_USER', scope.householdMemberForPreference(pref.listingPreferenceID))
+          boldSubLabel: null,
+          rentBurdenSubLabels: null
+        }
+        selectedApplicationPrefs.push(selectedPrefInfo)
+
+    # Check which of the custom proof preferences the applicant has selected.
+    # Add info for each selected custom proof pref to the list of selected prefs.
+    _.each scope.listing.customProofPreferences, (pref) ->
+      if scope.claimedCustomPreference(pref)
+        selectedPrefInfo = {
+          identifier: null,
+          displayName: pref.preferenceName,
+          order: pref.order,
+          subLabel: $translate.instant('LABEL.FOR_USER', scope.householdMemberForPreference(pref.listingPreferenceID))
+          boldSubLabel: scope.fileAttachmentForPreference(pref.listingPreferenceID),
+          rentBurdenSubLabels: null
+        }
         selectedApplicationPrefs.push(selectedPrefInfo)
 
     # Sort the selected preferences by order
