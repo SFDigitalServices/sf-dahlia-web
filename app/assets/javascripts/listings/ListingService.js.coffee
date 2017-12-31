@@ -395,6 +395,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # listing is open if deadline is in the future
     return today > lotteryDate
 
+  Service.lotteryComplete = (listing) ->
+    listing.Lottery_Status == 'Lottery Complete'
+
   Service.lotteryIsUpcoming = (listing) ->
     !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
 
@@ -403,6 +406,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
+    return false if Service.lotteryComplete(listing)
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
@@ -458,7 +462,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
           incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
-
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
