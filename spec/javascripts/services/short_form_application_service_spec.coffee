@@ -1001,3 +1001,16 @@ do ->
         }
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
         expect(pct).toEqual 60
+
+    describe 'beforeEnteringSubmittedAppPage', ->
+      it "doesn't redirect if the application has a lottery number", ->
+        ShortFormApplicationService.application.lotteryNumber = 12345678
+        ShortFormApplicationService.beforeEnteringSubmittedAppPage()
+        # reset the spy so that we can check for "not" toHaveBeenCalled
+        $state.go = jasmine.createSpy()
+        expect($state.go).not.toHaveBeenCalled()
+
+      it 'redirects to the home page if the application does not have a lottery number', ->
+        ShortFormApplicationService.application.lotteryNumber = undefined
+        ShortFormApplicationService.beforeEnteringSubmittedAppPage()
+        expect($state.go).toHaveBeenCalledWith('dahlia.welcome')

@@ -773,7 +773,6 @@ ShortFormApplicationService = (
       Service.application.status.match(/draft/i)
     )
 
-
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
     Service.application.id = Service.accountApplication.id
@@ -927,6 +926,11 @@ ShortFormApplicationService = (
     pct += 10 if application.completedSections.Income
     pct += 30 if application.completedSections.Preferences
     pct
+
+  Service.beforeEnteringSubmittedAppPage = () ->
+    applicationDataExists = !!Service.application.lotteryNumber
+    return if applicationDataExists
+    $state.go('dahlia.welcome')
 
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
