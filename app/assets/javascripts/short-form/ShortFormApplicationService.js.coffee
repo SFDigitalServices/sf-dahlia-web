@@ -4,6 +4,11 @@ ShortFormApplicationService = (
   AnalyticsService, FileUploadService
 ) ->
   Service = {}
+
+  Service.refreshSessionUid = ->
+    Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
+  Service.refreshSessionUid()
+
   Service.listing = ListingService.listing
   Service.form = {}
   Service.accountApplication = {}
@@ -63,13 +68,11 @@ ShortFormApplicationService = (
       Review: {}
     # for storing last page of your draft, to return to. default to first page
     lastPage: 'dahlia.short-form-application.name'
+    externalSessionId: Service.session_uid
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
-  Service.refreshSessionUid = ->
-    Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
-  Service.refreshSessionUid()
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
   Service.languageMap =
