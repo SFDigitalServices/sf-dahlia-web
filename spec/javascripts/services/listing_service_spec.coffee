@@ -97,12 +97,49 @@ do ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
+      it 'resets the listing data before getting a new listing', ->
+        resetListingData = spyOn(ListingService, 'resetListingData')
+        stubAngularAjaxRequest httpBackend, requestURL, fakeListing
+        ListingService.getListing 'abc123'
+        httpBackend.flush()
+        expect(resetListingData).toHaveBeenCalled()
+
+      it 'does not reset listing data before getting the same listing', ->
+        # setup the initial listing
+        ListingService.listing = angular.copy(fakeListing.listing)
+
+        # request the same listing
+        resetListingData = spyOn(ListingService, 'resetListingData')
+        ListingService.getListing ListingService.listing.listingID
+        expect(resetListingData).not.toHaveBeenCalled()
+
       it 'assigns Service.listing with an individual listing', ->
         fakeListing.listing.Units_Available = 0
         stubAngularAjaxRequest httpBackend, requestURL, fakeListing
         ListingService.getListing 'abc123'
         httpBackend.flush()
         expect(ListingService.listing.Id).toEqual fakeListing.listing.Id
+
+    describe 'Service.resetListingData', ->
+      it 'resets the listing', ->
+        ListingService.listing = angular.copy(fakeListing.listing)
+        ListingService.resetListingData()
+        expect(ListingService.listing).toEqual {}
+
+      it 'resets the AMICharts', ->
+        ListingService.AMICharts = ListingService._consolidatedAMICharts(fakeAMI.ami)
+        ListingService.resetListingData()
+        expect(ListingService.AMICharts).toEqual []
+
+      it 'resets the Lottery Bucket Info', ->
+        ListingService.lotteryBucketInfo = angular.copy(fakeLotteryBuckets)
+        ListingService.resetListingData()
+        expect(ListingService.lotteryBucketInfo).toEqual {}
+
+      it 'resets the download URLs', ->
+        ListingService.listingDownloadURLs = angular.copy(ListingService.defaultApplicationURLs)
+        ListingService.resetListingData()
+        expect(ListingService.listingDownloadURLs).toEqual []
 
     describe 'Service.getListingAMI', ->
       afterEach ->
