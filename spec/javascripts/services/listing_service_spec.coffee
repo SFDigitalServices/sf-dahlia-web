@@ -493,3 +493,14 @@ do ->
         expect(val).toEqual(formatted)
         val = ListingService.formatLotteryNumber(formatted)
         expect(val).toEqual(formatted)
+
+    describe 'Service.listingIsBMR', ->
+      it 'returns false if the listing program type is not a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'OCII-RENTAL'
+        expect(ListingService.listingIsBMR(listing)).toEqual false
+
+      it 'returns true if the listing program type is a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'IH-RENTAL'
+        expect(ListingService.listingIsBMR(listing)).toEqual true
