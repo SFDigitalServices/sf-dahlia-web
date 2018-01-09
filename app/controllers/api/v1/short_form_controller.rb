@@ -372,12 +372,13 @@ class Api::V1::ShortFormController < ApiController
             {
               shortFormPreferences: %i(
                 listingPreferenceID
+                recordTypeDevName
                 appMemberID
-                additionalDetails
+                certificateNumber
                 naturalKey
                 preferenceProof
                 optOut
-                ifCombinedIndividualPreference
+                individualPreference
                 shortformPreferenceID
               ),
             },
