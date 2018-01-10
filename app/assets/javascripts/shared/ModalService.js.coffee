@@ -5,15 +5,15 @@
 ModalService = ($modal, $window) ->
   Service = {}
   Service.modalInstance = null
-  Service.messages = {}
+  Service.content = {}
   Service.callbacks = {}
 
-  Service.alert = (message, opts = {}) ->
-    Service.messages.alert = message
+  Service.alert = (content, opts = {}) ->
+    angular.copy(content, Service.content)
     Service.callbacks.onConfirm = opts.onConfirm if opts.onConfirm
     nativeAlert = !!opts.nativeAlert
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
-      $window.alert(message)
+      $window.alert(content.message)
     else
       if (!Service.modalInstance)
         Service.modalInstance = $modal.open(

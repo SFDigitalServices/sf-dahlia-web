@@ -69,11 +69,11 @@ module.exports = ->
 
   @When 'I cancel the modal pop-up', ->
     browser.waitForAngular()
-    element(By.cssContainingText('button', 'Cancel')).click()
+    element(By.cssContainingText('button', 'Stay')).click()
 
   @When 'I confirm the modal', ->
     browser.waitForAngular()
-    element(By.cssContainingText('button', 'OK')).click()
+    element(By.cssContainingText('button', 'Leave')).click()
 
   @When /^I select "([^"]*)" as my language$/, (language) ->
     switch language

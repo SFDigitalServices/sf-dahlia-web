@@ -22,16 +22,20 @@ do ->
         spyOn(modalMock, 'open').and.callThrough()
 
       it 'creates an alert and modal instance', ->
-        expect(ModalService.messages.alert).not.toBeDefined()
+        expect(ModalService.content.message).not.toBeDefined()
         expect(ModalService.modalInstance).toEqual null
-        ModalService.alert('hi')
-        expect(ModalService.messages.alert).toEqual 'hi'
+        content =
+          message: 'hi'
+        ModalService.alert(content)
+        expect(ModalService.content.message).toEqual 'hi'
         expect(modalMock.open).toHaveBeenCalled()
 
       it 'does not call $modal service when modalInstance exists', ->
         ModalService.modalInstance = {someobject: 'hello'}
-        ModalService.alert('yo')
-        expect(ModalService.messages.alert).toEqual 'yo'
+        content =
+          message: 'yo'
+        ModalService.alert(content)
+        expect(ModalService.content.message).toEqual 'yo'
         expect(modalMock.open).not.toHaveBeenCalled()
 
       it 'adds onConfirm callback if passed in', ->
@@ -41,5 +45,7 @@ do ->
 
       it 'uses native browser alert if specified', ->
         spyOn($window, 'alert')
-        ModalService.alert('yo', {nativeAlert: true})
+        content =
+          message: 'yo'
+        ModalService.alert(content, {nativeAlert: true})
         expect($window.alert).toHaveBeenCalledWith('yo')
