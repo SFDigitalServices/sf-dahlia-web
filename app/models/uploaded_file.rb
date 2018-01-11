@@ -21,7 +21,8 @@ class UploadedFile < ActiveRecord::Base
       logger.error 'UploadedFile.create_and_resize error: png -> jpg conversion'
     end
     # read file data into :file attribute
-    attrs[:file] = File.read(tempfile_path)
+    # TODO: remove this testing error trigger
+    attrs[:file] = File.read(tempfile_path + 'foofoofoo')
     # simplify uploaded filename to remove extension
     attrs[:name] = File.basename(attrs[:name], File.extname(attrs[:name]))
     create(attrs)
