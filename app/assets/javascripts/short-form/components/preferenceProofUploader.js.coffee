@@ -51,9 +51,7 @@ angular.module('dahlia.components')
         !(@proofDocument.file && @proofDocument.file.name)
 
       @showPreferenceUploader = =>
-        @application.preferences[@preference] &&
-          !@proofDocument.loading &&
-          !@hasPreferenceFile()
+        @application.preferences[@preference] && !@hasPreferenceFile()
 
       @hasPreferenceFile = =>
         !_.isEmpty(@proofDocument.file) && !@proofDocument.loading

@@ -113,7 +113,6 @@ do ->
       validationError: jasmine.createSpy()
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
-      hasPreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
     fakeSharedService = {}
     fakeEvent =

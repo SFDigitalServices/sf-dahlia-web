@@ -4,9 +4,6 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
   Service.preferences = {}
   Service.session_uid = -> null
 
-  Service.hasPreferenceFile = (fileType) ->
-    Service.preferences[fileType] && !Service.preferenceFileIsLoading(fileType)
-
   Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
     pref = ListingService.getPreference(pref_type)
     # might be calling deletePreferenceFile on a preference that this listing doesn't have
@@ -78,16 +75,15 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
     uploadedFileParams.document_type = proofDocument.proofOption
 
     if (!file)
-      proofDocument.error = true
+      proofDocument.error = 'ERROR.FILE_MISSING'
       return $q.reject()
 
     proofDocument.loading = true
     Service._processProofFile file, (resizedFile) ->
       if resizedFile.size > 5 * 1000 * 1000 # 5MB
-        # error handler
-        Service.preferences[fileType] = null
-        Service.preferences["#{fileType}_loading"] = false
-        Service.preferences["#{fileType}_error"] = true
+        proofDocument.file = null
+        proofDocument.loading = false
+        proofDocument.error = 'ERROR.FILE_UPLOAD'
       else
         uploadedFileParams.file = resizedFile
         Upload.upload(
@@ -101,8 +97,9 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
           proofDocument.file = resp.data
         ), ((resp) ->
           # error handler
+          proofDocument.file = null
           proofDocument.loading = false
-          proofDocument.error = true
+          proofDocument.error = 'ERROR.FILE_UPLOAD_FAILED'
         ))
 
   # Rent Burden specific functions
