@@ -7,6 +7,8 @@ ShortFormApplicationService = (
 
   Service.refreshSessionUid = ->
     Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
+    Service.application.externalSessionId = Service.session_uid if Service.application
+
   Service.refreshSessionUid()
 
   Service.listing = ListingService.listing
@@ -68,7 +70,6 @@ ShortFormApplicationService = (
       Review: {}
     # for storing last page of your draft, to return to. default to first page
     lastPage: 'dahlia.short-form-application.name'
-    externalSessionId: Service.session_uid
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -685,8 +686,7 @@ ShortFormApplicationService = (
     # clean up any old data hanging around from now invalidated/changed preferences
     Service.refreshPreferences()
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
-    # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
-    Service.application.session_uid = Service.session_uid
+    Service.application.externalSessionId = Service.session_uid
     params =
       # $translate.use() with no arguments is a getter for the current lang setting
       locale: $translate.use()

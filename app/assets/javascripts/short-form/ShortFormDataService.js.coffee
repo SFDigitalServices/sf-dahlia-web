@@ -21,6 +21,7 @@ ShortFormDataService = (ListingService) ->
         'hasMilitaryService'
         'hasDevelopmentalDisability'
         'answeredCommunityScreening'
+        'externalSessionId'
       ]
     primaryApplicant: [
         'appMemberId', 'contactId',
