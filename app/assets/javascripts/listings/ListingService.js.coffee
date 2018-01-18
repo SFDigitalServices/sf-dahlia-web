@@ -240,7 +240,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
-    angular.copy({}, Service.listing)
+    Service.resetListingData()
 
     deferred = $q.defer()
     $http.get("/api/v1/listings/#{_id}.json",
@@ -253,6 +253,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       deferred.reject(data)
     )
     return deferred.promise
+
+  # Remove the previous listing and all it's associated data
+  Service.resetListingData = () ->
+    angular.copy({}, Service.listing)
+    angular.copy([], Service.AMICharts)
+    angular.copy({}, Service.lotteryBucketInfo)
+    angular.copy([], Service.listingDownloadURLs)
 
   Service.getListingResponse = (deferred) ->
     (data, status, headers, config, itemCache) ->
@@ -717,6 +724,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
+    'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
   }
 
   Service.mapSlugToId = (id) ->

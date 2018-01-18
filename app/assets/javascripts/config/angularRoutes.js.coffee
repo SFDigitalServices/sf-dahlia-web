@@ -113,6 +113,7 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
+              # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
             ).catch( (response) ->
               deferred.reject(response)
             )
