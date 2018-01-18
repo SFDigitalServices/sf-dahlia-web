@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
+ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -173,11 +173,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.openLotteryResultsModal = ->
     Service.loading.lotteryRank = false
     Service.error.lotteryRank = false
-    modalInstance = $modal.open({
-      templateUrl: 'listings/templates/listing/_lottery_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-small'
-    })
+    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
 
   Service.listingHasLotteryBuckets = ->
     Service.lotteryBucketInfo &&
@@ -874,7 +870,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate', 'ModalService']
 
 angular
   .module('dahlia.services')

@@ -4,6 +4,9 @@ do ->
 
     ListingService = undefined
     httpBackend = undefined
+    fakeModalService =
+      modalInstance: {}
+      openModal: jasmine.createSpy()
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
@@ -17,6 +20,8 @@ do ->
     fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
     fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
     fakeAMI = getJSONFixture('listings-api-ami.json')
+    loading = {}
+    error = {}
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
@@ -48,6 +53,7 @@ do ->
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$modal', modalMock
       $provide.value '$translate', $translate
+      $provide.value 'ModalService', fakeModalService
       return
     )
 
@@ -453,6 +459,17 @@ do ->
         grouped = ListingService.groupUnitDetails(fakeUnits.units)
         # fakeUnits just has one AMI level
         expect(_.keys(grouped).length).toEqual 1
+
+    describe 'Service.openLotteryResultsModal', ->
+      beforeEach ->
+        ListingService.openLotteryResultsModal()
+
+      it 'should set the loading and error flags for lottery rank to false', ->
+        expect(ListingService.loading.lotteryRank).toEqual false
+        expect(ListingService.error.lotteryRank).toEqual false
+
+      it 'should open the lottery results modal', ->
+        expect(fakeModalService.openModal).toHaveBeenCalled()
 
     describe 'Service.listingHasLotteryResults', ->
       it 'should be true if lottery PDF is available', ->

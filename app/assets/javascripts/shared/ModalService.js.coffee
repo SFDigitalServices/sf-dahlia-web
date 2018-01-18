@@ -8,6 +8,14 @@ ModalService = ($modal, $window) ->
   Service.content = {}
   Service.callbacks = {}
 
+  Service.openModal = (templateUrl, windowClass = 'modal-large') ->
+    if templateUrl
+      Service.modalInstance = $modal.open({
+        templateUrl: templateUrl,
+        controller: 'ModalInstanceController',
+        windowClass: windowClass
+      })
+
   Service.alert = (content, opts = {}) ->
     angular.copy(content, Service.content)
     Service.callbacks.onConfirm = opts.onConfirm if opts.onConfirm
@@ -16,16 +24,15 @@ ModalService = ($modal, $window) ->
       $window.alert(content.message)
     else
       if (!Service.modalInstance)
-        Service.modalInstance = $modal.open(
-          templateUrl: 'shared/templates/alert_modal.html',
-          controller: 'ModalInstanceController',
-          windowClass: 'modal-large'
-        )
+        Service.openModal('shared/templates/alert_modal.html')
         Service.modalInstance.result.then( ->
           Service.modalInstance = null
         ).catch( ->
           Service.modalInstance = null
         )
+
+  Service.closeModal = () ->
+    Service.modalInstance.close() if Service.modalInstance
 
   return Service
 
