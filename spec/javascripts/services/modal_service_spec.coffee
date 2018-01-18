@@ -71,7 +71,20 @@ do ->
         expect($window.alert).toHaveBeenCalledWith('yo')
 
     describe 'closeModal', ->
+      beforeEach ->
+        ModalService.clearModal = jasmine.createSpy()
+
       it 'closes the open modal instance', ->
         ModalService.modalInstance = modalInstance
         ModalService.closeModal()
         expect(ModalService.modalInstance.close).toHaveBeenCalled()
+
+      it 'calls ModalService.clearModal', ->
+        ModalService.closeModal()
+        expect(ModalService.clearModal).toHaveBeenCalled()
+
+    describe 'clearModal', ->
+      it 'sets the modal instance to null', ->
+        ModalService.modalInstance = modalInstance
+        ModalService.clearModal()
+        expect(ModalService.modalInstance).toEqual(null)
