@@ -153,7 +153,7 @@
         if _.isObject(error) && error.status >= 500
           timeoutRetries -= 1
           # if timing out on initial page load, retry a couple times before giving up
-          return e.preventDefault() if timeoutRetries <= 0
+          $window.location.href = '/500.html' if timeoutRetries <= 0
 
         # redirect when there's an error
         if toState.name == 'dahlia.listing' && error.status == 404
