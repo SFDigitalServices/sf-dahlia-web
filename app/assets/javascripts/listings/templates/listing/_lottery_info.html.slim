@@ -18,7 +18,7 @@ section.content-wrap
   span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
-  .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
+  .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe() && listing.Lottery_Results_Date'
     h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
     p.content-group_date
       span.content-group_day
