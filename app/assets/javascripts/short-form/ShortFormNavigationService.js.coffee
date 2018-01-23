@@ -50,8 +50,8 @@ ShortFormNavigationService = (
       pages: [
         'preferences-intro'
         'assisted-housing-preference'
-        'rent-burden-preference'
-        'rent-burden-preference-edit'
+        'rent-burdened-preference'
+        'rent-burdened-preference-edit'
         'neighborhood-preference'
         'adhp-preference'
         'live-work-preference'
@@ -100,8 +100,8 @@ ShortFormNavigationService = (
     # preferences
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
     'assisted-housing-preference': {callback: ['checkForNeighborhoodOrLiveWork']}
-    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
-    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
+    'rent-burdened-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burdened-preference-edit': {path: 'rent-burdened-preference'}
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
@@ -169,7 +169,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
-      'rent-burden-preference-edit',
+      'rent-burdened-preference-edit',
       'review-summary',
       'confirmation'
     ]
@@ -230,7 +230,7 @@ ShortFormNavigationService = (
       when 'income-vouchers'
         'household-priorities'
       # -- Preferences
-      when 'rent-burden-preference'
+      when 'rent-burdened-preference'
         , 'assisted-housing-preference'
           'preferences-programs'
       when 'neighborhood-preference'
@@ -307,7 +307,7 @@ ShortFormNavigationService = (
     if ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
     else if ShortFormApplicationService.eligibleForRentBurden()
-      'rent-burden-preference'
+      'rent-burdened-preference'
     else
       'preferences-intro'
 
