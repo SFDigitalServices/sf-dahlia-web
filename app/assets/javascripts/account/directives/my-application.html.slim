@@ -40,7 +40,7 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
       .feed-item-links
         a.feed-item-link.lined ui-sref="dahlia.listing({id: listing.Id})"
           | {{'LABEL.SEE_LISTING' | translate}}
-        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)"
+        button.button-link.btn-link.feed-item-link.a-alert.lined ng-if="!isSubmitted()" ng-click="deleteApplication(application.id)" ng-disabled="submitDisabled"
           | {{'T.DELETE' | translate}}
       .feed-item-meta
         p.feed-item-date
