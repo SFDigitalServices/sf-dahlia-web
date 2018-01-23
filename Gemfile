@@ -128,5 +128,6 @@ group :production do
   gem 'dalli'
   gem 'memcachier'
   gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
+  gem 'rails_autoscale_agent'
   gem 'rails_12factor'
 end
