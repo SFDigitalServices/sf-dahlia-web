@@ -26,7 +26,9 @@ angular.module('dahlia.directives')
 
       scope.deleteApplication = (id) ->
         if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
+          scope.submitDisabled = true
           ShortFormApplicationService.deleteApplication(id).success ->
+            scope.submitDisabled = false
             scope.application.deleted = true
 
       scope.formattedAddress = ->

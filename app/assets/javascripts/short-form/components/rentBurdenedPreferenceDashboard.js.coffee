@@ -1,5 +1,5 @@
 angular.module('dahlia.components')
-.component 'rentBurdenPreferenceDashboard',
+.component 'rentBurdenedPreferenceDashboard',
   bindings:
     application: '<'
     title: '@'
@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     customInvalidMessage: '<'
     onUncheck: '&'
 
-  templateUrl: 'short-form/components/rent-burden-preference-dashboard.html'
+  templateUrl: 'short-form/components/rent-burdened-preference-dashboard.html'
   controller:
     ['ShortFormApplicationService','FileUploadService', '$translate',
     (ShortFormApplicationService, FileUploadService, $translate) ->

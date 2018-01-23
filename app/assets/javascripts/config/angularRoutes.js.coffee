@@ -112,6 +112,7 @@
               setTimeout(ListingService.getListingPreferences)
               setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
+              # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -890,11 +891,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference', {
-      url: '/rent-burden-preference'
+    .state('dahlia.short-form-application.rent-burdened-preference', {
+      url: '/rent-burdened-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ],
@@ -902,11 +903,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference-edit', {
-      url: '/rent-burden-preference/:index'
+    .state('dahlia.short-form-application.rent-burdened-preference-edit', {
+      url: '/rent-burdened-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference-edit.html'
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
