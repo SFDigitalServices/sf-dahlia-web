@@ -1,12 +1,11 @@
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
-  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
   'SharedService', 'GoogleTranslateService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
-  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
   SharedService, GoogleTranslateService, ModalService) ->
-
     timeoutRetries = 2
     ngMeta.init()
 
@@ -41,6 +40,7 @@
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
+        AutosaveService.save()
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
@@ -121,6 +121,9 @@
         Idle.watch()
       else
         Idle.unwatch()
+
+      unless ShortFormApplicationService.isShortFormPage($state.current) && AccountService.loggedIn()
+        AutosaveService.stopTimer()
 
       # check if we're on short form and trying to access a later section than the first section
       toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
