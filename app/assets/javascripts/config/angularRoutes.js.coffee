@@ -603,8 +603,8 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, listing) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route
@@ -623,6 +623,9 @@
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
+              if AccountService.loggedIn()
+                AutosaveService.startTimer()
+
               deferred.resolve(ShortFormApplicationService.application)
               lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
 
@@ -682,11 +685,14 @@
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
       onEnter: [
-        'ShortFormApplicationService', 'AccountService',
-        (ShortFormApplicationService, AccountService) ->
+        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
+        (ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            # always autosave when you start a new application
+            AutosaveService.save() unless ShortFormApplicationService.application.id
+
       ]
     })
     .state('dahlia.short-form-application.contact', {
