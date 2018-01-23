@@ -27,11 +27,8 @@ class Api::V1::ListingsController < ApiController
   end
 
   def lottery_buckets
-    # TO DO BEFORE MERGE: Remove error raising and uncomment back regular code
-    raise 'error'
-    # Return this before merging
-    # @lottery_buckets = ListingService.lottery_buckets(params[:id])
-    # render json: @lottery_buckets
+    @lottery_buckets = ListingService.lottery_buckets(params[:id])
+    render json: @lottery_buckets
   end
 
   def lottery_ranking
