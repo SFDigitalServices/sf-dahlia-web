@@ -203,6 +203,8 @@
           AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
         if $stateParams.newAccount
           AccountService.openConfirmEmailModal()
+        if $stateParams.timeout
+          AccountService.accountError.messages.timeout = true
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
         if $stateParams.signedOut
