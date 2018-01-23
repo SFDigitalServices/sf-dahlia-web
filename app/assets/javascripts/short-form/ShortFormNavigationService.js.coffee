@@ -161,6 +161,7 @@ ShortFormNavigationService = (
     return false if $state.current.name == 'dahlia.short-form-review'
     hideBackButton = [
       'intro',
+      'community-screening',
       'overview',
       'name',
       'verify-address',
