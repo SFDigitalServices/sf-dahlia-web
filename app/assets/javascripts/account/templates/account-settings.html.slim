@@ -28,7 +28,7 @@
                 | {{'ERROR.EMAIL' | translate}}
 
               p.text-center.padding-top
-                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}" ng-disabled="submitDisabled"
 
         form novalidate="" name="form.accountPassword" ng-submit="updatePassword('change')"
           alert-box(form-object="form.accountPassword" hide-alert="hideAlert" custom-message="accountError.messages.password")
@@ -65,7 +65,7 @@
                 | {{'ERROR.PASSWORD_CONFIRMATION' | translate}}
 
               p.text-center.padding-top
-                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}" ng-disabled="submitDisabled"
 
         form novalidate="" name="form.accountNameDOB" ng-submit="updateNameDOB()"
           alert-box(form-object="form.accountNameDOB" hide-alert="hideAlert" custom-message="accountError.messages.nameDOB")
@@ -120,4 +120,4 @@
                 | {{'ERROR.DOB' | translate}}
 
               p.text-center.padding-top
-                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}"
+                input.button.small.no-margin type="submit" value="{{'LABEL.UPDATE' | translate}}" ng-disabled="submitDisabled"

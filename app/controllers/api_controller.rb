@@ -5,23 +5,28 @@ class ApiController < ActionController::API
   respond_to :json
 
   rescue_from StandardError do |e|
-    render_error(exception: e, status: :service_unavailable) # 503
+    render_error(exception: e, status: :service_unavailable, capture: true) # 503
   end
 
-  rescue_from Faraday::ConnectionFailed,
-              Faraday::TimeoutError do |e|
-    render_error(exception: e, status: :gateway_timeout) # 504
+  rescue_from Faraday::ClientError do |e|
+    if e.is_a?(Faraday::ConnectionFailed) || e.is_a?(Faraday::TimeoutError)
+      render_error(exception: e, status: :gateway_timeout, capture: true) # 504
+    elsif e.message.include? 'APEX_ERROR: System.StringException: Invalid id'
+      # listing not found error
+      render_error(exception: e, status: :not_found)
+    else
+      # catch all case
+      render_error(exception: e, status: :service_unavailable, capture: true)
+    end
   end
 
   def render_error(opts = {})
-    opts = Hashie::Mash.new(opts)
-    status = opts.status || :internal_server_error
-    if opts.exception
-      e = opts.exception
+    status = opts[:status] || :internal_server_error
+    message = 'Not found.'
+    if opts[:exception] && opts[:capture]
+      e = opts[:exception]
       Raven.capture_exception(e)
       message = "#{e.class.name}, #{e.message}"
-    else
-      message = 'Not found.'
     end
     logger.error "<< API Error >> #{message}"
     status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status]

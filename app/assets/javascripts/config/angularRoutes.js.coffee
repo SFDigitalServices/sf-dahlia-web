@@ -204,6 +204,8 @@
           AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
         if $stateParams.newAccount
           AccountService.openConfirmEmailModal()
+        if $stateParams.timeout
+          AccountService.accountError.messages.timeout = true
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
         if $stateParams.signedOut
@@ -886,11 +888,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference', {
-      url: '/rent-burden-preference'
+    .state('dahlia.short-form-application.rent-burdened-preference', {
+      url: '/rent-burdened-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ],
@@ -898,11 +900,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference-edit', {
-      url: '/rent-burden-preference/:index'
+    .state('dahlia.short-form-application.rent-burdened-preference-edit', {
+      url: '/rent-burdened-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference-edit.html'
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
@@ -972,6 +974,12 @@
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
+      resolve:
+        application: [
+          '$state', 'ShortFormApplicationService', 'AccountService'
+          ($state, ShortFormApplicationService, AccountService) ->
+            AccountService.checkForAccount(ShortFormApplicationService.applicant.email)
+        ]
     })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms?loginMessage'

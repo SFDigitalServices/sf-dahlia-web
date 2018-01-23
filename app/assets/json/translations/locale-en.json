@@ -332,7 +332,12 @@
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
     },
     "F1A_REVIEW_SIGN_IN": {
+        "ACCOUNT_EXISTS": {
+            "P1": "It looks like you may already have an account. Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
+            "TITLE": "Welcome back!"
+        },
         "CONTINUE_WITHOUT_AN_ACCOUNT": "Continue without an account",
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continue without signing in",
         "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
         "TITLE": "You're almost done!"
     },
@@ -830,6 +835,7 @@
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
+        "LOGGED_OUT_DUE_TO_INACTIVITY": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
         "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
@@ -842,7 +848,7 @@
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
         "APPLICATION_SUBMITTED": "Application Submitted",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose any unsaved information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
         "BACK": "Back",
@@ -872,7 +878,7 @@
         "SAVE_AND_COME_BACK_LATER": "Save and come back later",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
         "SESSION_EXPIRED": "Your session has expired.",
-        "SESSION_INACTIVITY": "To protect your identity, your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
+        "SESSION_INACTIVITY": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information you've entered into the application for this listing if you choose not to respond.",
         "SESSION_INACTIVITY_CONFIRMATION": "To protect your identity, your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
         "SESSION_INACTIVITY_LOGGED_IN": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",
         "SKIP_TO_MAIN_CONTENT": "Skip to main content",

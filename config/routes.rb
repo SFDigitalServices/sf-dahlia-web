@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
-    skip: %i(omniauth_callbacks),
+    skip: %i[omniauth_callbacks],
     controllers: {
       registrations: 'overrides/registrations',
       sessions: 'overrides/sessions',
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # listings
-      resources :listings, only: [:index, :show] do
+      resources :listings, only: %i[index show] do
         member do
           get 'units'
           get 'lottery_buckets'
@@ -51,6 +51,7 @@ Rails.application.routes.draw do
         get 'my-applications' => 'account#my_applications'
         put 'update' => 'account#update'
         get 'confirm' => 'account#confirm'
+        get 'check-account' => 'account#check_account'
       end
     end
   end
