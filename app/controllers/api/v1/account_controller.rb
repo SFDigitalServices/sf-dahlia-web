@@ -3,7 +3,7 @@ class Api::V1::AccountController < ApiController
   AccountService = SalesforceService::AccountService
   ListingService = SalesforceService::ListingService
 
-  before_action :authenticate_user!, except: %i(confirm check_account)
+  before_action :authenticate_user!, except: %i[confirm check_account]
 
   def my_applications
     applications = map_listings_to_applications(current_user_applications)

@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, $state, uuid,
+  $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
   AnalyticsService, FileUploadService
 ) ->
@@ -620,6 +620,17 @@ ShortFormApplicationService = (
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
 
+  Service.leaveAndResetShortForm = (toState, toParams) ->
+    # disable the onbeforeunload so that you are no longer bothered if you
+    # try to reload the listings page, for example
+    $window.removeEventListener 'beforeunload', Service.onExit
+    unless toState.name == 'dahlia.short-form-review'
+      Service.resetApplicationData()
+    if toParams.timeout
+      AnalyticsService.trackTimeout('Application')
+    else
+      AnalyticsService.trackFormAbandon('Application')
+
   Service.invalidateNameForm = ->
     Service.application.validatedForms['You']['name'] = false
 
@@ -963,7 +974,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', '$state', 'uuid',
+  '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
   'AnalyticsService', 'FileUploadService'

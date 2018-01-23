@@ -55,6 +55,7 @@ Style/ConditionalAssignment:
 
 Style/FormatStringToken:
   Enabled: false
+  Enabled: false
 
 Metrics/LineLength:
   Max: 90
@@ -66,5 +67,11 @@ Metrics/LineLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+    - 'config/routes.rb'
+
+Style/RescueStandardError:
+  Exclude:
+    - 'app/services/cache_service.rb'
+
 
 
