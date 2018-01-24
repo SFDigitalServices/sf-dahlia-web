@@ -199,14 +199,14 @@ GEM
     method_source (0.8.2)
     mime-types (2.99.3)
     mini_magick (4.7.2)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (5.10.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     netrc (0.11.0)
     newrelic_rpm (3.16.0.318)
-    nokogiri (1.7.1)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     oj (2.16.1)
     oj_mimic_json (1.0.1)
     orm_adapter (0.5.0)
@@ -422,7 +422,7 @@ DEPENDENCIES
   memcachier
   mini_magick (~> 4.7.2)
   newrelic_rpm
-  nokogiri (~> 1.7.1)
+  nokogiri (~> 1.8.1)
   oj
   oj_mimic_json
   overcommit
@@ -461,4 +461,4 @@ RUBY VERSION
    ruby 2.2.3p173
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
