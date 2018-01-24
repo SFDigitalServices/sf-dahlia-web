@@ -654,8 +654,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return [] unless amiLevel
     occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
+    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
-    #TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
     if Service.listingIs('Merry Go Round Shared Housing')
       max = 2
     else if Service.listingHasOnlySROUnits(listing)
