@@ -667,7 +667,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.householdAMIChartCutoff = ->
     if Service.listingIs('Merry Go Round Shared Housing')
       return 2
-    else if Service.listingHasOnlySROUnits(listing)
+    else if Service.listingHasOnlySROUnits(Service.listing)
       return 1
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
