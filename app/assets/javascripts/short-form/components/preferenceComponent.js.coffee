@@ -12,6 +12,7 @@ angular.module('dahlia.components')
     proofOptionLabel: '@'
     buttonLabel: '@'
     proofType: '@'
+    marginBottom: '<'
     required: '&'
   templateUrl: 'short-form/components/preference-component.html'
 
