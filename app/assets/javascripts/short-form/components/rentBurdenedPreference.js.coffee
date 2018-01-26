@@ -1,5 +1,5 @@
 angular.module('dahlia.components')
-.component 'rentBurdenPreference',
+.component 'rentBurdenedPreference',
   bindings:
     application: '<'
     title: '@'
@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     required: '&'
     showCheckbox: '<'
 
-  templateUrl: 'short-form/components/rent-burden-preference.html'
+  templateUrl: 'short-form/components/rent-burdened-preference.html'
   controller:
     ['ShortFormApplicationService', 'ShortFormHelperService', 'FileUploadService', '$translate',
     (ShortFormApplicationService, ShortFormHelperService, FileUploadService, $translate) ->

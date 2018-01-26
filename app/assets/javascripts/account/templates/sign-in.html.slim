@@ -16,6 +16,13 @@
         alert-box(primary="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.signedOut" ng-if="accountSuccess.messages.signedOut")
         alert-box(primary="true" info="true" hide-alert="hideMessage" custom-message="accountSuccess.messages.userTokenValidationTimeout" ng-if="accountSuccess.messages.userTokenValidationTimeout")
 
+        .alert-box.primary.no-margin.no-close.alert-box ng-if="accountError.messages.timeout"
+          span.alert-icon.ui-icon.ui-medium.ng-scope
+            svg
+              use xlink:href="#i-info"
+          p.alert-body translate="SIGN_IN.LOGGED_OUT_DUE_TO_INACTIVITY"
+
+
         .dash-card-inner.inset.border-bottom
 
           sign-in-fields
