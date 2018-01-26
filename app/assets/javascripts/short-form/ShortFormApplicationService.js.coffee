@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, $state, uuid,
+  $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
   AnalyticsService, FileUploadService
 ) ->
@@ -620,6 +620,17 @@ ShortFormApplicationService = (
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
 
+  Service.leaveAndResetShortForm = (toState, toParams) ->
+    # disable the onbeforeunload so that you are no longer bothered if you
+    # try to reload the listings page, for example
+    $window.removeEventListener 'beforeunload', Service.onExit
+    unless toState.name == 'dahlia.short-form-review'
+      Service.resetApplicationData()
+    if toParams.timeout
+      AnalyticsService.trackTimeout('Application')
+    else
+      AnalyticsService.trackFormAbandon('Application')
+
   Service.invalidateNameForm = ->
     Service.application.validatedForms['You']['name'] = false
 
@@ -691,6 +702,8 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    autosave = if options.autosave then '?autosave=true' else ''
+
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
@@ -701,10 +714,10 @@ ShortFormApplicationService = (
       if options.attachToAccount
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}#{autosave}", params)
     else
       # create
-      appSubmission = $http.post('/api/v1/short-form/application', params)
+      appSubmission = $http.post("/api/v1/short-form/application#{autosave}", params)
 
     appSubmission.success((data, status, headers, config) ->
       if data.lotteryNumber
@@ -737,9 +750,14 @@ ShortFormApplicationService = (
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
     Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
-      if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
+      previousApplication = data.application
+      if !_.isEmpty(previousApplication) && Service._previousIsSubmittedOrBothDrafts(previousApplication)
         # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data.application)
+        if opts.type == 'review-sign-in' && previousApplication.status.match(/draft/i)
+          # because we are finished/confirmed with the current draft, override the old one
+          Service.overridePreviousDraftId()
+        else if Service._previousIsSubmittedOrBothDrafts(previousApplication)
+          return Service._signInAndSkipSubmit(previousApplication)
       changed = null
       if Service.application.status.match(/draft/i)
         if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
@@ -773,10 +791,14 @@ ShortFormApplicationService = (
       Service.application.status.match(/draft/i)
     )
 
+  Service.overridePreviousDraftId = ->
+    # override draft ID and proceed...  ->
+    Service.application.id = Service.accountApplication.id
 
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
-    Service.application.id = Service.accountApplication.id
+    Service.overridePreviousDraftId()
+    # override draft ID and proceed...
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()
@@ -952,7 +974,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', '$state', 'uuid',
+  '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
   'AnalyticsService', 'FileUploadService'

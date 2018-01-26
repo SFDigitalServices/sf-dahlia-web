@@ -31,6 +31,7 @@ class CacheService
       end
       begin
         due_date_passed = Date.parse(listing['Application_Due_Date']) < Date.today
+      # to do: specify error class to rescuing
       rescue
         due_date_passed = true
       end

@@ -29,4 +29,20 @@ describe 'Account API' do
     # check to make sure the response data is present
     expect(json['applications']).not_to be_nil
   end
+
+  describe '#check-account' do
+    it 'checks for existing user account by email address' do
+      get '/api/v1/account/check-account', email: @user.email
+      json = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(json['account_exists']).to eq(true)
+    end
+
+    it 'checks for non-existing user account by email address' do
+      get '/api/v1/account/check-account', email: 'nobody@not.email'
+      json = JSON.parse(response.body)
+      expect(response).to be_success
+      expect(json['account_exists']).to eq(false)
+    end
+  end
 end

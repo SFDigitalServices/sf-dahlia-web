@@ -61,6 +61,20 @@ module.exports = ->
     getUrl(url)
     browser.ignoreSynchronization = false
 
+  @When 'I try to navigate to the Favorites page', ->
+    browser.waitForAngular()
+    element.all(By.cssContainingText('a', 'My Favorites')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When 'I cancel the modal pop-up', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Stay')).click()
+
+  @When 'I confirm the modal', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Leave')).click()
+
   @When /^I select "([^"]*)" as my language$/, (language) ->
     switch language
       when "Spanish"
@@ -651,6 +665,12 @@ module.exports = ->
   @Then 'I should see the general lottery notice on the review page', ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should still be on the Test Listing application page', ->
+    browser.wait(EC.urlContains('apply'), 6000)
+
+  @Then 'I should see the Favorites page', ->
+    browser.wait(EC.urlContains('favorites'), 6000)
 
   @Then 'I should land on the Sign In page', ->
     el = element(By.cssContainingText('h1', 'Sign In'))
