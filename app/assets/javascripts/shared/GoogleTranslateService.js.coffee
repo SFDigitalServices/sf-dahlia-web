@@ -29,11 +29,18 @@ GoogleTranslateService = ($q, $timeout) ->
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
-      event = new Event('change',
+      if typeof window.Event == 'function'
+        changeEvent = new Event('change',
           'bubbles': true
           'cancelable': true
-      )
-      googleTranslateOption.dispatchEvent(event)
+        )
+      else
+        # old style syntax to support IE 9+
+        changeEvent = document.createEvent('Event')
+        bubbles = true
+        cancelable = true
+        changeEvent.initEvent('change', bubbles, cancelable)
+      googleTranslateOption.dispatchEvent(changeEvent)
     else
       $timeout Service.setLanguage, 100, true, language
 
