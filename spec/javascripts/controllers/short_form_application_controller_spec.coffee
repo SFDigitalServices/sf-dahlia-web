@@ -3,6 +3,9 @@ do ->
   describe 'ShortFormApplicationController', ->
     scope = undefined
     state = undefined
+    translate = {
+      instant: jasmine.createSpy().and.returnValue('newmessage')
+    }
     fakeIdle = undefined
     fakeTitle = undefined
     eligibility = undefined
@@ -90,8 +93,11 @@ do ->
       hasCompleteRentBurdenFiles: ->
       hasCompleteRentBurdenFilesForAddress: jasmine.createSpy()
       cancelPreference: jasmine.createSpy()
+      setApplicationLanguage: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
-      resetUserData: ->
+      resetApplicationData: ->
+      isEnteringShortForm: jasmine.createSpy()
+      storeLastPage: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -134,10 +140,6 @@ do ->
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
 
-      $translate = {
-        instant: jasmine.createSpy('$translate.instant').and.returnValue('newmessage')
-      }
-
       deferred = $q.defer()
       deferred.resolve('resolveData')
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
@@ -145,7 +147,7 @@ do ->
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'resetUserData').and.callThrough()
+      spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
         state.go('dahlia.my-applications', {skipConfirm: true})
         deferred.promise
@@ -158,7 +160,7 @@ do ->
         $document: _$document_
         Idle: fakeIdle
         Title: fakeTitle
-        $translate: $translate
+        $translate: translate
         ShortFormApplicationService: fakeShortFormApplicationService
         ShortFormNavigationService: fakeShortFormNavigationService
         ShortFormHelperService: fakeShortFormHelperService
@@ -456,7 +458,7 @@ do ->
           fakeShortFormApplicationService.eligibleForAssistedHousing = jasmine.createSpy().and.returnValue(false)
           fakeShortFormApplicationService.eligibleForRentBurden = jasmine.createSpy().and.returnValue(true)
           scope.checkIfPreferencesApply()
-          path = 'dahlia.short-form-application.rent-burden-preference'
+          path = 'dahlia.short-form-application.rent-burdened-preference'
           expect(state.go).toHaveBeenCalledWith(path)
 
       describe 'preferences do not apply to household',->
@@ -559,11 +561,18 @@ do ->
         # Expect route path that is set up in FakeShortFormNavigationService, above
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.household-intro')
 
-    describe 'determineCommunityScreening', ->
+    describe 'beginApplication', ->
       it 'expects state.go to be called with community screening page if listing is a community building', ->
         scope.listing.Reserved_community_type = 'Veteran'
-        scope.determineCommunityScreening()
-        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening')
+        lang = 'en'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.community-screening', {lang: lang})
+
+      it 'expects state.go to be called with overview page and language param', ->
+        scope.listing.Reserved_community_type = null
+        lang = 'es'
+        scope.beginApplication(lang)
+        expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview', {lang: lang})
 
     describe 'validateCommunityEligibility', ->
       it 'expects state.go to be called with short form overview page if applicant answered Yes to screening question', ->
@@ -571,10 +580,12 @@ do ->
         scope.validateCommunityEligibility()
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.overview')
 
-      it 'expects communityScreeningInvalid to be marked true if applicant answered No to screening question', ->
+      it 'expects a community eligibility error if applicant answered No to screening question', ->
         scope.application.answeredCommunityScreening = 'No'
+        scope.eligibilityErrors = []
+        scope.communityEligibilityErrorMsg = ['At least one member of your household must be a Veteran']
         scope.validateCommunityEligibility()
-        expect(scope.communityScreeningInvalid).toEqual true
+        expect(scope.eligibilityErrors).toEqual scope.communityEligibilityErrorMsg
 
     describe 'checkForRentBurdenFiles', ->
       describe 'with rent burden opted out', ->
@@ -625,12 +636,25 @@ do ->
         scope.fileAttachmentsForRentBurden()
         expect(fakeShortFormHelperService.fileAttachmentsForRentBurden).toHaveBeenCalled()
 
+    describe 'onStateChangeSuccess', ->
+      it 'expects setApplicationLanguage to be called on ShortFormApplicationService', ->
+        lang = 'es'
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
+        expect(fakeShortFormApplicationService.setApplicationLanguage).toHaveBeenCalledWith(lang)
+
+      it 'expects isLoading to be set to false on ShortFormNavigationService', ->
+        lang = 'es'
+        toState = {name: 'state'}
+        scope.onStateChangeSuccess(null, toState, {lang: lang})
+        expect(fakeShortFormNavigationService.isLoading).toHaveBeenCalledWith(false)
+
     describe 'resetAndStartNewApp', ->
       beforeEach ->
         scope.resetAndStartNewApp()
 
-      it 'calls resetUserData on ShortFormApplicationService', ->
-        expect(fakeShortFormApplicationService.resetUserData).toHaveBeenCalled()
+      it 'calls resetApplicationData on ShortFormApplicationService', ->
+        expect(fakeShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
       it 'unsets application autofill value', ->
         expect(scope.application.autofill).toBeUndefined()

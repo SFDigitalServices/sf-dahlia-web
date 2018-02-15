@@ -29,6 +29,7 @@ class CacheService
       end
       begin
         due_date_passed = Date.parse(listing['Application_Due_Date']) < Date.today
+      # to do: specify error class to rescuing
       rescue
         due_date_passed = true
       end
@@ -50,5 +51,7 @@ class CacheService
     # because it is parameter-based and values will rarely change (1x/year?)
     image_processor = ListingImageService.new(listing).process_image
     Rails.logger.error image_processor.errors.join(',') if image_processor.errors.present?
+  rescue Faraday::ClientError => e
+    Raven.capture_exception(e, tags: { 'listing_id' => listing['Id'] })
   end
 end

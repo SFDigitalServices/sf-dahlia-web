@@ -1,7 +1,7 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService < Force::Base
-    WHITELIST_BROWSE_FIELDS = %i(
+    WHITELIST_BROWSE_FIELDS = %i[
       Id
       listingID
       Name
@@ -20,7 +20,7 @@ module Force
       Does_Match
       LastModifiedDate
       imageURL
-    ).freeze
+    ].freeze
 
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
@@ -51,14 +51,14 @@ module Force
 
     # get all units for a given listing
     def units(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       @parse_response = true
       cached_api_get("/Listing/Units/#{listing_id}", nil)
     end
 
     # get all preferences for a given listing
     def preferences(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       @parse_response = true
       cached_api_get("/Listing/Preferences/#{listing_id}", nil)
     end
@@ -76,7 +76,7 @@ module Force
 
     # get Lottery Buckets with rankings
     def lottery_buckets(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       @parse_response = false
       data = cached_api_get("/Listing/LotteryResult/#{listing_id}", nil)
       # cut down the bucketResults so it's not a huge JSON
@@ -89,16 +89,16 @@ module Force
 
     # get Individual Lottery Result with rankings
     def lottery_ranking(listing_id, lottery_number)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
       @parse_response = false
       cached_api_get(endpoint, nil)
     end
 
     def check_household_eligibility(listing_id, params)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(household_size incomelevel).each do |k|
+      %i[household_size incomelevel].each do |k|
         params[k] = params[k].to_i if params[k].present?
       end
       @parse_response = false
@@ -107,9 +107,7 @@ module Force
 
     def array_sort!(listing)
       listing.each do |k, v|
-        if v.is_a?(Array) && v[0] && v[0]['Id']
-          listing[k] = v.sort_by { |i| i['Id'] }
-        end
+        listing[k] = v.sort_by { |i| i['Id'] } if v.is_a?(Array) && v[0] && v[0]['Id']
       end
     end
 
@@ -117,7 +115,7 @@ module Force
 
     def get_listings(id = nil, params = nil)
       endpoint = '/ListingDetails'
-      endpoint += "/#{URI.encode(id)}" if id
+      endpoint += "/#{CGI.escape(id)}" if id
       @parse_response = true
       results = cached_api_get(endpoint, params)
       add_image_urls(results)

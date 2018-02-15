@@ -1,11 +1,17 @@
 ShortFormNavigationService = (
-  $state, bsLoadingOverlayService, ShortFormApplicationService, AccountService
+  $state,
+  bsLoadingOverlayService,
+  ShortFormApplicationService,
+  AccountService
 ) ->
   Service = {}
   RESERVED_TYPES = ShortFormApplicationService.RESERVED_TYPES
   Service.loading = false
   Service.sections = [
-    { name: 'You', pages: [
+    {
+      name: 'You',
+      translatedLabel: 'SHORT_FORM_NAV.YOU',
+      pages: [
         'name'
         'contact'
         'verify-address'
@@ -14,7 +20,10 @@ ShortFormNavigationService = (
         'alternate-contact-phone-address'
       ]
     },
-    { name: 'Household', pages: [
+    {
+      name: 'Household',
+      translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
+      pages: [
         'household-intro'
         'household-overview'
         'household-members'
@@ -27,16 +36,22 @@ ShortFormNavigationService = (
         'household-priorities'
       ]
     },
-    { name: 'Income', pages: [
+    {
+      name: 'Income',
+      translatedLabel: 'SHORT_FORM_NAV.INCOME',
+      pages: [
         'income-vouchers'
         'income'
       ]
     },
-    { name: 'Preferences', pages: [
+    {
+      name: 'Preferences',
+      translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
+      pages: [
         'preferences-intro'
         'assisted-housing-preference'
-        'rent-burden-preference'
-        'rent-burden-preference-edit'
+        'rent-burdened-preference'
+        'rent-burdened-preference-edit'
         'neighborhood-preference'
         'adhp-preference'
         'live-work-preference'
@@ -46,7 +61,10 @@ ShortFormNavigationService = (
         'general-lottery-notice'
       ]
     },
-    { name: 'Review', pages: [
+    {
+      name: 'Review',
+      translatedLabel: 'SHORT_FORM_NAV.REVIEW',
+      pages: [
         'review-optional'
         'review-summary'
         'review-sign-in'
@@ -82,8 +100,8 @@ ShortFormNavigationService = (
     # preferences
     'preferences-intro': {callback: ['checkIfPreferencesApply']}
     'assisted-housing-preference': {callback: ['checkForNeighborhoodOrLiveWork']}
-    'rent-burden-preference': {callback: ['checkForRentBurdenFiles']}
-    'rent-burden-preference-edit': {path: 'rent-burden-preference'}
+    'rent-burdened-preference': {callback: ['checkForRentBurdenFiles']}
+    'rent-burdened-preference-edit': {path: 'rent-burdened-preference'}
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
@@ -143,6 +161,7 @@ ShortFormNavigationService = (
     return false if $state.current.name == 'dahlia.short-form-review'
     hideBackButton = [
       'intro',
+      'community-screening',
       'overview',
       'name',
       'verify-address',
@@ -150,7 +169,7 @@ ShortFormNavigationService = (
       'household-member-form',
       'household-member-form-edit',
       'household-member-verify-address',
-      'rent-burden-preference-edit',
+      'rent-burdened-preference-edit',
       'review-summary',
       'confirmation'
     ]
@@ -211,7 +230,7 @@ ShortFormNavigationService = (
       when 'income-vouchers'
         'household-priorities'
       # -- Preferences
-      when 'rent-burden-preference'
+      when 'rent-burdened-preference'
         , 'assisted-housing-preference'
           'preferences-programs'
       when 'neighborhood-preference'
@@ -288,7 +307,7 @@ ShortFormNavigationService = (
     if ShortFormApplicationService.eligibleForAssistedHousing()
       'assisted-housing-preference'
     else if ShortFormApplicationService.eligibleForRentBurden()
-      'rent-burden-preference'
+      'rent-burdened-preference'
     else
       'preferences-intro'
 
@@ -369,7 +388,10 @@ ShortFormNavigationService = (
   return Service
 
 ShortFormNavigationService.$inject = [
-  '$state', 'bsLoadingOverlayService', 'ShortFormApplicationService', 'AccountService'
+  '$state',
+  'bsLoadingOverlayService',
+  'ShortFormApplicationService',
+  'AccountService'
 ]
 
 angular

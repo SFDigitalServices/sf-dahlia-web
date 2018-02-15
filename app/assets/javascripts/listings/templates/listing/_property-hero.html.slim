@@ -66,6 +66,15 @@
           svg
             use xlink:href="{{reservedUnitIcons[$index]}}"
         span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::reservedLabel(listing, descriptor.name, 'reservedForWhoAre')}}"
+
+    .content-card.padding--2x ng-show="loading.units"
+      .padding--2x ng-include="'shared/templates/spinner.html'"
+
+    .content-card.padding--2x ng-show="error.units"
+      .padding--2x.text-center
+        button.button-link ng-click="getListingUnits()"
+          | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
+
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in listing.groupedUnits"
       h2.property-hero_stat-header ng-if="percent && hasMultipleAMIUnits()"
         ' {{percent}}% AMI
@@ -82,7 +91,9 @@
 
   .content-card ng-if="::listingHasSROUnits()"
     h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
-    p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION"
+    / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
+    p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!listingIs('Merry Go Round Shared Housing')"
+    p.c-steel translate="LISTINGS.MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::listingIs('Merry Go Round Shared Housing')"
 
   / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print
