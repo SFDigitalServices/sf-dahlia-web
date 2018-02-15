@@ -22,7 +22,7 @@ module SfDahliaWeb
     config.time_zone = 'Pacific Time (US & Canada)'
 
     # Whitelist locales available for the application
-    I18n.available_locales = [:en, :es, :tl, :zh]
+    I18n.available_locales = %i[en es tl zh]
 
     # will use English translation if none found
     config.i18n.fallbacks = true
