@@ -158,8 +158,11 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
     return '' if application.status.match(/submitted/i)
-    interpolate = { file: application.preferences.documents[pref_type].proofOption }
-    $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+    if application.preferences.documents[pref_type]
+      interpolate = { file: application.preferences.documents[pref_type].proofOption }
+      $translate.instant('LABEL.FILE_ATTACHED', interpolate)
+    else
+      ''
 
   Service.fileAttachmentsForRentBurden = (application) ->
     if application.status.match(/submitted/i)
