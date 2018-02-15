@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
-  AnalyticsService, FileUploadService
+  AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -72,11 +72,6 @@ ShortFormApplicationService = (
   Service.refreshSessionUid()
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
-  Service.languageMap =
-    en: 'English'
-    es: 'Spanish'
-    tl: 'Filipino'
-    zh: 'Chinese'
 
   ## initialize other related services
   Service.initServices = ->
@@ -936,11 +931,11 @@ ShortFormApplicationService = (
     _.includes(['Submitted', 'Removed'], application.status)
 
   Service.setApplicationLanguage = (lang) ->
-    Service.application.applicationLanguage = Service.languageMap[lang]
+    Service.application.applicationLanguage = SharedService.languageMap[lang]
 
   Service.getLanguageCode = (application) ->
     # will take "English" and return "en"
-    _.invert(Service.languageMap)[application.applicationLanguage]
+    _.invert(SharedService.languageMap)[application.applicationLanguage]
 
   Service.applicationCompletionPercentage = (application) ->
     pct = 5
@@ -977,7 +972,7 @@ ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
-  'AnalyticsService', 'FileUploadService'
+  'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 
 angular

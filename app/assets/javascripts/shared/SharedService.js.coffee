@@ -18,6 +18,32 @@ SharedService = ($http, $state, $window, $document) ->
     '@',
     '(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?'
   ].join(''))
+  Service.languageMap =
+    en: 'English'
+    es: 'Spanish'
+    tl: 'Filipino'
+    zh: 'Chinese'
+
+  Service.isWelcomePage = (state = null) ->
+    if state
+      !!state.name.match /dahlia\.welcome-[a-z]+$/
+    else
+      $state.includes('dahlia.welcome-chinese') || $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-filipino')
+
+  Service.getWelcomePageLanguage = (stateName) ->
+    welcomePageLanguage =
+      longName: ''
+      shortName: ''
+
+    if stateName
+      matches = stateName.match(/(.*welcome-)([a-z]+$)/)
+      if matches
+        longName = matches[2]
+        shortName = _.invert(Service.languageMap)[longName.charAt(0).toUpperCase() + longName.slice(1)]
+        welcomePageLanguage.longName = longName
+        welcomePageLanguage.shortName = shortName
+
+    return welcomePageLanguage
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
