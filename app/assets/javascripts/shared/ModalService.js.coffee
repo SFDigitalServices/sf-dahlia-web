@@ -15,17 +15,25 @@ ModalService = ($modal, $window) ->
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(content.message)
     else
-      if (!Service.modalInstance)
-        Service.modalInstance = $modal.open(
-          templateUrl: 'shared/templates/alert_modal.html',
-          controller: 'ModalInstanceController',
-          windowClass: 'modal-large'
-        )
+      if (Service.modalInstance)
         Service.modalInstance.result.then( ->
           Service.modalInstance = null
+          Service._mobileAlert()
         ).catch( ->
           Service.modalInstance = null
         )
+      else
+        Service._mobileAlert()
+
+  Service._mobileAlert = ->
+    Service.modalInstance = $modal.open(
+      templateUrl: 'shared/templates/alert_modal.html',
+      controller: 'ModalInstanceController',
+      windowClass: 'modal-large'
+    )
+
+
+
 
   return Service
 
