@@ -8,6 +8,16 @@ class EmailerPreview < ActionMailer::Preview
     _submission_confirmation('es')
   end
 
+  def draft_application_saved
+    params = {
+      email: 'test@person.com',
+      first_name: 'Mister',
+      last_name: 'Tester',
+      listing_id: 'a0W0P00000DZTkAUAX',
+    }
+    Emailer.draft_application_saved(params)
+  end
+
   def account_update
     u = User.first
     Emailer.account_update(u)
