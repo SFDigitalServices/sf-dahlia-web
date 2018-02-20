@@ -51,11 +51,11 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs66.my.salesforce.com","id":"https://test.salesforce.com/id/00D0v000000CqbxEAC/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1507575767245","signature":"iR8/EdcxnaXYITtbjSiKNRD9I10yfCiR3pF1l/7Zx/o="}'
-    http_version: 
+    http_version:
   recorded_at: Mon, 09 Oct 2017 19:02:46 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs66.my.salesforce.com/services/apexrest/ListingDetails/a0W0P00000DZTkAUAX
+    uri: https://sfhousing--full.cs95.my.salesforce.com/services/apexrest/ListingDetails/a0W0P00000DZTkAUAX
     body:
       encoding: US-ASCII
       string: ''
@@ -344,6 +344,6 @@ http_interactions:
         TWF0Y2giOm51bGwsImNoYXJ0VHlwZXMiOlt7InllYXIiOjIwMTYsInBlcmNl
         bnQiOjEwMCwibnVtT2ZIb3VzZWhvbGQiOm51bGwsImNoYXJ0VHlwZSI6IkhV
         RCBVbmFkanVzdGVkIiwiYW1vdW50IjpudWxsfV19XQ==
-    http_version: 
+    http_version:
   recorded_at: Mon, 09 Oct 2017 19:02:47 GMT
 recorded_with: VCR 3.0.3
