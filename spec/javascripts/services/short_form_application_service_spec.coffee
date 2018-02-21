@@ -991,6 +991,7 @@ do ->
     # multilingual
     describe 'setApplicationLanguage', ->
       it 'sets application language to the full name version of the lang param', ->
+        fakeSharedService.getLanguageName = jasmine.createSpy().and.returnValue('Spanish')
         ShortFormApplicationService.setApplicationLanguage('es')
         expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
 
