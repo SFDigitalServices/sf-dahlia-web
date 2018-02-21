@@ -36,6 +36,7 @@
     $rootScope.$on 'IdleTimeout', ->
       content =
         message: $translate.instant('T.SESSION_EXPIRED')
+        continue: $translate.instant('T.OK')
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
         AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
