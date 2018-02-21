@@ -34,13 +34,15 @@
       ModalService.alert(content, {nativeAlert: true})
 
     $rootScope.$on 'IdleTimeout', ->
-      content.message = $translate.instant('T.SESSION_EXPIRED')
+      content =
+        message: $translate.instant('T.SESSION_EXPIRED')
+        continue: $translate.instant('T.OK')
       ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
+        AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
-        AutosaveService.save()
         $state.go('dahlia.listing', {timeout: true, id: ShortFormApplicationService.listing.Id})
 
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
