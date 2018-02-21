@@ -50,8 +50,7 @@
 @dahlia.config ['IdleProvider', 'TitleProvider', (IdleProvider, TitleProvider) ->
   # don't override the title with timeout countdowns/warnings
   TitleProvider.enabled(false)
-  #TO DO: Revert to ideal(300) before merging
-  IdleProvider.idle(10)
+  IdleProvider.idle(300)
   IdleProvider.timeout(60)
 ]
 
