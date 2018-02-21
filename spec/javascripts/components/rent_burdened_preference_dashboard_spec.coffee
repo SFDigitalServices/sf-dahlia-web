@@ -52,7 +52,7 @@ do ->
         lease: {file: 'somefile'}
         rent:
           1: {file: 'somefile'}
-      ctrl = $componentController 'rentBurdenPreferenceDashboard', locals, fakeBindings
+      ctrl = $componentController 'rentBurdenedPreferenceDashboard', locals, fakeBindings
 
     describe 'hasFiles', ->
       it 'should call function on FileUploadService', ->

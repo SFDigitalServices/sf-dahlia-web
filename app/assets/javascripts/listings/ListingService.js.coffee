@@ -241,7 +241,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
-    angular.copy({}, Service.listing)
+    Service.resetListingData()
 
     deferred = $q.defer()
     $http.get("/api/v1/listings/#{_id}.json#{if Service.forceRecache then '?force=true' else ''}",
@@ -254,6 +254,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       deferred.reject(data)
     )
     return deferred.promise
+
+  # Remove the previous listing and all it's associated data
+  Service.resetListingData = () ->
+    angular.copy({}, Service.listing)
+    angular.copy([], Service.AMICharts)
+    angular.copy({}, Service.lotteryBucketInfo)
+    angular.copy([], Service.listingDownloadURLs)
 
   Service.getListingResponse = (deferred) ->
     (data, status, headers, config, itemCache) ->
@@ -650,14 +657,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return [] unless amiLevel
     occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
+    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
-    max = 1 if Service.listingHasOnlySROUnits(listing)
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    if Service.listingIs('Merry Go Round Shared Housing')
+      max = 2
+    else if Service.listingHasOnlySROUnits(listing)
+      max = 1
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
-    return 1 if Service.listingHasOnlySROUnits(Service.listing)
+    if Service.listingIs('Merry Go Round Shared Housing')
+      return 2
+    else if Service.listingHasOnlySROUnits(Service.listing)
+      return 1
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
@@ -720,6 +735,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
+    'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
   }
 
   Service.mapSlugToId = (id) ->
