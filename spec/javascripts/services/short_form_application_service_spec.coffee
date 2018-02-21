@@ -42,6 +42,7 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+      trackTimeout: jasmine.createSpy()
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
       deletePreferenceFile: jasmine.createSpy()
@@ -608,6 +609,33 @@ do ->
         toState = {name: 'dahlia.create-account'}
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
+
+    describe 'leaveAndResetShortForm', ->
+      it 'should call trackTimeout if timing out', ->
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(fakeAnalyticsService.trackTimeout).toHaveBeenCalled()
+
+      it 'should call trackFormAbandon if not timing out', ->
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: false}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(fakeAnalyticsService.trackFormAbandon).toHaveBeenCalled()
+
+      it 'should call resetApplicationData if not on short form review', ->
+        spyOn(ShortFormApplicationService, 'resetApplicationData')
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
+
+      it 'should not call resetApplicationData if on short form review', ->
+        spyOn(ShortFormApplicationService, 'resetApplicationData')
+        toState = {name: 'dahlia.short-form-review'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(ShortFormApplicationService.resetApplicationData).not.toHaveBeenCalled()
 
     describe 'checkSurveyComplete', ->
       it 'should call function on ShortFormDataService', ->

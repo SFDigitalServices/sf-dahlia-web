@@ -1,5 +1,5 @@
 ShortFormApplicationService = (
-  $translate, $http, $state, uuid,
+  $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
   AnalyticsService, FileUploadService
 ) ->
@@ -236,7 +236,7 @@ ShortFormApplicationService = (
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
-  # - it's used to setup the monthly-rent page as well as rent-burden-preference pages
+  # - it's used to setup the monthly-rent page as well as rent-burdened-preference pages
   # - it will reset the addresses and Rent Burden if any members/addresses have changed
   Service.groupHouseholdAddresses = ->
     groupedAddresses = []
@@ -572,7 +572,7 @@ ShortFormApplicationService = (
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
       # special case for rentBurden subpages
-      return if stateName.match(/rent-burden-preference-edit/)
+      return if stateName.match(/rent-burdened-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
@@ -619,6 +619,17 @@ ShortFormApplicationService = (
       toState.name != 'dahlia.short-form-application.review-submitted' &&
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
+
+  Service.leaveAndResetShortForm = (toState, toParams) ->
+    # disable the onbeforeunload so that you are no longer bothered if you
+    # try to reload the listings page, for example
+    $window.removeEventListener 'beforeunload', Service.onExit
+    unless toState.name == 'dahlia.short-form-review'
+      Service.resetApplicationData()
+    if toParams.timeout
+      AnalyticsService.trackTimeout('Application')
+    else
+      AnalyticsService.trackFormAbandon('Application')
 
   Service.invalidateNameForm = ->
     Service.application.validatedForms['You']['name'] = false
@@ -691,6 +702,8 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    autosave = if options.autosave then '?autosave=true' else ''
+
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
@@ -701,10 +714,10 @@ ShortFormApplicationService = (
       if options.attachToAccount
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}#{autosave}", params)
     else
       # create
-      appSubmission = $http.post('/api/v1/short-form/application', params)
+      appSubmission = $http.post("/api/v1/short-form/application#{autosave}", params)
 
     appSubmission.success((data, status, headers, config) ->
       if data.lotteryNumber
@@ -956,7 +969,7 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', '$state', 'uuid',
+  '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
   'AnalyticsService', 'FileUploadService'

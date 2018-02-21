@@ -1,7 +1,7 @@
 module SalesforceService
   # encapsulate all Salesforce Listing querying functions
   class ListingService < SalesforceService::Base
-    WHITELIST_BROWSE_FIELDS = %i(
+    WHITELIST_BROWSE_FIELDS = %i[
       Id
       listingID
       Name
@@ -20,7 +20,7 @@ module SalesforceService
       Does_Match
       LastModifiedDate
       imageURL
-    ).freeze
+    ].freeze
 
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
@@ -51,13 +51,13 @@ module SalesforceService
 
     # get all units for a given listing
     def self.units(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       cached_api_get("/Listing/Units/#{listing_id}", nil, true)
     end
 
     # get all preferences for a given listing
     def self.preferences(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       cached_api_get("/Listing/Preferences/#{listing_id}", nil, true)
     end
 
@@ -73,7 +73,7 @@ module SalesforceService
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       data = cached_api_get("/Listing/LotteryResult/#{listing_id}", nil, false)
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
@@ -85,15 +85,15 @@ module SalesforceService
 
     # get Individual Lottery Result with rankings
     def self.lottery_ranking(listing_id, lottery_number)
-      listing_id = URI.encode(listing_id)
-      endpoint = "/Listing/LotteryResult/#{listing_id}/#{URI.encode(lottery_number)}"
+      listing_id = CGI.escape(listing_id)
+      endpoint = "/Listing/LotteryResult/#{listing_id}/#{CGI.escape(lottery_number)}"
       cached_api_get(endpoint, nil, false)
     end
 
     def self.check_household_eligibility(listing_id, params)
-      listing_id = URI.encode(listing_id)
+      listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(household_size incomelevel).each do |k|
+      %i[household_size incomelevel].each do |k|
         params[k] = params[k].to_i if params[k].present?
       end
       api_get(endpoint, params, false)
@@ -101,7 +101,7 @@ module SalesforceService
 
     def self.get_listings(id = nil, params = nil)
       endpoint = '/ListingDetails'
-      endpoint += "/#{URI.encode(id)}" if id
+      endpoint += "/#{CGI.escape(id)}" if id
       results = cached_api_get(endpoint, params, true)
       add_image_urls(results)
     end
@@ -129,9 +129,7 @@ module SalesforceService
 
     def self.array_sort!(listing)
       listing.each do |k, v|
-        if v.is_a?(Array) && v[0] && v[0]['Id']
-          listing[k] = v.sort_by { |i| i['Id'] }
-        end
+        listing[k] = v.sort_by { |i| i['Id'] } if v.is_a?(Array) && v[0] && v[0]['Id']
       end
     end
   end
