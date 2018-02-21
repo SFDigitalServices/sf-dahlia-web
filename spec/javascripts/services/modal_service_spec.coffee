@@ -30,14 +30,6 @@ do ->
         expect(ModalService.content.message).toEqual 'hi'
         expect(modalMock.open).toHaveBeenCalled()
 
-      it 'does not call $modal service when modalInstance exists', ->
-        ModalService.modalInstance = {someobject: 'hello'}
-        content =
-          message: 'yo'
-        ModalService.alert(content)
-        expect(ModalService.content.message).toEqual 'yo'
-        expect(modalMock.open).not.toHaveBeenCalled()
-
       it 'adds onConfirm callback if passed in', ->
         fakeCallback = -> 'hi'
         ModalService.alert('yo', {onConfirm: fakeCallback})
