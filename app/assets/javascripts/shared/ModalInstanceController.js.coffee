@@ -1,9 +1,14 @@
-ModalInstanceController = ($scope, $modalInstance) ->
+ModalInstanceController = ($scope, $modalInstance, ModalService) ->
+  $scope.content = ModalService.content
 
   $scope.closeModal = () ->
     $modalInstance.close()
 
-ModalInstanceController.$inject = ['$scope', '$modalInstance']
+  $scope.confirm = ->
+    ModalService.callbacks.onConfirm() if ModalService.callbacks.onConfirm
+    $modalInstance.close()
+
+ModalInstanceController.$inject = ['$scope', '$modalInstance', 'ModalService']
 
 angular
   .module('dahlia.controllers')
