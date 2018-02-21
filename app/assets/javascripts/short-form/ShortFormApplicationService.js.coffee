@@ -750,14 +750,9 @@ ShortFormApplicationService = (
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
     Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
-      previousApplication = data.application
-      if !_.isEmpty(previousApplication) && Service._previousIsSubmittedOrBothDrafts(previousApplication)
+      if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
-        if opts.type == 'review-sign-in' && previousApplication.status.match(/draft/i)
-          # because we are finished/confirmed with the current draft, override the old one
-          Service.overridePreviousDraftId()
-        else if Service._previousIsSubmittedOrBothDrafts(previousApplication)
-          return Service._signInAndSkipSubmit(previousApplication)
+        return Service._signInAndSkipSubmit(data.application)
       changed = null
       if Service.application.status.match(/draft/i)
         if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
@@ -791,14 +786,10 @@ ShortFormApplicationService = (
       Service.application.status.match(/draft/i)
     )
 
-  Service.overridePreviousDraftId = ->
-    # override draft ID and proceed...  ->
-    Service.application.id = Service.accountApplication.id
 
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
-    Service.overridePreviousDraftId()
-    # override draft ID and proceed...
+    Service.application.id = Service.accountApplication.id
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()
