@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state, $document) ->
+SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
   Service.assetPaths = STATIC_ASSET_PATHS
@@ -26,8 +26,9 @@ SharedService = ($http, $state, $document) ->
 
   Service.getLanguageCode = (langName) ->
     # will take "English" and return "en", for example
-    capitalizedLangName = langName.charAt(0).toUpperCase() + langName.slice(1)
-    _.invert(Service.languageMap)[capitalizedLangName]
+    if langName
+      capitalizedLangName = langName.charAt(0).toUpperCase() + langName.slice(1)
+      _.invert(Service.languageMap)[capitalizedLangName]
 
   Service.getLanguageName = (langCode) ->
     # will take "en" and return "English", for example
@@ -115,7 +116,7 @@ SharedService = ($http, $state, $document) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state', '$document']
+SharedService.$inject = ['$http', '$state', '$window', '$document']
 
 angular
   .module('dahlia.services')

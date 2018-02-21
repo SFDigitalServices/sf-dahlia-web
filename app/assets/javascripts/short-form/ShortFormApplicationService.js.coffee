@@ -922,7 +922,7 @@ ShortFormApplicationService = (
     _.includes(['Submitted', 'Removed'], application.status)
 
   Service.setApplicationLanguage = (lang) ->
-    Service.application.applicationLanguage = SharedService.languageMap[lang]
+    Service.application.applicationLanguage = SharedService.getLanguageName(lang)
 
   Service.getLanguageCode = (application) ->
     # will take "English" and return "en"
