@@ -75,6 +75,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def update_application
+    return if params['autosave'] == 'true' && autosave_disabled
     @application = ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
@@ -98,6 +99,10 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def autosave_disabled
+    ENV['AUTOSAVE'] == 'false'
+  end
 
   def application_complete
     application_params[:status] == 'submitted'
