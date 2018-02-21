@@ -935,7 +935,7 @@ ShortFormApplicationService = (
 
   Service.getLanguageCode = (application) ->
     # will take "English" and return "en"
-    _.invert(SharedService.languageMap)[application.applicationLanguage]
+    SharedService.getLanguageCode(application.applicationLanguage)
 
   Service.applicationCompletionPercentage = (application) ->
     pct = 5

@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state, $window, $document) ->
+SharedService = ($http, $state, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
   Service.assetPaths = STATIC_ASSET_PATHS
@@ -24,24 +24,31 @@ SharedService = ($http, $state, $window, $document) ->
     tl: 'Filipino'
     zh: 'Chinese'
 
+  Service.getLanguageCode = (langName) ->
+    # will take "English" and return "en", for example
+    capitalizedLangName = langName.charAt(0).toUpperCase() + langName.slice(1)
+    _.invert(Service.languageMap)[capitalizedLangName]
+
+  Service.getLanguageName = (langCode) ->
+    # will take "en" and return "English", for example
+    Service.languageMap[langCode]
+
   Service.isWelcomePage = (state = null) ->
     if state
-      !!state.name.match /dahlia\.welcome-[a-z]+$/
+      !!state.name.match /^dahlia\.welcome-[a-z]+$/
     else
       $state.includes('dahlia.welcome-chinese') || $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-filipino')
 
   Service.getWelcomePageLanguage = (stateName) ->
     welcomePageLanguage =
-      longName: ''
-      shortName: ''
+      name: ''
+      code: ''
 
     if stateName
       matches = stateName.match(/(.*welcome-)([a-z]+$)/)
       if matches
-        longName = matches[2]
-        shortName = _.invert(Service.languageMap)[longName.charAt(0).toUpperCase() + longName.slice(1)]
-        welcomePageLanguage.longName = longName
-        welcomePageLanguage.shortName = shortName
+        welcomePageLanguage.name = matches[2]
+        welcomePageLanguage.code = Service.getLanguageCode(matches[2])
 
     return welcomePageLanguage
 
@@ -108,7 +115,7 @@ SharedService = ($http, $state, $window, $document) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state', '$window', '$document']
+SharedService.$inject = ['$http', '$state', '$document']
 
 angular
   .module('dahlia.services')
