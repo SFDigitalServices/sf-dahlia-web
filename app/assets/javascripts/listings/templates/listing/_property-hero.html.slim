@@ -91,7 +91,9 @@
 
   .content-card ng-if="::listingHasSROUnits()"
     h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
-    p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION"
+    / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
+    p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!listingIs('Merry Go Round Shared Housing')"
+    p.c-steel translate="LISTINGS.MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::listingIs('Merry Go Round Shared Housing')"
 
   / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print

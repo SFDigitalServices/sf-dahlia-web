@@ -40,6 +40,7 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = []
+  $scope.communityEligibilityErrorMsg = []
   $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
   $scope.readMoreDevelopmentalDisabilities = false
@@ -47,6 +48,7 @@ ShortFormApplicationController = (
   $scope.labels = {}
   $scope.customInvalidMessage = null
   $scope.INPUT_MAX_LENGTH = inputMaxLength
+  # community screening
 
   ## form options
   $scope.alternate_contact_options = ShortFormHelperService.alternate_contact_options
@@ -188,12 +190,12 @@ ShortFormApplicationController = (
 
   $scope.checkCommunityScreening = ->
     # ng-change action for answering 'Yes' to screening
-    $scope.communityScreeningInvalid = false
+    $scope.eligibilityErrors = []
 
   $scope.validateCommunityEligibility = ->
-    $scope.communityScreeningInvalid = false
+    $scope.eligibilityErrors = []
     if $scope.application.answeredCommunityScreening == 'No'
-      $scope.communityScreeningInvalid = true
+      $scope.eligibilityErrors = $scope.communityEligibilityErrorMsg
       $scope.handleErrorState()
     else if $scope.application.answeredCommunityScreening ==  'Yes'
       $scope.goToAndTrackFormSuccess('dahlia.short-form-welcome.overview')
@@ -326,7 +328,7 @@ ShortFormApplicationController = (
     if ShortFormApplicationService.eligibleForAssistedHousing()
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.assisted-housing-preference')
     else if ShortFormApplicationService.eligibleForRentBurden()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burden-preference')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.rent-burdened-preference')
     else
       $scope.checkForNeighborhoodOrLiveWork()
 
@@ -419,7 +421,7 @@ ShortFormApplicationController = (
   $scope.cancelRentBurdenFilesForAddress = (address) ->
     ShortFormNavigationService.isLoading(true)
     FileUploadService.deleteRentBurdenPreferenceFiles($scope.listing.Id, address).then ->
-      $scope.go('dahlia.short-form-application.rent-burden-preference')
+      $scope.go('dahlia.short-form-application.rent-burdened-preference')
 
   $scope.setRentBurdenError = ->
     ShortFormApplicationService.invalidatePreferencesForm()
