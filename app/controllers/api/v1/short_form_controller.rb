@@ -71,7 +71,7 @@ class Api::V1::ShortFormController < ApiController
     end
   rescue Faraday::ClientError => e
     if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
-      return render_error(exception: e, status: 400, app_submit: true)
+      return render_error(exception: e, status: 500, app_submit: true)
     end
     raise e.class, e.message
   end

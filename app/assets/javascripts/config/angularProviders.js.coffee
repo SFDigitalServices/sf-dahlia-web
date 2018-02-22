@@ -13,7 +13,7 @@
         # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
         # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
         responseError: (error) ->
-          if error.status >= 400
+          if error.status >= 500
             $injector.invoke [
               '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService', '$state',
               ($http, bsLoadingOverlayService, ShortFormNavigationService, $state) ->
@@ -24,17 +24,20 @@
                 # AMI, lottery_ranking, unit data have their own handler
                 return if error.config.url.match(RegExp('listings/ami|lottery_ranking|units'))
                 if error.status == 504
-                  # if the timeout was encountered when trying to validatate user token,
+                  # handle timeout errors
+                  # if the timeout was encountered when trying to validate user token,
                   # don't show alert, instead redirect to sign in page
                   if (error.data.message.indexOf('user_token_validation') >= 0)
                     $state.go('dahlia.sign-in', {userTokenValidationTimeout: true})
                     return
                   else
                     alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
-                else if error.status == 400
+                else if error.data.message.indexOf('APEX_ERROR') >= 0
+                  # handle Salesforce errors that aren't timeouts
                   salesforceError = error.data.message.split("Class")[0].split("APEX_ERROR: ")[1]
                   alertMessage = "An error occurred: " + salesforceError
                 else
+                  # handle non-timeout, non-Salesforce errors
                   alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
                 alert(alertMessage)
                 error
