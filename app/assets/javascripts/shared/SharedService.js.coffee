@@ -5,7 +5,7 @@
 SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
-  Service.assetPaths = STATIC_ASSET_PATHS
+  Service.assetPaths = STATIC_ASSET_PATHS || {}
   Service.housingCounselors =
     all: []
     chinese: []
