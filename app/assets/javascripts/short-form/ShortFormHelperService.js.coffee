@@ -157,14 +157,16 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { user: name }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
-    return '' if application.status.match(/submitted/i)
-    interpolate = { file: application.preferences.documents[pref_type].proofOption }
+    proof = application.preferences.documents[pref_type]
+    return '' unless proof && proof.proofOption
+    interpolate = { file: proof.proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.fileAttachmentsForRentBurden = (application) ->
     if application.status.match(/submitted/i)
       return [
         subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
+        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: 'Lease and rent proof' })
       ]
     labels = []
     # this one is a little bit complicated because it has to sort through each set of rentBurden

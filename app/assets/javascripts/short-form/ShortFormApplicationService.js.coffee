@@ -151,6 +151,11 @@ ShortFormApplicationService = (
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
     return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    # don't save the fact that we're in the middle of verifying address, can end up in a weird state
+    if lastPage == 'verify-address'
+      lastPage = 'contact'
+    else if lastPage == 'household-member-verify-address'
+      lastPage = 'household-members'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -405,8 +410,6 @@ ShortFormApplicationService = (
     if type == 'liveWorkInSf' || type == 'all'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
       Service._updatePreference('workInSf', Service.workInSfMembers())
-    else if type == 'workInSf'
-      Service._updatePreference('workInSf', Service.workInSfMembers())
     if type == 'neighborhoodResidence' || type == 'all'
       Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
     if type == 'antiDisplacement' || type == 'all'
@@ -523,13 +526,15 @@ ShortFormApplicationService = (
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only check to reset this preference if it has been selected
-    return unless Service.preferences[preference]
     members = eligibleMembers.map (member) -> member.id
     selectedMember = Service.preferences[preference + '_household_member']
-    # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if _.isEmpty(members) || selectedMember && !_.includes(members, selectedMember)
-      Service.resetPreference(preference)
+    # if nobody is eligible
+    if _.isEmpty(members) ||
+      # or we've selected the preference and the selected member is no longer eligible
+      (Service.preferences[preference] && selectedMember && !_.includes(members, selectedMember)) ||
+      # or we're eligible but we don't seem to have any answer (selected or opted out)
+      (!_.isEmpty(members) && !Service.preferences.optOut && !Service.preferences[preference])
+        Service.resetPreference(preference)
 
   Service.resetPreference = (preference) ->
     # this should be called when you're cancelling the preference from an external factor
@@ -807,7 +812,7 @@ ShortFormApplicationService = (
     if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
       Service.refreshPreferences('all')
 
-  Service.checkForProofPrefs = (formattedApp) ->
+  Service.checkForProofPrefs = (formattedApp = Service.application) ->
     proofPrefs = [
       'liveInSf',
       'workInSf',
