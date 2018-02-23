@@ -70,10 +70,7 @@ class Api::V1::ShortFormController < ApiController
       render json: { error: ShortFormService.error }, status: 422
     end
   rescue Faraday::ClientError => e
-    if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
-      return render_error(exception: e, status: 500, app_submit: true)
-    end
-    raise e.class, e.message
+    handle_submit_error(e)
   end
 
   def update_application
@@ -213,6 +210,13 @@ class Api::V1::ShortFormController < ApiController
 
   def render_unauthorized_error
     render json: { error: 'unauthorized' }, status: 401
+  end
+
+  def handle_submit_error(e)
+    if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
+      return render_error(exception: e, status: 500, app_submit: true)
+    end
+    raise e.class, e.message
   end
 
   def applicant_attrs
