@@ -61,6 +61,20 @@ module.exports = ->
     getUrl(url)
     browser.ignoreSynchronization = false
 
+  @When 'I try to navigate to the Favorites page', ->
+    browser.waitForAngular()
+    element.all(By.cssContainingText('a', 'My Favorites')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When 'I cancel the modal pop-up', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Stay')).click()
+
+  @When 'I confirm the modal', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Leave')).click()
+
   @When /^I select "([^"]*)" as my language$/, (language) ->
     switch language
       when "Spanish"
@@ -582,7 +596,7 @@ module.exports = ->
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see proof uploaders for rent burden files', ->
-    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    # expect the rentBurdenedPreference component to render with the proof uploaders inside, rather than the dashboard
     uploader = element(By.model('$ctrl.proofDocument.file.name'))
     @expect(uploader.isPresent()).to.eventually.equal(true)
 
@@ -652,6 +666,12 @@ module.exports = ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should still be on the Test Listing application page', ->
+    browser.wait(EC.urlContains('apply'), 6000)
+
+  @Then 'I should see the Favorites page', ->
+    browser.wait(EC.urlContains('favorites'), 6000)
+
   @Then 'I should land on the Sign In page', ->
     el = element(By.cssContainingText('h1', 'Sign In'))
     @expect(el.isPresent()).to.eventually.equal(true)
@@ -688,13 +708,12 @@ module.exports = ->
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
   @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
-    withFiles = (status == 'draft')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
@@ -702,7 +721,8 @@ module.exports = ->
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
     expectByCss(@, '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
-    if withFiles
+    if status == 'draft'
+      # rentBurden displays more detailed info in draft
       expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
       expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
     else

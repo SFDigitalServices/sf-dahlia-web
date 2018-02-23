@@ -15,6 +15,7 @@
       abstract: true
       params:
         lang: { squash: true, value: 'en' }
+        skipConfirm: { squash: true, value: false }
       views:
         'translate@':
           templateUrl: 'shared/templates/translate-bar.html'
@@ -203,6 +204,8 @@
           AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
         if $stateParams.newAccount
           AccountService.openConfirmEmailModal()
+        if $stateParams.timeout
+          AccountService.accountError.messages.timeout = true
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
         if $stateParams.signedOut
@@ -601,8 +604,8 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, listing) ->
             deferred = $q.defer()
 
             # if the user just clicked the language switcher, don't reload the whole route
@@ -621,6 +624,9 @@
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
+              if AccountService.loggedIn()
+                AutosaveService.startTimer()
+
               deferred.resolve(ShortFormApplicationService.application)
               lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
 
@@ -680,11 +686,14 @@
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
       onEnter: [
-        'ShortFormApplicationService', 'AccountService',
-        (ShortFormApplicationService, AccountService) ->
+        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
+        (ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            # always autosave when you start a new application
+            AutosaveService.save() unless ShortFormApplicationService.application.id
+
       ]
     })
     .state('dahlia.short-form-application.contact', {
@@ -885,11 +894,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference', {
-      url: '/rent-burden-preference'
+    .state('dahlia.short-form-application.rent-burdened-preference', {
+      url: '/rent-burdened-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ],
@@ -897,11 +906,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference-edit', {
-      url: '/rent-burden-preference/:index'
+    .state('dahlia.short-form-application.rent-burdened-preference-edit', {
+      url: '/rent-burdened-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference-edit.html'
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
@@ -958,6 +967,7 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
+          ShortFormApplicationService.checkForProofPrefs()
         ]
     })
     .state('dahlia.short-form-application.review-sign-in', {
