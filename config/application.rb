@@ -21,6 +21,12 @@ module SfDahliaWeb
 
     config.time_zone = 'Pacific Time (US & Canada)'
 
+    # Whitelist locales available for the application
+    I18n.available_locales = %i[en es tl zh]
+
+    # will use English translation if none found
+    config.i18n.fallbacks = true
+
     # set up ActiveJob to use Sidekiq
     # if ENV['SIDEKIQ'] is not specified, will use default inline processor
     config.active_job.queue_adapter = :sidekiq if ENV['SIDEKIQ']

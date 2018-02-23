@@ -168,18 +168,14 @@ AccountService = (
     )
 
   Service.updateAccount = (infoType) ->
-    bsLoadingOverlayService.start()
-    # have to later manually call overlay.stop() since this update doesn't result in a stateChange
     Service.clearAccountMessages()
     if infoType == 'email'
       params =
         user:
           email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
-        bsLoadingOverlayService.stop()
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       ).error((response) ->
-        bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
           Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
@@ -190,7 +186,6 @@ AccountService = (
       params =
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        bsLoadingOverlayService.stop()
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
         _.merge(Service.loggedInUser, data.contact)
         Service._reformatDOB()

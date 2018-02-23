@@ -50,12 +50,41 @@ module.exports = ->
     url = "/listings/#{listingId}/apply/name"
     getUrl(url)
 
+  @Given 'I go to the welcome page of the Test Listing application', ->
+    url = "/listings/#{listingId}/apply-welcome/intro"
+    getUrl(url)
+
   @Given 'I have a confirmed account', ->
     # confirm the account
     browser.ignoreSynchronization = true
     url = "/api/v1/account/confirm/?email=#{sessionEmail}"
     getUrl(url)
     browser.ignoreSynchronization = false
+
+  @When 'I try to navigate to the Favorites page', ->
+    browser.waitForAngular()
+    element.all(By.cssContainingText('a', 'My Favorites')).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+  @When 'I cancel the modal pop-up', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Stay')).click()
+
+  @When 'I confirm the modal', ->
+    browser.waitForAngular()
+    element(By.cssContainingText('button', 'Leave')).click()
+
+  @When /^I select "([^"]*)" as my language$/, (language) ->
+    switch language
+      when "Spanish"
+        element(By.id('submit-es')).click()
+      when "English"
+        element(By.id('submit-en')).click()
+
+  @When 'I continue past the welcome overview', ->
+    # welcome overview
+    submitPage()
 
   @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
@@ -447,6 +476,9 @@ module.exports = ->
   @When 'I use the browser back button', ->
     browser.navigate().back()
 
+  @When 'I go to the listings page in Spanish', ->
+    getUrl('/es/listings')
+
   @When /^I navigate to the "([^"]*)" section$/, (section) ->
     element.all(By.css('.progress-nav'))
       .all(By.linkText(section.toUpperCase()))
@@ -473,6 +505,10 @@ module.exports = ->
 
   @When "I don't fill out the Name page", ->
     submitPage()
+
+  @When "I fill out the Name page with non-latin characters", ->
+    element(By.model('applicant.firstName')).sendKeys('Jane中文')
+    element(By.id('submit')).click()
 
   @When "I fill out the Name page with an invalid DOB", ->
     Pages.Name.fill({
@@ -560,7 +596,7 @@ module.exports = ->
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see proof uploaders for rent burden files', ->
-    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    # expect the rentBurdenedPreference component to render with the proof uploaders inside, rather than the dashboard
     uploader = element(By.model('$ctrl.proofDocument.file.name'))
     @expect(uploader.isPresent()).to.eventually.equal(true)
 
@@ -581,6 +617,14 @@ module.exports = ->
   @Then 'I should see my draft application with a Continue Application button', ->
     continueApplication = element(By.cssContainingText('.feed-item-action a', 'Continue Application'))
     @expect(continueApplication.isPresent()).to.eventually.equal(true)
+
+  @Then /^I should see "([^"]*)" selected in the translate bar language switcher$/, (language) ->
+    activeLang = element(By.cssContainingText('.translate-bar li a.active', language))
+    @expect(activeLang.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should be redirected back to the listings page in English', ->
+    # we check that it is at the ":3000/listings" URL rather than ":3000/es/listings"
+    browser.wait(EC.urlContains(':3000/listings'), 6000)
 
   @Then 'I should be on the Choose Draft page', ->
     expectAlertBox(@, 'Please choose which version of the application you want to use.')
@@ -627,6 +671,12 @@ module.exports = ->
     claimedPreference = element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
+  @Then 'I should still be on the Test Listing application page', ->
+    browser.wait(EC.urlContains('apply'), 6000)
+
+  @Then 'I should see the Favorites page', ->
+    browser.wait(EC.urlContains('favorites'), 6000)
+
   @Then 'I should land on the Sign In page', ->
     el = element(By.cssContainingText('h1', 'Sign In'))
     @expect(el.isPresent()).to.eventually.equal(true)
@@ -663,13 +713,12 @@ module.exports = ->
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
   @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
-    withFiles = (status == 'draft')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
@@ -677,7 +726,8 @@ module.exports = ->
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
     expectByCss(@, '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
-    if withFiles
+    if status == 'draft'
+      # rentBurden displays more detailed info in draft
       expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
       expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
     else
@@ -779,6 +829,10 @@ module.exports = ->
   @Then 'I should see name field errors on the Name page', ->
     expectAlertBox(@)
     expectError(@, 'Please enter a First Name')
+
+  @Then 'I should see an error about providing answers in English on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please provide your answers in English')
 
   @Then 'I should see DOB field errors on the Name page', ->
     expectAlertBox(@)
