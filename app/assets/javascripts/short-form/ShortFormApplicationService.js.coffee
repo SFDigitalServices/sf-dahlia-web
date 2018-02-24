@@ -156,6 +156,7 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
+    return if _.includes(['choose-draft', 'choose-applicant-details'], lastPage)
     # don't save the fact that we're in the middle of verifying address, can end up in a weird state
     if lastPage == 'verify-address'
       lastPage = 'contact'

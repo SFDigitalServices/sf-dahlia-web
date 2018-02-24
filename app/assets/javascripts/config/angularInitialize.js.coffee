@@ -139,7 +139,6 @@
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         fromState.name != 'dahlia.short-form-application.confirmation' &&
-        fromState.name != 'dahlia.short-form-application.choose-applicant-details' &&
         toState.name == 'dahlia.short-form-application.create-account' &&
         fromState.name != 'dahlia.short-form-application.sign-in')
           AccountService.rememberShortFormState(fromState.name)
@@ -149,7 +148,10 @@
       if (toState.name == 'dahlia.short-form-application.review-sign-in')
         # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
-
+      if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
+         toState.name == 'dahlia.short-form-application.create-account')
+        # reconciling a draft by creating account show diff email address alert
+        AccountService.rememberShortFormState(fromState.name)
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
