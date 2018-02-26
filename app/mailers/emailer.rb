@@ -21,7 +21,7 @@ class Emailer < Devise::Mailer
     I18n.locale = params[:locale]
 
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    @name = "#{params[:firstName]} #{params[:lastName]}"
+    @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],
@@ -124,9 +124,9 @@ class Emailer < Devise::Mailer
   private
 
   def format_app_due_date(listing)
-    due = listing.Application_Due_Date.to_time
-    due_time = "#{due.strftime('%I')}:#{due.strftime('%M')} #{due.strftime('%p')}"
-    due_date = "#{due.strftime('%b')} #{due.strftime('%d')}"
+    due = Time.zone.parse(listing['Application_Due_Date'])
+    due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
     @deadline = "#{due_time} on #{due_date}"
   end
 
@@ -161,7 +161,7 @@ class Emailer < Devise::Mailer
     @lottery_number = params[:lottery_number]
     @lottery_date = ''
     if @listing.Lottery_Date
-      @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
+      @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|
