@@ -48,6 +48,11 @@
         "START_WITH_AUTOFILL": "Start with these details",
         "TITLE": "Save time by using the details from your last application."
     },
+    "B1A_WELCOME_BACK": {
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continue without signing in",
+        "TITLE": "Welcome back!",
+        "YOU_ALREADY_HAVE_AN_ACCOUNT": "It looks like you already have an account. Signing in will save this application to your account, and allow you to check your application status at any time."
+    },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
         "TITLE": "First, what's your name?"
@@ -343,11 +348,6 @@
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
-    },
-    "F1A_REVIEW_SIGN_IN": {
-        "CONTINUE_WITHOUT_AN_ACCOUNT": "Continue without an account",
-        "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
-        "TITLE": "You're almost done!"
     },
     "F1_REVIEW_SUMMARY": {
         "NOTE": "This is your last chance to edit before submitting.",

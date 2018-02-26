@@ -609,12 +609,6 @@ ShortFormApplicationController = (
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 
-  $scope.confirmReviewedApplication = ->
-    if AccountService.loggedIn()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms')
-    else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-sign-in')
-
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
@@ -755,15 +749,22 @@ ShortFormApplicationController = (
 
   $scope.print = -> $window.print()
 
-  $scope.checkPrimaryApplicantAge = ->
+  $scope.checkAfterNamePage = ->
     if $scope.applicantDoesNotMeetSeniorRequirements()
       ShortFormNavigationService.isLoading(false)
       age = { minAge: $scope.listing.Reserved_community_minimum_age }
       $scope.eligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
       $scope.handleErrorState()
     else
-      $scope.clearEligibilityErrors()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+      if $scope.loggedIn()
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+      else
+        ShortFormNavigationService.isLoading(true)
+        AccountService.checkForAccount($scope.applicant.email).then ->
+          if AccountService.accountExists
+            $scope.goToAndTrackFormSuccess('dahlia.short-form-application.welcome-back')
+          else
+            $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
 
   $scope.DOBValid = (field, value, model = 'applicant') ->
     values = $scope.DOBValues(model)

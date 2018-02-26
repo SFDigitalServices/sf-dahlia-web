@@ -696,6 +696,20 @@
 
       ]
     })
+    .state('dahlia.short-form-application.welcome-back', {
+      url: '/welcome-back'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b1a-welcome-back.html'
+      onEnter: [
+        'AccountService',
+        (AccountService) ->
+          AccountService.clearAccountMessages()
+          AccountService.resetUserAuth()
+          AccountService.copyApplicantFields()
+          AccountService.lockCompletedFields()
+      ]
+    })
     .state('dahlia.short-form-application.contact', {
       url: '/contact'
       views:
@@ -970,18 +984,6 @@
           ShortFormApplicationService.checkForProofPrefs()
         ]
     })
-    .state('dahlia.short-form-application.review-sign-in', {
-      url: '/review-sign-in'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/f1a-review-sign-in.html'
-      onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
-        AccountService.resetUserAuth()
-        AccountService.copyApplicantFields()
-        AccountService.lockCompletedFields()
-      ]
-    })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms?loginMessage'
       params:
@@ -991,6 +993,9 @@
           templateUrl: 'short-form/templates/f2-review-terms.html'
       onEnter: ['$stateParams', '$translate', 'AccountService', ($stateParams, $translate, AccountService) ->
         AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+        AccountService.copyApplicantFields()
+        AccountService.lockCompletedFields()
         if $stateParams.loginMessage
           if $stateParams.loginMessage == 'update'
             message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY_AND_UPDATED')

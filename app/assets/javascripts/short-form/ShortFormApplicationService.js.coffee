@@ -156,7 +156,7 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-applicant-details'], lastPage)
+    return if _.includes(['choose-draft', 'choose-applicant-details', 'welcome-back'], lastPage)
     # don't save the fact that we're in the middle of verifying address, can end up in a weird state
     if lastPage == 'verify-address'
       lastPage = 'contact'
@@ -570,8 +570,10 @@ ShortFormApplicationService = (
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
-      # special case for rentBurden subpages
+      # special case for rentBurdened subpages
       return if stateName.match(/rent-burdened-preference-edit/)
+      # special case for welcome back page
+      return if stateName.match(/welcome-back/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
