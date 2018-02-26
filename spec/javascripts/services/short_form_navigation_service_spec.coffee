@@ -89,10 +89,6 @@ do ->
       return
     )
 
-    describe 'Service setup', ->
-      it 'initializes defaults', ->
-        expect(ShortFormNavigationService.sections).toEqual sections
-
     describe 'hasNav', ->
       it 'checks if section does not have nav enabled', ->
         $state.current.name = 'dahlia.short-form-welcome.intro'

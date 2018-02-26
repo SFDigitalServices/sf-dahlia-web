@@ -1,12 +1,11 @@
 @dahlia.run [
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
-  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService',
-  'SharedService'
+  'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
+  'SharedService', 'GoogleTranslateService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
-  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService,
-  SharedService) ->
-
+  AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
+  SharedService, GoogleTranslateService, ModalService) ->
     timeoutRetries = 2
     ngMeta.init()
 
@@ -23,15 +22,24 @@
     })
 
     $rootScope.$on 'IdleStart', ->
+      content =
+        title: $translate.instant('T.CONTINUE_WITH_YOUR_APPLICATION')
+        continue: $translate.instant('T.CONTINUE')
       if AccountService.loggedIn()
-        $window.alert($translate.instant('T.SESSION_INACTIVITY_LOGGED_IN'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY_LOGGED_IN')
       else if $state.is('dahlia.short-form-application.confirmation')
-        $window.alert($translate.instant('T.SESSION_INACTIVITY_CONFIRMATION'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY_CONFIRMATION')
       else
-        $window.alert($translate.instant('T.SESSION_INACTIVITY'))
+        content.message = $translate.instant('T.SESSION_INACTIVITY')
+      ModalService.alert(content, {nativeAlert: true})
 
     $rootScope.$on 'IdleTimeout', ->
+      content =
+        message: $translate.instant('T.SESSION_EXPIRED')
+        continue: $translate.instant('T.OK')
+      ModalService.alert(content, {nativeAlert: true})
       if AccountService.loggedIn()
+        AutosaveService.save() if ShortFormApplicationService.isShortFormPage($state.current)
         AccountService.signOut()
         $state.go('dahlia.sign-in', {timeout: true})
       else if ShortFormApplicationService.isShortFormPage($state.current)
@@ -40,6 +48,11 @@
     $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
       # always start the loading overlay
       bsLoadingOverlayService.start()
+
+      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
+
+      GoogleTranslateService.loadAPI().then ->
+        GoogleTranslateService.setLanguage(language)
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
@@ -57,32 +70,41 @@
         $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
       else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+        content =
+          title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
+          cancel: $translate.instant('T.STAY')
+          continue:  $translate.instant('T.LEAVE')
+          alert: true
         # Boolean for Logged in Users on the confirmation page of short form to remove the leave confirmation.
         loggedInConfirmation = (AccountService.loggedIn() && fromState.name == 'dahlia.short-form-application.confirmation')
         # Anonymous user coming from shortform and are on the confirmation page: change the leave message
         if (ShortFormApplicationService.isLeavingConfirmation(toState, fromState))
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION')
         else if (ShortFormApplicationService.isLeavingConfirmationToSignIn(toState, fromState))
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN')
         else
-          leaveMessage = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+          content.message = $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
         # timeout from inactivity means that we don't need to ALSO ask for confirmation
         skipConfirm = toParams.skipConfirm || toParams.timeout
-        if (skipConfirm || loggedInConfirmation || $window.confirm(leaveMessage))
-          # disable the onbeforeunload so that you are no longer bothered if you
-          # try to reload the listings page, for example
-          $window.removeEventListener 'beforeunload', ShortFormApplicationService.onExit
-          ShortFormApplicationService.resetUserData() unless toState.name == 'dahlia.short-form-review'
-          if toParams.timeout
-            AnalyticsService.trackTimeout('Application')
-          else
-            AnalyticsService.trackFormAbandon('Application')
+
+        if (skipConfirm || loggedInConfirmation)
+          # reset skipConfirm for future page actions
+          toParams.skipConfirm = false
+          ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
           AccountService.rememberShortFormState(null)
         else
-          # prevent page transition if user did not confirm
+          ModalService.alert(content,
+            onConfirm: ->
+              # fires only if user clicks 'ok' to leave page
+              # reloads this stateChangeStart method with skipConfirm true
+              toParams.skipConfirm = true
+              $state.go(toState.name, toParams)
+          )
+          # prevent user from leaving page while viewing modal
           bsLoadingOverlayService.stop()
           e.preventDefault()
           false
+
       else if fromState.name.match(/create\-account/) && !toState.name.match(/sign\-in/)
         # track if they are leaving create account to go somewhere else
         AnalyticsService.trackFormAbandon('Accounts')
@@ -90,6 +112,8 @@
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
+
+      SharedService.updateAlternateLanguageLinks()
 
       # track routes as we navigate EXCEPT for initial page load which is already tracked
       AnalyticsService.trackCurrentPage() unless fromState.name == ''
@@ -99,6 +123,9 @@
         Idle.watch()
       else
         Idle.unwatch()
+
+      unless ShortFormApplicationService.isShortFormPage($state.current) && AccountService.loggedIn()
+        AutosaveService.stopTimer()
 
       # check if we're on short form and trying to access a later section than the first section
       toSection = ShortFormNavigationService.getShortFormSectionFromState(toState)
@@ -121,7 +148,10 @@
       if (toState.name == 'dahlia.short-form-application.welcome-back')
         # always remember the welcome-back page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
-
+      if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
+         toState.name == 'dahlia.short-form-application.create-account')
+        # reconciling a draft by creating account show diff email address alert
+        AccountService.rememberShortFormState(fromState.name)
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes

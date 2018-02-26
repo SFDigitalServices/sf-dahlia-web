@@ -30,6 +30,15 @@ Feature: Short Form Application
       And I submit the page and wait
       Then I should be on the login page with the email confirmation popup
 
+    Scenario: Leaving the application pops up a modal
+      Given I go to the first page of the Test Listing application
+      When I try to navigate to the Favorites page
+      And I cancel the modal pop-up
+      Then I should still be on the Test Listing application page
+      Given I try to navigate to the Favorites page
+      When I confirm the modal
+      Then I should see the Favorites page
+
     Scenario: Filling out all details of application and saving draft
       Given I go to the first page of the Test Listing application
       # you
@@ -87,6 +96,17 @@ Feature: Short Form Application
       Then I should be on the Choose Draft page
       When I select my original application and submit
       Then I should land on the My Applications page
+
+    Scenario: Saving anonymous draft with different account details
+      Given I sign out
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer"
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in
+      Then I should be on the Choose Draft page
+      When I select my recent application and submit
+      Then I should be on the Choose Applicant Details page
 
     Scenario: Already logged into account (created and logged in earlier scenarios), continuing saved application
       Given I go to the Sign In page

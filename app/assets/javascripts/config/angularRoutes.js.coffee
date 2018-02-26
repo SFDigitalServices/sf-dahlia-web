@@ -15,9 +15,10 @@
       abstract: true
       params:
         lang: { squash: true, value: 'en' }
+        skipConfirm: { squash: true, value: false }
       views:
         'translate@':
-          templateUrl: 'shared/templates/translate.html'
+          templateUrl: 'shared/templates/translate-bar.html'
         'version@':
           templateUrl: 'shared/templates/version.html'
         'navigation@':
@@ -110,8 +111,9 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits)
               setTimeout(ListingService.getListingPreferences)
-              setTimeout(ListingService.getLotteryBuckets)
+              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
+              # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -202,6 +204,8 @@
           AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
         if $stateParams.newAccount
           AccountService.openConfirmEmailModal()
+        if $stateParams.timeout
+          AccountService.accountError.messages.timeout = true
         if $stateParams.redirectTo
           AccountService.afterLoginRedirect($stateParams.redirectTo)
         if $stateParams.signedOut
@@ -600,9 +604,15 @@
         ]
         application: [
           # 'listing' is part of the params so that application waits for listing (above) to resolve
-          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'listing'
-          ($q, $stateParams, $state, ShortFormApplicationService, listing) ->
+          '$q', '$stateParams', '$state', 'ShortFormApplicationService', 'AccountService', 'AutosaveService', 'listing'
+          ($q, $stateParams, $state, ShortFormApplicationService, AccountService, AutosaveService, listing) ->
             deferred = $q.defer()
+
+            # if the user just clicked the language switcher, don't reload the whole route
+            if ShortFormApplicationService.switchingLanguage()
+              deferred.resolve(ShortFormApplicationService.application)
+              return deferred.promise
+
             # always refresh the anonymous session_uid when starting a new application
             ShortFormApplicationService.refreshSessionUid()
 
@@ -614,16 +624,24 @@
             # it's ok if user is not logged in, we always check if they have an application
             # this is because "loggedIn()" may not return true on initial load
             ShortFormApplicationService.getMyApplicationForListing($stateParams.id, {autofill: true}).then( ->
+              if AccountService.loggedIn()
+                AutosaveService.startTimer()
+
               deferred.resolve(ShortFormApplicationService.application)
+              lang = ShortFormApplicationService.getLanguageCode(ShortFormApplicationService.application)
+
               if ShortFormApplicationService.application.status == 'Submitted'
                 # send them to their review page if the application is already submitted
                 $state.go('dahlia.short-form-review', {id: ShortFormApplicationService.application.id})
               else if ShortFormApplicationService.application.autofill == true
-                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id})
+                $state.go('dahlia.short-form-application.autofill-preview', {id: listing.Id, lang: lang})
+              else if lang && lang != $stateParams.lang
+                # check if draft application language matches the lang set in the route, if not then redirect
+                $state.go('dahlia.short-form-application.name', { id: $stateParams.id, lang: lang })
               # check if community screening has been answered
               if listing.Reserved_community_type &&
                 ShortFormApplicationService.application.answeredCommunityScreening != 'Yes'
-                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true})
+                  $state.go('dahlia.short-form-welcome.community-screening', {id: listing.Id, skipConfirm: true, lang: lang})
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -651,7 +669,7 @@
             # and then clicked 'back' in the browser from short form
             $timeout ->
               # autofill would not be `true` if you opted out
-              unless application.autofill
+              unless application && application.autofill
                 $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
         ]
       onEnter: [
@@ -668,11 +686,14 @@
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
       onEnter: [
-        'ShortFormApplicationService', 'AccountService',
-        (ShortFormApplicationService, AccountService) ->
+        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
+        (ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            # always autosave when you start a new application
+            AutosaveService.save() unless ShortFormApplicationService.application.id
+
       ]
     })
     .state('dahlia.short-form-application.welcome-back', {
@@ -887,11 +908,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference', {
-      url: '/rent-burden-preference'
+    .state('dahlia.short-form-application.rent-burdened-preference', {
+      url: '/rent-burdened-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference.html'
       onEnter: ['ShortFormApplicationService', (ShortFormApplicationService) ->
         ShortFormApplicationService.setFormPreferenceType('rentBurden')
       ],
@@ -899,11 +920,11 @@
         ShortFormApplicationService.setFormPreferenceType(null)
       ]
     })
-    .state('dahlia.short-form-application.rent-burden-preference-edit', {
-      url: '/rent-burden-preference/:index'
+    .state('dahlia.short-form-application.rent-burdened-preference-edit', {
+      url: '/rent-burdened-preference/:index'
       views:
         'container':
-          templateUrl: 'short-form/templates/e3b-rent-burden-preference-edit.html'
+          templateUrl: 'short-form/templates/e3b-rent-burdened-preference-edit.html'
       resolve:
         addressIndex: [
           '$stateParams', 'ShortFormApplicationService',
@@ -960,6 +981,7 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
+          ShortFormApplicationService.checkForProofPrefs()
         ]
     })
     .state('dahlia.short-form-application.review-terms', {
@@ -1031,7 +1053,7 @@
       onExit: [
         'ShortFormApplicationService',
         (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetUserData()
+          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {
@@ -1051,6 +1073,18 @@
             $state.go('dahlia.my-applications')
         ]
     })
+    .state('dahlia.short-form-application.choose-applicant-details', {
+      url: '/choose-applicant-details'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/choose-applicant-details.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+    })
+    # NOTE: MAY DELETE SOON?
     .state('dahlia.short-form-application.choose-account-settings', {
       url: '/choose-account-settings'
       views:
