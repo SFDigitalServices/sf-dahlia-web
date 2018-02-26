@@ -73,7 +73,7 @@ http_interactions:
       Date:
       - Wed, 13 Dec 2017 19:22:50 GMT
       Strict-Transport-Security:
-      - max-age=31536002; includeSubDomains
+      - max-age=31536000; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;

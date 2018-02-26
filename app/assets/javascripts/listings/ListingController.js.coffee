@@ -229,6 +229,9 @@ ListingController = (
   $scope.getListingAMI = ->
     ListingService.getListingAMI()
 
+  $scope.getListingPreferences = ->
+    ListingService.getListingPreferences()
+
   $scope.occupancy = (unitSummary) ->
     return '1' if unitSummary.maxOccupancy == 1
     unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
