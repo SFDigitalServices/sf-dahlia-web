@@ -32,4 +32,38 @@ describe Emailer, type: :mailer do
       end
     end
   end
+
+  describe '.draft_application_saved(params)' do
+    before do
+      @params = {
+        email: 'test@person.com',
+        first_name: 'Mister',
+        last_name: 'Tester',
+        listing_id: 'a0W0P00000DZTkAUAX',
+      }
+      @listing_name = '280 Fell (Fell Street Apartments)'
+    end
+
+    let(:mail) { Emailer.draft_application_saved(@params) }
+    let(:deadline) { '4:00 PM on May 31' }
+
+    it 'renders the headers' do
+      VCR.use_cassette('emailer/draft_application_saved') do
+        subject = "Complete your application for #{@listing_name} by #{deadline}"
+        expect(mail.subject).to eq(subject)
+        expect(mail.to).to eq([@params[:email]])
+        expect(mail.from).to eq(['dahlia@housing.sfgov.org'])
+      end
+    end
+
+    it 'renders the body' do
+      VCR.use_cassette('emailer/draft_application_saved') do
+        name = "#{@params[:first_name]} #{@params[:last_name]}"
+        text = "Applications for this listing are due by #{deadline}."
+        expect(mail.body.encoded).to match(name)
+        expect(mail.body.encoded).to match(text)
+        expect(mail.body.encoded).to match(deadline)
+      end
+    end
+  end
 end
