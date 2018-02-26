@@ -272,7 +272,7 @@
         "ADDRESS_VALIDATION_NOT_FOUND": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Hindi puwede ang mga P.O. Box.",
         "ADDRESS_VALIDATION_SECONDARY": "Hindi mahanap ang address na ito. Paki-check ang numero ng bahay, kalye, at lungsod na inilagay ninyo. Tiyaking isasama ninyo ang numero ng Apt o Suite kung bahagi ito ng inyong address. Hindi puwede ang mga P.O. Box. ",
         "ALERT": {
-            "BAD_REQUEST": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousing.info@sfgov.org kung nagkakaproblema pa rin kayo. ",
+            "BAD_REQUEST": "Naku! Mukhang nagkaroon ng problema. Pakisubukang muli. \nKontakin ang sfhousinginfo@sfgov.org kung nagkakaproblema pa rin kayo. ",
             "TIMEOUT_PLEASE_TRY_AGAIN": "Naku! Nagkaroon na naman ng problema. Pakisubukang muli. "
         },
         "ALTERNATE_CONTACT": "Mangyaring pumili ng kahaliling kontak",
