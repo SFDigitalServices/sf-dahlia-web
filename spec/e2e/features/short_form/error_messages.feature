@@ -12,10 +12,12 @@ Feature: Short Form Application
       # error: invalid DOB
       When I fill out the Name page with an invalid DOB
       Then I should see DOB field errors on the Name page
-
       # error: invalid email
       And I fill out the Name page with the email "grant@exygy"
       Then I should see an email error on the Name page
+      # error: using non-latin characters
+      When I fill out the Name page with non-latin characters
+      Then I should see an error about providing answers in English on the Name page
 
       # maxlength check: name should cut off
       When I fill out the Name page as "Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz Loremipsumloremipsumloremipsumloremipsumxyzxyz" with my account email
