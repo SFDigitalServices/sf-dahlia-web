@@ -910,28 +910,19 @@ do ->
           doubleSubmit: true
         expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
 
-      it 'sends you to choose account settings if they were different', ->
-        opts =
-          type: 'review-sign-in'
-          loggedInUser:
-            firstName: 'Mister'
-            lastName: 'Tester'
-          submitCallback: jasmine.createSpy()
-        ShortFormApplicationService.application.status = 'draft'
-        stubAngularAjaxRequest httpBackend, requestURL, {}
-        ShortFormApplicationService.signInSubmitApplication(opts)
-        httpBackend.flush()
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-account-settings')
-
     describe '_signInAndSkipSubmit', ->
       it 'checks if you\'ve already submitted', ->
-        fakePrevApplication = { status: 'submitted', id: '123' }
-        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
+        # ShortFormApplicationService.application.status = 'submitted'
+        fakePrevApplication =
+          application: { status: 'submitted', id: '123' }
+        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.application.id, doubleSubmit: false}
+        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication, {loggedInUser: {}})
         expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
       it 'sends you to choose draft', ->
-        fakePrevApplication = { status: 'draft' }
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
+        # ShortFormApplicationService.application.status = 'submitted'
+        fakePrevApplication =
+          application: { status: 'draft' }
+        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication, {loggedInUser: {}})
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
 
     describe 'hasCompleteRentBurdenFilesForAddress', ->

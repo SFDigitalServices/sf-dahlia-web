@@ -55,7 +55,8 @@
     },
     "B1_NAME": {
         "NAME_EDITABLE_VIA": "These fields are editable via your",
-        "TITLE": "First, what's your name?"
+        "TITLE": "First, what's your name?",
+        "APP_DETAILS_UPDATED": "Your application details were updated to match your account settings."
     },
     "B2A_VERIFY_ADDRESS": {
         "TITLE": "We have located the following address. Please confirm it's correct."
@@ -160,6 +161,11 @@
         "EXPIRED_EMAIL_SENT_TO": "A confirmation link was sent to {{email}}, but that link expired after 24 hours. We can resend an email with a new confirmation link to this same email address.",
         "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
+    },
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "Continue with these details",
+        "DESCRIPTION": "It looks like you already started a draft for this application. Just review the following details, and then pick up where you left off.",
+        "TITLE": "Pick up where you left off"
     },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
@@ -583,6 +589,7 @@
         "TRANS_MALE": "Trans Male",
         "UNCLE": "Uncle",
         "UPDATE": "Update",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Updated based on your account settings.",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "UPLOAD_ADDITIONAL_PROOF": "Upload Additional Proof",
@@ -760,7 +767,6 @@
         "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
-        "ACCOUNT_SETTINGS": "Account Settings",
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",

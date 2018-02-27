@@ -143,6 +143,9 @@ AccountService = (
       Service.accountExists = false
     )
 
+  Service.shortFormAccountExists = ->
+    Service.accountExists
+
   Service.signOut = (opts = {}) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})

@@ -685,15 +685,18 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
+      params:
+        infoChanged:
+          squash: true
       onEnter: [
-        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
-        (ShortFormApplicationService, AccountService, AutosaveService) ->
+        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-            # always autosave when you start a new application
+            ShortFormApplicationService.infoChanged = $stateParams.infoChanged
             AutosaveService.save() unless ShortFormApplicationService.application.id
-
+            # always autosave when you start a new application
       ]
     })
     .state('dahlia.short-form-application.welcome-back', {
@@ -1056,6 +1059,23 @@
           ShortFormApplicationService.resetApplicationData()
         ]
     })
+    .state('dahlia.short-form-application.continue-previous-draft', {
+      url: '/continue-previous-draft'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/continue-previous-draft.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.accountApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
     .state('dahlia.short-form-application.choose-draft', {
       url: '/choose-draft'
       views:
@@ -1082,27 +1102,6 @@
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
-        ]
-    })
-    # NOTE: MAY DELETE SOON?
-    .state('dahlia.short-form-application.choose-account-settings', {
-      url: '/choose-account-settings'
-      views:
-        'container@':
-          templateUrl: 'short-form/templates/choose-account-settings.html'
-          controller: 'ShortFormApplicationController'
-      resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
-        ]
-        $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.ACCOUNT_SETTINGS')
-        ]
-      onEnter: [
-        '$state', 'ShortFormApplicationService',
-        ($state, ShortFormApplicationService) ->
-          if _.isEmpty(ShortFormApplicationService.application)
-            $state.go('dahlia.my-applications')
         ]
     })
 

@@ -64,6 +64,8 @@ ShortFormApplicationService = (
       Review: {}
     # for storing last page of your draft, to return to. default to first page
     lastPage: 'name'
+    # for storing any applicant info that we are about to override, for comparison
+    overwrittenApplicantInfo: {}
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
@@ -156,7 +158,12 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-applicant-details', 'welcome-back'], lastPage)
+    return if _.includes([
+        'choose-draft',
+        'choose-applicant-details',
+        'continue-previous-draft',
+        'welcome-back',
+      ], lastPage)
     # don't save the fact that we're in the middle of verifying address, can end up in a weird state
     if lastPage == 'verify-address'
       lastPage = 'contact'
@@ -753,15 +760,13 @@ ShortFormApplicationService = (
     Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
       if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
         # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data.application)
+        return Service._signInAndSkipSubmit(data, opts)
       changed = null
       if Service.application.status.match(/draft/i)
         if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
           # ... then store this setting and kick them to the new page
           Service.addSeniorEligibilityError()
           return $state.go('dahlia.short-form-application.choose-applicant-details')
-        if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
-          return $state.go('dahlia.short-form-application.choose-account-settings')
         else
           # make sure short form data inherits logged in user data
           changed = Service.importUserData(opts.loggedInUser)
@@ -769,12 +774,12 @@ ShortFormApplicationService = (
         opts.submitCallback(changed)
       )
     ).error( ->
-      # there was an error retrieving your account info, please try again
-      # TODO: add some helpful message to the user
+      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
       $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
     )
 
-  Service._signInAndSkipSubmit = (previousApplication) ->
+  Service._signInAndSkipSubmit = (previousApplicationData, opts) ->
+    previousApplication = previousApplicationData.application
     if (previousApplication.status.match(/submitted/i))
       # they've already submitted -- send them to "my applications", either with:
       # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
@@ -782,8 +787,22 @@ ShortFormApplicationService = (
       doubleSubmit = !! Service.application.status.match(/submitted/i)
       $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
     else
-      # send them to choose which draft they want to keep
-      $state.go('dahlia.short-form-application.choose-draft')
+      if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
+        # ... then store this setting and kick them to the new page
+        Service.addSeniorEligibilityError()
+        $state.go('dahlia.short-form-application.choose-applicant-details')
+      else if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        # in this special case, we send them to a unique "autofill-like" page showing their previous draft
+        # we store whatever they had for primaryApplicant as it's about to be overwritten
+        overwrittenApplicantInfo = angular.copy(Service.applicant)
+        # we also override their current "draft" since it's basically blank
+        Service.loadApplication(previousApplicationData)
+        angular.copy(overwrittenApplicantInfo, Service.application.overwrittenApplicantInfo)
+        Service.resetCompletedSections()
+        $state.go('dahlia.short-form-application.continue-previous-draft')
+      else
+        # send them to choose which draft they want to keep
+        $state.go('dahlia.short-form-application.choose-draft')
 
   Service._previousIsSubmittedOrBothDrafts = (previousApplication) ->
     previousApplication.status.match(/submitted/i) || (
