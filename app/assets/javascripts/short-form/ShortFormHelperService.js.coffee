@@ -1,95 +1,112 @@
 ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   Service = {}
 
+  # the 't' identity function is purely so that the Gruntfile can know where to look
+  # for these translation strings (see customRegex)
+  t = (str) -> str
+
   Service.alternate_contact_options = [
-    ['Family Member', $translate.instant('LABEL.FAMILY_MEMBER')]
-    ['Friend', $translate.instant('LABEL.FRIEND')]
-    ['Social Worker or Housing Counselor', $translate.instant('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
-    ['Other', $translate.instant('LABEL.OTHER')]
+    ['Family Member', t('LABEL.FAMILY_MEMBER')]
+    ['Friend', t('LABEL.FRIEND')]
+    ['Social Worker or Housing Counselor', t('LABEL.SOCIAL_WORKER_OR_HOUSING_COUNSELOR')]
+    ['Other', t('LABEL.OTHER')]
   ]
   Service.gender_options = [
-    ['Female', $translate.instant('LABEL.FEMALE')]
-    ['Male', $translate.instant('LABEL.MALE')]
-    ['Genderqueer/Gender Non-binary', $translate.instant('LABEL.GENDERQUEER_NON_BINARY')]
-    ['Trans Female', $translate.instant('LABEL.TRANS_FEMALE')]
-    ['Trans Male', $translate.instant('LABEL.TRANS_MALE')]
-    ['Not Listed', $translate.instant('LABEL.NOT_LISTED')]
+    ['Female', t('LABEL.FEMALE')]
+    ['Male', t('LABEL.MALE')]
+    ['Genderqueer/Gender Non-binary', t('LABEL.GENDERQUEER_NON_BINARY')]
+    ['Trans Female', t('LABEL.TRANS_FEMALE')]
+    ['Trans Male', t('LABEL.TRANS_MALE')]
+    ['Not Listed', t('LABEL.NOT_LISTED')]
   ]
   Service.sex_at_birth_options = [
-    ['Female', $translate.instant('LABEL.FEMALE')]
-    ['Male', $translate.instant('LABEL.MALE')]
+    ['Female', t('LABEL.FEMALE')]
+    ['Male', t('LABEL.MALE')]
   ]
   Service.relationship_options = [
-    ['Spouse', $translate.instant('LABEL.SPOUSE')]
-    ['Registered Domestic Partner', $translate.instant('LABEL.REGISTERED_DOMESTIC_PARTNER')]
-    ['Parent', $translate.instant('LABEL.PARENT')]
-    ['Child', $translate.instant('LABEL.CHILD')]
-    ['Sibling', $translate.instant('LABEL.SIBLING')]
-    ['Cousin', $translate.instant('LABEL.COUSIN')]
-    ['Aunt', $translate.instant('LABEL.AUNT')]
-    ['Uncle', $translate.instant('LABEL.UNCLE')]
-    ['Nephew', $translate.instant('LABEL.NEPHEW')]
-    ['Niece', $translate.instant('LABEL.NIECE')]
-    ['Grandparent', $translate.instant('LABEL.GRANDPARENT')]
-    ['Great Grandparent', $translate.instant('LABEL.GREAT_GRANDPARENT')]
-    ['In-Law', $translate.instant('LABEL.IN_LAW')]
-    ['Friend', $translate.instant('LABEL.FRIEND')]
-    ['Other', $translate.instant('LABEL.OTHER')]
+    ['Spouse', t('LABEL.SPOUSE')]
+    ['Registered Domestic Partner', t('LABEL.REGISTERED_DOMESTIC_PARTNER')]
+    ['Parent', t('LABEL.PARENT')]
+    ['Child', t('LABEL.CHILD')]
+    ['Sibling', t('LABEL.SIBLING')]
+    ['Cousin', t('LABEL.COUSIN')]
+    ['Aunt', t('LABEL.AUNT')]
+    ['Uncle', t('LABEL.UNCLE')]
+    ['Nephew', t('LABEL.NEPHEW')]
+    ['Niece', t('LABEL.NIECE')]
+    ['Grandparent', t('LABEL.GRANDPARENT')]
+    ['Great Grandparent', t('LABEL.GREAT_GRANDPARENT')]
+    ['In-Law', t('LABEL.IN_LAW')]
+    ['Friend', t('LABEL.FRIEND')]
+    ['Other', t('LABEL.OTHER')]
   ]
   Service.ethnicity_options = [
-    ['Hispanic/Latino', $translate.instant('LABEL.HISPANIC_LATINO')]
-    ['Not Hispanic/Latino', $translate.instant('LABEL.NOT_HISPANIC_LATINO')]
+    ['Hispanic/Latino', t('LABEL.HISPANIC_LATINO')]
+    ['Not Hispanic/Latino', t('LABEL.NOT_HISPANIC_LATINO')]
   ]
   Service.race_options = [
-    ['American Indian/Alaskan Native', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE')]
-    ['Asian', $translate.instant('LABEL.ASIAN')]
-    ['Black/African American', $translate.instant('LABEL.BLACK_AFRICAN_AMERICAN')]
-    ['Native Hawaiian/Other Pacific Islander', $translate.instant('LABEL.NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER')]
-    ['White', $translate.instant('LABEL.WHITE')]
-    ['American Indian/Alaskan Native and Black/African American', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK')]
-    ['American Indian/Alaskan Native and White', $translate.instant('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE')]
-    ['Asian and White', $translate.instant('LABEL.ASIAN_WHITE')]
-    ['Black/African American and White', $translate.instant('LABEL.BLACK_AFRICAN_AMERICAN_WHITE')]
-    ['Other/Multiracial', $translate.instant('LABEL.OTHER_MULTIRACIAL')]
+    ['American Indian/Alaskan Native', t('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE')]
+    ['Asian', t('LABEL.ASIAN')]
+    ['Black/African American', t('LABEL.BLACK_AFRICAN_AMERICAN')]
+    ['Native Hawaiian/Other Pacific Islander', t('LABEL.NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER')]
+    ['White', t('LABEL.WHITE')]
+    ['American Indian/Alaskan Native and Black/African American', t('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_BLACK')]
+    ['American Indian/Alaskan Native and White', t('LABEL.AMERICAN_INDIAN_ALASKAN_NATIVE_WHITE')]
+    ['Asian and White', t('LABEL.ASIAN_WHITE')]
+    ['Black/African American and White', t('LABEL.BLACK_AFRICAN_AMERICAN_WHITE')]
+    ['Other/Multiracial', t('LABEL.OTHER_MULTIRACIAL')]
   ]
   Service.sexual_orientation_options = [
-    ['Bisexual', $translate.instant('LABEL.BISEXUAL')]
-    ['Gay/Lesbian/Same-Gender Loving', $translate.instant('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
-    ['Questioning/Unsure', $translate.instant('LABEL.QUESTIONING_UNSURE')]
-    ['Straight/Heterosexual', $translate.instant('LABEL.STRAIGHT_HETEROSEXUAL')]
-    ['Not listed', $translate.instant('LABEL.NOT_LISTED')]
+    ['Bisexual', t('LABEL.BISEXUAL')]
+    ['Gay/Lesbian/Same-Gender Loving', t('LABEL.GAY_LESBIAN_SAME_GENDER_LOVING')]
+    ['Questioning/Unsure', t('LABEL.QUESTIONING_UNSURE')]
+    ['Straight/Heterosexual', t('LABEL.STRAIGHT_HETEROSEXUAL')]
+    ['Not listed', t('LABEL.NOT_LISTED')]
   ]
   Service.preference_proof_options_default = [
-    ['Telephone bill', $translate.instant('LABEL.PROOF.TELEPHONE_BILL')],
-    ['Cable and internet bill', $translate.instant('LABEL.PROOF.CABLE_BILL')],
-    ['Gas bill', $translate.instant('LABEL.PROOF.GAS_BILL')],
-    ['Electric bill', $translate.instant('LABEL.PROOF.ELECTRIC_BILL')],
-    ['Garbage bill', $translate.instant('LABEL.PROOF.GARBAGE_BILL')],
-    ['Water bill', $translate.instant('LABEL.PROOF.WATER_BILL')],
-    ['Paystub', $translate.instant('LABEL.PROOF.PAYSTUB_HOME')],
-    ['Public benefits record', $translate.instant('LABEL.PROOF.PUBLIC_BENEFITS')],
-    ['School record', $translate.instant('LABEL.PROOF.SCHOOL_RECORD')],
+    ['Telephone bill', t('LABEL.PROOF.TELEPHONE_BILL')],
+    ['Cable and internet bill', t('LABEL.PROOF.CABLE_BILL')],
+    ['Gas bill', t('LABEL.PROOF.GAS_BILL')],
+    ['Electric bill', t('LABEL.PROOF.ELECTRIC_BILL')],
+    ['Garbage bill', t('LABEL.PROOF.GARBAGE_BILL')],
+    ['Water bill', t('LABEL.PROOF.WATER_BILL')],
+    ['Paystub', t('LABEL.PROOF.PAYSTUB_HOME')],
+    ['Public benefits record', t('LABEL.PROOF.PUBLIC_BENEFITS')],
+    ['School record', t('LABEL.PROOF.SCHOOL_RECORD')],
   ]
   Service.preference_proof_options_work = [
-    ['Paystub with employer address', $translate.instant('LABEL.PROOF.PAYSTUB_EMPLOYER')],
-    ['Letter from employer', $translate.instant('LABEL.PROOF.LETTER_FROM_EMPLOYER')],
+    ['Paystub with employer address', t('LABEL.PROOF.PAYSTUB_EMPLOYER')],
+    ['Letter from employer', t('LABEL.PROOF.LETTER_FROM_EMPLOYER')],
   ]
   Service.preference_proof_options_live = angular.copy(Service.preference_proof_options_default)
   Service.preference_proof_options_live.push(
-    ['Letter documenting homelessness', $translate.instant('LABEL.PROOF.HOMELESSNESS')],
+    ['Letter documenting homelessness', t('LABEL.PROOF.HOMELESSNESS')],
   )
 
   Service.preference_proof_options_rent_burden = [
-    ['Money order', $translate.instant('LABEL.PROOF.MONEY_ORDER')]
-    ['Cancelled check', $translate.instant('LABEL.PROOF.CANCELLED_CHECK')]
-    ['Debit from your bank account', $translate.instant('LABEL.PROOF.DEBIT_FROM_BANK')]
-    ['Screenshot of online payment', $translate.instant('LABEL.PROOF.ONLINE_PAYMENT')]
+    ['Money order', t('LABEL.PROOF.MONEY_ORDER')]
+    ['Cancelled check', t('LABEL.PROOF.CANCELLED_CHECK')]
+    ['Debit from your bank account', t('LABEL.PROOF.DEBIT_FROM_BANK')]
+    ['Screenshot of online payment', t('LABEL.PROOF.ONLINE_PAYMENT')]
   ]
 
   Service.priority_options = [
-    ['Mobility impaired', $translate.instant('LABEL.MOBILITY_IMPAIRMENTS')]
-    ['Vision impaired', $translate.instant('LABEL.VISION_IMPAIRMENTS')]
-    ['Hearing impaired', $translate.instant('LABEL.HEARING_IMPAIRMENTS')]
+    ['Mobility impaired', t('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision impaired', t('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing impaired', t('LABEL.HEARING_IMPAIRMENTS')]
+  ]
+
+  Service.listing_referral_options = [
+    ['Newspaper', t('REFERRAL.NEWSPAPER')]
+    ['MOHCD Website', t('REFERRAL.MOHCD_WEBSITE')]
+    ['Developer Website', t('REFERRAL.DEVELOPER_WEBSITE')]
+    ['Flyer', t('REFERRAL.FLYER')]
+    ['Email Alert', t('REFERRAL.EMAIL_ALERT')]
+    ['Friend', t('REFERRAL.FRIEND')]
+    ['Housing Counselor', t('REFERRAL.HOUSING_COUNSELOR')]
+    ['Radio Ad', t('REFERRAL.RADIO_AD')]
+    ['Bus Ad', t('REFERRAL.BUS_AD')]
+    ['Other', t('LABEL.OTHER')]
   ]
 
   Service.proofOptions = (preference) ->
@@ -131,10 +148,6 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
 
   ## Translation Helpers
-  Service.applicantFirstName = (applicant) ->
-    name = applicant.firstName
-    { name: if name then ', ' + name else '' }
-
   Service.householdMemberForPreference = (application, pref_type) ->
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
@@ -144,14 +157,16 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     { user: name }
 
   Service.fileAttachmentForPreference = (application, pref_type) ->
-    return '' if application.status.match(/submitted/i)
-    interpolate = { file: application.preferences.documents[pref_type].proofOption }
+    proof = application.preferences.documents[pref_type]
+    return '' unless proof && proof.proofOption
+    interpolate = { file: proof.proofOption }
     $translate.instant('LABEL.FILE_ATTACHED', interpolate)
 
   Service.fileAttachmentsForRentBurden = (application) ->
     if application.status.match(/submitted/i)
       return [
         subLabel: $translate.instant('LABEL.FOR_YOUR_HOUSEHOLD')
+        boldSubLabel: $translate.instant('LABEL.FILE_ATTACHED', { file: 'Lease and rent proof' })
       ]
     labels = []
     # this one is a little bit complicated because it has to sort through each set of rentBurden

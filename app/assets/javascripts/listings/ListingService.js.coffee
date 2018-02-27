@@ -240,7 +240,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
-    angular.copy({}, Service.listing)
+    Service.resetListingData()
 
     deferred = $q.defer()
     $http.get("/api/v1/listings/#{_id}.json",
@@ -253,6 +253,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       deferred.reject(data)
     )
     return deferred.promise
+
+  # Remove the previous listing and all it's associated data
+  Service.resetListingData = () ->
+    angular.copy({}, Service.listing)
+    angular.copy([], Service.AMICharts)
+    angular.copy({}, Service.lotteryBucketInfo)
+    angular.copy([], Service.listingDownloadURLs)
 
   Service.getListingResponse = (deferred) ->
     (data, status, headers, config, itemCache) ->
@@ -462,7 +469,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
+    Service.loading.units = true
+    Service.error.units = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = false
       if data && data.units
         units = data.units
         Service.listing.Units = units
@@ -471,6 +482,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = true
       return
     )
 
@@ -568,6 +581,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       descriptor.name
 
   Service.getListingPreferences = ->
+    Service.loading.preferences = true
+    Service.error.preferences = false
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
@@ -578,8 +593,10 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
         Service._extractCustomPreferences()
+        Service.loading.preferences = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.preferences = false
+      Service.error.preferences = true
     )
 
   Service.hardcodeCustomProofPrefs =
@@ -591,7 +608,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     customProofPreferences = _.remove customPreferences, (customPref) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
     Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
-    Service.listing.customProofPreferences = customProofPreferences
+    Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
   Service.getLotteryBuckets = ->
     angular.copy({}, Service.lotteryBucketInfo)
@@ -606,6 +623,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.formatLotteryNumber = (lotteryNumber) ->
     lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
     if (lotteryNumber.length < 8)
       lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
     lotteryNumber
@@ -640,14 +658,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return [] unless amiLevel
     occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
+    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
-    max = 1 if Service.listingHasOnlySROUnits(listing)
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    if Service.listingIs('Merry Go Round Shared Housing')
+      max = 2
+    else if Service.listingHasOnlySROUnits(listing)
+      max = 1
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
-    return 1 if Service.listingHasOnlySROUnits(Service.listing)
+    if Service.listingIs('Merry Go Round Shared Housing')
+      return 2
+    else if Service.listingHasOnlySROUnits(Service.listing)
+      return 1
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
@@ -710,6 +736,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
+    'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
   }
 
   Service.mapSlugToId = (id) ->

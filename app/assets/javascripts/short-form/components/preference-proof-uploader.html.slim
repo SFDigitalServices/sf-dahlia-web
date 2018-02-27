@@ -1,5 +1,5 @@
 / checkbox for proof options for this preference
-.form-group ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-hide="$ctrl.uploaded"
+.form-group.margin-bottom-none ng-class="{ error: $ctrl.inputInvalid($ctrl.selectorName) }" ng-hide="$ctrl.uploaded"
 
   label.form-label.caps for="{{$ctrl.selectorName}}"
     | {{$ctrl.proofOptionLabel}}
@@ -16,12 +16,12 @@
       option value=""
         | {{'LABEL.SELECT_ONE' | translate}}
       option ng-repeat="option in $ctrl.proofOptions" value="{{option[0]}}"
-        | {{ option[1] }}
-    small.error.margin-bottom-none id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
+        | {{ option[1] | translate }}
+    small.error id="{{$ctrl.selectorName}}_error" ng-if="$ctrl.inputInvalid($ctrl.selectorName)"
       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
-    p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from employer'"
       | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
-    p.form-note ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
       | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"

@@ -53,9 +53,25 @@ Style/ClassAndModuleChildren:
 Style/ConditionalAssignment:
   Enabled: false
 
+Style/FormatStringToken:
+  Enabled: false
+  Enabled: false
+
 Metrics/LineLength:
   Max: 90
   Exclude:
     - 'config/routes.rb'
     - 'config/application.rb'
     - 'app/models/user.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'config/routes.rb'
+
+Style/RescueStandardError:
+  Exclude:
+    - 'app/services/cache_service.rb'
+
+
+

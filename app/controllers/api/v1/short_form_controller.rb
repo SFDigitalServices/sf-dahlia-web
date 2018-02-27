@@ -3,11 +3,11 @@ class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
   ListingService = SalesforceService::ListingService
   before_action :authenticate_user!,
-                only: %i(
+                only: %i[
                   show_application
                   update_application
                   delete_application
-                )
+                ]
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -75,6 +75,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def update_application
+    return if params['autosave'] == 'true' && autosave_disabled
     @application = ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
@@ -99,6 +100,10 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def autosave_disabled
+    ENV['AUTOSAVE'] == 'false'
+  end
+
   def application_complete
     application_params[:status] == 'submitted'
   end
@@ -116,6 +121,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
+    email_draft_link(response) if first_time_draft?
     if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
@@ -126,6 +132,10 @@ class Api::V1::ShortFormController < ApiController
 
   def draft_application?
     application_params[:status].casecmp('draft').zero?
+  end
+
+  def first_time_draft?
+    draft_application? && !application_params['id']
   end
 
   def initial_submission?
@@ -156,11 +166,21 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     Emailer.submission_confirmation(
+      locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
-      firstName: response['primaryApplicant']['firstName'],
-      lastName: response['primaryApplicant']['lastName'],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_later
+  end
+
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
     ).deliver_later
   end
 
@@ -223,10 +243,9 @@ class Api::V1::ShortFormController < ApiController
   def unconfirmed_user_with_temp_session_id
     return false if params[:temp_session_id].blank?
     @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
-    if @unconfirmed_user
-      params.delete :temp_session_id
-      @unconfirmed_user.update(temp_session_id: nil)
-    end
+    return unless @unconfirmed_user
+    params.delete :temp_session_id
+    @unconfirmed_user.update(temp_session_id: nil)
   end
 
   def current_user_id
@@ -243,10 +262,8 @@ class Api::V1::ShortFormController < ApiController
       listing_id: uploaded_file_params[:listing_id],
       listing_preference_id: uploaded_file_params[:listing_preference_id],
     }
-    %i(address rent_burden_index).each do |field|
-      if uploaded_file_params[field]
-        file_params[field] = uploaded_file_params[field]
-      end
+    %i[address rent_burden_index].each do |field|
+      file_params[field] = uploaded_file_params[field] if uploaded_file_params[field]
     end
     rent_burden_type = uploaded_file_params[:rent_burden_type]
     if user_signed_in?
@@ -260,21 +277,22 @@ class Api::V1::ShortFormController < ApiController
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(%i(householdsize incomelevel childrenUnder6))
+          .permit(%i[householdsize incomelevel childrenUnder6])
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(%i(file session_uid listing_id listing_preference_id
-                     document_type address rent_burden_type rent_burden_index))
+          .permit(%i[file session_uid listing_id listing_preference_id
+                     document_type address rent_burden_type rent_burden_index])
   end
 
   def application_params
     params.require(:application)
           .permit(
             :id,
+            :applicationLanguage,
             {
-              primaryApplicant: %i(
+              primaryApplicant: %i[
                 contactId
                 appMemberId
                 language
@@ -315,10 +333,10 @@ class Api::V1::ShortFormController < ApiController
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
-              ),
+              ],
             },
             {
-              alternateContact: %i(
+              alternateContact: %i[
                 appMemberId
                 language
                 alternateContactType
@@ -333,10 +351,10 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
-              ),
+              ],
             },
             {
-              householdMembers: %i(
+              householdMembers: %i[
                 appMemberId
                 firstName
                 lastName
@@ -355,20 +373,21 @@ class Api::V1::ShortFormController < ApiController
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
-              ),
+              ],
             },
             :listingID,
             {
-              shortFormPreferences: %i(
+              shortFormPreferences: %i[
                 listingPreferenceID
+                recordTypeDevName
                 appMemberID
-                additionalDetails
+                certificateNumber
                 naturalKey
                 preferenceProof
                 optOut
-                ifCombinedIndividualPreference
+                individualPreference
                 shortformPreferenceID
-              ),
+              ],
             },
             :answeredCommunityScreening,
             :adaPrioritiesSelected,

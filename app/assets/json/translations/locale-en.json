@@ -1,7 +1,8 @@
 {
     "A1_INTRO": {
+        "CHOOSE_YOUR_LANGUAGE": "Choose your language",
         "SIGN_IN_SAVE_TIME": "Signing in could save you time by starting with details of your last application, and allow you to check the status of this application at anytime.",
-        "TITLE": "Let's get started on your application:"
+        "TITLE": "Let's get started on your application"
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
@@ -19,7 +20,7 @@
     },
     "A4_OVERVIEW": {
         "P1": "First we'll ask about you and the people you plan to live with. Then, we'll ask about your income. Finally, we'll see if you qualify for any affordable housing lottery preference, and if so, ask you to upload proof of those preferences.",
-        "P2": "If you are curious about which required docuemnts you may need for the application, please see our resource guide of required documents and claiming preferences.",
+        "P2": "If you are curious about which required documents you may need for the application, please see our resource guide of required documents and claiming preferences.",
         "P3": "You may also start the application now and save it and upload documents later.",
         "P4": "Please be aware that each household member can only appear on one application for each listing. If your application contains household members that are on other applications for this listing, all of them will be disqualified.",
         "TITLE": "Here's what to expect for this application.",
@@ -66,7 +67,7 @@
         "EMAIL_EDITABLE_VIA": "Your email address is editable via your",
         "ONLY_USE_YOUR_EMAIL": "We will only use your email address to contact you about your application.",
         "PROVIDE_AN_ADDRESS": "Provide an address where you can receive updates and materials about your application.",
-        "TITLE": "Thanks{{name}}. Now we need to know how to contact you.",
+        "TITLE": "Thanks, {{name}}. Now we need to know how to contact you.",
         "WORK_IN_SF_DESC": "This means you currently work in San Francisco at least 75% of your working hours."
     },
     "B3_ALTERNATE_CONTACT_TYPE": {
@@ -187,6 +188,10 @@
         "TITLE": "Let's move to income."
     },
     "DOCUMENT_CHECKLIST": {
+        "ALICE_GRIFFITH_1": "You'll need 1 (one) of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+        "ALICE_GRIFFITH_OPT_1": "Letter from SFHA verifying applicant lived at the site on or after October 26, 2010",
+        "ALICE_GRIFFITH_OPT_2": "A California ID or Driver’s License showing Alice Griffith address",
+        "ALICE_GRIFFITH_TITLE": "Alice Griffith Housing Development Resident",
         "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
@@ -239,7 +244,7 @@
     "E2C_LIVE_WORK_PREFERENCE": {
         "DOCUMENT_MUST_SHOW_CORRECT_NAME": "Document must show the correct name, address where you live in San Francisco and a date within 45 days of your application.",
         "DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK": "Document must show the correct name, address where you work in San Francisco and a date within 45 days of your application.",
-        "INSTRUCTIONS": " Just upload valid proof of where you live or work in San Francisco and get a higher ranking in the lottery.",
+        "INSTRUCTIONS": "Just upload valid proof of where you live or work in San Francisco and get a higher ranking in the lottery.",
         "LETTER_FOR_HOMELESSNESS_INSTRUCTIONS": "Letter must show either the shelter address or an address close to where you stay, and be signed by a caseworker on official letterhead.",
         "LETTER_FROM_EMPLOYER_INSTRUCTIONS": "Letter must verify employment in San Francisco with at least 75% of working hours in the City.",
         "LIVE_SF_PREFERENCE": {
@@ -269,7 +274,7 @@
         "FORM_ERROR": "Please complete uploading documents or select that you don't want this preference.",
         "RENT_BURDEN_NOTES": "You qualify for this preference because you said your household is currently spending more than 50% of your income on rent.<br><br>Just upload a copy of a valid lease and proof of rent payment for a higher ranking in the lottery.",
         "RENT_BURDEN_PREFERENCE": "Rent Burdened Preference",
-        "RENT_BURDEN_PREFERENCE_DESC": "  Rent Burdened households are those defined as paying more than 50% of their income for housing.",
+        "RENT_BURDEN_PREFERENCE_DESC": "Rent Burdened households are those defined as paying more than 50% of their income for housing.",
         "UPLOAD_ANOTHER_DOCUMENT_AT_THIS_ADDRESS": "Do you need to upload another document to show the total rent paid at this address?",
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
@@ -295,7 +300,7 @@
         "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
         "ALERT": {
-            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
+            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousinginfo@sfgov.org if you're still experiencing issues.",
             "TIMEOUT_PLEASE_TRY_AGAIN": "Oops! Looks like something went wrong. Please try again."
         },
         "ALTERNATE_CONTACT": "Please select an alternate contact",
@@ -332,6 +337,7 @@
         "PHONE_NUMBER_TYPE": "Please select a phone number type",
         "PLEASE_COMPLETE_PREFERENCE": "Please complete uploading documents or select that you don't want this preference.",
         "PLEASE_COMPLETE_PREFERENCE_CONTENT": "We strongly encourage you to upload documents to claim the preference before submitting to have a better chance in the lottery.",
+        "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Please provide your answers in English",
         "PLEASE_PUT_IN_A_RENT": "Please put in a rent value",
         "PLEASE_SELECT_AN_OPTION": "Please select one of the options above.",
         "PLEASE_SELECT_PREFERENCE_CONTENT": "We strongly encourage you to claim the preference and upload documents before submitting to have a better chance in the lottery.",
@@ -361,6 +367,16 @@
         "P5": "I declare that the foregoing is true and accurate, and acknowledge that any misstatement fraudulently or negligently made on this application will result in removal from the lottery.",
         "TITLE": "Terms"
     },
+    "FOOTER": {
+        "CITY_COUNTY_OF_SF": "City & County of San Francisco",
+        "CONTACT": "Contact",
+        "DAHLIA_DESCRIPTION": "<p class='c-iron'>DAHLIA: San Francisco Housing Portal is a project of the <br><a class='a-white' href='{{mohcdUrl}}' target='_blank'>Mayor's Office of Housing and Community Development</a></p><p class='t-small c-iron margin-top'>in partnership with<br><a class='a-white' href='{{sfDeptUrl}}' target='_blank'>San Francisco Department of Technology</a><br><a class='a-white' href='{{mayorUrl}}' target='_blank'>Mayor's Office of Civic Innovation</a></p>",
+        "DISCLAIMER": "Disclaimer",
+        "FOR_GENERAL_QUESTIONS": "For general program inquiries, you may call MOHCD at 415-701-5500.",
+        "GIVE_FEEDBACK": "Give Feedback",
+        "LISTING_QUESTIONS": "For listing and application questions, please contact the Leasing Agent displayed on the LISTING.",
+        "PRIVACY_POLICY": "Privacy Policy"
+    },
     "FORGOT_PASSWORD": {
         "EMAIL_SENT_DESCRIPTION": "You'll receive an email with a link to reset your password.",
         "EMAIL_SENT_TITLE": "We've sent you an email.",
@@ -382,6 +398,11 @@
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Please write down your lottery number and keep it in a safe place. We have also emailed this number to you if you provided an email address.",
         "TITLE": "Thanks. We have received your application for",
         "VIEW_AND_PRINT_A_COPY": "View submitted application and print a copy"
+    },
+    "HEADER": {
+        "LEARN_MORE": "Learn more.",
+        "TRANSLATE_BAR_EXPERT_NOTICE": "This page has been translated by a native speaker.",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "This page has been translated with Google Translate."
     },
     "LABEL": {
         "ADA_ACCESSIBLE_UNITS": "ADA Accessible Units",
@@ -542,6 +563,8 @@
         },
         "PROOF_OF_RENT": "Proof of Rent",
         "QUESTIONING_UNSURE": "Questioning/Unsure",
+        "READ_LESS": "read less",
+        "READ_MORE": "read more",
         "RECENT_APPLICATION": "Recent Application",
         "REGISTERED_DOMESTIC_PARTNER": "Registered Domestic Partner",
         "RENT_AT_ADDRESS": "Rent at {{address}}",
@@ -550,12 +573,15 @@
         "SEE_LISTING": "See Listing",
         "SELECT_ONE": "Select One",
         "SEND_EMAIL": "Send email",
+        "SHOW_LESS": "show less",
+        "SHOW_MORE": "show more",
         "SIBLING": "Sibling",
         "SIGN_IN": "Sign In",
         "SIGN_IN_TO_CONTINUE": "Sign in to continue",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Case manager or housing counselor",
         "SPOUSE": "Spouse",
         "START_UPLOAD": "Start Upload",
+        "STATE": "State",
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "You'll still have the opportunity to claim other preferences.",
         "STRAIGHT_HETEROSEXUAL": "Straight/Heterosexual",
         "SUGGESTED_ADDRESS": "Suggested Address",
@@ -579,6 +605,7 @@
         "VIEW_MAP": "View Map",
         "VISION_IMPAIRMENTS": "For Vision Impairments",
         "VOUCHERS_AND_SUBSIDIES": "Housing Voucher or Rental Subsidy",
+        "WHAT_IS_YOUR_RELATIONSHIP": "What is your relationship?",
         "WHAT_TYPE_OF_NUMBER": "What type of number is this?",
         "WHITE": "White",
         "WORK_IN_SF": "Do you work in San Francisco?",
@@ -644,6 +671,7 @@
             "SUBTITLE": "You can now check lottery results on the remaining listings.",
             "TITLE": "Lottery Results"
         },
+        "MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for up to 2 people only. Tenants may share bathrooms, and sometimes kitchen facilities.",
         "NO_AVAILABLE_UNITS": "There are no available units at this time.",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
@@ -666,6 +694,8 @@
         "RESERVED_UNITS_DESCRIPTION": "In order to qualify for these units one of the following must apply to you or someone in your household:",
         "RESERVED_UNITS_FOR_WHO_ARE": "Reserved for {{communityType}} who are {{reservedType}}",
         "SEE_MAXIMUM_INCOME_INFORMATION": "See Maximum Income Information",
+        "SEE_PREFERENCE_INFORMATION": "See Preference Information",
+        "SEE_UNIT_INFORMATION": "See Unit Information",
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
@@ -698,6 +728,7 @@
         "LOTTERY_NUMBER_NOT_FOUND_P1": "The number you entered was not found.",
         "LOTTERY_NUMBER_NOT_FOUND_P2": "Review the number you entered to make sure it is correct.",
         "LOTTERY_NUMBER_NOT_FOUND_P3": "If you were not selected, we encourage you to apply for other listings.",
+        "LOTTERY_NUMBER_NOT_VALID": "Please enter a valid lottery number.",
         "LOTTERY_RESULTS": "Lottery Results",
         "LOTTERY_RESULTS_PDF_LINK": "Download Lottery Results PDF",
         "NEXT_STEPS_P1": "Applicants will be contacted by the leasing agent in preference rank order until vacancies are filled.",
@@ -718,10 +749,22 @@
         "VIEW_PREFERENCE_LIST": "View Preference List"
     },
     "MY_APPLICATIONS": {
-        "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Are you sure you want to delete your application for this listing?",
+        "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Deleting this application means you will lose all the information you've entered.",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
         "TITLE": "My Applications",
         "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+    },
+    "NAV": {
+        "ACCOUNT_SETTINGS": "Account Settings",
+        "BROWSE_PROPERTIES": "Browse Properties",
+        "GET_ASSISTANCE": "Get Assistance",
+        "GET_FEEDBACK": "We'd love to get <a target='_blank' class='a-white lined' href='{{feedbackUrl}}'>your feedback.</a>",
+        "MY_ACCOUNT": "My Account",
+        "MY_APPLICATIONS": "My Applications",
+        "MY_DASHBOARD": "My Dashboard",
+        "MY_FAVORITES": "My Favorites",
+        "SIGN_IN": "Sign In",
+        "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
@@ -774,6 +817,17 @@
         "SITE_SECURITY_TITLE": "Site Security",
         "TITLE": "Privacy Policy"
     },
+    "REFERRAL": {
+        "BUS_AD": "Bus Ad",
+        "DEVELOPER_WEBSITE": "Developer Website",
+        "EMAIL_ALERT": "Email Alert",
+        "FLYER": "Flyer",
+        "FRIEND": "Friend",
+        "HOUSING_COUNSELOR": "Housing Counselor",
+        "MOHCD_WEBSITE": "MOHCD Website",
+        "NEWSPAPER": "Newspaper",
+        "RADIO_AD": "Radio Ad"
+    },
     "RESET_PASSWORD": {
         "TITLE": "Reset Password",
         "UPDATE_PASSWORD": "Update password"
@@ -786,10 +840,18 @@
         "VIEW_ORIGINAL_LISTING": "View the original listing",
         "YOUR_LOTTERY_NUMBER": "Your lottery number"
     },
+    "SHORT_FORM_NAV": {
+        "HOUSEHOLD": "Household",
+        "INCOME": "Income",
+        "PREFERENCES": "Preferences",
+        "REVIEW": "Review",
+        "YOU": "You"
+    },
     "SIGN_IN": {
         "BAD_CREDENTIALS": "Invalid login credentials. Please try again.",
         "DONT_HAVE_ACCOUNT": "Don't have an account?",
         "FORGOT_PASSWORD": "Forgot password?",
+        "LOGGED_OUT_DUE_TO_INACTIVITY": "We care about your security. We logged you out due to inactivity. Please sign in to continue.",
         "RESENT_CONFIRMATION_MESSAGE": "Email sent. Please check your inbox.",
         "SIGNED_IN_SUCCESSFULLY": "You signed in succesfully.",
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "You signed in successfully and your contact details have been updated.",
@@ -802,17 +864,23 @@
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
         "APPLICATION_SUBMITTED": "Application Submitted",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose all information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "Are you sure you would like to navigate away from this page? You will lose any unsaved information you've entered into the application for this listing. If you'd like to save your information to finish the application at a later time, please click the 'Save and Finish later' button.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "Are you sure you want to leave this page? If you link your application to an account, it will make checking application status and completing future applications easier.",
         "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "Are you sure you want to leave this page? If you create an account, it will make checking application status and completing future applications easier.",
         "BACK": "Back",
         "CLOSE": "close",
         "CONFIRM": "Confirm",
+        "CONTINUE": "Continue",
+        "CONTINUE_WITH_YOUR_APPLICATION": "Continue with your application?",
+        "DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL": "DAHLIA San Francisco Housing Portal",
         "DELETE": "Delete",
+        "DELETE_APPLICATION": "Delete this application?",
         "EDIT": "Edit",
-        "GET_STARTED": "Get Started",
         "IN_PROGRESS": "In Progress",
         "I_AGREE": "I agree and understand that I cannot change anything after I submit.",
+        "LEAVE": "Leave",
+        "LEAVE_YOUR_APPLICATION": "Leave your application?",
+        "MENU": "Menu",
         "NEVER_SUBMITTED": "Never Submitted",
         "NEXT": "Next",
         "NO": "No",
@@ -825,11 +893,13 @@
         "PER_YEAR": "per year",
         "SAVE_AND_COME_BACK_LATER": "Save and come back later",
         "SAVE_AND_FINISH_LATER": "Save and finish later",
-        "SESSION_INACTIVITY": "Your session will expire in one minute due to inactivity. You will lose all information you've entered into the application for this listing if you choose not to respond.",
-        "SESSION_INACTIVITY_CONFIRMATION": "Your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
-        "SESSION_INACTIVITY_LOGGED_IN": "Your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",
+        "SESSION_EXPIRED": "Your session has expired.",
+        "SESSION_INACTIVITY": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information you've entered into the application for this listing if you choose not to respond.",
+        "SESSION_INACTIVITY_CONFIRMATION": "To protect your identity, your session will expire in one minute due to inactivity. If you choose not to respond, you will lose the ability to save this application to an account where you can track the status of your application at any time.",
+        "SESSION_INACTIVITY_LOGGED_IN": "To protect your identity, your session will expire in one minute due to inactivity. You will lose any unsaved information and be logged out if you choose not to respond.",
         "SKIP_TO_MAIN_CONTENT": "Skip to main content",
         "STATUS": "Status",
+        "STAY": "Stay",
         "SUBMIT": "Submit",
         "SUBMITTED": "Submitted",
         "UNIT_TYPE": "Unit Type",

@@ -108,7 +108,7 @@ div ng-if="prioritiesSelectedExists()"
       | {{application.hasDevelopmentalDisability}}
     review-summary-item label="{{'LABEL.ADA_ACCESSIBLE_UNITS' | translate}}" identifier="adaPrioritiesSelected"
       span ng-repeat="priorityOption in priority_options" ng-if="application.adaPrioritiesSelected[priorityOption[0]]"
-        | {{priorityOption[1]}}
+        | {{priorityOption[1] | translate}}
         br
       span ng-if="application.adaPrioritiesSelected.None"
         | {{'T.NO' | translate}}
@@ -146,6 +146,9 @@ div ng-if="!atAutofillPreview()"
       | {{'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE' | translate}}
 
     review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customPreferences" ng-if="claimedCustomPreference(preference)"
+      | {{ preference.preferenceName }}
+
+    review-summary-item label="{{'LABEL.YOU_HAVE_CLAIMED' | translate}}" sub-label="{{'LABEL.FOR_USER' | translate: householdMemberForPreference(preference.listingPreferenceID) }}" ng-repeat="preference in listing.customProofPreferences" ng-if="claimedCustomPreference(preference)" bold-sub-label="{{fileAttachmentForPreference(preference.listingPreferenceID)}}"
       | {{ preference.preferenceName }}
 
 / Income
