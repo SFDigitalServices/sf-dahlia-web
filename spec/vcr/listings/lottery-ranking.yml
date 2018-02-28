@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 27 Feb 2018 22:51:30 GMT
+      - Wed, 28 Feb 2018 00:59:59 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=dXWQZJkYT32ys5_bejY84A;Path=/;Domain=.salesforce.com;Expires=Sat,
-        28-Apr-2018 22:51:30 GMT;Max-Age=5184000
+      - BrowserId=ucRbAhlYT3eY3cDgudM84w;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 00:59:59 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,9 +47,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519771890959","signature":"OwbwVIxeYCMazpjfHIbY/cLQtGVquab1PlmezmChfPM="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519779599912","signature":"rbfE+3EKlB9mmhtuVZ4Z9SpT2U0l7LrsG3cQQudxcQM="}'
     http_version: 
-  recorded_at: Tue, 27 Feb 2018 22:51:30 GMT
+  recorded_at: Wed, 28 Feb 2018 01:00:00 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs96.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000F8YG4UAN/00042084
@@ -71,7 +71,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 27 Feb 2018 22:51:31 GMT
+      - Wed, 28 Feb 2018 01:00:00 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=xkWrAV7gRf2oFu1GeQeqPg;Path=/;Domain=.salesforce.com;Expires=Sat,
-        28-Apr-2018 22:51:31 GMT;Max-Age=5184000
+      - BrowserId=k9M43Bx3TO-Fjx3tRSvkWg;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 01:00:00 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -96,12 +96,12 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"URL":null,"officeHours":null,"lotteryResultsURL":"http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/280%20Fell%20Street%20Ranked%20List-%203-22-2017.pdf","lotteryResults":false,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-03-22T18:00:00.000Z","lotteryCity":"San
-        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":3,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
-        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":7,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
-        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":3,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
-        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":3,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
-        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":3,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
-        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":11,"listingId":"a0W0P00000F8YG4UAN"}'
+        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":9,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
+        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
+        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":5,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":14,"listingId":"a0W0P00000F8YG4UAN"}'
     http_version: 
-  recorded_at: Tue, 27 Feb 2018 22:51:31 GMT
+  recorded_at: Wed, 28 Feb 2018 01:00:00 GMT
 recorded_with: VCR 3.0.3

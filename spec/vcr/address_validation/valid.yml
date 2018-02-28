@@ -31,7 +31,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       X-Ep-Request-Uuid:
-      - 6c35b4d4-5ce7-484b-a835-3d2e2d073438
+      - 0dff74b0-5ccf-46e6-8021-0e8967a543ad
       Cache-Control:
       - no-cache, no-store, must-revalidate, private
       Pragma:
@@ -39,40 +39,39 @@ http_interactions:
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_2c4793cdbb664c808214c02d337cdf99"
+      - "/api/v2/addresses/adr_4768e2e839904cca98a86f1a1013bcb3"
       Content-Type:
       - application/json; charset=utf-8
       X-Runtime:
-      - '0.112348'
+      - '0.147429'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - 7e0ce7e954
-      - bigweb7sj
+      - a47148ca59
+      - bigweb6sj
       - easypost
       X-Backend:
       - easypost
-      X-Canary:
-      - direct
       X-Proxied:
+      - extlb1wdc a892cfa518
       - intlb1sj 44a49ba25b
-      - lb5sj a892cfa518
+      - intlb2wdc 44a49ba25b
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA4xQy07DMBD8lcrnFGLHTdLcokoIJAQSLRcQilx7A0aOXdkO
-        4qH8O+tAOXCB287szO7sfhCtSEOE8h2TvFoXUu33ZcllndeMcpkzVRSVVP16
-        TTLi9s8gI+pbpTyEgJT0ICKoTiSa5bRe5mzJqh1jzYo2tLxDzXhQf2qsGIA0
-        djQGZ7rhIOzbEYboASJFL89XxYLWu/PFdkeODYaNFERHdJBte7U4u2mvNhfb
-        zfWswdXIb1oE7/qA5ZpTypdsVaySzY02+uS83SI8PDn7kwMGoc0RDE6lORFC
-        TDbhvQbf9UJqM2/+UuFXtAIbtUBjL0yAjPSgwAvTRfHapW8fr8Jgv7gX8LrX
-        UkTtbCDNB1FgNJJvqQ6jlOnnTfQjTgXvnUd0/5ChLGLS2WHQHMcUtahOqjKv
-        eUaMs4/f5JIydsILzsqMRD1A9z7fS9oBV0txeulC19pHMBDINM0f4/9dnm6Y
-        pukTAAD//wMAj75iKVMCAAA=
+        H4sIAAAAAAAAA4xQwW7bMAz9lUBnp7NkxbF9MwIULVB0wJJdNgwGI9GdClkK
+        JHlYW/jfR3nNDrtsN77H98hHvjGjWcdAh0Hu6wYFNlXbllIpaBto6pEDL3l1
+        VueKFcyfn1El0vdaB4yRKBUQEuoBMi1K3mxLsRXNqSy7XdvJ+gtp5ov+p8bB
+        hKxzs7U0008XcC9XGFNATJy8stxVG96c7jbHE7s2BDVyEJPIwY794+b2U/94
+        uD8ePq4aWk38oSfwai5UtpJzuRW7apdtfnYpZOfnI8HLd+/+5MAJjL2Cyes8
+        J2FM2QYhGAzDCMrYdfNvFX3FaHTJABlHsBELNqLGAHZI8HPI375eRcH+4n5g
+        MKNRkIx3kXVvTKM1RL7kOs5K5Z93Kcw0FUPwgdDXbwXJEiVdHZbMac5Rq/3N
+        vi4bWTDr3dM7ueVC3MhKirpgyUw4vK73sn6i1Qo+PPg49O4JLUa2LOvH5P8u
+        zzcsy/ILAAD//wMAdhIsZFMCAAA=
     http_version: 
-  recorded_at: Tue, 27 Feb 2018 22:51:16 GMT
+  recorded_at: Wed, 28 Feb 2018 00:59:46 GMT
 recorded_with: VCR 3.0.3

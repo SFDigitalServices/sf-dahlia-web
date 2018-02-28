@@ -31,7 +31,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       X-Ep-Request-Uuid:
-      - b257a1bf-25f2-437d-811c-6ea77b9658af
+      - 71d58dd0-de7d-4ffb-a549-21ed720774fe
       Cache-Control:
       - no-cache, no-store, must-revalidate, private
       Pragma:
@@ -39,38 +39,39 @@ http_interactions:
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_1d5a38990b984a9eab278d4acec580ed"
+      - "/api/v2/addresses/adr_4708941bafbe4b9e8a2a94df4ce872f2"
       Content-Type:
       - application/json; charset=utf-8
       X-Runtime:
-      - '0.131938'
+      - '0.089269'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - 7e0ce7e954
-      - bigweb6sj
+      - a47148ca59
+      - bigweb3sj
       - easypost
       X-Backend:
       - easypost
       X-Proxied:
-      - intlb1sj 44a49ba25b
-      - lb5sj a892cfa518
+      - extlb1wdc a892cfa518
+      - intlb1wdc 44a49ba25b
+      - intlb2sj 44a49ba25b
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA8xRQW7CMBD8SuRzQSQQkeRGCxxBauDSqooWewOuHBvZTlWK
-        8veug0KlXnrtIUpmNLOZnb0yKVjBQNgqFilMszyfHPJsBjnCIZlnYgYceZpN
-        ULAHZg7vyD3pF0JYdI4obhE8igoCnUzibDRJRsl8lyRFGhfx/IU07Vn8qdHQ
-        ICt0qxTNNM0Z9GWAzltEH5M3TvI8zuPoUcHpQE/k/JgNguRul568rAQdrS1o
-        Lh03vYpCEP+0IPAlz/286SwNS5hWextM+5Lg+WT0PQw2INUAGiPCCI/OBxtY
-        K9FWNXCp+p/eVFSNFKi9hLuxRoEWVOXhswqND5tRpF/cB1pZSw5eGu1YcWUC
-        lSTyEr5dy3novahBOaRw1hpL8PVKO/TRVuPFcvm8KsvxZrur1tv9ZklJa4nq
-        dufhbg294Ig/t4y08VFNRYRDu/Z4pB0pwi1W9/ZAOTw1ESJ1XV/g7N8k6omu
-        +wYAAP//AwCBDYVZzQIAAA==
+        H4sIAAAAAAAAA8xRQU7DMBD8SuQzrZKQqkluhcKRSrRcQCja2Oti5NiV7SBK
+        lb+zTpUiceHKIUpmNLOZnT0xJVjNQLimWKZlVWQtyBaLtsIScqgKIQuO5TKX
+        Obtitn1HHki/EsKh90RxhxBQNBDpPM3KWZrP8nKXpvWiqovlM2n6g/hTY6BD
+        Vptea5ppuwOY4wR9cIghI2+WV1VWZcmNhreWnsSHOZsE+cWuAnnZFkxy78Bw
+        5bkdVRSC+NsVgS91GOddF4u4hO1NcNH0tCV4eLPmEgY7UHoCnRVxREAfog2c
+        U+gaCVzp8adnFVWjBJqg4GKUKNCBbgJ8NrHxaTOK9Iv7QKek4hCUNZ7VJyZQ
+        KyKP8dv3nMfeawnaI4VzzjqCLyfaYYx2N1+t14932+38YbNr7jdPD2tKKhXq
+        852nu3X0gj3+3DIxNiSSihCxq36/px0pwjnW8HpFOQI1ESMNw1hg8W8SjcQw
+        fAMAAP//AwDCD4E4zQIAAA==
     http_version: 
-  recorded_at: Tue, 27 Feb 2018 22:51:17 GMT
+  recorded_at: Wed, 28 Feb 2018 00:59:47 GMT
 recorded_with: VCR 3.0.3
