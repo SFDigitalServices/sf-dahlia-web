@@ -2,6 +2,15 @@
 class Api::V1::ListingsController < ApiController
   ListingService = SalesforceService::ListingService
 
+  before_action do
+    # will force re-caching of content
+    ListingService.force = true if params[:force]
+  end
+
+  after_action do
+    ListingService.force = false if params[:force]
+  end
+
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
