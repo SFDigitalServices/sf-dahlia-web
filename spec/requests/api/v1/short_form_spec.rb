@@ -5,7 +5,7 @@ require 'support/jasmine'
 
 describe 'ShortForm API' do
   login_user
-  listing_id = 'a0W0P00000DZTkAUAX' # 280 Fell
+  listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
   application_show_id = 'a0o0P00000FEUwC'
 
   # WARNING: application will be deleted!
