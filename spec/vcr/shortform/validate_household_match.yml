@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 01:00:04 GMT
+      - Wed, 28 Feb 2018 23:20:29 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=wocSrBe7RxC6DOhVvdae5A;Path=/;Domain=.salesforce.com;Expires=Sun,
-        29-Apr-2018 01:00:04 GMT;Max-Age=5184000
+      - BrowserId=GHk54Ux6RG-W2hVrvfKSQw;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:29 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,9 +47,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519779605500","signature":"DAMSfJgs0JZ5POs0wLahk05DfMTw4OAISG8o2VwRgIY="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519860029650","signature":"FLAYtGkfbRixYl6sprCtfdTNm+24xxCzv0sl2W1wGdo="}'
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 01:00:05 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:29 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs96.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000F8YG4UAN?childrenUnder6=0&householdsize=2&incomelevel=40000.0
@@ -71,7 +71,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 01:00:05 GMT
+      - Wed, 28 Feb 2018 23:20:30 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=LoYJJkDIR5mdX697A9WjRQ;Path=/;Domain=.salesforce.com;Expires=Sun,
-        29-Apr-2018 01:00:05 GMT;Max-Age=5184000
+      - BrowserId=bVEBYvnoTW2ZjF2xWp30MA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:30 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -98,5 +98,5 @@ http_interactions:
       string: '{"listingId":"a0W0P00000F8YG4UAN","incomeMatch":false,"incomeEligibilityResult":"Too
         Low","householdMatch":true,"householdEligibilityResult":"Match"}'
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 01:00:06 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:30 GMT
 recorded_with: VCR 3.0.3

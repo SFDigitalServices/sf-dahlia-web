@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 01:00:00 GMT
+      - Wed, 28 Feb 2018 23:20:23 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=CBz6VnbOR5mZA0_FBBEHeA;Path=/;Domain=.salesforce.com;Expires=Sun,
-        29-Apr-2018 01:00:00 GMT;Max-Age=5184000
+      - BrowserId=C_4LpxTaTZiEF0ePjRynJg;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:23 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,9 +47,9 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519779600976","signature":"TwN7Miral9TU1DzRiDFjwzZMEts+d88/Mq6wqZabULY="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519860024397","signature":"obP7mz9O28YYlmDIIgJcNsUfcktCkkDQs5Yrha2ylJM="}'
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 01:00:01 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:24 GMT
 - request:
     method: get
     uri: https://sfhousing--full.cs96.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000F8YG4UAN
@@ -71,7 +71,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 01:00:01 GMT
+      - Wed, 28 Feb 2018 23:20:24 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
@@ -83,8 +83,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=k3gTs9aGTWWdsSBh2ICNUQ;Path=/;Domain=.salesforce.com;Expires=Sun,
-        29-Apr-2018 01:00:01 GMT;Max-Age=5184000
+      - BrowserId=Jrki20ymQ2mmKqVw9JjLHg;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:24 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -96,12 +96,12 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: '{"URL":null,"officeHours":null,"lotteryResultsURL":"http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/280%20Fell%20Street%20Ranked%20List-%203-22-2017.pdf","lotteryResults":false,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-03-22T18:00:00.000Z","lotteryCity":"San
-        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
-        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":9,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
-        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
-        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
-        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":4,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
-        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":5,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":14,"listingId":"a0W0P00000F8YG4UAN"}'
+        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":6,"preferenceResults":[{"preferenceRank":1,"lotteryRank":8,"lotteryNumber":"00162663","applicationID":"a0o0P00000Hiz4bQAB"},{"preferenceRank":2,"lotteryRank":13,"lotteryNumber":"00163771","applicationID":"a0o1g000000D1keAAC"},{"preferenceRank":3,"lotteryRank":17,"lotteryNumber":"00163792","applicationID":"a0o1g000000D1poAAC"},{"preferenceRank":4,"lotteryRank":19,"lotteryNumber":"00163083","applicationID":"a0o0P00000Hj0G0QAJ"},{"preferenceRank":5,"lotteryRank":23,"lotteryNumber":"00162660","applicationID":"a0o0P00000Hiz4MQAR"},{"preferenceRank":6,"lotteryRank":24,"lotteryNumber":"00163789","applicationID":"a0o1g000000D1obAAC"}],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":16,"preferenceResults":[{"preferenceRank":1,"lotteryRank":1,"lotteryNumber":"00163790","applicationID":"a0o1g000000D1peAAC"},{"preferenceRank":2,"lotteryRank":3,"lotteryNumber":"00163080","applicationID":"a0o0P00000Hj0FlQAJ"},{"preferenceRank":3,"lotteryRank":4,"lotteryNumber":"00162658","applicationID":"a0o0P00000Hiz1qQAB"},{"preferenceRank":4,"lotteryRank":5,"lotteryNumber":"00163796","applicationID":"a0o1g000000D1xdAAC"},{"preferenceRank":5,"lotteryRank":6,"lotteryNumber":"00163767","applicationID":"a0o1g000000D1jbAAC"},{"preferenceRank":6,"lotteryRank":8,"lotteryNumber":"00162663","applicationID":"a0o0P00000Hiz4bQAB"},{"preferenceRank":7,"lotteryRank":10,"lotteryNumber":"00163793","applicationID":"a0o1g000000D1ptAAC"},{"preferenceRank":8,"lotteryRank":11,"lotteryNumber":"00163787","applicationID":"a0o1g000000D1oMAAS"},{"preferenceRank":9,"lotteryRank":12,"lotteryNumber":"00162661","applicationID":"a0o0P00000Hiz4RQAR"},{"preferenceRank":10,"lotteryRank":13,"lotteryNumber":"00163771","applicationID":"a0o1g000000D1keAAC"},{"preferenceRank":11,"lotteryRank":14,"lotteryNumber":"00163784","applicationID":"a0o1g000000D1nOAAS"},{"preferenceRank":12,"lotteryRank":17,"lotteryNumber":"00163792","applicationID":"a0o1g000000D1poAAC"},{"preferenceRank":13,"lotteryRank":18,"lotteryNumber":"00162645","applicationID":"a0o0P00000Hiyw5QAB"},{"preferenceRank":14,"lotteryRank":19,"lotteryNumber":"00163083","applicationID":"a0o0P00000Hj0G0QAJ"},{"preferenceRank":15,"lotteryRank":23,"lotteryNumber":"00162660","applicationID":"a0o0P00000Hiz4MQAR"},{"preferenceRank":16,"lotteryRank":24,"lotteryNumber":"00163789","applicationID":"a0o1g000000D1obAAC"}],"preferenceOrder":2,"preferenceName":"Rent
+        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":6,"preferenceResults":[{"preferenceRank":1,"lotteryRank":8,"lotteryNumber":"00162663","applicationID":"a0o0P00000Hiz4bQAB"},{"preferenceRank":2,"lotteryRank":13,"lotteryNumber":"00163771","applicationID":"a0o1g000000D1keAAC"},{"preferenceRank":3,"lotteryRank":17,"lotteryNumber":"00163792","applicationID":"a0o1g000000D1poAAC"},{"preferenceRank":4,"lotteryRank":19,"lotteryNumber":"00163083","applicationID":"a0o0P00000Hj0G0QAJ"},{"preferenceRank":5,"lotteryRank":23,"lotteryNumber":"00162660","applicationID":"a0o0P00000Hiz4MQAR"},{"preferenceRank":6,"lotteryRank":24,"lotteryNumber":"00163789","applicationID":"a0o1g000000D1obAAC"}],"preferenceOrder":3,"preferenceName":"Displaced
+        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":6,"preferenceResults":[{"preferenceRank":1,"lotteryRank":8,"lotteryNumber":"00162663","applicationID":"a0o0P00000Hiz4bQAB"},{"preferenceRank":2,"lotteryRank":13,"lotteryNumber":"00163771","applicationID":"a0o1g000000D1keAAC"},{"preferenceRank":3,"lotteryRank":17,"lotteryNumber":"00163792","applicationID":"a0o1g000000D1poAAC"},{"preferenceRank":4,"lotteryRank":19,"lotteryNumber":"00163083","applicationID":"a0o0P00000Hj0G0QAJ"},{"preferenceRank":5,"lotteryRank":23,"lotteryNumber":"00162660","applicationID":"a0o0P00000Hiz4MQAR"},{"preferenceRank":6,"lotteryRank":24,"lotteryNumber":"00163789","applicationID":"a0o1g000000D1obAAC"}],"preferenceOrder":4,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":6,"preferenceResults":[{"preferenceRank":1,"lotteryRank":8,"lotteryNumber":"00162663","applicationID":"a0o0P00000Hiz4bQAB"},{"preferenceRank":2,"lotteryRank":13,"lotteryNumber":"00163771","applicationID":"a0o1g000000D1keAAC"},{"preferenceRank":3,"lotteryRank":17,"lotteryNumber":"00163792","applicationID":"a0o1g000000D1poAAC"},{"preferenceRank":4,"lotteryRank":19,"lotteryNumber":"00163083","applicationID":"a0o0P00000Hj0G0QAJ"},{"preferenceRank":5,"lotteryRank":23,"lotteryNumber":"00162660","applicationID":"a0o0P00000Hiz4MQAR"},{"preferenceRank":6,"lotteryRank":24,"lotteryNumber":"00163789","applicationID":"a0o1g000000D1obAAC"}],"preferenceOrder":5,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":8,"preferenceResults":[{"preferenceRank":1,"lotteryRank":2,"lotteryNumber":"00163788","applicationID":"a0o1g000000D1oWAAS"},{"preferenceRank":2,"lotteryRank":7,"lotteryNumber":"00163082","applicationID":"a0o0P00000Hj0FvQAJ"},{"preferenceRank":3,"lotteryRank":9,"lotteryNumber":"00163770","applicationID":"a0o1g000000D1kUAAS"},{"preferenceRank":4,"lotteryRank":15,"lotteryNumber":"00162662","applicationID":"a0o0P00000Hiz4WQAR"},{"preferenceRank":5,"lotteryRank":16,"lotteryNumber":"00163785","applicationID":"a0o1g000000D1nTAAS"},{"preferenceRank":6,"lotteryRank":20,"lotteryNumber":"00163791","applicationID":"a0o1g000000D1pjAAC"},{"preferenceRank":7,"lotteryRank":21,"lotteryNumber":"00162646","applicationID":"a0o0P00000HiywAQAR"},{"preferenceRank":8,"lotteryRank":22,"lotteryNumber":"00162659","applicationID":"a0o0P00000Hiz1vQAB"}],"preferenceOrder":null,"preferenceName":"generalLottery"}],"lotteryAppTotal":24,"listingId":"a0W0P00000F8YG4UAN"}'
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 01:00:01 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:25 GMT
 recorded_with: VCR 3.0.3
