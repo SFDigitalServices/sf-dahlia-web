@@ -8,9 +8,9 @@ describe Emailer, type: :mailer do
         email: 'test@person.com',
         first_name: 'Mister',
         last_name: 'Tester',
-        listing_id: 'a0W0P00000DZTkAUAX',
+        listing_id: 'a0W0P00000F8YG4UAN',
       }
-      @listing_name = '280 Fell (Fell Street Apartments)'
+      @listing_name = 'Automated Test Listing (please do not modify)'
     end
 
     let(:mail) { Emailer.submission_confirmation(@params) }
@@ -39,13 +39,13 @@ describe Emailer, type: :mailer do
         email: 'test@person.com',
         first_name: 'Mister',
         last_name: 'Tester',
-        listing_id: 'a0W0P00000DZTkAUAX',
+        listing_id: 'a0W0P00000F8YG4UAN',
       }
-      @listing_name = '280 Fell (Fell Street Apartments)'
+      @listing_name = 'Automated Test Listing (please do not modify)'
     end
 
     let(:mail) { Emailer.draft_application_saved(@params) }
-    let(:deadline) { '4:00 PM on May 31' }
+    let(:deadline) { '5:00 PM on Dec 31' }
 
     it 'renders the headers' do
       VCR.use_cassette('emailer/draft_application_saved') do
