@@ -13,7 +13,7 @@ class EmailerPreview < ActionMailer::Preview
       email: 'test@person.com',
       first_name: 'Mister',
       last_name: 'Tester',
-      listing_id: 'a0W0P00000DZTkAUAX',
+      listing_id: 'a0W0P00000F8YG4UAN',
     }
     Emailer.draft_application_saved(params)
   end
