@@ -358,10 +358,10 @@ ShortFormApplicationController = (
   ##### Custom Preferences Logic ####
   # this called after preferences programs
   $scope.checkForCustomPreferences = ->
-    if $scope.listing.customPreferences.length > 0
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
-    else
+    if _.isEmpty($scope.listing.customPreferences)
       $scope.checkForCustomProofPreferences()
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.custom-preferences')
 
   $scope.checkForCustomProofPreferences = ->
     nextIndex = null
