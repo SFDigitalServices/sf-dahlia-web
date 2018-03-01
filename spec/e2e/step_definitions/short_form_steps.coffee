@@ -7,8 +7,9 @@ remote = require('selenium-webdriver/remote')
 # import Page objects for interacting with short form pages
 Pages = require('../pages/short-form/index').Pages
 
-# QA "280 Fell"
-listingId = 'a0W0P00000DZTkAUAX'
+# Automated Test Listing
+listingId = 'a0W0P00000F8YG4UAN'
+
 sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
@@ -708,13 +709,12 @@ module.exports = ->
     expectByIdAndText(@, 'income-amount', '$72,000.00 per year')
 
   @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/, (status) ->
-    withFiles = (status == 'draft')
     expectByCss(@, '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
     expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-neighborhoodResidence .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-liveInSf .info-item_name', 'Live in San Francisco Preference')
     expectByCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
-    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached') if withFiles
+    expectByCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
     expectByCss(@, '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
     expectByCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
     expectByCss(@, '#review-certOfPreference .info-item_note.t-bold', 'Certificate Number: 11223344')
@@ -722,7 +722,8 @@ module.exports = ->
     expectByCss(@, '#review-displaced .info-item_note', 'for Coleman Francis')
     expectByCss(@, '#review-displaced .info-item_note.t-bold', 'Certificate Number: 11223344')
     expectByCss(@, '#review-rentBurden .info-item_name', 'Rent Burdened Preference')
-    if withFiles
+    if status == 'draft'
+      # rentBurden displays more detailed info in draft
       expectByCss(@, '#review-rentBurden .info-item_note', 'for 1222 HARRISON ST # 100')
       expectByCss(@, '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
     else

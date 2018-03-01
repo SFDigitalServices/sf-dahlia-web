@@ -104,8 +104,12 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
 
   # Rent Burden specific functions
   Service.uploadedRentBurdenRentFiles = (address) ->
-    files = Service.preferences.documents.rentBurden[address].rent
-    _.filter(files, (file) -> !_.isEmpty(file.file))
+    addressFiles = Service.preferences.documents.rentBurden[address]
+    if !_.isEmpty(addressFiles)
+      rentFiles = addressFiles.rent
+      _.filter(rentFiles, (file) -> !_.isEmpty(file.file))
+    else
+      []
 
   Service.rentBurdenFile = (opts) ->
     rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]

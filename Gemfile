@@ -94,7 +94,7 @@ group :test do
 end
 
 group :development do
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.52.0', require: false
   gem 'rails_best_practices'
   gem 'overcommit'
   # Spring speeds up development by keeping your application running in the
