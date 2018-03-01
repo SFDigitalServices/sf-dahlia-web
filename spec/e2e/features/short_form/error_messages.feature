@@ -42,7 +42,7 @@ Feature: Short Form Application
       Then I should see an error on the household member form
 
       When I cancel the household member
-      # error: household too big (280 Fell allows for 1-3 people, 4 is too big)
+      # error: household too big (Automated Test Listing allows for 1-3 people, 4 is too big)
       And I add another household member named "Jonny Doe" with same address as primary
       And I add another household member named "Karen Lee" with same address as primary
       And I add another household member named "Alex McGee" with same address as primary
