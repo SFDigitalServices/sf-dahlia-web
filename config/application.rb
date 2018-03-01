@@ -37,8 +37,8 @@ module SfDahliaWeb
       config.middleware.use Rack::Prerender, prerender_service_url: ENV['PRERENDER_SERVICE_URL']
     end
 
-    ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates'
-    ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query'
+    ENV['GEOCODING_SERVICE_URL'] ||= 'https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NHRP_Composite/GeocodeServer/findAddressCandidates'
+    ENV['NEIGHBORHOOD_BOUNDARY_SERVICE_URL'] ||= 'https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query'
 
     config.middleware.use Rack::XRobotsTag
     # write cached robots.txt into public dir

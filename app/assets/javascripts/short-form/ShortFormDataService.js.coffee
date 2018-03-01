@@ -422,17 +422,18 @@ ShortFormDataService = (ListingService) ->
         preferences[prefKey] = true
 
         if prefKey == 'rentBurden'
-          if file.rent_burden_type == 'lease'
-            preferences.documents.rentBurden[file.address].lease = {
-              proofOption: file.document_type
-              file: file
-            }
-          else
-            preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
-              id: file.rent_burden_index
-              proofOption: file.document_type
-              file: file
-            }
+          if !_.isEmpty(preferences.documents.rentBurden[file.address])
+            if file.rent_burden_type == 'lease'
+              preferences.documents.rentBurden[file.address].lease = {
+                proofOption: file.document_type
+                file: file
+              }
+            else
+              preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
+                id: file.rent_burden_index
+                proofOption: file.document_type
+                file: file
+              }
         else
           preferences.documents[prefKey] = {
             proofOption: file.document_type

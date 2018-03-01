@@ -4,7 +4,7 @@ require 'support/vcr_setup'
 require 'support/jasmine'
 
 describe 'Listings API' do
-  listing_id = 'a0W0P00000DZTkAUAX' # 280 Fell
+  listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
 
   ### generate Jasmine fixtures
   describe 'index' do

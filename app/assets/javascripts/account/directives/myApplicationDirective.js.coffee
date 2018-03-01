@@ -10,6 +10,7 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
+      scope.deleteDisabled = false
 
       scope.isDeleted = ->
         scope.application.deleted
@@ -33,8 +34,11 @@ angular.module('dahlia.directives')
           alert: true
         ModalService.alert(content,
           onConfirm: ->
+            scope.deleteDisabled = true
             ShortFormApplicationService.deleteApplication(id).success ->
               scope.application.deleted = true
+            .error ->
+              scope.deleteDisabled = false
         )
 
       scope.formattedAddress = ->
