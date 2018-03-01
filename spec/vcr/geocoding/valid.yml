@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
+    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1222%20Harrison%20St&f=pjson&outfields=loc_name
     body:
       encoding: US-ASCII
       string: ''
@@ -17,17 +17,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 23:20:05 GMT
+      - Thu, 01 Mar 2018 00:00:41 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - b3dfdd52
+      - 1d5b3942
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
       Content-Type:
-      - text/plain;charset=utf-8
+      - text/plain;charset=UTF-8
       Content-Length:
-      - '698'
+      - '1162'
       Connection:
       - close
     body:
@@ -40,45 +44,63 @@ http_interactions:
          },
          "candidates": [
           {
-           "address": "1222 HARRISON ST, San Francisco",
+           "address": "1222 HARRISON ST, San Francisco, CA",
            "location": {
-            "x": -13626517.284101073,
-            "y": 4547486.5483443365
+            "x": -13626517.284002636,
+            "y": 4547486.5483913906
            },
            "score": 100,
            "attributes": {
-            "loc_name": "EAS"
+            "Loc_name": "eas"
+           },
+           "extent": {
+            "xmin": -13626717.284002636,
+            "ymin": 4547286.5483913906,
+            "xmax": -13626317.284002636,
+            "ymax": 4547686.5483913906
            }
           },
           {
-           "address": "1222 HARRISON ST, San Francisco",
+           "address": "1222 HARRISON ST, San Francisco, CA",
            "location": {
-            "x": -13626500.352575805,
-            "y": 4547489.678503979
+            "x": -13626501.86483863,
+            "y": 4547488.1667259131
            },
            "score": 100,
            "attributes": {
-            "loc_name": "Street"
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13626701.86483863,
+            "ymin": 4547288.1667259131,
+            "xmax": -13626301.86483863,
+            "ymax": 4547688.1667259131
            }
           },
           {
-           "address": "1223 HARRISON ST, San Francisco",
+           "address": "1223 HARRISON ST, San Francisco, CA",
            "location": {
-            "x": -13626483.124013651,
-            "y": 4547463.8030332802
+            "x": -13626484.411478126,
+            "y": 4547462.5159868533
            },
            "score": 79,
            "attributes": {
-            "loc_name": "Street"
+            "Loc_name": "StClines"
+           },
+           "extent": {
+            "xmin": -13626684.411478126,
+            "ymin": 4547262.5159868533,
+            "xmax": -13626284.411478126,
+            "ymax": 4547662.5159868533
            }
           }
          ]
         }
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 23:20:08 GMT
+  recorded_at: Thu, 01 Mar 2018 00:00:42 GMT
 - request:
     method: get
-    uri: https://sfgis-svc.sfgov.org/arcgis/rest/services/dt/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284101073,4547486.548344336&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%272012-021%27
+    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284002636,4547486.548391391&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%272012-021%27
     body:
       encoding: US-ASCII
       string: ''
@@ -93,15 +115,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 28 Feb 2018 23:20:05 GMT
+      - Thu, 01 Mar 2018 00:00:41 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - 53cf148b
+      - SZWAtfqa3YxEYrZn_1519419533
+      X-Content-Type-Options:
+      - nosniff
+      Vary:
+      - Origin
       Content-Type:
-      - text/plain;charset=utf-8
+      - text/plain;charset=UTF-8
       Content-Length:
       - '15'
       Connection:
@@ -113,5 +139,5 @@ http_interactions:
          "count": 1
         }
     http_version: 
-  recorded_at: Wed, 28 Feb 2018 23:20:08 GMT
+  recorded_at: Thu, 01 Mar 2018 00:00:42 GMT
 recorded_with: VCR 3.0.3
