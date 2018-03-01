@@ -7,8 +7,9 @@ remote = require('selenium-webdriver/remote')
 # import Page objects for interacting with short form pages
 Pages = require('../pages/short-form/index').Pages
 
-# QA "280 Fell"
-listingId = 'a0W0P00000DZTkAUAX'
+# Automated Test Listing
+listingId = 'a0W0P00000F8YG4UAN'
+
 sessionEmail = chance.email()
 janedoeEmail = chance.email()
 accountPassword = 'password123'
