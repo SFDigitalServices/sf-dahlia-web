@@ -139,12 +139,8 @@ class Emailer < Devise::Mailer
   def admin_email
     # all heroku apps have Rails.env.production
     # but ENV['PRODUCTION'] is only on dahlia-production
-    if Rails.env.production? and ENV['PRODUCTION']
-      # if listing has_nrhp_adhp it goes to the set of admins that includes HBMR staff
-      @has_nrhp_adhp ? 'dahlia-admins-hbmr@exygy.com' : 'dahlia-admins@exygy.com'
-    else
-      @has_nrhp_adhp ? 'dahlia-test-hbmr@exygy.com' : 'dahlia-test@exygy.com'
-    end
+    production = Rails.env.production? and ENV['PRODUCTION']
+    production ? 'dahlia-admins@exygy.com' : 'dahlia-test@exygy.com'
   end
 
   def load_salesforce_contact(record)
