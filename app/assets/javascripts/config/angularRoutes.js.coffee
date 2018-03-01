@@ -80,10 +80,11 @@
         ]
     })
     .state('dahlia.listing', {
-      url: '/listings/:id',
+      url: '/listings/:id?preview',
       params:
         skipConfirm: { squash: true, value: false }
         timeout: { squash: true, value: false }
+        preview: null
       views:
         'container@':
           templateUrl: ($stateParams) ->
@@ -99,6 +100,7 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
+            ListingService.forceRecache = $stateParams.preview
             ListingService.getListing($stateParams.id).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
