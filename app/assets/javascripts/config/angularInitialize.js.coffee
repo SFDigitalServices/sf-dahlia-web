@@ -52,7 +52,7 @@
       if SharedService.isWelcomePage(toState)
         # on welcome pages, the language is determined by the language of the
         # welcome page, not by toParams.lang
-        language = SharedService.getWelcomePageLanguage(toState.name).shortName
+        language = SharedService.getWelcomePageLanguage(toState.name).code
         if toParams.lang != language
           # if toState is a language welcome page and a different lang is set in the
           # params, reload the welcome page with the matching lang param. even though

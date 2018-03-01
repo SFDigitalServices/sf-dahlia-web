@@ -27,8 +27,7 @@ SharedService = ($http, $state, $window, $document) ->
   Service.getLanguageCode = (langName) ->
     # will take "English" and return "en", for example
     if langName
-      capitalizedLangName = langName.charAt(0).toUpperCase() + langName.slice(1)
-      _.invert(Service.languageMap)[capitalizedLangName]
+      _.invert(Service.languageMap)[_.startCase(langName)]
 
   Service.getLanguageName = (langCode) ->
     # will take "en" and return "English", for example

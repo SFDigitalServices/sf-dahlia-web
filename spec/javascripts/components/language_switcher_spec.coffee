@@ -10,8 +10,8 @@ do ->
       current:
         name: 'name'
     fakeSharedService =
+      getLanguageName: ->
       isWelcomePage: ->
-      languageMap: {es: 'Spanish'}
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_, $q) ->
@@ -34,6 +34,7 @@ do ->
       it 'calls state.href with a language-appropriate state name for welcome pages', ->
         spyOn($fakeState, 'href').and.callThrough()
         spyOn(fakeSharedService, 'isWelcomePage').and.returnValue(true)
+        spyOn(fakeSharedService, 'getLanguageName').and.returnValue('Spanish')
         $fakeState.current.name = 'dahlia.welcome-chinese'
         ctrl.switchToLanguage('es')
         expect($fakeState.href).toHaveBeenCalledWith('dahlia.welcome-spanish', {lang: 'es'})

@@ -11,7 +11,7 @@ angular.module('dahlia.components')
         if lang == 'en'
           toStateName = 'dahlia.welcome'
         else
-          longLang = SharedService.languageMap[lang].toLowerCase()
+          longLang = SharedService.getLanguageName(lang).toLowerCase()
           toStateName = "dahlia.welcome-#{longLang}"
 
       href = $state.href(toStateName, {lang: lang})
