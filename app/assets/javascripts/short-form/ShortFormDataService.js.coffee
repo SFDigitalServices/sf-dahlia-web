@@ -269,7 +269,7 @@ ShortFormDataService = (ListingService) ->
         data.xCoordinate = geo.location.x
         data.yCoordinate = geo.location.y
       if geo.attributes
-        data.whichComponentOfLocatorWasUsed = geo.attributes.loc_name
+        data.whichComponentOfLocatorWasUsed = geo.attributes.Loc_name
       data.candidateScore = geo.score
     return data
 
