@@ -327,8 +327,12 @@ ShortFormApplicationService = (
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
-    if preference == 'neighborhoodResidence'
-      # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
+    # For NRHP and ADHP, if the applicant is eligible and can choose to claim the
+    # preference, we cancel Opt Out for Live/Work as well
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
       Service.cancelOptOut('liveWorkInSf')
 
   Service.preferenceRequired = (preference) ->
