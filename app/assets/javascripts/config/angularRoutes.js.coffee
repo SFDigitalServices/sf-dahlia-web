@@ -80,10 +80,11 @@
         ]
     })
     .state('dahlia.listing', {
-      url: '/listings/:id',
+      url: '/listings/:id?preview',
       params:
         skipConfirm: { squash: true, value: false }
         timeout: { squash: true, value: false }
+        preview: null
       views:
         'container@':
           templateUrl: ($stateParams) ->
@@ -99,6 +100,7 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
+            ListingService.forceRecache = $stateParams.preview
             ListingService.getListing($stateParams.id).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
@@ -967,6 +969,7 @@
       resolve:
         completed: ['ShortFormApplicationService', (ShortFormApplicationService) ->
           ShortFormApplicationService.completeSection('Preferences')
+          ShortFormApplicationService.checkForProofPrefs()
         ]
     })
     .state('dahlia.short-form-application.review-sign-in', {
@@ -980,12 +983,6 @@
         AccountService.copyApplicantFields()
         AccountService.lockCompletedFields()
       ]
-      resolve:
-        application: [
-          '$state', 'ShortFormApplicationService', 'AccountService'
-          ($state, ShortFormApplicationService, AccountService) ->
-            AccountService.checkForAccount(ShortFormApplicationService.applicant.email)
-        ]
     })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms?loginMessage'
@@ -1049,11 +1046,6 @@
           '$title', '$translate', 'application',
           ($title, $translate, application) ->
             $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
-        ]
-      onExit: [
-        'ShortFormApplicationService',
-        (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetApplicationData()
         ]
     })
     .state('dahlia.short-form-application.choose-draft', {
