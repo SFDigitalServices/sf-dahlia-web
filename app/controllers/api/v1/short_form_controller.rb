@@ -232,7 +232,7 @@ class Api::V1::ShortFormController < ApiController
 
   def handle_submit_error(e)
     if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
-      return render_error(exception: e, status: 500, app_submit: true, capture: true)
+      return render_error(e, status: 500, external_capture: true)
     end
     raise e.class, e.message
   end
