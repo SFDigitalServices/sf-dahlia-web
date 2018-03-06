@@ -101,9 +101,8 @@ class Api::V1::ShortFormController < ApiController
 
   def process_submit_app_response(response)
     attach_files_and_send_confirmation(response)
-    if current_user && application_complete
-      delete_draft_application(application_params[:listingID])
-    end
+    return unless current_user && application_complete
+    delete_draft_application(application_params[:listingID])
   end
 
   def autosave_disabled
@@ -233,7 +232,7 @@ class Api::V1::ShortFormController < ApiController
 
   def handle_submit_error(e)
     if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
-      return render_error(exception: e, status: 500, app_submit: true)
+      return render_error(exception: e, status: 500, app_submit: true, capture: true)
     end
     raise e.class, e.message
   end
