@@ -236,7 +236,7 @@ ShortFormApplicationService = (
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
-  # - it's used to setup the monthly-rent page as well as rent-burden-preference pages
+  # - it's used to setup the monthly-rent page as well as rent-burdened-preference pages
   # - it will reset the addresses and Rent Burden if any members/addresses have changed
   Service.groupHouseholdAddresses = ->
     groupedAddresses = []
@@ -572,7 +572,7 @@ ShortFormApplicationService = (
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
       # special case for rentBurden subpages
-      return if stateName.match(/rent-burden-preference-edit/)
+      return if stateName.match(/rent-burdened-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
@@ -702,6 +702,8 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    autosave = if options.autosave then '?autosave=true' else ''
+
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
@@ -712,10 +714,10 @@ ShortFormApplicationService = (
       if options.attachToAccount
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}#{autosave}", params)
     else
       # create
-      appSubmission = $http.post('/api/v1/short-form/application', params)
+      appSubmission = $http.post("/api/v1/short-form/application#{autosave}", params)
 
     appSubmission.success((data, status, headers, config) ->
       if data.lotteryNumber
@@ -748,9 +750,14 @@ ShortFormApplicationService = (
   Service.signInSubmitApplication = (opts = {}) ->
     # check if this user has already applied to this listing
     Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
-      if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
+      previousApplication = data.application
+      if !_.isEmpty(previousApplication) && Service._previousIsSubmittedOrBothDrafts(previousApplication)
         # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data.application)
+        if opts.type == 'review-sign-in' && previousApplication.status.match(/draft/i)
+          # because we are finished/confirmed with the current draft, override the old one
+          Service.overridePreviousDraftId()
+        else if Service._previousIsSubmittedOrBothDrafts(previousApplication)
+          return Service._signInAndSkipSubmit(previousApplication)
       changed = null
       if Service.application.status.match(/draft/i)
         if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
@@ -784,10 +791,14 @@ ShortFormApplicationService = (
       Service.application.status.match(/draft/i)
     )
 
+  Service.overridePreviousDraftId = ->
+    # override draft ID and proceed...  ->
+    Service.application.id = Service.accountApplication.id
 
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
-    Service.application.id = Service.accountApplication.id
+    Service.overridePreviousDraftId()
+    # override draft ID and proceed...
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()

@@ -27,9 +27,15 @@ ModalService = ($modal, $window) ->
         Service.openModal('shared/templates/alert_modal.html')
         Service.modalInstance.result.then( ->
           Service.clearModal()
+          Service._mobileAlert()
         ).catch( ->
           Service.clearModal()
         )
+      else
+        Service._mobileAlert()
+
+  Service._mobileAlert = ->
+    Service.openModal('shared/templates/alert_modal.html')
 
   Service.closeModal = () ->
     Service.modalInstance.close() if Service.modalInstance

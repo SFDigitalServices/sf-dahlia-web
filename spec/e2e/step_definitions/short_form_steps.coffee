@@ -596,7 +596,7 @@ module.exports = ->
     @expect(liveInSfMember.isPresent()).to.eventually.equal(true)
 
   @Then 'I should see proof uploaders for rent burden files', ->
-    # expect the rentBurdenPreference component to render with the proof uploaders inside, rather than the dashboard
+    # expect the rentBurdenedPreference component to render with the proof uploaders inside, rather than the dashboard
     uploader = element(By.model('$ctrl.proofDocument.file.name'))
     @expect(uploader.isPresent()).to.eventually.equal(true)
 
