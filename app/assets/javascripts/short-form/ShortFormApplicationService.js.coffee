@@ -298,8 +298,11 @@ ShortFormApplicationService = (
     Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
-    if _.includes(['neighborhoodResidence', 'antiDisplacement'], preference)
-      # cancelling Neighborhood also cancels liveInSf
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
+      # cancelling NRHP or ADHP also cancels liveInSf
       Service.cancelPreference('liveInSf')
     if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
       # cancels liveWork combo options
