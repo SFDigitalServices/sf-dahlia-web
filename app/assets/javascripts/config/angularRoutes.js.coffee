@@ -1047,11 +1047,6 @@
           ($title, $translate, application) ->
             $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
         ]
-      onExit: [
-        'ShortFormApplicationService',
-        (ShortFormApplicationService) ->
-          ShortFormApplicationService.resetApplicationData()
-        ]
     })
     .state('dahlia.short-form-application.choose-draft', {
       url: '/choose-draft'
