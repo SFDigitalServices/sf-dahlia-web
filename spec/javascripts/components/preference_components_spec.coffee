@@ -114,14 +114,14 @@ do ->
 
 
 # ==============================================
-    describe 'rentBurdenPreference', ->
+    describe 'rentBurdenedPreference', ->
       beforeEach ->
         fakeBindings.address = fakeAddress
         fakeBindings.groupedHouseholdAddressIndex = 0
         fakeBindings.application.preferences.documents.rentBurden[fakeAddress] =
           lease: {}
           rent: {}
-        ctrl = $componentController 'rentBurdenPreference', locals, fakeBindings
+        ctrl = $componentController 'rentBurdenedPreference', locals, fakeBindings
 
       it 'should get appropriate proof options to match rentBurden', ->
         expect(fakeShortFormHelperService.proofOptions).toHaveBeenCalledWith('rentBurden')

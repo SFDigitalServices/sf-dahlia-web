@@ -2,6 +2,15 @@
 class Api::V1::ListingsController < ApiController
   ListingService = SalesforceService::ListingService
 
+  before_action do
+    # will force re-caching of content
+    ListingService.force = true if params[:force]
+  end
+
+  after_action do
+    ListingService.force = false if params[:force]
+  end
+
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
@@ -12,13 +21,6 @@ class Api::V1::ListingsController < ApiController
   def show
     @listing = ListingService.listing(params[:id])
     render json: { listing: @listing }
-  rescue Faraday::ClientError => e
-    # Salesforce will throw an error if you request a listing ID that doesn't exist
-    if e.message.include? 'APEX_ERROR'
-      return render_error(exception: e, status: :not_found)
-    end
-    # else re-raise to default ApiController handler, e.g. for timeout
-    raise e.class, e.message
   end
 
   def units

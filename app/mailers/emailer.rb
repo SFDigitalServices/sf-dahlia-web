@@ -22,7 +22,7 @@ class Emailer < Devise::Mailer
     I18n.locale = params[:locale]
 
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    @name = "#{params[:firstName]} #{params[:lastName]}"
+    @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],
@@ -125,9 +125,9 @@ class Emailer < Devise::Mailer
   private
 
   def format_app_due_date(listing)
-    due = listing.Application_Due_Date.to_time
-    due_time = "#{due.strftime('%I')}:#{due.strftime('%M')} #{due.strftime('%p')}"
-    due_date = "#{due.strftime('%b')} #{due.strftime('%d')}"
+    due = Time.zone.parse(listing['Application_Due_Date'])
+    due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
     @deadline = "#{due_time} on #{due_date}"
   end
 
@@ -140,12 +140,8 @@ class Emailer < Devise::Mailer
   def admin_email
     # all heroku apps have Rails.env.production
     # but ENV['PRODUCTION'] is only on dahlia-production
-    if Rails.env.production? and ENV['PRODUCTION']
-      # if listing has_nrhp_adhp it goes to the set of admins that includes HBMR staff
-      @has_nrhp_adhp ? 'dahlia-admins-hbmr@exygy.com' : 'dahlia-admins@exygy.com'
-    else
-      @has_nrhp_adhp ? 'dahlia-test-hbmr@exygy.com' : 'dahlia-test@exygy.com'
-    end
+    production = Rails.env.production? and ENV['PRODUCTION']
+    production ? 'dahlia-admins@exygy.com' : 'dahlia-test@exygy.com'
   end
 
   def load_salesforce_contact(record)
@@ -162,7 +158,7 @@ class Emailer < Devise::Mailer
     @lottery_number = params[:lottery_number]
     @lottery_date = ''
     if @listing.Lottery_Date
-      @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
+      @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|
