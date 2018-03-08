@@ -23,25 +23,15 @@ ModalService = ($modal, $window) ->
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(content.message)
     else
-      if (!Service.modalInstance)
-        Service.openModal('shared/templates/alert_modal.html')
-        Service.modalInstance.result.then( ->
-          Service.clearModal()
-          Service._mobileAlert()
-        ).catch( ->
-          Service.clearModal()
-        )
-      else
-        Service._mobileAlert()
-
-  Service._mobileAlert = ->
-    Service.openModal('shared/templates/alert_modal.html')
+      # close any modal that may already be open before opening a new one
+      Service.closeModal()
+      Service.openModal('shared/templates/alert_modal.html')
 
   Service.closeModal = () ->
     Service.modalInstance.close() if Service.modalInstance
-    Service.clearModal()
+    Service._clearModalInstance()
 
-  Service.clearModal = () ->
+  Service._clearModalInstance = () ->
     Service.modalInstance = null
 
   return Service

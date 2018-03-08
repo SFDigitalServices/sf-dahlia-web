@@ -40,6 +40,7 @@ do ->
     describe 'alert', ->
       beforeEach ->
         spyOn(ModalService, 'openModal').and.callThrough()
+        spyOn(ModalService, 'closeModal').and.callThrough()
 
       it 'opens a modal with the alert template and given message', ->
         expect(ModalService.content.message).not.toBeDefined()
@@ -47,16 +48,22 @@ do ->
         content =
           message: 'hi'
         ModalService.alert(content)
+        expect(ModalService.modalInstance).not.toEqual null
         expect(ModalService.content.message).toEqual 'hi'
         expect(ModalService.openModal).toHaveBeenCalledWith(alertTemplateUrl)
 
-      it 'does not open a new modal when modalInstance exists', ->
+      it 'closes any open modalInstance before opening a new one', ->
         ModalService.modalInstance = modalInstance
-        content =
-          message: 'yo'
-        ModalService.alert(content)
-        expect(ModalService.content.message).toEqual 'yo'
-        expect(ModalService.openModal).not.toHaveBeenCalled()
+        ModalService.content =
+          message: 'this is an already open modal'
+
+        newContent =
+          message: 'this is a new modal'
+        ModalService.alert(newContent)
+
+        expect(ModalService.closeModal).toHaveBeenCalled()
+        expect(ModalService.openModal).toHaveBeenCalledWith(alertTemplateUrl)
+        expect(ModalService.content.message).toEqual 'this is a new modal'
 
       it 'adds onConfirm callback if passed in', ->
         fakeCallback = -> 'hi'
@@ -69,22 +76,23 @@ do ->
           message: 'yo'
         ModalService.alert(content, {nativeAlert: true})
         expect($window.alert).toHaveBeenCalledWith('yo')
+        expect(ModalService.openModal).not.toHaveBeenCalled()
 
     describe 'closeModal', ->
       beforeEach ->
-        ModalService.clearModal = jasmine.createSpy()
+        ModalService._clearModalInstance = jasmine.createSpy()
 
       it 'closes the open modal instance', ->
         ModalService.modalInstance = modalInstance
         ModalService.closeModal()
         expect(ModalService.modalInstance.close).toHaveBeenCalled()
 
-      it 'calls ModalService.clearModal', ->
+      it 'calls ModalService._clearModalInstance', ->
         ModalService.closeModal()
-        expect(ModalService.clearModal).toHaveBeenCalled()
+        expect(ModalService._clearModalInstance).toHaveBeenCalled()
 
-    describe 'clearModal', ->
+    describe '_clearModalInstance', ->
       it 'sets the modal instance to null', ->
         ModalService.modalInstance = modalInstance
-        ModalService.clearModal()
+        ModalService._clearModalInstance()
         expect(ModalService.modalInstance).toEqual(null)
