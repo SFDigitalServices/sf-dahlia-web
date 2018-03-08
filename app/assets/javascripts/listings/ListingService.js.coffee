@@ -21,6 +21,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
   Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
+  Service.forceRecache = false
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -239,7 +240,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
     Service.resetListingData()
 
     deferred = $q.defer()
-    $http.get("/api/v1/listings/#{_id}.json",
+    $http.get("/api/v1/listings/#{_id}.json#{if Service.forceRecache then '?force=true' else ''}",
       { etagCache: true }
     ).success(
       Service.getListingResponse(deferred)
@@ -467,7 +468,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
     # angular.copy([], Service.listing.Units)
     Service.loading.units = true
     Service.error.units = false
-    $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units#{if Service.forceRecache then '?force=true' else ''}")
+    .success((data, status, headers, config) ->
       Service.loading.units = false
       Service.error.units = false
       if data && data.units
@@ -577,18 +579,23 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
       descriptor.name
 
   Service.getListingPreferences = ->
+    Service.loading.preferences = true
+    Service.error.preferences = false
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
     if !_.isEmpty(Service.listing.preferences)
       return $q.when(Service.listing.preferences)
     ## <--
-    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences#{if Service.forceRecache then '?force=true' else ''}")
+    .success((data, status, headers, config) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
         Service._extractCustomPreferences()
+        Service.loading.preferences = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.preferences = false
+      Service.error.preferences = true
     )
 
   Service.hardcodeCustomProofPrefs =
