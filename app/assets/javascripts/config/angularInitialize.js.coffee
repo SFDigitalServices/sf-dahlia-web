@@ -113,6 +113,9 @@
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
 
+      # close any modals that might have been opened in previous states
+      ModalService.closeModal()
+
       SharedService.updateAlternateLanguageLinks()
 
       # track routes as we navigate EXCEPT for initial page load which is already tracked
