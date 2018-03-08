@@ -755,21 +755,249 @@ do ->
           expect(ShortFormApplicationService.applicant.phoneType).toEqual null
 
     describe 'cancelPreference', ->
-      beforeEach ->
+      it 'unsets preference fields', ->
+        spyOn(ShortFormApplicationService, 'unsetPreferenceFields').and.callThrough()
+
+        preference = 'certOfPreference'
+        ShortFormApplicationService.cancelPreference(preference)
+        expect(ShortFormApplicationService.unsetPreferenceFields)
+          .toHaveBeenCalledWith(preference)
+
+      describe 'cancels Live/Work', ->
+        it 'should clear Live/Work combo options if Live/Work is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('liveWorkInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should clear Live/Work combo options if Live is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('liveInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should clear Live/Work combo options if Work is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('workInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should unset individual Live and Work fields if Live/Work is canceled', ->
+          spyOn(ShortFormApplicationService, 'unsetPreferenceFields').and.callThrough()
+
+          ShortFormApplicationService.cancelPreference('liveWorkInSf')
+          expect(ShortFormApplicationService.unsetPreferenceFields)
+            .toHaveBeenCalledWith('liveInSf')
+          expect(ShortFormApplicationService.unsetPreferenceFields)
+            .toHaveBeenCalledWith('workInSf')
+
+      describe 'cancels NRHP', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelPreference').and.callThrough()
+
+        it 'should not clear Live in SF if listing doesn\'t have NRHP', ->
+          # Listing doesn't have NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+        it 'should not clear Live in SF if applicant not eligible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live in SF if listing has NRHP and applicant is elibible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+      describe 'cancels ADHP', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelPreference').and.callThrough()
+
+        it 'should not clear Live in SF if listing doesn\'t have ADHP', ->
+          # Listing doesn't have ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+        it 'should not clear Live in SF if applicant not eligible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live in SF if listing has ADHP and applicant is elibible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+    describe 'unsetPreferenceFields', ->
+      it 'should clear preference name, household member, proof option, and file', ->
         fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
         ShortFormApplicationService.preferences.liveInSf = true
         ShortFormApplicationService.preferences.liveInSf_household_member = 1
+        ShortFormApplicationService.preferences.liveInSf_proofOption = 'Telephone bill'
         ShortFormApplicationService.preferences.documents.liveInSf = {
           proofOption: 'Telephone Bill'
           file: {name: 'somefile.pdf'}
         }
 
-      it 'should clear preference name, household member, proof option and file', ->
-        ShortFormApplicationService.cancelPreference('liveInSf')
+        ShortFormApplicationService.unsetPreferenceFields('liveInSf')
         expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual null
         listingId = ShortFormApplicationService.listing.Id
-        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', listingId)
+        expect(fakeFileUploadService.deletePreferenceFile)
+          .toHaveBeenCalledWith('liveInSf', listingId)
+
+      it 'should delete Rent Burdened preference files', ->
+        listingId = ShortFormApplicationService.listing.Id
+
+        ShortFormApplicationService.unsetPreferenceFields('rentBurden')
+        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles)
+          .toHaveBeenCalledWith(listingId)
+
+      it 'should clear COP certificate number', ->
+        ShortFormApplicationService.preferences.certOfPreference_certificateNumber =
+          '12345678'
+
+        ShortFormApplicationService.unsetPreferenceFields('certOfPreference')
+        expect(ShortFormApplicationService.preferences.certOfPreference_certificateNumber)
+          .toEqual null
+
+      it 'should clear DTHP certificate number', ->
+        ShortFormApplicationService.preferences.displaced_certificateNumber =
+          '12345678'
+
+        ShortFormApplicationService.unsetPreferenceFields('displaced')
+        expect(ShortFormApplicationService.preferences.displaced_certificateNumber)
+          .toEqual null
+
+    describe 'cancelOptOut', ->
+      it 'should clear preference opt out', ->
+        ShortFormApplicationService.preferences.optOut.liveInSf = true
+
+        ShortFormApplicationService.cancelOptOut('liveInSf')
+        expect(ShortFormApplicationService.preferences.optOut.liveInSf).toEqual false
+
+      describe 'cancel NRHP Opt Out', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelOptOut').and.callThrough()
+
+        it 'should not clear Live/Work Opt Out if listing doesn\'t have NRHP', ->
+          # Listing doesn't have NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut)
+            .not.toHaveBeenCalledWith('liveWorkInSf')
+
+        it 'should not clear Live/Work Opt Out if applicant not eligible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut)
+            .not.toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live/Work Opt Out if listing has NRHP and elibible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut).toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+      describe 'cancel ADHP Opt Out', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelOptOut').and.callThrough()
+
+        it 'should not clear Live/Work Opt Out if listing doesn\'t have ADHP', ->
+          # Listing doesn't have ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).not.toHaveBeenCalledWith('liveWorkInSf')
+
+        it 'should not clear Live/Work Opt Out if not eligible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).not.toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live/Work Opt Out if listing has ADHP and elibible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
 
     describe 'resetPreference', ->
       beforeEach ->
