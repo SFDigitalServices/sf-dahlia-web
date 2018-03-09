@@ -152,12 +152,17 @@ ShortFormDataService = (ListingService) ->
       individualPref = null
       optOut = false
       shortformPreferenceID = null
-      certificateNumber = null # gets stored in additionalDetails field
+      certificateNumber = null
       appPrefs = application.preferences
+      proofOption = null
       PREFS = ListingService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        # default prefKey and optOut for Live/Work, in case individual live or work
+        # preference isn't applicable (like when applicant is eligible for both, but
+        # opts out of preference all together)
+        prefKey = 'liveWorkInSf'
         optOut = appPrefs.optOut.liveWorkInSf
         if appPrefs.liveInSf || appPrefs.optOut.liveInSf
           individualPref = 'Live in SF'
@@ -167,6 +172,8 @@ ShortFormDataService = (ListingService) ->
           individualPref = 'Work in SF'
           prefKey = 'workInSf'
           optOut = appPrefs.optOut.workInSf
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
       else if listingPref.preferenceName == PREFS.rentBurden
         shortformPreferenceID = appPrefs.rentBurden_shortformPreferenceID
         if appPrefs.rentBurden || appPrefs.optOut.rentBurden
@@ -177,11 +184,14 @@ ShortFormDataService = (ListingService) ->
           individualPref = 'Assisted Housing'
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
+        proofOption = 'Lease and rent proof' unless optOut
       else
         prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
         shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
         optOut = appPrefs.optOut[prefKey]
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
         # pref_certificateNumber may or may not exist, which is ok
         certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
 
@@ -200,18 +210,38 @@ ShortFormDataService = (ListingService) ->
           naturalKey = "#{member.firstName},#{member.lastName},#{Service.formatUserDOB(member)}"
 
       shortFormPref =
+        recordTypeDevName: Service._getPreferenceRecordType(listingPref)
         shortformPreferenceID: shortformPreferenceID
         listingPreferenceID: listingPref.listingPreferenceID
-        preferenceProof: appPrefs[prefKey + '_proofOption']
+        preferenceProof: proofOption
         naturalKey: naturalKey
         optOut: optOut
-        ifCombinedIndividualPreference: individualPref
-        additionalDetails: certificateNumber
+        individualPreference: individualPref
+        certificateNumber: certificateNumber
       # remove blank values
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       shortFormPreferences.push(shortFormPref)
     )
     return shortFormPreferences
+
+  Service._getPreferenceRecordType = (preference) ->
+    return preference.recordTypeDevName if preference.recordTypeDevName
+
+    PREFS = ListingService.preferenceMap
+    switch preference.preferenceName
+      when PREFS.certOfPreference
+        'COP'
+      when PREFS.displaced
+        'DTHP'
+      when PREFS.liveWorkInSf, PREFS.liveInSf, PREFS.workInSf
+        'L_W'
+      when PREFS.neighborhoodResidence
+        'NRHP'
+      when PREFS.assistedHousing, PREFS.rentBurden
+        'RB_AHP'
+      when PREFS.antiDisplacement
+        'ADHP'
+      else 'Custom'
 
   Service._formatPickList = (listData) ->
     resultStr = ""
@@ -249,7 +279,7 @@ ShortFormDataService = (ListingService) ->
         data.xCoordinate = geo.location.x
         data.yCoordinate = geo.location.y
       if geo.attributes
-        data.whichComponentOfLocatorWasUsed = geo.attributes.loc_name
+        data.whichComponentOfLocatorWasUsed = geo.attributes.Loc_name
       data.candidateScore = geo.score
     return data
 
@@ -353,17 +383,17 @@ ShortFormDataService = (ListingService) ->
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
       if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
         preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
-        if shortFormPref.ifCombinedIndividualPreference == 'Live in SF'
+        if shortFormPref.individualPreference == 'Live in SF'
           prefKey = 'liveInSf'
-        else if shortFormPref.ifCombinedIndividualPreference == 'Work in SF'
+        else if shortFormPref.individualPreference == 'Work in SF'
           prefKey = 'workInSf'
         else
           prefKey = 'liveWorkInSf'
       else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
         preferences.rentBurden_shortformPreferenceID = shortFormPref.shortformPreferenceID
-        if shortFormPref.ifCombinedIndividualPreference == 'Assisted Housing'
+        if shortFormPref.individualPreference == 'Assisted Housing'
           prefKey = 'assistedHousing'
-        else if shortFormPref.ifCombinedIndividualPreference == 'Rent Burdened'
+        else if shortFormPref.individualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
       else
         prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
@@ -379,14 +409,24 @@ ShortFormDataService = (ListingService) ->
           preferences["#{prefKey}_household_member"] = member.id
           preferences[prefKey] = true
 
-        if shortFormPref.additionalDetails
-          preferences["#{prefKey}_certificateNumber"] = shortFormPref.additionalDetails
+        if shortFormPref.certificateNumber
+          preferences["#{prefKey}_certificateNumber"] = shortFormPref.certificateNumber
 
-        _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
-          # mark preference as true if they've uploaded any files (e.g. for a draft)
-          preferences[prefKey] = true
+        preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
+    )
+    if preferences.liveInSf || preferences.workInSf
+      preferences.liveWorkInSf = true
+      preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
+    preferences
 
-          if prefKey == 'rentBurden'
+  Service._reformatPreferenceProof = (preferences, prefKey, shortFormPref, files, status) ->
+    if status.match(/draft/i)
+      _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
+        # mark preference as true if they've uploaded any files (e.g. for a draft)
+        preferences[prefKey] = true
+
+        if prefKey == 'rentBurden'
+          if !_.isEmpty(preferences.documents.rentBurden[file.address])
             if file.rent_burden_type == 'lease'
               preferences.documents.rentBurden[file.address].lease = {
                 proofOption: file.document_type
@@ -398,17 +438,16 @@ ShortFormDataService = (ListingService) ->
                 proofOption: file.document_type
                 file: file
               }
-          else
-            preferences.documents[prefKey] = {
-              proofOption: file.document_type
-              file: file
-            }
-
-    )
-    if preferences.liveInSf || preferences.workInSf
-      preferences.liveWorkInSf = true
-      preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
-    preferences
+        else
+          preferences.documents[prefKey] = {
+            proofOption: file.document_type
+            file: file
+          }
+    else
+      preferences.documents[prefKey] = {
+        proofOption: shortFormPref.preferenceProof
+      }
+    return preferences
 
   Service._reformatMailingAddress = (contact) ->
     return {
