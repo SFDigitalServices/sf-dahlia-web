@@ -159,6 +159,10 @@ ShortFormDataService = (ListingService) ->
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        # default prefKey and optOut for Live/Work, in case individual live or work
+        # preference isn't applicable (like when applicant is eligible for both, but
+        # opts out of preference all together)
+        prefKey = 'liveWorkInSf'
         optOut = appPrefs.optOut.liveWorkInSf
         if appPrefs.liveInSf || appPrefs.optOut.liveInSf
           individualPref = 'Live in SF'
@@ -275,7 +279,7 @@ ShortFormDataService = (ListingService) ->
         data.xCoordinate = geo.location.x
         data.yCoordinate = geo.location.y
       if geo.attributes
-        data.whichComponentOfLocatorWasUsed = geo.attributes.loc_name
+        data.whichComponentOfLocatorWasUsed = geo.attributes.Loc_name
       data.candidateScore = geo.score
     return data
 
