@@ -26,7 +26,7 @@ accordion-heading
         button.button-link ng-click="getListingUnits()"
           | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
 
-    .stats-toggle.margin-bottom ng-repeat="unitGroup in listing.unitTypes" data-event="gtm-unit-features" ng-click="toggleTable(unitGroup.unitType)" ng-class="isActiveTable(unitGroup.unitType)"
+    .stats-toggle.margin-bottom ng-repeat="unitGroup in listing.unitTypes" data-event="gtm-unit-features" ng-click="toggleTable(unitGroup.unitType)"
       .toggle-box.toggler.has-toggle
         .toggle-box_label
           strong
