@@ -103,6 +103,9 @@ ListingController = (
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
+  $scope.lotteryComplete = (listing) ->
+    ListingService.lotteryComplete(listing)
+
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
 

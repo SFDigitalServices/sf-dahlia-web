@@ -163,6 +163,17 @@ do ->
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.listingIsOpen(listing)).toEqual true
 
+    describe 'Service.lotteryComplete', ->
+      it "returns false when the listing's lottery status is not complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Not Yet Run'
+        expect(ListingService.lotteryComplete(listing)).toEqual false
+
+      it "returns true when the listing's lottery status is complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Lottery Complete'
+        expect(ListingService.lotteryComplete(listing)).toEqual true
+
     describe 'Service.lotteryIsUpcoming', ->
       beforeEach ->
         listing = fakeListing.listing
@@ -209,10 +220,16 @@ do ->
         listing.Application_Due_Date = past.toString()
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
-      it 'returns true if due date in future and Accepting_Online_Applications', ->
+      it "returns false if the listing's lottery status is complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Lottery Complete'
+        expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
+
+      it 'returns true if due date in future, Accepting_Online_Applications, and lottery status is not complete', ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
         listing.Application_Due_Date = tomorrow.toString()
+        listing.Lottery_Status = 'Not Yet Run'
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 
     describe 'Service.toggleFavoriteListing', ->
