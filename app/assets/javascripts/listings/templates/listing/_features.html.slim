@@ -85,7 +85,7 @@ accordion-heading
               | &ndash;{{ listing.Deposit_Max }}
           span.content-label.t-small
             | or one month's rent
-          span.t-tiny.d-block
+          span.t-tiny.d-block ng-if="listingIsBMR()"
             | May be higher for lower credit scores
 
       .row.collapse ng-if="listing.Costs_Not_Included"
