@@ -101,7 +101,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if listing_ids.indexOf(favorite_id) == -1
         Service.toggleFavoriteListing(favorite_id)
 
-
   Service.toggleFavoriteListing = (listing_id) ->
     # toggle the value for listing_id
     index = Service.favorites.indexOf(listing_id)
@@ -302,7 +301,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
 
-
   Service.getListingsWithEligibility = ->
     params =
       householdsize: Service.eligibility_filters.household_size
@@ -375,7 +373,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # lotteryResults get reversed (latest lottery results date first)
       if type == 'lotteryResultsListings' then _.reverse listings else listings
 
-
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids, checkFavorites = false) ->
     angular.copy([], Service.listings)
@@ -405,6 +402,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # listing is open if deadline is in the future
     return today > lotteryDate
 
+  Service.lotteryComplete = (listing) ->
+    listing.Lottery_Status == 'Lottery Complete'
+
   Service.lotteryIsUpcoming = (listing) ->
     !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
 
@@ -413,6 +413,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
+    return false if Service.lotteryComplete(listing)
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
@@ -468,7 +469,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
           incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
-
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
@@ -750,6 +750,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     slug = id.toLowerCase()
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
+
+  Service.listingIsBMR = (listing) ->
+    ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
 
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
