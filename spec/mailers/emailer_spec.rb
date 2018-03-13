@@ -19,7 +19,7 @@ describe Emailer, type: :mailer do
       VCR.use_cassette('emailer/submission_confirmation') do
         expect(mail.subject).to eq("Thanks for applying to #{@listing_name}")
         expect(mail.to).to eq([@params[:email]])
-        expect(mail.from).to eq(['dahlia@housing.sfgov.org'])
+        expect(mail.from).to eq(['donotreply@sfgov.org'])
       end
     end
 
@@ -52,7 +52,7 @@ describe Emailer, type: :mailer do
         subject = "Complete your application for #{@listing_name} by #{deadline}"
         expect(mail.subject).to eq(subject)
         expect(mail.to).to eq([@params[:email]])
-        expect(mail.from).to eq(['dahlia@housing.sfgov.org'])
+        expect(mail.from).to eq(['donotreply@sfgov.org'])
       end
     end
 

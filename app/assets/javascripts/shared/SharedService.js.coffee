@@ -5,7 +5,7 @@
 SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
-  Service.assetPaths = STATIC_ASSET_PATHS
+  Service.assetPaths = STATIC_ASSET_PATHS || {}
   Service.housingCounselors =
     all: []
     chinese: []
@@ -18,6 +18,39 @@ SharedService = ($http, $state, $window, $document) ->
     '@',
     '(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?'
   ].join(''))
+  Service.languageMap =
+    en: 'English'
+    es: 'Spanish'
+    tl: 'Filipino'
+    zh: 'Chinese'
+
+  Service.getLanguageCode = (langName) ->
+    # will take "English" and return "en", for example
+    if langName
+      _.invert(Service.languageMap)[_.startCase(langName)]
+
+  Service.getLanguageName = (langCode) ->
+    # will take "en" and return "English", for example
+    Service.languageMap[langCode]
+
+  Service.isWelcomePage = (state = null) ->
+    if state
+      !!state.name.match /^dahlia\.welcome-[a-z]+$/
+    else
+      $state.includes('dahlia.welcome-chinese') || $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-filipino')
+
+  Service.getWelcomePageLanguage = (stateName) ->
+    welcomePageLanguage =
+      name: ''
+      code: ''
+
+    if stateName
+      matches = stateName.match(/(.*welcome-)([a-z]+$)/)
+      if matches
+        welcomePageLanguage.name = matches[2]
+        welcomePageLanguage.code = Service.getLanguageCode(matches[2])
+
+    return welcomePageLanguage
 
   Service.showSharing = () ->
     $state.current.name == "dahlia.favorites"
