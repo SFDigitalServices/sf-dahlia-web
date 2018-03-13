@@ -1,14 +1,25 @@
 angular.module('dahlia.components')
 .component 'languageSwitcher',
   templateUrl: 'shared/components/language-switcher.html'
-  controller: ['$state', '$scope', ($state, $scope) ->
+  controller: ['SharedService', '$state', '$scope', (SharedService, $state, $scope) ->
     ctrl = @
 
     @switchToLanguage = (lang) ->
-      href = $state.href($state.current.name, {lang: lang})
-      if $state.current.name == 'dahlia.welcome'
-        href = href + "/"
-      href
+      toStateName = $state.current.name
+
+      if SharedService.isWelcomePage($state.current)
+        if lang == 'en'
+          toStateName = 'dahlia.welcome'
+        else
+          longLang = SharedService.getLanguageName(lang).toLowerCase()
+          toStateName = "dahlia.welcome-#{longLang}"
+
+      href = $state.href(toStateName, {lang: lang})
+
+      if toStateName == 'dahlia.welcome'
+        href += '/'
+
+      return href
 
     @isSelectedLanguage = (lang) ->
       $state.params.lang == lang
