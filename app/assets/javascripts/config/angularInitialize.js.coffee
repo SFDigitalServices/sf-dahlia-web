@@ -49,7 +49,20 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
-      language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
+      if SharedService.isWelcomePage(toState)
+        # on welcome pages, the language is determined by the language of the
+        # welcome page, not by toParams.lang
+        language = SharedService.getWelcomePageLanguage(toState.name).code
+        if toParams.lang != language
+          # if toState is a language welcome page and a different lang is set in the
+          # params, reload the welcome page with the matching lang param. even though
+          # toParams.lang doesn't determine the language set on a welcome page, we
+          # still want the URL to appear consistent, e.g. the Spanish welcome page
+          # path should always be 'es/welcome-spanish'
+          e.preventDefault()
+          $state.go(toState.name, {lang: language})
+      else
+        language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
 
       GoogleTranslateService.loadAPI().then ->
         GoogleTranslateService.setLanguage(language)
@@ -148,6 +161,14 @@
       if (toState.name == 'dahlia.short-form-application.review-sign-in')
         # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
+      if (fromState.name == 'dahlia.short-form-review' && toState.name != 'dahlia.short-form-review')
+        # Clear out application when leaving the application review page, unless going to
+        # the review page (e.g. when switching languages on that page). We used to have this
+        # in the dahlia.short-form-review state's onExit, but that caused a problem when going
+        # from that state to itself. onExit gets called after the next state is already
+        # entered and resolving, so clearing the application in onExit was wiping out the
+        # application data we just loaded in the dahlia.short-form-review state's resolve.
+        ShortFormApplicationService.resetApplicationData()
 
 
     $rootScope.$on '$viewContentLoaded', ->
