@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
+SharedController = ($scope, $state, $window, SharedService, GoogleTranslateService) ->
   $scope.assetPaths = SharedService.assetPaths
   $scope.housingCounselors = SharedService.housingCounselors
   $scope.alternateLanguageLinks = SharedService.alternateLanguageLinks
@@ -17,13 +17,15 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
   $scope.isWelcomePage = ->
-    $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-chinese') ||
-    $state.includes('dahlia.welcome-filipino')
+    SharedService.isWelcomePage()
 
   $scope.isEnglish = ->
     $state.params.lang == 'en'
 
-  $scope.feedbackUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
+  $scope.feedbackUrl = 'https://docs.google.com/\
+    forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
+
+  $scope.alertMessage = if $window.ALERT_MESSAGE then $window.ALERT_MESSAGE else ''
 
   $scope.hasCenterBody = () ->
     if $state.includes('dahlia.short-form-welcome') ||
@@ -51,7 +53,7 @@ SharedController = ($scope, $state, SharedService, GoogleTranslateService) ->
 ############################################################################################
 
 SharedController.$inject = [
-  '$scope', '$state', 'SharedService', 'GoogleTranslateService'
+  '$scope', '$state', '$window', 'SharedService', 'GoogleTranslateService'
 ]
 
 angular
