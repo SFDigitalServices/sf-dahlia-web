@@ -103,6 +103,9 @@ ListingController = (
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
+  $scope.lotteryComplete = (listing) ->
+    ListingService.lotteryComplete(listing)
+
   $scope.openLotteryResultsModal = () ->
     ListingService.openLotteryResultsModal()
 
@@ -355,6 +358,9 @@ ListingController = (
 
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
+
+  $scope.listingIsBMR = ->
+    ListingService.listingIsBMR($scope.listing)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
