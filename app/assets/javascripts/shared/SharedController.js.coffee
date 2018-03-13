@@ -17,8 +17,7 @@ SharedController = ($scope, $state, $window, SharedService, GoogleTranslateServi
     $state.includes('dahlia.short-form-welcome') || $state.includes('dahlia.short-form-application')
 
   $scope.isWelcomePage = ->
-    $state.includes('dahlia.welcome-spanish') || $state.includes('dahlia.welcome-chinese') ||
-    $state.includes('dahlia.welcome-filipino')
+    SharedService.isWelcomePage()
 
   $scope.isEnglish = ->
     $state.params.lang == 'en'

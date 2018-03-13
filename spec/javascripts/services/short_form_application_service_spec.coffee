@@ -47,6 +47,8 @@ do ->
       uploadProof: jasmine.createSpy()
       deletePreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: jasmine.createSpy()
+    fakeSharedService =
+      languageMap: {es: 'Spanish'}
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     setupFakeApplicant = (attributes) ->
@@ -82,6 +84,7 @@ do ->
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
+      $provide.value 'SharedService', fakeSharedService
       return
     )
 
@@ -112,7 +115,6 @@ do ->
 
       it 'does not initially allow access to later sections', ->
         expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
-
 
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
@@ -1217,21 +1219,25 @@ do ->
     # multilingual
     describe 'setApplicationLanguage', ->
       it 'sets application language to the full name version of the lang param', ->
+        fakeSharedService.getLanguageName = jasmine.createSpy().and.returnValue('Spanish')
         ShortFormApplicationService.setApplicationLanguage('es')
         expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
 
     describe 'getLanguageCode', ->
-      it 'returns the 2-letter code for the given language', ->
-        code = ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
-        expect(code).toEqual 'es'
+      it 'calls SharedService.getLanguageCode with the application language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('es')
+        ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
+        expect(fakeSharedService.getLanguageCode).toHaveBeenCalledWith('Spanish')
 
     describe 'switchingLanguage', ->
       it 'returns true if user is switching language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('en')
         ShortFormApplicationService.application.applicationLanguage = 'English'
         $state.params.lang = 'es'
         expect(ShortFormApplicationService.switchingLanguage()).toEqual true
 
       it 'returns false if user is not switching language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('es')
         ShortFormApplicationService.application.applicationLanguage = 'Spanish'
         $state.params.lang = 'es'
         expect(ShortFormApplicationService.switchingLanguage()).toEqual false
