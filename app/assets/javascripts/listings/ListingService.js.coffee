@@ -21,6 +21,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
+  Service.toggleStates = {}
   Service.forceRecache = false
 
   Service.listingDownloadURLs = []
@@ -273,6 +274,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+      Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session

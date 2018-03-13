@@ -10,6 +10,7 @@ ListingController = (
   $timeout,
   $filter,
   $translate,
+  $location,
   Carousel,
   SharedService,
   ListingService,
@@ -32,9 +33,10 @@ ListingController = (
   $scope.lotteryPreferences = ListingService.lotteryPreferences
   $scope.eligibilityFilters = ListingService.eligibility_filters
   $scope.application = ShortFormApplicationService.application
-  # for expanding the "read more/less" on What To Expect
-  $scope.whatToExpectOpen = false
-  $scope.amiChartExpanded = false
+  # for expanding the "read more/less" on AMI, what to expect,
+  # preserving expanded states when you use browser forward/back
+  $scope.toggleStates = ListingService.toggleStates
+  $scope.locationPath = null
   # for expanding the "What happens next"
   $scope.whatHappens = false
   # for searching lottery number
@@ -60,10 +62,7 @@ ListingController = (
     $scope.showApplicationOptions = !$scope.showApplicationOptions
 
   $scope.toggleTable = (table) ->
-    $scope["active#{table}Class"] = if $scope["active#{table}Class"] then '' else 'active'
-
-  $scope.isActiveTable = (table) ->
-    $scope["active#{table}Class"] == 'active'
+    ListingService.toggleStates[$scope.listing.Id][table] = !ListingService.toggleStates[$scope.listing.Id][table]
 
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
@@ -382,6 +381,7 @@ ListingController.$inject = [
   '$timeout',
   '$filter',
   '$translate',
+  '$location',
   'Carousel',
   'SharedService',
   'ListingService',

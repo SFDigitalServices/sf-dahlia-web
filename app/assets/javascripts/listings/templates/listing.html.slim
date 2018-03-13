@@ -8,7 +8,7 @@
     accordion-group.medium-right-column data-event="gtm-accordion-lottery" ng-if="::listingApplicationClosed(listing)"
       ng-include src="'listings/templates/listing/_lottery_info.html'"
 
-    accordion-group.bg-dust data-event="gtm-accordion-eligibility"
+    accordion-group.bg-dust data-event="gtm-accordion-eligibility" is-open="toggleStates[listing.Id].eligibility"
       header.listing-header.show-for-medium-up
         img.listing-header_icon ng-src="{{::assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
         hgroup.listing-header_group
@@ -19,10 +19,10 @@
       ng-include src="'listings/templates/listing/_eligibility.html'"
 
     / sidebar for open listing (larger browser sizes)
-    accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!listingApplicationClosed(listing)"
+    accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!listingApplicationClosed(listing)" is-open="toggleStates[listing.Id].process"
       ng-include src="'listings/templates/listing/_process.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-features"
+    accordion-group.bg-white data-event="gtm-accordion-features" is-open="toggleStates[listing.Id].features"
       header.listing-header.show-for-medium-up
         img.listing-header_icon ng-src="{{::assetPaths['listing-features.svg']}}" alt="features-options"
         hgroup.listing-header_group
@@ -32,7 +32,7 @@
             | Amenities, unit details and additional fees
       ng-include src="'listings/templates/listing/_features.html'"
 
-    accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::formattedBuildingAddress(listing)"
+    accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::formattedBuildingAddress(listing)" is-open="toggleStates[listing.Id].neighborhood"
       header.listing-header.show-for-medium-up
         img.listing-header_icon ng-src="{{::assetPaths['listing-neighborhood.svg']}}" alt="neighborhood-building"
         hgroup.listing-header_group
@@ -42,7 +42,7 @@
             | Location and transportation
       ng-include src="'listings/templates/listing/_neighborhood.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-information"
+    accordion-group.bg-white data-event="gtm-accordion-information" is-open="toggleStates[listing.Id].additionalInfo"
       header.listing-header.show-for-medium-up
         img.listing-header_icon ng-src="{{::assetPaths['listing-legal.svg']}}" alt="legal-documents"
         hgroup.listing-header_group
