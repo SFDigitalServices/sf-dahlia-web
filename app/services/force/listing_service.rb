@@ -1,6 +1,6 @@
 module Force
   # encapsulate all Salesforce Listing querying functions
-  class ListingService < Force::Base
+  class ListingService
     WHITELIST_BROWSE_FIELDS = %i[
       Id
       listingID
@@ -24,12 +24,16 @@ module Force
 
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
-    # `clean` determines whether to slim down the results
-    def listings(ids = nil, clean = true)
+    # returns cached and cleaned listings
+    def self.listings(ids = nil)
       params = ids.present? ? { ids: ids } : nil
-      results = get_listings(nil, params)
-      return results unless clean
+      results = get_listings(params)
       clean_listings_for_browse(results)
+    end
+
+    def self.raw_listings(opts = {})
+      force = opts[:refresh_cache] || false
+      Request.new(parse_response: true).cached_get('/ListingDetails', nil, force)
     end
 
     # get listings with eligibility matches applied
@@ -37,48 +41,46 @@ module Force
     #  householdsize: n
     #  incomelevel: n
     #  childrenUnder6: n
-    def eligible_listings(filters)
-      results = get_listings(nil, filters)
+    def self.eligible_listings(filters)
+      results = get_listings(filters)
       results = clean_listings_for_browse(results)
       # sort the matched listings to the top of the list
       results.partition { |i| i['Does_Match'] }.flatten
     end
 
     # get one detailed listing result by id
-    def listing(id)
-      get_listings(id).first
+    def self.listing(id)
+      endpoint = "/ListingDetails/#{CGI.escape(id)}"
+      results = Request.new(parse_response: true).cached_get(endpoint)
+      add_image_urls(results).first
     end
 
     # get all units for a given listing
-    def units(listing_id)
+    def self.units(listing_id)
       listing_id = CGI.escape(listing_id)
-      @parse_response = true
-      cached_api_get("/Listing/Units/#{listing_id}", nil)
+      Request.new(parse_response: true).cached_get("/Listing/Units/#{listing_id}")
     end
 
     # get all preferences for a given listing
-    def preferences(listing_id)
+    def self.preferences(listing_id)
       listing_id = CGI.escape(listing_id)
-      @parse_response = true
-      cached_api_get("/Listing/Preferences/#{listing_id}", nil)
+      Request.new(parse_response: true).cached_get("/Listing/Preferences/#{listing_id}")
     end
 
     # get AMI: opts are percent, chartType, year
-    def ami(opts = {})
-      @parse_response = true
-      results = cached_api_get("/ami?#{opts.to_query}", nil)
+    def self.ami(opts = {})
+      results = Request.new(parse_response: true).cached_get("/ami?#{opts.to_query}")
       results.sort_by { |i| i['numOfHousehold'] }
     end
 
-    def ami_charts
-      api_get('/ami/charts')
+    def self.ami_charts
+      Request.new.get('/ami/charts')
     end
 
     # get Lottery Buckets with rankings
-    def lottery_buckets(listing_id)
+    def self.lottery_buckets(listing_id)
       listing_id = CGI.escape(listing_id)
-      @parse_response = false
-      data = cached_api_get("/Listing/LotteryResult/#{listing_id}", nil)
+      data = Request.new.cached_get("/Listing/LotteryResult/#{listing_id}", nil)
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
       data['lotteryBuckets'].each do |bucket|
@@ -88,40 +90,35 @@ module Force
     end
 
     # get Individual Lottery Result with rankings
-    def lottery_ranking(listing_id, lottery_number)
+    def self.lottery_ranking(listing_id, lottery_number)
       listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
-      @parse_response = false
-      cached_api_get(endpoint, nil)
+      Request.new.cached_get(endpoint)
     end
 
-    def check_household_eligibility(listing_id, params)
+    def self.check_household_eligibility(listing_id, params)
       listing_id = CGI.escape(listing_id)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
       %i[household_size incomelevel].each do |k|
         params[k] = params[k].to_i if params[k].present?
       end
-      @parse_response = false
-      api_get(endpoint, params)
+      Request.new.get(endpoint, params)
     end
 
-    def array_sort!(listing)
+    def self.array_sort!(listing)
       listing.each do |k, v|
         listing[k] = v.sort_by { |i| i['Id'] } if v.is_a?(Array) && v[0] && v[0]['Id']
       end
     end
 
-    private
+    private_class_method :get_listings, :add_image_urls, :clean_listings_for_browse
 
-    def get_listings(id = nil, params = nil)
-      endpoint = '/ListingDetails'
-      endpoint += "/#{CGI.escape(id)}" if id
-      @parse_response = true
-      results = cached_api_get(endpoint, params)
+    def self.get_listings(params = nil)
+      results = Request.new(parse_response: true).cached_get('/ListingDetails', params)
       add_image_urls(results)
     end
 
-    def add_image_urls(listings)
+    def self.add_image_urls(listings)
       listing_images = ListingImage.all
       listings.each do |listing|
         listing_image = listing_images.select do |li|
@@ -134,7 +131,7 @@ module Force
       listings
     end
 
-    def clean_listings_for_browse(results)
+    def self.clean_listings_for_browse(results)
       results.map do |listing|
         listing.select do |key|
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')

@@ -20,11 +20,11 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
   describe '#perform' do
     it 'submits attachment file and marks it as delivered' do
       response = Hashie::Mash.new(status: 200)
-      expect_any_instance_of(Force::ShortFormService)
+      expect(Force::ShortFormService)
         .to receive(:get)
         .with(application_id)
         .and_return(application)
-      expect_any_instance_of(Force::ShortFormService)
+      expect(Force::ShortFormService)
         .to receive(:attach_file)
         .with(*args)
         .and_return(response)
@@ -40,11 +40,11 @@ RSpec.describe ShortFormAttachmentJob, type: :job do
 
     it 'logs errors if ShortFormService receives a bad response' do
       response = Hashie::Mash.new(status: 500)
-      expect_any_instance_of(Force::ShortFormService)
+      expect(Force::ShortFormService)
         .to receive(:get)
         .with(application_id)
         .and_return(application)
-      expect_any_instance_of(Force::ShortFormService)
+      expect(Force::ShortFormService)
         .to receive(:attach_file)
         .with(*args)
         .and_return(response)

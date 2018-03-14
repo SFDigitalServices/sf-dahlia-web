@@ -1,32 +1,32 @@
 module Force
   # encapsulate all Salesforce ShortForm querying functions
-  class ShortFormService < Force::Base
-    def check_household_eligibility(listing_id, params)
+  class ShortFormService
+    def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(householdsize childrenUnder6).each do |k|
+      %i[householdsize childrenUnder6].each do |k|
         params[k] = params[k].present? ? params[k].to_i : 0
       end
-      %i(incomelevel).each do |k|
+      %i[incomelevel].each do |k|
         params[k] = params[k].present? ? params[k].to_f : 0
       end
-      cached_api_get(endpoint, params)
+      Request.new.cached_get(endpoint, params)
     end
 
-    def create_or_update(params, contact_attrs)
+    def self.create_or_update(params, contact_attrs)
       params[:primaryApplicant].merge!(contact_attrs)
-      api_post('/shortForm', params)
+      Request.new(retries: 0).post('/shortForm', params)
     end
 
-    def get(id)
-      api_get("/shortForm/#{id}")
+    def self.get(id)
+      Request.new.get("/shortForm/#{id}")
     end
 
-    def get_for_user(contact_id)
-      apps = api_get("/shortForm/list/#{contact_id}")
+    def self.get_for_user(contact_id)
+      apps = Request.new.get("/shortForm/list/#{contact_id}")
       apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
-    def find_listing_application(opts = {})
+    def self.find_listing_application(opts = {})
       applications = get_for_user(opts[:contact_id])
       application = applications.find do |app|
         app['listingID'] == opts[:listing_id]
@@ -37,7 +37,7 @@ module Force
       application
     end
 
-    def autofill(applications, listing_id)
+    def self.autofill(applications, listing_id)
       # applications were already sorted by most recent in get_for_user
       application = applications.find do |app|
         app['status'] == 'Submitted'
@@ -46,7 +46,7 @@ module Force
       application
     end
 
-    def autofill_reset(application, listing_id)
+    def self.autofill_reset(application, listing_id)
       application = Hashie::Mash.new(application.as_json)
       reset = {
         autofill: true,
@@ -69,11 +69,11 @@ module Force
       application.merge(reset)
     end
 
-    def delete(id)
-      api_delete("/shortForm/delete/#{id}")
+    def self.delete(id)
+      Request.new.delete("/shortForm/delete/#{id}")
     end
 
-    def attach_file(application, file, filename)
+    def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/Attachment/#{application['id']}"
       body = {
@@ -85,41 +85,41 @@ module Force
         ApplicationPreferenceID: _short_form_pref_id(application, file),
       }
       Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: #{body}"
-      api_post_with_headers(endpoint, body, headers)
+      Request.new.post_with_headers(endpoint, body, headers)
     end
 
-    def queue_file_attachments(application_id, files)
+    def self.queue_file_attachments(application_id, files)
       files.each do |file|
         ShortFormAttachmentJob.perform_later(application_id, file.id)
       end
     end
 
-    def ownership?(contact_id, application)
+    def self.ownership?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
     end
 
-    def can_claim?(session_uid, application)
+    def self.can_claim?(session_uid, application)
       return false unless application['status'].casecmp('submitted').zero?
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
       session_uid == metadata['session_uid']
-    rescue
+    rescue JSON::ParserError
       false
     end
 
-    def submitted?(application)
+    def self.submitted?(application)
       application['status'] == 'Submitted'
     end
 
-    def _short_form_pref_id(application, file)
+    def self._short_form_pref_id(application, file)
       _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
     end
 
-    def _short_form_pref_member_id(application, file)
+    def self._short_form_pref_member_id(application, file)
       _short_form_pref(application, file).try(:[], 'appMemberID')
     end
 
-    def _short_form_pref(application, file)
+    def self._short_form_pref(application, file)
       application['shortFormPreferences'].find do |preference|
         preference['listingPreferenceID'] == file.listing_preference_id
       end

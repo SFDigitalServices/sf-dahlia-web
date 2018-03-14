@@ -11,7 +11,7 @@ class Api::V1::AccountController < ApiController
     contact = account_params
     contact[:contactID] = current_user.salesforce_contact_id
     contact[:webAppID] = current_user.id
-    salesforce_contact = Force::AccountService.new.create_or_update(contact)
+    salesforce_contact = Force::AccountService.create_or_update(contact)
     Emailer.account_update(current_user).deliver_later
     render json: { contact: salesforce_contact }
   end
@@ -40,12 +40,12 @@ class Api::V1::AccountController < ApiController
   private
 
   def current_user_applications
-    Force::ShortFormService.new.get_for_user(current_user.salesforce_contact_id)
+    Force::ShortFormService.get_for_user(current_user.salesforce_contact_id)
   end
 
   def map_listings_to_applications(applications)
     listing_ids = applications.collect { |a| a['listingID'] }.uniq.sort
-    listings = Force::ListingService.new.listings(listing_ids.join(','))
+    listings = Force::ListingService.listings(listing_ids.join(','))
     applications.each do |app|
       app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }
     end

@@ -8,7 +8,7 @@ class Api::V1::ShortFormController < ApiController
                 ]
 
   def validate_household
-    response = Force::ShortFormService.new.check_household_eligibility(
+    response = Force::ShortFormService.check_household_eligibility(
       params[:listing_id],
       eligibility_params,
     )
@@ -43,7 +43,7 @@ class Api::V1::ShortFormController < ApiController
 
   ####### - Short Form Application RESTful actions
   def show_application
-    @application = Force::ShortFormService.new.get(params[:id])
+    @application = Force::ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     map_listing_to_application
     render json: { application: @application }
@@ -60,7 +60,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    service = Force::ShortFormService.new
+    service = Force::ShortFormService
     response = service.create_or_update(application_params, applicant_attrs)
     if response.present?
       attach_files_and_send_confirmation(response)
@@ -77,7 +77,7 @@ class Api::V1::ShortFormController < ApiController
 
   def update_application
     return if params['autosave'] == 'true' && autosave_disabled
-    @application = Force::ShortFormService.new.get(application_params[:id])
+    @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
     # calls same underlying method for submit
@@ -85,17 +85,17 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def claim_submitted_application
-    @application = Force::ShortFormService.new.get(application_params[:id])
+    @application = Force::ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_claim?(@application)
     # calls same underlying method for submit
     submit_application
   end
 
   def delete_application
-    @application = Force::ShortFormService.new.get(params[:id])
+    @application = Force::ShortFormService.get(params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
-    result = Force::ShortFormService.new.delete(params[:id])
+    result = Force::ShortFormService.delete(params[:id])
     render json: result
   end
 
@@ -110,14 +110,14 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def delete_draft_application(listing_id)
-    applications = Force::ShortFormService.new.get_for_user(user_contact_id)
+    applications = Force::ShortFormService.get_for_user(user_contact_id)
 
     duplicate_draft_applications = applications.select do |app|
       app['listingID'] == listing_id && app['status'].casecmp('draft').zero?
     end
 
     duplicate_draft_applications.each do |app|
-      Force::ShortFormService.new.delete(app['id'])
+      Force::ShortFormService.delete(app['id'])
     end
   end
 
@@ -152,7 +152,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    Force::ShortFormService.new.queue_file_attachments(application_id, files)
+    Force::ShortFormService.queue_file_attachments(application_id, files)
   end
 
   def attach_temp_files_to_user
@@ -172,7 +172,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def map_listing_to_application
-    listing = Force::ListingService.new.listing(@application['listingID'])
+    listing = Force::ListingService.listing(@application['listingID'])
     @application['listing'] = listing
   end
 
@@ -182,7 +182,7 @@ class Api::V1::ShortFormController < ApiController
       listing_id: params[:listing_id],
       autofill: params[:autofill],
     }
-    @application = Force::ShortFormService.new.find_listing_application(opts)
+    @application = Force::ShortFormService.find_listing_application(opts)
   end
 
   def find_application_files
@@ -194,18 +194,18 @@ class Api::V1::ShortFormController < ApiController
 
   def user_can_access?(application)
     return false if application.empty?
-    Force::ShortFormService.new.ownership?(user_contact_id, application)
+    Force::ShortFormService.ownership?(user_contact_id, application)
   end
 
   def user_can_claim?(application)
     # check if they are claiming a submitted application with a newly created account;
     # current session key should match the session that was used to create the application
     uid = params[:temp_session_id]
-    Force::ShortFormService.new.can_claim?(uid, application)
+    Force::ShortFormService.can_claim?(uid, application)
   end
 
   def submitted?(application)
-    Force::ShortFormService.new.submitted?(application)
+    Force::ShortFormService.submitted?(application)
   end
 
   def render_unauthorized_error

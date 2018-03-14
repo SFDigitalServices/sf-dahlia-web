@@ -34,7 +34,7 @@ describe Overrides::RegistrationsController do
     end
 
     it 'saves a salesforce contact id on user' do
-      allow_any_instance_of(Force::AccountService)
+      allow(Force::AccountService)
         .to receive(:create_or_update)
         .and_return(salesforce_response)
 

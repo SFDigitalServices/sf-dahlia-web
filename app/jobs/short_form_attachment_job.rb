@@ -11,7 +11,7 @@ class ShortFormAttachmentJob < ActiveJob::Base
     file = UploadedFile.find(file_id)
     # if file has been cleared out, we can escape
     return unless file.file
-    service = Force::ShortFormService.new
+    service = Force::ShortFormService
     application = service.get(application_id)
     if application
       response = service.attach_file(application, file, file.descriptive_name)
@@ -20,7 +20,7 @@ class ShortFormAttachmentJob < ActiveJob::Base
         file.update(
           file: nil,
           application_id: application_id,
-          delivered_at: DateTime.now,
+          delivered_at: Time.now,
         )
         return
       else
