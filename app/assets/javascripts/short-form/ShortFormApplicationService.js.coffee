@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
-  AnalyticsService, FileUploadService
+  AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -72,11 +72,6 @@ ShortFormApplicationService = (
   Service.refreshSessionUid()
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
-  Service.languageMap =
-    en: 'English'
-    es: 'Spanish'
-    tl: 'Filipino'
-    zh: 'Chinese'
 
   ## initialize other related services
   Service.initServices = ->
@@ -298,8 +293,11 @@ ShortFormApplicationService = (
     Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
-    if _.includes(['neighborhoodResidence', 'antiDisplacement'], preference)
-      # cancelling Neighborhood also cancels liveInSf
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
+      # cancelling NRHP or ADHP also cancels liveInSf
       Service.cancelPreference('liveInSf')
     if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
       # cancels liveWork combo options
@@ -327,8 +325,12 @@ ShortFormApplicationService = (
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
-    if preference == 'neighborhoodResidence'
-      # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
+    # For NRHP and ADHP, if the applicant is eligible and can choose to claim the
+    # preference, we cancel Opt Out for Live/Work as well
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
       Service.cancelOptOut('liveWorkInSf')
 
   Service.preferenceRequired = (preference) ->
@@ -933,11 +935,11 @@ ShortFormApplicationService = (
     _.includes(['Submitted', 'Removed'], application.status)
 
   Service.setApplicationLanguage = (lang) ->
-    Service.application.applicationLanguage = Service.languageMap[lang]
+    Service.application.applicationLanguage = SharedService.getLanguageName(lang)
 
   Service.getLanguageCode = (application) ->
     # will take "English" and return "en"
-    _.invert(Service.languageMap)[application.applicationLanguage]
+    SharedService.getLanguageCode(application.applicationLanguage)
 
   Service.applicationCompletionPercentage = (application) ->
     pct = 5
@@ -974,7 +976,7 @@ ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
-  'AnalyticsService', 'FileUploadService'
+  'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 
 angular

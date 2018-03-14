@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
+ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -21,6 +21,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
+  Service.toggleStates = {}
   Service.forceRecache = false
 
   Service.listingDownloadURLs = []
@@ -100,7 +101,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       if listing_ids.indexOf(favorite_id) == -1
         Service.toggleFavoriteListing(favorite_id)
 
-
   Service.toggleFavoriteListing = (listing_id) ->
     # toggle the value for listing_id
     index = Service.favorites.indexOf(listing_id)
@@ -174,11 +174,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   Service.openLotteryResultsModal = ->
     Service.loading.lotteryRank = false
     Service.error.lotteryRank = false
-    modalInstance = $modal.open({
-      templateUrl: 'listings/templates/listing/_lottery_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-small'
-    })
+    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
 
   Service.listingHasLotteryBuckets = ->
     Service.lotteryBucketInfo &&
@@ -274,6 +270,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+      Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
@@ -299,7 +296,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
       deferred.resolve()
-
 
   Service.getListingsWithEligibility = ->
     params =
@@ -373,7 +369,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       # lotteryResults get reversed (latest lottery results date first)
       if type == 'lotteryResultsListings' then _.reverse listings else listings
 
-
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids, checkFavorites = false) ->
     angular.copy([], Service.listings)
@@ -403,6 +398,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # listing is open if deadline is in the future
     return today > lotteryDate
 
+  Service.lotteryComplete = (listing) ->
+    listing.Lottery_Status == 'Lottery Complete'
+
   Service.lotteryIsUpcoming = (listing) ->
     !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
 
@@ -411,6 +409,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
+    return false if Service.lotteryComplete(listing)
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
@@ -466,7 +465,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
           incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
-
 
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
@@ -749,6 +747,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
 
+  Service.listingIsBMR = (listing) ->
+    ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
+
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
 
@@ -889,7 +890,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate', 'ModalService']
 
 angular
   .module('dahlia.services')
