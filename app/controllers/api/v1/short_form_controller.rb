@@ -75,6 +75,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def update_application
+    return if params['autosave'] == 'true' && autosave_disabled
     @application = ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
@@ -99,6 +100,10 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def autosave_disabled
+    ENV['AUTOSAVE'] == 'false'
+  end
+
   def application_complete
     application_params[:status] == 'submitted'
   end
@@ -116,6 +121,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
+    email_draft_link(response) if first_time_draft?
     if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
@@ -126,6 +132,10 @@ class Api::V1::ShortFormController < ApiController
 
   def draft_application?
     application_params[:status].casecmp('draft').zero?
+  end
+
+  def first_time_draft?
+    draft_application? && !application_params['id']
   end
 
   def initial_submission?
@@ -160,8 +170,17 @@ class Api::V1::ShortFormController < ApiController
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
-      firstName: response['primaryApplicant']['firstName'],
-      lastName: response['primaryApplicant']['lastName'],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_later
+  end
+
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
     ).deliver_later
   end
 

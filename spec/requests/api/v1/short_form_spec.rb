@@ -5,12 +5,16 @@ require 'support/jasmine'
 
 describe 'ShortForm API' do
   login_user
-  listing_id = 'a0W0P00000DZTkAUAX' # 280 Fell
+  listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
   application_show_id = 'a0o0P00000FEUwC'
 
   # WARNING: application will be deleted!
-  # Hint: clone an existing application and use that id
-  application_delete_id = 'a0o0x0000000a8Y'
+  # Hint: to update this, clone the application whose ID we use for application_show_id
+  # and use the id of the cloned app. Do not use any application that has the
+  # logged-in user as primary applicant! That can cause a Salesforce
+  # "APEX_ERROR: System.NullPointerException: Attempt to de-reference a null object"
+  # error when we try to fetch the logged-in user's applications.
+  application_delete_id = 'a0o1g000000D1y2'
 
   # Application must have draft status
   application_update_id = 'a0o0P00000FEUwH'
