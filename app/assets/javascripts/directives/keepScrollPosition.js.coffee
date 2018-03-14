@@ -1,6 +1,7 @@
 angular.module('dahlia.directives')
 .directive 'keepScrollPosition',
-['$state', '$window', '$timeout', '$location', ($state, $window, $timeout, $location) ->
+['$state', '$window', '$timeout', '$location',
+($state, $window, $timeout, $location) ->
   # cache scroll position of each route's templateUrl
   scrollPositions = {}
   locationPath = ''

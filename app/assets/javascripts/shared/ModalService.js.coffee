@@ -8,6 +8,14 @@ ModalService = ($modal, $window) ->
   Service.content = {}
   Service.callbacks = {}
 
+  Service.openModal = (templateUrl, windowClass = 'modal-large') ->
+    if templateUrl
+      Service.modalInstance = $modal.open({
+        templateUrl: templateUrl,
+        controller: 'ModalInstanceController',
+        windowClass: windowClass
+      })
+
   Service.alert = (content, opts = {}) ->
     angular.copy(content, Service.content)
     Service.callbacks.onConfirm = opts.onConfirm if opts.onConfirm
@@ -15,17 +23,16 @@ ModalService = ($modal, $window) ->
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(content.message)
     else
-      if (!Service.modalInstance)
-        Service.modalInstance = $modal.open(
-          templateUrl: 'shared/templates/alert_modal.html',
-          controller: 'ModalInstanceController',
-          windowClass: 'modal-large'
-        )
-        Service.modalInstance.result.then( ->
-          Service.modalInstance = null
-        ).catch( ->
-          Service.modalInstance = null
-        )
+      # close any modal that may already be open before opening a new one
+      Service.closeModal()
+      Service.openModal('shared/templates/alert_modal.html')
+
+  Service.closeModal = () ->
+    Service.modalInstance.close() if Service.modalInstance
+    Service._clearModalInstance()
+
+  Service._clearModalInstance = () ->
+    Service.modalInstance = null
 
   return Service
 

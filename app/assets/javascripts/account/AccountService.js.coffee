@@ -10,7 +10,8 @@ AccountService = (
   $translate,
   bsLoadingOverlayService,
   ShortFormApplicationService,
-  ShortFormDataService
+  ShortFormDataService,
+  ModalService
 ) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
@@ -22,7 +23,6 @@ AccountService = (
   Service.myApplications = []
   Service.currentApplication = {}
   Service.createdAccount = {}
-  Service.accountExists = false
   Service.rememberedShortFormState = null
   Service.accountError =
     messages: {}
@@ -136,16 +136,6 @@ AccountService = (
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
 
-  Service.checkForAccount = (email) ->
-    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
-      Service.accountExists = data.account_exists
-    ).catch( (data, status, headers, config) ->
-      Service.accountExists = false
-    )
-
-  Service.shortFormAccountExists = ->
-    Service.accountExists
-
   Service.signOut = ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
@@ -211,28 +201,16 @@ AccountService = (
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_confirm_email_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_confirm_email_modal.html')
 
   Service.openConfirmationExpiredModal = (email, confirmed = false) ->
     Service.createdAccount.confirmed = confirmed
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_confirmation_expired_modal.html')
 
   Service.openInfoChangedModal = () ->
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_info_changed_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_info_changed_modal.html')
 
   Service.openAlreadySubmittedModal = (application_id, doubleSubmit = false) ->
     currentApplication = _.find(Service.myApplications, {id: application_id})
@@ -240,11 +218,7 @@ AccountService = (
     templateUrl = 'account/templates/partials/_already_submitted.html'
     if doubleSubmit
       templateUrl = 'account/templates/partials/_double_submitted.html'
-    modalInstance = $modal.open({
-      templateUrl: templateUrl,
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal(templateUrl)
 
   #################### helper functions
   Service.showReconfirmedMessage = ->
@@ -328,7 +302,7 @@ AccountService = (
 
 AccountService.$inject = [
   '$state', '$auth', '$modal', '$http', '$translate', 'bsLoadingOverlayService'
-  'ShortFormApplicationService', 'ShortFormDataService'
+  'ShortFormApplicationService', 'ShortFormDataService', 'ModalService'
 ]
 
 angular

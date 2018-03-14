@@ -9,6 +9,9 @@ do ->
       params: {}
       current:
         name: 'name'
+    fakeSharedService =
+      getLanguageName: ->
+      isWelcomePage: ->
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_, $q) ->
@@ -16,6 +19,7 @@ do ->
       deferred = $q.defer()
       locals =
         $state: $fakeState
+        SharedService: fakeSharedService
     )
 
     beforeEach ->
@@ -26,6 +30,14 @@ do ->
         spyOn($fakeState, 'href').and.callThrough()
         ctrl.switchToLanguage('es')
         expect($fakeState.href).toHaveBeenCalledWith('name', {lang: 'es'})
+
+      it 'calls state.href with a language-appropriate state name for welcome pages', ->
+        spyOn($fakeState, 'href').and.callThrough()
+        spyOn(fakeSharedService, 'isWelcomePage').and.returnValue(true)
+        spyOn(fakeSharedService, 'getLanguageName').and.returnValue('Spanish')
+        $fakeState.current.name = 'dahlia.welcome-chinese'
+        ctrl.switchToLanguage('es')
+        expect($fakeState.href).toHaveBeenCalledWith('dahlia.welcome-spanish', {lang: 'es'})
 
     describe 'isSelectedLanguage', ->
       beforeEach ->
