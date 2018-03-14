@@ -733,6 +733,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W0P00000DZKPdUAP': 'Abaca'
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
     'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
+    'a0W0P00000FIuv3UAD': '1335 Folsom Street'
   }
 
   Service.mapSlugToId = (id) ->
