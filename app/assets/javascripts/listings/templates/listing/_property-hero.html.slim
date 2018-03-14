@@ -89,7 +89,9 @@
 
       ng-include src="'listings/templates/listing/_property_unit_stats.html'"
 
-  .content-card ng-if="::listingHasSROUnits()"
+
+  / TODO: remove hardcoded case for 1335 Folsom Street listing
+  .content-card ng-if="::listingHasSROUnits() && !listingIs('1335 Folsom Street')"
     h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
     / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
     p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!listingIs('Merry Go Round Shared Housing')"
