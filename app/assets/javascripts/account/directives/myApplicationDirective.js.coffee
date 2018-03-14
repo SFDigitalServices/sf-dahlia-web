@@ -1,9 +1,9 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
-  '$translate', '$window', '$sce', '$compile',
-  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService',
-  ($translate, $window, $sce, $compile,
-  ShortFormApplicationService, ShortFormNavigationService, ListingService) ->
+  '$translate', '$window', '$sce',
+  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ModalService',
+  ($translate, $window, $sce,
+  ShortFormApplicationService, ShortFormNavigationService, ListingService, ModalService) ->
     replace: true
     scope:
       application: '=application'
@@ -14,6 +14,7 @@ angular.module('dahlia.directives')
       scope.application.deleted = false
       scope.loading = ListingService.loading
       scope.error = ListingService.error
+      scope.deleteDisabled = false
 
       scope.isDeleted = ->
         scope.application.deleted
@@ -29,11 +30,22 @@ angular.module('dahlia.directives')
         summary.join(', ')
 
       scope.deleteApplication = (id) ->
-        if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
-          ShortFormNavigationService.isLoading(true)
-          ShortFormApplicationService.deleteApplication(id).success ->
-            ShortFormNavigationService.isLoading(false)
-            scope.application.deleted = true
+        content =
+          title: $translate.instant('T.DELETE_APPLICATION')
+          cancel: $translate.instant('LABEL.CANCEL')
+          continue: $translate.instant('T.DELETE')
+          message: $translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+          alert: true
+        ModalService.alert(content,
+          onConfirm: ->
+            ShortFormNavigationService.isLoading(true)
+            scope.deleteDisabled = true
+            ShortFormApplicationService.deleteApplication(id).success ->
+              ShortFormNavigationService.isLoading(false)
+              scope.application.deleted = true
+            .error ->
+              scope.deleteDisabled = false
+        )
 
       scope.formattedAddress = ->
         ListingService.formattedAddress(scope.listing, 'Building')

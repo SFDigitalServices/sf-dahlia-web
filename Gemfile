@@ -66,7 +66,7 @@ gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '~> 1.7.1'
+gem 'nokogiri', '~> 1.8.1'
 gem 'actionpack-page_caching', '~> 1.1.0'
 
 # image manipulation
@@ -94,7 +94,7 @@ group :test do
 end
 
 group :development do
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.52.0', require: false
   gem 'rails_best_practices'
   gem 'overcommit'
   # Spring speeds up development by keeping your application running in the
@@ -128,5 +128,6 @@ group :production do
   gem 'dalli'
   gem 'memcachier'
   gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
+  gem 'rails_autoscale_agent'
   gem 'rails_12factor'
 end

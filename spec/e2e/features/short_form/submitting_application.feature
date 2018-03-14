@@ -27,9 +27,17 @@ Feature: Short Form Application
       # now that we've submitted, also create an account
       When I click the Create Account button
       And I fill out my account info with my locked-in application email
-      And I wait "18" seconds
       And I submit the Create Account form
       Then I should be on the login page with the email confirmation popup
+
+    Scenario: Leaving the application pops up a modal
+      Given I go to the first page of the Test Listing application
+      When I try to navigate to the Favorites page
+      And I cancel the modal pop-up
+      Then I should still be on the Test Listing application page
+      Given I try to navigate to the Favorites page
+      When I confirm the modal
+      Then I should see the Favorites page
 
     Scenario: Filling out all details of application and saving draft
       Given I go to the first page of the Test Listing application

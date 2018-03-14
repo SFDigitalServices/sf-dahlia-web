@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
-  $translate, $http, $state, uuid,
+  $translate, $http, $state, $window, uuid,
   ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
-  AnalyticsService, FileUploadService
+  AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
   Service.listing = ListingService.listing
@@ -72,11 +72,6 @@ ShortFormApplicationService = (
   Service.refreshSessionUid()
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
-  Service.languageMap =
-    en: 'English'
-    es: 'Spanish'
-    tl: 'Filipino'
-    zh: 'Chinese'
 
   ## initialize other related services
   Service.initServices = ->
@@ -156,6 +151,11 @@ ShortFormApplicationService = (
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
     return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    # don't save the fact that we're in the middle of verifying address, can end up in a weird state
+    if lastPage == 'verify-address'
+      lastPage = 'contact'
+    else if lastPage == 'household-member-verify-address'
+      lastPage = 'household-members'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -236,7 +236,7 @@ ShortFormApplicationService = (
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
-  # - it's used to setup the monthly-rent page as well as rent-burden-preference pages
+  # - it's used to setup the monthly-rent page as well as rent-burdened-preference pages
   # - it will reset the addresses and Rent Burden if any members/addresses have changed
   Service.groupHouseholdAddresses = ->
     groupedAddresses = []
@@ -293,8 +293,11 @@ ShortFormApplicationService = (
     Service.currentRentBurdenAddress.index = index
 
   Service.cancelPreference = (preference) ->
-    if _.includes(['neighborhoodResidence', 'antiDisplacement'], preference)
-      # cancelling Neighborhood also cancels liveInSf
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
+      # cancelling NRHP or ADHP also cancels liveInSf
       Service.cancelPreference('liveInSf')
     if _.includes(['liveWorkInSf', 'liveInSf', 'workInSf'], preference)
       # cancels liveWork combo options
@@ -322,8 +325,12 @@ ShortFormApplicationService = (
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
-    if preference == 'neighborhoodResidence'
-      # if we cancel our NRHP Opt Out, we cancel liveWorkOptOut as well
+    # For NRHP and ADHP, if the applicant is eligible and can choose to claim the
+    # preference, we cancel Opt Out for Live/Work as well
+    if (
+      (preference == 'neighborhoodResidence' && Service.eligibleForNRHP()) ||
+      (preference == 'antiDisplacement' && Service.eligibleForADHP())
+    )
       Service.cancelOptOut('liveWorkInSf')
 
   Service.preferenceRequired = (preference) ->
@@ -409,8 +416,6 @@ ShortFormApplicationService = (
   Service.refreshPreferences = (type = 'all') ->
     if type == 'liveWorkInSf' || type == 'all'
       Service._updatePreference('liveInSf', Service.liveInSfMembers())
-      Service._updatePreference('workInSf', Service.workInSfMembers())
-    else if type == 'workInSf'
       Service._updatePreference('workInSf', Service.workInSfMembers())
     if type == 'neighborhoodResidence' || type == 'all'
       Service._updatePreference('neighborhoodResidence', Service.liveInTheNeighborhoodMembers())
@@ -528,13 +533,15 @@ ShortFormApplicationService = (
     Service.preferences.documents.liveInSf = {proofOption: proofOption}
 
   Service._updatePreference = (preference, eligibleMembers) ->
-    # only check to reset this preference if it has been selected
-    return unless Service.preferences[preference]
     members = eligibleMembers.map (member) -> member.id
     selectedMember = Service.preferences[preference + '_household_member']
-    # if selected member's eligibility is changed, invalidate form, cancel preference and force user to review again
-    if _.isEmpty(members) || selectedMember && !_.includes(members, selectedMember)
-      Service.resetPreference(preference)
+    # if nobody is eligible
+    if _.isEmpty(members) ||
+      # or we've selected the preference and the selected member is no longer eligible
+      (Service.preferences[preference] && selectedMember && !_.includes(members, selectedMember)) ||
+      # or we're eligible but we don't seem to have any answer (selected or opted out)
+      (!_.isEmpty(members) && !Service.preferences.optOut && !Service.preferences[preference])
+        Service.resetPreference(preference)
 
   Service.resetPreference = (preference) ->
     # this should be called when you're cancelling the preference from an external factor
@@ -572,7 +579,7 @@ ShortFormApplicationService = (
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
       # special case for rentBurden subpages
-      return if stateName.match(/rent-burden-preference-edit/)
+      return if stateName.match(/rent-burdened-preference-edit/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
@@ -619,6 +626,17 @@ ShortFormApplicationService = (
       toState.name != 'dahlia.short-form-application.review-submitted' &&
       toState.name != 'dahlia.short-form-application.create-account' &&
       Service.isShortFormPage(toState)
+
+  Service.leaveAndResetShortForm = (toState, toParams) ->
+    # disable the onbeforeunload so that you are no longer bothered if you
+    # try to reload the listings page, for example
+    $window.removeEventListener 'beforeunload', Service.onExit
+    unless toState.name == 'dahlia.short-form-review'
+      Service.resetApplicationData()
+    if toParams.timeout
+      AnalyticsService.trackTimeout('Application')
+    else
+      AnalyticsService.trackFormAbandon('Application')
 
   Service.invalidateNameForm = ->
     Service.application.validatedForms['You']['name'] = false
@@ -691,6 +709,8 @@ ShortFormApplicationService = (
       uploaded_file:
         session_uid: Service.session_uid
 
+    autosave = if options.autosave then '?autosave=true' else ''
+
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
@@ -701,10 +721,10 @@ ShortFormApplicationService = (
       if options.attachToAccount
         appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
       else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}", params)
+        appSubmission = $http.put("/api/v1/short-form/application/#{id}#{autosave}", params)
     else
       # create
-      appSubmission = $http.post('/api/v1/short-form/application', params)
+      appSubmission = $http.post("/api/v1/short-form/application#{autosave}", params)
 
     appSubmission.success((data, status, headers, config) ->
       if data.lotteryNumber
@@ -799,7 +819,7 @@ ShortFormApplicationService = (
     if !_.isEmpty(Service.application) && Service.application.status.match(/draft/i)
       Service.refreshPreferences('all')
 
-  Service.checkForProofPrefs = (formattedApp) ->
+  Service.checkForProofPrefs = (formattedApp = Service.application) ->
     proofPrefs = [
       'liveInSf',
       'workInSf',
@@ -914,11 +934,11 @@ ShortFormApplicationService = (
     _.includes(['Submitted', 'Removed'], application.status)
 
   Service.setApplicationLanguage = (lang) ->
-    Service.application.applicationLanguage = Service.languageMap[lang]
+    Service.application.applicationLanguage = SharedService.getLanguageName(lang)
 
   Service.getLanguageCode = (application) ->
     # will take "English" and return "en"
-    _.invert(Service.languageMap)[application.applicationLanguage]
+    SharedService.getLanguageCode(application.applicationLanguage)
 
   Service.applicationCompletionPercentage = (application) ->
     pct = 5
@@ -952,10 +972,10 @@ ShortFormApplicationService = (
 ############################################################################################
 
 ShortFormApplicationService.$inject = [
-  '$translate', '$http', '$state', 'uuid',
+  '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
   'AddressValidationService', 'GeocodingService',
-  'AnalyticsService', 'FileUploadService'
+  'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 
 angular

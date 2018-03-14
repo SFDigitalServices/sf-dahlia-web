@@ -1,12 +1,14 @@
-ModalInstanceController = ($scope, $modalInstance, AccountService) ->
-  # on instantiation, set the AccountService modalinstance
-  # this is to give the service the ability to close the modal upon signing out
-  AccountService.modalInstance = $modalInstance
+ModalInstanceController = ($scope, ModalService) ->
+  $scope.content = ModalService.content
 
   $scope.closeModal = () ->
-    $modalInstance.close()
+    ModalService.closeModal()
 
-ModalInstanceController.$inject = ['$scope', '$modalInstance', 'AccountService']
+  $scope.confirm = ->
+    ModalService.callbacks.onConfirm() if ModalService.callbacks.onConfirm
+    $scope.closeModal()
+
+ModalInstanceController.$inject = ['$scope', 'ModalService']
 
 angular
   .module('dahlia.controllers')
