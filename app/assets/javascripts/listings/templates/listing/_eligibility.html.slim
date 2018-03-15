@@ -57,8 +57,10 @@ accordion-heading.lead
         header.custom-counter_header
           h4.custom-counter_title
             | {{'T.OCCUPANCY' | translate}}
-          p.custom-counter_text ng-if="::listingHasOnlySROUnits()"
+          p.custom-counter_text ng-if="::listingHasOnlySROUnits() && !listingIs('1335 Folsom Street')"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
+          p.custom-counter_text ng-if="::listingIs('1335 Folsom Street')"
+            | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL' | translate:"{ numberOfPeople: '2' }"}}
           p.custom-counter_text ng-if="::!listingHasOnlySROUnits() && listingHasSROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
           p.custom-counter_text ng-if="::!listingHasOnlySROUnits() && !listingHasSROUnits()"
