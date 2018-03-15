@@ -114,3 +114,28 @@ do ->
         fakeShortFormApplicationService.application.surveyComplete = true
         page = ShortFormNavigationService.getLandingPage({name: 'Review'})
         expect(page).toEqual 'review-summary'
+
+    describe 'redirectToListingIfNoApplication', ->
+      beforeEach ->
+        # reset the spy so that we can check for "not" toHaveBeenCalled
+        $state.go = jasmine.createSpy()
+        fakeShortFormApplicationService.Listing = {}
+
+      it "doesn't redirect if the application has a lottery number", ->
+        fakeShortFormApplicationService.application.lotteryNumber = 12345678
+        ShortFormNavigationService.redirectIfNoApplication()
+        expect($state.go).not.toHaveBeenCalled()
+
+      it 'redirects to the application start if there is a listing id and no lottery number', ->
+        fakeShortFormApplicationService.application.lotteryNumber = undefined
+        listingId = '192837465'
+        fakeShortFormApplicationService.Listing.Id = listingId
+        params = { id: listingId }
+        ShortFormNavigationService.redirectIfNoApplication()
+        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', params)
+
+      it 'redirects to the home page if there is no listing id and no lottery number', ->
+        fakeShortFormApplicationService.application.lotteryNumber = undefined
+        fakeShortFormApplicationService.Listing.Id = undefined
+        ShortFormNavigationService.redirectIfNoApplication()
+        expect($state.go).toHaveBeenCalledWith('dahlia.welcome')

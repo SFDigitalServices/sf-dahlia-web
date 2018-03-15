@@ -1007,9 +1007,8 @@
         'container':
           templateUrl: 'short-form/templates/g1-confirmation.html'
       onEnter: [
-        '$stateParams', 'ShortFormNavigationService',
-        ($stateParams, ShortFormNavigationService) ->
-          ShortFormNavigationService.redirectIfNoApplication($stateParams.id)
+        'ShortFormNavigationService', (ShortFormNavigationService) ->
+          ShortFormNavigationService.redirectIfNoApplication()
         ]
     })
     .state('dahlia.short-form-application.review-submitted', {
@@ -1019,9 +1018,8 @@
           templateUrl: 'short-form/templates/review-application.html'
           controller: 'ShortFormApplicationController'
       onEnter: [
-        '$stateParams', 'ShortFormNavigationService',
-        ($stateParams, ShortFormNavigationService) ->
-          ShortFormNavigationService.redirectIfNoApplication($stateParams.id)
+        'ShortFormNavigationService', (ShortFormNavigationService) ->
+          ShortFormNavigationService.redirectIfNoApplication()
         ]
     })
     # Short form submission: Review
