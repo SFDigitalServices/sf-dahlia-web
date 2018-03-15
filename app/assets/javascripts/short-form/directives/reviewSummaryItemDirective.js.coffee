@@ -5,10 +5,7 @@ angular.module('dahlia.directives')
     label: '@'
     subLabel: '@'
     boldSubLabel: '@'
+    rentBurdenSubLabels: '='
     identifier: '@'
-    getLabels: '&'
   transclude: true
   templateUrl: 'short-form/directives/review-summary-item.html'
-
-  link: (scope, elem, attrs) ->
-    scope.labels = scope.getLabels() if scope.getLabels
