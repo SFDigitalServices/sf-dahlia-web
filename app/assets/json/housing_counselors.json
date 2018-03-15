@@ -1,9 +1,9 @@
 { "locations": [
     {
-      "name": "BALANCE (formerly Consumer Credit Counseling)",
+      "name": "BALANCE",
       "languages": ["English", "Cantonese", "Spanish", "Filipino", "Russian"],
-      "address": "595 Market St, 9th Floor",
-      "citystate": "San Francisco, CA 94105",
+      "address": "1390 Market St, Suite 200",
+      "citystate": "San Francisco, CA 94102",
       "phone": "(800) 777-7526",
       "website": "http://www.balancepro.org"
     },
