@@ -947,14 +947,6 @@ ShortFormApplicationService = (
     pct += 30 if application.completedSections.Preferences
     pct
 
-  Service.beforeEnteringSubmittedAppPage = () ->
-    applicationDataExists = !!Service.application.lotteryNumber
-    return if applicationDataExists
-    if Service.Listing and Service.Listing.Id
-      $state.go('dahlia.listing', { id: Service.Listing.Id })
-    else
-      $state.go('dahlia.listings')
-
   # wrappers for other Service functions
   Service.DOBValid = ShortFormDataService.DOBValid
 
