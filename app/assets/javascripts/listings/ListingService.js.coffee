@@ -657,7 +657,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if Service.listingIs('Merry Go Round Shared Housing')
+    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
       max = 2
     else if Service.listingHasOnlySROUnits(listing)
       max = 1
@@ -666,7 +666,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
-    if Service.listingIs('Merry Go Round Shared Housing')
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
       return 2
     else if Service.listingHasOnlySROUnits(Service.listing)
       return 1
