@@ -625,6 +625,7 @@ ShortFormApplicationService = (
     fromState.name == 'dahlia.short-form-application.confirmation' &&
       toState.name != 'dahlia.short-form-application.review-submitted' &&
       toState.name != 'dahlia.short-form-application.create-account' &&
+      toState.name != 'dahlia.short-form-application.confirmation' &&
       Service.isShortFormPage(toState)
 
   Service.leaveAndResetShortForm = (toState, toParams) ->
