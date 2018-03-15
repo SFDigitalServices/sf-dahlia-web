@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:27 GMT
+      - Wed, 28 Feb 2018 23:20:31 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,14 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - upgrade-insecure-requests
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=Y2ca6R51QU-LiajXQ-Z2Bw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:27 GMT
+      - BrowserId=3fnIilKZRFCTUN9KWbhqnQ;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:31 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs51.my.salesforce.com","id":"https://test.salesforce.com/id/00D4B000000D2n3UAC/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1489512807368","signature":"DzpV+VjfOZnWUh7rYFDo23nIE/Y6g5KDcUGndGPg8No="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519860031701","signature":"WHvu1UNnNilXhtyadkrXOAjmcCov1GUJGplvr0gfFG8="}'
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:27 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:31 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs51.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0WU000000ClNXGMA3?childrenUnder6=0&householdsize=10&incomelevel=10000.0
+    uri: https://sfhousing--full.cs96.my.salesforce.com/services/apexrest/Listing/EligibilityCheck/a0W0P00000F8YG4UAN?childrenUnder6=0&householdsize=10&incomelevel=10000.0
     body:
       encoding: US-ASCII
       string: ''
@@ -74,17 +71,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 14 Mar 2017 17:33:27 GMT
-      Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4B000000D2n3";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - Wed, 28 Feb 2018 23:20:32 GMT
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=31536002; includeSubDomains
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
+        pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1g0000004c5rp";
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=Wog5ecLJSoywLA2YbO87VQ;Path=/;Domain=.salesforce.com;Expires=Sat,
-        13-May-2017 17:33:27 GMT
+      - BrowserId=9VNkzi-7RmueA-O9fR9JmQ;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:32 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -95,8 +95,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"listingId":"a0WU000000ClNXGMA3","incomeMatch":false,"incomeEligibilityResult":"Too
+      string: '{"listingId":"a0W0P00000F8YG4UAN","incomeMatch":false,"incomeEligibilityResult":"Too
         Low","householdMatch":false,"householdEligibilityResult":"Too Big"}'
     http_version: 
-  recorded_at: Tue, 14 Mar 2017 17:33:28 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:32 GMT
 recorded_with: VCR 3.0.3

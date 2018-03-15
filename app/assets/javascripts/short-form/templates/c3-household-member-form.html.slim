@@ -6,25 +6,23 @@
       | {{'C3_HOUSEHOLD_MEMBER_FORM.P1' | translate}}
 
   .app-inner.inset.border-bottom
-    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName')) }"
+    .form-group ng-class="{ error: (inputInvalid('firstName') || inputInvalid('lastName') || inputInvalid('middleName')) }"
       h3.form-label.caps
         | {{'LABEL.HOUSEHOLD_MEMBER_NAME' | translate}}
       label.sr-only for="houshold_member_first_name"
         | {{'LABEL.FIRST_NAME' | translate}}
-      input#houshold_member_first_name ng-model="householdMember.firstName" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error"
-      small.error#houshold_member_first_name_error ng-show="inputInvalid('firstName')"
-        | {{'ERROR.FIRST_NAME' | translate}}
+      input#houshold_member_first_name(ng-model="householdMember.firstName" maxlength="{{::INPUT_MAX_LENGTH.firstName}}" name="firstName" ng-required="true" placeholder="{{'LABEL.FIRST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('firstName') }" aria-describedby="houshold_member_first_name_error" ng-pattern="latinRegex" translated-error="ERROR.FIRST_NAME" input-error)
+
       label.sr-only for="household_member_middle_name"
         | {{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})
-      input#household_member_middle_name ng-model="householdMember.middleName" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text"
+      input#household_member_middle_name(ng-model="householdMember.middleName" maxlength="{{::INPUT_MAX_LENGTH.middleName}}" name="middleName" placeholder="{{'LABEL.MIDDLE_NAME' | translate}} ({{'T.OPTIONAL' | translate | lowercase}})" type="text" ng-class="{ error: inputInvalid('middleName') }" ng-pattern="latinRegex" input-error)
+
       label.sr-only for="household_member_last_name"
         | {{'LABEL.LAST_NAME' | translate}}
-      input#household_member_last_name ng-model="householdMember.lastName" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error"
-      small.error#household_member_last_name_error ng-show="inputInvalid('lastName')"
-        | {{'ERROR.LAST_NAME' | translate}}
+      input#household_member_last_name(ng-model="householdMember.lastName" maxlength="{{::INPUT_MAX_LENGTH.lastName}}" name="lastName" ng-required="true" placeholder="{{'LABEL.LAST_NAME' | translate}}" type="text" ng-class="{ error: inputInvalid('lastName') }" aria-describedby="household_member_last_name_error" ng-pattern="latinRegex" translated-error="ERROR.LAST_NAME" input-error)
 
   .app-inner.inset.border-bottom
-    .form-group ng-class="{ error: (inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')) }"
+    .form-group ng-class="{ error: applicantDOB_hasError() }"
       h3.form-label.caps
         | {{'LABEL.DOB' | translate}}
       .form-date-of-birth.row.collapse
@@ -40,8 +38,8 @@
         .form-group-year.large-2.columns.end
           label.sr-only for="date_of_birth_year"
             | {{'LABEL.DOB_YEAR' | translate}}
-          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') }" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\') && householdMemberValidAge($value)'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
-      small.error#date_of_birth_error ng-show="inputInvalid('date_of_birth_day') || inputInvalid('date_of_birth_month') || inputInvalid('date_of_birth_year')"
+          input#date_of_birth_year.no-margin(ng-model="householdMember.dob_year" maxlength="4" name="date_of_birth_year" ng-required="true" placeholder="YYYY" type="text" ng-class="{ error: inputInvalid('date_of_birth_year') || eligibilityErrors.length}" pattern="\d*" ui-validate="'DOBValid(\'year\', $value, \'householdMember\') && !householdMemberUnder0()'" numeric-only="" autocomplete="off" ng-change="recheckDOB('householdMember')" aria-describedby="date_of_birth_error")
+      small.error#date_of_birth_error ng-show="applicantDOB_hasError()"
         | {{'ERROR.DOB' | translate}}
 
   .app-inner.inset.border-bottom
@@ -49,10 +47,13 @@
       label.form-label.caps id="hasSameAddressAsApplicant_label"
         | {{'LABEL.MEMBER_SAME_ADDRESS' | translate}}
       .radio-group.padding-top--half role="radiogroup" aria-labelledby="hasSameAddressAsApplicant_label"
-        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='Yes' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress"
+        radio-block-item value='No' user='householdMember' name='hasSameAddressAsApplicant' ng-required='true' on-change="resetHouseholdMemberAddress" aria-describedby="household_member_same_address_error"
           | {{'T.NO' | translate}}
+
+        small.error#household_member_same_address_error ng-show="inputInvalid('hasSameAddressAsApplicant')"
+         | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
     .form-group.row ng-if="householdMember.hasSameAddressAsApplicant == 'No'" ng-class="{error: addressInputInvalid('home_address')}"
       p.form-note.margin-bottom
@@ -60,8 +61,7 @@
 
       address-form address-type="home_address" model='householdMember' model-name='householdMember' is-required="true" on-change="addressChange('householdMember')"
 
-      small.error ng-if="addressFailedValidation('home_address')"
-        | {{'ERROR.ADDRESS_VALIDATION' | translate}}
+      address-error error="addressValidationError('home_address')"
 
   .app-inner.inset.border-bottom
     .form-group ng-class="{ error: inputInvalid('workInSf') }"
@@ -70,10 +70,13 @@
       p.form-note.margin-bottom
         | {{'C3_HOUSEHOLD_MEMBER_FORM.WORK_IN_SF_DESC' | translate}}
       .radio-group role="radiogroup" aria-labelledby="workInSf_label"
-        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='Yes' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.YES' | translate}}
-        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true'
+        radio-block-item value='No' user='householdMember' name='workInSf' ng-required='true' aria-describedby="household_member_workInSf_error"
           | {{'T.NO' | translate}}
+
+      small.error#household_member_workInSf_error ng-show="inputInvalid('workInSf')"
+       | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
       small.highlight ng-if="householdMember.workInSf == 'Yes'"
         | {{'B2_CONTACT.CLAIM_WORK_IN_SF' | translate}}
@@ -85,17 +88,17 @@
       select#household_member_relationship ng-model="householdMember.relationship" data-width="auto" ng-required="true" name="relationship" ng-class="{ error: inputInvalid('relationship') }" aria-describedby="household_member_relationship_error"
         option value=""
           | {{'LABEL.SELECT_ONE' | translate}}
-        option ng-repeat="relationship in relationship_options" value="{{relationship}}"
-          | {{ relationship }}
+        option ng-repeat="relationship in relationship_options" value="{{relationship[0]}}"
+          | {{relationship[1] | translate}}
       small.error#household_member_relationship_error ng-show="inputInvalid('relationship')"
        | {{'ERROR.HOUSEHOLD_MEMBER_RELATIONSHIP' | translate}}
 
   .button-pager
     .button-pager_row.primary
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
-      input.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_SAVE' | translate}}" ng-if="!householdMember.id"
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_UPDATE' | translate}}" ng-if="householdMember.id"
+      input#submit.button.primary.radius.expand-small type="submit" value="{{'LABEL.HOUSEHOLD_MEMBER_SAVE' | translate}}" ng-if="!householdMember.id"
     .button-pager_row
-      button.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
+      button#cancel-member.button.button-link.button-lined.small-text-center.expand-small ng-click="cancelHouseholdMember()"
         span ng-if="!householdMember.id"
           | {{'LABEL.HOUSEHOLD_MEMBER_CANCEL' | translate}}
         span ng-if="householdMember.id"

@@ -1,26 +1,51 @@
-# allow trailing slashes and don't force case sensitivity on routes
-@dahlia.config ['$urlMatcherFactoryProvider', ($urlMatcherFactoryProvider) ->
-  $urlMatcherFactoryProvider.caseInsensitive(true)
-  $urlMatcherFactoryProvider.strictMode(false)
-]
-
 @dahlia.config ['$httpProvider', ($httpProvider) ->
   $httpProvider.defaults.useXDomain = true
   delete $httpProvider.defaults.headers.common["X-Requested-With"]
   $httpProvider.defaults.headers.common["Accept"] = "application/json"
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
+  $httpProvider.defaults.headers.get = {}
 
-  $httpProvider.interceptors.push ["$location", "$rootScope", "$q", ($location, $rootScope, $q) ->
-    success = (response) ->
-      response
-    error = (response) ->
-      if _([400, 401]).includes(response.status)
-        $rootScope.$broadcast "event:unauthorized"
-        $location.path ""
-        return response
-      $q.reject response
-    return (promise) ->
-      promise.then success, error
+  $httpProvider.interceptors.push [
+    '$location', '$rootScope', '$injector', '$q', '$translate',
+    ($location, $rootScope, $injector, $q, $translate) ->
+
+      return {
+        # This is set up to universally capture HTTP errors, particularly 503 or 504, when a bad request / timeout occurred.
+        # It will pop up an alert and stop the spinning loader and re-enable short form inputs so that the user can try again.
+        responseError: (error) ->
+          if error.status >= 500
+            $injector.invoke [
+              '$http', 'bsLoadingOverlayService', 'ShortFormNavigationService', '$state',
+              ($http, bsLoadingOverlayService, ShortFormNavigationService, $state) ->
+                # this will call bsLoadingOverlayService.stop(), even if not on short form
+                ShortFormNavigationService.isLoading(false)
+                # don't display alerts in E2E tests
+                return if window.protractor
+
+                # AMI, lottery_ranking, unit data, preferences and lottery_buckets have their own handler
+                return if error.config.url.match(RegExp('listings/ami|lottery_ranking|units|lottery_buckets'))
+
+                if error.status == 504
+                  # handle timeout errors
+                  # if the timeout was encountered when trying to validate user token,
+                  # don't show alert, instead redirect to sign in page
+                  if (error.data.message.indexOf('user_token_validation') >= 0)
+                    $state.go('dahlia.sign-in', {userTokenValidationTimeout: true})
+                    return
+                  else
+                    alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                else if error.data.message.indexOf('APEX_ERROR') >= 0
+                  # handle Salesforce errors that aren't timeouts
+                  salesforceError = error.data.message.split("Class")[0].split("APEX_ERROR: ")[1]
+                  alertMessage = "An error occurred: " + salesforceError
+                else
+                  # handle non-timeout, non-Salesforce errors
+                  alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
+                alert(alertMessage)
+                error
+            ]
+          return $q.reject(error)
+      }
   ]
 ]
 
@@ -51,16 +76,23 @@
 ]
 
 @dahlia.config ['$translateProvider', ($translateProvider) ->
-  # will generate new timestamp every hour
-  timestamp = Math.floor(new Date().getTime() / (1000 * 60 * 60))
   $translateProvider
     .preferredLanguage('en')
     .fallbackLanguage('en')
     .useSanitizeValueStrategy('sceParameters')
-    .useStaticFilesLoader(
-      prefix: '/translations/locale-'
-      suffix: ".json?t=#{timestamp}"
+    .useLoader('assetPathLoader') # custom loader, see below
+]
+
+@dahlia.factory 'assetPathLoader', ['$q', '$http', ($q, $http) ->
+  (options) ->
+    deferred = $q.defer()
+    # asset paths have unpredictable hash suffixes, which is why we need the custom loader
+    $http.get(STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
+      deferred.resolve(data)
+    ).error( ->
+      deferred.reject(options.key)
     )
+    return deferred.promise
 ]
 
 @dahlia.config ['$titleProvider', ($titleProvider) ->
@@ -70,6 +102,10 @@
   ]
 ]
 
+@dahlia.config ['httpEtagProvider', (httpEtagProvider) ->
+  httpEtagProvider.defineCache 'persistentCache',
+    cacheService: 'localStorage'
+]
 
 getAvailableStorageType = ->
   # When Safari (OS X or iOS) is in private browsing mode, it appears as though localStorage and sessionStorage

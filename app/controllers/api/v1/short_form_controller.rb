@@ -1,12 +1,13 @@
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   ShortFormService = SalesforceService::ShortFormService
+  ListingService = SalesforceService::ListingService
   before_action :authenticate_user!,
-                only: %i(
+                only: %i[
                   show_application
                   update_application
                   delete_application
-                )
+                ]
 
   def validate_household
     response = ShortFormService.check_household_eligibility(
@@ -21,7 +22,7 @@ class Api::V1::ShortFormController < ApiController
     # get rid of any previous uploads for this preference
     # (e.g. from an abandoned session or if you unchecked the box)
     destroy_files_for_listing_preference
-    @uploaded_file = UploadedFile.create(uploaded_file_attrs)
+    @uploaded_file = UploadedFile.create_and_resize(uploaded_file_attrs)
     if @uploaded_file
       render json: {
         success: true,
@@ -63,17 +64,17 @@ class Api::V1::ShortFormController < ApiController
   def submit_application
     response = ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
-      attach_files_and_send_confirmation(response)
-      if current_user && application_complete
-        delete_draft_application(application_params[:listingID])
-      end
+      process_submit_app_response(response)
       render json: response
     else
       render json: { error: ShortFormService.error }, status: 422
     end
+  rescue Faraday::ClientError => e
+    handle_submit_error(e)
   end
 
   def update_application
+    return if params['autosave'] == 'true' && autosave_disabled
     @application = ShortFormService.get(application_params[:id])
     return render_unauthorized_error unless user_can_access?(@application)
     return render_unauthorized_error if submitted?(@application)
@@ -98,6 +99,16 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def process_submit_app_response(response)
+    attach_files_and_send_confirmation(response)
+    return unless current_user && application_complete
+    delete_draft_application(application_params[:listingID])
+  end
+
+  def autosave_disabled
+    ENV['AUTOSAVE'] == 'false'
+  end
+
   def application_complete
     application_params[:status] == 'submitted'
   end
@@ -115,12 +126,21 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
-    if application_params[:status].casecmp('draft').zero? && user_signed_in?
+    email_draft_link(response) if first_time_draft?
+    if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
-      send_attached_files(response['id'])
+      send_attached_files(response.try(:[], 'id'))
       send_submit_app_confirmation(response)
     end
+  end
+
+  def draft_application?
+    application_params[:status].casecmp('draft').zero?
+  end
+
+  def first_time_draft?
+    draft_application? && !application_params['id']
   end
 
   def initial_submission?
@@ -141,9 +161,7 @@ class Api::V1::ShortFormController < ApiController
       )
       files = UploadedFile.where(upload_params)
     end
-    ShortFormService.attach_files(application_id, files)
-    # now that files are saved in SF, remove temp uploads
-    files.destroy_all
+    ShortFormService.queue_file_attachments(application_id, files)
   end
 
   def attach_temp_files_to_user
@@ -153,12 +171,22 @@ class Api::V1::ShortFormController < ApiController
 
   def send_submit_app_confirmation(response)
     Emailer.submission_confirmation(
+      locale: params[:locale],
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
-      firstName: response['primaryApplicant']['firstName'],
-      lastName: response['primaryApplicant']['lastName'],
-    ).deliver_now
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_later
+  end
+
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_later
   end
 
   def map_listing_to_application
@@ -167,13 +195,12 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def find_listing_application
-    @application = nil
-    applications = ShortFormService.get_for_user(user_contact_id)
-    applications.each do |application|
-      if application['listingID'] == params[:listing_id]
-        @application = application
-      end
-    end
+    opts = {
+      contact_id: user_contact_id,
+      listing_id: params[:listing_id],
+      autofill: params[:autofill],
+    }
+    @application = ShortFormService.find_listing_application(opts)
   end
 
   def find_application_files
@@ -203,6 +230,13 @@ class Api::V1::ShortFormController < ApiController
     render json: { error: 'unauthorized' }, status: 401
   end
 
+  def handle_submit_error(e)
+    if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
+      return render_error(e, status: 500, external_capture: true)
+    end
+    raise e.class, e.message
+  end
+
   def applicant_attrs
     {
       contactId: user_contact_id,
@@ -221,10 +255,9 @@ class Api::V1::ShortFormController < ApiController
   def unconfirmed_user_with_temp_session_id
     return false if params[:temp_session_id].blank?
     @unconfirmed_user = User.find_by_temp_session_id(params[:temp_session_id])
-    if @unconfirmed_user
-      params.delete :temp_session_id
-      @unconfirmed_user.update(temp_session_id: nil)
-    end
+    return unless @unconfirmed_user
+    params.delete :temp_session_id
+    @unconfirmed_user.update(temp_session_id: nil)
   end
 
   def current_user_id
@@ -239,35 +272,39 @@ class Api::V1::ShortFormController < ApiController
     file_params = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
     }
-    preference = file_params.delete(:preference)
+    %i[address rent_burden_index].each do |field|
+      file_params[field] = uploaded_file_params[field] if uploaded_file_params[field]
+    end
+    rent_burden_type = uploaded_file_params[:rent_burden_type]
     if user_signed_in?
       file_params.delete(:session_uid)
       file_params[:user_id] = current_user.id
     end
-    uploaded_files = UploadedFile.send(preference).where(file_params)
-    return false unless uploaded_files.any?
+    uploaded_files = UploadedFile.where(file_params)
+    uploaded_files = uploaded_files.send(rent_burden_type) if rent_burden_type
     uploaded_files.destroy_all
   end
 
   def eligibility_params
     params.require(:eligibility)
-          .permit(%i(householdsize incomelevel childrenUnder6))
+          .permit(%i[householdsize incomelevel childrenUnder6])
   end
 
   def uploaded_file_params
     params.require(:uploaded_file)
-          .permit(%i(file session_uid listing_id
-                     document_type preference))
+          .permit(%i[file session_uid listing_id listing_preference_id
+                     document_type address rent_burden_type rent_burden_index])
   end
 
   def application_params
     params.require(:application)
           .permit(
             :id,
+            :applicationLanguage,
             {
-              primaryApplicant: %i(
+              primaryApplicant: %i[
                 contactId
                 appMemberId
                 language
@@ -290,6 +327,7 @@ class Api::V1::ShortFormController < ApiController
                 genderOther
                 ethnicity
                 race
+                sexAtBirth
                 sexualOrientation
                 sexualOrientationOther
                 hiv
@@ -302,15 +340,15 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
-              ),
+              ],
             },
             {
-              alternateContact: %i(
+              alternateContact: %i[
                 appMemberId
                 language
                 alternateContactType
@@ -325,10 +363,10 @@ class Api::V1::ShortFormController < ApiController
                 mailingCity
                 mailingState
                 mailingZip
-              ),
+              ],
             },
             {
-              householdMembers: %i(
+              householdMembers: %i[
                 appMemberId
                 firstName
                 lastName
@@ -342,27 +380,38 @@ class Api::V1::ShortFormController < ApiController
                 city
                 state
                 zip
-                neighborhoodPreferenceMatch
+                preferenceAddressMatch
                 xCoordinate
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
-              ),
+              ],
             },
             :listingID,
-            :displacedPreferenceNatKey,
-            :certOfPreferenceNatKey,
-            :liveInSfPreferenceNatKey,
-            :workInSfPreferenceNatKey,
-            :neighborhoodResidencePreferenceNatKey,
-            :liveWorkOptOut,
-            :neighborhoodPreferenceOptOut,
+            {
+              shortFormPreferences: %i[
+                listingPreferenceID
+                recordTypeDevName
+                appMemberID
+                certificateNumber
+                naturalKey
+                preferenceProof
+                optOut
+                individualPreference
+                shortformPreferenceID
+              ],
+            },
+            :answeredCommunityScreening,
+            :adaPrioritiesSelected,
             :householdVouchersSubsidies,
             :referral,
+            :hasPublicHousing,
+            :hasMilitaryService,
+            :hasDevelopmentalDisability,
             :annualIncome,
             :monthlyIncome,
+            :totalMonthlyRent,
             :agreeToTerms,
-            :surveyComplete,
             :applicationSubmissionType,
             :applicationSubmittedDate,
             :status,
@@ -374,11 +423,14 @@ class Api::V1::ShortFormController < ApiController
     attrs = {
       session_uid: uploaded_file_params[:session_uid],
       listing_id: uploaded_file_params[:listing_id],
-      preference: uploaded_file_params[:preference],
+      listing_preference_id: uploaded_file_params[:listing_preference_id],
       document_type: uploaded_file_params[:document_type],
-      file: uploaded_file_params[:file].read,
+      file: uploaded_file_params[:file],
       name: uploaded_file_params[:file].original_filename,
       content_type: uploaded_file_params[:file].content_type,
+      address: uploaded_file_params[:address],
+      rent_burden_type: uploaded_file_params[:rent_burden_type],
+      rent_burden_index: uploaded_file_params[:rent_burden_index],
     }
     attrs[:user_id] = current_user.id if user_signed_in?
     attrs

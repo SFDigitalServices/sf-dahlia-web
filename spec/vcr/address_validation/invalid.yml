@@ -14,7 +14,7 @@ http_interactions:
       User-Agent:
       - EasyPost/v2 RubyClient/2.1.11
       Authorization:
-      - Bearer <<EASYPOST_API_KEY>>
+      - "<<ACCESS_TOKEN>>"
       Content-Type:
       - application/x-www-form-urlencoded
       Content-Length:
@@ -31,7 +31,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       X-Ep-Request-Uuid:
-      - 9d662082-2def-40eb-8c74-633d2ff727e5
+      - f5d7ad09-da47-40cd-b14c-dbe1863e0a49
       Cache-Control:
       - no-cache, no-store, must-revalidate, private
       Pragma:
@@ -39,39 +39,38 @@ http_interactions:
       Expires:
       - '0'
       Location:
-      - "/api/v2/addresses/adr_ba3f0e7f813a44448908e503a5579142"
+      - "/api/v2/addresses/adr_b8976fd5e0254173b92ea25ab21aac23"
       Content-Type:
       - application/json; charset=utf-8
-      X-Request-Id:
-      - 21950ff5-ff97-4cab-b403-ed1611f72ab2
       X-Runtime:
-      - '0.334818'
+      - '0.122086'
       Content-Encoding:
       - gzip
       Transfer-Encoding:
       - chunked
       X-Node:
-      - e8e9178a41
+      - 85fe40d5de
+      - bigweb4sj
       - easypost
-      - web11sj
       X-Backend:
       - easypost
       X-Proxied:
-      - lb5sj, 95ad0152de
+      - intlb1sj 44a49ba25b
+      - lb4sj a892cfa518
       Strict-Transport-Security:
       - max-age=15768000; includeSubDomains; preload
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAAA5SR0U/CMBDG/5Wlz0A6xoTtDUUfNRF40ZjlWG9Q07Wk7YxI
-        9r97HRlGYyQuWba7fN/1d1+PTAqWMxC22EBScZxWsziBCT2zjM8w5Qmk6TSL
-        J2M2YGbziqUn/VwIi85Rq7QIHkUBoT3m8dWQZ0M+XfE050me8ifSNHtxUaOh
-        RpbrRimaaeo96ENfOm8RfUzeeJxlcRZH1wp2G3oj50esF4zPdunJy5agozsL
-        upSuNJ2KIKh/M6fiQ+67eckkDUuYRnsbTOsllfud0WcYrEGqvqiNCCM8Oh9s
-        YK1EW1RQStUdelJRNFKg9hLOxgoFWlCFh/ciJN5vRkg/em9oZSVL8NJox/Ij
-        E6gkNQ/h3zVlGXLPK1AOCc5aY6l8PtIOHdrtaL5YPN4ul6P7h1Vx97C+XxBp
-        JVGd7rm/t5o+sMWvu4y08VFFQYiQVbPd0o6EcMJqXwbE4SmJgNS2XYCTC0T/
-        O+I3yD92+kbUIbbtJwAAAP//AwDJuGFnzQIAAA==
-    http_version:
-  recorded_at: Wed, 07 Sep 2016 05:03:50 GMT
+        H4sIAAAAAAAAA8xRQW7CMBD8SuQzRYmBQnKjBY4glXJpVUUbe0NdOTaynaot
+        yt+7DgqVeum1hyiZ0cxmdvbMlGQFA+nKapHPb2s5w5TPptl8UuUcgc+g4hmA
+        4BM2YrZ6QxFIv5TSofdECYcQUJYQaZ5mi5uU3/DFI58UPC3S+RNp2pP8U2Og
+        QVaYVmuaaZsTmM8B+uAQQ0bejOd5lmfJnYbXip7EhzEbBPxqV4G8bA8m2Tgw
+        QnlhexWFIP5+SeBLnfp5k+ksLmFbE1w0HfYET6/WXMNgA0oPoLEyjgjoQ7SB
+        cwpdWYNQuv/pRUXVKIkmKLgaa5ToQJcBPsrY+LAZRfrFvaNTtRIQlDWeFWcm
+        USsiP+O3b4WIvRc1aI8UzjnrCD6faYc+2nq8XK0e1vv9eLt7LDe7w3ZFSWuF
+        +nLn4W4NveCIP7dMjA1JTUXI2FV7PNKOFOESq3sZUY5ATcRIXdcXOP03iXqi
+        674BAAD//wMAcknLGM0CAAA=
+    http_version: 
+  recorded_at: Wed, 28 Feb 2018 23:20:07 GMT
 recorded_with: VCR 3.0.3

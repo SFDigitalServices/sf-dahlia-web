@@ -10,7 +10,9 @@ angular.module('dahlia.directives')
     customSubMessage: '=?'
     invert: '=?'
     primary: '=?'
+    info: '=?'
     shortForm: '=?'
+    eligibilityErrors: '=?'
 
   templateUrl: 'directives/alert-box.html'
 
@@ -37,9 +39,12 @@ angular.module('dahlia.directives')
       if scope.customMessage
         return scope.customMessage
       else if scope.preferenceWarning
-        $translate.instant("ERROR.PLEASE_SELECT_PREFERENCE_OPTION")
+        if scope.preferenceWarning == 'preferenceNotSelected'
+          $translate.instant('ERROR.PLEASE_SELECT_PREFERENCE_OPTION')
+        else
+          $translate.instant('ERROR.PLEASE_COMPLETE_PREFERENCE')
       else
-        $translate.instant("ERROR.FORM_SUBMISSION")
+        $translate.instant('ERROR.FORM_SUBMISSION')
 
     scope.close = (e) ->
       e.preventDefault()
@@ -55,7 +60,9 @@ angular.module('dahlia.directives')
       if scope.invert
         styles += 'invert no-margin '
       if scope.primary
-        styles += 'primary no-icon '
+        styles += 'primary '
+        unless scope.info
+          styles += 'no-icon '
       styles
 
     scope.isIconInverted = ->

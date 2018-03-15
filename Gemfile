@@ -42,6 +42,8 @@ gem 'facets', require: false
 
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
+# for CORS requests (specifically for CDN handling)
+gem 'rack-cors', '~> 1.0.1'
 
 # address validation
 gem 'easypost'
@@ -64,10 +66,26 @@ gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '~> 1.7.1'
+gem 'nokogiri', '~> 1.8.1'
+gem 'actionpack-page_caching', '~> 1.1.0'
+
+# image manipulation
+gem 'mini_magick', '~> 4.7.2'
+gem 'image_optimizer', '~> 1.7.0'
+
+gem 'prerender_rails', '~> 1.5.1'
 
 # http requests made easy
 gem 'http', require: false
+
+gem 'sidekiq', '~> 5.0.2'
+
+gem 'hashdiff', '~> 0.3.0'
+
+gem 'fog-aws'
+
+# https://elements.heroku.com/addons/sentry
+gem 'sentry-raven', '~> 2.6.3'
 
 group :test do
   gem 'codeclimate-test-reporter'
@@ -76,7 +94,7 @@ group :test do
 end
 
 group :development do
-  gem 'rubocop', require: false
+  gem 'rubocop', '~> 0.52.0', require: false
   gem 'rails_best_practices'
   gem 'overcommit'
   # Spring speeds up development by keeping your application running in the
@@ -102,11 +120,14 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'thor-rails'
   gem 'database_cleaner'
+  gem 'foreman'
 end
 
 group :production do
   gem 'newrelic_rpm'
   gem 'dalli'
   gem 'memcachier'
+  gem 'heroku-deflater', github: 'Exygy/heroku-deflater'
+  gem 'rails_autoscale_agent'
   gem 'rails_12factor'
 end

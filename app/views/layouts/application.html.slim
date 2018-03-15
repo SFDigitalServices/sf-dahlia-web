@@ -1,17 +1,41 @@
 doctype html
-/![if IE 9 ] <html class="ie9" lang="en">
-/! [if !(IE 9)]><!
-html lang="en"
-  /! <![endif]
+html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
   head
     title DAHLIA San Francisco Housing Portal
-    = stylesheet_link_tag 'application', media: 'all'
+
+    / load critical CSS in head
+    css:
+      body{
+        background:#fff;color:#222;font-family:"Open Sans",Helvetica,Arial,Verdana,sans-serif;font-style:normal;font-size:16px;font-weight:400;line-height:24px;margin:0;padding:0;position:relative;display:table;width:100%;height:100%}
+      .sr-only{
+        position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
+    / ---- async load CSS via Javascript onload ----
+    link rel="preload" media="all" href=asset_url('application.css') type="text/css" as="style" onload="this.rel='stylesheet'"
+    noscript
+      / if no JS available load as usual
+      = stylesheet_link_tag 'application', media: 'all'
+    / polyfill for CSS async methods
+    = javascript_include_tag 'https://cdn.jsdelivr.net/loadcss/1.3.1/loadCSS.js', async: true, onload: "loadCSS('#{asset_url('application.css')}')"
+    / ----> end load CSS
+
     meta http-equiv="X-UA-Compatible" content="IE=edge"
     meta charset="utf-8"
     meta name="viewport" content="width=device-width, initial-scale=1"
     meta content="M1zcm6GGM6sHSF_jvkq254DbYAj94JYbFC7ArZDAXlg" name="google-site-verification"
     = render partial: '/layouts/favicons'
     = csrf_meta_tags
+
+    / multilingual alt links currently only relevant for short form pages
+    link ng-repeat="link in alternateLanguageLinks" rel="alternate" hreflang="{{link.lang}}" href="#{root_url}{{link.href}}" ng-if="isShortFormPage()"
+
+    / prerender.io + metatags
+    meta name="fragment" content="!"
+    meta property="og:title" content="{{$title || 'DAHLIA San Francisco Housing Portal'}}"
+    meta property="og:image" content="{{ngMeta['og:image']}}"
+    meta property="og:description" content="{{ngMeta.description}}"
+    meta name="description" content="{{ngMeta.description}}"
+    meta property="og:type" content="website"
 
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
@@ -30,23 +54,44 @@ html lang="en"
         '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
-  body ng-app="dahlia" id="ng-app" ng-strict-di="" ng-controller="SharedController" ng-class="hasCenterBody()"
+  body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
+    #google_translate_element
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
       | {{'T.SKIP_TO_MAIN_CONTENT' | translate}}
 
-    .site-container
-      section(ui-view="translate")
-      section(ui-view="version")
-      section(ui-view="navigation")
+    .site-container ng-class="{'skiptranslate': doNotGoogleTranslate()}"
+      / always skip translations for the header + navigation
+      .skiptranslate
+        section(ui-view="translate")
+        section(ui-view="version")
+        section(ui-view="navigation")
       .loading-overlay(bs-loading-overlay)
-        section#main-content(ui-view="container")
-    .footer-section
+        section#main-content.main-content(ui-view="container")
+    .footer-section.skiptranslate
       .loading-overlay(bs-loading-overlay)
         section(ui-view="footer")
 
     / icon collection
     ng-include src="'shared/templates/icons.html'"
 
-    = javascript_include_tag 'application'
+
+    / RAVEN: scrub the password and just include the URL in the format of: https://abc123@sentry.io/123123
+    - if ENV['SENTRY_DSN']
+      - sentry_js_url = ENV['SENTRY_DSN'].gsub(/\:[A-Za-z0-9]*@/, '@')
+    - else
+      / needed to prevent page errors with ngRaven e.g. for E2E tests
+      - sentry_js_url = 'https://foobar@sentry.io/123123'
+    javascript:
+      var SENTRY_JS_URL = '#{sentry_js_url}'
+
+    = javascript_include_tag 'application', async: Rails.env.production?
     = yield :javascript
+
+    / MAINTENANCE_LISTINGS can be set to a comma-separated list of listing Ids
+    / to force those listings to display a maintenance page, e.g.
+    / ENV['MAINTENANCE_LISTINGS'] = 'a0W4B0000050b5gUAA,a0W4B0000050b5gUBB'
+    javascript:
+      var MAINTENANCE_LISTINGS = "#{ENV['MAINTENANCE_LISTINGS']}".split(',')
+      var STATIC_ASSET_PATHS = #{static_asset_paths.to_json.html_safe}
+      var ALERT_MESSAGE = "#{ENV['ALERT_MESSAGE']}"

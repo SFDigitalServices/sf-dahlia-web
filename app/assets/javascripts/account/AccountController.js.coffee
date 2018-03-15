@@ -5,7 +5,9 @@ AccountController = (
   $translate,
   AccountService,
   AnalyticsService,
-  ShortFormApplicationService
+  ShortFormApplicationService,
+  SharedService
+  inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.form = { current: {} }
@@ -26,8 +28,10 @@ AccountController = (
   $scope.userDataForContact = {}
   $scope.emailChanged = false
   $scope.nameOrDOBChanged = false
+  $scope.INPUT_MAX_LENGTH = inputMaxLength
 
-  $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8,}$/
+  $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
+  $scope.emailRegex = SharedService.emailRegex
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -101,12 +105,18 @@ AccountController = (
         if success
           form.$setUntouched()
           form.$setPristine()
+          # user signs in and saves an application
           if $scope.userInShortFormSession()
             ShortFormApplicationService.signInSubmitApplication(
               loggedInUser: AccountService.loggedInUser
               submitCallback: (changed) ->
                 $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
             )
+          # if user hasn't started the application at all and signs in from welcome page
+          else if $state.params.fromShortFormIntro
+            $state.go('dahlia.short-form-welcome.intro', {id: ShortFormApplicationService.listing.Id})
+          else if $state.current.name == 'dahlia.continue-draft-sign-in'
+            $state.go('dahlia.short-form-application.name', id: $state.params.listing_id)
           else
             $scope._signInRedirect()
       ).catch( ->
@@ -121,21 +131,13 @@ AccountController = (
     form = $scope.form.passwordReset
     if form.$valid
       AnalyticsService.trackFormSuccess('Accounts')
-      $scope.submitDisabled = false
+      $scope.submitDisabled = true
       AccountService.requestPasswordReset().then( (success) ->
         $scope.submitDisabled = false
       )
     else
       AnalyticsService.trackFormError('Accounts')
       $scope.handleErrorState()
-
-  $scope.updatePassword = (type) ->
-    $scope.form.current = $scope.form.accountPassword
-    form = $scope.form.current
-    if form.$valid
-      AccountService.updatePassword(type).then ->
-        form.$setUntouched()
-        form.$setPristine()
 
   $scope.$on 'auth:login-error', (ev, reason) ->
     if (reason.error == 'not_confirmed')
@@ -144,15 +146,31 @@ AccountController = (
       $scope.accountError.messages.user = $translate.instant('SIGN_IN.BAD_CREDENTIALS')
       $scope.handleErrorState()
 
+  $scope.updatePassword = (type) ->
+    $scope.form.current = $scope.form.accountPassword
+    form = $scope.form.current
+    if form.$valid
+      $scope.submitDisabled = true
+      AccountService.updatePassword(type).then ->
+        $scope.submitDisabled = false
+        form.$setUntouched()
+        form.$setPristine()
+
   $scope.updateEmail = ->
     $scope.form.current = $scope.form.accountEmail
     if $scope.form.current.$valid
-      AccountService.updateAccount('email')
+      $scope.submitDisabled = true
+      AccountService.updateAccount('email').then( ->
+        $scope.submitDisabled = false
+      )
 
   $scope.updateNameDOB = ->
     $scope.form.current = $scope.form.accountNameDOB
     if $scope.form.current.$valid
-      AccountService.updateAccount('nameDOB')
+      $scope.submitDisabled = true
+      AccountService.updateAccount('nameDOB').then( ->
+        $scope.submitDisabled = false
+      )
 
   $scope.isLocked = (field) ->
     AccountService.lockedFields[field]
@@ -233,7 +251,9 @@ AccountController = (
 
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService'
+  'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
+  'SharedService',
+  'inputMaxLength'
 ]
 
 angular

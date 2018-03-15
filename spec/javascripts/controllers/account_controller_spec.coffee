@@ -2,7 +2,7 @@ do ->
   'use strict'
   describe 'AccountController', ->
     scope = undefined
-    state = {current: {name: 'dahlia'}}
+    state = {current: {name: 'dahlia'}, params: {fromShortFormIntro: null}}
     deferred = undefined
     $translate =
       instant: jasmine.createSpy()
@@ -28,8 +28,8 @@ do ->
     fakeShortFormApplicationService =
       importUserData: -> null
       submitApplication: -> null
-      getMyAccountApplication: -> null
       signInSubmitApplication: -> null
+    fakeSharedService = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -61,7 +61,6 @@ do ->
       spyOn(fakeShortFormApplicationService, 'importUserData').and.returnValue(false)
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'signInSubmitApplication').and.returnValue(deferred.promise)
-      spyOn(fakeShortFormApplicationService, 'getMyAccountApplication').and.callFake -> fakeHttp
 
       $controller 'AccountController',
         $scope: scope
@@ -69,6 +68,8 @@ do ->
         AccountService: fakeAccountService
         AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
+        SharedService: fakeSharedService
+        inputMaxLength: {}
     )
 
     describe '$scope.createAccount', ->
@@ -142,16 +143,32 @@ do ->
           deferred.resolve(true)
 
         it 'sends user to AccountService.goToLoginRedirect if available', ->
+          state.params.fromShortFormIntro = null
           fakeAccountService.loginRedirect = 'dahlia.listings'
           scope.signIn()
           scope.$apply()
           expect(fakeAccountService.goToLoginRedirect).toHaveBeenCalled()
 
         it 'sends user to dahlia.my-account by default', ->
+          state.params.fromShortFormIntro = null
           fakeAccountService.loginRedirect = null
           scope.signIn()
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.my-account')
+
+      describe 'user signing in from short from intro page', ->
+        beforeEach ->
+          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
+          state.current.name = 'dahlia.sign-in'
+          state.params.fromShortFormIntro = true
+          fakeShortFormApplicationService.listing =
+            Id: "123"
+          deferred.resolve(true)
+
+        it 'sends user back to short form intro page', ->
+          scope.signIn()
+          scope.$apply()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.intro', {id: '123'})
 
     describe '$scope.requestPasswordReset', ->
       it 'calls on AccountService.requestPasswordReset', ->

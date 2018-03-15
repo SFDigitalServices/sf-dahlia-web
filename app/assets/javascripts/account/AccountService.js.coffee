@@ -10,7 +10,8 @@ AccountService = (
   $translate,
   bsLoadingOverlayService,
   ShortFormApplicationService,
-  ShortFormDataService
+  ShortFormDataService,
+  ModalService
 ) ->
   Service = {}
   # userAuth is used as model for inputs in create-account form
@@ -37,6 +38,14 @@ AccountService = (
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn
 
   Service.setLoggedInUser = (data) ->
+    if _.isEmpty(data)
+      # clear userContext
+      Raven.setUserContext()
+    else
+      Raven.setUserContext({
+        email: data.email,
+        id: data.id
+      })
     angular.copy(data, Service.loggedInUser)
 
   Service.importApplicantData = (applicant) ->
@@ -130,7 +139,7 @@ AccountService = (
   Service.signOut = ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetUserData()
+    ShortFormApplicationService.resetApplicationData()
     $auth.signOut()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
@@ -155,22 +164,19 @@ AccountService = (
   Service.getMyApplications = ->
     $http.get('/api/v1/account/my-applications').success((data) ->
       if data.applications
-        angular.copy(data.applications, Service.myApplications)
+        myApplications = _.map(data.applications, ShortFormDataService.reformatApplication)
+        angular.copy(myApplications, Service.myApplications)
     )
 
   Service.updateAccount = (infoType) ->
-    bsLoadingOverlayService.start()
-    # have to later manually call overlay.stop() since this update doesn't result in a stateChange
     Service.clearAccountMessages()
     if infoType == 'email'
       params =
         user:
           email: Service.userAuth.user.email
       $http.put('/api/v1/auth', params).success((data) ->
-        bsLoadingOverlayService.stop()
         Service.accountSuccess.messages.email = $translate.instant("ACCOUNT_SETTINGS.VERIFY_EMAIL")
       ).error((response) ->
-        bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
         if msg == 'Email has already been taken'
           Service.accountError.messages.email = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
@@ -181,7 +187,6 @@ AccountService = (
       params =
         contact: Service.userDataForSalesforce()
       $http.put('/api/v1/account/update', params).success((data) ->
-        bsLoadingOverlayService.stop()
         Service.accountSuccess.messages.nameDOB = $translate.instant("ACCOUNT_SETTINGS.ACCOUNT_CHANGES_SAVED")
         _.merge(Service.loggedInUser, data.contact)
         Service._reformatDOB()
@@ -196,28 +201,16 @@ AccountService = (
   Service.openConfirmEmailModal = (email) ->
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_confirm_email_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_confirm_email_modal.html')
 
   Service.openConfirmationExpiredModal = (email, confirmed = false) ->
     Service.createdAccount.confirmed = confirmed
     if email
       Service.createdAccount.email = email
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_confirmation_expired_modal.html')
 
   Service.openInfoChangedModal = () ->
-    modalInstance = $modal.open({
-      templateUrl: 'account/templates/partials/_info_changed_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal('account/templates/partials/_info_changed_modal.html')
 
   Service.openAlreadySubmittedModal = (application_id, doubleSubmit = false) ->
     currentApplication = _.find(Service.myApplications, {id: application_id})
@@ -225,11 +218,7 @@ AccountService = (
     templateUrl = 'account/templates/partials/_already_submitted.html'
     if doubleSubmit
       templateUrl = 'account/templates/partials/_double_submitted.html'
-    modalInstance = $modal.open({
-      templateUrl: templateUrl,
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-large'
-    })
+    ModalService.openModal(templateUrl)
 
   #################### helper functions
   Service.showReconfirmedMessage = ->
@@ -293,6 +282,12 @@ AccountService = (
     $state.go(Service.loginRedirect)
     Service.loginRedirect = null
 
+  Service.afterSignOut = ->
+    Service.accountSuccess.messages.signedOut = $translate.instant('SIGN_IN.SIGNED_OUT_SUCCESSFULLY')
+
+  Service.afterUserTokenValidationTimeout = ->
+    Service.accountSuccess.messages.userTokenValidationTimeout = $translate.instant('SIGN_IN.USER_TOKEN_VALIDATION_TIMEOUT')
+
   Service.DOBValid = ShortFormDataService.DOBValid
 
   # run on page load
@@ -307,7 +302,7 @@ AccountService = (
 
 AccountService.$inject = [
   '$state', '$auth', '$modal', '$http', '$translate', 'bsLoadingOverlayService'
-  'ShortFormApplicationService', 'ShortFormDataService'
+  'ShortFormApplicationService', 'ShortFormDataService', 'ModalService'
 ]
 
 angular

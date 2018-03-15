@@ -1,7 +1,7 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
-  '$translate', '$window', 'ShortFormApplicationService', 'ListingService',
-  ($translate, $window, ShortFormApplicationService, ListingService) ->
+  '$translate', '$window', 'ShortFormApplicationService', 'ListingService', 'ModalService',
+  ($translate, $window, ShortFormApplicationService, ListingService, ModalService) ->
     replace: true
     scope:
       application: '=application'
@@ -10,6 +10,7 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
+      scope.deleteDisabled = false
 
       scope.isDeleted = ->
         scope.application.deleted
@@ -25,9 +26,20 @@ angular.module('dahlia.directives')
         summary.join(', ')
 
       scope.deleteApplication = (id) ->
-        if $window.confirm($translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE'))
-          ShortFormApplicationService.deleteApplication(id).success ->
-            scope.application.deleted = true
+        content =
+          title: $translate.instant('T.DELETE_APPLICATION')
+          cancel: $translate.instant('LABEL.CANCEL')
+          continue: $translate.instant('T.DELETE')
+          message: $translate.instant('MY_APPLICATIONS.ARE_YOU_SURE_YOU_WANT_TO_DELETE')
+          alert: true
+        ModalService.alert(content,
+          onConfirm: ->
+            scope.deleteDisabled = true
+            ShortFormApplicationService.deleteApplication(id).success ->
+              scope.application.deleted = true
+            .error ->
+              scope.deleteDisabled = false
+        )
 
       scope.formattedAddress = ->
         ListingService.formattedAddress(scope.listing, 'Building')
@@ -47,5 +59,8 @@ angular.module('dahlia.directives')
 
       scope.lotteryNumber = ->
         { lotteryNumber: scope.application.lotteryNumber }
+
+      scope.getLanguageCode = (application) ->
+        ShortFormApplicationService.getLanguageCode(application)
 
 ]

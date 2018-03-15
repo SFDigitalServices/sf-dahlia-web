@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       files: [
         {
           src: '<%= patternLibraryPath %>/dist/assets/toolkit/styles/toolkit.css',
-          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.css'
+          dest: '<%= applicationAssetsPath %>/stylesheets/toolkit.scss'
         }
       ],
     },
@@ -32,6 +32,10 @@ module.exports = function(grunt) {
           {
             match: 'http://fonts.googleapis.com',
             replacement: '//fonts.googleapis.com'
+          },
+          {
+            match: /"\.\.\/images\/([a-zA-Z0-9\-_]*\.(png|jpg|svg))"/g,
+            replacement: "asset-path('$1')"
           }
         ],
         usePrefix: false
@@ -39,7 +43,7 @@ module.exports = function(grunt) {
       files: [
         {
           expand: true, flatten: true,
-          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.css'],
+          src: ['<%= applicationAssetsPath %>/stylesheets/toolkit.scss'],
           dest: '<%= applicationAssetsPath %>/stylesheets/'
         }
       ]
@@ -58,25 +62,39 @@ module.exports = function(grunt) {
       customRegex: [
          '\{\{\\s*(?:::)?\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate(:.*?)?\\s*(?:\\s*\\|\\s*[a-zA-Z]*)?\}\}',
          '="\'((?:\\\\.|[^\'\\\\])*)\'\\s*\\|\\s*translate"',
+         'translated-error="([A-Z\.\-\_]*)"',
          'translated-description="([A-Z\.\-\_]*)"',
-         'translated-short-description="([A-Z\.\-\_]*)"'
+         'translated-short-description="([A-Z\.\-\_]*)"',
+         'translatedLabel: \'([A-Z\.\-\_]*)\'',
+         /\', t\(\'([A-Z\.\-\_]*)\'\)/
        ],
       namespace: true,
       lang:     ['locale-en'],
-      dest:     'public/translations'
+      dest:     'app/assets/json/translations'
+    }
+  },
+  json_remove_fields: {
+    locale_es: {
+        src: 'app/assets/json/translations/locale-es.json'
+    },
+    locale_tl: {
+        src: 'app/assets/json/translations/locale-tl.json'
+    },
+    locale_zh: {
+        src: 'app/assets/json/translations/locale-zh.json'
     }
   },
   sortJSON: {
     src: [
-      'public/translations/locale-en.json',
-      'public/translations/locale-es.json',
-      'public/translations/locale-tl.json',
-      'public/translations/locale-zh.json'
+      'app/assets/json/translations/locale-en.json',
+      'app/assets/json/translations/locale-es.json',
+      'app/assets/json/translations/locale-tl.json',
+      'app/assets/json/translations/locale-zh.json'
     ],
     // options: {
     //   spacing: 2
     // }
-  }
+  },
 });
 
   // load tasks
@@ -85,6 +103,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-angular-translate');
   grunt.loadNpmTasks('grunt-sort-json');
+  grunt.loadNpmTasks('grunt-json-remove-fields');
 
 
   // register task
@@ -96,7 +115,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('translations', [
     'i18nextract',
-    'sortJSON'
+    'json_remove_fields',
+    'sortJSON',
   ]);
 
   grunt.registerTask('deploy', [

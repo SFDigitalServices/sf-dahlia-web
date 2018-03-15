@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 07 Mar 2017 17:56:37 GMT
+      - Wed, 28 Feb 2018 23:20:00 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -29,17 +29,14 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Content-Security-Policy:
-      - referrer origin-when-cross-origin
-      - reflected-xss block;report-uri /_/ContentDomainCSPNoAuth?type=xss
+      - upgrade-insecure-requests
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=8bHVYQb1S3W2-liMGD0g3A;Path=/;Domain=.salesforce.com;Expires=Sat,
-        06-May-2017 17:56:37 GMT
+      - BrowserId=jNhqtIeBQmeiAAtore2fHQ;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:00 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store
       X-Readonlymode:
       - 'false'
       Content-Type:
@@ -50,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--QA.cs71.my.salesforce.com","id":"https://test.salesforce.com/id/00D4D0000008g3xUAA/005U00000066jl9IAA","token_type":"Bearer","issued_at":"1488909398136","signature":"3x1ESL/Z/70gKA+fieJeSjnNxgdIGKc1na246xvMVps="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs96.my.salesforce.com","id":"https://test.salesforce.com/id/00D1g0000004c5rEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1519860001016","signature":"yqrnGj+vcABJ89Hu/eNi/vgSOzn8rZdOzk6PPYgv8rY="}'
     http_version: 
-  recorded_at: Tue, 07 Mar 2017 17:56:37 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:01 GMT
 - request:
     method: get
-    uri: https://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE
+    uri: https://sfhousing--full.cs96.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE
     body:
       encoding: US-ASCII
       string: ''
@@ -74,23 +71,20 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 07 Mar 2017 17:56:38 GMT
-      Content-Security-Policy-Report-Only:
-      - 'default-src https:; script-src https: ''unsafe-inline'' ''unsafe-eval'';
-        style-src https: ''unsafe-inline''; img-src https: data:; frame-ancestors
-        ''self'' *.salesforce.com *.force.com; font-src https: data:; connect-src
-        ''self'' https:; report-uri /_/ContentDomainCSPNoAuth?type=mydomain; base-uri
-        http://sfhousing--qa.cs71.my.salesforce.com/services/apexrest/Person/0036C000001sI5oQAE'
-      Public-Key-Pins-Report-Only:
-      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="6m4uJ26w5zoo/DLDmYNWG1dWpZ8/GSCPe6SBri8Euw0=";
-        max-age=86400; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D4D0000008g3x";
-      Content-Security-Policy:
-      - referrer origin-when-cross-origin
+      - Wed, 28 Feb 2018 23:20:01 GMT
       Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains
+      - max-age=31536002; includeSubDomains
+      Public-Key-Pins-Report-Only:
+      - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
+        pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D1g0000004c5rp";
+      X-Robots-Tag:
+      - none
+      Cache-Control:
+      - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=DtgIz9LhR2q3leqwNXF_ng;Path=/;Domain=.salesforce.com;Expires=Sat,
-        06-May-2017 17:56:38 GMT
+      - BrowserId=5or6Wq7xSS2K0FldunXBcA;Path=/;Domain=.salesforce.com;Expires=Sun,
+        29-Apr-2018 23:20:01 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Transfer-Encoding:
@@ -99,5 +93,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 07 Mar 2017 17:56:38 GMT
+  recorded_at: Wed, 28 Feb 2018 23:20:01 GMT
 recorded_with: VCR 3.0.3

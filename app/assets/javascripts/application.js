@@ -40,8 +40,15 @@
 //= require angular-ui-validate
 //= require angular-uuids
 //= require angular-linkify
+//= require angular-messages
 //= require angular-loading-overlay
+//= require angular-http-etag
+//= require ngMeta
+//= require raven-js/dist/raven
+//= require raven-js/dist/plugins/angular
 //= require config/angularModules.js
 //= require config/angularRoutes.js
+//= require config/angularProviders.js
 //= require config/angularInitialize.js
+//= require config/angularConstants.js
 //= require_tree .

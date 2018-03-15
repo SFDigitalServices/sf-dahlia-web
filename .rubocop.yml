@@ -22,7 +22,7 @@ Metrics/ClassLength:
 Metrics/AbcSize:
   # The ABC size is a calculated magnitude, so this number can be a Fixnum or
   # a Float.
-  Max: 25
+  Max: 35
 
 # Trailing commas make for clearer diffs because the last line won't appear
 # to have been changed, as it would if it lacked a comma and had one added.
@@ -53,8 +53,25 @@ Style/ClassAndModuleChildren:
 Style/ConditionalAssignment:
   Enabled: false
 
+Style/FormatStringToken:
+  Enabled: false
+  Enabled: false
+
 Metrics/LineLength:
   Max: 90
   Exclude:
     - 'config/routes.rb'
+    - 'config/application.rb'
     - 'app/models/user.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'config/routes.rb'
+
+Style/RescueStandardError:
+  Exclude:
+    - 'app/services/cache_service.rb'
+
+
+

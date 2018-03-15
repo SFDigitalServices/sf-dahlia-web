@@ -4,12 +4,17 @@ do ->
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
-    fakeShortForm = getJSONFixture('short-form-example.json')
+    fakeCustomPreference = {}
+    fakeShortForm = getJSONFixture('sample-web-short-form.json')
     fakeSalesforceApplication = {application: getJSONFixture('sample-salesforce-short-form.json')}
     validateHouseholdMatch = getJSONFixture('short_form-api-validate_household-match.json')
-    $translate = {}
+    $translate =
+      use: jasmine.createSpy()
     $state =
+      params:
+        lang: undefined
       go: jasmine.createSpy()
+      href: ->
       current: { name: 'dahlia' }
     fakeSFAddress =
       address1: '123 Main St.'
@@ -25,17 +30,25 @@ do ->
     fakeListingService =
       listing:
         Id: ''
+      hasPreference: ->
+      loadListing: ->
     fakeDataService =
-      formatApplication: -> fakeShortForm
+      formatApplication: -> fakeSalesforceApplication
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
+      initRentBurdenDocs: jasmine.createSpy()
+      checkSurveyComplete: jasmine.createSpy()
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+      trackTimeout: jasmine.createSpy()
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
       deletePreferenceFile: jasmine.createSpy()
+      deleteRentBurdenPreferenceFiles: jasmine.createSpy()
+    fakeSharedService =
+      languageMap: {es: 'Spanish'}
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
     setupFakeApplicant = (attributes) ->
@@ -71,6 +84,7 @@ do ->
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
+      $provide.value 'SharedService', fakeSharedService
       return
     )
 
@@ -102,7 +116,6 @@ do ->
       it 'does not initially allow access to later sections', ->
         expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
 
-
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
         ShortFormApplicationService.applicant.home_address = fakeSFAddress
@@ -129,11 +142,11 @@ do ->
 
     describe 'addHouseholdMember', ->
       beforeEach ->
-        setupFakeApplicant({neighborhoodPreferenceMatch: 'Matched'})
+        setupFakeApplicant({preferenceAddressMatch: 'Matched'})
         ShortFormApplicationService.applicant = fakeApplicant
         setupFakeHouseholdMember(
           hasSameAddressAsApplicant: 'Yes'
-          neighborhoodPreferenceMatch: null
+          preferenceAddressMatch: null
         )
         ShortFormApplicationService.householdMembers = []
         ShortFormApplicationService.householdMember = fakeHouseholdMember
@@ -147,54 +160,41 @@ do ->
       describe 'new household member', ->
         it 'adds an ID to the householdMember object', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.id).toEqual(1)
+          expect(householdMember.id).toEqual(2)
 
         it 'adds household member to Service.householdMembers', ->
           expect(ShortFormApplicationService.householdMembers.length).toEqual 1
           expect(ShortFormApplicationService.householdMembers[0]).toEqual fakeHouseholdMember
 
-        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+        it 'copies preferenceAddressMatch from applicant if hasSameAddressAsApplicant', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          expect(householdMember.preferenceAddressMatch).toEqual(ShortFormApplicationService.applicant.preferenceAddressMatch)
 
       describe 'old household member update', ->
-        it 'copies neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant', ->
+        it 'copies preferenceAddressMatch from applicant if hasSameAddressAsApplicant', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
-          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
           householdMember.hasSameAddressAsApplicant = 'Yes'
           ShortFormApplicationService.addHouseholdMember(householdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.neighborhoodPreferenceMatch).toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          expect(householdMember.preferenceAddressMatch).toEqual(ShortFormApplicationService.applicant.preferenceAddressMatch)
 
-        it 'does not copy neighborhoodPreferenceMatch from applicant if hasSameAddressAsApplicant == "No"', ->
+        it 'does not copy preferenceAddressMatch from applicant if hasSameAddressAsApplicant == "No"', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
-          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
-          householdMember.neighborhoodPreferenceMatch = 'Not Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+          householdMember.preferenceAddressMatch = 'Not Matched'
           householdMember.hasSameAddressAsApplicant = 'No'
           ShortFormApplicationService.addHouseholdMember(householdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          expect(householdMember.neighborhoodPreferenceMatch).not.toEqual(ShortFormApplicationService.applicant.neighborhoodPreferenceMatch)
+          expect(householdMember.preferenceAddressMatch).not.toEqual(ShortFormApplicationService.applicant.preferenceAddressMatch)
 
         it 'does not add a new household member', ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.addHouseholdMember(householdMember)
           expect(ShortFormApplicationService.householdMembers.length).toEqual(1)
-
-        it 'updates the name for any preferences attached to the member', ->
-          householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
-          householdMember = angular.copy(householdMember)
-          currentName = "#{householdMember.firstName} #{householdMember.lastName}"
-          # attach household member to the preference
-          ShortFormApplicationService.preferences['liveInSf_household_member'] = currentName
-          # now update
-          householdMember.firstName = 'Robert'
-          newName = "#{householdMember.firstName} #{householdMember.lastName}"
-          ShortFormApplicationService.addHouseholdMember(householdMember)
-          # the name attached to the preference should also update
-          expect(ShortFormApplicationService.preferences['liveInSf_household_member']).toEqual(newName)
 
     describe 'cancelHouseholdMember', ->
       beforeEach ->
@@ -230,49 +230,87 @@ do ->
         hh = ShortFormApplicationService.fullHousehold()
         expect(hh.length).toEqual(ShortFormApplicationService.householdMembers.length + 1)
 
+    describe 'groupHouseholdAddresses', ->
+      it 'sets up groupedHouseholdAddresses array on application', ->
+        setupFakeApplicant()
+        ShortFormApplicationService.applicant = fakeApplicant
+        ShortFormApplicationService.groupHouseholdAddresses()
+        expect(ShortFormApplicationService.application.groupedHouseholdAddresses.length).toEqual 1
+        correctValue = { fullName: 'Bob Williams (You)', firstName: 'You' }
+        expect(ShortFormApplicationService.application.groupedHouseholdAddresses[0].members).toEqual [correctValue]
+
+    describe 'clearAddressRelatedProofForMember', ->
+      beforeEach ->
+        setupFakeApplicant({ firstName: 'Frank', lastName: 'Robinson', id: 1 })
+        ShortFormApplicationService.applicant = fakeApplicant
+        # reset the spy so that we can check for "not" toHaveBeenCalled
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+      afterEach ->
+        resetFakePeople()
+
+      it 'clears the proof file for a preference if the indicated member is selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 1
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 1
+        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
+
+      it 'does not clear the proof file for a preference if the indicated member is not selected', ->
+        ShortFormApplicationService.preferences.liveInSf_household_member = 2
+        ShortFormApplicationService.clearAddressRelatedProofForMember(ShortFormApplicationService.applicant)
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
+        expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
+
+
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
       afterEach ->
         resetFakePeople()
 
-      describe 'applicant does not work in SF', ->
+      describe 'for applicant who does not work in SF: ', ->
         beforeEach ->
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
           ShortFormApplicationService.applicant.workInSf = 'No'
+          ShortFormApplicationService.preferences.workInSf = true
 
         it 'should not be assigned workInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
           expect(ShortFormApplicationService.application.preferences.workInSf).toEqual(null)
 
-      describe 'applicant does not live in SF', ->
+      describe 'for applicant who does not live in SF: ', ->
         beforeEach ->
           fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.householdMembers = []
           ShortFormApplicationService.applicant = fakeApplicant
+          ShortFormApplicationService.preferences.liveInSf = true
 
         it 'should not be assigned liveInSf preference', ->
           ShortFormApplicationService.refreshPreferences()
-          expect(ShortFormApplicationService.application.preferences.liveInSf).not.toEqual(true)
+          expect(ShortFormApplicationService.application.preferences.liveInSf).toEqual(null)
 
-        describe 'was previously eligible and selected for liveInSf', ->
+        describe 'who was previously eligible and selected for liveInSf', ->
           beforeEach ->
             fakeApplicant.home_address = fakeNonSFAddress
+            fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
             ShortFormApplicationService.householdMembers = []
             ShortFormApplicationService.applicant = fakeApplicant
             ShortFormApplicationService.application.completedSections['Preferences'] = true
             ShortFormApplicationService.preferences =
               liveInSf: true
-              liveInSf_file: 'somefile'
-              liveInSf_proof_option: 'proofOption'
-              liveInSf_household_member: fakeApplicant.firstName + " " + fakeApplicant.lastName
+              liveInSf_household_member: 1
+              documents: {
+                liveInSf: {
+                  file: {name: 'img.jpg'}
+                  proofOption: 'some option'
+                }
+              }
 
-          it 'clear liveInSf preference data', ->
+          it 'should clear liveInSf preference data', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
             expect(ShortFormApplicationService.preferences.liveInSf).toEqual(null)
-            expect(ShortFormApplicationService.preferences.liveInSf_proof_option).toEqual(null)
             expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual(null)
+            expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalledWith('liveInSf', ShortFormApplicationService.listing.Id)
 
           it 'invalidates preferences section', ->
             ShortFormApplicationService.refreshPreferences('liveWorkInSf')
@@ -286,7 +324,7 @@ do ->
       afterEach ->
         resetFakePeople()
 
-      describe 'household member has separate sf address', ->
+      describe 'for household member with separate SF address', ->
         beforeEach ->
           fakeApplicant.home_address = fakeNonSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
@@ -297,7 +335,7 @@ do ->
         it 'should return array of household member who lives in SF', ->
           expect(ShortFormApplicationService.liveInSfMembers().length).toEqual(1)
 
-      describe 'household member has the same sf address as the applicant', ->
+      describe 'for household member with same SF address as the applicant', ->
         beforeEach ->
           fakeApplicant.home_address = fakeSFAddress
           ShortFormApplicationService.applicant = fakeApplicant
@@ -344,7 +382,7 @@ do ->
         it 'should return array with applicant', ->
           expect(ShortFormApplicationService.workInSfMembers().length).toEqual(2)
 
-    describe 'neighborhoodResidenceMembers', ->
+    describe 'liveInTheNeighborhoodMembers', ->
       beforeEach ->
         setupFakeApplicant()
         setupFakeHouseholdMember()
@@ -354,46 +392,49 @@ do ->
 
       describe 'applicant doesn\'t have neighborhood preference', ->
         it 'returns array without applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
 
       describe 'applicant doesn\'t match neighborhood preference', ->
         beforeEach ->
-          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
 
         it 'returns array without applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(0)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
 
       describe 'applicant matches neighborhood preference', ->
         beforeEach ->
-          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
 
         it 'returns array with applicant', ->
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeApplicant)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeApplicant)
 
       describe 'household member matches neighborhood preference', ->
         beforeEach ->
-          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          fakeHouseholdMember.preferenceAddressMatch = 'Matched'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
         it 'returns array with household member', ->
-          members = ShortFormApplicationService.neighborhoodResidenceMembers()
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers().length).toEqual(1)
-          expect(ShortFormApplicationService.neighborhoodResidenceMembers()[0]).toEqual(fakeHouseholdMember)
+          members = ShortFormApplicationService.liveInTheNeighborhoodMembers()
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(1)
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers()[0]).toEqual(fakeHouseholdMember)
 
       describe 'applicant and household member match neighborhood preference', ->
         beforeEach ->
-          ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
-          fakeHouseholdMember.neighborhoodPreferenceMatch = 'Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+          fakeHouseholdMember.preferenceAddressMatch = 'Matched'
           ShortFormApplicationService.addHouseholdMember(fakeHouseholdMember)
 
         it 'returns array with applicant and household member', ->
-          neighborhoodResidenceMembers = ShortFormApplicationService.neighborhoodResidenceMembers()
-          expect(neighborhoodResidenceMembers.length).toEqual(2)
-          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
-          expect(_.find(neighborhoodResidenceMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
+          liveInTheNeighborhoodMembers = ShortFormApplicationService.liveInTheNeighborhoodMembers()
+          expect(liveInTheNeighborhoodMembers.length).toEqual(2)
+          expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeApplicant.firstName})).toEqual(fakeApplicant)
+          expect(_.find(liveInTheNeighborhoodMembers, {firstName: fakeHouseholdMember.firstName})).toEqual(fakeHouseholdMember)
 
     describe 'eligibleForLiveWork', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
       it 'returns true if someone is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'Yes'
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual true
@@ -402,30 +443,138 @@ do ->
         ShortFormApplicationService.applicant.workInSf = 'No'
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
 
+      it 'returns false if listing does not have liveWorkInSf', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.workInSf = 'Yes'
+        expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
+
     describe 'eligibleForNRHP', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
       it 'returns true if someone is eligible for NRHP', ->
-        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Matched'
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
 
       it 'returns false if nobody is eligible for NRHP', ->
-        ShortFormApplicationService.applicant.neighborhoodPreferenceMatch = 'Not Matched'
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
-    describe 'copyNRHPtoLiveInSf', ->
-      it 'copies NRHP member to liveInSf', ->
+      it 'returns false if listing does not have NRHP', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
+
+    describe 'eligibleForADHP', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+      it 'returns true if someone is eligible for ADHP', ->
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual true
+
+      it 'returns false if nobody is eligible for ADHP', ->
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
+
+      it 'returns false if listing does not have ADHP', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
+        expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
+
+    describe 'eligibleForAssistedHousing', ->
+      it 'returns true if application said yes to public housing', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        # TO DO: update during API integration story for preference
+        ShortFormApplicationService.application.hasPublicHousing = 'Yes'
+        expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
+
+      it 'returns false if application does not have assistedHousing', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        # TO DO: update during API integration story for preference
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
+        expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual false
+
+    describe 'eligibleForRentBurden', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        ShortFormApplicationService.application.hasPublicHousing = 'No'
+        ShortFormApplicationService.application.householdIncome.incomeTimeframe = 'per_month'
+        ShortFormApplicationService.application.groupedHouseholdAddresses = [
+          {
+            "address": "312 DEETZ RD",
+            "members": [
+              "You"
+            ],
+            "monthlyRent": 2000
+          }
+        ]
+
+      describe 'when rent-to-income ratio is greater than or equal to 50%', ->
+        it 'returns true', ->
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual true
+
+      describe 'when rent-to-income ratio is less than 50%', ->
+        it 'returns false', ->
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 9000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
+
+      describe 'when listing does not have rentBurden preference', ->
+        it 'returns false', ->
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
+          expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
+
+    describe 'copyNeighborhoodToLiveInSf', ->
+      beforeEach ->
         ShortFormApplicationService.preferences.neighborhoodResidence = true
-        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 'Jane Doe'
-        ShortFormApplicationService.copyNRHPtoLiveInSf()
-        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 'Jane Doe'
+        ShortFormApplicationService.preferences.neighborhoodResidence_household_member = 10
+        ShortFormApplicationService.preferences.neighborhoodResidence_proofOption = 'Gas Bill'
+        ShortFormApplicationService.preferences.documents.neighborhoodResidence = {
+          proofOption: 'Gas Bill'
+          file: {}
+        }
+
+      it 'copies Neighborhood member to liveInSf', ->
+        ShortFormApplicationService.copyNeighborhoodToLiveInSf('neighborhoodResidence')
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 10
+        expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual 'Gas Bill'
+        expect(ShortFormApplicationService.preferences.documents.liveInSf.proofOption).toEqual 'Gas Bill'
 
     describe 'preferenceRequired', ->
+      beforeEach ->
+        ShortFormApplicationService.application.preferences.optOut = {}
+
       it 'returns true if optOutField is not marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = false
+        ShortFormApplicationService.application.preferences.optOut.liveInSf = false
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual true
 
       it 'returns false if optOutField is marked', ->
-        ShortFormApplicationService.application.liveWorkOptOut = true
+        ShortFormApplicationService.application.preferences.optOut.liveInSf = true
         expect(ShortFormApplicationService.preferenceRequired('liveInSf')).toEqual false
+
+    describe 'showPreference', ->
+      beforeEach ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        ShortFormApplicationService.householdMembers = []
+
+        # TODO!
+        it 'returns true for liveWorkInSf if you are eligible for both live and work', ->
+          setupFakeApplicant({home_address: fakeSFAddress, workInSf: true})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('liveWorkInSf')).toEqual true
+
+        it 'returns true for liveInSf if you are only eligible for live', ->
+          setupFakeApplicant({home_address: fakeSFAddress, workInSf: false})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('liveInSf')).toEqual true
+
+        it 'returns true for workInSf if you are only eligible for work', ->
+          setupFakeApplicant({home_address: fakeNonSFAddress, workInSf: true})
+          ShortFormApplicationService.applicant = fakeApplicant
+          expect(ShortFormApplicationService.showPreference('workInSf')).toEqual true
+
 
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
@@ -463,24 +612,38 @@ do ->
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
+    describe 'leaveAndResetShortForm', ->
+      it 'should call trackTimeout if timing out', ->
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(fakeAnalyticsService.trackTimeout).toHaveBeenCalled()
+
+      it 'should call trackFormAbandon if not timing out', ->
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: false}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(fakeAnalyticsService.trackFormAbandon).toHaveBeenCalled()
+
+      it 'should call resetApplicationData if not on short form review', ->
+        spyOn(ShortFormApplicationService, 'resetApplicationData')
+        toState = {name: 'dahlia.listings'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
+
+      it 'should not call resetApplicationData if on short form review', ->
+        spyOn(ShortFormApplicationService, 'resetApplicationData')
+        toState = {name: 'dahlia.short-form-review'}
+        toParams = {timeout: true}
+        ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
+        expect(ShortFormApplicationService.resetApplicationData).not.toHaveBeenCalled()
+
     describe 'checkSurveyComplete', ->
-      beforeEach ->
-        setupFakeApplicant()
-      afterEach ->
-        resetFakePeople()
-
-      it 'should check if survey is incomplete', ->
+      it 'should call function on ShortFormDataService', ->
         ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.applicant.gender = {Female: true}
-        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual false
-
-      it 'should check if survey is complete', ->
-        ShortFormApplicationService.applicant = fakeApplicant
-        ShortFormApplicationService.applicant.gender = {Fake: true}
-        ShortFormApplicationService.applicant.ethnicity = 'Fake'
-        ShortFormApplicationService.applicant.race = 'Fake'
-        ShortFormApplicationService.applicant.referral = {Fake: true}
-        expect(ShortFormApplicationService.checkSurveyComplete()).toEqual true
+        ShortFormApplicationService.checkSurveyComplete()
+        expect(fakeDataService.checkSurveyComplete).toHaveBeenCalledWith(fakeApplicant)
 
     describe 'submitApplication', ->
       beforeEach ->
@@ -490,6 +653,10 @@ do ->
       it 'should indicate app status as submitted', ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect(ShortFormApplicationService.application.status).toEqual('submitted')
+
+      it 'should call $translate.use() to get current locale', ->
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect($translate.use).toHaveBeenCalled()
 
       it 'should call formatApplication on ShortFormDataService', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
@@ -525,17 +692,13 @@ do ->
         httpBackend.flush()
         expect(fakeDataService.reformatApplication).toHaveBeenCalled()
 
-    describe 'getMyAccountApplication', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'should load application into accountApplication', ->
+      it 'should load accountApplication if forComparison opt is passed', ->
         spyOn(fakeDataService, 'reformatApplication').and.callThrough()
         stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.getMyAccountApplication()
+        ShortFormApplicationService.getMyApplicationForListing 'xyz', {forComparison: true}
         httpBackend.flush()
-        expect(fakeDataService.reformatApplication).toHaveBeenCalledWith(fakeSalesforceApplication.application)
+        expect(fakeDataService.reformatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService.accountApplication.id).toEqual(fakeShortForm.id)
 
     describe 'keepCurrentDraftApplication', ->
       beforeEach ->
@@ -563,10 +726,10 @@ do ->
             firstName: 'Janice'
             lastName: 'Jane'
           ShortFormApplicationService.application.preferences =
-            liveInSf_household_member: 'Janice Jane'
+            liveInSf_household_member: 1
           ShortFormApplicationService.importUserData(loggedInUser)
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
-            .toEqual('Jane Doe')
+            .toEqual(1)
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
@@ -594,18 +757,263 @@ do ->
           expect(ShortFormApplicationService.applicant.phoneType).toEqual null
 
     describe 'cancelPreference', ->
-      beforeEach ->
-        ShortFormApplicationService.preferences["liveInSf"] = true
-        ShortFormApplicationService.preferences["liveInSf_household_member"] = 'Jane Doe'
-        ShortFormApplicationService.preferences["liveInSf_proof_option"] = 'Telephone Bill'
-        ShortFormApplicationService.preferences["liveInSf_proof_file"] = 'Some file'
+      it 'unsets preference fields', ->
+        spyOn(ShortFormApplicationService, 'unsetPreferenceFields').and.callThrough()
 
-      it 'should clear preference name, household member, proof option and file', ->
-        ShortFormApplicationService.cancelPreference("liveInSf")
-        expect(ShortFormApplicationService.preferences["liveInSf"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_household_member"]).toEqual null
-        expect(ShortFormApplicationService.preferences["liveInSf_proof_option"]).toEqual null
-        expect(fakeFileUploadService.deletePreferenceFile).toHaveBeenCalled()
+        preference = 'certOfPreference'
+        ShortFormApplicationService.cancelPreference(preference)
+        expect(ShortFormApplicationService.unsetPreferenceFields)
+          .toHaveBeenCalledWith(preference)
+
+      describe 'cancels Live/Work', ->
+        it 'should clear Live/Work combo options if Live/Work is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('liveWorkInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should clear Live/Work combo options if Live is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('liveInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should clear Live/Work combo options if Work is canceled', ->
+          ShortFormApplicationService.preferences.liveWorkInSf = true
+          ShortFormApplicationService.preferences.liveWorkInSf_preference = 'liveInSf'
+
+          ShortFormApplicationService.cancelPreference('workInSf')
+          expect(ShortFormApplicationService.preferences.liveWorkInSf).toEqual false
+          expect(ShortFormApplicationService.preferences.liveWorkInSf_preference)
+            .toEqual null
+
+        it 'should unset individual Live and Work fields if Live/Work is canceled', ->
+          spyOn(ShortFormApplicationService, 'unsetPreferenceFields').and.callThrough()
+
+          ShortFormApplicationService.cancelPreference('liveWorkInSf')
+          expect(ShortFormApplicationService.unsetPreferenceFields)
+            .toHaveBeenCalledWith('liveInSf')
+          expect(ShortFormApplicationService.unsetPreferenceFields)
+            .toHaveBeenCalledWith('workInSf')
+
+      describe 'cancels NRHP', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelPreference').and.callThrough()
+
+        it 'should not clear Live in SF if listing doesn\'t have NRHP', ->
+          # Listing doesn't have NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+        it 'should not clear Live in SF if applicant not eligible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live in SF if listing has NRHP and applicant is elibible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelPreference).toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+      describe 'cancels ADHP', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelPreference').and.callThrough()
+
+        it 'should not clear Live in SF if listing doesn\'t have ADHP', ->
+          # Listing doesn't have ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+        it 'should not clear Live in SF if applicant not eligible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live in SF if listing has ADHP and applicant is elibible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelPreference('antiDisplacement')
+          expect(ShortFormApplicationService.cancelPreference).toHaveBeenCalledWith('liveInSf')
+
+          resetFakePeople()
+
+    describe 'unsetPreferenceFields', ->
+      it 'should clear preference name, household member, proof option, and file', ->
+        fakeFileUploadService.deletePreferenceFile = jasmine.createSpy()
+        ShortFormApplicationService.preferences.liveInSf = true
+        ShortFormApplicationService.preferences.liveInSf_household_member = 1
+        ShortFormApplicationService.preferences.liveInSf_proofOption = 'Telephone bill'
+        ShortFormApplicationService.preferences.documents.liveInSf = {
+          proofOption: 'Telephone Bill'
+          file: {name: 'somefile.pdf'}
+        }
+
+        ShortFormApplicationService.unsetPreferenceFields('liveInSf')
+        expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_proofOption).toEqual null
+        listingId = ShortFormApplicationService.listing.Id
+        expect(fakeFileUploadService.deletePreferenceFile)
+          .toHaveBeenCalledWith('liveInSf', listingId)
+
+      it 'should delete Rent Burdened preference files', ->
+        listingId = ShortFormApplicationService.listing.Id
+
+        ShortFormApplicationService.unsetPreferenceFields('rentBurden')
+        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles)
+          .toHaveBeenCalledWith(listingId)
+
+      it 'should clear COP certificate number', ->
+        ShortFormApplicationService.preferences.certOfPreference_certificateNumber =
+          '12345678'
+
+        ShortFormApplicationService.unsetPreferenceFields('certOfPreference')
+        expect(ShortFormApplicationService.preferences.certOfPreference_certificateNumber)
+          .toEqual null
+
+      it 'should clear DTHP certificate number', ->
+        ShortFormApplicationService.preferences.displaced_certificateNumber =
+          '12345678'
+
+        ShortFormApplicationService.unsetPreferenceFields('displaced')
+        expect(ShortFormApplicationService.preferences.displaced_certificateNumber)
+          .toEqual null
+
+    describe 'cancelOptOut', ->
+      it 'should clear preference opt out', ->
+        ShortFormApplicationService.preferences.optOut.liveInSf = true
+
+        ShortFormApplicationService.cancelOptOut('liveInSf')
+        expect(ShortFormApplicationService.preferences.optOut.liveInSf).toEqual false
+
+      describe 'cancel NRHP Opt Out', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelOptOut').and.callThrough()
+
+        it 'should not clear Live/Work Opt Out if listing doesn\'t have NRHP', ->
+          # Listing doesn't have NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut)
+            .not.toHaveBeenCalledWith('liveWorkInSf')
+
+        it 'should not clear Live/Work Opt Out if applicant not eligible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut)
+            .not.toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live/Work Opt Out if listing has NRHP and elibible for NRHP', ->
+          # Listing has NRHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for NRHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
+          expect(ShortFormApplicationService.cancelOptOut).toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+      describe 'cancel ADHP Opt Out', ->
+        beforeEach ->
+          spyOn(ShortFormApplicationService, 'cancelOptOut').and.callThrough()
+
+        it 'should not clear Live/Work Opt Out if listing doesn\'t have ADHP', ->
+          # Listing doesn't have ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).not.toHaveBeenCalledWith('liveWorkInSf')
+
+        it 'should not clear Live/Work Opt Out if not eligible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant not eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).not.toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+        it 'should clear Live/Work Opt Out if listing has ADHP and elibible for ADHP', ->
+          # Listing has ADHP
+          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+
+          # Applicant is eligible for ADHP
+          setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
+          ShortFormApplicationService.applicant = fakeApplicant
+
+          ShortFormApplicationService.cancelOptOut('antiDisplacement')
+          expect(ShortFormApplicationService.cancelOptOut).toHaveBeenCalledWith('liveWorkInSf')
+
+          resetFakePeople()
+
+    describe 'resetPreference', ->
+      beforeEach ->
+        ShortFormApplicationService.preferences.liveInSf = true
+        ShortFormApplicationService.preferences.liveInSf_household_member = 'Jane Doe'
+        ShortFormApplicationService.preferences.optOut = { liveInSf: true }
+        ShortFormApplicationService.application.validatedForms.Preferences['live-work-preference'] = false
+
+      it 'should clear preference options and validatedForms', ->
+        ShortFormApplicationService.resetPreference('liveInSf')
+        expect(ShortFormApplicationService.preferences.liveInSf).toEqual null
+        expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual null
+        expect(ShortFormApplicationService.application.validatedForms.Preferences).toEqual {}
+        expect(ShortFormApplicationService.application.preferences.optOut.liveInSf).toEqual false
 
     describe 'checkHouseholdEligiblity', ->
       afterEach ->
@@ -621,6 +1029,19 @@ do ->
         httpBackend.flush()
         expect(ShortFormApplicationService._householdEligibility).toEqual(validateHouseholdMatch)
 
+    describe 'hasHouseholdPublicHousingQuestion', ->
+      it 'should includes public housing question when listing has Rent Burdened / Assisted Housing Preference', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
+        expect(showHouseholdPublicHousingQuestion).toEqual true
+
+      it 'should NOT include public housing question when listing doesn\'t have Rent Burdened / Assisted Housing Preference', ->
+        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
+        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
+        expect(showHouseholdPublicHousingQuestion).toEqual false
+
     describe 'loadApplication', ->
       it 'reformats the application', ->
         spyOn(fakeDataService, 'reformatApplication').and.callThrough()
@@ -630,12 +1051,22 @@ do ->
         expect(fakeDataService.reformatApplication)
           .toHaveBeenCalledWith(data.application, [])
 
+      it 'loads the listing into Service.listing for viewing submitted applications', ->
+        spyOn(fakeListingService, 'loadListing').and.callThrough()
+        data =
+          application: fakeShortForm
+        data.application.status = 'Submitted'
+        data.application.listing = {Id: 'XYZ'}
+        ShortFormApplicationService.loadApplication(data)
+        expect(fakeListingService.loadListing)
+          .toHaveBeenCalledWith(data.application.listing)
+
       it 'resets user data', ->
-        spyOn(ShortFormApplicationService, 'resetUserData').and.callThrough()
+        spyOn(ShortFormApplicationService, 'resetApplicationData').and.callThrough()
         data =
           application: fakeShortForm
         ShortFormApplicationService.loadApplication(data)
-        expect(ShortFormApplicationService.resetUserData).toHaveBeenCalled()
+        expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()
 
     describe 'loadAccountApplication', ->
       beforeEach ->
@@ -732,3 +1163,103 @@ do ->
         fakePrevApplication = { status: 'draft' }
         ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
         expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+    describe 'hasCompleteRentBurdenFilesForAddress', ->
+      it 'returns true with lease and rent file', ->
+        ShortFormApplicationService.application.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {file: 'some file'}
+                rent:
+                  1: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual true
+
+      it 'returns false with missing file', ->
+        ShortFormApplicationService.application.preferences.documents.rentBurden =
+          '123 Main St':
+            lease: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFilesForAddress('123 Main St')).toEqual false
+
+    describe 'hasCompleteRentBurdenFiles', ->
+      beforeEach ->
+        ShortFormApplicationService.application.groupedHouseholdAddresses = [{"address": "123 Main St"}]
+      it 'returns true with lease and rent file', ->
+        ShortFormApplicationService.application.preferences =
+          documents:
+            rentBurden:
+              '123 Main St':
+                lease: {file: 'some file'}
+                rent:
+                  1: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual true
+
+      it 'returns false with missing file', ->
+        ShortFormApplicationService.application.preferences.documents.rentBurden =
+          '123 Main St':
+            lease: {file: 'some file'}
+        expect(ShortFormApplicationService.hasCompleteRentBurdenFiles()).toEqual false
+
+    describe 'claimedCustomPreference', ->
+      beforeEach ->
+        fakeListing = getJSONFixture('listings-api-show.json').listing
+        ShortFormApplicationService.listing = fakeListing
+        fakeCustomPreference =
+          listingPreferenceID: '123456'
+        ShortFormApplicationService.listing.customPreferences = [fakeCustomPreference]
+
+      it 'returns true if custom preferences were claimed', ->
+        ShortFormApplicationService.preferences = {'123456': true}
+        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual true
+
+      it 'returns false if custom preferences were not claimed', ->
+        ShortFormApplicationService.preferences = {'liveInSf': true}
+        expect(ShortFormApplicationService.claimedCustomPreference(fakeCustomPreference)).toEqual false
+
+    # multilingual
+    describe 'setApplicationLanguage', ->
+      it 'sets application language to the full name version of the lang param', ->
+        fakeSharedService.getLanguageName = jasmine.createSpy().and.returnValue('Spanish')
+        ShortFormApplicationService.setApplicationLanguage('es')
+        expect(ShortFormApplicationService.application.applicationLanguage).toEqual 'Spanish'
+
+    describe 'getLanguageCode', ->
+      it 'calls SharedService.getLanguageCode with the application language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('es')
+        ShortFormApplicationService.getLanguageCode({applicationLanguage: 'Spanish'})
+        expect(fakeSharedService.getLanguageCode).toHaveBeenCalledWith('Spanish')
+
+    describe 'switchingLanguage', ->
+      it 'returns true if user is switching language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('en')
+        ShortFormApplicationService.application.applicationLanguage = 'English'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual true
+
+      it 'returns false if user is not switching language', ->
+        fakeSharedService.getLanguageCode = jasmine.createSpy().and.returnValue('es')
+        ShortFormApplicationService.application.applicationLanguage = 'Spanish'
+        $state.params.lang = 'es'
+        expect(ShortFormApplicationService.switchingLanguage()).toEqual false
+
+    describe 'sendToLastPageofApp', ->
+      describe 'entering short form section that is not the last page of application', ->
+        it 'sends user to last page of application', ->
+          spyOn($state, 'href').and.returnValue(true)
+          ShortFormApplicationService.application.lastPage = 'review-terms'
+          ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
+          lastPageRoute = 'dahlia.short-form-application.review-terms'
+          expect($state.go).toHaveBeenCalledWith(lastPageRoute)
+
+    describe 'applicationCompletionPercentage', ->
+      it 'calculates a baseline percentage of 5% for new applications', ->
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 5
+
+      it 'calculates a percentage based on completedSections', ->
+        ShortFormApplicationService.application.completedSections = {
+          You: true # 30%
+          Household: true # 25%
+        }
+        pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
+        expect(pct).toEqual 60

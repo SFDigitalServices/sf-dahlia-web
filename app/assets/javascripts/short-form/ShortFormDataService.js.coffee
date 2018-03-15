@@ -1,42 +1,88 @@
-ShortFormDataService = () ->
+ShortFormDataService = (ListingService) ->
   Service = {}
-  Service.preferences = [
-    'displaced',
-    'certOfPreference',
-    'liveInSf',
-    'workInSf',
-    'neighborhoodResidence'
+  Service.preferences = _.keys(ListingService.preferenceMap)
+  Service.metaFields = [
+    'completedSections'
+    'session_uid'
+    'lastPage'
+    'groupedHouseholdAddresses'
   ]
 
-  Service.formatApplication = (listingId, shortFormApplication) ->
-    application = angular.copy(shortFormApplication)
-    application.listingID = listingId
-    application = Service._formatDOB(application)
-    application = Service._formatAddress(application, 'applicant', 'home_address')
-    application = Service._formatAddress(application, 'applicant', 'mailing_address')
-    application = Service._formatGeocodingData(application)
-    noAltContact =
-      application.alternateContact.alternateContactType == 'None' ||
-      !application.alternateContact.firstName ||
-      !application.alternateContact.lastName
-    if noAltContact
-      delete application.alternateContact
-    else
-      application = Service._formatAddress(application, 'alternateContact', 'mailing_address')
-    application = Service._formatHouseholdAddress(application)
-    application = Service._formatHouseholdDOB(application)
-    application = Service._formatPreferences(application)
-    application = Service._formatReferrals(application)
-    application = Service._formatTerms(application)
-    application = Service._formatIncome(application)
-    application = Service._formatBooleans(application)
-    application = Service._renameApplicant(application)
-    application = Service._formatMetadata(application)
-    delete application.householdMembers if _.isEmpty(application.householdMembers)
-    delete application.primaryApplicant.mailingGeocoding_data
-    delete application.validatedForms
-    delete application.lotteryNumber
-    return application
+  Service.WHITELIST_FIELDS =
+    application: [
+        'id'
+        'applicationLanguage'
+        'listingID'
+        'applicationSubmittedDate'
+        'applicationSubmissionType'
+        'status'
+        'autofill'
+        'hasPublicHousing'
+        'hasMilitaryService'
+        'hasDevelopmentalDisability'
+        'answeredCommunityScreening'
+      ]
+    primaryApplicant: [
+        'appMemberId', 'contactId',
+        'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
+        'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
+        'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
+        'gender', 'genderOther', 'race', 'sexAtBirth', 'sexualOrientation', 'sexualOrientationOther',
+        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+      ]
+    alternateContact: [
+        'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
+        'agency', 'email', 'firstName', 'lastName', 'phone'
+      ]
+    householdMember: [
+        'appMemberId', 'firstName', 'middleName', 'lastName',
+        'relationship', 'preferenceAddressMatch', 'noAddress',
+        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+      ]
+
+
+  Service.formatApplication = (listingId, application) ->
+    # _.pick creates a new object
+    sfApp = _.pick application, Service.WHITELIST_FIELDS.application
+    sfApp.listingID = listingId
+
+    # check to see if we should build up alternateContact object
+    if application.alternateContact.alternateContactType != 'None' &&
+      application.alternateContact.firstName &&
+      application.alternateContact.lastName
+        sfApp.alternateContact = _.pick application.alternateContact, Service.WHITELIST_FIELDS.alternateContact
+        address = Service._formatAddress(application.alternateContact, 'mailing_address')
+        _.merge sfApp.alternateContact, address
+
+    # primaryApplicant
+    sfApp.primaryApplicant = _.pick application.applicant, Service.WHITELIST_FIELDS.primaryApplicant
+    sfApp.primaryApplicant.dob = Service.formatUserDOB(application.applicant)
+    sfApp.primaryApplicant.workInSf = Service._formatBoolean(application.applicant.workInSf)
+    _.merge sfApp.primaryApplicant, Service._formatGeocodingData(application.applicant)
+    home_address = Service._formatAddress(application.applicant, 'home_address')
+    mailing_address = Service._formatAddress(application.applicant, 'mailing_address')
+    _.merge sfApp.primaryApplicant, home_address
+    _.merge sfApp.primaryApplicant, mailing_address
+
+    # householdMembers
+    householdMembers = Service._formatHouseholdMembers(application)
+    unless _.isEmpty(householdMembers)
+      sfApp.householdMembers = householdMembers
+
+    # preferences + other data
+    sfApp.shortFormPreferences = Service._formatPreferences(application)
+    sfApp.adaPrioritiesSelected = Service._formatPickList(application.adaPrioritiesSelected)
+    sfApp.referral = Service._formatPickList(application.applicant.referral)
+    sfApp.agreeToTerms = !!application.applicant.terms.yes
+
+    # income
+    sfApp.householdVouchersSubsidies = Service._formatBoolean(application.householdVouchersSubsidies)
+    _.merge sfApp, Service._formatIncome(application.householdIncome)
+    sfApp.totalMonthlyRent = Service._calculateTotalMonthlyRent(application)
+    sfApp.formMetadata = Service._formatMetadata(application)
+
+    # done!
+    return sfApp
 
   Service.formatUserDOB = (user) ->
     dob_fields = _.compact [user.dob_year, user.dob_month, user.dob_day]
@@ -50,190 +96,220 @@ ShortFormDataService = () ->
 
   ######### "private" methods
 
-  Service._renameApplicant = (application) ->
-    application.primaryApplicant = angular.copy(application.applicant)
-    delete application.applicant
-    return application
-
-  Service._formatDOB = (application) ->
-    application.applicant.dob = Service.formatUserDOB(application.applicant)
-    application.applicant = Service.removeDOBFields(application.applicant)
-    return application
-
-  Service._formatHouseholdDOB = (application) ->
-    application.householdMembers.forEach( (member) ->
-      member.dob = Service.formatUserDOB(member)
-      angular.copy(Service.removeDOBFields(member), member)
-      delete member.id
-      return
-    )
-    return application
-
-
-  Service._formatAddress = (application, person, addressType) ->
-    delete application[person].geocoding_data
-    return application unless application[person][addressType]
+  Service._formatAddress = (member, addressType, opts = {}) ->
+    return unless member[addressType]
+    addressData = {}
 
     if addressType == 'home_address'
-      _.forEach application[person][addressType], (value, key) ->
+      _.forEach member[addressType], (value, key) ->
         if !_.includes(['address1', 'address2', 'boundary_match'], key)
-          application[person][key] = value
+          addressData[key] = value
         return
-      if application[person][addressType].address1
-        application[person].address = application[person][addressType].address1
-        address2 = application[person][addressType].address2
-        application[person].address += ' ' + address2 if address2
-      delete application[person].confirmed_home_address
+      if member[addressType].address1
+        addressData.address = member[addressType].address1
+        address2 = member[addressType].address2
+        addressData.address += ' ' + address2 if address2
 
     else if addressType == 'mailing_address'
-      _.forEach application[person][addressType], (value, key) ->
+      _.forEach member[addressType], (value, key) ->
         if !_.includes(['address1', 'address2', 'boundary_match'], key)
           newKey = 'mailing' + _.capitalize(key)
-          application[person][newKey] = value
+          addressData[newKey] = value
         return
-      application[person].mailingAddress = application[person][addressType].address1
-      address2 = application[person][addressType].address2
-      application[person].mailingAddress += ' ' + address2 if address2
+      addressData.mailingAddress = member[addressType].address1
+      address2 = member[addressType].address2
+      addressData.mailingAddress += ' ' + address2 if address2
 
-    delete application[person][addressType]
-    return application
-
-  Service._formatHouseholdAddress = (application) ->
-    application.householdMembers.forEach( (member) ->
-      if member.home_address
-        _.forEach member.home_address, (value, key) ->
-          if !_.includes(['address1', 'address2', 'boundary_match'], key)
-            member[key] = value
-          return
-        member.address = member.home_address.address1
-        member.address += ' ' + member.home_address.address2 if member.home_address.address2
-
+    if opts.householdMember
       if member.hasSameAddressAsApplicant == 'Yes'
-        member.hasSameAddressAsApplicant = true
+        addressData.hasSameAddressAsApplicant = true
       else
-        member.hasSameAddressAsApplicant = false
+        addressData.hasSameAddressAsApplicant = false
 
-      delete member.home_address
-      delete member.confirmed_home_address
-      delete member.geocoding_data
-    )
-    return application
+    return addressData
+
+  Service._formatHouseholdMembers = (application) ->
+    householdMembers = []
+    members = _.each application.householdMembers, (member) ->
+      householdMember = _.pick member, Service.WHITELIST_FIELDS.householdMember
+      householdMember.dob = Service.formatUserDOB(member)
+      householdMember.workInSf = Service._formatBoolean(member.workInSf)
+      _.merge householdMember, Service._formatGeocodingData(member)
+      home_address = Service._formatAddress(member, 'home_address', {householdMember: true})
+      _.merge householdMember, home_address
+      householdMembers.push(householdMember)
+    return householdMembers
 
   Service._formatPreferences = (application) ->
+    shortFormPreferences = []
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
-    preferences = angular.copy(Service.preferences)
-    preferences.forEach( (preference) ->
-      memberName = application.preferences[preference + '_household_member']
-      member = _.find(allMembers, (m) ->
-        return memberName == (m.firstName + ' ' + m.lastName)
-      )
-      return unless member
-      memberDOB = member.dob.replace(/\//g, '.')
-      if preference == 'certOfPreference'
-        preferenceName = preference + 'NatKey'
+
+    angular.copy(ListingService.listing.preferences).forEach( (listingPref) ->
+      # prefKey is the short name like liveInSf
+      prefKey = null
+      naturalKey = null
+      individualPref = null
+      optOut = false
+      shortformPreferenceID = null
+      certificateNumber = null
+      appPrefs = application.preferences
+      proofOption = null
+      PREFS = ListingService.preferenceMap
+
+      if listingPref.preferenceName == PREFS.liveWorkInSf
+        shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
+        # default prefKey and optOut for Live/Work, in case individual live or work
+        # preference isn't applicable (like when applicant is eligible for both, but
+        # opts out of preference all together)
+        prefKey = 'liveWorkInSf'
+        optOut = appPrefs.optOut.liveWorkInSf
+        if appPrefs.liveInSf || appPrefs.optOut.liveInSf
+          individualPref = 'Live in SF'
+          prefKey = 'liveInSf'
+          optOut = appPrefs.optOut.liveInSf
+        else if appPrefs.workInSf || appPrefs.optOut.workInSf
+          individualPref = 'Work in SF'
+          prefKey = 'workInSf'
+          optOut = appPrefs.optOut.workInSf
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
+      else if listingPref.preferenceName == PREFS.rentBurden
+        shortformPreferenceID = appPrefs.rentBurden_shortformPreferenceID
+        if appPrefs.rentBurden || appPrefs.optOut.rentBurden
+          individualPref = 'Rent Burdened'
+          prefKey = 'rentBurden'
+          optOut = appPrefs.optOut.rentBurden
+        else if appPrefs.assistedHousing || appPrefs.optOut.assistedHousing
+          individualPref = 'Assisted Housing'
+          prefKey = 'assistedHousing'
+          optOut = appPrefs.optOut.assistedHousing
+        proofOption = 'Lease and rent proof' unless optOut
       else
-        preferenceName = preference + 'PreferenceNatKey'
-      application[preferenceName] = member.firstName + ',' + member.lastName + ',' + memberDOB
-      delete application.preferences[preference + '_household_member']
+        prefKey = _.invert(PREFS)[listingPref.preferenceName]
+        prefKey = listingPref.listingPreferenceID if !prefKey
+        shortformPreferenceID = appPrefs["#{prefKey}_shortformPreferenceID"]
+        optOut = appPrefs.optOut[prefKey]
+        proof = appPrefs.documents[prefKey] || {}
+        proofOption = proof.proofOption unless optOut
+        # pref_certificateNumber may or may not exist, which is ok
+        certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
+
+
+      # if you optOut then you wouldn't have a memberName or proofOption
+      unless optOut
+        memberId = appPrefs[prefKey + '_household_member']
+        member = _.find(allMembers, { id: memberId })
+
+        if !member && prefKey == 'rentBurden'
+          # set a default member in the case of rentBurden where none was indicated
+          member = application.applicant
+
+        if member
+          # there might not be a member indicated if it's a draft
+          naturalKey = "#{member.firstName},#{member.lastName},#{Service.formatUserDOB(member)}"
+
+      shortFormPref =
+        recordTypeDevName: Service._getPreferenceRecordType(listingPref)
+        shortformPreferenceID: shortformPreferenceID
+        listingPreferenceID: listingPref.listingPreferenceID
+        preferenceProof: proofOption
+        naturalKey: naturalKey
+        optOut: optOut
+        individualPreference: individualPref
+        certificateNumber: certificateNumber
+      # remove blank values
+      shortFormPref = _.omitBy(shortFormPref, _.isNil)
+      shortFormPreferences.push(shortFormPref)
     )
+    return shortFormPreferences
 
-    if application.householdVouchersSubsidies == 'Yes'
-      application.householdVouchersSubsidies = true
-    else if application.householdVouchersSubsidies == 'No'
-      application.householdVouchersSubsidies = false
-    delete application.preferences
-    return application
+  Service._getPreferenceRecordType = (preference) ->
+    return preference.recordTypeDevName if preference.recordTypeDevName
 
-  Service._formatReferrals = (application) ->
-    referrals = ""
-    _.forEach application.applicant.referral, (value, key) ->
-      referrals += (key + ";") if value
+    PREFS = ListingService.preferenceMap
+    switch preference.preferenceName
+      when PREFS.certOfPreference
+        'COP'
+      when PREFS.displaced
+        'DTHP'
+      when PREFS.liveWorkInSf, PREFS.liveInSf, PREFS.workInSf
+        'L_W'
+      when PREFS.neighborhoodResidence
+        'NRHP'
+      when PREFS.assistedHousing, PREFS.rentBurden
+        'RB_AHP'
+      when PREFS.antiDisplacement
+        'ADHP'
+      else 'Custom'
+
+  Service._formatPickList = (listData) ->
+    resultStr = ""
+    _.each listData, (value, key) ->
+      resultStr += (key + ";") if value
       return
-    application.referral = referrals
-    delete application.applicant.referral
-    return application
+    return resultStr
 
-  Service._formatTerms = (application) ->
-    if application.applicant.terms.yes
-      application.agreeToTerms = true
+  Service._formatIncome = (householdIncome) ->
+    incomeData = {}
+    if householdIncome.incomeTimeframe == 'per_year'
+      incomeData.annualIncome = householdIncome.incomeTotal
+    else if householdIncome.incomeTimeframe == 'per_month'
+      incomeData.monthlyIncome = householdIncome.incomeTotal
+    return incomeData
+
+  Service._formatBoolean = (value) ->
+    # the point is to return true/false or null if no value provided
+    if value == 'Yes'
+      true
+    else if value == 'No'
+      false
     else
-      application.agreeToTerms = false
-    delete application.applicant.terms
-    return application
+      null
 
-  Service._formatIncome = (application) ->
-    incomeTimeframe = application.householdIncome.incomeTimeframe
-    if incomeTimeframe == 'per_year'
-      application.annualIncome = application.householdIncome.incomeTotal
-    else if incomeTimeframe == 'per_month'
-      application.monthlyIncome = application.householdIncome.incomeTotal
-    delete application.householdIncome
-    return application
+  Service._calculateTotalMonthlyRent = (application) ->
+    # _.sumBy will count any `null` or `undefined` values as 0
+    _.sumBy(application.groupedHouseholdAddresses, 'monthlyRent')
 
-  Service._formatBooleans = (application) ->
-    ['workInSf', 'hiv'].forEach (field) ->
-      if application.applicant[field] == 'Yes'
-        application.applicant[field] = true
-      else if application.applicant[field] == 'No'
-        application.applicant[field] = false
+  Service._formatGeocodingData = (member) ->
+    data = {}
+    if member.geocodingData
+      geo = member.geocodingData
+      if geo.location
+        data.xCoordinate = geo.location.x
+        data.yCoordinate = geo.location.y
+      if geo.attributes
+        data.whichComponentOfLocatorWasUsed = geo.attributes.Loc_name
+      data.candidateScore = geo.score
+    return data
 
-    application.householdMembers.forEach( (member) ->
-      if member.workInSf == 'Yes'
-        member.workInSf = true
-      else if member.workInSf == 'No'
-        member.workInSf = false
-    )
-    return application
-
-  Service._formatGeocodingData = (application) ->
-    members = application.householdMembers.concat([application.applicant])
-    members.forEach (member) ->
-      if member.geocodingData
-        geo = member.geocodingData
-        if geo.location
-          member.xCoordinate = geo.location.x
-          member.yCoordinate = geo.location.y
-        if geo.attributes
-          member.whichComponentOfLocatorWasUsed = geo.attributes.loc_name
-        member.candidateScore = geo.score
-        delete member.geocodingData
-    return application
-
+  # turn all metaFields into a formMetadata JSON string
   Service._formatMetadata = (application) ->
-    formMetadata =
-      completedSections: application.completedSections
-      session_uid: application.session_uid
-
-    application.formMetadata = JSON.stringify(formMetadata)
-    delete application.completedSections
-    delete application.session_uid
-    return application
+    JSON.stringify(_.pick(application, Service.metaFields))
 
   #############################################
   # Reverse formatting functions (Salesforce -> Web app)
   #############################################
 
   Service.reformatApplication = (sfApp = {}, uploadedFiles = []) ->
-    whitelist = [
-      'id'
-      'listingID'
-      'listing'
-      'applicationSubmittedDate'
-      'status'
-      'lotteryNumber'
-      'neighborhoodPreferenceOptOut'
-      'liveWorkOptOut'
-    ]
-    data = _.pick sfApp, whitelist
+    data = _.pick sfApp, Service.WHITELIST_FIELDS.application
+    data.lotteryNumber = sfApp.lotteryNumber
+    data.listing = sfApp.listing
     data.alternateContact = Service._reformatAltContact(sfApp.alternateContact)
     data.applicant = Service._reformatPrimaryApplicant(sfApp.primaryApplicant, sfApp.alternateContact)
+    data.adaPrioritiesSelected = Service._reformatMultiSelect(sfApp.adaPrioritiesSelected)
     data.applicant.referral = Service._reformatMultiSelect(sfApp.referral)
     data.householdMembers = Service._reformatHousehold(sfApp.householdMembers)
     data.householdVouchersSubsidies = Service._reformatBoolean(sfApp.householdVouchersSubsidies)
     data.householdIncome = Service._reformatIncome(sfApp)
-    data.preferences = Service._reformatPreferences(sfApp, uploadedFiles)
     Service._reformatMetadata(sfApp, data)
+
+    allHousehold = angular.copy(data.householdMembers)
+    allHousehold.unshift(data.applicant)
+    data.preferences = Service._reformatPreferences(sfApp, data, allHousehold, uploadedFiles)
+    # if sfApp.autofill == true that means the API returned an autofilled application
+    # to be used as a new draft (i.e. some fields need to be cleared out)
+    Service._autofillReset(data) if sfApp.autofill
     return data
 
   Service.reformatDOB = (dob = '') ->
@@ -247,34 +323,24 @@ ShortFormDataService = () ->
 
   Service._reformatAltContact = (alternateContact) ->
     return { alternateContactType: 'None' } unless alternateContact
-    whitelist = [
-      'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
-      'agency', 'email', 'firstName', 'lastName', 'phone'
-    ]
-    contact = _.pick alternateContact, whitelist
+    contact = _.pick alternateContact, Service.WHITELIST_FIELDS.alternateContact
     contact.mailing_address = Service._reformatMailingAddress(alternateContact)
     return contact
 
   Service._reformatPrimaryApplicant = (contact, altContact) ->
-    whitelist = [
-      'appMemberId', 'contactId',
-      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-      'email', 'firstName', 'middleName', 'lastName', 'neighborhoodPreferenceMatch',
-      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
-      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-    ]
-    applicant = _.pick contact, whitelist
+    applicant = _.pick contact, Service.WHITELIST_FIELDS.primaryApplicant
     applicant.mailing_address = Service._reformatMailingAddress(contact)
     applicant.home_address = Service._reformatHomeAddress(contact)
     applicant.workInSf = Service._reformatBoolean(contact.workInSf)
     applicant.additionalPhone = !! contact.alternatePhone
+    # we use this tempId to identify people in the preference dropdown
+    applicant.id = 1
     _.merge(applicant, Service.reformatDOB(contact.DOB))
     return applicant
 
   Service._reformatHousehold = (contacts) ->
     household = []
-    i = 0
+    i = 1
     contacts.forEach (contact) ->
       i++
       member = Service._reformatHouseholdMember(contact)
@@ -284,47 +350,104 @@ ShortFormDataService = () ->
     household
 
   Service._reformatHouseholdMember = (contact) ->
-    whitelist = [
-      'appMemberId', 'firstName', 'middleName', 'lastName',
-      'relationship', 'neighborhoodPreferenceMatch', 'noAddress',
-      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-    ]
-    member = _.pick contact, whitelist
+    member = _.pick contact, Service.WHITELIST_FIELDS.householdMember
     member.home_address = Service._reformatHomeAddress(contact)
     member.hasSameAddressAsApplicant = Service._reformatBoolean(contact.hasSameAddressAsApplicant)
     member.workInSf = Service._reformatBoolean(contact.workInSf)
     _.merge(member, Service.reformatDOB(contact.DOB))
     return member
 
-  Service._reformatPreferences = (sfApp, files) ->
-    preferences = {}
-    prefList = angular.copy(Service.preferences)
-    allHousehold = sfApp.householdMembers
-    allHousehold.unshift(sfApp.primaryApplicant)
-    prefList.forEach( (preference) ->
-      preferenceName = (if preference == 'certOfPreference' then preference else "#{preference}Preference")
-      appMemberId = sfApp["#{preferenceName}ID"]
-      # these are just workarounds since the salesforce naming is inconsistent
-      if !appMemberId && preference == 'workInSf'
-        appMemberId = sfApp['worksInSfPreferenceID']
-      if !appMemberId && preference == 'neighborhoodResidence'
-        appMemberId = sfApp['neighborhoodPreferenceID']
-      if appMemberId
-        member = _.find(allHousehold, {appMemberId: appMemberId})
-        # if we don't find a household member matching the preference that's probably bad.
+  Service._initPreferences = (data) ->
+    data.preferences = {
+      optOut: {}
+      documents: {
+        rentBurden: {}
+      }
+    }
+    _.each data.groupedHouseholdAddresses, (groupedHouseholdAddress) ->
+      Service.initRentBurdenDocs(groupedHouseholdAddress.address, data)
+
+    data.preferences
+
+  Service._reformatPreferences = (sfApp, data, allHousehold, files) ->
+    preferences = Service._initPreferences(data)
+    shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
+    shortFormPrefs.forEach( (shortFormPref) ->
+
+      listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
+      # if we don't find a matching listing preference that's probably bad.
+      return unless listingPref
+
+      member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
+
+      # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
+      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+        preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
+        if shortFormPref.individualPreference == 'Live in SF'
+          prefKey = 'liveInSf'
+        else if shortFormPref.individualPreference == 'Work in SF'
+          prefKey = 'workInSf'
+        else
+          prefKey = 'liveWorkInSf'
+      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+        preferences.rentBurden_shortformPreferenceID = shortFormPref.shortformPreferenceID
+        if shortFormPref.individualPreference == 'Assisted Housing'
+          prefKey = 'assistedHousing'
+        else if shortFormPref.individualPreference == 'Rent Burdened'
+          prefKey = 'rentBurden'
+      else
+        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        unless prefKey
+          # must be a customPreference... just identify by ID much like on e7b-custom-preferences
+          prefKey = listingPref.listingPreferenceID
+        preferences["#{prefKey}_shortformPreferenceID"] = shortFormPref.shortformPreferenceID
+
+      preferences.optOut[prefKey] = shortFormPref.optOut
+      unless shortFormPref.optOut
+        # now that we have prefKey, reconstruct the fields on preferences
         if member
-          preferences["#{preference}_household_member"] = "#{member.firstName} #{member.lastName}"
-          preferences[preference] = true
-          file = _.find(files, {preference: preference})
-          if file
-            preferences["#{preference}_proof_option"] = file.document_type
-            preferences["#{preference}_proof_file"] = file
+          preferences["#{prefKey}_household_member"] = member.id
+          preferences[prefKey] = true
+
+        if shortFormPref.certificateNumber
+          preferences["#{prefKey}_certificateNumber"] = shortFormPref.certificateNumber
+
+        preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
     )
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
       preferences.liveWorkInSf_preference = if preferences.liveInSf then 'liveInSf' else 'workInSf'
     preferences
 
+  Service._reformatPreferenceProof = (preferences, prefKey, shortFormPref, files, status) ->
+    if status.match(/draft/i)
+      _.each _.filter(files, {listing_preference_id: shortFormPref.listingPreferenceID}), (file) ->
+        # mark preference as true if they've uploaded any files (e.g. for a draft)
+        preferences[prefKey] = true
+
+        if prefKey == 'rentBurden'
+          if !_.isEmpty(preferences.documents.rentBurden[file.address])
+            if file.rent_burden_type == 'lease'
+              preferences.documents.rentBurden[file.address].lease = {
+                proofOption: file.document_type
+                file: file
+              }
+            else
+              preferences.documents.rentBurden[file.address].rent[file.rent_burden_index] = {
+                id: file.rent_burden_index
+                proofOption: file.document_type
+                file: file
+              }
+        else
+          preferences.documents[prefKey] = {
+            proofOption: file.document_type
+            file: file
+          }
+    else
+      preferences.documents[prefKey] = {
+        proofOption: shortFormPref.preferenceProof
+      }
+    return preferences
 
   Service._reformatMailingAddress = (contact) ->
     return {
@@ -348,7 +471,7 @@ ShortFormDataService = () ->
         incomeTimeframe: 'per_month'
         incomeTotal: sfApp.monthlyIncome
       }
-    else
+    else if sfApp.annualIncome
       return {
         incomeTimeframe: 'per_year'
         incomeTotal: sfApp.annualIncome
@@ -367,11 +490,73 @@ ShortFormDataService = () ->
   Service._reformatMetadata = (sfApp, data) ->
     formMetadata = JSON.parse(sfApp.formMetadata)
     return if _.isEmpty(formMetadata)
-    data.completedSections = formMetadata.completedSections
+    metadata = _.pick(formMetadata, Service.metaFields)
+    _.merge(data, metadata)
+
+  Service.initRentBurdenDocs = (address, data) ->
+    rentBurdenDocs = data.preferences.documents.rentBurden
+    return if !_.isEmpty(rentBurdenDocs[address])
+    rentBurdenDocs[address] = {
+      lease: {}
+      rent: {}
+    }
+
+
+  Service._autofillReset = (data) ->
+    data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
+    unless data.surveyComplete
+      # clear out demographics if you hadn't already completed them all
+      data.applicant.gender = null
+      data.applicant.genderOther = null
+      data.applicant.ethnicity = null
+      data.applicant.race = null
+      data.applicant.sexAtBirth = null
+      data.applicant.sexualOrientation = null
+      data.applicant.sexualOrientationOther = null
+      data.applicant.referral = {}
+
+    # reset fields that don't apply to this application
+    LS = ListingService
+    unless LS.hasPreference('assistedHousing')
+      delete data.hasPublicHousing
+      delete data.totalMonthlyRent
+      data.groupedHouseholdAddresses = []
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.VETERAN)
+      delete data.hasMilitaryService
+    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.DISABLED)
+      delete data.hasDevelopmentalDisability
+
+    # reset contact + neighborhood data
+    resetContactFields = [
+      'appMemberId'
+      'contactId'
+      'preferenceAddressMatch'
+      'xCoordinate'
+      'yCoordinate'
+      'whichComponentOfLocatorWasUsed'
+      'candidateScore'
+    ]
+    angular.copy(_.omit(data.applicant, resetContactFields), data.applicant)
+    _.each data.householdMembers, (member) ->
+      angular.copy(_.omit(member, resetContactFields), member)
+
+    # reset completedSections
+    angular.copy(Service.defaultCompletedSections, data.completedSections)
 
   #############################################
   # Helper functions
   #############################################
+
+  Service.checkSurveyComplete = (applicant, opts = {}) ->
+    responses = [
+      applicant.gender,
+      applicant.ethnicity,
+      applicant.race,
+      applicant.sexAtBirth,
+      applicant.sexualOrientation,
+      if opts.skipReferral then true else _.some(applicant.referral),
+    ]
+    return _.every(responses)
 
   Service.DOBValid = (field = 'day', values) ->
     month = values.month
@@ -403,7 +588,9 @@ ShortFormDataService = () ->
 
 #############################################
 
-ShortFormDataService.$inject = []
+ShortFormDataService.$inject = [
+  'ListingService'
+]
 
 angular
   .module('dahlia.services')

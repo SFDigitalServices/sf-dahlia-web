@@ -1,28 +1,28 @@
 h4.h-caps-lined translate="LEASING_AGENT.CONTACT"
 h3.t-delta.t-sans.no-margin
-  | {{ listing.Leasing_Agent_Name }}
+  | {{ ::listing.Leasing_Agent_Name }}
 p.c-steel
-  | {{ listing.Leasing_Agent_Title }}
-a.has-icon.margin-bottom--half title="Call {{ listing.Leasing_Agent_Phone }}" ng-href="tel:{{listing.Leasing_Agent_Phone | htmlTel}}" ng-if="listing.Leasing_Agent_Phone"
+  | {{ ::listing.Leasing_Agent_Title }}
+a.has-icon.margin-bottom--half title="Call {{ ::listing.Leasing_Agent_Phone }}" ng-href="tel:{{::listing.Leasing_Agent_Phone | htmlTel}}" ng-if="::listing.Leasing_Agent_Phone"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-phone"
-  | Call {{ listing.Leasing_Agent_Phone }}
-p.t-small.c-steel translate="LEASING_AGENT.DUE_TO_HIGH_CALL_VOLUME"
-a.has-icon.d-block.margin-bottom title="Email {{listing.Leasing_Agent_Email}}" ng-href="mailto:{{listing.Leasing_Agent_Email}}" ng-if="listing.Leasing_Agent_Email"
+  | Call {{ ::listing.Leasing_Agent_Phone }}
+p.t-small.c-steel translate="LEASING_AGENT.DUE_TO_HIGH_CALL_VOLUME" ng-if="::listing.Leasing_Agent_Phone"
+a.has-icon.d-block.margin-bottom title="Email {{::listing.Leasing_Agent_Email}}" ng-href="mailto:{{::listing.Leasing_Agent_Email}}" ng-if="::listing.Leasing_Agent_Email"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-mail"
   | {{ 'LABEL.EMAIL_ADDRESS' | translate }}
-p.c-steel ng-if="listing.Leasing_Agent_Street"
-  | {{ listing.Leasing_Agent_Street }}
+p.c-steel ng-if="::listing.Leasing_Agent_Street"
+  | {{ ::listing.Leasing_Agent_Street }}
   br
-  | {{ listing.Leasing_Agent_City }} {{ listing.Leasing_Agent_State }} {{ listing.Leasing_Agent_Zip }}
-a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map: {{formattedLeasingAgentAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedLeasingAgentAddress(listing)}}" ng-if="listing.Leasing_Agent_Street"
+  | {{ ::listing.Leasing_Agent_City }} {{ ::listing.Leasing_Agent_State }} {{ ::listing.Leasing_Agent_Zip }}
+a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map: {{formattedLeasingAgentAddress(listing)}}" href="https://www.google.com/maps/place/{{formattedLeasingAgentAddress(listing)}}" ng-if="::listing.Leasing_Agent_Street"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-map"
   | {{ 'LABEL.GET_DIRECTIONS' | translate }}
-.content-group_hours ng-if="listing.Office_Hours"
+.content-group_hours ng-if="::listing.Office_Hours"
   h3.content-group_title translate="LEASING_AGENT.OFFICE_HOURS"
-  .content-group_days.inline ng-bind-html="listing.Office_Hours"
+  .content-group_days.inline ng-bind-html="::listing.Office_Hours"

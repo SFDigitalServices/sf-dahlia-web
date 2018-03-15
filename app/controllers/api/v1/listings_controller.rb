@@ -2,10 +2,18 @@
 class Api::V1::ListingsController < ApiController
   ListingService = SalesforceService::ListingService
 
+  before_action do
+    # will force re-caching of content
+    ListingService.force = true if params[:force]
+  end
+
+  after_action do
+    ListingService.force = false if params[:force]
+  end
+
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    params[:ids] = params[:ids] if params[:ids].present?
     @listings = ListingService.listings(params[:ids])
     render json: { listings: @listings }
   end
@@ -22,7 +30,7 @@ class Api::V1::ListingsController < ApiController
 
   def lottery_buckets
     @lottery_buckets = ListingService.lottery_buckets(params[:id])
-    render json: { lottery_buckets: @lottery_buckets }
+    render json: @lottery_buckets
   end
 
   def lottery_ranking
@@ -30,7 +38,7 @@ class Api::V1::ListingsController < ApiController
       params[:id],
       params[:lottery_number],
     )
-    render json: { lottery_ranking: @lottery_ranking }
+    render json: @lottery_ranking
   end
 
   def preferences
@@ -39,12 +47,11 @@ class Api::V1::ListingsController < ApiController
   end
 
   def eligibility
-    e = params[:eligibility]
     # have to massage params into number values
     filters = {
-      householdsize: e[:householdsize].to_i,
-      incomelevel: e[:incomelevel].to_f,
-      childrenUnder6: e[:childrenUnder6].to_i,
+      householdsize: params[:householdsize].to_i,
+      incomelevel: params[:incomelevel].to_f,
+      childrenUnder6: params[:childrenUnder6].to_i,
     }
     @listings = ListingService.eligible_listings(filters)
     render json: { listings: @listings }
@@ -54,10 +61,15 @@ class Api::V1::ListingsController < ApiController
     # loop through all the ami levels that you just sent me
     # call ListingService.ami with each set of opts
     @ami_levels = []
-    params[:ami].each do |opts|
+    params[:chartType].each_with_index do |chart_type, i|
+      data = {
+        chartType: chart_type,
+        percent: params[:percent][i],
+        year: params[:year][i],
+      }
       @ami_levels << {
-        percent: opts[:percent],
-        values: ListingService.ami(opts.permit(%i(chartType percent year))),
+        percent: data[:percent],
+        values: ListingService.ami(data),
       }
     end
     render json: { ami: @ami_levels }

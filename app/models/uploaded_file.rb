@@ -1,18 +1,40 @@
 # Model for storing temporary uploaded files in the DB
 class UploadedFile < ActiveRecord::Base
-  enum preference: %i(workInSf liveInSf neighborhoodResidence)
+  enum rent_burden_type: %i(lease rent)
 
-  def descriptive_name
-    "#{preference_name} - #{document_type}#{File.extname(name)}"
+  def self.create_and_resize(attrs)
+    tempfile_path = attrs[:file].tempfile.path
+    begin
+      unless attrs[:content_type] == 'application/pdf'
+        if attrs[:content_type] == 'image/png'
+          # convert png -> jpeg
+          image = MiniMagick::Image.new(tempfile_path)
+          if image.valid?
+            image.format 'jpg'
+            attrs[:content_type] = 'image/jpeg'
+          end
+        end
+        # compress/optimize all jpegs
+        ImageOptimizer.new(tempfile_path, quality: 75).optimize
+      end
+    rescue
+      logger.error 'UploadedFile.create_and_resize error: png -> jpg conversion'
+    end
+    # read file data into :file attribute
+    attrs[:file] = File.read(tempfile_path)
+    # simplify uploaded filename to remove extension
+    attrs[:name] = File.basename(attrs[:name], File.extname(attrs[:name]))
+    create(attrs)
   end
 
-  def preference_name
-    # for neighborhoodResidence we combine NRHP and liveInSf in the filename
-    # because NRHP proof doubles as liveInSf proof
-    if preference.to_s == 'neighborhoodResidence'
-      'NRHP-liveInSf'
-    else
-      preference
-    end
+  # override as_json to omit the actual binary file since it's big and unncessary
+  def as_json(_options = {})
+    super(except: %i(file))
+  end
+
+  def descriptive_name
+    ext = content_type.rpartition('/').last
+    ext = 'jpg' if ext == 'jpeg'
+    "#{document_type}.#{ext}"
   end
 end

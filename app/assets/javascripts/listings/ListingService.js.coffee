@@ -2,8 +2,9 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
+ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalService) ->
   Service = {}
+  MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
   Service.listings = []
   Service.openListings = []
@@ -14,8 +15,14 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
   # these get loaded after the listing is loaded
   Service.AMICharts = []
   Service.loading = {}
+  Service.error = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURL = 'http://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
+  Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
+  Service.lotteryRankingInfo = {}
+  Service.lotteryBucketInfo = {}
+  Service.toggleStates = {}
+  Service.forceRecache = false
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -23,22 +30,22 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     {
       'language': 'English'
       'label': 'English'
-      'url': Service.mohcdApplicationURL + 'Universal Rent ShortForm PaperApp v8 - English.pdf'
+      'url': Service.mohcdEnglishApplicationURL
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service.mohcdApplicationURL + 'ES_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service.mohcdApplicationURL + 'TC_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Chinese')
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service.mohcdApplicationURL + 'TG_BMR Rent ShortForm PaperApp_v11.pdf'
+      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Tagalog')
     }
   ]
 
@@ -51,6 +58,23 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'Status',
   ]
 
+  Service.preferenceMap =
+    certOfPreference: "Certificate of Preference (COP)"
+    displaced: "Displaced Tenant Housing Preference (DTHP)"
+    liveWorkInSf: "Live or Work in San Francisco Preference"
+    liveInSf: "Live or Work in San Francisco Preference"
+    workInSf: "Live or Work in San Francisco Preference"
+    neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+    assistedHousing: "Rent Burdened / Assisted Housing Preference"
+    rentBurden: "Rent Burdened / Assisted Housing Preference"
+    antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
+
+  # Create a mapping to Salesforce naming conventions
+  Service.RESERVED_TYPES = {
+    VETERAN: 'Veteran'
+    DISABLED: 'Developmental disabilities'
+    SENIOR: 'Senior'
+  }
 
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
@@ -76,7 +100,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     Service.favorites.forEach (favorite_id) ->
       if listing_ids.indexOf(favorite_id) == -1
         Service.toggleFavoriteListing(favorite_id)
-
 
   Service.toggleFavoriteListing = (listing_id) ->
     # toggle the value for listing_id
@@ -119,17 +142,17 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.hasPreference = (preference) ->
     preferenceNames = _.map(Service.listing.preferences, (pref) -> pref.preferenceName)
-    preferenceMap =
-      certOfPreference: "Certificate of Preference (COP)"
-      displaced: "Displaced Tenant Housing Preference (DTHP)"
-      liveWorkInSf: "Live or Work in San Francisco Preference"
-      liveInSf: "Live or Work in San Francisco Preference"
-      workInSf: "Live or Work in San Francisco Preference"
-      neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
-
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
-    preferenceName = preferenceMap[preference]
+    preferenceName = Service.preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
+
+  Service.getPreference = (preference) ->
+    # looks up full preference object via the short name e.g. 'liveInSf'
+    preferenceName = Service.preferenceMap[preference]
+    _.find(Service.listing.preferences, { preferenceName: preferenceName })
+
+  Service.getPreferenceById = (listingPreferenceID) ->
+    _.find(Service.listing.preferences, { listingPreferenceID: listingPreferenceID })
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
@@ -149,15 +172,13 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     return incomeLevels
 
   Service.openLotteryResultsModal = ->
-    modalInstance = $modal.open({
-      templateUrl: 'listings/templates/listing/_lottery_modal.html',
-      controller: 'ModalInstanceController',
-      windowClass: 'modal-small'
-    })
+    Service.loading.lotteryRank = false
+    Service.error.lotteryRank = false
+    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
 
   Service.listingHasLotteryBuckets = ->
-    Service.listing.Lottery_Buckets &&
-    _.some(Service.listing.Lottery_Buckets.bucketResults, (pref) -> !_.isEmpty(pref.bucketResults))
+    Service.lotteryBucketInfo &&
+    _.some(Service.lotteryBucketInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
   # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = ->
@@ -200,9 +221,6 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
-  Service.showNeighborhoodPreferences = (listing) ->
-    !!listing.NeighborHoodPreferenceUrl && !Service.listingHasLotteryResults()
-
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
     _.sortBy sessions, (session) ->
@@ -215,80 +233,141 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.getListing = (_id) ->
     _id = Service.mapSlugToId(_id)
+
     if Service.listing && Service.listing.Id == _id
       # return a resolved promise if we already have the listing
       return $q.when(Service.listing)
+    Service.resetListingData()
+
+    deferred = $q.defer()
+    $http.get("/api/v1/listings/#{_id}.json#{if Service.forceRecache then '?force=true' else ''}",
+      { etagCache: true }
+    ).success(
+      Service.getListingResponse(deferred)
+    ).cached(
+      Service.getListingResponse(deferred)
+    ).error( (data, status, headers, config) ->
+      deferred.reject(data)
+    )
+    return deferred.promise
+
+  # Remove the previous listing and all it's associated data
+  Service.resetListingData = () ->
     angular.copy({}, Service.listing)
-    $http.get("/api/v1/listings/#{_id}.json").success((data, status, headers, config) ->
+    angular.copy([], Service.AMICharts)
+    angular.copy({}, Service.lotteryBucketInfo)
+    angular.copy([], Service.listingDownloadURLs)
+
+  Service.getListingResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      itemCache.set(data) unless status == 'cached'
+      deferred.resolve()
       if !data || !data.listing
         return
       angular.copy(data.listing, Service.listing)
+      # fallback for fixing the layout when a listing is missing an image
+      Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
-    ).error( (data, status, headers, config) ->
-      return
-    )
+      Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
     if opts.checkEligibility && Service.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
-    $http.get("/api/v1/listings.json").success((data, status, headers, config) ->
+    deferred = $q.defer()
+    $http.get("/api/v1/listings.json", {
+      etagCache: true
+    }).success(
+      Service.getListingsResponse(deferred)
+    ).cached(
+      Service.getListingsResponse(deferred)
+    ).error((data, status, headers, config) ->
+      deferred.reject(data)
+    )
+    return deferred.promise
+
+  Service.getListingsResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
+      listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
-    ).error( (data, status, headers, config) ->
-      return
-    )
+      deferred.resolve()
 
   Service.getListingsWithEligibility = ->
     params =
-      eligibility:
-        householdsize: Service.eligibility_filters.household_size
-        incomelevel: Service.eligibilityYearlyIncome()
-        includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
-        childrenUnder6: Service.eligibility_filters.children_under_6
-    $http.post("/api/v1/listings/eligibility.json", params).success((data, status, headers, config) ->
-      listings = (if data and data.listings then data.listings else [])
-      Service.groupListings(listings)
+      householdsize: Service.eligibility_filters.household_size
+      incomelevel: Service.eligibilityYearlyIncome()
+      includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
+      childrenUnder6: Service.eligibility_filters.children_under_6
+    deferred = $q.defer()
+    $http.get("/api/v1/listings/eligibility.json?#{Service.toQueryString(params)}",
+      { etagCache: true }
+    ).success(
+      Service.getListingsWithEligibilityResponse(deferred)
+    ).cached(
+      Service.getListingsWithEligibilityResponse(deferred)
     ).error( (data, status, headers, config) ->
-      return
+      deferred.reject(data)
     )
+    return deferred.promise
+
+  Service.getListingsWithEligibilityResponse = (deferred) ->
+    (data, status, headers, config, itemCache) ->
+      itemCache.set(data) unless status == 'cached'
+      listings = (if data and data.listings then data.listings else [])
+      listings = Service.cleanListings(listings)
+      Service.groupListings(listings)
+      deferred.resolve()
+
+  Service.cleanListings = (listings) ->
+    _.map listings, (listing) ->
+      # fallback for fixing the layout when a listing is missing an image
+      listing.imageURL ?= 'https://unsplash.it/g/780/438'
+    _.filter listings, (listing) ->
+      !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
   Service.groupListings = (listings) ->
-    angular.copy([], Service.openListings)
-    angular.copy([], Service.openMatchListings)
-    angular.copy([], Service.openNotMatchListings)
-    angular.copy([], Service.closedListings)
-    angular.copy([], Service.lotteryResultsListings)
+    openListings = []
+    openMatchListings = []
+    openNotMatchListings = []
+    closedListings = []
+    lotteryResultsListings = []
+
     listings.forEach (listing) ->
       if Service.listingIsOpen(listing)
         # All Open Listings Array
-        Service.openListings.push(listing)
+        openListings.push(listing)
         if listing.Does_Match
-          Service.openMatchListings.push(listing)
+          openMatchListings.push(listing)
         else
-          Service.openNotMatchListings.push(listing)
+          openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
-        if Service.lotteryDatePassed(listing)
-          Service.lotteryResultsListings.push(listing)
+        if Service.lotteryIsUpcoming(listing)
+          closedListings.push(listing)
         else
-          Service.closedListings.push(listing)
-    Service.sortListings()
+          lotteryResultsListings.push(listing)
 
-  Service.sortListings = ->
+    angular.copy(Service.sortListings(openListings, 'openListings'), Service.openListings)
+    angular.copy(Service.sortListings(openMatchListings, 'openMatchListings'), Service.openMatchListings)
+    angular.copy(Service.sortListings(openNotMatchListings, 'openNotMatchListings'), Service.openNotMatchListings)
+    angular.copy(Service.sortListings(closedListings, 'closedListings'), Service.closedListings)
+    angular.copy(Service.sortListings(lotteryResultsListings, 'lotteryResultsListings'), Service.lotteryResultsListings)
+
+  Service.sortListings = (listings, type) ->
     # openListing types
-    ['openListings', 'openMatchListings', 'openNotMatchListings'].forEach (type) ->
-      Service[type] = _.sortBy Service[type], (i) -> moment(i.Application_Due_Date)
+    if ['openListings', 'openMatchListings', 'openNotMatchListings'].indexOf(type) > -1
+      _.sortBy listings, (i) -> moment(i.Application_Due_Date)
     # closedListing types
-    ['closedListings', 'lotteryResultsListings'].forEach (type) ->
-      Service[type] = _.sortBy Service[type], (i) ->
+    else if ['closedListings', 'lotteryResultsListings'].indexOf(type) > -1
+      listings = _.sortBy listings, (i) ->
         # fallback to Application_Due_Date, really only for the special case of First Come First Serve
         moment(i.Lottery_Results_Date || i.Application_Due_Date)
-    # lotteryResults get reversed (latest lottery results date first)
-    Service.lotteryResultsListings = _.reverse(Service.lotteryResultsListings)
-
+      # lotteryResults get reversed (latest lottery results date first)
+      if type == 'lotteryResultsListings' then _.reverse listings else listings
 
   # retrieves only the listings specified by the passed in array of ids
   Service.getListingsByIds = (ids, checkFavorites = false) ->
@@ -319,37 +398,54 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     # listing is open if deadline is in the future
     return today > lotteryDate
 
+  Service.lotteryComplete = (listing) ->
+    listing.Lottery_Status == 'Lottery Complete'
+
+  Service.lotteryIsUpcoming = (listing) ->
+    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
+
   Service.listingIsReservedCommunity = (listing) ->
     !! listing.Reserved_community_type
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
+    return false if Service.lotteryComplete(listing)
     return false unless Service.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
-    Service.getListing(id).then ->
+    deferred = $q.defer()
+    Service.getListing(id).then( ->
+      deferred.resolve(Service.listing)
       if _.isEmpty(Service.listing)
         # kick them out unless there's a real listing
         return $state.go('dahlia.welcome')
       else if !Service.isAcceptingOnlineApplications(Service.listing)
         # kick them back to the listing
         return $state.go('dahlia.listing', {id: id})
+    ).catch( (response) ->
+      deferred.reject(response)
+    )
+    deferred.promise
 
   Service.getListingAMI = ->
     angular.copy([], Service.AMICharts)
-    if Service.listing.chartTypes
-      params =
-        ami: _.sortBy(Service.listing.chartTypes, 'percent')
-    else
-      # TODO: do we actually want/need this fallback?
-      # listing.chartTypes *should* always exist now
-      percent = Service.listing.AMI_Percentage || 100
-      params = { ami: [{year: '2016', chartType: 'Non-HERA', percent: percent}] }
-    $http.post('/api/v1/listings/ami.json', params).success((data, status, headers, config) ->
+    Service.loading.ami = true
+    Service.error.ami = false
+    # shouldn't happen, but safe to have a guard clause
+    return $q.when() unless Service.listing.chartTypes
+    allChartTypes = _.sortBy(Service.listing.chartTypes, 'percent')
+    data =
+      'year[]': _.map(allChartTypes, 'year')
+      'chartType[]': _.map(allChartTypes, 'chartType')
+      'percent[]': _.map(allChartTypes, 'percent')
+    $http.get('/api/v1/listings/ami.json', { params: data }).success((data, status, headers, config) ->
       if data && data.ami
         angular.copy(Service._consolidatedAMICharts(data.ami), Service.AMICharts)
+      Service.loading.ami = false
     ).error( (data, status, headers, config) ->
+      Service.loading.ami = false
+      Service.error.ami = true
       return
     )
 
@@ -365,14 +461,19 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         # if it exists, modify it with the max values
         i = 0
         amiPercentChart.values.forEach (incomeLevel) ->
-          incomeLevel.amount = Math.max(incomeLevel.amount, chart.values[i].amount)
+          chartAmount = if chart.values[i] then chart.values[i].amount else 0
+          incomeLevel.amount = Math.max(incomeLevel.amount, chartAmount)
           i++
     charts
 
-
   Service.getListingUnits = ->
     # angular.copy([], Service.listing.Units)
-    $http.get("/api/v1/listings/#{Service.listing.Id}/units").success((data, status, headers, config) ->
+    Service.loading.units = true
+    Service.error.units = false
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units#{if Service.forceRecache then '?force=true' else ''}")
+    .success((data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = false
       if data && data.units
         units = data.units
         Service.listing.Units = units
@@ -381,6 +482,8 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
         Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
         Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
     ).error( (data, status, headers, config) ->
+      Service.loading.units = false
+      Service.error.units = true
       return
     )
 
@@ -454,7 +557,21 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     !_.isEmpty(listing.priorityUnits)
 
   Service.listingHasReservedUnits = (listing) ->
-    !_.isEmpty(listing.reservedUnits)
+    !_.isEmpty(listing.unitSummaries.reserved)
+
+  # `type` should match what we get from Salesforce e.g. "Veteran"
+  Service.listingHasReservedUnitType = (listing, type) ->
+    return false unless Service.listingHasReservedUnits(listing)
+    types = _.map Service.listing.reservedDescriptor, (descriptor) -> descriptor.name
+    _.includes(types, type)
+
+  Service.listingHasSROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.some(combined, { Unit_Type: 'SRO' })
+
+  Service.listingHasOnlySROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
@@ -464,51 +581,101 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
       descriptor.name
 
   Service.getListingPreferences = ->
+    Service.loading.preferences = true
+    Service.error.preferences = false
     # TODO: -- REMOVE HARDCODED FEATURES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
-    return if !_.isEmpty(Service.listing.preferences)
+    if !_.isEmpty(Service.listing.preferences)
+      return $q.when(Service.listing.preferences)
     ## <--
-    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences").success((data, status, headers, config) ->
+    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences#{if Service.forceRecache then '?force=true' else ''}")
+    .success((data, status, headers, config) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences
+        Service._extractCustomPreferences()
+        Service.loading.preferences = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.preferences = false
+      Service.error.preferences = true
     )
 
+  Service.hardcodeCustomProofPrefs =
+    ['Alice Griffith Housing Development Resident']
+
+  Service._extractCustomPreferences = ->
+    customPreferences = _.filter Service.listing.preferences, (listingPref) ->
+      !_.invert(Service.preferenceMap)[listingPref.preferenceName]
+    customProofPreferences = _.remove customPreferences, (customPref) ->
+      _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
+    Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
+    Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
+
   Service.getLotteryBuckets = ->
-    Service.listing.Lottery_Buckets = {}
+    angular.copy({}, Service.lotteryBucketInfo)
     Service.loading.lotteryResults = true
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
       Service.loading.lotteryResults = false
-      if data && data.lottery_buckets.bucketResults
-        angular.copy(data.lottery_buckets, Service.listing.Lottery_Buckets)
+      angular.copy(data, Service.lotteryBucketInfo)
     ).error( (data, status, headers, config) ->
       Service.loading.lotteryResults = false
       return
     )
 
+  Service.formatLotteryNumber = (lotteryNumber) ->
+    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
+    if (lotteryNumber.length < 8)
+      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
+    lotteryNumber
+
   Service.getLotteryRanking = (lotteryNumber) ->
+    angular.copy({}, Service.lotteryRankingInfo)
     params =
       params:
         lottery_number: lotteryNumber
+    Service.loading.lotteryRank = true
+    Service.error.lotteryRank = false
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      if data && data.lottery_ranking
-        Service.listing.Lottery_Ranking = data.lottery_ranking
+      angular.copy(data, Service.lotteryRankingInfo)
+      Service.loading.lotteryRank = false
     ).error( (data, status, headers, config) ->
-      return
+      Service.loading.lotteryRank = false
+      Service.error.lotteryRank = true
     )
 
-  Service.occupancyIncomeLevels = (amiLevel) ->
+  # used by My Applications -- when you load an application we also parse the attached listing data
+  Service.loadListing = (listing) ->
+    return if Service.listing && Service.listing.Id == listing.Id
+    # TODO: won't be needed if we ever consolidate Listing_Lottery_Preferences and /preferences API
+    listing.preferences = _.map listing.Listing_Lottery_Preferences, (lotteryPref) ->
+      {
+        listingPreferenceID: lotteryPref.Id
+        preferenceName: lotteryPref.Lottery_Preference.Name
+      }
+    angular.copy(listing, Service.listing)
+
+  Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(Service.listing)
+    occupancyMinMax = Service.occupancyMinMax(listing)
     min = occupancyMinMax[0]
+    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
+      max = 2
+    else if Service.listingHasOnlySROUnits(listing)
+      max = 1
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
 
   Service.householdAMIChartCutoff = ->
+    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
+    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
+      return 2
+    else if Service.listingHasOnlySROUnits(Service.listing)
+      return 1
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
@@ -516,7 +683,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.minYearlyIncome = ->
     return if _.isEmpty(Service.AMICharts)
-    incomeLevels = Service.occupancyIncomeLevels(_.first(Service.AMICharts))
+    incomeLevels = Service.occupancyIncomeLevels(Service.listing, _.first(Service.AMICharts))
     # get the first (lowest) income level amount
     _.first(incomeLevels).amount
 
@@ -540,6 +707,12 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
     angular.copy(urls, Service.listingDownloadURLs)
 
+  Service.toQueryString = (params) ->
+    Object.keys(params).reduce(((a, k) ->
+      a.push k + '=' + encodeURIComponent(params[k])
+      a
+    ), []).join '&'
+
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
     # can also serve as slugToId map for applicable listings
@@ -562,6 +735,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
     'a0W6C000000DbnZUAS': 'Test Listing'
+    'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
+    'a0W0P00000DZKPdUAP': 'Abaca'
+    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
+    'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
+    'a0W0P00000FIuv3UAD': '1335 Folsom Street'
   }
 
   Service.mapSlugToId = (id) ->
@@ -570,6 +748,9 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
     slug = id.toLowerCase()
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
+
+  Service.listingIsBMR = (listing) ->
+    ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
 
   Service.listingIs = (name, listing = Service.listing) ->
     Service.LISTING_MAP[listing.Id] == name
@@ -711,7 +892,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate']
+ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate', 'ModalService']
 
 angular
   .module('dahlia.services')

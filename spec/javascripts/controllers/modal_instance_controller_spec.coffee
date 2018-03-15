@@ -5,8 +5,14 @@ do ->
     scope = undefined
     state = undefined
     fakeModalInstance = undefined
+    fakeModalService =
+      modalInstance: {}
+      callbacks: {}
+      openModal: jasmine.createSpy()
+      closeModal: jasmine.createSpy()
 
     beforeEach module('dahlia.controllers', ($provide) ->
+      $provide.value 'ModalService', fakeModalService
       return
     )
 
@@ -26,7 +32,7 @@ do ->
     )
 
     describe '$scope.closeModal', ->
-      describe 'expects ModalInstance.close to be called', ->
-        it 'calls the modalInstance to close', ->
+      describe 'expects ModalService.closeModal to be called', ->
+        it 'calls ModalService.closeModal', ->
           scope.closeModal()
-          expect(fakeModalInstance.close).toHaveBeenCalled()
+          expect(fakeModalService.closeModal).toHaveBeenCalled()

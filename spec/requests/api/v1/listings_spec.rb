@@ -4,6 +4,8 @@ require 'support/vcr_setup'
 require 'support/jasmine'
 
 describe 'Listings API' do
+  listing_id = 'a0W0P00000F8YG4UAN' # Automated Test Listing
+
   ### generate Jasmine fixtures
   describe 'index' do
     save_fixture do
@@ -14,8 +16,8 @@ describe 'Listings API' do
   end
   describe 'show' do
     save_fixture do
-      VCR.use_cassette('listings/a0W0P00000DYiwiUAD') do
-        get '/api/v1/listings/a0W0P00000DYiwiUAD.json'
+      VCR.use_cassette("listings/#{listing_id}") do
+        get "/api/v1/listings/#{listing_id}.json"
       end
     end
   end
@@ -23,20 +25,18 @@ describe 'Listings API' do
     save_fixture do
       VCR.use_cassette('listings/ami') do
         params = {
-          ami: [
-            { year: '2016', chartType: 'Non-HERA', percent: '50' },
-            { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
-            { year: '2016', chartType: 'Non-HERA', percent: '60' },
-          ],
+          chartType: %w[Non-HERA HCD/TCAC Non-HERA],
+          percent: %w[50 50 60],
+          year: %w[2016 2016 2016],
         }
-        post '/api/v1/listings/ami.json', params
+        get '/api/v1/listings/ami.json', params
       end
     end
   end
   describe 'units' do
     save_fixture do
       VCR.use_cassette('listings/units') do
-        get '/api/v1/listings/a0W0P00000DYiwiUAD/units.json'
+        get "/api/v1/listings/#{listing_id}/units.json"
       end
     end
   end
@@ -44,21 +44,19 @@ describe 'Listings API' do
     save_fixture do
       VCR.use_cassette('listings/eligibility') do
         params = {
-          eligibility: {
-            householdsize: 2,
-            incomelevel: 20_000,
-            childrenUnder6: 1,
-          },
+          householdsize: 2,
+          incomelevel: 20_000,
+          childrenUnder6: 1,
         }
-        post '/api/v1/listings/eligibility.json', params
+        get '/api/v1/listings/eligibility.json', params
       end
     end
   end
   describe 'lottery ranking' do
     save_fixture do
       VCR.use_cassette('listings/lottery-ranking') do
-        url = '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_ranking.json'
-        params = { lottery_number: '00008639' }
+        url = "/api/v1/listings/#{listing_id}/lottery_ranking.json"
+        params = { lottery_number: '00042084' }
         get url, params
       end
     end
@@ -66,14 +64,14 @@ describe 'Listings API' do
   describe 'lottery buckets' do
     save_fixture do
       VCR.use_cassette('listings/lottery-buckets') do
-        get '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_buckets.json'
+        get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
       end
     end
   end
   describe 'listing preferences' do
     save_fixture do
       VCR.use_cassette('listings/preferences') do
-        get '/api/v1/listings/a0W0P00000DZ4dTUAT/preferences.json'
+        get "/api/v1/listings/#{listing_id}/preferences.json"
       end
     end
   end
@@ -95,8 +93,8 @@ describe 'Listings API' do
   end
 
   it 'sends an individual listing' do
-    VCR.use_cassette('listings/a0W0P00000DYiwiUAD') do
-      get '/api/v1/listings/a0W0P00000DYiwiUAD.json'
+    VCR.use_cassette("listings/#{listing_id}") do
+      get "/api/v1/listings/#{listing_id}.json"
     end
 
     json = JSON.parse(response.body)
@@ -105,19 +103,17 @@ describe 'Listings API' do
     expect(response).to be_success
 
     # check to make sure the right Id is present
-    expect(json['listing']['Id']).to eq('a0W0P00000DYiwiUAD')
+    expect(json['listing']['Id']).to eq(listing_id)
   end
 
   it 'gets eligibility matches' do
     VCR.use_cassette('listings/eligibility') do
       params = {
-        eligibility: {
-          householdsize: 2,
-          incomelevel: 20_000,
-          childrenUnder6: 1,
-        },
+        householdsize: 2,
+        incomelevel: 20_000,
+        childrenUnder6: 1,
       }
-      post '/api/v1/listings/eligibility.json', params
+      get '/api/v1/listings/eligibility.json', params
     end
 
     json = JSON.parse(response.body)
@@ -132,13 +128,11 @@ describe 'Listings API' do
   it 'gets AMI results' do
     VCR.use_cassette('listings/ami') do
       params = {
-        ami: [
-          { year: '2016', chartType: 'Non-HERA', percent: '50' },
-          { year: '2016', chartType: 'HCD/TCAC', percent: '50' },
-          { year: '2016', chartType: 'Non-HERA', percent: '60' },
-        ],
+        chartType: %w[Non-HERA HCD/TCAC Non-HERA],
+        percent: %w[50 50 60],
+        year: %w[2016 2016 2016],
       }
-      post '/api/v1/listings/ami.json', params
+      get '/api/v1/listings/ami.json', params
     end
 
     json = JSON.parse(response.body)
@@ -153,7 +147,7 @@ describe 'Listings API' do
 
   it 'gets Unit results for a Listing' do
     VCR.use_cassette('listings/units') do
-      get '/api/v1/listings/a0W0P00000DYiwiUAD/units.json'
+      get "/api/v1/listings/#{listing_id}/units.json"
     end
 
     json = JSON.parse(response.body)
@@ -168,8 +162,8 @@ describe 'Listings API' do
 
   it 'returns lottery ranking for lottery number and listing id' do
     VCR.use_cassette('listings/lottery-ranking') do
-      url = '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_ranking.json'
-      params = { lottery_number: '00008639' }
+      url = "/api/v1/listings/#{listing_id}/lottery_ranking.json"
+      params = { lottery_number: '00042084' }
       get url, params
     end
 
@@ -177,30 +171,30 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['lottery_ranking']['applicationResults'].length).to eq(1)
+    expect(json['lotteryBuckets'].length).to eq(6)
   end
 
   it 'gets lottery buckets for a Listing' do
     VCR.use_cassette('listings/lottery-buckets') do
-      get '/api/v1/listings/a0W0P00000DYiwiUAD/lottery_buckets.json'
+      get "/api/v1/listings/#{listing_id}/lottery_buckets.json"
     end
 
     json = JSON.parse(response.body)
 
     expect(response).to be_success
 
-    expect(json['lottery_buckets']['bucketResults'].length).to eq(5)
+    expect(json['lotteryBuckets'].length).to eq(6)
   end
 
   it 'gets lottery preferences for a Listing' do
     VCR.use_cassette('listings/preferences') do
-      get '/api/v1/listings/a0W0P00000DZ4dTUAT/preferences.json'
+      get "/api/v1/listings/#{listing_id}/preferences.json"
     end
 
     json = JSON.parse(response.body)
 
     expect(response).to be_success
 
-    expect(json['preferences'].length).to eq(4)
+    expect(json['preferences'].length).to eq(5)
   end
 end

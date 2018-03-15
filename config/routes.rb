@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  root to: 'home#index'
+  root to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 
   mount_devise_token_auth_for(
     'User',
     at: 'api/v1/auth',
-    skip: %i(omniauth_callbacks),
+    skip: %i[omniauth_callbacks],
     controllers: {
       registrations: 'overrides/registrations',
       sessions: 'overrides/sessions',
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # listings
-      resources :listings, only: [:index, :show] do
+      resources :listings, only: %i[index show] do
         member do
           get 'units'
           get 'lottery_buckets'
@@ -26,8 +26,8 @@ Rails.application.routes.draw do
           get 'preferences'
         end
         collection do
-          post 'ami' => 'listings#ami'
-          post 'eligibility' => 'listings#eligibility'
+          get 'ami' => 'listings#ami'
+          get 'eligibility' => 'listings#eligibility'
         end
       end
       scope '/short-form' do
@@ -55,11 +55,21 @@ Rails.application.routes.draw do
     end
   end
 
+  # non-dahlia page
+  get '/mohcd-plus-housing' => 'home#plus_housing'
+
   # sitemap generator
   get 'sitemap.xml' => 'sitemaps#generate'
 
+  # robots.txt
+  get 'robots.txt' => 'robots_txts#show', format: 'text'
+
   # catch all mailer preview paths
   get '/rails/mailers/*path' => 'rails/mailers#preview'
-  # required for Angular html5mode
-  get '*path' => 'home#index'
+
+  # Redirect translations file requests to new location
+  get '/translations/:locale.json', to: 'application#asset_redirect'
+
+  # catch all to send all HTML requests to Angular (html5mode)
+  get '*path', to: 'home#index', constraints: ->(req) { req.format == :html || req.format == '*/*' }
 end

@@ -13,6 +13,7 @@
 
 # Ignore all node modules
 node_modules/
+npm-debug.log
 
 # Ingore Bower components
 lib/assets/bower_components
@@ -27,6 +28,9 @@ lib/assets/bower_components
 # Ignore .env, can store protected information
 .env
 
+dump.rdb
+
 ssl.sh
 certs
 public/sitemap*
+public/robots*

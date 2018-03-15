@@ -1,0 +1,22 @@
+.app-card.form-card
+  short-form-header
+    h2#question-title.app-card_question ng-if="householdMembers.length == 0"
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE_YOU' | translate }}
+    h2#question-title.app-card_question ng-if="householdMembers.length > 0"
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.TITLE_HOUSEHOLD' | translate }}
+    p.form-note.margin-bottom
+      | {{'C4_HOUSEHOLD_PUBLIC_HOUSING.P1' | translate}}
+
+  .app-inner.inset
+    .form-group ng-class="{ error: inputInvalid('hasPublicHousing') }"
+      p.form-note.margin-bottom translate="LABEL.PLEASE_SELECT_ONE"
+      .radio-group.padding-top--half role="radiogroup" aria-labelledby="question-title"
+        radio-block-item value='Yes' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingYes" aria-describedby="hasPublicHousing_error"
+          | {{'T.YES' | translate}}
+        radio-block-item value='No' user='application' name='hasPublicHousing' ng-required='true' on-change="publicHousingNo" aria-describedby="hasPublicHousing_error"
+          | {{'T.NO' | translate}}
+
+      small.error#hasPublicHousing_error ng-show="inputInvalid('hasPublicHousing')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
+
+  short-form-save-and-submit

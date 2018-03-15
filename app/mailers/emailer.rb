@@ -1,7 +1,8 @@
 # basic emailer class
 class Emailer < Devise::Mailer
   include ActionMailer::Text
-  default from: 'DAHLIA <dahlia@housing.sfgov.org>'
+  default from: 'DAHLIA <donotreply@sfgov.org>'
+  default reply_to: 'DAHLIA <donotreply@sfgov.org>'
   layout 'email'
 
   ### service external methods
@@ -17,8 +18,11 @@ class Emailer < Devise::Mailer
   end
 
   def submission_confirmation(params)
+    # set language based on params
+    I18n.locale = params[:locale]
+
     listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
-    @name = "#{params[:firstName]} #{params[:lastName]}"
+    @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],
@@ -45,11 +49,12 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log)
-    @log = log
+  def geocoding_log_notification(log_id, has_nrhp_adhp = false)
+    @log = GeocodingLog.find(log_id)
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
-    @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
+    @listing_url = "#{base_url}/listings/#{@log.listing_id}"
 
     subject = '[SF-DAHLIA] Address not found in ArcGIS service'
     mail(to: admin_email, subject: subject) do |format|
@@ -67,15 +72,16 @@ class Emailer < Devise::Mailer
     end
   end
 
-  def geocoding_error_notification(data, log)
-    @data = data
-    @log = log
-    @error = data[:errors].first
+  def geocoding_error_notification(data, log, has_nrhp_adhp = false)
+    @data = Hashie::Mash.new(data)
+    @log = Hashie::Mash.new(log)
+    @error = Hashie::Mash.new(@data[:errors].first)
+    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"
 
-    subject = "[SF-DAHLIA] ArcGIS #{data[:service_name]} service error"
+    subject = "[SF-DAHLIA] ArcGIS #{@data[:service_name]} service error"
     mail(to: admin_email, subject: subject) do |format|
       format.html do
         render(
@@ -93,7 +99,37 @@ class Emailer < Devise::Mailer
     end
   end
 
+  def draft_application_saved(params)
+    listing = Hashie::Mash.new(ListingService.listing(params[:listing_id]))
+    @listing_name = listing.Name
+    @email = params[:email]
+    @name = "#{params[:first_name]} #{params[:last_name]}"
+    continue_draft_path = '/continue-draft-sign-in/' + params[:listing_id]
+    @saved_application_url = "#{base_url}#{continue_draft_path}"
+    format_app_due_date(listing)
+    subject = "Complete your application for #{@listing_name} by #{@deadline}"
+    mail(to: @email, subject: subject) do |format|
+      format.html do
+        render(
+          'draft_application_saved',
+          locals: {
+            listing_name: @listing_name,
+            saved_application_url: @saved_application_url,
+            deadline: @deadline,
+          },
+        )
+      end
+    end
+  end
+
   private
+
+  def format_app_due_date(listing)
+    due = Time.zone.parse(listing['Application_Due_Date'])
+    due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
+    @deadline = "#{due_time} on #{due_date}"
+  end
 
   def setup_geocoding_notification
     @applicant = Hashie::Mash.new(@log[:applicant])
@@ -104,11 +140,8 @@ class Emailer < Devise::Mailer
   def admin_email
     # all heroku apps have Rails.env.production
     # but ENV['PRODUCTION'] is only on dahlia-production
-    if Rails.env.production? and ENV['PRODUCTION']
-      'dahlia-admins@exygy.com'
-    else
-      'dahlia-test@exygy.com'
-    end
+    production = Rails.env.production? and ENV['PRODUCTION']
+    production ? 'dahlia-admins@exygy.com' : 'dahlia-test@exygy.com'
   end
 
   def load_salesforce_contact(record)
@@ -125,7 +158,7 @@ class Emailer < Devise::Mailer
     @lottery_number = params[:lottery_number]
     @lottery_date = ''
     if @listing.Lottery_Date
-      @lottery_date = Date.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
+      @lottery_date = Time.zone.parse(@listing.Lottery_Date).strftime('%B %e, %Y')
     end
     @subject = "Thanks for applying to #{@listing_name}"
     mail(to: @email, subject: @subject) do |format|

@@ -1,0 +1,9 @@
+.form-group
+  label.form-label.caps id="sex_at_birth_form_label" for="user_sex_at_birth"
+    | {{'LABEL.APPLICANT_SEX_AT_BIRTH' | translate}}
+
+  select#user_sex_at_birth ng-model="user.sexAtBirth" data-width="auto" name="sexAtBirth"
+    option disabled="" selected="" value=""
+      | {{'LABEL.SELECT_ONE' | translate}}
+    option ng-repeat="sex in sex_at_birth_options" value="{{sex[0]}}"
+      | {{ sex[1] | translate }}
