@@ -3,10 +3,10 @@ module SalesforceService
   class ShortFormService < SalesforceService::Base
     def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
-      %i(householdsize childrenUnder6).each do |k|
+      %i[householdsize childrenUnder6].each do |k|
         params[k] = params[k].present? ? params[k].to_i : 0
       end
-      %i(incomelevel).each do |k|
+      %i[incomelevel].each do |k|
         params[k] = params[k].present? ? params[k].to_f : 0
       end
       cached_api_get(endpoint, params)
@@ -102,8 +102,8 @@ module SalesforceService
       return false unless application['status'].casecmp('submitted').zero?
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
-      session_uid == metadata['session_uid']
-    rescue
+      session_uid == metadata['externalSessionId']
+    rescue StandardError
       false
     end
 
