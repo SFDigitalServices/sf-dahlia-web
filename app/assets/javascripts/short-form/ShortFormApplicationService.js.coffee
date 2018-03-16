@@ -794,7 +794,6 @@ ShortFormApplicationService = (
       Service.application.status.match(/draft/i)
     )
 
-
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
     Service.application.id = Service.accountApplication.id
