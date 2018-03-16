@@ -731,8 +731,9 @@
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Deleting this application means you will lose all the information you've entered.",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
+        "RESULTS_POSTED": "Results Posted",
         "TITLE": "My Applications",
-        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is {{lotteryNumber}}"
     },
     "NAV": {
         "ACCOUNT_SETTINGS": "Account Settings",

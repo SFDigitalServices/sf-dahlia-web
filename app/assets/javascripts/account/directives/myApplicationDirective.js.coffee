@@ -1,7 +1,9 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
-  '$translate', '$window', 'ShortFormApplicationService', 'ListingService', 'ModalService',
-  ($translate, $window, ShortFormApplicationService, ListingService, ModalService) ->
+  '$translate', '$window', '$sce',
+  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ModalService',
+  ($translate, $window, $sce,
+  ShortFormApplicationService, ShortFormNavigationService, ListingService, ModalService) ->
     replace: true
     scope:
       application: '=application'
@@ -10,6 +12,8 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
+      scope.loading = ListingService.loading
+      scope.error = ListingService.error
       scope.deleteDisabled = false
 
       scope.isDeleted = ->
@@ -34,8 +38,10 @@ angular.module('dahlia.directives')
           alert: true
         ModalService.alert(content,
           onConfirm: ->
+            ShortFormNavigationService.isLoading(true)
             scope.deleteDisabled = true
             ShortFormApplicationService.deleteApplication(id).success ->
+              ShortFormNavigationService.isLoading(false)
               scope.application.deleted = true
             .error ->
               scope.deleteDisabled = false
@@ -54,11 +60,50 @@ angular.module('dahlia.directives')
       scope.isSubmitted = ->
         ShortFormApplicationService.applicationWasSubmitted(scope.application)
 
+      scope.submittedWithLotteryResults = ->
+        scope.isSubmitted() && scope.listing.Lottery_Results
+
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
       scope.lotteryNumber = ->
-        { lotteryNumber: scope.application.lotteryNumber }
+        if scope.listing.Lottery_Results
+          html = """
+            <button class='button-link lined' ng-click='viewLotteryResults()'>
+              ##{scope.application.lotteryNumber}
+            </button>
+          """
+          $sce.trustAsHtml(html)
+        else
+          "##{scope.application.lotteryNumber}"
+
+      scope.viewLotteryResults = ->
+        # if the search failed, then viewLotteryResults becomes a button to open the PDF instead
+        if ListingService.error.lotteryRank && scope.listing.LotteryResultsURL
+          $window.open(scope.listing.LotteryResultsURL, '_blank')
+          return
+
+        ShortFormNavigationService.isLoading(true)
+        # have to setup our "current" listing and application in the Services for the modal to play nicely
+        ListingService.loadListing(scope.listing)
+        angular.copy(scope.application, ShortFormApplicationService.application)
+        # lookup individual lottery ranking and then open the modal
+        ListingService.getLotteryRanking(scope.application.lotteryNumber).then(->
+          ListingService.openLotteryResultsModal()
+          ShortFormNavigationService.isLoading(false)
+        ).catch(->
+          ###
+          # NOTE: Even though we have the listing already "loaded" via API AccountController `map_listings_to_applications`
+          # this has one limitation which is that by using ListingService.listings() ("browse" API) we do not get LotteryResultsURL.
+          # So in the event that getLotteryRanking fails and we want to fall back to LotteryResultsURL, we have to call getListing.
+          ###
+          ListingService.loadListing({})
+          # have to restart the loader because the error would have stopped it
+          ShortFormNavigationService.isLoading(true)
+          ListingService.getListing(scope.listing.Id).then ->
+            ShortFormNavigationService.isLoading(false)
+            scope.listing = ListingService.listing
+        )
 
       scope.getLanguageCode = (application) ->
         ShortFormApplicationService.getLanguageCode(application)

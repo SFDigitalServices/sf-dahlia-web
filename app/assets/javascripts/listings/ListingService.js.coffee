@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalService) ->
+ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -630,7 +630,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
     lotteryNumber
 
   Service.getLotteryRanking = (lotteryNumber) ->
-    angular.copy({}, Service.lotteryRankingInfo)
+    angular.copy({submitted: false}, Service.lotteryRankingInfo)
     params =
       params:
         lottery_number: lotteryNumber
@@ -639,6 +639,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
     $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
       angular.copy(data, Service.lotteryRankingInfo)
       Service.loading.lotteryRank = false
+      Service.lotteryRankingInfo.submitted = true
     ).error( (data, status, headers, config) ->
       Service.loading.lotteryRank = false
       Service.error.lotteryRank = true
@@ -892,7 +893,7 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate, ModalSer
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$modal', '$q', '$state', '$translate', 'ModalService']
+ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService']
 
 angular
   .module('dahlia.services')

@@ -2,7 +2,7 @@ p.text-center.t-small.padding--3halves.no-margin.bg-dust
   a.a-dark href="http://sfmohcd.org/housing-preference-programs" target="_blank" data-event="gtm-read-about-lottery-preferences"
     | {{'LOTTERY.READ_ABOUT_PREFERENCES' | translate}}
 
-footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingSubmitted"
+footer.modal-footer.text-center.padding--3halves ng-if="!lotteryRankingInfo.submitted"
 
   span ng-if="!lotteryBucketInfo.lotteryResultsURL"
     p.t-small translate="LOTTERY.RESULTS_WILL_BE_POSTED_ON" translate-value-date="{{listing.Lottery_Results_Date | date : 'MMM d, yyyy' }}"

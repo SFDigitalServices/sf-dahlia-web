@@ -49,6 +49,9 @@
       # always start the loading overlay
       bsLoadingOverlayService.start()
 
+      # close any open modals
+      ModalService.closeModal()
+
       if SharedService.isWelcomePage(toState)
         # on welcome pages, the language is determined by the language of the
         # welcome page, not by toParams.lang
@@ -125,9 +128,6 @@
     $rootScope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
       # always stop the loading overlay
       bsLoadingOverlayService.stop()
-
-      # close any modals that might have been opened in previous states
-      ModalService.closeModal()
 
       SharedService.updateAlternateLanguageLinks()
 

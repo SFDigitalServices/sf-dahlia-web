@@ -6,11 +6,11 @@
         use xlink:href="#i-warning"
   p.alert-body translate="ERROR.LOTTERY_RANKING_SEARCH"
 
-.modal-inner.padding-bottom-none ng-if="!lotteryRankingSubmitted"
+.modal-inner.padding-bottom-none ng-if="!lotteryRankingInfo.submitted"
   p.t-small
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
-.modal-buckets-container ng-if="!lotteryRankingSubmitted"
+.modal-buckets-container ng-if="!lotteryRankingInfo.submitted"
   .modal-buckets
     header.modal-inner
       h2.h-caps-lined

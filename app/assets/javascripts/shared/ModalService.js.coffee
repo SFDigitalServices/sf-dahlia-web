@@ -9,6 +9,9 @@ ModalService = ($modal, $window) ->
   Service.callbacks = {}
 
   Service.openModal = (templateUrl, windowClass = 'modal-large') ->
+    # close any modal that may already be open before opening a new one
+    Service.closeModal()
+
     if templateUrl
       Service.modalInstance = $modal.open({
         templateUrl: templateUrl,
@@ -23,8 +26,6 @@ ModalService = ($modal, $window) ->
     if nativeAlert && !$window.navigator.userAgent.match(/iPhone|iPad|iPod/i)
       $window.alert(content.message)
     else
-      # close any modal that may already be open before opening a new one
-      Service.closeModal()
       Service.openModal('shared/templates/alert_modal.html')
 
   Service.closeModal = () ->
