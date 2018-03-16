@@ -21,6 +21,7 @@ do ->
     httpBackend = undefined
     fakeFile = {name: 'img.jpg'}
     prefType = 'liveInSf'
+    address = '123 Main St'
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
@@ -48,10 +49,69 @@ do ->
         expect(FileUploadService.session_uid).not.toEqual null
 
     describe 'Service.uploadProof', ->
-      it 'calls Upload.upload function', ->
+      it 'returns a rejection if the listing does not have the preference identified by pref_type', ->
+        bogusPrefType = 'foo'
+        rejectedPromise = FileUploadService.uploadProof(fakeFile, bogusPrefType)
+        rejectedPromiseResult = null
+        rejectedPromise.then(
+          () -> { rejectedPromiseResult = 'success' },
+          () -> { rejectedPromiseResult = 'error' }
+        )
+        expect(rejectedPromiseResult).toEqual('error')
 
-        FileUploadService.uploadProof(fakeFile, prefType)
-        expect(Upload.upload).toHaveBeenCalled()
+      it "returns a rejection if there's no file", ->
+        rejectedPromise = FileUploadService.uploadProof(null, prefType)
+        rejectedPromise.then(
+          () -> { rejectedPromiseResult = 'success' },
+          () -> { rejectedPromiseResult = 'error' }
+        )
+        expect(rejectedPromiseResult).toEqual('error')
+
+      describe "setting the proofDocument's error to ERROR.FILE_MISSING if there's no file", ->
+        describe 'when the rentBurdenType option is not present', ->
+          beforeEach ->
+            errorMsg = 'ERROR.FILE_MISSING'
+            FileUploadService.preferences =
+              documents:
+                "#{prefType}":
+                  file: "#{prefType}_file"
+                rentBurden:
+                  "#{address}":
+                    lease: 'lease file'
+                    rent:
+                      1: 'rent file'
+
+          it "sets the proofDocument's error to ERROR.FILE_MISSING if there's no file", ->
+            FileUploadService.uploadProof(null, prefType)
+            expect(FileUploadService.preferences.documents[prefType].error).toEqual(errorMsg)
+
+        describe 'when the rentBurdenType option is present', ->
+          opts =
+            rentBurdenType: 'lease'
+          FileUploadService.uploadProof(null, prefType)
+          expect(FileUploadService.preferences.documents.rentBurden[address].error).toEqual(errorMsg)
+
+      #sets the proofDocument's loading status to true
+      #calls Service._processProofFile
+      describe 'uploading a file >5MB', ->
+        #sets the proofDocument's file to null
+        #sets the proofDocument's loading status to false
+        #sets the proofDocument's error to ERROR.FILE_UPLOAD
+
+      describe 'uploading a file <=5MB', ->
+        it 'calls Upload.upload function', ->
+          FileUploadService.uploadProof(fakeFile, prefType)
+          expect(Upload.upload).toHaveBeenCalled()
+
+          describe 'successfully', ->
+            #sets the proofDocument's file to the upload response data
+            #sets the proofDocument's loading status to false
+            #sets the proofDocument's error to false
+
+          describe 'unsuccessfully', ->
+            #sets the proofDocument's file to null
+            #sets the proofDocument's loading status to false
+            #sets the proofDocument's error to ERROR.FILE_UPLOAD_FAILED
 
     describe 'Service.deletePreferenceFile', ->
       afterEach ->
@@ -70,21 +130,21 @@ do ->
         FileUploadService.preferences =
           documents:
             rentBurden:
-              '123 Main St':
+              "#{address}":
                 lease: 'lease file'
                 rent:
                   1: 'rent file'
       describe 'lease file', ->
         it 'returns the correct lease file', ->
           opts =
-            address: '123 Main St'
+            address: address
             rentBurdenType: 'lease'
           expect(FileUploadService.rentBurdenFile(opts)).toEqual('lease file')
 
       describe 'rent file', ->
         it 'returns the correct rent file', ->
           opts =
-            address: '123 Main St'
+            address: address
             rentBurdenType: 'rent'
             index: 1
           expect(FileUploadService.rentBurdenFile(opts)).toEqual('rent file')
@@ -94,15 +154,15 @@ do ->
         FileUploadService.preferences =
           documents:
             rentBurden:
-              '123 Main St':
+              "#{address}":
                 lease: {}
 
       it 'clears pertinent file', ->
         opts =
-          address: '123 Main St'
+          address: address
           rentBurdenType: 'lease'
         FileUploadService.clearRentBurdenFile(opts)
-        leaseFile = FileUploadService.preferences.documents.rentBurden['123 Main St'].lease
+        leaseFile = FileUploadService.preferences.documents.rentBurden[address].lease
         expect(leaseFile).toEqual {}
 
     describe 'Service.clearRentBurdenFiles', ->
@@ -110,14 +170,14 @@ do ->
         FileUploadService.preferences =
           documents:
             rentBurden:
-              '123 Main St':
+              "#{address}":
                 lease: {file: 'some file'}
                 rent:
                   1: {file: 'some file'}
 
       it 'clears all rent burden files', ->
-        FileUploadService.clearRentBurdenFiles('123 Main St')
-        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden['123 Main St']
+        FileUploadService.clearRentBurdenFiles(address)
+        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden[address]
         expectedResult = { lease: {  }, rent: {  } }
         expect(rentBurdenFiles).toEqual expectedResult
 
@@ -126,7 +186,7 @@ do ->
         FileUploadService.preferences =
           documents:
             rentBurden:
-              '123 Main St':
+              "#{address}":
                 lease: {file: 'some file'}
                 rent:
                   1: {file: 'some file'}
@@ -139,7 +199,7 @@ do ->
         hasFiles = FileUploadService.hasRentBurdenFiles()
         expect(hasFiles).toEqual true
       it 'returns true if there are files for the address given', ->
-        hasFiles = FileUploadService.hasRentBurdenFiles('123 Main St')
+        hasFiles = FileUploadService.hasRentBurdenFiles(address)
         expect(hasFiles).toEqual true
       it 'returns false if there are not files for the address given', ->
         hasFiles = FileUploadService.hasRentBurdenFiles('345 First St')
@@ -158,7 +218,7 @@ do ->
         FileUploadService.preferences =
           documents:
             rentBurden:
-              '123 Main St':
+              "#{address}":
                 lease: {file: 'some file'}
                 rent:
                   1: {file: 'some file'}
@@ -168,5 +228,5 @@ do ->
         FileUploadService.deleteRentBurdenPreferenceFiles('listingID')
         httpBackend.flush()
         expectedResult = { lease: {  }, rent: {  } }
-        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden['123 Main St']
+        rentBurdenFiles = FileUploadService.preferences.documents.rentBurden[address]
         expect(rentBurdenFiles).toEqual expectedResult
