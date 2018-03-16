@@ -128,14 +128,9 @@ do ->
 
       it 'redirects to the application start if there is a listing id and no lottery number', ->
         fakeShortFormApplicationService.application.lotteryNumber = undefined
-        listingId = '192837465'
-        fakeShortFormApplicationService.Listing.Id = listingId
+        listingId = '12345678'
         params = { id: listingId }
-        ShortFormNavigationService.redirectIfNoApplication()
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', params)
+        fakeListing = { Id: listingId }
 
-      it 'redirects to the home page if there is no listing id and no lottery number', ->
-        fakeShortFormApplicationService.application.lotteryNumber = undefined
-        fakeShortFormApplicationService.Listing.Id = undefined
-        ShortFormNavigationService.redirectIfNoApplication()
-        expect($state.go).toHaveBeenCalledWith('dahlia.welcome')
+        ShortFormNavigationService.redirectIfNoApplication(fakeListing)
+        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', params)
