@@ -101,7 +101,6 @@ angular.module('dahlia.directives')
           # have to restart the loader because the error would have stopped it
           ShortFormNavigationService.isLoading(true)
           ListingService.getListing(scope.listing.Id).then ->
-            # alert message: "Oops! Please download lottery results instead..." ??
             ShortFormNavigationService.isLoading(false)
             scope.listing = ListingService.listing
         )
