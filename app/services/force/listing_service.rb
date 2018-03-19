@@ -49,22 +49,27 @@ module Force
     end
 
     # get one detailed listing result by id
-    def self.listing(id)
+    def self.listing(id, opts = {})
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
-      results = Request.new(parse_response: true).cached_get(endpoint)
+      force = opts[:force] || false
+      results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       add_image_urls(results).first
     end
 
     # get all units for a given listing
-    def self.units(listing_id)
+    def self.units(listing_id, opts = {})
       listing_id = CGI.escape(listing_id)
-      Request.new(parse_response: true).cached_get("/Listing/Units/#{listing_id}")
+      force = opts[:force] || false
+      Request.new(parse_response: true)
+             .cached_get("/Listing/Units/#{listing_id}", nil, force)
     end
 
     # get all preferences for a given listing
-    def self.preferences(listing_id)
+    def self.preferences(listing_id, opts = {})
       listing_id = CGI.escape(listing_id)
-      Request.new(parse_response: true).cached_get("/Listing/Preferences/#{listing_id}")
+      force = opts[:force] || false
+      Request.new(parse_response: true)
+             .cached_get("/Listing/Preferences/#{listing_id}", nil, force)
     end
 
     # get AMI: opts are percent, chartType, year
@@ -111,14 +116,12 @@ module Force
       end
     end
 
-    private_class_method :get_listings, :add_image_urls, :clean_listings_for_browse
-
-    def self.get_listings(params = nil)
+    private_class_method def self.get_listings(params = nil)
       results = Request.new(parse_response: true).cached_get('/ListingDetails', params)
       add_image_urls(results)
     end
 
-    def self.add_image_urls(listings)
+    private_class_method def self.add_image_urls(listings)
       listing_images = ListingImage.all
       listings.each do |listing|
         listing_image = listing_images.select do |li|
@@ -131,7 +134,7 @@ module Force
       listings
     end
 
-    def self.clean_listings_for_browse(results)
+    private_class_method def self.clean_listings_for_browse(results)
       results.map do |listing|
         listing.select do |key|
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')

@@ -22,7 +22,6 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
   Service.toggleStates = {}
-  Service.forceRecache = false
 
   Service.listingDownloadURLs = []
   Service.defaultApplicationURLs = [
@@ -231,7 +230,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
 
   ###################################### Salesforce API Calls ###################################
 
-  Service.getListing = (_id) ->
+  Service.getListing = (_id, forceRecache = false) ->
     _id = Service.mapSlugToId(_id)
 
     if Service.listing && Service.listing.Id == _id
@@ -240,9 +239,10 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     Service.resetListingData()
 
     deferred = $q.defer()
-    $http.get("/api/v1/listings/#{_id}.json#{if Service.forceRecache then '?force=true' else ''}",
-      { etagCache: true }
-    ).success(
+    httpConfig = { etagCache: true }
+    httpConfig.params = { force: true } if forceRecache
+    $http.get("/api/v1/listings/#{_id}.json", httpConfig)
+    .success(
       Service.getListingResponse(deferred)
     ).cached(
       Service.getListingResponse(deferred)
@@ -466,11 +466,13 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
           i++
     charts
 
-  Service.getListingUnits = ->
+  Service.getListingUnits = (forceRecache = false) ->
     # angular.copy([], Service.listing.Units)
     Service.loading.units = true
     Service.error.units = false
-    $http.get("/api/v1/listings/#{Service.listing.Id}/units#{if Service.forceRecache then '?force=true' else ''}")
+    httpConfig = {}
+    httpConfig.params = { force: true } if forceRecache
+    $http.get("/api/v1/listings/#{Service.listing.Id}/units", httpConfig)
     .success((data, status, headers, config) ->
       Service.loading.units = false
       Service.error.units = false
@@ -580,7 +582,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     _.map listing[specialType], (descriptor) ->
       descriptor.name
 
-  Service.getListingPreferences = ->
+  Service.getListingPreferences = (forceRecache = false) ->
     Service.loading.preferences = true
     Service.error.preferences = false
     # TODO: -- REMOVE HARDCODED FEATURES --
@@ -589,7 +591,9 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     if !_.isEmpty(Service.listing.preferences)
       return $q.when(Service.listing.preferences)
     ## <--
-    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences#{if Service.forceRecache then '?force=true' else ''}")
+    httpConfig = { etagCache: true }
+    httpConfig.params = { force: true } if forceRecache
+    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences", httpConfig)
     .success((data, status, headers, config) ->
       if data && data.preferences
         Service.listing.preferences = data.preferences

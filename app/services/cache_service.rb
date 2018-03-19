@@ -15,9 +15,7 @@ class CacheService
     maybe_cache_listings(new_listings, old_listings)
   end
 
-  private_class_method :maybe_cache_listings, :cache_single_listing
-
-  def self.maybe_cache_listings(new_listings, old_listings)
+  private_class_method def self.maybe_cache_listings(new_listings, old_listings)
     new_listings.each do |listing|
       id = listing['Id']
       old = old_listings.find { |l| l['Id'] == id }
@@ -44,7 +42,7 @@ class CacheService
     end
   end
 
-  def self.cache_single_listing(listing, due_date_passed = true)
+  private_class_method def self.cache_single_listing(listing, due_date_passed = true)
     id = listing['Id']
     # cache this listing from API
     Force::ListingService.listing(id)

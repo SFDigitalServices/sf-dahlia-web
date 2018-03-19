@@ -8,12 +8,12 @@ class Api::V1::ListingsController < ApiController
   end
 
   def show
-    @listing = Force::ListingService.listing(params[:id])
+    @listing = Force::ListingService.listing(params[:id], force: params[:force])
     render json: { listing: @listing }
   end
 
   def units
-    @units = Force::ListingService.units(params[:id])
+    @units = Force::ListingService.units(params[:id], force: params[:force])
     render json: { units: @units }
   end
 
@@ -31,7 +31,7 @@ class Api::V1::ListingsController < ApiController
   end
 
   def preferences
-    @preferences = Force::ListingService.preferences(params[:id])
+    @preferences = Force::ListingService.preferences(params[:id], force: params[:force])
     render json: { preferences: @preferences }
   end
 
