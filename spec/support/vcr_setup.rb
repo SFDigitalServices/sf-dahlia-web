@@ -34,7 +34,7 @@ VCR.configure do |config|
       # puts j.try(:[], 'access_token')
       # puts '*'*20
       j.try(:[], 'access_token')
-    rescue JSON::ParserError
+    rescue JSON::ParserError, TypeError
       nil
     end
   end

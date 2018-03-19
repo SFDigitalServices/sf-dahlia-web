@@ -1,21 +1,25 @@
 # service class for pre-fetching + caching salesforce data
 class CacheService
-  def self.prefetch_listings(opts = {})
+  def prefetch_listings(opts = {})
     if opts[:refresh_all]
       # on daily run, don't grab old listings for comparison
       # to force cache write for all listings
-      old_listings = []
+      @old_listings = []
     else
       # grab previous cached result
-      old_listings = Force::ListingService.raw_listings
+      @old_listings = Force::ListingService.raw_listings
     end
     # refresh oauth_token before beginnning
     Force::Request.new.refresh_oauth_token
-    new_listings = Force::ListingService.raw_listings(refresh_cache: true)
-    maybe_cache_listings(new_listings, old_listings)
+    @new_listings = Force::ListingService.raw_listings(refresh_cache: true)
+    check_listings
   end
 
-  private_class_method def self.maybe_cache_listings(new_listings, old_listings)
+  private
+
+  attr_accessor :old_listings, :new_listings
+
+  def check_listings
     new_listings.each do |listing|
       id = listing['Id']
       old = old_listings.find { |l| l['Id'] == id }
@@ -28,21 +32,24 @@ class CacheService
         # That's why we more aggressively re-cache open listings.
         unchanged = HashDiff.diff(old, listing).empty?
       end
-      begin
-        due_date_passed = Date.parse(listing['Application_Due_Date']) < Date.today
-      rescue ArgumentError => e
-        raise e unless e.message == 'invalid date'
-        # if date is invalid, assume we do need to get lottery results
-        due_date_passed = true
-      end
-      # move on if there is no difference between the old and new listing object
-      # but always refresh open listings
-      next if unchanged && due_date_passed
-      cache_single_listing(listing, due_date_passed)
+      maybe_cache_listing(listing, unchanged)
     end
   end
 
-  private_class_method def self.cache_single_listing(listing, due_date_passed = true)
+  def maybe_cache_listing(listing, unchanged)
+    begin
+      due_date_passed = Date.parse(listing['Application_Due_Date']) < Date.today
+    rescue ArgumentError => e
+      raise e unless e.message == 'invalid date'
+      # if date is invalid, assume we do need to get lottery results
+      due_date_passed = true
+    end
+    # move on if there is no difference between the old and new listing object
+    # but always refresh open listings
+    cache_single_listing(listing, due_date_passed) unless unchanged && due_date_passed
+  end
+
+  def cache_single_listing(listing, due_date_passed = true)
     id = listing['Id']
     # cache this listing from API
     Force::ListingService.listing(id)
