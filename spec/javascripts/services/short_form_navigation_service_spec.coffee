@@ -120,7 +120,6 @@ do ->
       beforeEach ->
         # reset the spy so that we can check for "not" toHaveBeenCalled
         $state.go = jasmine.createSpy()
-        fakeShortFormApplicationService.Listing = {}
 
       it "doesn't redirect if the application has a lottery number", ->
         fakeShortFormApplicationService.application.lotteryNumber = 12345678
@@ -129,7 +128,7 @@ do ->
 
       it 'redirects to the application start if there is a listing id and no lottery number', ->
         fakeShortFormApplicationService.application.lotteryNumber = undefined
-        listingId = '12345678'
+        listingId = 'abcdefghij'
         params = { id: listingId }
         fakeListing = { Id: listingId }
 
