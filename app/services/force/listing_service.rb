@@ -85,7 +85,7 @@ module Force
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
       listing_id = CGI.escape(listing_id)
-      data = Request.new.cached_get("/Listing/LotteryResult/#{listing_id}", nil)
+      data = Request.new.cached_get("/Listing/LotteryResult/#{listing_id}")
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
       data['lotteryBuckets'].each do |bucket|
@@ -96,8 +96,9 @@ module Force
 
     # get Individual Lottery Result with rankings
     def self.lottery_ranking(listing_id, lottery_number)
-      listing_id = CGI.escape(listing_id)
-      endpoint = "/Listing/LotteryResult/#{listing_id}/#{lottery_number}"
+      esc_listing_id = CGI.escape(listing_id)
+      esc_lottery_number = CGI.escape(lottery_number)
+      endpoint = "/Listing/LotteryResult/#{esc_listing_id}/#{esc_lottery_number}"
       Request.new.cached_get(endpoint)
     end
 

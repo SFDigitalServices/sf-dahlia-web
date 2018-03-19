@@ -60,15 +60,15 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
-    service = Force::ShortFormService
-    response = service.create_or_update(application_params, applicant_attrs)
+    response =
+      Force::ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
       process_submit_app_response(response)
       render json: response
     else
       # handles rare case where salesforce returns a 200 OK with a blank response
       # only seen on QA and full
-      render json: { error: service.error }, status: 500
+      render json: { error: 'Empty Response from Salesforce' }, status: 500
     end
   rescue Faraday::ClientError => e
     handle_submit_error(e)

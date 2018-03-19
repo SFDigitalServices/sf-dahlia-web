@@ -11,10 +11,10 @@ class ShortFormAttachmentJob < ActiveJob::Base
     file = UploadedFile.find(file_id)
     # if file has been cleared out, we can escape
     return unless file.file
-    service = Force::ShortFormService
-    application = service.get(application_id)
+    application = Force::ShortFormService.get(application_id)
     if application
-      response = service.attach_file(application, file, file.descriptive_name)
+      response =
+        Force::ShortFormService.attach_file(application, file, file.descriptive_name)
       if response.status == 200
         # now that file is saved in SF, remove file binary and mark as delivered
         file.update(
