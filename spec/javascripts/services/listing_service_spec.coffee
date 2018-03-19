@@ -37,7 +37,6 @@ do ->
     $localStorage = undefined
     $state = undefined
     $translate = {}
-    modalMock = undefined
     requestURL = undefined
     incomeLevels = undefined
     minMax = undefined
@@ -51,7 +50,6 @@ do ->
     # have to include http-etag to allow `$http.get(...).success(...).cached(...)` to work in the tests
     beforeEach module('http-etag')
     beforeEach module('dahlia.services', ($provide) ->
-      $provide.value '$modal', modalMock
       $provide.value '$translate', $translate
       $provide.value 'ModalService', fakeModalService
       return
@@ -404,8 +402,10 @@ do ->
       it 'assigns Service.lotteryRankingInfo with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00042084')
+        ranking = angular.copy(fakeLotteryRanking)
+        ranking.submitted = true
         httpBackend.flush()
-        expect(ListingService.lotteryRankingInfo).toEqual fakeLotteryRanking
+        expect(ListingService.lotteryRankingInfo).toEqual ranking
 
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
@@ -485,8 +485,10 @@ do ->
         expect(ListingService.loading.lotteryRank).toEqual false
         expect(ListingService.error.lotteryRank).toEqual false
 
-      it 'should open the lottery results modal', ->
-        expect(fakeModalService.openModal).toHaveBeenCalled()
+      it 'should call ModalService.openModal with the appropriate template and class', ->
+        templateUrl = 'listings/templates/listing/_lottery_modal.html'
+        windowClass = 'modal-small'
+        expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl, windowClass)
 
     describe 'Service.listingHasLotteryResults', ->
       it 'should be true if lottery PDF is available', ->

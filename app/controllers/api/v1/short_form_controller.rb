@@ -63,16 +63,15 @@ class Api::V1::ShortFormController < ApiController
     service = Force::ShortFormService
     response = service.create_or_update(application_params, applicant_attrs)
     if response.present?
-      attach_files_and_send_confirmation(response)
-      if current_user && application_complete
-        delete_draft_application(application_params[:listingID])
-      end
+      process_submit_app_response(response)
       render json: response
     else
       # handles rare case where salesforce returns a 200 OK with a blank response
       # only seen on QA and full
       render json: { error: service.error }, status: 500
     end
+  rescue Faraday::ClientError => e
+    handle_submit_error(e)
   end
 
   def update_application
@@ -100,6 +99,12 @@ class Api::V1::ShortFormController < ApiController
   end
 
   private
+
+  def process_submit_app_response(response)
+    attach_files_and_send_confirmation(response)
+    return unless current_user && application_complete
+    delete_draft_application(application_params[:listingID])
+  end
 
   def autosave_disabled
     ENV['AUTOSAVE'] == 'false'
@@ -224,6 +229,13 @@ class Api::V1::ShortFormController < ApiController
 
   def render_unauthorized_error
     render json: { error: 'unauthorized' }, status: 401
+  end
+
+  def handle_submit_error(e)
+    if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
+      return render_error(e, status: 500, external_capture: true)
+    end
+    raise e.class, e.message
   end
 
   def applicant_attrs

@@ -4,10 +4,10 @@ do ->
 
     scope = undefined
     state = undefined
-    fakeModalInstance = undefined
     fakeModalService =
-      modalInstance: {}
-      callbacks: {}
+      callbacks: {
+        onConfirm: jasmine.createSpy()
+      }
       openModal: jasmine.createSpy()
       closeModal: jasmine.createSpy()
 
@@ -19,20 +19,23 @@ do ->
     beforeEach inject(($rootScope, $controller) ->
       scope = $rootScope.$new()
 
-      fakeModalInstance =
-        close: jasmine.createSpy('fakeModalInstance.close'),
-        dismiss: jasmine.createSpy('fakeModalInstance.dismiss'),
-        result:
-          then: jasmine.createSpy('fakeModalInstance.result.then')
-
       $controller 'ModalInstanceController',
         $scope: scope
         $state: state
-        $modalInstance: fakeModalInstance
     )
 
     describe '$scope.closeModal', ->
-      describe 'expects ModalService.closeModal to be called', ->
-        it 'calls ModalService.closeModal', ->
-          scope.closeModal()
-          expect(fakeModalService.closeModal).toHaveBeenCalled()
+      it 'calls ModalService.closeModal', ->
+        scope.closeModal()
+        expect(fakeModalService.closeModal).toHaveBeenCalled()
+
+    describe '$scope.confirm', ->
+      beforeEach ->
+        scope.closeModal = jasmine.createSpy()
+        scope.confirm()
+
+      it "calls the ModalService's callbacks' onConfirm function", ->
+        expect(fakeModalService.callbacks.onConfirm).toHaveBeenCalled()
+
+      it 'calls scope.closeModal', ->
+        expect(scope.closeModal).toHaveBeenCalled()
