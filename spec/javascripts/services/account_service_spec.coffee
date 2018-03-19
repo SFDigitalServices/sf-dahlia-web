@@ -20,6 +20,9 @@ do ->
       reformatApplication: -> fakeShortForm
       formatUserDOB: ->
       removeDOBFields: ->
+    fakeModalService =
+      openModal: jasmine.createSpy()
+      closeModal: jasmine.createSpy()
     fakeAuthResponse =
       id: 99
       email: 'applicant@email.com'
@@ -38,8 +41,6 @@ do ->
       applicant: {}
       importUserData: ->
       resetApplicationData: jasmine.createSpy()
-    modalMock =
-      open: () ->
     fakeApplicant =
       firstName: 'Samantha'
       lastName: 'Bee'
@@ -58,10 +59,10 @@ do ->
     beforeEach module('ng-token-auth')
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$translate', $translate
-      $provide.value '$modal', modalMock
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'ShortFormDataService', fakeShortFormDataService
+      $provide.value 'ModalService', fakeModalService
       return
     )
 
@@ -199,28 +200,23 @@ do ->
 
     describe 'openConfirmEmailModal', ->
       describe 'account just created', ->
-        it 'called modal to open', ->
-          spyOn(modalMock, 'open')
-          modalArgument =
-            templateUrl: 'account/templates/partials/_confirm_email_modal.html',
-            controller: 'ModalInstanceController',
-            windowClass: 'modal-large'
-          AccountService.createdAccount.email = 'some@email.com'
-          AccountService.createdAccount.confirmed_at = undefined
+        it 'calls ModalService.openModal with the confirm email template', ->
+          templateUrl = 'account/templates/partials/_confirm_email_modal.html'
           AccountService.openConfirmEmailModal()
-          expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
+          expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl)
+
+      describe 'unconfirmed user tries to log in', ->
+        it 'sets the createdAccount.email to the given email', ->
+          email = 'some@email.com'
+          AccountService.openConfirmEmailModal(email)
+          expect(AccountService.createdAccount.email).toEqual(email)
 
     describe 'openConfirmationExpiredModal', ->
       describe 'confirmation link expired', ->
-        it 'called modal to open', ->
-          spyOn(modalMock, 'open')
-          modalArgument =
-            templateUrl: 'account/templates/partials/_confirmation_expired_modal.html',
-            controller: 'ModalInstanceController',
-            windowClass: 'modal-large'
-          AccountService.createdAccount.email = 'some@email.com'
+        it 'calls ModalService.openModal with the confirmation expired template', ->
+          templateUrl = 'account/templates/partials/_confirmation_expired_modal.html'
           AccountService.openConfirmationExpiredModal()
-          expect(modalMock.open).toHaveBeenCalledWith(modalArgument)
+          expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl)
 
     describe 'lockCompletedFields', ->
       it 'checks for lockedFields', ->

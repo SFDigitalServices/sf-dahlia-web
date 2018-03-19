@@ -6,7 +6,8 @@ AccountController = (
   AccountService,
   AnalyticsService,
   ShortFormApplicationService,
-  SharedService
+  SharedService,
+  ModalService,
   inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
@@ -41,7 +42,11 @@ AccountController = (
     $scope.form.passwordReset ||
     $scope.form.current
 
+  $scope.closeModal = ->
+    ModalService.closeModal()
+
   $scope.closeAlert = ->
+    $scope.closeModal()
     $scope.hideAlert = true
 
   $scope.handleErrorState = ->
@@ -252,7 +257,7 @@ AccountController = (
 AccountController.$inject = [
   '$scope', '$state', '$document', '$translate',
   'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
-  'SharedService',
+  'SharedService', 'ModalService',
   'inputMaxLength'
 ]
 

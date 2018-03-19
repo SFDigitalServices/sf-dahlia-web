@@ -30,6 +30,8 @@ do ->
       submitApplication: -> null
       signInSubmitApplication: -> null
     fakeSharedService = {}
+    fakeModalService =
+      closeModal: jasmine.createSpy()
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -69,8 +71,25 @@ do ->
         AnalyticsService: fakeAnalyticsService
         ShortFormApplicationService: fakeShortFormApplicationService
         SharedService: fakeSharedService
+        ModalService: fakeModalService
         inputMaxLength: {}
     )
+
+    describe '$scope.closeModal', ->
+      it 'calls ModalService.closeModal', ->
+        scope.closeModal()
+        expect(fakeModalService.closeModal).toHaveBeenCalled()
+
+    describe '$scope.closeAlert', ->
+      beforeEach ->
+        scope.closeModal = jasmine.createSpy()
+        scope.closeAlert()
+
+      it 'calls scope.closeModal', ->
+        expect(scope.closeModal).toHaveBeenCalled()
+
+      it 'sets scope.hideAlert to true', ->
+        expect(scope.hideAlert).toEqual(true)
 
     describe '$scope.createAccount', ->
       beforeEach ->
