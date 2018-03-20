@@ -356,6 +356,20 @@ ShortFormNavigationService = (
     else
       'household-priorities'
 
+  Service.redirectIfNoApplication = () ->
+    applicationDataExists = !!ShortFormApplicationService.application.lotteryNumber
+    return if applicationDataExists
+    listing = ShortFormApplicationService.Listing
+    if listing and listing.Id
+      # if there is no application data and we have listing info,
+      # redirect to first page of listing application
+      $state.go('dahlia.short-form-application.name', {id: listing.Id})
+    else
+      # if no listing info is present, we can't know where to redirect to,
+      # so this is a malformed request - treat this as we treat 404s and
+      # redirect to homepage
+      $state.go('dahlia.welcome')
+
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)
 

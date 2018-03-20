@@ -109,6 +109,7 @@ do ->
       fileAttachmentsForRentBurden: jasmine.createSpy()
     fakeAccountService =
       loggedIn: () ->
+    fakeListingService = {}
     fakeAddressValidationService =
       validationError: jasmine.createSpy()
     fakeFileUploadService =
@@ -167,6 +168,7 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
+        ListingService: fakeListingService
         SharedService: fakeSharedService
         inputMaxLength: {}
       return

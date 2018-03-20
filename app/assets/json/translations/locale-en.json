@@ -656,6 +656,7 @@
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
+        "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "Occupancy for this building is limited to {{numberOfPeople}} people per unit.",
         "OCCUPANCY_DESCRIPTION_NO_SRO": "Occupancy limits for this building differ from household size, and do not include children under 6.",
         "OCCUPANCY_DESCRIPTION_SOME_SRO": "Occupancy for this building varies by unit type. SROs are limited to 1 person per unit, regardless of age. For all other unit types, occupancy limits do not count children under 6.",
         "OCCUPANCY_SEE_UNIT_INFO": "For the types of units available in this listing please see above.",
@@ -731,8 +732,9 @@
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "Deleting this application means you will lose all the information you've entered.",
         "NO_APPLICATIONS": "It looks like you haven't applied to any listings yet.",
+        "RESULTS_POSTED": "Results Posted",
         "TITLE": "My Applications",
-        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is #{{lotteryNumber}}"
+        "YOUR_LOTTERY_NUMBER_IS": "Your lottery number is {{lotteryNumber}}"
     },
     "NAV": {
         "ACCOUNT_SETTINGS": "Account Settings",
