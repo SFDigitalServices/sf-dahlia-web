@@ -1,11 +1,15 @@
 require 'rails_helper'
-# require 'support/vcr_setup'
 require 'webmock/rspec'
 require 'restforce'
 require 'ostruct'
 
 describe Force::Request do
   let(:oauth_token) { 'a1b2c3d4' }
+
+  def api_url(endpoint, include_host = false)
+    host = include_host ? ENV['SALESFORCE_INSTANCE_URL'] : ''
+    host + "/services/apexrest#{endpoint}"
+  end
 
   before do
     auth = OpenStruct.new(access_token: oauth_token)
@@ -16,12 +20,11 @@ describe Force::Request do
   describe '#get' do
     it 'sends a request to Salesforce' do
       endpoint = '/custom'
-      api_url = "/services/apexrest#{endpoint}"
       params = { test: true }
       response = OpenStruct.new(body: '')
 
       expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:get, api_url, params).and_return(response),
+        receive(:send).with(:get, api_url(endpoint), params).and_return(response),
       )
 
       Force::Request.new.get(endpoint, params)
@@ -103,13 +106,12 @@ describe Force::Request do
 
   describe '#post' do
     it 'sends a post request to Salesforce' do
-      endpoint = '/custom'
-      api_url = "/services/apexrest#{endpoint}"
-      params = { test: true }
+      endpoint = '/shortForm'
+      params = { save: true }
       response = OpenStruct.new(body: '')
 
       expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:post, api_url, params).and_return(response),
+        receive(:send).with(:post, api_url(endpoint), params).and_return(response),
       )
 
       Force::Request.new.post(endpoint, params)
@@ -118,13 +120,12 @@ describe Force::Request do
 
   describe '#delete' do
     it 'sends a delete request to Salesforce' do
-      endpoint = '/custom'
-      api_url = "/services/apexrest#{endpoint}"
-      params = { test: true }
+      endpoint = '/shortForm'
+      params = { delete: true }
       response = OpenStruct.new(body: '')
 
       expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:delete, api_url, params).and_return(response),
+        receive(:send).with(:delete, api_url(endpoint), params).and_return(response),
       )
 
       Force::Request.new.delete(endpoint, params)
@@ -134,7 +135,7 @@ describe Force::Request do
   describe '#post_with_headers' do
     let(:application_id) { 'a0o0P00000HSUgXQAX' }
     let(:endpoint) { "/shortForm/Attachment/#{application_id}" }
-    let(:api_url) { ENV['SALESFORCE_INSTANCE_URL'] + '/services/apexrest' + endpoint }
+    let(:salesforce_url) { api_url(endpoint, true) }
 
     it 'adds headers to request' do
       filename = 'proof-file.png'
@@ -150,10 +151,10 @@ describe Force::Request do
         ApplicationPreferenceID: '5647382910',
       }
 
-      stub_request(:post, api_url)
+      stub_request(:post, salesforce_url)
 
       Force::Request.new.post_with_headers(endpoint, body, headers)
-      expect(a_request(:post, api_url)
+      expect(a_request(:post, salesforce_url)
         .with(body: body.to_json, headers: headers_with_auth)).to have_been_made.once
     end
 
@@ -161,19 +162,19 @@ describe Force::Request do
       retries = 2
       error_class = Faraday::TimeoutError
 
-      stub_request(:post, api_url).to_raise(error_class)
+      stub_request(:post, salesforce_url).to_raise(error_class)
 
       expect do
         Force::Request.new(retries: retries).post_with_headers(endpoint)
       end.to raise_error(error_class, error_class.name)
-      expect(a_request(:post, api_url)).to have_been_made.times(retries + 1)
+      expect(a_request(:post, salesforce_url)).to have_been_made.times(retries + 1)
     end
 
     it 'raises an error for 401 status' do
       # Faraday (rather than Restforce) is needed for custom headers, but
       # doesn't throw an error for 401 status
 
-      stub_request(:post, api_url).to_return(status: 401)
+      stub_request(:post, salesforce_url).to_return(status: 401)
 
       expect do
         Force::Request.new.post_with_headers(endpoint)
