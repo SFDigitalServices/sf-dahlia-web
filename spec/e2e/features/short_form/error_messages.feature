@@ -78,3 +78,7 @@ Feature: Short Form Application
       When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
       And I click the Next button on the Live/Work Preference page
       Then I should see an error about uploading proof
+
+      # error: uploaded preference document too large
+      When I upload a too-large "Gas bill" as my proof of preference for "liveInSf"
+      Then I should see an error about the file being too large
