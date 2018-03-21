@@ -12,6 +12,7 @@ module Force
       @retries = opts[:retries] || 1
       @parse_response = opts[:parse_response] || false
       @error = nil
+      @client = create_client
     end
 
     def get(endpoint, params = nil)
@@ -36,52 +37,33 @@ module Force
     end
 
     def post_with_headers(endpoint, body = '', headers = {})
-      @error = nil
-      status = nil
-      response = nil
-      retries = @retries
-      while retries >= 0 && status != 200
-        retries -= 1
-        begin
-          # NOTE: status will be 500 if there was an error with submission
-          # e.g. DocumentType does not match Salesforce picklist
-          # --
-          # QUICK FIX for 401 issues: always force oauth_token refresh for these calls
-          refresh_oauth_token
-          response = post_request_with_headers_and_auth(endpoint, body, headers)
-          status = response.status
-        rescue Restforce::UnauthorizedError,
-               Restforce::AuthenticationError,
-               Faraday::ConnectionFailed,
-               Faraday::TimeoutError => e
-          # raise the error if there are no more retries left
-          unless retries > 0
-            @error = e.class.name
-            raise e
-          end
-        end
+      # Always refresh auth to help prevent unauthorized errors
+      refresh_oauth_token
+      process_request do
+        response = post_request_with_headers_and_auth(endpoint, body, headers)
+        raise Restforce::UnauthorizedError if response.status == 401
+        response
       end
-      response
     end
 
     def delete(endpoint, params = nil)
       send(:delete, endpoint, params)
     end
 
-    def oauth_token
-      Rails.cache.fetch('salesforce_oauth_token') do
-        refresh_oauth_token
+    def oauth_token(force_refresh = false)
+      Rails.cache.fetch('salesforce_oauth_token', force: force_refresh) do
+        auth = Restforce.new(timeout: 10).authenticate!
+        auth.access_token
       end
     end
 
     def refresh_oauth_token
-      auth = Restforce.new(timeout: 10).authenticate!
-      auth.access_token
+      oauth_token(true)
     end
 
     private
 
-    def restforce_client
+    def create_client
       Restforce.new(
         authentication_retries: 1,
         oauth_token: oauth_token,
@@ -96,12 +78,18 @@ module Force
     end
 
     def send(method, endpoint, params)
+      apex_endpoint = api_url(endpoint)
+      process_request(params) do
+        response = @client.send(method, apex_endpoint, params)
+        process_response(response)
+      end
+    end
+
+    def process_request(params = nil)
       @error = nil
       retries = @retries
-      apex_endpoint = api_url(endpoint)
       begin
-        response = restforce_client.send(method, apex_endpoint, params)
-        process_response(response)
+        yield
       rescue Restforce::UnauthorizedError,
              Restforce::AuthenticationError,
              Faraday::ConnectionFailed,
@@ -112,12 +100,12 @@ module Force
           retry
         else
           # raise the same error once we're out of retries
-          process_error(e)
+          process_error(e, params)
         end
       end
     end
 
-    def process_error(e)
+    def process_error(e, params = nil)
       @error = e.class.name
       message = nil
       message = 'user_token_validation' if params && params[:user_token_validation]

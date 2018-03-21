@@ -36,10 +36,12 @@ describe Force::ShortFormService do
         .and_return('ID')
       allow(Base64).to receive(:encode64).and_return('body')
 
-      application = { 'id' => '1235' }
-      file = OpenStruct.new(file: {}, document_type: 'type', content_type: 'type')
-      response = Force::ShortFormService.attach_file(application, file, 'filename')
-      expect(response).to eq(file: 'file')
+      VCR.use_cassette('force/initialize') do
+        application = { 'id' => '1235' }
+        file = OpenStruct.new(file: {}, document_type: 'type', content_type: 'type')
+        response = Force::ShortFormService.attach_file(application, file, 'filename')
+        expect(response).to eq(file: 'file')
+      end
     end
   end
 end
