@@ -1,6 +1,6 @@
 # Model for storing temporary uploaded files in the DB
 class UploadedFile < ActiveRecord::Base
-  enum rent_burden_type: %i(lease rent)
+  enum rent_burden_type: %i[lease rent]
 
   def self.create_and_resize(attrs)
     tempfile_path = attrs[:file].tempfile.path
@@ -21,8 +21,7 @@ class UploadedFile < ActiveRecord::Base
       logger.error 'UploadedFile.create_and_resize error: png -> jpg conversion'
     end
     # read file data into :file attribute
-    # TODO: remove this testing error trigger
-    attrs[:file] = File.read(tempfile_path + 'foofoofoo')
+    attrs[:file] = File.read(tempfile_path)
     # simplify uploaded filename to remove extension
     attrs[:name] = File.basename(attrs[:name], File.extname(attrs[:name]))
     create(attrs)
@@ -30,7 +29,7 @@ class UploadedFile < ActiveRecord::Base
 
   # override as_json to omit the actual binary file since it's big and unncessary
   def as_json(_options = {})
-    super(except: %i(file))
+    super(except: %i[file])
   end
 
   def descriptive_name
