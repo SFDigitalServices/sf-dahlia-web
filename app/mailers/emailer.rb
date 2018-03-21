@@ -22,7 +22,7 @@ class Emailer < Devise::Mailer
     I18n.locale = params[:locale]
 
     listing = Hashie::Mash.new(Force::ListingService.listing(params[:listing_id]))
-    @name = "#{params[:firstName]} #{params[:lastName]}"
+    @name = "#{params[:first_name]} #{params[:last_name]}"
     return false unless listing.present? && params[:email].present?
     _submission_confirmation_email(
       email: params[:email],
