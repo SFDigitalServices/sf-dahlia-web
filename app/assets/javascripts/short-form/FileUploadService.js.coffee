@@ -15,13 +15,13 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
         listing_id: listing_id
         listing_preference_id: pref_id
 
+    proofDocument = Service._proofDocument(pref_type, opts)
+
     if opts.rentBurdenType
       params.uploaded_file.rent_burden_type = opts.rentBurdenType
       params.uploaded_file.address = opts.address
       params.uploaded_file.rent_burden_index = opts.index
-      proofDocument = Service.rentBurdenFile(opts)
-    else
-      proofDocument = Service.preferences.documents[pref_type]
+
     if _.isEmpty(proofDocument) || _.isEmpty(proofDocument.file)
       proofDocument.proofOption = null if proofDocument
       return $q.resolve()
@@ -42,65 +42,30 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
       return
     )
 
-  Service._processProofFile = (file, upload) ->
-    if file.size > 2 * 1000 * 1000 # 2MB
-      options =
-        width: 2112,
-        height: 2112,
-        quality: 0.8
-      Upload.resize(file, options).then( (resizedFile) ->
-        upload(resizedFile)
-      )
-    else
-      upload(file)
-
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
     preference = ListingService.getPreference(pref_type)
     pref_id = if preference then preference.listingPreferenceID else pref_type
     return $q.reject() unless ListingService.getPreferenceById(pref_id)
-    uploadedFileParams =
-      session_uid: Service.session_uid()
-      listing_id: listing_id
-      listing_preference_id: pref_id
 
-    if opts.rentBurdenType
-      proofDocument = Service.rentBurdenFile(opts)
-      uploadedFileParams.address = opts.address
-      uploadedFileParams.rent_burden_type = opts.rentBurdenType
-      uploadedFileParams.rent_burden_index = opts.index
-    else
-      Service.preferences.documents[pref_type] ?= {}
-      proofDocument = Service.preferences.documents[pref_type]
-
-    uploadedFileParams.document_type = proofDocument.proofOption
+    proofDocument = Service._proofDocument(pref_type, opts)
 
     if (!file)
       proofDocument.error = 'ERROR.FILE_MISSING'
       return $q.reject()
 
+    uploadedFileParams =
+      session_uid: Service.session_uid()
+      listing_id: listing_id
+      listing_preference_id: pref_id
+      document_type: proofDocument.proofOption
+
+    if opts.rentBurdenType
+      uploadedFileParams.address = opts.address
+      uploadedFileParams.rent_burden_type = opts.rentBurdenType
+      uploadedFileParams.rent_burden_index = opts.index
+
     proofDocument.loading = true
-    Service._processProofFile file, (resizedFile) ->
-      if resizedFile.size > 5 * 1000 * 1000 # 5MB
-        proofDocument.file = null
-        proofDocument.loading = false
-        proofDocument.error = 'ERROR.FILE_UPLOAD'
-      else
-        uploadedFileParams.file = resizedFile
-        Upload.upload(
-          url: '/api/v1/short-form/proof'
-          method: 'POST'
-          data:
-            uploaded_file: uploadedFileParams
-        ).then( ((resp) ->
-          proofDocument.loading = false
-          proofDocument.error = false
-          proofDocument.file = resp.data
-        ), ((resp) ->
-          # error handler
-          proofDocument.file = null
-          proofDocument.loading = false
-          proofDocument.error = 'ERROR.FILE_UPLOAD_FAILED'
-        ))
+    Service._processProofFile(file, proofDocument, uploadedFileParams)
 
   # Rent Burden specific functions
   Service.uploadedRentBurdenRentFiles = (address) ->
@@ -110,23 +75,6 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
       _.filter(rentFiles, (file) -> !_.isEmpty(file.file))
     else
       []
-
-  Service.rentBurdenFile = (opts) ->
-    rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
-    return {} unless rentBurdenDocs
-    if opts.rentBurdenType == 'lease'
-      rentBurdenDocs.lease
-    else
-      rentBurdenDocs.rent[opts.index]
-
-  Service.clearRentBurdenFile = (opts) ->
-    rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
-    return unless rentBurdenDocs
-    if opts.rentBurdenType == 'lease'
-      angular.copy({}, rentBurdenDocs.lease)
-    else
-      # remove pref file at opts.index
-      delete rentBurdenDocs.rent[opts.index]
 
   Service.hasRentBurdenFiles = (address = null) ->
     hasFiles = false
@@ -138,6 +86,15 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
       _.map Service.preferences.documents.rentBurden, (doc, address) ->
         hasFiles = hasFiles || Service.hasRentBurdenFiles(address)
     return hasFiles
+
+  Service.clearRentBurdenFile = (opts) ->
+    rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
+    return unless rentBurdenDocs
+    if opts.rentBurdenType == 'lease'
+      angular.copy({}, rentBurdenDocs.lease)
+    else
+      # remove pref file at opts.index
+      delete rentBurdenDocs.rent[opts.index]
 
   Service.clearRentBurdenFiles = (address = null) ->
     if address
@@ -175,6 +132,52 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
     ).error( (data, status, headers, config) ->
       return
     )
+
+  Service._proofDocument = (prefType, opts) ->
+    if opts.rentBurdenType
+      rentBurdenDocs = Service.preferences.documents.rentBurden[opts.address]
+      return {} unless rentBurdenDocs
+      if opts.rentBurdenType == 'lease'
+        rentBurdenDocs.lease
+      else
+        rentBurdenDocs.rent[opts.index]
+    else
+      Service.preferences.documents[prefType] ?= {}
+
+  Service._processProofFile = (file, proofDocument, uploadedFileParams) ->
+    if file.size > 2 * 1000 * 1000 # 2MB
+      options =
+        width: 2112,
+        height: 2112,
+        quality: 0.8
+      Upload.resize(file, options).then( (resizedFile) ->
+        Service._uploadProofFile(resizedFile, proofDocument, uploadedFileParams)
+      )
+    else
+      Service._uploadProofFile(file, proofDocument, uploadedFileParams)
+
+  Service._uploadProofFile = (file, proofDocument, uploadedFileParams) ->
+    if file.size > 5 * 1000 * 1000 # 5MB
+      proofDocument.file = null
+      proofDocument.loading = false
+      proofDocument.error = 'ERROR.FILE_UPLOAD'
+    else
+      uploadedFileParams.file = file
+      Upload.upload(
+        url: '/api/v1/short-form/proof'
+        method: 'POST'
+        data:
+          uploaded_file: uploadedFileParams
+      ).then( ((resp) ->
+        proofDocument.loading = false
+        proofDocument.error = false
+        proofDocument.file = resp.data
+      ), ((resp) ->
+        # error handler
+        proofDocument.file = null
+        proofDocument.loading = false
+        proofDocument.error = 'ERROR.FILE_UPLOAD_FAILED'
+      ))
 
   return Service
 
