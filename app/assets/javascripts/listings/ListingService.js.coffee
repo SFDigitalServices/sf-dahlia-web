@@ -671,7 +671,11 @@ ListingService = ($http, $localStorage, $modal, $q, $state, $translate) ->
 
   Service.householdAMIChartCutoff = ->
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
+    if(
+      Service.listingIs('Merry Go Round Shared Housing') ||
+      Service.listingIs('1335 Folsom Street') ||
+      Service.listingIs('750 Harrison Street')
+    )
       return 2
     else if Service.listingHasOnlySROUnits(Service.listing)
       return 1
