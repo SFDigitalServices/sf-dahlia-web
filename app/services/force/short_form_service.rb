@@ -14,7 +14,7 @@ module Force
 
     def self.create_or_update(params, contact_attrs)
       params[:primaryApplicant].merge!(contact_attrs)
-      Request.new(retries: 0).post('/shortForm', params)
+      Request.new(retries: 0, timeout: 20).post('/shortForm', params)
     end
 
     def self.get(id)
