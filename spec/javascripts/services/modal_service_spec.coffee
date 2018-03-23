@@ -10,6 +10,8 @@ do ->
         modalInstance
     $window = undefined
     alertTemplateUrl = 'shared/templates/alert_modal.html'
+    defaultTemplateController = 'ModalInstanceController'
+    defaultWindowClass = 'modal-large'
 
     beforeEach module('dahlia.services', ($provide)->
       $provide.value '$modal', modalMock
@@ -23,11 +25,15 @@ do ->
 
     describe 'openModal', ->
       beforeEach ->
+        spyOn(ModalService, 'closeModal').and.callThrough()
         spyOn(modalMock, 'open').and.callThrough()
 
+      it 'calls ModalService.closeModal', ->
+        ModalService.modalInstance = modalInstance
+        ModalService.openModal()
+        expect(ModalService.closeModal).toHaveBeenCalled()
+
       it 'creates a modal instance using a given template', ->
-        defaultTemplateController = 'ModalInstanceController'
-        defaultWindowClass = 'modal-large'
         expectedParams =
           templateUrl: alertTemplateUrl
           controller: defaultTemplateController
@@ -51,19 +57,6 @@ do ->
         expect(ModalService.modalInstance).not.toEqual null
         expect(ModalService.content.message).toEqual 'hi'
         expect(ModalService.openModal).toHaveBeenCalledWith(alertTemplateUrl)
-
-      it 'closes any open modalInstance before opening a new one', ->
-        ModalService.modalInstance = modalInstance
-        ModalService.content =
-          message: 'this is an already open modal'
-
-        newContent =
-          message: 'this is a new modal'
-        ModalService.alert(newContent)
-
-        expect(ModalService.closeModal).toHaveBeenCalled()
-        expect(ModalService.openModal).toHaveBeenCalledWith(alertTemplateUrl)
-        expect(ModalService.content.message).toEqual 'this is a new modal'
 
       it 'adds onConfirm callback if passed in', ->
         fakeCallback = -> 'hi'

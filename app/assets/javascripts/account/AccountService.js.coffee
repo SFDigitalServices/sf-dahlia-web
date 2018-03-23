@@ -5,7 +5,6 @@
 AccountService = (
   $state,
   $auth,
-  $modal,
   $http,
   $translate,
   bsLoadingOverlayService,
@@ -141,6 +140,9 @@ AccountService = (
     Service.setLoggedInUser({})
     ShortFormApplicationService.resetApplicationData()
     $auth.signOut()
+    # close any open modal, e.g. "Lottery Results" that may have been opened while
+    # you were on My Applications
+    ModalService.closeModal()
 
   # this gets run on init of the app in AngularConfig to check if we're logged in
   Service.validateUser = ->
@@ -301,7 +303,7 @@ AccountService = (
 ############################################################################################
 
 AccountService.$inject = [
-  '$state', '$auth', '$modal', '$http', '$translate', 'bsLoadingOverlayService'
+  '$state', '$auth', '$http', '$translate', 'bsLoadingOverlayService'
   'ShortFormApplicationService', 'ShortFormDataService', 'ModalService'
 ]
 

@@ -356,6 +356,14 @@ ShortFormNavigationService = (
     else
       'household-priorities'
 
+  Service.redirectIfNoApplication = (listing) ->
+    applicationDataExists = !!ShortFormApplicationService.application.lotteryNumber
+    return if applicationDataExists
+
+    # if there is no application data, redirect to first page of listing application
+    # (which will then redirect to community screening question, if applicable)
+    $state.go('dahlia.short-form-application.name', { id: listing.Id }) if listing and listing.Id
+
   Service._currentPage = () ->
     Service._getSuffix($state.current.name)
 
