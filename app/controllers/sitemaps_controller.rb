@@ -13,7 +13,7 @@ class SitemapsController < ApplicationController
   end
 
   def sitemap_xml
-    listings = ListingService.listings()
+    listings = Force::ListingService.listings
     @sitemap = SitemapGenerator::Builder::SitemapFile.new(host: 'https://' + host_name)
     @sitemap.add '/', changefreq: 'weekly', priority: 1.0
     @sitemap.add '/welcome-chinese', changefreq: 'weekly'

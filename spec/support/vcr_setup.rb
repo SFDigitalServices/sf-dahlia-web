@@ -1,3 +1,5 @@
+require 'vcr'
+
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/vcr'
   config.hook_into :webmock
@@ -32,7 +34,7 @@ VCR.configure do |config|
       # puts j.try(:[], 'access_token')
       # puts '*'*20
       j.try(:[], 'access_token')
-    rescue
+    rescue JSON::ParserError, TypeError
       nil
     end
   end

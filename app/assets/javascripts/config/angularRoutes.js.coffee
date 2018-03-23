@@ -100,8 +100,8 @@
           '$stateParams', '$state', '$q', 'ListingService',
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
-            ListingService.forceRecache = $stateParams.preview
-            ListingService.getListing($stateParams.id).then( ->
+            forceRecache = $stateParams.preview
+            ListingService.getListing($stateParams.id, forceRecache).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
@@ -111,8 +111,8 @@
 
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
-              setTimeout(ListingService.getListingUnits)
-              setTimeout(ListingService.getListingPreferences)
+              setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
+              setTimeout(ListingService.getListingPreferences.bind(null, forceRecache))
               setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
               setTimeout(ListingService.getListingDownloadURLs)
               # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
@@ -595,13 +595,18 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$stateParams', '$q', 'ListingService',
-          ($stateParams, $q, ListingService) ->
+          '$state', '$stateParams', '$q', 'ListingService',
+          ($state, $stateParams, $q, ListingService) ->
             # store the listing in ListingService and kick out if it's not open for applications
             deferred = $q.defer()
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then ->
+            ListingService.getListingAndCheckIfOpen($stateParams.id).then( ->
               ListingService.getListingPreferences().then ->
                 deferred.resolve(ListingService.listing)
+            ).catch( (response) ->
+              # if no listing info is found, treat this as a 404 and redirect to homepage
+              $state.go('dahlia.welcome') unless ListingService.listing
+              deferred.reject(response)
+            )
             return deferred.promise
         ]
         application: [
@@ -1007,9 +1012,10 @@
         'container':
           templateUrl: 'short-form/templates/g1-confirmation.html'
       onEnter: [
-        'ShortFormNavigationService', (ShortFormNavigationService) ->
-          ShortFormNavigationService.redirectIfNoApplication()
-        ]
+        'listing', 'ShortFormNavigationService',
+        (listing, ShortFormNavigationService) ->
+          ShortFormNavigationService.redirectIfNoApplication(listing)
+      ]
     })
     .state('dahlia.short-form-application.review-submitted', {
       url: '/review-submitted'
@@ -1018,9 +1024,10 @@
           templateUrl: 'short-form/templates/review-application.html'
           controller: 'ShortFormApplicationController'
       onEnter: [
-        'ShortFormNavigationService', (ShortFormNavigationService) ->
-          ShortFormNavigationService.redirectIfNoApplication()
-        ]
+        'listing', 'ShortFormNavigationService',
+        (listing, ShortFormNavigationService) ->
+          ShortFormNavigationService.redirectIfNoApplication(listing)
+      ]
     })
     # Short form submission: Review
     .state('dahlia.short-form-review', {

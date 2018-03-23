@@ -34,13 +34,14 @@ describe Overrides::RegistrationsController do
     end
 
     it 'saves a salesforce contact id on user' do
-      allow(SalesforceService::AccountService)
+      allow(Force::AccountService)
         .to receive(:create_or_update)
         .and_return(salesforce_response)
 
       VCR.use_cassette('account/register') do
         post :create, valid_user_params
       end
+
       expect(assigns(:resource).salesforce_contact_id)
         .to eq('0036C000001sI5oQAE')
     end
