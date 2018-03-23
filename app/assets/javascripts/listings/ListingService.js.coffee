@@ -667,7 +667,11 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
+    if(
+      Service.listingIs('Merry Go Round Shared Housing') ||
+      Service.listingIs('1335 Folsom Street') ||
+      Service.listingIs('750 Harrison Street')
+    )
       max = 2
     else if Service.listingHasOnlySROUnits(listing)
       max = 1
@@ -677,7 +681,11 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
 
   Service.householdAMIChartCutoff = ->
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if Service.listingIs('Merry Go Round Shared Housing') || Service.listingIs('1335 Folsom Street')
+    if(
+      Service.listingIs('Merry Go Round Shared Housing') ||
+      Service.listingIs('1335 Folsom Street') ||
+      Service.listingIs('750 Harrison Street')
+    )
       return 2
     else if Service.listingHasOnlySROUnits(Service.listing)
       return 1
@@ -745,6 +753,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
     'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
     'a0W0P00000FIuv3UAD': '1335 Folsom Street'
+    'a0W0P00000DhM0wUAF': '750 Harrison Street'
   }
 
   Service.mapSlugToId = (id) ->
