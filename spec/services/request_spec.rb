@@ -5,6 +5,10 @@ require 'ostruct'
 
 describe Force::Request do
   let(:oauth_token) { 'a1b2c3d4' }
+  let(:client) { double('salesforce_client') }
+  let(:client_class) { double('salesforce_client_class') }
+  let(:default_response) { OpenStruct.new(body: '') }
+  let(:cache) { double('cache') }
 
   def api_url(endpoint, include_host = false)
     host = include_host ? ENV['SALESFORCE_INSTANCE_URL'] : ''
@@ -12,8 +16,11 @@ describe Force::Request do
   end
 
   before do
-    auth = OpenStruct.new(access_token: oauth_token)
-    allow_any_instance_of(Restforce::Client).to receive(:authenticate!).and_return(auth)
+    allow(client).to receive(:options).and_return({})
+    allow(client).to receive(:authenticate!)
+    allow(client_class).to receive(:new).and_return(client)
+    allow(cache).to receive(:fetch)
+      .with('salesforce_oauth_token', any_args).and_yield
   end
 
   # includes generic tests for all requests, like retries
@@ -21,13 +28,11 @@ describe Force::Request do
     it 'sends a request to Salesforce' do
       endpoint = '/custom'
       params = { test: true }
-      response = OpenStruct.new(body: '')
 
-      expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:get, api_url(endpoint), params).and_return(response),
-      )
+      expect(client).to receive(:send)
+        .with(:get, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new.get(endpoint, params)
+      Force::Request.new({}, client_class, cache).get(endpoint, params)
     end
 
     it 'retries when receiving an error' do
@@ -35,16 +40,12 @@ describe Force::Request do
       retries = 2
       error_class = Faraday::TimeoutError
 
-      restforce_client = instance_double('Restforce::Client')
-      allow_any_instance_of(Force::Request).to(
-        receive(:restforce_client).and_return(restforce_client),
-      )
-      expect(restforce_client).to(
+      expect(client).to(
         receive(:send).exactly(retries + 1).times.and_raise(error_class),
       )
 
       expect do
-        Force::Request.new(retries: retries).get(endpoint)
+        Force::Request.new({ retries: retries }, client_class, cache).get(endpoint)
       end.to raise_error(error_class, error_class.name)
     end
 
@@ -52,65 +53,57 @@ describe Force::Request do
       endpoint = '/custom'
       retries = 2
       error_class = Restforce::UnauthorizedError
-      allow_any_instance_of(Restforce::Client).to receive(:send).and_raise(error_class)
-      # token refreshed for initial request and for retries
-      expect_any_instance_of(Force::Request).to(
-        receive(:refresh_oauth_token).exactly(retries).times,
-      )
+
+      allow(client).to receive(:send)
+        .with(:get, api_url(endpoint), nil).and_raise(error_class)
+
+      # token refreshed on initialization and before each retry
+      expect(client).to receive(:authenticate!).exactly(retries + 1).times
 
       expect do
-        Force::Request.new(retries: retries).get(endpoint)
+        Force::Request.new({ retries: retries }, client_class, cache).get(endpoint)
       end.to raise_error(error_class, error_class.name)
     end
 
     it 'sets timeout for Salesforce request' do
-      endpoint = '/custom'
       timeout = 27
-      restforce_params = {
+      client_params = {
         authentication_retries: 1,
-        oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
         timeout: timeout,
       }
 
-      expect_any_instance_of(Force::Request).to(
-        receive(:oauth_token).and_return(oauth_token),
-      )
-      restforce = double
-      restforce_instance = double
-      expect(restforce).to(
-        receive(:new).with(restforce_params).and_return(restforce_instance),
-      )
-      allow(restforce_instance).to receive(:get).and_return(OpenStruct.new(body: ''))
+      expect(client_class).to receive(:new)
+        .with(client_params).and_return(client)
 
-      Force::Request.new({ timeout: timeout }, restforce).get(endpoint)
+      Force::Request.new({ timeout: timeout }, client_class, cache)
     end
   end
 
   describe '#cached_get' do
+    let(:endpoint) { '/Listings' }
+    let(:params) { { ids: '1,2,3' } }
+    let(:cache_key) { endpoint + '?' + params.to_query }
+
     it 'fetches from the cache' do
-      endpoint = '/Listings'
-      params = { ids: '1,2,3' }
-      key = endpoint + '?' + params.to_query
+      allow(client).to receive(:send)
+        .with(:get, api_url(endpoint), params).and_return(default_response)
 
-      allow_any_instance_of(Force::Request).to(
-        receive(:oauth_token).and_return(oauth_token),
-      )
-      expect(Rails.cache).to(
-        receive(:fetch).with(key, force: true, expires_in: 10.minutes),
-      )
+      expect(cache).to receive(:fetch)
+        .with(cache_key, force: true, expires_in: 10.minutes)
 
-      Force::Request.new.cached_get(endpoint, params, true)
+      Force::Request.new({}, client_class, cache).cached_get(endpoint, params, true)
     end
 
     it 'calls through to #get' do
-      endpoint = '/Listings'
-      params = { ids: '1,2,3' }
+      allow(cache).to receive(:fetch)
+        .with(cache_key, force: true, expires_in: 10.minutes).and_yield
 
-      expect_any_instance_of(Force::Request).to receive(:get).with(endpoint, params)
+      expect(client).to receive(:send)
+        .with(:get, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new.cached_get(endpoint, params, true)
+      Force::Request.new({}, client_class, cache).cached_get(endpoint, params, true)
     end
   end
 
@@ -118,13 +111,11 @@ describe Force::Request do
     it 'sends a post request to Salesforce' do
       endpoint = '/shortForm'
       params = { save: true }
-      response = OpenStruct.new(body: '')
 
-      expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:post, api_url(endpoint), params).and_return(response),
-      )
+      expect(client).to receive(:send)
+        .with(:post, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new.post(endpoint, params)
+      Force::Request.new({}, client_class, cache).post(endpoint, params)
     end
   end
 
@@ -132,20 +123,25 @@ describe Force::Request do
     it 'sends a delete request to Salesforce' do
       endpoint = '/shortForm'
       params = { delete: true }
-      response = OpenStruct.new(body: '')
 
-      expect_any_instance_of(Restforce::Client).to(
-        receive(:send).with(:delete, api_url(endpoint), params).and_return(response),
-      )
+      expect(client).to receive(:send)
+        .with(:delete, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new.delete(endpoint, params)
+      Force::Request.new({}, client_class, cache).delete(endpoint, params)
     end
   end
 
+  # stub actual requests so that we can test that Faraday creates
+  # correct body and headers
   describe '#post_with_headers' do
     let(:application_id) { 'a0o0P00000HSUgXQAX' }
     let(:endpoint) { "/shortForm/Attachment/#{application_id}" }
     let(:salesforce_url) { api_url(endpoint, true) }
+
+    before do
+      # Make sure we have an oauth token to test authorization header
+      client.options[:oauth_token] = oauth_token
+    end
 
     it 'adds headers to request' do
       filename = 'proof-file.png'
@@ -163,7 +159,8 @@ describe Force::Request do
 
       stub_request(:post, salesforce_url)
 
-      Force::Request.new.post_with_headers(endpoint, body, headers)
+      Force::Request.new({}, client_class, cache)
+                    .post_with_headers(endpoint, body, headers)
       expect(a_request(:post, salesforce_url)
         .with(body: body.to_json, headers: headers_with_auth)).to have_been_made.once
     end
@@ -175,7 +172,8 @@ describe Force::Request do
       stub_request(:post, salesforce_url).to_raise(error_class)
 
       expect do
-        Force::Request.new(retries: retries).post_with_headers(endpoint)
+        Force::Request.new({ retries: retries }, client_class, cache)
+                      .post_with_headers(endpoint)
       end.to raise_error(error_class, error_class.name)
       expect(a_request(:post, salesforce_url)).to have_been_made.times(retries + 1)
     end
@@ -187,8 +185,34 @@ describe Force::Request do
       stub_request(:post, salesforce_url).to_return(status: 401)
 
       expect do
-        Force::Request.new.post_with_headers(endpoint)
+        Force::Request.new({}, client_class, cache).post_with_headers(endpoint)
       end.to raise_error(Restforce::UnauthorizedError)
+    end
+  end
+
+  describe '#oauth_token' do
+    it 'fetches an oauth token from the cache' do
+      # called once during instantiation and once during method call
+      expect(cache).to receive(:fetch)
+        .with('salesforce_oauth_token', force: false).twice
+
+      Force::Request.new({}, client_class, cache).oauth_token
+    end
+
+    it 'authenticates the client' do
+      # called once during instantiation and once during method call
+      expect(client).to receive(:authenticate!).twice
+
+      Force::Request.new({}, client_class, cache).oauth_token
+    end
+  end
+
+  describe '#refresh_oauth_token' do
+    it 'force refreshes the cached oauth token' do
+      expect(cache).to receive(:fetch)
+        .with('salesforce_oauth_token', force: true).once
+
+      Force::Request.new({}, client_class, cache).refresh_oauth_token
     end
   end
 end

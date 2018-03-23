@@ -6,12 +6,13 @@ module Force
   class Request
     attr_accessor :error
 
-    def initialize(opts = {}, client_class = Restforce)
+    def initialize(opts = {}, client_class = Restforce, cache = Rails.cache)
       default_timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
       @timeout = opts[:timeout] || default_timeout
       @retries = opts[:retries] || 1
       @parse_response = opts[:parse_response] || false
       @error = nil
+      @cache = cache
       initialize_client(client_class)
     end
 
@@ -27,7 +28,7 @@ module Force
       else
         expires_in = params ? 10.minutes : 1.day
       end
-      Rails.cache.fetch(key, force: force_refresh, expires_in: expires_in) do
+      @cache.fetch(key, force: force_refresh, expires_in: expires_in) do
         get(endpoint, params)
       end
     end
@@ -51,15 +52,13 @@ module Force
     end
 
     def oauth_token(force_refresh = false)
-      Rails.cache.fetch('salesforce_oauth_token', force: force_refresh) do
+      @cache.fetch('salesforce_oauth_token', force: force_refresh) do
         # temporarily set a short timeout for authentication
         @client.options[:timeout] = 10
-        # @client.authenticate! requests an oauth token, sets the received
-        # token in @client's options, and returns the token request response
-        auth_response_data = @client.authenticate!
-        # restore the original timeout
+        @client.authenticate!
         @client.options[:timeout] = @timeout
-        auth_response_data.access_token
+        # cache access token
+        @client.options[:oauth_token]
       end
     end
 
@@ -76,15 +75,8 @@ module Force
         mashify: false,
         timeout: @timeout,
       )
-      # comment for devs, can maybe remove later:
-      # if there is a cached token, then oauth_token here will simply return
-      # the cached token and we will set it in the client's options.
-      # if there is no cached token, then the call to oauth_token will call
-      # @client.authenticate! which sets the oauth_token in the client's
-      # options as part of its process, and then the call here to oauth_token
-      # will still return that just-generated token, which we will set in
-      # the client options, even though it was just set there. so, slightly
-      # redundant, but not breaking anything
+      # set oauth token from the cache, if we can
+      # otherwise authenticate client created above
       @client.options[:oauth_token] = oauth_token
     end
 
