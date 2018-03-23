@@ -33,22 +33,21 @@ class User < ActiveRecord::Base
   end
 
   def sync_reconfirmation_with_salesforce
-    if pending_reconfirmation? && persisted?
-      # we have to grab the existing applicant first.
-      # Salesforce requires that we repackage all of their info when making an update
-      contact = AccountService.get(salesforce_contact_id)
-      return unless contact.present?
-      AccountService.create_or_update(
-        webAppID: id,
-        contactId: salesforce_contact_id,
-        # send unconfirmed_email because it's about to be confirmed
-        email: unconfirmed_email,
-        firstName: contact['firstName'],
-        middleName: contact['middleName'],
-        lastName: contact['lastName'],
-        DOB: contact['DOB'],
-      )
-    end
+    return unless pending_reconfirmation? && persisted?
+    # we have to grab the existing applicant first.
+    # Salesforce requires that we repackage all of their info when making an update
+    contact = Force::AccountService.get(salesforce_contact_id)
+    return unless contact.present?
+    Force::AccountService.create_or_update(
+      webAppID: id,
+      contactId: salesforce_contact_id,
+      # send unconfirmed_email because it's about to be confirmed
+      email: unconfirmed_email,
+      firstName: contact['firstName'],
+      middleName: contact['middleName'],
+      lastName: contact['lastName'],
+      DOB: contact['DOB'],
+    )
   end
 
   # https://github.com/plataformatec/devise#activejob-integration

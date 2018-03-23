@@ -6,9 +6,9 @@ namespace :cache do
 
   desc 'Pre-fetch all listings for caching'
   task prefetch: :environment do
-    CacheService.prefetch_listings(refresh_all: false)
+    CacheService.new.prefetch_listings(refresh_all: false)
   end
   task prefetch_daily: :environment do
-    CacheService.prefetch_listings(refresh_all: true)
+    CacheService.new.prefetch_listings(refresh_all: true)
   end
 end

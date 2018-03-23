@@ -1,6 +1,6 @@
-module SalesforceService
+module Force
   # encapsulate all Salesforce ShortForm querying functions
-  class ShortFormService < SalesforceService::Base
+  class ShortFormService
     def self.check_household_eligibility(listing_id, params)
       endpoint = "/Listing/EligibilityCheck/#{listing_id}"
       %i[householdsize childrenUnder6].each do |k|
@@ -9,20 +9,20 @@ module SalesforceService
       %i[incomelevel].each do |k|
         params[k] = params[k].present? ? params[k].to_f : 0
       end
-      cached_api_get(endpoint, params)
+      Request.new.cached_get(endpoint, params)
     end
 
     def self.create_or_update(params, contact_attrs)
       params[:primaryApplicant].merge!(contact_attrs)
-      api_post('/shortForm', params)
+      Request.new(retries: 0, timeout: 20).post('/shortForm', params)
     end
 
     def self.get(id)
-      api_get("/shortForm/#{id}")
+      Request.new.get("/shortForm/#{id}")
     end
 
     def self.get_for_user(contact_id)
-      apps = api_get("/shortForm/list/#{contact_id}")
+      apps = Request.new.get("/shortForm/list/#{contact_id}")
       apps.compact.sort_by { |app| app['applicationSubmittedDate'] || '0' }.reverse
     end
 
@@ -70,7 +70,7 @@ module SalesforceService
     end
 
     def self.delete(id)
-      api_delete("/shortForm/delete/#{id}")
+      Request.new.delete("/shortForm/delete/#{id}")
     end
 
     def self.attach_file(application, file, filename)
@@ -85,7 +85,7 @@ module SalesforceService
         ApplicationPreferenceID: _short_form_pref_id(application, file),
       }
       Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: #{body}"
-      api_post_with_headers(endpoint, body, headers)
+      Request.new.post_with_headers(endpoint, body, headers)
     end
 
     def self.queue_file_attachments(application_id, files)
