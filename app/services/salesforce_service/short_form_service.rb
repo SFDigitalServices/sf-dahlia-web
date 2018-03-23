@@ -102,7 +102,7 @@ module SalesforceService
       return false unless application['status'].casecmp('submitted').zero?
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
-      session_uid == metadata['externalSessionId']
+      session_uid == metadata['session_uid']
     rescue StandardError
       false
     end

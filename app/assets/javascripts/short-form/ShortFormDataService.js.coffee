@@ -3,7 +3,7 @@ ShortFormDataService = (ListingService) ->
   Service.preferences = _.keys(ListingService.preferenceMap)
   Service.metaFields = [
     'completedSections'
-    'externalSessionId'
+    'session_uid'
     'lastPage'
     'groupedHouseholdAddresses'
   ]

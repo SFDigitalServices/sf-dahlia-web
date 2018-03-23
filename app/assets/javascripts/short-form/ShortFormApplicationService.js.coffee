@@ -704,6 +704,7 @@ ShortFormApplicationService = (
     # clean up any old data hanging around from now invalidated/changed preferences
     Service.refreshPreferences()
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
+    Service.application.session_uid = Service.session_uid
     Service.application.externalSessionId = Service.session_uid
     params =
       # $translate.use() with no arguments is a getter for the current lang setting
