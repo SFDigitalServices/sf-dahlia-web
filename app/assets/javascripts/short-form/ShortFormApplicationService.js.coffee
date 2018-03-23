@@ -4,6 +4,13 @@ ShortFormApplicationService = (
   AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
+
+  Service.refreshSessionUid = ->
+    Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
+    Service.application.externalSessionId = Service.session_uid if Service.application
+
+  Service.refreshSessionUid()
+
   Service.listing = ListingService.listing
   Service.form = {}
   Service.accountApplication = {}
@@ -67,9 +74,6 @@ ShortFormApplicationService = (
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
-  Service.refreshSessionUid = ->
-    Service.session_uid = "#{uuid.v4()}-#{uuid.v4()}"
-  Service.refreshSessionUid()
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
 
@@ -701,8 +705,8 @@ ShortFormApplicationService = (
     # clean up any old data hanging around from now invalidated/changed preferences
     Service.refreshPreferences()
     Service.application.applicationSubmittedDate = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
-    # this gets stored in the metadata of the application to verify who's trying to "claim" it after submission
     Service.application.session_uid = Service.session_uid
+    Service.application.externalSessionId = Service.session_uid
     params =
       # $translate.use() with no arguments is a getter for the current lang setting
       locale: $translate.use()
