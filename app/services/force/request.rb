@@ -57,7 +57,7 @@ module Force
         @client.options[:timeout] = 10
         @client.authenticate!
         @client.options[:timeout] = @timeout
-        # cache access token
+        # cache new access token
         @client.options[:oauth_token]
       end
     end

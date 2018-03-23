@@ -103,7 +103,7 @@ module Force
       metadata = JSON.parse(application['formMetadata'])
       # only claimable if they are in the same user session
       session_uid == metadata['session_uid']
-    rescue JSON::ParserError
+    rescue StandardError
       false
     end
 
