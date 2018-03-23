@@ -35,7 +35,11 @@ describe Force::Request do
       retries = 2
       error_class = Faraday::TimeoutError
 
-      expect_any_instance_of(Restforce::Client).to(
+      restforce_client = instance_double('Restforce::Client')
+      allow_any_instance_of(Force::Request).to(
+        receive(:restforce_client).and_return(restforce_client),
+      )
+      expect(restforce_client).to(
         receive(:send).exactly(retries + 1).times.and_raise(error_class),
       )
 
@@ -60,6 +64,7 @@ describe Force::Request do
     end
 
     it 'sets timeout for Salesforce request' do
+      endpoint = '/custom'
       timeout = 27
       restforce_params = {
         authentication_retries: 1,
@@ -72,9 +77,14 @@ describe Force::Request do
       expect_any_instance_of(Force::Request).to(
         receive(:oauth_token).and_return(oauth_token),
       )
-      expect(Restforce).to receive(:new).with(restforce_params)
+      restforce = double
+      restforce_instance = double
+      expect(restforce).to(
+        receive(:new).with(restforce_params).and_return(restforce_instance),
+      )
+      allow(restforce_instance).to receive(:get).and_return(OpenStruct.new(body: ''))
 
-      Force::Request.new(timeout: timeout)
+      Force::Request.new({ timeout: timeout }, restforce).get(endpoint)
     end
   end
 

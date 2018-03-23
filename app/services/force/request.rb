@@ -6,13 +6,13 @@ module Force
   class Request
     attr_accessor :error
 
-    def initialize(opts = {})
+    def initialize(opts = {}, client_class = Restforce)
       default_timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
       @timeout = opts[:timeout] || default_timeout
       @retries = opts[:retries] || 1
       @parse_response = opts[:parse_response] || false
       @error = nil
-      @client = create_client
+      initialize_client(client_class)
     end
 
     def get(endpoint, params = nil)
@@ -52,8 +52,14 @@ module Force
 
     def oauth_token(force_refresh = false)
       Rails.cache.fetch('salesforce_oauth_token', force: force_refresh) do
-        auth = Restforce.new(timeout: 10).authenticate!
-        auth.access_token
+        # temporarily set a short timeout for authentication
+        @client.options[:timeout] = 10
+        # @client.authenticate! requests an oauth token, sets the received
+        # token in @client's options, and returns the token request response
+        auth_response_data = @client.authenticate!
+        # restore the original timeout
+        @client.options[:timeout] = @timeout
+        auth_response_data.access_token
       end
     end
 
@@ -63,14 +69,23 @@ module Force
 
     private
 
-    def create_client
-      Restforce.new(
+    def initialize_client(client_class)
+      @client = client_class.new(
         authentication_retries: 1,
-        oauth_token: oauth_token,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
         timeout: @timeout,
       )
+      # comment for devs, can maybe remove later:
+      # if there is a cached token, then oauth_token here will simply return
+      # the cached token and we will set it in the client's options.
+      # if there is no cached token, then the call to oauth_token will call
+      # @client.authenticate! which sets the oauth_token in the client's
+      # options as part of its process, and then the call here to oauth_token
+      # will still return that just-generated token, which we will set in
+      # the client options, even though it was just set there. so, slightly
+      # redundant, but not breaking anything
+      @client.options[:oauth_token] = oauth_token
     end
 
     def api_url(endpoint)

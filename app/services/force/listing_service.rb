@@ -58,18 +58,18 @@ module Force
 
     # get all units for a given listing
     def self.units(listing_id, opts = {})
-      listing_id = CGI.escape(listing_id)
+      esc_listing_id = CGI.escape(listing_id)
       force = opts[:force] || false
       Request.new(parse_response: true)
-             .cached_get("/Listing/Units/#{listing_id}", nil, force)
+             .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
     end
 
     # get all preferences for a given listing
     def self.preferences(listing_id, opts = {})
-      listing_id = CGI.escape(listing_id)
+      esc_listing_id = CGI.escape(listing_id)
       force = opts[:force] || false
       Request.new(parse_response: true)
-             .cached_get("/Listing/Preferences/#{listing_id}", nil, force)
+             .cached_get("/Listing/Preferences/#{esc_listing_id}", nil, force)
     end
 
     # get AMI: opts are percent, chartType, year
@@ -84,8 +84,8 @@ module Force
 
     # get Lottery Buckets with rankings
     def self.lottery_buckets(listing_id)
-      listing_id = CGI.escape(listing_id)
-      data = Request.new.cached_get("/Listing/LotteryResult/#{listing_id}")
+      esc_listing_id = CGI.escape(listing_id)
+      data = Request.new.cached_get("/Listing/LotteryResult/#{esc_listing_id}")
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
       data['lotteryBuckets'].each do |bucket|
