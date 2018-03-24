@@ -6,14 +6,14 @@ module Force
   class Request
     attr_accessor :error
 
-    def initialize(opts = {}, client_class = Restforce, cache = Rails.cache)
+    def initialize(opts = {})
       default_timeout = ENV['SALESFORCE_TIMEOUT'] ? ENV['SALESFORCE_TIMEOUT'].to_i : 10
       @timeout = opts[:timeout] || default_timeout
       @retries = opts[:retries] || 1
       @parse_response = opts[:parse_response] || false
       @error = nil
-      @cache = cache
-      initialize_client(client_class)
+      @cache = Rails.cache
+      initialize_client
     end
 
     def get(endpoint, params = nil)
@@ -68,8 +68,8 @@ module Force
 
     private
 
-    def initialize_client(client_class)
-      @client = client_class.new(
+    def initialize_client
+      @client = Restforce.new(
         authentication_retries: 1,
         instance_url: ENV['SALESFORCE_INSTANCE_URL'],
         mashify: false,
