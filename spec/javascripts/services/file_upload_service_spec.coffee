@@ -133,7 +133,7 @@ do ->
           expect(proofDocument.loading).toEqual(true)
 
           describe 'when the rentBurdenType option is not present', ->
-            it 'calls Service._processProofFile with the correct non-rent-burden params', ->
+            it 'calls Service._processProofFile with the correct non-rent-burdened params', ->
               uploadedFileParams =
                 session_uid: FileUploadService.session_uid()
                 listing_id: listingID
@@ -143,7 +143,7 @@ do ->
               expect(FileUploadService._processProofFile).toHaveBeenCalledWith(file, proofDocument, uploadedFileParams)
 
           describe 'when the rentBurdenType option is present', ->
-            it 'calls Service._processProofFile with the correct rent burden params', ->
+            it 'calls Service._processProofFile with the correct rent burdened params', ->
               opts =
                 rentBurdenType: 'lease'
                 address: address1
@@ -176,14 +176,14 @@ do ->
                 lease: {}
                 rent: {}
 
-      it 'returns the non-empty rent burden rent files for the given address', ->
+      it 'returns the non-empty rent burdened rent files for the given address', ->
         files = [
           {file: 'address1 rent file 1'},
           {file: 'address1 rent file 2'}
         ]
         expect(FileUploadService.uploadedRentBurdenRentFiles(address1)).toEqual(files)
 
-      it 'returns an empty list if no rent burden rent files are found for the given address', ->
+      it 'returns an empty list if no rent burdened rent files are found for the given address', ->
         files = []
         expect(FileUploadService.uploadedRentBurdenRentFiles(address2)).toEqual(files)
 
@@ -243,7 +243,7 @@ do ->
                 rent:
                   1: {file: 'some file'}
 
-      it 'clears all rent burden files', ->
+      it 'clears all rent burdened files', ->
         FileUploadService.clearRentBurdenFiles(address1)
         rentBurdenFiles = FileUploadService.preferences.documents.rentBurden[address1]
         expectedResult = { lease: {  }, rent: {  } }
@@ -263,7 +263,7 @@ do ->
                 rent:
                   1: {file: 'some file'}
 
-      it 'should delete all rent burden preference files', ->
+      it 'should delete all rent burdened preference files', ->
         stubAngularAjaxRequest httpBackend, "/api/v1/short-form/proof", 200
         FileUploadService.deleteRentBurdenPreferenceFiles('listingID')
         httpBackend.flush()
@@ -286,19 +286,19 @@ do ->
                 rent:
                   1: 'address2 rent file'
 
-      describe 'non-rent-burden file', ->
-        it 'returns the correct non-rent-burden file', ->
+      describe 'non-rent-burdened file', ->
+        it 'returns the correct non-rent-burdened file', ->
           opts = {}
           expect(FileUploadService._proofDocument(prefType, opts)).toEqual("#{prefType}_file")
 
-      describe 'rent burden lease file', ->
+      describe 'rent burdened lease file', ->
         it 'returns the correct lease file', ->
           opts =
             address: address1
             rentBurdenType: 'lease'
           expect(FileUploadService._proofDocument(prefType, opts)).toEqual('address1 lease file')
 
-      describe 'rent burden rent file', ->
+      describe 'rent burdened rent file', ->
         it 'returns the correct rent file', ->
           opts =
             address: address2
