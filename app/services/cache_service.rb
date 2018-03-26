@@ -22,17 +22,17 @@ class CacheService
   def check_listings
     new_listings.each do |listing|
       id = listing['Id']
-      old = old_listings.find { |l| l['Id'] == id }
+      old_listing = old_listings.find { |l| l['Id'] == id }
       unchanged = false
-      if old.present?
-        old = Force::ListingService.array_sort!(old)
-        listing = Force::ListingService.array_sort!(listing)
+      if old_listing.present?
+        sorted_old_listing = Force::ListingService.array_sort!(old_listing)
+        sorted_listing = Force::ListingService.array_sort!(listing)
         # NOTE: This comparison isn't perfect, as the browse listings API endpoint doesn't
         # contain some relational data e.g. some individual unit/preference details.
         # That's why we more aggressively re-cache open listings.
-        unchanged = HashDiff.diff(old, listing).empty?
+        unchanged = HashDiff.diff(sorted_old_listing, sorted_listing).empty?
       end
-      maybe_cache_listing(listing, unchanged)
+      maybe_cache_listing(listing) unless unchanged
     end
   end
 
