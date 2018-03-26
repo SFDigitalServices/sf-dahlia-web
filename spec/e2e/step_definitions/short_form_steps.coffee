@@ -285,6 +285,26 @@ module.exports = ->
     )
     browser.sleep(5000)
 
+  @When /^I upload a too-large "([^"]*)" as my proof of preference for "([^"]*)"$/, (documentType, preference) ->
+    # currently the max allowed file size after any resizing is 5MB
+    # open the proof option selector and pick the indicated documentType
+    element.all(By.id("#{preference}_proofDocument")).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+    element.all(By.cssContainingText('option', documentType)).filter((elem) ->
+      elem.isDisplayed()
+    ).first().click()
+
+    # need this for uploading file to sauce labs
+    browser.setFileDetector new remote.FileDetector()
+
+    # upload a file that will be >5MB even after any resizing
+    filePath = "#{process.env.PWD}/spec/e2e/assets/sf-homes-wide.pdf"
+    element.all(By.css('input[type="file"]')).then( (items) ->
+      items[0].sendKeys(filePath)
+    )
+    browser.sleep(5000)
+
   @When /^I upload a Copy of Lease as my proof for Assisted Housing$/, ->
     filePath = "#{process.env.PWD}/app/assets/images/logo-portal.png"
     element(By.id('ngf-assistedHousing_proofFile')).sendKeys(filePath)
@@ -873,6 +893,9 @@ module.exports = ->
     browser.waitForAngular()
     expectAlertBox(@, 'Unfortunately it appears you do not qualify')
     expectError(@, 'Your household income is too high', '.c-alert')
+
+  @Then 'I should see an error about the file being too large', ->
+    expectError(@, 'The file is too large or not a supported file type', '.error')
 
   @Then 'I should land on the optional survey page', ->
     surveyTitle = element(By.cssContainingText('h2.app-card_question', 'Help us ensure we are meeting our goal'))

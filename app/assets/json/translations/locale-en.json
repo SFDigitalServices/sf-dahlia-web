@@ -293,6 +293,7 @@
         "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
         "FILE_MISSING": "Please upload a valid document",
         "FILE_UPLOAD": "The file is too large or not a supported file type",
+        "FILE_UPLOAD_FAILED": "There was a problem uploading your file. Please try again.",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
         "GET_ASSISTANCE": "Get Assistance",
