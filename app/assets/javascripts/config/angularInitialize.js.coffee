@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
-  'SharedService', 'GoogleTranslateService', 'ModalService',
+  'SharedService', 'ExternalTranslateService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
-  SharedService, GoogleTranslateService, ModalService) ->
+  SharedService, ExternalTranslateService, ModalService) ->
     timeoutRetries = 2
     ngMeta.init()
 
@@ -55,20 +55,17 @@
       if SharedService.isWelcomePage(toState)
         # on welcome pages, the language is determined by the language of the
         # welcome page, not by toParams.lang
-        language = SharedService.getWelcomePageLanguage(toState.name).code
-        if toParams.lang != language
+        welcomePageLanguage = SharedService.getWelcomePageLanguage(toState.name).code
+        ExternalTranslateService.setLanguage(welcomePageLanguage)
+
+        if toParams.lang != welcomePageLanguage
           # if toState is a language welcome page and a different lang is set in the
           # params, reload the welcome page with the matching lang param. even though
           # toParams.lang doesn't determine the language set on a welcome page, we
           # still want the URL to appear consistent, e.g. the Spanish welcome page
           # path should always be 'es/welcome-spanish'
           e.preventDefault()
-          $state.go(toState.name, {lang: language})
-      else
-        language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
-
-      GoogleTranslateService.loadAPI().then ->
-        GoogleTranslateService.setLanguage(language)
+          $state.go(toState.name, {lang: welcomePageLanguage})
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
@@ -173,6 +170,9 @@
         # application data we just loaded in the dahlia.short-form-review state's resolve.
         ShortFormApplicationService.resetApplicationData()
 
+      ExternalTranslateService.setLanguage(toParams.lang)
+      ExternalTranslateService.loadAPI().then ->
+        setTimeout(ExternalTranslateService.translatePageContent)
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes

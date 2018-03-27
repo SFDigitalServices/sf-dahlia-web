@@ -1,4 +1,4 @@
-GoogleTranslateService = ($q, $timeout) ->
+ExternalTranslateService = ($q, $timeout) ->
   Service = {}
   Service.URL = '//translate.google.com/translate_a/element.js?cb=initGoogleTranslate'
   Service.translateElement = {}
@@ -25,8 +25,10 @@ GoogleTranslateService = ($q, $timeout) ->
     document.getElementsByTagName('head')[0].appendChild(node)
 
   Service.setLanguage = (language) ->
-    Service.language = language
-    googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{language}\"]")
+    Service.language = if language == 'zh' then 'zh-TW' else language
+
+  Service.translatePageContent = ->
+    googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{Service.language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
       if typeof window.Event == 'function'
@@ -42,7 +44,7 @@ GoogleTranslateService = ($q, $timeout) ->
         changeEvent.initEvent('change', bubbles, cancelable)
       googleTranslateOption.dispatchEvent(changeEvent)
     else
-      $timeout Service.setLanguage, 100, true, language
+      $timeout Service.translatePageContent, 100, true
 
   Service.init = ->
     Service.translateElement = new window.google.translate.TranslateElement(
@@ -57,8 +59,8 @@ GoogleTranslateService = ($q, $timeout) ->
 
   Service
 
-GoogleTranslateService.$inject = ['$q', '$timeout']
+ExternalTranslateService.$inject = ['$q', '$timeout']
 
 angular
   .module('dahlia.services')
-  .service('GoogleTranslateService', GoogleTranslateService)
+  .service('ExternalTranslateService', ExternalTranslateService)
