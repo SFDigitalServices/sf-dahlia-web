@@ -5,10 +5,9 @@ require 'ostruct'
 
 describe Force::Request do
   let(:oauth_token) { 'a1b2c3d4' }
-  let(:client) { double('salesforce_client') }
-  let(:client_class) { double('salesforce_client_class') }
+  let(:client) { instance_double(Restforce::Client) }
   let(:default_response) { OpenStruct.new(body: '') }
-  let(:cache) { double('cache') }
+  let(:cache) { instance_double(ActiveSupport::Cache::Store) }
 
   def api_url(endpoint, include_host = false)
     host = include_host ? ENV['SALESFORCE_INSTANCE_URL'] : ''
@@ -16,9 +15,10 @@ describe Force::Request do
   end
 
   before do
+    allow(Restforce).to receive(:new).and_return(client)
     allow(client).to receive(:options).and_return({})
     allow(client).to receive(:authenticate!)
-    allow(client_class).to receive(:new).and_return(client)
+    allow(Rails).to receive(:cache).and_return(cache)
     allow(cache).to receive(:fetch)
       .with('salesforce_oauth_token', any_args).and_yield
   end
@@ -32,7 +32,7 @@ describe Force::Request do
       expect(client).to receive(:send)
         .with(:get, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new({}, client_class, cache).get(endpoint, params)
+      Force::Request.new.get(endpoint, params)
     end
 
     it 'retries when receiving an error' do
@@ -45,7 +45,7 @@ describe Force::Request do
       )
 
       expect do
-        Force::Request.new({ retries: retries }, client_class, cache).get(endpoint)
+        Force::Request.new(retries: retries).get(endpoint)
       end.to raise_error(error_class, error_class.name)
     end
 
@@ -61,7 +61,7 @@ describe Force::Request do
       expect(client).to receive(:authenticate!).exactly(retries + 1).times
 
       expect do
-        Force::Request.new({ retries: retries }, client_class, cache).get(endpoint)
+        Force::Request.new(retries: retries).get(endpoint)
       end.to raise_error(error_class, error_class.name)
     end
 
@@ -74,10 +74,10 @@ describe Force::Request do
         timeout: timeout,
       }
 
-      expect(client_class).to receive(:new)
+      expect(Restforce).to receive(:new)
         .with(client_params).and_return(client)
 
-      Force::Request.new({ timeout: timeout }, client_class, cache)
+      Force::Request.new(timeout: timeout)
     end
   end
 
@@ -93,7 +93,7 @@ describe Force::Request do
       expect(cache).to receive(:fetch)
         .with(cache_key, force: true, expires_in: 10.minutes)
 
-      Force::Request.new({}, client_class, cache).cached_get(endpoint, params, true)
+      Force::Request.new.cached_get(endpoint, params, true)
     end
 
     it 'calls through to #get' do
@@ -103,7 +103,7 @@ describe Force::Request do
       expect(client).to receive(:send)
         .with(:get, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new({}, client_class, cache).cached_get(endpoint, params, true)
+      Force::Request.new.cached_get(endpoint, params, true)
     end
   end
 
@@ -115,7 +115,7 @@ describe Force::Request do
       expect(client).to receive(:send)
         .with(:post, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new({}, client_class, cache).post(endpoint, params)
+      Force::Request.new.post(endpoint, params)
     end
   end
 
@@ -127,7 +127,7 @@ describe Force::Request do
       expect(client).to receive(:send)
         .with(:delete, api_url(endpoint), params).and_return(default_response)
 
-      Force::Request.new({}, client_class, cache).delete(endpoint, params)
+      Force::Request.new.delete(endpoint, params)
     end
   end
 
@@ -159,8 +159,7 @@ describe Force::Request do
 
       stub_request(:post, salesforce_url)
 
-      Force::Request.new({}, client_class, cache)
-                    .post_with_headers(endpoint, body, headers)
+      Force::Request.new.post_with_headers(endpoint, body, headers)
       expect(a_request(:post, salesforce_url)
         .with(body: body.to_json, headers: headers_with_auth)).to have_been_made.once
     end
@@ -172,8 +171,7 @@ describe Force::Request do
       stub_request(:post, salesforce_url).to_raise(error_class)
 
       expect do
-        Force::Request.new({ retries: retries }, client_class, cache)
-                      .post_with_headers(endpoint)
+        Force::Request.new(retries: retries).post_with_headers(endpoint)
       end.to raise_error(error_class, error_class.name)
       expect(a_request(:post, salesforce_url)).to have_been_made.times(retries + 1)
     end
@@ -185,7 +183,7 @@ describe Force::Request do
       stub_request(:post, salesforce_url).to_return(status: 401)
 
       expect do
-        Force::Request.new({}, client_class, cache).post_with_headers(endpoint)
+        Force::Request.new.post_with_headers(endpoint)
       end.to raise_error(Restforce::UnauthorizedError)
     end
   end
@@ -196,14 +194,14 @@ describe Force::Request do
       expect(cache).to receive(:fetch)
         .with('salesforce_oauth_token', force: false).twice
 
-      Force::Request.new({}, client_class, cache).oauth_token
+      Force::Request.new.oauth_token
     end
 
     it 'authenticates the client' do
       # called once during instantiation and once during method call
       expect(client).to receive(:authenticate!).twice
 
-      Force::Request.new({}, client_class, cache).oauth_token
+      Force::Request.new.oauth_token
     end
   end
 
@@ -212,7 +210,7 @@ describe Force::Request do
       expect(cache).to receive(:fetch)
         .with('salesforce_oauth_token', force: true).once
 
-      Force::Request.new({}, client_class, cache).refresh_oauth_token
+      Force::Request.new.refresh_oauth_token
     end
   end
 end
