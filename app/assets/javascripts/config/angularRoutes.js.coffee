@@ -677,7 +677,8 @@
             $timeout ->
               # autofill would not be `true` if you opted out
               unless application && application.autofill
-                $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
+                $state.go('dahlia.short-form-welcome.overview', { id: $stateParams.id })
+            , 0, false
         ]
       onEnter: [
         'ShortFormApplicationService', 'AccountService',

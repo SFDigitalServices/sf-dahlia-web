@@ -189,6 +189,7 @@
           SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
+      , 0, false
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay
