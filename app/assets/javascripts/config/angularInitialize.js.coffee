@@ -172,7 +172,9 @@
 
       ExternalTranslateService.setLanguage(toParams.lang)
       ExternalTranslateService.loadAPI().then ->
-        setTimeout(ExternalTranslateService.translatePageContent)
+        # Wait until $digest is finished and all content on page has been updated
+        # before triggering automated translation
+        $timeout(ExternalTranslateService.translatePageContent, 0, false)
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
