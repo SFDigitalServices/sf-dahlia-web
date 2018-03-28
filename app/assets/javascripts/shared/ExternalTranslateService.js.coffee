@@ -44,7 +44,7 @@ ExternalTranslateService = ($q, $timeout) ->
         changeEvent.initEvent('change', bubbles, cancelable)
       googleTranslateOption.dispatchEvent(changeEvent)
     else
-      $timeout Service.translatePageContent, 100, true
+      $timeout Service.translatePageContent, 25, false
 
   Service.init = ->
     Service.translateElement = new window.google.translate.TranslateElement(
