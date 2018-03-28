@@ -3,7 +3,7 @@ nav#nav-top-bar.skiptranslate.top-bar(top-bar role="navigation")
     ul.title-area
       li.name
         .name-logo.t-alt-sans
-          a.topfocus ng-href="{{homepagePath()}}" title="{{'T.DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL' | translate}}"
+          a.topfocus ui-sref="dahlia.welcome" title="{{'T.DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL' | translate}}"
             | {{'T.DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL' | translate}}
       li.toggle-topbar.menu-icon
         button.button-link.t-caps.open-nav-mobile ng-click="openNavMobile();focusOnNavMobile()" aria-label="Open Menu"
