@@ -28,6 +28,7 @@ AccountService = (
   Service.accountSuccess =
     messages: {}
   Service.loginRedirect = null
+  Service.accountExists = false
 
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
@@ -135,10 +136,20 @@ AccountService = (
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
 
-  Service.signOut = ->
+  Service.checkForAccount = (email) ->
+    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
+      Service.accountExists = data.account_exists
+    ).catch( (data, status, headers, config) ->
+      Service.accountExists = false
+    )
+
+  Service.shortFormAccountExists = ->
+    Service.accountExists
+
+  Service.signOut = (opts = {}) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetApplicationData()
+    ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
     $auth.signOut()
     # close any open modal, e.g. "Lottery Results" that may have been opened while
     # you were on My Applications

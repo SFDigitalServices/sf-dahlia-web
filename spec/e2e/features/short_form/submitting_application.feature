@@ -21,13 +21,13 @@ Feature: Short Form Application
       And I continue past the general lottery notice page
       And I fill out the optional survey
       And I confirm details on the review page
-      And I continue confirmation without signing in
       And I agree to the terms and submit
       Then I should see my lottery number on the confirmation page
       # now that we've submitted, also create an account
       When I click the Create Account button
       And I fill out my account info with my locked-in application email
-      And I submit the Create Account form
+      And I wait "18" seconds
+      And I submit the page and wait
       Then I should be on the login page with the email confirmation popup
 
     Scenario: Leaving the application pops up a modal
@@ -42,8 +42,8 @@ Feature: Short Form Application
     Scenario: Filling out all details of application and saving draft
       Given I go to the first page of the Test Listing application
       # you
-      When I fill out the Name page as "Jane Valerie Doe"
-      And I fill out the Contact page with my account email, address (NRHP match), mailing address
+      When I fill out the Name page as "Jane Valerie Doe" with my account email
+      And I fill out the Contact page with my address (NRHP match) and mailing address
       And I confirm my address
       And I fill out an alternate contact
       # household
@@ -82,27 +82,37 @@ Feature: Short Form Application
       Then on the Review Page I should see my preference details on my "draft" application
       And I click the Save and Finish Later button
       And I fill out my account info
-      And I submit the Create Account form
+      And I submit the page and wait
       Then I should be on the login page with the email confirmation popup
 
     Scenario: Filling out anonymous draft, reaching Choose Draft page
       Given I have a confirmed account
+      And I go to the first page of the Test Listing application
+      And I fill out the Name page as "Thomas Huckleberry Sawyer" with my account email
+      And I continue without signing in
+      And I click the Save and Finish Later button
+      And I click the Sign In button
+      And I sign in with my email pre-filled
+      Then I should be on the Choose Draft page
+      When I select my original application and submit
+      Then I should land on the My Applications page
+
+    Scenario: Already logged into account (created and logged in earlier scenarios), continuing saved application
+      Given I go to My Applications
+      And I click the Continue Application button
+      # I should land back on the Review page where I clicked "save and finish later"
+      Then on the Review Page I should see my contact details
+
+    Scenario: Saving anonymous draft with different account details
+      Given I sign out
       And I go to the first page of the Test Listing application
       And I fill out the Name page as "Thomas Huckleberry Sawyer"
       And I click the Save and Finish Later button
       And I click the Sign In button
       And I sign in
       Then I should be on the Choose Draft page
-      When I select my original application and submit
-      Then I should land on the My Applications page
-
-    Scenario: Logging into account (created in earlier scenario), continuing saved application
-      Given I go to the Sign In page
-      And I sign in
-      And I go to My Applications
-      And I click the Continue Application button
-      # I should land back on the Review page where I clicked "save and finish later"
-      Then on the Review Page I should see my contact details
+      When I select my recent application and submit
+      Then I should be on the Choose Applicant Details page
 
     Scenario: Continuing draft, confirming all previously entered details and submitting
       Given I go to My Applications

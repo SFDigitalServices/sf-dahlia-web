@@ -94,13 +94,19 @@ module.exports = ->
       i--
 
   @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    Pages.Name.fill({ fullName })
+    Pages.Name.fill({ fullName: fullName, email: janedoeEmail })
+
+  @When /^I fill out the Name page as "([^"]*)" with my account email$/, (fullName) ->
+    Pages.Name.fill({ fullName: fullName, email: sessionEmail })
+
+  @When /^I fill out the Name page with the email "([^"]*)"$/, (email) ->
+    Pages.Name.fill({ email: email })
 
   @When 'I submit the Name page with my account info', ->
     submitPage()
 
-  @When /^I fill out the Contact page with the email "([^"]*)"$/, (email) ->
-    Pages.Contact.fill({ email: email })
+  @When 'I continue without signing in', ->
+    element(By.id('confirm_no_account')).click()
 
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
@@ -117,8 +123,8 @@ module.exports = ->
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
     Pages.Contact.fill({email: janedoeEmail, address1: '1222 Harrison St.'})
 
-  @When 'I fill out the Contact page with my account email, address (NRHP match), mailing address', ->
-    Pages.Contact.fill({email: sessionEmail, address1: '1222 Harrison St.', address2: '#100', extra: true})
+  @When 'I fill out the Contact page with my address (NRHP match) and mailing address', ->
+    Pages.Contact.fill({address1: '1222 Harrison St.', address2: '#100', extra: true})
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -431,9 +437,6 @@ module.exports = ->
   @When 'I confirm details on the review page', ->
     submitPage()
 
-  @When 'I continue confirmation without signing in', ->
-    element(By.id('confirm_no_account')).click()
-
   @When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click().then ->
       submitPage()
@@ -466,9 +469,12 @@ module.exports = ->
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('auth_password_confirmation')).sendKeys(accountPassword)
 
-  @When 'I submit the Create Account form', ->
+  @When 'I submit the page and wait', ->
     submitPage()
     browser.waitForAngular()
+
+  @When 'I pause', ->
+    browser.pause()
 
   @When 'I go to the Sign In page', ->
     signInUrl = "/sign-in"
@@ -480,22 +486,24 @@ module.exports = ->
     element(By.id('sign-in')).click()
     browser.waitForAngular()
 
-  @When 'I sign out', ->
-    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
-    element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
+  @When 'I sign in with my email pre-filled', ->
+    element(By.id('auth_password')).sendKeys(accountPassword)
+    element(By.id('sign-in')).click()
     browser.waitForAngular()
 
+  @When 'I sign out', ->
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click().then ->
+      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
+
   @When 'I view the application from My Applications', ->
-    element(By.cssContainingText('.button', 'Go to My Applications')).click()
-    element(By.cssContainingText('.button', 'View Application')).click()
-    browser.waitForAngular()
+    element(By.cssContainingText('.button', 'Go to My Applications')).click().then ->
+      element(By.cssContainingText('.button', 'View Application')).click()
 
   @When 'I go to My Applications', ->
     getUrl('/my-applications')
 
   @When 'I click the Continue Application button', ->
     element(By.cssContainingText('.feed-item-action a', 'Continue Application')).click()
-    browser.waitForAngular()
 
   @When 'I use the browser back button', ->
     browser.navigate().back()
@@ -514,9 +522,6 @@ module.exports = ->
     # pause before continuing
     delay = parseInt(delay) * 1000
     browser.sleep(delay)
-
-  @When 'I wait', ->
-    browser.pause()
 
   # helper method to delineate tests
   @When /^--I reach the "([^"]*)" step--/, (stepName) ->
@@ -543,7 +548,7 @@ module.exports = ->
     })
 
   @When "I fill out the Contact page with an address that isn't found", ->
-    Pages.Contact.fill({email: janedoeEmail, address1: '38383 Philz Way'})
+    Pages.Contact.fill({address1: '38383 Philz Way'})
 
   @When 'I fill out the household member form with missing data', ->
     # don't fill anything out and just submit
@@ -553,6 +558,9 @@ module.exports = ->
     element(By.id('choose_draft_original')).click().then ->
       submitPage()
 
+  @When 'I select my recent application and submit', ->
+    element(By.id('choose_draft_recent')).click().then ->
+      submitPage()
 
   ########################
   # --- Expectations --- #
@@ -649,6 +657,11 @@ module.exports = ->
 
   @Then 'I should be on the Choose Draft page', ->
     expectAlertBox(@, 'Please choose which version of the application you want to use.')
+
+  @Then 'I should be on the Choose Applicant Details page', ->
+    text = "The primary contact details on your new application don't match your current account settings. What would you like to do?"
+    el = element(By.cssContainingText('h1',  text))
+    @expect(el.isPresent()).to.eventually.equal(true)
 
   @Then 'I should land on the My Applications page', ->
     el = element(By.cssContainingText('h1', 'My Applications'))
@@ -765,7 +778,7 @@ module.exports = ->
   #################################################
 
   @Then /^on the Name page I should see my correct info for "([^"]*)"$/, (fullName) ->
-    Pages.Name.expectToMatch(@, { fullName })
+    Pages.Name.expectToMatch(@, { fullName: fullName, email: sessionEmail })
 
   @Then 'on the Contact page I should see my correct info', ->
     Pages.Contact.expectToMatch(@, {email: sessionEmail, address1: '1222 HARRISON ST # 100'})
@@ -854,13 +867,13 @@ module.exports = ->
     expectAlertBox(@)
     expectError(@, 'Please enter a valid Date of Birth')
 
+  @Then 'I should see an email error on the Name page', ->
+    expectAlertBox(@)
+    expectError(@, 'Please enter an email address')
+
   @Then 'I should see an address error on the Contact page', ->
     expectAlertBox(@)
     expectError(@, 'This address was not found.')
-
-  @Then 'I should see an email error on the Contact page', ->
-    expectAlertBox(@)
-    expectError(@, 'Please enter an email address')
 
   @Then 'I should see an error about selecting an option', ->
     expectAlertBox(@, 'Please select and complete one of the options below in order to continue')

@@ -161,9 +161,13 @@
       if (fromState.name == 'dahlia.short-form-application.confirmation')
         # clear out remembered state when coming from confirmation
         AccountService.rememberShortFormState(null)
-      if (toState.name == 'dahlia.short-form-application.review-sign-in')
-        # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
+      if (toState.name == 'dahlia.short-form-application.welcome-back')
+        # always remember the welcome-back page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
+      if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
+         toState.name == 'dahlia.short-form-application.create-account')
+        # reconciling a draft by creating account show diff email address alert
+        AccountService.rememberShortFormState(fromState.name)
       if (fromState.name == 'dahlia.short-form-review' && toState.name != 'dahlia.short-form-review')
         # Clear out application when leaving the application review page, unless going to
         # the review page (e.g. when switching languages on that page). We used to have this

@@ -13,6 +13,7 @@ ShortFormNavigationService = (
       translatedLabel: 'SHORT_FORM_NAV.YOU',
       pages: [
         'name'
+        'welcome-back'
         'contact'
         'verify-address'
         'alternate-contact-type'
@@ -67,7 +68,6 @@ ShortFormNavigationService = (
       pages: [
         'review-optional'
         'review-summary'
-        'review-sign-in'
         'review-terms'
       ]
     }
@@ -77,7 +77,7 @@ ShortFormNavigationService = (
     # intro
     'community-screening': {callback: ['validateCommunityEligibility']}
     # you
-    'name': {callback: ['checkPrimaryApplicantAge']}
+    'name': {callback: ['checkAfterNamePage']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
@@ -111,12 +111,11 @@ ShortFormNavigationService = (
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     # review
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
-    'review-summary': {callback: ['confirmReviewedApplication']}
-    'review-sign-in': {path: 'review-terms'}
+    'review-summary': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
     # save + finish workflow
     'choose-draft': {callback: ['chooseDraft']}
-    'choose-account-settings': {callback: ['chooseAccountSettings']}
+    'choose-applicant-details': {callback: ['chooseApplicantDetails']}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
@@ -195,15 +194,18 @@ ShortFormNavigationService = (
     application = ShortFormApplicationService.application
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
-      when 'contact'
+      when 'welcome-back'
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
         ,'income'
         ,'preferences-intro'
         ,'review-summary'
-        ,'review-sign-in'
+        ,'review-terms'
           Service._getPreviousPage()
+      # -- Contact
+      when 'contact'
+        'name'
       # -- Alt Contact
       when 'alternate-contact-type'
         'contact'
@@ -257,11 +259,6 @@ ShortFormNavigationService = (
           'general-lottery-notice'
         else
           'preferences-programs'
-      when 'review-terms'
-        if AccountService.loggedIn()
-          'review-summary'
-        else
-          'review-sign-in'
       when 'review-submitted'
         'confirmation'
       # -- catch all
