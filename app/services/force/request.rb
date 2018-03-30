@@ -103,9 +103,13 @@ module Force
              Faraday::TimeoutError => e
         if retries > 0
           refresh_oauth_token if e.is_a? Restforce::UnauthorizedError
+          Rails.logger.error(
+            "Salesforce request error: #{e.class.name}. Retrying #{retries} more times.",
+          )
           retries -= 1
           retry
         else
+          Rails.logger.error "Salesforce request error: #{e.class.name}. No more retries."
           # raise the same error once we're out of retries
           process_error(e, params)
         end
