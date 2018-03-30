@@ -1,4 +1,4 @@
-ExternalTranslateService = ($q, $timeout) ->
+ExternalTranslateService = ($q, $timeout, $window) ->
   Service = {}
   Service.URL = '//translate.google.com/translate_a/element.js?cb=initGoogleTranslate'
   Service.translateElement = {}
@@ -8,10 +8,10 @@ ExternalTranslateService = ($q, $timeout) ->
   Service.loadAPI = ->
     deferred = $q.defer()
     unless Service.loaded
-      window['initGoogleTranslate'] = ->
+      $window['initGoogleTranslate'] = ->
         Service.init()
         Service.loaded = true
-        deferred.resolve(window.google.translate)
+        deferred.resolve($window.google.translate)
       Service.loadScript()
     else
       deferred.resolve()
@@ -31,8 +31,8 @@ ExternalTranslateService = ($q, $timeout) ->
     googleTranslateOption = document.querySelector(".goog-te-combo option[value=\"#{Service.language}\"]")
     if googleTranslateOption
       googleTranslateOption.selected = true
-      if typeof window.Event == 'function'
-        changeEvent = new Event('change',
+      if typeof $window.Event == 'function'
+        changeEvent = new $window.Event('change',
           'bubbles': true
           'cancelable': true
         )
@@ -47,10 +47,10 @@ ExternalTranslateService = ($q, $timeout) ->
       $timeout Service.translatePageContent, 25, false
 
   Service.init = ->
-    Service.translateElement = new window.google.translate.TranslateElement(
+    Service.translateElement = new $window.google.translate.TranslateElement(
       pageLanguage: 'en'
       includedLanguages: 'en,es,tl,zh-TW'
-      layout: window.google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      layout: $window.google.translate.TranslateElement.InlineLayout.HORIZONTAL
       autoDisplay: false
       multilanguagePage: true
       gaTrack: true
@@ -59,7 +59,7 @@ ExternalTranslateService = ($q, $timeout) ->
 
   Service
 
-ExternalTranslateService.$inject = ['$q', '$timeout']
+ExternalTranslateService.$inject = ['$q', '$timeout', '$window']
 
 angular
   .module('dahlia.services')
