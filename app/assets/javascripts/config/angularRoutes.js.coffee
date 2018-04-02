@@ -196,6 +196,7 @@
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
+        AccountService.signOut() unless _.isEmpty(AccountService.loggedInUser)
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
         AccountService.unlockFields()

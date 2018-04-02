@@ -7,8 +7,9 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.showNavMobile = false
 
   $scope.signOut = ->
-    $state.go('dahlia.sign-in', {signedOut: true}).then ->
-      AccountService.signOut()
+    # signing out always takes you to the sign in page, which runs AccountService.signout if there is a logged in user
+    # doing this to accomodate short form modal alerts when leaving page
+    $state.go('dahlia.sign-in', {signedOut: true})
 
   $scope.homepagePath = ->
     # required for multilingual, e.g. "housing.sfgov.org/es/" needs trailing slash or else it will redirect back to english
