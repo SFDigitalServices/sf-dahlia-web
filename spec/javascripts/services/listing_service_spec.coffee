@@ -4,6 +4,9 @@ do ->
 
     ListingService = undefined
     httpBackend = undefined
+    fakeModalService =
+      modalInstance: {}
+      openModal: jasmine.createSpy()
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
@@ -17,6 +20,8 @@ do ->
     fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
     fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
     fakeAMI = getJSONFixture('listings-api-ami.json')
+    loading = {}
+    error = {}
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
@@ -48,6 +53,7 @@ do ->
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$modal', modalMock
       $provide.value '$translate', $translate
+      $provide.value 'ModalService', fakeModalService
       return
     )
 
@@ -163,6 +169,17 @@ do ->
         listing.Application_Due_Date = tomorrow.toString()
         expect(ListingService.listingIsOpen(listing)).toEqual true
 
+    describe 'Service.lotteryComplete', ->
+      it "returns false when the listing's lottery status is not complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Not Yet Run'
+        expect(ListingService.lotteryComplete(listing)).toEqual false
+
+      it "returns true when the listing's lottery status is complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Lottery Complete'
+        expect(ListingService.lotteryComplete(listing)).toEqual true
+
     describe 'Service.lotteryIsUpcoming', ->
       beforeEach ->
         listing = fakeListing.listing
@@ -209,10 +226,16 @@ do ->
         listing.Application_Due_Date = past.toString()
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
-      it 'returns true if due date in future and Accepting_Online_Applications', ->
+      it "returns false if the listing's lottery status is complete", ->
+        listing = fakeListing.listing
+        listing.Lottery_Status = 'Lottery Complete'
+        expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
+
+      it 'returns true if due date in future, Accepting_Online_Applications, and lottery status is not complete', ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
         listing.Application_Due_Date = tomorrow.toString()
+        listing.Lottery_Status = 'Not Yet Run'
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 
     describe 'Service.toggleFavoriteListing', ->
@@ -454,6 +477,17 @@ do ->
         # fakeUnits just has one AMI level
         expect(_.keys(grouped).length).toEqual 1
 
+    describe 'Service.openLotteryResultsModal', ->
+      beforeEach ->
+        ListingService.openLotteryResultsModal()
+
+      it 'should set the loading and error flags for lottery rank to false', ->
+        expect(ListingService.loading.lotteryRank).toEqual false
+        expect(ListingService.error.lotteryRank).toEqual false
+
+      it 'should open the lottery results modal', ->
+        expect(fakeModalService.openModal).toHaveBeenCalled()
+
     describe 'Service.listingHasLotteryResults', ->
       it 'should be true if lottery PDF is available', ->
         ListingService.listing.LotteryResultsURL = 'http://pdf.url'
@@ -493,3 +527,14 @@ do ->
         expect(val).toEqual(formatted)
         val = ListingService.formatLotteryNumber(formatted)
         expect(val).toEqual(formatted)
+
+    describe 'Service.listingIsBMR', ->
+      it 'returns false if the listing program type is not a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'OCII-RENTAL'
+        expect(ListingService.listingIsBMR(listing)).toEqual false
+
+      it 'returns true if the listing program type is a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'IH-RENTAL'
+        expect(ListingService.listingIsBMR(listing)).toEqual true

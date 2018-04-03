@@ -21,17 +21,25 @@
                 ShortFormNavigationService.isLoading(false)
                 # don't display alerts in E2E tests
                 return if window.protractor
-                # AMI, lottery_ranking, unit data, and lottery_buckets have their own handler
+
+                # AMI, lottery_ranking, unit data, preferences and lottery_buckets have their own handler
                 return if error.config.url.match(RegExp('listings/ami|lottery_ranking|units|lottery_buckets'))
+
                 if error.status == 504
-                  # if the timeout was encountered when trying to validatate user token,
+                  # handle timeout errors
+                  # if the timeout was encountered when trying to validate user token,
                   # don't show alert, instead redirect to sign in page
                   if (error.data.message.indexOf('user_token_validation') >= 0)
                     $state.go('dahlia.sign-in', {userTokenValidationTimeout: true})
                     return
                   else
                     alertMessage = $translate.instant('ERROR.ALERT.TIMEOUT_PLEASE_TRY_AGAIN')
+                else if error.data.message.indexOf('APEX_ERROR') >= 0
+                  # handle Salesforce errors that aren't timeouts
+                  salesforceError = error.data.message.split("Class")[0].split("APEX_ERROR: ")[1]
+                  alertMessage = "An error occurred: " + salesforceError
                 else
+                  # handle non-timeout, non-Salesforce errors
                   alertMessage = $translate.instant('ERROR.ALERT.BAD_REQUEST')
                 alert(alertMessage)
                 error

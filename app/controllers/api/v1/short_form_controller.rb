@@ -64,14 +64,13 @@ class Api::V1::ShortFormController < ApiController
   def submit_application
     response = ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
-      attach_files_and_send_confirmation(response)
-      if current_user && application_complete
-        delete_draft_application(application_params[:listingID])
-      end
+      process_submit_app_response(response)
       render json: response
     else
       render json: { error: ShortFormService.error }, status: 422
     end
+  rescue Faraday::ClientError => e
+    handle_submit_error(e)
   end
 
   def update_application
@@ -100,6 +99,12 @@ class Api::V1::ShortFormController < ApiController
 
   private
 
+  def process_submit_app_response(response)
+    attach_files_and_send_confirmation(response)
+    return unless current_user && application_complete
+    delete_draft_application(application_params[:listingID])
+  end
+
   def autosave_disabled
     ENV['AUTOSAVE'] == 'false'
   end
@@ -121,6 +126,7 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def attach_files_and_send_confirmation(response)
+    email_draft_link(response) if first_time_draft?
     if draft_application? && user_signed_in?
       attach_temp_files_to_user
     elsif initial_submission?
@@ -131,6 +137,10 @@ class Api::V1::ShortFormController < ApiController
 
   def draft_application?
     application_params[:status].casecmp('draft').zero?
+  end
+
+  def first_time_draft?
+    draft_application? && !application_params['id']
   end
 
   def initial_submission?
@@ -165,8 +175,17 @@ class Api::V1::ShortFormController < ApiController
       email: application_params[:primaryApplicant][:email],
       listing_id: application_params[:listingID],
       lottery_number: response['lotteryNumber'],
-      firstName: response['primaryApplicant']['firstName'],
-      lastName: response['primaryApplicant']['lastName'],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
+    ).deliver_later
+  end
+
+  def email_draft_link(response)
+    Emailer.draft_application_saved(
+      email: application_params[:primaryApplicant][:email],
+      listing_id: application_params[:listingID],
+      first_name: response['primaryApplicant']['firstName'],
+      last_name: response['primaryApplicant']['lastName'],
     ).deliver_later
   end
 
@@ -209,6 +228,13 @@ class Api::V1::ShortFormController < ApiController
 
   def render_unauthorized_error
     render json: { error: 'unauthorized' }, status: 401
+  end
+
+  def handle_submit_error(e)
+    if e.message.include?('APEX_ERROR') && e.message.exclude?('UNABLE_TO_LOCK_ROW')
+      return render_error(e, status: 500, external_capture: true)
+    end
+    raise e.class, e.message
   end
 
   def applicant_attrs

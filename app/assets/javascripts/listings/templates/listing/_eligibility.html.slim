@@ -50,7 +50,7 @@ accordion-heading.lead
               ng-include src="'listings/templates/listing/_income-table-multiple.html'"
 
           / don't show toggler e.g. if the listing is SRO only which will only have 1 row
-          show-more-toggler inline="true" toggle-state="amiChartExpanded" verb="show" ng-show="showAMItoggler()"
+          show-more-toggler inline="true" toggle-state="toggleStates[listing.Id].amiChartExpanded" verb="show" ng-show="showAMItoggler()"
 
     li.custom-counter_item
       .content-tile
@@ -102,12 +102,22 @@ accordion-heading.lead
           p.custom-counter_text ng-if="::listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
 
-        lottery-preference preference="preference" ng-repeat="preference in listing.preferences"
 
+        .content-card.padding--2x ng-show="loading.preferences"
+          .padding--2x ng-include="'shared/templates/spinner.html'"
 
-        div ng-if="::listingHasPreferences()"
-          p.custom-counter_text
-            | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
+        .content-card.padding--2x ng-show="error.preferences"
+          .padding--2x.text-center
+            button.button-link ng-click="getListingPreferences()"
+              | {{'LISTINGS.SEE_PREFERENCE_INFORMATION' | translate}}
+
+        div ng-show="!loading.preferences && !error.preferences"
+
+          lottery-preference preference="preference" ng-repeat="preference in listing.preferences"
+
+          div ng-if="::listingHasPreferences()"
+            p.custom-counter_text
+              | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
 
     li.custom-counter_item ng-if="::listingHasReservedUnits()"
       .content-tile
