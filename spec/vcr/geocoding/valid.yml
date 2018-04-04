@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Mar 2018 00:00:41 GMT
+      - Fri, 30 Mar 2018 22:38:04 GMT
       Server:
       - ''
       Cache-Control:
@@ -97,7 +97,7 @@ http_interactions:
          ]
         }
     http_version: 
-  recorded_at: Thu, 01 Mar 2018 00:00:42 GMT
+  recorded_at: Fri, 30 Mar 2018 22:38:26 GMT
 - request:
     method: get
     uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284002636,4547486.548391391&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%272012-021%27
@@ -115,7 +115,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Mar 2018 00:00:41 GMT
+      - Fri, 30 Mar 2018 22:38:04 GMT
       Server:
       - ''
       Cache-Control:
@@ -139,5 +139,5 @@ http_interactions:
          "count": 1
         }
     http_version: 
-  recorded_at: Thu, 01 Mar 2018 00:00:42 GMT
+  recorded_at: Fri, 30 Mar 2018 22:38:26 GMT
 recorded_with: VCR 3.0.3
