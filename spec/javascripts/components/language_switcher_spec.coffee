@@ -2,46 +2,58 @@ do ->
   'use strict'
   describe 'Language Switcher', ->
     $componentController = undefined
-    ctrl = undefined
     locals = undefined
-    $fakeState =
+    scope = undefined
+    $fakeState = {
       href: ->
       params: {}
-      current:
+      current: {
         name: 'name'
-    fakeSharedService =
+      }
+    }
+    fakeSharedService = {
       getLanguageName: ->
       isWelcomePage: ->
+    }
 
     beforeEach module('dahlia.components')
-    beforeEach inject((_$componentController_, $q) ->
+    beforeEach inject((_$componentController_, $q, _$rootScope_) ->
       $componentController = _$componentController_
       deferred = $q.defer()
-      locals =
+      scope = _$rootScope_.$new()
+      locals = {
         $state: $fakeState
         SharedService: fakeSharedService
+        $scope: scope
+      }
     )
 
     beforeEach ->
-      ctrl = $componentController 'languageSwitcher', locals
+      $componentController 'languageSwitcher', locals
 
-    describe 'switchToLanguage', ->
-      it 'calls state.href with proper arguments', ->
-        spyOn($fakeState, 'href').and.callThrough()
-        ctrl.switchToLanguage('es')
-        expect($fakeState.href).toHaveBeenCalledWith('name', {lang: 'es'})
+    describe 'stateForLanguage', ->
+      it 'returns the current page when on non-welcome pages', ->
+        spyOn(fakeSharedService, 'isWelcomePage').and.returnValue(false)
+        toState = scope.stateForLanguage('es')
+        expect(toState).toBe($fakeState.current.name)
 
-      it 'calls state.href with a language-appropriate state name for welcome pages', ->
-        spyOn($fakeState, 'href').and.callThrough()
+      it 'returns the language welcome page when on welcome pages', ->
         spyOn(fakeSharedService, 'isWelcomePage').and.returnValue(true)
         spyOn(fakeSharedService, 'getLanguageName').and.returnValue('Spanish')
         $fakeState.current.name = 'dahlia.welcome-chinese'
-        ctrl.switchToLanguage('es')
-        expect($fakeState.href).toHaveBeenCalledWith('dahlia.welcome-spanish', {lang: 'es'})
+        toState = scope.stateForLanguage('es')
+        expect(toState).toBe('dahlia.welcome-spanish')
+
+      it 'returns the home page for english', ->
+        spyOn(fakeSharedService, 'isWelcomePage').and.returnValue(true)
+        $fakeState.current.name = 'dahlia.welcome-chinese'
+        toState = scope.stateForLanguage('en')
+        expect(toState).toBe('dahlia.welcome')
 
     describe 'isSelectedLanguage', ->
       beforeEach ->
         $fakeState.params.lang = 'es'
-      it 'compares against $state.params.lang', ->
-        expect(ctrl.isSelectedLanguage('es')).toEqual true
-        expect(ctrl.isSelectedLanguage('zh')).toEqual false
+
+      it 'compares a language to the current language state/url', ->
+        expect(scope.isSelectedLanguage('es')).toEqual true
+        expect(scope.isSelectedLanguage('zh')).toEqual false
