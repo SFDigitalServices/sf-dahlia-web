@@ -80,12 +80,14 @@
           else 'Landing Page to Application Start'
         AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
 
+      signingOut = toState.name.match(/sign\-in/) && toParams.signedOut
+
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
         $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
-      else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
+      else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState)) && !signingOut
         content =
           title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
           cancel: $translate.instant('T.STAY')
