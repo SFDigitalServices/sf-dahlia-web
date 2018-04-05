@@ -83,9 +83,11 @@ module Force
     end
 
     # get Lottery Buckets with rankings
-    def self.lottery_buckets(listing_id)
+    def self.lottery_buckets(listing_id, opts = {})
       esc_listing_id = CGI.escape(listing_id)
-      data = Request.new.cached_get("/Listing/LotteryResult/#{esc_listing_id}")
+      force = opts[:force] || false
+      data = Request.new
+                    .cached_get("/Listing/LotteryResult/#{esc_listing_id}", nil, force)
       # cut down the bucketResults so it's not a huge JSON
       data['lotteryBuckets'] ||= []
       data['lotteryBuckets'].each do |bucket|
