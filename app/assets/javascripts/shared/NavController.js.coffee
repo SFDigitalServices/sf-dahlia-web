@@ -14,7 +14,6 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
         continue:  $translate.instant('T.LEAVE')
         alert: true
         message: $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
-
       ModalService.alert(content,
         onConfirm: ->
           AccountService.signOut()
