@@ -9,10 +9,6 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
   $scope.signOut = ->
     $state.go('dahlia.sign-in', {signedOut: true})
 
-  $scope.homepagePath = ->
-    # required for multilingual, e.g. "housing.sfgov.org/es/" needs trailing slash or else it will redirect back to english
-    $state.href('dahlia.welcome') + '/'
-
   $scope.closeNavMobile = ->
     $scope.showNavMobile = false
     $scope.focusOnMenuButton()

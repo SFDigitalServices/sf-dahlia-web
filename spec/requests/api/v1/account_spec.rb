@@ -6,17 +6,6 @@ require 'support/jasmine'
 describe 'Account API' do
   login_user
 
-  ### generate Jasmine fixtures
-  describe 'my applications' do
-    save_fixture do
-      VCR.use_cassette('account/my_applications') do
-        get '/api/v1/account/my-applications', {}, @auth_headers
-      end
-    end
-  end
-
-  # ---- end Jasmine fixtures
-
   it 'gets my applications' do
     VCR.use_cassette('account/my_applications') do
       get '/api/v1/account/my-applications', {}, @auth_headers

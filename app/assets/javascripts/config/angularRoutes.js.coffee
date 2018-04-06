@@ -41,7 +41,7 @@
     })
     # Home page
     .state('dahlia.welcome', {
-      url: '/'
+      url: ''
       views:
         'container@':
           controller: 'ListingController'
