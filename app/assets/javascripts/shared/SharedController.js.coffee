@@ -25,6 +25,8 @@ SharedController = ($scope, $state, $window, SharedService, GoogleTranslateServi
   $scope.feedbackUrl = 'https://docs.google.com/\
     forms/d/e/1FAIpQLSfJQL6ewvzETV7ZkWot94CaVlI7XlGPbhny4w6mPmDqZS995Q/viewform?usp=sf_link'
 
+  $scope.listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
+
   $scope.alertMessage = if $window.ALERT_MESSAGE then $window.ALERT_MESSAGE else ''
 
   $scope.hasCenterBody = () ->
