@@ -23,6 +23,8 @@ class Api::V1::GeocodingController < ApiController
       match = address_within_neighborhood?(address)
       return address.merge(boundary_match: match)
     else
+      logger.error "<< GeocodingService.geocode Error >> #{geocoded_addresses.errors}," \
+        "LOG PARAMS: #{log_params}"
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
@@ -44,6 +46,8 @@ class Api::V1::GeocodingController < ApiController
     return match unless neighborhood.errors.present?
 
     # otherwise notify of errors
+    logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
+      "#{neighborhood.errors}, LOG PARAMS: #{log_params}"
     ArcGISNotificationService.new(
       {
         errors: neighborhood.errors,
