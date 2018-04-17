@@ -2,17 +2,26 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService) ->
+NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, AccountService, ModalService, ShortFormApplicationService) ->
   $scope.loggedIn = AccountService.loggedIn
   $scope.showNavMobile = false
 
   $scope.signOut = ->
-    $state.go('dahlia.sign-in', {signedOut: true}).then ->
+    if ShortFormApplicationService.isShortFormPage($state.current)
+      content =
+        title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
+        cancel: $translate.instant('T.STAY')
+        continue:  $translate.instant('T.LEAVE')
+        alert: true
+        message: $translate.instant('T.ARE_YOU_SURE_YOU_WANT_TO_LEAVE')
+      ModalService.alert(content,
+        onConfirm: ->
+          AccountService.signOut()
+          $state.go('dahlia.sign-in', {signedOut: true})
+      )
+    else
       AccountService.signOut()
-
-  $scope.homepagePath = ->
-    # required for multilingual, e.g. "housing.sfgov.org/es/" needs trailing slash or else it will redirect back to english
-    $state.href('dahlia.welcome') + '/'
+      $state.go('dahlia.sign-in', {signedOut: true})
 
   $scope.closeNavMobile = ->
     $scope.showNavMobile = false
@@ -53,8 +62,8 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, AccountService
 ############################################################################################
 
 NavController.$inject = [
-  '$document', '$rootScope', '$scope', '$state', '$timeout',
-  'AccountService'
+  '$document', '$rootScope', '$scope', '$state', '$timeout', '$translate',
+  'AccountService', 'ModalService', 'ShortFormApplicationService'
 ]
 
 angular

@@ -9,12 +9,6 @@ section.splash-header.bg-image
             | {{'WELCOME.ALL_APPLICATION_CLOSED' | translate}}
           a.button.primary.shadow ui-sref="dahlia.listings"
             | {{'WELCOME.SEE_LISTINGS' | translate}}
-      .row
-        .medium-9.medium-centered.columns
-          a.t-semi.c-white.has-line href="http://tinyurl.com/SFEHS" target="_blank"
-            | Please take this optional survey to help the city better understand housing needs.
-          p.t-tiny.c-white.margin-top--half
-            | Your participation does not affect your access to housing opportunities, and the results of the survey do not affect MOHCD policies and procedures.
 
 section.splash-message
   .splash-message_panel.row
@@ -40,5 +34,5 @@ section.splash-wells.row.collapse
         img ng-src="{{::assetPaths['icon-mail.png']}}" alt="Mail Icon"
       h2.delta.t-serif.c-oil
         | {{'WELCOME.NEW_LISTING_EMAIL_ALERT' | translate}}
-      a.button.radius href="http://visitor.r20.constantcontact.com/manage/optin?v=001-rR5XWQW7dMuyJHtE1VRCKsbO11jmYRO8H1uzzSs3-D1IpgLqynO4XfpWqC1VNsQH18uAmSg3KefN0VH-e-qJPb97nMdJxJE9qz_-Vw8kA8%3D"
+      a.button.radius href="{{listingEmailAlertUrl}}"
         | {{'WELCOME.SIGN_UP_TODAY' | translate}}
