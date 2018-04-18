@@ -699,8 +699,9 @@
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             # always autosave when you start a new application
-            AutosaveService.save() unless ShortFormApplicationService.application.id
-
+            # TODO: remove hotfix for marking initial autosaves that come from the Name page
+            unless ShortFormApplicationService.application.id
+              ShortFormApplicationService.submitApplication({autosave: true, initialSave: true})
       ]
     })
     .state('dahlia.short-form-application.contact', {
