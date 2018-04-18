@@ -716,6 +716,9 @@ ShortFormApplicationService = (
 
     autosave = if options.autosave then '?autosave=true' else ''
 
+    # TODO: remove hotfix for marking initial autosaves that come from the Name page
+    autosave += '&initialSave=true' if options.initialSave
+
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
