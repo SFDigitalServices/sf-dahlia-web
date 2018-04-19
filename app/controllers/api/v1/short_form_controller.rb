@@ -60,6 +60,9 @@ class Api::V1::ShortFormController < ApiController
   end
 
   def submit_application
+    # TODO: remove hotfix for preventing POST autosaves that don't come from
+    # the initial entry into the application Name page
+    return if params['autosave'] == 'true' && params['initialSave'] != 'true'
     response =
       Force::ShortFormService.create_or_update(application_params, applicant_attrs)
     if response.present?
