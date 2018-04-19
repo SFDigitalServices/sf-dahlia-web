@@ -276,12 +276,10 @@ ShortFormApplicationController = (
     $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.preferenceAddressMatch && $scope.application.validatedForms.You['verify-address'] != false
-      ###
-      skip ahead if their current address has already been confirmed.
-      $scope.applicant.preferenceAddressMatch doesn't have to be 'Matched',
-       just that it has a value
-      ###
+    if $scope.applicant.preferenceAddressMatch != null && $scope.application.validatedForms.You['verify-address'] != false
+      # skip ahead if their current address has already been confirmed.
+      # $scope.applicant.preferenceAddressMatch is 'Matched' or '' if
+      # address already confirmed, or is null if not already confirmed
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alternate-contact-type')
     else
       # validate + geocode address, but kick out if we have errors
@@ -291,7 +289,6 @@ ShortFormApplicationController = (
         $scope.addressError = true
         $scope.handleErrorState()
       )
-
 
   $scope.checkIfAlternateContactInfoNeeded = ->
     if $scope.alternateContact.alternateContactType == 'None'
@@ -473,7 +470,7 @@ ShortFormApplicationController = (
       return
     else
       $scope.clearEligibilityErrors()
-    if noAddress || $scope.householdMember.preferenceAddressMatch
+    if noAddress || $scope.householdMember.preferenceAddressMatch != null
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)

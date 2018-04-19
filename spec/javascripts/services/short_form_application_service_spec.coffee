@@ -184,7 +184,7 @@ do ->
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
           householdMember = angular.copy(householdMember)
           ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
-          householdMember.preferenceAddressMatch = 'Not Matched'
+          householdMember.preferenceAddressMatch = ''
           householdMember.hasSameAddressAsApplicant = 'No'
           ShortFormApplicationService.addHouseholdMember(householdMember)
           householdMember = ShortFormApplicationService.getHouseholdMember(fakeHouseholdMember.id)
@@ -396,7 +396,7 @@ do ->
 
       describe 'applicant doesn\'t match neighborhood preference', ->
         beforeEach ->
-          ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
+          ShortFormApplicationService.applicant.preferenceAddressMatch = ''
 
         it 'returns array without applicant', ->
           expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
@@ -457,7 +457,7 @@ do ->
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual true
 
       it 'returns false if nobody is eligible for NRHP', ->
-        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
+        ShortFormApplicationService.applicant.preferenceAddressMatch = ''
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
       it 'returns false if listing does not have NRHP', ->
@@ -474,7 +474,7 @@ do ->
         expect(ShortFormApplicationService.eligibleForADHP()).toEqual true
 
       it 'returns false if nobody is eligible for ADHP', ->
-        ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
+        ShortFormApplicationService.applicant.preferenceAddressMatch = ''
         expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
 
       it 'returns false if listing does not have ADHP', ->
@@ -818,7 +818,7 @@ do ->
           fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for NRHP
-          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          setupFakeApplicant({ preferenceAddressMatch: '' })
           ShortFormApplicationService.applicant = fakeApplicant
 
           ShortFormApplicationService.cancelPreference('neighborhoodResidence')
@@ -855,7 +855,7 @@ do ->
           fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for ADHP
-          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          setupFakeApplicant({ preferenceAddressMatch: '' })
           ShortFormApplicationService.applicant = fakeApplicant
 
           ShortFormApplicationService.cancelPreference('antiDisplacement')
@@ -942,7 +942,7 @@ do ->
           fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for NRHP
-          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          setupFakeApplicant({ preferenceAddressMatch: '' })
           ShortFormApplicationService.applicant = fakeApplicant
 
           ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
@@ -980,7 +980,7 @@ do ->
           fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for ADHP
-          setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
+          setupFakeApplicant({ preferenceAddressMatch: '' })
           ShortFormApplicationService.applicant = fakeApplicant
 
           ShortFormApplicationService.cancelOptOut('antiDisplacement')

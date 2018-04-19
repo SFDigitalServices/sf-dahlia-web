@@ -244,7 +244,7 @@ do ->
       describe 'user does not have same address applicant', ->
         it 'calls validateHouseholdMemberAddress in ShortFormApplicationService', ->
           scope.householdMember.hasSameAddressAsApplicant = 'No'
-          scope.householdMember.preferenceAddressMatch = false
+          scope.householdMember.preferenceAddressMatch = null
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.validateHouseholdMemberAddress).toHaveBeenCalled()
 
