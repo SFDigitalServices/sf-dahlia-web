@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
+ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ExternalTranslateService, $timeout) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -230,7 +230,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
 
   ###################################### Salesforce API Calls ###################################
 
-  Service.getListing = (_id, forceRecache = false) ->
+  Service.getListing = (_id, forceRecache = false, retranslate = false) ->
     _id = Service.mapSlugToId(_id)
 
     if Service.listing && Service.listing.Id == _id
@@ -243,9 +243,9 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     httpConfig.params = { force: true } if forceRecache
     $http.get("/api/v1/listings/#{_id}.json", httpConfig)
     .success(
-      Service.getListingResponse(deferred)
+      Service.getListingResponse(deferred, retranslate)
     ).cached(
-      Service.getListingResponse(deferred)
+      Service.getListingResponse(deferred, retranslate)
     ).error( (data, status, headers, config) ->
       deferred.reject(data)
     )
@@ -258,7 +258,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     angular.copy({}, Service.lotteryBucketInfo)
     angular.copy([], Service.listingDownloadURLs)
 
-  Service.getListingResponse = (deferred) ->
+  Service.getListingResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       deferred.resolve()
@@ -270,6 +270,14 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
       # create a combined unitSummary
       unless Service.listing.unitSummary
         Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+      # On listing and listings pages, we are experiencing an issue where
+      # where the Google translation will try to keep up with digest re-calcs
+      # happening during page load and will get tripped up and fail, leaving
+      # the page untranslated. This quick fix runs the Google Translation
+      # again to cover for a possible earlier failed translate.
+      # TODO: Remove this quick fix for translation issues on listing pages
+      # and replace with a real fix based on actual digest timing.
+      $timeout(ExternalTranslateService.translatePageContent, 0, false) if retranslate
       Service.toggleStates[Service.listing.Id] ?= {}
 
   Service.getListings = (opts = {}) ->
@@ -280,21 +288,29 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     $http.get("/api/v1/listings.json", {
       etagCache: true
     }).success(
-      Service.getListingsResponse(deferred)
+      Service.getListingsResponse(deferred, opts.retranslate)
     ).cached(
-      Service.getListingsResponse(deferred)
+      Service.getListingsResponse(deferred, opts.retranslate)
     ).error((data, status, headers, config) ->
       deferred.reject(data)
     )
     return deferred.promise
 
-  Service.getListingsResponse = (deferred) ->
+  Service.getListingsResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
       itemCache.set(data) unless status == 'cached'
       listings = if data and data.listings then data.listings else []
       listings = Service.cleanListings(listings)
       Service.groupListings(listings)
       Service.displayLotteryResultsListings = !Service.openListings.length
+      # On listing and listings pages, we are experiencing an issue where
+      # where the Google translation will try to keep up with digest re-calcs
+      # happening during page load and will get tripped up and fail, leaving
+      # the page untranslated. This quick fix runs the Google Translation
+      # again to cover for a possible earlier failed translate.
+      # TODO: Remove this quick fix for translation issues on listing pages
+      # and replace with a real fix based on actual digest timing.
+      $timeout(ExternalTranslateService.translatePageContent, 0, false) if retranslate
       deferred.resolve()
 
   Service.getListingsWithEligibility = ->
@@ -906,7 +922,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService']
+ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ExternalTranslateService', '$timeout']
 
 angular
   .module('dahlia.services')

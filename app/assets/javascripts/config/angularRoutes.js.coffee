@@ -72,7 +72,7 @@
           controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings({checkEligibility: true})
+          ListingService.getListings({checkEligibility: true, retranslate: true})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -101,7 +101,7 @@
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
-            ListingService.getListing($stateParams.id, forceRecache).then( ->
+            ListingService.getListing($stateParams.id, forceRecache, true).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
