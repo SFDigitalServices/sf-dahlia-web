@@ -7,13 +7,23 @@ class ArcGISNotificationService
   end
 
   def send_notifications
-    send_address_notification if @service_data[:candidates] &&
-                                 @service_data[:candidates].empty? &&
-                                 # Send notification of address not found only if address
-                                 # is in San Francisco
-                                 @log_params[:city].casecmp('San Francisco').zero?
+    notifications_sent = false
 
-    send_error_notification if @service_data[:errors].present?
+    if @service_data[:candidates] &&
+       @service_data[:candidates].empty? &&
+       # Send notification of address not found only if address
+       # is in San Francisco
+       @log_params[:city].casecmp('San Francisco').zero?
+      send_address_notification
+      notifications_sent = true
+    end
+
+    if @service_data[:errors].present?
+      send_error_notification
+      notifications_sent = true
+    end
+
+    notifications_sent
   end
 
   def send_address_notification
