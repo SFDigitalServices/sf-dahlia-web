@@ -8,7 +8,7 @@ class Api::V1::GeocodingController < ApiController
   rescue StandardError => e
     logger.error "<< GeocodingController Error >> #{e.class.name}, #{e.message}"
     # in this case, no need to throw an error alert, just allow the user to proceed
-    render json: { geocoding_data: { boundary_match: false } }
+    render json: { geocoding_data: { boundary_match: nil } }
   end
 
   private
@@ -29,7 +29,7 @@ class Api::V1::GeocodingController < ApiController
         params[:has_nrhp_adhp],
       ).send_notifications
       # default response
-      { boundary_match: false }
+      { boundary_match: nil }
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::GeocodingController < ApiController
     x = address[:location][:x]
     y = address[:location][:y]
     project_id = listing_params[:Project_ID]
-    return false unless project_id.present?
+    return nil unless project_id.present?
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
     # return successful geocoded data with the result of boundary_match
@@ -53,7 +53,7 @@ class Api::V1::GeocodingController < ApiController
       params[:has_nrhp_adhp],
     ).send_notifications
     # default response
-    false
+    nil
   end
 
   def address_params
