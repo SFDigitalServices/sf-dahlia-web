@@ -49,9 +49,8 @@ class Emailer < Devise::Mailer
     super
   end
 
-  def geocoding_log_notification(log_id, has_nrhp_adhp = false)
+  def geocoding_log_notification(log_id)
     @log = GeocodingLog.find(log_id)
-    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log.listing_id}"
@@ -72,11 +71,10 @@ class Emailer < Devise::Mailer
     end
   end
 
-  def geocoding_error_notification(data, log, has_nrhp_adhp = false)
+  def geocoding_error_notification(data, log)
     @data = Hashie::Mash.new(data)
     @log = Hashie::Mash.new(log)
     @error = Hashie::Mash.new(@data[:errors].first)
-    @has_nrhp_adhp = has_nrhp_adhp
     setup_geocoding_notification
 
     @listing_url = "#{base_url}/listings/#{@log[:listing_id]}"

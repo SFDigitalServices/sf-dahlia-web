@@ -26,7 +26,6 @@ class Api::V1::GeocodingController < ApiController
       ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
-        params[:has_nrhp_adhp],
       ).send_notifications
       # default response
       { boundary_match: false }
@@ -36,7 +35,7 @@ class Api::V1::GeocodingController < ApiController
   def address_within_neighborhood?(address)
     x = address[:location][:x]
     y = address[:location][:y]
-    project_id = listing_params[:Project_ID]
+    project_id = params[:adhp] ? 'ADHP' : listing_params[:Project_ID]
     return false unless project_id.present?
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
@@ -50,7 +49,6 @@ class Api::V1::GeocodingController < ApiController
         service_name: NeighborhoodBoundaryService::NAME,
       },
       log_params,
-      params[:has_nrhp_adhp],
     ).send_notifications
     # default response
     false

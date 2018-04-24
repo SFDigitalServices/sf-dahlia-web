@@ -473,9 +473,6 @@ ShortFormApplicationService = (
   Service.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
 
-  Service.listingHasNRHP_or_ADHP = ->
-    Service.listingHasPreference('neighborhoodResidence') || Service.listingHasPreference('antiDisplacement')
-
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
     liveInSfEligible = Service.liveInSfMembers().length > 0
@@ -904,7 +901,8 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
-        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
+        nrhp: Service.listingHasPreference('neighborhoodResidence')
+        adhp: Service.listingHasPreference('antiDisplacement')
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
       .error(afterGeocode)
@@ -930,7 +928,8 @@ ShortFormApplicationService = (
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
-        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
+        nrhp: Service.listingHasPreference('neighborhoodResidence')
+        adhp: Service.listingHasPreference('antiDisplacement')
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
       .error(afterGeocode)
