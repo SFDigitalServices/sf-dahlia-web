@@ -19,7 +19,6 @@ GeocodingService = ($http, ShortFormDataService) ->
       # member, applicant sent over for logging purposes
       member: options.member
       applicant: options.applicant
-      nrhp: options.nrhp
       adhp: options.adhp
     }
     $http.post('/api/v1/addresses/geocode.json', params).success((data, status, headers, config) ->

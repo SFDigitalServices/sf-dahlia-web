@@ -32,7 +32,6 @@ do ->
       listing: fakeListing
       member: fakeHouseholdMember
       applicant: fakeApplicant
-      nrhp: true
       adhp: true
 
     beforeEach module('ui.router')
