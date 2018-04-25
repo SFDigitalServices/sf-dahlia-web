@@ -723,6 +723,22 @@ ShortFormApplicationService = (
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
 
+    # logging to provide visibility into cases we have been seeing where an
+    # application somehow gets submitted without preferenceAddressMatch set
+    # for primary applicant or a household member
+    if Service.application.status == 'submitted'
+      primaryApplicant = params.application.primaryApplicant
+      if primaryApplicant
+        primaryPrefAddressMatchEmpty = _.isNil(primaryApplicant.preferenceAddressMatch)
+        if primaryPrefAddressMatchEmpty
+          Raven.captureException(new Error('Application submitted without primary applicant preferenceAddressMatch value'))
+
+      householdMembers = params.application.householdMembers
+      unless _.isEmpty(householdMembers)
+        householdPrefAddressMatchEmpty = _.some(householdMembers, (member) -> _.isNil(member.preferenceAddressMatch))
+        if householdPrefAddressMatchEmpty
+          Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
+
     if params.application.id
       # update
       id = params.application.id
