@@ -22,9 +22,7 @@ GeocodingService = ($http, ShortFormDataService) ->
       nrhp: options.nrhp
       adhp: options.adhp
     }
-    member = options.member
     $http.post('/api/v1/addresses/geocode.json', params).success((data, status, headers, config) ->
-      # append preferenceAddressMatch data to member
       # 'Matched' and 'Not Matched' correspond with what gets stored in Salesforce
       match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
       Service.preferenceAddressMatch = match
