@@ -31,12 +31,12 @@ class Api::V1::GeocodingController < ApiController
         params[:has_nrhp_adhp],
       ).send_notifications
 
-      return { boundary_match: false } if notifications_sent
-      log_msg = '<< GeocodingController.geocoding_data ' \
-        'send_notifications called but notifications not sent >>'
-      logger.error log_msg
+      unless notifications_sent
+        log_msg = '<< GeocodingController.geocoding_data ' \
+          'send_notifications called but notifications not sent >>'
+        logger.error log_msg
+      end
 
-      # default response
       { boundary_match: nil }
     end
   end
@@ -49,11 +49,12 @@ class Api::V1::GeocodingController < ApiController
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
     # return successful geocoded data with the result of boundary_match
-    return match unless neighborhood.errors.present?
+    matching_errors = neighborhood.errors
+    return match unless matching_errors.present?
 
     # otherwise notify of errors
     logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
-      "#{neighborhood.errors}, LOG PARAMS: #{log_params}"
+      "#{matching_errors}, LOG PARAMS: #{log_params}"
     notifications_sent = ArcGISNotificationService.new(
       {
         errors: neighborhood.errors,
