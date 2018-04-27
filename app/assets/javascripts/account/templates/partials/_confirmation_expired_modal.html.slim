@@ -4,7 +4,8 @@ div ng-controller="AccountController"
       | {{'CONFIRM_ACCOUNT.ACCOUNT_ALREADY_CONFIRMED' | translate}}
     h1.modal-title.t-gamma.no-margin ng-if="!createdAccount.confirmed"
       | {{'CONFIRM_ACCOUNT.CONFIRMATION_LINK_EXPIRED' | translate}}
-  section.modal-inner.bg-dust
+
+  section.modal-inner
     p.c-steel ng-if="createdAccount.confirmed"
       | {{'CONFIRM_ACCOUNT.PLEASE_LOGIN' | translate}}
     p.c-steel ng-if="!createdAccount.confirmed"
@@ -16,7 +17,7 @@ div ng-controller="AccountController"
         button.tertiary ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
           | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
       .modal-button_item ng-if="createdAccount.confirmed"
-        button.button.min-width ng-click="closeModal()"
+        button.button.primary.min-width ng-click="closeModal()"
           | {{'T.OK' | translate}}
 
   ng-include src="'account/templates/partials/_modal_close.html'"
