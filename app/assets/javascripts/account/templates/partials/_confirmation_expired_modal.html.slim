@@ -10,13 +10,13 @@ div ng-controller="AccountController"
     p.c-steel ng-if="!createdAccount.confirmed"
       | {{confirmEmailExpiredMessage()}}
 
-    p.no-margin ng-if="!createdAccount.confirmed"
-      button.button-link.button-lined.no-padding ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
-        | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
-
-
-    p ng-if="createdAccount.confirmed"
-      button.button.small ng-click="closeModal()"
-        | {{'T.OK' | translate}}
+  footer.modal-footer.bg-dust
+    .modal-button-group.row
+      .modal-button_item ng-if="!createdAccount.confirmed"
+        button.tertiary ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+          | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
+      .modal-button_item ng-if="createdAccount.confirmed"
+        button.button.min-width ng-click="closeModal()"
+          | {{'T.OK' | translate}}
 
   ng-include src="'account/templates/partials/_modal_close.html'"
