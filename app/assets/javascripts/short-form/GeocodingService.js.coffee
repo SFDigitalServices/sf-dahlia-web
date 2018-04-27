@@ -22,12 +22,15 @@ GeocodingService = ($http, ShortFormDataService) ->
       adhp: options.adhp
     }
     $http.post('/api/v1/addresses/geocode.json', params).success((data, status, headers, config) ->
-      # 'Matched' and 'Not Matched' correspond with what gets stored in Salesforce
-      match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
+      # 'Matched', 'Not Matched', and '' correspond with what gets stored in Salesforce
+      match = switch data.geocoding_data.boundary_match
+        when null then ''
+        when true then 'Matched'
+        when false then 'Not Matched'
       Service.preferenceAddressMatch = match
       return data
     ).error( (data, status, headers, config) ->
-      Service.preferenceAddressMatch = 'Not Matched'
+      Service.preferenceAddressMatch = ''
     )
 
   return Service

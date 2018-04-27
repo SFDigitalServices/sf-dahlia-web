@@ -401,6 +401,13 @@ do ->
         it 'returns array without applicant', ->
           expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
 
+      describe "applicant's address wasn't able to be matched on neighborhood preference", ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.preferenceAddressMatch = ''
+
+        it 'returns array without applicant', ->
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
+
       describe 'applicant matches neighborhood preference', ->
         beforeEach ->
           ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'

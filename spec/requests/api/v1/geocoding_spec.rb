@@ -74,6 +74,6 @@ describe 'Geocoding API' do
     expect(response).to be_success
 
     # check to make sure boundary_match is false for a bad address
-    expect(json['geocoding_data']['boundary_match']).to eq(false)
+    expect(json['geocoding_data']['boundary_match']).to eq(nil)
   end
 end
