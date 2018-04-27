@@ -23,11 +23,19 @@ class Api::V1::GeocodingController < ApiController
       match = address_within_neighborhood?(address)
       return address.merge(boundary_match: match)
     else
-      ArcGISNotificationService.new(
+      logger.error '<< GeocodingService.geocode candidates empty >> ' \
+        "#{geocoded_addresses}, LOG PARAMS: #{log_params}"
+      notifications_sent = ArcGISNotificationService.new(
         geocoded_addresses.merge(service_name: GeocodingService::NAME),
         log_params,
         params[:has_nrhp_adhp],
       ).send_notifications
+
+      return { boundary_match: false } if notifications_sent
+      log_msg = '<< GeocodingController.geocoding_data ' \
+        'send_notifications called but notifications not sent >>'
+      logger.error log_msg
+
       # default response
       { boundary_match: nil }
     end
@@ -44,7 +52,9 @@ class Api::V1::GeocodingController < ApiController
     return match unless neighborhood.errors.present?
 
     # otherwise notify of errors
-    ArcGISNotificationService.new(
+    logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
+      "#{neighborhood.errors}, LOG PARAMS: #{log_params}"
+    notifications_sent = ArcGISNotificationService.new(
       {
         errors: neighborhood.errors,
         service_name: NeighborhoodBoundaryService::NAME,
@@ -52,6 +62,12 @@ class Api::V1::GeocodingController < ApiController
       log_params,
       params[:has_nrhp_adhp],
     ).send_notifications
+
+    return false if notifications_sent
+    log_msg = '<< GeocodingController.address_within_neighborhood? ' \
+      'send_notifications called but notifications not sent'
+    logger.error log_msg
+
     # default response
     nil
   end
