@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NHRP_Composite/GeocodeServer/findAddressCandidates?City=San%20Francisco&State=CA&Street=1299191%20Blahblah%20St&f=pjson&outfields=loc_name
+    uri: https://sfgis-portal.sfgov.org/svc/rest/services/dahlia/NRHP_pref/MapServer/0/query?f=pjson&geometry=-13626517.284002636,4547486.548391391&geometryType=esriGeometryPoint&returnCountOnly=true&spatialRel=esriSpatialRelIntersects&where=projid=%272012-021%27
     body:
       encoding: US-ASCII
       string: ''
@@ -17,13 +17,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 30 Apr 2018 06:00:27 GMT
+      - Mon, 30 Apr 2018 06:05:36 GMT
       Server:
       - ''
       Cache-Control:
       - max-age=0,must-revalidate
       Etag:
-      - 222e5f3e
+      - qzlVBTFpp2WieRPX_1519419533
       X-Content-Type-Options:
       - nosniff
       Vary:
@@ -31,13 +31,15 @@ http_interactions:
       Content-Type:
       - text/plain;charset=UTF-8
       Content-Length:
-      - '92'
+      - '15'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: "{\n \"spatialReference\": {\n  \"wkid\": 102100,\n  \"latestWkid\":
-        3857\n },\n \"candidates\": [\n  \n ]\n}"
+      string: |-
+        {
+         "count": 1
+        }
     http_version: 
-  recorded_at: Mon, 30 Apr 2018 06:00:49 GMT
+  recorded_at: Mon, 30 Apr 2018 06:05:58 GMT
 recorded_with: VCR 3.0.3

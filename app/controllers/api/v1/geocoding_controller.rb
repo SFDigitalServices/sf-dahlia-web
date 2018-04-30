@@ -20,7 +20,11 @@ class Api::V1::GeocodingController < ApiController
     geocoded_addresses = GeocodingService.new(address_params).geocode
     if geocoded_addresses[:candidates].present?
       address = geocoded_addresses[:candidates].first
-      match = address_within_neighborhood?(address)
+      # if the listing has either the ADHP or NRHP preference, then do
+      # boundary matching. if the listing doesn't have either of those
+      # preferences, then there is no relevant boundary to match the
+      # address against, so don't bother matching
+      match = params[:adhp] || params[:nrhp] ? address_within_neighborhood?(address) : nil
       return address.merge(boundary_match: match)
     else
       logger.error '<< GeocodingService.geocode candidates empty >> ' \

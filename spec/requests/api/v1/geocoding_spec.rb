@@ -4,12 +4,32 @@ require 'support/vcr_setup'
 require 'support/jasmine'
 
 describe 'Geocoding API' do
+  project_id = '2012-021'
+
+  # this address matches both the ADHP boundary and the
+  # NRHP boundary for the project ID we're using
+  match_address = {
+    address1: '1222 Harrison St.',
+    city: 'San Francisco',
+    zip: '94103',
+  }
+
+  # this address does not match the ADHP boundary or the
+  # NRHP boundary for the project ID we're using
+  non_match_address = {
+    address1: '2244 Taraval St.',
+    city: 'San Francisco',
+    zip: '94116',
+  }
+
+  invalid_address = {
+    address1: '1299191 Blahblah st.',
+    city: 'San Francisco',
+    zip: '12345',
+  }
+
   fake_params = {
-    address: {
-      address1: '1222 Harrison St.',
-      city: 'San Francisco',
-      zip: '94103',
-    },
+    address: match_address,
     member: {
       firstName: 'Jane',
       lastName: 'Doe',
@@ -23,20 +43,33 @@ describe 'Geocoding API' do
     listing: {
       Id: 'xyzyy123',
       Name: '132 Main St.',
-      Project_ID: '2012-021',
+      Project_ID: project_id,
     },
   }
+
+  fake_adhp_params = fake_params.merge(adhp: true)
+  fake_adhp_non_match_params = fake_adhp_params.clone
+  fake_adhp_non_match_params[:address] = non_match_address
+
+  fake_nrhp_params = fake_params.merge(nrhp: true)
+  fake_nrhp_non_match_params = fake_nrhp_params.clone
+  fake_nrhp_non_match_params[:address] = non_match_address
+
   fake_invalid_params = fake_params.clone
-  fake_invalid_params[:address] = {
-    address1: '1299191 Blahblah st.',
-    city: 'San Francisco',
-    zip: '12345',
-  }
+  fake_invalid_params[:address] = invalid_address
+
   ### generate Jasmine fixtures
-  describe 'valid address' do
+  describe 'valid address boundary match' do
     save_fixture do
-      VCR.use_cassette('geocoding/valid') do
-        post '/api/v1/addresses/geocode.json', fake_params
+      VCR.use_cassette('geocoding/adhp_match') do
+        post '/api/v1/addresses/geocode.json', fake_adhp_params
+      end
+    end
+  end
+  describe 'valid address no boundary match' do
+    save_fixture do
+      VCR.use_cassette('geocoding/adhp_non_match') do
+        post '/api/v1/addresses/geocode.json', fake_adhp_non_match_params
       end
     end
   end
@@ -49,31 +82,97 @@ describe 'Geocoding API' do
   end
   # ---- end Jasmine fixtures
 
-  it 'validates valid address with success == true' do
-    VCR.use_cassette('geocoding/valid') do
-      post '/api/v1/addresses/geocode.json', fake_params
+  describe 'geocoding a valid address' do
+    before do
+      VCR.use_cassette('geocoding/valid') do
+        post '/api/v1/addresses/geocode.json', fake_params
+      end
     end
 
-    json = JSON.parse(response.body)
+    let(:json) { JSON.parse(response.body) }
 
-    # test for the 200 status-code
-    expect(response).to be_success
+    it 'sends a success response' do
+      expect(response).to be_success
+    end
 
-    # check to make sure the geocoding_data comes back with valid results
-    expect(json['geocoding_data']['score']).to eq(100)
+    it 'sends valid geocoding information' do
+      expect(json['geocoding_data']['score']).to eq(100)
+    end
+
+    context 'when the listing has neither ADHP nor NRHP' do
+      it 'sends a nil boundary match' do
+        expect(json['geocoding_data']['boundary_match']).to eq(nil)
+      end
+    end
+
+    context 'when the listing has ADHP' do
+      context 'when address is within the ADHP boundary' do
+        it 'sends a true boundary match' do
+          VCR.use_cassette('geocoding/valid') do
+            VCR.use_cassette('geocoding/adhp_match') do
+              post '/api/v1/addresses/geocode.json', fake_adhp_params
+            end
+          end
+
+          json = JSON.parse(response.body)
+          expect(json['geocoding_data']['boundary_match']).to eq(true)
+        end
+      end
+
+      context 'when address is not within the ADHP boundary' do
+        it 'sends a false boundary match' do
+          VCR.use_cassette('geocoding/adhp_non_match') do
+            post '/api/v1/addresses/geocode.json', fake_adhp_non_match_params
+          end
+
+          json = JSON.parse(response.body)
+          expect(json['geocoding_data']['boundary_match']).to eq(false)
+        end
+      end
+    end
+
+    context 'when the listing has NRHP' do
+      context 'when address is within the NRHP boundary' do
+        it 'sends a true boundary match' do
+          VCR.use_cassette('geocoding/valid') do
+            VCR.use_cassette('geocoding/nrhp_match') do
+              post '/api/v1/addresses/geocode.json', fake_nrhp_params
+            end
+          end
+
+          json = JSON.parse(response.body)
+          expect(json['geocoding_data']['boundary_match']).to eq(true)
+        end
+      end
+
+      context 'address is not within the NRHP boundary' do
+        it 'sends a false boundary match' do
+          VCR.use_cassette('geocoding/nrhp_non_match') do
+            post '/api/v1/addresses/geocode.json', fake_nrhp_non_match_params
+          end
+
+          json = JSON.parse(response.body)
+          expect(json['geocoding_data']['boundary_match']).to eq(false)
+        end
+      end
+    end
   end
 
-  it 'validates invalid address with success == false' do
-    VCR.use_cassette('geocoding/invalid') do
-      post '/api/v1/addresses/geocode.json', fake_invalid_params
+  describe 'geocoding an invalid address' do
+    before do
+      VCR.use_cassette('geocoding/invalid') do
+        post '/api/v1/addresses/geocode.json', fake_invalid_params
+      end
     end
 
-    json = JSON.parse(response.body)
+    let(:json) { JSON.parse(response.body) }
 
-    # still gets a 200 status, but with nil results
-    expect(response).to be_success
+    it 'sends a success response' do
+      expect(response).to be_success
+    end
 
-    # check to make sure boundary_match is false for a bad address
-    expect(json['geocoding_data']['boundary_match']).to eq(nil)
+    it 'sends a nil boundary match' do
+      expect(json['geocoding_data']['boundary_match']).to eq(nil)
+    end
   end
 end

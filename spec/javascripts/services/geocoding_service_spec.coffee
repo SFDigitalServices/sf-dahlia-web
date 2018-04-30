@@ -5,7 +5,8 @@ do ->
     httpBackend = undefined
     fakeShortFormDataService =
       formatUserDOB: ->
-    fakeValidResult = getJSONFixture('geocoding-api-valid-address.json')
+    fakeValidAddressMatchResult = getJSONFixture('geocoding-api-valid-address-boundary-match.json')
+    fakeValidAddressNoMatchResult = getJSONFixture('geocoding-api-valid-address-no-boundary-match.json')
     fakeInvalidResult = getJSONFixture('geocoding-api-invalid-address.json')
     requestURL = undefined
     fakeListing = getJSONFixture('listings-api-show.json')
@@ -32,6 +33,7 @@ do ->
       listing: fakeListing
       member: fakeHouseholdMember
       applicant: fakeApplicant
+      nrhp: true
       adhp: true
 
     beforeEach module('ui.router')
@@ -54,25 +56,32 @@ do ->
 
         describe 'when the address is a match', ->
           it 'sets Service.preferenceAddressMatch to "Matched"', ->
-            stubAngularAjaxRequest httpBackend, requestURL, fakeValidResult
+            stubAngularAjaxRequest httpBackend, requestURL, fakeValidAddressMatchResult
             GeocodingService.geocode(geocodeOptions)
             httpBackend.flush()
             expect(GeocodingService.preferenceAddressMatch).toEqual 'Matched'
 
         describe 'when the address is not a match', ->
           it 'sets Service.preferenceAddressMatch to "Not Matched"', ->
+            stubAngularAjaxRequest httpBackend, requestURL, fakeValidAddressNoMatchResult
+            GeocodingService.geocode(geocodeOptions)
+            httpBackend.flush()
+            expect(GeocodingService.preferenceAddressMatch).toEqual "Not Matched"
+
+        describe 'when the address is invalid', ->
+          it 'sets Service.preferenceAddressMatch to be blank', ->
             stubAngularAjaxRequest httpBackend, requestURL, fakeInvalidResult
             GeocodingService.geocode(geocodeOptions)
             httpBackend.flush()
-            expect(GeocodingService.preferenceAddressMatch).toEqual 'Not Matched'
+            expect(GeocodingService.preferenceAddressMatch).toEqual ''
 
       describe 'when the attempt to geocode encounters an error', ->
         afterEach ->
           httpBackend.verifyNoOutstandingExpectation()
           httpBackend.verifyNoOutstandingRequest()
 
-        it 'sets Service.preferenceAddressMatch to "Not Matched"', ->
+        it 'sets Service.preferenceAddressMatch to be blank', ->
           stubAngularAjaxErrorRequest httpBackend, requestURL, {}
           GeocodingService.geocode(geocodeOptions)
           httpBackend.flush()
-          expect(GeocodingService.preferenceAddressMatch).toEqual 'Not Matched'
+          expect(GeocodingService.preferenceAddressMatch).toEqual ''

@@ -917,6 +917,7 @@ ShortFormApplicationService = (
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
+        nrhp: Service.listingHasPreference('neighborhoodResidence')
         adhp: Service.listingHasPreference('antiDisplacement')
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be '', but at least you can proceed.
@@ -943,6 +944,7 @@ ShortFormApplicationService = (
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
+        nrhp: Service.listingHasPreference('neighborhoodResidence')
         adhp: Service.listingHasPreference('antiDisplacement')
       ).success(afterGeocode)
       # if there is an error then preferenceAddressMatch will be '' but at least you can proceed.
