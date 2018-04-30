@@ -588,7 +588,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.preferenceAddressMatch
+        addressValid = applicant.preferenceAddressMatch != null
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -922,7 +922,7 @@ ShortFormApplicationService = (
         listing: Service.listing
         has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be '', but at least you can proceed.
       .error(afterGeocode)
     )
 
@@ -948,7 +948,7 @@ ShortFormApplicationService = (
         listing: Service.listing
         has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
       ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
+      # if there is an error then preferenceAddressMatch will be '' but at least you can proceed.
       .error(afterGeocode)
     )
 

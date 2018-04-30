@@ -8,7 +8,7 @@ class Api::V1::GeocodingController < ApiController
   rescue StandardError => e
     logger.error "<< GeocodingController Error >> #{e.class.name}, #{e.message}"
     # in this case, no need to throw an error alert, just allow the user to proceed
-    render json: { geocoding_data: { boundary_match: false } }
+    render json: { geocoding_data: { boundary_match: nil } }
   end
 
   private
@@ -31,13 +31,13 @@ class Api::V1::GeocodingController < ApiController
         params[:has_nrhp_adhp],
       ).send_notifications
 
-      return { boundary_match: false } if notifications_sent
-      log_msg = '<< GeocodingController.geocoding_data ' \
-        'send_notifications called but notifications not sent >>'
-      logger.error log_msg
+      unless notifications_sent
+        log_msg = '<< GeocodingController.geocoding_data ' \
+          'send_notifications called but notifications not sent >>'
+        logger.error log_msg
+      end
 
-      # default response
-      { boundary_match: false }
+      { boundary_match: nil }
     end
   end
 
@@ -45,15 +45,16 @@ class Api::V1::GeocodingController < ApiController
     x = address[:location][:x]
     y = address[:location][:y]
     project_id = listing_params[:Project_ID]
-    return false unless project_id.present?
+    return nil unless project_id.present?
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
     # return successful geocoded data with the result of boundary_match
-    return match unless neighborhood.errors.present?
+    matching_errors = neighborhood.errors
+    return match unless matching_errors.present?
 
     # otherwise notify of errors
     logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
-      "#{neighborhood.errors}, LOG PARAMS: #{log_params}"
+      "#{matching_errors}, LOG PARAMS: #{log_params}"
     notifications_sent = ArcGISNotificationService.new(
       {
         errors: neighborhood.errors,
@@ -69,7 +70,7 @@ class Api::V1::GeocodingController < ApiController
     logger.error log_msg
 
     # default response
-    false
+    nil
   end
 
   def address_params
