@@ -72,7 +72,7 @@
           controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings({checkEligibility: true})
+          ListingService.getListings({checkEligibility: true, retranslate: true})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -101,7 +101,7 @@
           ($stateParams, $state, $q, ListingService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
-            ListingService.getListing($stateParams.id, forceRecache).then( ->
+            ListingService.getListing($stateParams.id, forceRecache, true).then( ->
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
@@ -678,7 +678,8 @@
             $timeout ->
               # autofill would not be `true` if you opted out
               unless application && application.autofill
-                $state.go('dahlia.short-form-welcome.overview', {id: $stateParams.id})
+                $state.go('dahlia.short-form-welcome.overview', { id: $stateParams.id })
+            , 0, false
         ]
       onEnter: [
         'ShortFormApplicationService', 'AccountService',
@@ -703,8 +704,10 @@
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
-            AutosaveService.save() unless ShortFormApplicationService.application.id
             # always autosave when you start a new application
+            # TODO: remove hotfix for marking initial autosaves that come from the Name page
+            unless ShortFormApplicationService.application.id
+              ShortFormApplicationService.submitApplication({autosave: true, initialSave: true})
       ]
     })
     .state('dahlia.short-form-application.welcome-back', {
