@@ -136,6 +136,7 @@ ListingController = (
     # http://stackoverflow.com/a/18996042/260495
     $timeout ->
       $scope.carouselHeight = elem[0].offsetHeight
+    , 0, false
 
   $scope.listingImages = (listing) ->
     # TODO: update when we are getting multiple images from Salesforce
