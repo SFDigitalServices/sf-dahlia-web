@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'support/vcr_setup'
 require 'support/jasmine'
 
-describe 'Geocoding API' do
+describe 'Gis API' do
   project_id = '2012-021'
 
   # this address matches both the ADHP boundary and the
@@ -43,15 +43,14 @@ describe 'Geocoding API' do
     listing: {
       Id: 'xyzyy123',
       Name: '132 Main St.',
-      Project_ID: project_id,
     },
   }
 
-  fake_adhp_params = fake_params.merge(adhp: true)
+  fake_adhp_params = fake_params.merge(project_id: 'ADHP')
   fake_adhp_non_match_params = fake_adhp_params.clone
   fake_adhp_non_match_params[:address] = non_match_address
 
-  fake_nrhp_params = fake_params.merge(nrhp: true)
+  fake_nrhp_params = fake_params.merge(project_id: project_id)
   fake_nrhp_non_match_params = fake_nrhp_params.clone
   fake_nrhp_non_match_params[:address] = non_match_address
 
@@ -61,31 +60,31 @@ describe 'Geocoding API' do
   ### generate Jasmine fixtures
   describe 'valid address boundary match' do
     save_fixture do
-      VCR.use_cassette('geocoding/adhp_match') do
-        post '/api/v1/addresses/geocode.json', fake_adhp_params
+      VCR.use_cassette('gis/adhp_match') do
+        post '/api/v1/addresses/gis-data.json', fake_adhp_params
       end
     end
   end
   describe 'valid address no boundary match' do
     save_fixture do
-      VCR.use_cassette('geocoding/adhp_non_match') do
-        post '/api/v1/addresses/geocode.json', fake_adhp_non_match_params
+      VCR.use_cassette('gis/adhp_non_match') do
+        post '/api/v1/addresses/gis-data.json', fake_adhp_non_match_params
       end
     end
   end
   describe 'invalid address' do
     save_fixture do
-      VCR.use_cassette('geocoding/invalid') do
-        post '/api/v1/addresses/geocode.json', fake_invalid_params
+      VCR.use_cassette('gis/invalid') do
+        post '/api/v1/addresses/gis-data.json', fake_invalid_params
       end
     end
   end
   # ---- end Jasmine fixtures
 
-  describe 'geocoding a valid address' do
+  describe 'getting GID data for a valid address' do
     before do
-      VCR.use_cassette('geocoding/valid') do
-        post '/api/v1/addresses/geocode.json', fake_params
+      VCR.use_cassette('gis/valid') do
+        post '/api/v1/addresses/gis-data.json', fake_params
       end
     end
 
@@ -95,38 +94,38 @@ describe 'Geocoding API' do
       expect(response).to be_success
     end
 
-    it 'sends valid geocoding information' do
-      expect(json['geocoding_data']['score']).to eq(100)
+    it 'sends valid gis information' do
+      expect(json['gis_data']['score']).to eq(100)
     end
 
     context 'when the listing has neither ADHP nor NRHP' do
       it 'sends a nil boundary match' do
-        expect(json['geocoding_data']['boundary_match']).to eq(nil)
+        expect(json['gis_data']['boundary_match']).to eq(nil)
       end
     end
 
     context 'when the listing has ADHP' do
       context 'when address is within the ADHP boundary' do
         it 'sends a true boundary match' do
-          VCR.use_cassette('geocoding/valid') do
-            VCR.use_cassette('geocoding/adhp_match') do
-              post '/api/v1/addresses/geocode.json', fake_adhp_params
+          VCR.use_cassette('gis/valid') do
+            VCR.use_cassette('gis/adhp_match') do
+              post '/api/v1/addresses/gis-data.json', fake_adhp_params
             end
           end
 
           json = JSON.parse(response.body)
-          expect(json['geocoding_data']['boundary_match']).to eq(true)
+          expect(json['gis_data']['boundary_match']).to eq(true)
         end
       end
 
       context 'when address is not within the ADHP boundary' do
         it 'sends a false boundary match' do
-          VCR.use_cassette('geocoding/adhp_non_match') do
-            post '/api/v1/addresses/geocode.json', fake_adhp_non_match_params
+          VCR.use_cassette('gis/adhp_non_match') do
+            post '/api/v1/addresses/gis-data.json', fake_adhp_non_match_params
           end
 
           json = JSON.parse(response.body)
-          expect(json['geocoding_data']['boundary_match']).to eq(false)
+          expect(json['gis_data']['boundary_match']).to eq(false)
         end
       end
     end
@@ -134,34 +133,34 @@ describe 'Geocoding API' do
     context 'when the listing has NRHP' do
       context 'when address is within the NRHP boundary' do
         it 'sends a true boundary match' do
-          VCR.use_cassette('geocoding/valid') do
-            VCR.use_cassette('geocoding/nrhp_match') do
-              post '/api/v1/addresses/geocode.json', fake_nrhp_params
+          VCR.use_cassette('gis/valid') do
+            VCR.use_cassette('gis/nrhp_match') do
+              post '/api/v1/addresses/gis-data.json', fake_nrhp_params
             end
           end
 
           json = JSON.parse(response.body)
-          expect(json['geocoding_data']['boundary_match']).to eq(true)
+          expect(json['gis_data']['boundary_match']).to eq(true)
         end
       end
 
       context 'address is not within the NRHP boundary' do
         it 'sends a false boundary match' do
-          VCR.use_cassette('geocoding/nrhp_non_match') do
-            post '/api/v1/addresses/geocode.json', fake_nrhp_non_match_params
+          VCR.use_cassette('gis/nrhp_non_match') do
+            post '/api/v1/addresses/gis-data.json', fake_nrhp_non_match_params
           end
 
           json = JSON.parse(response.body)
-          expect(json['geocoding_data']['boundary_match']).to eq(false)
+          expect(json['gis_data']['boundary_match']).to eq(false)
         end
       end
     end
   end
 
-  describe 'geocoding an invalid address' do
+  describe 'getting GIS data for an invalid address' do
     before do
-      VCR.use_cassette('geocoding/invalid') do
-        post '/api/v1/addresses/geocode.json', fake_invalid_params
+      VCR.use_cassette('gis/invalid') do
+        post '/api/v1/addresses/gis-data.json', fake_invalid_params
       end
     end
 
@@ -172,7 +171,7 @@ describe 'Geocoding API' do
     end
 
     it 'sends a nil boundary match' do
-      expect(json['geocoding_data']['boundary_match']).to eq(nil)
+      expect(json['gis_data']['boundary_match']).to eq(nil)
     end
   end
 end

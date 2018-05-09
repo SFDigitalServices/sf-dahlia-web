@@ -1,6 +1,6 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
+  ListingService, ShortFormDataService, AddressValidationService, GISService,
   AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
@@ -900,36 +900,44 @@ ShortFormApplicationService = (
     # validate + geocode address
     # errors are handled in the controller
     afterGeocode = (response) ->
-      Service.applicant.geocodingData = response.geocoding_data
-      Service.applicant.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
+      unless _.isEmpty(response) || _.isEmpty(response.gis_data)
+        Service.applicant.geocodingData = response.gis_data
+        match = switch response.gis_data.boundary_match
+          when null then ''
+          when true then 'Matched'
+          when false then 'Not Matched'
+        Service.applicant.preferenceAddressMatch = match
       Service.copyNeighborhoodMatchToHousehold()
       # check if eligibility has changed
       Service.refreshPreferences('all')
       Service.clearAddressRelatedProofForMember(Service.applicant)
       callback()
+
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
     ).success( ->
       Service.copyHomeToMailingAddress()
-      GeocodingService.geocode(
+      GISService.getGISData(
         address: Service.applicant.home_address
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
-        nrhp: Service.listingHasPreference('neighborhoodResidence')
-        adhp: Service.listingHasPreference('antiDisplacement')
-      ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be '', but at least you can proceed.
-      .error(afterGeocode)
+        projectId: Service.getProjectIdForBoundaryMatching()
+      ).then(afterGeocode)
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
     # validate + geocode address
     # errors are handled in the controller
     afterGeocode = (response) ->
-      Service.householdMember.geocodingData = response.geocoding_data
-      Service.householdMember.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
+      unless _.isEmpty(response) || _.isEmpty(response.gis_data)
+        Service.householdMember.geocodingData = response.gis_data
+        match = switch response.gis_data.boundary_match
+          when null then ''
+          when true then 'Matched'
+          when false then 'Not Matched'
+        Service.householdMember.preferenceAddressMatch = match
       Service.addHouseholdMember(Service.householdMember)
       # check if eligibility has changed
       Service.refreshPreferences('all')
@@ -939,16 +947,13 @@ ShortFormApplicationService = (
       address: Service.householdMember.home_address
       type: 'home'
     ).success( ->
-      GeocodingService.geocode(
+      GISService.getGISData(
         address: Service.householdMember.home_address
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
-        nrhp: Service.listingHasPreference('neighborhoodResidence')
-        adhp: Service.listingHasPreference('antiDisplacement')
-      ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be '' but at least you can proceed.
-      .error(afterGeocode)
+        projectId: Service.getProjectIdForBoundaryMatching()
+      ).then(afterGeocode)
     )
 
   Service.applicationWasSubmitted = (application = Service.application) ->
@@ -982,6 +987,9 @@ ShortFormApplicationService = (
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
 
+  Service.getProjectIdForBoundaryMatching = ->
+    ListingService.getProjectIdForBoundaryMatching(Service.listing)
+
   Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --
@@ -996,7 +1004,7 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
-  'AddressValidationService', 'GeocodingService',
+  'AddressValidationService', 'GISService',
   'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 

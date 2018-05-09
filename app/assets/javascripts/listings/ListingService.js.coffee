@@ -139,8 +139,8 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       minMax = [min, max]
     return minMax
 
-  Service.hasPreference = (preference) ->
-    preferenceNames = _.map(Service.listing.preferences, (pref) -> pref.preferenceName)
+  Service.hasPreference = (preference, listing = Service.listing) ->
+    preferenceNames = _.map(listing.preferences, (pref) -> pref.preferenceName)
     # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
     preferenceName = Service.preferenceMap[preference]
     return _.includes(preferenceNames, preferenceName)
@@ -741,6 +741,15 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       a.push k + '=' + encodeURIComponent(params[k])
       a
     ), []).join '&'
+
+  Service.getProjectIdForBoundaryMatching = (listing) ->
+    return unless listing
+    if Service.hasPreference('antiDisplacement', listing)
+      'ADHP'
+    else if Service.hasPreference('neighborhoodResidence', listing)
+      listing.Project_ID
+    else
+      null
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {

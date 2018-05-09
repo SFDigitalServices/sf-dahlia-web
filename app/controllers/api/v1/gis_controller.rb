@@ -1,30 +1,29 @@
 # RESTful JSON API to query for address geocoding
-class Api::V1::GeocodingController < ApiController
+class Api::V1::GisController < ApiController
   GeocodingService = ArcGISService::GeocodingService
   NeighborhoodBoundaryService = ArcGISService::NeighborhoodBoundaryService
 
-  def geocode
-    render json: { geocoding_data: geocoding_data }
+  def gis_data
+    render json: { gis_data: geocoding_data }
   rescue StandardError => e
-    logger.error "<< GeocodingController Error >> #{e.class.name}, #{e.message}"
+    logger.error "<< GISController Error >> #{e.class.name}, #{e.message}"
     # in this case, no need to throw an error alert, just allow the user to proceed
-    render json: { geocoding_data: { boundary_match: nil } }
+    render json: { gis_data: { boundary_match: nil } }
   end
 
   private
 
-  # If we get a valid address from geocoder and a valid response from boundary service,
-  # return the boundary service match response.
-  # Otherwise, always return a nil match so users can move on with the application
+  # If we get a valid address from geocoder and a valid response from boundary
+  # service, return the geocoding data with the boundary match response added.
+  # Otherwise, always return at least a nil boundary match so users can move on
+  # with the application.
   def geocoding_data
     geocoded_addresses = GeocodingService.new(address_params).geocode
+
     if geocoded_addresses[:candidates].present?
       address = geocoded_addresses[:candidates].first
-      # if the listing has either the ADHP or NRHP preference, then do
-      # boundary matching. if the listing doesn't have either of those
-      # preferences, there is no relevant boundary to match the address
-      # against, so don't bother matching
-      match = params[:adhp] || params[:nrhp] ? address_within_neighborhood?(address) : nil
+      proj_id = params[:project_id]
+      match = proj_id ? address_within_boundary?(address, proj_id) : nil
       return address.merge(boundary_match: match)
     else
       logger.error '<< GeocodingService.geocode candidates empty >> ' \
@@ -35,19 +34,16 @@ class Api::V1::GeocodingController < ApiController
     end
   end
 
-  def address_within_neighborhood?(address)
+  def address_within_boundary?(address, project_id)
+    return nil unless project_id.present? && address.present?
+
     x = address[:location][:x]
     y = address[:location][:y]
-    project_id = params[:adhp] ? 'ADHP' : listing_params[:Project_ID]
-    return nil unless project_id.present?
-
     neighborhood = NeighborhoodBoundaryService.new(project_id, x, y)
     match = neighborhood.in_boundary?
-    # return successful geocoded data with the result of boundary_match
     matching_errors = neighborhood.errors
     return match unless matching_errors.present?
 
-    # otherwise notify of errors
     logger.error '<< NeighborhoodBoundaryService.in_boundary? Error >>' \
       "#{matching_errors}, LOG PARAMS: #{log_params}"
     send_boundary_match_error_notification(matching_errors)
@@ -63,7 +59,7 @@ class Api::V1::GeocodingController < ApiController
 
     return if notifications_sent
 
-    log_msg = '<< GeocodingController ' \
+    log_msg = '<< GISController ' \
       'send_geocoding_error_notification attempted but notifications not sent >>'
     logger.error log_msg
   end
@@ -79,7 +75,7 @@ class Api::V1::GeocodingController < ApiController
 
     return if notifications_sent
 
-    log_msg = '<< GeocodingController ' \
+    log_msg = '<< GISController ' \
       'send_boundary_match_error_notification attempted but notifications not sent >>'
     logger.error log_msg
   end
