@@ -109,19 +109,19 @@ module.exports = ->
     element(By.id('confirm_no_account')).click()
 
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
+    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
-    Pages.Contact.fill({email: janedoeEmail, address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
+    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
 
   @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
-    Pages.Contact.fill({email: janedoeEmail, workInSf: 'no'})
+    Pages.Contact.fill({workInSf: 'no'})
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
-    Pages.Contact.fill({email: janedoeEmail})
+    Pages.Contact.fill()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    Pages.Contact.fill({email: janedoeEmail, address1: '1222 Harrison St.'})
+    Pages.Contact.fill({address1: '1222 Harrison St.'})
 
   @When 'I fill out the Contact page with my address (NRHP match) and mailing address', ->
     Pages.Contact.fill({address1: '1222 Harrison St.', address2: '#100', extra: true})
@@ -781,7 +781,7 @@ module.exports = ->
     Pages.Name.expectToMatch(@, { fullName: fullName, email: sessionEmail })
 
   @Then 'on the Contact page I should see my correct info', ->
-    Pages.Contact.expectToMatch(@, {email: sessionEmail, address1: '1222 HARRISON ST # 100'})
+    Pages.Contact.expectToMatch(@, {address1: '1222 HARRISON ST # 100'})
 
   @Then 'on the Alternate Contact pages I should see my correct info', ->
     Pages.AlternateContact.expectToMatch(@)

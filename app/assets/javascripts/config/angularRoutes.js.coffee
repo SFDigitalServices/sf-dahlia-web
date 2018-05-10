@@ -196,25 +196,24 @@
           templateUrl: 'account/templates/sign-in.html'
           controller: 'AccountController'
       onEnter: ['$stateParams', 'AccountService', ($stateParams, AccountService) ->
-        AccountService.signOut().then ->
-          AccountService.clearAccountMessages()
-          AccountService.resetUserAuth()
-          AccountService.unlockFields()
+        AccountService.clearAccountMessages()
+        AccountService.resetUserAuth()
+        AccountService.unlockFields()
 
-          if $stateParams.expiredUnconfirmed
-            AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
-          if $stateParams.expiredConfirmed
-            AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
-          if $stateParams.newAccount
-            AccountService.openConfirmEmailModal()
-          if $stateParams.timeout
-            AccountService.accountError.messages.timeout = true
-          if $stateParams.redirectTo
-            AccountService.afterLoginRedirect($stateParams.redirectTo)
-          if $stateParams.signedOut
-            AccountService.afterSignOut()
-          if $stateParams.userTokenValidationTimeout
-            AccountService.afterUserTokenValidationTimeout()
+        if $stateParams.expiredUnconfirmed
+          AccountService.openConfirmationExpiredModal($stateParams.expiredUnconfirmed)
+        if $stateParams.expiredConfirmed
+          AccountService.openConfirmationExpiredModal($stateParams.expiredConfirmed, true)
+        if $stateParams.newAccount
+          AccountService.openConfirmEmailModal()
+        if $stateParams.timeout
+          AccountService.accountError.messages.timeout = true
+        if $stateParams.redirectTo
+          AccountService.afterLoginRedirect($stateParams.redirectTo)
+        if $stateParams.signedOut
+          AccountService.afterSignOut()
+        if $stateParams.userTokenValidationTimeout
+          AccountService.afterUserTokenValidationTimeout()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
