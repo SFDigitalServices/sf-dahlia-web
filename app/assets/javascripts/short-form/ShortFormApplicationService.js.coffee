@@ -924,7 +924,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
         projectId: Service.getProjectIdForBoundaryMatching()
-      ).then(afterGeocode)
+      ).then(afterGeocode, afterGeocode)
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
@@ -953,7 +953,7 @@ ShortFormApplicationService = (
         applicant: Service.applicant
         listing: Service.listing
         projectId: Service.getProjectIdForBoundaryMatching()
-      ).then(afterGeocode)
+      ).then(afterGeocode, afterGeocode)
     )
 
   Service.applicationWasSubmitted = (application = Service.application) ->

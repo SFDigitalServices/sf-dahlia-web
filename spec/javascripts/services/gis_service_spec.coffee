@@ -121,11 +121,11 @@ do ->
           httpBackend.verifyNoOutstandingExpectation()
           httpBackend.verifyNoOutstandingRequest()
 
-        it 'returns a failed promise whose value contains a null boundary match', ->
+        it 'returns a successful promise whose value contains a null boundary match', ->
           stubAngularAjaxErrorRequest httpBackend, requestURL, {}
           promise = GISService.getGISData(gisDataOptions)
           httpBackend.flush()
 
           result = getPromiseResult($rootScope, $q, promise)
-          expect(result.status).toEqual 'error'
+          expect(result.status).toEqual 'success'
           expect(result.value.gis_data.boundary_match).toEqual null

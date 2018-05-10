@@ -46,23 +46,6 @@ var stubAngularAjaxErrorRequest = function(httpBackend, requestURL, responseData
   httpBackend.when('POST', requestURL).respond(422, responseData);
 };
 
-var getPromiseResult = function(rootScope, q, promise) {
-  var result = {
-    status: null,
-    value: null
-  };
-  var deferred = q.defer();
-  deferred.promise.then(
-    function(value) { result.status = 'success'; result.value = value; },
-    function(value) { result.status = 'error'; result.value = value; }
-  );
-  deferred.resolve(promise);
-  // please see https://docs.angularjs.org/api/ng/service/$q#testing
-  // to understand why the below line is required
-  rootScope.$apply();
-  return result;
-};
-
 /*
 jQuery's AJAX handler normally fires the callback in a setTimeout
 in order to make it occur in the next tick of the event loop. This

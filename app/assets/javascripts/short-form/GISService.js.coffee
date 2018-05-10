@@ -24,7 +24,7 @@ GISService = ($http, $q, ShortFormDataService) ->
 
     $http.post('/api/v1/addresses/gis-data.json', params).then(
       (response) -> response.data,
-      (response) -> $q.reject({gis_data: {boundary_match: null}})
+      (response) -> {gis_data: {boundary_match: null, foo: 'bar'}}
     )
 
   return Service
