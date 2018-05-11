@@ -585,7 +585,7 @@ ShortFormApplicationService = (
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = applicant.preferenceAddressMatch != null
+        addressValid = !_.isNil(applicant.preferenceAddressMatch)
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
@@ -897,64 +897,69 @@ ShortFormApplicationService = (
 
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->
-    # validate + geocode address
-    # errors are handled in the controller
-    afterGeocode = (response) ->
-      unless _.isEmpty(response) || _.isEmpty(response.gis_data)
-        Service.applicant.geocodingData = response.gis_data
-        match = switch response.gis_data.boundary_match
-          when null then ''
-          when true then 'Matched'
-          when false then 'Not Matched'
-        Service.applicant.preferenceAddressMatch = match
-      Service.copyNeighborhoodMatchToHousehold()
-      # check if eligibility has changed
-      Service.refreshPreferences('all')
-      Service.clearAddressRelatedProofForMember(Service.applicant)
-      callback()
-
+    # address validation errors are handled in the Rails controller
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
     ).success( ->
       Service.copyHomeToMailingAddress()
+      # gis data errors are handled in the Rails controller
       GISService.getGISData(
         address: Service.applicant.home_address
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
         projectId: Service.getProjectIdForBoundaryMatching()
-      ).then(afterGeocode, afterGeocode)
+      ).then(
+        Service.afterGeocode.bind(null, true, callback)
+      ).catch(
+        Service.afterGeocode.bind(null, true, callback)
+      )
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
-    # validate + geocode address
-    # errors are handled in the controller
-    afterGeocode = (response) ->
-      unless _.isEmpty(response) || _.isEmpty(response.gis_data)
-        Service.householdMember.geocodingData = response.gis_data
-        match = switch response.gis_data.boundary_match
-          when null then ''
-          when true then 'Matched'
-          when false then 'Not Matched'
-        Service.householdMember.preferenceAddressMatch = match
-      Service.addHouseholdMember(Service.householdMember)
-      # check if eligibility has changed
-      Service.refreshPreferences('all')
-      Service.clearAddressRelatedProofForMember(Service.householdMember)
-      callback()
+    # address validation errors are handled in the Rails controller
     AddressValidationService.validate(
       address: Service.householdMember.home_address
       type: 'home'
     ).success( ->
+      # gis data errors are handled in the Rails controller
       GISService.getGISData(
         address: Service.householdMember.home_address
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
         projectId: Service.getProjectIdForBoundaryMatching()
-      ).then(afterGeocode, afterGeocode)
+      ).then(
+        Service.afterGeocode.bind(null, false, callback)
+      ).catch(
+        Service.afterGeocode.bind(null, false, callback)
+      )
     )
+
+  Service.afterGeocode = (isPrimary, callback, response) ->
+    member = if isPrimary then Service.applicant else Service.householdMember
+
+    if _.isEmpty(response) || _.isEmpty(response.gis_data)
+      member.geocodingData = null
+      member.preferenceAddressMatch = null
+    else
+      member.geocodingData = response.gis_data
+      match = switch response.gis_data.boundary_match
+        when null then ''
+        when true then 'Matched'
+        when false then 'Not Matched'
+      member.preferenceAddressMatch = match
+
+    if isPrimary
+      Service.copyNeighborhoodMatchToHousehold()
+    else
+      Service.addHouseholdMember(member)
+
+    # check if eligibility has changed
+    Service.refreshPreferences('all')
+    Service.clearAddressRelatedProofForMember(member)
+    callback()
 
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
