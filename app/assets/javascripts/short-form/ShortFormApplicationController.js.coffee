@@ -672,12 +672,12 @@ ShortFormApplicationController = (
 
   $scope.chooseApplicantDetails = ->
     if $scope.chosenAccountOption == 'createAccount'
-      AccountService.signOut().then ->
-        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.create-account')
+      AccountService.signOut()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.create-account')
     else if $scope.chosenAccountOption == 'continueAsGuest'
-      opts = {preserveAppData: true}
-      AccountService.signOut(opts).then ->
-        $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.application.lastPage}")
+      opts = { preserveAppData: true }
+      AccountService.signOut(opts)
+      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.application.lastPage}")
     else if $scope.chosenAccountOption == 'overwriteWithAccountInfo'
       ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)

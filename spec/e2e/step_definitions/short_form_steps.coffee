@@ -55,7 +55,7 @@ module.exports = ->
     url = "/listings/#{listingId}/apply-welcome/intro"
     getUrl(url)
 
-  @Given 'I have a confirmed account', ->
+  @Given 'I have confirmed my account', ->
     # confirm the account
     browser.ignoreSynchronization = true
     url = "/api/v1/account/confirm/?email=#{sessionEmail}"
@@ -87,14 +87,8 @@ module.exports = ->
     # welcome overview
     submitPage()
 
-  @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
-    i = parseInt(buttonClicks)
-    while i > 0
-      submitPage()
-      i--
-
-  @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
-    Pages.Name.fill({ fullName: fullName, email: janedoeEmail })
+  # @When /^I fill out the Name page as "([^"]*)"$/, (fullName) ->
+  #   Pages.Name.fill({ fullName: fullName, email: janedoeEmail })
 
   @When /^I fill out the Name page as "([^"]*)" with my account email$/, (fullName) ->
     Pages.Name.fill({ fullName: fullName, email: sessionEmail })
@@ -102,33 +96,8 @@ module.exports = ->
   @When /^I fill out the Name page with the email "([^"]*)"$/, (email) ->
     Pages.Name.fill({ email: email })
 
-  @When 'I submit the Name page with my account info', ->
-    submitPage()
-
   @When 'I continue without signing in', ->
     element(By.id('confirm_no_account')).click()
-
-  @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
-
-  @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
-    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
-
-  @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
-    Pages.Contact.fill({workInSf: 'no'})
-
-  @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
-    Pages.Contact.fill()
-
-  @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    Pages.Contact.fill({address1: '1222 Harrison St.'})
-
-  @When 'I fill out the Contact page with my address (NRHP match) and mailing address', ->
-    Pages.Contact.fill({address1: '1222 Harrison St.', address2: '#100', extra: true})
-
-  @When 'I confirm my address', ->
-    element(By.id('confirmed_home_address_yes')).click()
-    submitPage()
 
   @When 'I confirm their address', ->
     element(By.id('confirmed_home_address_yes')).click()
@@ -446,9 +415,6 @@ module.exports = ->
     scrollToElement(viewApp).then ->
       viewApp.click()
 
-  @When 'I click the Save and Finish Later button', ->
-    element(By.id('save_and_finish_later')).click()
-
   @When 'I click the Create Account button', ->
     createAccount = element(By.id('create-account'))
     scrollToElement(createAccount).then ->
@@ -490,10 +456,6 @@ module.exports = ->
     element(By.id('auth_password')).sendKeys(accountPassword)
     element(By.id('sign-in')).click()
     browser.waitForAngular()
-
-  @When 'I sign out', ->
-    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click().then ->
-      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
 
   @When 'I view the application from My Applications', ->
     element(By.cssContainingText('.button', 'Go to My Applications')).click().then ->
@@ -561,6 +523,9 @@ module.exports = ->
   @When 'I select my recent application and submit', ->
     element(By.id('choose_draft_recent')).click().then ->
       submitPage()
+
+  @When 'I continue my saved application', ->
+    getUrl("/continue-draft-sign-in/#{listingId}")
 
   ########################
   # --- Expectations --- #
@@ -666,10 +631,6 @@ module.exports = ->
   @Then 'I should land on the My Applications page', ->
     el = element(By.cssContainingText('h1', 'My Applications'))
     @expect(el.isPresent()).to.eventually.equal(true)
-
-  @Then /^I should see the "([^"]*)" checkbox un-checked$/, (preference) ->
-    checkbox = element(By.id("preferences-#{preference}"))
-    @expect(checkbox.isSelected()).to.eventually.equal(false)
 
   @Then /^I should see "([^"]*)" preference claimed for "([^"]*)"$/, (preference, name) ->
     claimedPreference = element(By.cssContainingText('.info-item_name', preference))
@@ -781,7 +742,7 @@ module.exports = ->
     Pages.Name.expectToMatch(@, { fullName: fullName, email: sessionEmail })
 
   @Then 'on the Contact page I should see my correct info', ->
-    Pages.Contact.expectToMatch(@, {address1: '1222 HARRISON ST # 100'})
+    Pages.Contact.expectToMatch(@, {address1: '1222 HARRISON ST # 100', extra: true})
 
   @Then 'on the Alternate Contact pages I should see my correct info', ->
     Pages.AlternateContact.expectToMatch(@)
