@@ -1,9 +1,8 @@
 # Sends email notifications related to geocoding errors
 class ArcGISNotificationService
-  def initialize(service_data, log_params, has_nrhp_adhp)
+  def initialize(service_data, log_params)
     @service_data = service_data
     @log_params = log_params
-    @has_nrhp_adhp = has_nrhp_adhp
   end
 
   def send_notifications
@@ -28,11 +27,11 @@ class ArcGISNotificationService
 
   def send_address_notification
     log_id = GeocodingLog.create(@log_params)
-    Emailer.geocoding_log_notification(log_id, @has_nrhp_adhp).deliver_later
+    Emailer.geocoding_log_notification(log_id).deliver_later
   end
 
   def send_error_notification
-    params = [@service_data, @log_params, @has_nrhp_adhp].as_json
+    params = [@service_data, @log_params].as_json
     Emailer.geocoding_error_notification(*params).deliver_later
   end
 end

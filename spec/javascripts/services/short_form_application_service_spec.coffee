@@ -260,7 +260,6 @@ do ->
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
         expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
 
-
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
@@ -582,7 +581,6 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           expect(ShortFormApplicationService.showPreference('workInSf')).toEqual true
 
-
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}
@@ -737,6 +735,80 @@ do ->
           ShortFormApplicationService.importUserData(loggedInUser)
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
             .toEqual(1)
+
+    describe 'afterGeocode', ->
+      beforeEach ->
+        setupFakeApplicant()
+        ShortFormApplicationService.applicant = fakeApplicant
+        setupFakeHouseholdMember()
+        ShortFormApplicationService.householdMember = fakeHouseholdMember
+      afterEach ->
+        resetFakePeople()
+
+      callback = ->
+      member = null
+
+      _.each(['applicant', 'householdMember'], (memberType) ->
+        isPrimary = memberType == 'applicant'
+
+        describe "when the #{memberType} is indicated", ->
+          beforeEach ->
+            member = ShortFormApplicationService[memberType]
+
+          describe 'when the given response is empty', ->
+            it "sets the #{memberType}'s geocodingData to null", ->
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(member.geocodingData).toEqual null
+
+            it "sets the #{memberType}'s preferenceAddressMatch to null", ->
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(member.preferenceAddressMatch).toEqual null
+
+          describe 'when the given response has data', ->
+            it "sets the #{memberType}'s geocodingData to the response GIS data", ->
+              response = {gis_data: {foo: 'bar'}}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.geocodingData).toEqual response.gis_data
+
+            it "sets the #{memberType}'s preferenceAddressMatch to the right string value", ->
+              response = {gis_data: boundary_match: true}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual 'Matched'
+
+              response = {gis_data: boundary_match: false}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual 'Not Matched'
+
+              response = {gis_data: boundary_match: null}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual ''
+
+          it "calls Service.clearAddressRelatedProofForMember with the #{memberType}", ->
+            spyOn(ShortFormApplicationService, 'clearAddressRelatedProofForMember')
+            ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+            expect(ShortFormApplicationService.clearAddressRelatedProofForMember).toHaveBeenCalledWith(member)
+
+          if isPrimary
+            it 'calls Service.copyNeighborhoodMatchToHousehold', ->
+              spyOn(ShortFormApplicationService, 'copyNeighborhoodMatchToHousehold')
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(ShortFormApplicationService.copyNeighborhoodMatchToHousehold).toHaveBeenCalled()
+          else
+            it 'calls Service.addHouseholdMember with the householdMember', ->
+              spyOn(ShortFormApplicationService, 'addHouseholdMember')
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(ShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(member)
+      )
+
+      it 'calls Service.refreshPreferences with "all"', ->
+        spyOn(ShortFormApplicationService, 'refreshPreferences')
+        ShortFormApplicationService.afterGeocode(false, callback, {})
+        expect(ShortFormApplicationService.refreshPreferences).toHaveBeenCalledWith('all')
+
+      it 'calls the given callback function', ->
+        callback = jasmine.createSpy()
+        ShortFormApplicationService.afterGeocode(true, callback, {})
+        expect(callback).toHaveBeenCalled()
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
