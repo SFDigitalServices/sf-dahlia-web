@@ -14,11 +14,12 @@ div ng-controller="AccountController"
     p.c-steel
       | {{'CONFIRM_ACCOUNT.CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL' | translate}}
 
-    .button-stack.text-center.row.padding-top
-      .small-12.medium-6.columns
-        button.button.primary.right-on-medium translate="T.OK" ng-click="closeModal()"
-      .small-12.medium-6.columns
-        button.button.button-link.button-lined.small-text-center.left-on-medium ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
+  footer.modal-footer.bg-dust
+    .modal-button-group.row
+      .modal-button_item
+        button.button.primary.min-width translate="T.OK" ng-click="closeModal()"
+      .modal-button_item
+        button.button.tertiary ng-click="resendConfirmationEmail()" ng-disabled="resendDisabled"
           | {{'CONFIRM_ACCOUNT.RESEND_EMAIL' | translate}}
 
   ng-include src="'account/templates/partials/_modal_close.html'"
