@@ -52,11 +52,11 @@ do ->
     )
 
     describe 'getGISData', ->
-      describe 'when the attempt to get GIS data is successful', ->
-        afterEach ->
-          httpBackend.verifyNoOutstandingExpectation()
-          httpBackend.verifyNoOutstandingRequest()
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
 
+      describe 'when the attempt to get GIS data is successful', ->
         it 'returns a successful promise whose value contains valid geocoded address information', ->
           stubAngularAjaxRequest httpBackend, requestURL, fakeValidAddressMatchResult
           promise = GISService.getGISData(gisDataOptions)
@@ -67,10 +67,6 @@ do ->
           expect(result.value.gis_data.score).toEqual 100
 
         describe 'when a project ID is sent', ->
-          afterEach ->
-            httpBackend.verifyNoOutstandingExpectation()
-            httpBackend.verifyNoOutstandingRequest()
-
           describe 'when the address is a match', ->
             it 'returns a successful promise whose value contains a true boundary match', ->
               stubAngularAjaxRequest httpBackend, requestURL, fakeValidAddressMatchResult
@@ -102,10 +98,6 @@ do ->
               expect(result.value.gis_data.boundary_match).toEqual null
 
         describe 'when no project ID is sent', ->
-          afterEach ->
-            httpBackend.verifyNoOutstandingExpectation()
-            httpBackend.verifyNoOutstandingRequest()
-
           it 'returns a successful promise whose value contains a null boundary match', ->
             stubAngularAjaxRequest httpBackend, requestURL, fakeInvalidResult
             gisDataOptions.project_id = null
@@ -117,10 +109,6 @@ do ->
             expect(result.value.gis_data.boundary_match).toEqual null
 
       describe 'when the attempt to get GIS data encounters an error', ->
-        afterEach ->
-          httpBackend.verifyNoOutstandingExpectation()
-          httpBackend.verifyNoOutstandingRequest()
-
         it 'returns a successful promise whose value contains a null boundary match', ->
           stubAngularAjaxErrorRequest httpBackend, requestURL, {}
           promise = GISService.getGISData(gisDataOptions)

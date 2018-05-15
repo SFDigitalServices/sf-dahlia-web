@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-GISService = ($http, $q, ShortFormDataService) ->
+GISService = ($http, ShortFormDataService) ->
   Service = {}
 
   Service.getGISData = (options) ->
@@ -33,7 +33,7 @@ GISService = ($http, $q, ShortFormDataService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-GISService.$inject = ['$http', '$q', 'ShortFormDataService']
+GISService.$inject = ['$http', 'ShortFormDataService']
 
 angular
   .module('dahlia.services')
