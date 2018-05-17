@@ -28,6 +28,16 @@ module.exports = ->
   @When 'I submit the Name page with my account info', ->
     element(By.id('submit')).click()
 
+  @Then /^I should see details for "([^"]*)" with birth date "([^"]*)" on the Name page$/,
+    (fullName, birthDate) ->
+      account = Utils.Account.get(fullName)
+
+      Pages.Name.expectToMatch @, {
+        fullName: fullName
+        birthDate: birthDate
+        email: account.email
+      }
+
   @Then /^I should see the account info for "([^"]*)" filled in on the Name page$/, (fullName) ->
     account = Utils.Account.get(fullName)
 
@@ -80,7 +90,7 @@ module.exports = ->
   @Then 'I should see my address (NRHP match) on the Contact page', ->
     Pages.Contact.expectToMatch(@, {address1: '1222 HARRISON ST'})
 
-  @Then 'the contact page fields should be empty', ->
+  @Then 'the Contact page fields should be empty', ->
     [
       'applicant_phone',
       'applicant_phone_type',

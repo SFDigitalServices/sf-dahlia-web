@@ -1,11 +1,16 @@
-Utils = require('../../utils')
+Utils = require('../utils')
 
-shortFormPages = {
+pageUrls = {
   Name: 'apply/name'
   Contact: 'apply/contact'
+  'My Applications': 'my-applications'
 }
 
 module.exports = ->
+  @Given 'I go to the first page of the Senior Test Listing application', ->
+    url = "/listings/a0W0x000000GHiFEAW/apply-welcome/community-screening"
+    Utils.Page.goTo()
+
   @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
     while i > 0
@@ -18,8 +23,12 @@ module.exports = ->
   @When 'I continue my saved draft', ->
     Utils.Page.goTo('/continue-draft-sign-in/a0W0P00000F8YG4UAN')
 
+  @Then /^I should be on the "([^"]*)" page$/, (pageName) ->
+    urlFrag = pageUrls[pageName]
+    Utils.Expect.urlContains(urlFrag)
+
   @Then /^I should be on the "([^"]*)" page of the application$/, (pageName) ->
-    urlFrag = shortFormPages[pageName]
+    urlFrag = pageUrls[pageName]
     Utils.Expect.urlContains(urlFrag)
 
   @Then /^I should see a form alert that says "([^"]*)"$/, (message) ->
@@ -32,3 +41,6 @@ module.exports = ->
     browser.getCurrentUrl().then (currentUrl) ->
       element(By.cssContainingText('.progress-nav_item', sectionName)).click().then ->
         Utils.Expect.urlIs(currentUrl)
+
+  @Then /^I should see a modal that says "([^"]*)"$/, (modalContent) ->
+    Utils.Expect.byCss(@, '.modal-inner', modalContent)

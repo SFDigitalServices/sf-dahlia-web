@@ -22,12 +22,20 @@ class CreateAccountPage extends AngularPage
     }
 
   fill: (opts = {}) ->
-    firstName = opts.firstName || @defaults.firstName
-    middleName = opts.middleName
-    lastName = opts.lastName || @defaults.lastName
-    month = opts.month || @defaults.dobMonth
-    day = opts.day || @defaults.dobDay
-    year = opts.year || @defaults.dobYear
+    if opts.fullName
+      { firstName, middleName, lastName } = @extractNameParts(opts.fullName)
+    else
+      firstName = opts.firstName || @defaults.firstName
+      middleName = opts.middleName
+      lastName = opts.lastName || @defaults.lastName
+
+    if opts.birthDate
+      { month, day, year } = @extractDateParts(opts.birthDate)
+    else
+      month = opts.month || @defaults.dob_month
+      day = opts.day || @defaults.dob_day
+      year = opts.year || @defaults.dob_year
+
     email = opts.email
     password = opts.password
 

@@ -19,10 +19,7 @@ module.exports = ->
 
   @When /^I create an account for "([^"]*)"$/, (fullName) ->
     existingAccount = Utils.Account.get(fullName)
-    # console.log(existingAccount)
-
     account = if existingAccount then existingAccount else Utils.Account.create(fullName)
-    # console.log(account)
 
     AccountPages.Create.fill {
       fullName: account.fullName
@@ -55,5 +52,5 @@ module.exports = ->
         element(By.css('.reveal-modal button.primary')).click()
     )
 
-  @Then 'I should be logged in', ->
-    Utils.Expect.byCss(@, 'nav a[href="/my-account"]', 'My Account')
+  @Then 'I should be signed out', ->
+    Utils.Expect.byCss(@, '.nav-menu a[href="/sign-in"]', 'Sign In')
