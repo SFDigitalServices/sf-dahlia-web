@@ -738,6 +738,28 @@ do ->
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
             .toEqual(1)
 
+    describe 'resetApplicantUserData', ->
+      it 'resets applicant fields used for accounts', ->
+        ShortFormApplicationService.applicant =
+          firstName: 'Howdy'
+          middleName: 'Yoohoo'
+          lastName: 'Doody'
+          email: 'how@dy.com'
+          dob_month: '02'
+          dob_day: '02'
+          dob_year: '1900'
+
+        ShortFormApplicationService.resetApplicantUserData()
+        expect(ShortFormApplicationService.applicant).toEqual({
+          firstName: ''
+          middleName: ''
+          lastName: ''
+          email: ''
+          dob_month: ''
+          dob_day: ''
+          dob_year: ''
+        })
+
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
         beforeEach ->

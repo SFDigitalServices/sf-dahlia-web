@@ -78,6 +78,10 @@ ShortFormApplicationService = (
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
 
+  Service.applicantAccountFields = [
+    'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+  ]
+
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
 
   ## initialize other related services
@@ -888,16 +892,21 @@ ShortFormApplicationService = (
     Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
-    fields = [
-      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
-    ]
-    accountData = _.pick(loggedInUser, fields)
+    accountData = _.pick(loggedInUser, Service.applicantAccountFields)
     applicant = angular.copy(Service.applicant)
     # merge the data into applicant
     _.merge Service.applicant, accountData
     changed = !_.isEqual(Service.applicant, applicant)
     # return T/F if data was changed or not
     return changed
+
+  Service.resetApplicantUserData = ->
+    emptyAccountData = _.reduce Service.applicantAccountFields, (data, fieldKey) ->
+      data[fieldKey] = ''
+      data
+    , {}
+
+    _.merge Service.applicant, emptyAccountData
 
   Service.hasDifferentInfo = (applicant, loggedInUser) ->
     fields = [

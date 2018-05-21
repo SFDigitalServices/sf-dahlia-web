@@ -98,6 +98,7 @@ do ->
       claimedCustomPreference: jasmine.createSpy()
       resetApplicationData: ->
       hasDifferentInfo: ->
+      resetApplicantUserData: jasmine.createSpy()
       importUserData: jasmine.createSpy()
       cancelPreferencesForMember: jasmine.createSpy()
       resetCompletedSections: jasmine.createSpy()
@@ -710,12 +711,19 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
 
     describe 'chooseApplicantDetails', ->
+
       describe 'when user chooses to create account', ->
         it 'signs out user and sends them to create account page', ->
+          scope.applicant.id = 1
           scope.chosenAccountOption = 'createAccount'
           scope.chooseApplicantDetails()
           scope.$apply()
-          expect(fakeAccountService.signOut).toHaveBeenCalled()
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
+          expect(fakeShortFormApplicationService.storeLastPage).toHaveBeenCalledWith('name')
+          expect(fakeShortFormApplicationService.resetApplicantUserData).toHaveBeenCalled()
+          expect(fakeShortFormApplicationService.cancelPreferencesForMember)
+            .toHaveBeenCalledWith(scope.applicant.id)
+          expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
 
       describe 'when user chooses to continue as guest', ->
@@ -724,7 +732,7 @@ do ->
           scope.chosenAccountOption = 'continueAsGuest'
           scope.chooseApplicantDetails()
           scope.$apply()
-          expect(fakeAccountService.signOut).toHaveBeenCalledWith({preserveAppData: true})
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
 
       describe 'when user chooses to overwrite account info', ->

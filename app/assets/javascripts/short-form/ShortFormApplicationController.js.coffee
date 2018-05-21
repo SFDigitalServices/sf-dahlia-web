@@ -40,9 +40,6 @@ ShortFormApplicationController = (
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
   $scope.eligibilityErrors = ShortFormApplicationService.eligibilityErrors
-  # to do: check why scope.eligbility errors gets cleared when going to applicant details page
-  $scope.returnEligibilityErrors = ->
-    return ShortFormApplicationService.eligibilityErrors
   $scope.communityEligibilityErrorMsg = []
   $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
@@ -666,22 +663,30 @@ ShortFormApplicationController = (
     if ($scope.chosenAccountSettingsToKeep == 'account')
       ShortFormApplicationService.importUserData(AccountService.loggedInUser)
     ShortFormApplicationService.submitApplication().then( ->
-      AccountService.importApplicantData($scope.applicant)
+      AccountService.importApplicantData($scope.applicant,
+        ShortFormService.applicantAccountFields)
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
     )
 
   $scope.chooseApplicantDetails = ->
     if $scope.chosenAccountOption == 'createAccount'
-      AccountService.signOut()
+      AccountService.signOut({ preserveAppData: true })
+
+      # Return applicant to name page to review new account info
+      ShortFormApplicationService.storeLastPage('name')
+      ShortFormApplicationService.resetApplicantUserData()
+      ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
+      ShortFormApplicationService.resetCompletedSections()
+
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.create-account')
     else if $scope.chosenAccountOption == 'continueAsGuest'
-      opts = { preserveAppData: true }
-      AccountService.signOut(opts)
+      AccountService.signOut({ preserveAppData: true })
       $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.application.lastPage}")
     else if $scope.chosenAccountOption == 'overwriteWithAccountInfo'
       ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
       ShortFormApplicationService.resetCompletedSections()
+
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
 
   ## account service
@@ -885,16 +890,10 @@ ShortFormApplicationController = (
     #  used to be for address validation errors
     $scope.handleErrorState()
 
-  $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
-    # have to preserve potential senior eligibilityErrors when going to this page
-    unless toState.name == 'dahlia.short-form-application.choose-applicant-details'
-      # otherwise make sure to clear out all errors on page change
-      $scope.clearErrors()
-    $scope.onStateChangeSuccess(e, toState, toParams, fromState, fromParams)
-
   # separate this method out for better unit testing
   $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
-    $scope.clearErrors()
+    unless toState.name == 'dahlia.short-form-application.choose-applicant-details'
+      $scope.clearErrors()
     ShortFormNavigationService.isLoading(false)
     ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
@@ -902,11 +901,12 @@ ShortFormApplicationController = (
         ShortFormApplicationService.sendToLastPageofApp(toState)
     ShortFormApplicationService.storeLastPage(toState.name)
 
-  $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
-    $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)
+  $scope.$on '$stateChangeSuccess', $scope.onStateChangeSuccess
 
   $scope.stateChangeStart = (e, toState, toParams, fromState, fromParams) ->
     ShortFormApplicationService.setApplicationLanguage(toParams.lang)
+
+  $scope.$on '$stateChangeStart', $scope.stateChangeStart
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

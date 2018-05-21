@@ -48,10 +48,7 @@ AccountService = (
       })
     angular.copy(data, Service.loggedInUser)
 
-  Service.importApplicantData = (applicant) ->
-    fields = [
-      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
-    ]
+  Service.importApplicantData = (applicant, fields) ->
     # copy over all non-blank values e.g. omit middleName if null
     userData = _.omitBy(_.pick(applicant, fields), _.isNil)
     # merge the data into loggedInUser
