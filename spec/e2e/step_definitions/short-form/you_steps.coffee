@@ -45,7 +45,19 @@ module.exports = ->
       fullName: account.fullName
       birthDate: account.birthDate
       email: account.email
-    }, false
+    }
+
+  # Multi-line regex to make coffeelint happy
+  @Then new RegExp('^I should see the account info for "([^"]*)" ' +
+    'with birth date "([^"]*)" filled in on the Name page$'),
+    (fullName, birthDate) ->
+      account = Utils.Account.get(fullName)
+
+      Pages.Name.expectToMatch @, {
+        fullName: fullName
+        birthDate: birthDate
+        email: account.email
+      }
 
   @Then 'I should only by able to edit my info from account settings', ->
     [
@@ -65,30 +77,39 @@ module.exports = ->
   ######################
   # -- Contact Page -- #
   ######################
+
   @When 'I fill out the Contact page with a non-SF address, yes to WorkInSF', ->
-    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'yes'})
+    Pages.Contact.fill({
+      address1: '1120 Mar West G'
+      city: 'Tiburon'
+      workInSf: 'yes'
+    })
 
   @When 'I fill out the Contact page with a non-SF address, no WorkInSF', ->
-    Pages.Contact.fill({address1: '1120 Mar West G', city: 'Tiburon', workInSf: 'no'})
+    Pages.Contact.fill({
+      address1: '1120 Mar West G'
+      city: 'Tiburon'
+      workInSf: 'no'
+    })
 
   @When 'I fill out the Contact page with an address (non-NRHP match), no WorkInSF', ->
-    Pages.Contact.fill({workInSf: 'no'})
+    Pages.Contact.fill({ workInSf: 'no' })
 
   @When 'I fill out the Contact page with an address (non-NRHP match) and WorkInSF', ->
     Pages.Contact.fill()
 
   @When 'I fill out the Contact page with an address (NRHP match) and WorkInSF', ->
-    Pages.Contact.fill({address1: '1222 Harrison St.'})
+    Pages.Contact.fill({ address1: '1222 Harrison St.' })
 
   @When 'I fill out the Contact page with my address (NRHP match) and mailing address', ->
-    Pages.Contact.fill({address1: '1222 Harrison St.', address2: '#100', extra: true})
+    Pages.Contact.fill({ address1: '1222 Harrison St.', address2: '#100', extra: true })
 
   @When 'I confirm my address', ->
     element(By.id('confirmed_home_address_yes')).click()
     Utils.Page.submit()
 
   @Then 'I should see my address (NRHP match) on the Contact page', ->
-    Pages.Contact.expectToMatch(@, {address1: '1222 HARRISON ST'})
+    Pages.Contact.expectToMatch(@, { address1: '1222 HARRISON ST' })
 
   @Then 'the Contact page fields should be empty', ->
     [

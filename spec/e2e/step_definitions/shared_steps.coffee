@@ -1,15 +1,18 @@
 Utils = require('../utils')
 
 pageUrls = {
-  Name: 'apply/name'
-  Contact: 'apply/contact'
+  Name: 'name'
+  Contact: 'contact'
   'My Applications': 'my-applications'
 }
 
 module.exports = ->
   @Given 'I go to the first page of the Senior Test Listing application', ->
-    url = "/listings/a0W0x000000GHiFEAW/apply-welcome/community-screening"
-    Utils.Page.goTo()
+    url = "/listings/#{Utils.Page.seniorListingId}/apply-welcome/community-screening"
+    Utils.Page.goTo(url)
+
+  @When /^I go to the "([^"]*)" page$/, (pageName) ->
+    Utils.Page.goTo(pageUrls[pageName])
 
   @When /^I hit the Next button "([^"]*)" times?$/, (buttonClicks) ->
     i = parseInt(buttonClicks)
@@ -20,19 +23,25 @@ module.exports = ->
   @When 'I click the Save and Finish Later button', ->
     element(By.id('save_and_finish_later')).click()
 
-  @When 'I continue my saved draft', ->
-    Utils.Page.goTo('/continue-draft-sign-in/a0W0P00000F8YG4UAN')
+  @When 'I continue my saved draft for the Test Listing', ->
+    Utils.Page.goTo("/continue-draft-sign-in/#{Utils.Page.testListingId}")
+
+  @When 'I continue my saved draft for the Senior Test Listing', ->
+    Utils.Page.goTo("/continue-draft-sign-in/#{Utils.Page.seniorListingId}")
 
   @Then /^I should be on the "([^"]*)" page$/, (pageName) ->
     urlFrag = pageUrls[pageName]
     Utils.Expect.urlContains(urlFrag)
 
   @Then /^I should be on the "([^"]*)" page of the application$/, (pageName) ->
-    urlFrag = pageUrls[pageName]
+    urlFrag = "apply/#{pageUrls[pageName]}"
     Utils.Expect.urlContains(urlFrag)
 
   @Then /^I should see a form alert that says "([^"]*)"$/, (message) ->
     Utils.Expect.alertBox(@, message)
+
+  @Then /^I should see a form notice that says "([^"]*)"$/, (message) ->
+    Utils.Expect.alertNotice(@, message)
 
   @Then /^the application page title should be "([^"]*)"$/, (title) ->
     Utils.Expect.byCss(@, 'h2.app-card_question', title)

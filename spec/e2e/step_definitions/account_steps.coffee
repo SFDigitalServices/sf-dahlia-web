@@ -39,18 +39,28 @@ module.exports = ->
     AccountPages.SignIn.signInPrefilled(account.password)
 
   @When 'I sign out', ->
-    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click().then ->
-      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
+    element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account'))
+      .click().then ->
+        element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
 
   @When 'I sign out without saving', ->
     element(By.cssContainingText('a[dropdown-toggle="#my-account-dropdown"]', 'My Account')).click()
-    .then(
-      ->
-        element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
-    ).then(
-      ->
-        element(By.css('.reveal-modal button.primary')).click()
-    )
+    .then ->
+      element(By.cssContainingText('#my-account-dropdown a', 'Sign Out')).click()
+    .then Utils.Page.confirmModal
+
+  @When /^I delete my application for the "([^"]*)"$/, (listing) ->
+    listingId = switch listing
+      when 'Test Listing'
+        Utils.Page.testListingId
+      when 'Senior Test Listing'
+        Utils.Page.seniorListingId
+
+    element(By.cssContainingText("a[href=\"/listings/#{listingId}\"] + .button-link", 'Delete'))
+      .click().then Utils.Page.confirmModal
+
+  @Then 'I should be signed in', ->
+    Utils.Expect.byCss(@, 'nav a[href="/my-account"]', 'My Account')
 
   @Then 'I should be signed out', ->
     Utils.Expect.byCss(@, '.nav-menu a[href="/sign-in"]', 'Sign In')

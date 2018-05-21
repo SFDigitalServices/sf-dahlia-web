@@ -6,9 +6,13 @@ ExpectUtil = {
     # make it case-insensitive to account for text transforms
     el.getText().then (elText) ->
       context.expect(elText.toLowerCase()).to.contain(text.toLowerCase())
-  alertBox: (context, errorText = "You'll need to resolve any errors") ->
-    alertBox = element(By.cssContainingText('.alert-box', errorText))
-    context.expect(alertBox.isPresent()).to.eventually.equal(true)
+  alert: (context, message, className) ->
+    alert = element(By.cssContainingText(className, message))
+    context.expect(alert.isPresent()).to.eventually.equal(true)
+  alertBox: (context, message = "You'll need to resolve any errors") ->
+    ExpectUtil.alert(context, message, '.alert-box')
+  alertNotice: (context, message) ->
+    ExpectUtil.alert(context, message, '.alert-notice')
   emptyField: (context, id) ->
     el = element(By.id(id))
     context.expect(el.getAttribute('value')).to.eventually.equal('')

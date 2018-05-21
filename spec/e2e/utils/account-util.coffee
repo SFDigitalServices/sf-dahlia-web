@@ -11,7 +11,7 @@ Account = {
     PageUtil.goTo(url)
     browser.ignoreSynchronization = false
   _accounts: {},
-  create: (fullName, birthDate = '1/1/1900') ->
+  create: (fullName, birthDate = '1/1/1902') ->
     Account._accounts[fullName] = {
       fullName: fullName
       email: chance.email()

@@ -2,7 +2,7 @@
 Utils = require('../../utils')
 
 module.exports = ->
-  @When 'I choose to continue the saved draft', ->
+  @When 'I choose to continue my saved draft', ->
     element(By.id('continue-previous-draft')).click()
 
   @When 'I choose to start from scratch', ->

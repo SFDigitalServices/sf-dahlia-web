@@ -4,7 +4,47 @@ Feature: Sign-in while filling out application
   In order to associate my application with my account and reconcile any previous applications
 
   Scenario: Setting up an account for sign in while applying tests
+    # Birth date indicates < 65 years old for senior building tests
     Given I have a confirmed account for "Alice Walker" with birth date "1/1/2000"
+
+  ###################################
+  ### Applying to senior building ###
+  ###################################
+
+  Scenario: Signing in on the welcome back page when my account DOB disqualifies me and creating a new account
+    Given I go to the first page of the Senior Test Listing application
+    And I answer yes to the community screening question
+    And I hit the Next button "1" time
+    # Email for existing account, but a different birth date than in account settings
+    # to qualify for senior listing
+    And I fill out the Name page as "Alice Walker" with birth date "1/1/1900"
+    And I sign in as "Alice Walker" with my email pre-filled
+    Then I should see a form notice that says "Everyone in your household must be a Senior"
+
+    When I choose to reconcile my application details by creating a new account
+    Then I should be signed out
+    And I should see a form alert that says "Create a new account with a different email address and you won't lose any of the information you've entered so far"
+
+    When I create an account for "Octavia Butler"
+    And I continue my saved draft for the Senior Test Listing
+    And I sign in as "Octavia Butler"
+    Then I should be on the "Name" page of the application
+    And I should see the account info for "Octavia Butler" filled in on the Name page
+    And I sign out without saving
+
+  Scenario: Signing in on the welcome back page when my account DOB disqualifies me and continuing anonymously
+    Given I go to the first page of the Senior Test Listing application
+    And I answer yes to the community screening question
+    And I hit the Next button "1" time
+    # Email for existing account, but a different birth date than in account settings
+    # to qualify for senior listing
+    And I fill out the Name page as "Alice Walker" with birth date "1/1/1900"
+    And I sign in as "Alice Walker" with my email pre-filled
+    Then I should see a form notice that says "Everyone in your household must be a Senior"
+
+    When I choose to reconcile my application details by continuing without an account
+    Then I should be on the "Name" page of the application
+    And I should see the account info for "Alice Walker" with birth date "1/1/1900" filled in on the Name page
 
   ########################################
   ### User does not have a saved draft ###
@@ -17,8 +57,12 @@ Feature: Sign-in while filling out application
     When I sign in as "Alice Walker" with my email pre-filled
     Then I should be signed in
     And I should be on the "Name" page of the application
-    And I should see the account info for "Alice Walker" filled in on the Name page
     And I should only by able to edit my info from account settings
+    And I should see the account info for "Alice Walker" filled in on the Name page
+
+    # Delete my automatically saved application for the next test
+    When I go to the "My Applications" page
+    And I delete my application for the "Test Listing"
     And I sign out
 
   Scenario: Signing in on the welcome back page with different account details
@@ -35,16 +79,16 @@ Feature: Sign-in while filling out application
     And I click the Save and Finish Later button
     And I sign out
 
-  #########################################
-  ### User has a previously saved draft ###
-  #########################################
+  ########################################
+  ## User has a previously saved draft ###
+  ########################################
 
   Scenario: Signing in on welcome back page with draft application and continuing draft
     Given I go to the first page of the Test Listing application
     And I fill out the Name page as "Alice Walker"
     And I sign in as "Alice Walker" with my email pre-filled
     Then the application page title should be "Pick up where you left off"
-    When I choose to continue the saved draft
+    When I choose to continue my saved draft
     Then I should be on the "Contact" page of the application
     And I should see my address (NRHP match) on the Contact page
     And I sign out without saving
@@ -60,28 +104,52 @@ Feature: Sign-in while filling out application
     Then the Contact page fields should be empty
     And I sign out without saving
 
-  Scenario: Signing in to save and finish later with different account details and choosing to create a new account
+  Scenario: Signing in to save and finish later with different account details and creating a new account
     Given I go to the first page of the Test Listing application
     # different birth date than in account settings
     When I fill out the Name page as "Alice Walker" with birth date "3/3/1953"
     And I continue without signing in
+    And I fill out the Contact page with an address (NRHP match) and WorkInSF
+    And I confirm my address
+    And I don't indicate an alternate contact
+    And I indicate I will live alone
+    And I indicate living in public housing
+    And I indicate no ADA priority
+    And I indicate having vouchers
+    And I fill out my income as "50000"
+    # Preferences
+    And I continue past the Lottery Preferences intro
+    And I select Assisted Housing Preference
+    And I select "Alice Walker" for "assistedHousing" preference
+    And I upload a Copy of Lease as my proof for Assisted Housing
     And I click the Save and Finish Later button
     And I click the Sign In button
-    When I sign in as "Alice Walker" with my email pre-filled
+    And I sign in as "Alice Walker" with my email pre-filled
     And I select my recent application and submit
     And I choose to reconcile my application details by creating a new account
     Then I should be signed out
     And I should see a form alert that says "Create a new account with a different email address and you won't lose any of the information you've entered so far"
+
     When I create an account for "Alice Walker"
     Then I should see a form alert that says "Email is already in use"
+
     When I create an account for "Harper Lee"
-    And I continue my saved draft
+    And I continue my saved draft for the Test Listing
     And I sign in as "Harper Lee"
     Then I should be on the "Name" page of the application
+    And I should only by able to edit my info from account settings
+    And I should not be able to navigate to the "Income" section
+    And I should not be able to navigate to the "Preferences" section
     And I should see the account info for "Harper Lee" filled in on the Name page
+    And I should see my address (NRHP match) on the Contact page
+
+    When I hit the Next button "1" time
+    And I indicate I will live alone
+    And I hit the Next button "5" times
+    Then I should see the "assistedHousing" checkbox un-checked
     And I sign out without saving
 
-  Scenario: Signing in to save and finish later while different account details and choosing to continue anonymously
+  Scenario: Signing in to save and finish later while different account details and continuing anonymously
     Given I go to the first page of the Test Listing application
     # different birth date than in account settings
     When I fill out the Name page as "Alice Walker" with birth date "4/4/1954"
@@ -95,7 +163,7 @@ Feature: Sign-in while filling out application
     And I should be on the "Contact" page of the application
     And the Contact page fields should be empty
 
-  Scenario: Signing in to save and finish later with different account details and choosing to use new application
+  Scenario: Signing in to save and finish later with different account details and using new application
     Given I go to the first page of the Test Listing application
     # different birth date than in account settings
     When I fill out the Name page as "Alice Walker" with birth date "2/2/1952"
@@ -123,12 +191,12 @@ Feature: Sign-in while filling out application
 
     When I choose to reconcile my application details by changing them to match my account details
     Then I should be on the "Name" page of the application
-    And I should see the account info for "Alice Walker" filled in on the Name page
     And I should only by able to edit my info from account settings
     And I should not be able to navigate to the "Income" section
     And I should not be able to navigate to the "Preferences" section
+    And I should see the account info for "Alice Walker" filled in on the Name page
 
-    When I hit the Next button "3" times
+    When I hit the Next button "2" times
     And I indicate I will live alone
     And I hit the Next button "5" times
     Then I should see the "assistedHousing" checkbox un-checked
@@ -143,49 +211,13 @@ Feature: Sign-in while filling out application
     And I agree to the terms and submit
     And I sign out without saving
 
-  ###################################################
-  ### User has a previously submitted application ###
-  ###################################################
+  # ###################################################
+  # ### User has a previously submitted application ###
+  # ###################################################
 
-  Scenario: Signing in to save and finish later with already submitted application
+  Scenario: Signing in to save and finish later with an already submitted application
     Given I go to the first page of the Test Listing application
     When I fill out the Name page as "Alice Walker"
     And I sign in as "Alice Walker" with my email pre-filled
     Then I should be on the "My Applications" page
     And I should see a modal that says "You have already submitted an application to this listing."
-
-  #######################################################
-  ### Applying to senior building (different listing) ###
-  #######################################################
-
-  Scenario: Signing in on the welcome back page when my account DOB disqualifies me and creating a new account
-    Given I go to the first page of the Senior Test Listing application
-    And I answer yes to the community screening question
-    And I hit the Next button "1" time
-    # different birth date than in account settings to qualify for listing
-    And I fill out the Name page as "Alice Walker" with birth date "1/1/1900"
-    And I sign in as "Alice Walker" with my email pre-filled
-
-
-
-# Sign-in when my account DOB disqualifies me and create new account
-
-# User has an account with a DOB that makes them younger than 55
-# User starts an anonymous application for a senior building that requires all application members to be seniors
-# User signs in on the "welcome back" page
-# User should see two choices "create a new account" or "continue filling out application anonymously"
-# Choose sign out and create new account
-# User should go to create new account page and see a message about choosing a different email
-# User should see an error if they choose the same email
-# When user creates an account, the should go back to their application
-# They should see the email on the "You" page has changed to use the new email they just registered with
-
-
-# Sign-in when my account DOB disqualifies me and continue anonymously
-
-# User has an account with a DOB that makes them younger than 55
-# User starts an anonymous application for a senior building that requires all application members to be seniors
-# User signs in on the "welcome back" page
-# User should see two choices "create a new account" or "continue filling out application anonymously"
-# User chooses to sign out and continue anonymously
-# User should be on the second page of the application to enter their contact details
