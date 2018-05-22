@@ -276,7 +276,7 @@ ShortFormApplicationController = (
     $scope.copyHomeToMailingAddress()
 
   $scope.checkIfAddressVerificationNeeded = ->
-    if $scope.applicant.preferenceAddressMatch != null && $scope.application.validatedForms.You['verify-address'] != false
+    if !_.isNil($scope.applicant.preferenceAddressMatch) && $scope.application.validatedForms.You['verify-address'] != false
       # skip ahead if their current address has already been confirmed.
       # $scope.applicant.preferenceAddressMatch is 'Matched', 'Not Matched',
       # or '' if address already confirmed, or is null if not already confirmed
@@ -470,7 +470,7 @@ ShortFormApplicationController = (
       return
     else
       $scope.clearEligibilityErrors()
-    if noAddress || $scope.householdMember.preferenceAddressMatch != null
+    if noAddress || !_.isNil($scope.householdMember.preferenceAddressMatch)
       # addHouseholdMember and skip ahead if they aren't filling out an address
       # or their current address has already been confirmed
       ShortFormApplicationService.addHouseholdMember($scope.householdMember)
