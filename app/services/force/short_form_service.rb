@@ -76,16 +76,23 @@ module Force
     def self.attach_file(application, file, filename)
       headers = { Name: filename, 'Content-Type' => file.content_type }
       endpoint = "/shortForm/Attachment/#{application['id']}"
-      body = {
+      file_body = Base64.encode64(file.file)
+
+      post_body = {
         fileName: filename,
         DocumentType: file.document_type,
-        Body: Base64.encode64(file.file),
         ApplicationId: application['id'],
         ApplicationMemberID: _short_form_pref_member_id(application, file),
         ApplicationPreferenceID: _short_form_pref_id(application, file),
       }
-      Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: #{body}"
-      Request.new.post_with_headers(endpoint, body, headers)
+
+      # log just first few chars of file_body; otherwise will take up many log lines
+      truncated_file_body = file_body ? "#{file_body[0, 20]}..." : ''
+      Rails.logger.info "Api::V1::ShortFormService.attach_file Parameters: \
+        #{post_body.merge(Body: truncated_file_body)}"
+
+      post_body[:Body] = file_body
+      Request.new.post_with_headers(endpoint, post_body, headers)
     end
 
     def self.queue_file_attachments(application_id, files)
