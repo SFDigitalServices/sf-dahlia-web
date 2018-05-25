@@ -168,11 +168,18 @@
         'container@':
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
-      onEnter: ['AccountService', (AccountService) ->
+      onEnter: ['$state', 'AccountService', ($state, AccountService) ->
+        reconcilingAccountDetails =
+          $state.current.name == 'dahlia.short-form-application.choose-applicant-details'
+
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
-        AccountService.copyApplicantFields()
-        AccountService.lockCompletedFields()
+        AccountService.copyApplicantFields('applicant', { excludeEmail: reconcilingAccountDetails })
+
+        if reconcilingAccountDetails
+          AccountService.unlockFields()
+        else
+          AccountService.lockCompletedFields()
       ]
       resolve:
         $title: ['$translate', ($translate) ->

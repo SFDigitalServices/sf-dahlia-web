@@ -897,14 +897,6 @@ ShortFormApplicationService = (
     # return T/F if data was changed or not
     return changed
 
-  Service.resetApplicantUserData = ->
-    emptyAccountData = _.reduce Service.applicantAccountFields, (data, fieldKey) ->
-      data[fieldKey] = ''
-      data
-    , {}
-
-    _.merge Service.applicant, emptyAccountData
-
   Service.hasDifferentInfo = (applicant, loggedInUser) ->
     fields = [
       'email', 'firstName', 'middleName', 'lastName'

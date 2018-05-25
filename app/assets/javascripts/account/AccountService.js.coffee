@@ -255,16 +255,19 @@ AccountService = (
     return false if !Service.loggedIn()
     _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
-  Service.copyApplicantFields = (from = 'applicant')->
+  Service.copyApplicantFields = (from = 'applicant', opts = {}) ->
     if from == 'applicant'
       user = ShortFormApplicationService.applicant
     else
       user = Service.loggedInUser
+
     contactInfo = _.pick user,
       ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
-    userInfo = _.pick user, ['email']
     angular.copy(contactInfo, Service.userAuth.contact)
-    angular.copy(userInfo, Service.userAuth.user)
+
+    unless opts.excludeEmail
+      userInfo = _.pick user, ['email']
+      angular.copy(userInfo, Service.userAuth.user)
 
   Service.lockCompletedFields = ->
     a = ShortFormApplicationService.applicant

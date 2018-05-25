@@ -720,7 +720,6 @@ do ->
           scope.$apply()
           expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
           expect(fakeShortFormApplicationService.storeLastPage).toHaveBeenCalledWith('name')
-          expect(fakeShortFormApplicationService.resetApplicantUserData).toHaveBeenCalled()
           expect(fakeShortFormApplicationService.cancelPreferencesForMember)
             .toHaveBeenCalledWith(scope.applicant.id)
           expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
