@@ -10,7 +10,7 @@ class Name extends AngularPage
     @dobYear = element(By.model('applicant.dob_year'))
     @email = element(By.model('applicant.email'))
 
-    @defaults =
+    @defaults = {
       firstName: 'Jane'
       middleName: 'Valerie'
       lastName: 'Doe'
@@ -18,6 +18,7 @@ class Name extends AngularPage
       dob_day: '22'
       dob_year: '1990'
       formattedDOB: '2/22/1990'
+    }
 
   fill: (opts = {}) ->
     if opts.fullName
@@ -43,7 +44,7 @@ class Name extends AngularPage
     @email.clear().sendKeys(opts.email) if opts.email
     @submitPage()
 
-  expectToMatch: (context, opts = {}, submit = true) ->
+  expectToMatch: (context, opts = {}) ->
     if opts.fullName
       { firstName, middleName, lastName } = @extractNameParts(opts.fullName)
     else
@@ -65,8 +66,14 @@ class Name extends AngularPage
     context.expect(@dobDay.getAttribute('value')).to.eventually.equal(day)
     context.expect(@dobYear.getAttribute('value')).to.eventually.equal(year)
     context.expect(@email.getAttribute('value')).to.eventually.equal(opts.email)
-    @submitPage() if submit
+    @submitPage()
 
+  expectNameToMatch: (context, name) ->
+    { firstName, middleName, lastName } = @extractNameParts(name)
+
+    context.expect(@firstName.getAttribute('value')).to.eventually.equal(firstName)
+    context.expect(@middleName.getAttribute('value')).to.eventually.equal(middleName) if middleName
+    context.expect(@lastName.getAttribute('value')).to.eventually.equal(lastName)
 
 
 module.exports.Name = Name

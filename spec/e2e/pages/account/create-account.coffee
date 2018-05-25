@@ -51,4 +51,10 @@ class CreateAccountPage extends AngularPage
     @passwordConfirmation.clear().sendKeys(password)
     @submitPage()
 
+  prefilled: (opts = {}) ->
+    @emailConfirmation.clear().sendKeys(opts.email)
+    @password.clear().sendKeys(opts.password)
+    @passwordConfirmation.clear().sendKeys(opts.password)
+    @submitPage()
+
 module.exports = new CreateAccountPage

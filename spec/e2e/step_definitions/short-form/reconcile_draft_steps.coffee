@@ -2,6 +2,12 @@
 Utils = require('../../utils')
 
 module.exports = ->
+  @When 'I select my original application and submit', ->
+    element(By.id('choose_draft_original')).click().then Utils.Page.submit
+
+  @When 'I select my recent application and submit', ->
+    element(By.id('choose_draft_recent')).click().then Utils.Page.submit
+
   @When 'I choose to continue my saved draft', ->
     element(By.id('continue-previous-draft')).click()
 
@@ -26,3 +32,6 @@ module.exports = ->
     your current account settings. What would you like to do?"
     el = element(By.cssContainingText('h1', text))
     @expect(el.isPresent()).to.eventually.equal(true)
+
+  @Then 'I should be on the Choose Draft page', ->
+    Utils.Expect.alertBox(@, 'Please choose which version of the application you want to use.')

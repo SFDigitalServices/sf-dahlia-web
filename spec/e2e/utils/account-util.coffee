@@ -20,6 +20,10 @@ Account = {
     }
   get: (fullName) ->
     Account._accounts[fullName]
+  getOrCreate: (fullName, birthDate) ->
+    account = Account.get(fullName)
+    return account if account
+    Account.create(fullName, birthDate)
 }
 
 module.exports = Account
