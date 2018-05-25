@@ -33,6 +33,8 @@ AccountService = (
   Service.rememberShortFormState = (name, params) ->
     Service.rememberedShortFormState = name
 
+  Service.showEmailInUseMessage = false
+
   Service.loggedIn = ->
     return false if !Service.loggedInUser
     !_.isEmpty(Service.loggedInUser) && Service.loggedInUser.signedIn

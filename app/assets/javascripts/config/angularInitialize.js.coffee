@@ -151,30 +151,42 @@
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
+
       # remember which page of short form we're on when we go to create account
       if (fromState.name.indexOf('short-form-application') >= 0 &&
         fromState.name != 'dahlia.short-form-application.confirmation' &&
         toState.name == 'dahlia.short-form-application.create-account' &&
-        fromState.name != 'dahlia.short-form-application.sign-in')
+        fromState.name != 'dahlia.short-form-application.sign-in' &&
+        fromState.name != 'dahlia.short-form-application.choose-applicant-details')
           AccountService.rememberShortFormState(fromState.name)
+
       if (fromState.name == 'dahlia.short-form-application.confirmation')
         # clear out remembered state when coming from confirmation
         AccountService.rememberShortFormState(null)
+
       if (toState.name == 'dahlia.short-form-application.welcome-back')
         # always remember the welcome-back page when we go to it (mainly for supporting "forgot pw")
         AccountService.rememberShortFormState(toState.name)
+
       if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
          toState.name == 'dahlia.short-form-application.create-account')
         # reconciling a draft by creating account show diff email address alert
-        AccountService.rememberShortFormState(fromState.name)
-      if (fromState.name == 'dahlia.short-form-review' && toState.name != 'dahlia.short-form-review')
-        # Clear out application when leaving the application review page, unless going to
-        # the review page (e.g. when switching languages on that page). We used to have this
-        # in the dahlia.short-form-review state's onExit, but that caused a problem when going
-        # from that state to itself. onExit gets called after the next state is already
-        # entered and resolving, so clearing the application in onExit was wiping out the
-        # application data we just loaded in the dahlia.short-form-review state's resolve.
-        ShortFormApplicationService.resetApplicationData()
+        AccountService.showEmailInUseMessage = true
+        # Continue with Application goes to name page since we wipe out name/email/dob
+        # before creating and account
+        AccountService.rememberShortFormState('dahlia.short-form-application.name')
+      else
+        AccountService.showEmailInUseMessage = false
+
+      if (fromState.name == 'dahlia.short-form-review' &&
+        toState.name != 'dahlia.short-form-review')
+          # Clear out application when leaving the application review page, unless going to
+          # the review page (e.g. when switching languages on that page). We used to have this
+          # in the dahlia.short-form-review state's onExit, but that caused a problem when going
+          # from that state to itself. onExit gets called after the next state is already
+          # entered and resolving, so clearing the application in onExit was wiping out the
+          # application data we just loaded in the dahlia.short-form-review state's resolve.
+          ShortFormApplicationService.resetApplicationData()
 
       ExternalTranslateService.setLanguage(toParams.lang)
       ExternalTranslateService.loadAPI().then ->

@@ -11,6 +11,7 @@ AccountController = (
   inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
+  $scope.showEmailInUseMessage = AccountService.showEmailInUseMessage
   $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
