@@ -13,7 +13,12 @@ Feature: Sign-in while filling out application
 
     Scenario: Signing in on the welcome back page when my account DOB disqualifies me and creating a new account
         Given I go to the first page of the "Senior Test Listing" application
-        And I answer yes to the community screening question
+        When I answer "No" to the community screening question
+        Then I should see a form notice that says "Everyone in your household must be a Senior"
+
+        When I wait "1" seconds
+        And I answer "Yes" to the community screening question
+        # Continue past welcome page
         And I hit the Next button "1" time
         # Email for existing account, but a different birth date than in account settings to qualify for senior listing
         And I fill out the Name page as "Alice Walker" with birth date "1/1/1900"
@@ -33,7 +38,7 @@ Feature: Sign-in while filling out application
 
     Scenario: Signing in on the welcome back page when my account DOB disqualifies me and continuing anonymously
         Given I go to the first page of the "Senior Test Listing" application
-        And I answer yes to the community screening question
+        When I answer "Yes" to the community screening question
         And I hit the Next button "1" time
         # Email for existing account, but a different birth date than in account settings to qualify for senior listing
         And I fill out the Name page as "Alice Walker" with birth date "1/1/1900"
@@ -41,8 +46,7 @@ Feature: Sign-in while filling out application
         Then I should see a form notice that says "Everyone in your household must be a Senior"
 
         When I choose to reconcile my application details by continuing without an account
-        Then I should be on the "Name" page of the application
-        And I should see the account info for "Alice Walker" with birth date "1/1/1900" filled in on the Name page
+        Then I should be on the "Contact" page of the application
 
 
     ### User does not have a saved draft ###
@@ -199,11 +203,11 @@ Feature: Sign-in while filling out application
         Then I should be on a page to reconcile my application details
 
         When I choose to reconcile my application details by changing them to match my account details
-        Then I should be on the "Name" page of the application
-        And I should only by able to edit my info from account settings
+        Then I should be on the "Contact" page of the application
         And I should not be able to navigate to the "Income" section
         And I should not be able to navigate to the "Preferences" section
-        And I should see the account info for "Alice Walker" filled in on the Name page
+        When I navigate to the "You" section
+        Then I should see the account info for "Alice Walker" filled in on the Name page
 
         When I hit the Next button "2" times
         And I indicate I will live alone
