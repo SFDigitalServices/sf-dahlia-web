@@ -4,9 +4,9 @@ Utils = require('../../utils')
 module.exports = ->
   @When 'I continue past the Lottery Preferences intro', Utils.Page.submit
 
-  @When 'I submit my preferences', -> Utils.Page.submit
+  @When 'I submit my preferences', Utils.Page.submit
 
-  @When 'I continue past the general lottery notice page', -> Utils.Page.submit
+  @When 'I continue past the general lottery notice page', Utils.Page.submit
 
   @When /^I select "([^"]*)" for "([^"]*)" preference$/, (fullName, preference) ->
     prefCheckboxId = "preferences-#{preference}"
