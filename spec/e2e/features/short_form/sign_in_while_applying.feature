@@ -114,12 +114,24 @@ Feature: Sign-in while filling out application
         Then I should land on the My Applications page
         And I sign out
 
-    Scenario: Signing in to save and finish later with different account details and creating a new account
+    Scenario: Signing in to save and finish later while different account details and continuing anonymously
         Given I go to the first page of the "Test Listing" application
         # different birth date than in account settings
-        When I fill out the Name page as "Alice Walker" with birth date "3/3/1953"
+        When I fill out the Name page as "Alice Walker" with birth date "4/4/1954"
         And I continue without signing in
-        And I fill out the Contact page with an address (NRHP match) and WorkInSF
+        And I click the Save and Finish Later button
+        And I click the Sign In button
+        When I sign in as "Alice Walker" with my email pre-filled
+        And I select my recent application and submit
+        And I choose to reconcile my application details by continuing without an account
+        Then I should be signed out
+        And I should be on the "Contact" page of the application
+        # Contact fields should be blank, unlike saved application
+        And the Contact page fields should be empty
+
+    Scenario: Signing in to save and finish later with different account details and creating a new account
+        # Already started with anonymous application in previous test
+        When I fill out the Contact page with an address (NRHP match) and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -127,6 +139,7 @@ Feature: Sign-in while filling out application
         And I indicate no ADA priority
         And I indicate having vouchers
         And I fill out my income as "50000"
+
         # Preferences
         And I continue past the Lottery Preferences intro
         And I select Assisted Housing Preference
@@ -158,20 +171,6 @@ Feature: Sign-in while filling out application
         And I hit the Next button "5" times
         Then I should see the "assistedHousing" checkbox un-checked
         And I sign out without saving
-
-    Scenario: Signing in to save and finish later while different account details and continuing anonymously
-        Given I go to the first page of the "Test Listing" application
-        # different birth date than in account settings
-        When I fill out the Name page as "Alice Walker" with birth date "4/4/1954"
-        And I continue without signing in
-        And I click the Save and Finish Later button
-        And I click the Sign In button
-        When I sign in as "Alice Walker" with my email pre-filled
-        And I select my recent application and submit
-        And I choose to reconcile my application details by continuing without an account
-        Then I should be signed out
-        And I should be on the "Contact" page of the application
-        And the Contact page fields should be empty
 
     Scenario: Signing in to save and finish later with different account details and using new application
         Given I go to the first page of the "Test Listing" application
