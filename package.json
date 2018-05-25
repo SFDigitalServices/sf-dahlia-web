@@ -1,7 +1,6 @@
 {
     "author": "Exygy",
-    "description":
-        "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
+    "description": "DAHLIA is the affordable housing portal for the City and County of San Francisco.",
     "license": "GPL-3.0",
     "dependencies": {
         "bower": "1.8.2"
@@ -30,17 +29,19 @@
     },
     "scripts": {
         "postinstall": "bower install",
-        "webdriver-start":
-            "./node_modules/protractor/bin/webdriver-manager start",
-        "webdriver-update":
-            "./node_modules/protractor/bin/webdriver-manager update",
-        "protractor":
-            "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
-        "saucelabs":
-            "./node_modules/protractor/bin/protractor spec/e2e/conf-saucelabs.js"
+        "webdriver-start": "./node_modules/protractor/bin/webdriver-manager start",
+        "webdriver-update": "./node_modules/protractor/bin/webdriver-manager update",
+        "protractor": "./node_modules/protractor/bin/protractor spec/e2e/conf.js",
+        "saucelabs": "./node_modules/protractor/bin/protractor spec/e2e/conf-saucelabs.js"
     },
-    "cacheDirectories": ["node_modules", "lib/assets/bower_components"],
-    "keywords": ["angular", "rails"],
+    "cacheDirectories": [
+        "node_modules",
+        "lib/assets/bower_components"
+    ],
+    "keywords": [
+        "angular",
+        "rails"
+    ],
     "name": "sf-dahlia-web",
     "repository": {
         "type": "git",
