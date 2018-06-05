@@ -234,7 +234,6 @@
       views:
         'container@':
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()

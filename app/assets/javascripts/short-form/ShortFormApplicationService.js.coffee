@@ -166,6 +166,7 @@ ShortFormApplicationService = (
         'choose-applicant-details',
         'continue-previous-draft',
         'welcome-back',
+        'sign-in',
       ], lastPage)
     # don't save the fact that we're in the middle of verifying address, can end up in a weird state
     if lastPage == 'verify-address'
@@ -782,67 +783,16 @@ ShortFormApplicationService = (
         Service.loadApplication(data)
     )
 
-  Service.signInSubmitApplication = (opts = {}) ->
-    # check if this user has already applied to this listing
-    Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
-      if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
-        # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data, opts)
-      changed = null
-      if Service.application.status.match(/draft/i)
-        if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
-          # ... then store this setting and kick them to the new page
-          Service.addSeniorEligibilityError()
-          return $state.go('dahlia.short-form-application.choose-applicant-details')
-        else
-          # make sure short form data inherits logged in user data
-          changed = Service.importUserData(opts.loggedInUser)
-      Service.submitApplication(opts).then( ->
-        opts.submitCallback(changed)
-      )
-    ).error( ->
-      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
-      $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
-    )
-
-  Service._signInAndSkipSubmit = (previousApplicationData, opts) ->
-    previousApplication = previousApplicationData.application
-    if (previousApplication.status.match(/submitted/i))
-      # they've already submitted -- send them to "my applications", either with:
-      # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
-      # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
-      doubleSubmit = !! Service.application.status.match(/submitted/i)
-      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
-    else
-      if Service.applicantDoesNotMeetSeniorRequirements(opts.loggedInUser)
-        # ... then store this setting and kick them to the new page
-        Service.addSeniorEligibilityError()
-        $state.go('dahlia.short-form-application.choose-applicant-details')
-      else if $state.current.name == 'dahlia.short-form-application.welcome-back'
-        # in this special case, we send them to a unique "autofill-like" page showing their previous draft
-        # we store whatever they had for primaryApplicant as it's about to be overwritten
-        overwrittenApplicantInfo = angular.copy(Service.applicant)
-        # we also override their current "draft" since it's basically blank
-        Service.loadApplication(previousApplicationData)
-        angular.copy(overwrittenApplicantInfo, Service.application.overwrittenApplicantInfo)
-        Service.resetCompletedSections()
-        $state.go('dahlia.short-form-application.continue-previous-draft')
-      else
-        # send them to choose which draft they want to keep
-        $state.go('dahlia.short-form-application.choose-draft')
-
-  Service._previousIsSubmittedOrBothDrafts = (previousApplication) ->
-    previousApplication.status.match(/submitted/i) || (
-      previousApplication.status.match(/draft/i) &&
-      Service.application.status.match(/draft/i)
-    )
-
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
     Service.application.id = Service.accountApplication.id
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()
+
+  Service.resetAndReplaceApp = ->
+    Service.resetApplicationData({ id: Service.application.id })
+    $state.go('dahlia.short-form-application.name')
 
   Service.loadApplication = (data) ->
     formattedApp = {}
