@@ -774,80 +774,80 @@ ShortFormApplicationController = (
       AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
-    $scope.afterSignInWhileApplying = ->
-      if (ShortFormApplicationService
-          .applicantDoesNotMeetSeniorRequirements(AccountService.loggedInUser)
-      )
-        # log user out to either create account or continue anonymously
-        AccountService.signOut({ preserveAppData: true })
-        ShortFormApplicationService.addSeniorEligibilityError()
-        return $state.go('dahlia.short-form-application.choose-applicant-details')
+  $scope.afterSignInWhileApplying = ->
+    if (ShortFormApplicationService
+        .applicantDoesNotMeetSeniorRequirements(AccountService.loggedInUser)
+    )
+      # log user out to either create account or continue anonymously
+      AccountService.signOut({ preserveAppData: true })
+      ShortFormApplicationService.addSeniorEligibilityError()
+      return $state.go('dahlia.short-form-application.choose-applicant-details')
 
-      $scope.getPrevAppData().then $scope.reconcilePreviousAppOrSubmit
+    $scope.getPrevAppData().then $scope.reconcilePreviousAppOrSubmit
 
-    $scope.getPrevAppData = ->
-      ShortFormApplicationService.getMyApplicationForListing(
-        $scope.listing.Id, { forComparison: true }
-      ).then (response) ->
-        return response.data
+  $scope.getPrevAppData = ->
+    ShortFormApplicationService.getMyApplicationForListing(
+      $scope.listing.Id, { forComparison: true }
+    ).then (response) ->
+      return response.data
 
-      .catch ->
-        alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
-        return $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
+    .catch ->
+      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
+      return $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
 
-    $scope.reconcilePreviousAppOrSubmit = (previousAppData) ->
-      previousApp = previousAppData.application
+  $scope.reconcilePreviousAppOrSubmit = (previousAppData) ->
+    previousApp = previousAppData.application
 
-      if (previousApp)
-        # previous app submitted
-        if $scope.appIsSubmitted(previousApp)
-          doubleSubmit = !! $scope.appIsSubmitted($scope.application)
-          return $state.go('dahlia.my-applications', {
-            skipConfirm: true,
-            alreadySubmittedId: previousApp.id,
-            doubleSubmit: doubleSubmit
-          })
+    if (previousApp)
+      # previous app submitted
+      if $scope.appIsSubmitted(previousApp)
+        doubleSubmit = !! $scope.appIsSubmitted($scope.application)
+        return $state.go('dahlia.my-applications', {
+          skipConfirm: true,
+          alreadySubmittedId: previousApp.id,
+          doubleSubmit: doubleSubmit
+        })
 
-        # previous app draft
-        else if $state.current.name == 'dahlia.short-form-application.welcome-back'
-          $scope.replaceAppWithPreviousDraft(previousAppData)
-          return $state.go('dahlia.short-form-application.continue-previous-draft')
-        else
-          return $state.go('dahlia.short-form-application.choose-draft')
-
-      # no previous draft, continue by saving application
-
-      if $scope.appIsDraft($scope.application)
-        # make sure short form data inherits logged in user data
-        changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+      # previous app draft
+      else if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        $scope.replaceAppWithPreviousDraft(previousAppData)
+        return $state.go('dahlia.short-form-application.continue-previous-draft')
       else
-        changed = null
+        return $state.go('dahlia.short-form-application.choose-draft')
 
-      ShortFormApplicationService.submitApplication().then ->
-        # I'm signing in on the welcome back page and continuing my application
-        # Go back to name page to see account details
-        if $state.current.name == 'dahlia.short-form-application.welcome-back'
-          $scope.goToAndTrackFormSuccess(
-            'dahlia.short-form-application.name', { infoChanged: changed })
+    # no previous draft, continue by saving application
 
-        # I'm signing in after submitting to save my application to my account
-        else
-          $state.go('dahlia.my-applications', { skipConfirm: true, infoChanged: changed })
+    if $scope.appIsDraft($scope.application)
+      # make sure short form data inherits logged in user data
+      changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    else
+      changed = null
 
-    $scope.appIsSubmitted = (application) ->
-      application.status.match(/submitted/i)
+    ShortFormApplicationService.submitApplication().then ->
+      # I'm signing in on the welcome back page and continuing my application
+      # Go back to name page to see account details
+      if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        $scope.goToAndTrackFormSuccess(
+          'dahlia.short-form-application.name', { infoChanged: changed })
 
-    $scope.appIsDraft = (application) ->
-      application.status.match(/draft/i)
+      # I'm signing in after submitting to save my application to my account
+      else
+        $state.go('dahlia.my-applications', { skipConfirm: true, infoChanged: changed })
 
-    $scope.replaceAppWithPreviousDraft = (previousAppData) ->
-      # we store whatever they had for primaryApplicant as it's about to be overwritten
-      overwrittenApplicantInfo = angular.copy($scope.applicant)
-      # we also override their current "draft" since it's basically blank and to keep
-      # ShortFormApplicationService.applicant and $scope.applicant, etc in sync
-      ShortFormApplicationService.loadApplication(previousAppData)
-      angular.copy(overwrittenApplicantInfo, $scope.application.overwrittenApplicantInfo)
-      ShortFormApplicationService.resetCompletedSections()
+  $scope.appIsSubmitted = (application) ->
+    application.status.match(/submitted/i)
+
+  $scope.appIsDraft = (application) ->
+    application.status.match(/draft/i)
+
+  $scope.replaceAppWithPreviousDraft = (previousAppData) ->
+    # we store whatever they had for primaryApplicant as it's about to be overwritten
+    overwrittenApplicantInfo = angular.copy($scope.applicant)
+    # we also override their current "draft" since it's basically blank and to keep
+    # ShortFormApplicationService.applicant and $scope.applicant, etc in sync
+    ShortFormApplicationService.loadApplication(previousAppData)
+    angular.copy(overwrittenApplicantInfo, $scope.application.overwrittenApplicantInfo)
+    ShortFormApplicationService.resetCompletedSections()
 
   $scope.print = -> $window.print()
 

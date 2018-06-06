@@ -143,18 +143,6 @@ do ->
         scope.signIn()
         expect(scope.submitDisabled).toEqual true
 
-      describe 'user in short form session', ->
-        beforeEach ->
-          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          state.current.name = 'dahlia.short-form-application.sign-in'
-          deferred.resolve(true)
-
-        it 'calls ShortFormApplicationService.signInSubmitApplication', ->
-          fakeShortFormApplicationService.application = { status: 'draft' }
-          scope.signIn()
-          scope.$apply()
-          expect(fakeShortFormApplicationService.signInSubmitApplication).toHaveBeenCalled()
-
       describe 'user not in short form session', ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)

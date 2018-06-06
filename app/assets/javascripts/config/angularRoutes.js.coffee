@@ -231,9 +231,12 @@
       # duplicated from above but to differentiate state for "Save and finish later"
       # will be accessed at '/listings/{id}/apply/sign-in'
       url: '/sign-in'
-      views:
-        'container@':
+      views: {
+        'container@': {
+          controller: 'ShortFormApplicationController'
           templateUrl: 'account/templates/sign-in.html'
+        }
+      }
       onEnter: ['AccountService', (AccountService) ->
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()

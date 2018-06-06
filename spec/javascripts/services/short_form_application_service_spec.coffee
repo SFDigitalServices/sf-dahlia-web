@@ -1201,39 +1201,6 @@ do ->
         ShortFormApplicationService.invalidateCurrentSectionIfIncomplete()
         expect(ShortFormApplicationService.application.completedSections['You']).toEqual(true)
 
-    describe 'signInSubmitApplication', ->
-      beforeEach ->
-        ShortFormApplicationService.application = fakeShortForm
-        setupFakeApplicant()
-      afterEach ->
-        resetFakePeople()
-
-      it 'sends you to the already submitted confirmation if you already submitted', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.application.status = 'submitted'
-        ShortFormApplicationService.signInSubmitApplication()
-        httpBackend.flush()
-        stateOpts =
-          skipConfirm: true
-          alreadySubmittedId: fakeSalesforceApplication.application.id
-          doubleSubmit: true
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
-
-    describe '_signInAndSkipSubmit', ->
-      it 'checks if you\'ve already submitted', ->
-        # ShortFormApplicationService.application.status = 'submitted'
-        fakePrevApplication =
-          application: { status: 'submitted', id: '123' }
-        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.application.id, doubleSubmit: false}
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication, {loggedInUser: {}})
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
-      it 'sends you to choose draft', ->
-        # ShortFormApplicationService.application.status = 'submitted'
-        fakePrevApplication =
-          application: { status: 'draft' }
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication, {loggedInUser: {}})
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
-
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'returns true with lease and rent file', ->
         ShortFormApplicationService.application.preferences =

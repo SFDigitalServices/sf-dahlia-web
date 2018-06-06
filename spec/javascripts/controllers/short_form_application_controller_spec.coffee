@@ -37,12 +37,14 @@ do ->
         optOut: {}
       }
       application:
+        status: 'draft'
         validatedForms:
           You: {}
           Household: {}
           Preferences: {}
           Income: {}
           Review: {}
+        overwrittenApplicantInfo: null
       applicationDefaults:
         applicant:
           home_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -79,6 +81,7 @@ do ->
       refreshPreferences: jasmine.createSpy()
       resetPreference: jasmine.createSpy()
       showPreference: jasmine.createSpy()
+      getMyApplicationForListing: ->
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -106,6 +109,8 @@ do ->
       applicantAgeOnForm: ->
       isEnteringShortForm: jasmine.createSpy()
       storeLastPage: jasmine.createSpy()
+      addSeniorEligibilityError: jasmine.createSpy()
+      loadApplication: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
@@ -115,6 +120,7 @@ do ->
     fakeShortFormHelperService =
       fileAttachmentsForRentBurden: jasmine.createSpy()
     fakeAccountService =
+      signIn: ->
       signOut: ->
       loggedIn: () ->
     fakeListingService = {}
@@ -128,6 +134,8 @@ do ->
       preventDefault: ->
     fakeHHOpts = {}
     fakeIncomeOpts = {}
+    $q = undefined
+    $rootScope = undefined
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
@@ -141,15 +149,18 @@ do ->
       return
     )
 
-    beforeEach inject(($rootScope, $controller, $q, _$document_) ->
+    beforeEach inject((_$rootScope_, $controller, _$q_, _$document_) ->
+      $rootScope = _$rootScope_
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
+      $q = _$q_
 
       deferred = $q.defer()
       deferred.resolve('resolveData')
+      spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
@@ -711,7 +722,6 @@ do ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
 
     describe 'chooseApplicantDetails', ->
-
       describe 'when user chooses to create account', ->
         it 'signs out user and sends them to create account page', ->
           scope.applicant.id = 1
@@ -753,3 +763,205 @@ do ->
 
         it 'sends user to name section of the short form', ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+    describe 'signIn', ->
+      beforeEach ->
+        scope.form.signIn = {
+          $valid: true
+          $setUntouched: ->
+          $setPristine: ->
+        }
+
+      it 'should sign in user', ->
+        scope.signIn()
+        expect(fakeAccountService.signIn).toHaveBeenCalled()
+
+      describe 'when sign in request successful', ->
+        it 'should re-enable submit button and call sign in actions', ->
+          scope.afterSignInWhileApplying = jasmine.createSpy()
+
+          scope.signIn()
+          $rootScope.$apply()
+
+          expect(scope.submitDisabled).toBe(false)
+          expect(scope.afterSignInWhileApplying).toHaveBeenCalled()
+
+      describe 'when sign in request fails', ->
+        it 'should re-enable submit button handle errors', ->
+          scope.handleErrorState = jasmine.createSpy()
+
+          deferred = $q.defer()
+          deferred.reject()
+          fakeAccountService.signIn.and.returnValue(deferred.promise)
+
+          scope.signIn()
+          $rootScope.$apply()
+
+          expect(scope.submitDisabled).toBe(false)
+          expect(scope.handleErrorState).toHaveBeenCalled()
+
+    describe 'afterSignInWhileApplying', ->
+      describe 'when senior requirements AND when account birth date doesn\'t qualify', ->
+        it 'should sign out and redirect ', ->
+          spyOn(fakeShortFormApplicationService,
+            'applicantDoesNotMeetSeniorRequirements').and.returnValue(true)
+
+          scope.afterSignInWhileApplying()
+
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
+          expect(fakeShortFormApplicationService.addSeniorEligibilityError).toHaveBeenCalled()
+          expect(state.go)
+            .toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
+
+      describe 'when no senior requirements OR account birth date does qualify', ->
+        it 'should load previous application(s)', ->
+            spyOn(fakeShortFormApplicationService,
+              'applicantDoesNotMeetSeniorRequirements').and.returnValue(false)
+            deferred = $q.defer()
+            deferred.resolve()
+            scope.getPrevAppData = jasmine.createSpy().and.returnValue(deferred.promise)
+            scope.reconcilePreviousAppOrSubmit = jasmine.createSpy()
+
+            scope.afterSignInWhileApplying()
+            $rootScope.$apply()
+
+            expect(scope.getPrevAppData).toHaveBeenCalled()
+            expect(scope.reconcilePreviousAppOrSubmit).toHaveBeenCalled()
+
+    describe 'getPrevAppData', ->
+      describe 'when prev app request successful', ->
+        it 'returns response data', ->
+          data = 'my app!'
+          promiseResult = undefined
+          deferred = $q.defer()
+          deferred.resolve({ data })
+          spyOn(fakeShortFormApplicationService, 'getMyApplicationForListing')
+            .and.returnValue(deferred.promise)
+
+          promise = scope.getPrevAppData()
+          promise.then (data) ->
+            promiseResult = data
+          $rootScope.$apply()
+
+          expect(promiseResult).toBe(data)
+
+      describe 'when prev app request fails', ->
+        it 'redirects to name page of application', ->
+          deferred = $q.defer()
+          deferred.reject()
+          spyOn(fakeShortFormApplicationService, 'getMyApplicationForListing')
+            .and.returnValue(deferred.promise)
+          spyOn(window, 'alert')
+
+          scope.getPrevAppData()
+          $rootScope.$apply()
+
+          expect(window.alert).toHaveBeenCalled()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name',
+            { id: fakeListing.Id })
+
+    describe 'reconcilePreviousAppOrSubmit', ->
+      describe 'when user has previous application', ->
+        describe 'when previous app is submitted', ->
+          appId = '0987654321'
+          previousAppData = {
+            application: {
+              id: appId
+              status: 'submitted'
+            }
+          }
+
+          describe 'when current app is draft', ->
+            it 'should redirect to my applications with already submitted message', ->
+              scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+              expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {
+                skipConfirm: true
+                alreadySubmittedId: appId
+                doubleSubmit: false
+              })
+
+          describe 'when current app is submitted', ->
+            beforeAll ->
+              fakeShortFormApplicationService.application.status = 'submitted'
+
+            afterAll ->
+              fakeShortFormApplicationService.application.status = 'draft'
+
+            it 'should redirect to my application with double submit message', ->
+              scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+              expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {
+                skipConfirm: true
+                alreadySubmittedId: appId
+                doubleSubmit: true
+              })
+
+      describe 'when previous app is draft', ->
+        previousAppData = {
+          application: {
+            status: 'draft'
+          }
+        }
+
+        it 'should redirect to choose draft', ->
+          scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+        describe 'when on welcome back page', ->
+          beforeEach ->
+            state.current.name = 'dahlia.short-form-application.welcome-back'
+
+          afterEach ->
+            state.current.name = 'dahlia.short-form-welcome.overview'
+
+          it 'should replace current app with previous and continue draft', ->
+            scope.replaceAppWithPreviousDraft = jasmine.createSpy()
+
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+            expect(scope.replaceAppWithPreviousDraft).toHaveBeenCalledWith(previousAppData)
+            expect(state.go)
+              .toHaveBeenCalledWith('dahlia.short-form-application.continue-previous-draft')
+
+      describe 'when user does not have previous application', ->
+        previousAppData = {}
+        infoChanged = {
+            firstName: 'Johnny'
+            lastName: 'Appleseed'
+          }
+
+        beforeEach ->
+          fakeShortFormApplicationService.importUserData.and.returnValue(infoChanged)
+
+        it 'submits current app and redirects to my applications', ->
+          scope.reconcilePreviousAppOrSubmit(previousAppData)
+          $rootScope.$apply()
+
+          expect(state.go).toHaveBeenCalledWith('dahlia.my-applications',
+            { skipConfirm: true, infoChanged })
+
+        describe 'when on welcome back page', ->
+          beforeEach ->
+              state.current.name = 'dahlia.short-form-application.welcome-back'
+
+          afterEach ->
+              state.current.name = 'dahlia.short-form-welcome.overview'
+
+          it 'redirects to name page', ->
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+            $rootScope.$apply()
+
+            expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name',
+              { infoChanged })
+
+    describe 'replaceAppWithPreviousDraft', ->
+      previousAppData = { id: '0987654321' }
+
+      it 'should load previous app and reset completed sections', ->
+        scope.replaceAppWithPreviousDraft(previousAppData)
+
+        expect(fakeShortFormApplicationService.loadApplication)
+          .toHaveBeenCalledWith(previousAppData)
+        expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
