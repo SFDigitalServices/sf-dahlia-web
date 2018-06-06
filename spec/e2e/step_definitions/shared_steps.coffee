@@ -84,7 +84,6 @@ module.exports = ->
     Utils.Expect.urlContains(urlFrag)
 
   @Then /^I should be on the "([^"]*)" page of the application$/, (pageName) ->
-    browser.driver.getCurrentUrl().then console.log
     urlFrag = "apply/#{pageUrls[pageName]}"
     Utils.Expect.urlContains(urlFrag)
 

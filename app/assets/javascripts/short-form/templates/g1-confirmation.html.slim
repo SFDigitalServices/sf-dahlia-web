@@ -25,7 +25,7 @@
       ' {{ listing.Lottery_Date | date : 'longDate'}}.
       span translate="G1_CONFIRMATION.NEXT_STEPS_BODY2" translate-values="listingLink()"
 
-  .app-inner.inset ng-class="{ border-bottom: (!loggedIn() && accountExists()) }"
+  .app-inner.inset ng-class="{ 'border-bottom': (!loggedIn() && accountExists()) }"
     .form-group
       h3.form-label.caps
         | {{'G1_CONFIRMATION.DONT_SUBMIT_ANOTHER_APP_TITLE' | translate}}
