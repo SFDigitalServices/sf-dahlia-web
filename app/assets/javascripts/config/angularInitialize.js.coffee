@@ -151,11 +151,16 @@
           return $state.go('dahlia.short-form-application.name', toParams)
 
       # remember which page of short form we're on when we go to create account
-      if (fromState.name.indexOf('short-form-application') >= 0 &&
-        fromState.name != 'dahlia.short-form-application.confirmation' &&
-        toState.name == 'dahlia.short-form-application.create-account' &&
-        fromState.name != 'dahlia.short-form-application.sign-in' &&
-        fromState.name != 'dahlia.short-form-application.choose-applicant-details')
+      # to save and finish later
+      if (toState.name == 'dahlia.short-form-application.create-account' &&
+        fromState.name.indexOf('short-form-application') >= 0 &&
+        ! _.includes([
+            'dahlia.short-form-application.confirmation',
+            'dahlia.short-form-application.sign-in',
+            'dahlia.short-form-application.choose-applicant-details',
+          ],
+          fromState.name
+        ))
           AccountService.rememberShortFormState(fromState.name)
 
       if (fromState.name == 'dahlia.short-form-application.confirmation')
@@ -168,13 +173,12 @@
 
       if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
          toState.name == 'dahlia.short-form-application.create-account')
-        # reconciling a draft by creating account show diff email address alert
-        AccountService.showEmailInUseMessage = true
-        # Continue with Application goes to name page since we wipe out name/email/dob
-        # before creating and account
+        AccountService.showChooseDiffEmailMessage = true
+        # continuing with application goes to name page to show user that application name/dob/email
+        # are replaced with new account settings
         AccountService.rememberShortFormState('dahlia.short-form-application.name')
       else
-        AccountService.showEmailInUseMessage = false
+        AccountService.showChooseDiffEmailMessage = false
 
       if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
         toState.name == 'dahlia.short-form-application.name')

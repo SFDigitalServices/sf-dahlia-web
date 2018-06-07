@@ -104,7 +104,7 @@ ShortFormApplicationController = (
   $scope.atContinuePreviousDraft = ->
     $state.current.name == "dahlia.short-form-application.continue-previous-draft"
 
-  $scope.continueDraftHasUpdatedInfo = (field) ->
+  $scope.continueDraftApplicantHasUpdatedInfo = (field) ->
     current = $scope.applicant
     old = $scope.application.overwrittenApplicantInfo
     if field == 'name'
@@ -661,15 +661,6 @@ ShortFormApplicationController = (
     else
       $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
 
-  $scope.chooseAccountSettings = ->
-    if ($scope.chosenAccountSettingsToKeep == 'account')
-      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-    ShortFormApplicationService.submitApplication().then( ->
-      AccountService.importApplicantData($scope.applicant,
-        ShortFormService.applicantAccountFields)
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
-    )
-
   $scope.chooseApplicantDetails = ->
     if $scope.chosenAccountOption == 'createAccount'
       AccountService.signOut({ preserveAppData: true })
@@ -695,8 +686,7 @@ ShortFormApplicationController = (
   $scope.loggedIn = ->
     AccountService.loggedIn()
 
-  $scope.accountExists = ->
-    AccountService.shortFormAccountExists()
+  $scope.accountExists = AccountService.shortFormAccountExists
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
@@ -789,11 +779,10 @@ ShortFormApplicationController = (
     ShortFormApplicationService.getMyApplicationForListing(
       $scope.listing.Id, { forComparison: true }
     ).then (response) ->
-      return response.data
-
+      response.data
     .catch ->
       alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
-      return $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
+      $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
 
   $scope.reconcilePreviousAppOrSubmit = (previousAppData) ->
     previousApp = previousAppData.application
@@ -816,7 +805,6 @@ ShortFormApplicationController = (
         return $state.go('dahlia.short-form-application.choose-draft')
 
     # no previous draft, continue by saving application
-
     if $scope.appIsDraft($scope.application)
       # make sure short form data inherits logged in user data
       changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)

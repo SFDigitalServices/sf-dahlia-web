@@ -1013,18 +1013,6 @@
       views:
         'container':
           templateUrl: 'short-form/templates/f2-review-terms.html'
-      onEnter: ['$stateParams', '$translate', 'AccountService', ($stateParams, $translate, AccountService) ->
-        AccountService.clearAccountMessages()
-        AccountService.resetUserAuth()
-        AccountService.copyApplicantFields()
-        AccountService.lockCompletedFields()
-        if $stateParams.loginMessage
-          if $stateParams.loginMessage == 'update'
-            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY_AND_UPDATED')
-          else
-            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY')
-          AccountService.accountSuccess.messages.login = message
-      ]
     })
     .state('dahlia.short-form-application.confirmation', {
       url: '/confirmation'

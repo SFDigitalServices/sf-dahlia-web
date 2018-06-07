@@ -30,10 +30,10 @@ AccountService = (
   Service.loginRedirect = null
   Service.accountExists = false
 
-  Service.rememberShortFormState = (name, params) ->
+  Service.rememberShortFormState = (name) ->
     Service.rememberedShortFormState = name
 
-  Service.showEmailInUseMessage = false
+  Service.showChooseDiffEmailMessage = false
 
   Service.loggedIn = ->
     return false if !Service.loggedInUser
@@ -49,13 +49,6 @@ AccountService = (
         id: data.id
       })
     angular.copy(data, Service.loggedInUser)
-
-  Service.importApplicantData = (applicant, fields) ->
-    # copy over all non-blank values e.g. omit middleName if null
-    userData = _.omitBy(_.pick(applicant, fields), _.isNil)
-    # merge the data into loggedInUser
-    _.merge Service.loggedInUser, userData
-
 
   Service.createAccount = (shortFormSession) ->
     # loading overlay will be cleared on success by a state transition in the controller

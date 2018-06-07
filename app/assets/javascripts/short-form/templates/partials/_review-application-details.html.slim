@@ -3,7 +3,7 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
 
 .app-inner
   / name
-  div ng-if="::atContinuePreviousDraft() && continueDraftHasUpdatedInfo('name')"
+  div ng-if="::atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('name')"
     review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
       .c-success
         | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
@@ -12,13 +12,13 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
           svg.i-check
             use xlink:href="#i-check"
         | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
-  div ng-if="::!(atContinuePreviousDraft() && continueDraftHasUpdatedInfo('name'))"
+  div ng-if="::!(atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('name'))"
     review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
       | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
 
 
   / DOB
-  div ng-if="::atContinuePreviousDraft() && continueDraftHasUpdatedInfo('dob')"
+  div ng-if="::atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('dob')"
     review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
       .c-success
         | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
@@ -27,7 +27,7 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
           svg.i-check
             use xlink:href="#i-check"
         | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
-  div ng-if="::!(atContinuePreviousDraft() && continueDraftHasUpdatedInfo('dob'))"
+  div ng-if="::!(atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('dob'))"
     review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
       | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
 

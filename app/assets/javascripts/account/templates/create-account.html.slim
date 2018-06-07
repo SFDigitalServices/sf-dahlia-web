@@ -15,7 +15,7 @@
             | {{'CREATE_ACCOUNT.P1' | translate}}
         alert-box(form-object="form.accountForm" hide-alert="hideAlert" custom-message="accountError.messages.user")
 
-        alert-box(primary="true" hide-alert="hideMessage" info='true' custom-message="chooseDifferentEmailMessage()" ng-if="showEmailInUseMessage")
+        alert-box(primary="true" hide-alert="hideMessage" info='true' custom-message="chooseDifferentEmailMessage()" ng-if="showChooseDiffEmailMessage")
 
         alert-box(primary="true" hide-alert="hideMessage" custom-message="emailConfirmInstructions()" ng-if="isLocked('email') && (userAuth.user.email !== userAuth.user.email_confirmation)")
 
