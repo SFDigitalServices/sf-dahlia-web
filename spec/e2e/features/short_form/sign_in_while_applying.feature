@@ -161,6 +161,8 @@ Feature: Sign-in while filling out application
         Then I should see a form alert that says "Email is already in use"
 
         When I create an account for "Harper Lee"
+        # wait a moment for account confirmation
+        And I wait "1" seconds
         And I continue my saved draft for the Test Listing
         And I sign in as "Harper Lee"
         Then I should be on the "Name" page of the application
@@ -234,3 +236,6 @@ Feature: Sign-in while filling out application
         And I sign in as "Alice Walker" with my email pre-filled
         Then I should be on the "My Applications" page
         And I should see a modal that says "You have already submitted an application to this listing."
+
+        And I close the modal
+        And I sign out

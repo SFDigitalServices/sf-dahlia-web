@@ -50,6 +50,10 @@ module.exports = ->
     browser.waitForAngular()
     element(By.cssContainingText('button', 'Leave')).click()
 
+  @When 'I close the modal', ->
+    browser.waitForAngular()
+    element(By.css('a[aria-label="Close"]')).click()
+
   @When 'I continue without signing in', ->
     element(By.id('confirm_no_account')).click()
 
