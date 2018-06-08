@@ -106,6 +106,7 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
+    'alice-griffith-preference': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkForCustomPreferences']}
     'custom-preferences': {callback: ['checkForCustomProofPreferences']}
     'custom-proof-preferences': {callback: ['checkForCustomProofPreferences']}

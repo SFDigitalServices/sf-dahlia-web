@@ -46,7 +46,6 @@ ShortFormApplicationService = (
       assistedHousing: null
       rentBurden: null
       aliceGriffith: null
-      alice_griffith_address: angular.copy(emptyAddress)
       optOut: {}
       documents:
         rentBurden: {}

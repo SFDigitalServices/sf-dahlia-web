@@ -186,6 +186,12 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
         proofOption = 'Lease and rent proof' unless optOut
+      else if listingPref.preferenceName == PREFS.aliceGriffith
+        # NOTE: This is a temp sol'n to joining address 1 and 2 into one line. We won't need this in #157290273
+        address = appPrefs["#{prefKey}_address"].address1 + " " +  appPrefs["#{prefKey}_address"].address2
+        city = appPrefs["#{prefKey}_address"]
+        state = appPrefs["#{prefKey}_address"]
+        zipCode = appPrefs["#{prefKey}_address"]
       else
         prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
@@ -232,6 +238,8 @@ ShortFormDataService = (ListingService) ->
     switch preference.preferenceName
       when PREFS.certOfPreference
         'COP'
+      when PREFS.aliceGriffith
+        'AG'
       when PREFS.displaced
         'DTHP'
       when PREFS.liveWorkInSf, PREFS.liveInSf, PREFS.workInSf
