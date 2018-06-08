@@ -238,6 +238,9 @@
         }
       }
       onEnter: ['AccountService', (AccountService) ->
+        # for using browser back button after signing in
+        if AccountService.loggedInUser.id
+          AccountService.signOut({ preserveAppData: true })
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
         AccountService.copyApplicantFields()
@@ -724,8 +727,15 @@
         'container':
           templateUrl: 'short-form/templates/b1a-welcome-back.html'
       onEnter: [
-        'AccountService',
-        (AccountService) ->
+        '$state', 'ShortFormApplicationService', 'AccountService',
+        ($state, ShortFormApplicationService, AccountService) ->
+          # for using browser back button after signing in
+          if AccountService.loggedInUser.id
+            AccountService.signOut({ preserveAppData: true })
+            ShortFormApplicationService.resetApplicationData({
+              applicant: ShortFormApplicationService.application.overwrittenApplicantInfo
+            })
+
           AccountService.clearAccountMessages()
           AccountService.resetUserAuth()
           AccountService.copyApplicantFields()
