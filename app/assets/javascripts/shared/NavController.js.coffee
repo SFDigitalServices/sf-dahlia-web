@@ -17,7 +17,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
       ModalService.alert(content,
         onConfirm: ->
           AccountService.signOut()
-          $state.go('dahlia.sign-in', {signedOut: true})
+          $state.go('dahlia.sign-in', { signedOut: true, skipConfirm: true })
       )
     else
       AccountService.signOut()

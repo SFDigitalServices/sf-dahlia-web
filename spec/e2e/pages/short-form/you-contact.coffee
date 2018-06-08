@@ -7,7 +7,6 @@ class Contact extends AngularPage
     @addlPhone = element(By.model('applicant.additionalPhone'))
     @altPhone = element(By.model('applicant.alternatePhone'))
     @altPhoneType = element(By.model('applicant.alternatePhoneType'))
-    @email = element(By.model('applicant.email'))
     @homeAddress1 = element(By.id('applicant_home_address_address1'))
     @homeAddress2 = element(By.id('applicant_home_address_address2'))
     @homeAddressCity = element(By.id('applicant_home_address_city'))
@@ -54,7 +53,6 @@ class Contact extends AngularPage
       @altPhone.sendKeys(@defaults.altPhone)
       @altPhoneType.sendKeys(@defaults.altPhoneType)
 
-    @email.clear().sendKeys(opts.email) if opts.email
     @homeAddress1.clear().sendKeys(opts.address1)
     @homeAddress2.clear().sendKeys(opts.address2) if opts.address2
     @homeAddressCity.clear().sendKeys(opts.city)
@@ -77,17 +75,20 @@ class Contact extends AngularPage
 
   expectToMatch: (context, opts = {}) ->
     context.expect(@phone.getAttribute('value')).to.eventually.equal(@defaults.formattedPhone)
-    context.expect(@email.getAttribute('value')).to.eventually.equal(opts.email)
-    context.expect(@altPhone.getAttribute('value')).to.eventually.equal(@defaults.formattedAltPhone)
     context.expect(@homeAddress1.getAttribute('value')).to.eventually.equal(opts.address1)
     context.expect(@homeAddress2.getAttribute('value')).to.eventually.equal('')
     context.expect(@homeAddressCity.getAttribute('value')).to.eventually.equal(@defaults.homeAddressCity.toUpperCase())
     context.expect(@homeAddressState.getAttribute('value')).to.eventually.equal(@defaults.homeAddressStateValue)
     context.expect(@homeAddressZip.getAttribute('value')).to.eventually.equal('94103-4463')
-    context.expect(@mailingAddress1.getAttribute('value')).to.eventually.equal(@defaults.mailingAddress1)
-    context.expect(@mailingAddressCity.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressCity)
-    context.expect(@mailingAddressState.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressStateValue)
-    context.expect(@mailingAddressZip.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressZip)
+
+    if opts.extra
+      context.expect(@altPhone.getAttribute('value')).to.eventually.equal(@defaults.formattedAltPhone)
+      context.expect(@mailingAddress1.getAttribute('value')).to.eventually.equal(@defaults.mailingAddress1)
+      context.expect(@mailingAddressCity.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressCity)
+      context.expect(@mailingAddressState.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressStateValue)
+      context.expect(@mailingAddressZip.getAttribute('value')).to.eventually.equal(@defaults.mailingAddressZip)
+
+    # context
     @submitPage()
 
 

@@ -28,9 +28,12 @@ AccountService = (
   Service.accountSuccess =
     messages: {}
   Service.loginRedirect = null
+  Service.accountExists = false
 
-  Service.rememberShortFormState = (name, params) ->
+  Service.rememberShortFormState = (name) ->
     Service.rememberedShortFormState = name
+
+  Service.showChooseDiffEmailMessage = false
 
   Service.loggedIn = ->
     return false if !Service.loggedInUser
@@ -46,16 +49,6 @@ AccountService = (
         id: data.id
       })
     angular.copy(data, Service.loggedInUser)
-
-  Service.importApplicantData = (applicant) ->
-    fields = [
-      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
-    ]
-    # copy over all non-blank values e.g. omit middleName if null
-    userData = _.omitBy(_.pick(applicant, fields), _.isNil)
-    # merge the data into loggedInUser
-    _.merge Service.loggedInUser, userData
-
 
   Service.createAccount = (shortFormSession) ->
     # loading overlay will be cleared on success by a state transition in the controller
@@ -135,10 +128,20 @@ AccountService = (
         msg = $translate.instant("ERROR.PASSWORD_UPDATE")
       Service.accountError.messages.password = msg
 
-  Service.signOut = ->
+  Service.checkForAccount = (email) ->
+    $http.get("/api/v1/account/check-account?email=#{encodeURIComponent(email)}").success((data) ->
+      Service.accountExists = data.account_exists
+    ).catch( (data, status, headers, config) ->
+      Service.accountExists = false
+    )
+
+  Service.shortFormAccountExists = ->
+    Service.accountExists
+
+  Service.signOut = (opts = {}) ->
     # reset the user data immediately, then call signOut
     Service.setLoggedInUser({})
-    ShortFormApplicationService.resetApplicationData()
+    ShortFormApplicationService.resetApplicationData() unless opts.preserveAppData
     $auth.signOut()
     # close any open modal, e.g. "Lottery Results" that may have been opened while
     # you were on My Applications
@@ -245,16 +248,19 @@ AccountService = (
     return false if !Service.loggedIn()
     _.merge(Service.loggedInUser, ShortFormDataService.reformatDOB(Service.loggedInUser.DOB))
 
-  Service.copyApplicantFields = (from = 'applicant')->
+  Service.copyApplicantFields = (from = 'applicant', opts = {}) ->
     if from == 'applicant'
       user = ShortFormApplicationService.applicant
     else
       user = Service.loggedInUser
+
     contactInfo = _.pick user,
       ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
-    userInfo = _.pick user, ['email']
     angular.copy(contactInfo, Service.userAuth.contact)
-    angular.copy(userInfo, Service.userAuth.user)
+
+    unless opts.excludeEmail
+      userInfo = _.pick user, ['email']
+      angular.copy(userInfo, Service.userAuth.user)
 
   Service.lockCompletedFields = ->
     a = ShortFormApplicationService.applicant

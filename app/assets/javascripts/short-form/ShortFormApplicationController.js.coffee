@@ -39,7 +39,7 @@ ShortFormApplicationController = (
   $scope.validated_mailing_address = AddressValidationService.validated_mailing_address
   $scope.validated_home_address = AddressValidationService.validated_home_address
   $scope.notEligibleErrorMessage = $translate.instant('ERROR.NOT_ELIGIBLE')
-  $scope.eligibilityErrors = []
+  $scope.eligibilityErrors = ShortFormApplicationService.eligibilityErrors
   $scope.communityEligibilityErrorMsg = []
   $scope.latinRegex = ShortFormApplicationService.latinRegex
   # read more toggler
@@ -78,6 +78,9 @@ ShortFormApplicationController = (
   $scope.trackAutofill = ->
     AnalyticsService.trackFormSuccess('Application', 'Start with these details')
 
+  $scope.trackContinuePreviousDraft = ->
+    AnalyticsService.trackFormSuccess('Application', 'Continue with these details')
+
   $scope.resetAndStartNewApp = ->
     # always pull answeredCommunityScreening from the current session since that Q is answered first
     data =
@@ -93,8 +96,24 @@ ShortFormApplicationController = (
     AnalyticsService.trackFormSuccess('Application', 'Reset and start from scratch')
     $state.go('dahlia.short-form-application.name')
 
+  $scope.resetAndReplaceApp = ShortFormApplicationService.resetAndReplaceApp
+
   $scope.atAutofillPreview = ->
     $state.current.name == "dahlia.short-form-application.autofill-preview"
+
+  $scope.atContinuePreviousDraft = ->
+    $state.current.name == "dahlia.short-form-application.continue-previous-draft"
+
+  $scope.continueDraftApplicantHasUpdatedInfo = (field) ->
+    current = $scope.applicant
+    old = $scope.application.overwrittenApplicantInfo
+    if field == 'name'
+      fields = ['firstName', 'middleName', 'lastName']
+      !_.isEqual(_.pick(current, fields), _.pick(old, fields))
+    else if field == 'dob'
+      currentDOB = "#{current.dob_day}/#{current.dob_month}/#{current.dob_year}"
+      oldDOB = "#{old.dob_day}/#{old.dob_month}/#{old.dob_year}"
+      currentDOB != oldDOB
 
   $scope.atShortFormState = ->
     ShortFormApplicationService.isShortFormPage($state.current)
@@ -158,10 +177,11 @@ ShortFormApplicationController = (
     $scope.hideAlert = false
     ShortFormNavigationService.isLoading(false)
     el = angular.element(document.getElementById('short-form-alerts'))
-    # uses duScroll aka 'angular-scroll' module
-    topOffset = 0
-    duration = 400 # animation speed in ms
-    $document.scrollToElement(el, topOffset, duration)
+    if el.length
+      # uses duScroll aka 'angular-scroll' module
+      topOffset = 0
+      duration = 400 # animation speed in ms
+      $document.scrollToElement(el, topOffset, duration)
 
   $scope.currentForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -510,7 +530,9 @@ ShortFormApplicationController = (
       )
 
   $scope.clearEligibilityErrors = ->
-    $scope.eligibilityErrors = []
+    # JS trick to clear out the current array without re-assigning it
+    # https://stackoverflow.com/a/1234337/260495
+    $scope.eligibilityErrors.length = 0
 
   $scope._respondToHouseholdEligibilityResults = (eligibility, error) ->
     seniorReqError = $scope.householdDoesNotMeetSeniorRequirements()
@@ -544,8 +566,7 @@ ShortFormApplicationController = (
       $scope.eligibilityErrors.push($translate.instant("ERROR.HOUSEHOLD_TOO_SMALL"))
     if seniorReqError
       # special case for "you or anyone" must be a senior, and you did not meet the reqs
-      age = { minAge: $scope.listing.Reserved_community_minimum_age }
-      $scope.eligibilityErrors.push($translate.instant('ERROR.SENIOR_ANYONE', age))
+      ShortFormApplicationService.addSeniorEligibilityError()
 
   $scope._determineIncomeEligibilityErrors = (error = 'too low') ->
     # error message from salesforce seems to be blank when income == 0, so default to 'too low'
@@ -606,12 +627,6 @@ ShortFormApplicationController = (
   $scope.checkSurveyComplete = ->
     ShortFormApplicationService.checkSurveyComplete()
 
-  $scope.confirmReviewedApplication = ->
-    if AccountService.loggedIn()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms')
-    else
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-sign-in')
-
   ## helpers
   $scope.alternateContactRelationship = ->
     ShortFormHelperService.alternateContactRelationship($scope.alternateContact)
@@ -623,7 +638,10 @@ ShortFormApplicationController = (
     ShortFormHelperService.applicationIncomeAmount($scope.application)
 
   $scope.translateLoggedInMessage = (page) ->
-    ShortFormHelperService.translateLoggedInMessage(page)
+    params =
+      page: page
+      infoChanged: ShortFormApplicationService.infoChanged
+    ShortFormHelperService.translateLoggedInMessage(params)
 
   $scope.applicantFullName = (applicant) ->
     if (!applicant || !applicant.firstName || !applicant.lastName)
@@ -634,23 +652,50 @@ ShortFormApplicationController = (
   $scope.chooseDraft = ->
     if ($scope.chosenApplicationToKeep == 'recent')
       user = AccountService.loggedInUser
-      ShortFormApplicationService.keepCurrentDraftApplication(user).then( ->
-        $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
-      )
+      if ShortFormApplicationService.hasDifferentInfo($scope.applicant, user)
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.choose-applicant-details')
+      else
+        ShortFormApplicationService.keepCurrentDraftApplication(user).then( ->
+          $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
+        )
     else
       $scope.goToAndTrackFormSuccess('dahlia.my-applications', {skipConfirm: true})
 
-  $scope.chooseAccountSettings = ->
-    if ($scope.chosenAccountSettingsToKeep == 'account')
-      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
-    ShortFormApplicationService.submitApplication().then( ->
-      AccountService.importApplicantData($scope.applicant)
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'update'})
-    )
+  $scope.chooseApplicantDetails = ->
+    if $scope.chosenAccountOption == 'createAccount'
+      AccountService.signOut({ preserveAppData: true })
+
+      # Return applicant to name page to review new account info
+      ShortFormApplicationService.storeLastPage('name')
+      ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
+      ShortFormApplicationService.resetCompletedSections()
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.create-account')
+
+    else if $scope.chosenAccountOption == 'continueAsGuest'
+      AccountService.signOut({ preserveAppData: true })
+      # when continuing anonymously, jump ahead to contact page rather than going back to the
+      # name page so you don't see the welcome back page a second time
+      lastPage = switch $scope.application.lastPage
+        when 'name'
+          'contact'
+        else
+          $scope.application.lastPage
+      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{lastPage}")
+
+    else if $scope.chosenAccountOption == 'overwriteWithAccountInfo'
+      ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
+      ShortFormApplicationService.resetCompletedSections()
+      # Import account details into recent draft and overwrite account application to
+      # prevent a duplicate
+      ShortFormApplicationService.keepCurrentDraftApplication(AccountService.loggedInUser).then ->
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
+
 
   ## account service
   $scope.loggedIn = ->
     AccountService.loggedIn()
+
+  $scope.accountExists = AccountService.shortFormAccountExists
 
   ## translation helpers
   $scope.preferenceProofOptions = (pref_type) ->
@@ -705,6 +750,7 @@ ShortFormApplicationController = (
       # go to Create Account without tracking Form Success
       $scope.go('dahlia.short-form-application.create-account')
 
+  # used for the welcome-back sign in
   $scope.signIn = ->
     form = $scope.form.signIn
     # have to manually set this because it's an ng-form
@@ -718,12 +764,7 @@ ShortFormApplicationController = (
         if success
           form.$setUntouched()
           form.$setPristine()
-          ShortFormApplicationService.signInSubmitApplication(
-            type: 'review-sign-in'
-            loggedInUser: AccountService.loggedInUser
-            submitCallback: ->
-              $scope.goToAndTrackFormSuccess('dahlia.short-form-application.review-terms', {loginMessage: 'sign-in'})
-          )
+          $scope.afterSignInWhileApplying()
       ).catch( ->
         $scope.handleErrorState()
         $scope.submitDisabled = false
@@ -732,18 +773,96 @@ ShortFormApplicationController = (
       AnalyticsService.trackFormError('Application')
       $scope.handleErrorState()
 
+  $scope.afterSignInWhileApplying = ->
+    if (ShortFormApplicationService
+        .applicantDoesNotMeetSeniorRequirements(AccountService.loggedInUser)
+    )
+      # log user out to either create account or continue anonymously
+      AccountService.signOut({ preserveAppData: true })
+      ShortFormApplicationService.addSeniorEligibilityError()
+      return $state.go('dahlia.short-form-application.choose-applicant-details')
+
+    $scope.getPrevAppData().then $scope.reconcilePreviousAppOrSubmit
+
+  $scope.getPrevAppData = ->
+    ShortFormApplicationService.getMyApplicationForListing(
+      $scope.listing.Id, { forComparison: true }
+    ).then (response) ->
+      response.data
+    .catch ->
+      alert($translate.instant('ERROR.ALERT.BAD_REQUEST'))
+      $state.go('dahlia.short-form-application.name', { id: $scope.listing.Id })
+
+  $scope.reconcilePreviousAppOrSubmit = (previousAppData) ->
+    previousApp = previousAppData.application
+
+    if (previousApp)
+      # previous app submitted
+      if $scope.appIsSubmitted(previousApp)
+        doubleSubmit = !! $scope.appIsSubmitted($scope.application)
+        return $state.go('dahlia.my-applications', {
+          skipConfirm: true,
+          alreadySubmittedId: previousApp.id,
+          doubleSubmit: doubleSubmit
+        })
+      # previous app draft
+      else if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        $scope.replaceAppWithPreviousDraft(previousAppData)
+        return $state.go('dahlia.short-form-application.continue-previous-draft')
+      else
+        return $state.go('dahlia.short-form-application.choose-draft')
+
+    # no previous draft, continue by saving application
+    if $scope.appIsDraft($scope.application)
+      # make sure short form data inherits logged in user data
+      changed = ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+    else
+      changed = null
+
+    ShortFormApplicationService.submitApplication().then ->
+      # I'm signing in on the welcome back page and continuing my application
+      # Go back to name page to see account details
+      if $state.current.name == 'dahlia.short-form-application.welcome-back'
+        $scope.goToAndTrackFormSuccess(
+          'dahlia.short-form-application.name', { infoChanged: changed })
+
+      # I'm signing in after submitting to save my application to my account
+      else
+        $state.go('dahlia.my-applications', { skipConfirm: true, infoChanged: changed })
+
+  $scope.appIsSubmitted = (application) ->
+    application.status.match(/submitted/i)
+
+  $scope.appIsDraft = (application) ->
+    application.status.match(/draft/i)
+
+  $scope.replaceAppWithPreviousDraft = (previousAppData) ->
+    # we store whatever they had for primaryApplicant as it's about to be overwritten
+    overwrittenApplicantInfo = angular.copy($scope.applicant)
+    # we also override their current "draft" since it's basically blank and to keep
+    # ShortFormApplicationService.applicant and $scope.applicant, etc in sync
+    ShortFormApplicationService.loadApplication(previousAppData)
+    angular.copy(overwrittenApplicantInfo, $scope.application.overwrittenApplicantInfo)
+    ShortFormApplicationService.resetCompletedSections()
 
   $scope.print = -> $window.print()
 
-  $scope.checkPrimaryApplicantAge = ->
+  $scope.checkAfterNamePage = ->
     if $scope.applicantDoesNotMeetSeniorRequirements()
       ShortFormNavigationService.isLoading(false)
       age = { minAge: $scope.listing.Reserved_community_minimum_age }
       $scope.eligibilityErrors = [$translate.instant('ERROR.SENIOR_EVERYONE', age)]
       $scope.handleErrorState()
     else
-      $scope.clearEligibilityErrors()
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+      if $scope.loggedIn()
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+      else
+        ShortFormNavigationService.isLoading(true)
+        AccountService.checkForAccount($scope.applicant.email).then ->
+          if AccountService.accountExists
+            $scope.goToAndTrackFormSuccess('dahlia.short-form-application.welcome-back')
+          else
+            $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
 
   $scope.DOBValid = (field, value, model = 'applicant') ->
     values = $scope.DOBValues(model)
@@ -751,14 +870,10 @@ ShortFormApplicationController = (
     ShortFormApplicationService.DOBValid(field, values)
 
   $scope.DOBValues = (model = 'applicant') ->
-    {
-      month: parseInt($scope[model].dob_month)
-      day: parseInt($scope[model].dob_day)
-      year: parseInt($scope[model].dob_year)
-    }
+    ShortFormApplicationService.DOBValues(model)
 
   $scope.primaryApplicantValidAge = ->
-    age = $scope.applicantAge('applicant')
+    age = $scope.memberAgeOnForm('applicant')
     return true unless age
     return false if $scope.primaryApplicantUnder18()
     return false if $scope.applicantDoesNotMeetSeniorRequirements()
@@ -771,12 +886,7 @@ ShortFormApplicationController = (
     $scope.eligibilityErrors.length
 
   $scope.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
-    listing = $scope.listing
-    requirement = listing.Reserved_Community_Requirement || ''
-    reservedType = listing.Reserved_community_type || ''
-    age = $scope.applicantAge(member)
-    reservedType.match(/senior/i) && requirement.match(/entire household/i) &&
-      age < listing.Reserved_community_minimum_age
+    ShortFormApplicationService.applicantDoesNotMeetSeniorRequirements(member)
 
   $scope.householdDoesNotMeetSeniorRequirements = ->
     listing = $scope.listing
@@ -788,30 +898,23 @@ ShortFormApplicationController = (
       ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
-    $scope.applicantAge('applicant') < 18
+    $scope.memberAgeOnForm('applicant') < 18
 
   $scope.householdMemberUnder0 = ->
-    dob = $scope.applicantDOBMoment('householdMember')
+    dob = $scope.memberDOBMoment('householdMember')
     return false unless dob
     ageDays = moment().add(10, 'months').diff(dob, 'days')
     # HH member allowed to be 10 months "unborn"
     return ageDays < 0
 
-  $scope.applicantAge = (member = 'applicant') ->
-    dob = $scope.applicantDOBMoment(member)
-    return unless dob
-    moment().diff(dob, 'years')
+  $scope.memberAgeOnForm = (member = 'applicant') ->
+    ShortFormApplicationService.memberAgeOnForm(member)
 
-  $scope.applicantDOBMoment = (member = 'applicant') ->
-    values = $scope.DOBValues(member)
-    form = $scope.form.applicationForm
-    # have to grab viewValue because if the field is in error state the model will be undefined
-    year = parseInt(form['date_of_birth_year'].$viewValue)
-    return false unless values.month && values.day && year >= 1900
-    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+  $scope.memberDOBMoment = (member = 'applicant') ->
+    ShortFormApplicationService.memberDOBMoment(member)
 
   $scope.householdMemberValidAge = ->
-    age = $scope.applicantAge('householdMember')
+    age = $scope.memberAgeOnForm('householdMember')
     return true unless age
     return false if $scope.householdMemberUnder0()
     return false if $scope.applicantDoesNotMeetSeniorRequirements('householdMember')
@@ -854,12 +957,10 @@ ShortFormApplicationController = (
     #  used to be for address validation errors
     $scope.handleErrorState()
 
-  $scope.$on '$stateChangeSuccess', (e, toState, toParams, fromState, fromParams) ->
-    $scope.onStateChangeSuccess(e, toState, toParams, fromState, fromParams)
-
   # separate this method out for better unit testing
   $scope.onStateChangeSuccess = (e, toState, toParams, fromState, fromParams) ->
-    $scope.clearErrors()
+    unless toState.name == 'dahlia.short-form-application.choose-applicant-details'
+      $scope.clearErrors()
     ShortFormNavigationService.isLoading(false)
     ShortFormApplicationService.setApplicationLanguage(toParams.lang)
     if ShortFormApplicationService.isEnteringShortForm(toState, fromState) &&
@@ -867,11 +968,12 @@ ShortFormApplicationController = (
         ShortFormApplicationService.sendToLastPageofApp(toState)
     ShortFormApplicationService.storeLastPage(toState.name)
 
-  $scope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams, options) ->
-    $scope.stateChangeStart(e, toState, toParams, fromState, fromParams)
+  $scope.$on '$stateChangeSuccess', $scope.onStateChangeSuccess
 
   $scope.stateChangeStart = (e, toState, toParams, fromState, fromParams) ->
     ShortFormApplicationService.setApplicationLanguage(toParams.lang)
+
+  $scope.$on '$stateChangeStart', $scope.stateChangeStart
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   $scope.listingIs = (name) ->

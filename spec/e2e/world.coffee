@@ -7,6 +7,4 @@ class World
     @expect = chai.expect
     return
 
-
-
-module.exports.World = World
+module.exports = World
