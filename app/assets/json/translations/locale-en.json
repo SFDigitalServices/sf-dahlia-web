@@ -255,6 +255,10 @@
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
+    "E6_ALICE_GRIFFITH_PREFERENCE": {
+        "TITLE": "Alice Griffith Housing Development Preference",
+        "DESC": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010."
+    },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_CERTIFICATE": "Do you know your COP Certificate Number?",
@@ -540,7 +544,9 @@
             "PUBLIC_BENEFITS": "Public benefits record",
             "SCHOOL_RECORD": "School record",
             "TELEPHONE_BILL": "Telephone bill (land line only)",
-            "WATER_BILL": "Water bill"
+            "WATER_BILL": "Water bill",
+            "CA_LICENSE": "CA ID or Driver’s License",
+            "SFHA_LETTER": "Letter from SFHA verifying address"
         },
         "PROOF_OF_RENT": "Proof of Rent",
         "QUESTIONING_UNSURE": "Questioning/Unsure",

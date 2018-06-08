@@ -90,6 +90,16 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Screenshot of online payment', t('LABEL.PROOF.ONLINE_PAYMENT')]
   ]
 
+  Service.preference_proof_options_alice_griffith = [
+    ['Letter from SFHA verifying address ', t('LABEL.PROOF.SFHA_LETTER')]
+    ['CA ID or Driver’s License', t('LABEL.PROOF.CA_LICENSE')]
+    ['Telephone bill', t('LABEL.PROOF.TELEPHONE_BILL')]
+    ['Cable and internet bill', t('LABEL.PROOF.CABLE_BILL')]
+    ['Paystub', t('LABEL.PROOF.PAYSTUB_HOME')]
+    ['Public benefits record', t('LABEL.PROOF.PUBLIC_BENEFITS')]
+    ['School record', t('LABEL.PROOF.SCHOOL_RECORD')]
+  ]
+
   Service.priority_options = [
     ['Mobility impaired', t('LABEL.MOBILITY_IMPAIRMENTS')]
     ['Vision impaired', t('LABEL.VISION_IMPAIRMENTS')]
@@ -119,9 +129,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         Service.preference_proof_options_live
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
+      when 'aliceGriffith'
+        Service.preference_proof_options_alice_griffith
       else
         Service.preference_proof_options_default
-
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->

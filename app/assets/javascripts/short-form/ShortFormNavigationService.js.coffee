@@ -55,6 +55,7 @@ ShortFormNavigationService = (
         'neighborhood-preference'
         'adhp-preference'
         'live-work-preference'
+        'alice-griffith-preference'
         'preferences-programs'
         'custom-preferences'
         'custom-proof-preferences'
@@ -201,6 +202,7 @@ ShortFormNavigationService = (
         ,'household-overview'
         ,'income'
         ,'preferences-intro'
+        ,'alice-griffith-preference'
         ,'review-summary'
         ,'review-sign-in'
           Service._getPreviousPage()

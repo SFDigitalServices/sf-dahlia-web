@@ -927,6 +927,12 @@
             ShortFormApplicationService.setRentBurdenAddressIndex($stateParams.index)
         ]
     })
+    .state('dahlia.short-form-application.alice-griffith-preference', {
+      url: '/alice-griffith-preference'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/e6-alice-griffith-preference.html'
+    })
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
       views:

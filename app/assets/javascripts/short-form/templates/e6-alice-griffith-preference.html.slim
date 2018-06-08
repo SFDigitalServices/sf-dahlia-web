@@ -1,0 +1,14 @@
+.app-card.form-card
+  short-form-header
+    h2.app-card_question
+      | Your household may qualify for the following preference
+    p.form-note.margin-bottom
+    	 | Just provide a valid address and upload proof to get a higher ranking in the lottery
+
+  .app-inner
+    .form-group
+      p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
+      .checkbox-group role="group"
+        alice-griffith-preference-component(application="application"  has-proof="true" title="{{'E6_ALICE_GRIFFITH_PREFERENCE.TITLE' | translate}}" preference="aliceGriffith" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  proof-option-sublabel="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" translated-description="E6_ALICE_GRIFFITH_PREFERENCE.DESC")
+
+  short-form-save-and-submit
