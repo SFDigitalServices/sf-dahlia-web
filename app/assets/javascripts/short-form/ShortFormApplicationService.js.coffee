@@ -907,7 +907,7 @@ ShortFormApplicationService = (
     reservedType = listing.Reserved_community_type || ''
     if _.isString(member)
       # are we evaluating a form value
-      age = Service.applicantAgeOnForm(member)
+      age = Service.memberAgeOnForm(member)
     else
       # or evaluating an appMember object
       age = Service.memberAge(member)
@@ -926,14 +926,14 @@ ShortFormApplicationService = (
   Service.maxHouseholdAge = ->
     _.max(_.map(Service.fullHousehold(), Service.memberAge))
 
-  # different function from memberAge above, this is used for validating
-  # what has been typed into the form, vs. what is stored in an applicant member object
-  Service.applicantAgeOnForm = (member = 'applicant') ->
-    dob = Service.applicantDOBMoment(member)
+  # different function from memberAge above, this is used for validating what has
+  # been typed into the form, vs. what is stored in an application member object
+  Service.memberAgeOnForm = (member = 'applicant') ->
+    dob = Service.memberDOBMoment(member)
     return unless dob
     moment().diff(dob, 'years')
 
-  Service.applicantDOBMoment = (member = 'applicant') ->
+  Service.memberDOBMoment = (member = 'applicant') ->
     values = Service.DOBValues(member)
     form = Service.form.applicationForm
     # have to grab viewValue because if the field is in error state the model will be undefined

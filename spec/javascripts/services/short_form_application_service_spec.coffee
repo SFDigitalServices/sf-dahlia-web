@@ -1301,24 +1301,65 @@ do ->
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
         expect(pct).toEqual 60
 
-    describe 'applicantAgeOnForm', ->
+    describe 'memberAgeOnForm', ->
+      it 'calls Service.memberDOBMoment with the given member string', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment')
+        member = 'householdMember'
+        ShortFormApplicationService.memberAgeOnForm(member)
+        expect(ShortFormApplicationService.memberDOBMoment).toHaveBeenCalledWith(member)
+
+      it 'returns undefined if Service.memberDOBMoment returns a falsey value', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(null)
+        age = ShortFormApplicationService.memberAgeOnForm()
+        expect(age).toBeUndefined()
+
+      it 'returns an integer representing the age of the member based on the DOB value returned by Service.memberDOBMoment', ->
+        dob = moment('01/01/1990', 'DD/MM/YYYY')
+        today = moment()
+        yearsDiffTodayAndDOB = today.diff(dob, 'years')
+
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(dob)
+        age = ShortFormApplicationService.memberAgeOnForm()
+
+        expect(age).toBe(yearsDiffTodayAndDOB)
+
+    describe 'memberDOBMoment', ->
       beforeEach ->
-        ShortFormApplicationService.form.applicationForm = {}
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '1990'
 
-      it 'checks form values for primary applicant DOB that is under 18', ->
-        fakeAge = 12
-        year = new Date().getFullYear() - fakeAge
-        ShortFormApplicationService.form.applicationForm.date_of_birth_year = {$viewValue: year}
-        ShortFormApplicationService.applicant.dob_month = 1
-        ShortFormApplicationService.applicant.dob_day = 1
-        ShortFormApplicationService.applicant.dob_year = year
-        expect(ShortFormApplicationService.applicantAgeOnForm('applicant')).toEqual fakeAge
+      it 'calls Service.DOBValues with the given member string', ->
+        member = 'householdMember'
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({})
+        ShortFormApplicationService.memberDOBMoment(member)
+        expect(ShortFormApplicationService.DOBValues).toHaveBeenCalledWith(member)
 
-      it 'checks form values for primary applicant DOB that is over 18', ->
-        fakeAge = 25
-        year = new Date().getFullYear() - fakeAge
-        ShortFormApplicationService.form.applicationForm.date_of_birth_year = {$viewValue: year}
-        ShortFormApplicationService.applicant.dob_month = 1
-        ShortFormApplicationService.applicant.dob_day = 1
-        ShortFormApplicationService.applicant.dob_year = year
-        expect(ShortFormApplicationService.applicantAgeOnForm('applicant')).toEqual fakeAge
+      it 'returns false if Service.DOBValues does not return a month value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({day: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if Service.DOBValues does not return a day value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({month: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if the birth year in the short form is < 1900', ->
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '01/01/1899'
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      describe 'if Service.DOBValues returns a month and a day, and the birth year in the short form is >= 1900', ->
+        it 'returns a moment object representing the member DOB, constructed using the month and
+            day returned by Service.DOBValues and the year from the short form', ->
+          year = ShortFormApplicationService.form.applicationForm.date_of_birth_year.$viewValue
+          values = {month: 1, day: 1}
+          dobMoment = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+          spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue(values)
+          result = ShortFormApplicationService.memberDOBMoment()
+
+          expect(result).toEqual(dobMoment)

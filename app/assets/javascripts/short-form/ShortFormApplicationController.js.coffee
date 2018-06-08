@@ -796,7 +796,6 @@ ShortFormApplicationController = (
           alreadySubmittedId: previousApp.id,
           doubleSubmit: doubleSubmit
         })
-
       # previous app draft
       else if $state.current.name == 'dahlia.short-form-application.welcome-back'
         $scope.replaceAppWithPreviousDraft(previousAppData)
@@ -865,7 +864,7 @@ ShortFormApplicationController = (
     ShortFormApplicationService.DOBValues(model)
 
   $scope.primaryApplicantValidAge = ->
-    age = $scope.applicantAgeOnForm('applicant')
+    age = $scope.memberAgeOnForm('applicant')
     return true unless age
     return false if $scope.primaryApplicantUnder18()
     return false if $scope.applicantDoesNotMeetSeniorRequirements()
@@ -890,23 +889,23 @@ ShortFormApplicationController = (
       ShortFormApplicationService.maxHouseholdAge() < listing.Reserved_community_minimum_age
 
   $scope.primaryApplicantUnder18 = ->
-    $scope.applicantAgeOnForm('applicant') < 18
+    $scope.memberAgeOnForm('applicant') < 18
 
   $scope.householdMemberUnder0 = ->
-    dob = $scope.applicantDOBMoment('householdMember')
+    dob = $scope.memberDOBMoment('householdMember')
     return false unless dob
     ageDays = moment().add(10, 'months').diff(dob, 'days')
     # HH member allowed to be 10 months "unborn"
     return ageDays < 0
 
-  $scope.applicantAgeOnForm = (member = 'applicant') ->
-    ShortFormApplicationService.applicantAgeOnForm(member)
+  $scope.memberAgeOnForm = (member = 'applicant') ->
+    ShortFormApplicationService.memberAgeOnForm(member)
 
-  $scope.applicantDOBMoment = (member = 'applicant') ->
-    ShortFormApplicationService.applicantDOBMoment(member)
+  $scope.memberDOBMoment = (member = 'applicant') ->
+    ShortFormApplicationService.memberDOBMoment(member)
 
   $scope.householdMemberValidAge = ->
-    age = $scope.applicantAgeOnForm('householdMember')
+    age = $scope.memberAgeOnForm('householdMember')
     return true unless age
     return false if $scope.householdMemberUnder0()
     return false if $scope.applicantDoesNotMeetSeniorRequirements('householdMember')

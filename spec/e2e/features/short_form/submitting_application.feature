@@ -26,7 +26,6 @@ Feature: Short Form Application
         # now that we've submitted, also create an account
         When I click the Create Account button
         And I create an account for "Jane Doe" with my pre-filled application details
-# And I wait "18" seconds
         # And I submit the page and wait
         Then I should be on the login page with the email confirmation popup
 

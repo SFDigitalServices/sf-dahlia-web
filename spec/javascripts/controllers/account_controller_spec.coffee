@@ -134,6 +134,7 @@ do ->
           $valid: true
           $setUntouched: () ->
           $setPristine: () ->
+        deferred.resolve(true)
 
       it 'calls function on AccountService', ->
         scope.signIn()
@@ -143,39 +144,39 @@ do ->
         scope.signIn()
         expect(scope.submitDisabled).toEqual true
 
-      describe 'user not in short form session', ->
-        beforeEach ->
-          spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
-          state.current.name = 'dahlia.sign-in'
-          deferred.resolve(true)
-
-        it 'sends user to AccountService.goToLoginRedirect if available', ->
-          state.params.fromShortFormIntro = null
-          fakeAccountService.loginRedirect = 'dahlia.listings'
-          scope.signIn()
-          scope.$apply()
-          expect(fakeAccountService.goToLoginRedirect).toHaveBeenCalled()
-
-        it 'sends user to dahlia.my-account by default', ->
-          state.params.fromShortFormIntro = null
-          fakeAccountService.loginRedirect = null
-          scope.signIn()
-          scope.$apply()
-          expect(state.go).toHaveBeenCalledWith('dahlia.my-account')
-
-      describe 'user signing in from short from intro page', ->
+      describe "when user came to the sign in page from a listing's short form intro page", ->
         beforeEach ->
           spyOn(fakeAccountService, 'loggedIn').and.returnValue(true)
           state.current.name = 'dahlia.sign-in'
           state.params.fromShortFormIntro = true
           fakeShortFormApplicationService.listing =
-            Id: "123"
-          deferred.resolve(true)
+            Id: '123'
 
         it 'sends user back to short form intro page', ->
           scope.signIn()
           scope.$apply()
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-welcome.intro', {id: '123'})
+
+      describe 'when user did not come to the sign in page from the short form intro page', ->
+        beforeEach ->
+          state.params.fromShortFormIntro = null
+
+        describe 'when user is signing in from the continue draft page', ->
+          it 'sends the user to the short form name page', ->
+            state.current.name = 'dahlia.continue-draft-sign-in'
+            listing_id = '123'
+            state.params.listing_id = listing_id
+            scope.signIn()
+            scope.$apply()
+            expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name', id: listing_id)
+
+        describe 'when user is not signing in from the continue draft page', ->
+          it 'calls scope._signInRedirect', ->
+            state.current.name = 'dahlia.sign-in'
+            scope._signInRedirect = jasmine.createSpy()
+            scope.signIn()
+            scope.$apply()
+            expect(scope._signInRedirect).toHaveBeenCalled()
 
     describe '$scope.requestPasswordReset', ->
       it 'calls on AccountService.requestPasswordReset', ->
