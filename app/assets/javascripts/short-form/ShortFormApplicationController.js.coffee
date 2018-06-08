@@ -673,14 +673,23 @@ ShortFormApplicationController = (
 
     else if $scope.chosenAccountOption == 'continueAsGuest'
       AccountService.signOut({ preserveAppData: true })
-      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{$scope.application.lastPage}")
+      # when continuing anonymously, jump ahead to contact page rather than going back to the
+      # name page so you don't see the welcome back page a second time
+      lastPage = switch $scope.application.lastPage
+        when 'name'
+          'contact'
+        else
+          $scope.application.lastPage
+      $scope.goToAndTrackFormSuccess("dahlia.short-form-application.#{lastPage}")
 
     else if $scope.chosenAccountOption == 'overwriteWithAccountInfo'
-      ShortFormApplicationService.importUserData(AccountService.loggedInUser)
       ShortFormApplicationService.cancelPreferencesForMember($scope.applicant.id)
       ShortFormApplicationService.resetCompletedSections()
+      # Import account details into recent draft and overwrite account application to
+      # prevent a duplicate
+      ShortFormApplicationService.keepCurrentDraftApplication(AccountService.loggedInUser).then ->
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
 
-      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
 
   ## account service
   $scope.loggedIn = ->

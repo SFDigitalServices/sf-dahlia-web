@@ -180,12 +180,6 @@
       else
         AccountService.showChooseDiffEmailMessage = false
 
-      if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
-        toState.name == 'dahlia.short-form-application.name')
-          # when continuing anonymously, jump ahead to contact page rather than going back to
-          # the name page
-          $state.go('dahlia.short-form-application.contact')
-
       if (fromState.name == 'dahlia.short-form-review' &&
         toState.name != 'dahlia.short-form-review')
           # Clear out application when leaving the application review page, unless going to

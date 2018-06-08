@@ -205,7 +205,7 @@ Feature: Sign-in while filling out application
         Then I should be on a page to reconcile my application details
 
         When I choose to reconcile my application details by changing them to match my account details
-        Then I should be on the "Contact" page of the application
+        Then I should be on the "Name" page of the application
         And I should not be able to navigate to the "Income" section
         And I should not be able to navigate to the "Preferences" section
         When I navigate to the "You" section

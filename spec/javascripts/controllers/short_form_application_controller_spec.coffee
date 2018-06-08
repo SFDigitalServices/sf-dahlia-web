@@ -165,6 +165,7 @@ do ->
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
@@ -729,11 +730,6 @@ do ->
             expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
 
         describe "when user's account info is the same as the applicant info on their recent application", ->
-          beforeEach ->
-            deferred = $q.defer()
-            deferred.resolve()
-            spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
-
           it 'calls ShortFormApplicationService.keepCurrentDraftApplication with the logged-in user', ->
             scope.chooseDraft()
             expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalledWith(fakeAccountService.loggedInUser)
@@ -770,7 +766,7 @@ do ->
           scope.chooseApplicantDetails()
           scope.$apply()
           expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
-          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.contact')
 
       describe 'when user chooses to overwrite account info', ->
         beforeEach ->
@@ -780,14 +776,14 @@ do ->
           scope.chooseApplicantDetails()
           scope.$apply()
 
-        it 'calls function to import user data', ->
-          expect(fakeShortFormApplicationService.importUserData).toHaveBeenCalledWith({test: 'test'})
-
         it 'calls function to cancel preferences by the member', ->
           expect(fakeShortFormApplicationService.cancelPreferencesForMember).toHaveBeenCalledWith(1)
 
         it 'calls function to reset completed sections', ->
           expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
+
+        it 'should overwrite previous draft application', ->
+          expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalled()
 
         it 'sends user to name section of the short form', ->
           expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
