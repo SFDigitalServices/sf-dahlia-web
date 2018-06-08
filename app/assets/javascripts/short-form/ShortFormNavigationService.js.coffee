@@ -203,7 +203,6 @@ ShortFormNavigationService = (
         ,'household-overview'
         ,'income'
         ,'preferences-intro'
-        ,'alice-griffith-preference'
         ,'review-summary'
         ,'review-sign-in'
           Service._getPreviousPage()
@@ -246,8 +245,13 @@ ShortFormNavigationService = (
           'adhp-preference'
         else
           Service.goBackToRentBurden()
-      when 'preferences-programs'
+      when 'alice-griffith-preference'
         Service.goBackToLiveWorkNeighborhood()
+      when 'preferences-programs'
+        if ShortFormApplicationService.listingHasPreference('aliceGriffith')
+          'alice-griffith-preference'
+        else
+          Service.goBackToLiveWorkNeighborhood()
       when 'custom-preferences'
         'preferences-programs'
       when 'custom-proof-preferences'

@@ -349,8 +349,10 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    # after Live/Work, go to preferences-programs
-    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    if ShortFormApplicationService.listingHasPreference('aliceGriffith')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alice-griffith-preference')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   ##### Custom Preferences Logic ####
   # this called after preferences programs

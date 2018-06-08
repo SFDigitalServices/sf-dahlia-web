@@ -8,6 +8,8 @@
     | {{'E2C_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME' | translate}}
   p.form-note.margin-bottom ng-if="$ctrl.preference == 'workInSf'"
     | {{'E2C_LIVE_WORK_PREFERENCE.DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK' | translate}}
+  p.form-note.margin-bottom ng-if="$ctrl.preference == 'aliceGriffith'"
+    | {{'E6_ALICE_GRIFFITH_PREFERENCE.DOCUMENT_MUST_SHOW_AG_ADDRESS' | translate}}
   p.form-note ng-if="$ctrl.proofType == 'Copy of Lease'"
     | {{'LABEL.UPLOAD_LEASE_DESCRIPTION' | translate}}
 
@@ -23,6 +25,8 @@
       | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FROM_EMPLOYER_INSTRUCTIONS' | translate}}
     p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter documenting homelessness'"
       | {{'E2C_LIVE_WORK_PREFERENCE.LETTER_FOR_HOMELESSNESS_INSTRUCTIONS' | translate}}
+    p.form-note.margin-bottom ng-if="$ctrl.proofDocument.proofOption == 'Letter from SFHA verifying address'"
+      | {{'E6_ALICE_GRIFFITH_PREFERENCE.LETTER_FROM_SFHA_INSTRUCTIONS' | translate}}
 
 .form-group.text-center ng-class="{ error: $ctrl.inputInvalid($ctrl.fileInputName) }" ng-if="$ctrl.showPreferenceUploader()"
   / type="button" tells it not to act as a submit button

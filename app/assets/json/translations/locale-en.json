@@ -256,8 +256,17 @@
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
     "E6_ALICE_GRIFFITH_PREFERENCE": {
-        "TITLE": "Alice Griffith Housing Development Preference",
-        "DESC": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010."
+        "TITLE": "Your household may qualify for the following lottery preference.",
+        "INSTRUCTIONS": "Just provide a valid address and upload proof to get a higher ranking in the lottery.",
+        "ADDRESS": "Alice Griffith Address",
+        "ADDRESS_DESC": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
+        "ADDRESS_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
+        "DOCUMENT_MUST_SHOW_AG_ADDRESS": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+        "LETTER_FROM_SFHA_INSTRUCTIONS": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
+        "PREFERENCE": {
+            "TITLE": "Alice Griffith Housing Development Resident Preference",
+            "DESC": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010."
+        }
     },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",

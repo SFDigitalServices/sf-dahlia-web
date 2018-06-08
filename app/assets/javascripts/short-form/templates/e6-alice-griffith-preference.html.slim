@@ -1,14 +1,26 @@
 .app-card.form-card
   short-form-header
     h2.app-card_question
-      | Your household may qualify for the following preference
+      | {{'E6_ALICE_GRIFFITH_PREFERENCE.TITLE' | translate}}
     p.form-note.margin-bottom
-    	 | Just provide a valid address and upload proof to get a higher ranking in the lottery
+    	 | {{'E6_ALICE_GRIFFITH_PREFERENCE.INSTRUCTIONS' | translate}}
 
   .app-inner
-    .form-group
+    .form-group ng-class="{ error: inputInvalid('aliceGriffith') }"
       p.form-note.margin-bottom--2x translate="LABEL.PLEASE_SELECT_PREFERENCE"
-      .checkbox-group role="group"
-        alice-griffith-preference-component(application="application"  has-proof="true" title="{{'E6_ALICE_GRIFFITH_PREFERENCE.TITLE' | translate}}" preference="aliceGriffith" proof-option-label="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}"  proof-option-sublabel="{{'LABEL.PREFERENCE_PROOF_ADDRESS_DOCUMENTS' | translate}}" translated-description="E6_ALICE_GRIFFITH_PREFERENCE.DESC")
+      .checkbox-group.border-bottom.margin-bottom--2x role="group"
+        preference(application="application" has-proof="true" title="{{'E6_ALICE_GRIFFITH_PREFERENCE.PREFERENCE.TITLE' | translate}}" preference="aliceGriffith" proof-option-label="{{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS_DOCUMENTS' | translate}}" translated-description="E6_ALICE_GRIFFITH_PREFERENCE.PREFERENCE.DESC" required="preferenceRequired('aliceGriffith')")
+
+        div.form-group.input-inset ng-if="application.preferences.aliceGriffith"
+          label.form-label.caps
+            | {{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS' | translate}}
+          p.form-note.margin-bottom
+            | {{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS_DESC' | translate}}
+          address-form address-type="preference_address" model="application.preferences.aliceGriffith" model-name='aliceGriffith' is-required="true"
+
+      preference-opt-out preference="aliceGriffith" application="application" invalid="inputInvalid('aliceGriffith')" cancel-preference="cancelPreference('aliceGriffith')"
+
+      small.error ng-if="inputInvalid('aliceGriffith')"
+        | {{'ERROR.PLEASE_SELECT_AN_OPTION' | translate}}
 
   short-form-save-and-submit

@@ -14,6 +14,9 @@ angular.module('dahlia.components')
     proofType: '@'
     marginBottom: '<'
     required: '&'
+    hasAddress: '<'
+    addressTitle: '@'
+    addressDescription: '@'
   templateUrl: 'short-form/components/preference-component.html'
 
   controller:
