@@ -92,10 +92,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
 
   Service.preference_proof_options_alice_griffith = [
     ['Letter from SFHA verifying address', t('LABEL.PROOF.SFHA_LETTER')]
-    ['CA ID or Driver’s License', t('LABEL.PROOF.CA_LICENSE')]
-    ['Telephone bill', t('LABEL.PROOF.TELEPHONE_BILL')]
+    ['CA ID or Driver\'s License', t('LABEL.PROOF.CA_LICENSE')]
+    ['Telephone bill (landline only)', t('LABEL.PROOF.TELEPHONE_BILL')]
     ['Cable and internet bill', t('LABEL.PROOF.CABLE_BILL')]
-    ['Paystub', t('LABEL.PROOF.PAYSTUB_HOME')]
+    ['Paystub (listing home address)', t('LABEL.PROOF.PAYSTUB_HOME')]
     ['Public benefits record', t('LABEL.PROOF.PUBLIC_BENEFITS')]
     ['School record', t('LABEL.PROOF.SCHOOL_RECORD')]
   ]

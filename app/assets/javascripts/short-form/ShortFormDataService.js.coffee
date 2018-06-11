@@ -204,7 +204,7 @@ ShortFormDataService = (ListingService) ->
       if prefAddress
         # NOTE: This is a temp sol'n to joining address 1 and 2 into one line. We won't need this in #157290273
         address = prefAddress.address1
-        address += " " + prefAddress.address2
+        address += " " + prefAddress.address2 if prefAddress.address2
         city = prefAddress.city
         state = prefAddress.state
         zipCode = prefAddress.zip
