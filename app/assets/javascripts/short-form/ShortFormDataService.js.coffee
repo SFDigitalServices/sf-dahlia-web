@@ -156,6 +156,10 @@ ShortFormDataService = (ListingService) ->
       certificateNumber = null
       appPrefs = application.preferences
       proofOption = null
+      address = null
+      city = null
+      state = null
+      zipCode = null
       PREFS = ListingService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
@@ -186,12 +190,6 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'assistedHousing'
           optOut = appPrefs.optOut.assistedHousing
         proofOption = 'Lease and rent proof' unless optOut
-      else if listingPref.preferenceName == PREFS.aliceGriffith
-        # NOTE: This is a temp sol'n to joining address 1 and 2 into one line. We won't need this in #157290273
-        address = appPrefs["#{prefKey}_address"].address1 + " " +  appPrefs["#{prefKey}_address"].address2
-        city = appPrefs["#{prefKey}_address"]
-        state = appPrefs["#{prefKey}_address"]
-        zipCode = appPrefs["#{prefKey}_address"]
       else
         prefKey = _.invert(PREFS)[listingPref.preferenceName]
         prefKey = listingPref.listingPreferenceID if !prefKey
@@ -201,7 +199,15 @@ ShortFormDataService = (ListingService) ->
         proofOption = proof.proofOption unless optOut
         # pref_certificateNumber may or may not exist, which is ok
         certificateNumber = appPrefs["#{prefKey}_certificateNumber"]
+        prefAddress = appPrefs[prefKey + '_address']
 
+      if prefAddress
+        # NOTE: This is a temp sol'n to joining address 1 and 2 into one line. We won't need this in #157290273
+        address = prefAddress.address1
+        address += " " + prefAddress.address2
+        city = prefAddress.city
+        state = prefAddress.state
+        zipCode = prefAddress.zip
 
       # if you optOut then you wouldn't have a memberName or proofOption
       unless optOut
@@ -216,15 +222,20 @@ ShortFormDataService = (ListingService) ->
           # there might not be a member indicated if it's a draft
           naturalKey = "#{member.firstName},#{member.lastName},#{Service.formatUserDOB(member)}"
 
-      shortFormPref =
+      shortFormPref = {
+        shortformPreferenceID
         recordTypeDevName: Service._getPreferenceRecordType(listingPref)
-        shortformPreferenceID: shortformPreferenceID
         listingPreferenceID: listingPref.listingPreferenceID
         preferenceProof: proofOption
-        naturalKey: naturalKey
-        optOut: optOut
         individualPreference: individualPref
-        certificateNumber: certificateNumber
+        naturalKey
+        optOut
+        certificateNumber
+        address
+        city
+        state
+        zipCode
+      }
       # remove blank values
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
       shortFormPreferences.push(shortFormPref)
@@ -421,7 +432,14 @@ ShortFormDataService = (ListingService) ->
         if shortFormPref.certificateNumber
           preferences["#{prefKey}_certificateNumber"] = shortFormPref.certificateNumber
 
+        if shortFormPref.address || shortFormPref.city || shortFormPref.state || shortFormPref.zipCode
+          preferences["#{prefKey}_address"].address = shortFormPref.address
+          preferences["#{prefKey}_address"].city = shortFormPref.city
+          preferences["#{prefKey}_address"].state = shortFormPref.state
+          preferences["#{prefKey}_address"].zip = shortFormPref.zipCode
+
         preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
+
     )
     if preferences.liveInSf || preferences.workInSf
       preferences.liveWorkInSf = true
