@@ -168,11 +168,18 @@
         'container@':
           templateUrl: 'account/templates/create-account.html'
           controller: 'AccountController'
-      onEnter: ['AccountService', (AccountService) ->
+      onEnter: ['$state', 'AccountService', ($state, AccountService) ->
+        reconcilingAccountDetails =
+          $state.current.name == 'dahlia.short-form-application.choose-applicant-details'
+
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
-        AccountService.copyApplicantFields()
-        AccountService.lockCompletedFields()
+        AccountService.copyApplicantFields('applicant', { excludeEmail: reconcilingAccountDetails })
+
+        if reconcilingAccountDetails
+          AccountService.unlockFields()
+        else
+          AccountService.lockCompletedFields()
       ]
       resolve:
         $title: ['$translate', ($translate) ->
@@ -224,11 +231,16 @@
       # duplicated from above but to differentiate state for "Save and finish later"
       # will be accessed at '/listings/{id}/apply/sign-in'
       url: '/sign-in'
-      views:
-        'container@':
+      views: {
+        'container@': {
+          controller: 'ShortFormApplicationController'
           templateUrl: 'account/templates/sign-in.html'
-          controller: 'AccountController'
+        }
+      }
       onEnter: ['AccountService', (AccountService) ->
+        # for using browser back button after signing in
+        if AccountService.loggedInUser.id
+          AccountService.signOut({ preserveAppData: true })
         AccountService.clearAccountMessages()
         AccountService.resetUserAuth()
         AccountService.copyApplicantFields()
@@ -693,16 +705,41 @@
       views:
         'container':
           templateUrl: 'short-form/templates/b1-name.html'
+      params:
+        infoChanged:
+          squash: true
       onEnter: [
-        'ShortFormApplicationService', 'AccountService', 'AutosaveService',
-        (ShortFormApplicationService, AccountService, AutosaveService) ->
+        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            ShortFormApplicationService.infoChanged = $stateParams.infoChanged
             # always autosave when you start a new application
             # TODO: remove hotfix for marking initial autosaves that come from the Name page
             unless ShortFormApplicationService.application.id
               ShortFormApplicationService.submitApplication({autosave: true, initialSave: true})
+      ]
+    })
+    .state('dahlia.short-form-application.welcome-back', {
+      url: '/welcome-back'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b1a-welcome-back.html'
+      onEnter: [
+        '$state', 'ShortFormApplicationService', 'AccountService',
+        ($state, ShortFormApplicationService, AccountService) ->
+          # for using browser back button after signing in
+          if AccountService.loggedInUser.id
+            AccountService.signOut({ preserveAppData: true })
+            ShortFormApplicationService.resetApplicationData({
+              applicant: ShortFormApplicationService.application.overwrittenApplicantInfo
+            })
+
+          AccountService.clearAccountMessages()
+          AccountService.resetUserAuth()
+          AccountService.copyApplicantFields()
+          AccountService.lockCompletedFields()
       ]
     })
     .state('dahlia.short-form-application.contact', {
@@ -985,18 +1022,6 @@
           ShortFormApplicationService.checkForProofPrefs()
         ]
     })
-    .state('dahlia.short-form-application.review-sign-in', {
-      url: '/review-sign-in'
-      views:
-        'container':
-          templateUrl: 'short-form/templates/f1a-review-sign-in.html'
-      onEnter: ['AccountService', (AccountService) ->
-        AccountService.clearAccountMessages()
-        AccountService.resetUserAuth()
-        AccountService.copyApplicantFields()
-        AccountService.lockCompletedFields()
-      ]
-    })
     .state('dahlia.short-form-application.review-terms', {
       url: '/review-terms?loginMessage'
       params:
@@ -1004,15 +1029,6 @@
       views:
         'container':
           templateUrl: 'short-form/templates/f2-review-terms.html'
-      onEnter: ['$stateParams', '$translate', 'AccountService', ($stateParams, $translate, AccountService) ->
-        AccountService.clearAccountMessages()
-        if $stateParams.loginMessage
-          if $stateParams.loginMessage == 'update'
-            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY_AND_UPDATED')
-          else
-            message = $translate.instant('SIGN_IN.SIGNED_IN_SUCCESSFULLY')
-          AccountService.accountSuccess.messages.login = message
-      ]
     })
     .state('dahlia.short-form-application.confirmation', {
       url: '/confirmation'
@@ -1064,6 +1080,23 @@
             $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: application.listing.Name})
         ]
     })
+    .state('dahlia.short-form-application.continue-previous-draft', {
+      url: '/continue-previous-draft'
+      views:
+        'container@':
+          templateUrl: 'short-form/templates/continue-previous-draft.html'
+          controller: 'ShortFormApplicationController'
+      resolve:
+        auth: ['$auth', ($auth) ->
+          $auth.validateUser()
+        ]
+      onEnter: [
+        '$state', 'ShortFormApplicationService',
+        ($state, ShortFormApplicationService) ->
+          if _.isEmpty(ShortFormApplicationService.accountApplication)
+            $state.go('dahlia.my-applications')
+        ]
+    })
     .state('dahlia.short-form-application.choose-draft', {
       url: '/choose-draft'
       views:
@@ -1081,24 +1114,15 @@
             $state.go('dahlia.my-applications')
         ]
     })
-    .state('dahlia.short-form-application.choose-account-settings', {
-      url: '/choose-account-settings'
+    .state('dahlia.short-form-application.choose-applicant-details', {
+      url: '/choose-applicant-details'
       views:
         'container@':
-          templateUrl: 'short-form/templates/choose-account-settings.html'
+          templateUrl: 'short-form/templates/choose-applicant-details.html'
           controller: 'ShortFormApplicationController'
       resolve:
         auth: ['$auth', ($auth) ->
           $auth.validateUser()
-        ]
-        $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.ACCOUNT_SETTINGS')
-        ]
-      onEnter: [
-        '$state', 'ShortFormApplicationService',
-        ($state, ShortFormApplicationService) ->
-          if _.isEmpty(ShortFormApplicationService.application)
-            $state.go('dahlia.my-applications')
         ]
     })
 

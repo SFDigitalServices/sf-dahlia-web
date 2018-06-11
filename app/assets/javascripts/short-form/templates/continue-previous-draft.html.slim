@@ -1,0 +1,24 @@
+section.app-container
+  .row.collapse
+    .medium-6.medium-centered.columns.fixed-width
+
+      short-form-nav
+
+      form(novalidate="" name="form.applicationForm")
+        #short-form-wrapper.focus-container
+          .app-card.form-card
+            .app-inner.leader
+              h2.app-card_question
+                | {{'CONTINUE_PREVIOUS_DRAFT.TITLE' | translate}}
+              p.form-note.margin-bottom
+                | {{'CONTINUE_PREVIOUS_DRAFT.DESCRIPTION' | translate}}
+
+            ng-include src="'short-form/templates/partials/_review-application-details.html'"
+
+            .button-pager
+              .button-pager_row.primary
+                button#continue-previous-draft.button.primary type="button" ui-sref="dahlia.short-form-application.contact" ng-click="trackContinuePreviousDraft()"
+                  | {{'CONTINUE_PREVIOUS_DRAFT.CONTINUE_WITH_THESE_DETAILS' | translate}}
+              .button-pager_row
+                button#start-from-scratch.button.button-link.button-lined.small-text-center.expand-small type="button" ng-click="resetAndReplaceApp()"
+                  | {{'B0_AUTOFILL_PREVIEW.START_FROM_SCRATCH' | translate}}

@@ -1,18 +1,12 @@
-World = require('../world.coffee').World
-Chance = require('chance')
-chance = new Chance()
-EC = protractor.ExpectedConditions
-
-getUrl = (url) ->
-  browser.get(url)
+World = require('../world.coffee')
+Utils = require('../utils')
 
 module.exports = ->
-  # import global cucumber options
   @World = World
 
   @Given 'I try to go to a listing page with an invalid ID', ->
     url = "/listings/foofoofoofoo"
-    getUrl(url)
+    Utils.Page.goTo(url)
 
   ######################
   # --- Expectations --- #

@@ -17,8 +17,8 @@ class UploadedFile < ActiveRecord::Base
         # compress/optimize all jpegs
         ImageOptimizer.new(tempfile_path, quality: 75).optimize
       end
-    rescue
-      logger.error 'UploadedFile.create_and_resize error: png -> jpg conversion'
+    rescue StandardError => e
+      logger.error "UploadedFile.create_and_resize error: png -> jpg conversion, #{e}"
     end
     # read file data into :file attribute
     attrs[:file] = File.read(tempfile_path)
