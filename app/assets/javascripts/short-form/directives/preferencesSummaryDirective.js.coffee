@@ -26,6 +26,7 @@ angular.module('dahlia.directives')
           when 'workInSf' then 'E2C_LIVE_WORK_PREFERENCE.WORK_SF_PREFERENCE.TITLE'
           when 'assistedHousing' then 'E3A_ASSISTED_HOUSING_PREFERENCE.PREFERENCE.TITLE'
           when 'rentBurden' then 'E3B_RENT_BURDEN_PREFERENCE.RENT_BURDEN_PREFERENCE'
+          when 'aliceGriffith' then 'E6_ALICE_GRIFFITH_PREFERENCE.PREFERENCE.TITLE'
 
         # If we didn't find a display name for this key, skip over it
         return unless displayNameTranslateKey

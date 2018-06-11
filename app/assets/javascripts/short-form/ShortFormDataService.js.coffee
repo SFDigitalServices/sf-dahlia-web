@@ -433,10 +433,12 @@ ShortFormDataService = (ListingService) ->
           preferences["#{prefKey}_certificateNumber"] = shortFormPref.certificateNumber
 
         if shortFormPref.address || shortFormPref.city || shortFormPref.state || shortFormPref.zipCode
-          preferences["#{prefKey}_address"].address = shortFormPref.address
-          preferences["#{prefKey}_address"].city = shortFormPref.city
-          preferences["#{prefKey}_address"].state = shortFormPref.state
-          preferences["#{prefKey}_address"].zip = shortFormPref.zipCode
+          preferences["#{prefKey}_address"] = {
+            address1: shortFormPref.address
+            city: shortFormPref.city
+            state: shortFormPref.state
+            zip: shortFormPref.zipCode
+          }
 
         preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
 
