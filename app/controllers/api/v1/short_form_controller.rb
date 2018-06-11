@@ -403,6 +403,10 @@ class Api::V1::ShortFormController < ApiController
                 optOut
                 individualPreference
                 shortformPreferenceID
+                address
+                city
+                state
+                zipCode
               ],
             },
             :answeredCommunityScreening,
