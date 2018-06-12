@@ -15,8 +15,9 @@ Feature: Short Form Application
         And I indicate having vouchers
         And I fill out my income as "25000"
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
-        And I opt out of Live/Work preference
+        And I opt out of "Assisted Housing" preference
+        And I opt out of "Live/Work" preference
+        And I opt out of "Alice Griffith" preference
         And I don't choose COP/DTHP preferences
         And I continue past the general lottery notice page
         And I fill out the optional survey
@@ -66,11 +67,17 @@ Feature: Short Form Application
         And I upload a "Gas bill" as my proof of preference for "neighborhoodResidence"
         And I click the Next button on the Live in the Neighborhood page
 
+        And I select "Coleman Francis" for "aliceGriffith" preference
+        And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
+        And I fill out my address for Alice Griffith
+        And I hit the Next button "1" time
+
         And I select "Jane Doe" for "certOfPreference" preference
         And I fill out my "certOfPreference" certificate number
         And I select "Coleman Francis" for "displaced" preference
         And I fill out my "displaced" certificate number
         And I submit my preferences
+
         # review
         And I fill out the optional survey
         # confirm everything has shown up
@@ -113,6 +120,7 @@ Feature: Short Form Application
         Then I continue past the Lottery Preferences intro
         And on the Rent Burdened page I should see my correct info
         And on the Live in the Neighborhood page I should see my correct info
+        And on the Alice Griffith page I should see my correct info
         And on the Preferences Programs page I should see my correct info
 
         # review

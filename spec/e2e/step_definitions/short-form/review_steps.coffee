@@ -71,6 +71,8 @@ module.exports = ->
       Utils.Expect.byCss(@, '#review-liveInSf .info-item_note', 'for Jane Doe')
       Utils.Expect.byCss(@, '#review-liveInSf .info-item_note', 'Gas bill attached')
       Utils.Expect.byCss(@,
+        '#review-aliceGriffith .info-item_note', 'Letter from SFHA verifying address')
+      Utils.Expect.byCss(@,
         '#review-certOfPreference .info-item_name', 'Certificate of Preference (COP)')
       Utils.Expect.byCss(@, '#review-certOfPreference .info-item_note', 'for Jane Doe')
       Utils.Expect.byCss(@,

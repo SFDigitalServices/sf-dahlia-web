@@ -81,8 +81,9 @@ Feature: Short Form Application - Rent Burdened Preference
         And I indicate being done with this address
         Then I should see green checkmarks indicating my uploads for Lease and Rent
         And I hit the Next button "1" time
-        And I opt out of NRHP preference
-        And I opt out of Live/Work preference
+        And I opt out of "NRHP" preference
+        And I opt out of "Live/Work" preference
+        And I opt out of "Alice Griffith" preference
         And I don't choose COP/DTHP preferences
         And I fill out the optional survey
         Then on the Review Page I should see my Rent Burdened preference details
