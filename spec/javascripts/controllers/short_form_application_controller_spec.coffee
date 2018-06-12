@@ -511,10 +511,24 @@ do ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.live-work-preference')
 
     describe 'checkAfterLiveWork', ->
-      it 'goes to preferences-programs page', ->
-        scope.checkAfterLiveWork()
-        path = 'dahlia.short-form-application.preferences-programs'
-        expect(state.go).toHaveBeenCalledWith(path)
+      describe 'when listing has Alice Griffith preference', ->
+        beforeEach ->
+          spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
+
+        it 'goes to alice-griffith-preference', ->
+          scope.checkAfterLiveWork()
+
+          path = 'dahlia.short-form-application.preferences-programs'
+          expect(state.go).toHaveBeenCalledWith(path)
+
+      describe 'when listing does not have Alice Griffith preference', ->
+        beforeEach ->
+          spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
+
+        it 'goes to preferences-programs page', ->
+          scope.checkAfterLiveWork()
+          path = 'dahlia.short-form-application.preferences-programs'
+          expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->

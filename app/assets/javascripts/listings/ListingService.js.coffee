@@ -621,8 +621,8 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       Service.error.preferences = true
     )
 
-  Service.hardcodeCustomProofPrefs =
-    ['Alice Griffith Housing Development Resident']
+  # TODO: Replace with `requiresProof` listing preference setting (#154784101)
+  Service.hardcodeCustomProofPrefs = []
 
   Service._extractCustomPreferences = ->
     customPreferences = _.filter Service.listing.preferences, (listingPref) ->
