@@ -1201,48 +1201,6 @@ do ->
         ShortFormApplicationService.invalidateCurrentSectionIfIncomplete()
         expect(ShortFormApplicationService.application.completedSections['You']).toEqual(true)
 
-    describe 'signInSubmitApplication', ->
-      beforeEach ->
-        ShortFormApplicationService.application = fakeShortForm
-        setupFakeApplicant()
-      afterEach ->
-        resetFakePeople()
-
-      it 'sends you to the already submitted confirmation if you already submitted', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.application.status = 'submitted'
-        ShortFormApplicationService.signInSubmitApplication()
-        httpBackend.flush()
-        stateOpts =
-          skipConfirm: true
-          alreadySubmittedId: fakeSalesforceApplication.application.id
-          doubleSubmit: true
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
-
-      it 'sends you to choose account settings if they were different', ->
-        opts =
-          type: 'review-sign-in'
-          loggedInUser:
-            firstName: 'Mister'
-            lastName: 'Tester'
-          submitCallback: jasmine.createSpy()
-        ShortFormApplicationService.application.status = 'draft'
-        stubAngularAjaxRequest httpBackend, requestURL, {}
-        ShortFormApplicationService.signInSubmitApplication(opts)
-        httpBackend.flush()
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-account-settings')
-
-    describe '_signInAndSkipSubmit', ->
-      it 'checks if you\'ve already submitted', ->
-        fakePrevApplication = { status: 'submitted', id: '123' }
-        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
-      it 'sends you to choose draft', ->
-        fakePrevApplication = { status: 'draft' }
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
-
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'returns true with lease and rent file', ->
         ShortFormApplicationService.application.preferences =
@@ -1342,3 +1300,66 @@ do ->
         }
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
         expect(pct).toEqual 60
+
+    describe 'memberAgeOnForm', ->
+      it 'calls Service.memberDOBMoment with the given member string', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment')
+        member = 'householdMember'
+        ShortFormApplicationService.memberAgeOnForm(member)
+        expect(ShortFormApplicationService.memberDOBMoment).toHaveBeenCalledWith(member)
+
+      it 'returns undefined if Service.memberDOBMoment returns a falsey value', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(null)
+        age = ShortFormApplicationService.memberAgeOnForm()
+        expect(age).toBeUndefined()
+
+      it 'returns an integer representing the age of the member based on the DOB value returned by Service.memberDOBMoment', ->
+        dob = moment('01/01/1990', 'DD/MM/YYYY')
+        today = moment()
+        yearsDiffTodayAndDOB = today.diff(dob, 'years')
+
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(dob)
+        age = ShortFormApplicationService.memberAgeOnForm()
+
+        expect(age).toBe(yearsDiffTodayAndDOB)
+
+    describe 'memberDOBMoment', ->
+      beforeEach ->
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '1990'
+
+      it 'calls Service.DOBValues with the given member string', ->
+        member = 'householdMember'
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({})
+        ShortFormApplicationService.memberDOBMoment(member)
+        expect(ShortFormApplicationService.DOBValues).toHaveBeenCalledWith(member)
+
+      it 'returns false if Service.DOBValues does not return a month value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({day: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if Service.DOBValues does not return a day value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({month: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if the birth year in the short form is < 1900', ->
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '01/01/1899'
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      describe 'if Service.DOBValues returns a month and a day, and the birth year in the short form is >= 1900', ->
+        it 'returns a moment object representing the member DOB, constructed using the month and
+            day returned by Service.DOBValues and the year from the short form', ->
+          year = ShortFormApplicationService.form.applicationForm.date_of_birth_year.$viewValue
+          values = {month: 1, day: 1}
+          dobMoment = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+          spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue(values)
+          result = ShortFormApplicationService.memberDOBMoment()
+
+          expect(result).toEqual(dobMoment)

@@ -10,7 +10,7 @@ angular.module('dahlia.directives')
     scope.ngHref = $state.href(attrs.to)
 
     scope.isEditable = ->
-      return false if scope.atAutofillPreview()
+      return false if (scope.atAutofillPreview() || scope.atContinuePreviousDraft())
       # using regex .match made the angular digest loop angry!
       scope.application.status.toLowerCase() == 'draft'
 ]

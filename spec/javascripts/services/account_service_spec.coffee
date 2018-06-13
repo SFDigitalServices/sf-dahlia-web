@@ -230,16 +230,21 @@ do ->
         expect(AccountService.lockedFields.dob).toEqual false
 
     describe 'copyApplicantFields', ->
-      it 'copies fields from ShortFormApplicationService into userAuth.contact', ->
+      beforeEach ->
         fakeShortFormApplicationService.applicant = fakeApplicantFull
+
+      it 'copies fields from ShortFormApplicationService into userAuth.contact', ->
         AccountService.copyApplicantFields()
-        info = _.pick fakeApplicantFull, ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
+        info = _.pick fakeApplicantFull,
+          ['firstName', 'middleName', 'lastName', 'dob_day', 'dob_month', 'dob_year']
         expect(AccountService.userAuth.contact).toEqual info
       it 'copies fields from ShortFormApplicationService into userAuth.user', ->
-        fakeShortFormApplicationService.applicant = fakeApplicantFull
         AccountService.copyApplicantFields()
         info = _.pick fakeApplicantFull, ['email']
         expect(AccountService.userAuth.user).toEqual info
+      it 'should exclude email when specified', ->
+        AccountService.copyApplicantFields('primary', { excludeEmail: true })
+        expect(AccountService.userAuth.user.email).toBeUndefined()
 
     describe 'getMyApplications', ->
       afterEach ->
