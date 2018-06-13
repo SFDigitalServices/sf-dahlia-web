@@ -194,12 +194,12 @@
         "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
         "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
         "RENT_BURDEN_DOC_1": "You'll need a Copy of Lease showing the address where you live.",
-        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with 1 (one) of the following:",
+        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with one of the following:",
         "RENT_BURDEN_TITLE": "Rent Burdened Preference",
-        "RESIDENT_DESC": "You'll need 1 (one) of the following documents showing the address where you live in San Francisco:",
+        "RESIDENT_DESC": "You'll need one of the following documents showing the address where you live in San Francisco:",
         "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
         "TITLE": "Document Checklist",
-        "WORK_SF_DESC": "You'll need 1 (one) of the following documents showing the address where you work in San Francisco:",
+        "WORK_SF_DESC": "You'll need one of the following documents showing the address where you work in San Francisco:",
         "WORK_SF_TITLE": "Work in San Francisco Preference"
     },
     "DOUBLE_SUBMITTED": {
@@ -796,11 +796,10 @@
     },
     "PREFERENCES": {
         "ALICE_GRIFFITH": {
-            "TITLE": "Alice Griffith Housing Development Resident",
+            "TITLE": "Alice Griffith Housing Development Resident Preference",
             "DESC": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
             "PROOF_DESC": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
-            "SFHA_LETTER_INSTRUCTIONS": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
-            "CA_LICENSE_INSTRUCTIONS": "California ID or Driver's License showing Alice Griffith address"
+            "SFHA_LETTER_INSTRUCTIONS": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010"
         }
     },
     "PRIVACY_POLICY": {
