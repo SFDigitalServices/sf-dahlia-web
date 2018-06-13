@@ -60,14 +60,16 @@ angular.module('dahlia.directives')
       scope.isSubmitted = ->
         ShortFormApplicationService.applicationWasSubmitted(scope.application)
 
+      #TODO: remove hotfix for 626 Mission Bay
       scope.submittedWithLotteryResults = ->
-        scope.isSubmitted() && scope.listing.Lottery_Results
+        scope.isSubmitted() && scope.listing.Lottery_Results && !ListingService.listingIs('626 Mission Bay Family Housing', scope.listing)
 
       scope.isPastDue = ->
         moment(scope.listing.Application_Due_Date) < moment()
 
       scope.lotteryNumber = ->
-        if scope.listing.Lottery_Results
+        #TODO: remove hotfix for 626 Mission Bay
+        if scope.listing.Lottery_Results && !ListingService.listingIs('626 Mission Bay Family Housing', scope.listing)
           html = """
             <button class='button-link lined' ng-click='viewLotteryResults()'>
               ##{scope.application.lotteryNumber}

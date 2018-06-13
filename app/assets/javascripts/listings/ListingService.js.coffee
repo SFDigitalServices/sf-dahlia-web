@@ -346,7 +346,8 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
         else
           openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
-        if Service.lotteryIsUpcoming(listing) || Service.listingIs('626 Mission Bay Family Housing')
+        #TODO: remove hotfix for 626 Mission Bay
+        if Service.lotteryIsUpcoming(listing) || Service.listingIs('626 Mission Bay Family Housing', listing)
           closedListings.push(listing)
         else
           lotteryResultsListings.push(listing)
