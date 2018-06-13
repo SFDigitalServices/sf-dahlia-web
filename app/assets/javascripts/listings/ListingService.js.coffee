@@ -346,7 +346,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
         else
           openNotMatchListings.push(listing)
       else if !Service.listingIsOpen(listing)
-        if Service.lotteryIsUpcoming(listing)
+        if Service.lotteryIsUpcoming(listing) || Service.listingIs('626 Mission Bay Family Housing')
           closedListings.push(listing)
         else
           lotteryResultsListings.push(listing)
@@ -754,6 +754,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService) ->
     'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
     'a0W0P00000FIuv3UAD': '1335 Folsom Street'
     'a0W0P00000DhM0wUAF': '750 Harrison Street'
+    'a0W0P00000GQqlQUAT': '626 Mission Bay Family Housing'
   }
 
   Service.mapSlugToId = (id) ->

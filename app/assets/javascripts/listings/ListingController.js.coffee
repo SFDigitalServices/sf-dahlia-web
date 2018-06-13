@@ -208,6 +208,7 @@ ListingController = (
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
   $scope.listingHasLotteryResults = ->
+    return false if ListingService.listingIs('626 Mission Bay Family Housing')
     ListingService.listingHasLotteryResults()
 
   $scope.listingHasPreferences = ->
