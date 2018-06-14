@@ -208,8 +208,6 @@ ListingController = (
     $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
   $scope.listingHasLotteryResults = ->
-    #TODO: remove hotfix for 626 Mission Bay
-    return false if ListingService.listingIs('626 Mission Bay Family Housing')
     ListingService.listingHasLotteryResults()
 
   $scope.listingHasPreferences = ->

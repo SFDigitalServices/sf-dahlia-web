@@ -18,8 +18,7 @@ section.content-wrap
   span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
-  / TODO: remove hotfix for 626 Mission Bay
-  .content-group ng-if='listingIs("626 Mission Bay Family Housing") || (!listing.Lottery_Results && !listingIsFirstComeFirstServe())'
+  .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
     h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
     p.content-group_date
       span.content-group_day
