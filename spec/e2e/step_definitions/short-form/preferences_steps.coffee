@@ -283,6 +283,13 @@ module.exports = ->
     element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
     element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
 
+  @When "I fill out an address for Alice Griffith that isn't found", ->
+    element(By.id('aliceGriffith_aliceGriffith_address_address1'))
+      .clear().sendKeys('Mission')
+    element(By.id('aliceGriffith_aliceGriffith_address_city')).clear().sendKeys('San Francisco')
+    element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
+    element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
+
   @Then 'on the Alice Griffith page I should see my correct info', ->
     Utils.Expect.checkboxChecked(@, 'preferences-aliceGriffith')
     # Coleman Francis == '2'
