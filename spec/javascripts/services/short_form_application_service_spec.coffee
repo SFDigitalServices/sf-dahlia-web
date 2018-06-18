@@ -1004,11 +1004,11 @@ do ->
             address2: 'Apt 3'
             city: 'San Francisco'
             state: 'CA'
-            zipCode: '94114'
+            zip: '94114'
           }
 
         ShortFormApplicationService.unsetPreferenceFields('aliceGriffith')
-        expect(ShortFormApplicationService.preferences.preferences.aliceGriffith_address)
+        expect(ShortFormApplicationService.preferences.aliceGriffith_address)
           .toEqual null
 
     describe 'cancelOptOut', ->

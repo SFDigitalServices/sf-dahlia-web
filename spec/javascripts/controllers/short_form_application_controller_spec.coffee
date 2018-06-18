@@ -87,7 +87,6 @@ do ->
         { error: -> null }
       validateApplicantAddress: ->
         { error: -> null }
-      validateAliceGriffithAddress: ->
       checkHouseholdEligiblity: (listing) ->
       hasHouseholdPublicHousingQuestion: ->
       submitApplication: (options={}) ->
@@ -126,8 +125,10 @@ do ->
       signOut: ->
       loggedIn: () ->
     fakeListingService = {}
-    fakeAddressValidationService =
+    fakeAddressValidationService = {
+      validate: ->
       validationError: jasmine.createSpy()
+    }
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
@@ -165,11 +166,11 @@ do ->
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
-      spyOn(fakeShortFormApplicationService, 'validateAliceGriffithAddress').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'resetApplicationData').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'submitApplication').and.callFake ->
@@ -731,6 +732,13 @@ do ->
 
     describe 'checkAliceGriffithAddress', ->
       beforeEach ->
+        fakeShortFormApplicationService.preferences.aliceGriffith_address = {
+          address1: '1234 Main St.'
+          address2: 'Apt 3'
+          city: 'San Francisco'
+          state: 'CA'
+          zip: '94114'
+        }
         spyOn(scope, 'goToAndTrackFormSuccess')
 
       describe 'when address not verified', ->
@@ -741,7 +749,10 @@ do ->
         it 'should validate Alice Griffith address', ->
           scope.checkAliceGriffithAddress()
 
-          expect(fakeShortFormApplicationService.validateAliceGriffithAddress).toHaveBeenCalled()
+          expect(fakeAddressValidationService.validate).toHaveBeenCalledWith({
+            address: fakeShortFormApplicationService.preferences.aliceGriffith_address
+            type: 'home'
+          })
 
         it 'should go to verify address page address when verification successful', ->
           scope.checkAliceGriffithAddress()
@@ -756,8 +767,7 @@ do ->
 
           deferred = $q.defer()
           deferred.reject({ status: 422 })
-          fakeShortFormApplicationService.validateAliceGriffithAddress
-            .and.returnValue(deferred.promise)
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
 
           scope.checkAliceGriffithAddress()
           $rootScope.$apply()
@@ -770,8 +780,7 @@ do ->
         it 'should go to preferences programs page when verification errors', ->
           deferred = $q.defer()
           deferred.reject({ status: 500 })
-          fakeShortFormApplicationService.validateAliceGriffithAddress
-            .and.returnValue(deferred.promise)
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
 
           scope.checkAliceGriffithAddress()
           $rootScope.$apply()

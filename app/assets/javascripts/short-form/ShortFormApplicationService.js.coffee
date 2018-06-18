@@ -904,12 +904,6 @@ ShortFormApplicationService = (
       )
     )
 
-  Service.validateAliceGriffithAddress = () ->
-    AddressValidationService.validate {
-      address: Service.preferences.aliceGriffith_address
-      type: 'home'
-    }
-
   # this will only return true if the senior requirement is "everyone",
   # meaning the primary applicant *must* be a senior
   Service.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
