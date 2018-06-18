@@ -67,6 +67,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     assistedHousing: "Rent Burdened / Assisted Housing Preference"
     rentBurden: "Rent Burdened / Assisted Housing Preference"
     antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
+    aliceGriffith: "Alice Griffith Housing Development Resident"
 
   # Create a mapping to Salesforce naming conventions
   Service.RESERVED_TYPES = {
@@ -620,8 +621,8 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       Service.error.preferences = true
     )
 
-  Service.hardcodeCustomProofPrefs =
-    ['Alice Griffith Housing Development Resident']
+  # TODO: Replace with `requiresProof` listing preference setting (#154784101)
+  Service.hardcodeCustomProofPrefs = []
 
   Service._extractCustomPreferences = ->
     customPreferences = _.filter Service.listing.preferences, (listingPref) ->

@@ -32,6 +32,9 @@ module.exports = ->
       Utils.Page.uploadPreferenceProof(
         preference, documentType, '/spec/e2e/assets/sf-homes-wide.pdf')
 
+  @When /^I opt out of "([^"]*)" preference$/, (preference) ->
+    Utils.Page.optOutAndSubmit()
+
   @Then 'I should see the Preferences Programs screen', ->
     certificateOfPreferenceLabel = element(
       By.cssContainingText('strong.form-label', 'Certificate of Preference (COP)'))
@@ -103,9 +106,6 @@ module.exports = ->
 
   @When 'I select Assisted Housing Preference', ->
     Utils.Page.checkCheckbox('preferences-assistedHousing')
-
-  @When 'I opt out of Assisted Housing preference', ->
-    Utils.Page.optOutAndSubmit()
 
   @When 'I go back to the RB/AH preference page', ->
     navItem = element(By.cssContainingText('.progress-nav_item', 'Preferences'))
@@ -204,9 +204,6 @@ module.exports = ->
   # -- NRHP -- #
   ##############
 
-  @When 'I opt out of NRHP preference', ->
-    Utils.Page.optOutAndSubmit()
-
   @When 'I click the Live in the Neighborhood checkbox', ->
     Utils.Page.checkCheckbox('preferences-neighborhoodResidence')
 
@@ -225,9 +222,6 @@ module.exports = ->
   ###################
   # -- Live/Work -- #
   ###################
-
-  @When 'I opt out of Live/Work preference', ->
-    Utils.Page.optOutAndSubmit()
 
   @When 'I click the Live or Work in SF checkbox', ->
     Utils.Page.checkCheckbox('preferences-liveWorkInSf')
@@ -277,6 +271,45 @@ module.exports = ->
   @Then 'I should still see the single Live in San Francisco preference selected', ->
     liveInSf = element(By.id('preferences-liveInSf'))
     browser.wait(EC.elementToBeSelected(liveInSf), 5000)
+
+  ########################
+  # -- Alice Griffith -- #
+  ########################
+
+  @When 'I fill out my address for Alice Griffith', ->
+    element(By.id('aliceGriffith_aliceGriffith_address_address1'))
+      .clear().sendKeys('1234 Market St.')
+    element(By.id('aliceGriffith_aliceGriffith_address_city')).clear().sendKeys('San Francisco')
+    element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
+    element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
+
+  @When "I fill out an address for Alice Griffith that isn't found", ->
+    element(By.id('aliceGriffith_aliceGriffith_address_address1'))
+      .clear().sendKeys('Mission')
+    element(By.id('aliceGriffith_aliceGriffith_address_city')).clear().sendKeys('San Francisco')
+    element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
+    element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
+
+  @Then 'on the Alice Griffith page I should see my correct info', ->
+    Utils.Expect.checkboxChecked(@, 'preferences-aliceGriffith')
+    # Coleman Francis == '2'
+    Utils.Expect.inputValue(@, 'aliceGriffith_household_member', '2')
+    Utils.Expect.byCss(@,
+      '#uploaded-aliceGriffith_proofFile .media-body strong', 'Letter from SFHA verifying address')
+    Utils.Expect.byCss(@, '#uploaded-aliceGriffith_proofFile .media-body .t-micro', 'logo-city')
+    Utils.Expect.byCss(@, '#uploaded-aliceGriffith_proofFile .media-body .t-small', 'Uploaded')
+    @expect(element(By.id('aliceGriffith_aliceGriffith_address_address1')).getAttribute('value'))
+      .to.eventually.equal('1234 MARKET ST')
+    @expect(element(By.id('aliceGriffith_aliceGriffith_address_city')).getAttribute('value'))
+      .to.eventually.equal('SAN FRANCISCO')
+    @expect(element(By.id('aliceGriffith_aliceGriffith_address_state')).getAttribute('value'))
+      .to.eventually.equal('CA')
+    @expect(element(By.id('aliceGriffith_aliceGriffith_address_zip')).getAttribute('value'))
+      .to.eventually.equal('94102-4801')
+    Utils.Page.submit()
+
+  @Then 'I should see a blank address error', ->
+    Utils.Expect.error(@, 'Please enter an address')
 
   ##################
   # -- COP/DTHP -- #

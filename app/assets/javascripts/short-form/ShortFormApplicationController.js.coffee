@@ -369,8 +369,10 @@ ShortFormApplicationController = (
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.live-work-preference')
 
   $scope.checkAfterLiveWork = ->
-    # after Live/Work, go to preferences-programs
-    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    if ShortFormApplicationService.listingHasPreference('aliceGriffith')
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.alice-griffith-preference')
+    else
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   ##### Custom Preferences Logic ####
   # this called after preferences programs
@@ -479,6 +481,33 @@ ShortFormApplicationController = (
   $scope.preferenceRequired = (preference) ->
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
+
+  $scope.checkAliceGriffithAddress = ->
+    preferenceAddressVerified =
+      $scope.application.aliceGriffith_address_verified &&
+      $scope.application.validatedForms.Preferences['verify-alice-griffith-address'] != false
+
+    if preferenceAddressVerified
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      AddressValidationService.validate {
+        address: ShortFormApplicationService.preferences.aliceGriffith_address
+        type: 'home'
+      }
+      .then ->
+        $scope.application.aliceGriffith_address_verified = true
+        $scope.goToAndTrackFormSuccess(
+          'dahlia.short-form-application.alice-griffith-verify-address')
+      .catch (error) ->
+        $scope.application.aliceGriffith_address_verified = false
+        # 422 is the status returned when the request was successful but
+        # the address is invalid
+        if error.status == 422
+          $scope.addressError = true
+          $scope.handleErrorState()
+        else
+          # continue application if address verification service errors so user isn't stuck
+          $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
 
   ###### Household Section ########
   $scope.addHouseholdMember = ->

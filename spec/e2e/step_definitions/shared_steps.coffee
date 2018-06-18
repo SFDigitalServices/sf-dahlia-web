@@ -115,3 +115,7 @@ module.exports = ->
     Utils.Expect.alertBox(@,
       'Please select and complete one of the options below in order to continue')
     Utils.Expect.error(@, 'Please select one of the options above')
+
+  @Then 'I should see an address not found error', ->
+    Utils.Expect.alertBox(@)
+    Utils.Expect.error(@, 'This address was not found.')

@@ -46,6 +46,7 @@ ShortFormApplicationService = (
       neighborhoodResidence: null
       assistedHousing: null
       rentBurden: null
+      aliceGriffith: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -173,6 +174,8 @@ ShortFormApplicationService = (
       lastPage = 'contact'
     else if lastPage == 'household-member-verify-address'
       lastPage = 'household-members'
+    else if lastPage == 'alice-griffith-verify-address'
+      lastPage = 'alice-griffith-preference'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -340,6 +343,8 @@ ShortFormApplicationService = (
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
       if preference == 'certOfPreference' || preference == 'displaced'
         Service.preferences["#{preference}_certificateNumber"] = null
+      if Service.preferences["#{preference}_address"]
+        Service.preferences["#{preference}_address"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false

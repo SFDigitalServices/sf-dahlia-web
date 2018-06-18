@@ -28,7 +28,7 @@ Feature: Short Form Application
         And I fill out the Name page as "Jane Doe"
         # error: address not found
         And I fill out the Contact page with an address that isn't found
-        Then I should see an address error on the Contact page
+        Then I should see an address not found error
 
         When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
         And I confirm my address
@@ -68,7 +68,7 @@ Feature: Short Form Application
 
         # error: L/W preference option not chosen (optOut / preference both blank)
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
         And I click the Next button on the Live/Work Preference page
         Then I should see an error about selecting an option
 
@@ -80,3 +80,15 @@ Feature: Short Form Application
         # error: uploaded preference document too large
         When I upload a too-large "Gas bill" as my proof of preference for "liveInSf"
         Then I should see an error about the file being too large
+        And I opt out of "Live/Work" preference
+
+        # error: address not entered for Alice Griffith
+        When I select "Jane Doe" for "aliceGriffith" preference
+        And I hit the Next button "1" time
+        Then I should see a blank address error
+
+        # error: address not found for Alice Griffith
+        And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
+        And I fill out an address for Alice Griffith that isn't found
+        When I hit the Next button "1" time
+        Then I should see an address not found error

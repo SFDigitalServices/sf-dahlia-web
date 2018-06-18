@@ -217,8 +217,9 @@ Feature: Sign-in while filling out application
         Then I should see the "assistedHousing" checkbox un-checked
 
         # Submit application for next set of tests
-        When I opt out of Assisted Housing preference
-        And I opt out of Live/Work preference
+        When I opt out of "Assisted Housing" preference
+        And I opt out of "Live/Work" preference
+        And I opt out of "Alice Griffith" preference
         And I don't choose COP/DTHP preferences
         And I continue past the general lottery notice page
         And I fill out the optional survey

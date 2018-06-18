@@ -16,7 +16,8 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate having vouchers
         And I fill out my income as "50000"
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
+        And I opt out of "Alice Griffith" preference
         Then I should see the Preferences Programs screen
         # I work but not live in SF, alone
         When --I reach the "I work but not live in SF, alone" step--
@@ -55,7 +56,7 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate living in public housing
         And I hit the Next button "3" times
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
         Then I should see the "Live in San Francisco" preference checkbox
         # I neither live nor work in SF, household member lives in SF
         When --I reach the "I neither live nor work in SF, household member lives in SF" step--
@@ -95,7 +96,7 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate living in public housing
         And I hit the Next button "3" times
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
         Then I should see the "Live or Work in San Francisco" preference checkbox
         # I work in SF, household member works in SF
         When --I reach the "I work in SF, household member works in SF" step--
@@ -136,7 +137,7 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate living in public housing
         And I hit the Next button "3" times
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
         Then I should see the "Live or Work in San Francisco" preference checkbox
         # Make sure the dropdowns are correct
         When --I reach the "Make sure the dropdowns are correct" step--
@@ -173,7 +174,8 @@ Feature: Short Form Application - Live/Work Preference
         Then I should see the "liveWorkInSf" checkbox un-checked
         # see general lottery notice
         When --I reach the "see general lottery notice" step--
-        When I opt out of Live/Work preference
+        When I opt out of "Live/Work" preference
+        And I opt out of "Alice Griffith" preference
         And I hit the Next button "3" times
         Then I should see the general lottery notice on the review page
 
@@ -189,7 +191,7 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate having vouchers
         And I fill out my income as "25000"
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
+        And I opt out of "Assisted Housing" preference
         And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
         And I go back to the Contact page
         And I change WorkInSF to "No"
@@ -198,6 +200,7 @@ Feature: Short Form Application - Live/Work Preference
         When I upload a "Gas bill" as my proof of preference for "liveInSf"
         Then I should see the successful file upload info for "liveInSf"
         When I click the Next button on the Live/Work Preference page
+        And I opt out of "Alice Griffith" preference
         Then I should see the Preferences Programs screen
 
     Scenario: Selecting live/work member, going back and forth from previous page, changing name
@@ -212,8 +215,8 @@ Feature: Short Form Application - Live/Work Preference
         And I indicate having vouchers
         And I fill out my income as "25000"
         And I continue past the Lottery Preferences intro
-        And I opt out of Assisted Housing preference
-        And I opt out of NRHP preference
+        And I opt out of "Assisted Housing" preference
+        And I opt out of "NRHP" preference
         And I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
         And I use the browser back button
         And I go back to the Live/Work preference page
@@ -221,6 +224,7 @@ Feature: Short Form Application - Live/Work Preference
         # Finish the application and make sure a name change doesn't unclaim the preference
         When I upload a "Gas bill" as my proof of preference for "liveInSf"
         And I click the Next button on the Live/Work Preference page
+        And I opt out of "Alice Griffith" preference
         And I don't choose COP/DTHP preferences
         And I fill out the optional survey
         And I navigate to the "You" section

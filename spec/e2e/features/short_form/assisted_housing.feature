@@ -26,7 +26,8 @@ Feature: Short Form Application - Assisted Housing Preference
         And I select "Jane Doe" for "assistedHousing" preference
         And I upload a Copy of Lease as my proof for Assisted Housing
         And I hit the Next button "1" times
-        And I opt out of Live/Work preference
+        And I opt out of "Live/Work" preference
+        And I opt out of "Alice Griffith" preference
         And I hit the Next button "2" times
         # Submit app and see preference claimed
         And I confirm details on the review page
