@@ -343,6 +343,8 @@ ShortFormApplicationService = (
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
       if preference == 'certOfPreference' || preference == 'displaced'
         Service.preferences["#{preference}_certificateNumber"] = null
+      if Service.preferences["#{preference}_address"]
+        Service.preferences["#{preference}_address"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
@@ -902,13 +904,11 @@ ShortFormApplicationService = (
       )
     )
 
-  Service.validateAliceGriffithAddress = (callback) ->
+  Service.validateAliceGriffithAddress = () ->
     AddressValidationService.validate {
       address: Service.preferences.aliceGriffith_address
       type: 'home'
     }
-    .success ->
-      callback()
 
   # this will only return true if the senior requirement is "everyone",
   # meaning the primary applicant *must* be a senior

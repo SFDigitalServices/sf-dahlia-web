@@ -997,6 +997,20 @@ do ->
         expect(ShortFormApplicationService.preferences.displaced_certificateNumber)
           .toEqual null
 
+      it 'should clear preference address fields', ->
+        ShortFormApplicationService.preferences.aliceGriffith_address =
+          {
+            address1: '1234 Main St'
+            address2: 'Apt 3'
+            city: 'San Francisco'
+            state: 'CA'
+            zipCode: '94114'
+          }
+
+        ShortFormApplicationService.unsetPreferenceFields('aliceGriffith')
+        expect(ShortFormApplicationService.preferences.preferences.aliceGriffith_address)
+          .toEqual null
+
     describe 'cancelOptOut', ->
       it 'should clear preference opt out', ->
         ShortFormApplicationService.preferences.optOut.liveInSf = true
