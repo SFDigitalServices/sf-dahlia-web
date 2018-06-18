@@ -28,7 +28,7 @@ Feature: Short Form Application
         And I fill out the Name page as "Jane Doe"
         # error: address not found
         And I fill out the Contact page with an address that isn't found
-        Then I should see an address error on the Contact page
+        Then I should see an address not found error
 
         When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
         And I confirm my address
@@ -87,8 +87,8 @@ Feature: Short Form Application
         And I hit the Next button "1" time
         Then I should see a blank address error
 
-# error: address not found for Alice Griffith
-# And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
-# And I fill out an address that isn't found
-# When I hit the Next button "1" time
-# Then I should see an address not found error
+        # error: address not found for Alice Griffith
+        And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
+        And I fill out an address for Alice Griffith that isn't found
+        When I hit the Next button "1" time
+        Then I should see an address not found error

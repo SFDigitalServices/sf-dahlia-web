@@ -283,6 +283,13 @@ module.exports = ->
     element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
     element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
 
+  @When "I fill out an address for Alice Griffith that isn't found", ->
+    element(By.id('aliceGriffith_aliceGriffith_address_address1'))
+      .clear().sendKeys('Mission')
+    element(By.id('aliceGriffith_aliceGriffith_address_city')).clear().sendKeys('San Francisco')
+    element(By.id('aliceGriffith_aliceGriffith_address_state')).sendKeys('CA')
+    element(By.id('aliceGriffith_aliceGriffith_address_zip')).clear().sendKeys('94114')
+
   @Then 'on the Alice Griffith page I should see my correct info', ->
     Utils.Expect.checkboxChecked(@, 'preferences-aliceGriffith')
     # Coleman Francis == '2'
@@ -292,13 +299,13 @@ module.exports = ->
     Utils.Expect.byCss(@, '#uploaded-aliceGriffith_proofFile .media-body .t-micro', 'logo-city')
     Utils.Expect.byCss(@, '#uploaded-aliceGriffith_proofFile .media-body .t-small', 'Uploaded')
     @expect(element(By.id('aliceGriffith_aliceGriffith_address_address1')).getAttribute('value'))
-      .to.eventually.equal('1234 Market St.')
+      .to.eventually.equal('1234 MARKET ST')
     @expect(element(By.id('aliceGriffith_aliceGriffith_address_city')).getAttribute('value'))
-      .to.eventually.equal('San Francisco')
+      .to.eventually.equal('SAN FRANCISCO')
     @expect(element(By.id('aliceGriffith_aliceGriffith_address_state')).getAttribute('value'))
       .to.eventually.equal('CA')
     @expect(element(By.id('aliceGriffith_aliceGriffith_address_zip')).getAttribute('value'))
-      .to.eventually.equal('94114')
+      .to.eventually.equal('94102-4801')
     Utils.Page.submit()
 
   @Then 'I should see a blank address error', ->

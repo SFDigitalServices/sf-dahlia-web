@@ -6,6 +6,7 @@ ShortFormDataService = (ListingService) ->
     'session_uid'
     'lastPage'
     'groupedHouseholdAddresses'
+    'aliceGriffith_address_verified'
   ]
 
   Service.WHITELIST_FIELDS =
@@ -202,7 +203,6 @@ ShortFormDataService = (ListingService) ->
         prefAddress = appPrefs[prefKey + '_address']
 
       if prefAddress
-        # NOTE: This is a temp sol'n to joining address 1 and 2 into one line. We won't need this in #157290273
         address = prefAddress.address1
         address += " " + prefAddress.address2 if prefAddress.address2
         city = prefAddress.city

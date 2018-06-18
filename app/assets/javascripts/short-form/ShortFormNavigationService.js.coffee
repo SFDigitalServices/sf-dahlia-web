@@ -57,6 +57,7 @@ ShortFormNavigationService = (
         'adhp-preference'
         'live-work-preference'
         'alice-griffith-preference'
+        'alice-griffith-verify-address'
         'preferences-programs'
         'custom-preferences'
         'custom-proof-preferences'
@@ -106,7 +107,8 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
-    'alice-griffith-preference': {path: 'preferences-programs'}
+    'alice-griffith-preference': {callback: ['checkAliceGriffithAddress']}
+    'alice-griffith-verify-address': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkForCustomPreferences']}
     'custom-preferences': {callback: ['checkForCustomProofPreferences']}
     'custom-proof-preferences': {callback: ['checkForCustomProofPreferences']}
@@ -171,6 +173,7 @@ ShortFormNavigationService = (
       'household-member-form-edit',
       'household-member-verify-address',
       'rent-burdened-preference-edit',
+      'alice-griffith-verify-address',
       'review-summary',
       'confirmation'
     ]

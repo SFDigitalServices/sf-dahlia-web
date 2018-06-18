@@ -187,10 +187,6 @@ module.exports = ->
   @Then 'on the Contact page I should see my correct info', ->
     Pages.Contact.expectToMatch(@, { address1: '1222 HARRISON ST # 100', extra: true })
 
-  @Then 'I should see an address error on the Contact page', ->
-    Utils.Expect.alertBox(@)
-    Utils.Expect.error(@, 'This address was not found.')
-
   ###########################
   # -- Alternate Contact -- #
   ###########################

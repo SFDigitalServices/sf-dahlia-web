@@ -125,8 +125,10 @@ do ->
       signOut: ->
       loggedIn: () ->
     fakeListingService = {}
-    fakeAddressValidationService =
+    fakeAddressValidationService = {
+      validate: ->
       validationError: jasmine.createSpy()
+    }
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
@@ -164,6 +166,7 @@ do ->
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
@@ -726,6 +729,76 @@ do ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
         scope.claimedCustomPreference()
         expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
+
+    describe 'checkAliceGriffithAddress', ->
+      beforeEach ->
+        fakeShortFormApplicationService.preferences.aliceGriffith_address = {
+          address1: '1234 Main St.'
+          address2: 'Apt 3'
+          city: 'San Francisco'
+          state: 'CA'
+          zip: '94114'
+        }
+        spyOn(scope, 'goToAndTrackFormSuccess')
+
+      describe 'when address not verified', ->
+        beforeEach ->
+          scope.application.aliceGriffith_address_verified = false
+          scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = false
+
+        it 'should validate Alice Griffith address', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(fakeAddressValidationService.validate).toHaveBeenCalledWith({
+            address: fakeShortFormApplicationService.preferences.aliceGriffith_address
+            type: 'home'
+          })
+
+        it 'should go to verify address page address when verification successful', ->
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(true)
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.alice-griffith-verify-address')
+
+        it 'should display address errors when verification unsuccessful', ->
+          spyOn(scope, 'handleErrorState').and.callThrough()
+
+          deferred = $q.defer()
+          deferred.reject({ status: 422 })
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
+
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(false)
+          expect(scope.addressError).toEqual(true)
+          expect(scope.handleErrorState).toHaveBeenCalled()
+
+
+        it 'should go to preferences programs page when verification errors', ->
+          deferred = $q.defer()
+          deferred.reject({ status: 500 })
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
+
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(false)
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'when address is already verified', ->
+        beforeEach ->
+          scope.application.aliceGriffith_address_verified = true
+          scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = true
+
+        it 'should proceed directly to preferences programs page', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
     describe 'chooseDraft', ->
       beforeEach ->

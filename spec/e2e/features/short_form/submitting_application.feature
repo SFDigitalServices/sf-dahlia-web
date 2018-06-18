@@ -71,6 +71,7 @@ Feature: Short Form Application
         And I upload a "Letter from SFHA verifying address" as my proof of preference for "aliceGriffith"
         And I fill out my address for Alice Griffith
         And I hit the Next button "1" time
+        And I confirm my address
 
         And I select "Jane Doe" for "certOfPreference" preference
         And I fill out my "certOfPreference" certificate number

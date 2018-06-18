@@ -968,7 +968,15 @@
       url: '/alice-griffith-preference'
       views:
         'container':
-          templateUrl: 'short-form/templates/e6-alice-griffith-preference.html'
+          templateUrl: 'short-form/templates/e6a-alice-griffith-preference.html'
+    })
+    .state('dahlia.short-form-application.alice-griffith-verify-address', {
+      url: '/alice-griffith-verify-address'
+      views: {
+        container: {
+          templateUrl: 'short-form/templates/e6b-alice-griffith-verify-address.html'
+        }
+      }
     })
     .state('dahlia.short-form-application.preferences-programs', {
       url: '/preferences-programs'
