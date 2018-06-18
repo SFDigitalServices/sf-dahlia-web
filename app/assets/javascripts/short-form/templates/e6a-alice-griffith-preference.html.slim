@@ -11,12 +11,17 @@
       .checkbox-group.border-bottom.margin-bottom--2x role="group"
         preference(application="application" has-proof="true" title="{{'PREFERENCES.ALICE_GRIFFITH.TITLE' | translate}}" preference="aliceGriffith" proof-option-label="{{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS_DOCUMENTS' | translate}}" translated-description="PREFERENCES.ALICE_GRIFFITH.DESC" required="preferenceRequired('aliceGriffith')")
 
-        div.form-group.input-inset ng-if="application.preferences.aliceGriffith"
+        div.form-group.input-inset ng-if="application.preferences.aliceGriffith" ng-class="{error: addressInputInvalid('home_address')}"
           label.form-label.caps
             | {{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS' | translate}}
           p.form-note.margin-bottom
             | {{'E6_ALICE_GRIFFITH_PREFERENCE.ADDRESS_DESC' | translate}}
-          address-form address-type="aliceGriffith_address" model="application.preferences" model-name='aliceGriffith' is-required="true"
+
+          address-form address-type="aliceGriffith_address" model="application.preferences" model-name='aliceGriffith' is-required="true" on-change="application.aliceGriffith_address_verified = false"
+
+          / Address validation service has home and mailing address, so we use home for preference
+          / address validation
+          address-error error="addressValidationError('home_address')"
 
       preference-opt-out preference="aliceGriffith" application="application" invalid="inputInvalid('aliceGriffith')" cancel-preference="cancelPreference('aliceGriffith')"
 

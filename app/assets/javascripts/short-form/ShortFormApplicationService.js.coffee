@@ -174,6 +174,8 @@ ShortFormApplicationService = (
       lastPage = 'contact'
     else if lastPage == 'household-member-verify-address'
       lastPage = 'household-members'
+    else if lastPage == 'alice-griffith-verify-address'
+      lastPage = 'alice-griffith-preference'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -899,6 +901,14 @@ ShortFormApplicationService = (
         Service.afterGeocode.bind(null, false, callback)
       )
     )
+
+  Service.validateAliceGriffithAddress = (callback) ->
+    AddressValidationService.validate {
+      address: Service.preferences.aliceGriffith_address
+      type: 'home'
+    }
+    .success ->
+      callback()
 
   # this will only return true if the senior requirement is "everyone",
   # meaning the primary applicant *must* be a senior

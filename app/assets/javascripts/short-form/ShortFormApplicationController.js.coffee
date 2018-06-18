@@ -482,6 +482,24 @@ ShortFormApplicationController = (
     return false unless $scope.showPreference(preference)
     ShortFormApplicationService.preferenceRequired(preference)
 
+  $scope.checkAliceGriffithAddress = ->
+    preferenceAddressVerified =
+      $scope.application.aliceGriffith_address_verified &&
+      $scope.application.validatedForms.Preferences['verify-alice-griffith-address'] != false
+
+    if preferenceAddressVerified
+      $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+    else
+      ShortFormApplicationService.validateAliceGriffithAddress( ->
+        $scope.application.aliceGriffith_address_verified = true
+        $scope.goToAndTrackFormSuccess(
+          'dahlia.short-form-application.alice-griffith-verify-address')
+      ).catch( ->
+        $scope.application.aliceGriffith_address_verified = false
+        # continue application if address verification fails so user isn't stuck
+        $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
+      )
+
   ###### Household Section ########
   $scope.addHouseholdMember = ->
     noAddress = $scope.householdMember.hasSameAddressAsApplicant == 'Yes'
