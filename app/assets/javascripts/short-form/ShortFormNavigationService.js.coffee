@@ -239,7 +239,7 @@ ShortFormNavigationService = (
       # -- Preferences
       when 'rent-burdened-preference'
         , 'assisted-housing-preference'
-          'preferences-programs'
+          'preferences-intro'
       when 'neighborhood-preference'
         , 'adhp-preference'
           Service.goBackToRentBurden()
