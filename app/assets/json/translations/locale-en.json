@@ -215,6 +215,7 @@
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Neighborhood Resident Housing Preference</strong> means at least one household member lives within the same Supervisorial District or within a 1/2 mile buffer of the project.",
+            "NAME": "Neighborhood Resident Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in the same neighborhood as the listing.",
             "TITLE": "Live in the Neighborhood"
         }
@@ -225,6 +226,7 @@
         "INSTRUCTIONS_P2": "Just upload valid proof of this address and <strong>we'll also give you Live in San Francisco Preference.</strong>",
         "PREFERENCE": {
             "DESCRIPTION": "<strong>Anti-Displacement Housing Preference</strong> is designed to benefit residents living in neighborhoods undergoing extreme displacement pressure.",
+            "NAME": "Anti-Displacement Housing Preference",
             "SHORT_DESCRIPTION": "You said someone in your household lives in a neighborhood where people are at the greatest risk of being displaced.",
             "TITLE": "Live in the Neighborhood"
         }
@@ -311,6 +313,8 @@
         "EMAIL_CONFIRMATION": "Email confirmation does not match",
         "EMAIL_NOT_FOUND": "Email not found. Please make sure your email has an account with us and is confirmed.",
         "FILE_MISSING": "Please upload a valid document",
+        "FILE_UPLOAD": "The file is too large or not a supported file type",
+        "FILE_UPLOAD_FAILED": "There was a problem uploading your file. Please try again.",
         "FIRST_NAME": "Please enter a First Name",
         "FORM_SUBMISSION": "You'll need to resolve any errors before moving on.",
         "GET_ASSISTANCE": "Get Assistance",
