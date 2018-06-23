@@ -487,7 +487,7 @@ ShortFormApplicationController = (
       $scope.application.aliceGriffith_address_verified &&
       $scope.application.validatedForms.Preferences['verify-alice-griffith-address'] != false
 
-    if preferenceAddressVerified || $scope.application.preferences.aliceGriffith == false
+    if preferenceAddressVerified || $scope.preferences.aliceGriffith == false
       $scope.goToAndTrackFormSuccess('dahlia.short-form-application.preferences-programs')
     else
       AddressValidationService.validate {

@@ -741,8 +741,19 @@ do ->
         }
         spyOn(scope, 'goToAndTrackFormSuccess')
 
-      describe 'when address not verified', ->
+      describe 'when preference not claimed', ->
         beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = false
+
+        it 'should proceed directly to preferences programs page', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'when preference claimed and address not verified', ->
+        beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = true
           scope.application.aliceGriffith_address_verified = false
           scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = false
 
@@ -789,8 +800,9 @@ do ->
           expect(scope.goToAndTrackFormSuccess)
             .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
 
-      describe 'when address is already verified', ->
+      describe 'when preference claimed and address is already verified', ->
         beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = true
           scope.application.aliceGriffith_address_verified = true
           scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = true
 
