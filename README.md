@@ -20,7 +20,7 @@ See [here](https://www.lucidchart.com/documents/view/53cd191b-3ca5-4b23-832d-28a
 Before you install DAHLIA, your system should have the following:
 
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/) 2.2.3 (Use [RVM](https://rvm.io/rvm/install) or [rbenv](https://github.com/rbenv/rbenv))
-- [Bundler](https://github.com/bundler/bundler) `gem install bundler -v 1.12.5`
+- [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
 - [Node.js](https://nodejs.org/en/) 6.2.2
