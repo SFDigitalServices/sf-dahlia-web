@@ -873,6 +873,11 @@ ShortFormApplicationController = (
     ShortFormApplicationService.loadApplication(previousAppData)
     angular.copy(overwrittenApplicantInfo, $scope.application.overwrittenApplicantInfo)
     ShortFormApplicationService.resetCompletedSections()
+    # set the Intro section to completed, because if the user chooses to continue
+    # with their previous draft, we will send them onwards to the Contact page in
+    # the You section, so we need to make sure the Intro section is marked complete
+    # since the user will be past that section
+    ShortFormApplicationService.completeSection('Intro')
 
   $scope.print = -> $window.print()
 
