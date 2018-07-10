@@ -1,55 +1,8 @@
 {
     "A1_INTRO": {
-        "TITLE": "Comencemos con su solicitud",
         "CHOOSE_YOUR_LANGUAGE": "Elija su idioma",
-        "SIGN_IN_SAVE_TIME": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría controlar el estado de esta solicitud en cualquier momento."
-    },
-    "T": {
-        "APPLICATION": "Solicitud",
-        "APPLICATION_DUE": "Vencimiento de la solicitud",
-        "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
-        "APPLICATION_SUBMITTED": "Solicitud presentada",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Está seguro de que desea salir de esta página? Perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para completar la solicitud en otro momento, haga clic en el botón “Guardar y finalizar en otro momento”.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
-        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
-        "BACK": "Retroceder",
-        "CLOSE": "Cerrar",
-        "CONFIRM": "Confirmar",
-        "DELETE": "Eliminar",
-        "EDIT": "Editar",
-        "IN_PROGRESS": "En curso",
-        "I_AGREE": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
-        "NEVER_SUBMITTED": "Nunca se presentó",
-        "NEXT": "Siguiente",
-        "NO": "No",
-        "NONE": "Ninguno",
-        "OCCUPANCY": "Ocupación",
-        "OK": "Aceptar",
-        "OPTIONAL": "Opcional",
-        "OR": "o",
-        "PER_MONTH": "por mes",
-        "PER_YEAR": "por año",
-        "SAVE_AND_FINISH_LATER": "Guardar y finalizar en otro momento",
-        "SESSION_INACTIVITY": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda.",
-        "SESSION_INACTIVITY_CONFIRMATION": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta solicitud en una cuenta que le permite realizar un seguimiento del estado de su solicitud en cualquier momento.",
-        "SESSION_INACTIVITY_LOGGED_IN": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, su sesión se cerrará y perderá toda la información que no haya guardado.",
-        "SKIP_TO_MAIN_CONTENT": "Ir al contenido principal",
-        "STATUS": "Estado",
-        "SUBMIT": "Someter",
-        "SUBMITTED": "Presentada",
-        "UNIT_TYPE": "",
-        "YES": "Sí",
-        "YOU": "Usted",
-        "SAVE_AND_COME_BACK_LATER": "Guardar y regresar luego",
-        "DAHLIA_SAN_FRANCISCO_HOUSING_PORTAL": "",
-        "MENU": "",
-        "CONTINUE": "",
-        "CONTINUE_WITH_YOUR_APPLICATION": "",
-        "DELETE_APPLICATION": "",
-        "LEAVE": "",
-        "LEAVE_YOUR_APPLICATION": "",
-        "SESSION_EXPIRED": "",
-        "STAY": ""
+        "SIGN_IN_SAVE_TIME": "Registrarse podría ahorrarle tiempo, ya que comenzaría con los detalles de su última solicitud y le permitiría controlar el estado de esta solicitud en cualquier momento.",
+        "TITLE": "Comencemos con su solicitud"
     },
     "A2_COMMUNITY_SCREENING": {
         "SENIOR": {
@@ -70,35 +23,26 @@
         "P2": "Podrá revisar su solicitud antes de presentarla.",
         "P3": "Tenga en cuenta que cada integrante del grupo familiar puede aparecer solamente en una solicitud para cada anuncio de vivienda. Si su solicitud incluye integrantes de la familia que figuran en otras solicitudes para este anuncio de vivienda, todos serán descalificados.",
         "TITLE": "En qué consiste esta solicitud.",
-        "WARNING": "Cualquier declaración fraudulenta hará que su solicitud sea eliminada del sorteo.",
-        "P4": "",
-        "VIEW_DOCUMENT_CHECKLIST": "Ver lista de verificación de documentos"
-    },
-    "ACCOUNT_SETTINGS": {
-        "ACCOUNT_CHANGES_SAVED": "",
-        "ACCOUNT_SETTINGS": "",
-        "CONTACT_INFORMATION_UPDATED": "",
-        "CONTACT_INFORMATION_UPDATED_MESSAGE": "",
-        "EMAIL_RECONFIRMED_UPDATED": "",
-        "INFORMATION_CHANGE_NOTICE": "",
-        "REMEMBER_YOUR_PASSWORD": "",
-        "TITLE": "",
-        "VERIFY_EMAIL": ""
+        "VIEW_DOCUMENT_CHECKLIST": "Ver lista de verificación de documentos",
+        "WARNING": "Cualquier declaración fraudulenta hará que su solicitud sea eliminada del sorteo."
     },
     "ALREADY_SUBMITTED": {
         "MESSAGE": "Ya ha enviado una solicitud para este anuncio de vivienda.",
         "TITLE": "¡Buenas noticias!"
     },
     "B0_AUTOFILL_PREVIEW": {
-        "DESCRIPTION": "",
         "START_FROM_SCRATCH": "Reinicie y comience de nuevo",
-        "START_WITH_AUTOFILL": "Comience con estos detalles",
-        "TITLE": ""
+        "START_WITH_AUTOFILL": "Comience con estos detalles"
+    },
+    "B1A_WELCOME_BACK": {
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continuar sin iniciar sesión",
+        "TITLE": "¡Bienvenido de nuevo!",
+        "YOU_ALREADY_HAVE_AN_ACCOUNT": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
     },
     "B1_NAME": {
+        "APP_DETAILS_UPDATED": "Se actualizaron los detalles de su solicitud para que coincidan con los ajustes de su cuenta.",
         "NAME_EDITABLE_VIA": "Estos campos pueden editarse mediante su",
-        "TITLE": "Primero, ¿cuál es su nombre?",
-        "APP_DETAILS_UPDATED": "Se actualizaron los detalles de su solicitud para que coincidan con los ajustes de su cuenta."
+        "TITLE": "Primero, ¿cuál es su nombre?"
     },
     "B2A_VERIFY_ADDRESS": {
         "TITLE": "Hemos localizado la siguiente dirección. Confirme si es correcta."
@@ -151,8 +95,7 @@
         "HOW_MUCH_DO_YOU_AND_MEMBERS_PAY": "¿Cuánto pagan {{members}} en {{address}}?",
         "HOW_MUCH_DO_YOU_PAY": "¿Cuánto paga Usted en {{address}}?",
         "TITLE_HOUSEHOLD": "¿Cuánto paga de alquiler mensual su grupo familiar?",
-        "TITLE_YOU": "¿Cuánto paga usted de alquiler mensual?",
-        "DESCRIPTION": ""
+        "TITLE_YOU": "¿Cuánto paga usted de alquiler mensual?"
     },
     "C6A_HOUSEHOLD_RESERVED_UNITS_VETERAN": {
         "P1": "Existen unidades reservadas disponibles en este edificio si al menos un solicitante ha prestado servicios en las Fuerzas Armadas de los Estados Unidos.<br><br>Si se acepta su solicitud, tenga en cuenta que deberá proporcionar más información.",
@@ -171,36 +114,32 @@
         "TITLE_YOU": "¿Usted necesita alguna de las siguientes características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)?"
     },
     "CHOOSE_ACCOUNT_SETTINGS": {
-        "ALERT_MESSAGE": "",
-        "ALERT_TITLE": "",
-        "PRIMARY_CONTACT_OPTIONS": "Opciones de contacto principal",
-        "TITLE": ""
+        "PRIMARY_CONTACT_OPTIONS": "Opciones de contacto principal"
     },
-    "CHOOSE_DRAFT": {
-        "ALERT_MESSAGE": "",
-        "ALERT_TITLE": "",
-        "APPLICATION_OPTIONS": "",
-        "TITLE": ""
+    "CHOOSE_APPLICANT_DETAILS": {
+        "ALERT_MESSAGE": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
+        "CONTINUE_ANON": "Continuar sin ninguna cuenta",
+        "CONTINUE_ANON_NOTE": "Omita el inicio de sesión y envíe su solicitud sin ninguna cuenta.",
+        "CREATE_ACCOUNT_NOTE": "Si esta cuenta no es suya, cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora.",
+        "CREATE_NEW_ACCOUNT": "Crear una cuenta nueva",
+        "SELECT_CHANGE_NOTE": "Si usa esta cuenta, todos los detalles de contacto principales en esta solicitud serán reemplazados por los ajustes de su cuenta. Esto significa que es posible que tenga que recuperar sus preferencias y volver a cargar los documentos.",
+        "TITLE": "Los detalles de contacto principales de su nueva solicitud no coinciden con los ajustes actuales de su cuenta. ¿Qué le gustaría hacer?",
+        "TITLE_DISQUALIFIED": "Los ajustes de su cuenta no le permiten ser elegible para este listado. ¿Qué le gustaría hacer?",
+        "WILL_REPLACE": "reemplazará",
+        "YOUR_OPTIONS": "Sus opciones"
     },
-    "CONFIRM_ACCOUNT": {
-        "ACCOUNT_ALREADY_CONFIRMED": "",
-        "CLICK_ON_LINK_IN_MESSAGE_TO_CONFIRM_EMAIL": "",
-        "CONFIRMATION_LINK_EXPIRED": "",
-        "CONFIRMATION_NEEDED": "",
-        "EMAIL_HAS_BEEN_SENT_TO": "",
-        "EXPIRED_EMAIL_SENT_TO": "",
-        "PLEASE_LOGIN": "",
-        "RESEND_EMAIL": ""
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "Continuar con estos detalles",
+        "DESCRIPTION": "Al parecer, usted ya comenzó un borrador para esta solicitud. Simplemente revise los siguientes detalles y retome desde donde quedó.",
+        "TITLE": "Retomar desde donde quedó"
     },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "¿Ya tiene una cuenta?",
+        "CHOOSE_DIFF_EMAIL": "Cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora.",
         "CONTINUE_WITH_APPLICATION": "Continuar con la solicitud",
         "CREATE_AN_ACCOUNT": "Crear una cuenta",
-        "EMAIL_CONFIRM_INSTRUCTIONS": "",
-        "P1": "",
         "PASSWORD_INSTRUCTIONS": "Debe tener al menos 8 caracteres e incluir al menos una letra y un número.",
-        "PASSWORD_SHORT_INSTRUCTIONS": "Debe tener 8 caracteres",
-        "CHOOSE_DIFF_EMAIL": "Cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora."
+        "PASSWORD_SHORT_INSTRUCTIONS": "Debe tener 8 caracteres"
     },
     "D1_INCOME_VOUCHERS": {
         "P1": "Por ejemplo: Sección 8, Programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH), Human Services Agencies (Agencias de Servicios Humanos, HSA), Housing Opportunities for Persons with AIDS Program (Programa de Oportunidades de Vivienda para Personas con Sida, HOPWA), Catholic Charities (Grupos de Caridad Cristianos), AIDS Foundation (Fundación para el Sida), etc.",
@@ -266,14 +205,12 @@
         "WORK_SF_PREFERENCE": {
             "DESCRIPTION": "Al menos un integrante del grupo familiar debe trabajar en San Francisco por lo menos el 75 % de sus horas laborales.",
             "TITLE": "Preferencia por trabajar en San Francisco"
-        },
-        "DOCUMENT_MUST_SHOW_CORRECT_NAME_FOR_WORK": ""
+        }
     },
     "E3A_ASSISTED_HOUSING_PREFERENCE": {
         "INSTRUCTIONS": "Usted cumple con los requisitos para esta preferencia porque afirmó que un integrante de su grupo familiar vive en una vivienda pública o del proyecto del Department of Housing and Urban Development (Departamento de Vivienda y Desarrollo Urbano, HUD).<br><br>Esto no incluye los vales de la Sección 8 ni los vales de las opciones de vivienda del programa Veterans Affairs Supportive Housing (Apoyo a la Vivienda del Departamento de Asuntos de Veteranos, VASH).<br><br>Para tener una clasificación más alta en el sorteo, debe cargar una copia de un contrato de alquiler válido.",
         "PREFERENCE": {
-            "TITLE": "Preferencia por vivienda asistencial",
-            "DESCRIPTION": ""
+            "TITLE": "Preferencia por vivienda asistencial"
         }
     },
     "E3B_RENT_BURDEN_PREFERENCE": {
@@ -285,16 +222,20 @@
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Cargar documentos para {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Cargar documentos para cada dirección"
     },
+    "E6_ALICE_GRIFFITH_PREFERENCE": {
+        "ADDRESS": "Dirección en Alice Griffith",
+        "ADDRESS_DESC": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
+        "ADDRESS_DOCUMENTS": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
+        "INSTRUCTIONS": "Proporcione una dirección válida y cargue un comprobante para tener una clasificación más alta en el sorteo.",
+        "TITLE": "Su grupo familiar podría cumplir con los requisitos para la siguiente preferencia de sorteo."
+    },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "Si usted posee un Certificate of Preference (COP) de la antigua San Francisco Redevelopment Agency (Agencia de Reurbanización de San Francisco). La Agencia desplazó a los poseedores de COP durante las décadas de 1960 y 1970.",
         "DISPLACED": "Displaced Tenant Housing Preference (DTHP)",
         "DISPLACED_TENANTS_DESC": "Si usted posee un certificado de Displaced Tenant Housing Preference (DTHP). Los poseedores de certificados DTHP son inquilinos que fueron desalojados en virtud de la Ellis Act u Owner Move-In, o que fueron desplazados por un incendio.",
         "HAVE_NOT_HEARD_OF_PREFERENCES": "Si no está enterado de estas preferencias, es probable que no tenga ninguna.",
-        "TITLE": "Existen preferencias de sorteo para personas que ya tienen certificados especiales.",
-        "CERT_OF_PREFERENCE_CERTIFICATE": "",
-        "DISPLACED_CERTIFICATE": "",
-        "NEED_CERTIFICATE_FOR_PREFERENCE": ""
+        "TITLE": "Existen preferencias de sorteo para personas que ya tienen certificados especiales."
     },
     "E8_GENERAL_LOTTERY_NOTICE": {
         "TITLE": "Según la información que usted ingresó, su grupo familiar no ha solicitado ninguna preferencia para el sorteo de la vivienda.",
@@ -302,18 +243,14 @@
     },
     "ERROR": {
         "ADDRESS": "Ingrese una dirección",
+        "ADDRESS_VALIDATION_NOT_FOUND": "No se encuentra esta dirección.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
         "ALTERNATE_CONTACT": "Indique un contacto alternativo",
         "CITY": "Ingrese una ciudad",
         "COMPLETE_UPLOADING_DOCUMENTS": "Complete la carga de los documentos indicados anteriormente.",
         "CONFIRMED_ADDRESS": "Confirme la dirección sugerida.",
-        "CREATE_ACCOUNT": "",
-        "CURRENT_PASSWORD_INVALID": "",
         "DOB": "Ingrese una fecha de nacimiento válida.",
         "DOB_PRIMARY_APPLICANT_AGE": "El solicitante principal debe tener 18 años de edad como mínimo.",
         "EMAIL": "Ingrese una dirección de correo electrónico",
-        "EMAIL_ALREADY_IN_USE": "",
-        "EMAIL_CONFIRMATION": "",
-        "EMAIL_NOT_FOUND": "",
         "FILE_MISSING": "Cargue un documento válido",
         "FILE_UPLOAD": "El archivo es demasiado grande o no es un tipo de archivo admitido",
         "FIRST_NAME": "Ingrese el primer nombre",
@@ -329,8 +266,6 @@
         "NOT_ELIGIBLE": "Lamentablemente, usted parece no reunir los requisitos necesarios para este anuncio de vivienda.",
         "NOT_ELIGIBLE_DESCRIPTION": "Si cree que puede haber cometido un error, revise y corrija la información. Tenga en cuenta que si ingresa información falsa, su solicitud será descalificada.<br><br>Si la información que ingresó es correcta, lo invitamos a volver a visitar el sitio en el futuro para saber si hay más propiedades disponibles.",
         "PASSWORD": "Ingrese el apellido",
-        "PASSWORD_CONFIRMATION": "",
-        "PASSWORD_UPDATE": "",
         "PHONE_NUMBER": "Ingrese un número de teléfono",
         "PHONE_NUMBER_TYPE": "Indique el tipo de número de teléfono",
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "Proporcione sus respuestas en inglés",
@@ -345,26 +280,15 @@
         "STATE": "Ingrese el estado",
         "TERMS": "Para poder continuar, debe aceptar los términos.",
         "VETERAN_ANYONE": "Al menos un integrante de su grupo familiar debe ser un veterano de guerra.",
-        "ZIP": "Ingrese un código postal",
-        "ADDRESS_VALIDATION_NOT_FOUND": "No se encuentra esta dirección.  Favor de verificar el número, calle, y ciudad del domicilio que fue ingresado.  No se permiten apartados postales.",
-        "ADDRESS_VALIDATION_INSUFFICIENT": "",
-        "ADDRESS_VALIDATION_SECONDARY": "",
-        "PLEASE_COMPLETE_PREFERENCE": "",
-        "ALERT": {
-            "BAD_REQUEST": "",
-            "TIMEOUT_PLEASE_TRY_AGAIN": ""
-        },
-        "PLEASE_COMPLETE_PREFERENCE_CONTENT": "",
-        "LOTTERY_RANKING_SEARCH": "",
-        "FILE_UPLOAD_FAILED": ""
+        "ZIP": "Ingrese un código postal"
     },
     "F0_REVIEW_OPTIONAL": {
         "P1": "Estas preguntas son opcionales y no afectarán su elegibilidad para acceder a la vivienda. Se mantendrá la privacidad de sus respuestas.",
         "TITLE": "Ayúdenos a garantizar que cumplamos con nuestro objetivo de prestar servicio a todas las personas."
     },
     "F1_REVIEW_SUMMARY": {
-        "TITLE": "Dedique unos momentos a revisar su información antes de enviar su solicitud.",
-        "NOTE": "Esta es su última oportunidad de editar antes de enviar."
+        "NOTE": "Esta es su última oportunidad de editar antes de enviar.",
+        "TITLE": "Dedique unos momentos a revisar su información antes de enviar su solicitud."
     },
     "F2_REVIEW_TERMS": {
         "P1": "Esta solicitud debe enviarse antes del {{date}}.",
@@ -374,15 +298,13 @@
         "P5": "Declaro que la información que antecede es verdadera y exacta, y acepto que cualquier declaración errónea, fraudulenta o negligente que figure en esta solicitud ocasionará que sea eliminado del sorteo.",
         "TITLE": "Términos"
     },
-    "FORGOT_PASSWORD": {
-        "EMAIL_SENT_DESCRIPTION": "",
-        "EMAIL_SENT_TITLE": "",
-        "TITLE": ""
-    },
     "G1_CONFIRMATION": {
         "BROWSE_MORE_LISTINGS": "Ver más anuncios de viviendas",
         "CREATE_ACCOUNT_BODY": "Crear una cuenta le permitirá guardar su información para solicitudes futuras y verificar el estado de esta solicitud en cualquier momento.",
         "CREATE_ACCOUNT_TITLE": "¿Desea crear una cuenta?",
+        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento si no ha recibido un correo electrónico de confirmación.",
+        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento en caso de tener preguntas.",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "No presente otra aplicación",
         "GO_TO_MY_APPLICATIONS": "Ir a Mis solicitudes",
         "LOTTERY_NUMBER": "Este es su número para el sorteo",
         "NEXT_STEPS_BODY1": "El sorteo se realizará el",
@@ -391,10 +313,11 @@
         "NO_THANKS_IM_DONE": "No, gracias; ya finalicé.",
         "PLEASE_WRITE_DOWN_YOUR_NUMBER": "Anote su número del sorteo y manténgalo en un lugar seguro. También le enviaremos dicho número a su casilla de correo electrónico, en caso de que la haya proporcionado.",
         "TITLE": "Gracias. Hemos recibido su solicitud para",
-        "VIEW_AND_PRINT_A_COPY": "Ver la solicitud presentada e imprimir una copia",
-        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento si no ha recibido un correo electrónico de confirmación.",
-        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento en caso de tener preguntas.",
-        "DONT_SUBMIT_ANOTHER_APP_TITLE": "No presente otra aplicación"
+        "VIEW_AND_PRINT_A_COPY": "Ver la solicitud presentada e imprimir una copia"
+    },
+    "HEADER": {
+        "TRANSLATE_BAR_EXPERT_NOTICE": "Esta página fue traducida por un hablante nativo.",
+        "TRANSLATE_BAR_GOOGLE_NOTICE": "Esta página ha sido traducida por Google Translate."
     },
     "LABEL": {
         "ADA_ACCESSIBLE_UNITS": "Unidades con características de accesibilidad según la Americans with Disabilities Act (Ley de Estadounidenses con Discapacidades, ADA)",
@@ -414,6 +337,7 @@
         "APPLICANT_EMAIL": "Su dirección de correo electrónico:",
         "APPLICANT_ETHNICITY": "¿Cómo describiría su origen étnico?",
         "APPLICANT_GENDER": "¿Cuál es su sexo?",
+        "APPLICANT_GENDER_SUBTITLE": "Seleccione la opción que describa mejor su identidad de género actual.",
         "APPLICANT_INCOME_TOTAL": "¿Cuáles son sus ingresos familiares totales sin la deducción de impuestos?",
         "APPLICANT_NO_EMAIL": "No tengo dirección de correo electrónico",
         "APPLICANT_NO_PHONE": "No tengo teléfono",
@@ -424,8 +348,8 @@
         "APPLICANT_SECOND_PHONE": "Su número de teléfono secundario",
         "APPLICANT_SEPARATE_ADDRESS": "Envíen mi correspondencia a una dirección diferente",
         "APPLICANT_SEXUAL_ORIENTATION": "¿Cómo describiría su orientación sexual o identidad sexual?",
+        "APPLICANT_SEX_AT_BIRTH": "¿Cuál era su género al nacer?",
         "APPLICATION_CONTACT_DETAILS": "Detalles de contacto de la solicitud",
-        "APPLY_ONLINE": "",
         "ASIAN": "Asiático",
         "ASIAN_WHITE": "Asiático y blanco",
         "AUNT": "Tía",
@@ -435,10 +359,10 @@
         "CANCEL": "Cancelar",
         "CANCEL_ADDING_DOCUMENTS": "Cancelar la carga de documentos",
         "CANCEL_UPLOAD": "Cancelar la carga",
+        "CHANGE_APPLICATION_DETAILS": "Cambiar detalles de la solicitud",
         "CHILD": "Hijo(a)",
         "CITY": "Nombre de la ciudad",
         "CLEAR": "Borrar",
-        "CONFIRM_NEW_PASSWORD": "",
         "CONTACT_EMAIL": "Dirección de correo electrónico del contacto",
         "CONTACT_MAILING_ADDRESS": "Dirección postal del contacto",
         "CONTACT_PHONE_NUMBER": "Número de teléfono del contacto",
@@ -446,7 +370,6 @@
         "COPY_OF_LEASE": "Copia del contrato de alquiler",
         "COUSIN": "Primo",
         "CREATE_ACCOUNT": "Crear cuenta",
-        "CURRENT_ACCOUNT_SETTINGS": "",
         "DOB": "Fecha de nacimiento",
         "DOB_DAY": "Día",
         "DOB_MONTH": "Mes",
@@ -455,17 +378,16 @@
         "DONE_WITH_THIS_ADDRESS": "Ya he finalizado con esta dirección",
         "DONT_WANT_PREFERENCE": "No deseo esta preferencia para el sorteo",
         "EDITED": "Editado",
-        "EDIT_ELIGIBILITY": "",
         "EMAIL_ADDRESS": "Correo electrónico",
-        "ESTIMATE_YOUR_ELIGIBILITY": "",
         "FAMILY_MEMBER": "Integrante de la familia",
         "FEMALE": "Femenino",
         "FILE_ATTACHED": "{{file}} adjunto",
         "FIND_OUT_MORE_ABOUT_PREFERENCES": "Más información sobre esta preferencia",
         "FIRST_NAME": "Primer nombre",
-        "FOR_USER": "",
         "FRIEND": "Amigo(a)",
-        "GET_DIRECTIONS": "",
+        "GAY_LESBIAN_SAME_GENDER_LOVING": "Gay/lesbiana/amor del mismo género",
+        "GENDERQUEER_NON_BINARY": "Género variante/Género binario",
+        "GOOD_NEWS_FOR_HIGHER_RANKING": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
         "GRANDPARENT": "Abuelo(a)",
         "GREAT_GRANDPARENT": "Bisabuelo(a)",
         "HEARING_IMPAIRMENTS": "Para personas con impedimentos auditivos",
@@ -498,13 +420,11 @@
         "NAME": "Nombre",
         "NATIVE_HAWAIIAN_OTHER_PACIFIC_ISLANDER": "Nativo de Hawái/Isleño del Pacífico",
         "NEPHEW": "Sobrino",
-        "NEW_PASSWORD": "",
         "NIECE": "Sobrina",
         "NOT_HISPANIC_LATINO": "No hispano/No latino",
         "NOT_LISTED": "No especificado en la lista",
         "NO_ALTERNATE_CONTACT": "No tengo un contacto alternativo",
         "NO_RENT_PAID": "No pago alquiler",
-        "OLD_PASSWORD": "",
         "ON_THE_LISTING": "en el aviso de vivienda",
         "ORIGINAL_APPLICATION": "Solicitud original",
         "OTHER": "Otro",
@@ -530,6 +450,7 @@
         "PROOF": {
             "CABLE_BILL": "Factura de internet y de cable",
             "CANCELLED_CHECK": "Cheque cancelado",
+            "CA_LICENSE": "Id. o licencia de conducir emitida por el estado de CA",
             "DEBIT_FROM_BANK": "Débito de su cuenta bancaria",
             "ELECTRIC_BILL": "Factura de electricidad",
             "GARBAGE_BILL": "Factura del servicio de recolección de basura",
@@ -542,27 +463,28 @@
             "PAYSTUB_HOME": "Recibo de sueldo (con la dirección de la vivienda)",
             "PUBLIC_BENEFITS": "Registro de beneficios públicos",
             "SCHOOL_RECORD": "Registro escolar",
+            "SFHA_LETTER": "Carta de la SFHA donde se verifica la dirección",
             "TELEPHONE_BILL": "Factura telefónica (solamente del teléfono fijo)",
-            "WATER_BILL": "Factura del servicio de agua",
-            "CA_LICENSE": "Id. o licencia de conducir emitida por el estado de CA",
-            "SFHA_LETTER": "Carta de la SFHA donde se verifica la dirección"
+            "WATER_BILL": "Factura del servicio de agua"
         },
         "PROOF_OF_RENT": "Comprobante de alquiler",
         "QUESTIONING_UNSURE": "En duda/sin determinar",
+        "READ_LESS": "leer menos",
+        "READ_MORE": "leer mas",
         "RECENT_APPLICATION": "Solicitud reciente",
         "REGISTERED_DOMESTIC_PARTNER": "Pareja doméstica registrada",
         "RENT_AT_ADDRESS": "Alquila en {{address}}",
-        "RE_ENTER_EMAIL_ADDRESS": "",
         "RE_ENTER_PASSWORD": "Vuelve a ingresar su contraseña para confirmar",
-        "SEE_LISTING": "",
         "SELECT_ONE": "Seleccione uno",
-        "SEND_EMAIL": "",
+        "SHOW_LESS": "ver menos",
+        "SHOW_MORE": "ver mas",
         "SIBLING": "Hermano(a)",
         "SIGN_IN": "Inicie sesión",
         "SIGN_IN_TO_CONTINUE": "Inicie sesión para continuar",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Trabajador social o asesor de vivienda",
         "SPOUSE": "Cónyuge",
         "START_UPLOAD": "Iniciar la carga",
+        "STATE": "Estado",
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "Tendrá la oportunidad de solicitar otras preferencias.",
         "STRAIGHT_HETEROSEXUAL": "Heterosexual",
         "SUGGESTED_ADDRESS": "Dirección sugerida",
@@ -570,6 +492,7 @@
         "TRANS_MALE": "Transgénero masculino",
         "UNCLE": "Tío",
         "UPDATE": "Actualizar",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Actualizados según los ajustes de su cuenta.",
         "UPLOADED": "Cargado",
         "UPLOADING": "Cargando",
         "UPLOAD_ADDITIONAL_PROOF": "Cargar comprobante adicional",
@@ -581,10 +504,9 @@
         "UPLOAD_PROOF_OF_RENT_PAYMENT": "Cargar comprobante del pago del alquiler",
         "UPLOAD_RENT_DESCRIPTION": "Proporcione un comprobante de su alquiler mensual. Usted afirmó que su alquiler en esta dirección es de: {{rent}} <br/><br/>Puede cargar varios documentos si su grupo familiar paga con varios cheques, giros monetarios, etc.",
         "VETERANS_IN_HOUSEHOLD": "Veteranos de guerra en el grupo familiar",
-        "VIEW_APPLICATION": "",
-        "VIEW_MAP": "",
         "VISION_IMPAIRMENTS": "Para personas con impedimentos visuales",
         "VOUCHERS_AND_SUBSIDIES": "Vales para la vivienda o subsidios para la renta",
+        "WHAT_IS_YOUR_RELATIONSHIP": "¿Cuál es su relación?",
         "WHAT_TYPE_OF_NUMBER": "¿Qué tipo de número es este?",
         "WHITE": "Blanco",
         "WORK_IN_SF": "¿Trabaja usted en San Francisco?",
@@ -594,216 +516,54 @@
         "YOUR_SEXUAL_ORIENTATION": "Especifique su orientación sexual",
         "YOU_HAVE_CLAIMED": "Usted ha solicitado:",
         "ZIP": "Código postal",
-        "ZIPCODE": "Código postal",
-        "APPLICANT_GENDER_SUBTITLE": "Seleccione la opción que describa mejor su identidad de género actual.",
-        "APPLICANT_SEX_AT_BIRTH": "¿Cuál era su género al nacer?",
-        "FOR_YOUR_HOUSEHOLD": "",
-        "GAY_LESBIAN_SAME_GENDER_LOVING": "Gay/lesbiana/amor del mismo género",
-        "GENDERQUEER_NON_BINARY": "Género variante/Género binario",
-        "GOOD_NEWS_FOR_HIGHER_RANKING": "¡Buenas noticias! Usted cumple con los requisitos para tener una clasificación más alta en el sorteo.",
-        "WHAT_IS_YOUR_RELATIONSHIP": "¿Cuál es su relación?",
-        "CERTIFICATE_NUMBER": "",
-        "READ_LESS": "leer menos",
-        "READ_MORE": "leer mas",
-        "SHOW_LESS": "ver menos",
-        "SHOW_MORE": "ver mas",
-        "STATE": "Estado",
-        "CHANGE_APPLICATION_DETAILS": "Cambiar detalles de la solicitud",
-        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Actualizados según los ajustes de su cuenta."
-    },
-    "LEASING_AGENT": {
-        "CONTACT": "",
-        "DUE_TO_HIGH_CALL_VOLUME": "",
-        "OFFICE_HOURS": ""
+        "ZIPCODE": "Código postal"
     },
     "LISTINGS": {
-        "ADDITIONAL_INFORMATION": "",
-        "ADDITIONAL_LISTINGS": {
-            "HIDE": "",
-            "SHOW": "",
-            "SUBTITLE": "",
-            "TITLE": ""
-        },
-        "ALL_UNITS": "",
-        "ALL_UNITS_RESERVED_FOR": "",
-        "APPLY": {
-            "APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE": "",
-            "DO_NOT_APPLY_ONLINE_AND_PAPER": "",
-            "DO_NOT_DO_MULTIPLE_APPLICATIONS": "",
-            "DROP_OFF_APPLICATION": "",
-            "DROP_OFF_APPLICATION_OR_MAIL": "",
-            "FIND_A_HOUSING_COUNSELOR": "",
-            "GET_A_PAPER_APPLICATION": "",
-            "HOW_TO_APPLY": "",
-            "INCLUDE_AN_ENVELOPE": "",
-            "NEED_HELP": "",
-            "PAPER_APPLICATIONS_MUST_BE_MAILED": "",
-            "PICK_UP_AN_APPLICATION": "",
-            "SEND_BY_US_MAIL": "",
-            "SUBMIT_A_PAPER_APPLICATION": "",
-            "VISIT_A_HOUSING_COUNSELOR": ""
-        },
-        "AVAILABLE_AND_WAITLIST": "",
-        "AVAILABLE_UNITS": "",
-        "AVAILABLE_UNITS_AND_WAITLIST": "",
-        "AVAILABLE_UNITS_AND_WAITLIST_DESC": "",
-        "CURRENT_WAITLIST_SIZE": "",
-        "DOWNLOAD_LOTTERY_RESULTS": "",
-        "ENTER_LOTTERY_FOR_WAITLIST": "",
-        "FINAL_WAITLIST_SIZE": "",
         "FOR_INCOME_CALCULATIONS": "Para el cálculo de los ingresos, tenga en cuenta que el tamaño del grupo familiar incluye a todas las personas (de cualquier edad) que viven en la unidad.",
         "HOUSEHOLD_MAXIMUM_INCOME": "Ingresos anuales del grupo familiar",
-        "IMPORTANT_PROGRAM_RULES": "",
-        "INCLUDES_PRIORITY_UNITS": "",
-        "LOTTERY_RESULTS": {
-            "HIDE": "",
-            "NO_RESULTS": "",
-            "SHOW": "",
-            "SUBTITLE": "",
-            "TITLE": ""
-        },
-        "NO_AVAILABLE_UNITS": "",
-        "NO_MATCHES": "",
-        "NO_OPEN_LISTINGS": "",
-        "OPEN_WAITLIST": "",
-        "OPEN_WAITLIST_SLOTS": "",
-        "PETS_POLICY": "",
-        "PRIORITY_UNITS": "",
-        "PRIORITY_UNITS_DESCRIPTION": "",
-        "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "",
-        "REQUIRED_DOCUMENTS": "",
-        "RESERVED_COMMUNITY_BUILDING": "",
-        "RESERVED_FOR": "",
-        "RESERVED_UNITS": "",
-        "RESERVED_UNITS_DESCRIPTION": "",
-        "RESERVED_UNITS_FOR_WHO_ARE": "",
-        "SHOWING_MATCHES_FOR": "",
-        "SINGLE_ROOM_OCCUPANCY": "",
-        "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "",
-        "SMOKING_POLICY": "",
-        "SPECIAL_NOTES": "",
-        "TELL_US_YOUR_HOUSEHOLD_SIZE": "Infórmenos el tamaño y los ingresos del grupo familiar y destacaremos los anuncios de vivienda que podrían ser aptos para usted.",
-        "UNITS_ARE_FOR": "",
-        "UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR": "",
-        "UPCOMING_LOTTERIES": {
-            "HIDE": "",
-            "NO_RESULTS": "",
-            "SHOW": "",
-            "SUBTITLE": "",
-            "TITLE": ""
-        },
-        "VIEW_LOTTERY_RESULTS": "",
-        "WAITLIST_IS_OPEN": "",
-        "YOU_DONT_MATCH_ANY": "",
-        "YOU_MAY_BE_ELIGIBLE": "",
-        "APPLICATIONS_CLOSED": "",
-        "BATH": "",
-        "CONFIRMED_PREFERENCE_LIST": "",
-        "OCCUPANCY_DESCRIPTION_ALL_SRO": "",
-        "OCCUPANCY_DESCRIPTION_NO_SRO": "",
-        "OCCUPANCY_DESCRIPTION_SOME_SRO": "",
-        "PEOPLE": "",
-        "PERSON": "",
-        "OCCUPANCY_SEE_UNIT_INFO": "",
-        "SEE_MAXIMUM_INCOME_INFORMATION": "",
-        "SEE_UNIT_INFORMATION": "",
-        "MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "",
-        "OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL": "",
-        "SEE_PREFERENCE_INFORMATION": ""
-    },
-    "LOTTERY": {
-        "ANY_REMAINING_UNITS": "",
-        "BUCKETS_INTRO": "",
-        "GENERAL_POOL": "",
-        "HOUSING_PREFERENCES": "",
-        "LOTTERY_NUMBER_NOT_FOUND_P1": "",
-        "LOTTERY_NUMBER_NOT_FOUND_P2": "",
-        "LOTTERY_NUMBER_NOT_FOUND_P3": "",
-        "LOTTERY_RESULTS": "",
-        "LOTTERY_RESULTS_PDF_LINK": "",
-        "NEXT_STEPS_P1": "",
-        "NEXT_STEPS_P2": "",
-        "NEXT_STEPS_P3": "",
-        "NEXT_STEPS_TITLE": "",
-        "NUMBER_APPLICANTS_QUALIFIED_FOR_PREFERENCE": "",
-        "RANK": "",
-        "RANKING_ORDER_NOTE": "",
-        "RANKING_PREFERENCES_CONSIDERED_OVER_GENERAL_NOTE": "",
-        "RANKING_PREFERENCE_CONSIDERATION_NOTE": "",
-        "RANKING_TITLE": "",
-        "READ_ABOUT_PREFERENCES": "",
-        "RESULTS_FROM": "",
-        "UNSORTED_RESULTS_NOTE": "",
-        "UP_TO_X_UNITS_AVAILABLE": "",
-        "APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE": "",
-        "COMPLETE_RESULTS_WILL_BE_POSTED": "",
-        "LOTTERY": "",
-        "LOTTERY_INFO_SUBHEADER": "",
-        "VIEW_PREFERENCE_LIST": "",
-        "RESULTS_WILL_BE_POSTED_ON": "",
-        "LOTTERY_NUMBER_NOT_VALID": ""
+        "TELL_US_YOUR_HOUSEHOLD_SIZE": "Infórmenos el tamaño y los ingresos del grupo familiar y destacaremos los anuncios de vivienda que podrían ser aptos para usted."
     },
     "MY_APPLICATIONS": {
         "ARE_YOU_SURE_YOU_WANT_TO_DELETE": "¿Está seguro de que desea eliminar su solicitud para este aviso de vivienda?",
         "NO_APPLICATIONS": "Parece que usted aún no ha enviado ninguna solicitud para un aviso de vivienda.",
         "TITLE": "Mis solicitudes",
-        "YOUR_LOTTERY_NUMBER_IS": "Su número de sorteo es el #{{lotteryNumber}}",
-        "RESULTS_POSTED": ""
+        "YOUR_LOTTERY_NUMBER_IS": "Su número de sorteo es el #{{lotteryNumber}}"
+    },
+    "NAV": {
+        "GET_ASSISTANCE": "Obtener asistencia",
+        "SIGN_IN": "Inicie sesión"
     },
     "PAGE_TITLE": {
-        "ADDITIONAL_RESOURCES": "",
-        "CREATE_ACCOUNT": "",
-        "DISCLAIMER": "",
-        "ELIGIBILITY_ESTIMATOR": "",
-        "FAVORITES": "",
         "GET_ASSISTANCE": "Obtener asistencia",
-        "HOUSING_COUNSELORS": "",
-        "LISTINGS": "",
-        "LISTING_APPLICATION": "",
-        "MY_ACCOUNT": "",
         "MY_APPLICATIONS": "Mis solicitudes",
-        "PRIVACY": "",
-        "SHARE_LISTING": "",
-        "SIGN_IN": "Inicie sesión",
-        "WELCOME_CHINESE": "",
-        "WELCOME_FILIPINO": "",
-        "WELCOME_SPANISH": "",
-        "DOCUMENT_CHECKLIST": ""
+        "SIGN_IN": "Inicie sesión"
+    },
+    "PREFERENCES": {
+        "ALICE_GRIFFITH": {
+            "DESC": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
+            "PROOF_DESC": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
+            "SFHA_LETTER_INSTRUCTIONS": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
+            "TITLE": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
+        }
     },
     "PRIVACY_POLICY": {
-        "ANALYTICS_P1": "",
-        "ANALYTICS_TITLE": "",
-        "COOKIES_P1": "",
-        "COOKIES_P2": "",
-        "COOKIES_TITLE": "",
-        "INFO_COLLECTION_P1": "",
-        "INFO_COLLECTION_P2": "",
-        "INFO_COLLECTION_P3": "",
-        "INFO_COLLECTION_P4": "",
-        "INFO_COLLECTION_TITLE": "",
-        "INFO_SHARING_P1": "",
-        "INFO_SHARING_TITLE": "",
-        "INFO_YOU_PROVIDE_P1": "",
-        "INFO_YOU_PROVIDE_P2": "",
-        "INFO_YOU_PROVIDE_P3": "",
-        "INFO_YOU_PROVIDE_TITLE": "",
-        "INTRO": "",
-        "LINKS_P1": "",
-        "LINKS_P2": "",
-        "LINKS_P3": "",
-        "LINKS_TITLE": "",
-        "POLICY_CHANGES_P1": "",
-        "POLICY_CHANGES_TITLE": "",
         "QUESTIONS_P1": "Si tiene preguntas sobre esta Política de privacidad, puede comunicarse con nosotros llamando al {{telLink}} o enviando un mensaje a {{emailLink}}.",
         "QUESTIONS_TITLE": "Preguntas",
-        "SITE_SECURITY_P1": "",
-        "SITE_SECURITY_P2": "",
-        "SITE_SECURITY_TITLE": "",
         "TITLE": "Política de privacidad"
     },
+    "REFERRAL": {
+        "BUS_AD": "Anuncio en el bus",
+        "DEVELOPER_WEBSITE": "Sitio Web del constructor",
+        "EMAIL_ALERT": "Alerta por correo electrónico",
+        "FLYER": "Volante",
+        "FRIEND": "Amigo",
+        "HOUSING_COUNSELOR": "Consejero de vivienda",
+        "MOHCD_WEBSITE": "Sitio Web de MOHCD",
+        "NEWSPAPER": "Periódico",
+        "RADIO_AD": "Anuncio en la radio"
+    },
     "RESET_PASSWORD": {
-        "TITLE": "Restablecer la contraseña",
-        "UPDATE_PASSWORD": ""
+        "TITLE": "Restablecer la contraseña"
     },
     "REVIEW_APPLICATION": {
         "BACK_TO_MY_APPLICATIONS": "Volver a Mis solicitudes",
@@ -821,116 +581,46 @@
         "YOU": "Usted"
     },
     "SIGN_IN": {
-        "BAD_CREDENTIALS": "",
         "DONT_HAVE_ACCOUNT": "¿No tiene una cuenta?",
         "FORGOT_PASSWORD": "¿Olvidó su contraseña?",
-        "RESENT_CONFIRMATION_MESSAGE": "",
         "SIGNED_IN_SUCCESSFULLY": "Ha iniciado sesión satisfactoriamente.",
-        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto.",
-        "SIGN_IN_REQUIRED": "",
-        "SIGNED_OUT_SUCCESSFULLY": "",
-        "USER_TOKEN_VALIDATION_TIMEOUT": "",
-        "LOGGED_OUT_DUE_TO_INACTIVITY": ""
+        "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
     },
-    "WELCOME": {
-        "ADDITIONAL_OPPORTUNITIES": "",
-        "ALL_APPLICATION_CLOSED": "",
-        "BROWSE_OTHER_RESOURCES_SPLASH_MESSAGE": "",
-        "ESTIMATE_ELIGIBILITY": "",
-        "ESTIMATE_ELIGIBILITY_DESCRIPTION": "",
-        "NEW_LISTING_EMAIL_ALERT": "",
-        "SEE_LISTINGS": "",
-        "SIGN_UP_TODAY": "",
-        "TITLE": ""
-    },
-    "FOOTER": {
-        "CITY_COUNTY_OF_SF": "",
-        "CONTACT": "",
-        "DAHLIA_DESCRIPTION": "",
-        "DISCLAIMER": "",
-        "FOR_GENERAL_QUESTIONS": "",
-        "GIVE_FEEDBACK": "",
-        "LISTING_QUESTIONS": "",
-        "PRIVACY_POLICY": ""
-    },
-    "HEADER": {
-        "LEARN_MORE": "",
-        "TRANSLATE_BAR_EXPERT_NOTICE": "Esta página fue traducida por un hablante nativo.",
-        "TRANSLATE_BAR_GOOGLE_NOTICE": "Esta página ha sido traducida por Google Translate."
-    },
-    "NAV": {
-        "ACCOUNT_SETTINGS": "",
-        "BROWSE_PROPERTIES": "",
-        "GET_ASSISTANCE": "Obtener asistencia",
-        "GET_FEEDBACK": "",
-        "MY_ACCOUNT": "",
-        "MY_APPLICATIONS": "",
-        "MY_DASHBOARD": "",
-        "MY_FAVORITES": "",
-        "SIGN_IN": "Inicie sesión",
-        "SIGN_OUT": ""
-    },
-    "DOCUMENT_CHECKLIST": {
-        "ASSISTED_HOUSING_DESC": "",
-        "ASSISTED_HOUSING_TITLE": "",
-        "HEADER": "",
-        "P1": "",
-        "P2": "",
-        "RENT_BURDEN_DOC_1": "",
-        "RENT_BURDEN_DOC_2": "",
-        "RENT_BURDEN_TITLE": "",
-        "RESIDENT_DESC": "",
-        "RESIDENT_TITLE": "",
-        "TITLE": "",
-        "WORK_SF_DESC": "",
-        "WORK_SF_TITLE": ""
-    },
-    "REFERRAL": {
-        "BUS_AD": "Anuncio en el bus",
-        "DEVELOPER_WEBSITE": "Sitio Web del constructor",
-        "EMAIL_ALERT": "Alerta por correo electrónico",
-        "FLYER": "Volante",
-        "FRIEND": "Amigo",
-        "HOUSING_COUNSELOR": "Consejero de vivienda",
-        "MOHCD_WEBSITE": "Sitio Web de MOHCD",
-        "NEWSPAPER": "Periódico",
-        "RADIO_AD": "Anuncio en la radio"
-    },
-    "B1A_WELCOME_BACK": {
-        "CONTINUE_WITHOUT_SIGNING_IN": "Continuar sin iniciar sesión",
-        "TITLE": "¡Bienvenido de nuevo!",
-        "YOU_ALREADY_HAVE_AN_ACCOUNT": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
-    },
-    "CHOOSE_APPLICANT_DETAILS": {
-        "ALERT_MESSAGE": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
-        "CONTINUE_ANON": "Continuar sin ninguna cuenta",
-        "CONTINUE_ANON_NOTE": "Omita el inicio de sesión y envíe su solicitud sin ninguna cuenta.",
-        "CREATE_ACCOUNT_NOTE": "Si esta cuenta no es suya, cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora.",
-        "CREATE_NEW_ACCOUNT": "Crear una cuenta nueva",
-        "SELECT_CHANGE_NOTE": "Si usa esta cuenta, todos los detalles de contacto principales en esta solicitud serán reemplazados por los ajustes de su cuenta. Esto significa que es posible que tenga que recuperar sus preferencias y volver a cargar los documentos.",
-        "TITLE": "Los detalles de contacto principales de su nueva solicitud no coinciden con los ajustes actuales de su cuenta. ¿Qué le gustaría hacer?",
-        "TITLE_DISQUALIFIED": "Los ajustes de su cuenta no le permiten ser elegible para este listado. ¿Qué le gustaría hacer?",
-        "WILL_REPLACE": "reemplazará",
-        "YOUR_OPTIONS": "Sus opciones"
-    },
-    "CONTINUE_PREVIOUS_DRAFT": {
-        "CONTINUE_WITH_THESE_DETAILS": "Continuar con estos detalles",
-        "DESCRIPTION": "Al parecer, usted ya comenzó un borrador para esta solicitud. Simplemente revise los siguientes detalles y retome desde donde quedó.",
-        "TITLE": "Retomar desde donde quedó"
-    },
-    "E6_ALICE_GRIFFITH_PREFERENCE": {
-        "TITLE": "Su grupo familiar podría cumplir con los requisitos para la siguiente preferencia de sorteo.",
-        "INSTRUCTIONS": "Proporcione una dirección válida y cargue un comprobante para tener una clasificación más alta en el sorteo.",
-        "ADDRESS": "Dirección en Alice Griffith",
-        "ADDRESS_DESC": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
-        "ADDRESS_DOCUMENTS": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?"
-    },
-    "PREFERENCES": {
-        "ALICE_GRIFFITH": {
-            "TITLE": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith",
-            "DESC": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
-            "PROOF_DESC": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
-            "SFHA_LETTER_INSTRUCTIONS": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior"
-        }
+    "T": {
+        "APPLICATION": "Solicitud",
+        "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
+        "APPLICATION_DUE": "Vencimiento de la solicitud",
+        "APPLICATION_SUBMITTED": "Solicitud presentada",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE": "¿Está seguro de que desea salir de esta página? Perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda. Si desea guardar su información para completar la solicitud en otro momento, haga clic en el botón “Guardar y finalizar en otro momento”.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_CONFIRMATION": "¿Está seguro de que desea salir de esta página? Si vincula su solicitud a una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
+        "ARE_YOU_SURE_YOU_WANT_TO_LEAVE_SIGN_IN": "¿Está seguro de que desea salir de esta página? Si crea una cuenta, le será más fácil comprobar el estado de la solicitud y completar solicitudes futuras.",
+        "BACK": "Retroceder",
+        "CLOSE": "Cerrar",
+        "CONFIRM": "Confirmar",
+        "DELETE": "Eliminar",
+        "EDIT": "Editar",
+        "IN_PROGRESS": "En curso",
+        "I_AGREE": "Acepto y entiendo que no podré realizar ningún cambio después de enviar la solicitud.",
+        "NEVER_SUBMITTED": "Nunca se presentó",
+        "NEXT": "Siguiente",
+        "NO": "No",
+        "NONE": "Ninguno",
+        "OCCUPANCY": "Ocupación",
+        "OK": "Aceptar",
+        "OPTIONAL": "Opcional",
+        "OR": "o",
+        "PER_MONTH": "por mes",
+        "PER_YEAR": "por año",
+        "SAVE_AND_COME_BACK_LATER": "Guardar y regresar luego",
+        "SAVE_AND_FINISH_LATER": "Guardar y finalizar en otro momento",
+        "SESSION_INACTIVITY": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá toda la información que haya ingresado en la solicitud para este anuncio de vivienda.",
+        "SESSION_INACTIVITY_CONFIRMATION": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, perderá la posibilidad de guardar esta solicitud en una cuenta que le permite realizar un seguimiento del estado de su solicitud en cualquier momento.",
+        "SESSION_INACTIVITY_LOGGED_IN": "Su sesión finalizará en un minuto debido a la inactividad. Si decide no responder, su sesión se cerrará y perderá toda la información que no haya guardado.",
+        "SKIP_TO_MAIN_CONTENT": "Ir al contenido principal",
+        "STATUS": "Estado",
+        "SUBMIT": "Someter",
+        "SUBMITTED": "Presentada",
+        "YES": "Sí",
+        "YOU": "Usted"
     }
 }
