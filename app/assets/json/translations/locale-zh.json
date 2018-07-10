@@ -34,7 +34,13 @@
         "START_FROM_SCRATCH": "重設並重新開始",
         "START_WITH_AUTOFILL": "沿用這些詳細資料開始作業"
     },
+    "B1A_WELCOME_BACK": {
+        "CONTINUE_WITHOUT_SIGNING_IN": "未登入繼續執行",
+        "TITLE": "歡迎回來！",
+        "YOU_ALREADY_HAVE_AN_ACCOUNT": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
+    },
     "B1_NAME": {
+        "APP_DETAILS_UPDATED": "您的申請詳細資料已更新，以符合您的帳戶設定。",
         "NAME_EDITABLE_VIA": "這些欄位可以編輯，請透過您的",
         "TITLE": "首先，您的名字是？"
     },
@@ -110,8 +116,26 @@
     "CHOOSE_ACCOUNT_SETTINGS": {
         "PRIMARY_CONTACT_OPTIONS": "主要聯絡人選項"
     },
+    "CHOOSE_APPLICANT_DETAILS": {
+        "ALERT_MESSAGE": "有關此申請及帳戶設定中的所有主要聯絡詳細資料均會根據您的選擇覆寫。",
+        "CONTINUE_ANON": "無帳戶繼續執行",
+        "CONTINUE_ANON_NOTE": "略過登入程序，並在無帳戶的情況下提交此申請。",
+        "CREATE_ACCOUNT_NOTE": "如果這不是您的帳戶，請使用其他電子郵件地址建立新帳戶，這樣您便不會遺失迄今為止所輸入的任何資訊。",
+        "CREATE_NEW_ACCOUNT": "建立新帳戶",
+        "SELECT_CHANGE_NOTE": "如果您使用此帳戶，有關此申請的所有主要聯絡詳細資料均會被您的帳戶設定取代。這意味著您可能必須重新主張優先權利並再次上傳文件。",
+        "TITLE": "新申請的主要聯絡詳細資料與您的目前帳戶設定不符。您想執行什麼工作？",
+        "TITLE_DISQUALIFIED": "您的帳戶設定並不符合此清單的資格。您想執行什麼工作？",
+        "WILL_REPLACE": "將取代",
+        "YOUR_OPTIONS": "您的選擇"
+    },
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "使用這些詳細資料繼續執行",
+        "DESCRIPTION": "您似乎已為此申請擬訂了草稿。您只需檢閱以下詳細資料，然後從之前離開的位置繼續執行。",
+        "TITLE": "從之前離開的位置繼續執行"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "已有帳戶？",
+        "CHOOSE_DIFF_EMAIL": "請使用其他電子郵件地址建立新帳戶，這樣您便不會遺失迄今為止所輸入的任何資訊。",
         "CONTINUE_WITH_APPLICATION": "繼續申請作業",
         "CREATE_AN_ACCOUNT": "建立帳戶",
         "PASSWORD_INSTRUCTIONS": "必須至少有 8 個字元，而且其中包括至少 1 個英文字母和 1 個數字。",
@@ -198,6 +222,13 @@
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "上傳 {{address}} 的相關文件",
         "UPLOAD_FOR_EACH_ADDRESS": "上傳各個地址的相關文件"
     },
+    "E6_ALICE_GRIFFITH_PREFERENCE": {
+        "ADDRESS": "Alice Griffith 地址",
+        "ADDRESS_DESC": "您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區",
+        "ADDRESS_DOCUMENTS": "您希望上傳以下哪個文件以證明您符合相關資格？",
+        "INSTRUCTIONS": "只需提供有效的地址並上傳相關證明，即可獲得更高等級的抽籤優先權利。",
+        "TITLE": "您的家庭可能符合獲得以下抽籤優先權利的資格。"
+    },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "如果您持有由過去舊金山再發展機構核發的「Certificate of Preference (COP)」。  被機構命令搬遷的 COP 擁有者一般是在 1960 和 1970 年代。",
@@ -255,11 +286,6 @@
         "P1": "這些問題可選擇性作答，而且不會影響您的住房資格。您的回答將予以保密。",
         "TITLE": "請幫我們確定我們已達成目標，以服務所有市民。"
     },
-    "F1A_REVIEW_SIGN_IN": {
-        "CONTINUE_WITHOUT_AN_ACCOUNT": "不使用帳戶並繼續",
-        "INSTRUCTIONS": "登入可將您的資訊儲存至現有帳戶，並且能讓您隨時查看該申請的狀況。",
-        "TITLE": "就快完成了！"
-    },
     "F1_REVIEW_SUMMARY": {
         "NOTE": "提交之前，這是您最後的編輯機會。",
         "TITLE": "在提交申請前，花一點時間審閱您所提供的資訊。"
@@ -276,6 +302,9 @@
         "BROWSE_MORE_LISTINGS": "瀏覽更多清單",
         "CREATE_ACCOUNT_BODY": "建立帳戶可讓您儲存資訊供日後申請之用，而且您可以隨時查看該申請的狀況。",
         "CREATE_ACCOUNT_TITLE": "您是否要建立帳戶？",
+        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "如有需要更新表格上的資料、請不要重新遞交申請表格、否則新舊兩份表格將會一起在抽籤前刪除。如果沒收到確認的電子郵件、請聯繫您的租賃代理人。",
+        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "如有需要更新表格上的資料、請不要重新遞交申請表格、否則新舊兩份表格將會一起在抽籤前刪除。如有任何問題、請聯繫您的租賃代理人。",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "請不要重新遞交申請表格",
         "GO_TO_MY_APPLICATIONS": "前往「我的申請」",
         "LOTTERY_NUMBER": "這是您的抽籤票券號碼",
         "NEXT_STEPS_BODY1": "抽籤將於下列日期舉行：",
@@ -330,6 +359,7 @@
         "CANCEL": "取消",
         "CANCEL_ADDING_DOCUMENTS": "取消新增文件",
         "CANCEL_UPLOAD": "取消上傳",
+        "CHANGE_APPLICATION_DETAILS": "變更申請詳細資料",
         "CHILD": "兒童",
         "CITY": "城市名稱",
         "CLEAR": "清除",
@@ -419,6 +449,7 @@
         "PROOF": {
             "CABLE_BILL": "有線電視及網際網路帳單",
             "CANCELLED_CHECK": "已取消的支票",
+            "CA_LICENSE": "加州 ID 或駕駛執照",
             "DEBIT_FROM_BANK": "您銀行帳戶的金融卡",
             "ELECTRIC_BILL": "電費帳單",
             "GARBAGE_BILL": "垃圾帳單",
@@ -431,21 +462,27 @@
             "PAYSTUB_HOME": "薪資單 (列出住家地址)",
             "PUBLIC_BENEFITS": "公共福利記錄",
             "SCHOOL_RECORD": "學校證明",
+            "SFHA_LETTER": "SFHA 地址驗證信函",
             "TELEPHONE_BILL": "電話帳單 (僅限市話)",
             "WATER_BILL": "水費帳單"
         },
         "PROOF_OF_RENT": "租金證明",
         "QUESTIONING_UNSURE": "有疑問/不確定",
+        "READ_LESS": "閱讀更少資訊",
+        "READ_MORE": "閱讀更多資訊",
         "RECENT_APPLICATION": "近期申請",
         "REGISTERED_DOMESTIC_PARTNER": "已註冊的家庭伴侶",
         "RENT_AT_ADDRESS": "在 {{address}} 租房",
         "RE_ENTER_PASSWORD": "請重新輸入您的密碼以確認",
         "SELECT_ONE": "選取一個",
+        "SHOW_LESS": "顯示更少資訊",
+        "SHOW_MORE": "顯示更多資訊",
         "SIBLING": "兄弟姐妹",
         "SIGN_IN_TO_CONTINUE": "登入並繼續",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "個案經理或住房顧問",
         "SPOUSE": "配偶",
         "START_UPLOAD": "開始上傳",
+        "STATE": "州",
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "您仍然可以主張其他優先權利。",
         "STRAIGHT_HETEROSEXUAL": "異性戀/同性戀",
         "SUGGESTED_ADDRESS": "建議地址",
@@ -453,6 +490,7 @@
         "TRANS_MALE": "跨性男",
         "UNCLE": "叔/伯/姨/舅父",
         "UPDATE": "更新",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "已根據您的帳戶設定進行更新。",
         "UPLOADED": "已上傳",
         "UPLOADING": "正在上傳",
         "UPLOAD_ADDITIONAL_PROOF": "上傳其他證明",
@@ -496,10 +534,29 @@
         "GET_ASSISTANCE": "取得協助",
         "MY_APPLICATIONS": "我的申請"
     },
+    "PREFERENCES": {
+        "ALICE_GRIFFITH": {
+            "DESC": "針對至少有一名成員居住在 Alice Griffith 住宅區中的家庭。這包括於「鄰里選擇」(Choice Neighborhoods) 計畫申請時間，即 2010 年 10 月 26 日（或之後）居住在目標重建地點的基線和目前居民。",
+            "PROOF_DESC": "您需要提供以下任一文件，證明您的地址於 2010 年 10 月 26 日（或之後）位在 Alice Griffith 住宅區：",
+            "SFHA_LETTER_INSTRUCTIONS": "來自舊金山住房管理局 (San Francisco Housing Authority) 的信函，確認申請人於 2010 年 10 月 26 日（或之後）居住在 Alice Griffith 住宅區",
+            "TITLE": "Alice Griffith 住宅區居民優先權利"
+        }
+    },
     "PRIVACY_POLICY": {
         "QUESTIONS_P1": "若您對此隱私權政策有任何疑問，可透過 {{telLink}} 或 {{emailLink}} 與我們聯絡",
         "QUESTIONS_TITLE": "問題",
         "TITLE": "隱私權政策"
+    },
+    "REFERRAL": {
+        "BUS_AD": "公車巴士廣告",
+        "DEVELOPER_WEBSITE": "開發商網站",
+        "EMAIL_ALERT": "電子郵件通知",
+        "FLYER": "傳單",
+        "FRIEND": "朋友",
+        "HOUSING_COUNSELOR": "房屋顧問",
+        "MOHCD_WEBSITE": "MOHCD 市政府辦公室房屋社區開發部網站",
+        "NEWSPAPER": "報紙",
+        "RADIO_AD": "廣播廣告"
     },
     "RESET_PASSWORD": {
         "TITLE": "重設密碼"
