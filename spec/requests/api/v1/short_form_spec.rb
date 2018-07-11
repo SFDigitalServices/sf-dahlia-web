@@ -14,7 +14,7 @@ describe 'ShortForm API' do
   # logged-in user as primary applicant! That can cause a Salesforce
   # "APEX_ERROR: System.NullPointerException: Attempt to de-reference a null object"
   # error when we try to fetch the logged-in user's applications.
-  application_delete_id = 'a0o0x0000003n8F'
+  application_delete_id = 'a0o0U000000brab'
 
   # Application must have draft status
   application_update_id = 'a0o0P00000FEUwH'

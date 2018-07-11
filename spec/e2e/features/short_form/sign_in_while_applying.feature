@@ -32,6 +32,8 @@ Feature: Sign-in while filling out application
         When I create an account for "Octavia Butler"
         And I continue my saved draft for the Senior Test Listing
         And I sign in as "Octavia Butler"
+        And I answer "Yes" to the community screening question
+        And I hit the Next button "1" time
         Then I should be on the "Name" page of the application
         And I should see the account info for "Octavia Butler" filled in on the Name page
         And I sign out without saving
