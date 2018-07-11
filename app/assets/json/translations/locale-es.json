@@ -34,7 +34,13 @@
         "START_FROM_SCRATCH": "Reinicie y comience de nuevo",
         "START_WITH_AUTOFILL": "Comience con estos detalles"
     },
+    "B1A_WELCOME_BACK": {
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continuar sin iniciar sesión",
+        "TITLE": "¡Bienvenido de nuevo!",
+        "YOU_ALREADY_HAVE_AN_ACCOUNT": "Al parecer, usted ya tiene una cuenta. Si inicia sesión, se guardará esta solicitud en su cuenta, y usted podrá controlar el estado de su solicitud en cualquier momento."
+    },
     "B1_NAME": {
+        "APP_DETAILS_UPDATED": "Se actualizaron los detalles de su solicitud para que coincidan con los ajustes de su cuenta.",
         "NAME_EDITABLE_VIA": "Estos campos pueden editarse mediante su",
         "TITLE": "Primero, ¿cuál es su nombre?"
     },
@@ -110,8 +116,26 @@
     "CHOOSE_ACCOUNT_SETTINGS": {
         "PRIMARY_CONTACT_OPTIONS": "Opciones de contacto principal"
     },
+    "CHOOSE_APPLICANT_DETAILS": {
+        "ALERT_MESSAGE": "Su selección sobrescribirá todos los detalles de contacto principales en esta solicitud y en los ajustes de la cuenta.",
+        "CONTINUE_ANON": "Continuar sin ninguna cuenta",
+        "CONTINUE_ANON_NOTE": "Omita el inicio de sesión y envíe su solicitud sin ninguna cuenta.",
+        "CREATE_ACCOUNT_NOTE": "Si esta cuenta no es suya, cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora.",
+        "CREATE_NEW_ACCOUNT": "Crear una cuenta nueva",
+        "SELECT_CHANGE_NOTE": "Si usa esta cuenta, todos los detalles de contacto principales en esta solicitud serán reemplazados por los ajustes de su cuenta. Esto significa que es posible que tenga que recuperar sus preferencias y volver a cargar los documentos.",
+        "TITLE": "Los detalles de contacto principales de su nueva solicitud no coinciden con los ajustes actuales de su cuenta. ¿Qué le gustaría hacer?",
+        "TITLE_DISQUALIFIED": "Los ajustes de su cuenta no le permiten ser elegible para este listado. ¿Qué le gustaría hacer?",
+        "WILL_REPLACE": "reemplazará",
+        "YOUR_OPTIONS": "Sus opciones"
+    },
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "Continuar con estos detalles",
+        "DESCRIPTION": "Al parecer, usted ya comenzó un borrador para esta solicitud. Simplemente revise los siguientes detalles y retome desde donde quedó.",
+        "TITLE": "Retomar desde donde quedó"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "¿Ya tiene una cuenta?",
+        "CHOOSE_DIFF_EMAIL": "Cree una cuenta nueva con una dirección de correo electrónico diferente y no perderá la información que haya ingresado hasta ahora.",
         "CONTINUE_WITH_APPLICATION": "Continuar con la solicitud",
         "CREATE_AN_ACCOUNT": "Crear una cuenta",
         "PASSWORD_INSTRUCTIONS": "Debe tener al menos 8 caracteres e incluir al menos una letra y un número.",
@@ -198,6 +222,13 @@
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Cargar documentos para {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Cargar documentos para cada dirección"
     },
+    "E6_ALICE_GRIFFITH_PREFERENCE": {
+        "ADDRESS": "Dirección en Alice Griffith",
+        "ADDRESS_DESC": "Su dirección en el Desarrollo de Viviendas Alice Griffith (Alice Griffith Housing Development) al 26 de octubre del 2010 o en una fecha posterior.",
+        "ADDRESS_DOCUMENTS": "¿Cuál de los siguientes documentos le gustaría cargar para validar su elegibilidad?",
+        "INSTRUCTIONS": "Proporcione una dirección válida y cargue un comprobante para tener una clasificación más alta en el sorteo.",
+        "TITLE": "Su grupo familiar podría cumplir con los requisitos para la siguiente preferencia de sorteo."
+    },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_DESC": "Si usted posee un Certificate of Preference (COP) de la antigua San Francisco Redevelopment Agency (Agencia de Reurbanización de San Francisco). La Agencia desplazó a los poseedores de COP durante las décadas de 1960 y 1970.",
@@ -255,11 +286,6 @@
         "P1": "Estas preguntas son opcionales y no afectarán su elegibilidad para acceder a la vivienda. Se mantendrá la privacidad de sus respuestas.",
         "TITLE": "Ayúdenos a garantizar que cumplamos con nuestro objetivo de prestar servicio a todas las personas."
     },
-    "F1A_REVIEW_SIGN_IN": {
-        "CONTINUE_WITHOUT_AN_ACCOUNT": "Continuar sin ninguna cuenta",
-        "INSTRUCTIONS": "Registrarse le permitirá guardar su información en su cuenta y verificar el estado de esta solicitud en cualquier momento.",
-        "TITLE": "¡Ya casi está por finalizar!"
-    },
     "F1_REVIEW_SUMMARY": {
         "NOTE": "Esta es su última oportunidad de editar antes de enviar.",
         "TITLE": "Dedique unos momentos a revisar su información antes de enviar su solicitud."
@@ -276,6 +302,9 @@
         "BROWSE_MORE_LISTINGS": "Ver más anuncios de viviendas",
         "CREATE_ACCOUNT_BODY": "Crear una cuenta le permitirá guardar su información para solicitudes futuras y verificar el estado de esta solicitud en cualquier momento.",
         "CREATE_ACCOUNT_TITLE": "¿Desea crear una cuenta?",
+        "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento si no ha recibido un correo electrónico de confirmación.",
+        "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "Si necesita actualizar la información en su aplicación, no presente otra aplicación o ambas aplicaciones se removerán de la lotería. Comuníquese con el agente de arrendamiento en caso de tener preguntas.",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "No presente otra aplicación",
         "GO_TO_MY_APPLICATIONS": "Ir a Mis solicitudes",
         "LOTTERY_NUMBER": "Este es su número para el sorteo",
         "NEXT_STEPS_BODY1": "El sorteo se realizará el",
@@ -330,6 +359,7 @@
         "CANCEL": "Cancelar",
         "CANCEL_ADDING_DOCUMENTS": "Cancelar la carga de documentos",
         "CANCEL_UPLOAD": "Cancelar la carga",
+        "CHANGE_APPLICATION_DETAILS": "Cambiar detalles de la solicitud",
         "CHILD": "Hijo(a)",
         "CITY": "Nombre de la ciudad",
         "CLEAR": "Borrar",
@@ -420,6 +450,7 @@
         "PROOF": {
             "CABLE_BILL": "Factura de internet y de cable",
             "CANCELLED_CHECK": "Cheque cancelado",
+            "CA_LICENSE": "Id. o licencia de conducir emitida por el estado de CA",
             "DEBIT_FROM_BANK": "Débito de su cuenta bancaria",
             "ELECTRIC_BILL": "Factura de electricidad",
             "GARBAGE_BILL": "Factura del servicio de recolección de basura",
@@ -432,22 +463,28 @@
             "PAYSTUB_HOME": "Recibo de sueldo (con la dirección de la vivienda)",
             "PUBLIC_BENEFITS": "Registro de beneficios públicos",
             "SCHOOL_RECORD": "Registro escolar",
+            "SFHA_LETTER": "Carta de la SFHA donde se verifica la dirección",
             "TELEPHONE_BILL": "Factura telefónica (solamente del teléfono fijo)",
             "WATER_BILL": "Factura del servicio de agua"
         },
         "PROOF_OF_RENT": "Comprobante de alquiler",
         "QUESTIONING_UNSURE": "En duda/sin determinar",
+        "READ_LESS": "leer menos",
+        "READ_MORE": "leer mas",
         "RECENT_APPLICATION": "Solicitud reciente",
         "REGISTERED_DOMESTIC_PARTNER": "Pareja doméstica registrada",
         "RENT_AT_ADDRESS": "Alquila en {{address}}",
         "RE_ENTER_PASSWORD": "Vuelve a ingresar su contraseña para confirmar",
         "SELECT_ONE": "Seleccione uno",
+        "SHOW_LESS": "ver menos",
+        "SHOW_MORE": "ver mas",
         "SIBLING": "Hermano(a)",
         "SIGN_IN": "Inicie sesión",
         "SIGN_IN_TO_CONTINUE": "Inicie sesión para continuar",
         "SOCIAL_WORKER_OR_HOUSING_COUNSELOR": "Trabajador social o asesor de vivienda",
         "SPOUSE": "Cónyuge",
         "START_UPLOAD": "Iniciar la carga",
+        "STATE": "Estado",
         "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "Tendrá la oportunidad de solicitar otras preferencias.",
         "STRAIGHT_HETEROSEXUAL": "Heterosexual",
         "SUGGESTED_ADDRESS": "Dirección sugerida",
@@ -455,6 +492,7 @@
         "TRANS_MALE": "Transgénero masculino",
         "UNCLE": "Tío",
         "UPDATE": "Actualizar",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Actualizados según los ajustes de su cuenta.",
         "UPLOADED": "Cargado",
         "UPLOADING": "Cargando",
         "UPLOAD_ADDITIONAL_PROOF": "Cargar comprobante adicional",
@@ -500,10 +538,29 @@
         "MY_APPLICATIONS": "Mis solicitudes",
         "SIGN_IN": "Inicie sesión"
     },
+    "PREFERENCES": {
+        "ALICE_GRIFFITH": {
+            "DESC": "En el caso de grupos familiares en los que al menos un miembro fue un residente de Desarrollo de Viviendas Alice Griffith. Esto incluye a residentes anteriores y actuales que vivieron en el área de redesarrollo objetivo al momento de hacer la solicitud para Choice Neighborhoods el 26 de octubre del 2010 o en una fecha posterior.",
+            "PROOF_DESC": "Necesitará uno de los siguientes documentos para dejar constancia de su dirección en Desarrollo de Viviendas Alice Griffith, con fecha del 26 de octubre del 2010 o con una fecha posterior:",
+            "SFHA_LETTER_INSTRUCTIONS": "Carta de la Autoridad de Viviendas de San Francisco (San Francisco Housing Authority) donde se deje constancia de que el solicitante vivía en una dirección de Alice Griffith el 26 de octubre del 2010 o en una fecha posterior",
+            "TITLE": "Preferencia de residentes de Desarrollo de Viviendas Alice Griffith"
+        }
+    },
     "PRIVACY_POLICY": {
         "QUESTIONS_P1": "Si tiene preguntas sobre esta Política de privacidad, puede comunicarse con nosotros llamando al {{telLink}} o enviando un mensaje a {{emailLink}}.",
         "QUESTIONS_TITLE": "Preguntas",
         "TITLE": "Política de privacidad"
+    },
+    "REFERRAL": {
+        "BUS_AD": "Anuncio en el bus",
+        "DEVELOPER_WEBSITE": "Sitio Web del constructor",
+        "EMAIL_ALERT": "Alerta por correo electrónico",
+        "FLYER": "Volante",
+        "FRIEND": "Amigo",
+        "HOUSING_COUNSELOR": "Consejero de vivienda",
+        "MOHCD_WEBSITE": "Sitio Web de MOHCD",
+        "NEWSPAPER": "Periódico",
+        "RADIO_AD": "Anuncio en la radio"
     },
     "RESET_PASSWORD": {
         "TITLE": "Restablecer la contraseña"
