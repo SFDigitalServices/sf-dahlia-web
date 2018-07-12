@@ -609,8 +609,7 @@ ShortFormApplicationService = (
         level: 'warning',
         extra: {
           toState: toState.url, fromState: fromState,
-          completedSections: Service.application.completedSections,
-          validatedForms: Service.application.validatedForms
+          application: Service.application
         }
       })
       return false
