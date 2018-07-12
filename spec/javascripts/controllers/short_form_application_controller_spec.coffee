@@ -112,6 +112,7 @@ do ->
       storeLastPage: jasmine.createSpy()
       addSeniorEligibilityError: jasmine.createSpy()
       loadApplication: jasmine.createSpy()
+      completeSection: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
