@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 30 Mar 2018 22:38:57 GMT
+      - Tue, 10 Jul 2018 22:59:13 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=BCgmJ1AMRR64Q9B0M433KA;Path=/;Domain=.salesforce.com;Expires=Tue,
-        29-May-2018 22:38:57 GMT;Max-Age=5184000
+      - BrowserId=Fo-KIjWNS9eL7WLlj7zdzQ;Path=/;Domain=.salesforce.com;Expires=Sat,
+        08-Sep-2018 22:59:13 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,7 +47,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs95.my.salesforce.com","id":"https://test.salesforce.com/id/00D0x000000CtkoEAC/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1522449538072","signature":"/E2vNP6yIsdE2G690PJtkqKJ7Aps89QjKkvB7pHBlwo="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263554644","signature":"wdjJMamgDC5lqTorfh0ALVbJ2mjc+QqtB4xjC009/wc="}'
     http_version: 
-  recorded_at: Fri, 30 Mar 2018 22:38:58 GMT
+  recorded_at: Tue, 10 Jul 2018 22:59:16 GMT
 recorded_with: VCR 3.0.3
