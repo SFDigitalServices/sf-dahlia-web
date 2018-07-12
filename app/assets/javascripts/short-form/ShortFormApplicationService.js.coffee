@@ -604,7 +604,15 @@ ShortFormApplicationService = (
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
-    return false unless Service.userCanAccessSection(toSection.name)
+    if not Service.userCanAccessSection(toSection.name)
+      Raven.captureMessage('User attempted to access unauthorized section', {
+        level: 'warning',
+        extra: {
+          toState: toState.url, fromState: fromState,
+          application: Service.application
+        }
+      })
+      return false
     # they're "jumping ahead" if they're not coming from a short form page or create-account
     # and they're trying to go to a page that's not either the first page, or their stored lastPage
     namePage = 'dahlia.short-form-application.name'
