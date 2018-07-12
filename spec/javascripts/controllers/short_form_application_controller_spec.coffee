@@ -744,7 +744,7 @@ do ->
 
       describe 'when preference not claimed', ->
         beforeEach ->
-          fakeShortFormApplicationService.preferences.aliceGriffith = false
+          fakeShortFormApplicationService.preferences.aliceGriffith = null
 
         it 'should proceed directly to preferences programs page', ->
           scope.checkAliceGriffithAddress()
