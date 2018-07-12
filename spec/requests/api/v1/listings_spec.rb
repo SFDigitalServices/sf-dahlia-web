@@ -171,7 +171,7 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['lotteryBuckets'].length).to eq(6)
+    expect(json['lotteryBuckets'].length).to eq(7)
   end
 
   it 'gets lottery buckets for a Listing' do
@@ -183,7 +183,7 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['lotteryBuckets'].length).to eq(6)
+    expect(json['lotteryBuckets'].length).to eq(7)
   end
 
   it 'gets lottery preferences for a Listing' do
@@ -195,6 +195,6 @@ describe 'Listings API' do
 
     expect(response).to be_success
 
-    expect(json['preferences'].length).to eq(5)
+    expect(json['preferences'].length).to eq(6)
   end
 end
