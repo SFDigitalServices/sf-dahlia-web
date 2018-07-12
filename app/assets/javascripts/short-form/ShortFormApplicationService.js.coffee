@@ -607,7 +607,11 @@ ShortFormApplicationService = (
     if not Service.userCanAccessSection(toSection.name)
       Raven.captureMessage('User attempted to access unauthorized section', {
         level: 'warning',
-        extra: {toPage: toState.url, fromPage: fromState.url, completedSections: Service.application.completedSections}
+        extra: {
+          toState: toState.url, fromState: fromState,
+          completedSections: Service.application.completedSections,
+          validatedForms: Service.application.validatedForms
+        }
       })
       return false
     # they're "jumping ahead" if they're not coming from a short form page or create-account
