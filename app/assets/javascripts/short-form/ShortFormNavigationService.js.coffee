@@ -13,6 +13,7 @@ ShortFormNavigationService = (
       translatedLabel: 'SHORT_FORM_NAV.YOU',
       pages: [
         'name'
+        'welcome-back'
         'contact'
         'verify-address'
         'alternate-contact-type'
@@ -55,6 +56,8 @@ ShortFormNavigationService = (
         'neighborhood-preference'
         'adhp-preference'
         'live-work-preference'
+        'alice-griffith-preference'
+        'alice-griffith-verify-address'
         'preferences-programs'
         'custom-preferences'
         'custom-proof-preferences'
@@ -67,7 +70,6 @@ ShortFormNavigationService = (
       pages: [
         'review-optional'
         'review-summary'
-        'review-sign-in'
         'review-terms'
       ]
     }
@@ -77,7 +79,7 @@ ShortFormNavigationService = (
     # intro
     'community-screening': {callback: ['validateCommunityEligibility']}
     # you
-    'name': {callback: ['checkPrimaryApplicantAge']}
+    'name': {callback: ['checkAfterNamePage']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
@@ -105,18 +107,19 @@ ShortFormNavigationService = (
     'neighborhood-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'neighborhoodResidence'}
     'adhp-preference': {callback: ['checkAfterLiveInTheNeighborhood'], params: 'antiDisplacement'}
     'live-work-preference': {callback: ['checkAfterLiveWork']}
+    'alice-griffith-preference': {callback: ['checkAliceGriffithAddress']}
+    'alice-griffith-verify-address': {path: 'preferences-programs'}
     'preferences-programs': {callback: ['checkForCustomPreferences']}
     'custom-preferences': {callback: ['checkForCustomProofPreferences']}
     'custom-proof-preferences': {callback: ['checkForCustomProofPreferences']}
     'general-lottery-notice': {callback: ['goToLandingPage'], params: 'Review'}
     # review
     'review-optional': {path: 'review-summary', callback: ['checkSurveyComplete']}
-    'review-summary': {callback: ['confirmReviewedApplication']}
-    'review-sign-in': {path: 'review-terms'}
+    'review-summary': {path: 'review-terms'}
     'review-terms': {callback: ['submitApplication']}
     # save + finish workflow
     'choose-draft': {callback: ['chooseDraft']}
-    'choose-account-settings': {callback: ['chooseAccountSettings']}
+    'choose-applicant-details': {callback: ['chooseApplicantDetails']}
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
@@ -170,6 +173,7 @@ ShortFormNavigationService = (
       'household-member-form-edit',
       'household-member-verify-address',
       'rent-burdened-preference-edit',
+      'alice-griffith-verify-address',
       'review-summary',
       'confirmation'
     ]
@@ -195,15 +199,18 @@ ShortFormNavigationService = (
     application = ShortFormApplicationService.application
     page = switch Service._currentPage()
       # -- Pages that follow normal deterministic order
-      when 'contact'
+      when 'welcome-back'
         ,'alternate-contact-name'
         ,'alternate-contact-phone-address'
         ,'household-overview'
         ,'income'
         ,'preferences-intro'
         ,'review-summary'
-        ,'review-sign-in'
+        ,'review-terms'
           Service._getPreviousPage()
+      # -- Contact
+      when 'contact'
+        'name'
       # -- Alt Contact
       when 'alternate-contact-type'
         'contact'
@@ -232,7 +239,7 @@ ShortFormNavigationService = (
       # -- Preferences
       when 'rent-burdened-preference'
         , 'assisted-housing-preference'
-          'preferences-programs'
+          'preferences-intro'
       when 'neighborhood-preference'
         , 'adhp-preference'
           Service.goBackToRentBurden()
@@ -243,8 +250,13 @@ ShortFormNavigationService = (
           'adhp-preference'
         else
           Service.goBackToRentBurden()
-      when 'preferences-programs'
+      when 'alice-griffith-preference'
         Service.goBackToLiveWorkNeighborhood()
+      when 'preferences-programs'
+        if ShortFormApplicationService.listingHasPreference('aliceGriffith')
+          'alice-griffith-preference'
+        else
+          Service.goBackToLiveWorkNeighborhood()
       when 'custom-preferences'
         'preferences-programs'
       when 'custom-proof-preferences'
@@ -257,11 +269,6 @@ ShortFormNavigationService = (
           'general-lottery-notice'
         else
           'preferences-programs'
-      when 'review-terms'
-        if AccountService.loggedIn()
-          'review-summary'
-        else
-          'review-sign-in'
       when 'review-submitted'
         'confirmation'
       # -- catch all

@@ -2,10 +2,10 @@
   '$rootScope', '$state', '$window', '$translate', '$document', '$timeout',
   'Idle', 'bsLoadingOverlayService', 'ngMeta',
   'AnalyticsService', 'ShortFormApplicationService', 'AccountService', 'ShortFormNavigationService', 'AutosaveService',
-  'SharedService', 'GoogleTranslateService', 'ModalService',
+  'SharedService', 'ExternalTranslateService', 'ModalService',
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
-  SharedService, GoogleTranslateService, ModalService) ->
+  SharedService, ExternalTranslateService, ModalService) ->
     timeoutRetries = 2
     ngMeta.init()
 
@@ -55,20 +55,17 @@
       if SharedService.isWelcomePage(toState)
         # on welcome pages, the language is determined by the language of the
         # welcome page, not by toParams.lang
-        language = SharedService.getWelcomePageLanguage(toState.name).code
-        if toParams.lang != language
+        welcomePageLanguage = SharedService.getWelcomePageLanguage(toState.name).code
+        ExternalTranslateService.setLanguage(welcomePageLanguage)
+
+        if toParams.lang != welcomePageLanguage
           # if toState is a language welcome page and a different lang is set in the
           # params, reload the welcome page with the matching lang param. even though
           # toParams.lang doesn't determine the language set on a welcome page, we
           # still want the URL to appear consistent, e.g. the Spanish welcome page
           # path should always be 'es/welcome-spanish'
           e.preventDefault()
-          $state.go(toState.name, {lang: language})
-      else
-        language = if toParams.lang == 'zh' then 'zh-TW' else toParams.lang
-
-      GoogleTranslateService.loadAPI().then ->
-        GoogleTranslateService.setLanguage(language)
+          $state.go(toState.name, {lang: welcomePageLanguage})
 
       if (!fromState.name)
         # fromState.name being empty means the user just arrived at DAHLIA
@@ -80,14 +77,12 @@
           else 'Landing Page to Application Start'
         AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
 
-      signingOut = toState.name.match(/sign\-in/) && toParams.signedOut
-
       if ShortFormApplicationService.hittingBackFromConfirmation(fromState, toState)
         # the redirect will trigger $stateChangeStart again and will popup the confirmation alert
         e.preventDefault()
         $state.go('dahlia.listing', {id: ShortFormApplicationService.listing.listingID})
 
-      else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState)) && !signingOut
+      else if (ShortFormApplicationService.isLeavingShortForm(toState, fromState))
         content =
           title: $translate.instant('T.LEAVE_YOUR_APPLICATION')
           cancel: $translate.instant('T.STAY')
@@ -154,27 +149,52 @@
         if !ShortFormApplicationService.authorizedToProceed(toState, fromState, toSection)
           e.preventDefault()
           return $state.go('dahlia.short-form-application.name', toParams)
+
       # remember which page of short form we're on when we go to create account
-      if (fromState.name.indexOf('short-form-application') >= 0 &&
-        fromState.name != 'dahlia.short-form-application.confirmation' &&
-        toState.name == 'dahlia.short-form-application.create-account' &&
-        fromState.name != 'dahlia.short-form-application.sign-in')
+      # to save and finish later
+      if (toState.name == 'dahlia.short-form-application.create-account' &&
+        fromState.name.indexOf('short-form-application') >= 0 &&
+        ! _.includes([
+            'dahlia.short-form-application.confirmation',
+            'dahlia.short-form-application.sign-in',
+            'dahlia.short-form-application.choose-applicant-details',
+          ],
+          fromState.name
+        ))
           AccountService.rememberShortFormState(fromState.name)
+
       if (fromState.name == 'dahlia.short-form-application.confirmation')
         # clear out remembered state when coming from confirmation
         AccountService.rememberShortFormState(null)
-      if (toState.name == 'dahlia.short-form-application.review-sign-in')
-        # always remember the review-sign-in page when we go to it (mainly for supporting "forgot pw")
-        AccountService.rememberShortFormState(toState.name)
-      if (fromState.name == 'dahlia.short-form-review' && toState.name != 'dahlia.short-form-review')
-        # Clear out application when leaving the application review page, unless going to
-        # the review page (e.g. when switching languages on that page). We used to have this
-        # in the dahlia.short-form-review state's onExit, but that caused a problem when going
-        # from that state to itself. onExit gets called after the next state is already
-        # entered and resolving, so clearing the application in onExit was wiping out the
-        # application data we just loaded in the dahlia.short-form-review state's resolve.
-        ShortFormApplicationService.resetApplicationData()
 
+      if (toState.name == 'dahlia.short-form-application.welcome-back')
+        # always remember the welcome-back page when we go to it (mainly for supporting "forgot pw")
+        AccountService.rememberShortFormState(toState.name)
+
+      if (fromState.name == 'dahlia.short-form-application.choose-applicant-details' &&
+         toState.name == 'dahlia.short-form-application.create-account')
+        AccountService.showChooseDiffEmailMessage = true
+        # continuing with application goes to name page to show user that application name/dob/email
+        # are replaced with new account settings
+        AccountService.rememberShortFormState('dahlia.short-form-application.name')
+      else
+        AccountService.showChooseDiffEmailMessage = false
+
+      if (fromState.name == 'dahlia.short-form-review' &&
+        toState.name != 'dahlia.short-form-review')
+          # Clear out application when leaving the application review page, unless going to
+          # the review page (e.g. when switching languages on that page). We used to have this
+          # in the dahlia.short-form-review state's onExit, but that caused a problem when going
+          # from that state to itself. onExit gets called after the next state is already
+          # entered and resolving, so clearing the application in onExit was wiping out the
+          # application data we just loaded in the dahlia.short-form-review state's resolve.
+          ShortFormApplicationService.resetApplicationData()
+
+      ExternalTranslateService.setLanguage(toParams.lang)
+      ExternalTranslateService.loadAPI().then ->
+        # Wait until $digest is finished and all content on page has been updated
+        # before triggering automated translation
+        $timeout(ExternalTranslateService.translatePageContent, 0, false)
 
     $rootScope.$on '$viewContentLoaded', ->
       # Utility function to scroll to top of page when state changes
@@ -189,6 +209,7 @@
           SharedService.focusOn('main-content')
         else
           SharedService.focusOnBody()
+      , 0, false
 
     $rootScope.$on '$stateChangeError', (e, toState, toParams, fromState, fromParams, error) ->
       # always stop the loading overlay

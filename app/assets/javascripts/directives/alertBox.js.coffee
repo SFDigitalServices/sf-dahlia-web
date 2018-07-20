@@ -13,6 +13,8 @@ angular.module('dahlia.directives')
     info: '=?'
     shortForm: '=?'
     eligibilityErrors: '=?'
+    # shortEligibilityError is used by choose-applicant-details page
+    shortEligibilityError: '=?'
 
   templateUrl: 'directives/alert-box.html'
 

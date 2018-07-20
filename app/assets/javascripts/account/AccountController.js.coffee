@@ -11,6 +11,7 @@ AccountController = (
   inputMaxLength
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
+  $scope.showChooseDiffEmailMessage = AccountService.showChooseDiffEmailMessage
   $scope.form = { current: {} }
   # userAuth is used as model for inputs in create-account form
   $scope.userAuth = AccountService.userAuth
@@ -110,15 +111,9 @@ AccountController = (
         if success
           form.$setUntouched()
           form.$setPristine()
-          # user signs in and saves an application
-          if $scope.userInShortFormSession()
-            ShortFormApplicationService.signInSubmitApplication(
-              loggedInUser: AccountService.loggedInUser
-              submitCallback: (changed) ->
-                $state.go('dahlia.my-applications', {skipConfirm: true, infoChanged: changed})
-            )
+
           # if user hasn't started the application at all and signs in from welcome page
-          else if $state.params.fromShortFormIntro
+          if $state.params.fromShortFormIntro
             $state.go('dahlia.short-form-welcome.intro', {id: ShortFormApplicationService.listing.Id})
           else if $state.current.name == 'dahlia.continue-draft-sign-in'
             $state.go('dahlia.short-form-application.name', id: $state.params.listing_id)
@@ -190,6 +185,9 @@ AccountController = (
   $scope.confirmEmailExpiredMessage = ->
     interpolate = { email: $scope.createdAccount.email }
     $translate.instant('CONFIRM_ACCOUNT.EXPIRED_EMAIL_SENT_TO', interpolate)
+
+  $scope.chooseDifferentEmailMessage = ->
+    $translate.instant('CREATE_ACCOUNT.CHOOSE_DIFF_EMAIL')
 
   $scope.resendConfirmationEmail = ->
     $scope.resendDisabled = true

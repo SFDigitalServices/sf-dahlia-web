@@ -24,4 +24,5 @@ angular.module('dahlia.directives')
       if usedBrowserNavigation && prevPosition
         $timeout ->
           $window.scrollTo prevPosition[0], prevPosition[1]
+        , 0, false
 ]

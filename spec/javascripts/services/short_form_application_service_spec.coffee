@@ -260,7 +260,6 @@ do ->
         expect(ShortFormApplicationService.preferences.liveInSf_household_member).toEqual 2
         expect(fakeFileUploadService.deletePreferenceFile).not.toHaveBeenCalled()
 
-
     describe 'refreshPreferences', ->
       beforeEach ->
         setupFakeApplicant()
@@ -397,6 +396,13 @@ do ->
       describe 'applicant doesn\'t match neighborhood preference', ->
         beforeEach ->
           ShortFormApplicationService.applicant.preferenceAddressMatch = 'Not Matched'
+
+        it 'returns array without applicant', ->
+          expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
+
+      describe "applicant's address wasn't able to be matched on neighborhood preference", ->
+        beforeEach ->
+          ShortFormApplicationService.applicant.preferenceAddressMatch = ''
 
         it 'returns array without applicant', ->
           expect(ShortFormApplicationService.liveInTheNeighborhoodMembers().length).toEqual(0)
@@ -575,7 +581,6 @@ do ->
           ShortFormApplicationService.applicant = fakeApplicant
           expect(ShortFormApplicationService.showPreference('workInSf')).toEqual true
 
-
     describe 'authorizedToProceed', ->
       it 'always allows you to access first page of You section', ->
         toState = {name: 'dahlia.short-form-application.name'}
@@ -730,6 +735,80 @@ do ->
           ShortFormApplicationService.importUserData(loggedInUser)
           expect(ShortFormApplicationService.application.preferences.liveInSf_household_member)
             .toEqual(1)
+
+    describe 'afterGeocode', ->
+      beforeEach ->
+        setupFakeApplicant()
+        ShortFormApplicationService.applicant = fakeApplicant
+        setupFakeHouseholdMember()
+        ShortFormApplicationService.householdMember = fakeHouseholdMember
+      afterEach ->
+        resetFakePeople()
+
+      callback = ->
+      member = null
+
+      _.each(['applicant', 'householdMember'], (memberType) ->
+        isPrimary = memberType == 'applicant'
+
+        describe "when the #{memberType} is indicated", ->
+          beforeEach ->
+            member = ShortFormApplicationService[memberType]
+
+          describe 'when the given response is empty', ->
+            it "sets the #{memberType}'s geocodingData to null", ->
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(member.geocodingData).toEqual null
+
+            it "sets the #{memberType}'s preferenceAddressMatch to null", ->
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(member.preferenceAddressMatch).toEqual null
+
+          describe 'when the given response has data', ->
+            it "sets the #{memberType}'s geocodingData to the response GIS data", ->
+              response = {gis_data: {foo: 'bar'}}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.geocodingData).toEqual response.gis_data
+
+            it "sets the #{memberType}'s preferenceAddressMatch to the right string value", ->
+              response = {gis_data: boundary_match: true}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual 'Matched'
+
+              response = {gis_data: boundary_match: false}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual 'Not Matched'
+
+              response = {gis_data: boundary_match: null}
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, response)
+              expect(member.preferenceAddressMatch).toEqual ''
+
+          it "calls Service.clearAddressRelatedProofForMember with the #{memberType}", ->
+            spyOn(ShortFormApplicationService, 'clearAddressRelatedProofForMember')
+            ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+            expect(ShortFormApplicationService.clearAddressRelatedProofForMember).toHaveBeenCalledWith(member)
+
+          if isPrimary
+            it 'calls Service.copyNeighborhoodMatchToHousehold', ->
+              spyOn(ShortFormApplicationService, 'copyNeighborhoodMatchToHousehold')
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(ShortFormApplicationService.copyNeighborhoodMatchToHousehold).toHaveBeenCalled()
+          else
+            it 'calls Service.addHouseholdMember with the householdMember', ->
+              spyOn(ShortFormApplicationService, 'addHouseholdMember')
+              ShortFormApplicationService.afterGeocode(isPrimary, callback, {})
+              expect(ShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(member)
+      )
+
+      it 'calls Service.refreshPreferences with "all"', ->
+        spyOn(ShortFormApplicationService, 'refreshPreferences')
+        ShortFormApplicationService.afterGeocode(false, callback, {})
+        expect(ShortFormApplicationService.refreshPreferences).toHaveBeenCalledWith('all')
+
+      it 'calls the given callback function', ->
+        callback = jasmine.createSpy()
+        ShortFormApplicationService.afterGeocode(true, callback, {})
+        expect(callback).toHaveBeenCalled()
 
     describe 'clearPhoneData', ->
       describe 'type is alternate', ->
@@ -916,6 +995,20 @@ do ->
 
         ShortFormApplicationService.unsetPreferenceFields('displaced')
         expect(ShortFormApplicationService.preferences.displaced_certificateNumber)
+          .toEqual null
+
+      it 'should clear preference address fields', ->
+        ShortFormApplicationService.preferences.aliceGriffith_address =
+          {
+            address1: '1234 Main St'
+            address2: 'Apt 3'
+            city: 'San Francisco'
+            state: 'CA'
+            zip: '94114'
+          }
+
+        ShortFormApplicationService.unsetPreferenceFields('aliceGriffith')
+        expect(ShortFormApplicationService.preferences.aliceGriffith_address)
           .toEqual null
 
     describe 'cancelOptOut', ->
@@ -1122,48 +1215,6 @@ do ->
         ShortFormApplicationService.invalidateCurrentSectionIfIncomplete()
         expect(ShortFormApplicationService.application.completedSections['You']).toEqual(true)
 
-    describe 'signInSubmitApplication', ->
-      beforeEach ->
-        ShortFormApplicationService.application = fakeShortForm
-        setupFakeApplicant()
-      afterEach ->
-        resetFakePeople()
-
-      it 'sends you to the already submitted confirmation if you already submitted', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeSalesforceApplication
-        ShortFormApplicationService.application.status = 'submitted'
-        ShortFormApplicationService.signInSubmitApplication()
-        httpBackend.flush()
-        stateOpts =
-          skipConfirm: true
-          alreadySubmittedId: fakeSalesforceApplication.application.id
-          doubleSubmit: true
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', stateOpts)
-
-      it 'sends you to choose account settings if they were different', ->
-        opts =
-          type: 'review-sign-in'
-          loggedInUser:
-            firstName: 'Mister'
-            lastName: 'Tester'
-          submitCallback: jasmine.createSpy()
-        ShortFormApplicationService.application.status = 'draft'
-        stubAngularAjaxRequest httpBackend, requestURL, {}
-        ShortFormApplicationService.signInSubmitApplication(opts)
-        httpBackend.flush()
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-account-settings')
-
-    describe '_signInAndSkipSubmit', ->
-      it 'checks if you\'ve already submitted', ->
-        fakePrevApplication = { status: 'submitted', id: '123' }
-        params = {skipConfirm: true, alreadySubmittedId: fakePrevApplication.id, doubleSubmit: false}
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
-        expect($state.go).toHaveBeenCalledWith('dahlia.my-applications', params)
-      it 'sends you to choose draft', ->
-        fakePrevApplication = { status: 'draft' }
-        ShortFormApplicationService._signInAndSkipSubmit(fakePrevApplication)
-        expect($state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
-
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'returns true with lease and rent file', ->
         ShortFormApplicationService.application.preferences =
@@ -1263,3 +1314,66 @@ do ->
         }
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
         expect(pct).toEqual 60
+
+    describe 'memberAgeOnForm', ->
+      it 'calls Service.memberDOBMoment with the given member string', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment')
+        member = 'householdMember'
+        ShortFormApplicationService.memberAgeOnForm(member)
+        expect(ShortFormApplicationService.memberDOBMoment).toHaveBeenCalledWith(member)
+
+      it 'returns undefined if Service.memberDOBMoment returns a falsey value', ->
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(null)
+        age = ShortFormApplicationService.memberAgeOnForm()
+        expect(age).toBeUndefined()
+
+      it 'returns an integer representing the age of the member based on the DOB value returned by Service.memberDOBMoment', ->
+        dob = moment('01/01/1990', 'DD/MM/YYYY')
+        today = moment()
+        yearsDiffTodayAndDOB = today.diff(dob, 'years')
+
+        spyOn(ShortFormApplicationService, 'memberDOBMoment').and.returnValue(dob)
+        age = ShortFormApplicationService.memberAgeOnForm()
+
+        expect(age).toBe(yearsDiffTodayAndDOB)
+
+    describe 'memberDOBMoment', ->
+      beforeEach ->
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '1990'
+
+      it 'calls Service.DOBValues with the given member string', ->
+        member = 'householdMember'
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({})
+        ShortFormApplicationService.memberDOBMoment(member)
+        expect(ShortFormApplicationService.DOBValues).toHaveBeenCalledWith(member)
+
+      it 'returns false if Service.DOBValues does not return a month value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({day: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if Service.DOBValues does not return a day value', ->
+        spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue({month: 1})
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      it 'returns false if the birth year in the short form is < 1900', ->
+        ShortFormApplicationService.form.applicationForm =
+          date_of_birth_year:
+            $viewValue: '01/01/1899'
+        result = ShortFormApplicationService.memberDOBMoment()
+        expect(result).toBe(false)
+
+      describe 'if Service.DOBValues returns a month and a day, and the birth year in the short form is >= 1900', ->
+        it 'returns a moment object representing the member DOB, constructed using the month and
+            day returned by Service.DOBValues and the year from the short form', ->
+          year = ShortFormApplicationService.form.applicationForm.date_of_birth_year.$viewValue
+          values = {month: 1, day: 1}
+          dobMoment = moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+          spyOn(ShortFormApplicationService, 'DOBValues').and.returnValue(values)
+          result = ShortFormApplicationService.memberDOBMoment()
+
+          expect(result).toEqual(dobMoment)

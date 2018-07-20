@@ -5,7 +5,12 @@ angular.module('dahlia.directives')
   templateUrl: 'short-form/directives/address-verification-form.html'
 
   link: (scope, elem, attrs) ->
-    scope.user = scope[attrs.user] if attrs.user
+    # scope.user holds data for interacting with forms,
+    # including preference data in this case
+    if attrs.user
+      scope.user = scope[attrs.user]
+    else if attrs.preference
+      scope.user = scope.application.preferences["#{attrs.preference}_address"]
     # NOTE: currently assumes "home" and not "mailing" address since that's all we're using
     scope.user.confirmed_home_address = null
     scope.ngHref = $state.href(attrs.editPath)

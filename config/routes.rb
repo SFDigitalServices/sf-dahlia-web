@@ -45,12 +45,13 @@ Rails.application.routes.draw do
         # address validation
         post 'validate' => 'address_validation#validate'
         # address geocoding
-        post 'geocode' => 'geocoding#geocode'
+        post 'gis-data' => 'gis#gis_data'
       end
       scope '/account' do
         get 'my-applications' => 'account#my_applications'
         put 'update' => 'account#update'
         get 'confirm' => 'account#confirm'
+        get 'check-account' => 'account#check_account'
       end
     end
   end

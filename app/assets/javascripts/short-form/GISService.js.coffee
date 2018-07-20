@@ -2,34 +2,29 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-GeocodingService = ($http, ShortFormDataService) ->
+GISService = ($http, ShortFormDataService) ->
   Service = {}
-  Service.preferenceAddressMatch = null
 
-  Service.geocode = (options) ->
-    Service.preferenceAddressMatch = null
+  Service.getGISData = (options) ->
+    # pick out only the data we need send to the geocoder and format it
     ['member', 'applicant'].forEach (user) ->
       options[user].dob = ShortFormDataService.formatUserDOB(options[user])
       options[user] = _.pick options[user], ['firstName', 'lastName', 'dob']
     options.address = _.pick options.address, ['address1', 'city', 'state', 'zip']
-    options.listing = _.pick options.listing, ['Id', 'Name', 'Project_ID']
+    options.listing = _.pick options.listing, ['Id', 'Name']
+
     params = {
       address: options.address
       listing: options.listing
+      project_id: options.projectId
       # member, applicant sent over for logging purposes
       member: options.member
       applicant: options.applicant
-      has_nrhp_adhp: options.has_nrhp_adhp
     }
-    member = options.member
-    $http.post('/api/v1/addresses/geocode.json', params).success((data, status, headers, config) ->
-      # append preferenceAddressMatch data to member
-      # 'Matched' and 'Not Matched' correspond with what gets stored in Salesforce
-      match = if data.geocoding_data.boundary_match then 'Matched' else 'Not Matched'
-      Service.preferenceAddressMatch = match
-      return data
-    ).error( (data, status, headers, config) ->
-      Service.preferenceAddressMatch = 'Not Matched'
+
+    $http.post('/api/v1/addresses/gis-data.json', params).then(
+      (response) -> response.data, # success
+      (response) -> {gis_data: {boundary_match: null}} # error - return empty data
     )
 
   return Service
@@ -38,8 +33,8 @@ GeocodingService = ($http, ShortFormDataService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-GeocodingService.$inject = ['$http', 'ShortFormDataService']
+GISService.$inject = ['$http', 'ShortFormDataService']
 
 angular
   .module('dahlia.services')
-  .service('GeocodingService', GeocodingService)
+  .service('GISService', GISService)

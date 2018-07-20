@@ -1,6 +1,6 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingService, ShortFormDataService, AddressValidationService, GeocodingService,
+  ListingService, ShortFormDataService, AddressValidationService, GISService,
   AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
@@ -17,6 +17,7 @@ ShortFormApplicationService = (
   Service.application = {}
   Service._householdEligibility = {}
   Service.activeSection = {}
+  Service.eligibilityErrors = []
   emptyAddress = { address1: null, address2: "", city: null, state: null, zip: null }
   Service.applicationDefaults =
     id: null
@@ -45,6 +46,7 @@ ShortFormApplicationService = (
       neighborhoodResidence: null
       assistedHousing: null
       rentBurden: null
+      aliceGriffith: null
       optOut: {}
       documents:
         rentBurden: {}
@@ -69,11 +71,17 @@ ShortFormApplicationService = (
       Preferences: {}
       Review: {}
     # for storing last page of your draft, to return to. default to first page
-    lastPage: 'dahlia.short-form-application.name'
+    lastPage: 'name'
+    # for storing any applicant info that we are about to override, for comparison
+    overwrittenApplicantInfo: {}
 
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
+
+  Service.applicantAccountFields = [
+    'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
+  ]
 
   Service.latinRegex = new RegExp("^[A-z0-9\u00C0-\u017E\\s'\.,-\/\+#%$:=\-_`~()]+$")
 
@@ -154,12 +162,20 @@ ShortFormApplicationService = (
   Service.storeLastPage = (stateName) ->
     lastPage = _.replace(stateName, 'dahlia.short-form-application.', '')
     # don't save the fact that we landed on "choose-xxx" pages
-    return if _.includes(['choose-draft', 'choose-account-settings'], lastPage)
+    return if _.includes([
+        'choose-draft',
+        'choose-applicant-details',
+        'continue-previous-draft',
+        'welcome-back',
+        'sign-in',
+      ], lastPage)
     # don't save the fact that we're in the middle of verifying address, can end up in a weird state
     if lastPage == 'verify-address'
       lastPage = 'contact'
     else if lastPage == 'household-member-verify-address'
       lastPage = 'household-members'
+    else if lastPage == 'alice-griffith-verify-address'
+      lastPage = 'alice-griffith-preference'
     Service.application.lastPage = lastPage
 
   Service.copyHomeToMailingAddress = ->
@@ -219,16 +235,18 @@ ShortFormApplicationService = (
     # list of all householdMembers minus the cancelled one
     householdMembers = Service.householdMembers.filter (m) ->
       (m != Service.householdMember && m.id != Service.householdMember.id)
-    # search through all xxx_household_member items in preferences marked for this member
-    _.each Service.preferences, (v,k) ->
-      if k.indexOf('_household_member') > 0 and v == Service.householdMember.id
-        preference = k.split('_household_member')[0]
-        Service.cancelPreference(preference)
-
+    Service.cancelPreferencesForMember(Service.householdMember.id)
     # persist the changes to Service.householdMembers
     Service.resetHouseholdMember()
     angular.copy(householdMembers, Service.householdMembers)
     Service.invalidateHouseholdForm()
+
+  Service.cancelPreferencesForMember = (memberId) ->
+    # search through all xxx_household_member items in preferences marked for this member
+    _.each Service.preferences, (value, key) ->
+      if key.indexOf('_household_member') > 0 and value == memberId
+        preference = key.split('_household_member')[0]
+        Service.cancelPreference(preference)
 
   Service.copyNeighborhoodMatchToHousehold = ->
     Service.householdMembers.forEach( (member) ->
@@ -236,7 +254,6 @@ ShortFormApplicationService = (
         # copy applicant's preferenceAddressMatch to householdMember
         member.preferenceAddressMatch = Service.applicant.preferenceAddressMatch
     )
-
 
   # this function sets up Service.groupedHouseholdAddresses which is used by Rent Burden preference
   # - gets called onEnter of household-monthly-rent
@@ -326,6 +343,8 @@ ShortFormApplicationService = (
       FileUploadService.deletePreferenceFile(preference, Service.listing.Id)
       if preference == 'certOfPreference' || preference == 'displaced'
         Service.preferences["#{preference}_certificateNumber"] = null
+      if Service.preferences["#{preference}_address"]
+        Service.preferences["#{preference}_address"] = null
 
   Service.cancelOptOut = (preference) ->
     Service.application.preferences.optOut[preference] = false
@@ -462,19 +481,8 @@ ShortFormApplicationService = (
     # JS concat creates a new array (does not modify HH member array)
     Service.application.householdMembers.concat([Service.applicant])
 
-  Service.memberAge = (member) ->
-    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
-    age = moment().diff(dob, 'years')
-    age
-
-  Service.maxHouseholdAge = ->
-    _.max(_.map(Service.fullHousehold(), Service.memberAge))
-
   Service.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
-
-  Service.listingHasNRHP_or_ADHP = ->
-    Service.listingHasPreference('neighborhoodResidence') || Service.listingHasPreference('antiDisplacement')
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
@@ -582,19 +590,29 @@ ShortFormApplicationService = (
       stateName = stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
       # special case for household-member-form
       return if stateName.match(/household-member-form/)
-      # special case for rentBurden subpages
+      # special case for rentBurdened subpages
       return if stateName.match(/rent-burdened-preference-edit/)
+      # special case for welcome back page
+      return if stateName.match(/welcome-back/)
       isValid = Service.form.applicationForm.$valid
       # special case for contact form
       if stateName.match(/contact/)
         applicant = Service.applicant
-        addressValid = !!applicant.preferenceAddressMatch
+        addressValid = !_.isNil(applicant.preferenceAddressMatch)
         isValid = isValid && addressValid
       Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
     return true unless toState && fromState
-    return false unless Service.userCanAccessSection(toSection.name)
+    if not Service.userCanAccessSection(toSection.name)
+      Raven.captureMessage('User attempted to access unauthorized section', {
+        level: 'warning',
+        extra: {
+          toState: toState.url, fromState: fromState,
+          application: Service.application
+        }
+      })
+      return false
     # they're "jumping ahead" if they're not coming from a short form page or create-account
     # and they're trying to go to a page that's not either the first page, or their stored lastPage
     namePage = 'dahlia.short-form-application.name'
@@ -668,7 +686,7 @@ ShortFormApplicationService = (
     return unless Service.application.validatedForms['Preferences']
     delete Service.application.validatedForms['Preferences']['live-work-preference']
 
-  Service._resetCompletedSections = ->
+  Service.resetCompletedSections = ->
     angular.copy(Service.applicationDefaults.completedSections, Service.application.completedSections)
 
   Service.resetMonthlyRentForm = ->
@@ -723,6 +741,22 @@ ShortFormApplicationService = (
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
 
+    # logging to provide visibility into cases we have been seeing where an
+    # application somehow gets submitted without preferenceAddressMatch set
+    # for primary applicant or a household member
+    if Service.application.status == 'submitted'
+      primaryApplicant = params.application.primaryApplicant
+      if primaryApplicant
+        primaryPrefAddressMatchEmpty = _.isNil(primaryApplicant.preferenceAddressMatch)
+        if primaryPrefAddressMatchEmpty
+          Raven.captureException(new Error('Application submitted without primary applicant preferenceAddressMatch value'))
+
+      householdMembers = params.application.householdMembers
+      unless _.isEmpty(householdMembers)
+        householdPrefAddressMatchEmpty = _.some(householdMembers, (member) -> _.isNil(member.preferenceAddressMatch))
+        if householdPrefAddressMatchEmpty
+          Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
+
     if params.application.id
       # update
       id = params.application.id
@@ -762,51 +796,16 @@ ShortFormApplicationService = (
         Service.loadApplication(data)
     )
 
-  Service.signInSubmitApplication = (opts = {}) ->
-    # check if this user has already applied to this listing
-    Service.getMyApplicationForListing(Service.listing.Id, {forComparison: true}).success((data) ->
-      if !_.isEmpty(data.application) && Service._previousIsSubmittedOrBothDrafts(data.application)
-        # if user already had an application for this listing
-        return Service._signInAndSkipSubmit(data.application)
-      changed = null
-      if Service.application.status.match(/draft/i)
-        if opts.type == 'review-sign-in' && Service.hasDifferentInfo(Service.applicant, opts.loggedInUser)
-          return $state.go('dahlia.short-form-application.choose-account-settings')
-        else
-          # make sure short form data inherits logged in user data
-          changed = Service.importUserData(opts.loggedInUser)
-      Service.submitApplication(opts).then( ->
-        opts.submitCallback(changed)
-      )
-    ).error( ->
-      # there was an error retrieving your account info, please try again
-      # TODO: add some helpful message to the user
-      $state.go('dahlia.short-form-application.name', {id: Service.listing.Id})
-    )
-
-  Service._signInAndSkipSubmit = (previousApplication) ->
-    if (previousApplication.status.match(/submitted/i))
-      # they've already submitted -- send them to "my applications", either with:
-      # - alreadySubmitted: "Good news! You already submitted" (if they were trying to save a draft)
-      # - doubleSubmit: "You have already submitted to this account" (if they were trying to submit again)
-      doubleSubmit = !! Service.application.status.match(/submitted/i)
-      $state.go('dahlia.my-applications', {skipConfirm: true, alreadySubmittedId: previousApplication.id, doubleSubmit: doubleSubmit})
-    else
-      # send them to choose which draft they want to keep
-      $state.go('dahlia.short-form-application.choose-draft')
-
-  Service._previousIsSubmittedOrBothDrafts = (previousApplication) ->
-    previousApplication.status.match(/submitted/i) || (
-      previousApplication.status.match(/draft/i) &&
-      Service.application.status.match(/draft/i)
-    )
-
   Service.keepCurrentDraftApplication = (loggedInUser) ->
     Service.importUserData(loggedInUser)
     Service.application.id = Service.accountApplication.id
     # now that we've overridden current application ID with our old one
     # submitApplication() will update our existing draft on salesforce
     Service.submitApplication()
+
+  Service.resetAndReplaceApp = ->
+    Service.resetApplicationData({ id: Service.application.id })
+    $state.go('dahlia.short-form-application.name')
 
   Service.loadApplication = (data) ->
     formattedApp = {}
@@ -853,15 +852,11 @@ ShortFormApplicationService = (
     Service.application.surveyComplete = ShortFormDataService.checkSurveyComplete(Service.applicant)
 
   Service.importUserData = (loggedInUser) ->
-    fields = [
-      'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
-    ]
-    userData = _.pick(loggedInUser, fields)
-    original = angular.copy(Service.applicant)
+    accountData = _.pick(loggedInUser, Service.applicantAccountFields)
+    applicant = angular.copy(Service.applicant)
     # merge the data into applicant
-    _.merge Service.applicant, userData
-    changed = !_.isEqual(Service.applicant, original)
-    Service._mapPrimaryApplicantPreferences(original, userData) if changed
+    _.merge Service.applicant, accountData
+    changed = !_.isEqual(Service.applicant, applicant)
     # return T/F if data was changed or not
     return changed
 
@@ -875,66 +870,120 @@ ShortFormApplicationService = (
     applicantData.DOB = ShortFormDataService.formatUserDOB(applicant)
     !_.isEqual(userData, applicantData)
 
-  Service._mapPrimaryApplicantPreferences = (original, userData) ->
-    originalFullName = original.firstName + " " + original.lastName
-    _.forEach Service.application.preferences, (value, key) ->
-      if value == originalFullName
-        Service.application.preferences[key] = userData.firstName + " " + userData.lastName
-      return
-
   ####### Address validation functions
   Service.validateApplicantAddress = (callback) ->
-    # validate + geocode address
-    # errors are handled in the controller
-    afterGeocode = (response) ->
-      Service.applicant.geocodingData = response.geocoding_data
-      Service.applicant.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
-      Service.copyNeighborhoodMatchToHousehold()
-      # check if eligibility has changed
-      Service.refreshPreferences('all')
-      Service.clearAddressRelatedProofForMember(Service.applicant)
-      callback()
+    # address validation errors are handled in the Rails controller
     AddressValidationService.validate(
       address: Service.applicant.home_address
       type: 'home'
     ).success( ->
       Service.copyHomeToMailingAddress()
-      GeocodingService.geocode(
+      # gis data errors are handled in the Rails controller
+      GISService.getGISData(
         address: Service.applicant.home_address
         member: Service.applicant
         applicant: Service.applicant
         listing: Service.listing
-        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
-      ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be 'Not Matched', but at least you can proceed.
-      .error(afterGeocode)
+        projectId: Service.getProjectIdForBoundaryMatching()
+      ).then(
+        Service.afterGeocode.bind(null, true, callback)
+      ).catch(
+        Service.afterGeocode.bind(null, true, callback)
+      )
     )
 
   Service.validateHouseholdMemberAddress = (callback) ->
-    # validate + geocode address
-    # errors are handled in the controller
-    afterGeocode = (response) ->
-      Service.householdMember.geocodingData = response.geocoding_data
-      Service.householdMember.preferenceAddressMatch = GeocodingService.preferenceAddressMatch
-      Service.addHouseholdMember(Service.householdMember)
-      # check if eligibility has changed
-      Service.refreshPreferences('all')
-      Service.clearAddressRelatedProofForMember(Service.householdMember)
-      callback()
+    # address validation errors are handled in the Rails controller
     AddressValidationService.validate(
       address: Service.householdMember.home_address
       type: 'home'
     ).success( ->
-      GeocodingService.geocode(
+      # gis data errors are handled in the Rails controller
+      GISService.getGISData(
         address: Service.householdMember.home_address
         member: Service.householdMember
         applicant: Service.applicant
         listing: Service.listing
-        has_nrhp_adhp: Service.listingHasNRHP_or_ADHP()
-      ).success(afterGeocode)
-      # if there is an error then preferenceAddressMatch will be 'Not Matched' but at least you can proceed.
-      .error(afterGeocode)
+        projectId: Service.getProjectIdForBoundaryMatching()
+      ).then(
+        Service.afterGeocode.bind(null, false, callback)
+      ).catch(
+        Service.afterGeocode.bind(null, false, callback)
+      )
     )
+
+  # this will only return true if the senior requirement is "everyone",
+  # meaning the primary applicant *must* be a senior
+  Service.applicantDoesNotMeetSeniorRequirements = (member = 'applicant') ->
+    listing = Service.listing
+    requirement = listing.Reserved_Community_Requirement || ''
+    reservedType = listing.Reserved_community_type || ''
+    if _.isString(member)
+      # are we evaluating a form value
+      age = Service.memberAgeOnForm(member)
+    else
+      # or evaluating an appMember object
+      age = Service.memberAge(member)
+    !!reservedType.match(/senior/i) && !!requirement.match(/entire household/i) &&
+      age < listing.Reserved_community_minimum_age
+
+  Service.addSeniorEligibilityError = ->
+    age = { minAge: Service.listing.Reserved_community_minimum_age }
+    Service.eligibilityErrors.push($translate.instant('ERROR.SENIOR_EVERYONE', age))
+
+  Service.memberAge = (member) ->
+    dob = moment("#{member.dob_year}-#{member.dob_month}-#{member.dob_day}", 'YYYY-MM-DD')
+    age = moment().diff(dob, 'years')
+    age
+
+  Service.maxHouseholdAge = ->
+    _.max(_.map(Service.fullHousehold(), Service.memberAge))
+
+  # different function from memberAge above, this is used for validating what has
+  # been typed into the form, vs. what is stored in an application member object
+  Service.memberAgeOnForm = (member = 'applicant') ->
+    dob = Service.memberDOBMoment(member)
+    return unless dob
+    moment().diff(dob, 'years')
+
+  Service.memberDOBMoment = (member = 'applicant') ->
+    values = Service.DOBValues(member)
+    form = Service.form.applicationForm
+    # have to grab viewValue because if the field is in error state the model will be undefined
+    year = parseInt(form['date_of_birth_year'].$viewValue)
+    return false unless values.month && values.day && year >= 1900
+    moment("#{year}-#{values.month}-#{values.day}", 'YYYY-MM-DD')
+
+  Service.DOBValues = (member = 'applicant') ->
+    {
+      month: parseInt(Service[member].dob_month)
+      day: parseInt(Service[member].dob_day)
+      year: parseInt(Service[member].dob_year)
+    }
+
+  Service.afterGeocode = (isPrimary, callback, response) ->
+    member = if isPrimary then Service.applicant else Service.householdMember
+
+    if _.isEmpty(response) || _.isEmpty(response.gis_data)
+      member.geocodingData = null
+      member.preferenceAddressMatch = null
+    else
+      member.geocodingData = response.gis_data
+      match = switch response.gis_data.boundary_match
+        when null then ''
+        when true then 'Matched'
+        when false then 'Not Matched'
+      member.preferenceAddressMatch = match
+
+    if isPrimary
+      Service.copyNeighborhoodMatchToHousehold()
+    else
+      Service.addHouseholdMember(member)
+
+    # check if eligibility has changed
+    Service.refreshPreferences('all')
+    Service.clearAddressRelatedProofForMember(member)
+    callback()
 
   Service.applicationWasSubmitted = (application = Service.application) ->
     # from the user's perspective, "Removed" applications should look the same as "Submitted" ones
@@ -967,6 +1016,9 @@ ShortFormApplicationService = (
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
 
+  Service.getProjectIdForBoundaryMatching = ->
+    ListingService.getProjectIdForBoundaryMatching(Service.listing)
+
   Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
 
   # TODO: -- REMOVE HARDCODED FEATURES --
@@ -981,7 +1033,7 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ShortFormDataService',
-  'AddressValidationService', 'GeocodingService',
+  'AddressValidationService', 'GISService',
   'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 

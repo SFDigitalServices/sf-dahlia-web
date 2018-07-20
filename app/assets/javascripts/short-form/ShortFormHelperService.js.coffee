@@ -90,6 +90,16 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Screenshot of online payment', t('LABEL.PROOF.ONLINE_PAYMENT')]
   ]
 
+  Service.preference_proof_options_alice_griffith = [
+    ['Letter from SFHA verifying address', t('LABEL.PROOF.SFHA_LETTER')]
+    ['CA ID or Driver\'s License', t('LABEL.PROOF.CA_LICENSE')]
+    ['Telephone bill (landline only)', t('LABEL.PROOF.TELEPHONE_BILL')]
+    ['Cable and internet bill', t('LABEL.PROOF.CABLE_BILL')]
+    ['Paystub (listing home address)', t('LABEL.PROOF.PAYSTUB_HOME')]
+    ['Public benefits record', t('LABEL.PROOF.PUBLIC_BENEFITS')]
+    ['School record', t('LABEL.PROOF.SCHOOL_RECORD')]
+  ]
+
   Service.priority_options = [
     ['Mobility impaired', t('LABEL.MOBILITY_IMPAIRMENTS')]
     ['Vision impaired', t('LABEL.VISION_IMPAIRMENTS')]
@@ -119,9 +129,10 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
         Service.preference_proof_options_live
       when 'rentBurden'
         Service.preference_proof_options_rent_burden
+      when 'aliceGriffith'
+        Service.preference_proof_options_alice_griffith
       else
         Service.preference_proof_options_default
-
 
   ## Review Page helpers
   Service.alternateContactRelationship = (alternateContact) ->
@@ -187,14 +198,18 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     return '' unless certificateNumber
     $translate.instant('LABEL.CERTIFICATE_NUMBER') + ': ' + certificateNumber
 
-  Service.translateLoggedInMessage = (page) ->
+  Service.translateLoggedInMessage = (args) ->
     accountSettings =  $translate.instant('ACCOUNT_SETTINGS.ACCOUNT_SETTINGS')
     link = $state.href('dahlia.account-settings')
     markup = null
-    if page == 'b1-name'
+    if args.page == 'b1-name' && args.infoChanged
+      nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
+      detailsUpdated = $translate.instant('B1_NAME.APP_DETAILS_UPDATED')
+      markup = "#{detailsUpdated} #{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
+    if args.page == 'b1-name' && !args.infoChanged
       nameEditable = $translate.instant('B1_NAME.NAME_EDITABLE_VIA')
       markup = "#{nameEditable} <a href='#{link}'>#{accountSettings}</a>"
-    else if page == 'b2-contact'
+    else if args.page == 'b2-contact'
       nameEditable = $translate.instant('B2_CONTACT.EMAIL_EDITABLE_VIA')
       markup = "#{nameEditable} <a class='lined' href='#{link}'>#{accountSettings}</a>"
     return $sce.trustAsHtml(markup)

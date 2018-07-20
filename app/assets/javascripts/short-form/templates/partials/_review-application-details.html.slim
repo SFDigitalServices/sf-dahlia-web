@@ -2,10 +2,36 @@
 review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-application.name"
 
 .app-inner
-  review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
-    | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
-  review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
-    | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+  / name
+  div ng-if="::atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('name')"
+    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
+      .c-success
+        | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
+      .c-success.info-item_name.sentence.t-normal
+        span.ui-icon.ui-static.ui-small.i-success.padding-right--half
+          svg.i-check
+            use xlink:href="#i-check"
+        | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
+  div ng-if="::!(atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('name'))"
+    review-summary-item label="{{'LABEL.NAME' | translate}}" identifier="full-name"
+      | {{applicant.firstName}} {{applicant.middleName}} {{applicant.lastName}}
+
+
+  / DOB
+  div ng-if="::atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('dob')"
+    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
+      .c-success
+        | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+      .c-success.info-item_name.sentence.t-normal
+        span.ui-icon.ui-static.ui-small.i-success.padding-right--half
+          svg.i-check
+            use xlink:href="#i-check"
+        | {{'LABEL.UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS' | translate}}
+  div ng-if="::!(atContinuePreviousDraft() && continueDraftApplicantHasUpdatedInfo('dob'))"
+    review-summary-item label="{{'LABEL.DOB' | translate}}" identifier="dob"
+      | {{applicant.dob_month}}/{{applicant.dob_day}}/{{applicant.dob_year}}
+
+
   review-summary-item label="{{'LABEL.PHONE' | translate}}" identifier="phone" ng-if="!applicant.noPhone" sub-label="{{applicant.phoneType}}"
     | {{applicant.phone | tel}}
   review-summary-item label="{{'LABEL.ADDITIONAL_PHONE' | translate}}" identifier="alt-phone" sub-label="{{applicant.alternatePhoneType}}" ng-if="!applicant.noPhone && applicant.additionalPhone"
@@ -13,10 +39,11 @@ review-summary-section header="{{'T.YOU' | translate}}" to="dahlia.short-form-ap
   review-summary-item label="{{'LABEL.EMAIL_ADDRESS' | translate}}"  ng-if="!applicant.noEmail" identifier="email"
     | {{applicant.email}}
   review-summary-item label="{{'LABEL.ADDRESS' | translate}}" identifier="home-address"
-    | {{applicant.home_address.address1}}
-    br
-    ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
-    | {{applicant.home_address.zip}}
+    div ng-if="applicant.home_address.address1"
+      | {{applicant.home_address.address1}}
+      br
+      ' {{applicant.home_address.city}}, {{applicant.home_address.state}}
+      | {{applicant.home_address.zip}}
 
   review-summary-item label="{{'LABEL.MAILING_ADDRESS' | translate}}" identifier="mailing-address" ng-if="applicant.hasAltMailingAddress"
     | {{applicant.mailing_address.address1}}

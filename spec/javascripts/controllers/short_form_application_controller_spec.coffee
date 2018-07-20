@@ -23,6 +23,7 @@ do ->
         applicationForm:
           $valid: true
           $setPristine: -> undefined
+      eligibilityErrors: []
       inputInvalid: ->
       listing: fakeListing
       applicant:
@@ -36,12 +37,14 @@ do ->
         optOut: {}
       }
       application:
+        status: 'draft'
         validatedForms:
           You: {}
           Household: {}
           Preferences: {}
           Income: {}
           Review: {}
+        overwrittenApplicantInfo: null
       applicationDefaults:
         applicant:
           home_address: { address1: null, address2: "", city: null, state: null, zip: null }
@@ -78,6 +81,8 @@ do ->
       refreshPreferences: jasmine.createSpy()
       resetPreference: jasmine.createSpy()
       showPreference: jasmine.createSpy()
+      getMyApplicationForListing: ->
+      keepCurrentDraftApplication: ->
       validateHouseholdMemberAddress: ->
         { error: -> null }
       validateApplicantAddress: ->
@@ -96,22 +101,35 @@ do ->
       setApplicationLanguage: jasmine.createSpy()
       claimedCustomPreference: jasmine.createSpy()
       resetApplicationData: ->
+      hasDifferentInfo: ->
+      resetApplicantUserData: jasmine.createSpy()
+      importUserData: jasmine.createSpy()
+      cancelPreferencesForMember: jasmine.createSpy()
+      resetCompletedSections: jasmine.createSpy()
+      applicantDoesNotMeetSeniorRequirements: ->
+      memberAgeOnForm: ->
       isEnteringShortForm: jasmine.createSpy()
       storeLastPage: jasmine.createSpy()
+      addSeniorEligibilityError: jasmine.createSpy()
+      loadApplication: jasmine.createSpy()
+      completeSection: jasmine.createSpy()
     fakeFunctions =
       fakeGetLandingPage: (section, application) ->
         'household-intro'
       fakeIsLoading: -> false
       fakeSubmitOptionsForCurrentPage: -> {}
-    fakeAccountService = {}
     fakeShortFormNavigationService = undefined
     fakeShortFormHelperService =
       fileAttachmentsForRentBurden: jasmine.createSpy()
     fakeAccountService =
+      signIn: ->
+      signOut: ->
       loggedIn: () ->
     fakeListingService = {}
-    fakeAddressValidationService =
+    fakeAddressValidationService = {
+      validate: ->
       validationError: jasmine.createSpy()
+    }
     fakeFileUploadService =
       deletePreferenceFile: jasmine.createSpy()
       deleteRentBurdenPreferenceFiles: ->
@@ -120,6 +138,8 @@ do ->
       preventDefault: ->
     fakeHHOpts = {}
     fakeIncomeOpts = {}
+    $q = undefined
+    $rootScope = undefined
 
     beforeEach module('dahlia.controllers', ($provide) ->
       fakeShortFormNavigationService =
@@ -133,17 +153,23 @@ do ->
       return
     )
 
-    beforeEach inject(($rootScope, $controller, $q, _$document_) ->
+    beforeEach inject((_$rootScope_, $controller, _$q_, _$document_) ->
+      $rootScope = _$rootScope_
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
       fakeTitle = jasmine.createSpyObj('Title', ['restore'])
       state.current = {name: 'dahlia.short-form-welcome.overview'}
       state.params = {}
+      $q = _$q_
 
       deferred = $q.defer()
       deferred.resolve('resolveData')
+      spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
+      spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
       spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
+      spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'validateApplicantAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'validateHouseholdMemberAddress').and.callThrough()
       spyOn(fakeShortFormApplicationService, 'hasHouseholdPublicHousingQuestion').and.callThrough()
@@ -241,10 +267,10 @@ do ->
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.addHouseholdMember).toHaveBeenCalledWith(scope.householdMember)
 
-      describe 'user does not have same address applicant', ->
+      describe 'user does not have same address as applicant', ->
         it 'calls validateHouseholdMemberAddress in ShortFormApplicationService', ->
           scope.householdMember.hasSameAddressAsApplicant = 'No'
-          scope.householdMember.preferenceAddressMatch = false
+          scope.householdMember.preferenceAddressMatch = null
           scope.addHouseholdMember()
           expect(fakeShortFormApplicationService.validateHouseholdMemberAddress).toHaveBeenCalled()
 
@@ -489,10 +515,24 @@ do ->
         expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.live-work-preference')
 
     describe 'checkAfterLiveWork', ->
-      it 'goes to preferences-programs page', ->
-        scope.checkAfterLiveWork()
-        path = 'dahlia.short-form-application.preferences-programs'
-        expect(state.go).toHaveBeenCalledWith(path)
+      describe 'when listing has Alice Griffith preference', ->
+        beforeEach ->
+          spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(true)
+
+        it 'goes to alice-griffith-preference', ->
+          scope.checkAfterLiveWork()
+
+          path = 'dahlia.short-form-application.preferences-programs'
+          expect(state.go).toHaveBeenCalledWith(path)
+
+      describe 'when listing does not have Alice Griffith preference', ->
+        beforeEach ->
+          spyOn(fakeShortFormApplicationService, 'applicationHasPreference').and.returnValue(false)
+
+        it 'goes to preferences-programs page', ->
+          scope.checkAfterLiveWork()
+          path = 'dahlia.short-form-application.preferences-programs'
+          expect(state.go).toHaveBeenCalledWith(path)
 
     describe 'saveAndFinishLater', ->
       describe 'logged in', ->
@@ -532,18 +572,11 @@ do ->
 
     describe 'primaryApplicantUnder18', ->
       it 'checks form values for primary applicant DOB that is under 18', ->
-        year = new Date().getFullYear()
-        scope.form.applicationForm.date_of_birth_year = {$viewValue: year}
-        scope.applicant.dob_month = 1
-        scope.applicant.dob_day = 1
-        scope.applicant.dob_year = year
+        spyOn(fakeShortFormApplicationService, 'memberAgeOnForm').and.returnValue(15)
         expect(scope.primaryApplicantUnder18()).toEqual true
 
       it 'checks form values for primary applicant DOB that is over 18', ->
-        scope.form.applicationForm.date_of_birth_year = {$viewValue: '1995'}
-        scope.applicant.dob_month = 10
-        scope.applicant.dob_day = 10
-        scope.applicant.dob_year = 1995
+        spyOn(fakeShortFormApplicationService, 'memberAgeOnForm').and.returnValue(25)
         expect(scope.primaryApplicantUnder18()).toEqual false
 
     describe 'householdMemberValidAge', ->
@@ -697,3 +730,367 @@ do ->
       it ' calls claimedCustomPreference on ShortFormApplicationService', ->
         scope.claimedCustomPreference()
         expect(fakeShortFormApplicationService.claimedCustomPreference).toHaveBeenCalled()
+
+    describe 'checkAliceGriffithAddress', ->
+      beforeEach ->
+        fakeShortFormApplicationService.preferences.aliceGriffith_address = {
+          address1: '1234 Main St.'
+          address2: 'Apt 3'
+          city: 'San Francisco'
+          state: 'CA'
+          zip: '94114'
+        }
+        spyOn(scope, 'goToAndTrackFormSuccess')
+
+      describe 'when preference not claimed', ->
+        beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = null
+
+        it 'should proceed directly to preferences programs page', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'when preference claimed and address not verified', ->
+        beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = true
+          scope.application.aliceGriffith_address_verified = false
+          scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = false
+
+        it 'should validate Alice Griffith address', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(fakeAddressValidationService.validate).toHaveBeenCalledWith({
+            address: fakeShortFormApplicationService.preferences.aliceGriffith_address
+            type: 'home'
+          })
+
+        it 'should go to verify address page address when verification successful', ->
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(true)
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.alice-griffith-verify-address')
+
+        it 'should display address errors when verification unsuccessful', ->
+          spyOn(scope, 'handleErrorState').and.callThrough()
+
+          deferred = $q.defer()
+          deferred.reject({ status: 422 })
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
+
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(false)
+          expect(scope.addressError).toEqual(true)
+          expect(scope.handleErrorState).toHaveBeenCalled()
+
+
+        it 'should go to preferences programs page when verification errors', ->
+          deferred = $q.defer()
+          deferred.reject({ status: 500 })
+          fakeAddressValidationService.validate.and.returnValue(deferred.promise)
+
+          scope.checkAliceGriffithAddress()
+          $rootScope.$apply()
+
+          expect(scope.application.aliceGriffith_address_verified).toEqual(false)
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+      describe 'when preference claimed and address is already verified', ->
+        beforeEach ->
+          fakeShortFormApplicationService.preferences.aliceGriffith = true
+          scope.application.aliceGriffith_address_verified = true
+          scope.application.validatedForms.Preferences['verify-alice-griffith-address'] = true
+
+        it 'should proceed directly to preferences programs page', ->
+          scope.checkAliceGriffithAddress()
+
+          expect(scope.goToAndTrackFormSuccess)
+            .toHaveBeenCalledWith('dahlia.short-form-application.preferences-programs')
+
+    describe 'chooseDraft', ->
+      beforeEach ->
+        spyOn(scope, 'goToAndTrackFormSuccess')
+
+      describe 'when user has chosen their recent application', ->
+        beforeEach ->
+          scope.chosenApplicationToKeep = 'recent'
+          user = {test: 'test'}
+          fakeAccountService.loggedInUser = user
+
+        describe "when user's account info differs from the applicant info on their recent application", ->
+          it 'sends user to choose application details', ->
+            spyOn(fakeShortFormApplicationService, 'hasDifferentInfo').and.returnValue(true)
+            scope.chooseDraft()
+            expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
+
+        describe "when user's account info is the same as the applicant info on their recent application", ->
+          it 'calls ShortFormApplicationService.keepCurrentDraftApplication with the logged-in user', ->
+            scope.chooseDraft()
+            expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalledWith(fakeAccountService.loggedInUser)
+
+          it 'calls scope.goToAndTrackFormSuccess to go to My Applications, skipping the confirm modal', ->
+            scope.chooseDraft()
+            $rootScope.$apply()
+            expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
+
+      describe 'when user has chosen their saved draft', ->
+        it 'calls scope.goToAndTrackFormSuccess to go to My Applications, skipping the confirm modal', ->
+          scope.chosenApplicationToKeep = 'comparison'
+          scope.chooseDraft()
+          expect(scope.goToAndTrackFormSuccess).toHaveBeenCalledWith('dahlia.my-applications', {skipConfirm: true})
+
+    describe 'chooseApplicantDetails', ->
+      describe 'when user chooses to create account', ->
+        it 'signs out user and sends them to create account page', ->
+          scope.applicant.id = 1
+          scope.chosenAccountOption = 'createAccount'
+          scope.chooseApplicantDetails()
+          scope.$apply()
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
+          expect(fakeShortFormApplicationService.storeLastPage).toHaveBeenCalledWith('name')
+          expect(fakeShortFormApplicationService.cancelPreferencesForMember)
+            .toHaveBeenCalledWith(scope.applicant.id)
+          expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.create-account')
+
+      describe 'when user chooses to continue as guest', ->
+        it 'signs out user and sends them to the last page of the app', ->
+          scope.application.lastPage = 'name'
+          scope.chosenAccountOption = 'continueAsGuest'
+          scope.chooseApplicantDetails()
+          scope.$apply()
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.contact')
+
+      describe 'when user chooses to overwrite account info', ->
+        beforeEach ->
+          fakeAccountService.loggedInUser = {test: 'test'}
+          scope.applicant.id = 1
+          scope.chosenAccountOption = 'overwriteWithAccountInfo'
+          scope.chooseApplicantDetails()
+          scope.$apply()
+
+        it 'calls function to cancel preferences by the member', ->
+          expect(fakeShortFormApplicationService.cancelPreferencesForMember).toHaveBeenCalledWith(1)
+
+        it 'calls function to reset completed sections', ->
+          expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()
+
+        it 'should overwrite previous draft application', ->
+          expect(fakeShortFormApplicationService.keepCurrentDraftApplication).toHaveBeenCalled()
+
+        it 'sends user to name section of the short form', ->
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name')
+
+    describe 'signIn', ->
+      beforeEach ->
+        scope.form.signIn = {
+          $valid: true
+          $setUntouched: ->
+          $setPristine: ->
+        }
+
+      it 'should sign in user', ->
+        scope.signIn()
+        expect(fakeAccountService.signIn).toHaveBeenCalled()
+
+      describe 'when sign in request successful', ->
+        it 'should re-enable submit button and call sign in actions', ->
+          scope.afterSignInWhileApplying = jasmine.createSpy()
+
+          scope.signIn()
+          $rootScope.$apply()
+
+          expect(scope.submitDisabled).toBe(false)
+          expect(scope.afterSignInWhileApplying).toHaveBeenCalled()
+
+      describe 'when sign in request fails', ->
+        it 'should re-enable submit button handle errors', ->
+          scope.handleErrorState = jasmine.createSpy()
+
+          deferred = $q.defer()
+          deferred.reject()
+          fakeAccountService.signIn.and.returnValue(deferred.promise)
+
+          scope.signIn()
+          $rootScope.$apply()
+
+          expect(scope.submitDisabled).toBe(false)
+          expect(scope.handleErrorState).toHaveBeenCalled()
+
+    describe 'afterSignInWhileApplying', ->
+      describe 'when senior requirements AND when account birth date doesn\'t qualify', ->
+        it 'should sign out and redirect ', ->
+          spyOn(fakeShortFormApplicationService,
+            'applicantDoesNotMeetSeniorRequirements').and.returnValue(true)
+
+          scope.afterSignInWhileApplying()
+
+          expect(fakeAccountService.signOut).toHaveBeenCalledWith({ preserveAppData: true })
+          expect(fakeShortFormApplicationService.addSeniorEligibilityError).toHaveBeenCalled()
+          expect(state.go)
+            .toHaveBeenCalledWith('dahlia.short-form-application.choose-applicant-details')
+
+      describe 'when no senior requirements OR account birth date does qualify', ->
+        it 'should load previous application(s)', ->
+          spyOn(fakeShortFormApplicationService,
+            'applicantDoesNotMeetSeniorRequirements').and.returnValue(false)
+          deferred = $q.defer()
+          deferred.resolve()
+          scope.getPrevAppData = jasmine.createSpy().and.returnValue(deferred.promise)
+          scope.reconcilePreviousAppOrSubmit = jasmine.createSpy()
+
+          scope.afterSignInWhileApplying()
+          $rootScope.$apply()
+
+          expect(scope.getPrevAppData).toHaveBeenCalled()
+          expect(scope.reconcilePreviousAppOrSubmit).toHaveBeenCalled()
+
+    describe 'getPrevAppData', ->
+      describe 'when prev app request successful', ->
+        it 'returns response data', ->
+          data = 'my app!'
+          promiseResult = undefined
+          deferred = $q.defer()
+          deferred.resolve({ data })
+          spyOn(fakeShortFormApplicationService, 'getMyApplicationForListing')
+            .and.returnValue(deferred.promise)
+
+          promise = scope.getPrevAppData()
+          promise.then (data) ->
+            promiseResult = data
+          $rootScope.$apply()
+
+          expect(promiseResult).toBe(data)
+
+      describe 'when prev app request fails', ->
+        it 'redirects to name page of application', ->
+          deferred = $q.defer()
+          deferred.reject()
+          spyOn(fakeShortFormApplicationService, 'getMyApplicationForListing')
+            .and.returnValue(deferred.promise)
+          spyOn(window, 'alert')
+
+          scope.getPrevAppData()
+          $rootScope.$apply()
+
+          expect(window.alert).toHaveBeenCalled()
+          expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name',
+            { id: fakeListing.Id })
+
+    describe 'reconcilePreviousAppOrSubmit', ->
+      describe 'when user has previous application', ->
+        describe 'when previous app is submitted', ->
+          appId = '0987654321'
+          previousAppData = {
+            application: {
+              id: appId
+              status: 'submitted'
+            }
+          }
+
+          describe 'when current app is draft', ->
+            it 'should redirect to my applications with already submitted message', ->
+              scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+              expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {
+                skipConfirm: true
+                alreadySubmittedId: appId
+                doubleSubmit: false
+              })
+
+          describe 'when current app is submitted', ->
+            beforeAll ->
+              fakeShortFormApplicationService.application.status = 'submitted'
+
+            afterAll ->
+              fakeShortFormApplicationService.application.status = 'draft'
+
+            it 'should redirect to my application with double submit message', ->
+              scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+              expect(state.go).toHaveBeenCalledWith('dahlia.my-applications', {
+                skipConfirm: true
+                alreadySubmittedId: appId
+                doubleSubmit: true
+              })
+
+      describe 'when previous app is draft', ->
+        previousAppData = {
+          application: {
+            status: 'draft'
+          }
+        }
+
+        describe 'when on welcome back page', ->
+          beforeEach ->
+            state.current.name = 'dahlia.short-form-application.welcome-back'
+
+          afterEach ->
+            state.current.name = 'dahlia.short-form-welcome.overview'
+
+          it 'should replace current app with previous and continue draft', ->
+            scope.replaceAppWithPreviousDraft = jasmine.createSpy()
+
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+            expect(scope.replaceAppWithPreviousDraft).toHaveBeenCalledWith(previousAppData)
+            expect(state.go)
+              .toHaveBeenCalledWith('dahlia.short-form-application.continue-previous-draft')
+
+        describe 'when not on welcome back page', ->
+          beforeEach ->
+            state.current.name = 'dahlia.short-form-application.overview'
+
+          it 'should redirect to choose draft', ->
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+
+            expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.choose-draft')
+
+      describe 'when user does not have previous application', ->
+        previousAppData = {}
+        infoChanged = {
+          firstName: 'Johnny'
+          lastName: 'Appleseed'
+        }
+
+        beforeEach ->
+          fakeShortFormApplicationService.importUserData.and.returnValue(infoChanged)
+
+        describe 'when not on welcome back page', ->
+          it 'submits current app and redirects to my applications', ->
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+            $rootScope.$apply()
+
+            expect(state.go).toHaveBeenCalledWith('dahlia.my-applications',
+              { skipConfirm: true, infoChanged })
+
+        describe 'when on welcome back page', ->
+          beforeEach ->
+            state.current.name = 'dahlia.short-form-application.welcome-back'
+
+          afterEach ->
+            state.current.name = 'dahlia.short-form-welcome.overview'
+
+          it 'redirects to name page', ->
+            scope.reconcilePreviousAppOrSubmit(previousAppData)
+            $rootScope.$apply()
+
+            expect(state.go).toHaveBeenCalledWith('dahlia.short-form-application.name',
+              { infoChanged })
+
+    describe 'replaceAppWithPreviousDraft', ->
+      previousAppData = { id: '0987654321' }
+
+      it 'should load previous app and reset completed sections', ->
+        scope.replaceAppWithPreviousDraft(previousAppData)
+
+        expect(fakeShortFormApplicationService.loadApplication)
+          .toHaveBeenCalledWith(previousAppData)
+        expect(fakeShortFormApplicationService.resetCompletedSections).toHaveBeenCalled()

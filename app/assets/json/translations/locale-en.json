@@ -48,7 +48,13 @@
         "START_WITH_AUTOFILL": "Start with these details",
         "TITLE": "Save time by using the details from your last application."
     },
+    "B1A_WELCOME_BACK": {
+        "CONTINUE_WITHOUT_SIGNING_IN": "Continue without signing in",
+        "TITLE": "Welcome back!",
+        "YOU_ALREADY_HAVE_AN_ACCOUNT": "It looks like you already have an account. Signing in will save this application to your account, and allow you to check your application status at any time."
+    },
     "B1_NAME": {
+        "APP_DETAILS_UPDATED": "Your application details were updated to match your account settings.",
         "NAME_EDITABLE_VIA": "These fields are editable via your",
         "TITLE": "First, what's your name?"
     },
@@ -128,6 +134,18 @@
         "PRIMARY_CONTACT_OPTIONS": "Primary Contact Options",
         "TITLE": "The primary contact details on your new application don't match your current account settings."
     },
+    "CHOOSE_APPLICANT_DETAILS": {
+        "ALERT_MESSAGE": "All primary contact details on this application and in account settings will be overwritten by your selection.",
+        "CONTINUE_ANON": "Continue without an account",
+        "CONTINUE_ANON_NOTE": "Skip sign-in and submit this application without an account.",
+        "CREATE_ACCOUNT_NOTE": "If this is not you, create a new account with a different email address and you won't lose any of the information you've entered so far.",
+        "CREATE_NEW_ACCOUNT": "Create a new account",
+        "SELECT_CHANGE_NOTE": "If you use this account, all primary contact details on this application will be replaced by your account settings. This means you may have to reclaim preferences and upload documents again.",
+        "TITLE": "The primary contact details on your new application don't match your current account settings. What would you like to do?",
+        "TITLE_DISQUALIFIED": "Your account settings don't qualify you for this listing. What would you like to do?",
+        "WILL_REPLACE": "will replace",
+        "YOUR_OPTIONS": "Your options"
+    },
     "CHOOSE_DRAFT": {
         "ALERT_MESSAGE": "Any primary contact information on your application will be overwritten by your current account settings.",
         "ALERT_TITLE": "Please choose which version of the application you want to use.",
@@ -144,8 +162,14 @@
         "PLEASE_LOGIN": "Please login to your account to continue.",
         "RESEND_EMAIL": "Resend the email"
     },
+    "CONTINUE_PREVIOUS_DRAFT": {
+        "CONTINUE_WITH_THESE_DETAILS": "Continue with these details",
+        "DESCRIPTION": "It looks like you already started a draft for this application. Just review the following details, and then pick up where you left off.",
+        "TITLE": "Pick up where you left off"
+    },
     "CREATE_ACCOUNT": {
         "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+        "CHOOSE_DIFF_EMAIL": "Create a new account with a different email address and you won't lose any of the information you've entered so far.",
         "CONTINUE_WITH_APPLICATION": "Continue with Application",
         "CREATE_AN_ACCOUNT": "Create an Account",
         "EMAIL_CONFIRM_INSTRUCTIONS": "Please re-enter your email address to confirm.",
@@ -164,22 +188,18 @@
         "TITLE": "Let's move to income."
     },
     "DOCUMENT_CHECKLIST": {
-        "ALICE_GRIFFITH_1": "You'll need 1 (one) of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
-        "ALICE_GRIFFITH_OPT_1": "Letter from SFHA verifying applicant lived at the site on or after October 26, 2010",
-        "ALICE_GRIFFITH_OPT_2": "A California ID or Driver’s License showing Alice Griffith address",
-        "ALICE_GRIFFITH_TITLE": "Alice Griffith Housing Development Resident",
         "ASSISTED_HOUSING_DESC": "You'll need a Copy of Lease showing the address where you live.",
         "ASSISTED_HOUSING_TITLE": "Assisted Housing Preference",
         "HEADER": "The document checklist outlines what your household will need if you would like to claim lottery preferences on the housing application.",
         "P1": "Claiming a preference on your housing application is optional. Preferences qualify you for a higher ranking in the lottery.",
         "P2": "All documents must show the correct name and current address. All documents other than a lease must show a date within 45 days of your application.",
         "RENT_BURDEN_DOC_1": "You'll need a Copy of Lease showing the address where you live.",
-        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with 1 (one) of the following:",
+        "RENT_BURDEN_DOC_2": "You'll also need to show last month's rent with one of the following:",
         "RENT_BURDEN_TITLE": "Rent Burdened Preference",
-        "RESIDENT_DESC": "You'll need 1 (one) of the following documents showing the address where you live in San Francisco:",
+        "RESIDENT_DESC": "You'll need one of the following documents showing the address where you live in San Francisco:",
         "RESIDENT_TITLE": "Live in Neighborhood, Live in San Francisco and Anti-Displacement Housing Preferences",
         "TITLE": "Document Checklist",
-        "WORK_SF_DESC": "You'll need 1 (one) of the following documents showing the address where you work in San Francisco:",
+        "WORK_SF_DESC": "You'll need one of the following documents showing the address where you work in San Francisco:",
         "WORK_SF_TITLE": "Work in San Francisco Preference"
     },
     "DOUBLE_SUBMITTED": {
@@ -255,6 +275,13 @@
         "UPLOAD_DOCUMENTS_FOR_ADDRESS": "Upload documents for {{address}}",
         "UPLOAD_FOR_EACH_ADDRESS": "Upload Documents for Each Address"
     },
+    "E6_ALICE_GRIFFITH_PREFERENCE": {
+        "ADDRESS": "Alice Griffith Address",
+        "ADDRESS_DESC": "Your address at Alice Griffith Housing Development, on or after October 26, 2010",
+        "ADDRESS_DOCUMENTS": "Which one of the following documents would you like to upload in order to prove eligibility?",
+        "INSTRUCTIONS": "Just provide a valid address and upload proof to get a higher ranking in the lottery.",
+        "TITLE": "Your household may qualify for the following lottery preference."
+    },
     "E7_PREFERENCES_PROGRAMS": {
         "CERT_OF_PREFERENCE": "Certificate of Preference (COP)",
         "CERT_OF_PREFERENCE_CERTIFICATE": "Do you know your COP Certificate Number?",
@@ -276,7 +303,7 @@
         "ADDRESS_VALIDATION_NOT_FOUND": "This address was not found. Please check the house number, street, and city entered. PO Boxes are not allowed.",
         "ADDRESS_VALIDATION_SECONDARY": "This address was not found. Please check the house number, street, and city entered. Make sure to include an Apt or Suite number if it's part of your address. PO Boxes are not allowed.",
         "ALERT": {
-            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousinginfo@sfgov.org if you're still experiencing issues.",
+            "BAD_REQUEST": "Oops! Looks like something went wrong. Please try again. \n\nContact sfhousing.info@sfgov.org if you're still experiencing issues.",
             "TIMEOUT_PLEASE_TRY_AGAIN": "Oops! Looks like something went wrong. Please try again."
         },
         "ALTERNATE_CONTACT": "Please select an alternate contact",
@@ -331,11 +358,6 @@
     "F0_REVIEW_OPTIONAL": {
         "P1": "These questions are optional and won't affect your eligibility for housing. Your answers will be kept private.",
         "TITLE": "Help us ensure we are meeting our goal to serve all people."
-    },
-    "F1A_REVIEW_SIGN_IN": {
-        "CONTINUE_WITHOUT_AN_ACCOUNT": "Continue without an account",
-        "INSTRUCTIONS": "Signing in will save your information to your existing account, and allow you to check the status of this application at any time.",
-        "TITLE": "You're almost done!"
     },
     "F1_REVIEW_SUMMARY": {
         "NOTE": "This is your last chance to edit before submitting.",
@@ -428,6 +450,7 @@
         "CANCEL_ADDING_DOCUMENTS": "Cancel adding documents",
         "CANCEL_UPLOAD": "Cancel upload",
         "CERTIFICATE_NUMBER": "Certificate Number",
+        "CHANGE_APPLICATION_DETAILS": "Change Application Details",
         "CHILD": "Child",
         "CITY": "City Name",
         "CLEAR": "Clear",
@@ -527,6 +550,7 @@
         "PROOF": {
             "CABLE_BILL": "Cable and internet bill",
             "CANCELLED_CHECK": "Cancelled check",
+            "CA_LICENSE": "CA ID or Driver's License",
             "DEBIT_FROM_BANK": "Debit from your bank account",
             "ELECTRIC_BILL": "Electric bill",
             "GARBAGE_BILL": "Garbage bill",
@@ -539,6 +563,7 @@
             "PAYSTUB_HOME": "Paystub (listing home address)",
             "PUBLIC_BENEFITS": "Public benefits record",
             "SCHOOL_RECORD": "School record",
+            "SFHA_LETTER": "Letter from SFHA verifying address",
             "TELEPHONE_BILL": "Telephone bill (land line only)",
             "WATER_BILL": "Water bill"
         },
@@ -570,6 +595,7 @@
         "TRANS_MALE": "Trans Male",
         "UNCLE": "Uncle",
         "UPDATE": "Update",
+        "UPDATED_BASED_ON_YOUR_ACCOUNT_SETTINGS": "Updated based on your account settings.",
         "UPLOADED": "Uploaded",
         "UPLOADING": "Uploading",
         "UPLOAD_ADDITIONAL_PROOF": "Upload Additional Proof",
@@ -749,7 +775,6 @@
         "SIGN_OUT": "Sign Out"
     },
     "PAGE_TITLE": {
-        "ACCOUNT_SETTINGS": "Account Settings",
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
         "CREATE_ACCOUNT": "Create an Account",
         "DISCLAIMER": "Disclaimer",
@@ -768,6 +793,14 @@
         "WELCOME_CHINESE": "中文",
         "WELCOME_FILIPINO": "Filipino",
         "WELCOME_SPANISH": "Español"
+    },
+    "PREFERENCES": {
+        "ALICE_GRIFFITH": {
+            "DESC": "For households in which at least one member was a resident of the Alice Griffith housing development. This includes baseline and current residents that lived in the targeted redevelopment site on or after the time of application for Choice Neighborhoods of October 26, 2010.",
+            "PROOF_DESC": "You'll need one of the following documents showing your address at Alice Griffith Housing Development, dated on or after October 26, 2010:",
+            "SFHA_LETTER_INSTRUCTIONS": "Letter from San Francisco Housing Authority verifying applicant lived at the Alice Griffith address on or after October 26, 2010",
+            "TITLE": "Alice Griffith Housing Development Resident Preference"
+        }
     },
     "PRIVACY_POLICY": {
         "ANALYTICS_P1": "We use a tool called \"Google Analytics\" to help understand how visitors interact with our website so that the site can be improved. You can read {{termsLink}}Google Analytics Terms of Use{{linkEnd}} and the {{privacyLink}}Google Privacy Policy{{linkEnd}} for Google Analytics. You can choose not to have your data collected by Google Analytics by downloading their {{optOutLink}}opt-out browser add-on{{linkEnd}}.",

@@ -17,7 +17,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
       ModalService.alert(content,
         onConfirm: ->
           AccountService.signOut()
-          $state.go('dahlia.sign-in', {signedOut: true})
+          $state.go('dahlia.sign-in', { signedOut: true, skipConfirm: true })
       )
     else
       AccountService.signOut()
@@ -41,7 +41,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
     $timeout ->
       element = _.last $document[0].getElementsByClassName(className)
       element.focus()
-    , delay
+    , delay, false
 
   $rootScope.$on '$stateChangeStart', ->
     # always close the mobile nav when state changes
