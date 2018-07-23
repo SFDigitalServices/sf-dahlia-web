@@ -716,6 +716,10 @@ ShortFormApplicationService = (
       Service.application.completedSections[section.name] = false
 
   Service.submitApplication = (options={}) ->
+
+    # Turns off autosave requests based on config variable
+    return if options.autosave && $window.AUTOSAVE != 'true'
+
     if options.finish
       Service.application.status = 'submitted'
 
@@ -733,9 +737,8 @@ ShortFormApplicationService = (
         session_uid: Service.session_uid
 
     autosave = if options.autosave then '?autosave=true' else ''
-
     # TODO: remove hotfix for marking initial autosaves that come from the Name page
-    autosave += '&initialSave=true' if options.initialSave
+    autosave += '&initialSave=true' if (options.initialSave && options.autosave)
 
     if options.attachToAccount
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
