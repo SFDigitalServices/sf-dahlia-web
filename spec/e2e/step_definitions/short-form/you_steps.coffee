@@ -198,5 +198,12 @@ module.exports = ->
   @When 'I fill out an alternate contact', ->
     Pages.AlternateContact.fillAllSections()
 
+  @When /^I fill out the AlternateContact page with the email "([^"]*)"$/, (email) ->
+    Pages.AlternateContact.fill({ email: email })
+
+  @Then 'I should see an email error on the AlternateContact page', ->
+    Utils.Expect.alertBox(@)
+    Utils.Expect.error(@, 'Please enter an email address')
+
   @Then 'on the Alternate Contact pages I should see my correct info', ->
     Pages.AlternateContact.expectToMatch(@)

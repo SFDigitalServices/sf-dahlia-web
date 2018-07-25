@@ -32,6 +32,14 @@ Feature: Short Form Application
 
         When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
         And I confirm my address
+        # error: invalid email in alternate contact
+        And I fill out the AlternateContact page with the email "grant@exygy"
+        Then I should see an email error on the AlternateContact page
+
+        When I navigate to the "You" section
+        And I fill out the Name page as "Jane Doe"
+        And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        And I confirm my address
         And I don't indicate an alternate contact
         And I indicate living with other people
         # error: missing details for member
