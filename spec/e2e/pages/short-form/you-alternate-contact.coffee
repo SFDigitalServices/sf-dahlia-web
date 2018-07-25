@@ -30,11 +30,12 @@ class AlternateContact extends AngularPage
     @defaults.fullName = "#{@defaults.firstName} #{@defaults.lastName}"
     @defaults.formattedPhone
 
-  fill: (opts = {}) ->
+  selectTypeOther: ->
     @typeOther.click()
     @typeOtherInput.sendKeys(@defaults.typeOther)
     @submitPage()
 
+  fillName: (opts = {}) ->
     if opts.fullName
       { firstName, middleName, lastName } = @extractNameParts(opts.fullName)
     else
@@ -44,6 +45,7 @@ class AlternateContact extends AngularPage
     @lastName.clear().sendKeys(lastName)
     @submitPage()
 
+  fillContact: (opts = {}) ->
     @phone.sendKeys(opts.phone || @defaults.phone)
     @email.clear().sendKeys(opts.email || @defaults.email)
     @mailingAddress1.clear().sendKeys(opts.address) if opts.address

@@ -198,8 +198,17 @@ module.exports = ->
   @When 'I fill out an alternate contact', ->
     Pages.AlternateContact.fillAllSections()
 
-  @When /^I fill out the AlternateContact page with the email "([^"]*)"$/, (email) ->
-    Pages.AlternateContact.fill({ email: email })
+  @When 'I select an alternate contact of type Other', ->
+    Pages.AlternateContact.selectTypeOther()
+
+  @When /^I fill out the AlternateContact Name page as "([^"]*)"$/, (fullName) ->
+    account = Utils.Account.getOrCreate(fullName)
+    Pages.AlternateContact.fillName {
+      fullName: account.fullName
+    }
+
+  @When /^I fill out the AlternateContact Contact page with the email "([^"]*)"$/, (email) ->
+    Pages.AlternateContact.fillContact({ email: email })
 
   @Then 'I should see an email error on the AlternateContact page', ->
     Utils.Expect.alertBox(@)
