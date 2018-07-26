@@ -30,6 +30,30 @@ class AlternateContact extends AngularPage
     @defaults.fullName = "#{@defaults.firstName} #{@defaults.lastName}"
     @defaults.formattedPhone
 
+  selectTypeOther: ->
+    @typeOther.click()
+    @typeOtherInput.sendKeys(@defaults.typeOther)
+    @submitPage()
+
+  fillName: (opts = {}) ->
+    if opts.fullName
+      { firstName, middleName, lastName } = @extractNameParts(opts.fullName)
+    else
+      firstName = opts.firstName || @defaults.firstName
+      lastName = opts.lastName || @defaults.lastName
+    @firstName.clear().sendKeys(firstName)
+    @lastName.clear().sendKeys(lastName)
+    @submitPage()
+
+  fillContact: (opts = {}) ->
+    @phone.sendKeys(opts.phone || @defaults.phone)
+    @email.clear().sendKeys(opts.email || @defaults.email)
+    @mailingAddress1.clear().sendKeys(opts.address) if opts.address
+    @mailingAddressCity.clear().sendKeys(opts.city) if opts.city
+    @mailingAddressState.sendKeys(opts.state) if opts.state
+    @mailingAddressZip.clear().sendKeys(opts.zip) if opts.zip
+    @submitPage()
+
   fillAllSections: ->
     @typeOther.click()
     @typeOtherInput.sendKeys(@defaults.typeOther)
