@@ -606,7 +606,8 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
     if !_.isEmpty(Service.listing.preferences)
-      return $q.when(Service.listing.preferences)
+      return $q.when(Service.listing.preferences).then ->
+        Service.loading.preferences = false
     ## <--
     httpConfig = { etagCache: true }
     httpConfig.params = { force: true } if forceRecache
