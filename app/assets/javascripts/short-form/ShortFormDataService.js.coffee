@@ -71,8 +71,7 @@ ShortFormDataService = (ListingService) ->
     unless _.isEmpty(householdMembers)
       sfApp.householdMembers = householdMembers
 
-    # preferences + other data
-    sfApp.shortFormPreferences = Service._formatPreferences(application)
+    # add other data
     sfApp.adaPrioritiesSelected = Service._formatPickList(application.adaPrioritiesSelected)
     sfApp.referral = Service._formatPickList(application.applicant.referral)
     sfApp.agreeToTerms = !!application.applicant.terms.yes
@@ -83,8 +82,18 @@ ShortFormDataService = (ListingService) ->
     sfApp.totalMonthlyRent = Service._calculateTotalMonthlyRent(application)
     sfApp.formMetadata = Service._formatMetadata(application)
 
-    # done!
-    return sfApp
+    # add preferences and return
+    if !ListingService.listing.preferences
+      # if listing preferences are not present when they should be, fetch them again
+      Raven.captureMessage('Undefined listing preferences', {
+        level: 'warning', extra: { listing: ListingService.listing }
+      })
+      ListingService.getListingPreferences().then ->
+        sfApp.shortFormPreferences = Service._formatPreferences(application)
+        return sfApp
+    else
+      sfApp.shortFormPreferences = Service._formatPreferences(application)
+      return sfApp
 
   Service.formatUserDOB = (user) ->
     dob_fields = _.compact [user.dob_year, user.dob_month, user.dob_day]

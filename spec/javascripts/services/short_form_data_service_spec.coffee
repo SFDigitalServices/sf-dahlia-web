@@ -1,6 +1,7 @@
 do ->
   'use strict'
   describe 'ShortFormDataService', ->
+    $q = undefined
     ShortFormDataService = undefined
     formattedApp = undefined
     reformattedApp = undefined
@@ -32,7 +33,8 @@ do ->
       return
     )
 
-    beforeEach inject((_ShortFormDataService_) ->
+    beforeEach inject((_$q_, _ShortFormDataService_) ->
+      $q = _$q_
       ShortFormDataService = _ShortFormDataService_
       return
     )
@@ -49,6 +51,15 @@ do ->
 
       it 'sends stringified JSON for formMetadata', ->
         expect(formattedApp.formMetadata).toContain('"completedSections"')
+
+      describe 'formatApplication when listing preferences are missing', ->
+        beforeEach ->
+          fakeListingService.listing.preferences = null
+          fakeListingService.getListingPreferences = jasmine.createSpy().and.returnValue($q.defer().promise)
+          formattedApp = ShortFormDataService.formatApplication(fakeListingId, fakeApplication)
+
+        it 'calls ListingService.getListingPreferences', ->
+          expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
 
     describe 'reformatApplication', ->
       beforeEach ->
