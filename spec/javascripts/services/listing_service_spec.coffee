@@ -24,6 +24,10 @@ do ->
     error = {}
     fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
+    fakeCustomPrefs = [
+          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
+          {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
+        ]
     fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
@@ -327,15 +331,12 @@ do ->
     describe 'Service.getListingPreferences', ->
       beforeEach ->
         # have to populate listing first
-        ListingService.listing = fakeListing.listing
-        # just to divert from our hardcoding
+        ListingService.listing = angular.copy(fakeListing.listing)
         ListingService.listing.Id = 'fakeId-123'
-        fakeCustomPrefs = [
-          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
-          {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
-        ]
-        fakePreferences.preferences = fakePreferences.preferences.concat(fakeCustomPrefs)
-        stubAngularAjaxRequest httpBackend, requestURL, fakePreferences
+        # just to divert from our hardcoding
+        preferences = angular.copy(fakePreferences)
+        preferences.preferences = preferences.preferences.concat fakeCustomPrefs
+        stubAngularAjaxRequest httpBackend, requestURL, preferences
         ListingService.getListingPreferences()
 
       afterEach ->
@@ -344,16 +345,21 @@ do ->
 
       it 'assigns Service.listing.preferences with the Preference results', ->
         httpBackend.flush()
-        expect(ListingService.listing.preferences).toEqual fakePreferences.preferences
+        expect(ListingService.listing.preferences).toEqual fakePreferences.preferences.concat fakeCustomPrefs
+        expect(ListingService.loading.preferences).toEqual false
 
       it 'assigns Service.listing.customPreferences with the customPreferences without proof', ->
-        expect(ListingService.listing.customPreferences.length).toEqual 2
+        httpBackend.flush()
         expect(ListingService.listing.customPreferences[0].preferenceName).toEqual 'DACA Fund'
+        expect(ListingService.listing.customPreferences.length).toEqual 2
+        expect(ListingService.loading.preferences).toEqual false
 
       it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->
         # We don't currently have any hard-coded custom preferences, and this feature will be
         # replaced with `requiresProof` setting in #154784101
+        httpBackend.flush()
         expect(ListingService.listing.customProofPreferences.length).toEqual 0
+        expect(ListingService.loading.preferences).toEqual false
 
     describe 'Service.getListingsByIds', ->
       afterEach ->
