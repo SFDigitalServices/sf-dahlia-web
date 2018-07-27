@@ -601,8 +601,10 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
 
   Service.getListingPreferences = (forceRecache = false) ->
     Service.loading.preferences = true
+    # Reset preferences that might already exist
+    angular.copy([], Service.listing.preferences)
     Service.error.preferences = false
-    # TODO: -- REMOVE HARDCODED FEATURES --
+    # TODO: -- REMOVE HARDCODED PREFERENCES --
     Service.stubListingPreferences()
     # if this listing had stubbed preferences then we can abort
     if !_.isEmpty(Service.listing.preferences)
