@@ -133,6 +133,15 @@ ShortFormApplicationService = (
 
     completed = Service.application.completedSections
     validated = Service.application.validatedForms
+
+    # catch errors where validatedForms becomes undefined
+    if _.isEmpty(validated)
+      Raven.captureMessage('Validated forms is unexpectedly empty', {
+        level: 'warning',
+        extra: { sectionName: name, application: Service.application }
+      })
+      return false
+
     switch name
       when 'You'
         true
