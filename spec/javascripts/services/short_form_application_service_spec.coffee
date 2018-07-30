@@ -75,6 +75,15 @@ do ->
     resetFakePeople = ->
       fakeApplicant = undefined
       fakeHouseholdMember = undefined
+    deleteValidatedForms = ->
+      delete ShortFormApplicationService.application.validatedForms
+    resetValidatedForms = ->
+      ShortFormApplicationService.application.validatedForms =
+        You: {}
+        Household: {}
+        Income: {}
+        Preferences: {}
+        Review: {}
 
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$state', $state
@@ -115,6 +124,15 @@ do ->
 
       it 'does not initially allow access to later sections', ->
         expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
+
+      describe 'when Service.application.validatedForms is empty', ->
+        beforeEach ->
+          deleteValidatedForms()
+        afterEach ->
+          resetValidatedForms()
+
+        it 'returns false', ->
+          expect(ShortFormApplicationService.userCanAccessSection('You')).toEqual false
 
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
