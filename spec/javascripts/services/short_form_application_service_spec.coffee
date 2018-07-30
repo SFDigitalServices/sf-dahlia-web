@@ -1320,6 +1320,20 @@ do ->
           lastPageRoute = 'dahlia.short-form-application.review-terms'
           expect($state.go).toHaveBeenCalledWith(lastPageRoute)
 
+    describe 'checkFormState', ->
+      beforeEach ->
+        ShortFormApplicationService.form.applicationForm =
+          $valid: true
+
+      describe 'when Service.application.validatedForms is empty', ->
+        beforeEach ->
+          deleteValidatedForms()
+        afterEach ->
+          resetValidatedForms()
+
+        it 'returns false', ->
+          expect(ShortFormApplicationService.checkFormState('dahlia.short-form-application.income')).toEqual false
+
     describe 'applicationCompletionPercentage', ->
       it 'calculates a baseline percentage of 5% for new applications', ->
         pct = ShortFormApplicationService.applicationCompletionPercentage(ShortFormApplicationService.application)
