@@ -23,7 +23,7 @@ Before you install DAHLIA, your system should have the following:
 - [Bundler](https://github.com/bundler/bundler) `gem install bundler`
 - [Homebrew](http://brew.sh)
 - [PostgreSQL](https://postgresapp.com/)
-- [Node.js](https://nodejs.org/en/) 6.2.2
+- [Node.js](https://nodejs.org/en/) 6.11.1
   - can use installer from [nodejs.org](https://nodejs.org/en/) or see: [installing NVM and node.js on MacOS](https://stackoverflow.com/a/28025834/260495)
 
 ## Getting started
