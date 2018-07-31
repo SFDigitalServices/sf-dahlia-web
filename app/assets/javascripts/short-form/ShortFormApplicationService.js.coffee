@@ -133,6 +133,15 @@ ShortFormApplicationService = (
 
     completed = Service.application.completedSections
     validated = Service.application.validatedForms
+
+    # catch errors where validatedForms becomes undefined
+    if _.isEmpty(validated)
+      Raven.captureMessage('Validated forms is unexpectedly empty', {
+        level: 'warning',
+        extra: { sectionName: name, application: Service.application }
+      })
+      return false
+
     switch name
       when 'You'
         true
@@ -600,6 +609,15 @@ ShortFormApplicationService = (
         applicant = Service.applicant
         addressValid = !_.isNil(applicant.preferenceAddressMatch)
         isValid = isValid && addressValid
+
+      # catch errors where validatedForms becomes undefined
+      if _.isEmpty(Service.application.validatedForms)
+        Raven.captureMessage('Validated forms is unexpectedly empty', {
+          level: 'warning',
+          extra: { stateName: stateName, application: Service.application }
+        })
+        return false
+
       Service.application.validatedForms[section.name][stateName] = isValid
 
   Service.authorizedToProceed = (toState, fromState, toSection) ->
