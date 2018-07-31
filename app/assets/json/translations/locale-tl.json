@@ -55,7 +55,7 @@
     },
     "B1_NAME": {
         "APP_DETAILS_UPDATED": "Nabago na ang mga detalye ng inyong aplikasyon para magtugma ito sa settings ng inyong account. \n",
-        "NAME_EDITABLE_VIA": "Puwede ma-edit ang mga field (kahon o patlang na dapat punan) sa pamamagitan ng inyong",
+        "NAME_EDITABLE_VIA": "Puwedeng ma-edit ang mga field (kahon o patlang na dapat punan) sa pamamagitan ng inyong",
         "TITLE": "Una, ano ang inyong pangalan?"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -141,7 +141,7 @@
         "CREATE_ACCOUNT_NOTE": "Kung hindi kayo ito, gumawa ng bagong account na may ibang email address at hindi mawawala ang anumang impormasyong naipasok na ninyo. ",
         "CREATE_NEW_ACCOUNT": "Gumawa ng bagong account\n",
         "SELECT_CHANGE_NOTE": "Kapag ginamit ninyo ang account na ito, papalitan ng settings ng inyong account ang lahat ng detalye ukol sa pangunahing kontak na nasa aplikasyong ito. Ang ibig sabihin nito, posibleng kailangan ninyong makuha muli ang mga preperensiya at mag-upload muli ng mga dokumento.",
-        "TITLE": "Hindi nagtutugma ang mga detalye ukol sa pangunahing kontak sa kasalukuyang settings ng inyong account. Ano ang gusto ninyong gawin. ",
+        "TITLE": "Hindi nagtutugma ang mga detalye ukol sa pangunahing kontak sa kasalukuyang settings ng inyong account. Ano ang gusto ninyong gawin?",
         "TITLE_DISQUALIFIED": "Batay sa settings ng inyong account, hindi kayo kuwalipikado para sa nakalistang pabahay na ito. Ano ang gusto ninyong gawin?",
         "WILL_REPLACE": "papalitan ko",
         "YOUR_OPTIONS": "Ang inyong mga opsiyon"

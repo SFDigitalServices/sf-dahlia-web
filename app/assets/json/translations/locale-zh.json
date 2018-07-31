@@ -35,13 +35,13 @@
         "START_WITH_AUTOFILL": "沿用這些詳細資料開始作業"
     },
     "B1A_WELCOME_BACK": {
-        "CONTINUE_WITHOUT_SIGNING_IN": "未登入繼續執行",
+        "CONTINUE_WITHOUT_SIGNING_IN": "未登入並繼續",
         "TITLE": "歡迎回來！",
         "YOU_ALREADY_HAVE_AN_ACCOUNT": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
     },
     "B1_NAME": {
         "APP_DETAILS_UPDATED": "您的申請詳細資料已更新，以符合您的帳戶設定。",
-        "NAME_EDITABLE_VIA": "這些欄位可以編輯，請透過您的",
+        "NAME_EDITABLE_VIA": "請透過您的「帳戶設定」編輯這些欄位",
         "TITLE": "首先，您的名字是？"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -572,8 +572,8 @@
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "家庭",
         "INCOME": "收入",
-        "PREFERENCES": "优先",
-        "REVIEW": "评论",
+        "PREFERENCES": "優先",
+        "REVIEW": "評論",
         "YOU": "您"
     },
     "SIGN_IN": {
