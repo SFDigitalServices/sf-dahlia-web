@@ -386,7 +386,7 @@ ShortFormApplicationController = (
     nextIndex = null
     currentIndex = parseInt($state.params.prefIdx)
 
-    if !isEmpty($scope.listing.customProofPreferences)
+    if !_.isEmpty($scope.listing.customProofPreferences)
       if currentIndex >= 0 && currentIndex < $scope.listing.customProofPreferences.length - 1
         nextIndex = currentIndex + 1
       else if isNaN(currentIndex) && $scope.listing.customProofPreferences.length
