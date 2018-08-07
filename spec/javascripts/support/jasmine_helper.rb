@@ -13,3 +13,8 @@
 #    config.prevent_phantom_js_auto_install = true
 # end
 #
+
+# Uncomment lines below to show logs for Jasmine tests.
+# Jasmine.configure do |config|
+#  config.show_console_log = true
+# end
