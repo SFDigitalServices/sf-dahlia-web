@@ -80,6 +80,14 @@
       "website": "http://www.thearcsf.org/"
     },
     {
+      "name": "Veterans Equity Center",
+      "languages":["English", "Spanish", "Filipino"],
+      "address": "1010 Mission St",
+      "citystate": "San Francisco, CA 94103",
+      "phone": "(415) 255-2347",
+      "website": "http://www.vetsequitycenter.org/services/bishop/"
+    },
+    {
       "name": "Bill Sorro Housing Program (BiSHoP)",
       "languages":["English", "Spanish", "Filipino"],
       "address": "1360 Mission Street #400",
