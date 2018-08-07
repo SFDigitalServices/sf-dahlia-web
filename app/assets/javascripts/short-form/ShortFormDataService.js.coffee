@@ -83,17 +83,8 @@ ShortFormDataService = (ListingService) ->
     sfApp.formMetadata = Service._formatMetadata(application)
 
     # add preferences and return
-    if !ListingService.listing.preferences
-      # if listing preferences are not present when they should be, fetch them again
-      Raven.captureMessage('Undefined listing preferences', {
-        level: 'warning', extra: { listing: ListingService.listing }
-      })
-      ListingService.getListingPreferences().then ->
-        sfApp.shortFormPreferences = Service._formatPreferences(application)
-        return sfApp
-    else
-      sfApp.shortFormPreferences = Service._formatPreferences(application)
-      return sfApp
+    sfApp.shortFormPreferences = Service._formatPreferences(application)
+    return sfApp
 
   Service.formatUserDOB = (user) ->
     dob_fields = _.compact [user.dob_year, user.dob_month, user.dob_day]
