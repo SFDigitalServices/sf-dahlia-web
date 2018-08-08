@@ -16,6 +16,14 @@
       "website": "https://bhpmss.org/"
     },
     {
+      "name": "Bill Sorro Housing Program (BiSHoP)",
+      "languages":["English", "Spanish", "Filipino"],
+      "address": "1360 Mission Street #400",
+      "citystate": "San Francisco, CA 94103",
+      "phone": "(415) 513-5177",
+      "website": "http://bishopsf.org"
+    },
+    {
       "name": "Homeless Prenatal Program, Inc.",
       "languages": ["English", "Spanish"],
       "address": "2500 18th St",
@@ -86,14 +94,6 @@
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 255-2347",
       "website": "http://www.vetsequitycenter.org/services/bishop/"
-    },
-    {
-      "name": "Bill Sorro Housing Program (BiSHoP)",
-      "languages":["English", "Spanish", "Filipino"],
-      "address": "1360 Mission Street #400",
-      "citystate": "San Francisco, CA 94103",
-      "phone": "(415) 513-5177",
-      "website": "http://bishopsf.org"
     }
   ]
 }
