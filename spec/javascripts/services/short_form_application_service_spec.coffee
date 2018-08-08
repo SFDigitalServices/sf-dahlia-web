@@ -1,6 +1,8 @@
 do ->
   'use strict'
   describe 'ShortFormApplicationService', ->
+    $q = undefined
+    $rootScope = undefined
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
@@ -97,7 +99,9 @@ do ->
       return
     )
 
-    beforeEach inject((_$httpBackend_, _ShortFormApplicationService_) ->
+    beforeEach inject((_$q_, _$rootScope_, _$httpBackend_, _ShortFormApplicationService_) ->
+      $q = _$q_
+      $rootScope = _$rootScope_
       httpBackend = _$httpBackend_
       ShortFormApplicationService = _ShortFormApplicationService_
       requestURL = ShortFormApplicationService.requestURL
@@ -671,6 +675,11 @@ do ->
     describe 'submitApplication', ->
       beforeEach ->
         fakeListing = getJSONFixture('listings-api-show.json').listing
+        fakeListingService.listing = angular.copy(fakeListing)
+        deferred = $q.defer()
+        deferred.resolve()
+        fakeListingService.getListingPreferences = jasmine.createSpy().and.returnValue(deferred.promise)
+        ShortFormApplicationService._sendApplication = jasmine.createSpy()
         ShortFormApplicationService.application = fakeShortForm
 
       it 'should indicate app status as submitted', ->
@@ -681,10 +690,21 @@ do ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect($translate.use).toHaveBeenCalled()
 
-      it 'should call formatApplication on ShortFormDataService', ->
+      it 'should call formatApplication on ShortFormDataService when preferences are defined', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect(fakeListingService.getListingPreferences).not.toHaveBeenCalled()
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
+
+      it 'should call formatApplication on ShortFormDataService when preferences are undefined', ->
+        fakeListingService.listing.preferences = null
+        spyOn(fakeDataService, 'formatApplication').and.callThrough()
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        $rootScope.$apply()
+        expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
+        expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
       it 'should indicate app date submitted to be date today', ->
         dateToday = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
