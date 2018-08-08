@@ -71,8 +71,7 @@ ShortFormDataService = (ListingService) ->
     unless _.isEmpty(householdMembers)
       sfApp.householdMembers = householdMembers
 
-    # preferences + other data
-    sfApp.shortFormPreferences = Service._formatPreferences(application)
+    # add other data
     sfApp.adaPrioritiesSelected = Service._formatPickList(application.adaPrioritiesSelected)
     sfApp.referral = Service._formatPickList(application.applicant.referral)
     sfApp.agreeToTerms = !!application.applicant.terms.yes
@@ -83,7 +82,8 @@ ShortFormDataService = (ListingService) ->
     sfApp.totalMonthlyRent = Service._calculateTotalMonthlyRent(application)
     sfApp.formMetadata = Service._formatMetadata(application)
 
-    # done!
+    # add preferences and return
+    sfApp.shortFormPreferences = Service._formatPreferences(application)
     return sfApp
 
   Service.formatUserDOB = (user) ->

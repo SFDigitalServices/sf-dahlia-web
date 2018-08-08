@@ -734,7 +734,6 @@ ShortFormApplicationService = (
       Service.application.completedSections[section.name] = false
 
   Service.submitApplication = (options={}) ->
-
     # Turns off autosave requests based on config variable
     return if options.autosave && $window.AUTOSAVE != 'true'
 
@@ -750,7 +749,6 @@ ShortFormApplicationService = (
     params =
       # $translate.use() with no arguments is a getter for the current lang setting
       locale: $translate.use()
-      application: ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       uploaded_file:
         session_uid: Service.session_uid
 
@@ -762,10 +760,40 @@ ShortFormApplicationService = (
       # NOTE: This temp_session_id is vital for the operation of Create Account on "save and finish"
       params.temp_session_id = Service.session_uid
 
+    if Service.application.id
+      # update
+      id = Service.application.id
+      submitMethod = $http.put
+      if options.attachToAccount
+        submitPath = "/api/v1/short-form/claim-application/#{id}"
+      else
+        submitPath = "/api/v1/short-form/application/#{id}#{autosave}"
+    else
+      # create
+      submitMethod = $http.post
+      submitPath = "/api/v1/short-form/application#{autosave}"
+
+    # although we have already attempted to fetch the listing preferences in the resolve
+    # for the dahlia.short-form-application route, sometimes they are not yet done being
+    # fetched by the time the user gets here, so we check if we need to fetch them here
+    if ListingService.listing.preferences
+      params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
+      Service._sendApplication(submitMethod, submitPath, params)
+    else
+      Raven.captureMessage('Undefined listing preferences', {
+        level: 'warning', extra: { listing: ListingService.listing }
+      })
+      ListingService.getListingPreferences().then ->
+        params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
+        Service._sendApplication(submitMethod, submitPath, params)
+
+  Service._sendApplication = (method, path, params) ->
+    # TODO: remove this logging once the geocoding bug has been resolved:
+    # (https://www.pivotaltracker.com/story/show/155672733)
     # logging to provide visibility into cases we have been seeing where an
     # application somehow gets submitted without preferenceAddressMatch set
     # for primary applicant or a household member
-    if Service.application.status == 'submitted'
+    if params.application.status == 'submitted'
       primaryApplicant = params.application.primaryApplicant
       if primaryApplicant
         primaryPrefAddressMatchEmpty = _.isNil(primaryApplicant.preferenceAddressMatch)
@@ -778,18 +806,7 @@ ShortFormApplicationService = (
         if householdPrefAddressMatchEmpty
           Raven.captureException(new Error('Application submitted without household member preferenceAddressMatch value'))
 
-    if params.application.id
-      # update
-      id = params.application.id
-      if options.attachToAccount
-        appSubmission = $http.put("/api/v1/short-form/claim-application/#{id}", params)
-      else
-        appSubmission = $http.put("/api/v1/short-form/application/#{id}#{autosave}", params)
-    else
-      # create
-      appSubmission = $http.post("/api/v1/short-form/application#{autosave}", params)
-
-    appSubmission.success((data, status, headers, config) ->
+    method(path, params).success((data, status, headers, config) ->
       if data.lotteryNumber
         Service.application.lotteryNumber = data.lotteryNumber
         Service.application.id = data.id
