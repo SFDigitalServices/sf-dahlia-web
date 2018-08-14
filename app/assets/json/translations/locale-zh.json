@@ -35,13 +35,13 @@
         "START_WITH_AUTOFILL": "沿用這些詳細資料開始作業"
     },
     "B1A_WELCOME_BACK": {
-        "CONTINUE_WITHOUT_SIGNING_IN": "未登入繼續執行",
+        "CONTINUE_WITHOUT_SIGNING_IN": "未登入並繼續",
         "TITLE": "歡迎回來！",
         "YOU_ALREADY_HAVE_AN_ACCOUNT": "您似乎已擁有現成的帳戶。登入會將此申請儲存至您的帳戶，並可讓您隨時檢查申請狀態。"
     },
     "B1_NAME": {
         "APP_DETAILS_UPDATED": "您的申請詳細資料已更新，以符合您的帳戶設定。",
-        "NAME_EDITABLE_VIA": "這些欄位可以編輯，請透過您的",
+        "NAME_EDITABLE_VIA": "請透過您的「帳戶設定」編輯這些欄位",
         "TITLE": "首先，您的名字是？"
     },
     "B2A_VERIFY_ADDRESS": {
@@ -49,7 +49,7 @@
     },
     "B2_CONTACT": {
         "APPLICANT_ADDRESS_DESC": "我們需要您目前居住地點的地址。若您無家可歸，請輸入收容所地址或靠近您所在地點的地址。",
-        "CLAIM_WORK_IN_SF": "為主張此為抽籤優先權利，您將需要上傳佐證文件，在稍後的畫面中會有說明。",
+        "CLAIM_WORK_IN_SF": "為行使此為抽籤優先權利，您將需要上傳佐證文件，在稍後的畫面中會有說明。",
         "EMAIL_EDITABLE_VIA": "您的電子郵件地址可以編輯，請透過您的",
         "ONLY_USE_YOUR_EMAIL": "您的電子郵件地址僅用於申請作業聯絡用途。",
         "PROVIDE_AN_ADDRESS": "請提供您可收件的地址，以便寄送與申請相關的更新及資料。",
@@ -122,7 +122,7 @@
         "CONTINUE_ANON_NOTE": "略過登入程序，並在無帳戶的情況下提交此申請。",
         "CREATE_ACCOUNT_NOTE": "如果這不是您的帳戶，請使用其他電子郵件地址建立新帳戶，這樣您便不會遺失迄今為止所輸入的任何資訊。",
         "CREATE_NEW_ACCOUNT": "建立新帳戶",
-        "SELECT_CHANGE_NOTE": "如果您使用此帳戶，有關此申請的所有主要聯絡詳細資料均會被您的帳戶設定取代。這意味著您可能必須重新主張優先權利並再次上傳文件。",
+        "SELECT_CHANGE_NOTE": "如果您使用此帳戶，有關此申請的所有主要聯絡詳細資料均會被您的帳戶設定取代。這意味著您可能必須重新行使優先權利並再次上傳文件。",
         "TITLE": "新申請的主要聯絡詳細資料與您的目前帳戶設定不符。您想執行什麼工作？",
         "TITLE_DISQUALIFIED": "您的帳戶設定並不符合此清單的資格。您想執行什麼工作？",
         "WILL_REPLACE": "將取代",
@@ -160,7 +160,7 @@
         "GET_STARTED": "由此開始",
         "STEPS_TITLE": "只需 3 個簡單步驟：",
         "STEP_1": "看看您是否符合這些抽籤優先權利。",
-        "STEP_2": "根據您的情況勾選相應方塊，主張您的抽籤優先權利。",
+        "STEP_2": "根據您的情況勾選相應方塊，行使您的抽籤優先權利。",
         "STEP_3": "透過您的電腦或手機上傳所需的文件。",
         "TITLE": "抽籤優先權利除了能賦予您參與資格，還能讓您獲得較高的抽籤順位。"
     },
@@ -238,7 +238,7 @@
         "TITLE": "針對這些已有特殊憑證的人士，亦有相應的抽籤優先權利。"
     },
     "E8_GENERAL_LOTTERY_NOTICE": {
-        "TITLE": "根據您所輸入的資訊，您的家庭未曾主張任何抽籤優先權利。",
+        "TITLE": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。",
         "YOU_WILL_BE_IN_GENERAL_LOTTERY": "您將會列入一般抽籤名單。"
     },
     "ERROR": {
@@ -271,7 +271,7 @@
         "PLEASE_PROVIDE_ANSWERS_IN_ENGLISH": "請用英文作答",
         "PLEASE_PUT_IN_A_RENT": "請填入租金價格",
         "PLEASE_SELECT_AN_OPTION": "請選擇上列其中一項。",
-        "PLEASE_SELECT_PREFERENCE_CONTENT": "衷心建議您，在提交資料前先上傳文件以主張您的優先權利，如此一來在抽籤時中籤的機會較大。",
+        "PLEASE_SELECT_PREFERENCE_CONTENT": "衷心建議您，在提交資料前先上傳文件以行使您的優先權利，如此一來在抽籤時中籤的機會較大。",
         "PLEASE_SELECT_PREFERENCE_OPTION": "請選擇並完成以下其中一項，以便繼續作業。",
         "RELATIONSHIP": "請輸入關係。",
         "SENIOR_ANYONE": "您的家庭中必須至少有一位成員是大於 {{minAge}} 歲的年長者",
@@ -293,7 +293,7 @@
     "F2_REVIEW_TERMS": {
         "P1": "此申請必須在 {{date}} 之前提交。",
         "P2": "租賃機構將按抽籤評分及優先權利順序來聯繫申請者，直到空房額滿為止。",
-        "P3": "您提供的所有資訊將經過驗證，您的資格也會經過確認。  若您曾作出任何欺詐性的陳述，或是有任何家庭成員出現在此清單的多份申請中，您的申請將會從抽籤中移除。若我們無法證實您所主張的住房抽籤優先權利為真，您便無法享有該優先權利，但您也不會受到懲處。",
+        "P3": "您提供的所有資訊將經過驗證，您的資格也會經過確認。  若您曾作出任何欺詐性的陳述，或是有任何家庭成員出現在此清單的多份申請中，您的申請將會從抽籤中移除。若我們無法證實您所行使的住房抽籤優先權利為真，您便無法享有該優先權利，但您也不會受到懲處。",
         "P4": "如果您的申請從抽籤中獲選，請準備填寫更詳細的申請資料並提供必要的支援文件。  如需詳細資訊，請與張貼在清單內的發展人員或租賃機構聯絡。完成本抽籤申請並不代表您已有權住房，或是您已符合住房資格；所有申請人皆需依照物業的「住客遴選標準」所規範內容進行篩選。<br><br>在您的線上申請提交後，便無法再變更內容。",
         "P5": "我宣誓上述聲明既真實且精確，並且認可若本申請中有任何不實聲明或疏忽情況下之聲明，將導致本申請從抽籤中排除。",
         "TITLE": "條款"
@@ -400,7 +400,7 @@
         "HOUSEHOLD_MEMBER_RELATIONSHIP": "這些人與您的關係為何？",
         "HOUSEHOLD_MEMBER_SAVE": "儲存家庭成員",
         "HOUSEHOLD_MEMBER_UPDATE": "更新家庭成員",
-        "HOW_DID_YOU_HEAR_ABOUT_THIS": "您如何得知此清單？",
+        "HOW_DID_YOU_HEAR_ABOUT_THIS": "您如何得知此出租項目？",
         "INCOME": "收入",
         "INCOME_PLACEHOLDER": "您所有收入來源的總額",
         "IN_LAW": "姻親",
@@ -442,7 +442,7 @@
         "PLEASE_SELECT_ONE": "請選擇一個項目。",
         "PLEASE_SELECT_PREFERENCE": "請選擇，以便獲得您的抽籤優先權利：",
         "PREFERENCES": "優先權利",
-        "PREFERENCE_OPTION_TO_CLAIM": "您想要主張哪一項優先權利？",
+        "PREFERENCE_OPTION_TO_CLAIM": "您想要行使哪一項優先權利？",
         "PREFERENCE_PROOF_ADDRESS_DOCUMENTS": "您想要上傳哪一類型的文件，以便證實您居住在該地址？",
         "PREFERENCE_PROOF_DOCUMENTS": "您上傳了哪份文件來證實您的資格？",
         "PRIMARY_USER": "主要申請人",
@@ -483,7 +483,7 @@
         "SPOUSE": "配偶",
         "START_UPLOAD": "開始上傳",
         "STATE": "州",
-        "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "您仍然可以主張其他優先權利。",
+        "STILL_HAVE_OPPORTUNITY_TO_CLAIM": "您仍然可以行使其他優先權利。",
         "STRAIGHT_HETEROSEXUAL": "異性戀/同性戀",
         "SUGGESTED_ADDRESS": "建議地址",
         "TRANS_FEMALE": "跨性女",
@@ -512,7 +512,7 @@
         "YOUR_GENDER": "請表明您的性別",
         "YOUR_NAME": "您的姓名",
         "YOUR_SEXUAL_ORIENTATION": "請表明您的性取向",
-        "YOU_HAVE_CLAIMED": "您已主張：",
+        "YOU_HAVE_CLAIMED": "您已行使：",
         "ZIP": "郵遞區號",
         "ZIPCODE": "郵遞區號"
     },
@@ -563,7 +563,7 @@
     },
     "REVIEW_APPLICATION": {
         "BACK_TO_MY_APPLICATIONS": "返回到「我的申請」",
-        "GENERAL_LOTTERY_NOTICE": "根據您所輸入的資訊，您的家庭未曾主張任何抽籤優先權利。您將會列入一般抽籤名單。",
+        "GENERAL_LOTTERY_NOTICE": "根據您所輸入的資訊，您的家庭未曾行使任何抽籤優先權利。您將會列入一般抽籤名單。",
         "PRINT_A_COPY": "請列印副本做為記錄",
         "TITLE": "這是您提交的資訊。",
         "VIEW_ORIGINAL_LISTING": "檢視原始清單",
@@ -572,8 +572,8 @@
     "SHORT_FORM_NAV": {
         "HOUSEHOLD": "家庭",
         "INCOME": "收入",
-        "PREFERENCES": "优先",
-        "REVIEW": "评论",
+        "PREFERENCES": "優先",
+        "REVIEW": "評論",
         "YOU": "您"
     },
     "SIGN_IN": {
@@ -603,7 +603,7 @@
         "NONE": "無",
         "OCCUPANCY": "居住",
         "OK": "確定",
-        "OPTIONAL": "可選",
+        "OPTIONAL": "可選擇回答與否",
         "OR": "或",
         "PER_MONTH": "每月",
         "PER_YEAR": "每年",

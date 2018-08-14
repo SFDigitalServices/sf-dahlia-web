@@ -1,6 +1,8 @@
 do ->
   'use strict'
   describe 'ShortFormApplicationService', ->
+    $q = undefined
+    $rootScope = undefined
     ShortFormApplicationService = undefined
     httpBackend = undefined
     fakeListing = undefined
@@ -75,6 +77,15 @@ do ->
     resetFakePeople = ->
       fakeApplicant = undefined
       fakeHouseholdMember = undefined
+    deleteValidatedForms = ->
+      delete ShortFormApplicationService.application.validatedForms
+    resetValidatedForms = ->
+      ShortFormApplicationService.application.validatedForms =
+        You: {}
+        Household: {}
+        Income: {}
+        Preferences: {}
+        Review: {}
 
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$state', $state
@@ -88,7 +99,9 @@ do ->
       return
     )
 
-    beforeEach inject((_$httpBackend_, _ShortFormApplicationService_) ->
+    beforeEach inject((_$q_, _$rootScope_, _$httpBackend_, _ShortFormApplicationService_) ->
+      $q = _$q_
+      $rootScope = _$rootScope_
       httpBackend = _$httpBackend_
       ShortFormApplicationService = _ShortFormApplicationService_
       requestURL = ShortFormApplicationService.requestURL
@@ -115,6 +128,15 @@ do ->
 
       it 'does not initially allow access to later sections', ->
         expect(ShortFormApplicationService.userCanAccessSection('Income')).toEqual false
+
+      describe 'when Service.application.validatedForms is empty', ->
+        beforeEach ->
+          deleteValidatedForms()
+        afterEach ->
+          resetValidatedForms()
+
+        it 'returns false', ->
+          expect(ShortFormApplicationService.userCanAccessSection('You')).toEqual false
 
     describe 'copyHomeToMailingAddress', ->
       it 'copies applicant home address to mailing address', ->
@@ -653,6 +675,11 @@ do ->
     describe 'submitApplication', ->
       beforeEach ->
         fakeListing = getJSONFixture('listings-api-show.json').listing
+        fakeListingService.listing = angular.copy(fakeListing)
+        deferred = $q.defer()
+        deferred.resolve()
+        fakeListingService.getListingPreferences = jasmine.createSpy().and.returnValue(deferred.promise)
+        ShortFormApplicationService._sendApplication = jasmine.createSpy()
         ShortFormApplicationService.application = fakeShortForm
 
       it 'should indicate app status as submitted', ->
@@ -663,10 +690,21 @@ do ->
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         expect($translate.use).toHaveBeenCalled()
 
-      it 'should call formatApplication on ShortFormDataService', ->
+      it 'should call formatApplication on ShortFormDataService when preferences are defined', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        expect(fakeListingService.getListingPreferences).not.toHaveBeenCalled()
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
+
+      it 'should call formatApplication on ShortFormDataService when preferences are undefined', ->
+        fakeListingService.listing.preferences = null
+        spyOn(fakeDataService, 'formatApplication').and.callThrough()
+        ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
+        $rootScope.$apply()
+        expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
+        expect(fakeDataService.formatApplication).toHaveBeenCalled()
+        expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
       it 'should indicate app date submitted to be date today', ->
         dateToday = moment().tz('America/Los_Angeles').format('YYYY-MM-DD')
@@ -1301,6 +1339,20 @@ do ->
           ShortFormApplicationService.sendToLastPageofApp('dahlia.short-form-application.name')
           lastPageRoute = 'dahlia.short-form-application.review-terms'
           expect($state.go).toHaveBeenCalledWith(lastPageRoute)
+
+    describe 'checkFormState', ->
+      beforeEach ->
+        ShortFormApplicationService.form.applicationForm =
+          $valid: true
+
+      describe 'when Service.application.validatedForms is empty', ->
+        beforeEach ->
+          deleteValidatedForms()
+        afterEach ->
+          resetValidatedForms()
+
+        it 'returns false', ->
+          expect(ShortFormApplicationService.checkFormState('dahlia.short-form-application.income')).toEqual false
 
     describe 'applicationCompletionPercentage', ->
       it 'calculates a baseline percentage of 5% for new applications', ->
