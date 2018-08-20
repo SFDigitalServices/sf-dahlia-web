@@ -33,7 +33,7 @@
     },
     {
       "name": "HomeownershipSF",
-      "languages": ["English", "Spanish"],
+      "languages": ["English", "Spanish", "Filipino"],
       "address": "275 5th St #314",
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 202-5462",
@@ -86,14 +86,6 @@
       "citystate": "San Francisco, CA 94103",
       "phone": "(415) 255-7200, ext. 190",
       "website": "http://www.thearcsf.org/"
-    },
-    {
-      "name": "Veterans Equity Center",
-      "languages":["English", "Spanish", "Filipino"],
-      "address": "1010 Mission St",
-      "citystate": "San Francisco, CA 94103",
-      "phone": "(415) 255-2347",
-      "website": "http://www.vetsequitycenter.org/services/bishop/"
     }
   ]
 }
