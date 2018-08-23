@@ -180,9 +180,9 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     Service.lotteryBucketInfo &&
     _.some(Service.lotteryBucketInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
 
-  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
+  # Lottery Results being "available" means that the lottery status is complete and we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = ->
-    !! (Service.listing.LotteryResultsURL || Service.listingHasLotteryBuckets())
+    !! (Service.lotteryComplete && (Service.listing.LotteryResultsURL || Service.listingHasLotteryBuckets()))
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
     street = "#{type}_Street_Address"
