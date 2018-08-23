@@ -203,10 +203,10 @@ ListingController = (
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
   $scope.showLotteryResultsModalButton = ->
-    ListingService.listingHasLotteryBuckets()
+    ListingService.listingHasLotteryResults() && ListingService.listingHasLotteryBuckets()
 
   $scope.showDownloadLotteryResultsButton = ->
-    $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+    ListingService.listingHasLotteryResults() && $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
   $scope.listingHasLotteryResults = ->
     ListingService.listingHasLotteryResults()
