@@ -1,10 +1,12 @@
 World = require('../world.coffee')
 Utils = require('../utils')
+{ defineSupportCode } = require('cucumber')
 
-module.exports = ->
-  @World = World
+defineSupportCode( ({Given, Then, setWorldConstructor}) ->
 
-  @Given 'I try to go to a listing page with an invalid ID', ->
+  setWorldConstructor(World)
+
+  Given 'I try to go to a listing page with an invalid ID', ->
     url = "/listings/foofoofoofoo"
     Utils.Page.goTo(url)
 
@@ -12,6 +14,7 @@ module.exports = ->
   # --- Expectations --- #
   ######################
 
-  @Then 'I should be redirected to the listings page', ->
+  Then 'I should be redirected to the listings page', ->
     listingsHeader = element(By.id('listings_header'))
     @expect(listingsHeader.isPresent()).to.eventually.equal(true)
+)

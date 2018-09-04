@@ -6,7 +6,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
     Scenario: Using an address outside the NRHP area, I should not see the preference option
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -22,7 +22,7 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
     Scenario: Using an address inside the NRHP area, I should see the preference option
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page with an address (NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate living with other people
@@ -64,6 +64,6 @@ Feature: Short Form Application - Neighborhood Resident Housing Preference
         And I upload a "School record" as my proof of preference for "neighborhoodResidence"
         And I click the Next button on the Live in the Neighborhood page
         And I opt out of "Alice Griffith" preference
-        And I don't choose COP/DTHP preferences
+        And I don't choose COP-DTHP preferences
         And I fill out the optional survey
         Then I should see "Neighborhood Resident Housing Preference" preference claimed for "Jane Doe"

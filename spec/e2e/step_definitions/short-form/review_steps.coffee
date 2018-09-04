@@ -1,41 +1,42 @@
 Utils = require('../../utils')
 Pages = require('../../pages/short-form').Pages
+{ defineSupportCode } = require('cucumber')
 
-module.exports = ->
-  @When 'I fill out the optional survey', ->
+defineSupportCode( ({When, Then}) ->
+  When 'I fill out the optional survey', ->
     Pages.DemographicSurvey.fill()
 
-  @When 'I confirm details on the review page', ->
+  When 'I confirm details on the review page', ->
     Utils.Page.submit()
 
-  @When 'I agree to the terms and submit', ->
+  When 'I agree to the terms and submit', ->
     element(By.id('terms_yes')).click().then ->
       Utils.Page.submit()
 
-  @When 'I click to view submitted application', ->
+  When 'I click to view submitted application', ->
     viewApp = element(By.id('view-app'))
     Utils.Page.scrollToElement(viewApp).then ->
       viewApp.click()
 
-  @Then 'on the optional survey page I should see my correct info', ->
+  Then 'on the optional survey page I should see my correct info', ->
     Pages.DemographicSurvey.expectToMatch(@)
 
-  @Then 'I should land on the optional survey page', ->
+  Then 'I should land on the optional survey page', ->
     surveyTitle =
       element(By.cssContainingText('h2.app-card_question',
         'Help us ensure we are meeting our goal'))
     @expect(surveyTitle.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see my lottery number on the confirmation page', ->
+  Then 'I should see my lottery number on the confirmation page', ->
     lotteryNumberMarkup = element(By.id('lottery_number'))
     @expect(lotteryNumberMarkup.isPresent()).to.eventually.equal(true)
 
-  @Then 'I should see the general lottery notice on the review page', ->
+  Then 'I should see the general lottery notice on the review page', ->
     claimedPreference =
       element(By.cssContainingText('.info-item_name', 'You will be in the general lottery'))
     @expect(claimedPreference.isPresent()).to.eventually.equal(true)
 
-  @Then /^on the Review Page I should see my contact details for "([^"]*)"$/, (fullName) ->
+  Then /^on the Review Page I should see my contact details for "([^"]*)"$/, (fullName) ->
     account = Utils.Account.get(fullName)
 
     Utils.Expect.byIdAndText(@, 'full-name', account.fullName)
@@ -46,22 +47,22 @@ module.exports = ->
     Utils.Expect.byCss(@, '.info-item_name', '1222 HARRISON ST # 100')
     Utils.Expect.byCss(@, '.info-item_name', Pages.Contact.defaults.mailingAddress1)
 
-  @Then 'on the Review Page I should see my alternate contact details', ->
+  Then 'on the Review Page I should see my alternate contact details', ->
     Utils.Expect.byIdAndText(@, 'alt-contact-name', Pages.AlternateContact.defaults.fullName)
     Utils.Expect.byIdAndText(@, 'alt-contact-email', Pages.AlternateContact.defaults.email)
     Utils.Expect.byIdAndText(@, 'alt-contact-phone', Pages.AlternateContact.defaults.formattedPhone)
     Utils.Expect.byCss(@, '#review-alt-contact-mailing-address .info-item_name',
       Pages.AlternateContact.defaults.address)
 
-  @Then 'on the Review Page I should see my household member details', ->
+  Then 'on the Review Page I should see my household member details', ->
     Utils.Expect.byIdAndText(@, 'household-member-0-name', 'Coleman Francis')
     Utils.Expect.byIdAndText(@, 'household-member-0-dob', '10/15/1985')
 
-  @Then 'on the Review Page I should see my income details', ->
+  Then 'on the Review Page I should see my income details', ->
     Utils.Expect.byIdAndText(@, 'income-vouchers', 'NONE')
     Utils.Expect.byIdAndText(@, 'income-amount', '$72,000.00 per year')
 
-  @Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/,
+  Then /^on the Review Page I should see my preference details on my "([^"]*)" application$/,
     (status) ->
       Utils.Expect.byCss(@,
         '#review-neighborhoodResidence .info-item_name', 'Neighborhood Resident Housing Preference')
@@ -95,11 +96,12 @@ module.exports = ->
         Utils.Expect.byCss(@,
           '#review-rentBurden .info-item_note', 'for your household')
 
-  @Then 'on the Review Page I should see my Rent Burdened preference details', ->
+  Then 'on the Review Page I should see my Rent Burdened preference details', ->
     Utils.Expect.byCss(@, '#review-rentBurden .info-item_note', 'for 4053 18TH ST')
     Utils.Expect.byCss(@, '#review-rentBurden .info-item_note', 'for 2601 MISSION ST')
     Utils.Expect.byCss(@,
       '#review-rentBurden .info-item_note', 'Copy of Lease and Money order attached')
 
-  @Then 'on the View Submitted App Page I should see Assisted Housing preference claimed', ->
+  Then 'on the View Submitted App Page I should see Assisted Housing preference claimed', ->
     Utils.Expect.byCss(@, '#review-assistedHousing .info-item_name', 'Assisted Housing Preference')
+)
