@@ -19,7 +19,6 @@ defineSupportCode( ({Given, Then, When}) ->
         email: account.email
         password: account.password
       }
-
       Utils.Account.confirm(account.email)
 
   When /^I create an account for "([^"]*)"$/, (fullName) ->
@@ -98,6 +97,7 @@ defineSupportCode( ({Given, Then, When}) ->
       .click().then Utils.Page.confirmModal
 
   When 'I try to navigate to the Favorites page', ->
+    browser.waitForAngular()
     element.all(By.cssContainingText('a', 'My Favorites')).filter((elem) ->
       elem.isDisplayed()
     ).first().click()

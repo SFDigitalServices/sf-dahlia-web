@@ -6,6 +6,7 @@ Feature: Sign-in while filling out application
     Scenario: Setting up an account for sign in while applying tests
         # Birth date indicates < 65 years old for senior building tests
         Given I have a confirmed account for "Alice Walker" with birth date "1/1/2000"
+        When I wait "5" seconds
 
 
     ### Applying to senior building ###
