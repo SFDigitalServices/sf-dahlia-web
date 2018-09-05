@@ -35,7 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'angular-rails-templates'
 
 # salesforce
-gem 'restforce', require: false
+gem 'restforce', '~>3.1.0', require: false
 
 # handy ruby extensions
 gem 'facets', require: false
