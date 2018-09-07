@@ -6,7 +6,7 @@ Feature: Short Form Application - Rent Burdened Preference
     Scenario: Being eligible for Rent Burdened preference with a single address
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate living with other people
@@ -35,7 +35,7 @@ Feature: Short Form Application - Rent Burdened Preference
         # change address, clear out preference
         When --I reach the "Change primary applicant address" step--
         And I go back to the Contact page
-        And I fill out the Contact page with an address (NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate being done adding people
@@ -84,6 +84,6 @@ Feature: Short Form Application - Rent Burdened Preference
         And I opt out of "NRHP" preference
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
-        And I don't choose COP/DTHP preferences
+        And I don't choose COP-DTHP preferences
         And I fill out the optional survey
         Then on the Review Page I should see my Rent Burdened preference details

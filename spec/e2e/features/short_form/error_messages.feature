@@ -30,7 +30,7 @@ Feature: Short Form Application
         And I fill out the Contact page with an address that isn't found
         Then I should see an address not found error
 
-        When I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        When I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         # error: invalid email in alternate contact
         And I select an alternate contact of type Other
@@ -75,12 +75,12 @@ Feature: Short Form Application
         # error: L/W preference option not chosen (optOut / preference both blank)
         And I continue past the Lottery Preferences intro
         And I opt out of "Assisted Housing" preference
-        And I click the Next button on the Live/Work Preference page
+        And I click the Next button on the Live-Work Preference page
         Then I should see an error about selecting an option
 
         # error: preference document not uploaded
-        When I select "Jane Doe" for "Live in San Francisco" in Live/Work preference
-        And I click the Next button on the Live/Work Preference page
+        When I select "Jane Doe" for "Live in San Francisco" in Live-Work preference
+        And I click the Next button on the Live-Work Preference page
         Then I should see an error about uploading proof
 
         # error: uploaded preference document too large
