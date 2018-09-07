@@ -876,7 +876,7 @@
         "USER_TOKEN_VALIDATION_TIMEOUT": "Mahalaga sa amin ang inyong seguridad. Ni-log out namin kayo dahil may problema sa koneksiyon. Mangyaring mag-sign in para makapagpatuloy. "
     },
     "T": {
-        "APPLICATION": "Aplikasyon",
+        "APPLICATION_FOR_LISTING": "Aplikasyon para sa {{listingName}}",
         "APPLICATION_DEADLINE": "Huling Araw para sa Pagsusumite ng Aplikasyon",
         "APPLICATION_DUE": "Huling Araw ng Pagsusumite ng Aplikasyon",
         "APPLICATION_SUBMITTED": "Naisumite na ang Aplikasyon",
