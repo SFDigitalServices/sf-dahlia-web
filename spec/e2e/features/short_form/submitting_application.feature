@@ -6,7 +6,7 @@ Feature: Short Form Application
     Scenario: Submitting a basic application, creating an account on the confirmation page
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -18,7 +18,7 @@ Feature: Short Form Application
         And I opt out of "Assisted Housing" preference
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
-        And I don't choose COP/DTHP preferences
+        And I don't choose COP-DTHP preferences
         And I continue past the general lottery notice page
         And I fill out the optional survey
         And I confirm details on the review page
@@ -43,7 +43,7 @@ Feature: Short Form Application
         Given I go to the first page of the "Test Listing" application
         # you
         When I fill out the Name page as "Jane Valerie Doe"
-        And I fill out the Contact page with my address (NRHP match) and mailing address
+        And I fill out the Contact page with my address, NRHP match, and mailing address
         And I confirm my address
         And I fill out an alternate contact
         # household
