@@ -4,8 +4,7 @@ section.app-container
       short-form-back
       .app-header.app-card.form-card
         header.app-card_header
-          h1.app-card_title
-            | {{application.listing.Name || listing.Name}} {{'T.APPLICATION' | translate}}
+          h1.app-card_title translate="T.APPLICATION_FOR_LISTING" translate-value-listing-name="{{application.listing.Name || listing.Name}}"
         .app-card_nav.text-center
           a.button.button-link.button-lined.small-text-center.expand-small ui-sref="dahlia.listing({id: listing.listingID})"
             | {{'REVIEW_APPLICATION.VIEW_ORIGINAL_LISTING' | translate}}
