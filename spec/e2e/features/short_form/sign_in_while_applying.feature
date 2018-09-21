@@ -6,6 +6,7 @@ Feature: Sign-in while filling out application
     Scenario: Setting up an account for sign in while applying tests
         # Birth date indicates < 65 years old for senior building tests
         Given I have a confirmed account for "Alice Walker" with birth date "1/1/2000"
+        When I wait "5" seconds
 
 
     ### Applying to senior building ###
@@ -79,7 +80,7 @@ Feature: Sign-in while filling out application
 
         # Save application for next set of tests
         Then I hit the Next button "1" time
-        And I fill out the Contact page with an address (NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I click the Save and Finish Later button
         And I sign out
 
@@ -94,7 +95,7 @@ Feature: Sign-in while filling out application
         Then the application page title should be "Pick up where you left off"
         When I choose to continue my saved draft
         Then I should be on the "Contact" page of the application
-        And I should see my address (NRHP match) on the Contact page
+        And I should see my address, NRHP match, on the Contact page
         And I sign out without saving
 
     Scenario: Signing in on welcome back page with draft application and starting from scratch
@@ -137,7 +138,7 @@ Feature: Sign-in while filling out application
 
     Scenario: Signing in to save and finish later with different account details and creating a new account
         # Already started with anonymous application in previous test
-        When I fill out the Contact page with an address (NRHP match) and WorkInSF
+        When I fill out the Contact page with an address, NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -172,7 +173,7 @@ Feature: Sign-in while filling out application
         And I should not be able to navigate to the "Income" section
         And I should not be able to navigate to the "Preferences" section
         And I should see the account info for "Harper Lee" filled in on the Name page
-        And I should see my address (NRHP match) on the Contact page
+        And I should see my address, NRHP match, on the Contact page
 
         When I hit the Next button "1" time
         And I indicate I will live alone
@@ -185,7 +186,7 @@ Feature: Sign-in while filling out application
         # different birth date than in account settings
         When I fill out the Name page as "Alice Walker" with birth date "2/2/1952"
         And I continue without signing in
-        And I fill out the Contact page with an address (non-NRHP match) and WorkInSF
+        And I fill out the Contact page with an address, non-NRHP match, and WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate I will live alone
@@ -222,7 +223,7 @@ Feature: Sign-in while filling out application
         When I opt out of "Assisted Housing" preference
         And I opt out of "Live/Work" preference
         And I opt out of "Alice Griffith" preference
-        And I don't choose COP/DTHP preferences
+        And I don't choose COP-DTHP preferences
         And I continue past the general lottery notice page
         And I fill out the optional survey
         And I confirm details on the review page

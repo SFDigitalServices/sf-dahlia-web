@@ -392,7 +392,7 @@
         "CREATE_ACCOUNT_TITLE": "Would you like to create an account?",
         "DONT_SUBMIT_ANOTHER_APP_P1_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you did not receive an email confirmation.",
         "DONT_SUBMIT_ANOTHER_APP_P1_NO_EMAIL": "If you need to update information on your application, do not apply again or both applications will be removed from the lottery. Contact the leasing agent if you have any questions.",
-        "DONT_SUBMIT_ANOTHER_APP_TITLE": "Do not submit another application",
+        "DONT_SUBMIT_ANOTHER_APP_TITLE": "Do not submit another application for this listing",
         "GO_TO_MY_APPLICATIONS": "Go to My Applications",
         "LOTTERY_NUMBER": "Here's your lottery ticket number",
         "NEXT_STEPS_BODY1": "The lottery will be held on",
@@ -876,7 +876,7 @@
         "USER_TOKEN_VALIDATION_TIMEOUT": "We care about your security. We logged you out due to a connection issue. Please sign in to continue."
     },
     "T": {
-        "APPLICATION": "Application",
+        "APPLICATION_FOR_LISTING": "{{listingName}} Application",
         "APPLICATION_DEADLINE": "Application Deadline",
         "APPLICATION_DUE": "Application Due",
         "APPLICATION_SUBMITTED": "Application Submitted",

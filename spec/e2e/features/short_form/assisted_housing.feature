@@ -6,7 +6,7 @@ Feature: Short Form Application - Assisted Housing Preference
     Scenario: Claiming Assisted Housing preference
         Given I go to the first page of the "Test Listing" application
         When I fill out the Name page as "Jane Doe"
-        And I fill out the Contact page with an address (non-NRHP match), no WorkInSF
+        And I fill out the Contact page with an address, non-NRHP match, no WorkInSF
         And I confirm my address
         And I don't indicate an alternate contact
         And I indicate living with other people

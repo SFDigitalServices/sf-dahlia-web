@@ -82,7 +82,7 @@ accordion-heading
           p.t-delta.no-margin.t-bold
             | {{::listing.Deposit_Min | currency:"$":0}}
             span ng-if="listing.Deposit_Max && listing.Deposit_Max != listing.Deposit_Min"
-              | &ndash;{{ listing.Deposit_Max }}
+              | &ndash;{{ listing.Deposit_Max | currency:"$":0 }}
           span.content-label.t-small
             | or one month's rent
           span.t-tiny.d-block ng-if="listingIsBMR()"

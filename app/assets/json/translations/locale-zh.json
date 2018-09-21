@@ -583,7 +583,7 @@
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "您已成功登入，而且您的詳細聯絡資訊已經更新。"
     },
     "T": {
-        "APPLICATION": "申請",
+        "APPLICATION_FOR_LISTING": "{{listingName}} 申請",
         "APPLICATION_DEADLINE": "申請截止日期",
         "APPLICATION_DUE": "申請到期日期",
         "APPLICATION_SUBMITTED": "已提交申請",

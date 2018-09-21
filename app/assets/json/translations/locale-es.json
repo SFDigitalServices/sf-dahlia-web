@@ -587,7 +587,7 @@
         "SIGNED_IN_SUCCESSFULLY_AND_UPDATED": "Ha iniciado sesión satisfactoriamente y se ha actualizado su información de contacto."
     },
     "T": {
-        "APPLICATION": "Solicitud",
+        "APPLICATION_FOR_LISTING": "{{listingName}} Solicitud",
         "APPLICATION_DEADLINE": "Fecha límite para la presentación de la solicitud",
         "APPLICATION_DUE": "Vencimiento de la solicitud",
         "APPLICATION_SUBMITTED": "Solicitud presentada",
