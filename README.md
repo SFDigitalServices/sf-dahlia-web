@@ -3,8 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/gpa.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web)
 [![Test Coverage](https://codeclimate.com/github/Exygy/sf-dahlia-web/badges/coverage.svg)](https://codeclimate.com/github/Exygy/sf-dahlia-web/coverage)
 [![Build Status](https://semaphoreci.com/api/v1/exygy/sf-dahlia-web-full/branches/master/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web-full)
-[![BrowserStack](./Browserstack-logo@2x.png?raw=true){:height="40px"}](https://www.browserstack.com/)
-
+<a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" align="left" height="36" ></a>
 
 ## Purpose
 
