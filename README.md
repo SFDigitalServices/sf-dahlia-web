@@ -5,7 +5,7 @@
 [![Build Status](https://semaphoreci.com/api/v1/exygy/sf-dahlia-web-full/branches/master/badge.svg)](https://semaphoreci.com/exygy/sf-dahlia-web-full)
 
 
-Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" align="left" height="36" ></a>
+Cross-browser testing done with <a href="https://www.browserstack.com/"><img src="./Browserstack-logo@2x.png?raw=true" height="36" ></a>
 
 ## Purpose
 
