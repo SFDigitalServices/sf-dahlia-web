@@ -23,11 +23,10 @@ class DemographicSurvey extends AngularPage
   fill: (opts = {}) ->
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
-    # leave one blank so that we still encounter the survey page
-    # TODO: leave out something other than sex at birth?
     @userSex.sendKeys(@defaults.userSex)
     @userSexOther.clear().sendKeys(@defaults.userSexOther)
-    @userEthnicity.sendKeys(@defaults.userEthnicity)
+    # leave one blank so that we still encounter the survey page
+    # @userEthnicity.sendKeys(@defaults.userEthnicity)
     @userRace.sendKeys(@defaults.userRace)
     # choose two referral options
     @referralNewspaper.click()
@@ -36,7 +35,7 @@ class DemographicSurvey extends AngularPage
     @submitPage()
 
   expectToMatch: (context, opts = {}) ->
-    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userEthnicity', 'userRace']
+    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userRace']
     fields.forEach (field) =>
       context.expect(this[field].getAttribute('value')).to.eventually.equal(@defaults[field])
     context.expect(@referralNewspaper.isSelected()).to.eventually.equal(true)
