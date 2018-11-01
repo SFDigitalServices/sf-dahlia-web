@@ -4,7 +4,6 @@ class DemographicSurvey extends AngularPage
   constructor: ->
     @userGender = element(By.id('user_gender'))
     @genderOther = element(By.id('genderOther'))
-    @userSexAtBirth = element(By.id('user_sex_at_birth'))
     @userSex = element(By.id('user_sexual_orientation'))
     @userSexOther = element(By.id('user_sexual_orientation_other'))
     @userEthnicity = element(By.id('user_ethnicity'))
@@ -16,7 +15,6 @@ class DemographicSurvey extends AngularPage
     @defaults =
       userGender: 'Not Listed'
       genderOther: 'Dothraki'
-      userSexAtBirth: 'Male'
       userSex: 'Not listed'
       userSexOther: 'Ziggy Stardust'
       userEthnicity: 'Not Hispanic/Latino'
@@ -26,7 +24,7 @@ class DemographicSurvey extends AngularPage
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
     # leave one blank so that we still encounter the survey page
-    # @userSexAtBirth.sendKeys(@defaults.userSexAtBirth)
+    # TODO: leave out something other than sex at birth?
     @userSex.sendKeys(@defaults.userSex)
     @userSexOther.clear().sendKeys(@defaults.userSexOther)
     @userEthnicity.sendKeys(@defaults.userEthnicity)

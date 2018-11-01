@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RESTful JSON API to query for short form actions
 class Api::V1::ShortFormController < ApiController
   before_action :authenticate_user!,
@@ -331,7 +333,6 @@ class Api::V1::ShortFormController < ApiController
                 genderOther
                 ethnicity
                 race
-                sexAtBirth
                 sexualOrientation
                 sexualOrientationOther
                 hiv
