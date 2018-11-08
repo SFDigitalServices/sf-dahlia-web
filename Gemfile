@@ -46,7 +46,7 @@ gem 'rack-rewrite', '~> 1.5.0'
 gem 'rack-cors', '~> 1.0.1'
 
 # address validation
-gem 'easypost'
+gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # JSON optimization
