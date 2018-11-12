@@ -160,7 +160,7 @@ ShortFormDataService = (ListingService) ->
       address = null
       city = null
       state = null
-      zipCode = null
+      zip = null
       PREFS = ListingService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
@@ -207,7 +207,7 @@ ShortFormDataService = (ListingService) ->
         address += " " + prefAddress.address2 if prefAddress.address2
         city = prefAddress.city
         state = prefAddress.state
-        zipCode = prefAddress.zip
+        zip = prefAddress.zip
 
       # if you optOut then you wouldn't have a memberName or proofOption
       unless optOut
@@ -234,7 +234,7 @@ ShortFormDataService = (ListingService) ->
         address
         city
         state
-        zipCode
+        zip
       }
       # remove blank values
       shortFormPref = _.omitBy(shortFormPref, _.isNil)
@@ -432,12 +432,12 @@ ShortFormDataService = (ListingService) ->
         if shortFormPref.certificateNumber
           preferences["#{prefKey}_certificateNumber"] = shortFormPref.certificateNumber
 
-        if shortFormPref.address || shortFormPref.city || shortFormPref.state || shortFormPref.zipCode
+        if shortFormPref.address || shortFormPref.city || shortFormPref.state || shortFormPref.zip
           preferences["#{prefKey}_address"] = {
             address1: shortFormPref.address
             city: shortFormPref.city
             state: shortFormPref.state
-            zip: shortFormPref.zipCode
+            zip: shortFormPref.zip
           }
 
         preferences = Service._reformatPreferenceProof(preferences, prefKey, shortFormPref, files, sfApp.status)
