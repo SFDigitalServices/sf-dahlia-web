@@ -19,10 +19,7 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
     ['Trans Male', t('LABEL.TRANS_MALE')]
     ['Not Listed', t('LABEL.NOT_LISTED')]
   ]
-  Service.sex_at_birth_options = [
-    ['Female', t('LABEL.FEMALE')]
-    ['Male', t('LABEL.MALE')]
-  ]
+
   Service.relationship_options = [
     ['Spouse', t('LABEL.SPOUSE')]
     ['Registered Domestic Partner', t('LABEL.REGISTERED_DOMESTIC_PARTNER')]

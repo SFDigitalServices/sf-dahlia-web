@@ -4,7 +4,6 @@ class DemographicSurvey extends AngularPage
   constructor: ->
     @userGender = element(By.id('user_gender'))
     @genderOther = element(By.id('genderOther'))
-    @userSexAtBirth = element(By.id('user_sex_at_birth'))
     @userSex = element(By.id('user_sexual_orientation'))
     @userSexOther = element(By.id('user_sexual_orientation_other'))
     @userEthnicity = element(By.id('user_ethnicity'))
@@ -16,7 +15,6 @@ class DemographicSurvey extends AngularPage
     @defaults =
       userGender: 'Not Listed'
       genderOther: 'Dothraki'
-      userSexAtBirth: 'Male'
       userSex: 'Not listed'
       userSexOther: 'Ziggy Stardust'
       userEthnicity: 'Not Hispanic/Latino'
@@ -25,11 +23,10 @@ class DemographicSurvey extends AngularPage
   fill: (opts = {}) ->
     @userGender.sendKeys(@defaults.userGender)
     @genderOther.clear().sendKeys(@defaults.genderOther)
-    # leave one blank so that we still encounter the survey page
-    # @userSexAtBirth.sendKeys(@defaults.userSexAtBirth)
     @userSex.sendKeys(@defaults.userSex)
     @userSexOther.clear().sendKeys(@defaults.userSexOther)
-    @userEthnicity.sendKeys(@defaults.userEthnicity)
+    # leave one blank so that we still encounter the survey page
+    # @userEthnicity.sendKeys(@defaults.userEthnicity)
     @userRace.sendKeys(@defaults.userRace)
     # choose two referral options
     @referralNewspaper.click()
@@ -38,7 +35,7 @@ class DemographicSurvey extends AngularPage
     @submitPage()
 
   expectToMatch: (context, opts = {}) ->
-    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userEthnicity', 'userRace']
+    fields = ['userGender', 'genderOther', 'userSex', 'userSexOther', 'userRace']
     fields.forEach (field) =>
       context.expect(this[field].getAttribute('value')).to.eventually.equal(@defaults[field])
     context.expect(@referralNewspaper.isSelected()).to.eventually.equal(true)

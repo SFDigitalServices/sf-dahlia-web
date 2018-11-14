@@ -46,7 +46,7 @@ gem 'rack-rewrite', '~> 1.5.0'
 gem 'rack-cors', '~> 1.0.1'
 
 # address validation
-gem 'easypost'
+gem 'easypost', '>=3.0.1'
 gem 'StreetAddress', github: 'Exygy/street-address', require: 'street_address'
 
 # JSON optimization
@@ -66,7 +66,7 @@ gem 'active_model-errors_details'
 
 gem 'sitemap_generator', github: 'Exygy/sitemap_generator'
 
-gem 'nokogiri', '~> 1.8.1'
+gem 'nokogiri', '>= 1.8.2'
 gem 'actionpack-page_caching', '~> 1.1.0'
 
 # image manipulation
