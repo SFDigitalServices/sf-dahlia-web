@@ -44,8 +44,9 @@ PreCommit:
   CoffeeLint:
     enabled: true
     description: 'Analyzing with CoffeeLint'
-    required_executable: 'coffeelint'
     install_command: 'npm install'
+    required_executable: 'npm'
+    command: ['npm', 'run', 'coffeelint']
 
   TrailingWhitespace:
     enabled: true
