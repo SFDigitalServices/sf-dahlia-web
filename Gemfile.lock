@@ -233,7 +233,7 @@ GEM
     puma (3.6.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.8)
+    rack (1.6.11)
     rack-cors (1.0.1)
     rack-protection (2.0.0)
       rack
@@ -437,6 +437,7 @@ DEPENDENCIES
   pry-rails
   puma
   quiet_assets
+  rack (>= 1.6.11)
   rack-cors (~> 1.0.1)
   rack-rewrite (~> 1.5.0)
   rails (~> 4.2.8)

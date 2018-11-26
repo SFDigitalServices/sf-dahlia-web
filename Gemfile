@@ -40,6 +40,7 @@ gem 'restforce', '~>3.1.0', require: false
 # handy ruby extensions
 gem 'facets', require: false
 
+gem 'rack', '>= 1.6.11'
 # for redirecting
 gem 'rack-rewrite', '~> 1.5.0'
 # for CORS requests (specifically for CDN handling)
