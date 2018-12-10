@@ -221,7 +221,7 @@ GEM
     pg (0.18.4)
     phantomjs (2.1.1.0)
     powerpack (0.1.1)
-    prerender_rails (1.5.1)
+    prerender_rails (1.6.0)
       activesupport
       rack
     pry (0.10.3)
@@ -432,7 +432,7 @@ DEPENDENCIES
   overcommit
   pg
   phantomjs (~> 2.1.1)
-  prerender_rails (~> 1.5.1)
+  prerender_rails (~> 1.6.0)
   pry
   pry-rails
   puma
