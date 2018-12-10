@@ -323,19 +323,19 @@ ListingController = (
 
   $scope.priorityLabel = (priority, modifier) ->
     labelMap =
-      'Vision impaired':
+      'Vision impairments':
         name: 'Vision Impairments'
         description: 'impaired vision'
-      'Hearing impaired':
+      'Hearing impairments':
         name: 'Hearing Impairments'
         description: 'impaired hearing'
-      'Hearing/Vision impaired':
+      'Hearing/Vision impairments':
         name: 'Vision and/or Hearing Impairments'
         description: 'impaired vision and/or hearing'
-      'Mobility/hearing/vision impaired':
+      'Mobility/hearing/vision impairments':
         name: 'Mobility, Hearing and/or Vision Impairments'
         description: 'impaired mobility, hearing and/or vision'
-      'Mobility impaired':
+      'Mobility impairments':
         name: 'Mobility Impairments'
         description: 'impaired mobility'
 

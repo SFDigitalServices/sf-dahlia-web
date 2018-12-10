@@ -407,7 +407,7 @@ class Api::V1::ShortFormController < ApiController
                 address
                 city
                 state
-                zipCode
+                zip
               ],
             },
             :answeredCommunityScreening,
