@@ -77,8 +77,8 @@ When 'I indicate no ADA priority', ->
   Utils.Page.checkCheckbox 'adaPrioritiesSelected_none', Utils.Page.submit
 
 When 'I indicate ADA Mobility and Vision impairments', ->
-  Utils.Page.checkCheckbox 'adaPrioritiesSelected_mobility-impaired', ->
-    Utils.Page.checkCheckbox 'adaPrioritiesSelected_vision-impaired', Utils.Page.submit
+  Utils.Page.checkCheckbox 'adaPrioritiesSelected_mobility-impairments', ->
+    Utils.Page.checkCheckbox 'adaPrioritiesSelected_vision-impairments', Utils.Page.submit
 
 When 'I fill out the household member form with missing data', ->
   # don't fill anything out and just submit
@@ -95,8 +95,8 @@ Then 'on the Public Housing page I should see my correct info', ->
   Utils.Page.submit()
 
 Then 'on the ADA Priorities page I should see my correct info', ->
-  Utils.Expect.checkboxChecked(@, 'adaPrioritiesSelected_mobility-impaired')
-  Utils.Expect.checkboxChecked(@, 'adaPrioritiesSelected_vision-impaired')
+  Utils.Expect.checkboxChecked(@, 'adaPrioritiesSelected_mobility-impairments')
+  Utils.Expect.checkboxChecked(@, 'adaPrioritiesSelected_vision-impairments')
   Utils.Page.submit()
 
 Then 'I should see an error on the household member form', ->

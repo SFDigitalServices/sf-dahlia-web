@@ -98,9 +98,9 @@ ShortFormHelperService = ($translate, $filter, $sce, $state) ->
   ]
 
   Service.priority_options = [
-    ['Mobility impaired', t('LABEL.MOBILITY_IMPAIRMENTS')]
-    ['Vision impaired', t('LABEL.VISION_IMPAIRMENTS')]
-    ['Hearing impaired', t('LABEL.HEARING_IMPAIRMENTS')]
+    ['Mobility impairments', t('LABEL.MOBILITY_IMPAIRMENTS')]
+    ['Vision impairments', t('LABEL.VISION_IMPAIRMENTS')]
+    ['Hearing impairments', t('LABEL.HEARING_IMPAIRMENTS')]
   ]
 
   Service.listing_referral_options = [

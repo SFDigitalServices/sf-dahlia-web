@@ -243,7 +243,7 @@ ShortFormApplicationController = (
 
   $scope.noPrioritiesSelected = ->
     selected = $scope.application.adaPrioritiesSelected
-    !_.some([selected['Mobility impaired'], selected['Vision impaired'], selected['Hearing impaired'], selected.None])
+    !_.some([selected['Mobility impairments'], selected['Vision impairments'], selected['Hearing impairments'], selected.None])
 
   $scope.prioritiesSelectedExists = ->
     !_.isEmpty($scope.application.adaPrioritiesSelected)
