@@ -101,7 +101,7 @@ module Force
       esc_listing_id = CGI.escape(listing_id)
       esc_lottery_number = CGI.escape(lottery_number)
       endpoint = "/Listing/LotteryResult/#{esc_listing_id}/#{esc_lottery_number}"
-      Request.new.cached_get(endpoint)
+      Request.new.get(endpoint)
     end
 
     def self.check_household_eligibility(listing_id, params)
