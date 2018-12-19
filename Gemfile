@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 4.2.8'
+gem 'rails', '~> 4.2.11'
 gem 'rails-api'
 
 # Use SCSS for stylesheets
@@ -62,6 +62,8 @@ gem 'devise_token_auth', '~> 0.1.39'
 gem 'pg'
 
 gem 'actionmailer-text'
+gem 'activejob', '>= 4.2.11'
+
 gem 'hashie'
 gem 'active_model-errors_details'
 
