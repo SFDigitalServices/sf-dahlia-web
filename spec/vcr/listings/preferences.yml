@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:54 GMT
+      - Thu, 27 Dec 2018 03:16:49 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=SBQJv5YgR36Zzq6OpXSKEw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:54 GMT;Max-Age=5184000
+      - BrowserId=GCIDO8kvRSKxBLe0c_zi2g;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:16:49 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263534710","signature":"00LosUGVUnAA7NnkrYVYQY6+ixfGVFjknWW7JnZ/uL4="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545880610028","signature":"pHLk7ZbFsZS25R2diFk7z0USlCOqYzlioLUWpg8q5xQ="}'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:56 GMT
+  recorded_at: Thu, 27 Dec 2018 03:16:50 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/Listing/Preferences/a0W0P00000F8YG4UAN
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/Preferences/a0W0P00000F8YG4UAN"
     body:
       encoding: US-ASCII
       string: ''
@@ -71,22 +71,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:55 GMT
+      - Thu, 27 Dec 2018 03:16:50 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0U0000000Qf1m";
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D0U0000000Qf1m";
+      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=tYJTSt_1Q3eFE7AOyaopUw;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:55 GMT;Max-Age=5184000
+      - BrowserId=p6ww9Gk7QNiBzVCyjGF2aw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:16:50 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -121,11 +121,11 @@ http_interactions:
         households in which at least one member lives or works in San Francisco.  Requires
         submission of proof.  Please note in order to claim Work Preference, the applicant
         currently work in San Francisco at least 75% of their working hours.","appTotal":null},{"unitsAvailable":null,"requiresProof":false,"readMoreUrl":null,"preferenceProofRequirementDescription":null,"preferenceName":"Alice
-        Griffith Housing Development Resident","pdfUrl":null,"order":null,"NRHPDistrict":null,"name":"LP-31158","listingPreferenceID":"a0l0U000003lWZqQAM","listingId":"a0W0P00000F8YG4UAN","description":"For
+        Griffith Housing Development Resident","pdfUrl":null,"order":null,"NRHPDistrict":null,"name":"LP-32885","listingPreferenceID":"a0l0P00001PsqDoQAJ","listingId":"a0W0P00000F8YG4UAN","description":"For
         households in which at least one member was a resident of the Alice Griffith
         housing development. This includes baseline and current residents that lived
         in the targeted redevelopment site on or after the time of application for
         Choice Neighborhoods of October 26, 2010.","appTotal":null}]'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:56 GMT
+  recorded_at: Thu, 27 Dec 2018 03:16:50 GMT
 recorded_with: VCR 3.0.3
