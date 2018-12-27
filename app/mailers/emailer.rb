@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # basic emailer class
 class Emailer < Devise::Mailer
   include ActionMailer::Text
@@ -124,7 +126,7 @@ class Emailer < Devise::Mailer
 
   def format_app_due_date(listing)
     due = Time.zone.parse(listing['Application_Due_Date'])
-    due_time = "#{due.strftime('%l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
+    due_time = "#{due.strftime('%-l')}:#{due.strftime('%M')} #{due.strftime('%p')}"
     due_date = "#{due.strftime('%b')} #{due.strftime('%e')}"
     @deadline = "#{due_time} on #{due_date}"
   end
