@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jul 2018 21:42:36 GMT
+      - Thu, 27 Dec 2018 03:16:48 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=OK9w6xzWRiu-lcTKYY4daQ;Path=/;Domain=.salesforce.com;Expires=Sun,
-        09-Sep-2018 21:42:36 GMT;Max-Age=5184000
+      - BrowserId=pbfjcZxGTPi6j2LMZn3ODw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:16:48 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531345356562","signature":"B50NeTs9X/Kncdh8q7K1qR5P1pRNKW6eF1og2WRC0pY="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545880608799","signature":"zr6XnMFm/bbJymtZnOrhwnwc7BUZ0W15JE1wiUooDFA="}'
     http_version: 
-  recorded_at: Wed, 11 Jul 2018 21:42:36 GMT
+  recorded_at: Thu, 27 Dec 2018 03:16:48 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/Listing/LotteryResult/a0W0P00000F8YG4UAN/00042084
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/Listing/LotteryResult/a0W0P00000F8YG4UAN/00042084"
     body:
       encoding: US-ASCII
       string: ''
@@ -71,22 +71,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 11 Jul 2018 21:42:37 GMT
+      - Thu, 27 Dec 2018 03:16:49 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0U0000000Qf1m";
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D0U0000000Qf1m";
+      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=d2g9lCMcTFCAuQq6jS_ojw;Path=/;Domain=.salesforce.com;Expires=Sun,
-        09-Sep-2018 21:42:37 GMT;Max-Age=5184000
+      - BrowserId=wgBA2EFxS--KhpynCEkEKg;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:16:49 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -97,14 +97,14 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"URL":null,"officeHours":null,"lotteryResultsURL":"http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/280%20Fell%20Street%20Ranked%20List-%203-22-2017.pdf","lotteryResults":true,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-03-22T18:00:00.000Z","lotteryCity":"San
-        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":17,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
-        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":37,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
-        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":17,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
-        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":17,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
-        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":18,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
-        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":22,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"},{"unitsAvailable":null,"totalSubmittedApps":0,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"Alice
-        Griffith Housing Development Resident"}],"lotteryAppTotal":59,"listingId":"a0W0P00000F8YG4UAN"}'
+      string: '{"URL":null,"officeHours":null,"lotteryResultsURL":"http://sfmohcd.org/sites/default/files/Documents/MOH/Lottery%20Results/280%20Fell%20Street%20Ranked%20List-%203-22-2017.pdf","lotteryResults":false,"lotteryPreferences":null,"lotteryEndTime":null,"lotteryDate":"2017-03-22T18:00:00.000Z","lotteryCity":"San
+        Francisco","lotteryBuckets":[{"unitsAvailable":1,"totalSubmittedApps":37,"preferenceResults":[],"preferenceOrder":1,"preferenceName":"Certificate
+        of Preference (COP)"},{"unitsAvailable":2,"totalSubmittedApps":90,"preferenceResults":[],"preferenceOrder":2,"preferenceName":"Rent
+        Burdened / Assisted Housing Preference"},{"unitsAvailable":3,"totalSubmittedApps":36,"preferenceResults":[],"preferenceOrder":3,"preferenceName":"Displaced
+        Tenant Housing Preference (DTHP)"},{"unitsAvailable":4,"totalSubmittedApps":35,"preferenceResults":[],"preferenceOrder":4,"preferenceName":"Neighborhood
+        Resident Housing Preference (NRHP)"},{"unitsAvailable":5,"totalSubmittedApps":52,"preferenceResults":[],"preferenceOrder":5,"preferenceName":"Live
+        or Work in San Francisco Preference"},{"unitsAvailable":1,"totalSubmittedApps":134,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"generalLottery"},{"unitsAvailable":null,"totalSubmittedApps":23,"preferenceResults":[],"preferenceOrder":null,"preferenceName":"Alice
+        Griffith Housing Development Resident"}],"lotteryAppTotal":244,"listingId":"a0W0P00000F8YG4UAN"}'
     http_version: 
-  recorded_at: Wed, 11 Jul 2018 21:42:37 GMT
+  recorded_at: Thu, 27 Dec 2018 03:16:49 GMT
 recorded_with: VCR 3.0.3
