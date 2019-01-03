@@ -12,11 +12,11 @@
     thead
       tr
         th scope="col" household size
-        th scope="col" ng-repeat="amiChart in AMICharts"
+        th scope="col" ng-repeat="amiChart in $ctrl.parent.AMICharts"
           | {{::amiChart.percent}}% AMI UNITS
     tbody
-      tr ng-repeat="householdIncomeLevel in occupancyIncomeLevels(AMICharts[0])" ng-show="toggleStates[listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= householdAMIChartCutoff()"
+      tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff()"
         td scope="row"
-          | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
-        td ng-repeat="amiChart in AMICharts"
+          | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::$ctrl.occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
+        td ng-repeat="amiChart in $ctrl.parent.AMICharts"
           | {{::incomeForHouseholdSize(amiChart, householdIncomeLevel) | currency : $ : 0}}<small>/year</small>

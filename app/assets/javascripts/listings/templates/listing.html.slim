@@ -16,7 +16,8 @@
             | Eligibility
           span.listing-header_subheader
             | Income, occupancy, preferences, and subsidies
-      ng-include src="'listings/templates/listing/_eligibility.html'"
+          listing-container
+      / ng-include src="'listings/templates/listing/_eligibility.html'"
 
     / sidebar for open listing (larger browser sizes)
     accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!listingApplicationClosed(listing)" is-open="toggleStates[listing.Id].process"

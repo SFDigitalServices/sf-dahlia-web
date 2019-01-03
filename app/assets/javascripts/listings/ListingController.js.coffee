@@ -211,8 +211,8 @@ ListingController = (
   $scope.listingHasLotteryResults = ->
     ListingService.listingHasLotteryResults()
 
-  $scope.listingHasPreferences = ->
-    $scope.listing.preferences && $scope.listing.preferences.length
+  # $scope.listingHasPreferences = ->
+  #   $scope.listing.preferences && $scope.listing.preferences.length
 
   $scope.listingHasPreference = (preference) ->
     ListingService.hasPreference(preference)
@@ -232,16 +232,16 @@ ListingController = (
   $scope.getListingAMI = ->
     ListingService.getListingAMI()
 
-  $scope.getListingPreferences = ->
-    ListingService.getListingPreferences()
+  # $scope.getListingPreferences = ->
+  #   ListingService.getListingPreferences()
 
-  $scope.occupancy = (unitSummary) ->
-    return '1' if unitSummary.maxOccupancy == 1
-    unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+  # $scope.occupancy = (unitSummary) ->
+  #   return '1' if unitSummary.maxOccupancy == 1
+  #   unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
 
-  $scope.occupancyLabel = (maxOccupancy) ->
-    return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
-    $translate.instant('LISTINGS.PEOPLE')
+  # $scope.occupancyLabel = (maxOccupancy) ->
+  #   return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
+  #   $translate.instant('LISTINGS.PEOPLE')
 
   $scope.formatBaths = (numberOfBathrooms) ->
     return 'Shared' if numberOfBathrooms == 0
@@ -255,11 +255,11 @@ ListingController = (
     else
       numberOfBathrooms
 
-  $scope.occupancyIncomeLevels = (amiLevel) ->
-    ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
+  # $scope.occupancyIncomeLevels = (amiLevel) ->
+  #   ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
 
-  $scope.householdAMIChartCutoff = ->
-    ListingService.householdAMIChartCutoff()
+  # $scope.householdAMIChartCutoff = ->
+  #   ListingService.householdAMIChartCutoff()
 
   $scope.minYearlyIncome = ->
     ListingService.minYearlyIncome()
@@ -267,8 +267,8 @@ ListingController = (
   $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
     ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
-  $scope.listingHasPriorityUnits = ->
-    ListingService.listingHasPriorityUnits($scope.listing)
+  # $scope.listingHasPriorityUnits = ->
+  #   ListingService.listingHasPriorityUnits($scope.listing)
 
   $scope.listingHasReservedUnits = ->
     ListingService.listingHasReservedUnits($scope.listing)
