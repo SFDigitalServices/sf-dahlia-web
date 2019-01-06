@@ -1,66 +1,110 @@
-.page-accordion-container.p-relative.clearfix
-  section.section-hero
-    .accordion-offset.accordion-offset--hero
-      ng-include src="'listings/templates/listing/_property-hero.html'"
+listing-container
+/ .page-accordion-container.p-relative.clearfix
+/   section.section-hero
+/     .accordion-offset.accordion-offset--hero
+/       ng-include src="'listings/templates/listing/_property-hero.html'"
 
-  accordion.page-accordion close-others="false"
-    / sidebar for closed listing
-    accordion-group.medium-right-column data-event="gtm-accordion-lottery" ng-if="::listingApplicationClosed(listing)"
-      ng-include src="'listings/templates/listing/_lottery_info.html'"
+/   accordion.page-accordion close-others="false"
+/     / sidebar for closed listing
+/     accordion-group.medium-right-column data-event="gtm-accordion-lottery" ng-if="::listingApplicationClosed(listing)"
+/       accordion-heading
+/         img.accordion-icon ng-src="{{::assetPaths['listing-units.svg']}}" alt="neighborhood-building"
+/         h3.accordion-name translate="LOTTERY.LOTTERY"
+/         span.accordion-subheader translate="LOTTERY.LOTTERY_INFO_SUBHEADER"
+/         span.ui-control.ui-icon.ui-small
+/           svg
+/             use xlink:href="#i-arrow-down"
 
-    accordion-group.bg-dust data-event="gtm-accordion-eligibility" is-open="toggleStates[listing.Id].eligibility"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon ng-src="{{::assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Eligibility
-          span.listing-header_subheader
-            | Income, occupancy, preferences, and subsidies
-          listing-container
-      / ng-include src="'listings/templates/listing/_eligibility.html'"
+/       section.content-wrap
+/         .content-group.no-padding.hide-for-small-down
+/           span.post-dealine_alert
+/             .label.flag-label.secondary.text-wrap.alert-tint
+/               span.ui-icon.ui-static.ui-medium.i-color
+/                 svg
+/                   use xlink:href="#i-clock"
+/               span translate="LISTINGS.APPLICATIONS_CLOSED" translate-value-date="{{::listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
 
-    / sidebar for open listing (larger browser sizes)
-    accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!listingApplicationClosed(listing)" is-open="toggleStates[listing.Id].process"
-      ng-include src="'listings/templates/listing/_process.html'"
+/         span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
+/           ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-features" is-open="toggleStates[listing.Id].features"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon ng-src="{{::assetPaths['listing-features.svg']}}" alt="features-options"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Features
-          span.listing-header_subheader
-            | Amenities, unit details and additional fees
-      ng-include src="'listings/templates/listing/_features.html'"
+/         .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
+/           h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
+/           p.content-group_date
+/             span.content-group_day
+/               | {{ listing.Lottery_Results_Date | date : 'longDate' }}
+/           p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
 
-    accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::formattedBuildingAddress(listing)" is-open="toggleStates[listing.Id].neighborhood"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon ng-src="{{::assetPaths['listing-neighborhood.svg']}}" alt="neighborhood-building"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Neighborhood
-          span.listing-header_subheader
-            | Location and transportation
-      ng-include src="'listings/templates/listing/_neighborhood.html'"
+/         .content-group.expand.text-center ng-if="listingHasLotteryResults()"
+/           ng-include src="'listings/templates/listing/_lottery_results.html'"
 
-    accordion-group.bg-white data-event="gtm-accordion-information" is-open="toggleStates[listing.Id].additionalInfo"
-      header.listing-header.show-for-medium-up
-        img.listing-header_icon ng-src="{{::assetPaths['listing-legal.svg']}}" alt="legal-documents"
-        hgroup.listing-header_group
-          h3.listing-header_name
-            | Additional Information
-          / span.content-header_subheader
-          /   | Required documents and selection criteria
-      ng-include src="'listings/templates/listing/_legal.html'"
+/         .content-group
+/           ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
-    .content-panel.accordion-offset.margin-bottom--2x
-      .content-card
-        .row
-          .medium-9.columns
-            p.t-base.t-serif Monitored by the Mayor's Office of Housing & Community Development
-          .medium-3.columns
-            img.right alt=("Equal Housing Opportunity Logo") ng-src="{{::assetPaths['logo-equal.png']}}"
+/         / lottery preference URL
+/         .content-group ng-repeat="lotteryPreference in ::listing.preferences" ng-if="!listingHasLotteryResults() && lotteryPreference.pdfUrl"
+/           h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{::lotteryPreference.preferenceName}}"
+/           a.button.primary.expand ng-href="{{::lotteryPreference.pdfUrl}}" target="_blank"
+/             | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
+/           p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
 
-  .bg-dust
-    .accordion-offset
-      ng-include src="'pages/templates/_email-updates.html'"
+/         .content-group ng-if="::leasingAgentInfoAvailable()"
+/           ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
+
+/       / ng-include src="'listings/templates/listing/_lottery_info.html'"
+
+/     accordion-group.bg-dust data-event="gtm-accordion-eligibility" is-open="toggleStates[listing.Id].eligibility"
+/       header.listing-header.show-for-medium-up
+/         img.listing-header_icon ng-src="{{::assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
+/         hgroup.listing-header_group
+/           h3.listing-header_name
+/             | Eligibility
+/           span.listing-header_subheader
+/             | Income, occupancy, preferences, and subsidies
+/           / eligibility-section
+/       ng-include src="'listings/templates/listing/_eligibility.html'"
+
+/     / sidebar for open listing (larger browser sizes)
+/     accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!listingApplicationClosed(listing)" is-open="toggleStates[listing.Id].process"
+/       ng-include src="'listings/templates/listing/_process.html'"
+
+/     accordion-group.bg-white data-event="gtm-accordion-features" is-open="toggleStates[listing.Id].features"
+/       header.listing-header.show-for-medium-up
+/         img.listing-header_icon ng-src="{{::assetPaths['listing-features.svg']}}" alt="features-options"
+/         hgroup.listing-header_group
+/           h3.listing-header_name
+/             | Features
+/           span.listing-header_subheader
+/             | Amenities, unit details and additional fees
+/       ng-include src="'listings/templates/listing/_features.html'"
+
+/     accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::formattedBuildingAddress(listing)" is-open="toggleStates[listing.Id].neighborhood"
+/       header.listing-header.show-for-medium-up
+/         img.listing-header_icon ng-src="{{::assetPaths['listing-neighborhood.svg']}}" alt="neighborhood-building"
+/         hgroup.listing-header_group
+/           h3.listing-header_name
+/             | Neighborhood
+/           span.listing-header_subheader
+/             | Location and transportation
+/       ng-include src="'listings/templates/listing/_neighborhood.html'"
+
+/     accordion-group.bg-white data-event="gtm-accordion-information" is-open="toggleStates[listing.Id].additionalInfo"
+/       header.listing-header.show-for-medium-up
+/         img.listing-header_icon ng-src="{{::assetPaths['listing-legal.svg']}}" alt="legal-documents"
+/         hgroup.listing-header_group
+/           h3.listing-header_name
+/             | Additional Information
+/           / span.content-header_subheader
+/           /   | Required documents and selection criteria
+/       ng-include src="'listings/templates/listing/_legal.html'"
+
+/     .content-panel.accordion-offset.margin-bottom--2x
+/       .content-card
+/         .row
+/           .medium-9.columns
+/             p.t-base.t-serif Monitored by the Mayor's Office of Housing & Community Development
+/           .medium-3.columns
+/             img.right alt=("Equal Housing Opportunity Logo") ng-src="{{::assetPaths['logo-equal.png']}}"
+
+/   .bg-dust
+/     .accordion-offset
+/       ng-include src="'pages/templates/_email-updates.html'"

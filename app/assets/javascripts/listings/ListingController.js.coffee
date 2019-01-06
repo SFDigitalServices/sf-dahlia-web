@@ -75,9 +75,9 @@ ListingController = (
   $scope.formattedLeasingAgentAddress = (listing, display) ->
     ListingService.formattedAddress(listing, 'Leasing_Agent', display)
 
-  $scope.leasingAgentInfoAvailable = ->
-    l = $scope.listing
-    l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
+  # $scope.leasingAgentInfoAvailable = ->
+  #   l = $scope.listing
+  #   l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
 
   $scope.showAMItoggler = ->
     return false if _.isEmpty($scope.AMICharts)
@@ -104,12 +104,12 @@ ListingController = (
   $scope.lotteryComplete = (listing) ->
     ListingService.lotteryComplete(listing)
 
-  $scope.openLotteryResultsModal = () ->
-    ListingService.openLotteryResultsModal()
+  # $scope.openLotteryResultsModal = () ->
+  #   ListingService.openLotteryResultsModal()
 
-  $scope.lotteryDateVenueAvailable = (listing) ->
-    (listing.Lottery_Date != undefined &&
-      listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+  # $scope.lotteryDateVenueAvailable = (listing) ->
+  #   (listing.Lottery_Date != undefined &&
+  #     listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
   $scope.showMatches = ->
     $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
@@ -138,10 +138,10 @@ ListingController = (
       $scope.carouselHeight = elem[0].offsetHeight
     , 0, false
 
-  $scope.listingImages = (listing) ->
-    # TODO: update when we are getting multiple images from Salesforce
-    # right now it's just an array of one
-    [listing.imageURL]
+  # $scope.listingImages = (listing) ->
+  #   # TODO: update when we are getting multiple images from Salesforce
+  #   # right now it's just an array of one
+  #   [listing.imageURL]
 
   # lottery search
   $scope.clearLotteryRankingInfo = ->
@@ -202,14 +202,14 @@ ListingController = (
   $scope.sortedInformationSessions = ->
     ListingService.sortByDate($scope.listing.Information_Sessions)
 
-  $scope.showLotteryResultsModalButton = ->
-    ListingService.listingHasLotteryBuckets()
+  # $scope.showLotteryResultsModalButton = ->
+  #   ListingService.listingHasLotteryBuckets()
 
-  $scope.showDownloadLotteryResultsButton = ->
-    $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+  # $scope.showDownloadLotteryResultsButton = ->
+  #   $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
-  $scope.listingHasLotteryResults = ->
-    ListingService.listingHasLotteryResults()
+  # $scope.listingHasLotteryResults = ->
+  #   ListingService.listingHasLotteryResults()
 
   # $scope.listingHasPreferences = ->
   #   $scope.listing.preferences && $scope.listing.preferences.length
@@ -363,8 +363,8 @@ ListingController = (
     ListingService.listingIsBMR($scope.listing)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
-  $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
-    ListingService.listingIsFirstComeFirstServe(listing)
+  # $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
+  #   ListingService.listingIsFirstComeFirstServe(listing)
 
   $scope.listingIs = (name) ->
     ListingService.listingIs(name)

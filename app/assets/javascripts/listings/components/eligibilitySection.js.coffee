@@ -6,9 +6,6 @@ angular.module('dahlia.components')
   controller: ['ListingService', 'ListingHelperService', '$translate', (ListingService, ListingHelperService, $translate) ->
     ctrl = @
 
-    this.$onInit = ->
-        console.log(this.parent.listing, 'we are in elgibility section')
-
     @occupancy = (unitSummary) ->
         return '1' if unitSummary.maxOccupancy == 1
         unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy

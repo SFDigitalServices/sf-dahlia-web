@@ -57,6 +57,42 @@ ListingHelperService = (ListingService) ->
     else
       ''
 
+  Service.formattedAddress = (listing, type='Building', display='full') ->
+    street = "#{type}_Street_Address"
+    zip = "#{type}_Postal_Code"
+    if type == 'Leasing_Agent'
+      street = "#{type}_Street"
+      zip = "#{type}_Zip"
+    else if type == 'Building'
+      zip = "#{type}_Zip_Code"
+
+    # If Street address is undefined, then return false for display and google map lookup
+    if listing[street] == undefined
+      return
+    # If other fields are undefined, proceed, with special string formatting
+    if listing[street] != undefined
+      Street_Address = listing[street] + ', '
+    else
+      Street_Address = ''
+    if listing["#{type}_City"] != undefined
+      City = listing["#{type}_City"]
+    else
+      City = ''
+    if listing["#{type}_State"] != undefined
+      State = listing["#{type}_State"]
+    else
+      State = ''
+    if listing[zip] != undefined
+      Zip_Code = listing[zip]
+    else
+      Zip_Code = ''
+
+    if display == 'street'
+      return "#{Street_Address}"
+    else if display == 'city-state-zip'
+      return "#{City} #{State}, #{Zip_Code}"
+    else
+      "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   return Service
 
