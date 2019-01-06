@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec for short form controller in api/v1
 require 'spec_helper'
 require 'support/vcr_setup'
@@ -14,7 +16,7 @@ describe 'ShortForm API' do
   # logged-in user as primary applicant! That can cause a Salesforce
   # "APEX_ERROR: System.NullPointerException: Attempt to de-reference a null object"
   # error when we try to fetch the logged-in user's applications.
-  application_delete_id = 'a0o0U000000brab'
+  application_delete_id = 'a0o210000027Yti'
 
   # Application must have draft status
   application_update_id = 'a0o0P00000FEUwH'

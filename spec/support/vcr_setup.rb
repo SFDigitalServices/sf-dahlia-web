@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'vcr'
 
 VCR.configure do |config|
@@ -6,6 +8,7 @@ VCR.configure do |config|
   # look for instances of these protected values showing up in our VCR requests
   # and filter them out with e.g. "<<SALESFORCE_USERNAME>>"
   %w[
+    SALESFORCE_INSTANCE_URL
     SALESFORCE_USERNAME
     SALESFORCE_PASSWORD
     SALESFORCE_SECURITY_TOKEN
@@ -41,9 +44,7 @@ VCR.configure do |config|
 
   config.filter_sensitive_data('<<ACCESS_TOKEN>>') do |interaction|
     h = interaction.request.headers
-    if h['Authorization'] && h['Authorization'].first
-      h['Authorization'].first.split('OAuth ').last
-    end
+    h['Authorization'].first.split('OAuth ').last if h['Authorization']&.first
   end
 
   # needed for codeclimate to work

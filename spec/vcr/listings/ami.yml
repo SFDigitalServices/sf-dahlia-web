@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:49 GMT
+      - Thu, 27 Dec 2018 03:06:13 GMT
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       X-Content-Type-Options:
@@ -33,8 +33,8 @@ http_interactions:
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=N8ZkUuTKSwmP6yFCkaoVlQ;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:49 GMT;Max-Age=5184000
+      - BrowserId=Xs92FMnIQA2BCcIs4FKSfQ;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:06:13 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       X-Readonlymode:
@@ -47,12 +47,12 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"https://sfhousing--full.cs97.my.salesforce.com","id":"https://test.salesforce.com/id/00D0U0000000Qf1UAE/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1531263529980","signature":"kt2oXFDUmDM6SCIn1qkZ+IYEl5CqYAbzNNGETYab1eE="}'
+      string: '{"access_token":"<<ACCESS_TOKEN>>","instance_url":"<<SALESFORCE_INSTANCE_URL>>","id":"https://test.salesforce.com/id/00D210000009rvpEAA/0050P000007QAY9QAO","token_type":"Bearer","issued_at":"1545879974020","signature":"PgG8/aYfIkv9CT3eESaoOlmDY/YPvzpSyzKRoBxzhhM="}'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:51 GMT
+  recorded_at: Thu, 27 Dec 2018 03:06:14 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/ami?chartType=Non-HERA&percent=50&year=2016
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ami?chartType=Non-HERA&percent=50&year=2016"
     body:
       encoding: US-ASCII
       string: ''
@@ -71,22 +71,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:50 GMT
+      - Thu, 27 Dec 2018 03:06:14 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0U0000000Qf1m";
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D0U0000000Qf1m";
+      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=vSfO_tsNSQCwNb9zBLCyYA;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:50 GMT;Max-Age=5184000
+      - BrowserId=YqNgu74iS7-zGTFtL9QfAw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:06:14 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -99,10 +99,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '[{"year":2016.0,"percent":50.0,"numOfHousehold":8.0,"chartType":"Non-HERA","amount":76300.00},{"year":2016.0,"percent":50.0,"numOfHousehold":5.0,"chartType":"Non-HERA","amount":61500.00},{"year":2016.0,"percent":50.0,"numOfHousehold":6.0,"chartType":"Non-HERA","amount":66450.00},{"year":2016.0,"percent":50.0,"numOfHousehold":3.0,"chartType":"Non-HERA","amount":55350.00},{"year":2016.0,"percent":50.0,"numOfHousehold":7.0,"chartType":"Non-HERA","amount":71350.00},{"year":2016.0,"percent":50.0,"numOfHousehold":1.0,"chartType":"Non-HERA","amount":43050.00},{"year":2016.0,"percent":50.0,"numOfHousehold":4.0,"chartType":"Non-HERA","amount":61500.00},{"year":2016.0,"percent":50.0,"numOfHousehold":2.0,"chartType":"Non-HERA","amount":49200.00}]'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:51 GMT
+  recorded_at: Thu, 27 Dec 2018 03:06:14 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/ami?chartType=HCD/TCAC&percent=50&year=2016
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ami?chartType=HCD/TCAC&percent=50&year=2016"
     body:
       encoding: US-ASCII
       string: ''
@@ -121,22 +121,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:50 GMT
+      - Thu, 27 Dec 2018 03:06:14 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0U0000000Qf1m";
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D0U0000000Qf1m";
+      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=7ogTK8OPQN-90rNu1-TVEA;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:50 GMT;Max-Age=5184000
+      - BrowserId=IamdDyaATymPcNu6tplVJw;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:06:14 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -149,10 +149,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '[{"year":2016.0,"percent":50.0,"numOfHousehold":3.0,"chartType":"HCD/TCAC","amount":55350.00},{"year":2016.0,"percent":50.0,"numOfHousehold":4.0,"chartType":"HCD/TCAC","amount":61500.00},{"year":2016.0,"percent":50.0,"numOfHousehold":7.0,"chartType":"HCD/TCAC","amount":76300.00},{"year":2016.0,"percent":50.0,"numOfHousehold":5.0,"chartType":"HCD/TCAC","amount":66450.00},{"year":2016.0,"percent":50.0,"numOfHousehold":2.0,"chartType":"HCD/TCAC","amount":49200.00},{"year":2016.0,"percent":50.0,"numOfHousehold":8.0,"chartType":"HCD/TCAC","amount":81200.00},{"year":2016.0,"percent":50.0,"numOfHousehold":1.0,"chartType":"HCD/TCAC","amount":43050.00},{"year":2016.0,"percent":50.0,"numOfHousehold":6.0,"chartType":"HCD/TCAC","amount":71350.00}]'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:52 GMT
+  recorded_at: Thu, 27 Dec 2018 03:06:14 GMT
 - request:
     method: get
-    uri: https://sfhousing--full.cs97.my.salesforce.com/services/apexrest/ami?chartType=Non-HERA&percent=60&year=2016
+    uri: "<<SALESFORCE_INSTANCE_URL>>/services/apexrest/ami?chartType=Non-HERA&percent=60&year=2016"
     body:
       encoding: US-ASCII
       string: ''
@@ -171,22 +171,22 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Jul 2018 22:58:50 GMT
+      - Thu, 27 Dec 2018 03:06:14 GMT
       Strict-Transport-Security:
       - max-age=31536002; includeSubDomains
       Public-Key-Pins-Report-Only:
       - pin-sha256="9n0izTnSRF+W4W4JTq51avSXkWhQB8duS2bxVLfzXsY="; pin-sha256="5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=";
         pin-sha256="njN4rRG+22dNXAi+yb8e3UMypgzPUPHlv4+foULwl1g="; max-age=86400;
-        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D0U0000000Qf1m";
+        includeSubDomains; report-uri="https://calm-dawn-26291.herokuapp.com/hpkp-report/00D210000009rvpm";
       Expect-Ct:
-      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D0U0000000Qf1m";
+      - max-age=0; report-uri="https://calm-dawn-26291.herokuapp.com/Expect-CT-report/00D210000009rvpm";
       X-Robots-Tag:
       - none
       Cache-Control:
       - no-cache,must-revalidate,max-age=0,no-store,private
       Set-Cookie:
-      - BrowserId=L9jFWWozSDWbLm1e67fA-w;Path=/;Domain=.salesforce.com;Expires=Sat,
-        08-Sep-2018 22:58:50 GMT;Max-Age=5184000
+      - BrowserId=IXASRCqKTrmfERXshJWpVQ;Path=/;Domain=.salesforce.com;Expires=Mon,
+        25-Feb-2019 03:06:14 GMT;Max-Age=5184000
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Content-Type:
@@ -199,5 +199,5 @@ http_interactions:
       encoding: ASCII-8BIT
       string: '[{"year":2016.0,"percent":60.0,"numOfHousehold":8.0,"chartType":"Non-HERA","amount":91560.00},{"year":2016.0,"percent":60.0,"numOfHousehold":1.0,"chartType":"Non-HERA","amount":51660.00},{"year":2016.0,"percent":60.0,"numOfHousehold":6.0,"chartType":"Non-HERA","amount":79740.00},{"year":2016.0,"percent":60.0,"numOfHousehold":7.0,"chartType":"Non-HERA","amount":85620.00},{"year":2016.0,"percent":60.0,"numOfHousehold":2.0,"chartType":"Non-HERA","amount":59040.00},{"year":2016.0,"percent":60.0,"numOfHousehold":3.0,"chartType":"Non-HERA","amount":66420.00},{"year":2016.0,"percent":60.0,"numOfHousehold":5.0,"chartType":"Non-HERA","amount":73800.00},{"year":2016.0,"percent":60.0,"numOfHousehold":4.0,"chartType":"Non-HERA","amount":73800.00}]'
     http_version: 
-  recorded_at: Tue, 10 Jul 2018 22:58:52 GMT
+  recorded_at: Thu, 27 Dec 2018 03:06:14 GMT
 recorded_with: VCR 3.0.3
