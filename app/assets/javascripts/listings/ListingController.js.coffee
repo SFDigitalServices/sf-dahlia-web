@@ -60,8 +60,8 @@ ListingController = (
   $scope.toggleApplicationOptions = () ->
     $scope.showApplicationOptions = !$scope.showApplicationOptions
 
-  $scope.toggleTable = (table) ->
-    ListingService.toggleStates[$scope.listing.Id][table] = !ListingService.toggleStates[$scope.listing.Id][table]
+  # $scope.toggleTable = (table) ->
+  #   ListingService.toggleStates[$scope.listing.Id][table] = !ListingService.toggleStates[$scope.listing.Id][table]
 
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
@@ -244,17 +244,17 @@ ListingController = (
   #   return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
   #   $translate.instant('LISTINGS.PEOPLE')
 
-  $scope.formatBaths = (numberOfBathrooms) ->
-    return 'Shared' if numberOfBathrooms == 0
-    return '1/2 ' + $translate.instant('LISTINGS.BATH') if numberOfBathrooms == 0.5
+  # $scope.formatBaths = (numberOfBathrooms) ->
+  #   return 'Shared' if numberOfBathrooms == 0
+  #   return '1/2 ' + $translate.instant('LISTINGS.BATH') if numberOfBathrooms == 0.5
 
-    fullBaths = Math.floor numberOfBathrooms
-    andAHalf = numberOfBathrooms - fullBaths == 0.5
+  #   fullBaths = Math.floor numberOfBathrooms
+  #   andAHalf = numberOfBathrooms - fullBaths == 0.5
 
-    if andAHalf
-      fullBaths + ' 1/2 ' + $translate.instant('LISTINGS.BATH')
-    else
-      numberOfBathrooms
+  #   if andAHalf
+  #     fullBaths + ' 1/2 ' + $translate.instant('LISTINGS.BATH')
+  #   else
+  #     numberOfBathrooms
 
   # $scope.occupancyIncomeLevels = (amiLevel) ->
   #   ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
@@ -360,8 +360,8 @@ ListingController = (
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
 
-  $scope.listingIsBMR = ->
-    ListingService.listingIsBMR($scope.listing)
+  # $scope.listingIsBMR = ->
+  #   ListingService.listingIsBMR($scope.listing)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   # $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->

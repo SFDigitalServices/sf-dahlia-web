@@ -1,0 +1,94 @@
+accordion-heading
+  img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-features.svg']}}" alt="features-options"
+  h3.accordion-name
+    | Features
+  span.accordion-subheader Amenities, unit details and additional fees
+  span.ui-control.ui-icon.ui-small
+    svg
+      use xlink:href="#i-arrow-down"
+
+.content-section
+  .content-tile.feature-tile
+    feature-row title="Neighborhood" description="{{::$ctrl.parent.listing.Neighborhood}}"
+    feature-row title="Built" description="{{::$ctrl.parent.listing.Year_Built}}"
+    feature-row title="Property Amenities" description="{{::$ctrl.parent.listing.Amenities}}"
+    feature-row title="Accessibility" description="{{::$ctrl.parent.listing.Accessibility}}"
+    feature-row title="Services Onsite" description="{{::$ctrl.parent.listing.Services_Onsite}}"
+
+  .content-tile.feature-tile
+    h4.feature-title.margin-bottom Unit Features
+
+    .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
+      .padding--2x ng-include="'shared/templates/spinner.html'"
+
+    .content-card.padding--2x ng-show="$ctrl.parent.error.units"
+      .padding--2x.text-center
+        button.button-link ng-click="$ctrl.parent.getListingUnits()"
+          | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
+
+    .stats-toggle.margin-bottom ng-repeat="unitGroup in $ctrl.parent.listing.unitTypes" data-event="gtm-unit-features" ng-click="$ctrl.toggleTable(unitGroup.unitType)"
+      .toggle-box.toggler.has-toggle
+        .toggle-box_label
+          strong
+            | {{::unitGroup.unitType}}:
+          span
+            |  {{::unitGroup.units.length}}
+            span
+              ng-pluralize count="unitGroup.units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          span
+            | ,  {{::unitGroup.unitAreaRange}}
+            span
+              |  square feet
+          span.ui-control.ui-icon.ui-small
+            svg
+              use xlink:href="#i-arrow-down"
+
+      .stats.scrollable-table-container ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id][unitGroup.unitType]"
+        table role="grid"
+          thead
+            tr
+              th scope="col" Unit
+              th scope="col" Area
+              th scope="col" Baths
+              th scope="col" Floor
+              th scope="col" Accessibility
+          tbody
+            tr ng-repeat="unit in unitGroup.units"
+              td scope="row"
+                | {{::unit.Unit_Number}}
+              td
+                | {{::unit.Unit_Square_Footage}} <small>sqft</small>
+              td
+                | {{ $ctrl.formatBaths(unit.Number_of_Bathrooms) }}
+              td
+                | {{::unit.Unit_Floor}}
+              td
+                | {{::unit.Priority_Type}}
+
+  .content-tile.feature-tile
+    .content-card.bg-dust
+      h5.content-card_title Additional Fees
+      .row.collapse.margin-bottom
+        .small-6.columns.padding-right.padding-bottom
+          span.t-small Application Fee
+          p.t-delta.no-margin.t-bold
+            | {{::$ctrl.parent.listing.Fee | currency:"$":2}}
+          span.content-label.t-small
+            | per applicant age 18 and over
+          span.t-tiny.d-block
+            | Due post lottery
+        .small-6.columns.padding-bottom
+          span.t-small Deposit
+          p.t-delta.no-margin.t-bold
+            | {{::$ctrl.parent.listing.Deposit_Min | currency:"$":0}}
+            span ng-if="$ctrl.parent.listing.Deposit_Max && $ctrl.parent.listing.Deposit_Max != $ctrl.parent.listing.Deposit_Min"
+              | &ndash;{{ $ctrl.parent.listing.Deposit_Max | currency:"$":0 }}
+          span.content-label.t-small
+            | or one month's rent
+          span.t-tiny.d-block ng-if="$ctrl.listingIsBMR()"
+            | May be higher for lower credit scores
+
+      .row.collapse ng-if="$ctrl.parent.listing.Costs_Not_Included"
+        .small-12.columns
+          p.t-small.margin-top
+            | {{::$ctrl.parent.listing.Costs_Not_Included}}

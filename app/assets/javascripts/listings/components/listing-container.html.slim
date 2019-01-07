@@ -32,7 +32,8 @@
             | Features
           span.listing-header_subheader
             | Amenities, unit details and additional fees
-      ng-include src="'listings/templates/listing/_features.html'"
+      features-section
+      / ng-include src="'listings/templates/listing/_features.html'"
 
     accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::$ctrl.formattedBuildingAddress($ctrl.listing)" is-open="$ctrl.toggleStates[$ctrl.listing.Id].neighborhood"
       header.listing-header.show-for-medium-up
