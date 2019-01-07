@@ -21,7 +21,8 @@
 
     / sidebar for open listing (larger browser sizes)
     accordion-group.medium-right-column data-event="gtm-accordion-process" ng-if="::!$ctrl.listingApplicationClosed($ctrl.listing)" is-open="$ctrl.toggleStates[$ctrl.listing.Id].process"
-      ng-include src="'listings/templates/listing/_process.html'"
+      process-section
+      / ng-include src="'listings/templates/listing/_process.html'"
 
     accordion-group.bg-white data-event="gtm-accordion-features" is-open="$ctrl.toggleStates[$ctrl.listing.Id].features"
       header.listing-header.show-for-medium-up

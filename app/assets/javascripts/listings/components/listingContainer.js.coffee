@@ -57,5 +57,11 @@ angular.module('dahlia.components')
     @listingHasSROUnits = ->
       ListingService.listingHasSROUnits(@listing)
 
+    @submittedApplication = ->
+      @application &&
+      @application.id &&
+      @application.status.toLowerCase() == 'submitted'
+
+
     return ctrl
   ]

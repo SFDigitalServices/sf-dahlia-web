@@ -1,14 +1,10 @@
 angular.module('dahlia.components')
-.component 'lotteryInfo',
+.component 'lotteryInfoSection',
   templateUrl: 'listings/components/lottery-info-section.html'
   require:
     parent: '^listingContainer'
   controller: ['ListingService', (ListingService) ->
     ctrl = @
-
-    @lotteryDateVenueAvailable = (listing) ->
-      (listing.Lottery_Date != undefined &&
-          listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
     @listingHasLotteryResults = ->
       ListingService.listingHasLotteryResults()

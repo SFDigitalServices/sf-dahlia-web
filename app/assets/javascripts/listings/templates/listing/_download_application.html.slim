@@ -1,9 +1,9 @@
-button.button.has-icon.has-icon--right.small.expand.no-margin data-event="gtm-download-application" title="Download Application" ng-click="$ctrl.toggleApplicationOptions()" ng-class="{primary: !$ctrl.parent.listing.Accepting_Online_Applications, secondary: $ctrl.parent.listing.Accepting_Online_Applications}"
+button.button.has-icon.has-icon--right.small.expand.no-margin data-event="gtm-download-application" title="Download Application" ng-click="$ctrl.parent.toggleApplicationOptions()" ng-class="{primary: !$ctrl.parent.listing.Accepting_Online_Applications, secondary: $ctrl.parent.listing.Accepting_Online_Applications}"
   | Download Application
   span.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down" xmlns:xlink="http://www.w3.org/1999/xlink"
-.text-center.margin-top.t-small ng-show="$ctrl.showApplicationOptions"
-  p ng-repeat="url in $ctrl.listingDownloadURLs"
+.text-center.margin-top.t-small ng-show="$ctrl.parent.showApplicationOptions"
+  p ng-repeat="url in $ctrl.parent.listingDownloadURLs"
     a target="_blank" title="Download {{::url.language}} Application" ng-href="{{::url.url}}" ng-class="{'t-ch': url.language == 'Traditional Chinese'}"
       | {{url.label}}

@@ -1,14 +1,14 @@
-.content-column ng-if="::$ctrl.submittedApplication()"
+.content-column ng-if="::$ctrl.parent.submittedApplication()"
   .content-group.has-divider
     h2.h-caps-lined
       | {{'LABEL.MY_APPLICATION' | translate}}
-    button.button.primary.expand type="button" title="{{'LABEL.VIEW_APPLICATION' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.application.id})"
+    button.button.primary.expand type="button" title="{{'LABEL.VIEW_APPLICATION' | translate}}" ui-sref="dahlia.short-form-review({id: $ctrl.parent.application.id})"
       | {{'LABEL.VIEW_APPLICATION' | translate}}
     p.c-steel.t-small
       ' {{'T.APPLICATION_SUBMITTED' | translate}}:
-      ' {{$ctrl.application.applicationSubmittedDate | date : "MMM d, yyyy" }}
+      ' {{$ctrl.parent.application.applicationSubmittedDate | date : "MMM d, yyyy" }}
 
-.content-column ng-if="::!$ctrl.submittedApplication()"
+.content-column ng-if="::!$ctrl.parent.submittedApplication()"
   / Apply Online button (if applicable)
   .content-group.has-divider ng-if="::$ctrl.parent.listing.Accepting_Online_Applications"
     ng-include src="'listings/templates/listing/_apply_online.html'"
@@ -50,7 +50,7 @@
     p.content-group_address
       | {{ ::$ctrl.parent.listing.Application_Street_Address }}
       br
-      | {{ ::l$ctrl.parent.isting.Application_City }} {{ ::$ctrl.parent.listing.Application_State }} {{ ::$ctrl.parent.listing.Application_Postal_Code }}
+      | {{ ::$ctrl.parent.listing.Application_City }} {{ ::$ctrl.parent.listing.Application_State }} {{ ::$ctrl.parent.listing.Application_Postal_Code }}
     p.c-charcoal.t-small
       | {{'LISTINGS.APPLY.APPLICATIONS_MUST_BE_RECEIVED_BY_DEADLINE' | translate}}
 

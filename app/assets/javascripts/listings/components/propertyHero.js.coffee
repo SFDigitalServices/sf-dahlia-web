@@ -3,12 +3,8 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/property-hero.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ShortFormApplicationService', '$sce', (ListingService, ShortFormApplicationService, $sce) ->
+  controller: ['ListingService', '$sce', (ListingService, $sce) ->
     ctrl = @
-
-    @application = ShortFormApplicationService.application
-    @listingDownloadURLs = ListingService.listingDownloadURLs
-    @carouselHeight = null
 
     @reservedUnitIcons = [
       $sce.trustAsResourceUrl('#i-star')
@@ -26,17 +22,8 @@ angular.module('dahlia.components')
       _.keys(this.parent.listing.groupedUnits).length > 1
 
     @reservedDescriptorIcon = (listing, descriptor) ->
-      index = _.findIndex(this.parent.listing.reservedDescriptor, ['name', descriptor])
+      index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
       @reservedUnitIcons[index]
-
-    @submittedApplication = ->
-      @application &&
-      @application.id &&
-      @application.status.toLowerCase() == 'submitted'
-
-    @showApplicationOptions = false
-    @toggleApplicationOptions = () ->
-      @showApplicationOptions = !@showApplicationOptions
 
     return ctrl
   ]
