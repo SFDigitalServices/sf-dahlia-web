@@ -1,0 +1,19 @@
+accordion-heading
+  img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-neighborhood.svg']}}" alt="features-options"
+  h3.accordion-name
+    | Neighborhood
+  span.accordion-subheader Location and transportation
+  span.ui-control.ui-icon.ui-small
+    svg
+      use xlink:href="#i-arrow-down"
+
+.content-section
+  .property-map.map-panel
+    figure.property-map_figure.p-relative
+      iframe title="Map of {{::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}" ng-src="{{::$ctrl.googleMapSrc($ctrl.parent.listing)}}" width="640" height="450" frameborder="0" style="border:0"
+
+    a.map-link.ui-link.hide-for-print target="_blank" title="Get Directions" href="https://www.google.com/maps/place/{{::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}"
+      span.ui-icon.ui-small.i-deep
+        svg
+          use xlink:href="#i-map"
+      | Get Directions

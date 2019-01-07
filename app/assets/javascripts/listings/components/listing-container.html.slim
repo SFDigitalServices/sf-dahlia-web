@@ -43,7 +43,8 @@
             | Neighborhood
           span.listing-header_subheader
             | Location and transportation
-      ng-include src="'listings/templates/listing/_neighborhood.html'"
+      neighborhood-section
+      / ng-include src="'listings/templates/listing/_neighborhood.html'"
 
     accordion-group.bg-white data-event="gtm-accordion-information" is-open="$ctrl.toggleStates[$ctrl.listing.Id].additionalInfo"
       header.listing-header.show-for-medium-up
