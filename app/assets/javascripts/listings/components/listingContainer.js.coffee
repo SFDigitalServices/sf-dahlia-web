@@ -4,10 +4,11 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/listing-container.html'
   controller: ['ListingService', 'ListingHelperService', 'SharedService', (ListingService, ListingHelperService, SharedService) ->
     ctrl = @
-    # To do: remove Shared Service once we create a Shared
+    # TODO: remove Shared Service once we create a Shared Container
     this.$onInit = ->
       console.log(SharedService.assetPaths)
 
+    @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
     @assetPaths = SharedService.assetPaths
     @listing = ListingService.listing
     @loading  = ListingService.loading
