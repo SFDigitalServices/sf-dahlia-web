@@ -7,27 +7,24 @@ angular.module('dahlia.components')
     ctrl = @
 
     @lotteryDateVenueAvailable = (listing) ->
-        (listing.Lottery_Date != undefined &&
-            listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+      (listing.Lottery_Date != undefined &&
+          listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
     @listingHasLotteryResults = ->
-        ListingService.listingHasLotteryResults()
+      ListingService.listingHasLotteryResults()
 
     @openLotteryResultsModal = () ->
-        ListingService.openLotteryResultsModal()
+      ListingService.openLotteryResultsModal()
 
     @showLotteryResultsModalButton = ->
-        ListingService.listingHasLotteryBuckets()
+      ListingService.listingHasLotteryBuckets()
 
     @showDownloadLotteryResultsButton = ->
-        this.parent.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+      this.parent.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
 
     @leasingAgentInfoAvailable = ->
-        l = this.parent.listing
-        l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
-
-    @formattedLeasingAgentAddress = (listing) ->
-        ListingHelperService.formattedAddress(listing, 'Leasing_Agent')
+      l = this.parent.listing
+      l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
 
     return ctrl
   ]

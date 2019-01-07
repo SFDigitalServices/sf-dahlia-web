@@ -42,6 +42,8 @@ angular.module('dahlia.components')
 
     @formattedBuildingAddress = (listing, display) ->
         ListingHelperService.formattedAddress(listing, 'Building', display)
+    @listingHasSROUnits = ->
+      ListingService.listingHasSROUnits(@listing)
 
     return ctrl
   ]

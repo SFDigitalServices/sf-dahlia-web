@@ -63,9 +63,9 @@ accordion-heading.lead
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
           p.custom-counter_text ng-if="::$ctrl.parent.listingIs('1335 Folsom Street') || $ctrl.parent.listingIs('750 Harrison Street')"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL' | translate:"{ numberOfPeople: '2' }"}}
-          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && $ctrl.listingHasSROUnits()"
+          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && $ctrl.parent.listingHasSROUnits()"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
-          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && !$ctrl.listingHasSROUnits()"
+          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingHasSROUnits()"
             span ng-if="::$ctrl.parent.listingIs('Transbay Block 7')"
               | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
             span ng-if="::!$ctrl.parent.listingIs('Transbay Block 7')"
