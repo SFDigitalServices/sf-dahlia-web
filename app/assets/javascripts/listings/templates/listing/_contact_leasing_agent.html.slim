@@ -18,7 +18,7 @@ p.c-steel ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Street }}
   br
   | {{ ::$ctrl.parent.listing.Leasing_Agent_City }} {{ ::$ctrl.parent.listing.Leasing_Agent_State }} {{ ::$ctrl.parent.listing.Leasing_Agent_Zip }}
-a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map: {{$ctrl.formattedLeasingAgentAddress($ctrl.parent.listing)}}" href="https://www.google.com/maps/place/{{$ctrl.formattedLeasingAgentAddress($ctrl.parent.listing)}}" ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
+a.has-icon.d-block.margin-bottom.hide-for-print target="_blank" title="View Map: {{$ctrl.parent.formattedLeasingAgentAddress($ctrl.parent.listing)}}" href="https://www.google.com/maps/place/{{$ctrl.parent.formattedLeasingAgentAddress($ctrl.parent.listing)}}" ng-if="::$ctrl.parent.listing.Leasing_Agent_Street"
   span.ui-icon.ui-static.ui-medium.i-primary
     svg
       use xlink:href="#i-map"

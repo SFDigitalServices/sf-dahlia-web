@@ -46,12 +46,12 @@ ListingController = (
   $scope.error = ListingService.error
   $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
-  $scope.reservedUnitIcons = [
-    $sce.trustAsResourceUrl('#i-star')
-    $sce.trustAsResourceUrl('#i-cross')
-    $sce.trustAsResourceUrl('#i-oval')
-    $sce.trustAsResourceUrl('#i-polygon')
-  ]
+  # $scope.reservedUnitIcons = [
+  #   $sce.trustAsResourceUrl('#i-star')
+  #   $sce.trustAsResourceUrl('#i-cross')
+  #   $sce.trustAsResourceUrl('#i-oval')
+  #   $sce.trustAsResourceUrl('#i-polygon')
+  # ]
 
   $scope.toggleFavoriteListing = (listing_id) ->
     ListingService.toggleFavoriteListing(listing_id)
@@ -98,6 +98,7 @@ ListingController = (
     ListingService.resetEligibilityFilters()
     IncomeCalculatorService.resetIncomeSources()
 
+  #To Delete
   $scope.listingApplicationClosed = (listing) ->
     ! ListingService.listingIsOpen(listing)
 
@@ -131,12 +132,12 @@ ListingController = (
   # --- Carousel ---
   $scope.carouselHeight = 300
   $scope.Carousel = Carousel
-  $scope.adjustCarouselHeight = (elem) ->
-    # for why we need $timeout, see:
-    # http://stackoverflow.com/a/18996042/260495
-    $timeout ->
-      $scope.carouselHeight = elem[0].offsetHeight
-    , 0, false
+  # $scope.adjustCarouselHeight = (elem) ->
+  #   # for why we need $timeout, see:
+  #   # http://stackoverflow.com/a/18996042/260495
+  #   $timeout ->
+  #     $scope.carouselHeight = elem[0].offsetHeight
+  #   , 0, false
 
   # $scope.listingImages = (listing) ->
   #   # TODO: update when we are getting multiple images from Salesforce
@@ -223,8 +224,8 @@ ListingController = (
   $scope.hasMultipleAMICharts = ->
     $scope.AMICharts.length > 1
 
-  $scope.hasMultipleAMIUnits = ->
-    _.keys($scope.listing.groupedUnits).length > 1
+  # $scope.hasMultipleAMIUnits = ->
+  #   _.keys($scope.listing.groupedUnits).length > 1
 
   $scope.getListingUnits = ->
     ListingService.getListingUnits()
@@ -285,9 +286,9 @@ ListingController = (
   $scope.allListingUnitsAvailable = ->
     ListingService.allListingUnitsAvailable($scope.listing)
 
-  $scope.reservedDescriptorIcon = (listing, descriptor) ->
-    index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
-    $scope.reservedUnitIcons[index]
+  # $scope.reservedDescriptorIcon = (listing, descriptor) ->
+  #   index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
+  #   $scope.reservedUnitIcons[index]
 
   $scope.reservedForLabels = (listing) ->
     types = []

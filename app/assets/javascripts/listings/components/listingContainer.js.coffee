@@ -37,11 +37,23 @@ angular.module('dahlia.components')
       ListingService.listingIsFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
-      console.log('here')
       !ListingService.listingIsOpen(listing)
 
     @formattedBuildingAddress = (listing, display) ->
-        ListingHelperService.formattedAddress(listing, 'Building', display)
+      ListingHelperService.formattedAddress(listing, 'Building', display)
+
+    @formattedLeasingAgentAddress = (listing) ->
+      ListingHelperService.formattedAddress(listing, 'Leasing_Agent')
+
+    @toggleFavoriteListing = (listing_id) ->
+      ListingService.toggleFavoriteListing(listing_id)
+
+    @isFavorited = (listing_id) ->
+      ListingService.isFavorited(listing_id)
+
+    @getListingUnits = ->
+      ListingService.getListingUnits()
+
     @listingHasSROUnits = ->
       ListingService.listingHasSROUnits(@listing)
 

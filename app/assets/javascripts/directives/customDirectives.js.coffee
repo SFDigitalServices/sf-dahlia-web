@@ -7,6 +7,7 @@ angular.module('dahlia.directives')
 ]
 .directive 'adjustCarouselHeight', ['$window', ($window) ->
   link: (scope, elem, attrs) ->
+    ## REFACTOR TO DO: Fix this in propertyHero
     elem.bind 'load', ->
       scope.adjustCarouselHeight(elem)
 
