@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Force
   # encapsulate all Salesforce Listing querying functions
   class ListingService
@@ -21,7 +23,7 @@ module Force
       LastModifiedDate
       imageURL
     ].freeze
-
+    TEST_OWNERSHIP_LISTING_ID = 'a0W21000007AWriEAG'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
@@ -53,15 +55,43 @@ module Force
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      add_image_urls(results).first
+      result = add_image_urls(results).first
+      # TODO: Remove stubbed out listing when fields are available on Salesforce.
+      if id == TEST_OWNERSHIP_LISTING_ID
+        # rubocop:disable LineLength
+        stubbed_listing_data = {
+          'Tenure' => 'New sale',
+          'Allows_Realtor_Commission' => true,
+          'Realtor_Commission_Percentage' => 15,
+          'Realtor_Commission_Info' => 'TBD but this will probably be a shortish string',
+          'CC_and_R_URL' => 'http://www.google.com',
+          'Repricing_Mechanism' => 'TODO: Replace this with a real example of a repricing mechanism. Here\'s some sample text with links <a href=\"http://sf-moh.org/index.aspx?page=295\" target=\"_blank\">Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013</a>',
+          'Expected_Move_in_Date' => '2019-12-20',
+          'Appliances' => 'TODO: Replace this with a real example of a list of available appliances.',
+          'Parking_Information' => 'TODO: Replace this with a real example of parking information. It might be a fairly long paragraph',
+          'Multiple_Listing_Service_URL' => 'http://www.google.com',
+          'Housing_Program_Name' => 'TBD what this is',
+        }
+        # rubocop:enable LineLength
+        result.merge!(stubbed_listing_data)
+        result['Units'] = stub_unit_data(result['Units'])
+      end
+      result
     end
 
     # get all units for a given listing
     def self.units(listing_id, opts = {})
       esc_listing_id = CGI.escape(listing_id)
       force = opts[:force] || false
-      Request.new(parse_response: true)
-             .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
+      units = Request.new(parse_response: true)
+                     .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
+      # TODO: Remove stubbed out units when fields are available on Salesforce.
+      if esc_listing_id == TEST_OWNERSHIP_LISTING_ID
+        puts 'units before', units
+        units = stub_unit_data(units)
+        puts 'units after', units
+      end
+      units
     end
 
     # get all preferences for a given listing
@@ -143,6 +173,20 @@ module Force
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
         end
       end
+    end
+
+    # TODO: Remove this method when we no longer need to stub data.
+    private_class_method def self.stub_unit_data(units)
+      units.each do |unit|
+        stubbed_unit_data = {
+          'Price_Without_Parking' => 260_000,
+          'Price_With_Parking' => 289_000,
+          'HOA_Dues_Without_Parking' => 466,
+          'HOA_Dues_With_Parking' => 562,
+        }
+        unit.merge!(stubbed_unit_data)
+      end
+      units
     end
   end
 end
