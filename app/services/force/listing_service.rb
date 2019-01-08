@@ -62,6 +62,7 @@ module Force
       result = add_image_urls(results).first
       # TODO: Remove stubbed out listing when fields are available on Salesforce.
       stub_listing_data(result) if id == TEST_OWNERSHIP_LISTING_ID
+      result
     end
 
     # get all units for a given listing
@@ -72,6 +73,7 @@ module Force
                      .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
       # TODO: Remove stubbed out units when fields are available on Salesforce.
       stub_unit_data(units) if esc_listing_id == TEST_OWNERSHIP_LISTING_ID
+      units
     end
 
     # get all preferences for a given listing
