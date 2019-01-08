@@ -6,6 +6,8 @@ angular.module('dahlia.components')
   controller: ['ListingService', '$sce', (ListingService, $sce) ->
     ctrl = @
 
+    @carouselHeight = 300
+
     @reservedUnitIcons = [
       $sce.trustAsResourceUrl('#i-star')
       $sce.trustAsResourceUrl('#i-cross')
