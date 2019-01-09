@@ -28,9 +28,6 @@ angular.module('dahlia.components')
     @listingIs = (name) ->
       ListingService.listingIs(name)
 
-    @listingIsFirstComeFirstServe = (listing = @listing) ->
-      ListingService.listingIsFirstComeFirstServe(listing)
-
     @listingHasReservedUnits = ->
       ListingService.listingHasReservedUnits(@listing)
 
@@ -63,6 +60,8 @@ angular.module('dahlia.components')
       @application.id &&
       @application.status.toLowerCase() == 'submitted'
 
+    @hasEligibilityFilters = ->
+      ListingService.hasEligibilityFilters()
 
     return ctrl
   ]

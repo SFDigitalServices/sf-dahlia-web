@@ -1,0 +1,90 @@
+.property-card ng-class="{last: $last, first: $first}"
+  h1.property-card_title.text-center.margin-bottom.hide-for-medium-up
+    a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
+  figure.property-card_figure
+    a.property-card_overlay ui-sref="dahlia.listing({id: $ctrl.listing.Id})" tabindex="-1"
+      img.property-card_thumb alt="Listing Name:{{::$ctrl.listing.Name}}, Address:{{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing)}}" ng-src="{{::$ctrl.listing.imageURL}}" role="link"
+
+      / Matched & Not Matched Labels
+      span.status-label.label.label--flag.success ng-if="$ctrl.showMatches() && $ctrl.browseListings.isOpenMatchListing($ctrl.listing)"
+        span.ui-icon.ui-static.ui-medium.i-white
+          svg
+            use xlink:href="#i-check"
+        | Matched
+      span.status-label.label.label--flag ng-if="$ctrl.showMatches() && $ctrl.isOpenNotMatchListing($ctrl.listing)"
+        | Not a Match
+
+      / Application Deadline & Lottery Results Date Labels
+      span.application-label.label.label--flag.primary ng-if="::$ctrl.isOpenListing($ctrl.listing)"
+        span.ui-icon.ui-static.ui-medium.i-white
+          svg
+            use xlink:href="#i-clock"
+        span ng-if="::!$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+          | Application Deadline: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+        span ng-if="::$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+          / # TODO: -- REMOVE HARDCODED FEATURES --
+          | Application Available: December 6th
+      span.application-label.label.label--flag.alert ng-if="::$ctrl.isClosedListing($ctrl.listing)"
+        | Application Closed: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
+      span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && !$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+        | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
+      span.status-label.label.label--flag ng-if="::$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+        | First-come, first-serve (no lottery)
+      span.application-label.label.label--flag ng-if="::$ctrl.isLotteryResultsListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+        | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
+
+    figcaption.property-card_info
+      h1.property-card_title.show-for-medium-up
+        a ui-sref="dahlia.listing({id: $ctrl.listing.Id})" {{::$ctrl.listing.Name}}
+      p.property-card_address
+        | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
+        br.show-for-small-only
+        | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
+      span.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
+
+  .property-card_content
+    .property-card_stats
+      h2.property-card_label
+        span translate="LISTINGS.AVAILABLE_UNITS" ng-if="::!$ctrl.listing.hasWaitlist"
+        span translate="LISTINGS.OPEN_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available == 0"
+        span translate="LISTINGS.AVAILABLE_AND_WAITLIST" ng-if="::$ctrl.listing.hasWaitlist && $ctrl.listing.Units_Available > 0"
+      p.property-card_subheader translate="LISTINGS.INCLUDES_PRIORITY_UNITS" translate-value-priorities="{{::$ctrl.priorityTypeNames($ctrl.listing)}}" ng-if="::$ctrl.priorityTypes($ctrl.listing).length"
+
+      // -- Unit Summary Table(s)
+      / General
+      .scrollable-table-container
+        table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
+          caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
+            span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
+          thead
+            tr
+              th scope="col" Unit Type
+              th scope="col" Minimum Income
+              th.text-right scope="col" Rent
+          tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
+        / Reserved
+        table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
+          caption ng-if="::$ctrl.listingIsReservedCommunity($ctrl.listing)"
+            span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
+          caption ng-if="::!$ctrl.listingIsReservedCommunity($ctrl.listing)"
+            span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
+
+          tbody ng-include="'listings/templates/_unit-summary.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
+
+      .property-card_action.small-only-text-center
+        button.button.round-icon.has-label data-event="gtm-favorite" ng-click="$ctrl.listingContainer.toggleFavoriteListing($ctrl.listing.Id)"
+          span.ui-icon
+            svg
+              use xlink:href="#i-like" ng-show="!$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
+              use xlink:href="#i-like-fill" ng-show="$ctrl.listingContainer.isFavorited($ctrl.listing.Id)"
+          span.inline
+            | Favorite
+
+        button.button.round-icon.has-label.i-block data-event="gtm-share" ng-show="$ctrl.showSharing()" ui-sref="dahlia.share({id: $ctrl.listing.Id})"
+          span.ui-icon
+            svg
+              use xlink:href="#i-forward"
+              use style="display:none" xlink:href="#i-forward-fill"
+          span.inline Share
+
+        a.button.ghost-white.right.expand-small.no-margin ui-sref="dahlia.listing({id: $ctrl.listing.Id})" See Details

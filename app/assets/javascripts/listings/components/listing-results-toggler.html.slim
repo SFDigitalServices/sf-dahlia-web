@@ -1,0 +1,30 @@
+section.results-section.border-top
+  article.row
+    .large-12.columns
+      header.status-header.status--closed ng-class="{'has-button': $ctrl.hasListings}" aria-describedby="{{$ctrl.togglerId}}" ng-click="$ctrl.toggleListings($event)"
+        .status-header_content
+          .status-header_icon
+            span.ui-icon.ui-xlarge
+              svg
+                use xlink:href="{{$ctrl.icon}}"
+          hgroup.status-header_group
+            h2.status-header_title.gamma
+              | {{$ctrl.text.title}}
+            p.no-margin ng-if="$ctrl.hasListings"
+              | {{$ctrl.text.subtitle}}
+            p.no-margin ng-if="!$ctrl.hasListings"
+              | {{$ctrl.text.noResults}}
+        .status-header_action ng-if="$ctrl.hasListings"
+          button.button.ghost-white.expand-small.right.toggler id="{{$ctrl.togglerId}}"
+            span ng-show="!$ctrl.displayToggledSection"
+              ' {{$ctrl.text.showResults}}
+              ' ({{$ctrl.listingResults.length}})
+            span ng-show="$ctrl.displayToggledSection"
+              ' {{$ctrl.text.hideResults}}
+              ' ({{$ctrl.listingResults.length}})
+
+  .section.margin-top--2x.show-for-print ng-show="$ctrl.displayToggledSection"
+    / Lottery Results Posted
+    article.row
+      .large-12.columns
+        property-card listing="listing" ng-repeat="listing in $ctrl.listingResults"

@@ -1,0 +1,110 @@
+header.lead-header.bg-dust#listings_header ng-if="!$ctrl.parent.hasEligibilityFilters()"
+  .row
+    .medium-12.columns
+      .results-header
+        h1.results-header_values
+          | {{'LISTINGS.TELL_US_YOUR_HOUSEHOLD_SIZE' | translate}}
+        .results-header_actions
+          a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator"
+            | {{'LABEL.ESTIMATE_YOUR_ELIGIBILITY' | translate}}
+
+/// Matches results bar
+header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
+  .row
+    .medium-12.columns
+      h1.lead-header_title translate="LISTINGS.SHOWING_MATCHES_FOR"
+      .results-header
+        p.results-header_values
+          strong
+            ' {{$ctrl.eligibilityFilters.household_size}}
+          ' {{$ctrl.eligibilityFilters.household_size == 1 ? 'person ' : 'people '}}
+          span ng-if="$ctrl.eligibilityFilters.children_under_6 && $ctrl.eligibilityFilters.children_under_6 > 0"
+            ' (including
+            strong
+              ' {{$ctrl.eligibilityFilters.children_under_6}}
+              ' {{$ctrl.eligibilityFilters.children_under_6 == 1 ? 'child' : 'children'}}
+            ' under 6)
+          ' at <strong>{{ $ctrl.eligibilityFilters.income_total | currency : $ : 0}}</strong>/{{ $ctrl.eligibilityFilters.income_timeframe | incomeTimeframe }}
+        .results-header_actions
+          a.button.tiny.has-icon.has-icon--right.i-block ui-sref="dahlia.eligibility-estimator"
+            | {{'LABEL.EDIT_ELIGIBILITY' | translate}}
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-arrow-down"
+
+          button.button.ghost-white.tiny.has-icon.has-icon--right.i-block ng-click="$ctrl.clearEligibilityFilters()"
+            | {{'LABEL.CLEAR' | translate}}
+            span.ui-icon.ui-static.ui-small.i-color
+              svg
+                use xlink:href="#i-close"
+
+/ Notification: No listings with Open Applications
+section.results-section ng-if="!$ctrl.parent.openListings.length"
+  .row
+    .large-12.columns
+      .block--short.bg-dust
+        h2.t-delta.t-serif.c-oil.no-margin translate="LISTINGS.NO_OPEN_LISTINGS"
+
+/ Listings:
+/   * Open (doesn't have a header)
+/   * Before Eligibility filter
+.results-section ng-if="!$ctrl.parent.hasEligibilityFilters() && $ctrl.openListings.length"
+  .row
+    .large-12.columns
+      property-card listing='listing' ng-repeat="listing in $ctrl.openListings"
+
+/ Listings:
+/   * After Eligibility filter
+.has-eligibility-filters ng-if="$ctrl.parent.hasEligibilityFilters()"
+
+  / No Matches Section Heading
+  section.results-section.no-match.border-top ng-if="!$ctrl.openMatchListings.length"
+    / Notification: No Matches based on Eligibility
+    .row
+      .large-12.columns
+        header.status-header.status--not-matched
+          h2.status-header_title.gamma
+            | {{'LISTINGS.NO_MATCHES' | translate}}
+          p.margin-bottom--half
+            | {{'LISTINGS.YOU_DONT_MATCH_ANY' | translate}}
+          p.t-small.c-steel.no-margin
+            | <a class="lined" ui-sref="dahlia.additional-resources">Click here</a> for other rental and ownership affordable housing opportunities.
+
+    .margin-top--2x ng-include="'listings/templates/_housing-counselor.html'"
+
+  / Notification: Matched listings
+  section.results-section.bg-dust ng-if="$ctrl.openMatchListings.length"
+    .row
+      .large-12.columns
+        header.status-header.status--matched
+          .status-header_icon
+            span.ui-icon.ui-large
+              svg
+                use xlink:href="#i-check"
+          hgroup.status-header_group
+            h2.status-header_title
+              | {{'LABEL.MATCHED' | translate}}
+            p.no-margin
+              | {{'LISTINGS.YOU_MAY_BE_ELIGIBLE' | translate}}
+
+    / Listings: Open Matched Listings
+    .row.margin-top--2x
+      .large-12.columns
+        property-card listing='listing' ng-repeat="listing in $ctrl.openListings"
+
+
+/ Notification: Not Matched listings
+section.margin-top--2x.margin-bottom--2x ng-if="$ctrl.openMatchListings.length && $ctrl.openNotMatchListings.length"
+  ng-include src="'listings/templates/_housing-counselor.html'"
+
+/ Listings: Not Matched
+listing-results-toggler listing-results="$ctrl.openNotMatchListings" section-name="notMatched" icon="#i-building" ng-if="$ctrl.parent.hasEligibilityFilters() && $ctrl.openNotMatchListings.length"
+
+/ Listings: Upcoming Lotteries (Closed Listings)
+listing-results-toggler listing-results="$ctrl.closedListings" section-name="upcomingLotteries" icon="#i-clock"
+
+/ Listings: Lottery Results
+listing-results-toggler listing-results="$ctrl.lotteryResultsListings" section-name="lotteryResults" icon="#i-result"
+
+/ email updates callout
+ng-include src="'pages/templates/_email-updates.html'"
