@@ -25,9 +25,6 @@ ListingController = (
   $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
 
-  #apply online
-  $scope.application = ShortFormApplicationService.application
-
   # lottery results ranking
   # for expanding the "What happens next"
   $scope.whatHappens = false
@@ -42,10 +39,6 @@ ListingController = (
   #used in Favorites
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
-
-  #applyonline
-  $scope.lotteryComplete = (listing) ->
-    ListingService.lotteryComplete(listing)
 
   # lottery search
   $scope.clearLotteryRankingInfo = ->
@@ -90,23 +83,10 @@ ListingController = (
   $scope.viewingMyApplications = ->
     $state.current.name == 'dahlia.my-applications'
 
-  #panel-apply - apply online
-  $scope.hasDraftApplication = ->
-    $scope.application &&
-    $scope.application.id &&
-    $scope.application.status.toLowerCase() == 'draft'
-
-  #panel-apply - apply online
-  $scope.getLanguageCode = (application) ->
-    ShortFormApplicationService.getLanguageCode(application)
-
   #income-table-multiple
   $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
     ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
-  #apply-online
-  $scope.trackApplyOnlineTimer = ->
-    AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
 
 ############################################################################################
 ######################################## CONFIG ############################################

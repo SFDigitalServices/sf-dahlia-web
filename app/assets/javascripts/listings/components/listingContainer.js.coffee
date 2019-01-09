@@ -5,9 +5,6 @@ angular.module('dahlia.components')
   controller: ['ListingService', 'ListingHelperService', 'SharedService', (ListingService, ListingHelperService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
-    this.$onInit = ->
-      console.log(SharedService.assetPaths)
-
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
     @assetPaths = SharedService.assetPaths
     @listing = ListingService.listing
@@ -54,11 +51,6 @@ angular.module('dahlia.components')
 
     @listingHasSROUnits = ->
       ListingService.listingHasSROUnits(@listing)
-
-    @submittedApplication = ->
-      @application &&
-      @application.id &&
-      @application.status.toLowerCase() == 'submitted'
 
     @hasEligibilityFilters = ->
       ListingService.hasEligibilityFilters()
