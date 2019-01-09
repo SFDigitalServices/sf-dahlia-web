@@ -18,131 +18,34 @@ ListingController = (
   ShortFormApplicationService,
   AnalyticsService
 ) ->
-  $scope.shared = SharedService
-  $scope.listings = ListingService.listings
-  $scope.openListings = ListingService.openListings
-  $scope.openMatchListings = ListingService.openMatchListings
-  $scope.openNotMatchListings = ListingService.openNotMatchListings
-  $scope.closedListings = ListingService.closedListings
-  $scope.lotteryResultsListings = ListingService.lotteryResultsListings
   $scope.listing = ListingService.listing
+  #lottery modal
   $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
+  #lottery modal
   $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
-  $scope.AMICharts = ListingService.AMICharts
-  $scope.lotteryPreferences = ListingService.lotteryPreferences
-  $scope.eligibilityFilters = ListingService.eligibility_filters
+
+  #apply online
   $scope.application = ShortFormApplicationService.application
-  # for expanding the "read more/less" on AMI, what to expect,
-  # preserving expanded states when you use browser forward/back
-  $scope.toggleStates = ListingService.toggleStates
-  $scope.locationPath = null
+
+  # lottery results ranking
   # for expanding the "What happens next"
   $scope.whatHappens = false
+
+  # lottery modal
   # for searching lottery number
   $scope.lotterySearchNumber = ''
   $scope.lotteryNumberFormatValid = true
   $scope.loading = ListingService.loading
   $scope.error = ListingService.error
-  $scope.listingDownloadURLs = ListingService.listingDownloadURLs
 
-  # $scope.reservedUnitIcons = [
-  #   $sce.trustAsResourceUrl('#i-star')
-  #   $sce.trustAsResourceUrl('#i-cross')
-  #   $sce.trustAsResourceUrl('#i-oval')
-  #   $sce.trustAsResourceUrl('#i-polygon')
-  # ]
-
-  $scope.toggleFavoriteListing = (listing_id) ->
-    ListingService.toggleFavoriteListing(listing_id)
-
-  $scope.showApplicationOptions = false
-  $scope.toggleApplicationOptions = () ->
-    $scope.showApplicationOptions = !$scope.showApplicationOptions
-
-  # $scope.toggleTable = (table) ->
-  #   ListingService.toggleStates[$scope.listing.Id][table] = !ListingService.toggleStates[$scope.listing.Id][table]
-
+  #used in Favorites
   $scope.isFavorited = (listing_id) ->
     ListingService.isFavorited(listing_id)
 
-  $scope.formattedBuildingAddress = (listing, display) ->
-    ListingService.formattedAddress(listing, 'Building', display)
-
-  $scope.formattedApplicationAddress = (listing, display) ->
-    ListingService.formattedAddress(listing, 'Application', display)
-
-  $scope.formattedLeasingAgentAddress = (listing, display) ->
-    ListingService.formattedAddress(listing, 'Leasing_Agent', display)
-
-  # $scope.leasingAgentInfoAvailable = ->
-  #   l = $scope.listing
-  #   l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
-
-  $scope.showAMItoggler = ->
-    return false if _.isEmpty($scope.AMICharts)
-    lastHouseholdIncomeLevel = $scope.occupancyIncomeLevels(_.last($scope.AMICharts))
-    maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-    maxNumOfHousehold > $scope.householdAMIChartCutoff()
-
-  $scope.googleMapSrc = (listing) ->
-    # exygy google places API key -- should be unlimited use for this API
-    api_key = 'AIzaSyCW_oXspwGsSlthw-MrPxjNvdH56El1pjM'
-    url = "https://www.google.com/maps/embed/v1/place?key=#{api_key}&q=#{$scope.formattedBuildingAddress(listing)}"
-    $sce.trustAsResourceUrl(url)
-
-  $scope.hasEligibilityFilters = ->
-    ListingService.hasEligibilityFilters()
-
-  $scope.clearEligibilityFilters = ->
-    ListingService.resetEligibilityFilters()
-    IncomeCalculatorService.resetIncomeSources()
-
-  #To Delete
-  $scope.listingApplicationClosed = (listing) ->
-    ! ListingService.listingIsOpen(listing)
-
+  #applyonline
   $scope.lotteryComplete = (listing) ->
     ListingService.lotteryComplete(listing)
-
-  # $scope.openLotteryResultsModal = () ->
-  #   ListingService.openLotteryResultsModal()
-
-  # $scope.lotteryDateVenueAvailable = (listing) ->
-  #   (listing.Lottery_Date != undefined &&
-  #     listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
-
-  $scope.showMatches = ->
-    $state.current.name == 'dahlia.listings' && $scope.hasEligibilityFilters()
-
-  $scope.isOpenListing = (listing) ->
-    $scope.openListings.indexOf(listing) > -1
-  $scope.isOpenMatchListing = (listing) ->
-    $scope.openMatchListings.indexOf(listing) > -1
-  $scope.isOpenNotMatchListing = (listing) ->
-    $scope.openNotMatchListings.indexOf(listing) > -1
-  $scope.isClosedListing = (listing) ->
-    $scope.closedListings.indexOf(listing) > -1
-  $scope.isLotteryResultsListing = (listing) ->
-    $scope.lotteryResultsListings.indexOf(listing) > -1
-
-  $scope.waitlistSlotsRemaining = (listing) ->
-    listing.Maximum_waitlist_size - listing.Number_of_people_currently_on_waitlist
-
-  # --- Carousel ---
-  $scope.carouselHeight = 300
-  $scope.Carousel = Carousel
-  # $scope.adjustCarouselHeight = (elem) ->
-  #   # for why we need $timeout, see:
-  #   # http://stackoverflow.com/a/18996042/260495
-  #   $timeout ->
-  #     $scope.carouselHeight = elem[0].offsetHeight
-  #   , 0, false
-
-  # $scope.listingImages = (listing) ->
-  #   # TODO: update when we are getting multiple images from Salesforce
-  #   # right now it's just an array of one
-  #   [listing.imageURL]
 
   # lottery search
   $scope.clearLotteryRankingInfo = ->
@@ -152,6 +55,7 @@ ListingController = (
     preferenceBucketResults = _.find($scope.lotteryRankingInfo.lotteryBuckets, { 'preferenceName': prefName })
     if preferenceBucketResults then preferenceBucketResults.preferenceResults else []
 
+  # applicantHasCertofPrefs
   $scope.applicantSelectedForPreference = ->
     preferenceBucketResults = _.filter($scope.lotteryRankingInfo.lotteryBuckets, (bucket) ->
       return false unless bucket.preferenceResults[0]
@@ -159,10 +63,12 @@ ListingController = (
     )
     preferenceBucketResults.length > 0
 
+  #lottery-results-ranking
   $scope.applicantHasCertOfPreference = ->
     results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]
     results && results.preferenceRank
 
+  #lottery-results-ranking
   $scope.lotteryNumberValid = ->
     return unless $scope.lotteryRankingInfo && $scope.lotteryRankingInfo.lotteryBuckets
     # true if there are any lotteryBuckets
@@ -184,192 +90,23 @@ ListingController = (
   $scope.viewingMyApplications = ->
     $state.current.name == 'dahlia.my-applications'
 
-  $scope.submittedApplication = ->
-    $scope.application &&
-    $scope.application.id &&
-    $scope.application.status.toLowerCase() == 'submitted'
-
+  #panel-apply - apply online
   $scope.hasDraftApplication = ->
     $scope.application &&
     $scope.application.id &&
     $scope.application.status.toLowerCase() == 'draft'
 
+  #panel-apply - apply online
   $scope.getLanguageCode = (application) ->
     ShortFormApplicationService.getLanguageCode(application)
 
-  $scope.sortedOpenHouses = ->
-    ListingService.sortByDate($scope.listing.Open_Houses)
-
-  $scope.sortedInformationSessions = ->
-    ListingService.sortByDate($scope.listing.Information_Sessions)
-
-  # $scope.showLotteryResultsModalButton = ->
-  #   ListingService.listingHasLotteryBuckets()
-
-  # $scope.showDownloadLotteryResultsButton = ->
-  #   $scope.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
-
-  # $scope.listingHasLotteryResults = ->
-  #   ListingService.listingHasLotteryResults()
-
-  # $scope.listingHasPreferences = ->
-  #   $scope.listing.preferences && $scope.listing.preferences.length
-
-  $scope.listingHasPreference = (preference) ->
-    ListingService.hasPreference(preference)
-
-  $scope.closedAndLotteryListingsCount = ->
-    $scope.lotteryResultsListings.length + $scope.closedListings.length
-
-  $scope.hasMultipleAMICharts = ->
-    $scope.AMICharts.length > 1
-
-  # $scope.hasMultipleAMIUnits = ->
-  #   _.keys($scope.listing.groupedUnits).length > 1
-
-  $scope.getListingUnits = ->
-    ListingService.getListingUnits()
-
-  $scope.getListingAMI = ->
-    ListingService.getListingAMI()
-
-  # $scope.getListingPreferences = ->
-  #   ListingService.getListingPreferences()
-
-  # $scope.occupancy = (unitSummary) ->
-  #   return '1' if unitSummary.maxOccupancy == 1
-  #   unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
-
-  # $scope.occupancyLabel = (maxOccupancy) ->
-  #   return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
-  #   $translate.instant('LISTINGS.PEOPLE')
-
-  # $scope.formatBaths = (numberOfBathrooms) ->
-  #   return 'Shared' if numberOfBathrooms == 0
-  #   return '1/2 ' + $translate.instant('LISTINGS.BATH') if numberOfBathrooms == 0.5
-
-  #   fullBaths = Math.floor numberOfBathrooms
-  #   andAHalf = numberOfBathrooms - fullBaths == 0.5
-
-  #   if andAHalf
-  #     fullBaths + ' 1/2 ' + $translate.instant('LISTINGS.BATH')
-  #   else
-  #     numberOfBathrooms
-
-  # $scope.occupancyIncomeLevels = (amiLevel) ->
-  #   ListingService.occupancyIncomeLevels($scope.listing, amiLevel)
-
-  # $scope.householdAMIChartCutoff = ->
-  #   ListingService.householdAMIChartCutoff()
-
-  $scope.minYearlyIncome = ->
-    ListingService.minYearlyIncome()
-
+  #income-table-multiple
   $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
     ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
-  # $scope.listingHasPriorityUnits = ->
-  #   ListingService.listingHasPriorityUnits($scope.listing)
-
-  $scope.listingHasReservedUnits = ->
-    ListingService.listingHasReservedUnits($scope.listing)
-
-  $scope.listingHasSROUnits = ->
-    ListingService.listingHasSROUnits($scope.listing)
-
-  $scope.listingHasOnlySROUnits = ->
-    ListingService.listingHasOnlySROUnits($scope.listing)
-
-  $scope.listingIsReservedCommunity = (listing = $scope.listing) ->
-    ListingService.listingIsReservedCommunity(listing)
-
-  $scope.allListingUnitsAvailable = ->
-    ListingService.allListingUnitsAvailable($scope.listing)
-
-  # $scope.reservedDescriptorIcon = (listing, descriptor) ->
-  #   index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
-  #   $scope.reservedUnitIcons[index]
-
-  $scope.reservedForLabels = (listing) ->
-    types = []
-    _.each listing.reservedDescriptor, (descriptor) ->
-      if descriptor.name
-        type = descriptor.name
-        types.push($scope.reservedLabel(listing, type, 'reservedForWhoAre'))
-    if types.length then types.join(' or ') else ''
-
-  $scope.reservedLabel = (listing, type,  modifier) ->
-    labelMap =
-      "#{ListingService.RESERVED_TYPES.SENIOR}":
-        building: 'Senior'
-        eligibility: 'Seniors'
-        reservedFor: "seniors #{$scope.seniorMinimumAge(listing)}"
-        reservedForWhoAre: "seniors #{$scope.seniorMinimumAge(listing)}"
-        unitDescription: "seniors #{$scope.seniorMinimumAge(listing)}"
-      "#{ListingService.RESERVED_TYPES.VETERAN}":
-        building: 'Veterans'
-        eligibility: 'Veterans'
-        reservedFor: 'veterans'
-        reservedForWhoAre: 'veterans'
-        unitDescription: 'veterans of the U.S. Armed Forces'
-      "#{ListingService.RESERVED_TYPES.DISABLED}":
-        building: 'Developmental Disability'
-        eligibility: 'People with developmental disabilities'
-        reservedFor: 'people with developmental disabilities'
-        reservedForWhoAre: 'developmentally disabled'
-        unitDescription: 'people with developmental disabilities'
-
-    return type unless labelMap[type]
-    return labelMap[type][modifier]
-
-  $scope.priorityLabel = (priority, modifier) ->
-    labelMap =
-      'Vision impairments':
-        name: 'Vision Impairments'
-        description: 'impaired vision'
-      'Hearing impairments':
-        name: 'Hearing Impairments'
-        description: 'impaired hearing'
-      'Hearing/Vision impairments':
-        name: 'Vision and/or Hearing Impairments'
-        description: 'impaired vision and/or hearing'
-      'Mobility/hearing/vision impairments':
-        name: 'Mobility, Hearing and/or Vision Impairments'
-        description: 'impaired mobility, hearing and/or vision'
-      'Mobility impairments':
-        name: 'Mobility Impairments'
-        description: 'impaired mobility'
-
-    return priority unless labelMap[priority]
-    return labelMap[priority][modifier]
-
-  $scope.priorityTypes = (listing) ->
-    ListingService.priorityTypes(listing)
-
-  $scope.priorityTypeNames = (listing) ->
-    names = _.map $scope.priorityTypes(listing), (priority) ->
-      $scope.priorityLabel(priority, 'name')
-    names.join(', ')
-
-  $scope.seniorMinimumAge = (listing = $scope.listing) ->
-    if listing.Reserved_community_minimum_age
-      "#{listing.Reserved_community_minimum_age}+"
-    else
-      ''
-
+  #apply-online
   $scope.trackApplyOnlineTimer = ->
     AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
-
-  # $scope.listingIsBMR = ->
-  #   ListingService.listingIsBMR($scope.listing)
-
-  # TODO: -- REMOVE HARDCODED FEATURES --
-  # $scope.listingIsFirstComeFirstServe = (listing = $scope.listing) ->
-  #   ListingService.listingIsFirstComeFirstServe(listing)
-
-  $scope.listingIs = (name) ->
-    ListingService.listingIs(name)
-  # ---
 
 ############################################################################################
 ######################################## CONFIG ############################################
