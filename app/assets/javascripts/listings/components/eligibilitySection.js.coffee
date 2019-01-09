@@ -45,5 +45,8 @@ angular.module('dahlia.components')
     @householdAMIChartCutoff = ->
       ListingService.householdAMIChartCutoff()
 
+    @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+      ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+
     return ctrl
   ]

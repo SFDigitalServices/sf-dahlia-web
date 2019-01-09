@@ -25,10 +25,6 @@ ListingController = (
     ListingService.isFavorited(listing_id)
 
 
-  #income-table-multiple
-  $scope.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-    ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
-
 
 ############################################################################################
 ######################################## CONFIG ############################################
