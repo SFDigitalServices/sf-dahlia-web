@@ -8,17 +8,10 @@ angular.module('dahlia.components')
 
     @eligibilityFilters = ListingService.eligibility_filters
     @openMatchListings = ListingService.openMatchListings
-    @openListings = ListingService.openListings
-    @openNotMatchListings = ListingService.openNotMatchListings
-    @closedListings = ListingService.closedListings
-    @lotteryResultsListings = ListingService.lotteryResultsListings
 
     @clearEligibilityFilters = ->
       ListingService.resetEligibilityFilters()
       IncomeCalculatorService.resetIncomeSources()
-
-    @isOpenMatchListing = (listing) ->
-      @openMatchListings.indexOf(listing) > -1
 
     return ctrl
   ]

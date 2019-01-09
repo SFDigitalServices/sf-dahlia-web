@@ -8,10 +8,23 @@ angular.module('dahlia.components')
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
     @assetPaths = SharedService.assetPaths
     @listing = ListingService.listing
+    @listings = ListingService.listings
     @loading  = ListingService.loading
     @error = ListingService.error
     @toggleStates = ListingService.toggleStates
     @AMICharts = ListingService.AMICharts
+    @favorites = ListingService.favorites
+
+    @openListings = ListingService.openListings
+    @openNotMatchListings = ListingService.openNotMatchListings
+    @closedListings = ListingService.closedListings
+    @lotteryResultsListings = ListingService.lotteryResultsListings
+
+    @isOpenMatchListing = (listing) ->
+      @openMatchListings.indexOf(listing) > -1
+
+    @isFavorited = (listing_id) ->
+      ListingService.isFavorited(listing_id)
 
     @reservedLabel = ->
       ListingHelperService.reservedLabel(@listing, @listing.Reserved_community_type, 'eligibility')

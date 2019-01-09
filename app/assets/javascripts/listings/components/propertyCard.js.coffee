@@ -4,15 +4,9 @@ angular.module('dahlia.components')
   bindings:
     listing: '<'
   require:
-    browseListings: '^browseListings'
     listingContainer: '^listingContainer'
   controller: ['ListingService', 'ListingHelperService', 'SharedService', '$state', (ListingService, ListingHelperService, SharedService, $state) ->
     ctrl = @
-
-    this.$onInit = ->
-      console.log(SharedService.assetPaths)
-
-
 
     @showSharing = ->
       SharedService.showSharing()
@@ -21,16 +15,16 @@ angular.module('dahlia.components')
       $state.current.name == 'dahlia.listings' && this.listingContainer.hasEligibilityFilters()
 
     @isOpenNotMatchListing = (listing) ->
-      this.browseListings.openNotMatchListings.indexOf(listing) > -1
+      this.listingContainer.openNotMatchListings.indexOf(listing) > -1
 
     @isOpenListing = (listing) ->
-      this.browseListings.openListings.indexOf(listing) > -1
+      this.listingContainer.openListings.indexOf(listing) > -1
 
     @isClosedListing = (listing) ->
-      this.browseListings.closedListings.indexOf(listing) > -1
+      this.listingContainer.closedListings.indexOf(listing) > -1
 
     @isLotteryResultsListing = (listing) ->
-      this.browseListings.lotteryResultsListings.indexOf(listing) > -1
+      this.listingContainer.lotteryResultsListings.indexOf(listing) > -1
 
     @priorityTypes = (listing) ->
       ListingService.priorityTypes(listing)

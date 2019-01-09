@@ -18,12 +18,8 @@ ListingController = (
   ShortFormApplicationService,
   AnalyticsService
 ) ->
-  $scope.listing = ListingService.listing
 
   #used in Favorites
-  $scope.isFavorited = (listing_id) ->
-    ListingService.isFavorited(listing_id)
-
 
 
 ############################################################################################

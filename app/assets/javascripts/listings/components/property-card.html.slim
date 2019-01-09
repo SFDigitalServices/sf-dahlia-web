@@ -6,7 +6,7 @@
       img.property-card_thumb alt="Listing Name:{{::$ctrl.listing.Name}}, Address:{{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing)}}" ng-src="{{::$ctrl.listing.imageURL}}" role="link"
 
       / Matched & Not Matched Labels
-      span.status-label.label.label--flag.success ng-if="$ctrl.showMatches() && $ctrl.browseListings.isOpenMatchListing($ctrl.listing)"
+      span.status-label.label.label--flag.success ng-if="$ctrl.showMatches() && $ctrl.listingContainer.isOpenMatchListing($ctrl.listing)"
         span.ui-icon.ui-static.ui-medium.i-white
           svg
             use xlink:href="#i-check"
