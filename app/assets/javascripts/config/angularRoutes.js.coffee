@@ -69,7 +69,6 @@
       views:
         'container@':
           templateUrl: 'listings/templates/listings.html'
-          controller: 'ListingController'
       resolve:
         listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getListings({checkEligibility: true, retranslate: true})
@@ -94,7 +93,6 @@
               'listings/templates/listing-maintenance.html'
             else
               'listings/templates/listing.html'
-          controller: 'ListingController'
       resolve:
         listing: [
           '$stateParams', '$state', '$q', 'ListingService',
@@ -402,7 +400,6 @@
       views:
         'container@':
           templateUrl: 'listings/templates/favorites.html'
-          controller: 'ListingController'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
           ListingService.getFavoriteListings()
