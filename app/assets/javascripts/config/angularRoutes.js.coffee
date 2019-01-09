@@ -44,7 +44,6 @@
       url: ''
       views:
         'container@':
-          controller: 'ListingController'
           templateUrl: 'pages/templates/welcome.html'
       resolve:
         listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
