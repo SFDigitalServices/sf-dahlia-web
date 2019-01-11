@@ -1,7 +1,7 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
   '$translate', '$window', '$sce',
-  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ModalService',
+  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ListingHelperService', 'ModalService',
   ($translate, $window, $sce,
   ShortFormApplicationService, ShortFormNavigationService, ListingService, ModalService) ->
     replace: true
@@ -48,7 +48,7 @@ angular.module('dahlia.directives')
         )
 
       scope.formattedAddress = ->
-        ListingService.formattedAddress(scope.listing, 'Building')
+        ListingHelperService.formattedAddress(scope.listing, 'Building')
 
       scope.applicationStyle = ->
         {

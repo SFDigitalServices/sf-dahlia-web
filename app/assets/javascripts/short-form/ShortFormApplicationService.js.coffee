@@ -1,6 +1,6 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingService, ShortFormDataService, AddressValidationService, GISService,
+  ListingService, ListingHelperService, ShortFormDataService, AddressValidationService, GISService,
   AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
@@ -1049,7 +1049,7 @@ ShortFormApplicationService = (
     ListingService.hasPreference('assistedHousing')
 
   Service.formattedBuildingAddress = (listing, display) ->
-    ListingService.formattedAddress(listing, 'Building', display)
+    ListingHelperService.formattedAddress(listing, 'Building', display)
 
   Service.listingHasReservedUnitType = (type) ->
     ListingService.listingHasReservedUnitType(Service.listing, type)
@@ -1070,7 +1070,7 @@ ShortFormApplicationService = (
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
-  'ListingService', 'ShortFormDataService',
+  'ListingService', 'ListingHelperService', 'ListingConstantsService' 'ShortFormDataService',
   'AddressValidationService', 'GISService',
   'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
