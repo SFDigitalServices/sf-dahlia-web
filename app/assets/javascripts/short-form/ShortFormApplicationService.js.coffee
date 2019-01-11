@@ -1057,8 +1057,6 @@ ShortFormApplicationService = (
   Service.getProjectIdForBoundaryMatching = ->
     ListingService.getProjectIdForBoundaryMatching(Service.listing)
 
-  Service.RESERVED_TYPES = ListingService.RESERVED_TYPES
-
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.listingIs = ListingService.listingIs
 

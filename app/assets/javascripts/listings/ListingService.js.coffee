@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ExternalTranslateService, $timeout) ->
+ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService, ExternalTranslateService, $timeout) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -17,65 +17,13 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
   Service.loading = {}
   Service.error = {}
   Service.displayLotteryResultsListings = false
-  Service.mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
-  Service.mohcdEnglishApplicationURL = Service.mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
   Service.lotteryRankingInfo = {}
   Service.lotteryBucketInfo = {}
   Service.toggleStates = {}
 
+  Service.preferenceMap = ListingConstantsService.preferenceMap
+
   Service.listingDownloadURLs = []
-  Service.defaultApplicationURLs = [
-    # http://sfmohcd.org/general-bmr-rental-application
-    {
-      'language': 'English'
-      'label': 'English'
-      'url': Service.mohcdEnglishApplicationURL
-    }
-    {
-      'language': 'Spanish'
-      'label': 'Español'
-      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Spanish')
-    }
-    {
-      'language': 'Traditional Chinese'
-      'label': '中文'
-      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Chinese')
-    }
-    {
-      'language': 'Tagalog'
-      'label': 'Filipino'
-      'url': Service.mohcdEnglishApplicationURL.replace('English', 'Tagalog')
-    }
-  ]
-
-  Service.fieldsForUnitGrouping = [
-    'Unit_Type',
-    'Reserved_Type',
-    'BMR_Rent_Monthly',
-    'BMR_Rental_Minimum_Monthly_Income_Needed',
-    'Rent_percent_of_income',
-    'Status',
-  ]
-
-  Service.preferenceMap =
-    certOfPreference: "Certificate of Preference (COP)"
-    displaced: "Displaced Tenant Housing Preference (DTHP)"
-    liveWorkInSf: "Live or Work in San Francisco Preference"
-    liveInSf: "Live or Work in San Francisco Preference"
-    workInSf: "Live or Work in San Francisco Preference"
-    neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
-    assistedHousing: "Rent Burdened / Assisted Housing Preference"
-    rentBurden: "Rent Burdened / Assisted Housing Preference"
-    antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
-    aliceGriffith: "Alice Griffith Housing Development Resident"
-
-  # Create a mapping to Salesforce naming conventions
-  Service.RESERVED_TYPES = {
-    VETERAN: 'Veteran'
-    DISABLED: 'Developmental disabilities'
-    SENIOR: 'Senior'
-  }
-
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
 
@@ -476,10 +424,10 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       flattened[percent] = []
       grouped[percent] = _.groupBy amiUnits, (unit) ->
         # create an identity function to group by all unit features in the pickList
-        _.flatten(_.toPairs(_.pick(unit, Service.fieldsForUnitGrouping)))
+        _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
       _.forEach grouped[percent], (groupedUnits, id) ->
         # summarize each group by combining the unit details + total # of units
-        summary = _.pick(groupedUnits[0], Service.fieldsForUnitGrouping)
+        summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
         summary.total = groupedUnits.length
         flattened[percent].push(summary)
 
@@ -494,7 +442,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
       u.Unit_Type = '000SRO' if u.Unit_Type == 'SRO'
       return u
     # sort everything based on the order presented in pickList
-    units = _.sortBy units, Service.fieldsForUnitGrouping
+    units = _.sortBy units, ListingConstantsService.fieldsForUnitGrouping
     # put "Studio" back to normal
     _.map units, (u) ->
       u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
@@ -690,7 +638,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     incomeLevel.amount
 
   Service.getListingDownloadURLs = ->
-    urls = angular.copy(Service.defaultApplicationURLs)
+    urls = angular.copy(ListingConstantsService.defaultApplicationURLs)
     english = _.find(urls, { language: 'English' })
     chinese = _.find(urls, { language: 'Traditional Chinese' })
     spanish = _.find(urls, { language: 'Spanish' })
@@ -718,39 +666,10 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     else
       null
 
-  # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.LISTING_MAP = {
-    # can also serve as slugToId map for applicable listings
-    'a0WU000000DBJ9YMAX': '480 Potrero'
-    'a0WU000000BdZWlMAN': 'Alchemy'
-    'a0W0P00000DYQpCUAX': '21 Clarence'
-    'a0W0P00000DYPP7UAP': '168 Hyde'
-    'a0W0P00000DYN6BUAX': 'Olume'
-    'a0WU000000BcwrAMAR': 'Rincon'
-    'a0WU000000C3hBWMAZ': 'Potrero 1010'
-    'a0WU000000C4FsQMAV': '529 Stevenson'
-    'a0WU000000D9iF8MAJ': '888 Paris'
-    'a0WU000000DB97cMAD': '77 Bluxome'
-    'a0W0P00000DYbAYUA1': '3445 Geary'
-    'a0W0P00000DYgtDUAT': '125 Mason'
-    'a0W0P00000DYiwiUAD': 'Argenta 909'
-    'a0W0P00000DYm1xUAD': 'Northpoint Vistas'
-    'a0W0P00000DYlxMUAT': '280 Brighton'
-    'a0W0P00000DYuFSUA1': '30 Dore'
-    'a0W0P00000DYxphUAD': '168 Hyde Relisting'
-    'a0W0P00000DZ4dTUAT': 'L Seven'
-    'a0W6C000000DbnZUAS': 'Test Listing'
-    'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
-    'a0W0P00000DZKPdUAP': 'Abaca'
-    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
-    'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
-    'a0W0P00000FIuv3UAD': '1335 Folsom Street'
-    'a0W0P00000DhM0wUAF': '750 Harrison Street'
-  }
 
   Service.mapSlugToId = (id) ->
     # strip spaces and lowercase the listing names e.g. "Argenta 909" => "argenta909"
-    mapping = _.mapKeys _.invert(Service.LISTING_MAP), (v, k) -> k.toLowerCase().replace(/ /g, '')
+    mapping = _.mapKeys _.invert(ListingConstantsService.LISTING_MAP), (v, k) -> k.toLowerCase().replace(/ /g, '')
     slug = id.toLowerCase()
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
@@ -759,7 +678,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
     ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
 
   Service.listingIs = (name, listing = Service.listing) ->
-    Service.LISTING_MAP[listing.Id] == name
+    ListingConstantsServic.LISTING_MAP[listing.Id] == name
 
   Service.listingIsFirstComeFirstServe = (listing = Service.listing) ->
     # hardcoded, currently just this one listing
@@ -898,7 +817,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Ex
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ExternalTranslateService', '$timeout']
+ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ListingConstantsService', 'ExternalTranslateService', '$timeout']
 
 angular
   .module('dahlia.services')
