@@ -16,6 +16,7 @@ angular.module('dahlia.components')
     @favorites = ListingService.favorites
 
     @openListings = ListingService.openListings
+    @openMatchListings = ListingService.openMatchListings
     @openNotMatchListings = ListingService.openNotMatchListings
     @closedListings = ListingService.closedListings
     @lotteryResultsListings = ListingService.lotteryResultsListings
@@ -67,6 +68,10 @@ angular.module('dahlia.components')
 
     @hasEligibilityFilters = ->
       ListingService.hasEligibilityFilters()
+
+    @lotteryDateVenueAvailable = (listing) ->
+      (listing.Lottery_Date != undefined &&
+        listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
     return ctrl
   ]

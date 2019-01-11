@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/features-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', (ListingService) ->
+  controller: ['ListingService', '$translate', (ListingService, $translate) ->
     ctrl = @
 
     @toggleTable = (table) ->

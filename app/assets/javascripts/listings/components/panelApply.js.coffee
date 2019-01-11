@@ -5,6 +5,7 @@ angular.module('dahlia.components')
     parent: '^listingContainer'
   controller: ['ListingService', 'ShortFormApplicationService', 'AnalyticsService', (ListingService, ShortFormApplicationService, AnalyticsService) ->
     ctrl = @
+    @showApplicationOptions = false
 
     @application = ShortFormApplicationService.application
 
@@ -26,6 +27,9 @@ angular.module('dahlia.components')
 
     @getLanguageCode = (application) ->
       ShortFormApplicationService.getLanguageCode(application)
+
+    @toggleApplicationOptions = () ->
+      ctrl.showApplicationOptions = !ctrl.showApplicationOptions
 
     return ctrl
   ]
