@@ -17,8 +17,10 @@ do ->
       listings: fakeListings
       listingHasOnlySROUnits: jasmine.createSpy()
       listingHasPriorityUnits: jasmine.createSpy()
-      occupancyIncomeLevels: jasmine.createSpy()
-      householdAMIChartCutoff: jasmine.createSpy()
+      occupancyIncomeLevels: ->
+      householdAMIChartCutoff: ->
+      getListingPreferences: jasmine.createSpy()
+      incomeForHouseholdSize: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
 
@@ -69,9 +71,78 @@ do ->
           expect(ctrl.showAMItoggler()).toBe(false)
         it 'calls ListingService.occupancyIncomeLevels', ->
           fakeListingService.AMICharts = fakeAMI
+          spyOn(fakeListingService, 'occupancyIncomeLevels')
           ctrl.showAMItoggler()
           expect(fakeListingService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, _.last(fakeAMI))
         it 'calls ListingService.householdAMIChartCutoff', ->
           fakeListingService.AMICharts = fakeAMI
+          spyOn(fakeListingService, 'householdAMIChartCutoff')
           ctrl.showAMItoggler()
           expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled()
+        it 'returns true when maxNumOfHousehold is > householdAMIChartCutoff', ->
+          fakeListingService.AMICharts = fakeAMI
+          fakeOccupancyIncomeLevel = {
+            numOfHousehold: 5
+          }
+          fakeOccupancyIncomeLevel2 = {
+            numOfHousehold: 3
+          }
+          spyOn(fakeListingService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          spyOn(fakeListingService, 'householdAMIChartCutoff').and.returnValue(4)
+          expect(ctrl.showAMItoggler()).toEqual true
+        it 'returns false when maxNumOfHousehold is < householdAMIChartCutoff', ->
+          fakeListingService.AMICharts = fakeAMI
+          fakeOccupancyIncomeLevel = {
+            numOfHousehold: 5
+          }
+          fakeOccupancyIncomeLevel2 = {
+            numOfHousehold: 3
+          }
+          spyOn(fakeListingService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          spyOn(fakeListingService, 'householdAMIChartCutoff').and.returnValue(6)
+          expect(ctrl.showAMItoggler()).toEqual false
+
+      describe 'hasMultipleAMICharts', ->
+        it 'calls ListingService.AMICharts', ->
+          ctrl.hasMultipleAMICharts()
+          spyOn(fakeListingService, 'AMICharts').and.returnValue([])
+          expect(fakeListingService.AMICharts).toHaveBeenCalled
+        it 'calls true for ListingService.AMICharts >= 2', ->
+          fakeListingService.AMICharts = [1,2]
+          expect(ctrl.hasMultipleAMICharts()).toEqual true
+        it 'calls false for ListingService.AMICharts <= 1', ->
+          fakeListingService.AMICharts = [1]
+          expect(ctrl.hasMultipleAMICharts()).toEqual false
+
+      describe 'listingHasPreferences', ->
+        it 'calls parent.listing.preferences', ->
+          fakeListing.preferences = -> null
+          spyOn(fakeListing, 'preferences')
+          ctrl.listingHasPreferences()
+          expect(fakeParent.preferences).toHaveBeenCalled
+        it 'calls true if parent has at least one preference', ->
+          fakeListing.preferences = [1]
+          expect(ctrl.listingHasPreferences()).toEqual true
+        it 'calls false for empty preferences', ->
+          fakeListing.preferences = []
+          expect(ctrl.listingHasPreferences()).toEqual false
+
+      describe 'getListingPreferences', ->
+        it 'calls ListingService.getListingPreferences', ->
+          ctrl.getListingPreferences()
+          expect(fakeListingService.getListingPreferences).toHaveBeenCalled
+
+      describe 'priorityLabel', ->
+        it 'calls ListingService.priorityLabel', ->
+          ctrl.priorityLabel()
+          expect(fakeListingService.priorityLabel).toHaveBeenCalled
+
+      describe 'householdAMIChartCutoff', ->
+        it 'calls ListingService.householdAMIChartCutoff', ->
+          ctrl.householdAMIChartCutoff()
+          expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled
+
+      describe 'incomeForHouseholdSize', ->
+        it 'calls ListingService.incomeForHouseholdSize', ->
+          ctrl.incomeForHouseholdSize()
+          expect(fakeListingService.incomeForHouseholdSize).toHaveBeenCalled

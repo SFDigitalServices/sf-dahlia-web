@@ -11,9 +11,15 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
+    fakeStates = {}
+    fakeTable = {
+      fakeKey: true
+    }
+    fakeStates[fakeListing.Id] = fakeTable
     fakeListingService =
         listings: fakeListings
         listingIsBMR: jasmine.createSpy()
+        toggleStates: fakeStates
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -43,3 +49,12 @@ do ->
         it 'calls ListingService.listingIsBMR', ->
           ctrl.listingIsBMR()
           expect(fakeListingService.listingIsBMR).toHaveBeenCalledWith(ctrl.parent.listing)
+
+      describe 'toggleTable', ->
+        it 'calls ListingService.toggleStates', ->
+          ctrl.toggleTable('fakeKey')
+          expect(fakeListingService.toggleStates).toHaveBeenCalled
+        it 'changes state to false', ->
+          value = fakeListingService.toggleStates[fakeListing.Id]['fakeKey']
+          ctrl.toggleTable('fakeKey')
+          expect(fakeListingService.toggleStates[fakeListing.Id]['fakeKey']).toEqual !value

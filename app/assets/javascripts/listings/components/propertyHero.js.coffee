@@ -28,7 +28,6 @@ angular.module('dahlia.components')
       $sce.trustAsResourceUrl('#i-polygon')
     ]
 
-
     @listingImages = (listing) ->
       # TODO: update when we are getting multiple images from Salesforce
       # right now it's just an array of one

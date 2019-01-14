@@ -25,7 +25,7 @@ angular.module('dahlia.components')
       ListingService.AMICharts.length > 1
 
     @listingHasPreferences = ->
-      this.parent.listing.preferences && this.parent.listing.preferences.length
+      this.parent.listing.preferences && this.parent.listing.preferences.length > 0
 
     @listingHasOnlySROUnits = ->
       ListingService.listingHasOnlySROUnits(this.parent.listing)

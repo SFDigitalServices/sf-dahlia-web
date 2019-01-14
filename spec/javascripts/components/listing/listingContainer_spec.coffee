@@ -57,9 +57,13 @@ do ->
       getListingAMI: jasmine.createSpy()
       getListingUnits: jasmine.createSpy()
       listingIsBMR: jasmine.createSpy()
+      listingHasSROUnits: jasmine.createSpy()
+      listingIsReservedCommunity: jasmine.createSpy()
+      listingIsFirstComeFirstServe: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
+      reservedLabel: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -178,3 +182,35 @@ do ->
         it 'calls ListingService.getListingAMI', ->
           ctrl.getListingAMI()
           expect(fakeListingService.getListingAMI).toHaveBeenCalled()
+
+      describe '$ctrl.reservedLabel', ->
+        it 'calls ListingHelperService.reservedLabel', ->
+          ctrl.reservedLabel()
+          expect(fakeListingHelperService.reservedLabel).toHaveBeenCalled()
+
+      describe '$ctrl.listingIsReservedCommunity', ->
+        it 'calls ListingService.listingIsReservedCommunity', ->
+          ctrl.listingIsReservedCommunity()
+          expect(fakeListingService.listingIsReservedCommunity).toHaveBeenCalledWith(fakeListing)
+
+      describe '$ctrl.listingIs', ->
+        it 'calls ListingService.listingIs', ->
+          name = 'fake'
+          spyOn(fakeListingService, 'listingIs')
+          ctrl.listingIs(name)
+          expect(fakeListingService.listingIs).toHaveBeenCalledWith(name)
+
+      describe '$ctrl.listingIsFirstComeFirstServe', ->
+        it 'calls ListingService.listingIsFirstComeFirstServe', ->
+          ctrl.listingIsFirstComeFirstServe()
+          expect(fakeListingService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
+
+      describe '$ctrl.formattedLeasingAgentAddress', ->
+        it 'calls ListingHelperService.formattedAddress', ->
+          ctrl.formattedLeasingAgentAddress(fakeListing)
+          expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Leasing_Agent')
+
+      describe '$ctrl.listingHasSROUnits', ->
+        it 'calls ListingService.listingHasSROUnits', ->
+          ctrl.listingHasSROUnits()
+          expect(fakeListingService.listingHasSROUnits).toHaveBeenCalled()
