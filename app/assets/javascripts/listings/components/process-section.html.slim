@@ -55,7 +55,7 @@ accordion-heading
 
   .content-group ng-if="::!$ctrl.parent.listingIsFirstComeFirstServe()"
     h4.h-caps-lined Public Lottery
-    ul ng-if="::$ctrl.parent.lotteryDateVenueAvailable(listing)"
+    ul ng-if="::$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)"
       li
         p.content-group_date
           span.content-group_day
@@ -66,7 +66,7 @@ accordion-heading
           |  {{ ::$ctrl.parent.listing.Lottery_Venue }}
         p.content-group_address.c-steel
           | {{ ::$ctrl.parent.listing.Lottery_Street_Address }} {{ ::$ctrl.parent.listing.Lottery_City }}
-    p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateVenueAvailable(listing)"
+    p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)"
       | Lottery date, time and venue to be scheduled.
 
   .content-group
