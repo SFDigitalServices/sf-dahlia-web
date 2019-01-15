@@ -7,17 +7,12 @@ angular.module('dahlia.components')
     ctrl = @
 
     this.$postLink = ->
-      @setupCarouselHeight()
+      # @setupCarouselHeight()
 
-    # TODO: debug this is from directive adjustCarouselHeight -- looks different still from https://dahlia-full.herokuapp.com/listings/a0W0P00000F7GabUAF
-    @setupCarouselHeight = ->
-      angular.element(document).find('img')[0].offsetHeight
-      angular.element($window).bind 'resize', ->
-        console.log('resizing')
-        $timeout ->
-          propertyImage = angular.element(document).find('img')[0]
-          @carouselHeight = propertyImage.offsetHeight
-        , 0, false
+    @adjustCarouselHeight = (elem) ->
+      $timeout ->
+        ctrl.carouselHeight = elem[0].offsetHeight
+      , 0, false
 
     @carouselHeight = 300
 

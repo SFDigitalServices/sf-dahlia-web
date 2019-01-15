@@ -4,7 +4,7 @@
       ng-carousel ng-carousel-name="hero-carousel" ng-style="{height: $ctrl.carouselHeight + 'px'}"
         slidecontainer
           slide ng-repeat="image in ::$ctrl.listingImages($ctrl.parent.listing) track by $index"
-            img.property-hero_thumb alt="Listing Name:{{::$ctrl.parent.listing.Name}}, Address:{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}" ng-src="{{image}}"
+            img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{::$ctrl.parent.listing.Name}}, Address:{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}" ng-src="{{image}}")
         div ng-if="::$ctrl.listingImages($ctrl.parent.listing).length > 1"
           .carousel-arrow.carousel-arrow-left
             button ng-click="Carousel.get('hero-carousel').previous()" tabindex="-1"
