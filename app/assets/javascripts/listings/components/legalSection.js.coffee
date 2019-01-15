@@ -3,8 +3,3 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/legal-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', (ListingService) ->
-    ctrl = @
-
-    return ctrl
-  ]
