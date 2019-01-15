@@ -35,8 +35,9 @@ angular.module('dahlia.components')
     @getListingAMI = ->
       ListingService.getListingAMI()
 
-    @listingIsReservedCommunity = () ->
-      ListingService.listingIsReservedCommunity(@listing)
+    @listingIsReservedCommunity = (listing = null) ->
+      listing = @listing unless listing
+      ListingService.listingIsReservedCommunity(listing)
 
     @listingIs = (name) ->
       ListingService.listingIs(name)
