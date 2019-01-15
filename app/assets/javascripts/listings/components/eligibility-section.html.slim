@@ -47,8 +47,7 @@ accordion-heading.lead
 
             / multiple chart / MF style
             div ng-if="$ctrl.hasMultipleAMICharts()"
-              p income table multiple
-              / ng-include src="'listings/templates/listing/_income-table-multiple.html'"
+              ng-include src="'listings/templates/listing/_income-table-multiple.html'"
 
           / don't show toggler e.g. if the listing is SRO only which will only have 1 row
           show-more-toggler inline="true" toggle-state="$ctrl.parent.toggleStates[listing.Id].amiChartExpanded" verb="show" ng-show="$ctrl.showAMItoggler()"

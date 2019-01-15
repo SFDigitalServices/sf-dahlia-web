@@ -8,7 +8,8 @@ LotteryModalController = (
   ListingService,
   AnalyticsService
 ) ->
-
+  $scope.listing = ListingService.listing
+  $scope.application = ListingService.application
   $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
   $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
