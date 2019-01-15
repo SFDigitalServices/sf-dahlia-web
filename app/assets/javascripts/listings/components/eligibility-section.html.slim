@@ -143,7 +143,7 @@ accordion-heading.lead
             | {{'LISTINGS.PRIORITY_UNITS' | translate}}
           p.custom-counter_text
             | {{'LISTINGS.PRIORITY_UNITS_DESCRIPTION' | translate}}
-        .content-card ng-repeat="(type, units) in ::$ctrl.listing.priorityUnits"
+        .content-card ng-repeat="(type, units) in ::$ctrl.parent.listing.priorityUnits"
           h4.content-card_title.no-margin
             | {{::$ctrl.priorityLabel(type, 'name')}}
           p.c-steel

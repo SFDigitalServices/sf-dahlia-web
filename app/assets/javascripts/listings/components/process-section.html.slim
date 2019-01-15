@@ -14,7 +14,7 @@ accordion-heading
         svg
           use xlink:href="#i-clock"
       span ng-if="::!$ctrl.parent.listingIsFirstComeFirstServe($ctrl.parent.listing)"
-        | Application Deadline {{::listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+        | Application Deadline {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
       span ng-if="::$ctrl.parent.listingIsFirstComeFirstServe(listing)"
         / # TODO: -- REMOVE HARDCODED FEATURES --
         | Application Available: December 6, 2016

@@ -14,6 +14,7 @@ angular.module('dahlia.components')
     @toggleStates = ListingService.toggleStates
     @AMICharts = ListingService.AMICharts
     @favorites = ListingService.favorites
+    @listingDownloadURLs = ListingService.listingDownloadURLs
 
     @openListings = ListingService.openListings
     @openMatchListings = ListingService.openMatchListings
