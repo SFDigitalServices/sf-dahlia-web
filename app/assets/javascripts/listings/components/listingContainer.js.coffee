@@ -28,9 +28,10 @@ angular.module('dahlia.components')
     @isFavorited = (listing_id) ->
       ListingService.isFavorited(listing_id)
 
-    @reservedLabel = (type, modifier) ->
+    @reservedLabel = (type, modifier, listing = null) ->
       type = @listing.Reserved_community_type unless type
-      ListingHelperService.reservedLabel(@listing, type, modifier)
+      listing = @listing unless listing
+      ListingHelperService.reservedLabel(listing, type, modifier)
 
     @getListingAMI = ->
       ListingService.getListingAMI()
