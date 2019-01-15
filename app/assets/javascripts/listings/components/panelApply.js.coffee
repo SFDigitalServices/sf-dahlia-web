@@ -3,33 +3,35 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/panel-apply.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ShortFormApplicationService', 'AnalyticsService', (ListingService, ShortFormApplicationService, AnalyticsService) ->
-    ctrl = @
-    @showApplicationOptions = false
+  controller: [
+    'ListingService', 'ShortFormApplicationService', 'AnalyticsService',
+    (ListingService, ShortFormApplicationService, AnalyticsService) ->
+      ctrl = @
+      @showApplicationOptions = false
 
-    @application = ShortFormApplicationService.application
+      @application = ShortFormApplicationService.application
 
-    @submittedApplication = ->
-      @application &&
-      @application.id &&
-      @application.status.toLowerCase() == 'submitted'
+      @submittedApplication = ->
+        @application &&
+        @application.id &&
+        @application.status.toLowerCase() == 'submitted'
 
-    @hasDraftApplication = ->
-      @application &&
-      @application.id &&
-      @application.status.toLowerCase() == 'draft'
+      @hasDraftApplication = ->
+        @application &&
+        @application.id &&
+        @application.status.toLowerCase() == 'draft'
 
-    @trackApplyOnlineTimer = ->
-      AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
+      @trackApplyOnlineTimer = ->
+        AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
 
-    @lotteryComplete = (listing) ->
-      ListingService.lotteryComplete(listing)
+      @lotteryComplete = (listing) ->
+        ListingService.lotteryComplete(listing)
 
-    @getLanguageCode = (application) ->
-      ShortFormApplicationService.getLanguageCode(application)
+      @getLanguageCode = (application) ->
+        ShortFormApplicationService.getLanguageCode(application)
 
-    @toggleApplicationOptions = () ->
-      ctrl.showApplicationOptions = !ctrl.showApplicationOptions
+      @toggleApplicationOptions = () ->
+        ctrl.showApplicationOptions = !ctrl.showApplicationOptions
 
-    return ctrl
+      return ctrl
   ]

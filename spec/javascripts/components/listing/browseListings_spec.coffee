@@ -9,7 +9,6 @@ do ->
       instant: ->
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
-    fakeSharedService = {}
     fakeIncomeCalculatorService = {
       resetIncomeSources: jasmine.createSpy()
     }
@@ -19,15 +18,11 @@ do ->
     fakeListingService =
       listings: fakeListings
       resetEligibilityFilters: jasmine.createSpy()
-    fakeListingHelperService =
-      priorityLabel: jasmine.createSpy()
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
         ListingService: fakeListingService
-        ListingHelperService: fakeListingHelperService
-        SharedService: fakeSharedService
         IncomeCalculatorService: fakeIncomeCalculatorService
         $state: state
       }
@@ -38,9 +33,9 @@ do ->
         ctrl = $componentController 'browseListings', locals, {parent: fakeParent}
 
       describe '$ctrl.clearEligibilityFilters', ->
-        it 'expects ListingService.function to be called', ->
-          # ctrl.clearEligibilityFilters()
-          # expect(fakeListingService.resetEligibilityFilters).toHaveBeenCalled()
-        it 'expects IncomeCalculatorService.function to be called', ->
+        it 'expects ListingService.resetEligibilityFilters to be called', ->
+          ctrl.clearEligibilityFilters()
+          expect(fakeListingService.resetEligibilityFilters).toHaveBeenCalled()
+        it 'expects IncomeCalculatorService.resetIncomeSources to be called', ->
           ctrl.clearEligibilityFilters()
           expect(fakeIncomeCalculatorService.resetIncomeSources).toHaveBeenCalled()

@@ -80,9 +80,18 @@ do ->
       beforeEach ->
         ctrl = $componentController 'listingContainer', locals
 
-      describe 'initiates ctrl defaults values', ->
+      describe 'initiates ctrl default values', ->
         it 'populates ctrl with array of listings', ->
           expect(ctrl.listings).toEqual fakeListings
+
+        it 'populates ctrl with a single listing', ->
+          expect(ctrl.listing).toEqual fakeListing
+
+        it 'populates ctrl with AMICharts', ->
+          expect(ctrl.AMICharts).toBeDefined()
+
+        it 'populates ctrl with favorites', ->
+          expect(ctrl.favorites).toEqual fakeListingFavorites
 
         it 'populates ctrl with openListings', ->
           expect(ctrl.openListings).toBeDefined()
@@ -99,24 +108,26 @@ do ->
         it 'populates ctrl with lotteryResultsListings', ->
           expect(ctrl.lotteryResultsListings).toBeDefined()
 
-        it 'populates ctrl with a single listing', ->
-          expect(ctrl.listing).toEqual fakeListing
+      describe '$ctrl.isOpenMatchListing', ->
+        describe "when the given listing is in the controller's list of open match listings", ->
+          it 'returns true',->
+            ctrl.openMatchListings = [fakeListing]
+            expect(ctrl.isOpenMatchListing(fakeListing)).toEqual true
+        describe "when the given listing is not in the controller's list of open match listings", ->
+          it 'returns false',->
+            ctrl.openMatchListings = []
+            expect(ctrl.isOpenMatchListing(fakeListing)).toEqual false
 
-        it 'populates ctrl with favorites', ->
-          expect(ctrl.favorites).toEqual fakeListingFavorites
-
-        it 'populates ctrl with AMICharts', ->
-          expect(ctrl.AMICharts).toBeDefined()
+      describe '$ctrl.isFavorited', ->
+        it 'calls ListingService.isFavorited with the given listing ID', ->
+          fakeListingId = 'asdf1234'
+          ctrl.isFavorited(fakeListingId)
+          expect(fakeListingService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingService.function to be called', ->
           ctrl.toggleFavoriteListing 1
           expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
-
-      describe '$ctrl.isFavorited', ->
-        it 'expects ListingService.isFavorited to be called', ->
-          ctrl.isFavorited(fakeListing)
-          expect(fakeListingService.isFavorited).toHaveBeenCalled()
 
       describe '$ctrl.hasEligibilityFilters', ->
         it 'expects ListingService.hasEligibilityFilters to be called', ->
@@ -155,12 +166,6 @@ do ->
           it 'returns false', ->
             listing.Lottery_Street_Address = undefined
             expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual false
-
-      describe '$ctrl.isOpenMatchListing', ->
-        describe 'open matched listing', ->
-          it 'returns true',->
-            ctrl.openMatchListings = [fakeListing]
-            expect(ctrl.isOpenMatchListing(fakeListing)).toEqual true
 
       describe '$ctrl.formattedBuildingAddress', ->
         it 'expects ListingService.function to be called', ->

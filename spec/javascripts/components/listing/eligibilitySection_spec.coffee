@@ -47,27 +47,19 @@ do ->
           expect(ctrl.occupancy(unitSummary)).toEqual('1-3')
 
       describe 'occupancyLabel', ->
-        it 'calls translate person for 1', ->
-          spyOn($translate, 'instant')
-          ctrl.occupancyLabel(1)
-          expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
-        it 'calls translate people for more than 1', ->
-          spyOn($translate, 'instant')
-          ctrl.occupancyLabel(2)
-          expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
-
-      describe 'listingHasOnlySROUnits', ->
-        it 'calls ListingService.listingHasOnlySROUnits', ->
-          ctrl.listingHasOnlySROUnits()
-          expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalled()
-
-      describe 'listingHasPriorityUnits', ->
-        it 'calls ListingService.listingHasPriorityUnits', ->
-          ctrl.listingHasPriorityUnits()
-          expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(fakeListing)
+        describe 'when maxOccupancy == 1', ->
+          it 'calls $translate.instant with "LISTINGS.PERSON"', ->
+            spyOn($translate, 'instant')
+            ctrl.occupancyLabel(1)
+            expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PERSON')
+        describe 'when maxOccupancy != 1', ->
+          it 'calls $translate.instant with "LISTINGS.PEOPLE"', ->
+            spyOn($translate, 'instant')
+            ctrl.occupancyLabel(2)
+            expect($translate.instant).toHaveBeenCalledWith('LISTINGS.PEOPLE')
 
       describe 'showAMItoggler', ->
-        it 'calls false for empty AMICharts', ->
+        it 'returns false for empty AMICharts', ->
           expect(ctrl.showAMItoggler()).toBe(false)
         it 'calls ListingService.occupancyIncomeLevels', ->
           fakeListingService.AMICharts = fakeAMI
@@ -103,46 +95,54 @@ do ->
           expect(ctrl.showAMItoggler()).toEqual false
 
       describe 'hasMultipleAMICharts', ->
-        it 'calls ListingService.AMICharts', ->
-          ctrl.hasMultipleAMICharts()
-          spyOn(fakeListingService, 'AMICharts').and.returnValue([])
-          expect(fakeListingService.AMICharts).toHaveBeenCalled
-        it 'calls true for ListingService.AMICharts >= 2', ->
+        it 'returns true when there are 2 or more AMI charts', ->
           fakeListingService.AMICharts = [1,2]
           expect(ctrl.hasMultipleAMICharts()).toEqual true
-        it 'calls false for ListingService.AMICharts <= 1', ->
+        it 'returns false when there is 1 or fewer AMI charts', ->
           fakeListingService.AMICharts = [1]
           expect(ctrl.hasMultipleAMICharts()).toEqual false
 
       describe 'listingHasPreferences', ->
-        it 'calls parent.listing.preferences', ->
-          fakeListing.preferences = -> null
-          spyOn(fakeListing, 'preferences')
-          ctrl.listingHasPreferences()
-          expect(fakeParent.preferences).toHaveBeenCalled
-        it 'calls true if parent has at least one preference', ->
+        it "returns true if the parent's listing has at least one preference", ->
           fakeListing.preferences = [1]
           expect(ctrl.listingHasPreferences()).toEqual true
-        it 'calls false for empty preferences', ->
+        it "returns false if the parent's listing has no preferences", ->
           fakeListing.preferences = []
           expect(ctrl.listingHasPreferences()).toEqual false
+
+      describe 'listingHasOnlySROUnits', ->
+        it "calls ListingService.listingHasOnlySROUnits with the parent's listing", ->
+          ctrl.listingHasOnlySROUnits()
+          expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'getListingPreferences', ->
         it 'calls ListingService.getListingPreferences', ->
           ctrl.getListingPreferences()
-          expect(fakeListingService.getListingPreferences).toHaveBeenCalled
+          expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
+
+      describe 'listingHasPriorityUnits', ->
+        it "calls ListingService.listingHasPriorityUnits with the parent's listing", ->
+          ctrl.listingHasPriorityUnits()
+          expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'priorityLabel', ->
-        it 'calls ListingService.priorityLabel', ->
-          ctrl.priorityLabel()
-          expect(fakeListingService.priorityLabel).toHaveBeenCalled
+        it 'calls ListingHelperService.priorityLabel with the given arguments', ->
+          ctrl.priorityLabel(1, 2)
+          expect(fakeListingHelperService.priorityLabel).toHaveBeenCalledWith(1, 2)
+
+      describe 'occupancyIncomeLevels', ->
+        it "calls ListingService.occupancyIncomeLevels with the parent's listing and the given amiLevel", ->
+          spyOn(fakeListingService, 'occupancyIncomeLevels')
+          ctrl.occupancyIncomeLevels(1)
+          expect(fakeListingService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, 1)
 
       describe 'householdAMIChartCutoff', ->
         it 'calls ListingService.householdAMIChartCutoff', ->
+          spyOn(fakeListingService, 'householdAMIChartCutoff')
           ctrl.householdAMIChartCutoff()
-          expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled
+          expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled()
 
       describe 'incomeForHouseholdSize', ->
-        it 'calls ListingService.incomeForHouseholdSize', ->
-          ctrl.incomeForHouseholdSize()
-          expect(fakeListingService.incomeForHouseholdSize).toHaveBeenCalled
+        it 'calls ListingService.incomeForHouseholdSize with the given arguments', ->
+          ctrl.incomeForHouseholdSize(1, 2)
+          expect(fakeListingService.incomeForHouseholdSize).toHaveBeenCalledWith(1, 2)
