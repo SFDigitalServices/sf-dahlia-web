@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -52,6 +54,7 @@ module SfDahliaWeb
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 %r{(.+)/$}, '$1'
       r301 %r{(.+)/\?(.*)$}, '$1?$2'
+      r301 '/mohcd-plus-housing', 'https://sfmohcd.org/plus-housing-application'
     end
   end
 end
