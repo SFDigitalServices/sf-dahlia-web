@@ -31,6 +31,7 @@ do ->
         it 'calls ListingService.listingHasLotteryResults', ->
           ctrl.listingHasLotteryResults()
           expect(fakeListingService.listingHasLotteryResults).toHaveBeenCalled()
+
       describe 'openLotteryResultsModal', ->
         it 'expect ListingService.openLotteryResultsModal to be called', ->
           ctrl.openLotteryResultsModal()

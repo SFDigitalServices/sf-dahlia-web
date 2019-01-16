@@ -124,6 +124,38 @@ do ->
           ctrl.isFavorited(fakeListingId)
           expect(fakeListingService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
+      describe '$ctrl.reservedLabel', ->
+        it 'calls ListingHelperService.reservedLabel', ->
+          ctrl.reservedLabel()
+          expect(fakeListingHelperService.reservedLabel).toHaveBeenCalled()
+
+      describe '$ctrl.getListingAMI', ->
+        it 'calls ListingService.getListingAMI', ->
+          ctrl.getListingAMI()
+          expect(fakeListingService.getListingAMI).toHaveBeenCalled()
+
+      describe '$ctrl.listingIsReservedCommunity', ->
+        it 'calls ListingService.listingIsReservedCommunity', ->
+          ctrl.listingIsReservedCommunity()
+          expect(fakeListingService.listingIsReservedCommunity).toHaveBeenCalledWith(fakeListing)
+
+      describe '$ctrl.listingIs', ->
+        it 'calls ListingService.listingIs with the given name', ->
+          name = 'fake'
+          spyOn(fakeListingService, 'listingIs')
+          ctrl.listingIs(name)
+          expect(fakeListingService.listingIs).toHaveBeenCalledWith(name)
+
+      describe '$ctrl.listingHasReservedUnits', ->
+        it "calls ListingService.listingHasReservedUnits with the controller's listing", ->
+          ctrl.listingHasReservedUnits()
+          expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
+
+      describe '$ctrl.listingIsFirstComeFirstServe', ->
+        it 'calls ListingService.listingIsFirstComeFirstServe', ->
+          ctrl.listingIsFirstComeFirstServe()
+          expect(fakeListingService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
+
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingService.function to be called', ->
           ctrl.toggleFavoriteListing 1
@@ -173,42 +205,10 @@ do ->
           ctrl.formattedBuildingAddress(fakeListing, display)
           expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
 
-      describe 'listingHasReservedUnits', ->
-        it 'calls ListingService.listingHasReservedUnits', ->
-          ctrl.listingHasReservedUnits()
-          expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
-
       describe '$ctrl.getListingUnits', ->
         it 'calls ListingService.getListingUnits', ->
           ctrl.getListingUnits()
           expect(fakeListingService.getListingUnits).toHaveBeenCalled()
-
-      describe '$ctrl.getListingAMI', ->
-        it 'calls ListingService.getListingAMI', ->
-          ctrl.getListingAMI()
-          expect(fakeListingService.getListingAMI).toHaveBeenCalled()
-
-      describe '$ctrl.reservedLabel', ->
-        it 'calls ListingHelperService.reservedLabel', ->
-          ctrl.reservedLabel()
-          expect(fakeListingHelperService.reservedLabel).toHaveBeenCalled()
-
-      describe '$ctrl.listingIsReservedCommunity', ->
-        it 'calls ListingService.listingIsReservedCommunity', ->
-          ctrl.listingIsReservedCommunity()
-          expect(fakeListingService.listingIsReservedCommunity).toHaveBeenCalledWith(fakeListing)
-
-      describe '$ctrl.listingIs', ->
-        it 'calls ListingService.listingIs', ->
-          name = 'fake'
-          spyOn(fakeListingService, 'listingIs')
-          ctrl.listingIs(name)
-          expect(fakeListingService.listingIs).toHaveBeenCalledWith(name)
-
-      describe '$ctrl.listingIsFirstComeFirstServe', ->
-        it 'calls ListingService.listingIsFirstComeFirstServe', ->
-          ctrl.listingIsFirstComeFirstServe()
-          expect(fakeListingService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.formattedLeasingAgentAddress', ->
         it 'calls ListingHelperService.formattedAddress', ->
