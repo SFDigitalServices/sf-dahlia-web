@@ -1,0 +1,20 @@
+header.lead-header.bg-image.bg-gradient
+  .row
+    .large-12.columns
+      hgroup.lead-header_group
+        h1.lead-header_title.t-beta.c-white My Favorites
+
+section.row ng-show="!$ctrl.parent.favorites.length"
+  .large-12.columns
+    .block.bg-mist.margin-top--2x.text-center
+      figure.block-icon
+        img ng-src="{{::$ctrl.parent.assetPaths['icon-heart.png']}}" alt="Heart Icon"
+      p.t-delta.t-serif.c-oil It looks like you haven't favorited any listings yet.
+      a.button ui-sref="dahlia.listings" Browse Listings
+
+.results-section
+  .row
+    .large-12.columns
+      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id)"
+
+ng-include src="'pages/templates/_email-updates.html'"

@@ -47,12 +47,12 @@ div ng-if="!applicantSelectedForPreference()"
 
 .t-small.padding--3halves ng-if="lotteryNumberValid()"
   .toggled
-    a.a-dark.toggler.toggle-more.t-small title="{{'LOTTERY.NEXT_STEPS_TITLE' | translate}}" href="#" ng-click="whatHappens = !whatHappens"
+    a.a-dark.toggler.toggle-more.t-small title="{{'LOTTERY.NEXT_STEPS_TITLE' | translate}}" href="#" ng-click="showWhatHappensNextSection = !showWhatHappensNextSection"
       | {{'LOTTERY.NEXT_STEPS_TITLE' | translate}}&nbsp;
       span.ui-icon.ui-static.ui-tiny.i-dark
         svg
           use xlink:href="#i-arrow-down"
-    span ng-show="whatHappens"
+    span ng-show="showWhatHappensNextSection"
       p.c-steel.t-small.margin-top
         | {{'LOTTERY.NEXT_STEPS_P1' | translate}}
       p.c-steel.t-small
