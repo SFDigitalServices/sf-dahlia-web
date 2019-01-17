@@ -20,7 +20,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
         $scope.filters.income_timeframe = 'per_year'
         $scope.filters.income_total = 0
       ListingService.setEligibilityFilters($scope.filters)
-      $state.go('dahlia.listings')
+      $state.go('dahlia.listings-for-rent')
     else
       $scope.hideAlert = false
 

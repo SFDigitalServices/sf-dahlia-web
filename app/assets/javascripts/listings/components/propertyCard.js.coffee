@@ -14,7 +14,7 @@ angular.module('dahlia.components')
         SharedService.showSharing()
 
       @showMatches = ->
-        $state.current.name == 'dahlia.listings' && this.listingContainer.hasEligibilityFilters()
+        $state.current.name == 'dahlia.listings-for-rent' && this.listingContainer.hasEligibilityFilters()
 
       @isOpenNotMatchListing = (listing) ->
         this.listingContainer.openNotMatchListings.indexOf(listing) > -1

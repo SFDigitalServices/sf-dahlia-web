@@ -44,19 +44,19 @@ do ->
         ctrl = $componentController 'propertyCard', locals, {listingContainer: fakeListingContainer}
 
       describe '$ctrl.showMatches', ->
-        describe 'dahlia.listings state with filters available', ->
+        describe 'dahlia.listings-for-rent state with filters available', ->
           it 'returns true', ->
-            state.current.name = 'dahlia.listings'
+            state.current.name = 'dahlia.listings-for-rent'
             spyOn(fakeListingContainer, 'hasEligibilityFilters').and.returnValue(true)
             expect(ctrl.showMatches()).toEqual true
 
         describe 'filters unavailable', ->
           it 'returns false', ->
-            state.current.name = 'dahlia.listings'
+            state.current.name = 'dahlia.listings-for-rent'
             spyOn(fakeListingContainer, 'hasEligibilityFilters').and.returnValue(false)
             expect(ctrl.showMatches()).toEqual false
 
-        describe 'state is not dahlia.listings', ->
+        describe 'state is not dahlia.listings-for-rent', ->
           it 'returns false', ->
             state.current.name = 'dahlia.home'
             spyOn(fakeListingContainer, 'hasEligibilityFilters').and.returnValue(true)

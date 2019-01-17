@@ -82,8 +82,8 @@ do ->
             expect(fakeListingService.setEligibilityFilters)
               .toHaveBeenCalledWith(scope.filters)
 
-          it 'changes state to dahlia.listings', ->
-            expect(state.go).toHaveBeenCalledWith('dahlia.listings')
+          it 'changes state to dahlia.listings-for-rent', ->
+            expect(state.go).toHaveBeenCalledWith('dahlia.listings-for-rent')
 
         describe 'invalid form', ->
           it 'assigned hideAlert to false', ->
