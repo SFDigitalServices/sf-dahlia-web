@@ -102,7 +102,7 @@
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
-                return $state.go('dahlia.listings-for-rent')
+                return $state.go('dahlia.welcome')
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 
