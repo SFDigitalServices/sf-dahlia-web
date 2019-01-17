@@ -1,0 +1,109 @@
+.property-hero
+  figure.property-hero_figure
+    div.property-hero_container
+      ng-carousel ng-carousel-name="hero-carousel" ng-style="{height: $ctrl.carouselHeight + 'px'}"
+        slidecontainer
+          slide ng-repeat="image in ::$ctrl.listingImages($ctrl.parent.listing) track by $index"
+            img.property-hero_thumb(adjust-carousel-height alt="Listing Name:{{::$ctrl.parent.listing.Name}}, Address:{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}" ng-src="{{image}}")
+        div ng-if="::$ctrl.listingImages($ctrl.parent.listing).length > 1"
+          .carousel-arrow.carousel-arrow-left
+            button ng-click="Carousel.get('hero-carousel').previous()" tabindex="-1"
+              span.ui-icon.ui-static.ui-large.i-white
+                svg
+                  use xlink:href="#i-left"
+          .carousel-arrow.carousel-arrow-right
+            button ng-click="Carousel.get('hero-carousel').next()" tabindex="-1"
+              span.ui-icon.ui-static.ui-large.i-white
+                svg
+                  use xlink:href="#i-right"
+
+    h1.property-hero_title.offset
+      | {{::$ctrl.parent.listing.Name}}
+    span.property-hero_label.label.radius.bg-splash ng-if="::$ctrl.parent.listingIsReservedCommunity()" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'building')}}"
+
+  header.property-hero_content.p-relative.margin-bottom
+    hgroup.clearfix
+      p.property-hero_address
+        | {{::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}
+      p.content-group_address.c-steel
+        | {{::$ctrl.parent.listing.Developer}}
+      a.ui-link.t-micro.hide-for-print target="_blank" href="https://www.google.com/maps/place/{{$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)}}"
+        | View on Map
+
+    .property-hero_favorite
+      button.button.round-icon.i-block data-event="gtm-favorite" title="Favorite" ng-click="$ctrl.parent.toggleFavoriteListing($ctrl.parent.listing.Id);"
+        span.ui-icon
+          svg
+            use xlink:href="#i-like" ng-show="!$ctrl.parent.isFavorited($ctrl.parent.listing.Id)"
+            use xlink:href="#i-like-fill" ng-show="$ctrl.parent.isFavorited($ctrl.parent.listing.Id)"
+        span.sr-only Favorite
+      a.button.round-icon.i-block data-event="gtm-share" title="Share" ui-sref="dahlia.share({id: $ctrl.parent.listing.Id})"
+        span.ui-icon
+          svg
+            use xlink:href="#i-forward"
+            use style="display:none" xlink:href="#i-forward-fill"
+        span.sr-only Share
+
+  .property-hero_stats.show-for-small-only.margin-top ng-if="::$ctrl.parent.listingApplicationClosed($ctrl.parent.listing)"
+    span.label.label--flag.alert-tint
+      span.ui-icon.ui-static.ui-medium.i-color
+        svg
+          use xlink:href="#i-clock"
+      | Applications Closed {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+
+  section.property-hero_stats.margin-bottom--2x
+    .message-group
+      .message.is-reserved ng-if="::$ctrl.parent.listingIsReservedCommunity()"
+        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}"
+      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits() && $ctrl.parent.listingIsReservedCommunity()" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
+        span.ui-icon.ui-static.ui-medium.i-color.message-icon
+          svg
+            use xlink:href="{{::$ctrl.parent.reservedUnitIcons[$index]}}"
+        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, descriptor.name, 'reservedForWhoAre')}}"
+
+      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits() && !$ctrl.parent.listingIsReservedCommunity()" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
+        span.ui-icon.ui-static.ui-medium.i-color.message-icon
+          svg
+            use xlink:href="{{$ctrl.parent.reservedUnitIcons[$index]}}"
+        span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel(descriptor.name, 'reservedForWhoAre')}}"
+
+    .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
+      .padding--2x ng-include="'shared/templates/spinner.html'"
+
+    .content-card.padding--2x ng-show="$ctrl.parent.error.units"
+      .padding--2x.text-center
+        button.button-link ng-click="$ctrl.parent.getListingUnits()"
+          | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
+
+    .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in $ctrl.parent.listing.groupedUnits"
+      h2.property-hero_stat-header ng-if="percent && $ctrl.hasMultipleAMIUnits()"
+        ' {{percent}}% AMI
+        ng-pluralize count="unitGroups.length" when="{'1': ' Unit', 'other': ' Units'}"
+
+        / TODO: will fully implement this More Info popup link in a later story
+        / a.property-hero_stat-info href="#"
+        /   span.ui-icon.ui-static.ui-medium.i-primary
+        /     svg
+        /       use xlink:href="#i-info"
+        /   |  More Info
+
+      ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+
+
+  / TODO: remove case for hardcoded listings
+  .content-card ng-if="::$ctrl.parent.listingHasSROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street') && !$ctrl.parent.listingIs('750 Harrison Street')"
+    h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
+    / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
+    p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!ctrl.parent.listingIs('Merry Go Round Shared Housing')"
+    p.c-steel translate="LISTINGS.MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::$ctrl.parent.listingIs('Merry Go Round Shared Housing')"
+
+  / "How To Apply" on mobile browsers gets included here
+  .property-hero_apply.hide-for-medium-up.hide-for-print
+    div ng-if="!ctrl.parent.listingApplicationClosed(ctrl.parent.listing)"
+      .label.flag-label.secondary.text-wrap
+        span.ui-icon.ui-medium
+          svg
+            use xlink:href="#i-clock"
+        | Application Deadline {{::$ctrl.parent.listing.Application_Due_Date | date : "MMM d, yyyy 'at' h:mm a"}}
+      ng-include src="'listings/templates/listing/_waitlist-info.html'"
+      panel-apply

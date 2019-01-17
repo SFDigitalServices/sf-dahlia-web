@@ -1,5 +1,5 @@
 accordion-heading
-  img.accordion-icon ng-src="{{::assetPaths['listing-units.svg']}}" alt="neighborhood-building"
+  img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-units.svg']}}" alt="neighborhood-building"
   h3.accordion-name translate="LOTTERY.LOTTERY"
   span.accordion-subheader translate="LOTTERY.LOTTERY_INFO_SUBHEADER"
   span.ui-control.ui-icon.ui-small
@@ -13,30 +13,30 @@ section.content-wrap
         span.ui-icon.ui-static.ui-medium.i-color
           svg
             use xlink:href="#i-clock"
-        span translate="LISTINGS.APPLICATIONS_CLOSED" translate-value-date="{{::listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
+        span translate="LISTINGS.APPLICATIONS_CLOSED" translate-value-date="{{::$ctrl.parent.listing.Application_Due_Date | date : 'MMM d, yyyy \'at\' h:mm a'}}"
 
-  span ng-if="lotteryDateVenueAvailable(listing) && !listingHasLotteryResults()"
+  span ng-if="$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing) && !$ctrl.listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_pre_lottery_info.html'"
 
-  .content-group ng-if='!listing.Lottery_Results && !listingIsFirstComeFirstServe()'
+  .content-group ng-if='!$ctrl.parent.listing.Lottery_Results && !$ctrl.parent.listingIsFirstComeFirstServe()'
     h4.h-caps-lined translate="LOTTERY.LOTTERY_RESULTS"
     p.content-group_date
       span.content-group_day
-        | {{ listing.Lottery_Results_Date | date : 'longDate' }}
+        | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
     p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
 
-  .content-group.expand.text-center ng-if="listingHasLotteryResults()"
+  .content-group.expand.text-center ng-if="$ctrl.listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
 
   .content-group
     ng-include src="'listings/templates/listing/_what_to_expect.html'"
 
   / lottery preference URL
-  .content-group ng-repeat="lotteryPreference in ::listing.preferences" ng-if="!listingHasLotteryResults() && lotteryPreference.pdfUrl"
+  .content-group ng-repeat="lotteryPreference in ::$ctrl.parent.listing.preferences" ng-if="!$ctrl.listingHasLotteryResults() && lotteryPreference.pdfUrl"
     h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{::lotteryPreference.preferenceName}}"
     a.button.primary.expand ng-href="{{::lotteryPreference.pdfUrl}}" target="_blank"
       | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
     p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
 
-  .content-group ng-if="::leasingAgentInfoAvailable()"
+  .content-group ng-if="::$ctrl.leasingAgentInfoAvailable()"
     ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
