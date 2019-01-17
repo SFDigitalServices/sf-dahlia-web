@@ -1130,7 +1130,7 @@
         ]
     })
 
-    $urlRouterProvider.when('/listings', '/').otherwise('/') # default to welcome screen
+    $urlRouterProvider.otherwise('/') # default to welcome screen
 
     # have to check if browser supports html5mode (http://stackoverflow.com/a/22771095)
     if !!(window.history && history.pushState)
