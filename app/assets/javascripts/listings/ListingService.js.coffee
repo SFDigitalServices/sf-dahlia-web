@@ -2,7 +2,8 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService, ExternalTranslateService, $timeout, ListingEligibilityService) ->
+ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService,
+ExternalTranslateService, $timeout, ListingEligibilityService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}

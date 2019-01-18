@@ -19,6 +19,14 @@ do ->
     # fakeListingSomeSRO has two unit summaries in general, one for SRO, one for 1 BR
     fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
     fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
+    fakeListingConstantsService = {
+      defaultApplicationURLs: {
+        'language': 'Spanish'
+        'label': 'EspaÃ±ol'
+        'url': 'http://url.com'
+      }
+      LISTING_MAP: {}
+    }
     fakeAMI = getJSONFixture('listings-api-ami.json')
     loading = {}
     error = {}
@@ -38,6 +46,12 @@ do ->
       income_total: 3500
       include_children_under_6: true
       children_under_6: 1
+    fakeListingEligibilityService = {
+      eligibilityYearlyIncome: jasmine.createSpy()
+      eligibility_filters: fakeEligibilityFilters
+      setEligibilityFilters: jasmine.createSpy()
+      hasEligibilityFilters: ->
+    }
     $localStorage = undefined
     $state = undefined
     $translate = {}
@@ -56,6 +70,8 @@ do ->
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
       $provide.value 'ModalService', fakeModalService
+      $provide.value 'ListingEligibilityService', fakeListingEligibilityService
+      $provide.value 'ListingConstantsService', fakeListingConstantsService
       return
     )
 
@@ -97,9 +113,13 @@ do ->
     describe 'Service.getListings', ->
       it 'returns Service.getListingsWithEligibility if eligibility options are set', ->
         ListingService.getListingsWithEligibility = jasmine.createSpy()
-        ListingService.setEligibilityFilters(fakeEligibilityFilters)
+        spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
         ListingService.getListings({checkEligibility: true})
         expect(ListingService.getListingsWithEligibility).toHaveBeenCalled()
+      it 'calls ListingEligibilityService.eligibilityYearlyIncome', ->
+        spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
+        ListingService.getListings({checkEligibility: true})
+        expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 
     describe 'Service.getListing', ->
       afterEach ->
@@ -145,7 +165,7 @@ do ->
         expect(ListingService.lotteryBucketInfo).toEqual {}
 
       it 'resets the download URLs', ->
-        ListingService.listingDownloadURLs = angular.copy(ListingService.defaultApplicationURLs)
+        ListingService.listingDownloadURLs = angular.copy(fakeListingConstantsService.defaultApplicationURLs)
         ListingService.resetListingData()
         expect(ListingService.listingDownloadURLs).toEqual []
 
@@ -293,26 +313,6 @@ do ->
           httpBackend.flush()
           expect(ListingService.favorites).toEqual []
 
-    describe 'Service.setEligibilityFilters', ->
-      describe 'When filters have been set', ->
-        beforeEach ->
-          # reset eligibility filters
-          ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
-        afterEach ->
-          # reset eligibility filters
-          ListingService.setEligibilityFilters angular.copy(ListingService.eligibility_filter_defaults)
-        it 'updates Service.eligibility_filters with appropriate data', ->
-          ListingService.setEligibilityFilters(fakeEligibilityFilters)
-          expect(ListingService.eligibility_filters.income_total).toEqual 3500
-          expect(ListingService.eligibility_filters.household_size).toEqual 2
-        it 'checks if eligibility filters have been set', ->
-          expect(ListingService.hasEligibilityFilters()).toEqual false
-          ListingService.setEligibilityFilters(fakeEligibilityFilters)
-          expect(ListingService.hasEligibilityFilters()).toEqual true
-        it 'returns yearly income', ->
-          ListingService.setEligibilityFilters(fakeEligibilityFilters)
-          expect(ListingService.eligibilityYearlyIncome()).toEqual 3500*12
-
     describe 'Service.getListingUnits', ->
       beforeEach ->
         # have to populate listing first
@@ -383,12 +383,18 @@ do ->
       it 'calls groupListings and cleanListings functions with returned listings', ->
         ListingService.cleanListings = jasmine.createSpy()
         ListingService.groupListings = jasmine.createSpy()
-        ListingService.setEligibilityFilters(fakeEligibilityFilters)
         stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
         ListingService.getListingsWithEligibility()
         httpBackend.flush()
         expect(ListingService.cleanListings).toHaveBeenCalled()
         expect(ListingService.groupListings).toHaveBeenCalled()
+      it 'calls ListingEligibilityService.eligibilityYearlyIncome', ->
+        ListingService.cleanListings = jasmine.createSpy()
+        ListingService.groupListings = jasmine.createSpy()
+        stubAngularAjaxRequest httpBackend, requestURL, fakeEligibilityListings
+        ListingService.getListingsWithEligibility()
+        httpBackend.flush()
+        expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 
     describe 'Service.getLotteryBuckets', ->
       afterEach ->

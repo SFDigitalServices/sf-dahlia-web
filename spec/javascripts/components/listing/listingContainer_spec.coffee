@@ -25,6 +25,11 @@ do ->
       'income_total': ''
       'include_children_under_6': false
       'children_under_6': ''
+    fakeListingEligibilityService = {
+      eligibility_filter_defaults: eligibilityFilterDefaults
+      eligibility_filters: eligibilityFilterDefaults
+      resetEligibilityFilters: jasmine.createSpy()
+    }
     hasFilters = false
     fakeListingService =
       listings: fakeListings
@@ -47,8 +52,6 @@ do ->
       toggleFavoriteListing: jasmine.createSpy()
       isFavorited: jasmine.createSpy()
       openLotteryResultsModal: jasmine.createSpy()
-      eligibility_filters: eligibilityFilterDefaults
-      resetEligibilityFilters: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       listingHasPriorityUnits: jasmine.createSpy()
       listingHasReservedUnits: jasmine.createSpy()
@@ -73,6 +76,7 @@ do ->
         $translate: $translate
         ListingHelperService: fakeListingHelperService
         SharedService: fakeSharedService
+        ListingEligibilityService: fakeListingEligibilityService
       }
     )
 
@@ -162,10 +166,10 @@ do ->
           expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
 
       describe '$ctrl.hasEligibilityFilters', ->
-        it 'expects ListingService.hasEligibilityFilters to be called', ->
-          fakeListingService.hasEligibilityFilters = jasmine.createSpy()
+        it 'expects fakeListingEligibilityService.hasEligibilityFilters to be called', ->
+          fakeListingEligibilityService.hasEligibilityFilters = jasmine.createSpy()
           ctrl.hasEligibilityFilters()
-          expect(fakeListingService.hasEligibilityFilters).toHaveBeenCalled()
+          expect(fakeListingEligibilityService.hasEligibilityFilters).toHaveBeenCalled()
 
       describe '$ctrl.listingApplicationClosed', ->
         it 'expects ListingService.listingIsOpen to be called', ->
