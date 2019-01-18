@@ -12,6 +12,6 @@ Given 'I try to go to a listing page with an invalid ID', ->
 # --- Expectations --- #
 ######################
 
-Then 'I should be redirected to the listings page', ->
-  listingsHeader = element(By.id('listings_header'))
-  @expect(listingsHeader.isPresent()).to.eventually.equal(true)
+Then 'I should be redirected to the welcome page', ->
+  welcomeComponent = element(By.tagName('welcome-component'))
+  @expect(welcomeComponent.isPresent()).to.eventually.equal(true)

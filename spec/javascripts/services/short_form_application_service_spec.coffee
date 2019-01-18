@@ -625,12 +625,12 @@ do ->
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
       it 'should know if you\'re leaving short form', ->
-        toState = {name: 'dahlia.listings'}
+        toState = {name: 'dahlia.listings-for-rent'}
         fromState = {name: 'dahlia.short-form-application.name'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(true)
 
       it 'should not trigger if you\'re on the short form intro page', ->
-        toState = {name: 'dahlia.listings'}
+        toState = {name: 'dahlia.listings-for-rent'}
         fromState = {name: 'dahlia.short-form-welcome.intro'}
         expect(ShortFormApplicationService.isLeavingShortForm(toState, fromState)).toEqual(false)
 
@@ -641,20 +641,20 @@ do ->
 
     describe 'leaveAndResetShortForm', ->
       it 'should call trackTimeout if timing out', ->
-        toState = {name: 'dahlia.listings'}
+        toState = {name: 'dahlia.listings-for-rent'}
         toParams = {timeout: true}
         ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
         expect(fakeAnalyticsService.trackTimeout).toHaveBeenCalled()
 
       it 'should call trackFormAbandon if not timing out', ->
-        toState = {name: 'dahlia.listings'}
+        toState = {name: 'dahlia.listings-for-rent'}
         toParams = {timeout: false}
         ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
         expect(fakeAnalyticsService.trackFormAbandon).toHaveBeenCalled()
 
       it 'should call resetApplicationData if not on short form review', ->
         spyOn(ShortFormApplicationService, 'resetApplicationData')
-        toState = {name: 'dahlia.listings'}
+        toState = {name: 'dahlia.listings-for-rent'}
         toParams = {timeout: true}
         ShortFormApplicationService.leaveAndResetShortForm(toState, toParams)
         expect(ShortFormApplicationService.resetApplicationData).toHaveBeenCalled()

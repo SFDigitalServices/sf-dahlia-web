@@ -72,7 +72,7 @@
         # start Apply Online timer, tracking if the first state that is arrived at is
         # 1) the browse listings page, 2) a single listing page, or 3) any other page
         timerVariable = switch toState.name
-          when 'dahlia.listings' then 'Browse to Application Start'
+          when 'dahlia.listings-for-rent' then 'Browse to Application Start'
           when 'dahlia.listing' then 'Listing Page to Application Start'
           else 'Landing Page to Application Start'
         AnalyticsService.startTimer(label: 'Apply Online Click', variable: timerVariable)
@@ -224,7 +224,7 @@
 
         # redirect when there's an error
         if toState.name == 'dahlia.listing' && error.status == 404
-          return $state.go('dahlia.listings')
+          return $state.go('dahlia.listings-for-rent')
         else
           return $state.go('dahlia.welcome')
 

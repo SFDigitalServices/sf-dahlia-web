@@ -63,8 +63,8 @@
           SharedService.getHousingCounselors()
         ]
     })
-    .state('dahlia.listings', {
-      url: '/listings'
+    .state('dahlia.listings-for-rent', {
+      url: '/listings/for-rent'
       views:
         'container@':
           templateUrl: 'listings/templates/listings.html'
@@ -102,7 +102,7 @@
               deferred.resolve(ListingService.listing)
               if _.isEmpty(ListingService.listing)
                 # kick them out unless there's a real listing
-                return $state.go('dahlia.listings')
+                return $state.go('dahlia.welcome')
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 

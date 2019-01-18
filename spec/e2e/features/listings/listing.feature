@@ -4,4 +4,4 @@ Feature: Listing
 
     Scenario: Attempting to go to a listing page using an invalid ID
       Given I try to go to a listing page with an invalid ID
-      Then I should be redirected to the listings page
+      Then I should be redirected to the welcome page
