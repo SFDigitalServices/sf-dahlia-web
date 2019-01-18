@@ -13,9 +13,10 @@ do ->
       'children_under_6': ''
 
     fakeListingService = {}
-    fakeListingService =
+    fakeListingEligibilityService = {
       eligibility_filter_defaults: eligibilityFilterDefaults
       eligibility_filters: eligibilityFilterDefaults
+    }
 
     fakeIncomeCalculatorService = {}
 
@@ -23,6 +24,8 @@ do ->
       fakeIncomeCalculatorService.calculateTotalYearlyIncome = () ->
         return 0
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
+      $provide.value 'ListingEligibilityService', fakeListingEligibilityService
+
       return
     )
 

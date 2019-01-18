@@ -1068,7 +1068,7 @@ ShortFormApplicationService = (
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
-  'ListingService', 'ListingHelperService', 'ListingConstantsService' 'ShortFormDataService',
+  'ListingService', 'ListingHelperService', 'ListingConstantsService', 'ShortFormDataService',
   'AddressValidationService', 'GISService',
   'AnalyticsService', 'FileUploadService', 'SharedService'
 ]

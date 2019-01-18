@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService, ExternalTranslateService, $timeout) ->
+ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService, ExternalTranslateService, $timeout, ListingEligibilityService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -26,16 +26,6 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
   Service.listingDownloadURLs = []
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
-
-  Service.eligibility_filter_defaults =
-    'household_size': ''
-    'income_timeframe': ''
-    'income_total': ''
-    'include_children_under_6': false
-    'children_under_6': ''
-
-  $localStorage.eligibility_filters ?= angular.copy(Service.eligibility_filter_defaults)
-  Service.eligibility_filters = $localStorage.eligibility_filters
 
   Service.getFavoriteListings = () ->
     Service.getListingsByIds(Service.favorites, true)
@@ -61,24 +51,6 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
 
   Service.isFavorited = (listing_id) ->
     Service.favorites.indexOf(listing_id) > -1
-
-  Service.setEligibilityFilters = (filters) ->
-    angular.copy(filters, Service.eligibility_filters)
-
-  Service.resetEligibilityFilters = ->
-    angular.copy(Service.eligibility_filter_defaults, Service.eligibility_filters)
-
-  Service.hasEligibilityFilters = ->
-    hasIncome = Service.eligibility_filters.income_total >= 0 ? true : false
-    !! (hasIncome &&
-        Service.eligibility_filters.income_timeframe &&
-        Service.eligibility_filters.household_size)
-
-  Service.eligibilityYearlyIncome = ->
-    if Service.eligibility_filters.income_timeframe == 'per_month'
-      parseFloat(Service.eligibility_filters.income_total) * 12
-    else
-      parseFloat(Service.eligibility_filters.income_total)
 
   Service.occupancyMinMax = (listing) ->
     minMax = [1, 1]
@@ -194,7 +166,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
-    if opts.checkEligibility && Service.hasEligibilityFilters()
+    if opts.checkEligibility && ListingEligibilityService.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
     deferred = $q.defer()
     $http.get("/api/v1/listings.json", {
@@ -227,10 +199,10 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
 
   Service.getListingsWithEligibility = ->
     params =
-      householdsize: Service.eligibility_filters.household_size
-      incomelevel: Service.eligibilityYearlyIncome()
-      includeChildrenUnder6: Service.eligibility_filters.include_children_under_6
-      childrenUnder6: Service.eligibility_filters.children_under_6
+      householdsize: ListingEligibilityService.eligibility_filters.household_size
+      incomelevel: ListingEligibilityService.eligibilityYearlyIncome()
+      includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
+      childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
     deferred = $q.defer()
     $http.get("/api/v1/listings/eligibility.json?#{Service.toQueryString(params)}",
       { etagCache: true }
@@ -678,7 +650,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
     ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
 
   Service.listingIs = (name, listing = Service.listing) ->
-    ListingConstantsServic.LISTING_MAP[listing.Id] == name
+    ListingConstantsService.LISTING_MAP[listing.Id] == name
 
   Service.listingIsFirstComeFirstServe = (listing = Service.listing) ->
     # hardcoded, currently just this one listing
@@ -817,7 +789,7 @@ ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, Li
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ListingConstantsService', 'ExternalTranslateService', '$timeout']
+ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ListingConstantsService', 'ExternalTranslateService', '$timeout', 'ListingEligibilityService']
 
 angular
   .module('dahlia.services')
