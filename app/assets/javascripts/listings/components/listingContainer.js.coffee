@@ -24,6 +24,9 @@ angular.module('dahlia.components')
       @closedListings = ListingService.closedListings
       @lotteryResultsListings = ListingService.lotteryResultsListings
 
+      @isOwnershipListing = (listing) ->
+        @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
+
       @isOpenMatchListing = (listing) ->
         @openMatchListings.indexOf(listing) > -1
 
