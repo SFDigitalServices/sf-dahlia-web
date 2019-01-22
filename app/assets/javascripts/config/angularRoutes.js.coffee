@@ -378,19 +378,6 @@
           AccountService.openAlreadySubmittedModal($stateParams.alreadySubmittedId, $stateParams.doubleSubmit)
       ]
     })
-    .state('dahlia.my-favorites', {
-      url: '/my-favorites'
-      views:
-        'container@':
-          templateUrl: 'account/templates/my-favorites.html'
-      resolve:
-        auth: ['$auth', ($auth) ->
-          $auth.validateUser()
-        ]
-        $title: ['$translate', ($translate) ->
-          $translate('PAGE_TITLE.FAVORITES')
-        ]
-    })
     ##########################
     # </ End Account/Login >
     ##########################
