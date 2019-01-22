@@ -61,11 +61,13 @@ do ->
       listingIsBMR: jasmine.createSpy()
       listingHasSROUnits: jasmine.createSpy()
       listingIsReservedCommunity: jasmine.createSpy()
-      listingIsFirstComeFirstServe: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
+      listingIs: jasmine.createSpy()
+      listingIsFirstComeFirstServe: jasmine.createSpy()
+      listingIsOpen: jasmine.createSpy()
     fakeListingLotteryService =
       getLotteryBuckets: ->
 
@@ -145,11 +147,10 @@ do ->
           expect(fakeListingService.listingIsReservedCommunity).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.listingIs', ->
-        it 'calls ListingService.listingIs with the given name', ->
+        it 'calls ListingHelperService.listingIs with the given name and listing', ->
           name = 'fake'
-          spyOn(fakeListingService, 'listingIs')
-          ctrl.listingIs(name)
-          expect(fakeListingService.listingIs).toHaveBeenCalledWith(name)
+          ctrl.listingIs(name, fakeListing)
+          expect(fakeListingHelperService.listingIs).toHaveBeenCalledWith(name, fakeListing)
 
       describe '$ctrl.listingHasReservedUnits', ->
         it "calls ListingService.listingHasReservedUnits with the controller's listing", ->
@@ -157,9 +158,9 @@ do ->
           expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
 
       describe '$ctrl.listingIsFirstComeFirstServe', ->
-        it 'calls ListingService.listingIsFirstComeFirstServe', ->
+        it 'calls ListingHelperService.listingIsFirstComeFirstServe', ->
           ctrl.listingIsFirstComeFirstServe()
-          expect(fakeListingService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingHelperService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingService.function to be called', ->
@@ -173,10 +174,9 @@ do ->
           expect(fakeListingEligibilityService.hasEligibilityFilters).toHaveBeenCalled()
 
       describe '$ctrl.listingApplicationClosed', ->
-        it 'expects ListingService.listingIsOpen to be called', ->
-          fakeListingService.listingIsOpen = jasmine.createSpy()
+        it 'expects ListingHelperService.listingIsOpen to be called', ->
           ctrl.listingApplicationClosed(fakeListing)
-          expect(fakeListingService.listingIsOpen).toHaveBeenCalled()
+          expect(fakeListingHelperService.listingIsOpen).toHaveBeenCalled()
 
       describe '$ctrl.lotteryDateVenueAvailable', ->
         beforeEach ->

@@ -4,8 +4,8 @@
 
 ListingService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
-  ExternalTranslateService, ListingConstantsService ,ListingEligibilityService,
-  ListingLotteryService, ModalService) ->
+  ExternalTranslateService, ListingConstantsService, ListingHelperService,
+  ListingEligibilityService, ListingLotteryService, ModalService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -219,7 +219,7 @@ ListingService = (
       !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
   Service.lotteryIsUpcoming = (listing) ->
-    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
+    !listing.Lottery_Results && !ListingLotteryService.lotteryDatePassed(listing)
 
   Service.groupListings = (listings) ->
     openListings = []
@@ -229,14 +229,14 @@ ListingService = (
     lotteryResultsListings = []
 
     listings.forEach (listing) ->
-      if Service.listingIsOpen(listing)
+      if ListingHelperService.listingIsOpen(listing)
         # All Open Listings Array
         openListings.push(listing)
         if listing.Does_Match
           openMatchListings.push(listing)
         else
           openNotMatchListings.push(listing)
-      else if !Service.listingIsOpen(listing)
+      else
         if Service.lotteryIsUpcoming(listing)
           closedListings.push(listing)
         else
@@ -272,22 +272,13 @@ ListingService = (
       return
     )
 
-  # Business logic for determining if a listing is open
-  # `due date` should be a datetime, to include precise hour of deadline
-  Service.listingIsOpen = (listing) ->
-    return false unless listing.Application_Due_Date
-    now = moment()
-    deadline = moment(listing.Application_Due_Date).tz('America/Los_Angeles')
-    # listing is open if deadline is in the future
-    return deadline > now
-
   Service.listingIsReservedCommunity = (listing) ->
     !! listing.Reserved_community_type
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
     return false if Service.lotteryComplete(listing)
-    return false unless Service.listingIsOpen(listing)
+    return false unless ListingHelperService.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
@@ -513,10 +504,10 @@ ListingService = (
     # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if(
-      Service.listingIs('Merry Go Round Shared Housing') ||
-      Service.listingIs('1335 Folsom Street') ||
-      Service.listingIs('750 Harrison Street')
+    if (
+      ListingHelperService.listingIs('Merry Go Round Shared Housing', listing) ||
+      ListingHelperService.listingIs('1335 Folsom Street', listing) ||
+      ListingHelperService.listingIs('750 Harrison Street', listing)
     )
       max = 2
     else if Service.listingHasOnlySROUnits(listing)
@@ -528,9 +519,9 @@ ListingService = (
   Service.householdAMIChartCutoff = ->
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
     if(
-      Service.listingIs('Merry Go Round Shared Housing') ||
-      Service.listingIs('1335 Folsom Street') ||
-      Service.listingIs('750 Harrison Street')
+      ListingHelperService.listingIs('Merry Go Round Shared Housing', Service.listing) ||
+      ListingHelperService.listingIs('1335 Folsom Street', Service.listing) ||
+      ListingHelperService.listingIs('750 Harrison Street', Service.listing)
     )
       return 2
     else if Service.listingHasOnlySROUnits(Service.listing)
@@ -592,79 +583,72 @@ ListingService = (
   Service.listingIsBMR = (listing) ->
     ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
 
-  Service.listingIs = (name, listing = Service.listing) ->
-    ListingConstantsService.LISTING_MAP[listing.Id] == name
-
-  Service.listingIsFirstComeFirstServe = (listing = Service.listing) ->
-    # hardcoded, currently just this one listing
-    Service.listingIs('168 Hyde Relisting', listing)
-
   Service.stubListingPreferences = ->
     opts = null
-    if (Service.listingIs('Alchemy'))
+    if (ListingHelperService.listingIs('Alchemy', Service.listing))
       opts = {
         COPUnits: 50
         DTHPUnits: 10
         NRHPUnits: 20
         NRHPDistrict: 8
       }
-    if (Service.listingIs('480 Potrero'))
+    if (ListingHelperService.listingIs('480 Potrero', Service.listing))
       opts = {
         COPUnits: 11
         DTHPUnits: 2
         NRHPUnits: 4
         NRHPDistrict: 10
       }
-    if (Service.listingIs('21 Clarence'))
+    if (ListingHelperService.listingIs('21 Clarence', Service.listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (Service.listingIs('168 Hyde'))
+    if (ListingHelperService.listingIs('168 Hyde', Service.listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (Service.listingIs('Olume'))
+    if (ListingHelperService.listingIs('Olume', Service.listing))
       opts = {
         COPUnits: 18
         DTHPUnits: 3
         NRHPUnits: 7
         NRHPDistrict: 6
       }
-    if (Service.listingIs('3445 Geary'))
+    if (ListingHelperService.listingIs('3445 Geary', Service.listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (Service.listingIs('125 Mason'))
+    if (ListingHelperService.listingIs('125 Mason', Service.listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 3
         NRHPUnits: 0
       }
-    if (Service.listingIs('Argenta 909'))
+    if (ListingHelperService.listingIs('Argenta 909', Service.listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (Service.listingIs('Northpoint Vistas'))
+    if (ListingHelperService.listingIs('Northpoint Vistas', Service.listing))
       opts = {
         COPUnits: 2
         DTHPUnits: 2
         NRHPUnits: 0
       }
-    if (Service.listingIs('280 Brighton'))
+    if (ListingHelperService.listingIs('280 Brighton', Service.listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (Service.listingIs('30 Dore'))
+    if (ListingHelperService.listingIs('30 Dore', Service.listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
@@ -729,14 +713,6 @@ ListingService = (
   Service.listingHasLotteryResults = ->
     !! (Service.listing.LotteryResultsURL || ListingLotteryService.listingHasLotteryBuckets(Service.listing))
 
-  Service.lotteryDatePassed = (listing) ->
-    return true if Service.listingIsFirstComeFirstServe(listing) && !Service.listingIsOpen(listing)
-    return false unless listing.Lottery_Date
-    today = moment().tz('America/Los_Angeles').startOf('day')
-    lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
-    # listing is open if deadline is in the future
-    return today > lotteryDate
-
   Service.lotteryComplete = (listing) ->
     listing.Lottery_Status == 'Lottery Complete'
 
@@ -776,8 +752,8 @@ ListingService = (
 
 ListingService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
-  'ExternalTranslateService', 'ListingConstantsService', 'ListingEligibilityService',
-  'ListingLotteryService', 'ModalService'
+  'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
+  'ListingEligibilityService', 'ListingLotteryService', 'ModalService'
 ]
 
 angular

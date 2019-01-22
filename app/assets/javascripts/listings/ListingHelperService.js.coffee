@@ -26,7 +26,6 @@ ListingHelperService = (ListingConstantsService) ->
     return priority unless labelMap[priority]
     return labelMap[priority][modifier]
 
-
   Service.reservedLabel = (listing, type,  modifier) ->
     labelMap =
       "#{ListingConstantsService.RESERVED_TYPES.SENIOR}":
@@ -93,6 +92,24 @@ ListingHelperService = (ListingConstantsService) ->
       return "#{City} #{State}, #{Zip_Code}"
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
+
+  Service.listingIs = (name, listing) ->
+    return false unless listing && name
+    ListingConstantsService.LISTING_MAP[listing.Id] == name
+
+  Service.listingIsFirstComeFirstServe = (listing) ->
+    return false unless listing
+    # hardcoded, currently just this one listing
+    Service.listingIs('168 Hyde Relisting', listing)
+
+  # Business logic for determining if a listing is open
+  # `due date` should be a datetime, to include precise hour of deadline
+  Service.listingIsOpen = (listing) ->
+    return false unless listing && listing.Application_Due_Date
+    now = moment()
+    deadline = moment(listing.Application_Due_Date).tz('America/Los_Angeles')
+    # listing is open if deadline is in the future
+    return deadline > now
 
   return Service
 

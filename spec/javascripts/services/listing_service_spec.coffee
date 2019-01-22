@@ -52,10 +52,15 @@ do ->
       setEligibilityFilters: jasmine.createSpy()
       hasEligibilityFilters: ->
     }
+    fakeListingHelperService =
+      listingIs: ->
+      listingIsFirstComeFirstServe: ->
+      listingIsOpen: ->
     fakeListingLotteryService =
       lotteryBucketInfo: {}
       lotteryRankingInfo: {}
       listingHasLotteryBuckets: ->
+      lotteryDatePassed: ->
       resetData: jasmine.createSpy()
     $localStorage = undefined
     $state = undefined
@@ -77,6 +82,7 @@ do ->
       $provide.value 'ModalService', fakeModalService
       $provide.value 'ListingConstantsService', fakeListingConstantsService
       $provide.value 'ListingEligibilityService', fakeListingEligibilityService
+      $provide.value 'ListingHelperService', fakeListingHelperService
       $provide.value 'ListingLotteryService', fakeListingLotteryService
       return
     )
@@ -190,12 +196,6 @@ do ->
         consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)
         expect(ListingService.AMICharts).toEqual consolidated
 
-    describe 'Service.listingIsOpen', ->
-      it 'checks if listing application due date has passed', ->
-        listing = fakeListing.listing
-        listing.Application_Due_Date = tomorrow.toString()
-        expect(ListingService.listingIsOpen(listing)).toEqual true
-
     describe 'Service.lotteryComplete', ->
       it "returns false when the listing's lottery status is not complete", ->
         listing = fakeListing.listing
@@ -213,44 +213,31 @@ do ->
 
       it 'returns false when the listing has results and lottery date has not passed', ->
         listing.Lottery_Results = true
-        listing.Lottery_Date = tomorrow.toString()
+        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
         expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
 
       it 'returns false when the listing has results and lottery date has passed', ->
         listing.Lottery_Results = true
-        listing.Lottery_Date = lastWeek.toString()
+        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
         expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
 
       it 'returns false when the listing has no results and lottery date has passed', ->
         listing.Lottery_Results = false
-        listing.Lottery_Date = lastWeek.toString()
+        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
         expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
 
       it 'returns true when the listing has no results and lottery date has not passed', ->
         listing.Lottery_Results = false
-        listing.Lottery_Date = tomorrow.toString()
+        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
         expect(ListingService.lotteryIsUpcoming(listing)).toEqual true
-
-    describe 'Service.lotteryDatePassed', ->
-      it 'checks if listing lottery date has passed', ->
-        listing = fakeListing.listing
-        listing.Lottery_Date = tomorrow.toString()
-        expect(ListingService.lotteryDatePassed(listing)).toEqual false
-
-      it 'checks if listing lottery date has not passed', ->
-        listing = fakeListing.listing
-        listing.Lottery_Date = lastWeek.toString()
-        expect(ListingService.lotteryDatePassed(listing)).toEqual true
 
     describe 'Service.isAcceptingOnlineApplications', ->
       it 'returns false if an empty listing is passed in', ->
         expect(ListingService.isAcceptingOnlineApplications({})).toEqual false
 
-      it 'returns false if due date has passed', ->
+      it 'returns false if listing is not open', ->
         listing = fakeListing.listing
-        past = new Date()
-        past.setDate(past.getDate() - 10)
-        listing.Application_Due_Date = past.toString()
+        spyOn(fakeListingHelperService, 'listingIsOpen').and.returnValue(false)
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
       it "returns false if the listing's lottery status is complete", ->
@@ -258,10 +245,10 @@ do ->
         listing.Lottery_Status = 'Lottery Complete'
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
-      it 'returns true if due date in future, Accepting_Online_Applications, and lottery status is not complete', ->
+      it 'returns true if listing is open, Accepting_Online_Applications, and lottery status is not complete', ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
-        listing.Application_Due_Date = tomorrow.toString()
+        spyOn(fakeListingHelperService, 'listingIsOpen').and.returnValue(true)
         listing.Lottery_Status = 'Not Yet Run'
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 

@@ -3,14 +3,15 @@ do ->
   describe 'ListingLotteryService', ->
 
     ListingLotteryService = undefined
+    httpBackend = undefined
 
     fakeListing = getJSONFixture('listings-api-show.json')
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     requestURL = undefined
-
-    httpBackend = undefined
-    fakeListingService =
-      listing: fakeListing
+    tomorrow = new Date()
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    lastWeek = new Date()
+    lastWeek.setDate(lastWeek.getDate() - 7)
 
     beforeEach module('dahlia.services', ->
       return
@@ -62,3 +63,13 @@ do ->
           ]
         ListingLotteryService.lotteryBucketInfo = fakeLotteryBuckets
         expect(ListingLotteryService.listingHasLotteryBuckets(fakeListing)).toEqual true
+
+    describe 'Service.lotteryDatePassed', ->
+      it 'returns true if listing lottery date has passed', ->
+        listing = fakeListing.listing
+        listing.Lottery_Date = lastWeek.toString()
+        expect(ListingLotteryService.lotteryDatePassed(listing)).toEqual true
+      it 'returns false if listing lottery date has not passed', ->
+        listing = fakeListing.listing
+        listing.Lottery_Date = tomorrow.toString()
+        expect(ListingLotteryService.lotteryDatePassed(listing)).toEqual false

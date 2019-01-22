@@ -40,17 +40,17 @@ angular.module('dahlia.components')
       listing = @listing unless listing
       ListingService.listingIsReservedCommunity(listing)
 
-    @listingIs = (name) ->
-      ListingService.listingIs(name)
+    @listingIs = (name, listing) ->
+      ListingHelperService.listingIs(name, listing)
 
     @listingHasReservedUnits = ->
       ListingService.listingHasReservedUnits(@listing)
 
     @listingIsFirstComeFirstServe = (listing = @listing) ->
-      ListingService.listingIsFirstComeFirstServe(listing)
+      ListingHelperService.listingIsFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
-      !ListingService.listingIsOpen(listing)
+      !ListingHelperService.listingIsOpen(listing)
 
     @formattedBuildingAddress = (listing, display) ->
       ListingHelperService.formattedAddress(listing, 'Building', display)
