@@ -2,10 +2,10 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state, $window, $document) ->
+SharedService = ($http, $state, $window, $document, env) ->
   Service = {}
   Service.alternateLanguageLinks = []
-  Service.assetPaths = STATIC_ASSET_PATHS || {}
+  Service.assetPaths = env.STATIC_ASSET_PATHS || {}
   Service.housingCounselors =
     all: []
     chinese: []
@@ -90,6 +90,7 @@ SharedService = ($http, $state, $window, $document) ->
         lang: lang
         href: href.slice(1)
       )
+
   Service.getHousingCounselors = ->
     housingCounselorJsonPath = Service.assetPaths['housing_counselors.json']
     # if we've already loaded this asset, no need to reload
@@ -108,6 +109,12 @@ SharedService = ($http, $state, $window, $document) ->
   Service.onDocChecklistPage = ->
     $state.current.name == "dahlia.document-checklist"
 
+  Service.toQueryString = (params) ->
+    Object.keys(params).reduce(((a, k) ->
+      a.push k + '=' + encodeURIComponent(params[k])
+      a
+    ), []).join '&'
+
   return Service
 
 
@@ -115,7 +122,7 @@ SharedService = ($http, $state, $window, $document) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state', '$window', '$document']
+SharedService.$inject = ['$http', '$state', '$window', '$document', 'env']
 
 angular
   .module('dahlia.services')

@@ -32,18 +32,39 @@ do ->
       it 'returns false if a listing is not given', ->
         expect(ListingHelperService.listingIs('Fake Listing', null)).toEqual false
 
-    describe 'Service.listingIsFirstComeFirstServe', ->
+    describe 'Service.isFirstComeFirstServe', ->
       it 'calls Service.listingIs with the name "168 Hyde Relisting" and the given listing', ->
         spyOn(ListingHelperService, 'listingIs')
-        ListingHelperService.listingIsFirstComeFirstServe(fakeListing)
+        ListingHelperService.isFirstComeFirstServe(fakeListing)
         expect(ListingHelperService.listingIs).toHaveBeenCalledWith('168 Hyde Relisting', fakeListing)
 
-    describe 'Service.listingIsOpen', ->
+    describe 'Service.isOpen', ->
       it 'returns true if listing application due date has not passed', ->
         listing = fakeListing.listing
         listing.Application_Due_Date = tomorrow.toString()
-        expect(ListingHelperService.listingIsOpen(listing)).toEqual true
+        expect(ListingHelperService.isOpen(listing)).toEqual true
       it 'returns false if listing application due date has passed', ->
         listing = fakeListing.listing
         listing.Application_Due_Date = lastWeek.toString()
-        expect(ListingHelperService.listingIsOpen(listing)).toEqual false
+        expect(ListingHelperService.isOpen(listing)).toEqual false
+
+    describe 'Service.isReservedCommunity', ->
+      it "returns true if the listing's Reserved_community_type property is truthy", ->
+        listing = fakeListing.listing
+        listing.Reserved_community_type = 'Senior'
+        expect(ListingHelperService.isReservedCommunity(listing)).toEqual true
+      it "returns false if the listing's Reserved_community_type property is falsey", ->
+        listing = fakeListing.listing
+        listing.Reserved_community_type = null
+        expect(ListingHelperService.isReservedCommunity(listing)).toEqual false
+
+    describe 'Service.isBMR', ->
+      it 'returns false if the listing program type is not a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'OCII-RENTAL'
+        expect(ListingHelperService.isBMR(listing)).toEqual false
+
+      it 'returns true if the listing program type is a BMR type', ->
+        listing = fakeListing.listing
+        listing.Program_Type = 'IH-RENTAL'
+        expect(ListingHelperService.isBMR(listing)).toEqual true

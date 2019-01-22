@@ -54,31 +54,32 @@ do ->
       listingHasReservedUnits: jasmine.createSpy()
       listingHasOnlySROUnits: jasmine.createSpy()
       getListingAMI: jasmine.createSpy()
-      getListingUnits: jasmine.createSpy()
-      listingIsBMR: jasmine.createSpy()
       listingHasSROUnits: jasmine.createSpy()
-      listingIsReservedCommunity: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
       listingIs: jasmine.createSpy()
-      listingIsFirstComeFirstServe: jasmine.createSpy()
-      listingIsOpen: jasmine.createSpy()
+      isFirstComeFirstServe: jasmine.createSpy()
+      isOpen: jasmine.createSpy()
+      isReservedCommunity: jasmine.createSpy()
     fakeListingLotteryService =
       getLotteryBuckets: ->
       listingHasLotteryResults: ->
       openLotteryResultsModal: jasmine.createSpy()
+    fakeListingUnitService =
+      getListingUnits: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
         $translate: $translate
-        ListingHelperService: fakeListingHelperService
-        SharedService: fakeSharedService
+        ListingService: fakeListingService
         ListingEligibilityService: fakeListingEligibilityService
+        ListingHelperService: fakeListingHelperService
+        ListingUnitService: fakeListingUnitService
+        SharedService: fakeSharedService
       }
     )
 
@@ -141,9 +142,9 @@ do ->
           expect(fakeListingService.getListingAMI).toHaveBeenCalled()
 
       describe '$ctrl.listingIsReservedCommunity', ->
-        it 'calls ListingService.listingIsReservedCommunity', ->
+        it 'calls ListingHelperService.isReservedCommunity', ->
           ctrl.listingIsReservedCommunity()
-          expect(fakeListingService.listingIsReservedCommunity).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingHelperService.isReservedCommunity).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.listingIs', ->
         it 'calls ListingHelperService.listingIs with the given name and listing', ->
@@ -156,10 +157,10 @@ do ->
           ctrl.listingHasReservedUnits()
           expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
 
-      describe '$ctrl.listingIsFirstComeFirstServe', ->
-        it 'calls ListingHelperService.listingIsFirstComeFirstServe', ->
-          ctrl.listingIsFirstComeFirstServe()
-          expect(fakeListingHelperService.listingIsFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
+      describe '$ctrl.isFirstComeFirstServe', ->
+        it 'calls ListingHelperService.isFirstComeFirstServe', ->
+          ctrl.isFirstComeFirstServe()
+          expect(fakeListingHelperService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingService.function to be called', ->
@@ -173,9 +174,9 @@ do ->
           expect(fakeListingEligibilityService.hasEligibilityFilters).toHaveBeenCalled()
 
       describe '$ctrl.listingApplicationClosed', ->
-        it 'expects ListingHelperService.listingIsOpen to be called', ->
+        it 'expects ListingHelperService.isOpen to be called', ->
           ctrl.listingApplicationClosed(fakeListing)
-          expect(fakeListingHelperService.listingIsOpen).toHaveBeenCalled()
+          expect(fakeListingHelperService.isOpen).toHaveBeenCalled()
 
       describe '$ctrl.lotteryDateVenueAvailable', ->
         beforeEach ->
@@ -210,9 +211,9 @@ do ->
           expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
 
       describe '$ctrl.getListingUnits', ->
-        it 'calls ListingService.getListingUnits', ->
+        it 'calls ListingUnitService.getListingUnits', ->
           ctrl.getListingUnits()
-          expect(fakeListingService.getListingUnits).toHaveBeenCalled()
+          expect(fakeListingUnitService.getListingUnits).toHaveBeenCalled()
 
       describe '$ctrl.formattedLeasingAgentAddress', ->
         it 'calls ListingHelperService.formattedAddress', ->
