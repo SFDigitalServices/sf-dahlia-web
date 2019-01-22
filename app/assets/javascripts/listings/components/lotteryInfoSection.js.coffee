@@ -9,10 +9,10 @@ angular.module('dahlia.components')
     @loading = ListingLotteryService.loading
 
     @listingHasLotteryResults = ->
-      ListingService.listingHasLotteryResults()
+      ListingLotteryService.listingHasLotteryResults(this.parent.listing)
 
     @openLotteryResultsModal = () ->
-      ListingService.openLotteryResultsModal()
+      ListingLotteryService.openLotteryResultsModal()
 
     @showLotteryResultsModalButton = ->
       ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)

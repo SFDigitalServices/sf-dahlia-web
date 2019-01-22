@@ -3,7 +3,7 @@ angular.module('dahlia.directives')
   '$translate', '$window', '$sce',
   'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ListingHelperService', 'ModalService',
   ($translate, $window, $sce,
-  ShortFormApplicationService, ShortFormNavigationService, ListingService, ModalService) ->
+  ShortFormApplicationService, ShortFormNavigationService, ListingService, ListingHelperService, ModalService) ->
     replace: true
     scope:
       application: '=application'
@@ -13,7 +13,7 @@ angular.module('dahlia.directives')
       scope.listing = scope.application.listing
       scope.application.deleted = false
       scope.loading = ListingService.loading
-      scope.error = ListingService.error
+      scope.lotteryError = ListingLotteryService.error
       scope.deleteDisabled = false
 
       scope.isDeleted = ->
@@ -79,7 +79,7 @@ angular.module('dahlia.directives')
 
       scope.viewLotteryResults = ->
         # if the search failed, then viewLotteryResults becomes a button to open the PDF instead
-        if ListingService.error.lotteryRank && scope.listing.LotteryResultsURL
+        if scope.lotteryError.lotteryRank && scope.listing.LotteryResultsURL
           $window.open(scope.listing.LotteryResultsURL, '_blank')
           return
 
@@ -89,7 +89,7 @@ angular.module('dahlia.directives')
         angular.copy(scope.application, ShortFormApplicationService.application)
         # lookup individual lottery ranking and then open the modal
         ListingService.getLotteryRanking(scope.application.lotteryNumber).then(->
-          ListingService.openLotteryResultsModal()
+          ListingLotteryService.openLotteryResultsModal()
           ShortFormNavigationService.isLoading(false)
         ).catch(->
           ###

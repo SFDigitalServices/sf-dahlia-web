@@ -110,7 +110,7 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
               setTimeout(ListingService.getListingPreferences.bind(null, forceRecache))
-              unless ListingService.lotteryIsUpcoming(ListingService.listing)
+              unless ListingLotteryService.lotteryIsUpcoming(ListingService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingService.listing))
               setTimeout(ListingService.getListingDownloadURLs)
               # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !

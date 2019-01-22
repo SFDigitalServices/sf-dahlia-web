@@ -50,11 +50,9 @@ do ->
       loading: {}
       toggleFavoriteListing: jasmine.createSpy()
       isFavorited: jasmine.createSpy()
-      openLotteryResultsModal: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       listingHasPriorityUnits: jasmine.createSpy()
       listingHasReservedUnits: jasmine.createSpy()
-      listingHasLotteryResults: jasmine.createSpy()
       listingHasOnlySROUnits: jasmine.createSpy()
       getListingAMI: jasmine.createSpy()
       getListingUnits: jasmine.createSpy()
@@ -70,6 +68,8 @@ do ->
       listingIsOpen: jasmine.createSpy()
     fakeListingLotteryService =
       getLotteryBuckets: ->
+      listingHasLotteryResults: ->
+      openLotteryResultsModal: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->

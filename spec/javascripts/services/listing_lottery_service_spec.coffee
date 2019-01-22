@@ -4,8 +4,11 @@ do ->
 
     ListingLotteryService = undefined
     httpBackend = undefined
+    fakeModalService =
+      modalInstance: {}
+      openModal: jasmine.createSpy()
 
-    fakeListing = getJSONFixture('listings-api-show.json')
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     requestURL = undefined
     tomorrow = new Date()
@@ -13,7 +16,8 @@ do ->
     lastWeek = new Date()
     lastWeek.setDate(lastWeek.getDate() - 7)
 
-    beforeEach module('dahlia.services', ->
+    beforeEach module('dahlia.services', ($provide) ->
+      $provide.value 'ModalService', fakeModalService
       return
     )
 
@@ -39,9 +43,9 @@ do ->
 
       it 'adds the buckets for the given listings to Service.lotteryBucketInfo', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
-        ListingLotteryService.getLotteryBuckets(fakeListing.listing)
+        ListingLotteryService.getLotteryBuckets(fakeListing)
         httpBackend.flush()
-        expect(ListingLotteryService.lotteryBucketInfo[fakeListing.listing.Id]).toEqual fakeLotteryBuckets
+        expect(ListingLotteryService.lotteryBucketInfo[fakeListing.Id]).toEqual fakeLotteryBuckets
 
     describe 'Service.listingHasLotteryBuckets', ->
       it 'returns false when no listing is given', ->
@@ -66,10 +70,66 @@ do ->
 
     describe 'Service.lotteryDatePassed', ->
       it 'returns true if listing lottery date has passed', ->
-        listing = fakeListing.listing
-        listing.Lottery_Date = lastWeek.toString()
-        expect(ListingLotteryService.lotteryDatePassed(listing)).toEqual true
+        fakeListing.Lottery_Date = lastWeek.toString()
+        expect(ListingLotteryService.lotteryDatePassed(fakeListing)).toEqual true
       it 'returns false if listing lottery date has not passed', ->
-        listing = fakeListing.listing
-        listing.Lottery_Date = tomorrow.toString()
-        expect(ListingLotteryService.lotteryDatePassed(listing)).toEqual false
+        fakeListing.Lottery_Date = tomorrow.toString()
+        expect(ListingLotteryService.lotteryDatePassed(fakeListing)).toEqual false
+
+    describe 'Service.lotteryIsUpcoming', ->
+      it 'returns false when the listing has results and lottery date has not passed', ->
+        fakeListing.Lottery_Results = true
+        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
+        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
+
+      it 'returns false when the listing has results and lottery date has passed', ->
+        fakeListing.Lottery_Results = true
+        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
+        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
+
+      it 'returns false when the listing has no results and lottery date has passed', ->
+        fakeListing.Lottery_Results = false
+        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
+        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
+
+      it 'returns true when the listing has no results and lottery date has not passed', ->
+        fakeListing.Lottery_Results = false
+        spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
+        expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual true
+
+    describe 'Service.listingHasLotteryResults', ->
+      it 'returns true if lottery PDF is available', ->
+        fakeListing.LotteryResultsURL = 'http://pdf.url'
+        expect(ListingLotteryService.listingHasLotteryResults(fakeListing)).toEqual true
+
+      it 'returns true if lottery buckets are available', ->
+        fakeListing.LotteryResultsURL = null
+        spyOn(ListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
+        expect(ListingLotteryService.listingHasLotteryResults(fakeListing)).toEqual true
+
+      it 'returns false if neither the lottery PDF nor the lottery are available', ->
+        fakeListing.LotteryResultsURL = null
+        spyOn(ListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
+        expect(ListingLotteryService.listingHasLotteryResults(fakeListing)).toEqual false
+
+    describe 'Service.lotteryComplete', ->
+      it "returns true when the listing's lottery status is \"Listing Complete\"", ->
+        fakeListing.Lottery_Status = 'Lottery Complete'
+        expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual true
+
+      it "returns false when the listing's lottery status is not \"Listing Complete\"", ->
+        fakeListing.Lottery_Status = 'Not Yet Run'
+        expect(ListingLotteryService.lotteryComplete(fakeListing)).toEqual false
+
+    describe 'Service.openLotteryResultsModal', ->
+      beforeEach ->
+        ListingLotteryService.openLotteryResultsModal()
+
+      it 'should set the loading and error flags for lottery rank to false', ->
+        expect(ListingLotteryService.loading.lotteryRank).toEqual false
+        expect(ListingLotteryService.error.lotteryRank).toEqual false
+
+      it 'should call ModalService.openModal with the appropriate template and class', ->
+        templateUrl = 'listings/templates/listing/_lottery_modal.html'
+        windowClass = 'modal-small'
+        expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl, windowClass)

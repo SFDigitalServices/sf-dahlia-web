@@ -18,7 +18,7 @@ LotteryModalController = (
   $scope.lotterySearchNumber = ''
   $scope.lotteryNumberFormatValid = true
   $scope.loading = ListingService.loading
-  $scope.error = ListingService.error
+  $scope.error = ListingLotteryService.error
 
   $scope.applicantHasCertOfPreference = ->
     results = $scope.preferenceBucketResults('Certificate of Preference (COP)')[0]

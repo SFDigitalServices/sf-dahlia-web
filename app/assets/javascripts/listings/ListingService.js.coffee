@@ -5,7 +5,7 @@
 ListingService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
   ExternalTranslateService, ListingConstantsService, ListingHelperService,
-  ListingEligibilityService, ListingLotteryService, ModalService) ->
+  ListingEligibilityService, ListingLotteryService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -218,9 +218,6 @@ ListingService = (
     _.filter listings, (listing) ->
       !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
-  Service.lotteryIsUpcoming = (listing) ->
-    !listing.Lottery_Results && !ListingLotteryService.lotteryDatePassed(listing)
-
   Service.groupListings = (listings) ->
     openListings = []
     openMatchListings = []
@@ -237,7 +234,7 @@ ListingService = (
         else
           openNotMatchListings.push(listing)
       else
-        if Service.lotteryIsUpcoming(listing)
+        if ListingLotteryService.lotteryIsUpcoming(listing)
           closedListings.push(listing)
         else
           lotteryResultsListings.push(listing)
@@ -277,7 +274,7 @@ ListingService = (
 
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
-    return false if Service.lotteryComplete(listing)
+    return false if ListingLotteryService.lotteryComplete(listing)
     return false unless ListingHelperService.listingIsOpen(listing)
     return listing.Accepting_Online_Applications
 
@@ -709,18 +706,6 @@ ListingService = (
 
     Service.listing.preferences = preferences
 
-  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
-  Service.listingHasLotteryResults = ->
-    !! (Service.listing.LotteryResultsURL || ListingLotteryService.listingHasLotteryBuckets(Service.listing))
-
-  Service.lotteryComplete = (listing) ->
-    listing.Lottery_Status == 'Lottery Complete'
-
-  Service.openLotteryResultsModal = ->
-    Service.loading.lotteryRank = false
-    Service.error.lotteryRank = false
-    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
-
   Service.formatLotteryNumber = (lotteryNumber) ->
     lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
     return '' if lotteryNumber.length == 0
@@ -753,7 +738,7 @@ ListingService = (
 ListingService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
-  'ListingEligibilityService', 'ListingLotteryService', 'ModalService'
+  'ListingEligibilityService', 'ListingLotteryService'
 ]
 
 angular

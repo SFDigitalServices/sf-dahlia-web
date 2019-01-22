@@ -2,11 +2,12 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingLotteryService = ($http, ListingHelperService) ->
+ListingLotteryService = ($http, ListingHelperService, ModalService) ->
   Service = {}
   Service.lotteryBucketInfo = {}
   Service.lotteryRankingInfo = {}
   Service.loading = {}
+  Service.error = {}
 
   Service.getLotteryBuckets = (listing) ->
     return unless listing
@@ -37,6 +38,23 @@ ListingLotteryService = ($http, ListingHelperService) ->
     # listing is open if deadline is in the future
     return today > lotteryDate
 
+  Service.lotteryIsUpcoming = (listing) ->
+    return false unless listing
+    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
+
+  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
+  Service.listingHasLotteryResults = (listing) ->
+    return false unless listing
+    !! (listing.LotteryResultsURL || Service.listingHasLotteryBuckets(listing))
+
+  Service.lotteryComplete = (listing) ->
+    listing && (listing.Lottery_Status == 'Lottery Complete')
+
+  Service.openLotteryResultsModal = ->
+    Service.loading.lotteryRank = false
+    Service.error.lotteryRank = false
+    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
+
   Service.resetData = ->
     angular.copy({}, Service.lotteryBucketInfo)
 
@@ -46,7 +64,7 @@ ListingLotteryService = ($http, ListingHelperService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingLotteryService.$inject = ['$http', 'ListingHelperService']
+ListingLotteryService.$inject = ['$http', 'ListingHelperService', 'ModalService']
 
 angular
   .module('dahlia.services')

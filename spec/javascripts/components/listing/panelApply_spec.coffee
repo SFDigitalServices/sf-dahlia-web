@@ -18,6 +18,7 @@ do ->
     }
     fakeListingService =
       listings: fakeListings
+    fakeListingLotteryService =
       lotteryComplete: jasmine.createSpy()
     fakeShortFormApplicationService =
       getLanguageCode: jasmine.createSpy()
@@ -30,6 +31,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         ListingService: fakeListingService
+        ListingLotteryService: fakeListingLotteryService
         ShortFormApplicationService: fakeShortFormApplicationService
         AnalyticsService: fakeAnalyticsService
       }
@@ -71,6 +73,6 @@ do ->
           expect(fakeAnalyticsService.trackTimerEvent).toHaveBeenCalledWith('Application', 'Apply Online Click')
 
       describe '$ctrl.lotteryComplete', ->
-        it 'calls ListingService.lotteryComplete', ->
+        it 'calls ListingLotteryService.lotteryComplete', ->
           ctrl.lotteryComplete(fakeListing)
-          expect(fakeListingService.lotteryComplete).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingLotteryService.lotteryComplete).toHaveBeenCalledWith(fakeListing)

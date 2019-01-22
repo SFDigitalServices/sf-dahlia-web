@@ -4,9 +4,6 @@ do ->
 
     ListingService = undefined
     httpBackend = undefined
-    fakeModalService =
-      modalInstance: {}
-      openModal: jasmine.createSpy()
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
     # fakeListingAllSRO has only one unit summary, in general, for SRO
@@ -60,7 +57,8 @@ do ->
       lotteryBucketInfo: {}
       lotteryRankingInfo: {}
       listingHasLotteryBuckets: ->
-      lotteryDatePassed: ->
+      lotteryIsUpcoming: ->
+      lotteryComplete: ->
       resetData: jasmine.createSpy()
     $localStorage = undefined
     $state = undefined
@@ -79,7 +77,6 @@ do ->
     beforeEach module('http-etag')
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
-      $provide.value 'ModalService', fakeModalService
       $provide.value 'ListingConstantsService', fakeListingConstantsService
       $provide.value 'ListingEligibilityService', fakeListingEligibilityService
       $provide.value 'ListingHelperService', fakeListingHelperService
@@ -196,41 +193,6 @@ do ->
         consolidated = ListingService._consolidatedAMICharts(fakeAMI.ami)
         expect(ListingService.AMICharts).toEqual consolidated
 
-    describe 'Service.lotteryComplete', ->
-      it "returns false when the listing's lottery status is not complete", ->
-        listing = fakeListing.listing
-        listing.Lottery_Status = 'Not Yet Run'
-        expect(ListingService.lotteryComplete(listing)).toEqual false
-
-      it "returns true when the listing's lottery status is complete", ->
-        listing = fakeListing.listing
-        listing.Lottery_Status = 'Lottery Complete'
-        expect(ListingService.lotteryComplete(listing)).toEqual true
-
-    describe 'Service.lotteryIsUpcoming', ->
-      beforeEach ->
-        listing = fakeListing.listing
-
-      it 'returns false when the listing has results and lottery date has not passed', ->
-        listing.Lottery_Results = true
-        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
-
-      it 'returns false when the listing has results and lottery date has passed', ->
-        listing.Lottery_Results = true
-        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
-        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
-
-      it 'returns false when the listing has no results and lottery date has passed', ->
-        listing.Lottery_Results = false
-        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(true)
-        expect(ListingService.lotteryIsUpcoming(listing)).toEqual false
-
-      it 'returns true when the listing has no results and lottery date has not passed', ->
-        listing.Lottery_Results = false
-        spyOn(fakeListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
-        expect(ListingService.lotteryIsUpcoming(listing)).toEqual true
-
     describe 'Service.isAcceptingOnlineApplications', ->
       it 'returns false if an empty listing is passed in', ->
         expect(ListingService.isAcceptingOnlineApplications({})).toEqual false
@@ -242,14 +204,14 @@ do ->
 
       it "returns false if the listing's lottery status is complete", ->
         listing = fakeListing.listing
-        listing.Lottery_Status = 'Lottery Complete'
+        spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(true)
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
       it 'returns true if listing is open, Accepting_Online_Applications, and lottery status is not complete', ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
+        spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(false)
         spyOn(fakeListingHelperService, 'listingIsOpen').and.returnValue(true)
-        listing.Lottery_Status = 'Not Yet Run'
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 
     describe 'Service.toggleFavoriteListing', ->
@@ -470,33 +432,6 @@ do ->
         grouped = ListingService.groupUnitDetails(fakeUnits.units)
         # fakeUnits just has one AMI level
         expect(_.keys(grouped).length).toEqual 1
-
-    describe 'Service.openLotteryResultsModal', ->
-      beforeEach ->
-        ListingService.openLotteryResultsModal()
-
-      it 'should set the loading and error flags for lottery rank to false', ->
-        expect(ListingService.loading.lotteryRank).toEqual false
-        expect(ListingService.error.lotteryRank).toEqual false
-
-      it 'should call ModalService.openModal with the appropriate template and class', ->
-        templateUrl = 'listings/templates/listing/_lottery_modal.html'
-        windowClass = 'modal-small'
-        expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl, windowClass)
-
-    describe 'Service.listingHasLotteryResults', ->
-      it 'should be true if lottery PDF is available', ->
-        ListingService.listing.LotteryResultsURL = 'http://pdf.url'
-        expect(ListingService.listingHasLotteryResults()).toEqual true
-
-      it 'should be true if lottery buckets are available', ->
-        spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
-        expect(ListingService.listingHasLotteryResults()).toEqual true
-
-      it 'should be false if lottery buckets and PDF are *not* available', ->
-        ListingService.listing.LotteryResultsURL = null
-        spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
-        expect(ListingService.listingHasLotteryResults()).toEqual false
 
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns no if not all units are SROs', ->
