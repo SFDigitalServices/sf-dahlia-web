@@ -108,6 +108,24 @@ do ->
         it 'populates ctrl with lotteryResultsListings', ->
           expect(ctrl.lotteryResultsListings).toBeDefined()
 
+      describe '$ctrl.isOwnershipListing', ->
+        describe 'returns false', ->
+          it 'when the listing has a rental Tenure', ->
+            ctrl.listing = fakeListing
+            ctrl.listing.Tenure = 'New rental'
+            expect(ctrl.isOwnershipListing()).toEqual false
+          it 'when the listing does not have a tenure defined', ->
+            ctrl.listing = fakeListing
+            delete ctrl.listing.Tenure
+            expect(ctrl.isOwnershipListing()).toEqual false
+        describe 'returns true', ->
+          it 'when the listing has an ownership tenure', ->
+            ctrl.listing = fakeListing
+            ctrl.listing.Tenure = 'New sale'
+            expect(ctrl.isOwnershipListing()).toEqual true
+            ctrl.listing.Tenure = 'Resale'
+            expect(ctrl.isOwnershipListing()).toEqual true
+
       describe '$ctrl.isOpenMatchListing', ->
         describe "when the given listing is in the controller's list of open match listings", ->
           it 'returns true',->
