@@ -42,7 +42,6 @@ do ->
       favorites: fakeListingFavorites
       AMICharts: []
       lotteryPreferences: []
-      getLotteryBuckets: () -> null
       formatLotteryNumber: () -> null
       getLotteryRanking: () -> null
       hasEligibilityFilters: () -> null
@@ -67,6 +66,8 @@ do ->
       priorityLabel: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
+    fakeListingLotteryService =
+      getLotteryBuckets: ->
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->

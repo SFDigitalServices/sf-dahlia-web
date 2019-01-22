@@ -20,11 +20,11 @@ do ->
     fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
     fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
     fakeListingConstantsService = {
-      defaultApplicationURLs: {
+      defaultApplicationURLs: [{
         'language': 'Spanish'
         'label': 'EspaÃ±ol'
         'url': 'http://url.com'
-      }
+      }]
       LISTING_MAP: {}
     }
     fakeAMI = getJSONFixture('listings-api-ami.json')
@@ -52,6 +52,11 @@ do ->
       setEligibilityFilters: jasmine.createSpy()
       hasEligibilityFilters: ->
     }
+    fakeListingLotteryService =
+      lotteryBucketInfo: {}
+      lotteryRankingInfo: {}
+      listingHasLotteryBuckets: ->
+      resetData: jasmine.createSpy()
     $localStorage = undefined
     $state = undefined
     $translate = {}
@@ -70,8 +75,9 @@ do ->
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value '$translate', $translate
       $provide.value 'ModalService', fakeModalService
-      $provide.value 'ListingEligibilityService', fakeListingEligibilityService
       $provide.value 'ListingConstantsService', fakeListingConstantsService
+      $provide.value 'ListingEligibilityService', fakeListingEligibilityService
+      $provide.value 'ListingLotteryService', fakeListingLotteryService
       return
     )
 
@@ -159,15 +165,14 @@ do ->
         ListingService.resetListingData()
         expect(ListingService.AMICharts).toEqual []
 
-      it 'resets the Lottery Bucket Info', ->
-        ListingService.lotteryBucketInfo = angular.copy(fakeLotteryBuckets)
-        ListingService.resetListingData()
-        expect(ListingService.lotteryBucketInfo).toEqual {}
-
       it 'resets the download URLs', ->
         ListingService.listingDownloadURLs = angular.copy(fakeListingConstantsService.defaultApplicationURLs)
         ListingService.resetListingData()
         expect(ListingService.listingDownloadURLs).toEqual []
+
+      it 'calls ListingLotteryService.resetData', ->
+        ListingService.resetListingData()
+        expect(fakeListingLotteryService.resetData).toHaveBeenCalled()
 
     describe 'Service.getListingAMI', ->
       afterEach ->
@@ -396,29 +401,18 @@ do ->
         httpBackend.flush()
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 
-    describe 'Service.getLotteryBuckets', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'assigns Service.lotteryBucketInfo with bucket results', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryBuckets
-        ListingService.getLotteryBuckets()
-        httpBackend.flush()
-        expect(ListingService.lotteryBucketInfo).toEqual fakeLotteryBuckets
-
     describe 'Service.getLotteryRanking', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
         httpBackend.verifyNoOutstandingRequest()
 
-      it 'assigns Service.lotteryRankingInfo with ranking results', ->
+      it 'assigns ListingLotteryService.lotteryRankingInfo with ranking results', ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
         ListingService.getLotteryRanking('00042084')
         ranking = angular.copy(fakeLotteryRanking)
         ranking.submitted = true
         httpBackend.flush()
-        expect(ListingService.lotteryRankingInfo).toEqual ranking
+        expect(fakeListingLotteryService.lotteryRankingInfo).toEqual ranking
 
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
@@ -509,12 +503,12 @@ do ->
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be true if lottery buckets are available', ->
-        ListingService.lotteryBucketInfo = fakeLotteryBuckets
+        spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
         expect(ListingService.listingHasLotteryResults()).toEqual true
 
       it 'should be false if lottery buckets and PDF are *not* available', ->
         ListingService.listing.LotteryResultsURL = null
-        ListingService.lotteryBucketInfo = {bucketResults: []}
+        spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
         expect(ListingService.listingHasLotteryResults()).toEqual false
 
     describe 'Service.listingHasOnlySROUnits', ->

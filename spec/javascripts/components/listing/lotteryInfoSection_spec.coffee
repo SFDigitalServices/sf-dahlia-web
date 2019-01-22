@@ -13,6 +13,7 @@ do ->
       listings: fakeListings
       listingHasLotteryResults: jasmine.createSpy()
       openLotteryResultsModal: jasmine.createSpy()
+    fakeListingLotteryService =
       listingHasLotteryBuckets: ->
 
     beforeEach module('dahlia.components')
@@ -20,6 +21,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         ListingService: fakeListingService
+        ListingLotteryService: fakeListingLotteryService
       }
     )
 
@@ -38,19 +40,19 @@ do ->
           expect(fakeListingService.openLotteryResultsModal).toHaveBeenCalled()
 
       describe '$ctrl.showLotteryResultsModalButton', ->
-        it 'calls ListingService.listingHasLotteryBuckets', ->
-          spyOn(fakeListingService, 'listingHasLotteryBuckets')
+        it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
           ctrl.showLotteryResultsModalButton()
-          expect(fakeListingService.listingHasLotteryBuckets).toHaveBeenCalled()
+          expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
 
       describe '$ctrl.showDownloadLotteryResultsButton', ->
-        it 'calls ListingService.listingHasLotteryBuckets', ->
-          spyOn(fakeListingService, 'listingHasLotteryBuckets')
+        it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
           ctrl.showDownloadLotteryResultsButton()
-          expect(fakeListingService.listingHasLotteryBuckets).toHaveBeenCalled()
+          expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
         it 'returns false if listing has buckets', ->
-          spyOn(fakeListingService, 'listingHasLotteryBuckets').and.returnValue(true)
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual false
         it 'returns true if listing is missing buckets', ->
-          spyOn(fakeListingService, 'listingHasLotteryBuckets').and.returnValue(false)
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual true

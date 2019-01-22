@@ -2,8 +2,10 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingService = ($http, $localStorage, $q, $state, $translate, ModalService, ListingConstantsService,
-ExternalTranslateService, $timeout, ListingEligibilityService) ->
+ListingService = (
+  $http, $localStorage, $q, $state, $translate, $timeout,
+  ExternalTranslateService, ListingConstantsService ,ListingEligibilityService,
+  ListingLotteryService, ModalService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -18,8 +20,6 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
   Service.loading = {}
   Service.error = {}
   Service.displayLotteryResultsListings = false
-  Service.lotteryRankingInfo = {}
-  Service.lotteryBucketInfo = {}
   Service.toggleStates = {}
 
   Service.preferenceMap = ListingConstantsService.preferenceMap
@@ -92,19 +92,6 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
         })
     return incomeLevels
 
-  Service.openLotteryResultsModal = ->
-    Service.loading.lotteryRank = false
-    Service.error.lotteryRank = false
-    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
-
-  Service.listingHasLotteryBuckets = ->
-    Service.lotteryBucketInfo &&
-    _.some(Service.lotteryBucketInfo.lotteryBuckets, (bucket) -> !_.isEmpty(bucket.preferenceResults))
-
-  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
-  Service.listingHasLotteryResults = ->
-    !! (Service.listing.LotteryResultsURL || Service.listingHasLotteryBuckets())
-
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
     _.sortBy sessions, (session) ->
@@ -140,8 +127,8 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
   Service.resetListingData = () ->
     angular.copy({}, Service.listing)
     angular.copy([], Service.AMICharts)
-    angular.copy({}, Service.lotteryBucketInfo)
     angular.copy([], Service.listingDownloadURLs)
+    ListingLotteryService.resetData()
 
   Service.getListingResponse = (deferred, retranslate = false) ->
     (data, status, headers, config, itemCache) ->
@@ -231,6 +218,9 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
     _.filter listings, (listing) ->
       !_.includes(MAINTENANCE_LISTINGS, listing.Id)
 
+  Service.lotteryIsUpcoming = (listing) ->
+    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
+
   Service.groupListings = (listings) ->
     openListings = []
     openMatchListings = []
@@ -290,20 +280,6 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
     deadline = moment(listing.Application_Due_Date).tz('America/Los_Angeles')
     # listing is open if deadline is in the future
     return deadline > now
-
-  Service.lotteryDatePassed = (listing) ->
-    return true if Service.listingIsFirstComeFirstServe(listing) && !Service.listingIsOpen(listing)
-    return false unless listing.Lottery_Date
-    today = moment().tz('America/Los_Angeles').startOf('day')
-    lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
-    # listing is open if deadline is in the future
-    return today > lotteryDate
-
-  Service.lotteryComplete = (listing) ->
-    listing.Lottery_Status == 'Lottery Complete'
-
-  Service.lotteryIsUpcoming = (listing) ->
-    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
 
   Service.listingIsReservedCommunity = (listing) ->
     !! listing.Reserved_community_type
@@ -518,40 +494,6 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
       _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
     Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
-
-  Service.getLotteryBuckets = ->
-    angular.copy({}, Service.lotteryBucketInfo)
-    Service.loading.lotteryResults = true
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_buckets").success((data, status, headers, config) ->
-      Service.loading.lotteryResults = false
-      angular.copy(data, Service.lotteryBucketInfo)
-    ).error( (data, status, headers, config) ->
-      Service.loading.lotteryResults = false
-      return
-    )
-
-  Service.formatLotteryNumber = (lotteryNumber) ->
-    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
-    return '' if lotteryNumber.length == 0
-    if (lotteryNumber.length < 8)
-      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
-    lotteryNumber
-
-  Service.getLotteryRanking = (lotteryNumber) ->
-    angular.copy({submitted: false}, Service.lotteryRankingInfo)
-    params =
-      params:
-        lottery_number: lotteryNumber
-    Service.loading.lotteryRank = true
-    Service.error.lotteryRank = false
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      angular.copy(data, Service.lotteryRankingInfo)
-      Service.loading.lotteryRank = false
-      Service.lotteryRankingInfo.submitted = true
-    ).error( (data, status, headers, config) ->
-      Service.loading.lotteryRank = false
-      Service.error.lotteryRank = true
-    )
 
   # used by My Applications -- when you load an application we also parse the attached listing data
   Service.loadListing = (listing) ->
@@ -783,14 +725,60 @@ ExternalTranslateService, $timeout, ListingEligibilityService) ->
 
     Service.listing.preferences = preferences
 
-  return Service
+  # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
+  Service.listingHasLotteryResults = ->
+    !! (Service.listing.LotteryResultsURL || ListingLotteryService.listingHasLotteryBuckets(Service.listing))
 
+  Service.lotteryDatePassed = (listing) ->
+    return true if Service.listingIsFirstComeFirstServe(listing) && !Service.listingIsOpen(listing)
+    return false unless listing.Lottery_Date
+    today = moment().tz('America/Los_Angeles').startOf('day')
+    lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
+    # listing is open if deadline is in the future
+    return today > lotteryDate
+
+  Service.lotteryComplete = (listing) ->
+    listing.Lottery_Status == 'Lottery Complete'
+
+  Service.openLotteryResultsModal = ->
+    Service.loading.lotteryRank = false
+    Service.error.lotteryRank = false
+    ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
+
+  Service.formatLotteryNumber = (lotteryNumber) ->
+    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
+    if (lotteryNumber.length < 8)
+      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
+    lotteryNumber
+
+  Service.getLotteryRanking = (lotteryNumber) ->
+    angular.copy({submitted: false}, ListingLotteryService.lotteryRankingInfo)
+    params =
+      params:
+        lottery_number: lotteryNumber
+    Service.loading.lotteryRank = true
+    Service.error.lotteryRank = false
+    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
+      angular.copy(data, ListingLotteryService.lotteryRankingInfo)
+      Service.loading.lotteryRank = false
+      ListingLotteryService.lotteryRankingInfo.submitted = true
+    ).error( (data, status, headers, config) ->
+      Service.loading.lotteryRank = false
+      Service.error.lotteryRank = true
+    )
+
+  return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingService.$inject = ['$http', '$localStorage', '$q', '$state', '$translate', 'ModalService', 'ListingConstantsService', 'ExternalTranslateService', '$timeout', 'ListingEligibilityService']
+ListingService.$inject = [
+  '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
+  'ExternalTranslateService', 'ListingConstantsService', 'ListingEligibilityService',
+  'ListingLotteryService', 'ModalService'
+]
 
 angular
   .module('dahlia.services')

@@ -3,8 +3,10 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/lottery-info-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', (ListingService) ->
+  controller: ['ListingService', 'ListingLotteryService', (ListingService, ListingLotteryService) ->
     ctrl = @
+
+    @loading = ListingLotteryService.loading
 
     @listingHasLotteryResults = ->
       ListingService.listingHasLotteryResults()
@@ -13,10 +15,10 @@ angular.module('dahlia.components')
       ListingService.openLotteryResultsModal()
 
     @showLotteryResultsModalButton = ->
-      ListingService.listingHasLotteryBuckets()
+      ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
 
     @showDownloadLotteryResultsButton = ->
-      this.parent.listing.LotteryResultsURL && !ListingService.listingHasLotteryBuckets()
+      this.parent.listing.LotteryResultsURL && !ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
 
     @leasingAgentInfoAvailable = ->
       l = this.parent.listing

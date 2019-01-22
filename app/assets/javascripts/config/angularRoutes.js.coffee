@@ -94,8 +94,8 @@
               'listings/templates/listing.html'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingService',
-          ($stateParams, $state, $q, ListingService) ->
+          '$stateParams', '$state', '$q', 'ListingService', 'ListingLotteryService',
+          ($stateParams, $state, $q, ListingService, ListingLotteryService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
             ListingService.getListing($stateParams.id, forceRecache, true).then( ->
@@ -110,7 +110,8 @@
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
               setTimeout(ListingService.getListingPreferences.bind(null, forceRecache))
-              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
+              unless ListingService.lotteryIsUpcoming(ListingService.listing)
+                setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingService.listing))
               setTimeout(ListingService.getListingDownloadURLs)
               # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
             ).catch( (response) ->

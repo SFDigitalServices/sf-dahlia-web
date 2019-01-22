@@ -6,12 +6,13 @@ LotteryModalController = (
   $scope,
   $state,
   ListingService,
+  ListingLotteryService,
   AnalyticsService
 ) ->
   $scope.listing = ListingService.listing
   $scope.application = ListingService.application
   $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
-  $scope.lotteryRankingInfo = ListingService.lotteryRankingInfo
+  $scope.lotteryRankingInfo = ListingLotteryService.lotteryRankingInfo
   $scope.favorites = ListingService.favorites
   $scope.showWhatHappensNextSection = false
   $scope.lotterySearchNumber = ''
