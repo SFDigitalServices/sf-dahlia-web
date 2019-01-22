@@ -5,7 +5,7 @@
 ListingService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
   ExternalTranslateService, ListingConstantsService, ListingHelperService,
-  ListingEligibilityService, ListingLotteryService) ->
+  ListingEligibilityService, ListingLotteryService, ListingPreferencesService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -60,20 +60,6 @@ ListingService = (
       max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
       minMax = [min, max]
     return minMax
-
-  Service.hasPreference = (preference, listing = Service.listing) ->
-    preferenceNames = _.map(listing.preferences, (pref) -> pref.preferenceName)
-    # look up the full name of the preference (i.e. "workInSf" -> "Live/Work Preference")
-    preferenceName = Service.preferenceMap[preference]
-    return _.includes(preferenceNames, preferenceName)
-
-  Service.getPreference = (preference) ->
-    # looks up full preference object via the short name e.g. 'liveInSf'
-    preferenceName = Service.preferenceMap[preference]
-    _.find(Service.listing.preferences, { preferenceName: preferenceName })
-
-  Service.getPreferenceById = (listingPreferenceID) ->
-    _.find(Service.listing.preferences, { listingPreferenceID: listingPreferenceID })
 
   Service.maxIncomeLevelsFor = (listing, ami) ->
     occupancyMinMax = Service.occupancyMinMax(listing)
@@ -447,42 +433,6 @@ ListingService = (
     _.map listing[specialType], (descriptor) ->
       descriptor.name
 
-  Service.getListingPreferences = (forceRecache = false) ->
-    Service.loading.preferences = true
-    # Reset preferences that might already exist
-    angular.copy([], Service.listing.preferences)
-    Service.error.preferences = false
-    Service.stubListingPreferences()
-    # if this listing had stubbed preferences then we can abort
-    if !_.isEmpty(Service.listing.preferences)
-      return $q.when(Service.listing.preferences).then ->
-        Service.loading.preferences = false
-    ## <--
-    httpConfig = { etagCache: true }
-    httpConfig.params = { force: true } if forceRecache
-    $http.get("/api/v1/listings/#{Service.listing.Id}/preferences", httpConfig)
-    .success((data, status, headers, config) ->
-      if data && data.preferences
-        Service.listing.preferences = data.preferences
-        # TODO: -- REMOVE HARDCODED PREFERENCES --
-        Service._extractCustomPreferences()
-        Service.loading.preferences = false
-    ).error( (data, status, headers, config) ->
-      Service.loading.preferences = false
-      Service.error.preferences = true
-    )
-
-  # TODO: Replace with `requiresProof` listing preference setting (#154784101)
-  Service.hardcodeCustomProofPrefs = []
-
-  Service._extractCustomPreferences = ->
-    customPreferences = _.filter Service.listing.preferences, (listingPref) ->
-      !_.invert(Service.preferenceMap)[listingPref.preferenceName]
-    customProofPreferences = _.remove customPreferences, (customPref) ->
-      _.includes(Service.hardcodeCustomProofPrefs, customPref.preferenceName)
-    Service.listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
-    Service.listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
-
   # used by My Applications -- when you load an application we also parse the attached listing data
   Service.loadListing = (listing) ->
     return if Service.listing && Service.listing.Id == listing.Id
@@ -569,7 +519,6 @@ ListingService = (
     else
       null
 
-
   Service.mapSlugToId = (id) ->
     # strip spaces and lowercase the listing names e.g. "Argenta 909" => "argenta909"
     mapping = _.mapKeys _.invert(ListingConstantsService.LISTING_MAP), (v, k) -> k.toLowerCase().replace(/ /g, '')
@@ -579,132 +528,6 @@ ListingService = (
 
   Service.listingIsBMR = (listing) ->
     ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
-
-  Service.stubListingPreferences = ->
-    opts = null
-    if (ListingHelperService.listingIs('Alchemy', Service.listing))
-      opts = {
-        COPUnits: 50
-        DTHPUnits: 10
-        NRHPUnits: 20
-        NRHPDistrict: 8
-      }
-    if (ListingHelperService.listingIs('480 Potrero', Service.listing))
-      opts = {
-        COPUnits: 11
-        DTHPUnits: 2
-        NRHPUnits: 4
-        NRHPDistrict: 10
-      }
-    if (ListingHelperService.listingIs('21 Clarence', Service.listing))
-      opts = {
-        COPUnits: 1
-        DTHPUnits: 1
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('168 Hyde', Service.listing))
-      opts = {
-        COPUnits: 1
-        DTHPUnits: 0
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('Olume', Service.listing))
-      opts = {
-        COPUnits: 18
-        DTHPUnits: 3
-        NRHPUnits: 7
-        NRHPDistrict: 6
-      }
-    if (ListingHelperService.listingIs('3445 Geary', Service.listing))
-      opts = {
-        COPUnits: 1
-        DTHPUnits: 0
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('125 Mason', Service.listing))
-      opts = {
-        COPUnits: 3
-        DTHPUnits: 3
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('Argenta 909', Service.listing))
-      opts = {
-        COPUnits: 1
-        DTHPUnits: 1
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('Northpoint Vistas', Service.listing))
-      opts = {
-        COPUnits: 2
-        DTHPUnits: 2
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('280 Brighton', Service.listing))
-      opts = {
-        COPUnits: 3
-        DTHPUnits: 0
-        NRHPUnits: 0
-      }
-    if (ListingHelperService.listingIs('30 Dore', Service.listing))
-      opts = {
-        COPUnits: 1
-        DTHPUnits: 0
-        NRHPUnits: 0
-      }
-    if opts
-      Service.stubPreferences(opts)
-
-  Service.stubPreferences = (options) ->
-    defaults = [
-      {
-        preferenceName: 'Certificate of Preference (COP)'
-        description: '''
-          Households in which one member holds a Certificate of Preference from the former San Francisco
-          Redevelopment Agency. COP holders were displaced by Agency action generally during the 1960s and 1970s.
-          '''
-        unitsAvailable: options.COPUnits
-        readMoreUrl: 'http://sfmohcd.org/certificate-preference'
-      },
-      {
-        preferenceName: 'Displaced Tenant Housing Preference (DTHP)'
-        description: '''
-          Households in which one member holds a Displaced Tenant Housing Preference Certificate.
-          DTHP Certificate holders are people who have been evicted through either an Ellis Act Eviction
-          or an Owner Move-In Eviction in 2010 or later. Once all units reserved for this preference are filled,
-          remaining DTHP holders will receive Live/Work preference, regardless of their current living or working location.
-          '''
-        unitsAvailable: options.DTHPUnits
-        readMoreUrl: 'http://sfmohcd.org/displaced-tenant-housing-preference-program-0'
-      },
-      {
-        preferenceName: 'Neighborhood Resident Housing Preference (NRHP)'
-        description: """
-          Households that submit acceptable documentation that at least one member lives either within supervisorial
-          District #{options.NRHPDistrict} or within a half-mile of the project.
-          """
-        unitsAvailable: options.NRHPUnits
-        readMoreUrl: 'http://sfmohcd.org/neighborhood-resident-housing-preference'
-      },
-      {
-        preferenceName: 'Live or Work in San Francisco Preference'
-        description: '''
-          Households that submit acceptable documentation that at least one member lives or works in San Francisco.
-          In order to claim Work Preference, you or a household member must currently work in San Francisco at least
-          75% of your working hours.
-          '''
-        unitsAvailable: 'Remaining'
-        readMoreUrl: 'http://sfmohcd.org/housing-preference-programs'
-      }
-    ]
-
-    preferences = []
-    i = 1
-    defaults.forEach (pref) ->
-      if pref.unitsAvailable
-        pref.order = i++
-        preferences.push(pref)
-
-    Service.listing.preferences = preferences
 
   Service.formatLotteryNumber = (lotteryNumber) ->
     lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
@@ -738,7 +561,7 @@ ListingService = (
 ListingService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
-  'ListingEligibilityService', 'ListingLotteryService'
+  'ListingEligibilityService', 'ListingLotteryService', 'ListingPreferencesService'
 ]
 
 angular

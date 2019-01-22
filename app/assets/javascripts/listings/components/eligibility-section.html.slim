@@ -103,10 +103,10 @@ accordion-heading.lead
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
 
 
-        .content-card.padding--2x ng-show="$ctrl.parent.loading.preferences"
+        .content-card.padding--2x ng-show="$ctrl.loading.preferences"
           .padding--2x ng-include="'shared/templates/spinner.html'"
 
-        .content-card.padding--2x ng-show="$ctrl.parent.error.preferences"
+        .content-card.padding--2x ng-show="$ctrl.error.preferences"
           .padding--2x.text-center
             button.button-link ng-click="$ctrl.getListingPreferences()"
               | {{'LISTINGS.SEE_PREFERENCE_INFORMATION' | translate}}

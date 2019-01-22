@@ -3,8 +3,12 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/eligibility-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ListingHelperService', '$translate', (ListingService, ListingHelperService, $translate) ->
+  controller: ['ListingService', 'ListingHelperService', '$translate', 'ListingPreferencesService',
+  (ListingService, ListingHelperService, $translate, ListingPreferencesService) ->
     ctrl = @
+
+    @loading = ListingPreferencesService.loading
+    @error = ListingPreferencesService.error
 
     @occupancy = (unitSummary) ->
       return '1' if unitSummary.maxOccupancy == 1

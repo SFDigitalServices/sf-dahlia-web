@@ -109,7 +109,7 @@
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
               setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
-              setTimeout(ListingService.getListingPreferences.bind(null, forceRecache))
+              setTimeout(ListingService.getListingPreferences.bind(null, ListingService.listing, forceRecache))
               unless ListingLotteryService.lotteryIsUpcoming(ListingService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingService.listing))
               setTimeout(ListingService.getListingDownloadURLs)
