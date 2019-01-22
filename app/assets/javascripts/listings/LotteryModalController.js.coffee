@@ -45,13 +45,13 @@ LotteryModalController = (
 
   # retrieve lottery ranking to display in lottery results modal
   $scope.showLotteryRanking = ->
-    $scope.lotterySearchNumber = ListingService.formatLotteryNumber($scope.lotterySearchNumber)
+    $scope.lotterySearchNumber = ListingLotteryService.formatLotteryNumber($scope.lotterySearchNumber)
     if $scope.lotterySearchNumber == ''
       $scope.lotteryNumberFormatValid = false
       $scope.clearLotteryRankingInfo()
     else
       $scope.lotteryNumberFormatValid = true
-      ListingService.getLotteryRanking($scope.lotterySearchNumber).then( ->
+      ListingLotteryService.getLotteryRanking($scope.lotterySearchNumber, $scope.listing).then( ->
         AnalyticsService.trackInvalidLotteryNumber() if !$scope.lotteryNumberValid()
       )
 
@@ -67,6 +67,7 @@ LotteryModalController.$inject = [
   '$scope',
   '$state',
   'ListingService',
+  'ListingLotteryService',
   'AnalyticsService'
 ]
 

@@ -33,9 +33,6 @@ do ->
           {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
           {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
         ]
-    fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
-    fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
-    fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeEligibilityFilters =
       household_size: 2
@@ -350,19 +347,6 @@ do ->
         httpBackend.flush()
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 
-    describe 'Service.getLotteryRanking', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'assigns ListingLotteryService.lotteryRankingInfo with ranking results', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
-        ListingService.getLotteryRanking('00042084')
-        ranking = angular.copy(fakeLotteryRanking)
-        ranking.submitted = true
-        httpBackend.flush()
-        expect(fakeListingLotteryService.lotteryRankingInfo).toEqual ranking
-
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
         listing = fakeListing.listing
@@ -446,18 +430,6 @@ do ->
       it 'returns 1 if all units are SROs', ->
         ListingService.listing = fakeListingAllSRO
         expect(ListingService.householdAMIChartCutoff()).toEqual(1)
-
-    describe 'Service.formatLotteryNumber', ->
-      it 'removes any extraneous formatting from lottery numbers', ->
-        formatted = '00041990'
-        val = ListingService.formatLotteryNumber('# 41990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber('#041990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber('41990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber(formatted)
-        expect(val).toEqual(formatted)
 
     describe 'Service.listingIsBMR', ->
       it 'returns false if the listing program type is not a BMR type', ->

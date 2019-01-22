@@ -706,29 +706,6 @@ ListingService = (
 
     Service.listing.preferences = preferences
 
-  Service.formatLotteryNumber = (lotteryNumber) ->
-    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
-    return '' if lotteryNumber.length == 0
-    if (lotteryNumber.length < 8)
-      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
-    lotteryNumber
-
-  Service.getLotteryRanking = (lotteryNumber) ->
-    angular.copy({submitted: false}, ListingLotteryService.lotteryRankingInfo)
-    params =
-      params:
-        lottery_number: lotteryNumber
-    Service.loading.lotteryRank = true
-    Service.error.lotteryRank = false
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      angular.copy(data, ListingLotteryService.lotteryRankingInfo)
-      Service.loading.lotteryRank = false
-      ListingLotteryService.lotteryRankingInfo.submitted = true
-    ).error( (data, status, headers, config) ->
-      Service.loading.lotteryRank = false
-      Service.error.lotteryRank = true
-    )
-
   return Service
 
 ############################################################################################

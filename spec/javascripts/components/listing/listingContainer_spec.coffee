@@ -42,7 +42,6 @@ do ->
       favorites: fakeListingFavorites
       AMICharts: []
       lotteryPreferences: []
-      formatLotteryNumber: () -> null
       getLotteryRanking: () -> null
       hasEligibilityFilters: () -> null
       stubFeatures: () -> null

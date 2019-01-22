@@ -3,7 +3,6 @@ do ->
   describe 'LotteryModalController', ->
     scope = undefined
     state = {current: {name: undefined}}
-    listing = undefined
     fakeListings = getJSONFixture('listings-api-index.json').listings
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeAnalyticsService = {
@@ -11,25 +10,25 @@ do ->
     }
     fakeListingService =
       listings: fakeListings
-      getLotteryRanking: () -> null
-      formatLotteryNumber: () -> null
+    fakeListingLotteryService =
+      formatLotteryNumber: ->
+      getLotteryRanking: ->
 
     beforeEach module('dahlia.controllers', ($provide) ->
-      $provide.value 'ListingService', fakeListingService
-      $provide.value 'AnalyticsService', fakeAnalyticsService
       return
     )
 
     beforeEach inject(($rootScope, $controller, $q) ->
       deferred = $q.defer()
       deferred.resolve('resolveData')
-      spyOn(fakeListingService, 'getLotteryRanking').and.returnValue(deferred.promise)
+      spyOn(fakeListingLotteryService, 'getLotteryRanking').and.returnValue(deferred.promise)
 
       scope = $rootScope.$new()
       $controller 'LotteryModalController',
         $scope: scope
         $state: state
         ListingService: fakeListingService
+        ListingLotteryService: fakeListingLotteryService
         AnalyticsService: fakeAnalyticsService
       return
     )
@@ -61,8 +60,9 @@ do ->
           expect(scope.lotteryNumberValid()).toEqual(true)
 
     describe 'showLotteryRanking', ->
-      it 'calls ListingService.getLotteryRanking', ->
+      it 'calls ListingLotteryService.getLotteryRanking', ->
         scope.lotterySearchNumber = '22222'
-
+        scope.listing = fakeListing
+        spyOn(fakeListingLotteryService, 'formatLotteryNumber').and.returnValue(scope.lotterySearchNumber)
         scope.showLotteryRanking()
-        expect(fakeListingService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber)
+        expect(fakeListingLotteryService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber, scope.listing)

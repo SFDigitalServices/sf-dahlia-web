@@ -55,6 +55,30 @@ ListingLotteryService = ($http, ListingHelperService, ModalService) ->
     Service.error.lotteryRank = false
     ModalService.openModal('listings/templates/listing/_lottery_modal.html', 'modal-small')
 
+  Service.formatLotteryNumber = (lotteryNumber) ->
+    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
+    return '' if lotteryNumber.length == 0
+    if (lotteryNumber.length < 8)
+      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
+    lotteryNumber
+
+  Service.getLotteryRanking = (lotteryNumber, listing) ->
+    return false unless lotteryNumber && listing
+    angular.copy({submitted: false}, Service.lotteryRankingInfo)
+    params =
+      params:
+        lottery_number: lotteryNumber
+    Service.loading.lotteryRank = true
+    Service.error.lotteryRank = false
+    $http.get("/api/v1/listings/#{listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
+      angular.copy(data, Service.lotteryRankingInfo)
+      Service.loading.lotteryRank = false
+      Service.lotteryRankingInfo.submitted = true
+    ).error( (data, status, headers, config) ->
+      Service.loading.lotteryRank = false
+      Service.error.lotteryRank = true
+    )
+
   Service.resetData = ->
     angular.copy({}, Service.lotteryBucketInfo)
 

@@ -10,6 +10,7 @@ do ->
 
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
+    fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
     requestURL = undefined
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
@@ -133,3 +134,28 @@ do ->
         templateUrl = 'listings/templates/listing/_lottery_modal.html'
         windowClass = 'modal-small'
         expect(fakeModalService.openModal).toHaveBeenCalledWith(templateUrl, windowClass)
+
+    describe 'Service.formatLotteryNumber', ->
+      it 'removes any extraneous formatting from lottery numbers', ->
+        formatted = '00041990'
+        val = ListingLotteryService.formatLotteryNumber('# 41990')
+        expect(val).toEqual(formatted)
+        val = ListingLotteryService.formatLotteryNumber('#041990')
+        expect(val).toEqual(formatted)
+        val = ListingLotteryService.formatLotteryNumber('41990')
+        expect(val).toEqual(formatted)
+        val = ListingLotteryService.formatLotteryNumber(formatted)
+        expect(val).toEqual(formatted)
+
+    describe 'Service.getLotteryRanking', ->
+      afterEach ->
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+
+      it 'assigns Service.lotteryRankingInfo with ranking results', ->
+        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
+        ListingLotteryService.getLotteryRanking('00042084', fakeListing)
+        ranking = angular.copy(fakeLotteryRanking)
+        ranking.submitted = true
+        httpBackend.flush()
+        expect(ListingLotteryService.lotteryRankingInfo).toEqual ranking
