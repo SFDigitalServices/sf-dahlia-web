@@ -1,12 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-<<<<<<< HEAD
-  ListingService, ListingHelperService, ListingConstantsService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferencesService
-=======
   ListingService, ListingHelperService, ListingConstantsService, ListingUnitService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService
->>>>>>> 44f760e8f56cc9ff66c5e4bb723f3e78ee896304
+  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferencesService
 ) ->
   Service = {}
 
