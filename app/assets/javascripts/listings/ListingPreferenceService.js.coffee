@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingPreferencesService = (ListingConstantsService, ListingHelperService, $http) ->
+ListingPreferenceService = (ListingConstantsService, ListingHelperService, $http) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -191,8 +191,8 @@ ListingPreferencesService = (ListingConstantsService, ListingHelperService, $htt
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingPreferencesService.$inject = ['ListingConstantsService', 'ListingHelperService', '$http']
+ListingPreferenceService.$inject = ['ListingConstantsService', 'ListingHelperService', '$http']
 
 angular
   .module('dahlia.services')
-  .service('ListingPreferencesService', ListingPreferencesService)
+  .service('ListingPreferenceService', ListingPreferenceService)

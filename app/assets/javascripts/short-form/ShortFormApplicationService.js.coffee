@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
   ListingDataService, ListingConstantsService, ListingUnitService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferencesService
+  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferenceService
 ) ->
   Service = {}
 
@@ -491,7 +491,7 @@ ShortFormApplicationService = (
     Service.application.householdMembers.concat([Service.applicant])
 
   Service.listingHasPreference = (preference) ->
-    ListingPreferencesService.hasPreference(preference, ListingDataService.listing)
+    ListingPreferenceService.hasPreference(preference, ListingDataService.listing)
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
@@ -783,7 +783,7 @@ ShortFormApplicationService = (
       Raven.captureMessage('Undefined listing preferences', {
         level: 'warning', extra: { listing: ListingDataService.listing }
       })
-      ListingPreferencesService.getListingPreferences(ListingDataService.listing).then ->
+      ListingPreferenceService.getListingPreferences(ListingDataService.listing).then ->
         params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
         Service._sendApplication(submitMethod, submitPath, params)
 
@@ -1046,7 +1046,7 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   Service.hasHouseholdPublicHousingQuestion = ->
-    ListingPreferencesService.hasPreference('assistedHousing', ListingDataService.listing)
+    ListingPreferenceService.hasPreference('assistedHousing', ListingDataService.listing)
 
   Service.formattedBuildingAddress = (listing, display) ->
     ListingDataService.formattedAddress(listing, 'Building', display)
@@ -1069,7 +1069,7 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingDataService', 'ListingConstantsService', 'ListingUnitService', 'ShortFormDataService',
-  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferencesService'
+  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferenceService'
 ]
 
 angular

@@ -94,8 +94,8 @@
               'listings/templates/listing.html'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferencesService', 'ListingUnitService',
-          ($stateParams, $state, $q, ListingDataService, ListingLotteryService, ListingPreferencesService, ListingUnitService) ->
+          '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService',
+          ($stateParams, $state, $q, ListingDataService, ListingLotteryService, ListingPreferenceService, ListingUnitService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
             ListingDataService.getListing($stateParams.id, forceRecache, true).then( ->
@@ -109,7 +109,7 @@
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingDataService.getListingAMI)
               setTimeout(ListingUnitService.getListingUnits.bind(null, ListingDataService.listing, forceRecache))
-              setTimeout(ListingPreferencesService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
+              setTimeout(ListingPreferenceService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
               unless ListingLotteryService.lotteryIsUpcoming(ListingDataService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingDataService.listing))
               setTimeout(ListingDataService.getListingDownloadURLs)
@@ -604,12 +604,12 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$state', '$stateParams', '$q', 'ListingDataService', 'ListingPreferencesService',
-          ($state, $stateParams, $q, ListingDataService, ListingPreferencesService) ->
+          '$state', '$stateParams', '$q', 'ListingDataService', 'ListingPreferenceService',
+          ($state, $stateParams, $q, ListingDataService, ListingPreferenceService) ->
             # store the listing in ListingDataService and kick out if it's not open for applications
             deferred = $q.defer()
             ListingDataService.getListingAndCheckIfOpen($stateParams.id).then( ->
-              ListingPreferencesService.getListingPreferences(ListingDataService.listing).then ->
+              ListingPreferenceService.getListingPreferences(ListingDataService.listing).then ->
                 deferred.resolve(ListingDataService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage

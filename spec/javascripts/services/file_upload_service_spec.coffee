@@ -14,7 +14,7 @@ do ->
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingPreference =
       listingPreferenceID: listingPreferenceID
-    fakeListingPreferencesService = {
+    fakeListingPreferenceService = {
       getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
       getPreferenceById: jasmine.createSpy().and.returnValue(true)
     }
@@ -38,7 +38,7 @@ do ->
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
       $provide.value 'ListingDataService', fakeListingDataService
-      $provide.value 'ListingPreferencesService', fakeListingPreferencesService
+      $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       return
     )
 
@@ -76,10 +76,10 @@ do ->
 
       describe 'when preference is not found on the listing', ->
         beforeEach ->
-          fakeListingPreferencesService.getPreferenceById = jasmine.createSpy().and.returnValue(null)
+          fakeListingPreferenceService.getPreferenceById = jasmine.createSpy().and.returnValue(null)
 
         afterEach ->
-          fakeListingPreferencesService.getPreferenceById = jasmine.createSpy().and.returnValue(listingPreferenceID)
+          fakeListingPreferenceService.getPreferenceById = jasmine.createSpy().and.returnValue(listingPreferenceID)
 
         it 'returns a rejection', ->
           rejection = FileUploadService.uploadProof(file, prefType)

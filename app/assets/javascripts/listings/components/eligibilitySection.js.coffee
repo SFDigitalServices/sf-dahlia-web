@@ -4,12 +4,12 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferencesService', 'ListingUnitService',
-    ($translate, ListingDataService, ListingEligibilityService, ListingPreferencesService, ListingUnitService) ->
+    '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferenceService', 'ListingUnitService',
+    ($translate, ListingDataService, ListingEligibilityService, ListingPreferenceService, ListingUnitService) ->
       ctrl = @
 
-      @loading = ListingPreferencesService.loading
-      @error = ListingPreferencesService.error
+      @loading = ListingPreferenceService.loading
+      @error = ListingPreferenceService.error
 
       @occupancy = (unitSummary) ->
         return '1' if unitSummary.maxOccupancy == 1
@@ -36,7 +36,7 @@ angular.module('dahlia.components')
         ListingUnitService.listingHasOnlySROUnits(this.parent.listing)
 
       @getListingPreferences = ->
-        ListingPreferencesService.getListingPreferences(this.parent.listing)
+        ListingPreferenceService.getListingPreferences(this.parent.listing)
 
       @listingHasPriorityUnits = ->
         ListingUnitService.listingHasPriorityUnits(this.parent.listing)

@@ -5,7 +5,7 @@
 ListingDataService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
   ExternalTranslateService, ListingConstantsService, ListingHelperService,
-  ListingEligibilityService, ListingLotteryService, ListingUnitService, SharedService, ListingPreferencesService) ->
+  ListingEligibilityService, ListingLotteryService, ListingUnitService, SharedService, ListingPreferenceService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -403,9 +403,9 @@ ListingDataService = (
 
   Service.getProjectIdForBoundaryMatching = (listing) ->
     return unless listing
-    if ListingPreferencesService.hasPreference('antiDisplacement', listing)
+    if ListingPreferenceService.hasPreference('antiDisplacement', listing)
       'ADHP'
-    else if ListingPreferencesService.hasPreference('neighborhoodResidence', listing)
+    else if ListingPreferenceService.hasPreference('neighborhoodResidence', listing)
       listing.Project_ID
     else
       null
@@ -426,7 +426,7 @@ ListingDataService = (
 ListingDataService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
-  'ListingEligibilityService', 'ListingLotteryService', 'ListingUnitService', 'SharedService', 'ListingPreferencesService'
+  'ListingEligibilityService', 'ListingLotteryService', 'ListingUnitService', 'SharedService', 'ListingPreferenceService'
 ]
 
 angular

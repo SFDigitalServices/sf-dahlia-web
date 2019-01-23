@@ -23,7 +23,7 @@ do ->
       listings: fakeListings
       getListingPreferences: jasmine.createSpy()
       priorityLabel: jasmine.createSpy()
-    fakeListingPreferencesService = {
+    fakeListingPreferenceService = {
       getListingPreferences: jasmine.createSpy()
     }
     fakeListingUnitService =
@@ -36,7 +36,7 @@ do ->
       locals = {
         $translate: $translate
         ListingDataService: fakeListingDataService
-        ListingPreferencesService: fakeListingPreferencesService
+        ListingPreferenceService: fakeListingPreferenceService
         ListingUnitService: fakeListingUnitService
         ListingEligibilityService: fakeListingEligibilityService
       }
@@ -124,9 +124,9 @@ do ->
           expect(fakeListingUnitService.listingHasOnlySROUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'getListingPreferences', ->
-        it 'calls ListingPreferencesService.getListingPreferences', ->
+        it 'calls ListingPreferenceService.getListingPreferences', ->
           ctrl.getListingPreferences()
-          expect(fakeListingPreferencesService.getListingPreferences).toHaveBeenCalledWith(fakeListingDataService.listing)
+          expect(fakeListingPreferenceService.getListingPreferences).toHaveBeenCalledWith(fakeListingDataService.listing)
 
       describe 'listingHasPriorityUnits', ->
         it "calls ListingUnitService.listingHasPriorityUnits with the parent's listing", ->

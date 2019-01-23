@@ -12,11 +12,11 @@ angular.module('dahlia.components')
     onChange: '&'
   templateUrl: 'short-form/components/preference-checkbox.html'
 
-  controller: ['ListingDataService', 'ListingPreferencesService', (ListingDataService, ListingPreferencesService) ->
+  controller: ['ListingDataService', 'ListingPreferenceService', (ListingDataService, ListingPreferenceService) ->
     ctrl = @
 
     @showDescription = false
-    listingPreference = ListingPreferencesService.getPreference(@preference, ListingDataService.listing)
+    listingPreference = ListingPreferenceService.getPreference(@preference, ListingDataService.listing)
     if listingPreference
       @moreInfoLink = listingPreference.readMoreUrl
 
