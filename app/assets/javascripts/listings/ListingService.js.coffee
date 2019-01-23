@@ -52,31 +52,6 @@ ListingService = (
   Service.isFavorited = (listing_id) ->
     Service.favorites.indexOf(listing_id) > -1
 
-  Service.occupancyMinMax = (listing) ->
-    minMax = [1, 1]
-    if listing.unitSummary
-      min = _.min(_.map(listing.unitSummary, 'minOccupancy')) || 1
-      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
-      minMax = [min, max]
-    return minMax
-
-  Service.maxIncomeLevelsFor = (listing, ami) ->
-    occupancyMinMax = Service.occupancyMinMax(listing)
-    incomeLevels = []
-    ami.forEach (amiLevel) ->
-      occupancy = parseInt(amiLevel.numOfHousehold)
-      # only grab the incomeLevels that fit within our listing's occupancyMinMax
-      # + we add 2 more to account for potential childrenUnder6
-      min = occupancyMinMax[0]
-      max = occupancyMinMax[1] + 2
-      if occupancy >= min && occupancy <= max
-        incomeLevels.push({
-          occupancy: occupancy,
-          yearly: parseFloat(amiLevel.amount),
-          monthly: Math.floor(parseFloat(amiLevel.amount) / 12.0)
-        })
-    return incomeLevels
-
   Service.sortByDate = (sessions) ->
     # used for sorting Open_Houses and Information_Sessions
     _.sortBy sessions, (session) ->
@@ -326,52 +301,6 @@ ListingService = (
         preferenceName: lotteryPref.Lottery_Preference.Name
       }
     angular.copy(listing, Service.listing)
-
-  Service.occupancyIncomeLevels = (listing, amiLevel) ->
-    return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(listing)
-    min = occupancyMinMax[0]
-    # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
-    max = occupancyMinMax[1] + 2
-    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if (
-      ListingHelperService.listingIs('Merry Go Round Shared Housing', listing) ||
-      ListingHelperService.listingIs('1335 Folsom Street', listing) ||
-      ListingHelperService.listingIs('750 Harrison Street', listing)
-    )
-      max = 2
-    else if ListingUnitService.listingHasOnlySROUnits(listing)
-      max = 1
-    _.filter amiLevel.values, (value) ->
-      # where numOfHousehold >= min && <= max
-      value.numOfHousehold >= min && value.numOfHousehold <= max
-
-  Service.householdAMIChartCutoff = ->
-    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if(
-      ListingHelperService.listingIs('Merry Go Round Shared Housing', Service.listing) ||
-      ListingHelperService.listingIs('1335 Folsom Street', Service.listing) ||
-      ListingHelperService.listingIs('750 Harrison Street', Service.listing)
-    )
-      return 2
-    else if ListingUnitService.listingHasOnlySROUnits(Service.listing)
-      return 1
-    occupancyMinMax = Service.occupancyMinMax(Service.listing)
-    max = occupancyMinMax[1]
-    # cutoff at 2x the num of bedrooms
-    Math.floor(max/2) * 2
-
-  Service.minYearlyIncome = ->
-    return if _.isEmpty(Service.AMICharts)
-    incomeLevels = Service.occupancyIncomeLevels(Service.listing, _.first(Service.AMICharts))
-    # get the first (lowest) income level amount
-    _.first(incomeLevels).amount
-
-  Service.incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-    incomeLevel = _.find amiChart.values, (value) ->
-      value.numOfHousehold == householdIncomeLevel.numOfHousehold
-    return unless incomeLevel
-    incomeLevel.amount
 
   Service.getListingDownloadURLs = ->
     urls = angular.copy(ListingConstantsService.defaultApplicationURLs)

@@ -4,8 +4,8 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    '$translate', 'ListingService', 'ListingHelperService', 'ListingPreferencesService', 'ListingUnitService',
-    ($translate, ListingService, ListingHelperService, ListingPreferencesService, ListingUnitService) ->
+    '$translate', 'ListingService', 'ListingHelperService', 'ListingPreferencesService', 'ListingUnitService', 'ListingEligibilityService',
+    ($translate, ListingService, ListingHelperService, ListingPreferencesService, ListingUnitService, ListingEligibilityService) ->
       ctrl = @
 
       @loading = ListingPreferencesService.loading
@@ -22,9 +22,9 @@ angular.module('dahlia.components')
       @showAMItoggler = ->
         return false if _.isEmpty(ListingService.AMICharts)
         amiLevel = _.last(ListingService.AMICharts)
-        lastHouseholdIncomeLevel = ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
         maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-        maxNumOfHousehold > ListingService.householdAMIChartCutoff()
+        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @hasMultipleAMICharts = ->
         ListingService.AMICharts.length > 1
@@ -45,13 +45,13 @@ angular.module('dahlia.components')
         ListingHelperService.priorityLabel(priority, modifier)
 
       @occupancyIncomeLevels = (amiLevel) ->
-        ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
 
       @householdAMIChartCutoff = ->
-        ListingService.householdAMIChartCutoff()
+        ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-        ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+        ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
       return ctrl
   ]
