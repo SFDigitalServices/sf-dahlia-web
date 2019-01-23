@@ -1,2 +1,2 @@
-rental-listing ng-if="!$ctrl.parent.isOwnershipListing()"
-ownership-listing ng-if="$ctrl.parent.isOwnershipListing()"
+rental-listing ng-if="!$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
+ownership-listing ng-if="$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"

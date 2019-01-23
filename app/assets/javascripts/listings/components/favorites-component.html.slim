@@ -15,6 +15,11 @@ section.row ng-show="!$ctrl.parent.favorites.length"
 .results-section
   .row
     .large-12.columns
-      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id)"
+      span.h1.t-beta.t-serif ng-if="$ctrl.parent.hasOwnAndRentListings($ctrl.parent.listings)"
+        | Rental Units
+      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && !$ctrl.parent.isOwnershipListing(listing)"
+      span.h1.t-beta.t-serif ng-if="$ctrl.parent.hasOwnAndRentListings($ctrl.parent.listings)"
+        | Ownership Units
+      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && $ctrl.parent.isOwnershipListing(listing)"
 
 ng-include src="'pages/templates/_email-updates.html'"

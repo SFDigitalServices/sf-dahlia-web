@@ -25,13 +25,20 @@ angular.module('dahlia.components')
       @lotteryResultsListings = ListingService.lotteryResultsListings
 
       @isOwnershipListing = (listing) ->
-        @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
+        listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
 
-      @isOpenMatchListing = (listing) ->
-        @openMatchListings.indexOf(listing) > -1
+      @hasOwnAndRentFavorited = (listings) ->
+        ownershipFavorites = (@isOwnershipListing listing for listing in @filterByFavorites listings)
+        (_.some ownershipFavorites) && !(_.every ownershipFavorites)
+
+      @filterByFavorites = (listings) ->
+        (listing for listing in listings when @isFavorited listing.Id)
 
       @isFavorited = (listing_id) ->
         ListingService.isFavorited(listing_id)
+
+      @isOpenMatchListing = (listing) ->
+        @openMatchListings.indexOf(listing) > -1
 
       @reservedLabel = (type, modifier, listing = null) ->
         type = @listing.Reserved_community_type unless type
@@ -65,9 +72,6 @@ angular.module('dahlia.components')
 
       @toggleFavoriteListing = (listing_id) ->
         ListingService.toggleFavoriteListing(listing_id)
-
-      @isFavorited = (listing_id) ->
-        ListingService.isFavorited(listing_id)
 
       @getListingUnits = ->
         ListingService.getListingUnits()
