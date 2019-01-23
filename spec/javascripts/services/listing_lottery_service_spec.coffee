@@ -6,7 +6,6 @@ do ->
     fakeModalService =
       modalInstance: {}
       openModal: jasmine.createSpy()
-
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
     fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')

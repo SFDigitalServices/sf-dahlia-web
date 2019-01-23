@@ -5,32 +5,7 @@ do ->
     httpBackend = undefined
     fakeListings = getJSONFixture('listings-api-index.json')
     fakeListing = getJSONFixture('listings-api-show.json')
-    # fakeListingAllSRO has only one unit summary, in general, for SRO
-    fakeListingAllSRO = angular.copy(fakeListing.listing)
-    fakeListingAllSRO.unitSummaries =
-      reserved: null
-      general: [angular.copy(fakeListing.listing.unitSummaries.general[0])]
-    fakeListingAllSRO.unitSummaries.general[0].unitType = 'SRO'
-    fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
-    # fakeListingSomeSRO has two unit summaries in general, one for SRO, one for 1 BR
-    fakeListingSomeSRO = angular.copy(fakeListingAllSRO)
-    fakeListingSomeSRO.unitSummaries.general.push(angular.copy(fakeListing.listing.unitSummaries.general[0]))
-    fakeListingConstantsService = {
-      defaultApplicationURLs: [{
-        'language': 'Spanish'
-        'label': 'EspaÃ±ol'
-        'url': 'http://url.com'
-      }]
-      LISTING_MAP: {}
-    }
     fakeAMI = getJSONFixture('listings-api-ami.json')
-    loading = {}
-    error = {}
-    fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
-    fakeCustomPrefs = [
-          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
-          {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
-        ]
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeEligibilityFilters =
       household_size: 2
@@ -38,6 +13,13 @@ do ->
       income_total: 3500
       include_children_under_6: true
       children_under_6: 1
+    fakeListingConstantsService = {
+      defaultApplicationURLs: [{
+        'language': 'Spanish'
+        'label': 'Español'
+        'url': 'http://url.com'
+      }]
+    }
     fakeListingEligibilityService = {
       eligibilityYearlyIncome: jasmine.createSpy()
       eligibility_filters: fakeEligibilityFilters
@@ -60,13 +42,9 @@ do ->
     $localStorage = undefined
     $state = undefined
     $translate = {}
+    loading = {}
+    error = {}
     requestURL = undefined
-    incomeLevels = undefined
-    minMax = undefined
-    tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
-    lastWeek = new Date()
-    lastWeek.setDate(lastWeek.getDate() - 7)
     listing = undefined
 
     beforeEach module('ui.router')

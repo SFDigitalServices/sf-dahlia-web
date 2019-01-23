@@ -1,32 +1,30 @@
 do ->
   'use strict'
   describe 'ListingPreferenceService', ->
-    requestURL = undefined
     ListingPreferenceService = undefined
     httpBackend = undefined
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     listing = null
-    fakeListing = getJSONFixture('listings-api-show.json')
-    fakeListingConstantsService = {
-      preferenceMap: fakeCustomPrefs
-      defaultApplicationURLs: [{
-        'language': 'Spanish'
-        'label': 'EspaÃ±ol'
-        'url': 'http://url.com'
-      }]
-      LISTING_MAP: {}
-    }
-    fakeAMI = getJSONFixture('listings-api-ami.json')
-    loading = {}
-    error = {}
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeCustomPrefs = [
       {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
       {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
     ]
+    fakeListingConstantsService =
+      preferenceMap:
+        certOfPreference: "Certificate of Preference (COP)"
+        displaced: "Displaced Tenant Housing Preference (DTHP)"
+        liveWorkInSf: "Live or Work in San Francisco Preference"
+        liveInSf: "Live or Work in San Francisco Preference"
+        workInSf: "Live or Work in San Francisco Preference"
+        neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+        assistedHousing: "Rent Burdened / Assisted Housing Preference"
+        rentBurden: "Rent Burdened / Assisted Housing Preference"
+        antiDisplacement: "Anti-Displacement Housing Preference (ADHP)"
+        aliceGriffith: "Alice Griffith Housing Development Resident"
+    loading = {}
     fakeListingIdentityService =
       listingIs: ->
-      isFirstComeFirstServe: ->
-      isOpen: ->
 
     beforeEach module('ui.router')
     beforeEach module('http-etag')
@@ -39,19 +37,18 @@ do ->
     beforeEach inject((_ListingPreferenceService_, _$httpBackend_) ->
       httpBackend = _$httpBackend_
       ListingPreferenceService = _ListingPreferenceService_
-      requestURL = ListingPreferenceService.requestURL
       return
     )
 
     describe 'Service.getListingPreferences', ->
       beforeEach ->
         # have to populate listing first
-        listing = angular.copy(fakeListing.listing)
+        listing = angular.copy(fakeListing)
         listing.Id = 'fakeId-123'
         # just to divert from our hardcoding
         preferences = angular.copy(fakePreferences)
         preferences.preferences = preferences.preferences.concat fakeCustomPrefs
-        stubAngularAjaxRequest httpBackend, requestURL, preferences
+        stubAngularAjaxRequest httpBackend, "/api/v1/listings/#{listing.Id}/preferences", preferences
         ListingPreferenceService.getListingPreferences(listing)
 
       afterEach ->
@@ -77,12 +74,14 @@ do ->
         expect(ListingPreferenceService.loading.preferences).toEqual false
 
     describe 'Service.hasPreference', ->
+      beforeEach ->
+        listing = angular.copy(fakeListing)
+        listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
+
       describe 'listing has preference', ->
         it 'should return true', ->
-          listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingPreferenceService.hasPreference('liveInSf', listing)).toEqual true
 
       describe 'listing does not have preference', ->
         it 'should return false', ->
-          listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingPreferenceService.hasPreference('neighborhoodResidence', listing)).toEqual false

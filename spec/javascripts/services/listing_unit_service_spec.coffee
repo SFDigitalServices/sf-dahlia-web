@@ -17,7 +17,7 @@ do ->
       return
     )
 
-    beforeEach inject((_ListingUnitService_, _$httpBackend_) ->
+    beforeEach inject((_$httpBackend_, _ListingUnitService_) ->
       httpBackend = _$httpBackend_
       ListingUnitService = _ListingUnitService_
       return

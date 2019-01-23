@@ -6,7 +6,6 @@ do ->
     fakeListingConstantsService =
       LISTING_MAP: {}
     fakeListingConstantsService.LISTING_MAP[fakeListing.listing.Id] = fakeListing.listing.Name
-
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     lastWeek = new Date()

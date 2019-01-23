@@ -1,11 +1,7 @@
 do ->
   'use strict'
   describe 'ListingEligibilityService', ->
-    incomeLevels = undefined
-    minMax = undefined
     ListingEligibilityService = undefined
-    loading = {}
-    error = {}
     fakeListing = getJSONFixture('listings-api-show.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeAMI = getJSONFixture('listings-api-ami.json')
@@ -22,22 +18,14 @@ do ->
       income_total: 3500
       include_children_under_6: true
       children_under_6: 1
-    fakeListingEligibilityService = {
-      # setEligibilityFilters: jasmine.createSpy()
-    }
     $localStorage = undefined
-
-    # beforeEach module('dahlia.services', ($provide) ->
-    #   $provide.value '$translate', $translate
-    #   $provide.value 'ModalService', fakeModalService
-    #   $provide.value 'ListingEligibilityService', fakeListingEligibilityService
-    #   return
-    # )
+    incomeLevels = undefined
+    minMax = undefined
 
     beforeEach module('dahlia.services', ->
     )
 
-    beforeEach inject((_ListingEligibilityService_, _$localStorage_) ->
+    beforeEach inject((_$localStorage_, _ListingEligibilityService_) ->
       $localStorage = _$localStorage_
       ListingEligibilityService = _ListingEligibilityService_
       return
