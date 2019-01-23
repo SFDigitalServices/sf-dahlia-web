@@ -1,7 +1,7 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
   ListingService, ListingHelperService, ListingConstantsService, ShortFormDataService,
-  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService
+  AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferencesService
 ) ->
   Service = {}
 
@@ -491,7 +491,7 @@ ShortFormApplicationService = (
     Service.application.householdMembers.concat([Service.applicant])
 
   Service.listingHasPreference = (preference) ->
-    ListingService.hasPreference(preference)
+    ListingPreferencesService.hasPreference(preference, ListingService.listing)
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
@@ -783,7 +783,7 @@ ShortFormApplicationService = (
       Raven.captureMessage('Undefined listing preferences', {
         level: 'warning', extra: { listing: ListingService.listing }
       })
-      ListingService.getListingPreferences().then ->
+      ListingPreferencesService.getListingPreferences(ListingService.listing).then ->
         params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
         Service._sendApplication(submitMethod, submitPath, params)
 
@@ -1046,7 +1046,7 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   Service.hasHouseholdPublicHousingQuestion = ->
-    ListingService.hasPreference('assistedHousing')
+    ListingPreferencesService.hasPreference('assistedHousing', ListingService.listing)
 
   Service.formattedBuildingAddress = (listing, display) ->
     ListingHelperService.formattedAddress(listing, 'Building', display)
@@ -1069,7 +1069,7 @@ ShortFormApplicationService = (
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
   'ListingService', 'ListingHelperService', 'ListingConstantsService', 'ShortFormDataService',
-  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService'
+  'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferencesService'
 ]
 
 angular

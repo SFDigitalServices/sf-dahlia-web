@@ -35,7 +35,7 @@ angular.module('dahlia.components')
       ListingService.listingHasOnlySROUnits(this.parent.listing)
 
     @getListingPreferences = ->
-      ListingService.getListingPreferences()
+      ListingPreferencesService.getListingPreferences(this.parent.listing)
 
     @listingHasPriorityUnits = ->
       ListingService.listingHasPriorityUnits(this.parent.listing)

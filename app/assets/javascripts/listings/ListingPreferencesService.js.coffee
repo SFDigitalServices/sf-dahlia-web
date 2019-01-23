@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingPreferencesService = (ListingConstantsService) ->
+ListingPreferencesService = (ListingConstantsService, ListingHelperService, $http) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -27,7 +27,7 @@ ListingPreferencesService = (ListingConstantsService) ->
     # Reset preferences that might already exist
     angular.copy([], listing.preferences)
     Service.error.preferences = false
-    Service.stubListingPreferences()
+    Service.stubListingPreferences(listing)
     # if this listing had stubbed preferences then we can abort
     if !_.isEmpty(listing.preferences)
       return $q.when(listing.preferences).then ->
@@ -58,81 +58,81 @@ ListingPreferencesService = (ListingConstantsService) ->
     listing.customPreferences = _.sortBy customPreferences, (pref) -> pref.order
     listing.customProofPreferences = _.sortBy customProofPreferences, (pref) -> pref.order
 
-  Service.stubListingPreferences = ->
+  Service.stubListingPreferences = (listing) ->
     opts = null
-    if (ListingHelperService.listingIs('Alchemy', Service.listing))
+    if (ListingHelperService.listingIs('Alchemy', listing))
       opts = {
         COPUnits: 50
         DTHPUnits: 10
         NRHPUnits: 20
         NRHPDistrict: 8
       }
-    if (ListingHelperService.listingIs('480 Potrero', Service.listing))
+    if (ListingHelperService.listingIs('480 Potrero', listing))
       opts = {
         COPUnits: 11
         DTHPUnits: 2
         NRHPUnits: 4
         NRHPDistrict: 10
       }
-    if (ListingHelperService.listingIs('21 Clarence', Service.listing))
+    if (ListingHelperService.listingIs('21 Clarence', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('168 Hyde', Service.listing))
+    if (ListingHelperService.listingIs('168 Hyde', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Olume', Service.listing))
+    if (ListingHelperService.listingIs('Olume', listing))
       opts = {
         COPUnits: 18
         DTHPUnits: 3
         NRHPUnits: 7
         NRHPDistrict: 6
       }
-    if (ListingHelperService.listingIs('3445 Geary', Service.listing))
+    if (ListingHelperService.listingIs('3445 Geary', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('125 Mason', Service.listing))
+    if (ListingHelperService.listingIs('125 Mason', listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 3
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Argenta 909', Service.listing))
+    if (ListingHelperService.listingIs('Argenta 909', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Northpoint Vistas', Service.listing))
+    if (ListingHelperService.listingIs('Northpoint Vistas', listing))
       opts = {
         COPUnits: 2
         DTHPUnits: 2
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('280 Brighton', Service.listing))
+    if (ListingHelperService.listingIs('280 Brighton', listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('30 Dore', Service.listing))
+    if (ListingHelperService.listingIs('30 Dore', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
     if opts
-      Service.stubPreferences(opts)
+      Service.stubPreferences(opts, listing)
 
-  Service.stubPreferences = (options) ->
+  Service.stubPreferences = (options, listing) ->
     defaults = [
       {
         preferenceName: 'Certificate of Preference (COP)'
@@ -182,7 +182,7 @@ ListingPreferencesService = (ListingConstantsService) ->
         pref.order = i++
         preferences.push(pref)
 
-    Service.listing.preferences = preferences
+    listing.preferences = preferences
 
   return Service
 
@@ -191,7 +191,7 @@ ListingPreferencesService = (ListingConstantsService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingPreferencesService.$inject = ['ListingConstantsService']
+ListingPreferencesService.$inject = ['ListingConstantsService', 'ListingHelperService', '$http']
 
 angular
   .module('dahlia.services')
