@@ -1,6 +1,6 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingService, ListingHelperService, ListingConstantsService, ShortFormDataService,
+  ListingService, ListingHelperService, ListingConstantsService, ListingUnitService, ShortFormDataService,
   AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService
 ) ->
   Service = {}
@@ -1052,7 +1052,7 @@ ShortFormApplicationService = (
     ListingHelperService.formattedAddress(listing, 'Building', display)
 
   Service.listingHasReservedUnitType = (type) ->
-    ListingService.listingHasReservedUnitType(Service.listing, type)
+    ListingUnitService.listingHasReservedUnitType(Service.listing, type)
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingService.getProjectIdForBoundaryMatching(Service.listing)
@@ -1068,7 +1068,7 @@ ShortFormApplicationService = (
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
-  'ListingService', 'ListingHelperService', 'ListingConstantsService', 'ShortFormDataService',
+  'ListingService', 'ListingHelperService', 'ListingConstantsService', 'ListingUnitService', 'ShortFormDataService',
   'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService'
 ]
 

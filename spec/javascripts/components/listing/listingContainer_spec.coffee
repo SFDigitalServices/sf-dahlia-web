@@ -50,11 +50,7 @@ do ->
       toggleFavoriteListing: jasmine.createSpy()
       isFavorited: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
-      listingHasPriorityUnits: jasmine.createSpy()
-      listingHasReservedUnits: jasmine.createSpy()
-      listingHasOnlySROUnits: jasmine.createSpy()
       getListingAMI: jasmine.createSpy()
-      listingHasSROUnits: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
@@ -69,6 +65,8 @@ do ->
       openLotteryResultsModal: jasmine.createSpy()
     fakeListingUnitService =
       getListingUnits: jasmine.createSpy()
+      listingHasReservedUnits: jasmine.createSpy()
+      listingHasSROUnits: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -153,9 +151,9 @@ do ->
           expect(fakeListingHelperService.listingIs).toHaveBeenCalledWith(name, fakeListing)
 
       describe '$ctrl.listingHasReservedUnits', ->
-        it "calls ListingService.listingHasReservedUnits with the controller's listing", ->
+        it "calls ListingUnitService.listingHasReservedUnits with the controller's listing", ->
           ctrl.listingHasReservedUnits()
-          expect(fakeListingService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
+          expect(fakeListingUnitService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
 
       describe '$ctrl.isFirstComeFirstServe', ->
         it 'calls ListingHelperService.isFirstComeFirstServe', ->
@@ -221,6 +219,6 @@ do ->
           expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Leasing_Agent')
 
       describe '$ctrl.listingHasSROUnits', ->
-        it 'calls ListingService.listingHasSROUnits', ->
+        it 'calls ListingUnitService.listingHasSROUnits', ->
           ctrl.listingHasSROUnits()
-          expect(fakeListingService.listingHasSROUnits).toHaveBeenCalled()
+          expect(fakeListingUnitService.listingHasSROUnits).toHaveBeenCalled()

@@ -44,3 +44,10 @@ do ->
         expect(fakeListing.Units).toEqual fakeUnits.units
       it 'assigns the given listing.groupedUnits with the grouped unit results', ->
         expect(fakeListing.groupedUnits).toEqual ListingUnitService.groupUnitDetails(fakeUnits.units)
+
+    describe 'Service.listingHasOnlySROUnits', ->
+      it 'returns false if not all units are SROs', ->
+        fakeListing.listing.unitSummaries.general[0].Unit_Type = 'Studio'
+        expect(ListingUnitService.listingHasOnlySROUnits(fakeListing.listing)).toEqual(false)
+      it 'returns true if all units are SROs', ->
+        expect(ListingUnitService.listingHasOnlySROUnits(fakeListingAllSRO)).toEqual(true)

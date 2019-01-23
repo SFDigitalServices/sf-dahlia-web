@@ -15,22 +15,24 @@ do ->
     fakeListingService =
       AMICharts: []
       listings: fakeListings
-      listingHasOnlySROUnits: jasmine.createSpy()
-      listingHasPriorityUnits: jasmine.createSpy()
       occupancyIncomeLevels: ->
       householdAMIChartCutoff: ->
       getListingPreferences: jasmine.createSpy()
       incomeForHouseholdSize: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
+    fakeListingUnitService =
+      listingHasPriorityUnits: jasmine.createSpy()
+      listingHasOnlySROUnits: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
         $translate: $translate
+        ListingService: fakeListingService
         ListingHelperService: fakeListingHelperService
+        ListingUnitService: fakeListingUnitService
       }
     )
 
@@ -111,9 +113,9 @@ do ->
           expect(ctrl.listingHasPreferences()).toEqual false
 
       describe 'listingHasOnlySROUnits', ->
-        it "calls ListingService.listingHasOnlySROUnits with the parent's listing", ->
+        it "calls ListingUnitService.listingHasOnlySROUnits with the parent's listing", ->
           ctrl.listingHasOnlySROUnits()
-          expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingUnitService.listingHasOnlySROUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'getListingPreferences', ->
         it 'calls ListingService.getListingPreferences', ->
@@ -121,9 +123,9 @@ do ->
           expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
 
       describe 'listingHasPriorityUnits', ->
-        it "calls ListingService.listingHasPriorityUnits with the parent's listing", ->
+        it "calls ListingUnitService.listingHasPriorityUnits with the parent's listing", ->
           ctrl.listingHasPriorityUnits()
-          expect(fakeListingService.listingHasPriorityUnits).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingUnitService.listingHasPriorityUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'priorityLabel', ->
         it 'calls ListingHelperService.priorityLabel with the given arguments', ->

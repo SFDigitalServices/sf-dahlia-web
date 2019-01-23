@@ -95,6 +95,26 @@ ListingUnitService = ($http, ListingConstantsService, ListingHelperService) ->
       return
     )
 
+  Service.listingHasPriorityUnits = (listing) ->
+    !_.isEmpty(listing.priorityUnits)
+
+  Service.listingHasReservedUnits = (listing) ->
+    !_.isEmpty(listing.unitSummaries.reserved)
+
+  # `type` should match what we get from Salesforce e.g. "Veteran"
+  Service.listingHasReservedUnitType = (listing, type) ->
+    return false unless Service.listingHasReservedUnits(listing)
+    types = _.map listing.reservedDescriptor, (descriptor) -> descriptor.name
+    _.includes(types, type)
+
+  Service.listingHasSROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.some(combined, { Unit_Type: 'SRO' })
+
+  Service.listingHasOnlySROUnits = (listing) ->
+    combined = Service.combineUnitSummaries(listing)
+    _.every(combined, { Unit_Type: 'SRO' })
+
   return Service
 
 ############################################################################################
