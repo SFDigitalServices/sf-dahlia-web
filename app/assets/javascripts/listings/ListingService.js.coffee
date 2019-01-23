@@ -309,26 +309,6 @@ ListingService = (
           i++
     charts
 
-  Service.listingHasPriorityUnits = (listing) ->
-    !_.isEmpty(listing.priorityUnits)
-
-  Service.listingHasReservedUnits = (listing) ->
-    !_.isEmpty(listing.unitSummaries.reserved)
-
-  # `type` should match what we get from Salesforce e.g. "Veteran"
-  Service.listingHasReservedUnitType = (listing, type) ->
-    return false unless Service.listingHasReservedUnits(listing)
-    types = _.map Service.listing.reservedDescriptor, (descriptor) -> descriptor.name
-    _.includes(types, type)
-
-  Service.listingHasSROUnits = (listing) ->
-    combined = ListingUnitService.combineUnitSummaries(listing)
-    _.some(combined, { Unit_Type: 'SRO' })
-
-  Service.listingHasOnlySROUnits = (listing) ->
-    combined = ListingUnitService.combineUnitSummaries(listing)
-    _.every(combined, { Unit_Type: 'SRO' })
-
   Service.priorityTypes = (listing) ->
     Service.collectTypes(listing, 'prioritiesDescriptor')
 
@@ -360,7 +340,7 @@ ListingService = (
       ListingHelperService.listingIs('750 Harrison Street', listing)
     )
       max = 2
-    else if Service.listingHasOnlySROUnits(listing)
+    else if ListingUnitService.listingHasOnlySROUnits(listing)
       max = 1
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
@@ -374,7 +354,7 @@ ListingService = (
       ListingHelperService.listingIs('750 Harrison Street', Service.listing)
     )
       return 2
-    else if Service.listingHasOnlySROUnits(Service.listing)
+    else if ListingUnitService.listingHasOnlySROUnits(Service.listing)
       return 1
     occupancyMinMax = Service.occupancyMinMax(Service.listing)
     max = occupancyMinMax[1]

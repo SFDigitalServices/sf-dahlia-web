@@ -14,7 +14,6 @@ do ->
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
       hasPreference: ->
-      listingHasReservedUnitType: ->
       RESERVED_TYPES:
         VETERAN: 'Veteran'
         DISABLED: 'Developmental disabilities'
@@ -26,9 +25,12 @@ do ->
         liveInSf: "Live or Work in San Francisco Preference"
         workInSf: "Live or Work in San Francisco Preference"
         neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+    fakeListingUnitService =
+      listingHasReservedUnitType: ->
 
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingUnitService', fakeListingUnitService
       return
     )
 
@@ -97,6 +99,9 @@ do ->
         expect(ShortFormDataService.maxDOBDay(2, 2000)).toEqual(29)
 
     describe '_autofillReset', ->
+      beforeEach ->
+        spyOn(fakeListingUnitService, 'listingHasReservedUnitType').and.returnValue(false)
+
       it 'should check if demographic survey was completed', ->
         fakeApplication.surveyComplete = null
         fakeApplication.applicant.gender = 'X'

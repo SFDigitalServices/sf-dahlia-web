@@ -354,15 +354,6 @@ do ->
         amount = ListingService.incomeForHouseholdSize(fakeChart, fakeIncomeLevel)
         expect(amount).toEqual fakeChart.values[1].amount
 
-    describe 'Service.listingHasOnlySROUnits', ->
-      it 'returns no if not all units are SROs', ->
-        ListingService.listing = fakeListing.listing
-        ListingService.listing.unitSummaries.general[0].Unit_Type = 'Studio'
-        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(false)
-      it 'returns yes if all units are SROs', ->
-        ListingService.listing = fakeListingAllSRO
-        expect(ListingService.listingHasOnlySROUnits(ListingService.listing)).toEqual(true)
-
     describe 'Service.householdAMIChartCutoff', ->
       it 'returns 1 if all units are SROs', ->
         ListingService.listing = fakeListingAllSRO

@@ -43,7 +43,7 @@ angular.module('dahlia.components')
       ListingHelperService.listingIs(name, listing)
 
     @listingHasReservedUnits = ->
-      ListingService.listingHasReservedUnits(@listing)
+      ListingUnitService.listingHasReservedUnits(@listing)
 
     @isFirstComeFirstServe = (listing = @listing) ->
       ListingHelperService.isFirstComeFirstServe(listing)
@@ -67,7 +67,7 @@ angular.module('dahlia.components')
       ListingUnitService.getListingUnits()
 
     @listingHasSROUnits = ->
-      ListingService.listingHasSROUnits(@listing)
+      ListingUnitService.listingHasSROUnits(@listing)
 
     @hasEligibilityFilters = ->
       ListingEligibilityService.hasEligibilityFilters()

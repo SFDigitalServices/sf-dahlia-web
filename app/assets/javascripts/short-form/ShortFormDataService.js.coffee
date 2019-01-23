@@ -1,4 +1,4 @@
-ShortFormDataService = (ListingService, ListingConstantsService) ->
+ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitService) ->
   Service = {}
   Service.preferences = _.keys(ListingService.preferenceMap)
   Service.metaFields = [
@@ -550,9 +550,9 @@ ShortFormDataService = (ListingService, ListingConstantsService) ->
       delete data.hasPublicHousing
       delete data.totalMonthlyRent
       data.groupedHouseholdAddresses = []
-    unless LS.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.VETERAN)
+    unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.VETERAN)
       delete data.hasMilitaryService
-    unless LS.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.DISABLED)
+    unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.DISABLED)
       delete data.hasDevelopmentalDisability
 
     # reset contact + neighborhood data
@@ -618,7 +618,8 @@ ShortFormDataService = (ListingService, ListingConstantsService) ->
 
 ShortFormDataService.$inject = [
   'ListingService',
-  'ListingConstantsService'
+  'ListingConstantsService',
+  'ListingUnitService'
 ]
 
 angular
