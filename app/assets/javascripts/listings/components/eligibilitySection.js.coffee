@@ -4,8 +4,8 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    '$translate', 'ListingDataService', 'ListingPreferencesService', 'ListingUnitService',
-    ($translate, ListingDataService, ListingPreferencesService, ListingUnitService) ->
+    '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferencesService', 'ListingUnitService',
+    ($translate, ListingDataService, ListingEligibilityService, ListingPreferencesService, ListingUnitService) ->
       ctrl = @
 
       @loading = ListingPreferencesService.loading
@@ -22,9 +22,9 @@ angular.module('dahlia.components')
       @showAMItoggler = ->
         return false if _.isEmpty(ListingDataService.AMICharts)
         amiLevel = _.last(ListingDataService.AMICharts)
-        lastHouseholdIncomeLevel = ListingDataService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
         maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-        maxNumOfHousehold > ListingDataService.householdAMIChartCutoff()
+        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @hasMultipleAMICharts = ->
         ListingDataService.AMICharts.length > 1
@@ -45,13 +45,13 @@ angular.module('dahlia.components')
         ListingDataService.priorityLabel(priority, modifier)
 
       @occupancyIncomeLevels = (amiLevel) ->
-        ListingDataService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
 
       @householdAMIChartCutoff = ->
-        ListingDataService.householdAMIChartCutoff()
+        ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-        ListingDataService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+        ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
       return ctrl
   ]
