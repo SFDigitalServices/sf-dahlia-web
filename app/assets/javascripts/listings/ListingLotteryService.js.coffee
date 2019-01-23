@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingLotteryService = ($http, ListingHelperService, ModalService) ->
+ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
   Service = {}
   Service.lotteryBucketInfo = {}
   Service.lotteryRankingInfo = {}
@@ -31,7 +31,7 @@ ListingLotteryService = ($http, ListingHelperService, ModalService) ->
       false
 
   Service.lotteryDatePassed = (listing) ->
-    return true if ListingHelperService.isFirstComeFirstServe(listing) && !ListingHelperService.isOpen(listing)
+    return true if ListingIdentityService.isFirstComeFirstServe(listing) && !ListingIdentityService.isOpen(listing)
     return false unless listing.Lottery_Date
     today = moment().tz('America/Los_Angeles').startOf('day')
     lotteryDate = moment(listing.Lottery_Date).tz('America/Los_Angeles')
@@ -88,7 +88,7 @@ ListingLotteryService = ($http, ListingHelperService, ModalService) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingLotteryService.$inject = ['$http', 'ListingHelperService', 'ModalService']
+ListingLotteryService.$inject = ['$http', 'ListingIdentityService', 'ModalService']
 
 angular
   .module('dahlia.services')

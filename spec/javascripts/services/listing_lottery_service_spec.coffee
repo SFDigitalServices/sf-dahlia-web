@@ -1,7 +1,6 @@
 do ->
   'use strict'
   describe 'ListingLotteryService', ->
-
     ListingLotteryService = undefined
     httpBackend = undefined
     fakeModalService =

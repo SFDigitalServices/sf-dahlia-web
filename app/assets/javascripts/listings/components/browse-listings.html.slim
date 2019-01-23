@@ -49,7 +49,7 @@ section.results-section ng-if="!$ctrl.parent.openListings.length"
 /   * Open (doesn't have a header)
 /   * Before Eligibility filter
 .results-section ng-if="!$ctrl.parent.hasEligibilityFilters() && $ctrl.parent.openListings.length"
-  .row ng-if="$ctrl.parent.temp($ctrl.parent.openListings)"
+  .row
     .large-12.columns
       property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
 

@@ -6,11 +6,6 @@ do ->
     httpBackend = undefined
     listing = null
     fakeListing = getJSONFixture('listings-api-show.json')
-
-    fakeCustomPrefs = [
-          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
-          {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
-        ]
     fakeListingConstantsService = {
       preferenceMap: fakeCustomPrefs
       defaultApplicationURLs: [{
@@ -25,10 +20,10 @@ do ->
     error = {}
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeCustomPrefs = [
-          {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
-          {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
-        ]
-    fakeListingHelperService =
+      {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
+      {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
+    ]
+    fakeListingIdentityService =
       listingIs: ->
       isFirstComeFirstServe: ->
       isOpen: ->
@@ -37,7 +32,7 @@ do ->
     beforeEach module('http-etag')
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value 'ListingConstantsService', fakeListingConstantsService
-      $provide.value 'ListingHelperService', fakeListingHelperService
+      $provide.value 'ListingIdentityService', fakeListingIdentityService
       return
     )
 

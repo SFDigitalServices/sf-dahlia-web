@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingPreferenceService = (ListingConstantsService, ListingHelperService, $http) ->
+ListingPreferenceService = ($http, ListingConstantsService, ListingIdentityService) ->
   Service = {}
   Service.loading = {}
   Service.error = {}
@@ -60,70 +60,70 @@ ListingPreferenceService = (ListingConstantsService, ListingHelperService, $http
 
   Service.stubListingPreferences = (listing) ->
     opts = null
-    if (ListingHelperService.listingIs('Alchemy', listing))
+    if (ListingIdentityService.listingIs('Alchemy', listing))
       opts = {
         COPUnits: 50
         DTHPUnits: 10
         NRHPUnits: 20
         NRHPDistrict: 8
       }
-    if (ListingHelperService.listingIs('480 Potrero', listing))
+    if (ListingIdentityService.listingIs('480 Potrero', listing))
       opts = {
         COPUnits: 11
         DTHPUnits: 2
         NRHPUnits: 4
         NRHPDistrict: 10
       }
-    if (ListingHelperService.listingIs('21 Clarence', listing))
+    if (ListingIdentityService.listingIs('21 Clarence', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('168 Hyde', listing))
+    if (ListingIdentityService.listingIs('168 Hyde', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Olume', listing))
+    if (ListingIdentityService.listingIs('Olume', listing))
       opts = {
         COPUnits: 18
         DTHPUnits: 3
         NRHPUnits: 7
         NRHPDistrict: 6
       }
-    if (ListingHelperService.listingIs('3445 Geary', listing))
+    if (ListingIdentityService.listingIs('3445 Geary', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('125 Mason', listing))
+    if (ListingIdentityService.listingIs('125 Mason', listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 3
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Argenta 909', listing))
+    if (ListingIdentityService.listingIs('Argenta 909', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 1
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('Northpoint Vistas', listing))
+    if (ListingIdentityService.listingIs('Northpoint Vistas', listing))
       opts = {
         COPUnits: 2
         DTHPUnits: 2
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('280 Brighton', listing))
+    if (ListingIdentityService.listingIs('280 Brighton', listing))
       opts = {
         COPUnits: 3
         DTHPUnits: 0
         NRHPUnits: 0
       }
-    if (ListingHelperService.listingIs('30 Dore', listing))
+    if (ListingIdentityService.listingIs('30 Dore', listing))
       opts = {
         COPUnits: 1
         DTHPUnits: 0
@@ -191,7 +191,7 @@ ListingPreferenceService = (ListingConstantsService, ListingHelperService, $http
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingPreferenceService.$inject = ['ListingConstantsService', 'ListingHelperService', '$http']
+ListingPreferenceService.$inject = ['$http', 'ListingConstantsService', 'ListingIdentityService']
 
 angular
   .module('dahlia.services')

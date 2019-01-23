@@ -2,7 +2,13 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingHelperService = (ListingConstantsService) ->
+# This service contains functions that check properties of a listing to determine
+# whether the listing is or is not a certain kind of listing.
+#
+# TODO: It's not fully clear that this service needs to be a separate service.
+# Look further into where/how the functions in this service are used to see if
+# there is a reasonable alternative way to manage these functions.
+ListingIdentityService = (ListingConstantsService) ->
   Service = {}
 
   Service.listingIs = (name, listing) ->
@@ -23,20 +29,14 @@ ListingHelperService = (ListingConstantsService) ->
     # listing is open if deadline is in the future
     return deadline > now
 
-  Service.isReservedCommunity = (listing) ->
-    !! listing.Reserved_community_type
-
-  Service.isBMR = (listing) ->
-    ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
-
   return Service
 
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingHelperService.$inject = ['ListingConstantsService']
+ListingIdentityService.$inject = ['ListingConstantsService']
 
 angular
   .module('dahlia.services')
-  .service('ListingHelperService', ListingHelperService)
+  .service('ListingIdentityService', ListingIdentityService)

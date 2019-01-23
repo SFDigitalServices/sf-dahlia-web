@@ -2,7 +2,7 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-ListingEligibilityService = ($localStorage, ListingHelperService, ListingUnitService) ->
+ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitService) ->
   Service = {}
   Service.eligibility_filter_defaults =
     'household_size': ''
@@ -48,9 +48,9 @@ ListingEligibilityService = ($localStorage, ListingHelperService, ListingUnitSer
     max = occupancyMinMax[1] + 2
     # TO DO: Hardcoded Temp fix, take this and replace with long term solution
     if (
-      ListingHelperService.listingIs('Merry Go Round Shared Housing', listing) ||
-      ListingHelperService.listingIs('1335 Folsom Street', listing) ||
-      ListingHelperService.listingIs('750 Harrison Street', listing)
+      ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
+      ListingIdentityService.listingIs('1335 Folsom Street', listing) ||
+      ListingIdentityService.listingIs('750 Harrison Street', listing)
     )
       max = 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)
@@ -66,11 +66,11 @@ ListingEligibilityService = ($localStorage, ListingHelperService, ListingUnitSer
     incomeLevel.amount
 
   Service.householdAMIChartCutoff = (listing) ->
-    # TO DO: Hardcoded Temp fix, take this and replace with long term solution
-    if(
-      ListingHelperService.listingIs('Merry Go Round Shared Housing', listing) ||
-      ListingHelperService.listingIs('1335 Folsom Street', listing) ||
-      ListingHelperService.listingIs('750 Harrison Street', listing)
+    # TODO: Hardcoded Temp fix, take this and replace with long term solution
+    if (
+      ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
+      ListingIdentityService.listingIs('1335 Folsom Street', listing) ||
+      ListingIdentityService.listingIs('750 Harrison Street', listing)
     )
       return 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)
@@ -82,12 +82,11 @@ ListingEligibilityService = ($localStorage, ListingHelperService, ListingUnitSer
 
   return Service
 
-
 ############################################################################################
 ######################################## CONFIG ############################################
 ############################################################################################
 
-ListingEligibilityService.$inject = ['$localStorage', 'ListingHelperService', 'ListingUnitService']
+ListingEligibilityService.$inject = ['$localStorage', 'ListingIdentityService', 'ListingUnitService']
 
 angular
   .module('dahlia.services')

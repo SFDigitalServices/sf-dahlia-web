@@ -44,7 +44,7 @@ do ->
       setEligibilityFilters: jasmine.createSpy()
       hasEligibilityFilters: ->
     }
-    fakeListingHelperService =
+    fakeListingIdentityService =
       listingIs: ->
       isFirstComeFirstServe: ->
       isOpen: ->
@@ -76,7 +76,7 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'ListingConstantsService', fakeListingConstantsService
       $provide.value 'ListingEligibilityService', fakeListingEligibilityService
-      $provide.value 'ListingHelperService', fakeListingHelperService
+      $provide.value 'ListingIdentityService', fakeListingIdentityService
       $provide.value 'ListingLotteryService', fakeListingLotteryService
       $provide.value 'SharedService', fakeSharedService
       return
@@ -197,7 +197,7 @@ do ->
 
       it 'returns false if listing is not open', ->
         listing = fakeListing.listing
-        spyOn(fakeListingHelperService, 'isOpen').and.returnValue(false)
+        spyOn(fakeListingIdentityService, 'isOpen').and.returnValue(false)
         expect(ListingDataService.isAcceptingOnlineApplications(listing)).toEqual false
 
       it "returns false if the listing's lottery status is complete", ->
@@ -209,7 +209,7 @@ do ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
         spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(false)
-        spyOn(fakeListingHelperService, 'isOpen').and.returnValue(true)
+        spyOn(fakeListingIdentityService, 'isOpen').and.returnValue(true)
         expect(ListingDataService.isAcceptingOnlineApplications(listing)).toEqual true
 
     describe 'Service.toggleFavoriteListing', ->

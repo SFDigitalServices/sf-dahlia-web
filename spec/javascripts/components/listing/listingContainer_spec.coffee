@@ -52,11 +52,10 @@ do ->
       formattedAddress: jasmine.createSpy()
       getListingAMI: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
-    fakeListingHelperService =
+    fakeListingIdentityService =
       listingIs: jasmine.createSpy()
       isFirstComeFirstServe: jasmine.createSpy()
       isOpen: jasmine.createSpy()
-      isReservedCommunity: jasmine.createSpy()
     fakeListingLotteryService =
       getLotteryBuckets: ->
       listingHasLotteryResults: ->
@@ -73,7 +72,7 @@ do ->
         $translate: $translate
         ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
-        ListingHelperService: fakeListingHelperService
+        ListingIdentityService: fakeListingIdentityService
         ListingUnitService: fakeListingUnitService
         SharedService: fakeSharedService
       }
@@ -138,15 +137,20 @@ do ->
           expect(fakeListingDataService.getListingAMI).toHaveBeenCalled()
 
       describe '$ctrl.listingIsReservedCommunity', ->
-        it 'calls ListingHelperService.isReservedCommunity', ->
-          ctrl.listingIsReservedCommunity()
-          expect(fakeListingHelperService.isReservedCommunity).toHaveBeenCalledWith(fakeListing)
+        it "returns true if the listing's Reserved_community_type property is truthy", ->
+          listing = fakeListing
+          listing.Reserved_community_type = 'Senior'
+          expect(ctrl.listingIsReservedCommunity(listing)).toEqual true
+        it "returns false if the listing's Reserved_community_type property is falsey", ->
+          listing = fakeListing
+          listing.Reserved_community_type = null
+          expect(ctrl.listingIsReservedCommunity(listing)).toEqual false
 
       describe '$ctrl.listingIs', ->
-        it 'calls ListingHelperService.listingIs with the given name and listing', ->
+        it 'calls ListingIdentityService.listingIs with the given name and listing', ->
           name = 'fake'
           ctrl.listingIs(name, fakeListing)
-          expect(fakeListingHelperService.listingIs).toHaveBeenCalledWith(name, fakeListing)
+          expect(fakeListingIdentityService.listingIs).toHaveBeenCalledWith(name, fakeListing)
 
       describe '$ctrl.listingHasReservedUnits', ->
         it "calls ListingUnitService.listingHasReservedUnits with the controller's listing", ->
@@ -154,9 +158,9 @@ do ->
           expect(fakeListingUnitService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
 
       describe '$ctrl.isFirstComeFirstServe', ->
-        it 'calls ListingHelperService.isFirstComeFirstServe', ->
+        it 'calls ListingIdentityService.isFirstComeFirstServe', ->
           ctrl.isFirstComeFirstServe()
-          expect(fakeListingHelperService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingIdentityService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
         it 'expects ListingDataService.function to be called', ->
@@ -170,9 +174,9 @@ do ->
           expect(fakeListingEligibilityService.hasEligibilityFilters).toHaveBeenCalled()
 
       describe '$ctrl.listingApplicationClosed', ->
-        it 'expects ListingHelperService.isOpen to be called', ->
+        it 'expects ListingIdentityService.isOpen to be called', ->
           ctrl.listingApplicationClosed(fakeListing)
-          expect(fakeListingHelperService.isOpen).toHaveBeenCalled()
+          expect(fakeListingIdentityService.isOpen).toHaveBeenCalled()
 
       describe '$ctrl.lotteryDateVenueAvailable', ->
         beforeEach ->

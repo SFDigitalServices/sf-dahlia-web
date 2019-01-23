@@ -2,8 +2,8 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['ListingDataService', 'ListingEligibilityService', 'ListingHelperService', 'ListingUnitService', 'SharedService',
-  (ListingDataService, ListingEligibilityService, ListingHelperService, ListingUnitService, SharedService) ->
+  controller: ['ListingDataService', 'ListingEligibilityService', 'ListingIdentityService', 'ListingUnitService', 'SharedService',
+  (ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
@@ -37,19 +37,19 @@ angular.module('dahlia.components')
       ListingDataService.getListingAMI()
 
     @listingIsReservedCommunity = (listing = @listing) ->
-      ListingHelperService.isReservedCommunity(listing)
+      !! listing.Reserved_community_type
 
     @listingIs = (name, listing) ->
-      ListingHelperService.listingIs(name, listing)
+      ListingIdentityService.listingIs(name, listing)
 
     @listingHasReservedUnits = ->
       ListingUnitService.listingHasReservedUnits(@listing)
 
     @isFirstComeFirstServe = (listing = @listing) ->
-      ListingHelperService.isFirstComeFirstServe(listing)
+      ListingIdentityService.isFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
-      !ListingHelperService.isOpen(listing)
+      !ListingIdentityService.isOpen(listing)
 
     @formattedBuildingAddress = (listing, display) ->
       ListingDataService.formattedAddress(listing, 'Building', display)

@@ -1010,10 +1010,6 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeStart', $scope.stateChangeStart
 
-  # TODO: -- REMOVE HARDCODED FEATURES --
-  $scope.listingIs = (name) ->
-    ShortFormApplicationService.listingIs(name)
-
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',

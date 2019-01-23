@@ -1057,9 +1057,6 @@ ShortFormApplicationService = (
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
 
-  # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.listingIs = ListingDataService.listingIs
-
   return Service
 
 ############################################################################################

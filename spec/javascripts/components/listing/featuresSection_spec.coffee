@@ -20,15 +20,12 @@ do ->
     fakeListingDataService =
       listings: fakeListings
       toggleStates: fakeStates
-    fakeListingHelperService =
-      isBMR: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
         ListingDataService: fakeListingDataService
-        ListingHelperService: fakeListingHelperService
         $translate: $translate
       }
     )
@@ -71,6 +68,10 @@ do ->
               expect(ctrl.formatBaths(1)).toEqual(1)
 
       describe 'listingIsBMR', ->
-        it 'calls ListingHelperService.isBMR', ->
-          ctrl.listingIsBMR()
-          expect(fakeListingHelperService.isBMR).toHaveBeenCalledWith(ctrl.parent.listing)
+        it 'returns false if the listing program type is not a BMR type', ->
+          ctrl.parent.listing.Program_Type = 'OCII-RENTAL'
+          expect(ctrl.listingIsBMR()).toEqual false
+
+        it 'returns true if the listing program type is a BMR type', ->
+          ctrl.parent.listing.Program_Type = 'IH-RENTAL'
+          expect(ctrl.listingIsBMR()).toEqual true

@@ -4,8 +4,8 @@
 
 ListingDataService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
-  ExternalTranslateService, ListingConstantsService, ListingHelperService,
-  ListingEligibilityService, ListingLotteryService, ListingUnitService, SharedService, ListingPreferenceService) ->
+  ExternalTranslateService, ListingConstantsService, ListingEligibilityService, ListingIdentityService,
+  ListingLotteryService, ListingPreferenceService, ListingUnitService, SharedService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -180,7 +180,7 @@ ListingDataService = (
     lotteryResultsListings = []
 
     listings.forEach (listing) ->
-      if ListingHelperService.isOpen(listing)
+      if ListingIdentityService.isOpen(listing)
         # All Open Listings Array
         openListings.push(listing)
         if listing.Does_Match
@@ -225,7 +225,7 @@ ListingDataService = (
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
     return false if ListingLotteryService.lotteryComplete(listing)
-    return false unless ListingHelperService.isOpen(listing)
+    return false unless ListingIdentityService.isOpen(listing)
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
@@ -425,8 +425,8 @@ ListingDataService = (
 
 ListingDataService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
-  'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
-  'ListingEligibilityService', 'ListingLotteryService', 'ListingUnitService', 'SharedService', 'ListingPreferenceService'
+  'ExternalTranslateService', 'ListingConstantsService', 'ListingEligibilityService', 'ListingIdentityService',
+  'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService', 'SharedService'
 ]
 
 angular
