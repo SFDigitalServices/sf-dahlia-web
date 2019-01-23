@@ -266,39 +266,6 @@ do ->
           httpBackend.flush()
           expect(ListingService.favorites).toEqual []
 
-    describe 'Service.getListingPreferences', ->
-      beforeEach ->
-        # have to populate listing first
-        ListingService.listing = angular.copy(fakeListing.listing)
-        ListingService.listing.Id = 'fakeId-123'
-        # just to divert from our hardcoding
-        preferences = angular.copy(fakePreferences)
-        preferences.preferences = preferences.preferences.concat fakeCustomPrefs
-        stubAngularAjaxRequest httpBackend, requestURL, preferences
-        ListingService.getListingPreferences()
-
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'assigns Service.listing.preferences with the Preference results', ->
-        httpBackend.flush()
-        expect(ListingService.listing.preferences).toEqual fakePreferences.preferences.concat fakeCustomPrefs
-        expect(ListingService.loading.preferences).toEqual false
-
-      it 'assigns Service.listing.customPreferences with the customPreferences without proof', ->
-        httpBackend.flush()
-        expect(ListingService.listing.customPreferences[0].preferenceName).toEqual 'DACA Fund'
-        expect(ListingService.listing.customPreferences.length).toEqual 2
-        expect(ListingService.loading.preferences).toEqual false
-
-      it 'assigns Service.listing.customProofPreferences with the customPreferences with proof', ->
-        # We don't currently have any hard-coded custom preferences, and this feature will be
-        # replaced with `requiresProof` setting in #154784101
-        httpBackend.flush()
-        expect(ListingService.listing.customProofPreferences.length).toEqual 0
-        expect(ListingService.loading.preferences).toEqual false
-
     describe 'Service.getListingsByIds', ->
       afterEach ->
         httpBackend.verifyNoOutstandingExpectation()
@@ -345,17 +312,6 @@ do ->
         ]
         sorted = ListingService.sortByDate(angular.copy(fakeOpenHouses))
         expect(sorted[0]).toEqual fakeOpenHouses[1]
-
-    describe 'Service.hasPreference', ->
-      describe 'listing has preference', ->
-        it 'should return true', ->
-          ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
-          expect(ListingService.hasPreference('liveInSf')).toEqual true
-
-      describe 'listing does not have preference', ->
-        it 'should return false', ->
-          ListingService.listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
-          expect(ListingService.hasPreference('neighborhoodResidence')).toEqual false
 
     describe 'Service.loadListing', ->
       beforeEach ->

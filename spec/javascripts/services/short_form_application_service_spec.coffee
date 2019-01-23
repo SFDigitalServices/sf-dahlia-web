@@ -32,7 +32,6 @@ do ->
     fakeListingService =
       listing:
         Id: ''
-      hasPreference: ->
       loadListing: ->
     fakeDataService =
       formatApplication: -> fakeSalesforceApplication
@@ -53,6 +52,9 @@ do ->
       languageMap: {es: 'Spanish'}
     uuid = {v4: jasmine.createSpy()}
     requestURL = undefined
+    fakeListingPreferencesService = {
+      hasPreference: ->
+    }
     setupFakeApplicant = (attributes) ->
       fakeApplicant = _.assign {
         firstName: 'Bob'
@@ -96,6 +98,7 @@ do ->
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
       $provide.value 'SharedService', fakeSharedService
+      $provide.value 'ListingPreferencesService', fakeListingPreferencesService
       return
     )
 
@@ -461,7 +464,7 @@ do ->
 
     describe 'eligibleForLiveWork', ->
       beforeEach ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
       it 'returns true if someone is eligible for live/work', ->
         ShortFormApplicationService.applicant.workInSf = 'Yes'
@@ -472,13 +475,13 @@ do ->
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
 
       it 'returns false if listing does not have liveWorkInSf', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
         ShortFormApplicationService.applicant.workInSf = 'Yes'
         expect(ShortFormApplicationService.eligibleForLiveWork()).toEqual false
 
     describe 'eligibleForNRHP', ->
       beforeEach ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
       it 'returns true if someone is eligible for NRHP', ->
         ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
@@ -489,13 +492,13 @@ do ->
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
       it 'returns false if listing does not have NRHP', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
         ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
         expect(ShortFormApplicationService.eligibleForNRHP()).toEqual false
 
     describe 'eligibleForADHP', ->
       beforeEach ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
       it 'returns true if someone is eligible for ADHP', ->
         ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
@@ -506,26 +509,26 @@ do ->
         expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
 
       it 'returns false if listing does not have ADHP', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
         ShortFormApplicationService.applicant.preferenceAddressMatch = 'Matched'
         expect(ShortFormApplicationService.eligibleForADHP()).toEqual false
 
     describe 'eligibleForAssistedHousing', ->
       it 'returns true if application said yes to public housing', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
         ShortFormApplicationService.application.hasPublicHousing = 'Yes'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual true
 
       it 'returns false if application does not have assistedHousing', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
         # TO DO: update during API integration story for preference
         ShortFormApplicationService.application.hasPublicHousing = 'No'
         expect(ShortFormApplicationService.eligibleForAssistedHousing()).toEqual false
 
     describe 'eligibleForRentBurden', ->
       beforeEach ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
         ShortFormApplicationService.application.hasPublicHousing = 'No'
         ShortFormApplicationService.application.householdIncome.incomeTimeframe = 'per_month'
         ShortFormApplicationService.application.groupedHouseholdAddresses = [
@@ -550,7 +553,7 @@ do ->
 
       describe 'when listing does not have rentBurden preference', ->
         it 'returns false', ->
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
           ShortFormApplicationService.application.householdIncome.incomeTotal = 3000
           expect(ShortFormApplicationService.eligibleForRentBurden()).toEqual false
 
@@ -584,7 +587,7 @@ do ->
 
     describe 'showPreference', ->
       beforeEach ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
         ShortFormApplicationService.householdMembers = []
 
         # TODO!
@@ -678,7 +681,7 @@ do ->
         fakeListingService.listing = angular.copy(fakeListing)
         deferred = $q.defer()
         deferred.resolve()
-        fakeListingService.getListingPreferences = jasmine.createSpy().and.returnValue(deferred.promise)
+        fakeListingPreferencesService.getListingPreferences = jasmine.createSpy().and.returnValue(deferred.promise)
         ShortFormApplicationService._sendApplication = jasmine.createSpy()
         ShortFormApplicationService.application = fakeShortForm
 
@@ -693,7 +696,7 @@ do ->
       it 'should call formatApplication on ShortFormDataService when preferences are defined', ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
-        expect(fakeListingService.getListingPreferences).not.toHaveBeenCalled()
+        expect(fakeListingPreferencesService.getListingPreferences).not.toHaveBeenCalled()
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
@@ -702,7 +705,7 @@ do ->
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         $rootScope.$apply()
-        expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
+        expect(fakeListingPreferencesService.getListingPreferences).toHaveBeenCalled()
         expect(fakeDataService.formatApplication).toHaveBeenCalled()
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
@@ -925,14 +928,14 @@ do ->
 
         it 'should not clear Live in SF if listing doesn\'t have NRHP', ->
           # Listing doesn't have NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
 
           ShortFormApplicationService.cancelPreference('neighborhoodResidence')
           expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
 
         it 'should not clear Live in SF if applicant not eligible for NRHP', ->
           # Listing has NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for NRHP
           setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
@@ -945,7 +948,7 @@ do ->
 
         it 'should clear Live in SF if listing has NRHP and applicant is elibible for NRHP', ->
           # Listing has NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant is eligible for NRHP
           setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
@@ -962,14 +965,14 @@ do ->
 
         it 'should not clear Live in SF if listing doesn\'t have ADHP', ->
           # Listing doesn't have ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
 
           ShortFormApplicationService.cancelPreference('antiDisplacement')
           expect(ShortFormApplicationService.cancelPreference).not.toHaveBeenCalledWith('liveInSf')
 
         it 'should not clear Live in SF if applicant not eligible for ADHP', ->
           # Listing has ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for ADHP
           setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
@@ -982,7 +985,7 @@ do ->
 
         it 'should clear Live in SF if listing has ADHP and applicant is elibible for ADHP', ->
           # Listing has ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant is eligible for ADHP
           setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
@@ -1062,7 +1065,7 @@ do ->
 
         it 'should not clear Live/Work Opt Out if listing doesn\'t have NRHP', ->
           # Listing doesn't have NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
 
           ShortFormApplicationService.cancelOptOut('neighborhoodResidence')
           expect(ShortFormApplicationService.cancelOptOut)
@@ -1070,7 +1073,7 @@ do ->
 
         it 'should not clear Live/Work Opt Out if applicant not eligible for NRHP', ->
           # Listing has NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for NRHP
           setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
@@ -1084,7 +1087,7 @@ do ->
 
         it 'should clear Live/Work Opt Out if listing has NRHP and elibible for NRHP', ->
           # Listing has NRHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant is eligible for NRHP
           setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
@@ -1101,14 +1104,14 @@ do ->
 
         it 'should not clear Live/Work Opt Out if listing doesn\'t have ADHP', ->
           # Listing doesn't have ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
 
           ShortFormApplicationService.cancelOptOut('antiDisplacement')
           expect(ShortFormApplicationService.cancelOptOut).not.toHaveBeenCalledWith('liveWorkInSf')
 
         it 'should not clear Live/Work Opt Out if not eligible for ADHP', ->
           # Listing has ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant not eligible for ADHP
           setupFakeApplicant({ preferenceAddressMatch: 'Not Matched' })
@@ -1121,7 +1124,7 @@ do ->
 
         it 'should clear Live/Work Opt Out if listing has ADHP and elibible for ADHP', ->
           # Listing has ADHP
-          fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+          fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
 
           # Applicant is eligible for ADHP
           setupFakeApplicant({ preferenceAddressMatch: 'Matched' })
@@ -1162,15 +1165,15 @@ do ->
 
     describe 'hasHouseholdPublicHousingQuestion', ->
       it 'should includes public housing question when listing has Rent Burdened / Assisted Housing Preference', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(true)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(true)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
+        expect(fakeListingPreferencesService.hasPreference).toHaveBeenCalledWith('assistedHousing', fakeListing)
         expect(showHouseholdPublicHousingQuestion).toEqual true
 
       it 'should NOT include public housing question when listing doesn\'t have Rent Burdened / Assisted Housing Preference', ->
-        fakeListingService.hasPreference = jasmine.createSpy().and.returnValue(false)
+        fakeListingPreferencesService.hasPreference = jasmine.createSpy().and.returnValue(false)
         showHouseholdPublicHousingQuestion = ShortFormApplicationService.hasHouseholdPublicHousingQuestion()
-        expect(fakeListingService.hasPreference).toHaveBeenCalledWith('assistedHousing')
+        expect(fakeListingPreferencesService.hasPreference).toHaveBeenCalledWith('assistedHousing', fakeListing)
         expect(showHouseholdPublicHousingQuestion).toEqual false
 
     describe 'loadApplication', ->

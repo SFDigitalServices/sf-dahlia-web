@@ -409,9 +409,9 @@ ListingService = (
 
   Service.getProjectIdForBoundaryMatching = (listing) ->
     return unless listing
-    if Service.hasPreference('antiDisplacement', listing)
+    if ListingPreferencesService.hasPreference('antiDisplacement', listing)
       'ADHP'
-    else if Service.hasPreference('neighborhoodResidence', listing)
+    else if ListingPreferencesService.hasPreference('neighborhoodResidence', listing)
       listing.Project_ID
     else
       null

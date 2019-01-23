@@ -1,7 +1,7 @@
 do ->
   'use strict'
   describe 'ListingUnitService', ->
-
+    requestURL = undefined
     ListingUnitService = undefined
     httpBackend = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
@@ -33,7 +33,7 @@ do ->
     describe 'Service.getListingUnits', ->
       beforeEach ->
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
-        spyOn()
+        # spyOn()
         ListingUnitService.getListingUnits(fakeListing)
         httpBackend.flush()
       afterEach ->

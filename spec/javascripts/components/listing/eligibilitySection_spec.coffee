@@ -14,6 +14,7 @@ do ->
     }
     fakeListingService =
       AMICharts: []
+      listing: fakeListing
       listings: fakeListings
       listingHasOnlySROUnits: jasmine.createSpy()
       listingHasPriorityUnits: jasmine.createSpy()
@@ -23,6 +24,9 @@ do ->
       incomeForHouseholdSize: jasmine.createSpy()
     fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
+    fakeListingPreferencesService = {
+      getListingPreferences: jasmine.createSpy()
+    }
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -31,6 +35,7 @@ do ->
         ListingService: fakeListingService
         $translate: $translate
         ListingHelperService: fakeListingHelperService
+        ListingPreferencesService: fakeListingPreferencesService
       }
     )
 
@@ -116,9 +121,9 @@ do ->
           expect(fakeListingService.listingHasOnlySROUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'getListingPreferences', ->
-        it 'calls ListingService.getListingPreferences', ->
+        it 'calls ListingPreferencesService.getListingPreferences', ->
           ctrl.getListingPreferences()
-          expect(fakeListingService.getListingPreferences).toHaveBeenCalled()
+          expect(fakeListingPreferencesService.getListingPreferences).toHaveBeenCalledWith(fakeListingService.listing)
 
       describe 'listingHasPriorityUnits', ->
         it "calls ListingService.listingHasPriorityUnits with the parent's listing", ->

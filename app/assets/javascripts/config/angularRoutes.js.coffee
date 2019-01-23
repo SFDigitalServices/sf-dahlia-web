@@ -94,7 +94,7 @@
               'listings/templates/listing.html'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingService', 'ListingLotteryService', 'ListingPreferencesService',
+          '$stateParams', '$state', '$q', 'ListingService', 'ListingLotteryService', 'ListingPreferencesService', 'ListingUnitService',
           ($stateParams, $state, $q, ListingService, ListingLotteryService, ListingPreferencesService, ListingUnitService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
@@ -604,12 +604,12 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$state', '$stateParams', '$q', 'ListingService',
-          ($state, $stateParams, $q, ListingService) ->
+          '$state', '$stateParams', '$q', 'ListingService', 'ListingPreferencesService',
+          ($state, $stateParams, $q, ListingService, ListingPreferencesService) ->
             # store the listing in ListingService and kick out if it's not open for applications
             deferred = $q.defer()
             ListingService.getListingAndCheckIfOpen($stateParams.id).then( ->
-              ListingService.getListingPreferences().then ->
+              ListingPreferencesService.getListingPreferences(ListingService.listing).then ->
                 deferred.resolve(ListingService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage
