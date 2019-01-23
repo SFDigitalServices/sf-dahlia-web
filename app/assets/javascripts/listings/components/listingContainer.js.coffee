@@ -2,8 +2,8 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['ListingService', 'ListingHelperService', 'SharedService', 'ListingEligibilityService',
-  (ListingService, ListingHelperService, SharedService, ListingEligibilityService) ->
+  controller: ['ListingService', 'ListingEligibilityService', 'ListingHelperService', 'ListingUnitService', 'SharedService',
+  (ListingService, ListingEligibilityService, ListingHelperService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
@@ -36,9 +36,8 @@ angular.module('dahlia.components')
     @getListingAMI = ->
       ListingService.getListingAMI()
 
-    @listingIsReservedCommunity = (listing = null) ->
-      listing = @listing unless listing
-      ListingService.listingIsReservedCommunity(listing)
+    @listingIsReservedCommunity = (listing = @listing) ->
+      ListingHelperService.isReservedCommunity(listing)
 
     @listingIs = (name, listing) ->
       ListingHelperService.listingIs(name, listing)
@@ -46,11 +45,11 @@ angular.module('dahlia.components')
     @listingHasReservedUnits = ->
       ListingService.listingHasReservedUnits(@listing)
 
-    @listingIsFirstComeFirstServe = (listing = @listing) ->
-      ListingHelperService.listingIsFirstComeFirstServe(listing)
+    @isFirstComeFirstServe = (listing = @listing) ->
+      ListingHelperService.isFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
-      !ListingHelperService.listingIsOpen(listing)
+      !ListingHelperService.isOpen(listing)
 
     @formattedBuildingAddress = (listing, display) ->
       ListingHelperService.formattedAddress(listing, 'Building', display)
@@ -65,7 +64,7 @@ angular.module('dahlia.components')
       ListingService.isFavorited(listing_id)
 
     @getListingUnits = ->
-      ListingService.getListingUnits()
+      ListingUnitService.getListingUnits()
 
     @listingHasSROUnits = ->
       ListingService.listingHasSROUnits(@listing)

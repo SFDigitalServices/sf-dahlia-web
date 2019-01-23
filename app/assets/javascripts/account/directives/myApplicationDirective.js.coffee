@@ -88,7 +88,7 @@ angular.module('dahlia.directives')
         ListingService.loadListing(scope.listing)
         angular.copy(scope.application, ShortFormApplicationService.application)
         # lookup individual lottery ranking and then open the modal
-        ListingService.getLotteryRanking(scope.application.lotteryNumber).then(->
+        ListingLotteryService.getLotteryRanking(scope.application.lotteryNumber, scope.listing).then(->
           ListingLotteryService.openLotteryResultsModal()
           ShortFormNavigationService.isLoading(false)
         ).catch(->

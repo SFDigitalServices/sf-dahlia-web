@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/features-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', '$translate', (ListingService, $translate) ->
+  controller: ['ListingService', 'ListingHelperService', '$translate', (ListingService, ListingHelperService, $translate) ->
     ctrl = @
 
     @toggleTable = (table) ->
@@ -22,7 +22,7 @@ angular.module('dahlia.components')
         numberOfBathrooms
 
     @listingIsBMR = ->
-      ListingService.listingIsBMR(this.parent.listing)
+      ListingHelperService.isBMR(this.parent.listing)
 
     return ctrl
   ]

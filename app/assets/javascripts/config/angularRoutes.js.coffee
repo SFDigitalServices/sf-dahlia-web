@@ -95,7 +95,7 @@
       resolve:
         listing: [
           '$stateParams', '$state', '$q', 'ListingService', 'ListingLotteryService', 'ListingPreferencesService',
-          ($stateParams, $state, $q, ListingService, ListingLotteryService, ListingPreferencesService) ->
+          ($stateParams, $state, $q, ListingService, ListingLotteryService, ListingPreferencesService, ListingUnitService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
             ListingService.getListing($stateParams.id, forceRecache, true).then( ->
@@ -108,7 +108,7 @@
 
               # trigger this asynchronously, allowing the listing page to load first
               setTimeout(ListingService.getListingAMI)
-              setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
+              setTimeout(ListingUnitService.getListingUnits.bind(null, ListingService.listing, forceRecache))
               setTimeout(ListingPreferencesService.getListingPreferences.bind(null, ListingService.listing, forceRecache))
               unless ListingLotteryService.lotteryIsUpcoming(ListingService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingService.listing))

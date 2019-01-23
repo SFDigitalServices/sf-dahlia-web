@@ -27,15 +27,11 @@ do ->
     fakeAMI = getJSONFixture('listings-api-ami.json')
     loading = {}
     error = {}
-    fakeUnits = getJSONFixture('listings-api-units.json')
     fakePreferences = getJSONFixture('listings-api-listing-preferences.json')
     fakeCustomPrefs = [
           {preferenceName: 'DACA Fund', listingPreferenceID: '1233'}
           {preferenceName: 'Households with Pet Zebras', listingPreferenceID: '1234'}
         ]
-    fakeLotteryResults = getJSONFixture('listings-api-lottery-results.json')
-    fakeLotteryBuckets = getJSONFixture('listings-api-lottery-buckets.json')
-    fakeLotteryRanking = getJSONFixture('listings-api-lottery-ranking.json')
     fakeEligibilityListings = getJSONFixture('listings-api-eligibility-listings.json')
     fakeEligibilityFilters =
       household_size: 2
@@ -51,8 +47,8 @@ do ->
     }
     fakeListingHelperService =
       listingIs: ->
-      listingIsFirstComeFirstServe: ->
-      listingIsOpen: ->
+      isFirstComeFirstServe: ->
+      isOpen: ->
     fakeListingLotteryService =
       lotteryBucketInfo: {}
       lotteryRankingInfo: {}
@@ -60,6 +56,8 @@ do ->
       lotteryIsUpcoming: ->
       lotteryComplete: ->
       resetData: jasmine.createSpy()
+    fakeSharedService =
+      toQueryString: ->
     $localStorage = undefined
     $state = undefined
     $translate = {}
@@ -81,6 +79,7 @@ do ->
       $provide.value 'ListingEligibilityService', fakeListingEligibilityService
       $provide.value 'ListingHelperService', fakeListingHelperService
       $provide.value 'ListingLotteryService', fakeListingLotteryService
+      $provide.value 'SharedService', fakeSharedService
       return
     )
 
@@ -199,7 +198,7 @@ do ->
 
       it 'returns false if listing is not open', ->
         listing = fakeListing.listing
-        spyOn(fakeListingHelperService, 'listingIsOpen').and.returnValue(false)
+        spyOn(fakeListingHelperService, 'isOpen').and.returnValue(false)
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual false
 
       it "returns false if the listing's lottery status is complete", ->
@@ -211,7 +210,7 @@ do ->
         listing = fakeListing.listing
         listing.Accepting_Online_Applications = true
         spyOn(fakeListingLotteryService, 'lotteryComplete').and.returnValue(false)
-        spyOn(fakeListingHelperService, 'listingIsOpen').and.returnValue(true)
+        spyOn(fakeListingHelperService, 'isOpen').and.returnValue(true)
         expect(ListingService.isAcceptingOnlineApplications(listing)).toEqual true
 
     describe 'Service.toggleFavoriteListing', ->
@@ -266,21 +265,6 @@ do ->
           ListingService.getFavoriteListings()
           httpBackend.flush()
           expect(ListingService.favorites).toEqual []
-
-    describe 'Service.getListingUnits', ->
-      beforeEach ->
-        # have to populate listing first
-        ListingService.listing = fakeListing.listing
-        stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
-        ListingService.getListingUnits()
-        httpBackend.flush()
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-      it 'assigns Service.listing.Units with the Unit results', ->
-        expect(ListingService.listing.Units).toEqual fakeUnits.units
-      it 'assigns Service.listing.groupedUnits with the grouped Unit results', ->
-        expect(ListingService.listing.groupedUnits).toEqual ListingService.groupUnitDetails(fakeUnits.units)
 
     describe 'Service.getListingPreferences', ->
       beforeEach ->
@@ -350,19 +334,6 @@ do ->
         httpBackend.flush()
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
 
-    describe 'Service.getLotteryRanking', ->
-      afterEach ->
-        httpBackend.verifyNoOutstandingExpectation()
-        httpBackend.verifyNoOutstandingRequest()
-
-      it 'assigns ListingLotteryService.lotteryRankingInfo with ranking results', ->
-        stubAngularAjaxRequest httpBackend, requestURL, fakeLotteryRanking
-        ListingService.getLotteryRanking('00042084')
-        ranking = angular.copy(fakeLotteryRanking)
-        ranking.submitted = true
-        httpBackend.flush()
-        expect(fakeListingLotteryService.lotteryRankingInfo).toEqual ranking
-
     describe 'Service.sortByDate', ->
       it 'returns sorted list of Open Houses', ->
         listing = fakeListing.listing
@@ -427,12 +398,6 @@ do ->
         amount = ListingService.incomeForHouseholdSize(fakeChart, fakeIncomeLevel)
         expect(amount).toEqual fakeChart.values[1].amount
 
-    describe 'Service.groupUnitDetails', ->
-      it 'should return an object containing a list of units for each AMI level', ->
-        grouped = ListingService.groupUnitDetails(fakeUnits.units)
-        # fakeUnits just has one AMI level
-        expect(_.keys(grouped).length).toEqual 1
-
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns no if not all units are SROs', ->
         ListingService.listing = fakeListing.listing
@@ -446,26 +411,3 @@ do ->
       it 'returns 1 if all units are SROs', ->
         ListingService.listing = fakeListingAllSRO
         expect(ListingService.householdAMIChartCutoff()).toEqual(1)
-
-    describe 'Service.formatLotteryNumber', ->
-      it 'removes any extraneous formatting from lottery numbers', ->
-        formatted = '00041990'
-        val = ListingService.formatLotteryNumber('# 41990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber('#041990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber('41990')
-        expect(val).toEqual(formatted)
-        val = ListingService.formatLotteryNumber(formatted)
-        expect(val).toEqual(formatted)
-
-    describe 'Service.listingIsBMR', ->
-      it 'returns false if the listing program type is not a BMR type', ->
-        listing = fakeListing.listing
-        listing.Program_Type = 'OCII-RENTAL'
-        expect(ListingService.listingIsBMR(listing)).toEqual false
-
-      it 'returns true if the listing program type is a BMR type', ->
-        listing = fakeListing.listing
-        listing.Program_Type = 'IH-RENTAL'
-        expect(ListingService.listingIsBMR(listing)).toEqual true

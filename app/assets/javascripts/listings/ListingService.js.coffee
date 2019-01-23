@@ -5,7 +5,7 @@
 ListingService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
   ExternalTranslateService, ListingConstantsService, ListingHelperService,
-  ListingEligibilityService, ListingLotteryService, ListingPreferencesService) ->
+  ListingEligibilityService, ListingLotteryService, ListingUnitService, SharedService, ListingPreferencesService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -19,7 +19,6 @@ ListingService = (
   Service.AMICharts = []
   Service.loading = {}
   Service.error = {}
-  Service.displayLotteryResultsListings = false
   Service.toggleStates = {}
 
   Service.preferenceMap = ListingConstantsService.preferenceMap
@@ -83,9 +82,6 @@ ListingService = (
     _.sortBy sessions, (session) ->
       moment("#{session.Date} #{session.Start_Time}", 'YYYY-MM-DD h:mmA')
 
-  Service.allListingUnitsAvailable = (listing) ->
-    listing.Units_Available == listing.Units.length
-
   ###################################### Salesforce API Calls ###################################
 
   Service.getListing = (_id, forceRecache = false, retranslate = false) ->
@@ -127,7 +123,7 @@ ListingService = (
       Service.listing.imageURL ?= 'https://unsplash.it/g/780/438'
       # create a combined unitSummary
       unless Service.listing.unitSummary
-        Service.listing.unitSummary = Service.combineUnitSummaries(Service.listing)
+        Service.listing.unitSummary = ListingUnitService.combineUnitSummaries(Service.listing)
       # On listing and listings pages, we are experiencing an issue where
       # where the Google translation will try to keep up with digest re-calcs
       # happening during page load and will get tripped up and fail, leaving
@@ -160,7 +156,6 @@ ListingService = (
       listings = if data and data.listings then data.listings else []
       listings = Service.cleanListings(listings)
       Service.groupListings(listings)
-      Service.displayLotteryResultsListings = !Service.openListings.length
       # On listing and listings pages, we are experiencing an issue where
       # where the Google translation will try to keep up with digest re-calcs
       # happening during page load and will get tripped up and fail, leaving
@@ -178,7 +173,7 @@ ListingService = (
       includeChildrenUnder6: ListingEligibilityService.eligibility_filters.include_children_under_6
       childrenUnder6: ListingEligibilityService.eligibility_filters.children_under_6
     deferred = $q.defer()
-    $http.get("/api/v1/listings/eligibility.json?#{Service.toQueryString(params)}",
+    $http.get("/api/v1/listings/eligibility.json?#{SharedService.toQueryString(params)}",
       { etagCache: true }
     ).success(
       Service.getListingsWithEligibilityResponse(deferred)
@@ -212,7 +207,7 @@ ListingService = (
     lotteryResultsListings = []
 
     listings.forEach (listing) ->
-      if ListingHelperService.listingIsOpen(listing)
+      if ListingHelperService.isOpen(listing)
         # All Open Listings Array
         openListings.push(listing)
         if listing.Does_Match
@@ -255,13 +250,10 @@ ListingService = (
       return
     )
 
-  Service.listingIsReservedCommunity = (listing) ->
-    !! listing.Reserved_community_type
-
   Service.isAcceptingOnlineApplications = (listing) ->
     return false if _.isEmpty(listing)
     return false if ListingLotteryService.lotteryComplete(listing)
-    return false unless ListingHelperService.listingIsOpen(listing)
+    return false unless ListingHelperService.isOpen(listing)
     return listing.Accepting_Online_Applications
 
   Service.getListingAndCheckIfOpen = (id) ->
@@ -317,95 +309,6 @@ ListingService = (
           i++
     charts
 
-  Service.getListingUnits = (forceRecache = false) ->
-    # angular.copy([], Service.listing.Units)
-    Service.loading.units = true
-    Service.error.units = false
-    httpConfig = {}
-    httpConfig.params = { force: true } if forceRecache
-    $http.get("/api/v1/listings/#{Service.listing.Id}/units", httpConfig)
-    .success((data, status, headers, config) ->
-      Service.loading.units = false
-      Service.error.units = false
-      if data && data.units
-        units = data.units
-        Service.listing.Units = units
-        Service.listing.groupedUnits = Service.groupUnitDetails(units)
-        Service.listing.unitTypes = Service.groupUnitTypes(units)
-        Service.listing.priorityUnits = Service.groupSpecialUnits(Service.listing.Units, 'Priority_Type')
-        Service.listing.reservedUnits = Service.groupSpecialUnits(Service.listing.Units, 'Reserved_Type')
-    ).error( (data, status, headers, config) ->
-      Service.loading.units = false
-      Service.error.units = true
-      return
-    )
-
-  Service.groupUnitDetails = (units) ->
-    grouped = _.groupBy units, 'of_AMI_for_Pricing_Unit'
-    flattened = {}
-    _.forEach grouped, (amiUnits, percent) ->
-      flattened[percent] = []
-      grouped[percent] = _.groupBy amiUnits, (unit) ->
-        # create an identity function to group by all unit features in the pickList
-        _.flatten(_.toPairs(_.pick(unit, ListingConstantsService.fieldsForUnitGrouping)))
-      _.forEach grouped[percent], (groupedUnits, id) ->
-        # summarize each group by combining the unit details + total # of units
-        summary = _.pick(groupedUnits[0], ListingConstantsService.fieldsForUnitGrouping)
-        summary.total = groupedUnits.length
-        flattened[percent].push(summary)
-
-      # make sure each array is sorted according to our desired order
-      flattened[percent] = Service._sortGroupedUnits(flattened[percent])
-    return flattened
-
-  Service._sortGroupedUnits = (units) ->
-    # little hack to re-sort Studio to the top
-    _.map units, (u) ->
-      u.Unit_Type = '000Studio' if u.Unit_Type == 'Studio'
-      u.Unit_Type = '000SRO' if u.Unit_Type == 'SRO'
-      return u
-    # sort everything based on the order presented in pickList
-    units = _.sortBy units, ListingConstantsService.fieldsForUnitGrouping
-    # put "Studio" back to normal
-    _.map units, (u) ->
-      u.Unit_Type = 'Studio' if u.Unit_Type == '000Studio'
-      u.Unit_Type = 'SRO' if u.Unit_Type == '000SRO'
-      return u
-
-  Service.groupUnitTypes = (units) ->
-    # get a grouping of unit types across both "general" and "reserved"
-    grouped = _.groupBy units, 'Unit_Type'
-    unitTypes = []
-    _.forEach grouped, (groupedUnits, type) ->
-      group = {}
-      group.unitType = type
-      group.units = groupedUnits
-      group.unitAreaRange = Service.unitAreaRange(groupedUnits)
-      unitTypes.push(group)
-    unitTypes
-
-  Service.unitAreaRange = (units) ->
-    min = (_.minBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
-    max = (_.maxBy(units, 'Unit_Square_Footage') || {})['Unit_Square_Footage']
-    if min != max
-      "#{min} - #{max}"
-    else
-      min
-
-  Service.groupSpecialUnits = (units, type) ->
-    grouped = _.groupBy units, type
-    delete grouped['undefined']
-    grouped
-
-  Service.combineUnitSummaries = (listing) ->
-    # combined unitSummary is useful e.g. for overall occupancy levels across the whole listing
-    listing.unitSummaries ?= {}
-    combined = _.concat(listing.unitSummaries.reserved, listing.unitSummaries.general)
-    combined = _.omitBy(_.uniqBy(combined, 'unitType'), _.isNil)
-    # rename the unitType field to match how individual units are labeled
-    _.map(combined, (u) -> u.Unit_Type = u.unitType)
-    Service._sortGroupedUnits(combined)
-
   Service.listingHasPriorityUnits = (listing) ->
     !_.isEmpty(listing.priorityUnits)
 
@@ -419,11 +322,11 @@ ListingService = (
     _.includes(types, type)
 
   Service.listingHasSROUnits = (listing) ->
-    combined = Service.combineUnitSummaries(listing)
+    combined = ListingUnitService.combineUnitSummaries(listing)
     _.some(combined, { Unit_Type: 'SRO' })
 
   Service.listingHasOnlySROUnits = (listing) ->
-    combined = Service.combineUnitSummaries(listing)
+    combined = ListingUnitService.combineUnitSummaries(listing)
     _.every(combined, { Unit_Type: 'SRO' })
 
   Service.priorityTypes = (listing) ->
@@ -504,12 +407,6 @@ ListingService = (
     tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
     angular.copy(urls, Service.listingDownloadURLs)
 
-  Service.toQueryString = (params) ->
-    Object.keys(params).reduce(((a, k) ->
-      a.push k + '=' + encodeURIComponent(params[k])
-      a
-    ), []).join '&'
-
   Service.getProjectIdForBoundaryMatching = (listing) ->
     return unless listing
     if Service.hasPreference('antiDisplacement', listing)
@@ -526,32 +423,6 @@ ListingService = (
     # by default will just return the id, unless it finds a matching slug
     return if mapping[slug] then mapping[slug] else id
 
-  Service.listingIsBMR = (listing) ->
-    ['IH-RENTAL', 'IH-OWN'].indexOf(listing.Program_Type) >= 0
-
-  Service.formatLotteryNumber = (lotteryNumber) ->
-    lotteryNumber = lotteryNumber.replace(/[^0-9]+/g, '')
-    return '' if lotteryNumber.length == 0
-    if (lotteryNumber.length < 8)
-      lotteryNumber = _.repeat('0', 8 - lotteryNumber.length) + lotteryNumber
-    lotteryNumber
-
-  Service.getLotteryRanking = (lotteryNumber) ->
-    angular.copy({submitted: false}, ListingLotteryService.lotteryRankingInfo)
-    params =
-      params:
-        lottery_number: lotteryNumber
-    Service.loading.lotteryRank = true
-    Service.error.lotteryRank = false
-    $http.get("/api/v1/listings/#{Service.listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      angular.copy(data, ListingLotteryService.lotteryRankingInfo)
-      Service.loading.lotteryRank = false
-      ListingLotteryService.lotteryRankingInfo.submitted = true
-    ).error( (data, status, headers, config) ->
-      Service.loading.lotteryRank = false
-      Service.error.lotteryRank = true
-    )
-
   return Service
 
 ############################################################################################
@@ -561,7 +432,7 @@ ListingService = (
 ListingService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingHelperService',
-  'ListingEligibilityService', 'ListingLotteryService', 'ListingPreferencesService'
+  'ListingEligibilityService', 'ListingLotteryService', 'ListingUnitService', 'SharedService', 'ListingPreferencesService'
 ]
 
 angular
