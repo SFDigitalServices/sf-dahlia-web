@@ -12,7 +12,7 @@ do ->
       'include_children_under_6': false
       'children_under_6': ''
 
-    fakeListingService = {}
+    fakeListingDataService = {}
     fakeListingEligibilityService = {
       eligibility_filter_defaults: eligibilityFilterDefaults
       eligibility_filters: eligibilityFilterDefaults
@@ -38,13 +38,13 @@ do ->
       $controller 'EligibilityEstimatorController',
         $scope: scope
         $state: state
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
       return
     )
 
     describe 'scope defaults are set', ->
-      it 'populates $scope.filters with filter values from ListingService', ->
+      it 'populates $scope.filters with filter values from ListingDataService', ->
         expect(scope.filters).toEqual eligibilityFilterDefaults
 
       it 'populates $scope.hideAlert as false', ->
@@ -64,7 +64,7 @@ do ->
             $scope: scope
             $state: state
             IncomeCalculatorService: fakeIncomeCalculatorService
-            ListingService: fakeListingService
+            ListingDataService: fakeListingDataService
             ListingEligibilityService: fakeListingEligibilityService
         )
         it 'assigns filters.income_total with calculated yearly income', ->
@@ -83,7 +83,7 @@ do ->
             scope.eligibilityForm = { $valid: true }
             scope.submitForm()
 
-          it 'calls function to store on filters in ListingService', ->
+          it 'calls function to store on filters in ListingDataService', ->
             expect(fakeListingEligibilityService.setEligibilityFilters)
               .toHaveBeenCalledWith(scope.filters)
 
@@ -131,7 +131,7 @@ do ->
               $scope: scope
               $state: state
               IncomeCalculatorService: fakeIncomeCalculatorService
-              ListingService: fakeListingService
+              ListingDataService: fakeListingDataService
               ListingEligibilityService: fakeListingEligibilityService
           )
           it 'returns true', ->

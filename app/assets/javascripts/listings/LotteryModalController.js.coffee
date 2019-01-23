@@ -5,19 +5,19 @@
 LotteryModalController = (
   $scope,
   $state,
-  ListingService,
+  ListingDataService,
   ListingLotteryService,
   AnalyticsService
 ) ->
-  $scope.listing = ListingService.listing
-  $scope.application = ListingService.application
-  $scope.lotteryBucketInfo = ListingService.lotteryBucketInfo
+  $scope.listing = ListingDataService.listing
+  $scope.application = ListingDataService.application
+  $scope.lotteryBucketInfo = ListingDataService.lotteryBucketInfo
   $scope.lotteryRankingInfo = ListingLotteryService.lotteryRankingInfo
-  $scope.favorites = ListingService.favorites
+  $scope.favorites = ListingDataService.favorites
   $scope.showWhatHappensNextSection = false
   $scope.lotterySearchNumber = ''
   $scope.lotteryNumberFormatValid = true
-  $scope.loading = ListingService.loading
+  $scope.loading = ListingDataService.loading
   $scope.error = ListingLotteryService.error
 
   $scope.applicantHasCertOfPreference = ->
@@ -66,7 +66,7 @@ LotteryModalController = (
 LotteryModalController.$inject = [
   '$scope',
   '$state',
-  'ListingService',
+  'ListingDataService',
   'ListingLotteryService',
   'AnalyticsService'
 ]

@@ -2,39 +2,39 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: ['ListingService', 'ListingEligibilityService', 'ListingHelperService', 'ListingUnitService', 'SharedService',
-  (ListingService, ListingEligibilityService, ListingHelperService, ListingUnitService, SharedService) ->
+  controller: ['ListingDataService', 'ListingEligibilityService', 'ListingHelperService', 'ListingUnitService', 'SharedService',
+  (ListingDataService, ListingEligibilityService, ListingHelperService, ListingUnitService, SharedService) ->
     ctrl = @
     # TODO: remove Shared Service once we create a Shared Container
     @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
     @assetPaths = SharedService.assetPaths
-    @listing = ListingService.listing
-    @listings = ListingService.listings
-    @loading  = ListingService.loading
-    @error = ListingService.error
-    @toggleStates = ListingService.toggleStates
-    @AMICharts = ListingService.AMICharts
-    @favorites = ListingService.favorites
+    @listing = ListingDataService.listing
+    @listings = ListingDataService.listings
+    @loading  = ListingDataService.loading
+    @error = ListingDataService.error
+    @toggleStates = ListingDataService.toggleStates
+    @AMICharts = ListingDataService.AMICharts
+    @favorites = ListingDataService.favorites
 
-    @openListings = ListingService.openListings
-    @openMatchListings = ListingService.openMatchListings
-    @openNotMatchListings = ListingService.openNotMatchListings
-    @closedListings = ListingService.closedListings
-    @lotteryResultsListings = ListingService.lotteryResultsListings
+    @openListings = ListingDataService.openListings
+    @openMatchListings = ListingDataService.openMatchListings
+    @openNotMatchListings = ListingDataService.openNotMatchListings
+    @closedListings = ListingDataService.closedListings
+    @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
     @isOpenMatchListing = (listing) ->
       @openMatchListings.indexOf(listing) > -1
 
     @isFavorited = (listing_id) ->
-      ListingService.isFavorited(listing_id)
+      ListingDataService.isFavorited(listing_id)
 
     @reservedLabel = (type, modifier, listing = null) ->
       type = @listing.Reserved_community_type unless type
       listing = @listing unless listing
-      ListingHelperService.reservedLabel(listing, type, modifier)
+      ListingDataService.reservedLabel(listing, type, modifier)
 
     @getListingAMI = ->
-      ListingService.getListingAMI()
+      ListingDataService.getListingAMI()
 
     @listingIsReservedCommunity = (listing = @listing) ->
       ListingHelperService.isReservedCommunity(listing)
@@ -52,16 +52,16 @@ angular.module('dahlia.components')
       !ListingHelperService.isOpen(listing)
 
     @formattedBuildingAddress = (listing, display) ->
-      ListingHelperService.formattedAddress(listing, 'Building', display)
+      ListingDataService.formattedAddress(listing, 'Building', display)
 
     @formattedLeasingAgentAddress = (listing) ->
-      ListingHelperService.formattedAddress(listing, 'Leasing_Agent')
+      ListingDataService.formattedAddress(listing, 'Leasing_Agent')
 
     @toggleFavoriteListing = (listing_id) ->
-      ListingService.toggleFavoriteListing(listing_id)
+      ListingDataService.toggleFavoriteListing(listing_id)
 
     @isFavorited = (listing_id) ->
-      ListingService.isFavorited(listing_id)
+      ListingDataService.isFavorited(listing_id)
 
     @getListingUnits = ->
       ListingUnitService.getListingUnits()

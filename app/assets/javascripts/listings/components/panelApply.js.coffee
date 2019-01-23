@@ -4,8 +4,8 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    'ListingService', 'ListingLotteryService', 'ShortFormApplicationService', 'AnalyticsService',
-    (ListingService, ListingLotteryService, ShortFormApplicationService, AnalyticsService) ->
+    'ListingDataService', 'ListingLotteryService', 'ShortFormApplicationService', 'AnalyticsService',
+    (ListingDataService, ListingLotteryService, ShortFormApplicationService, AnalyticsService) ->
       ctrl = @
       @showApplicationOptions = false
 

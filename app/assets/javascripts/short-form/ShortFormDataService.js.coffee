@@ -1,6 +1,6 @@
-ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitService) ->
+ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnitService) ->
   Service = {}
-  Service.preferences = _.keys(ListingService.preferenceMap)
+  Service.preferences = _.keys(ListingDataService.preferenceMap)
   Service.metaFields = [
     'completedSections'
     'session_uid'
@@ -147,7 +147,7 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
 
-    angular.copy(ListingService.listing.preferences).forEach( (listingPref) ->
+    angular.copy(ListingDataService.listing.preferences).forEach( (listingPref) ->
       # prefKey is the short name like liveInSf
       prefKey = null
       naturalKey = null
@@ -161,7 +161,7 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
       city = null
       state = null
       zip = null
-      PREFS = ListingService.preferenceMap
+      PREFS = ListingDataService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
@@ -245,7 +245,7 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
   Service._getPreferenceRecordType = (preference) ->
     return preference.recordTypeDevName if preference.recordTypeDevName
 
-    PREFS = ListingService.preferenceMap
+    PREFS = ListingDataService.preferenceMap
     switch preference.preferenceName
       when PREFS.certOfPreference
         'COP'
@@ -394,14 +394,14 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
     shortFormPrefs.forEach( (shortFormPref) ->
 
-      listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
+      listingPref = ListingDataService.getPreferenceById(shortFormPref.listingPreferenceID)
       # if we don't find a matching listing preference that's probably bad.
       return unless listingPref
 
       member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
 
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
-      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+      if listingPref.preferenceName == ListingDataService.preferenceMap.liveWorkInSf
         preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.individualPreference == 'Live in SF'
           prefKey = 'liveInSf'
@@ -409,14 +409,14 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
           prefKey = 'workInSf'
         else
           prefKey = 'liveWorkInSf'
-      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+      else if listingPref.preferenceName == ListingDataService.preferenceMap.rentBurden
         preferences.rentBurden_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.individualPreference == 'Assisted Housing'
           prefKey = 'assistedHousing'
         else if shortFormPref.individualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
       else
-        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        prefKey = _.invert(ListingDataService.preferenceMap)[listingPref.preferenceName]
         unless prefKey
           # must be a customPreference... just identify by ID much like on e7b-custom-preferences
           prefKey = listingPref.listingPreferenceID
@@ -544,7 +544,7 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
       data.applicant.referral = {}
 
     # reset fields that don't apply to this application
-    LS = ListingService
+    LS = ListingDataService
     LCS = ListingConstantsService
     unless LS.hasPreference('assistedHousing')
       delete data.hasPublicHousing
@@ -617,7 +617,7 @@ ShortFormDataService = (ListingService, ListingConstantsService, ListingUnitServ
 #############################################
 
 ShortFormDataService.$inject = [
-  'ListingService',
+  'ListingDataService',
   'ListingConstantsService',
   'ListingUnitService'
 ]

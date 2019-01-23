@@ -4,7 +4,7 @@ angular.module('dahlia.components')
     preference: '<'
   templateUrl: 'listings/components/lottery-preference.html'
 
-  controller: ['ListingService', (ListingService) ->
+  controller: ['ListingDataService', (ListingDataService) ->
     ctrl = @
 
     docSectionMap = {

@@ -2,7 +2,7 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculatorService, ListingEligibilityService) ->
+EligibilityEstimatorController = ($scope, $state, ListingDataService, IncomeCalculatorService, ListingEligibilityService) ->
   $scope.filter_defaults = ListingEligibilityService.eligibility_filter_defaults
   $scope.filters = angular.copy(ListingEligibilityService.eligibility_filters)
 
@@ -58,7 +58,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
 ######################################## CONFIG ############################################
 ############################################################################################
 
-EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingService', 'IncomeCalculatorService', 'ListingEligibilityService']
+EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingDataService', 'IncomeCalculatorService', 'ListingEligibilityService']
 
 angular
   .module('dahlia.controllers')

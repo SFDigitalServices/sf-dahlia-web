@@ -3,14 +3,14 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/process-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', (ListingService) ->
+  controller: ['ListingDataService', (ListingDataService) ->
     ctrl = @
 
     @sortedInformationSessions = ->
-      ListingService.sortByDate(this.parent.listing.Information_Sessions)
+      ListingDataService.sortByDate(this.parent.listing.Information_Sessions)
 
     @sortedOpenHouses = ->
-      ListingService.sortByDate(this.parent.listing.Open_Houses)
+      ListingDataService.sortByDate(this.parent.listing.Open_Houses)
 
     return ctrl
   ]

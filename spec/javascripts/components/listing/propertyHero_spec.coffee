@@ -9,7 +9,7 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
         listings: fakeListings
         sortByDate: jasmine.createSpy()
     $sce = {
@@ -21,7 +21,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         $sce: $sce
         $window: $window
         $timeout: $timeout

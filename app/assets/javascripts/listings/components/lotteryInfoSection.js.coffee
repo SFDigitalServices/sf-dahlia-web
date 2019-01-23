@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/lottery-info-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ListingLotteryService', (ListingService, ListingLotteryService) ->
+  controller: ['ListingDataService', 'ListingLotteryService', (ListingDataService, ListingLotteryService) ->
     ctrl = @
 
     @loading = ListingLotteryService.loading

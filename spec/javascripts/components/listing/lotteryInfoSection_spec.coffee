@@ -9,7 +9,7 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
     fakeListingLotteryService =
       listingHasLotteryBuckets: ->
@@ -20,7 +20,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
       }
     )

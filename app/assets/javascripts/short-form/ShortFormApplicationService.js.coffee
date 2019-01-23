@@ -1,6 +1,6 @@
 ShortFormApplicationService = (
   $translate, $http, $state, $window, uuid,
-  ListingService, ListingHelperService, ListingConstantsService, ListingUnitService, ShortFormDataService,
+  ListingDataService, ListingConstantsService, ListingUnitService, ShortFormDataService,
   AddressValidationService, GISService, AnalyticsService, FileUploadService, SharedService, ListingPreferencesService
 ) ->
   Service = {}
@@ -11,7 +11,7 @@ ShortFormApplicationService = (
 
   Service.refreshSessionUid()
 
-  Service.listing = ListingService.listing
+  Service.listing = ListingDataService.listing
   Service.form = {}
   Service.accountApplication = {}
   Service.application = {}
@@ -491,7 +491,7 @@ ShortFormApplicationService = (
     Service.application.householdMembers.concat([Service.applicant])
 
   Service.listingHasPreference = (preference) ->
-    ListingPreferencesService.hasPreference(preference, ListingService.listing)
+    ListingPreferencesService.hasPreference(preference, ListingDataService.listing)
 
   Service.eligibleForLiveWork = ->
     return false unless Service.listingHasPreference('liveWorkInSf')
@@ -776,14 +776,14 @@ ShortFormApplicationService = (
     # although we have already attempted to fetch the listing preferences in the resolve
     # for the dahlia.short-form-application route, sometimes they are not yet done being
     # fetched by the time the user gets here, so we check if we need to fetch them here
-    if ListingService.listing.preferences
+    if ListingDataService.listing.preferences
       params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
       Service._sendApplication(submitMethod, submitPath, params)
     else
       Raven.captureMessage('Undefined listing preferences', {
-        level: 'warning', extra: { listing: ListingService.listing }
+        level: 'warning', extra: { listing: ListingDataService.listing }
       })
-      ListingPreferencesService.getListingPreferences(ListingService.listing).then ->
+      ListingPreferencesService.getListingPreferences(ListingDataService.listing).then ->
         params.application = ShortFormDataService.formatApplication(Service.listing.Id, Service.application)
         Service._sendApplication(submitMethod, submitPath, params)
 
@@ -851,7 +851,7 @@ ShortFormApplicationService = (
       files = data.files || []
       if data.application.status.match(/submitted/i) && data.application.listing
         # on submitted app the listing is loaded along with it
-        ListingService.loadListing(data.application.listing)
+        ListingDataService.loadListing(data.application.listing)
       formattedApp = ShortFormDataService.reformatApplication(data.application, files)
       Service.checkForProofPrefs(formattedApp) unless formattedApp.status.match(/submitted/i)
 
@@ -1046,19 +1046,19 @@ ShortFormApplicationService = (
   Service.DOBValid = ShortFormDataService.DOBValid
 
   Service.hasHouseholdPublicHousingQuestion = ->
-    ListingPreferencesService.hasPreference('assistedHousing', ListingService.listing)
+    ListingPreferencesService.hasPreference('assistedHousing', ListingDataService.listing)
 
   Service.formattedBuildingAddress = (listing, display) ->
-    ListingHelperService.formattedAddress(listing, 'Building', display)
+    ListingDataService.formattedAddress(listing, 'Building', display)
 
   Service.listingHasReservedUnitType = (type) ->
     ListingUnitService.listingHasReservedUnitType(Service.listing, type)
 
   Service.getProjectIdForBoundaryMatching = ->
-    ListingService.getProjectIdForBoundaryMatching(Service.listing)
+    ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
 
   # TODO: -- REMOVE HARDCODED FEATURES --
-  Service.listingIs = ListingService.listingIs
+  Service.listingIs = ListingDataService.listingIs
 
   return Service
 
@@ -1068,7 +1068,7 @@ ShortFormApplicationService = (
 
 ShortFormApplicationService.$inject = [
   '$translate', '$http', '$state', '$window', 'uuid',
-  'ListingService', 'ListingHelperService', 'ListingConstantsService', 'ListingUnitService', 'ShortFormDataService',
+  'ListingDataService', 'ListingConstantsService', 'ListingUnitService', 'ShortFormDataService',
   'AddressValidationService', 'GISService', 'AnalyticsService', 'FileUploadService', 'SharedService', 'ListingPreferencesService'
 ]
 

@@ -17,7 +17,7 @@ do ->
       table2: false
     }
     fakeStates[fakeListing.Id] = fakeTable
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
       toggleStates: fakeStates
     fakeListingHelperService =
@@ -27,7 +27,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingHelperService: fakeListingHelperService
         $translate: $translate
       }
@@ -40,14 +40,14 @@ do ->
       describe 'toggleTable', ->
         describe "when the given table's toggle state is true", ->
           it 'set its toggle state to false', ->
-            table1ToggleStateVal = fakeListingService.toggleStates[fakeListing.Id]['table1']
+            table1ToggleStateVal = fakeListingDataService.toggleStates[fakeListing.Id]['table1']
             ctrl.toggleTable('table1')
-            expect(fakeListingService.toggleStates[fakeListing.Id]['table1']).toEqual false
+            expect(fakeListingDataService.toggleStates[fakeListing.Id]['table1']).toEqual false
         describe "when the given table's toggle state is false", ->
           it 'set its toggle state to true', ->
-            table1ToggleStateVal = fakeListingService.toggleStates[fakeListing.Id]['table2']
+            table1ToggleStateVal = fakeListingDataService.toggleStates[fakeListing.Id]['table2']
             ctrl.toggleTable('table2')
-            expect(fakeListingService.toggleStates[fakeListing.Id]['table2']).toEqual true
+            expect(fakeListingDataService.toggleStates[fakeListing.Id]['table2']).toEqual true
 
       describe 'formatBaths', ->
         describe 'when the given number of bathrooms is 0', ->

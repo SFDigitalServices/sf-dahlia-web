@@ -1,6 +1,6 @@
 do ->
   'use strict'
-  describe 'ListingService', ->
+  describe 'ListingDataService', ->
     ListingEligibilityService = undefined
     loading = {}
     error = {}

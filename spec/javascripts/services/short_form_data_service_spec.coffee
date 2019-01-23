@@ -8,7 +8,7 @@ do ->
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
     fakeApplicant = undefined
-    fakeListingService =
+    fakeListingDataService =
       listing:
         preferences: getJSONFixture('listings-api-listing-preferences.json').preferences
       getPreference: jasmine.createSpy()
@@ -29,7 +29,7 @@ do ->
       listingHasReservedUnitType: ->
 
     beforeEach module('dahlia.services', ($provide) ->
-      $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingDataService', fakeListingDataService
       $provide.value 'ListingUnitService', fakeListingUnitService
       return
     )
@@ -132,14 +132,14 @@ do ->
         expect(fakeApplication.applicant.preferenceAddressMatch).toBeUndefined()
 
       it 'should reset housing fields if assistedHousing pref not available on this listing', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+        spyOn(fakeListingDataService, 'hasPreference').and.returnValue(false)
         fakeApplication.hasPublicHousing = 'Yes'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.hasPublicHousing).toBeUndefined()
         expect(fakeApplication.totalMonthlyRent).toBeUndefined()
 
       it 'should not reset housing fields if assistedHousing pref is available on this listing', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+        spyOn(fakeListingDataService, 'hasPreference').and.returnValue(true)
         fakeApplication.hasPublicHousing = 'Yes'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.hasPublicHousing).toEqual 'Yes'

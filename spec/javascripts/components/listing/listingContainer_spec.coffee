@@ -9,7 +9,7 @@ do ->
     yesterday.setDate(yesterday.getDate() - 1)
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
-    fakeListingService = {}
+    fakeListingDataService = {}
     $translate =
       instant: ->
     fakeSharedService = {}
@@ -31,7 +31,7 @@ do ->
       resetEligibilityFilters: jasmine.createSpy()
     }
     hasFilters = false
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
       openListings: []
       openMatchListings: []
@@ -51,10 +51,8 @@ do ->
       isFavorited: jasmine.createSpy()
       formattedAddress: jasmine.createSpy()
       getListingAMI: jasmine.createSpy()
-    fakeListingHelperService =
-      priorityLabel: jasmine.createSpy()
-      formattedAddress: jasmine.createSpy()
       reservedLabel: jasmine.createSpy()
+    fakeListingHelperService =
       listingIs: jasmine.createSpy()
       isFirstComeFirstServe: jasmine.createSpy()
       isOpen: jasmine.createSpy()
@@ -73,7 +71,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingEligibilityService: fakeListingEligibilityService
         ListingHelperService: fakeListingHelperService
         ListingUnitService: fakeListingUnitService
@@ -124,20 +122,20 @@ do ->
             expect(ctrl.isOpenMatchListing(fakeListing)).toEqual false
 
       describe '$ctrl.isFavorited', ->
-        it 'calls ListingService.isFavorited with the given listing ID', ->
+        it 'calls ListingDataService.isFavorited with the given listing ID', ->
           fakeListingId = 'asdf1234'
           ctrl.isFavorited(fakeListingId)
-          expect(fakeListingService.isFavorited).toHaveBeenCalledWith(fakeListingId)
+          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
       describe '$ctrl.reservedLabel', ->
-        it 'calls ListingHelperService.reservedLabel', ->
+        it 'calls ListingDataService.reservedLabel', ->
           ctrl.reservedLabel()
-          expect(fakeListingHelperService.reservedLabel).toHaveBeenCalled()
+          expect(fakeListingDataService.reservedLabel).toHaveBeenCalled()
 
       describe '$ctrl.getListingAMI', ->
-        it 'calls ListingService.getListingAMI', ->
+        it 'calls ListingDataService.getListingAMI', ->
           ctrl.getListingAMI()
-          expect(fakeListingService.getListingAMI).toHaveBeenCalled()
+          expect(fakeListingDataService.getListingAMI).toHaveBeenCalled()
 
       describe '$ctrl.listingIsReservedCommunity', ->
         it 'calls ListingHelperService.isReservedCommunity', ->
@@ -161,9 +159,9 @@ do ->
           expect(fakeListingHelperService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
-        it 'expects ListingService.function to be called', ->
+        it 'expects ListingDataService.function to be called', ->
           ctrl.toggleFavoriteListing 1
-          expect(fakeListingService.toggleFavoriteListing).toHaveBeenCalled()
+          expect(fakeListingDataService.toggleFavoriteListing).toHaveBeenCalled()
 
       describe '$ctrl.hasEligibilityFilters', ->
         it 'expects fakeListingEligibilityService.hasEligibilityFilters to be called', ->
@@ -203,10 +201,10 @@ do ->
             expect(ctrl.lotteryDateVenueAvailable(listing)).toEqual false
 
       describe '$ctrl.formattedBuildingAddress', ->
-        it 'expects ListingService.function to be called', ->
+        it 'expects ListingDataService.formattedAddress to be called', ->
           display = 'full'
           ctrl.formattedBuildingAddress(fakeListing, display)
-          expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
+          expect(fakeListingDataService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
 
       describe '$ctrl.getListingUnits', ->
         it 'calls ListingUnitService.getListingUnits', ->
@@ -214,9 +212,9 @@ do ->
           expect(fakeListingUnitService.getListingUnits).toHaveBeenCalled()
 
       describe '$ctrl.formattedLeasingAgentAddress', ->
-        it 'calls ListingHelperService.formattedAddress', ->
+        it 'calls ListingDataService.formattedAddress', ->
           ctrl.formattedLeasingAgentAddress(fakeListing)
-          expect(fakeListingHelperService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Leasing_Agent')
+          expect(fakeListingDataService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Leasing_Agent')
 
       describe '$ctrl.listingHasSROUnits', ->
         it 'calls ListingUnitService.listingHasSROUnits', ->

@@ -29,7 +29,7 @@ do ->
       city: 'Mount Shasta'
     fakeApplicant = undefined
     fakeHouseholdMember = undefined
-    fakeListingService =
+    fakeListingDataService =
       listing:
         Id: ''
       loadListing: ->
@@ -93,7 +93,7 @@ do ->
       $provide.value '$state', $state
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
-      $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingDataService', fakeListingDataService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
@@ -678,7 +678,7 @@ do ->
     describe 'submitApplication', ->
       beforeEach ->
         fakeListing = getJSONFixture('listings-api-show.json').listing
-        fakeListingService.listing = angular.copy(fakeListing)
+        fakeListingDataService.listing = angular.copy(fakeListing)
         deferred = $q.defer()
         deferred.resolve()
         fakeListingPreferencesService.getListingPreferences = jasmine.createSpy().and.returnValue(deferred.promise)
@@ -701,7 +701,7 @@ do ->
         expect(ShortFormApplicationService._sendApplication).toHaveBeenCalled()
 
       it 'should call formatApplication on ShortFormDataService when preferences are undefined', ->
-        fakeListingService.listing.preferences = null
+        fakeListingDataService.listing.preferences = null
         spyOn(fakeDataService, 'formatApplication').and.callThrough()
         ShortFormApplicationService.submitApplication(fakeListing.id, fakeShortForm)
         $rootScope.$apply()
@@ -1186,13 +1186,13 @@ do ->
           .toHaveBeenCalledWith(data.application, [])
 
       it 'loads the listing into Service.listing for viewing submitted applications', ->
-        spyOn(fakeListingService, 'loadListing').and.callThrough()
+        spyOn(fakeListingDataService, 'loadListing').and.callThrough()
         data =
           application: fakeShortForm
         data.application.status = 'Submitted'
         data.application.listing = {Id: 'XYZ'}
         ShortFormApplicationService.loadApplication(data)
-        expect(fakeListingService.loadListing)
+        expect(fakeListingDataService.loadListing)
           .toHaveBeenCalledWith(data.application.listing)
 
       it 'resets user data', ->

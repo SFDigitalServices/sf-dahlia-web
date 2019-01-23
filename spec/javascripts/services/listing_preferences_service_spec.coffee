@@ -37,7 +37,7 @@ do ->
     beforeEach inject((_ListingPreferencesService_, _$httpBackend_) ->
       httpBackend = _$httpBackend_
       ListingPreferencesService = _ListingPreferencesService_
-      # requestURL = ListingService.requestURL
+      # requestURL = ListingDataService.requestURL
       return
     )
 
@@ -82,5 +82,5 @@ do ->
 
       describe 'listing does not have preference', ->
         it 'should return false', ->
-          §listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
+          listing.preferences = [{preferenceName: 'Live or Work in San Francisco Preference'}]
           expect(ListingPreferencesService.hasPreference('neighborhoodResidence', listing)).toEqual false

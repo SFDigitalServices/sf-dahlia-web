@@ -3,12 +3,12 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/browse-listings.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ListingEligibilityService', 'IncomeCalculatorService', '$state',
-  (ListingService, ListingEligibilityService, IncomeCalculatorService, $state) ->
+  controller: ['ListingDataService', 'ListingEligibilityService', 'IncomeCalculatorService', '$state',
+  (ListingDataService, ListingEligibilityService, IncomeCalculatorService, $state) ->
     ctrl = @
 
     @eligibilityFilters = ListingEligibilityService.eligibility_filters
-    @openMatchListings = ListingService.openMatchListings
+    @openMatchListings = ListingDataService.openMatchListings
 
     @clearEligibilityFilters = ->
       ListingEligibilityService.resetEligibilityFilters()

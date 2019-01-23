@@ -12,7 +12,7 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
       AMICharts: []
       listing: fakeListing
       listings: fakeListings
@@ -20,7 +20,6 @@ do ->
       householdAMIChartCutoff: ->
       getListingPreferences: jasmine.createSpy()
       incomeForHouseholdSize: jasmine.createSpy()
-    fakeListingHelperService =
       priorityLabel: jasmine.createSpy()
     fakeListingPreferencesService = {
       getListingPreferences: jasmine.createSpy()
@@ -34,8 +33,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         $translate: $translate
-        ListingService: fakeListingService
-        ListingHelperService: fakeListingHelperService
+        ListingDataService: fakeListingDataService
         ListingPreferencesService: fakeListingPreferencesService
         ListingUnitService: fakeListingUnitService
       }
@@ -68,45 +66,45 @@ do ->
       describe 'showAMItoggler', ->
         it 'returns false for empty AMICharts', ->
           expect(ctrl.showAMItoggler()).toBe(false)
-        it 'calls ListingService.occupancyIncomeLevels', ->
-          fakeListingService.AMICharts = fakeAMI
-          spyOn(fakeListingService, 'occupancyIncomeLevels')
+        it 'calls ListingDataService.occupancyIncomeLevels', ->
+          fakeListingDataService.AMICharts = fakeAMI
+          spyOn(fakeListingDataService, 'occupancyIncomeLevels')
           ctrl.showAMItoggler()
-          expect(fakeListingService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, _.last(fakeAMI))
-        it 'calls ListingService.householdAMIChartCutoff', ->
-          fakeListingService.AMICharts = fakeAMI
-          spyOn(fakeListingService, 'householdAMIChartCutoff')
+          expect(fakeListingDataService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, _.last(fakeAMI))
+        it 'calls ListingDataService.householdAMIChartCutoff', ->
+          fakeListingDataService.AMICharts = fakeAMI
+          spyOn(fakeListingDataService, 'householdAMIChartCutoff')
           ctrl.showAMItoggler()
-          expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled()
+          expect(fakeListingDataService.householdAMIChartCutoff).toHaveBeenCalled()
         it 'returns true when maxNumOfHousehold is > householdAMIChartCutoff', ->
-          fakeListingService.AMICharts = fakeAMI
+          fakeListingDataService.AMICharts = fakeAMI
           fakeOccupancyIncomeLevel = {
             numOfHousehold: 5
           }
           fakeOccupancyIncomeLevel2 = {
             numOfHousehold: 3
           }
-          spyOn(fakeListingService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
-          spyOn(fakeListingService, 'householdAMIChartCutoff').and.returnValue(4)
+          spyOn(fakeListingDataService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          spyOn(fakeListingDataService, 'householdAMIChartCutoff').and.returnValue(4)
           expect(ctrl.showAMItoggler()).toEqual true
         it 'returns false when maxNumOfHousehold is < householdAMIChartCutoff', ->
-          fakeListingService.AMICharts = fakeAMI
+          fakeListingDataService.AMICharts = fakeAMI
           fakeOccupancyIncomeLevel = {
             numOfHousehold: 5
           }
           fakeOccupancyIncomeLevel2 = {
             numOfHousehold: 3
           }
-          spyOn(fakeListingService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
-          spyOn(fakeListingService, 'householdAMIChartCutoff').and.returnValue(6)
+          spyOn(fakeListingDataService, 'occupancyIncomeLevels').and.returnValue([fakeOccupancyIncomeLevel, fakeOccupancyIncomeLevel2])
+          spyOn(fakeListingDataService, 'householdAMIChartCutoff').and.returnValue(6)
           expect(ctrl.showAMItoggler()).toEqual false
 
       describe 'hasMultipleAMICharts', ->
         it 'returns true when there are 2 or more AMI charts', ->
-          fakeListingService.AMICharts = [1,2]
+          fakeListingDataService.AMICharts = [1,2]
           expect(ctrl.hasMultipleAMICharts()).toEqual true
         it 'returns false when there is 1 or fewer AMI charts', ->
-          fakeListingService.AMICharts = [1]
+          fakeListingDataService.AMICharts = [1]
           expect(ctrl.hasMultipleAMICharts()).toEqual false
 
       describe 'listingHasPreferences', ->
@@ -125,7 +123,7 @@ do ->
       describe 'getListingPreferences', ->
         it 'calls ListingPreferencesService.getListingPreferences', ->
           ctrl.getListingPreferences()
-          expect(fakeListingPreferencesService.getListingPreferences).toHaveBeenCalledWith(fakeListingService.listing)
+          expect(fakeListingPreferencesService.getListingPreferences).toHaveBeenCalledWith(fakeListingDataService.listing)
 
       describe 'listingHasPriorityUnits', ->
         it "calls ListingUnitService.listingHasPriorityUnits with the parent's listing", ->
@@ -133,23 +131,23 @@ do ->
           expect(fakeListingUnitService.listingHasPriorityUnits).toHaveBeenCalledWith(fakeListing)
 
       describe 'priorityLabel', ->
-        it 'calls ListingHelperService.priorityLabel with the given arguments', ->
+        it 'calls ListingDataService.priorityLabel with the given arguments', ->
           ctrl.priorityLabel(1, 2)
-          expect(fakeListingHelperService.priorityLabel).toHaveBeenCalledWith(1, 2)
+          expect(fakeListingDataService.priorityLabel).toHaveBeenCalledWith(1, 2)
 
       describe 'occupancyIncomeLevels', ->
-        it "calls ListingService.occupancyIncomeLevels with the parent's listing and the given amiLevel", ->
-          spyOn(fakeListingService, 'occupancyIncomeLevels')
+        it "calls ListingDataService.occupancyIncomeLevels with the parent's listing and the given amiLevel", ->
+          spyOn(fakeListingDataService, 'occupancyIncomeLevels')
           ctrl.occupancyIncomeLevels(1)
-          expect(fakeListingService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, 1)
+          expect(fakeListingDataService.occupancyIncomeLevels).toHaveBeenCalledWith(fakeListing, 1)
 
       describe 'householdAMIChartCutoff', ->
-        it 'calls ListingService.householdAMIChartCutoff', ->
-          spyOn(fakeListingService, 'householdAMIChartCutoff')
+        it 'calls ListingDataService.householdAMIChartCutoff', ->
+          spyOn(fakeListingDataService, 'householdAMIChartCutoff')
           ctrl.householdAMIChartCutoff()
-          expect(fakeListingService.householdAMIChartCutoff).toHaveBeenCalled()
+          expect(fakeListingDataService.householdAMIChartCutoff).toHaveBeenCalled()
 
       describe 'incomeForHouseholdSize', ->
-        it 'calls ListingService.incomeForHouseholdSize with the given arguments', ->
+        it 'calls ListingDataService.incomeForHouseholdSize with the given arguments', ->
           ctrl.incomeForHouseholdSize(1, 2)
-          expect(fakeListingService.incomeForHouseholdSize).toHaveBeenCalledWith(1, 2)
+          expect(fakeListingDataService.incomeForHouseholdSize).toHaveBeenCalledWith(1, 2)

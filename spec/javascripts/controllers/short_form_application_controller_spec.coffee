@@ -125,7 +125,7 @@ do ->
       signIn: ->
       signOut: ->
       loggedIn: () ->
-    fakeListingService = {}
+    fakeListingDataService = {}
     fakeAddressValidationService = {
       validate: ->
       validationError: jasmine.createSpy()
@@ -194,7 +194,7 @@ do ->
         FileUploadService: fakeFileUploadService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         SharedService: fakeSharedService
         inputMaxLength: {}
       return

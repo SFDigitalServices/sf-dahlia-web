@@ -26,14 +26,14 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
       openMatchListings: jasmine.createSpy()
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         IncomeCalculatorService: fakeIncomeCalculatorService
         $state: state
         ListingEligibilityService: fakeListingEligibilityService

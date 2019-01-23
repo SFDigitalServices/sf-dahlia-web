@@ -16,7 +16,7 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
     fakeListingLotteryService =
       lotteryComplete: jasmine.createSpy()
@@ -30,7 +30,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
         ShortFormApplicationService: fakeShortFormApplicationService
         AnalyticsService: fakeAnalyticsService

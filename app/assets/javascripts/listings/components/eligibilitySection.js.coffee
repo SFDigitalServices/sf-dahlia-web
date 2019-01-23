@@ -4,8 +4,8 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    '$translate', 'ListingService', 'ListingHelperService', 'ListingPreferencesService', 'ListingUnitService',
-    ($translate, ListingService, ListingHelperService, ListingPreferencesService, ListingUnitService) ->
+    '$translate', 'ListingDataService', 'ListingPreferencesService', 'ListingUnitService',
+    ($translate, ListingDataService, ListingPreferencesService, ListingUnitService) ->
       ctrl = @
 
       @loading = ListingPreferencesService.loading
@@ -20,14 +20,14 @@ angular.module('dahlia.components')
         $translate.instant('LISTINGS.PEOPLE')
 
       @showAMItoggler = ->
-        return false if _.isEmpty(ListingService.AMICharts)
-        amiLevel = _.last(ListingService.AMICharts)
-        lastHouseholdIncomeLevel = ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        return false if _.isEmpty(ListingDataService.AMICharts)
+        amiLevel = _.last(ListingDataService.AMICharts)
+        lastHouseholdIncomeLevel = ListingDataService.occupancyIncomeLevels(this.parent.listing, amiLevel)
         maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-        maxNumOfHousehold > ListingService.householdAMIChartCutoff()
+        maxNumOfHousehold > ListingDataService.householdAMIChartCutoff()
 
       @hasMultipleAMICharts = ->
-        ListingService.AMICharts.length > 1
+        ListingDataService.AMICharts.length > 1
 
       @listingHasPreferences = ->
         this.parent.listing.preferences && this.parent.listing.preferences.length > 0
@@ -42,16 +42,16 @@ angular.module('dahlia.components')
         ListingUnitService.listingHasPriorityUnits(this.parent.listing)
 
       @priorityLabel = (priority, modifier) ->
-        ListingHelperService.priorityLabel(priority, modifier)
+        ListingDataService.priorityLabel(priority, modifier)
 
       @occupancyIncomeLevels = (amiLevel) ->
-        ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        ListingDataService.occupancyIncomeLevels(this.parent.listing, amiLevel)
 
       @householdAMIChartCutoff = ->
-        ListingService.householdAMIChartCutoff()
+        ListingDataService.householdAMIChartCutoff()
 
       @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-        ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+        ListingDataService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
 
       return ctrl
   ]

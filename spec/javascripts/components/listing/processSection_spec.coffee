@@ -11,7 +11,7 @@ do ->
     fakeParent = {
       listing: fakeListing
     }
-    fakeListingService =
+    fakeListingDataService =
         listings: fakeListings
         sortByDate: jasmine.createSpy()
 
@@ -19,7 +19,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         $translate: $translate
       }
     )
@@ -29,11 +29,11 @@ do ->
         ctrl = $componentController 'processSection', locals, {parent: fakeParent}
 
       describe 'sortedInformationSessions', ->
-        it 'calls ListingService.sortByDate', ->
+        it 'calls ListingDataService.sortByDate', ->
           ctrl.sortedInformationSessions()
-          expect(fakeListingService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Information_Sessions)
+          expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Information_Sessions)
 
       describe 'sortedOpenHouses', ->
-        it 'calls ListingService.sortByDate', ->
+        it 'calls ListingDataService.sortByDate', ->
           ctrl.sortedOpenHouses()
-          expect(fakeListingService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Open_Houses)
+          expect(fakeListingDataService.sortByDate).toHaveBeenCalledWith(ctrl.parent.listing.Open_Houses)

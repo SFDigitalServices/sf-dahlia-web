@@ -97,7 +97,7 @@ When adding new modules to the JavaScript dirctory, please follow the example st
             - applications.html
     - listings
         - ListingController.js
-        - ListingService.js
+        - ListingDataService.js
         - templates
             - listings.html
             - listing.html

@@ -1,14 +1,14 @@
-FileUploadService = ($http, $q, Upload, uuid, ListingService, ListingPreferencesService) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPreferencesService) ->
   Service = {}
   # these are to be overridden
   Service.preferences = {}
   Service.session_uid = -> null
 
   Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
-    pref = ListingPreferencesService.getPreference(pref_type, ListingService.listing)
+    pref = ListingPreferencesService.getPreference(pref_type, ListingDataService.listing)
     # might be calling deletePreferenceFile on a preference that this listing doesn't have
     pref_id = if pref then pref.listingPreferenceID else pref_type
-    return $q.reject() unless ListingPreferencesService.getPreferenceById(pref_id, ListingService.listing)
+    return $q.reject() unless ListingPreferencesService.getPreferenceById(pref_id, ListingDataService.listing)
     params =
       uploaded_file:
         session_uid: Service.session_uid()
@@ -43,9 +43,9 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService, ListingPreferences
     )
 
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    preference = ListingPreferencesService.getPreference(pref_type, ListingService.listing)
+    preference = ListingPreferencesService.getPreference(pref_type, ListingDataService.listing)
     pref_id = if preference then preference.listingPreferenceID else pref_type
-    return $q.reject() unless ListingPreferencesService.getPreferenceById(pref_id, ListingService.listing)
+    return $q.reject() unless ListingPreferencesService.getPreferenceById(pref_id, ListingDataService.listing)
 
     proofDocument = Service._proofDocument(pref_type, opts)
 
@@ -108,7 +108,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService, ListingPreferences
         angular.copy({}, rentBurdenDocs.rent)
 
   Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
-    pref = ListingPreferencesService.getPreference('rentBurden', ListingService.listing)
+    pref = ListingPreferencesService.getPreference('rentBurden', ListingDataService.listing)
     return unless pref
     pref_id = pref.listingPreferenceID
     unless Service.hasRentBurdenFiles(address)
@@ -186,7 +186,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService, ListingPreferences
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid', 'ListingService', 'ListingPreferencesService'
+  '$http', '$q', 'Upload', 'uuid', 'ListingDataService', 'ListingPreferencesService'
 ]
 
 angular

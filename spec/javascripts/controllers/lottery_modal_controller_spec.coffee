@@ -8,7 +8,7 @@ do ->
     fakeAnalyticsService = {
       trackInvalidLotteryNumber: jasmine.createSpy()
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
     fakeListingLotteryService =
       formatLotteryNumber: ->
@@ -27,7 +27,7 @@ do ->
       $controller 'LotteryModalController',
         $scope: scope
         $state: state
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
         AnalyticsService: fakeAnalyticsService
       return

@@ -1,11 +1,17 @@
 do ->
   'use strict'
   describe 'ListingUnitService', ->
-    requestURL = undefined
     ListingUnitService = undefined
     httpBackend = undefined
     fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeUnits = getJSONFixture('listings-api-units.json')
+    # fakeListingAllSRO has only one unit summary, in general, for SRO
+    fakeListingAllSRO = angular.copy(fakeListing)
+    fakeListingAllSRO.unitSummaries =
+      reserved: null
+      general: [angular.copy(fakeListing.unitSummaries.general[0])]
+    fakeListingAllSRO.unitSummaries.general[0].unitType = 'SRO'
+    fakeListingAllSRO.unitSummaries.general[0].maxOccupancy = 1
 
     beforeEach module('dahlia.services', ($provide) ->
       return
@@ -14,7 +20,6 @@ do ->
     beforeEach inject((_ListingUnitService_, _$httpBackend_) ->
       httpBackend = _$httpBackend_
       ListingUnitService = _ListingUnitService_
-      requestURL = ListingUnitService.requestURL
       return
     )
 
@@ -32,8 +37,8 @@ do ->
 
     describe 'Service.getListingUnits', ->
       beforeEach ->
+        requestURL = "/api/v1/listings/#{fakeListing.Id}/units"
         stubAngularAjaxRequest httpBackend, requestURL, fakeUnits
-        # spyOn()
         ListingUnitService.getListingUnits(fakeListing)
         httpBackend.flush()
       afterEach ->
@@ -47,7 +52,7 @@ do ->
 
     describe 'Service.listingHasOnlySROUnits', ->
       it 'returns false if not all units are SROs', ->
-        fakeListing.listing.unitSummaries.general[0].Unit_Type = 'Studio'
-        expect(ListingUnitService.listingHasOnlySROUnits(fakeListing.listing)).toEqual(false)
+        fakeListing.unitSummaries.general[0].Unit_Type = 'Studio'
+        expect(ListingUnitService.listingHasOnlySROUnits(fakeListing)).toEqual(false)
       it 'returns true if all units are SROs', ->
         expect(ListingUnitService.listingHasOnlySROUnits(fakeListingAllSRO)).toEqual(true)

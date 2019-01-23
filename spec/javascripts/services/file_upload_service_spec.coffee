@@ -22,7 +22,7 @@ do ->
       preferences:
         documents:
           "#{prefType}": {}
-    fakeListingService =
+    fakeListingDataService =
       listing: fakeListing
     $translate = {}
     Upload =
@@ -37,7 +37,7 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
-      $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingDataService', fakeListingDataService
       $provide.value 'ListingPreferencesService', fakeListingPreferencesService
       return
     )
