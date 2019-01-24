@@ -289,25 +289,8 @@ ListingDataService = (
       descriptor.name
 
   Service.priorityLabel = (priority, modifier) ->
-    labelMap =
-      'Vision impairments':
-        name: 'Vision Impairments'
-        description: 'impaired vision'
-      'Hearing impairments':
-        name: 'Hearing Impairments'
-        description: 'impaired hearing'
-      'Hearing/Vision impairments':
-        name: 'Vision and/or Hearing Impairments'
-        description: 'impaired vision and/or hearing'
-      'Mobility/hearing/vision impairments':
-        name: 'Mobility, Hearing and/or Vision Impairments'
-        description: 'impaired mobility, hearing and/or vision'
-      'Mobility impairments':
-        name: 'Mobility Impairments'
-        description: 'impaired mobility'
-
-    return priority unless labelMap[priority]
-    return labelMap[priority][modifier]
+    return priority unless ListingConstantsService.priorityLabelMap[priority]
+    return ListingConstantsService.priorityLabelMap[priority][modifier]
 
   Service.reservedLabel = (listing, type,  modifier) ->
     labelMap =

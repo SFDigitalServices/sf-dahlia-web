@@ -40,6 +40,23 @@ ListingConstantsService = () ->
     'Status',
   ]
 
+  Service.priorityLabelMap =
+    'Vision impairments':
+      name: 'Vision Impairments'
+      description: 'impaired vision'
+    'Hearing impairments':
+      name: 'Hearing Impairments'
+      description: 'impaired hearing'
+    'Hearing/Vision impairments':
+      name: 'Vision and/or Hearing Impairments'
+      description: 'impaired vision and/or hearing'
+    'Mobility/hearing/vision impairments':
+      name: 'Mobility, Hearing and/or Vision Impairments'
+      description: 'impaired mobility, hearing and/or vision'
+    'Mobility impairments':
+      name: 'Mobility Impairments'
+      description: 'impaired mobility'
+
   Service.preferenceMap =
     certOfPreference: "Certificate of Preference (COP)"
     displaced: "Displaced Tenant Housing Preference (DTHP)"
