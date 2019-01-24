@@ -156,4 +156,4 @@ do ->
         ranking = angular.copy(fakeLotteryRanking)
         ranking.submitted = true
         httpBackend.flush()
-        expect(ListingLotteryService.lotteryRankingInfo).toEqual ranking
+        expect(ListingLotteryService.lotteryRankingInfo[fakeListing.Id]).toEqual ranking

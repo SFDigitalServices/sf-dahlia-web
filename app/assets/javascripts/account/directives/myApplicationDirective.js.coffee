@@ -1,9 +1,11 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
   '$translate', '$window', '$sce',
-  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingDataService', 'ModalService',
+  'ListingDataService', 'ListingLotteryService', 'ModalService',
+  'ShortFormApplicationService', 'ShortFormNavigationService',
   ($translate, $window, $sce,
-  ShortFormApplicationService, ShortFormNavigationService, ListingDataService, ModalService) ->
+  ListingDataService, ListingLotteryService, ModalService,
+  ShortFormApplicationService, ShortFormNavigationService) ->
     replace: true
     scope:
       application: '=application'

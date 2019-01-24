@@ -64,16 +64,17 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
 
   Service.getLotteryRanking = (lotteryNumber, listing) ->
     return false unless lotteryNumber && listing
-    angular.copy({submitted: false}, Service.lotteryRankingInfo)
+    Service.lotteryRankingInfo[listing.Id] = {}
+    angular.copy({submitted: false}, Service.lotteryRankingInfo[listing.Id])
     params =
       params:
         lottery_number: lotteryNumber
     Service.loading.lotteryRank = true
     Service.error.lotteryRank = false
     $http.get("/api/v1/listings/#{listing.Id}/lottery_ranking", params).success((data, status, headers, config) ->
-      angular.copy(data, Service.lotteryRankingInfo)
+      angular.copy(data, Service.lotteryRankingInfo[listing.Id])
       Service.loading.lotteryRank = false
-      Service.lotteryRankingInfo.submitted = true
+      Service.lotteryRankingInfo[listing.Id].submitted = true
     ).error( (data, status, headers, config) ->
       Service.loading.lotteryRank = false
       Service.error.lotteryRank = true

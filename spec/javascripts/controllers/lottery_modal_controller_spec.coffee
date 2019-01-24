@@ -9,8 +9,11 @@ do ->
       trackInvalidLotteryNumber: jasmine.createSpy()
     }
     fakeListingDataService =
+      listing: fakeListing
       listings: fakeListings
     fakeListingLotteryService =
+      lotteryBucketInfo: {}
+      lotteryRankingInfo: {}
       formatLotteryNumber: ->
       getLotteryRanking: ->
 

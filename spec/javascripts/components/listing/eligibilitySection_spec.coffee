@@ -21,7 +21,6 @@ do ->
       AMICharts: []
       listing: fakeListing
       listings: fakeListings
-      getListingPreferences: jasmine.createSpy()
       priorityLabel: jasmine.createSpy()
     fakeListingPreferenceService = {
       getListingPreferences: jasmine.createSpy()

@@ -1,4 +1,4 @@
-ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnitService) ->
+ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService) ->
   Service = {}
   Service.preferences = _.keys(ListingDataService.preferenceMap)
   Service.metaFields = [
@@ -11,37 +11,36 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnit
 
   Service.WHITELIST_FIELDS =
     application: [
-        'id'
-        'applicationLanguage'
-        'listingID'
-        'applicationSubmittedDate'
-        'applicationSubmissionType'
-        'status'
-        'autofill'
-        'hasPublicHousing'
-        'hasMilitaryService'
-        'hasDevelopmentalDisability'
-        'answeredCommunityScreening'
-        'externalSessionId'
-      ]
+      'id'
+      'applicationLanguage'
+      'listingID'
+      'applicationSubmittedDate'
+      'applicationSubmissionType'
+      'status'
+      'autofill'
+      'hasPublicHousing'
+      'hasMilitaryService'
+      'hasDevelopmentalDisability'
+      'answeredCommunityScreening'
+      'externalSessionId'
+    ]
     primaryApplicant: [
-        'appMemberId', 'contactId',
-        'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-        'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
-        'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-        'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
-        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-      ]
+      'appMemberId', 'contactId',
+      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
+      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
+      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
+      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+    ]
     alternateContact: [
-        'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
-        'agency', 'email', 'firstName', 'lastName', 'phone'
-      ]
+      'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
+      'agency', 'email', 'firstName', 'lastName', 'phone'
+    ]
     householdMember: [
-        'appMemberId', 'firstName', 'middleName', 'lastName',
-        'relationship', 'preferenceAddressMatch', 'noAddress',
-        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-      ]
-
+      'appMemberId', 'firstName', 'middleName', 'lastName',
+      'relationship', 'preferenceAddressMatch', 'noAddress',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+    ]
 
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
@@ -393,8 +392,8 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnit
     preferences = Service._initPreferences(data)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
     shortFormPrefs.forEach( (shortFormPref) ->
-
-      listingPref = ListingDataService.getPreferenceById(shortFormPref.listingPreferenceID)
+      listing = sfApp || ListingDataService.listing
+      listingPref = ListingPreferenceService.getPreferenceById(shortFormPref.listingPreferenceID, listing)
       # if we don't find a matching listing preference that's probably bad.
       return unless listingPref
 
@@ -530,7 +529,6 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnit
       rent: {}
     }
 
-
   Service._autofillReset = (data) ->
     data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
     unless data.surveyComplete
@@ -546,7 +544,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnit
     # reset fields that don't apply to this application
     LS = ListingDataService
     LCS = ListingConstantsService
-    unless LS.hasPreference('assistedHousing')
+    unless ListingPreferenceService.hasPreference('assistedHousing', LS.listing)
       delete data.hasPublicHousing
       delete data.totalMonthlyRent
       data.groupedHouseholdAddresses = []
@@ -619,6 +617,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingUnit
 ShortFormDataService.$inject = [
   'ListingDataService',
   'ListingConstantsService',
+  'ListingPreferenceService',
   'ListingUnitService'
 ]
 
