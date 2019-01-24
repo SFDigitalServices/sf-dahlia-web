@@ -392,7 +392,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
     preferences = Service._initPreferences(data)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
     shortFormPrefs.forEach( (shortFormPref) ->
-      listing = sfApp || ListingDataService.listing
+      listing = sfApp.listing || ListingDataService.listing
       listingPref = ListingPreferenceService.getPreferenceById(shortFormPref.listingPreferenceID, listing)
       # if we don't find a matching listing preference that's probably bad.
       return unless listingPref
