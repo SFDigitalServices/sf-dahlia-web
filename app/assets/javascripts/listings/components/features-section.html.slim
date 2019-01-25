@@ -23,7 +23,7 @@ accordion-heading
 
     .content-card.padding--2x ng-show="$ctrl.parent.error.units"
       .padding--2x.text-center
-        button.button-link ng-click="$ctrl.parent.getListingUnits()"
+        button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
 
     .stats-toggle.margin-bottom ng-repeat="unitGroup in $ctrl.parent.listing.unitTypes" data-event="gtm-unit-features" ng-click="$ctrl.toggleTable(unitGroup.unitType)"

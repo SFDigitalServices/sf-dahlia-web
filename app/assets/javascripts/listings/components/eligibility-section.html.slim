@@ -9,13 +9,13 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
-    li.custom-counter_item ng-if="::$ctrl.parent.listingIsReservedCommunity()"
+    li.custom-counter_item ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{$ctrl.parent.listing.Reserved_community_type}}"
         .content-card
           h4.content-card_title.no-margin
-            | {{$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'eligibility')}}
+            | {{$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'eligibility')}}
           p.c-steel
             | {{'LISTINGS.ALL_UNITS' | translate}}
           p.c-steel(ng-text-truncate="::$ctrl.parent.listing.Reserved_community_type_description | nl2br" ng-tt-words-threshold="60")
@@ -35,7 +35,7 @@ accordion-heading.lead
 
         .content-card.padding--2x ng-show="$ctrl.parent.error.ami"
           .padding--2x.text-center
-            button.button-link ng-click="$ctrl.parent.getListingAMI()"
+            button.button-link ng-click="$ctrl.parent.getListingAMI($ctrl.parent.listing)"
               | {{'LISTINGS.SEE_MAXIMUM_INCOME_INFORMATION' | translate}}
 
 
@@ -62,9 +62,9 @@ accordion-heading.lead
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO' | translate}}
           p.custom-counter_text ng-if="::$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) || $ctrl.parent.listingIs('750 Harrison Street', $ctrl.parent.listing)"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_ALL_SRO_PLURAL' | translate:"{ numberOfPeople: '2' }"}}
-          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && $ctrl.parent.listingHasSROUnits()"
+          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && $ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
             | {{'LISTINGS.OCCUPANCY_DESCRIPTION_SOME_SRO' | translate}}
-          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits() && !$ctrl.parent.listingHasSROUnits()"
+          p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !$ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
             span ng-if="::$ctrl.parent.listingIs('Transbay Block 7', $ctrl.parent.listing)"
               | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
             span ng-if="::!$ctrl.parent.listingIs('Transbay Block 7', $ctrl.parent.listing)"
@@ -95,9 +95,9 @@ accordion-heading.lead
           h4.custom-counter_title
             | Lottery Preferences
           p.custom-counter_text ng-if="::!$ctrl.listingHasPreferences()"
-            span ng-if="::$ctrl.parent.isFirstComeFirstServe()"
+            span ng-if="::$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
               | There will be no lottery. Applications will be reviewed in the order they are received.
-            span ng-if="::!$ctrl.parent.isFirstComeFirstServe()"
+            span ng-if="::!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
               | Preference holders will be given highest ranking in the lottery process.
           p.custom-counter_text ng-if="::$ctrl.listingHasPreferences()"
             | Anyone may enter the housing lottery for this listing. If your household has one of the following preferences, you will be considered in the order shown here. Each preference holder will be reviewed in lottery rank order.
@@ -119,7 +119,7 @@ accordion-heading.lead
             p.custom-counter_text
               | {{'LISTINGS.REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION' | translate}}
 
-    li.custom-counter_item ng-if="::$ctrl.parent.listingHasReservedUnits()"
+    li.custom-counter_item ng-if="::$ctrl.parent.listingHasReservedUnits($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title
@@ -128,12 +128,12 @@ accordion-heading.lead
             | {{'LISTINGS.RESERVED_UNITS_DESCRIPTION' | translate}}
         .content-card ng-repeat="(type, units) in ::$ctrl.parent.listing.reservedUnits"
           h4.content-card_title.no-margin
-            | {{::$ctrl.parent.reservedLabel(type, 'eligibility')}}
+            | {{::$ctrl.parent.reservedLabel($ctrl.parent.listing, type, 'eligibility')}}
           p.c-steel
             | {{::units.length}}
             span
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
-          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel(type, 'unitDescription')}}"
+          p.c-steel translate="LISTINGS.UNITS_ARE_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, type, 'unitDescription')}}"
 
     li.custom-counter_item ng-if="$ctrl.listingHasPriorityUnits()"
       .content-tile

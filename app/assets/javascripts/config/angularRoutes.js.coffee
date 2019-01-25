@@ -107,7 +107,7 @@
                 return deferred.promise
 
               # trigger this asynchronously, allowing the listing page to load first
-              setTimeout(ListingDataService.getListingAMI)
+              setTimeout(ListingDataService.getListingAMI.bind(null, ListingDataService.listing))
               setTimeout(ListingUnitService.getListingUnits.bind(null, ListingDataService.listing, forceRecache))
               setTimeout(ListingPreferenceService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
               unless ListingLotteryService.lotteryIsUpcoming(ListingDataService.listing)
