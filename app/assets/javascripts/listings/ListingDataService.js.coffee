@@ -316,6 +316,12 @@ ListingDataService = (
     return type unless labelMap[type]
     return labelMap[type][modifier]
 
+  Service.formatSeniorMinimumAge = (listing) ->
+    if listing.Reserved_community_minimum_age
+      "#{listing.Reserved_community_minimum_age}+"
+    else
+      ''
+
   # used by My Applications -- when you load an application we also parse the attached listing data
   Service.loadListing = (listing) ->
     return if Service.listing && Service.listing.Id == listing.Id && listing.preferences
@@ -326,12 +332,6 @@ ListingDataService = (
         preferenceName: lotteryPref.Lottery_Preference.Name
       }
     angular.copy(listing, Service.listing)
-
-  Service.seniorMinimumAge = (listing) ->
-    if listing.Reserved_community_minimum_age
-      "#{listing.Reserved_community_minimum_age}+"
-    else
-      ''
 
   Service.formattedAddress = (listing, type='Building', display='full') ->
     street = "#{type}_Street_Address"
