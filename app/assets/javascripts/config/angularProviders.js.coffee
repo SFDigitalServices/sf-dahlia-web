@@ -83,11 +83,11 @@
     .useLoader('assetPathLoader') # custom loader, see below
 ]
 
-@dahlia.factory 'assetPathLoader', ['$q', '$http', 'env', ($q, $http, env) ->
+@dahlia.factory 'assetPathLoader', ['$q', '$http', '$window', ($q, $http, $window) ->
   (options) ->
     deferred = $q.defer()
     # asset paths have unpredictable hash suffixes, which is why we need the custom loader
-    $http.get(env.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
+    $http.get($window.STATIC_ASSET_PATHS["locale-#{options.key}.json"]).success((data) ->
       deferred.resolve(data)
     ).error( ->
       deferred.reject({status: 503})

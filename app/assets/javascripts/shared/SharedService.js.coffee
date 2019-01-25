@@ -2,10 +2,10 @@
 ####################################### SERVICE ############################################
 ############################################################################################
 
-SharedService = ($http, $state, $window, $document, env) ->
+SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
-  Service.assetPaths = env.STATIC_ASSET_PATHS || {}
+  Service.assetPaths = $window.STATIC_ASSET_PATHS || {}
   Service.housingCounselors =
     all: []
     chinese: []
@@ -122,7 +122,7 @@ SharedService = ($http, $state, $window, $document, env) ->
 ######################################## CONFIG ############################################
 ############################################################################################
 
-SharedService.$inject = ['$http', '$state', '$window', '$document', 'env']
+SharedService.$inject = ['$http', '$state', '$window', '$document']
 
 angular
   .module('dahlia.services')

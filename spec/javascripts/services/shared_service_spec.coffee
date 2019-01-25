@@ -6,17 +6,16 @@ do ->
     $state = undefined
     $window = undefined
     $document = undefined
-    env = {}
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide) ->
-      $provide.constant 'env', env
     )
 
     beforeEach inject((_SharedService_, _$httpBackend_, _$state_, _$window_, _$document_) ->
       httpBackend = _$httpBackend_
       $state = _$state_
       $window = _$window_
+      $window.STATIC_ASSET_PATHS = {}
       $document = _$document_
       SharedService = _SharedService_
       return
