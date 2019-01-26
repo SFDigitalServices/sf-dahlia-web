@@ -25,7 +25,7 @@ module Force
       imageURL
       Tenure
     ].freeze
-    TEST_OWNERSHIP_LISTING_ID = 'a0W21000007AWriEAG'
+    TEST_OWNERSHIP_LISTING_ID = 'a0W21000007AWriEAG'.freeze
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
