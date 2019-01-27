@@ -28,27 +28,25 @@ angular.module('dahlia.components')
     @isOpenMatchListing = (listing) ->
       @openMatchListings.indexOf(listing) > -1
 
-    @isFavorited = (listing_id) ->
-      ListingDataService.isFavorited(listing_id)
+    @isFavorited = (listingId) ->
+      ListingDataService.isFavorited(listingId)
 
-    @reservedLabel = (type, modifier, listing = null) ->
-      type = @listing.Reserved_community_type unless type
-      listing = @listing unless listing
+    @reservedLabel = (listing, type, modifier) ->
       ListingDataService.reservedLabel(listing, type, modifier)
 
-    @getListingAMI = ->
-      ListingDataService.getListingAMI()
+    @getListingAMI =(listing) ->
+      ListingDataService.getListingAMI(listing)
 
-    @listingIsReservedCommunity = (listing = @listing) ->
+    @listingIsReservedCommunity = (listing) ->
       !! listing.Reserved_community_type
 
     @listingIs = (name, listing) ->
       ListingIdentityService.listingIs(name, listing)
 
-    @listingHasReservedUnits = ->
-      ListingUnitService.listingHasReservedUnits(@listing)
+    @listingHasReservedUnits = (listing) ->
+      ListingUnitService.listingHasReservedUnits(listing)
 
-    @isFirstComeFirstServe = (listing = @listing) ->
+    @isFirstComeFirstServe = (listing) ->
       ListingIdentityService.isFirstComeFirstServe(listing)
 
     @listingApplicationClosed = (listing) ->
@@ -60,17 +58,17 @@ angular.module('dahlia.components')
     @formattedLeasingAgentAddress = (listing) ->
       ListingDataService.formattedAddress(listing, 'Leasing_Agent')
 
-    @toggleFavoriteListing = (listing_id) ->
-      ListingDataService.toggleFavoriteListing(listing_id)
+    @toggleFavoriteListing = (listingId) ->
+      ListingDataService.toggleFavoriteListing(listingId)
 
-    @isFavorited = (listing_id) ->
-      ListingDataService.isFavorited(listing_id)
+    @isFavorited = (listingId) ->
+      ListingDataService.isFavorited(listingId)
 
-    @getListingUnits = ->
-      ListingUnitService.getListingUnits()
+    @getListingUnits = (listing) ->
+      ListingUnitService.getListingUnits(listing)
 
-    @listingHasSROUnits = ->
-      ListingUnitService.listingHasSROUnits(@listing)
+    @listingHasSROUnits = (listing) ->
+      ListingUnitService.listingHasSROUnits(listing)
 
     @hasEligibilityFilters = ->
       ListingEligibilityService.hasEligibilityFilters()

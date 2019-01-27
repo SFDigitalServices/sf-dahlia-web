@@ -243,13 +243,13 @@ ListingDataService = (
     )
     deferred.promise
 
-  Service.getListingAMI = ->
+  Service.getListingAMI = (listing) ->
     angular.copy([], Service.AMICharts)
     Service.loading.ami = true
     Service.error.ami = false
     # shouldn't happen, but safe to have a guard clause
-    return $q.when() unless Service.listing.chartTypes
-    allChartTypes = _.sortBy(Service.listing.chartTypes, 'percent')
+    return $q.when() unless listing.chartTypes
+    allChartTypes = _.sortBy(listing.chartTypes, 'percent')
     data =
       'year[]': _.map(allChartTypes, 'year')
       'chartType[]': _.map(allChartTypes, 'chartType')

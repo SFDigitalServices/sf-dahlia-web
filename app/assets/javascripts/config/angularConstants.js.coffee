@@ -12,7 +12,3 @@
   genderOther: 50
   sexualOrientationOther: 50
 }
-
-@dahlia.constant 'env', {
-  STATIC_ASSET_PATHS: <%= static_asset_paths.to_json.html_safe %>
-}

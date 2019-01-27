@@ -145,14 +145,16 @@ do ->
           expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
       describe '$ctrl.reservedLabel', ->
-        it 'calls ListingDataService.reservedLabel', ->
-          ctrl.reservedLabel()
-          expect(fakeListingDataService.reservedLabel).toHaveBeenCalled()
+        it 'calls ListingDataService.reservedLabel with the given arguments', ->
+          type = 'foo'
+          modifier = 'bar'
+          ctrl.reservedLabel(fakeListing, type, modifier)
+          expect(fakeListingDataService.reservedLabel).toHaveBeenCalledWith(fakeListing, type, modifier)
 
       describe '$ctrl.getListingAMI', ->
-        it 'calls ListingDataService.getListingAMI', ->
-          ctrl.getListingAMI()
-          expect(fakeListingDataService.getListingAMI).toHaveBeenCalled()
+        it 'calls ListingDataService.getListingAMI with the given listing', ->
+          ctrl.getListingAMI(fakeListing)
+          expect(fakeListingDataService.getListingAMI).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.listingIsReservedCommunity', ->
         it "returns true if the listing's Reserved_community_type property is truthy", ->
@@ -171,13 +173,13 @@ do ->
           expect(fakeListingIdentityService.listingIs).toHaveBeenCalledWith(name, fakeListing)
 
       describe '$ctrl.listingHasReservedUnits', ->
-        it "calls ListingUnitService.listingHasReservedUnits with the controller's listing", ->
-          ctrl.listingHasReservedUnits()
-          expect(fakeListingUnitService.listingHasReservedUnits).toHaveBeenCalledWith(ctrl.listing)
+        it "calls ListingUnitService.listingHasReservedUnits with the given listing", ->
+          ctrl.listingHasReservedUnits(fakeListing)
+          expect(fakeListingUnitService.listingHasReservedUnits).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.isFirstComeFirstServe', ->
-        it 'calls ListingIdentityService.isFirstComeFirstServe', ->
-          ctrl.isFirstComeFirstServe()
+        it 'calls ListingIdentityService.isFirstComeFirstServe with the given listing', ->
+          ctrl.isFirstComeFirstServe(fakeListing)
           expect(fakeListingIdentityService.isFirstComeFirstServe).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.toggleFavoriteListing', ->
@@ -229,9 +231,9 @@ do ->
           expect(fakeListingDataService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Building', display)
 
       describe '$ctrl.getListingUnits', ->
-        it 'calls ListingUnitService.getListingUnits', ->
-          ctrl.getListingUnits()
-          expect(fakeListingUnitService.getListingUnits).toHaveBeenCalled()
+        it 'calls ListingUnitService.getListingUnits with the given listing', ->
+          ctrl.getListingUnits(fakeListing)
+          expect(fakeListingUnitService.getListingUnits).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.formattedLeasingAgentAddress', ->
         it 'calls ListingDataService.formattedAddress', ->
@@ -239,6 +241,6 @@ do ->
           expect(fakeListingDataService.formattedAddress).toHaveBeenCalledWith(fakeListing, 'Leasing_Agent')
 
       describe '$ctrl.listingHasSROUnits', ->
-        it 'calls ListingUnitService.listingHasSROUnits', ->
-          ctrl.listingHasSROUnits()
-          expect(fakeListingUnitService.listingHasSROUnits).toHaveBeenCalled()
+        it 'calls ListingUnitService.listingHasSROUnits with the given listing', ->
+          ctrl.listingHasSROUnits(fakeListing)
+          expect(fakeListingUnitService.listingHasSROUnits).toHaveBeenCalledWith(fakeListing)

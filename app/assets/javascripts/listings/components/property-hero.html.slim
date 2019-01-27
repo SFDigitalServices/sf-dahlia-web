@@ -19,7 +19,7 @@
 
     h1.property-hero_title.offset
       | {{::$ctrl.parent.listing.Name}}
-    span.property-hero_label.label.radius.bg-splash ng-if="::$ctrl.parent.listingIsReservedCommunity()" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'building')}}"
+    span.property-hero_label.label.radius.bg-splash ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'building')}}"
 
   header.property-hero_content.p-relative.margin-bottom
     hgroup.clearfix
@@ -53,26 +53,26 @@
 
   section.property-hero_stats.margin-bottom--2x
     .message-group
-      .message.is-reserved ng-if="::$ctrl.parent.listingIsReservedCommunity()"
+      .message.is-reserved ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
         span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}"
-      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits() && $ctrl.parent.listingIsReservedCommunity()" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
+      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits($ctrl.parent.listing) && $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
             use xlink:href="{{::$ctrl.parent.reservedUnitIcons[$index]}}"
-        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, descriptor.name, 'reservedForWhoAre')}}"
+        span.message-text translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, descriptor.name, 'reservedForWhoAre')}}"
 
-      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits() && !$ctrl.parent.listingIsReservedCommunity()" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
+      .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits($ctrl.parent.listing) && !$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
             use xlink:href="{{$ctrl.parent.reservedUnitIcons[$index]}}"
-        span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel(descriptor.name, 'reservedForWhoAre')}}"
+        span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, descriptor.name, 'reservedForWhoAre')}}"
 
     .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
       .padding--2x ng-include="'shared/templates/spinner.html'"
 
     .content-card.padding--2x ng-show="$ctrl.parent.error.units"
       .padding--2x.text-center
-        button.button-link ng-click="$ctrl.parent.getListingUnits()"
+        button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
 
     .property-hero_stat.margin-top--2x ng-repeat="(percent, unitGroups) in $ctrl.parent.listing.groupedUnits"
@@ -91,7 +91,7 @@
 
 
   / TODO: remove case for hardcoded listings
-  .content-card ng-if="::$ctrl.parent.listingHasSROUnits() && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) && !$ctrl.parent.listingIs('750 Harrison Street', $ctrl.parent.listing)"
+  .content-card ng-if="::$ctrl.parent.listingHasSROUnits($ctrl.parent.listing) && !$ctrl.parent.listingIs('1335 Folsom Street', $ctrl.parent.listing) && !$ctrl.parent.listingIs('750 Harrison Street', $ctrl.parent.listing)"
     h4.content-card_title translate="LISTINGS.SINGLE_ROOM_OCCUPANCY"
     / TODO: remove hardcoded case for Merry Go Round Shared Housing listing
     p.c-steel translate="LISTINGS.SINGLE_ROOM_OCCUPANCY_DESCRIPTION" ng-if="::!ctrl.parent.listingIs('Merry Go Round Shared Housing', $ctrl.parent.listing)"
