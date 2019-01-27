@@ -297,9 +297,9 @@ ListingDataService = (
       "#{ListingConstantsService.RESERVED_TYPES.SENIOR}":
         building: 'Senior'
         eligibility: 'Seniors'
-        reservedFor: "seniors #{Service.seniorMinimumAge(listing)}"
-        reservedForWhoAre: "seniors #{Service.seniorMinimumAge(listing)}"
-        unitDescription: "seniors #{Service.seniorMinimumAge(listing)}"
+        reservedFor: "seniors #{Service.formatSeniorMinimumAge(listing)}"
+        reservedForWhoAre: "seniors #{Service.formatSeniorMinimumAge(listing)}"
+        unitDescription: "seniors #{Service.formatSeniorMinimumAge(listing)}"
       "#{ListingConstantsService.RESERVED_TYPES.VETERAN}":
         building: 'Veterans'
         eligibility: 'Veterans'
