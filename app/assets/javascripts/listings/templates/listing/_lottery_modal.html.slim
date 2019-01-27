@@ -39,10 +39,10 @@
           | {{'LOTTERY.LOTTERY_NUMBER_NOT_VALID' | translate}}
 
     // Lottery Results Buckets
-    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingInfo.submitted"
+    ng-include src="'listings/templates/listing/_lottery_results_buckets.html'" ng-if="!lotteryRankingInfo[listing.Id].submitted"
 
     // Lottery Results Ranking
-    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRankingInfo.submitted"
+    ng-include src="'listings/templates/listing/_lottery_results_ranking.html'" ng-if="lotteryRankingInfo[listing.Id].submitted"
 
     // Lottery Footer
     ng-include src="'listings/templates/listing/_lottery_modal_footer.html'"
