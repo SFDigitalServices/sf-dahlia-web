@@ -77,6 +77,20 @@
           $translate('PAGE_TITLE.LISTINGS')
         ]
     })
+    .state('dahlia.listings-for-sale', {
+      url: '/listings/for-sale'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listings.html'
+      resolve:
+        listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'sale'}})
+        ]
+        $title: ['$translate', ($translate) ->
+          # translate used without ".instant" so that it will async resolve
+          $translate('PAGE_TITLE.LISTINGS')
+        ]
+    })
     .state('dahlia.listing', {
       url: '/listings/:id?preview',
       params:
