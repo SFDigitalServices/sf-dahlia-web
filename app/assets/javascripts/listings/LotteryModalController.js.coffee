@@ -7,10 +7,11 @@ LotteryModalController = (
   $state,
   ListingDataService,
   ListingLotteryService,
-  AnalyticsService
+  AnalyticsService,
+  ShortFormApplicationService
 ) ->
   $scope.listing = ListingDataService.listing
-  $scope.application = ListingDataService.application
+  $scope.application = ShortFormApplicationService.application
   $scope.lotteryBucketInfo = ListingLotteryService.lotteryBucketInfo[$scope.listing.Id]
   $scope.lotteryRankingInfo = ListingLotteryService.lotteryRankingInfo
   $scope.favorites = ListingDataService.favorites
@@ -68,7 +69,8 @@ LotteryModalController.$inject = [
   '$state',
   'ListingDataService',
   'ListingLotteryService',
-  'AnalyticsService'
+  'AnalyticsService',
+  'ShortFormApplicationService'
 ]
 
 angular
