@@ -16,6 +16,7 @@ do ->
       lotteryRankingInfo: {}
       formatLotteryNumber: ->
       getLotteryRanking: ->
+    fakeShortFormApplicationService = {}
 
     beforeEach module('dahlia.controllers', ($provide) ->
       return
@@ -33,32 +34,43 @@ do ->
         ListingDataService: fakeListingDataService
         ListingLotteryService: fakeListingLotteryService
         AnalyticsService: fakeAnalyticsService
+        ShortFormApplicationService: fakeShortFormApplicationService
       return
     )
 
     describe '$scope.applicantSelectedForPreference', ->
+      beforeEach ->
+        scope.lotteryRankingInfo = {}
+      afterEach ->
+        scope.lotteryRankingInfo = {}
+
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
-          scope.lotteryRankingInfo =
-            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
+          scope.lotteryRankingInfo[scope.listing.Id] =
+            lotteryBuckets: [{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.applicantSelectedForPreference()).toEqual(true)
 
       describe 'applicant was not selected for lottery preference', ->
         it 'returns false', ->
-          scope.lotteryRankingInfo =
+          scope.lotteryRankingInfo[scope.listing.Id] =
             lotteryBuckets:[{preferenceResults: []}]
           expect(scope.applicantSelectedForPreference()).toEqual(false)
 
     describe '$scope.lotteryNumberValid', ->
+      beforeEach ->
+        scope.lotteryRankingInfo = {}
+      afterEach ->
+        scope.lotteryRankingInfo = {}
+
       describe 'invalid', ->
         it 'returns false', ->
-          scope.lotteryRankingInfo =
+          scope.lotteryRankingInfo[scope.listing.Id] =
             lotteryBuckets:[{preferenceResults: []}]
           expect(scope.lotteryNumberValid()).toEqual(false)
 
       describe 'valid', ->
         it 'returns true', ->
-          scope.lotteryRankingInfo =
+          scope.lotteryRankingInfo[scope.listing.Id] =
             lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.lotteryNumberValid()).toEqual(true)
 
@@ -69,3 +81,14 @@ do ->
         spyOn(fakeListingLotteryService, 'formatLotteryNumber').and.returnValue(scope.lotterySearchNumber)
         scope.showLotteryRanking()
         expect(fakeListingLotteryService.getLotteryRanking).toHaveBeenCalledWith(scope.lotterySearchNumber, scope.listing)
+
+    describe 'viewingMyApplications', ->
+      afterEach ->
+        state = {current: {name: undefined}}
+
+      it 'returns true if the current state name is "dahlia.my-applications"', ->
+        state.current.name = 'dahlia.my-applications'
+        expect(scope.viewingMyApplications()).toEqual(true)
+      it 'returns false if the current state name is not "dahlia.my-applications"', ->
+        state.current.name = 'dahlia.listing'
+        expect(scope.viewingMyApplications()).toEqual(false)

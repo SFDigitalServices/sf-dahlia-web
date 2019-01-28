@@ -12,7 +12,7 @@ LotteryModalController = (
 ) ->
   $scope.listing = ListingDataService.listing
   $scope.application = ShortFormApplicationService.application
-  $scope.lotteryBucketInfo = ListingLotteryService.lotteryBucketInfo[$scope.listing.Id]
+  $scope.lotteryBucketInfo = ListingLotteryService.lotteryBucketInfo
   $scope.lotteryRankingInfo = ListingLotteryService.lotteryRankingInfo
   $scope.favorites = ListingDataService.favorites
   $scope.showWhatHappensNextSection = false
