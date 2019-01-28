@@ -54,7 +54,7 @@
   section.property-hero_stats.margin-bottom--2x
     .message-group
       .message.is-reserved ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
-        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}"
+        span.message-text translate="LISTINGS.ALL_UNITS_RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, $ctrl.parent.listing.Reserved_community_type, 'reservedFor')}}"
       .message.is-reserved ng-if="::$ctrl.parent.listingHasReservedUnits($ctrl.parent.listing) && $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)" ng-repeat="descriptor in ::$ctrl.parent.listing.reservedDescriptor"
         span.ui-icon.ui-static.ui-medium.i-color.message-icon
           svg
