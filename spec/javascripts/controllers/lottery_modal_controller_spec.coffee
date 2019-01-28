@@ -8,6 +8,8 @@ do ->
     fakeAnalyticsService = {
       trackInvalidLotteryNumber: jasmine.createSpy()
     }
+    fakeShortFormApplicationService =
+      application: {}
     fakeListingDataService =
       listing: fakeListing
       listings: fakeListings
@@ -46,13 +48,13 @@ do ->
 
       describe 'applicant is selected for lottery preference', ->
         it 'returns true', ->
-          scope.lotteryRankingInfo[scope.listing.Id] =
-            lotteryBuckets: [{preferenceResults: [{preferenceRank: 1}]}]
+          scope.lotteryRankingInfo[fakeListing.Id] =
+            lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.applicantSelectedForPreference()).toEqual(true)
 
       describe 'applicant was not selected for lottery preference', ->
         it 'returns false', ->
-          scope.lotteryRankingInfo[scope.listing.Id] =
+          scope.lotteryRankingInfo[fakeListing.Id] =
             lotteryBuckets:[{preferenceResults: []}]
           expect(scope.applicantSelectedForPreference()).toEqual(false)
 
@@ -64,13 +66,13 @@ do ->
 
       describe 'invalid', ->
         it 'returns false', ->
-          scope.lotteryRankingInfo[scope.listing.Id] =
+          scope.lotteryRankingInfo[fakeListing.Id] =
             lotteryBuckets:[{preferenceResults: []}]
           expect(scope.lotteryNumberValid()).toEqual(false)
 
       describe 'valid', ->
         it 'returns true', ->
-          scope.lotteryRankingInfo[scope.listing.Id] =
+          scope.lotteryRankingInfo[fakeListing.Id] =
             lotteryBuckets:[{preferenceResults: [{preferenceRank: 1}]}]
           expect(scope.lotteryNumberValid()).toEqual(true)
 
