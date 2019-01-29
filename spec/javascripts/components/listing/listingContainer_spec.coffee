@@ -111,22 +111,69 @@ do ->
           expect(ctrl.lotteryResultsListings).toBeDefined()
 
       describe '$ctrl.isOwnershipListing', ->
+        testListing = angular.copy(fakeListing)
         describe 'returns false', ->
           it 'when the listing has a rental Tenure', ->
-            ctrl.listing = fakeListing
-            ctrl.listing.Tenure = 'New rental'
-            expect(ctrl.isOwnershipListing()).toEqual false
+            testListing.Tenure = 'New rental'
+            expect(ctrl.isOwnershipListing(testListing)).toEqual false
           it 'when the listing does not have a tenure defined', ->
-            ctrl.listing = fakeListing
-            delete ctrl.listing.Tenure
-            expect(ctrl.isOwnershipListing()).toEqual false
+            delete testListing.Tenure
+            expect(ctrl.isOwnershipListing(testListing)).toEqual false
         describe 'returns true', ->
           it 'when the listing has an ownership tenure', ->
-            ctrl.listing = fakeListing
-            ctrl.listing.Tenure = 'New sale'
-            expect(ctrl.isOwnershipListing()).toEqual true
-            ctrl.listing.Tenure = 'Resale'
-            expect(ctrl.isOwnershipListing()).toEqual true
+            testListing.Tenure = 'New sale'
+            expect(ctrl.isOwnershipListing(testListing)).toEqual true
+            testListing.Tenure = 'Resale'
+            expect(ctrl.isOwnershipListing(testListing)).toEqual true
+
+      describe '$ctrl.hasOwnAndRentFavorited', ->
+        fakeOwnListing = angular.copy(fakeListing)
+        fakeOwnListing.Tenure = 'New sale'
+        fakeRentListing = angular.copy(fakeListing)
+        fakeRentListing.Tenure = 'New rental'
+
+        describe 'when rent and own listings are favorited', ->
+          it 'returns true', ->
+            listings = [fakeRentListing, fakeOwnListing]
+            ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
+            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual true
+
+        describe 'when no listings are favorited', ->
+          it 'returns false', ->
+            listings = [fakeRentListing, fakeOwnListing]
+            ctrl.filterByFavorites = jasmine.createSpy().and.returnValue([])
+            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+
+        describe 'when only rental listings are favorited', ->
+          it 'returns false', ->
+            listings = [fakeRentListing]
+            ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
+            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+
+        describe 'when only ownership listings are favorited', ->
+          it 'returns false', ->
+            listings = [fakeRentListing]
+            ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
+            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+
+      describe '$ctrl.isFavorited', ->
+        it 'calls ListingService.isFavorited with the given listing ID', ->
+          fakeListingId = 'asdf1234'
+          ctrl.isFavorited(fakeListingId)
+          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
+
+      describe '$ctrl.filterByFavorites', ->
+        it "calls ListingService.isFavorited with the given listing's ID", ->
+          fakeListingId = 'asdf1234'
+          listing = angular.copy(fakeListing)
+          listing.Id = fakeListingId
+          ctrl.filterByFavorites([listing])
+          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
+
+        it 'filters out non-favorited listings', ->
+          ctrl.isFavorited = jasmine.createSpy().and.returnValues(false, true, false)
+          results = ctrl.filterByFavorites([fakeListing, fakeListing, fakeListing])
+          expect(results.length).toEqual(1)
 
       describe '$ctrl.isOpenMatchListing', ->
         describe "when the given listing is in the controller's list of open match listings", ->
@@ -137,12 +184,6 @@ do ->
           it 'returns false',->
             ctrl.openMatchListings = []
             expect(ctrl.isOpenMatchListing(fakeListing)).toEqual false
-
-      describe '$ctrl.isFavorited', ->
-        it 'calls ListingDataService.isFavorited with the given listing ID', ->
-          fakeListingId = 'asdf1234'
-          ctrl.isFavorited(fakeListingId)
-          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
       describe '$ctrl.reservedLabel', ->
         it 'calls ListingDataService.reservedLabel with the given arguments', ->
