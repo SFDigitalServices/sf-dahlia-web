@@ -8,7 +8,6 @@
     "newrelic",
     "papertrail",
     "memcachier",
-    "sendgrid",
     "heroku-postgresql"
   ],
   "buildpacks": [
