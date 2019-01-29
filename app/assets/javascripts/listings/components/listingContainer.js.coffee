@@ -28,9 +28,9 @@ angular.module('dahlia.components')
         listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
 
       @hasOwnAndRentFavorited = (listings) ->
-        ownershipFavorites = (@isOwnershipListing listing for listing in @filterByFavorites listings)
-        # User has ownership and rental listings favorited if some but not all listings are ownership.
-        (_.some ownershipFavorites) && !(_.every ownershipFavorites)
+        favoritedListings = @filterByFavorites listings
+        areOwnershipListings = (@isOwnershipListing listing for listing in favoritedListings)
+        (_.some areOwnershipListings) && !(_.every areOwnershipListings)
 
       @filterByFavorites = (listings) ->
         (listing for listing in listings when @isFavorited listing.Id)
