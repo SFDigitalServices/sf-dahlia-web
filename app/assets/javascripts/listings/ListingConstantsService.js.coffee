@@ -16,12 +16,12 @@ ListingConstantsService = () ->
     }
     {
       'language': 'Spanish'
-      'label': 'EspaÃ±ol'
+      'label': 'Español'
       'url': Service._mohcdEnglishApplicationURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
-      'label': 'ä¸­æ–‡'
+      'label': '中文'
       'url': Service._mohcdEnglishApplicationURL.replace('English', 'Chinese')
     }
     {
