@@ -5,7 +5,7 @@
 SharedService = ($http, $state, $window, $document) ->
   Service = {}
   Service.alternateLanguageLinks = []
-  Service.assetPaths = STATIC_ASSET_PATHS || {}
+  Service.assetPaths = $window.STATIC_ASSET_PATHS || {}
   Service.housingCounselors =
     all: []
     chinese: []
@@ -90,6 +90,7 @@ SharedService = ($http, $state, $window, $document) ->
         lang: lang
         href: href.slice(1)
       )
+
   Service.getHousingCounselors = ->
     housingCounselorJsonPath = Service.assetPaths['housing_counselors.json']
     # if we've already loaded this asset, no need to reload
@@ -107,6 +108,12 @@ SharedService = ($http, $state, $window, $document) ->
 
   Service.onDocChecklistPage = ->
     $state.current.name == "dahlia.document-checklist"
+
+  Service.toQueryString = (params) ->
+    Object.keys(params).reduce(((a, k) ->
+      a.push k + '=' + encodeURIComponent(params[k])
+      a
+    ), []).join '&'
 
   return Service
 

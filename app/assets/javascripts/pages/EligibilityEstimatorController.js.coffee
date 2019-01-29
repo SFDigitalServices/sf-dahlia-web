@@ -2,9 +2,9 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculatorService) ->
-  $scope.filter_defaults = ListingService.eligibility_filter_defaults
-  $scope.filters = angular.copy(ListingService.eligibility_filters)
+EligibilityEstimatorController = ($scope, $state, ListingDataService, IncomeCalculatorService, ListingEligibilityService) ->
+  $scope.filter_defaults = ListingEligibilityService.eligibility_filter_defaults
+  $scope.filters = angular.copy(ListingEligibilityService.eligibility_filters)
 
   # check if we've used the IncomeCalculator to calculate income
   if IncomeCalculatorService.calculateTotalYearlyIncome() > 0
@@ -19,7 +19,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
       if !$scope.filters.income_total
         $scope.filters.income_timeframe = 'per_year'
         $scope.filters.income_total = 0
-      ListingService.setEligibilityFilters($scope.filters)
+      ListingEligibilityService.setEligibilityFilters($scope.filters)
       $state.go('dahlia.listings-for-rent')
     else
       $scope.hideAlert = false
@@ -29,7 +29,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
     $scope.eligibilityForm.$setPristine()
     $scope.hideAlert = false
     angular.copy($scope.filter_defaults, $scope.filters)
-    ListingService.resetEligibilityFilters()
+    ListingEligibilityService.resetEligibilityFilters()
     IncomeCalculatorService.resetIncomeSources()
 
   $scope.inputInvalid = (name) ->
@@ -44,7 +44,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
 
   $scope.goToIncomeCalculator = () ->
     # save our currently entered filters before we move on!
-    ListingService.setEligibilityFilters($scope.filters)
+    ListingEligibilityService.setEligibilityFilters($scope.filters)
 
   $scope.resetChildrenUnder6 = ->
     $scope.filters.children_under_6 = ""
@@ -58,7 +58,7 @@ EligibilityEstimatorController = ($scope, $state, ListingService, IncomeCalculat
 ######################################## CONFIG ############################################
 ############################################################################################
 
-EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingService', 'IncomeCalculatorService']
+EligibilityEstimatorController.$inject = ['$scope', '$state', 'ListingDataService', 'IncomeCalculatorService', 'ListingEligibilityService']
 
 angular
   .module('dahlia.controllers')

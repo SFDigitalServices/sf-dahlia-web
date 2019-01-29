@@ -22,18 +22,16 @@ do ->
       lotteryResultsListings: []
       priorityTypeNames: jasmine.createSpy()
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
       priorityTypes: ->
-    fakeListingHelperService =
-      priorityLabel: ->
       reservedLabel: ->
+      priorityLabel: ->
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
-        ListingHelperService: fakeListingHelperService
+        ListingDataService: fakeListingDataService
         SharedService: fakeSharedService
         $state: state
       }
@@ -97,37 +95,37 @@ do ->
           expect(fakeSharedService.showSharing).toHaveBeenCalled()
 
       describe '$ctrl.priorityTypes', ->
-        it 'calls ListingService.priorityTypes', ->
-          spyOn(fakeListingService, 'priorityTypes')
+        it 'calls ListingDataService.priorityTypes', ->
+          spyOn(fakeListingDataService, 'priorityTypes')
           ctrl.priorityTypes(fakeListing)
-          expect(fakeListingService.priorityTypes).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingDataService.priorityTypes).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.priorityTypeNames', ->
-        it 'calls ListingHelperService.priorityTypes', ->
-          spyOn(fakeListingHelperService, 'priorityLabel')
-          spyOn(fakeListingService, 'priorityTypes').and.returnValue([1])
+        it 'calls ListingDataService.priorityTypes', ->
+          spyOn(fakeListingDataService, 'priorityLabel')
+          spyOn(fakeListingDataService, 'priorityTypes').and.returnValue([1])
           ctrl.priorityTypeNames(fakeListing)
-          expect(fakeListingHelperService.priorityLabel).toHaveBeenCalledWith(1, 'name')
-        it 'calls ListingService.priorityTypes', ->
-          spyOn(fakeListingService, 'priorityTypes')
-          spyOn(fakeListingHelperService, 'priorityLabel')
+          expect(fakeListingDataService.priorityLabel).toHaveBeenCalledWith(1, 'name')
+        it 'calls ListingDataService.priorityTypes', ->
+          spyOn(fakeListingDataService, 'priorityTypes')
+          spyOn(fakeListingDataService, 'priorityLabel')
           ctrl.priorityTypeNames(fakeListing)
-          expect(fakeListingService.priorityTypes).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingDataService.priorityTypes).toHaveBeenCalledWith(fakeListing)
         it 'returns joined names', ->
-          spyOn(fakeListingService, 'priorityTypes').and.returnValue([1, 2])
-          spyOn(fakeListingHelperService, 'priorityLabel')
+          spyOn(fakeListingDataService, 'priorityTypes').and.returnValue([1, 2])
+          spyOn(fakeListingDataService, 'priorityLabel')
           ctrl.priorityTypeNames(fakeListing)
-          expect(fakeListingService.priorityTypes).toHaveBeenCalledWith(fakeListing)
+          expect(fakeListingDataService.priorityTypes).toHaveBeenCalledWith(fakeListing)
 
       describe '$ctrl.reservedForLabels', ->
-        it 'calls ListingHelperService.reservedLabel', ->
-          spyOn(fakeListingHelperService, 'reservedLabel').and.returnValue('fake')
+        it 'calls ListingDataService.reservedLabel', ->
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
           ctrl.reservedForLabels(fakeListing)
-          expect(fakeListingHelperService.reservedLabel).toHaveBeenCalled()
+          expect(fakeListingDataService.reservedLabel).toHaveBeenCalled()
         it 'returns values joined with or', ->
-          spyOn(fakeListingHelperService, 'reservedLabel').and.returnValue('fake')
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
           expect(ctrl.reservedForLabels(fakeListing)).toEqual 'fake or fake'
         it 'returns empty string for empty reservedDescriptor', ->
           fakeListing.reservedDescriptor = null
-          spyOn(fakeListingHelperService, 'reservedLabel').and.returnValue('fake')
+          spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
           expect(ctrl.reservedForLabels(fakeListing)).toEqual ''

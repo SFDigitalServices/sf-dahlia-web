@@ -23,9 +23,9 @@ article.feed-item.animated-fade ng-class="applicationStyle()" ng-hide="isDeleted
         a.button.small ui-sref="dahlia.short-form-review({id: application.id})" ng-if="::!submittedWithLotteryResults()"
           | {{'LABEL.VIEW_APPLICATION' | translate}}
         button.button.small.primary ng-click="viewLotteryResults()" ng-if="::submittedWithLotteryResults()"
-          span ng-if="!error.lotteryRank"
+          span ng-if="!lotteryError.lotteryRank"
             | {{'LISTINGS.VIEW_LOTTERY_RESULTS' | translate}}
-          span ng-if="error.lotteryRank"
+          span ng-if="lotteryError.lotteryRank"
             | {{'LISTINGS.DOWNLOAD_LOTTERY_RESULTS' | translate}}
 
       .feed-item-action ng-if="::!isSubmitted() && !isPastDue()"

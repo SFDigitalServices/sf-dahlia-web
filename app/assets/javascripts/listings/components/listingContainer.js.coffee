@@ -2,85 +2,80 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: [
-    'ListingService', 'ListingHelperService', 'SharedService',
-    (ListingService, ListingHelperService, SharedService) ->
-      ctrl = @
-      # TODO: remove Shared Service once we create a Shared Container
-      @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
-      @assetPaths = SharedService.assetPaths
-      @listing = ListingService.listing
-      @listings = ListingService.listings
-      @loading  = ListingService.loading
-      @error = ListingService.error
-      @toggleStates = ListingService.toggleStates
-      @AMICharts = ListingService.AMICharts
-      @favorites = ListingService.favorites
-      @listingDownloadURLs = ListingService.listingDownloadURLs
+  controller: ['ListingDataService', 'ListingEligibilityService', 'ListingIdentityService', 'ListingUnitService', 'SharedService',
+  (ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
+    ctrl = @
+    # TODO: remove Shared Service once we create a Shared Container
+    @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
+    @assetPaths = SharedService.assetPaths
+    @listing = ListingDataService.listing
+    @listings = ListingDataService.listings
+    @loading  = ListingDataService.loading
+    @error = ListingDataService.error
+    @toggleStates = ListingDataService.toggleStates
+    @AMICharts = ListingDataService.AMICharts
+    @favorites = ListingDataService.favorites
 
-      @openListings = ListingService.openListings
-      @openMatchListings = ListingService.openMatchListings
-      @openNotMatchListings = ListingService.openNotMatchListings
-      @closedListings = ListingService.closedListings
-      @lotteryResultsListings = ListingService.lotteryResultsListings
+    @openListings = ListingDataService.openListings
+    @openMatchListings = ListingDataService.openMatchListings
+    @openNotMatchListings = ListingDataService.openNotMatchListings
+    @closedListings = ListingDataService.closedListings
+    @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
-      @isOwnershipListing = (listing) ->
-        @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
+    @isOwnershipListing = (listing) ->
+      @listing.Tenure == 'New sale' || @listing.Tenure == 'Resale'
 
-      @isOpenMatchListing = (listing) ->
-        @openMatchListings.indexOf(listing) > -1
+    @isOpenMatchListing = (listing) ->
+      @openMatchListings.indexOf(listing) > -1
 
-      @isFavorited = (listing_id) ->
-        ListingService.isFavorited(listing_id)
+    @isFavorited = (listingId) ->
+      ListingDataService.isFavorited(listingId)
 
-      @reservedLabel = (type, modifier, listing = null) ->
-        type = @listing.Reserved_community_type unless type
-        listing = @listing unless listing
-        ListingHelperService.reservedLabel(listing, type, modifier)
+    @reservedLabel = (listing, type, modifier) ->
+      ListingDataService.reservedLabel(listing, type, modifier)
 
-      @getListingAMI = ->
-        ListingService.getListingAMI()
+    @getListingAMI =(listing) ->
+      ListingDataService.getListingAMI(listing)
 
-      @listingIsReservedCommunity = (listing = null) ->
-        listing = @listing unless listing
-        ListingService.listingIsReservedCommunity(listing)
+    @listingIsReservedCommunity = (listing) ->
+      !! listing.Reserved_community_type
 
-      @listingIs = (name) ->
-        ListingService.listingIs(name)
+    @listingIs = (name, listing) ->
+      ListingIdentityService.listingIs(name, listing)
 
-      @listingHasReservedUnits = ->
-        ListingService.listingHasReservedUnits(@listing)
+    @listingHasReservedUnits = (listing) ->
+      ListingUnitService.listingHasReservedUnits(listing)
 
-      @listingIsFirstComeFirstServe = (listing = @listing) ->
-        ListingService.listingIsFirstComeFirstServe(listing)
+    @isFirstComeFirstServe = (listing) ->
+      ListingIdentityService.isFirstComeFirstServe(listing)
 
-      @listingApplicationClosed = (listing) ->
-        !ListingService.listingIsOpen(listing)
+    @listingApplicationClosed = (listing) ->
+      !ListingIdentityService.isOpen(listing)
 
-      @formattedBuildingAddress = (listing, display) ->
-        ListingHelperService.formattedAddress(listing, 'Building', display)
+    @formattedBuildingAddress = (listing, display) ->
+      ListingDataService.formattedAddress(listing, 'Building', display)
 
-      @formattedLeasingAgentAddress = (listing) ->
-        ListingHelperService.formattedAddress(listing, 'Leasing_Agent')
+    @formattedLeasingAgentAddress = (listing) ->
+      ListingDataService.formattedAddress(listing, 'Leasing_Agent')
 
-      @toggleFavoriteListing = (listing_id) ->
-        ListingService.toggleFavoriteListing(listing_id)
+    @toggleFavoriteListing = (listingId) ->
+      ListingDataService.toggleFavoriteListing(listingId)
 
-      @isFavorited = (listing_id) ->
-        ListingService.isFavorited(listing_id)
+    @isFavorited = (listingId) ->
+      ListingDataService.isFavorited(listingId)
 
-      @getListingUnits = ->
-        ListingService.getListingUnits()
+    @getListingUnits = (listing) ->
+      ListingUnitService.getListingUnits(listing)
 
-      @listingHasSROUnits = ->
-        ListingService.listingHasSROUnits(@listing)
+    @listingHasSROUnits = (listing) ->
+      ListingUnitService.listingHasSROUnits(listing)
 
-      @hasEligibilityFilters = ->
-        ListingService.hasEligibilityFilters()
+    @hasEligibilityFilters = ->
+      ListingEligibilityService.hasEligibilityFilters()
 
-      @lotteryDateVenueAvailable = (listing) ->
-        (listing.Lottery_Date != undefined &&
-          listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+    @lotteryDateVenueAvailable = (listing) ->
+      (listing.Lottery_Date != undefined &&
+        listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
-      return ctrl
+    return ctrl
   ]

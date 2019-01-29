@@ -6,8 +6,8 @@ angular.module('dahlia.components')
   require:
     listingContainer: '^listingContainer'
   controller: [
-    'ListingService', 'ListingHelperService', 'SharedService', '$state',
-    (ListingService, ListingHelperService, SharedService, $state) ->
+    'ListingDataService', 'SharedService', '$state',
+    (ListingDataService, SharedService, $state) ->
       ctrl = @
 
       @showSharing = ->
@@ -29,11 +29,11 @@ angular.module('dahlia.components')
         this.listingContainer.lotteryResultsListings.indexOf(listing) > -1
 
       @priorityTypes = (listing) ->
-        ListingService.priorityTypes(listing)
+        ListingDataService.priorityTypes(listing)
 
       @priorityTypeNames = (listing) ->
         names = _.map @priorityTypes(listing), (priority) ->
-          ListingHelperService.priorityLabel(priority, 'name')
+          ListingDataService.priorityLabel(priority, 'name')
         names.join(', ')
 
       @reservedForLabels = (listing) ->
@@ -41,7 +41,7 @@ angular.module('dahlia.components')
         _.each listing.reservedDescriptor, (descriptor) ->
           if descriptor.name
             type = descriptor.name
-            types.push(ListingHelperService.reservedLabel(listing, type, 'reservedForWhoAre'))
+            types.push(ListingDataService.reservedLabel(listing, type, 'reservedForWhoAre'))
         if types.length then types.join(' or ') else ''
 
       return ctrl

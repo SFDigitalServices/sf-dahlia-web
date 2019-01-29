@@ -19,16 +19,16 @@
         span.ui-icon.ui-static.ui-medium.i-white
           svg
             use xlink:href="#i-clock"
-        span ng-if="::!$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+        span ng-if="::!$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
           | Application Deadline: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
-        span ng-if="::$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+        span ng-if="::$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
           / # TODO: -- REMOVE HARDCODED FEATURES --
           | Application Available: December 6th
       span.application-label.label.label--flag.alert ng-if="::$ctrl.isClosedListing($ctrl.listing)"
         | Application Closed: {{::$ctrl.listing.Application_Due_Date | dateSuffix}}
-      span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && !$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
+      span.status-label.label.label--flag ng-if="::$ctrl.isClosedListing($ctrl.listing) && !$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
         | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
-      span.status-label.label.label--flag ng-if="::$ctrl.listingContainer.listingIsFirstComeFirstServe($ctrl.listing)"
+      span.status-label.label.label--flag ng-if="::$ctrl.listingContainer.isFirstComeFirstServe($ctrl.listing)"
         | First-come, first-serve (no lottery)
       span.application-label.label.label--flag ng-if="::$ctrl.isLotteryResultsListing($ctrl.listing) && $ctrl.listing.Lottery_Results_Date"
         | Lottery Results Posted: {{::$ctrl.listing.Lottery_Results_Date | dateSuffix}}
@@ -40,7 +40,7 @@
         | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'street')}}
         br.show-for-small-only
         | {{::$ctrl.listingContainer.formattedBuildingAddress($ctrl.listing, 'city-state-zip')}}
-      span.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing.Reserved_community_type, 'building', $ctrl.listing)}}"
+      span.label.radius.medium.bg-splash ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)" translate="LISTINGS.RESERVED_COMMUNITY_BUILDING" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'building')}}"
 
   .property-card_content
     .property-card_stats
@@ -55,7 +55,7 @@
       .scrollable-table-container
         table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'table-reserved': $ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing), 'td-bw': !$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)}"
           caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
-            span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing.Reserved_community_type, 'reservedFor', $ctrl.listing)}}"
+            span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}"
           thead
             tr
               th scope="col" Unit Type
@@ -65,7 +65,7 @@
         / Reserved
         table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
           caption ng-if="::$ctrl.listingIsReservedCommunity($ctrl.listing)"
-            span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing.Reserved_community_type, 'reservedFor', $ctrl.listing)}}" translate-value-reserved-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
+            span translate="LISTINGS.RESERVED_UNITS_FOR_WHO_ARE"  translate-value-community-type="{{::$ctrl.listingContainer.reservedLabel($ctrl.listing, $ctrl.listing.Reserved_community_type, 'reservedFor')}}" translate-value-reserved-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
           caption ng-if="::!$ctrl.listingIsReservedCommunity($ctrl.listing)"
             span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
 

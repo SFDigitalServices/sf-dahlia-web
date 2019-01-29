@@ -8,13 +8,11 @@ do ->
     fakeSalesforceApplication = getJSONFixture('sample-salesforce-short-form.json')
     fakeApplication = getJSONFixture('sample-web-short-form.json')
     fakeApplicant = undefined
-    fakeListingService =
+    fakeListingDataService =
       listing:
         preferences: getJSONFixture('listings-api-listing-preferences.json').preferences
       getPreference: jasmine.createSpy()
       getPreferenceById: jasmine.createSpy()
-      hasPreference: ->
-      listingHasReservedUnitType: ->
       RESERVED_TYPES:
         VETERAN: 'Veteran'
         DISABLED: 'Developmental disabilities'
@@ -26,9 +24,15 @@ do ->
         liveInSf: "Live or Work in San Francisco Preference"
         workInSf: "Live or Work in San Francisco Preference"
         neighborhoodResidence: "Neighborhood Resident Housing Preference (NRHP)"
+    fakeListingPreferenceService =
+      hasPreference: ->
+    fakeListingUnitService =
+      listingHasReservedUnitType: ->
 
     beforeEach module('dahlia.services', ($provide) ->
-      $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingDataService', fakeListingDataService
+      $provide.value 'ListingPreferenceService', fakeListingPreferenceService
+      $provide.value 'ListingUnitService', fakeListingUnitService
       return
     )
 
@@ -97,6 +101,9 @@ do ->
         expect(ShortFormDataService.maxDOBDay(2, 2000)).toEqual(29)
 
     describe '_autofillReset', ->
+      beforeEach ->
+        spyOn(fakeListingUnitService, 'listingHasReservedUnitType').and.returnValue(false)
+
       it 'should check if demographic survey was completed', ->
         fakeApplication.surveyComplete = null
         fakeApplication.applicant.gender = 'X'
@@ -127,14 +134,14 @@ do ->
         expect(fakeApplication.applicant.preferenceAddressMatch).toBeUndefined()
 
       it 'should reset housing fields if assistedHousing pref not available on this listing', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(false)
+        spyOn(fakeListingPreferenceService, 'hasPreference').and.returnValue(false)
         fakeApplication.hasPublicHousing = 'Yes'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.hasPublicHousing).toBeUndefined()
         expect(fakeApplication.totalMonthlyRent).toBeUndefined()
 
       it 'should not reset housing fields if assistedHousing pref is available on this listing', ->
-        spyOn(fakeListingService, 'hasPreference').and.returnValue(true)
+        spyOn(fakeListingPreferenceService, 'hasPreference').and.returnValue(true)
         fakeApplication.hasPublicHousing = 'Yes'
         ShortFormDataService._autofillReset(fakeApplication)
         expect(fakeApplication.hasPublicHousing).toEqual 'Yes'

@@ -3,7 +3,7 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/neighborhood-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', '$sce', (ListingService, $sce) ->
+  controller: ['ListingDataService', '$sce', (ListingDataService, $sce) ->
     ctrl = @
 
     @googleMapSrc = (listing) ->
