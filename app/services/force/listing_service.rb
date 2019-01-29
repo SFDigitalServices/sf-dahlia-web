@@ -6,6 +6,7 @@ module Force
     WHITELIST_BROWSE_FIELDS = %i[
       Id
       listingID
+      Tenure
       Name
       Application_Due_Date
       Accepting_Online_Applications
