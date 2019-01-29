@@ -10,7 +10,7 @@ do ->
       listing: fakeListing
       formattedBuildingAddress: jasmine.createSpy()
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
     $sce = {
       trustAsResourceUrl: jasmine.createSpy()
@@ -20,7 +20,7 @@ do ->
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         $sce: $sce
       }
     )

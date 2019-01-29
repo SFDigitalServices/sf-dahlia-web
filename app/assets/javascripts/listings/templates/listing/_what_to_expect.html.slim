@@ -2,16 +2,16 @@ h4.h-caps-lined
   | What to Expect
 p.c-steel.t-small.margin-bottom
   ' Applicants will be contacted by the leasing agent
-  span ng-if="!$ctrl.parent.listingIsFirstComeFirstServe()"
+  span ng-if="!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
     | in lottery rank order until vacancies are filled.
-  span ng-if="$ctrl.parent.listingIsFirstComeFirstServe()"
+  span ng-if="$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
     | on a first-come, first-serve basis until the vacancy is filled.
 .show-for-print ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].whatToExpectOpen"
   p.c-steel.t-small
     | All of the information that you have provided must be verified, and your eligibility confirmed.  Any fraudulent statements will cause your application to be removed from the lottery.  You will also be removed from the lottery if you cannot prove a housing preference, or if a household member appears on more than one application.
   p.c-steel.t-small
     | Should your application be chosen
-    span ng-if="!$ctrl.parent.listingIsFirstComeFirstServe()"
+    span ng-if="!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
       |  from the lottery
     | , be prepared to fill out a more detailed application and provide required supporting documents.
 

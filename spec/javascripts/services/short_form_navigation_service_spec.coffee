@@ -21,6 +21,7 @@ do ->
       stop: -> null
     fakeModalService =
       modalInstance: {}
+    fakeAccountService = {}
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
@@ -30,6 +31,7 @@ do ->
       $provide.value 'uuid', uuid
       $provide.value 'bsLoadingOverlayService', fakeLoadingOverlayService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+      $provide.value 'AccountService', fakeAccountService
       $provide.value 'ModalService', fakeModalService
       return
     )

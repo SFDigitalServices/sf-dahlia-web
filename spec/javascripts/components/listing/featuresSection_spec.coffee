@@ -17,16 +17,15 @@ do ->
       table2: false
     }
     fakeStates[fakeListing.Id] = fakeTable
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
-      listingIsBMR: jasmine.createSpy()
       toggleStates: fakeStates
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
         $translate: $translate
       }
     )
@@ -38,14 +37,14 @@ do ->
       describe 'toggleTable', ->
         describe "when the given table's toggle state is true", ->
           it 'set its toggle state to false', ->
-            table1ToggleStateVal = fakeListingService.toggleStates[fakeListing.Id]['table1']
+            table1ToggleStateVal = fakeListingDataService.toggleStates[fakeListing.Id]['table1']
             ctrl.toggleTable('table1')
-            expect(fakeListingService.toggleStates[fakeListing.Id]['table1']).toEqual false
+            expect(fakeListingDataService.toggleStates[fakeListing.Id]['table1']).toEqual false
         describe "when the given table's toggle state is false", ->
           it 'set its toggle state to true', ->
-            table1ToggleStateVal = fakeListingService.toggleStates[fakeListing.Id]['table2']
+            table1ToggleStateVal = fakeListingDataService.toggleStates[fakeListing.Id]['table2']
             ctrl.toggleTable('table2')
-            expect(fakeListingService.toggleStates[fakeListing.Id]['table2']).toEqual true
+            expect(fakeListingDataService.toggleStates[fakeListing.Id]['table2']).toEqual true
 
       describe 'formatBaths', ->
         describe 'when the given number of bathrooms is 0', ->
@@ -69,6 +68,10 @@ do ->
               expect(ctrl.formatBaths(1)).toEqual(1)
 
       describe 'listingIsBMR', ->
-        it 'calls ListingService.listingIsBMR', ->
-          ctrl.listingIsBMR()
-          expect(fakeListingService.listingIsBMR).toHaveBeenCalledWith(ctrl.parent.listing)
+        it 'returns false if the listing program type is not a BMR type', ->
+          ctrl.parent.listing.Program_Type = 'OCII-RENTAL'
+          expect(ctrl.listingIsBMR()).toEqual false
+
+        it 'returns true if the listing program type is a BMR type', ->
+          ctrl.parent.listing.Program_Type = 'IH-RENTAL'
+          expect(ctrl.listingIsBMR()).toEqual true

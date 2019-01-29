@@ -1,9 +1,11 @@
 angular.module('dahlia.directives')
 .directive 'myApplication', [
   '$translate', '$window', '$sce',
-  'ShortFormApplicationService', 'ShortFormNavigationService', 'ListingService', 'ModalService',
+  'ListingDataService', 'ListingLotteryService', 'ModalService',
+  'ShortFormApplicationService', 'ShortFormNavigationService',
   ($translate, $window, $sce,
-  ShortFormApplicationService, ShortFormNavigationService, ListingService, ModalService) ->
+  ListingDataService, ListingLotteryService, ModalService,
+  ShortFormApplicationService, ShortFormNavigationService) ->
     replace: true
     scope:
       application: '=application'
@@ -12,8 +14,8 @@ angular.module('dahlia.directives')
     link: (scope, elem, attrs) ->
       scope.listing = scope.application.listing
       scope.application.deleted = false
-      scope.loading = ListingService.loading
-      scope.error = ListingService.error
+      scope.loading = ListingDataService.loading
+      scope.lotteryError = ListingLotteryService.error
       scope.deleteDisabled = false
 
       scope.isDeleted = ->
@@ -48,7 +50,7 @@ angular.module('dahlia.directives')
         )
 
       scope.formattedAddress = ->
-        ListingService.formattedAddress(scope.listing, 'Building')
+        ListingDataService.formattedAddress(scope.listing, 'Building')
 
       scope.applicationStyle = ->
         {
@@ -79,30 +81,30 @@ angular.module('dahlia.directives')
 
       scope.viewLotteryResults = ->
         # if the search failed, then viewLotteryResults becomes a button to open the PDF instead
-        if ListingService.error.lotteryRank && scope.listing.LotteryResultsURL
+        if scope.lotteryError.lotteryRank && scope.listing.LotteryResultsURL
           $window.open(scope.listing.LotteryResultsURL, '_blank')
           return
 
         ShortFormNavigationService.isLoading(true)
         # have to setup our "current" listing and application in the Services for the modal to play nicely
-        ListingService.loadListing(scope.listing)
+        ListingDataService.loadListing(scope.listing)
         angular.copy(scope.application, ShortFormApplicationService.application)
         # lookup individual lottery ranking and then open the modal
-        ListingService.getLotteryRanking(scope.application.lotteryNumber).then(->
-          ListingService.openLotteryResultsModal()
+        ListingLotteryService.getLotteryRanking(scope.application.lotteryNumber, scope.listing).then(->
+          ListingLotteryService.openLotteryResultsModal()
           ShortFormNavigationService.isLoading(false)
         ).catch(->
           ###
           # NOTE: Even though we have the listing already "loaded" via API AccountController `map_listings_to_applications`
-          # this has one limitation which is that by using ListingService.listings() ("browse" API) we do not get LotteryResultsURL.
+          # this has one limitation which is that by using ListingDataService.listings() ("browse" API) we do not get LotteryResultsURL.
           # So in the event that getLotteryRanking fails and we want to fall back to LotteryResultsURL, we have to call getListing.
           ###
-          ListingService.loadListing({})
+          ListingDataService.loadListing({})
           # have to restart the loader because the error would have stopped it
           ShortFormNavigationService.isLoading(true)
-          ListingService.getListing(scope.listing.Id).then ->
+          ListingDataService.getListing(scope.listing.Id).then ->
             ShortFormNavigationService.isLoading(false)
-            scope.listing = ListingService.listing
+            scope.listing = ListingDataService.listing
         )
 
       scope.getLanguageCode = (application) ->

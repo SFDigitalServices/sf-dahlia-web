@@ -3,4 +3,3 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/listing-details.html'
   require:
     parent: '^listingContainer'
-

@@ -46,8 +46,8 @@
         'container@':
           templateUrl: 'pages/templates/welcome.html'
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings({checkEligibility: false})
+        listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
+          ListingDataService.getListings({checkEligibility: false})
         ]
     })
     .state('dahlia.housing-counselors', {
@@ -69,8 +69,8 @@
         'container@':
           templateUrl: 'listings/templates/listings.html'
       resolve:
-        listings: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getListings({checkEligibility: true, retranslate: true})
+        listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
+          ListingDataService.getListings({checkEligibility: true, retranslate: true})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -87,32 +87,33 @@
         'container@':
           templateUrl: ($stateParams) ->
             # templateUrl is a special function that only takes $stateParams
-            # which is why we can't include ListingService here
+            # which is why we can't include ListingDataService here
             if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
               'listings/templates/listing-maintenance.html'
             else
               'listings/templates/listing.html'
       resolve:
         listing: [
-          '$stateParams', '$state', '$q', 'ListingService',
-          ($stateParams, $state, $q, ListingService) ->
+          '$stateParams', '$state', '$q', 'ListingDataService', 'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService',
+          ($stateParams, $state, $q, ListingDataService, ListingLotteryService, ListingPreferenceService, ListingUnitService) ->
             deferred = $q.defer()
             forceRecache = $stateParams.preview
-            ListingService.getListing($stateParams.id, forceRecache, true).then( ->
-              deferred.resolve(ListingService.listing)
-              if _.isEmpty(ListingService.listing)
+            ListingDataService.getListing($stateParams.id, forceRecache, true).then( ->
+              deferred.resolve(ListingDataService.listing)
+              if _.isEmpty(ListingDataService.listing)
                 # kick them out unless there's a real listing
                 return $state.go('dahlia.welcome')
               if _.includes(MAINTENANCE_LISTINGS, $stateParams.id)
                 return deferred.promise
 
               # trigger this asynchronously, allowing the listing page to load first
-              setTimeout(ListingService.getListingAMI)
-              setTimeout(ListingService.getListingUnits.bind(null, forceRecache))
-              setTimeout(ListingService.getListingPreferences.bind(null, forceRecache))
-              setTimeout(ListingService.getLotteryBuckets) unless ListingService.lotteryIsUpcoming(ListingService.listing)
-              setTimeout(ListingService.getListingDownloadURLs)
-              # be sure to reset all relevant data in ListingService.resetListingData() if you add to this list !
+              setTimeout(ListingDataService.getListingAMI.bind(null, ListingDataService.listing))
+              setTimeout(ListingUnitService.getListingUnits.bind(null, ListingDataService.listing, forceRecache))
+              setTimeout(ListingPreferenceService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
+              unless ListingLotteryService.lotteryIsUpcoming(ListingDataService.listing)
+                setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingDataService.listing))
+              setTimeout(ListingDataService.getListingDownloadURLs)
+              # be sure to reset all relevant data in ListingDataService.resetListingData() if you add to this list !
             ).catch( (response) ->
               deferred.reject(response)
             )
@@ -400,8 +401,8 @@
         'container@':
           templateUrl: 'listings/templates/favorites.html'
       resolve:
-        listing: ['$stateParams', 'ListingService', ($stateParams, ListingService) ->
-          ListingService.getFavoriteListings()
+        listing: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
+          ListingDataService.getFavoriteListings()
         ]
         $title: ['$translate', ($translate) ->
           $translate('PAGE_TITLE.FAVORITES')
@@ -473,9 +474,9 @@
           templateUrl: 'pages/templates/share.html'
           controller: 'ShareController'
       resolve:
-        $title: ['$title', '$translate', 'ListingService', ($title, $translate, ListingService) ->
-          if !_.isEmpty(ListingService.listing)
-            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingService.listing.Name})
+        $title: ['$title', '$translate', 'ListingDataService', ($title, $translate, ListingDataService) ->
+          if !_.isEmpty(ListingDataService.listing)
+            $translate('PAGE_TITLE.SHARE_LISTING', {listing: ListingDataService.listing.Name})
           else
             $translate('PAGE_TITLE.SHARE_LISTING', {listing: 'Listing'})
         ]
@@ -559,10 +560,10 @@
       abstract: true
       resolve:
         listing: [
-          '$stateParams', '$q', 'ListingService',
-          ($stateParams, $q, ListingService) ->
-            # store the listing in ListingService and kick out if it's not open for applications
-            ListingService.getListingAndCheckIfOpen($stateParams.id)
+          '$stateParams', '$q', 'ListingDataService',
+          ($stateParams, $q, ListingDataService) ->
+            # store the listing in ListingDataService and kick out if it's not open for applications
+            ListingDataService.getListingAndCheckIfOpen($stateParams.id)
         ]
         $title: ['$title', '$translate', 'listing', ($title, $translate, listing) ->
           $translate('PAGE_TITLE.LISTING_APPLICATION', {listing: listing.Name})
@@ -603,16 +604,16 @@
           controller: 'ShortFormApplicationController'
       resolve:
         listing: [
-          '$state', '$stateParams', '$q', 'ListingService',
-          ($state, $stateParams, $q, ListingService) ->
-            # store the listing in ListingService and kick out if it's not open for applications
+          '$state', '$stateParams', '$q', 'ListingDataService', 'ListingPreferenceService',
+          ($state, $stateParams, $q, ListingDataService, ListingPreferenceService) ->
+            # store the listing in ListingDataService and kick out if it's not open for applications
             deferred = $q.defer()
-            ListingService.getListingAndCheckIfOpen($stateParams.id).then( ->
-              ListingService.getListingPreferences().then ->
-                deferred.resolve(ListingService.listing)
+            ListingDataService.getListingAndCheckIfOpen($stateParams.id).then( ->
+              ListingPreferenceService.getListingPreferences(ListingDataService.listing).then ->
+                deferred.resolve(ListingDataService.listing)
             ).catch( (response) ->
               # if no listing info is found, treat this as a 404 and redirect to homepage
-              $state.go('dahlia.welcome') unless ListingService.listing
+              $state.go('dahlia.welcome') unless ListingDataService.listing
               deferred.reject(response)
             )
             return deferred.promise

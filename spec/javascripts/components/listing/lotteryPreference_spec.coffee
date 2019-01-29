@@ -11,14 +11,14 @@ do ->
     fakeMissingPreference = {
       preferenceName: "Fake"
     }
-    fakeListingService =
+    fakeListingDataService =
       listings: fakeListings
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
       $componentController = _$componentController_
       locals = {
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
       }
     )
 

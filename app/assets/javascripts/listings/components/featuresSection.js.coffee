@@ -3,11 +3,11 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/features-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', '$translate', (ListingService, $translate) ->
+  controller: ['ListingDataService', '$translate', (ListingDataService, $translate) ->
     ctrl = @
 
     @toggleTable = (table) ->
-      ListingService.toggleStates[this.parent.listing.Id][table] = !ListingService.toggleStates[this.parent.listing.Id][table]
+      ListingDataService.toggleStates[this.parent.listing.Id][table] = !ListingDataService.toggleStates[this.parent.listing.Id][table]
 
     @formatBaths = (numberOfBathrooms) ->
       return 'Shared' if numberOfBathrooms == 0
@@ -22,7 +22,7 @@ angular.module('dahlia.components')
         numberOfBathrooms
 
     @listingIsBMR = ->
-      ListingService.listingIsBMR(this.parent.listing)
+      ['IH-RENTAL', 'IH-OWN'].indexOf(this.parent.listing.Program_Type) >= 0
 
     return ctrl
   ]
