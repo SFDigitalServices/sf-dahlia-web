@@ -46,9 +46,12 @@ Before you install DAHLIA, your system should have the following:
 
 ## Running Tests
 
-Run:
+To run ruby tests:
 - `rake spec`
-- `rake jasmine:ci`
+
+To run javascript unit tests:
+- `rake jasmine:ci` to run in terminal
+- `rake jasmine` to then run tests interactively at http://localhost:8888/
 
 To run E2E tests:
 - Installation (needs to be run once): `./node_modules/protractor/bin/webdriver-manager update` to get the selenium webdriver installed
