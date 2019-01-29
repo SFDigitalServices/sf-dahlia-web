@@ -1,14 +1,14 @@
-FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
+FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPreferenceService) ->
   Service = {}
   # these are to be overridden
   Service.preferences = {}
   Service.session_uid = -> null
 
   Service.deletePreferenceFile = (pref_type, listing_id, opts = {}) ->
-    pref = ListingService.getPreference(pref_type)
+    pref = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
     # might be calling deletePreferenceFile on a preference that this listing doesn't have
     pref_id = if pref then pref.listingPreferenceID else pref_type
-    return $q.reject() unless ListingService.getPreferenceById(pref_id)
+    return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
     params =
       uploaded_file:
         session_uid: Service.session_uid()
@@ -43,9 +43,9 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
     )
 
   Service.uploadProof = (file, pref_type, listing_id, opts = {}) ->
-    preference = ListingService.getPreference(pref_type)
+    preference = ListingPreferenceService.getPreference(pref_type, ListingDataService.listing)
     pref_id = if preference then preference.listingPreferenceID else pref_type
-    return $q.reject() unless ListingService.getPreferenceById(pref_id)
+    return $q.reject() unless ListingPreferenceService.getPreferenceById(pref_id, ListingDataService.listing)
 
     proofDocument = Service._proofDocument(pref_type, opts)
 
@@ -108,7 +108,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
         angular.copy({}, rentBurdenDocs.rent)
 
   Service.deleteRentBurdenPreferenceFiles = (listing_id, address = null) ->
-    pref = ListingService.getPreference('rentBurden')
+    pref = ListingPreferenceService.getPreference('rentBurden', ListingDataService.listing)
     return unless pref
     pref_id = pref.listingPreferenceID
     unless Service.hasRentBurdenFiles(address)
@@ -186,7 +186,7 @@ FileUploadService = ($http, $q, Upload, uuid, ListingService) ->
 ############################################################################################
 
 FileUploadService.$inject = [
-  '$http', '$q', 'Upload', 'uuid', 'ListingService'
+  '$http', '$q', 'Upload', 'uuid', 'ListingDataService', 'ListingPreferenceService'
 ]
 
 angular

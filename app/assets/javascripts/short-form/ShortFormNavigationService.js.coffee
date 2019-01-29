@@ -2,10 +2,11 @@ ShortFormNavigationService = (
   $state,
   bsLoadingOverlayService,
   ShortFormApplicationService,
-  AccountService
+  AccountService,
+  ListingConstantsService
 ) ->
   Service = {}
-  RESERVED_TYPES = ShortFormApplicationService.RESERVED_TYPES
+  RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
   Service.sections = [
     {
@@ -406,7 +407,8 @@ ShortFormNavigationService.$inject = [
   '$state',
   'bsLoadingOverlayService',
   'ShortFormApplicationService',
-  'AccountService'
+  'AccountService',
+  'ListingConstantsService'
 ]
 
 angular

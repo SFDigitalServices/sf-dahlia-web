@@ -35,3 +35,6 @@ ssl.sh
 certs
 public/sitemap*
 public/robots*
+
+# VS Code
+TAGS

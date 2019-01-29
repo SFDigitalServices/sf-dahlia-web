@@ -6,11 +6,11 @@
         use xlink:href="#i-warning"
   p.alert-body translate="ERROR.LOTTERY_RANKING_SEARCH"
 
-.modal-inner.padding-bottom-none ng-if="!lotteryRankingInfo.submitted"
+.modal-inner.padding-bottom-none ng-if="!lotteryRankingInfo[listing.Id].submitted"
   p.t-small
     | {{'LOTTERY.BUCKETS_INTRO' | translate}}
 
-.modal-buckets-container ng-if="!lotteryRankingInfo.submitted"
+.modal-buckets-container ng-if="!lotteryRankingInfo[listing.Id].submitted"
   .modal-buckets
     header.modal-inner
       h2.h-caps-lined
@@ -19,11 +19,11 @@
         | {{'LOTTERY.RANKING_ORDER_NOTE' | translate}}
 
     section.buckets
-      lottery-results-row ng-repeat-start="bucketResult in lotteryBucketInfo.lotteryBuckets" item-type="bucket" bucket-result="bucketResult" ng-if="bucketResult.preferenceName != 'generalLottery'"
+      lottery-results-row ng-repeat-start="bucketResult in lotteryBucketInfo[listing.Id].lotteryBuckets" item-type="bucket" bucket-result="bucketResult" ng-if="bucketResult.preferenceName != 'generalLottery'"
 
       .modal-inner.bg-dust ng-repeat-end="" ng-if="bucketResult.preferenceName == 'generalLottery'"
         .buckets-divider
 
     section.buckets
       / we `ng-repeat` again but this time just to grab the generalLottery bucket
-      lottery-results-row ng-repeat="bucketResult in lotteryBucketInfo.lotteryBuckets" item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" bucket-result="bucketResult" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"
+      lottery-results-row ng-repeat="bucketResult in lotteryBucketInfo[listing.Id].lotteryBuckets" item-type="bucket" pref-name="{{'LOTTERY.GENERAL_POOL' | translate}}" bucket-result="bucketResult" is-general="true" ng-if="bucketResult.preferenceName == 'generalLottery'"

@@ -12,10 +12,11 @@ do ->
       'include_children_under_6': false
       'children_under_6': ''
 
-    fakeListingService = {}
-    fakeListingService =
+    fakeListingDataService = {}
+    fakeListingEligibilityService = {
       eligibility_filter_defaults: eligibilityFilterDefaults
       eligibility_filters: eligibilityFilterDefaults
+    }
 
     fakeIncomeCalculatorService = {}
 
@@ -23,24 +24,27 @@ do ->
       fakeIncomeCalculatorService.calculateTotalYearlyIncome = () ->
         return 0
       $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
+      $provide.value 'ListingEligibilityService', fakeListingEligibilityService
+
       return
     )
 
     beforeEach inject(($rootScope, $controller) ->
       scope = $rootScope.$new()
       state = jasmine.createSpyObj('$state', ['go'])
-      fakeListingService.setEligibilityFilters = jasmine.createSpy()
-      fakeListingService.resetEligibilityFilters = jasmine.createSpy()
+      fakeListingEligibilityService.setEligibilityFilters = jasmine.createSpy()
+      fakeListingEligibilityService.resetEligibilityFilters = jasmine.createSpy()
 
       $controller 'EligibilityEstimatorController',
         $scope: scope
         $state: state
-        ListingService: fakeListingService
+        ListingDataService: fakeListingDataService
+        ListingEligibilityService: fakeListingEligibilityService
       return
     )
 
     describe 'scope defaults are set', ->
-      it 'populates $scope.filters with filter values from ListingService', ->
+      it 'populates $scope.filters with filter values from ListingDataService', ->
         expect(scope.filters).toEqual eligibilityFilterDefaults
 
       it 'populates $scope.hideAlert as false', ->
@@ -60,7 +64,8 @@ do ->
             $scope: scope
             $state: state
             IncomeCalculatorService: fakeIncomeCalculatorService
-            ListingService: fakeListingService
+            ListingDataService: fakeListingDataService
+            ListingEligibilityService: fakeListingEligibilityService
         )
         it 'assigns filters.income_total with calculated yearly income', ->
           expect(scope.filters.income_total).toEqual income
@@ -78,8 +83,8 @@ do ->
             scope.eligibilityForm = { $valid: true }
             scope.submitForm()
 
-          it 'calls function to store on filters in ListingService', ->
-            expect(fakeListingService.setEligibilityFilters)
+          it 'calls function to store on filters in ListingDataService', ->
+            expect(fakeListingEligibilityService.setEligibilityFilters)
               .toHaveBeenCalledWith(scope.filters)
 
           it 'changes state to dahlia.listings-for-rent', ->
@@ -108,8 +113,8 @@ do ->
         it 'resets filters', ->
           expect(scope.filters).toEqual(eligibilityFilterDefaults)
 
-        it 'calls function to reset filters in ListingService', ->
-          expect(fakeListingService.resetEligibilityFilters)
+        it 'calls function to reset filters in ListingEligibilityService', ->
+          expect(fakeListingEligibilityService.resetEligibilityFilters)
             .toHaveBeenCalled()
 
         it 'calls IncomeCalc Service to reset income sources', ->
@@ -126,7 +131,8 @@ do ->
               $scope: scope
               $state: state
               IncomeCalculatorService: fakeIncomeCalculatorService
-              ListingService: fakeListingService
+              ListingDataService: fakeListingDataService
+              ListingEligibilityService: fakeListingEligibilityService
           )
           it 'returns true', ->
             expect(scope.hasCalculatedIncome()).toEqual(true)
@@ -136,6 +142,6 @@ do ->
             expect(scope.hasCalculatedIncome()).toEqual(false)
 
       describe 'goToIncomeCalculator', ->
-        it 'calls function to store current filters into ListingService',->
+        it 'calls function to store current filters into ListingEligibilityService',->
           scope.goToIncomeCalculator()
-          expect(fakeListingService.setEligibilityFilters).toHaveBeenCalledWith(scope.filters)
+          expect(fakeListingEligibilityService.setEligibilityFilters).toHaveBeenCalledWith(scope.filters)

@@ -3,50 +3,55 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/eligibility-section.html'
   require:
     parent: '^listingContainer'
-  controller: ['ListingService', 'ListingHelperService', '$translate', (ListingService, ListingHelperService, $translate) ->
-    ctrl = @
+  controller: [
+    '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferenceService', 'ListingUnitService',
+    ($translate, ListingDataService, ListingEligibilityService, ListingPreferenceService, ListingUnitService) ->
+      ctrl = @
 
-    @occupancy = (unitSummary) ->
-      return '1' if unitSummary.maxOccupancy == 1
-      unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+      @loading = ListingPreferenceService.loading
+      @error = ListingPreferenceService.error
 
-    @occupancyLabel = (maxOccupancy) ->
-      return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
-      $translate.instant('LISTINGS.PEOPLE')
+      @occupancy = (unitSummary) ->
+        return '1' if unitSummary.maxOccupancy == 1
+        unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
 
-    @showAMItoggler = ->
-      return false if _.isEmpty(ListingService.AMICharts)
-      amiLevel = _.last(ListingService.AMICharts)
-      lastHouseholdIncomeLevel = ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
-      maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-      maxNumOfHousehold > ListingService.householdAMIChartCutoff()
+      @occupancyLabel = (maxOccupancy) ->
+        return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
+        $translate.instant('LISTINGS.PEOPLE')
 
-    @hasMultipleAMICharts = ->
-      ListingService.AMICharts.length > 1
+      @showAMItoggler = ->
+        return false if _.isEmpty(ListingDataService.AMICharts)
+        amiLevel = _.last(ListingDataService.AMICharts)
+        lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+        maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
+        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
-    @listingHasPreferences = ->
-      this.parent.listing.preferences && this.parent.listing.preferences.length > 0
+      @hasMultipleAMICharts = ->
+        ListingDataService.AMICharts.length > 1
 
-    @listingHasOnlySROUnits = ->
-      ListingService.listingHasOnlySROUnits(this.parent.listing)
+      @listingHasPreferences = ->
+        this.parent.listing.preferences && this.parent.listing.preferences.length > 0
 
-    @getListingPreferences = ->
-      ListingService.getListingPreferences()
+      @listingHasOnlySROUnits = ->
+        ListingUnitService.listingHasOnlySROUnits(this.parent.listing)
 
-    @listingHasPriorityUnits = ->
-      ListingService.listingHasPriorityUnits(this.parent.listing)
+      @getListingPreferences = ->
+        ListingPreferenceService.getListingPreferences(this.parent.listing)
 
-    @priorityLabel = (priority, modifier) ->
-      ListingHelperService.priorityLabel(priority, modifier)
+      @listingHasPriorityUnits = ->
+        ListingUnitService.listingHasPriorityUnits(this.parent.listing)
 
-    @occupancyIncomeLevels = (amiLevel) ->
-      ListingService.occupancyIncomeLevels(this.parent.listing, amiLevel)
+      @priorityLabel = (priority, modifier) ->
+        ListingDataService.priorityLabel(priority, modifier)
 
-    @householdAMIChartCutoff = ->
-      ListingService.householdAMIChartCutoff()
+      @occupancyIncomeLevels = (amiLevel) ->
+        ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
 
-    @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-      ListingService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+      @householdAMIChartCutoff = ->
+        ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
-    return ctrl
+      @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+        ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+
+      return ctrl
   ]

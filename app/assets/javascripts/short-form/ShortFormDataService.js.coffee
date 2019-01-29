@@ -1,6 +1,6 @@
-ShortFormDataService = (ListingService) ->
+ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPreferenceService, ListingUnitService) ->
   Service = {}
-  Service.preferences = _.keys(ListingService.preferenceMap)
+  Service.preferences = _.keys(ListingDataService.preferenceMap)
   Service.metaFields = [
     'completedSections'
     'session_uid'
@@ -11,37 +11,36 @@ ShortFormDataService = (ListingService) ->
 
   Service.WHITELIST_FIELDS =
     application: [
-        'id'
-        'applicationLanguage'
-        'listingID'
-        'applicationSubmittedDate'
-        'applicationSubmissionType'
-        'status'
-        'autofill'
-        'hasPublicHousing'
-        'hasMilitaryService'
-        'hasDevelopmentalDisability'
-        'answeredCommunityScreening'
-        'externalSessionId'
-      ]
+      'id'
+      'applicationLanguage'
+      'listingID'
+      'applicationSubmittedDate'
+      'applicationSubmissionType'
+      'status'
+      'autofill'
+      'hasPublicHousing'
+      'hasMilitaryService'
+      'hasDevelopmentalDisability'
+      'answeredCommunityScreening'
+      'externalSessionId'
+    ]
     primaryApplicant: [
-        'appMemberId', 'contactId',
-        'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
-        'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
-        'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
-        'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
-        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-      ]
+      'appMemberId', 'contactId',
+      'noPhone', 'noEmail', 'noAddress', 'hasAltMailingAddress',
+      'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
+      'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
+      'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+    ]
     alternateContact: [
-        'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
-        'agency', 'email', 'firstName', 'lastName', 'phone'
-      ]
+      'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
+      'agency', 'email', 'firstName', 'lastName', 'phone'
+    ]
     householdMember: [
-        'appMemberId', 'firstName', 'middleName', 'lastName',
-        'relationship', 'preferenceAddressMatch', 'noAddress',
-        'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-      ]
-
+      'appMemberId', 'firstName', 'middleName', 'lastName',
+      'relationship', 'preferenceAddressMatch', 'noAddress',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+    ]
 
   Service.formatApplication = (listingId, application) ->
     # _.pick creates a new object
@@ -147,7 +146,7 @@ ShortFormDataService = (ListingService) ->
     allMembers = angular.copy(application.householdMembers)
     allMembers.push(application.applicant)
 
-    angular.copy(ListingService.listing.preferences).forEach( (listingPref) ->
+    angular.copy(ListingDataService.listing.preferences).forEach( (listingPref) ->
       # prefKey is the short name like liveInSf
       prefKey = null
       naturalKey = null
@@ -161,7 +160,7 @@ ShortFormDataService = (ListingService) ->
       city = null
       state = null
       zip = null
-      PREFS = ListingService.preferenceMap
+      PREFS = ListingDataService.preferenceMap
 
       if listingPref.preferenceName == PREFS.liveWorkInSf
         shortformPreferenceID = appPrefs.liveWorkInSf_shortformPreferenceID
@@ -245,7 +244,7 @@ ShortFormDataService = (ListingService) ->
   Service._getPreferenceRecordType = (preference) ->
     return preference.recordTypeDevName if preference.recordTypeDevName
 
-    PREFS = ListingService.preferenceMap
+    PREFS = ListingDataService.preferenceMap
     switch preference.preferenceName
       when PREFS.certOfPreference
         'COP'
@@ -393,15 +392,15 @@ ShortFormDataService = (ListingService) ->
     preferences = Service._initPreferences(data)
     shortFormPrefs = angular.copy(sfApp.shortFormPreferences) || []
     shortFormPrefs.forEach( (shortFormPref) ->
-
-      listingPref = ListingService.getPreferenceById(shortFormPref.listingPreferenceID)
+      listing = sfApp.listing || ListingDataService.listing
+      listingPref = ListingPreferenceService.getPreferenceById(shortFormPref.listingPreferenceID, listing)
       # if we don't find a matching listing preference that's probably bad.
       return unless listingPref
 
       member = _.find(allHousehold, {appMemberId: shortFormPref.appMemberID})
 
       # lookup the short preferenceKey from the long name (e.g. lookup "certOfPreference")
-      if listingPref.preferenceName == ListingService.preferenceMap.liveWorkInSf
+      if listingPref.preferenceName == ListingDataService.preferenceMap.liveWorkInSf
         preferences.liveWorkInSf_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.individualPreference == 'Live in SF'
           prefKey = 'liveInSf'
@@ -409,14 +408,14 @@ ShortFormDataService = (ListingService) ->
           prefKey = 'workInSf'
         else
           prefKey = 'liveWorkInSf'
-      else if listingPref.preferenceName == ListingService.preferenceMap.rentBurden
+      else if listingPref.preferenceName == ListingDataService.preferenceMap.rentBurden
         preferences.rentBurden_shortformPreferenceID = shortFormPref.shortformPreferenceID
         if shortFormPref.individualPreference == 'Assisted Housing'
           prefKey = 'assistedHousing'
         else if shortFormPref.individualPreference == 'Rent Burdened'
           prefKey = 'rentBurden'
       else
-        prefKey = _.invert(ListingService.preferenceMap)[listingPref.preferenceName]
+        prefKey = _.invert(ListingDataService.preferenceMap)[listingPref.preferenceName]
         unless prefKey
           # must be a customPreference... just identify by ID much like on e7b-custom-preferences
           prefKey = listingPref.listingPreferenceID
@@ -530,7 +529,6 @@ ShortFormDataService = (ListingService) ->
       rent: {}
     }
 
-
   Service._autofillReset = (data) ->
     data.surveyComplete = Service.checkSurveyComplete(data.applicant, {skipReferral: true})
     unless data.surveyComplete
@@ -544,14 +542,15 @@ ShortFormDataService = (ListingService) ->
       data.applicant.referral = {}
 
     # reset fields that don't apply to this application
-    LS = ListingService
-    unless LS.hasPreference('assistedHousing')
+    LS = ListingDataService
+    LCS = ListingConstantsService
+    unless ListingPreferenceService.hasPreference('assistedHousing', LS.listing)
       delete data.hasPublicHousing
       delete data.totalMonthlyRent
       data.groupedHouseholdAddresses = []
-    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.VETERAN)
+    unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.VETERAN)
       delete data.hasMilitaryService
-    unless LS.listingHasReservedUnitType(LS.listing, LS.RESERVED_TYPES.DISABLED)
+    unless ListingUnitService.listingHasReservedUnitType(LS.listing, LCS.RESERVED_TYPES.DISABLED)
       delete data.hasDevelopmentalDisability
 
     # reset contact + neighborhood data
@@ -616,7 +615,10 @@ ShortFormDataService = (ListingService) ->
 #############################################
 
 ShortFormDataService.$inject = [
-  'ListingService'
+  'ListingDataService',
+  'ListingConstantsService',
+  'ListingPreferenceService',
+  'ListingUnitService'
 ]
 
 angular

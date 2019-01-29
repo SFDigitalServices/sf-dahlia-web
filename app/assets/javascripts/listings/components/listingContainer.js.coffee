@@ -2,27 +2,25 @@ angular.module('dahlia.components')
 .component 'listingContainer',
   transclude: true
   templateUrl: 'listings/components/listing-container.html'
-  controller: [
-    'ListingService', 'ListingHelperService', 'SharedService',
-    (ListingService, ListingHelperService, SharedService) ->
-      ctrl = @
-      # TODO: remove Shared Service once we create a Shared Container
-      @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
-      @assetPaths = SharedService.assetPaths
-      @listing = ListingService.listing
-      @listings = ListingService.listings
-      @loading  = ListingService.loading
-      @error = ListingService.error
-      @toggleStates = ListingService.toggleStates
-      @AMICharts = ListingService.AMICharts
-      @favorites = ListingService.favorites
-      @listingDownloadURLs = ListingService.listingDownloadURLs
+  controller: ['ListingDataService', 'ListingEligibilityService', 'ListingIdentityService', 'ListingUnitService', 'SharedService',
+  (ListingDataService, ListingEligibilityService, ListingIdentityService, ListingUnitService, SharedService) ->
+    ctrl = @
+    # TODO: remove Shared Service once we create a Shared Container
+    @listingEmailAlertUrl = "http://eepurl.com/dkBd2n"
+    @assetPaths = SharedService.assetPaths
+    @listing = ListingDataService.listing
+    @listings = ListingDataService.listings
+    @loading  = ListingDataService.loading
+    @error = ListingDataService.error
+    @toggleStates = ListingDataService.toggleStates
+    @AMICharts = ListingDataService.AMICharts
+    @favorites = ListingDataService.favorites
 
-      @openListings = ListingService.openListings
-      @openMatchListings = ListingService.openMatchListings
-      @openNotMatchListings = ListingService.openNotMatchListings
-      @closedListings = ListingService.closedListings
-      @lotteryResultsListings = ListingService.lotteryResultsListings
+    @openListings = ListingDataService.openListings
+    @openMatchListings = ListingDataService.openMatchListings
+    @openNotMatchListings = ListingDataService.openNotMatchListings
+    @closedListings = ListingDataService.closedListings
+    @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
       @isOwnershipListing = (listing) ->
         listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
@@ -31,61 +29,56 @@ angular.module('dahlia.components')
         favoritedListings = @filterByFavorites listings
         areOwnershipListings = (@isOwnershipListing listing for listing in favoritedListings)
         (_.some areOwnershipListings) && !(_.every areOwnershipListings)
+    @isOpenMatchListing = (listing) ->
+      @openMatchListings.indexOf(listing) > -1
 
+    @isFavorited = (listingId) ->
+      ListingDataService.isFavorited(listingId)
       @filterByFavorites = (listings) ->
         (listing for listing in listings when @isFavorited listing.Id)
 
-      @isFavorited = (listing_id) ->
-        ListingService.isFavorited(listing_id)
+    @reservedLabel = (listing, type, modifier) ->
+      ListingDataService.reservedLabel(listing, type, modifier)
 
-      @isOpenMatchListing = (listing) ->
-        @openMatchListings.indexOf(listing) > -1
+    @getListingAMI =(listing) ->
+      ListingDataService.getListingAMI(listing)
 
-      @reservedLabel = (type, modifier, listing = null) ->
-        type = @listing.Reserved_community_type unless type
-        listing = @listing unless listing
-        ListingHelperService.reservedLabel(listing, type, modifier)
+    @listingIsReservedCommunity = (listing) ->
+      !! listing.Reserved_community_type
 
-      @getListingAMI = ->
-        ListingService.getListingAMI()
+    @listingIs = (name, listing) ->
+      ListingIdentityService.listingIs(name, listing)
 
-      @listingIsReservedCommunity = (listing = null) ->
-        listing = @listing unless listing
-        ListingService.listingIsReservedCommunity(listing)
+    @listingHasReservedUnits = (listing) ->
+      ListingUnitService.listingHasReservedUnits(listing)
 
-      @listingIs = (name) ->
-        ListingService.listingIs(name)
+    @isFirstComeFirstServe = (listing) ->
+      ListingIdentityService.isFirstComeFirstServe(listing)
 
-      @listingHasReservedUnits = ->
-        ListingService.listingHasReservedUnits(@listing)
+    @listingApplicationClosed = (listing) ->
+      !ListingIdentityService.isOpen(listing)
 
-      @listingIsFirstComeFirstServe = (listing = @listing) ->
-        ListingService.listingIsFirstComeFirstServe(listing)
+    @formattedBuildingAddress = (listing, display) ->
+      ListingDataService.formattedAddress(listing, 'Building', display)
 
-      @listingApplicationClosed = (listing) ->
-        !ListingService.listingIsOpen(listing)
+    @formattedLeasingAgentAddress = (listing) ->
+      ListingDataService.formattedAddress(listing, 'Leasing_Agent')
 
-      @formattedBuildingAddress = (listing, display) ->
-        ListingHelperService.formattedAddress(listing, 'Building', display)
+    @toggleFavoriteListing = (listingId) ->
+      ListingDataService.toggleFavoriteListing(listingId)
 
-      @formattedLeasingAgentAddress = (listing) ->
-        ListingHelperService.formattedAddress(listing, 'Leasing_Agent')
+    @getListingUnits = (listing) ->
+      ListingUnitService.getListingUnits(listing)
 
-      @toggleFavoriteListing = (listing_id) ->
-        ListingService.toggleFavoriteListing(listing_id)
+    @listingHasSROUnits = (listing) ->
+      ListingUnitService.listingHasSROUnits(listing)
 
-      @getListingUnits = ->
-        ListingService.getListingUnits()
+    @hasEligibilityFilters = ->
+      ListingEligibilityService.hasEligibilityFilters()
 
-      @listingHasSROUnits = ->
-        ListingService.listingHasSROUnits(@listing)
+    @lotteryDateVenueAvailable = (listing) ->
+      (listing.Lottery_Date != undefined &&
+        listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
-      @hasEligibilityFilters = ->
-        ListingService.hasEligibilityFilters()
-
-      @lotteryDateVenueAvailable = (listing) ->
-        (listing.Lottery_Date != undefined &&
-          listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
-
-      return ctrl
+    return ctrl
   ]

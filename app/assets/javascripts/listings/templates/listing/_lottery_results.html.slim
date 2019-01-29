@@ -5,8 +5,8 @@ p.content-group_day.margin-bottom
   p.c-steel.t-small.margin-bottom ng-if="$ctrl.parent.listing.Lottery_Summary"
     | {{$ctrl.parent.listing.Lottery_Summary}}
 
-  button.primary.expand.no-margin ng-click="$ctrl.openLotteryResultsModal()" ng-if="$ctrl.showLotteryResultsModalButton()" ng-disabled="$ctrl.parent.loading.lotteryResults" data-event="gtm-view-lottery-results"
+  button.primary.expand.no-margin ng-click="$ctrl.openLotteryResultsModal()" ng-if="$ctrl.showLotteryResultsModalButton()" ng-disabled="$ctrl.loading.lotteryResults" data-event="gtm-view-lottery-results"
     | {{'LISTINGS.VIEW_LOTTERY_RESULTS' | translate}}
 
-  a.button.primary.expand.no-margin ng-if="$ctrl.showDownloadLotteryResultsButton()" ng-href="{{$ctrl.parent.listing.LotteryResultsURL}}" target="_blank" ng-disabled="$ctrl.parent.loading.lotteryResults" data-event="gtm-download-lottery-results"
+  a.button.primary.expand.no-margin ng-if="$ctrl.showDownloadLotteryResultsButton()" ng-href="{{$ctrl.parent.listing.LotteryResultsURL}}" target="_blank" ng-disabled="$ctrl.loading.lotteryResults" data-event="gtm-download-lottery-results"
     | {{'LISTINGS.DOWNLOAD_LOTTERY_RESULTS' | translate}}

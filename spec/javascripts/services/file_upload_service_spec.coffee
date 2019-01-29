@@ -11,15 +11,19 @@ do ->
     errorMsg = undefined
     proofDocument = undefined
     file = fileValue
+    fakeListing = getJSONFixture('listings-api-show.json').listing
+    fakeListingPreference =
+      listingPreferenceID: listingPreferenceID
+    fakeListingPreferenceService = {
+      getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
+      getPreferenceById: jasmine.createSpy().and.returnValue(true)
+    }
     fakeShortFormApplicationService =
       preferences:
         documents:
           "#{prefType}": {}
-    fakeListingPreference =
-      listingPreferenceID: listingPreferenceID
-    fakeListingService =
-      getPreference: jasmine.createSpy().and.returnValue(fakeListingPreference)
-      getPreferenceById: jasmine.createSpy().and.returnValue(true)
+    fakeListingDataService =
+      listing: fakeListing
     $translate = {}
     Upload =
       upload: ->
@@ -33,7 +37,8 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'Upload', Upload
       $provide.value 'uuid', uuid
-      $provide.value 'ListingService', fakeListingService
+      $provide.value 'ListingDataService', fakeListingDataService
+      $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       return
     )
 
@@ -71,10 +76,10 @@ do ->
 
       describe 'when preference is not found on the listing', ->
         beforeEach ->
-          fakeListingService.getPreferenceById = jasmine.createSpy().and.returnValue(null)
+          fakeListingPreferenceService.getPreferenceById = jasmine.createSpy().and.returnValue(null)
 
         afterEach ->
-          fakeListingService.getPreferenceById = jasmine.createSpy().and.returnValue(listingPreferenceID)
+          fakeListingPreferenceService.getPreferenceById = jasmine.createSpy().and.returnValue(listingPreferenceID)
 
         it 'returns a rejection', ->
           rejection = FileUploadService.uploadProof(file, prefType)

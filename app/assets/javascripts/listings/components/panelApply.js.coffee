@@ -4,10 +4,11 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    'ListingService', 'ShortFormApplicationService', 'AnalyticsService',
-    (ListingService, ShortFormApplicationService, AnalyticsService) ->
+    'ListingDataService', 'ListingLotteryService', 'ShortFormApplicationService', 'AnalyticsService',
+    (ListingDataService, ListingLotteryService, ShortFormApplicationService, AnalyticsService) ->
       ctrl = @
       @showApplicationOptions = false
+      @listingDownloadURLs = ListingDataService.listingDownloadURLs
 
       @application = ShortFormApplicationService.application
 
@@ -25,7 +26,7 @@ angular.module('dahlia.components')
         AnalyticsService.trackTimerEvent('Application', 'Apply Online Click')
 
       @lotteryComplete = (listing) ->
-        ListingService.lotteryComplete(listing)
+        ListingLotteryService.lotteryComplete(listing)
 
       @getLanguageCode = (application) ->
         ShortFormApplicationService.getLanguageCode(application)
