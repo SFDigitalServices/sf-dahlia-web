@@ -160,7 +160,7 @@ do ->
         it 'calls ListingService.isFavorited with the given listing ID', ->
           fakeListingId = 'asdf1234'
           ctrl.isFavorited(fakeListingId)
-          expect(fakeListingService.isFavorited).toHaveBeenCalledWith(fakeListingId)
+          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
       describe '$ctrl.filterByFavorites', ->
         it "calls ListingService.isFavorited with the given listing's ID", ->
@@ -168,7 +168,7 @@ do ->
           listing = angular.copy(fakeListing)
           listing.Id = fakeListingId
           ctrl.filterByFavorites([listing])
-          expect(fakeListingService.isFavorited).toHaveBeenCalledWith(fakeListingId)
+          expect(fakeListingDataService.isFavorited).toHaveBeenCalledWith(fakeListingId)
 
         it 'filters out non-favorited listings', ->
           ctrl.isFavorited = jasmine.createSpy().and.returnValues(false, true, false)

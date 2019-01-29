@@ -22,20 +22,22 @@ angular.module('dahlia.components')
     @closedListings = ListingDataService.closedListings
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
-      @isOwnershipListing = (listing) ->
-        listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
+    @isOwnershipListing = (listing) ->
+      listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
 
-      @hasOwnAndRentFavorited = (listings) ->
-        favoritedListings = @filterByFavorites listings
-        areOwnershipListings = (@isOwnershipListing listing for listing in favoritedListings)
-        (_.some areOwnershipListings) && !(_.every areOwnershipListings)
+    @hasOwnAndRentFavorited = (listings) ->
+      favoritedListings = @filterByFavorites listings
+      areOwnershipListings = (@isOwnershipListing listing for listing in favoritedListings)
+      (_.some areOwnershipListings) && !(_.every areOwnershipListings)
+
     @isOpenMatchListing = (listing) ->
       @openMatchListings.indexOf(listing) > -1
 
     @isFavorited = (listingId) ->
       ListingDataService.isFavorited(listingId)
-      @filterByFavorites = (listings) ->
-        (listing for listing in listings when @isFavorited listing.Id)
+
+    @filterByFavorites = (listings) ->
+      (listing for listing in listings when @isFavorited listing.Id)
 
     @reservedLabel = (listing, type, modifier) ->
       ListingDataService.reservedLabel(listing, type, modifier)
