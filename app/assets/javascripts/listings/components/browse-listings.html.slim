@@ -1,12 +1,4 @@
-header.lead-header.bg-dust#listings_header ng-if="!$ctrl.parent.hasEligibilityFilters()"
-  .row
-    .medium-12.columns
-      .results-header
-        h1.results-header_values
-          | {{'LISTINGS.TELL_US_YOUR_HOUSEHOLD_SIZE' | translate}}
-        .results-header_actions
-          a.button.ghost-white.large ui-sref="dahlia.eligibility-estimator"
-            | {{'LABEL.ESTIMATE_YOUR_ELIGIBILITY' | translate}}
+ng-include src="'listings/templates/_buy-header.html'"
 
 /// Matches results bar
 header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
@@ -39,7 +31,7 @@ header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
                 use xlink:href="#i-close"
 
 / Notification: No listings with Open Applications
-section.results-section ng-if="!$ctrl.parent.openListings.length"
+section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length"
   .row
     .large-12.columns
       .block--short.bg-dust
@@ -48,10 +40,12 @@ section.results-section ng-if="!$ctrl.parent.openListings.length"
 / Listings:
 /   * Open (doesn't have a header)
 /   * Before Eligibility filter
-.results-section ng-if="!$ctrl.parent.hasEligibilityFilters() && $ctrl.parent.openListings.length"
+.results-section#listing-results ng-if="!$ctrl.parent.hasEligibilityFilters() && $ctrl.parent.openListings.length"
   .row
     .large-12.columns
       property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
+
+ng-include src="'listings/templates/_buy-callout.html'"
 
 / Listings:
 /   * After Eligibility filter
