@@ -928,8 +928,9 @@
         "ESTIMATE_ELIGIBILITY": "Estimate Eligibility",
         "ESTIMATE_ELIGIBILITY_DESCRIPTION": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
-        "SEE_LISTINGS": "See listings",
+        "SEE_RENTAL_LISTINGS": "Rent",
+        "SEE_SALE_LISTINGS": "Buy",
         "SIGN_UP_TODAY": "Sign Up today",
-        "TITLE": "Browse Affordable Housing Opportunities"
+        "TITLE": "Apply for affordable housing"
     }
 }

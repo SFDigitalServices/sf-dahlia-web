@@ -37,6 +37,9 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
     meta name="description" content="{{ngMeta.description}}"
     meta property="og:type" content="website"
 
+    javascript:
+      window.env = {showOwnershipListings: "#{ENV['SHOW_OWNERSHIP_LISTINGS']}"}
+
     - if ENV['HEAP_ANALYTICS_KEY']
       /! HEAP Analytics
       javascript:
