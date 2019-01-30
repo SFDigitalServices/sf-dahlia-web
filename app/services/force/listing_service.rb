@@ -36,8 +36,6 @@ module Force
       results.each do |result|
         if result['listingID'] == TEST_OWNERSHIP_LISTING_ID
           stub_ownership_listing_data(result)
-        else
-          stub_rental_listing_data(result)
         end
       end
       # TODO: Move filtering to saleforce request
@@ -184,7 +182,6 @@ module Force
       # Add stubbed listing fields
       # rubocop:disable LineLength
       stubbed_listing_data = {
-        'Tenure' => 'New sale',
         'Allows_Realtor_Commission' => true,
         'Realtor_Commission_Percentage' => 15,
         'Realtor_Commission_Info' => 'TBD but this will probably be a shortish string',
@@ -216,13 +213,6 @@ module Force
 
       # Add stubbed unit data
       listing['Units'] = stub_unit_data(listing['Units'])
-      listing
-    end
-
-    # TODO: Remove this method when we no longer need to stub data.
-    private_class_method def self.stub_rental_listing_data(listing)
-      stubbed_listing_data = { 'Tenure' => 'New rental' }
-      listing.merge!(stubbed_listing_data)
       listing
     end
 
