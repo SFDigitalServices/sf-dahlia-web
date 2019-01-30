@@ -68,7 +68,8 @@ To update this app with the latest PL styles:
 
 1. [Clone the PL repository in the same parent directory as this one.](https://github.com/Exygy/sf-dahlia-pattern-library)
 2. Optional: switch to the PL branch you want to import styles from.
-3. Run `grunt`
+3. `cd` to your `sf-dahlia-web` folder
+4. Run `grunt`
 
 We use `grunt-clean` and `grunt-copy` to transfer the CSS, and `grunt-replace` to replace relative background image paths with Rails asset URLs.
 
