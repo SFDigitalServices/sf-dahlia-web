@@ -60,6 +60,18 @@ To run E2E tests:
 
 Note: These tests will run on Semaphore (our CI) as well for every review app and QA deploy.
 
+## Importing pattern library styles
+
+We currently manually transfer the application's CSS from [our pattern library](https://github.com/Exygy/sf-dahlia-pattern-library) using Grunt.
+
+To update this app with the latest PL styles:
+
+1. [Clone the PL repository in the same parent directory as this one.](https://github.com/Exygy/sf-dahlia-pattern-library)
+2. Optional: switch to the PL branch you want to import styles from.
+3. Run `grunt`
+
+We use `grunt-clean` and `grunt-copy` to transfer the CSS, and `grunt-replace` to replace relative background image paths with Rails asset URLs.
+
 ### Acceptance/Feature Apps
 
 Temporary "acceptance" apps are created upon opening a pull request for a feature branch. After the pull request is closed, the acceptance app is automatically spun down. See [this Heroku article](https://devcenter.heroku.com/articles/github-integration-review-apps) for details.
