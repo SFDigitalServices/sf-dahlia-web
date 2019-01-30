@@ -1,4 +1,4 @@
-h4.h-caps-lined translate="LEASING_AGENT.CONTACT"
+h4.h-caps-lined translate="{{ $ctrl.parent.isOwnershipListing($ctrl.parent.listing) ? 'SALES_AGENT.CONTACT' : 'LEASING_AGENT.CONTACT' }}"
 h3.t-delta.t-sans.no-margin
   | {{ ::$ctrl.parent.listing.Leasing_Agent_Name }}
 p.c-steel
