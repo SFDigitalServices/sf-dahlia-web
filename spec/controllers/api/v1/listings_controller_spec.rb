@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'support/vcr_setup'
 
@@ -5,19 +7,31 @@ describe Api::V1::ListingsController do
   let(:listings) do
     VCR.use_cassette('listings/listings') do
       listings = Force::ListingService.send :get_listings
-      listings.take(10)
+      # Because we cannot guarantee what order listings will arrive in, and
+      # because we don't want to filter through the entire returned list to
+      # find some sale and some rental listings, here we mock the Tenure
+      # values on some listings to ensure that we have both sale and rental
+      # listings to test on. We plan in the future to have dedicated sale and
+      # rental listing Salesforce endpoints, which we can then test separately.
+      listings[0]['Tenure'] = 'New rental'
+      listings[1]['Tenure'] = 'Re-rental'
+      listings[2]['Tenure'] = 'New sale'
+      listings[3]['Tenure'] = 'Resale'
+      listings.take(4)
     end
   end
 
   before do
-    allow(Force::ListingService).to receive(:get_listings).with(nil)
-                                                          .and_return(listings)
+    allow(Force::ListingService)
+      .to receive(:get_listings)
+      .with(nil)
+      .and_return(listings)
   end
 
   describe '#index' do
-    fit 'returns all 10 listings' do
+    fit 'returns all 4 listings' do
       get :index
-      expect(JSON.parse(response.body)['listings'].size).to eq(10)
+      expect(JSON.parse(response.body)['listings'].size).to eq(4)
     end
 
     it 'returns only rental listings' do
