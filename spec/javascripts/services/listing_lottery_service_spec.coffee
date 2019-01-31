@@ -106,7 +106,6 @@ do ->
         spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
         expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false
 
-
     describe 'Service.listingHasLotteryResults', ->
       it 'returns true if lottery PDF is available', ->
         fakeListing.LotteryResultsURL = 'http://pdf.url'
