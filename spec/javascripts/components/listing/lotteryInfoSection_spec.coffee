@@ -14,6 +14,7 @@ do ->
     fakeListingLotteryService =
       listingHasLotteryBuckets: ->
       listingHasLotteryResults: jasmine.createSpy()
+      lotteryComplete: ->
       openLotteryResultsModal: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
@@ -44,6 +45,11 @@ do ->
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
           ctrl.showLotteryResultsModalButton()
           expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
+        it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
+          spyOn(fakeListingLotteryService, 'lotteryComplete')
+          ctrl.showLotteryResultsModalButton()
+          expect(fakeListingLotteryService.lotteryComplete).toHaveBeenCalled()
 
       describe '$ctrl.showDownloadLotteryResultsButton', ->
         it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
