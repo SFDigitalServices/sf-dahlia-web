@@ -1,4 +1,4 @@
-ng-include src="'listings/templates/_buy-header.html'"
+ng-include src="'listings/templates/_rent-header.html'"
 
 /// Matches results bar
 header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
@@ -45,7 +45,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
     .large-12.columns
       property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
 
-ng-include src="'listings/templates/_buy-callout.html'"
+ng-include src="'listings/templates/_rent-callout.html'"
 
 / Listings:
 /   * After Eligibility filter
