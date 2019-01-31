@@ -660,7 +660,8 @@
             "OTHER_GROUPS_MAY_QUALIFY": "Others, like San Francisco teachers and first responders, may qualify for loans.",
             "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
         },
-        "NO_AVAILABLE_UNITS": "There are no available units for sale at this time."
+        "NO_AVAILABLE_UNITS": "There are no available units for sale at this time.",
+        "SEE_THE_LISTINGS": "See the listings"
     },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
@@ -965,7 +966,6 @@
         "NEW_LISTING_EMAIL_ALERT": "Get emailed whenever a new listing is posted.",
         "SEE_RENTAL_LISTINGS": "Rent",
         "SEE_SALE_LISTINGS": "Buy",
-        "SEE_THE_LISTINGS": "See the listings",
         "SIGN_UP_TODAY": "Sign Up today",
         "TITLE": "Apply for affordable housing"
     }
