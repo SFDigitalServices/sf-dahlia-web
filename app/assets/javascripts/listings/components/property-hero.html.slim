@@ -87,7 +87,8 @@
         /       use xlink:href="#i-info"
         /   |  More Info
 
-      ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+      ng-include src="'listings/templates/listing/_rental_unit_stats.html'" ng-if="!$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
+      ng-include src="'listings/templates/listing/_ownership_unit_stats.html'" ng-if="$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
 
 
   / TODO: remove case for hardcoded listings
