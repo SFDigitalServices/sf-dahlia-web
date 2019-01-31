@@ -45,8 +45,6 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
     .large-12.columns
       property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
 
-ng-include src="'listings/templates/_rent-callout.html'"
-
 / Listings:
 /   * After Eligibility filter
 .has-eligibility-filters ng-if="$ctrl.parent.hasEligibilityFilters()"
@@ -86,6 +84,7 @@ ng-include src="'listings/templates/_rent-callout.html'"
       .large-12.columns
         property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
 
+ng-include src="'listings/templates/_rent-callout.html'" ng-if="!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length"
 
 / Notification: Not Matched listings
 section.margin-top--2x.margin-bottom--2x ng-if="$ctrl.openMatchListings.length && $ctrl.parent.openNotMatchListings.length"
