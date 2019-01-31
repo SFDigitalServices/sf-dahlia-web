@@ -636,8 +636,7 @@
             "FIND_MATCHING_LISTINGS": "Find matching listings",
             "IF_YOU_TELL_US": "If you tell us your household size and income, we can highlight listings you may qualify for.",
             "OR_GET_HELP_CALCULATING_INCOME": "or <a ui-sref='{{sref}}'>get help calculating your income</a>"
-        },
-        "NO_AVAILABLE_UNITS": "There are no available units for rent at this time."
+        }
     },
     "LISTINGS_FOR_SALE": {
         "CALLOUT": {
@@ -660,7 +659,6 @@
             "OTHER_GROUPS_MAY_QUALIFY": "Others, like San Francisco teachers and first responders, may qualify for loans.",
             "VIEW_FULL_LIST_OF_PROGRAMS": "View the full list of programs"
         },
-        "NO_AVAILABLE_UNITS": "There are no available units for sale at this time.",
         "SEE_THE_LISTINGS": "See the listings"
     },
     "LISTINGS": {
@@ -714,6 +712,7 @@
             "TITLE": "Lottery Results"
         },
         "MERRY_GO_ROUND_SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for up to 2 people only. Tenants may share bathrooms, and sometimes kitchen facilities.",
+        "NO_AVAILABLE_UNITS": "There are no available units at this time.",
         "NO_MATCHES": "No Matches",
         "NO_OPEN_LISTINGS": "No listings currently have open applications.",
         "OCCUPANCY_DESCRIPTION_ALL_SRO": "Occupancy for this building is limited to 1 person per unit.",
