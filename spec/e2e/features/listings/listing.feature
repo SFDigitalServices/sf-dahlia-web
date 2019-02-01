@@ -6,6 +6,6 @@ Feature: Listings
       Given I try to go to a listing page with an invalid ID
       Then I should be redirected to the welcome page
 
-    Scenario: Attempting to go to a sale listings page
-      Given I try to go to a sale listings page
+    Scenario: Attempting to go to the Ownership listings page
+      Given I try to go to the Ownership listings page
       Then I should see available units

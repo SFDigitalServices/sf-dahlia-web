@@ -16,7 +16,7 @@ Then 'I should be redirected to the welcome page', ->
   welcomeComponent = element(By.tagName('welcome-component'))
   @expect(welcomeComponent.isPresent()).to.eventually.equal(true)
 
-Given 'I try to go to a sale listings page', ->
+Given 'I try to go to the Ownership listings page', ->
   url = "/listings/for-sale"
   Utils.Page.goTo(url)
 
