@@ -14,3 +14,9 @@ Feature: Listings
       Given I go to the "Test Listing" listing page
       And I click the Download Application button
       Then I should see at least one paper application download link
+
+    Scenario: Going to ownership listings from the welcome page
+      Given I go to the welcome page
+      Then I should see a link to ownership listings
+      And I click the Buy link
+      Then I should be redirected to ownership listings
