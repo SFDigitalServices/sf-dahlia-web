@@ -4,57 +4,33 @@
 
 ListingConstantsService = () ->
   Service = {}
-  Service._mohcdRentalPaperAppURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
-  Service._mohcdEnglishRentalPaperAppURL = Service._mohcdRentalPaperAppURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
 
-  Service._mohcdOwnershipPaperAppURLBase = 'https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/'
-  Service._mohcdEnglishOwnershipPaperAppURL = Service._mohcdOwnershipPaperAppURLBase + 'English%20BMR%20Own%20Short%20Form%20Paper%20App.pdf'
+  Service._mohcdPaperAppURLBase = 'https://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service._mohcdPaperAppURLTemplate =
+    Service._mohcdPaperAppURLBase +
+    'BMR%20Rental%20Paper%20Applications/' +
+    '{lang}%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
+  Service._mohcdOwnershipPaperAppTemplate =
+    Service._mohcdPaperAppURLBase +
+    'BMR%20Ownership%20Paper%20Applications/' +
+    '{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf'
 
-  Service.rentalPaperAppURLs = [
-    {
-      'language': 'English'
-      'label': 'English'
-      'url': Service._mohcdEnglishRentalPaperAppURL
-    }
-    {
-      'language': 'Spanish'
-      'label': 'Español'
-      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Spanish')
-    }
-    {
-      'language': 'Traditional Chinese'
-      'label': '中文'
-      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Chinese')
-    }
-    {
-      'language': 'Tagalog'
-      'label': 'Filipino'
-      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Tagalog')
-    }
+  Service.paperAppLanguages = [
+    { language: 'English', label: 'English' }
+    { language: 'Spanish', label: 'Español' }
+    { language: 'Traditional Chinese', label: '中文', slug: 'Chinese' }
+    { language: 'Tagalog', label: 'Filipino' }
   ]
-
-  Service.ownershipPaperAppURLs = [
-    {
-      'language': 'English'
-      'label': 'English'
-      'url': Service._mohcdEnglishOwnershipPaperAppURL
-    }
-    {
-      'language': 'Spanish'
-      'label': 'Español'
-      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Spanish')
-    }
-    {
-      'language': 'Traditional Chinese'
-      'label': '中文'
-      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Chinese')
-    }
-    {
-      'language': 'Tagalog'
-      'label': 'Filipino'
-      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Tagalog')
-    }
-  ]
+  Service.rentalPaperAppURLs = Service.paperAppLanguages.map((l) -> {
+    language: l.language
+    label: l.label
+    url: Service._mohcdPaperAppURLTemplate.replace('{lang}', l.slug || l.language)
+  })
+  Service.ownershipPaperAppURLs = Service.paperAppLanguages.map((l) -> {
+    language: l.language
+    label: l.label
+    url: Service._mohcdOwnershipPaperAppTemplate.replace('{lang}', l.slug || l.language)
+  })
 
   Service.fieldsForUnitGrouping = [
     'Unit_Type',
