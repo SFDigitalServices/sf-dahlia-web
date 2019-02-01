@@ -53,7 +53,8 @@
       // -- Unit Summary Table(s)
       / General
       .scrollable-table-container
-        property-card-pricing listing="::$ctrl.listing"
+        property-card-rental-stats listing="::$ctrl.listing" ng-if="!$ctrl.listingContainer.isOwnershipListing($ctrl.listing)"
+        property-card-ownership-stats listing="::$ctrl.listing" ng-if="$ctrl.listingContainer.isOwnershipListing($ctrl.listing)"
 
       .property-card_action.small-only-text-center
         button.button.round-icon.has-label data-event="gtm-favorite" ng-click="$ctrl.listingContainer.toggleFavoriteListing($ctrl.listing.Id)"
