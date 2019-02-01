@@ -371,7 +371,7 @@ ListingDataService = (
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
-  Service.getlistingPaperAppURLs = (listing) ->
+  Service.getListingPaperAppURLs = (listing) ->
     if ListingIdentityService.isOwnership(listing)
       urls = angular.copy(ListingConstantsService.ownershipPaperAppURLs)
     else
@@ -383,7 +383,6 @@ ListingDataService = (
     tagalog = _.find(urls, { language: 'Tagalog' })
 
     # replace download URLs if they are customized on the listing
-    listing = Service.listing
     english.url = listing.Download_URL if listing.Download_URL
     chinese.url = listing.Download_URL_Cantonese if listing.Download_URL_Cantonese
     spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish

@@ -14,11 +14,30 @@ do ->
       include_children_under_6: true
       children_under_6: 1
     fakeListingConstantsService = {
-      defaultApplicationURLs: [{
-        'language': 'Spanish'
-        'label': 'Español'
-        'url': 'http://url.com'
-      }]
+      rentalPaperAppURLs: [
+        {
+          language: 'English'
+          label: 'English'
+          url: 'https://englishrentalapp.com'
+        }
+        {
+          language: 'Spanish'
+          label: 'Español'
+          url: 'https://spanishrentalapp.com'
+        }
+      ]
+      ownershipPaperAppURLs: [
+        {
+          language: 'English'
+          label: 'English'
+          url: 'https://englishownershipapp.com'
+        }
+        {
+          language: 'Spanish'
+          label: 'Español'
+          url: 'https://spanishownershipapp.com'
+        }
+      ]
     }
     fakeListingEligibilityService = {
       eligibilityYearlyIncome: jasmine.createSpy()
@@ -28,6 +47,7 @@ do ->
     }
     fakeListingIdentityService =
       listingIs: ->
+      isOwnership: ->
       isFirstComeFirstServe: ->
       isOpen: ->
     fakeListingLotteryService =
@@ -151,7 +171,7 @@ do ->
         expect(ListingDataService.AMICharts).toEqual []
 
       it 'resets the download URLs', ->
-        ListingDataService.listingPaperAppURLs = angular.copy(fakeListingConstantsService.defaultApplicationURLs)
+        ListingDataService.listingPaperAppURLs = angular.copy(fakeListingConstantsService.rentalPaperAppURLs)
         ListingDataService.resetListingData()
         expect(ListingDataService.listingPaperAppURLs).toEqual []
 
@@ -300,6 +320,7 @@ do ->
     describe 'Service.loadListing', ->
       beforeEach ->
         ListingDataService.loadListing(fakeListing.listing)
+
       it 'should populate Service.listing', ->
         expect(ListingDataService.listing.Id).toEqual fakeListing.listing.Id
       it 'should populate Service.listing.preferences', ->
@@ -307,3 +328,54 @@ do ->
         expect(ListingDataService.listing.preferences.length).toEqual count
         prefId = fakeListing.listing.Listing_Lottery_Preferences[0].Id
         expect(ListingDataService.listing.preferences[0].listingPreferenceID).toEqual prefId
+
+    describe 'Service.getListingPaperAppURLs', ->
+      describe 'for a rental listing', ->
+        beforeEach ->
+          spyOn(fakeListingIdentityService, 'isOwnership').and.returnValue(false)
+
+        describe 'with no custom download URLs', ->
+          beforeEach ->
+            listing = angular.copy(fakeListing.listing)
+
+          it 'should set Service.listingPaperAppURLs to the default rental paper application download URLs', ->
+            ListingDataService.getListingPaperAppURLs(listing)
+            expect(ListingDataService.listingPaperAppURLs).toEqual fakeListingConstantsService.rentalPaperAppURLs
+
+        describe 'with custom download URLs', ->
+          beforeEach ->
+            listing = angular.copy(fakeListing.listing)
+            listing.Download_URL = 'https://englishcustomappurl.com'
+
+          it 'should set Service.listingPaperAppURLs to the default rental paper application download URLs merged with any available corresponding custom URLs', ->
+            ListingDataService.getListingPaperAppURLs(listing)
+            listingEnglishUrl = _.find(ListingDataService.listingPaperAppURLs, { language: 'English'})
+            listingSpanishUrl = _.find(ListingDataService.listingPaperAppURLs, { language: 'Spanish'})
+            defaultSpanishURL = _.find(fakeListingConstantsService.rentalPaperAppURLs, { language: 'Spanish'})
+            expect(listingEnglishUrl.url).toEqual listing.Download_URL
+            expect(listingSpanishUrl.url).toEqual defaultSpanishURL.url
+
+      describe 'for an ownership listing', ->
+        beforeEach ->
+          spyOn(fakeListingIdentityService, 'isOwnership').and.returnValue(true)
+
+        describe 'with no custom download URLs', ->
+          beforeEach ->
+            listing = angular.copy(fakeListing.listing)
+
+          it 'should set Service.listingPaperAppURLs to the default ownership paper application download URLs', ->
+            ListingDataService.getListingPaperAppURLs(listing)
+            expect(ListingDataService.listingPaperAppURLs).toEqual fakeListingConstantsService.ownershipPaperAppURLs
+
+        describe 'with custom download URLs', ->
+          beforeEach ->
+            listing = angular.copy(fakeListing.listing)
+            listing.Download_URL = 'https://englishcustomappurl.com'
+
+          it 'should set Service.listingPaperAppURLs to the default ownership paper application download URLs merged with any available corresponding custom URLs', ->
+            ListingDataService.getListingPaperAppURLs(listing)
+            listingEnglishUrl = _.find(ListingDataService.listingPaperAppURLs, { language: 'English'})
+            listingSpanishUrl = _.find(ListingDataService.listingPaperAppURLs, { language: 'Spanish'})
+            defaultSpanishURL = _.find(fakeListingConstantsService.ownershipPaperAppURLs, { language: 'Spanish'})
+            expect(listingEnglishUrl.url).toEqual listing.Download_URL
+            expect(listingSpanishUrl.url).toEqual defaultSpanishURL.url
