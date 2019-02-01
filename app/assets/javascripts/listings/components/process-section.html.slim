@@ -69,24 +69,7 @@ accordion-heading
     p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)"
       | Lottery date, time and venue to be scheduled.
 
-  .content-group ng-if="::$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
-    h4.h-caps-lined
-      | Expected move-in date
-    p.t-small.caps
-      | {{ ::$ctrl.parent.listing.Expected_Move_in_Date | date : 'MMMM yyyy' }}
-
-  .content-group
-    ng-include src="'listings/templates/listing/_what_to_expect.html'"
-
-  .content-group ng-if="::$ctrl.parent.listing.Leasing_Agent_Phone || $ctrl.parent.listing.Leasing_Agent_Email"
-    ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
-
-  .content-group ng-if="::$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
-    h4.h-caps-lined
-      | Housing Program
-    p
-      a href="https://sfmohcd.org/for-buyers"
-        | Below Market Rate
+  ng-include src="'listings/templates/listing/_additional_info.html'"
 
   .content-group
     p.t-small Listing Updated: {{::$ctrl.parent.listing.LastModifiedDate | date : 'MMMM d, yyyy'}}

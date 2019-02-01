@@ -1,0 +1,24 @@
+.content-group ng-if="::$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
+  h4.h-caps-lined
+    | Expected move-in date
+  p.t-small.caps
+    | {{ ::$ctrl.parent.listing.Expected_Move_in_Date | date : 'MMMM yyyy' }}
+
+.content-group
+  ng-include src="'listings/templates/listing/_what_to_expect.html'"
+
+.content-group ng-repeat="lotteryPreference in ::$ctrl.parent.listing.preferences" ng-if="!$ctrl.listingHasLotteryResults() && lotteryPreference.pdfUrl"
+  h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{::lotteryPreference.preferenceName}}"
+  a.button.primary.expand ng-href="{{::lotteryPreference.pdfUrl}}" target="_blank"
+    | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
+  p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
+
+.content-group ng-if="::$ctrl.parent.agentInfoAvailable($ctrl.parent.listing)"
+  ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
+
+.content-group ng-if="::$ctrl.parent.isOwnershipListing($ctrl.parent.listing)"
+  h4.h-caps-lined
+    | Housing Program
+  p
+    a href="https://sfmohcd.org/for-buyers"
+      | Below Market Rate
