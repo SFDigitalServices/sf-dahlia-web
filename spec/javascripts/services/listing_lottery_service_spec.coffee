@@ -101,7 +101,7 @@ do ->
         spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
         expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual true
 
-      it 'returns true when the listings lottery is complete', ->
+      it 'returns false when the listings lottery is complete', ->
         fakeListing.Lottery_Status = 'Lottery Complete'
         spyOn(ListingLotteryService, 'lotteryDatePassed').and.returnValue(false)
         expect(ListingLotteryService.lotteryIsUpcoming(fakeListing)).toEqual false

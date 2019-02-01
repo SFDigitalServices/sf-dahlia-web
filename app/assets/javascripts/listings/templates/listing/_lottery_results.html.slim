@@ -1,7 +1,7 @@
 h4.t-gamma.t-serif Lottery Results
 p.content-group_day.margin-bottom
   | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
-.padding.bg-dust
+.padding.bg-dust ng-if="$ctrl.lotteryComplete()"
   p.c-steel.t-small.margin-bottom ng-if="$ctrl.parent.listing.Lottery_Summary"
     | {{$ctrl.parent.listing.Lottery_Summary}}
 

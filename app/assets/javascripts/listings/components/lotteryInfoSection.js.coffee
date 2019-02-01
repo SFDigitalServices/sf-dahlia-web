@@ -15,10 +15,13 @@ angular.module('dahlia.components')
       ListingLotteryService.openLotteryResultsModal()
 
     @showLotteryResultsModalButton = ->
-      ListingLotteryService.listingHasLotteryBuckets(this.parent.listing) && ListingLotteryService.lotteryComplete(this.parent.listing)
+      ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
 
     @showDownloadLotteryResultsButton = ->
       this.parent.listing.LotteryResultsURL && !ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
+
+    @lotteryComplete = ->
+      ListingLotteryService.lotteryComplete(this.parent.listing)
 
     @leasingAgentInfoAvailable = ->
       l = this.parent.listing
