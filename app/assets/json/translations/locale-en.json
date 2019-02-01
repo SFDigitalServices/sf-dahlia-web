@@ -657,7 +657,7 @@
             "SEND_BY_US_MAIL": "Send Application by US Mail",
             "SUBMIT_A_PAPER_APPLICATION": "Submit a Paper Application",
             "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application.",
-            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='https://sfmohcd.org/homebuyer-program-eligibility'>eligibility requirements</a> for this listing before you begin."
+            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}'>eligibility requirements</a> for this listing before you begin."
         },
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
