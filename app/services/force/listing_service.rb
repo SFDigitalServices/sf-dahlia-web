@@ -179,20 +179,6 @@ module Force
       # rubocop:enable LineLength
       listing.merge!(stubbed_listing_data)
 
-      # Add stubbed unitSummaries data
-      stubbed_unit_summaries_data = {
-        'minPriceWithoutParking' => 260_000,
-        'maxPriceWithoutParking' => 300_000,
-        'minPriceWithParking' => 289_000,
-        'maxPriceWithParking' => 400_000,
-        'minHoaDuesWithoutParking' => 466,
-        'maxHoaDuesWithoutParking' => 500,
-        'minHoaDuesWithParking' => 562,
-        'maxHoaDuesWithParking' => 700,
-      }
-      listing['unitSummaries']['general'].each do |summary|
-        summary.merge!(stubbed_unit_summaries_data)
-      end
       listing
     end
 
