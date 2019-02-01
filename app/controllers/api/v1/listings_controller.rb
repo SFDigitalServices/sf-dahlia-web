@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # RESTful JSON API to query for listings
 class Api::V1::ListingsController < ApiController
   def index
     # params[:ids] could be nil which means get all open listings
     # params[:ids] is a comma-separated list of ids
-    @listings = Force::ListingService.listings(params[:ids])
+    @listings = Force::ListingService.listings(listings_params)
     render json: { listings: @listings }
   end
 
@@ -62,5 +64,11 @@ class Api::V1::ListingsController < ApiController
       }
     end
     render json: { ami: @ami_levels }
+  end
+
+  private
+
+  def listings_params
+    params.permit(:ids, :Tenure)
   end
 end

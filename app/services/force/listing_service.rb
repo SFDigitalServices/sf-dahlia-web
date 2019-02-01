@@ -23,18 +23,23 @@ module Force
       Does_Match
       LastModifiedDate
       imageURL
+      Tenure
     ].freeze
     TEST_OWNERSHIP_LISTING_ID = 'a0W21000007AWriEAG'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
-    def self.listings(ids = nil)
-      params = ids.present? ? { ids: ids } : nil
+    def self.listings(attrs = {})
+      params = attrs[:ids].present? ? { ids: attrs[:ids] } : nil
       results = get_listings(params)
       # TODO: Remove stubbed listing data when fields are available on Salesforce.
       results.each do |result|
-        stub_listing_data(result) if result['listingID'] == TEST_OWNERSHIP_LISTING_ID
+        if result['listingID'] == TEST_OWNERSHIP_LISTING_ID
+          stub_ownership_listing_data(result)
+        end
       end
+      # TODO: Move filtering to saleforce request
+      results = filter_listings(results, attrs) if attrs.present?
       clean_listings_for_browse(results)
     end
 
@@ -62,7 +67,7 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       result = add_image_urls(results).first
       # TODO: Remove stubbed out listing when fields are available on Salesforce.
-      stub_listing_data(result) if id == TEST_OWNERSHIP_LISTING_ID
+      stub_ownership_listing_data(result) if id == TEST_OWNERSHIP_LISTING_ID
       result
     end
 
@@ -156,11 +161,10 @@ module Force
     end
 
     # TODO: Remove this method when we no longer need to stub data.
-    private_class_method def self.stub_listing_data(listing)
+    private_class_method def self.stub_ownership_listing_data(listing)
       # Add stubbed listing fields
       # rubocop:disable LineLength
       stubbed_listing_data = {
-        'Tenure' => 'New sale',
         'Allows_Realtor_Commission' => true,
         'Realtor_Commission_Percentage' => 15,
         'Realtor_Commission_Info' => 'TBD but this will probably be a shortish string',
@@ -190,6 +194,30 @@ module Force
         summary.merge!(stubbed_unit_summaries_data)
       end
       listing
+    end
+
+    private_class_method def self.filter_listings(results, filter)
+      results = results.collect(&:with_indifferent_access)
+      filter.except(:ids).each do |key, value|
+        results = case key.to_sym
+                  when :Tenure
+                    case value
+                    when 'rental'
+                      results.select do |listing|
+                        listing[key] == 'New rental' || listing[key] == 'Re-rental'
+                      end
+                    when 'sale'
+                      results.select do |listing|
+                        listing[key] == 'New sale' || listing[key] == 'Resale'
+                      end
+                    else
+                      results
+                    end
+                  else
+                    results
+                  end
+      end
+      results
     end
   end
 end

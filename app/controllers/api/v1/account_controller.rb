@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
   before_action :authenticate_user!, except: %i[confirm check_account]
@@ -45,7 +47,7 @@ class Api::V1::AccountController < ApiController
 
   def map_listings_to_applications(applications)
     listing_ids = applications.collect { |a| a['listingID'] }.uniq.sort
-    listings = Force::ListingService.listings(listing_ids.join(','))
+    listings = Force::ListingService.listings(ids: listing_ids.join(','))
     applications.each do |app|
       app['listing'] = listings.find { |l| l['listingID'] == app['listingID'] }
     end
