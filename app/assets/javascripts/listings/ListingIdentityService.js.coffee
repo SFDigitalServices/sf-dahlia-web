@@ -15,6 +15,9 @@ ListingIdentityService = (ListingConstantsService) ->
     return false unless listing && name
     ListingConstantsService.LISTING_MAP[listing.Id] == name
 
+  Service.isOwnership = (listing) ->
+    listing.Tenure == 'New sale' || listing.Tenure == 'Resale'
+
   Service.isFirstComeFirstServe = (listing) ->
     return false unless listing
     # hardcoded, currently just this one listing

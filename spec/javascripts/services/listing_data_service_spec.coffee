@@ -145,9 +145,9 @@ do ->
         expect(ListingDataService.AMICharts).toEqual []
 
       it 'resets the download URLs', ->
-        ListingDataService.listingDownloadURLs = angular.copy(fakeListingConstantsService.defaultApplicationURLs)
+        ListingDataService.listingPaperAppURLs = angular.copy(fakeListingConstantsService.defaultApplicationURLs)
         ListingDataService.resetListingData()
-        expect(ListingDataService.listingDownloadURLs).toEqual []
+        expect(ListingDataService.listingPaperAppURLs).toEqual []
 
       it 'calls ListingLotteryService.resetData', ->
         ListingDataService.resetListingData()

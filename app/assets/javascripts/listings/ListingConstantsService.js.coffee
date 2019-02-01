@@ -4,30 +4,55 @@
 
 ListingConstantsService = () ->
   Service = {}
-  Service._mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
-  Service._mohcdEnglishApplicationURL = Service._mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
+  Service._mohcdRentalPaperAppURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
+  Service._mohcdEnglishRentalPaperAppURL = Service._mohcdRentalPaperAppURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
 
-  Service.defaultApplicationURLs = [
-    # http://sfmohcd.org/general-bmr-rental-application
+  Service._mohcdOwnershipPaperAppURLBase = 'https://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Ownership%20Paper%20Applications/'
+  Service._mohcdEnglishOwnershipPaperAppURL = Service._mohcdOwnershipPaperAppURLBase + 'English%20BMR%20Own%20Short%20Form%20Paper%20App.pdf'
+
+  Service.rentalPaperAppURLs = [
     {
       'language': 'English'
       'label': 'English'
-      'url': Service._mohcdEnglishApplicationURL
+      'url': Service._mohcdEnglishRentalPaperAppURL
     }
     {
       'language': 'Spanish'
       'label': 'Español'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Spanish')
+      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Spanish')
     }
     {
       'language': 'Traditional Chinese'
       'label': '中文'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Chinese')
+      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Chinese')
     }
     {
       'language': 'Tagalog'
       'label': 'Filipino'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Tagalog')
+      'url': Service._mohcdEnglishRentalPaperAppURL.replace('English', 'Tagalog')
+    }
+  ]
+
+  Service.ownershipPaperAppURLs = [
+    {
+      'language': 'English'
+      'label': 'English'
+      'url': Service._mohcdEnglishOwnershipPaperAppURL
+    }
+    {
+      'language': 'Spanish'
+      'label': 'Español'
+      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Spanish')
+    }
+    {
+      'language': 'Traditional Chinese'
+      'label': '中文'
+      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Chinese')
+    }
+    {
+      'language': 'Tagalog'
+      'label': 'Filipino'
+      'url': Service._mohcdEnglishOwnershipPaperAppURL.replace('English', 'Tagalog')
     }
   ]
 
