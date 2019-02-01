@@ -70,7 +70,7 @@
           templateUrl: 'listings/templates/listings.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: true, retranslate: true})
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'rental'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
