@@ -113,7 +113,8 @@ ListingDataService = (
       return Service.getListingsWithEligibility()
     deferred = $q.defer()
     $http.get("/api/v1/listings.json", {
-      etagCache: true
+      etagCache: true,
+      params: opts.params
     }).success(
       Service.getListingsResponse(deferred, opts.retranslate)
     ).cached(

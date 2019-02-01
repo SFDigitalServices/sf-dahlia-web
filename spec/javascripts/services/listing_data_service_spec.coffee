@@ -105,6 +105,12 @@ do ->
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(true)
         ListingDataService.getListings({checkEligibility: true})
         expect(fakeListingEligibilityService.eligibilityYearlyIncome).toHaveBeenCalled()
+      it 'passes params to http request', ->
+        fakeParams = {checkEligibility: false, params: {Tenure: 'rental'}}
+        httpBackend.expect('GET', "/api/v1/listings.json?Tenure=rental").respond(fakeListings)
+        spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(false)
+        ListingDataService.getListings(fakeParams)
+        httpBackend.flush()
 
     describe 'Service.getListing', ->
       afterEach ->
