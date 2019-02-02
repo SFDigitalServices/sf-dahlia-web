@@ -8,7 +8,7 @@ angular.module('dahlia.components')
     (ListingDataService, ListingLotteryService, ShortFormApplicationService, AnalyticsService) ->
       ctrl = @
       @showApplicationOptions = false
-      @listingDownloadURLs = ListingDataService.listingDownloadURLs
+      @listingPaperAppURLs = ListingDataService.listingPaperAppURLs
 
       @application = ShortFormApplicationService.application
 
