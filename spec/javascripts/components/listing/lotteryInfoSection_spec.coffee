@@ -16,6 +16,7 @@ do ->
       listingHasLotteryResults: jasmine.createSpy()
       lotteryComplete: ->
       openLotteryResultsModal: jasmine.createSpy()
+      loading: { lotteryResults: false }
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_) ->
@@ -45,11 +46,6 @@ do ->
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets')
           ctrl.showLotteryResultsModalButton()
           expect(fakeListingLotteryService.listingHasLotteryBuckets).toHaveBeenCalled()
-        it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
-          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(true)
-          spyOn(fakeListingLotteryService, 'lotteryComplete')
-          ctrl.showLotteryResultsModalButton()
-          expect(fakeListingLotteryService.lotteryComplete).toHaveBeenCalled()
 
       describe '$ctrl.showDownloadLotteryResultsButton', ->
         it 'calls ListingLotteryService.listingHasLotteryBuckets', ->
@@ -62,3 +58,7 @@ do ->
         it 'returns true if listing is missing buckets', ->
           spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
           expect(ctrl.showDownloadLotteryResultsButton()).toEqual true
+        it 'returns false if loading', ->
+          fakeListingLotteryService.loading.lotteryResults = true
+          spyOn(fakeListingLotteryService, 'listingHasLotteryBuckets').and.returnValue(false)
+          expect(ctrl.showDownloadLotteryResultsButton()).toEqual false
