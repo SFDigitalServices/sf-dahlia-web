@@ -69,7 +69,7 @@ accordion-heading
     p.t-small.c-steel ng-if="::!$ctrl.parent.lotteryDateVenueAvailable($ctrl.parent.listing)"
       | Lottery date, time and venue to be scheduled.
 
-  ng-include src="'listings/templates/listing/_additional_info.html'"
+  ng-include src="'listings/templates/listing/_additional_sidebar_info.html'"
 
   .content-group
     p.t-small Listing Updated: {{::$ctrl.parent.listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
