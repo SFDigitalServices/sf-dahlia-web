@@ -6,7 +6,7 @@ angular.module('dahlia.components')
 
   controller: ['$window', ($window) ->
     ctrl = @
-    @showOwnershipListings = $window.env.showOwnershipListings == 'true'
+    @showSaleListings = $window.env.showSaleListings == 'true'
 
     return ctrl
   ]

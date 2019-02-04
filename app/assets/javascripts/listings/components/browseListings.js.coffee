@@ -3,6 +3,8 @@ angular.module('dahlia.components')
   templateUrl: 'listings/components/browse-listings.html'
   require:
     parent: '^listingContainer'
+  bindings:
+    tenureType: '@'
   controller: ['$state', 'IncomeCalculatorService', 'ListingDataService', 'ListingEligibilityService',
   ($state, IncomeCalculatorService, ListingDataService, ListingEligibilityService) ->
     ctrl = @

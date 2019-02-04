@@ -1,4 +1,5 @@
-ng-include src="'listings/templates/_rent-header.html'"
+ng-include src="'listings/templates/_rental-header.html'" ng-if="$ctrl.tenureType == 'rental'"
+ng-include src="'listings/templates/_sale-header.html'" ng-if="$ctrl.tenureType == 'sale'"
 
 /// Matches results bar
 header.lead-header ng-if="$ctrl.parent.hasEligibilityFilters()"
@@ -84,7 +85,8 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
       .large-12.columns
         property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
 
-ng-include src="'listings/templates/_rent-callout.html'" ng-if="!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length"
+ng-include src="'listings/templates/_rental-callout.html'" ng-if="$ctrl.tenureType == 'rental' && !$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length"
+ng-include src="'listings/templates/_sale-callout.html'" ng-if="$ctrl.tenureType == 'sale' && !$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length"
 
 / Notification: Not Matched listings
 section.margin-top--2x.margin-bottom--2x ng-if="$ctrl.openMatchListings.length && $ctrl.parent.openNotMatchListings.length"

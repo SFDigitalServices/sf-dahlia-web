@@ -15,11 +15,11 @@ section.row ng-show="!$ctrl.parent.favorites.length"
 .results-section
   .row
     .large-12.columns
-      h2.text-center.large-text-left.t-gamma.t-serif ng-if="$ctrl.parent.hasOwnAndRentFavorited($ctrl.parent.listings)"
+      h2.text-center.large-text-left.t-gamma.t-serif ng-if="$ctrl.parent.hasSaleAndRentalFavorited($ctrl.parent.listings)"
         | Rental Units
-      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && !$ctrl.parent.isOwnership(listing)"
-      h2.text-center.large-text-left.t-gamma.t-serif ng-if="$ctrl.parent.hasOwnAndRentFavorited($ctrl.parent.listings)"
+      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && !$ctrl.parent.isSale(listing)"
+      h2.text-center.large-text-left.t-gamma.t-serif ng-if="$ctrl.parent.hasSaleAndRentalFavorited($ctrl.parent.listings)"
         | Ownership Units
-      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && $ctrl.parent.isOwnership(listing)"
+      property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && $ctrl.parent.isSale(listing)"
 
 ng-include src="'pages/templates/_email-updates.html'"
