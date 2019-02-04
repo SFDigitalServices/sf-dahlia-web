@@ -4,32 +4,33 @@
 
 ListingConstantsService = () ->
   Service = {}
-  Service._mohcdApplicationURLBase = 'http://sfmohcd.org/sites/default/files/Documents/MOH/BMR%20Rental%20Paper%20Applications/'
-  Service._mohcdEnglishApplicationURL = Service._mohcdApplicationURLBase + 'English%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
 
-  Service.defaultApplicationURLs = [
-    # http://sfmohcd.org/general-bmr-rental-application
-    {
-      'language': 'English'
-      'label': 'English'
-      'url': Service._mohcdEnglishApplicationURL
-    }
-    {
-      'language': 'Spanish'
-      'label': 'Español'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Spanish')
-    }
-    {
-      'language': 'Traditional Chinese'
-      'label': '中文'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Chinese')
-    }
-    {
-      'language': 'Tagalog'
-      'label': 'Filipino'
-      'url': Service._mohcdEnglishApplicationURL.replace('English', 'Tagalog')
-    }
+  Service._mohcdPaperAppURLBase = 'https://sfmohcd.org/sites/default/files/Documents/MOH/'
+  Service._mohcdPaperAppURLTemplate =
+    Service._mohcdPaperAppURLBase +
+    'BMR%20Rental%20Paper%20Applications/' +
+    '{lang}%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
+  Service._mohcdOwnershipPaperAppTemplate =
+    Service._mohcdPaperAppURLBase +
+    'BMR%20Ownership%20Paper%20Applications/' +
+    '{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf'
+
+  Service.paperAppLanguages = [
+    { language: 'English', label: 'English' }
+    { language: 'Spanish', label: 'Español' }
+    { language: 'Traditional Chinese', label: '中文', slug: 'Chinese' }
+    { language: 'Tagalog', label: 'Filipino' }
   ]
+  Service.rentalPaperAppURLs = Service.paperAppLanguages.map((l) -> {
+    language: l.language
+    label: l.label
+    url: Service._mohcdPaperAppURLTemplate.replace('{lang}', l.slug || l.language)
+  })
+  Service.ownershipPaperAppURLs = Service.paperAppLanguages.map((l) -> {
+    language: l.language
+    label: l.label
+    url: Service._mohcdOwnershipPaperAppTemplate.replace('{lang}', l.slug || l.language)
+  })
 
   Service.fieldsForUnitGrouping = [
     'Unit_Type',
