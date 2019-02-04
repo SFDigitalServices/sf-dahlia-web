@@ -70,7 +70,21 @@
           templateUrl: 'listings/templates/listings.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: true, retranslate: true})
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'rental'}})
+        ]
+        $title: ['$translate', ($translate) ->
+          # translate used without ".instant" so that it will async resolve
+          $translate('PAGE_TITLE.LISTINGS')
+        ]
+    })
+    .state('dahlia.listings-for-sale', {
+      url: '/listings/for-sale'
+      views:
+        'container@':
+          templateUrl: 'listings/templates/listings.html'
+      resolve:
+        listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'sale'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -112,7 +126,7 @@
               setTimeout(ListingPreferenceService.getListingPreferences.bind(null, ListingDataService.listing, forceRecache))
               unless ListingLotteryService.lotteryIsUpcoming(ListingDataService.listing)
                 setTimeout(ListingLotteryService.getLotteryBuckets.bind(null, ListingDataService.listing))
-              setTimeout(ListingDataService.getListingDownloadURLs)
+              setTimeout(ListingDataService.getListingPaperAppURLs.bind(null, ListingDataService.listing))
               # be sure to reset all relevant data in ListingDataService.resetListingData() if you add to this list !
             ).catch( (response) ->
               deferred.reject(response)

@@ -2,14 +2,15 @@ do ->
   'use strict'
   describe 'ListingIdentityService', ->
     ListingIdentityService = undefined
-    fakeListing = getJSONFixture('listings-api-show.json')
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeListingConstantsService =
       LISTING_MAP: {}
-    fakeListingConstantsService.LISTING_MAP[fakeListing.listing.Id] = fakeListing.listing.Name
+    fakeListingConstantsService.LISTING_MAP[fakeListing.Id] = fakeListing.Name
     tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
     lastWeek = new Date()
     lastWeek.setDate(lastWeek.getDate() - 7)
+    testListing = null
 
     beforeEach module('dahlia.services', ($provide) ->
       $provide.value 'ListingConstantsService', fakeListingConstantsService
@@ -23,11 +24,34 @@ do ->
 
     describe 'Service.listingIs', ->
       it 'returns true if the given listing has the given name', ->
-        expect(ListingIdentityService.listingIs(fakeListing.listing.Name, fakeListing.listing)).toEqual true
+        expect(ListingIdentityService.listingIs(fakeListing.Name, fakeListing)).toEqual true
       it 'returns false if a name is not given', ->
         expect(ListingIdentityService.listingIs(null, fakeListing)).toEqual false
       it 'returns false if a listing is not given', ->
         expect(ListingIdentityService.listingIs('Fake Listing', null)).toEqual false
+
+    describe 'Service.isOwnership', ->
+      beforeEach ->
+        testListing = angular.copy(fakeListing)
+
+      describe 'when the listing has a rental tenure', ->
+        it 'returns false', ->
+          testListing.Tenure = 'New rental'
+          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+          testListing.Tenure = 'Re-rental'
+          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+
+      describe 'when the listing does not have a tenure defined', ->
+        it 'returns false', ->
+          delete testListing.Tenure
+          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+
+      describe 'when the listing has an ownership tenure', ->
+        it 'returns true', ->
+          testListing.Tenure = 'New sale'
+          expect(ListingIdentityService.isOwnership(testListing)).toEqual true
+          testListing.Tenure = 'Resale'
+          expect(ListingIdentityService.isOwnership(testListing)).toEqual true
 
     describe 'Service.isFirstComeFirstServe', ->
       it 'calls Service.listingIs with the name "168 Hyde Relisting" and the given listing', ->
@@ -36,12 +60,13 @@ do ->
         expect(ListingIdentityService.listingIs).toHaveBeenCalledWith('168 Hyde Relisting', fakeListing)
 
     describe 'Service.isOpen', ->
+      beforeEach ->
+        testListing = angular.copy(fakeListing)
+
       it 'returns true if listing application due date has not passed', ->
-        listing = fakeListing.listing
-        listing.Application_Due_Date = tomorrow.toString()
-        expect(ListingIdentityService.isOpen(listing)).toEqual true
+        testListing.Application_Due_Date = tomorrow.toString()
+        expect(ListingIdentityService.isOpen(testListing)).toEqual true
       it 'returns false if listing application due date has passed', ->
-        listing = fakeListing.listing
-        listing.Application_Due_Date = lastWeek.toString()
-        expect(ListingIdentityService.isOpen(listing)).toEqual false
+        testListing.Application_Due_Date = lastWeek.toString()
+        expect(ListingIdentityService.isOpen(testListing)).toEqual false
 

@@ -20,7 +20,7 @@ ListingDataService = (
   Service.loading = {}
   Service.error = {}
   Service.toggleStates = {}
-  Service.listingDownloadURLs = []
+  Service.listingPaperAppURLs = []
   $localStorage.favorites ?= []
   Service.favorites = $localStorage.favorites
   Service.preferenceMap = ListingConstantsService.preferenceMap
@@ -82,7 +82,7 @@ ListingDataService = (
   Service.resetListingData = () ->
     angular.copy({}, Service.listing)
     angular.copy([], Service.AMICharts)
-    angular.copy([], Service.listingDownloadURLs)
+    angular.copy([], Service.listingPaperAppURLs)
     ListingLotteryService.resetData()
 
   Service.getListingResponse = (deferred, retranslate = false) ->
@@ -113,7 +113,8 @@ ListingDataService = (
       return Service.getListingsWithEligibility()
     deferred = $q.defer()
     $http.get("/api/v1/listings.json", {
-      etagCache: true
+      etagCache: true,
+      params: opts.params
     }).success(
       Service.getListingsResponse(deferred, opts.retranslate)
     ).cached(
@@ -370,19 +371,23 @@ ListingDataService = (
     else
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
-  Service.getListingDownloadURLs = ->
-    urls = angular.copy(ListingConstantsService.defaultApplicationURLs)
+  Service.getListingPaperAppURLs = (listing) ->
+    if ListingIdentityService.isOwnership(listing)
+      urls = angular.copy(ListingConstantsService.ownershipPaperAppURLs)
+    else
+      urls = angular.copy(ListingConstantsService.rentalPaperAppURLs)
+
     english = _.find(urls, { language: 'English' })
     chinese = _.find(urls, { language: 'Traditional Chinese' })
     spanish = _.find(urls, { language: 'Spanish' })
     tagalog = _.find(urls, { language: 'Tagalog' })
+
     # replace download URLs if they are customized on the listing
-    listing = Service.listing
     english.url = listing.Download_URL if listing.Download_URL
     chinese.url = listing.Download_URL_Cantonese if listing.Download_URL_Cantonese
     spanish.url = listing.Download_URL_Spanish if listing.Download_URL_Spanish
     tagalog.url = listing.Download_URL_Tagalog if listing.Download_URL_Tagalog
-    angular.copy(urls, Service.listingDownloadURLs)
+    angular.copy(urls, Service.listingPaperAppURLs)
 
   Service.getProjectIdForBoundaryMatching = (listing) ->
     return unless listing
