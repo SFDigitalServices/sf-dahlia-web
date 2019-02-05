@@ -1,7 +1,7 @@
 h4.h-caps-lined
   | What to Expect
 p.c-steel.t-small.margin-bottom
-  ' Applicants will be contacted by the leasing agent
+  ' Applicants will be contacted by the {{$ctrl.parent.isOwnership($ctrl.parent.listing) ? 'sales agent' : 'leasing agent'}}
   span ng-if="!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
     | in lottery rank order until vacancies are filled.
   span ng-if="$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
