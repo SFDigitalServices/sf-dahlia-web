@@ -627,6 +627,9 @@
         "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
         "OFFICE_HOURS": "Office Hours"
     },
+    "SALES_AGENT": {
+        "CONTACT": "Contact Sales Agent"
+    },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
         "ADDITIONAL_LISTINGS": {
@@ -653,7 +656,8 @@
             "PICK_UP_AN_APPLICATION": "Pick up an application",
             "SEND_BY_US_MAIL": "Send Application by US Mail",
             "SUBMIT_A_PAPER_APPLICATION": "Submit a Paper Application",
-            "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application."
+            "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application.",
+            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}'>eligibility requirements</a> for this listing before you begin."
         },
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
