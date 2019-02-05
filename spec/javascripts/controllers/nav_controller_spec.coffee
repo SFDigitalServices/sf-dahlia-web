@@ -1,11 +1,13 @@
 do ->
   'use strict'
   describe 'NavController', ->
-
+    fakeWindow = {}
+    fakeWindow['env'] = {showOwnershipListings: 'true'}
     fakeDocument = {}
     scope = undefined
     state = undefined
     fakeTimeout = {}
+
     fakeTranslate =
       instant: ->
     fakeAccountService =
@@ -19,6 +21,7 @@ do ->
       $provide.value 'AccountService', fakeAccountService
       $provide.value 'ModalService', fakeModalService
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
+      $provide.value '$window', fakeWindow
       return
     )
 

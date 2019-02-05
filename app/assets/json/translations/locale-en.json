@@ -773,7 +773,9 @@
         "MY_DASHBOARD": "My Dashboard",
         "MY_FAVORITES": "My Favorites",
         "SIGN_IN": "Sign In",
-        "SIGN_OUT": "Sign Out"
+        "SIGN_OUT": "Sign Out",
+        "BUY": "Buy",
+        "RENT": "Rent"
     },
     "PAGE_TITLE": {
         "ADDITIONAL_RESOURCES": "More Housing Opportunities",
