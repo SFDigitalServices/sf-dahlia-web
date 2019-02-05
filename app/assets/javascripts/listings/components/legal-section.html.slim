@@ -21,3 +21,14 @@ accordion-heading
       h4.content-card_title.t-serif
         | {{'LISTINGS.IMPORTANT_PROGRAM_RULES' | translate}}
       p ng-text-truncate="::$ctrl.parent.listing.Legal_Disclaimers | stripMostTags | nl2br" ng-tt-words-threshold="60"
+    .content-card.bg-dust ng-if="::$ctrl.parent.listing.CC_and_R_URL"
+      h4.content-card_title.t-serif
+        | {{'LISTINGS.CC&R' | translate}}
+      p.margin-bottom
+        | {{'LISTINGS.CC&R_DESCRIPTION' | translate}}
+      a.button.secondary href="{{ ::$ctrl.parent.listing.CC_and_R_URL }}"
+        | {{'LISTINGS.DOWNLOAD_PDF' | translate}}
+    .content-card.bg-dust ng-if="::$ctrl.parent.listing.Repricing_Mechanism"
+      h4.content-card_title.t-serif
+        | {{'LISTINGS.RE_PRICING' | translate}}
+      p ng-text-truncate="::$ctrl.parent.listing.Repricing_Mechanism | stripMostTags | nl2br" ng-tt-words-threshold="60"

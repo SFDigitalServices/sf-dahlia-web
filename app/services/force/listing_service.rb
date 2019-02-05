@@ -184,7 +184,7 @@ module Force
         'Realtor_Commission_Percentage' => 15,
         'Realtor_Commission_Info' => 'TBD but this will probably be a shortish string',
         'CC_and_R_URL' => 'http://www.google.com',
-        'Repricing_Mechanism' => 'TODO: Replace this with a real example of a repricing mechanism. Here\'s some sample text with links <a href=\"http://sf-moh.org/index.aspx?page=295\" target=\"_blank\">Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013</a>',
+        'Repricing_Mechanism' => 'TODO: Replace this with a real example of a repricing mechanism. Here\'s some sample text with links <a href="http://sf-moh.org/index.aspx?page=295" target="_blank">Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013</a>',
         'Expected_Move_in_Date' => '2019-12-20',
         'Appliances' => 'TODO: Replace this with a real example of a list of available appliances.',
         'Parking_Information' => 'TODO: Replace this with a real example of parking information. It might be a fairly long paragraph',
