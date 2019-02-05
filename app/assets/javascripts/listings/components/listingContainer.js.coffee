@@ -82,5 +82,8 @@ angular.module('dahlia.components')
       (listing.Lottery_Date != undefined &&
         listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
 
+    @agentInfoAvailable = (listing) ->
+      listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street
+
     return ctrl
   ]

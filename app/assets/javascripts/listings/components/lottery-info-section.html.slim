@@ -28,15 +28,4 @@ section.content-wrap
   .content-group.expand.text-center ng-if="$ctrl.listingHasLotteryResults()"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
 
-  .content-group
-    ng-include src="'listings/templates/listing/_what_to_expect.html'"
-
-  / lottery preference URL
-  .content-group ng-repeat="lotteryPreference in ::$ctrl.parent.listing.preferences" ng-if="!$ctrl.listingHasLotteryResults() && lotteryPreference.pdfUrl"
-    h4.content-group_title translate="LISTINGS.CONFIRMED_PREFERENCE_LIST" translate-value-preference="{{::lotteryPreference.preferenceName}}"
-    a.button.primary.expand ng-href="{{::lotteryPreference.pdfUrl}}" target="_blank"
-      | {{'LOTTERY.VIEW_PREFERENCE_LIST' | translate}}
-    p.c-steel.t-small translate="LOTTERY.APPLICATIONS_THAT_QUALIFY_FOR_PREFERENCE"
-
-  .content-group ng-if="::$ctrl.leasingAgentInfoAvailable()"
-    ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
+  ng-include src="'listings/templates/listing/_additional_sidebar_info.html'"
