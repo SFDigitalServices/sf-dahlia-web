@@ -18,11 +18,11 @@ angular.module('dahlia.components')
       ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
 
     @showDownloadLotteryResultsButton = ->
-      this.parent.listing.LotteryResultsURL && !ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
+      !@loading.lotteryResults && this.parent.listing.LotteryResultsURL &&
+      !ListingLotteryService.listingHasLotteryBuckets(this.parent.listing)
 
-    @leasingAgentInfoAvailable = ->
-      l = this.parent.listing
-      l.Leasing_Agent_Phone || l.Leasing_Agent_Email || l.Leasing_Agent_Street
+    @lotteryComplete = ->
+      ListingLotteryService.lotteryComplete(this.parent.listing)
 
     return ctrl
   ]

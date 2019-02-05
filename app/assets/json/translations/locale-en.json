@@ -627,6 +627,9 @@
         "DUE_TO_HIGH_CALL_VOLUME": "Due to high call volume you may hear a message.",
         "OFFICE_HOURS": "Office Hours"
     },
+    "SALES_AGENT": {
+        "CONTACT": "Contact Sales Agent"
+    },
     "LISTINGS": {
         "ADDITIONAL_INFORMATION": "Additional Information",
         "ADDITIONAL_LISTINGS": {
@@ -653,7 +656,8 @@
             "PICK_UP_AN_APPLICATION": "Pick up an application",
             "SEND_BY_US_MAIL": "Send Application by US Mail",
             "SUBMIT_A_PAPER_APPLICATION": "Submit a Paper Application",
-            "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application."
+            "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application.",
+            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}'>eligibility requirements</a> for this listing before you begin."
         },
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
@@ -689,7 +693,6 @@
         "OPEN_WAITLIST_SLOTS": "Open Waitlist Slots",
         "PEOPLE": "people",
         "PERSON": "person",
-        "PETS_POLICY": "Pets Policy",
         "PRIORITY_UNITS": "Priority Units",
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
@@ -705,7 +708,6 @@
         "SHOWING_MATCHES_FOR": "Showing matches for",
         "SINGLE_ROOM_OCCUPANCY": "Single Room Occupancy",
         "SINGLE_ROOM_OCCUPANCY_DESCRIPTION": "This property offers single rooms for one person only. Tenants may share bathrooms, and sometimes kitchen facilities.",
-        "SMOKING_POLICY": "Smoking Policy",
         "SPECIAL_NOTES": "Special Notes",
         "TELL_US_YOUR_HOUSEHOLD_SIZE": "Tell us your household size and income and we'll highlight listings that might be a fit.",
         "UNITS_ARE_FOR": "These units are for {{type}}.",
