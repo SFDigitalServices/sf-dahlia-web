@@ -278,3 +278,10 @@ do ->
         it 'calls ListingUnitService.listingHasSROUnits with the given listing', ->
           ctrl.listingHasSROUnits(fakeListing)
           expect(fakeListingUnitService.listingHasSROUnits).toHaveBeenCalledWith(fakeListing)
+
+      describe '$ctrl.agentInfoAvailable', ->
+        it 'returns undefined if agents info is not available', ->
+          expect(ctrl.agentInfoAvailable(fakeListing)).not.toBeDefined()
+        it 'returns defined object if agents info is available', ->
+          fakeListing.Leasing_Agent_Street = '1 South Van Ness Ave San Francisco CA 94131'
+          expect(ctrl.agentInfoAvailable(fakeListing)).toBeDefined()
