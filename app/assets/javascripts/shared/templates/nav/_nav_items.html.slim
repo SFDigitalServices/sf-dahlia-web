@@ -1,7 +1,7 @@
-li ng-if="!showOwnershipListings"
+li ng-if="!showSaleListings"
   a ui-sref="dahlia.listings-for-rent"
     | {{ "NAV.BROWSE_PROPERTIES" | translate}}
-li ng-if-start="showOwnershipListings"
+li ng-if-start="showSaleListings"
   a ui-sref="dahlia.listings-for-rent"
     | {{ "NAV.RENT" | translate}}
 li ng-if-end="true"
