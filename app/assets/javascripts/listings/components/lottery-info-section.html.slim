@@ -25,7 +25,7 @@ section.content-wrap
         | {{ $ctrl.parent.listing.Lottery_Results_Date | date : 'longDate' }}
     p.c-steel.t-small translate="LOTTERY.COMPLETE_RESULTS_WILL_BE_POSTED"
 
-  .content-group.expand.text-center ng-if="$ctrl.listingHasLotteryResults()"
+  .content-group.expand.text-center ng-if="$ctrl.lotteryComplete()"
     ng-include src="'listings/templates/listing/_lottery_results.html'"
 
   ng-include src="'listings/templates/listing/_additional_sidebar_info.html'"
