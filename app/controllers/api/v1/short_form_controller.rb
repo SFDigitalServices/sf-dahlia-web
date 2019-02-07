@@ -218,7 +218,7 @@ class Api::V1::ShortFormController < ApiController
 
   def user_can_access?(application)
     return false if application.empty?
-    Force::ShortFormService.ownership?(user_contact_id, application)
+    Force::ShortFormService.user_owns_app?(user_contact_id, application)
   end
 
   def user_can_claim?(application)

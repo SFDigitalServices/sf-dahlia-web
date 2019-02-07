@@ -67,7 +67,7 @@
       url: '/listings/for-rent'
       views:
         'container@':
-          templateUrl: 'listings/templates/listings.html'
+          templateUrl: 'listings/templates/listings-for-rent.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'rental'}})
@@ -81,7 +81,7 @@
       url: '/listings/for-sale'
       views:
         'container@':
-          templateUrl: 'listings/templates/listings.html'
+          templateUrl: 'listings/templates/listings-for-sale.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
           ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'sale'}})

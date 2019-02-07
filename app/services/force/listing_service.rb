@@ -25,7 +25,7 @@ module Force
       imageURL
       Tenure
     ].freeze
-    TEST_OWNERSHIP_LISTING_ID = 'a0W21000007AWriEAG'
+    TEST_SALE_LISTING_ID = 'a0W21000007AWriEAG'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
@@ -34,9 +34,7 @@ module Force
       results = get_listings(params)
       # TODO: Remove stubbed listing data when fields are available on Salesforce.
       results.each do |result|
-        if result['listingID'] == TEST_OWNERSHIP_LISTING_ID
-          stub_ownership_listing_data(result)
-        end
+        stub_sale_listing_data(result) if result['listingID'] == TEST_SALE_LISTING_ID
       end
       # TODO: Move filtering to saleforce request
       results = filter_listings(results, attrs) if attrs.present?
@@ -67,7 +65,7 @@ module Force
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
       result = add_image_urls(results).first
       # TODO: Remove stubbed out listing when fields are available on Salesforce.
-      stub_ownership_listing_data(result) if id == TEST_OWNERSHIP_LISTING_ID
+      stub_sale_listing_data(result) if id == TEST_SALE_LISTING_ID
       result
     end
 
@@ -161,7 +159,7 @@ module Force
     end
 
     # TODO: Remove this method when we no longer need to stub data.
-    private_class_method def self.stub_ownership_listing_data(listing)
+    private_class_method def self.stub_sale_listing_data(listing)
       # Add stubbed listing fields
       # rubocop:disable LineLength
       stubbed_listing_data = {

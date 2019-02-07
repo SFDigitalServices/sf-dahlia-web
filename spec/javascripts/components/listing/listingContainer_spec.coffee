@@ -54,7 +54,7 @@ do ->
       reservedLabel: jasmine.createSpy()
     fakeListingIdentityService =
       listingIs: jasmine.createSpy()
-      isOwnership: jasmine.createSpy()
+      isSale: jasmine.createSpy()
       isFirstComeFirstServe: jasmine.createSpy()
       isOpen: jasmine.createSpy()
     fakeListingLotteryService =
@@ -111,43 +111,43 @@ do ->
         it 'populates ctrl with lotteryResultsListings', ->
           expect(ctrl.lotteryResultsListings).toBeDefined()
 
-      describe '$ctrl.isOwnership', ->
-        it 'calls ListingIdentityService.isOwnership with the given listing', ->
-          ctrl.isOwnership(fakeListing)
-          expect(fakeListingIdentityService.isOwnership).toHaveBeenCalledWith(fakeListing)
+      describe '$ctrl.isSale', ->
+        it 'calls ListingIdentityService.isSale with the given listing', ->
+          ctrl.isSale(fakeListing)
+          expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
 
-      describe '$ctrl.hasOwnAndRentFavorited', ->
-        fakeOwnListing = angular.copy(fakeListing)
-        fakeOwnListing.Tenure = 'New sale'
-        fakeRentListing = angular.copy(fakeListing)
-        fakeRentListing.Tenure = 'New rental'
+      describe '$ctrl.hasSaleAndRentalFavorited', ->
+        fakeSaleListing = angular.copy(fakeListing)
+        fakeSaleListing.Tenure = 'New sale'
+        fakeRentalListing = angular.copy(fakeListing)
+        fakeRentalListing.Tenure = 'New rental'
 
-        describe 'when rent and own listings are favorited', ->
+        describe 'when rental and sale listings are favorited', ->
           it 'returns true', ->
-            listings = [fakeRentListing, fakeOwnListing]
+            listings = [fakeRentalListing, fakeSaleListing]
             ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
-            ctrl.isOwnership = jasmine.createSpy().and.returnValues(false, true)
-            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual true
+            ctrl.isSale = jasmine.createSpy().and.returnValues(false, true)
+            expect(ctrl.hasSaleAndRentalFavorited(listings)).toEqual true
 
         describe 'when no listings are favorited', ->
           it 'returns false', ->
-            listings = [fakeRentListing, fakeOwnListing]
+            listings = [fakeRentalListing, fakeSaleListing]
             ctrl.filterByFavorites = jasmine.createSpy().and.returnValue([])
-            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+            expect(ctrl.hasSaleAndRentalFavorited(listings)).toEqual false
 
         describe 'when only rental listings are favorited', ->
           it 'returns false', ->
-            listings = [fakeRentListing]
+            listings = [fakeRentalListing]
             ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
-            ctrl.isOwnership = jasmine.createSpy().and.returnValue(false)
-            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+            ctrl.isSale = jasmine.createSpy().and.returnValue(false)
+            expect(ctrl.hasSaleAndRentalFavorited(listings)).toEqual false
 
-        describe 'when only ownership listings are favorited', ->
+        describe 'when only sale listings are favorited', ->
           it 'returns false', ->
-            listings = [fakeRentListing]
+            listings = [fakeRentalListing]
             ctrl.filterByFavorites = jasmine.createSpy().and.returnValue(listings)
-            ctrl.isOwnership = jasmine.createSpy().and.returnValue(true)
-            expect(ctrl.hasOwnAndRentFavorited(listings)).toEqual false
+            ctrl.isSale = jasmine.createSpy().and.returnValue(true)
+            expect(ctrl.hasSaleAndRentalFavorited(listings)).toEqual false
 
       describe '$ctrl.isFavorited', ->
         it 'calls ListingService.isFavorited with the given listing ID', ->

@@ -30,28 +30,28 @@ do ->
       it 'returns false if a listing is not given', ->
         expect(ListingIdentityService.listingIs('Fake Listing', null)).toEqual false
 
-    describe 'Service.isOwnership', ->
+    describe 'Service.isSale', ->
       beforeEach ->
         testListing = angular.copy(fakeListing)
 
       describe 'when the listing has a rental tenure', ->
         it 'returns false', ->
           testListing.Tenure = 'New rental'
-          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+          expect(ListingIdentityService.isSale(testListing)).toEqual false
           testListing.Tenure = 'Re-rental'
-          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+          expect(ListingIdentityService.isSale(testListing)).toEqual false
 
       describe 'when the listing does not have a tenure defined', ->
         it 'returns false', ->
           delete testListing.Tenure
-          expect(ListingIdentityService.isOwnership(testListing)).toEqual false
+          expect(ListingIdentityService.isSale(testListing)).toEqual false
 
-      describe 'when the listing has an ownership tenure', ->
+      describe 'when the listing has a sale tenure', ->
         it 'returns true', ->
           testListing.Tenure = 'New sale'
-          expect(ListingIdentityService.isOwnership(testListing)).toEqual true
+          expect(ListingIdentityService.isSale(testListing)).toEqual true
           testListing.Tenure = 'Resale'
-          expect(ListingIdentityService.isOwnership(testListing)).toEqual true
+          expect(ListingIdentityService.isSale(testListing)).toEqual true
 
     describe 'Service.isFirstComeFirstServe', ->
       it 'calls Service.listingIs with the name "168 Hyde Relisting" and the given listing', ->
