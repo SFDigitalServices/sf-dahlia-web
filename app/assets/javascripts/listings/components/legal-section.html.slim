@@ -28,6 +28,15 @@ accordion-heading
         | {{'LISTINGS.CC&R_DESCRIPTION' | translate}}
       a.button.secondary href="{{ ::$ctrl.parent.listing.CC_and_R_URL }}"
         | {{'LISTINGS.DOWNLOAD_PDF' | translate}}
+    .content-card.bg-dust ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+      h4.content-card_title.t-serif
+        | {{'LISTINGS.REALTOR_COMMISSION' | translate}}
+      p.margin-bottom ng-if="!$ctrl.parent.listing.Allows_Realtor_Commission"
+        | {{'LISTINGS.REALTOR_COMMISSION_NOT_ELIGIBILE' | translate}}
+      div ng-if="$ctrl.parent.listing.Allows_Realtor_Commission"
+        p translate="LISTINGS.REALTOR_COMMISSION_ELIGIBILE" translate-value-percentage="{{$ctrl.parent.listing.Realtor_Commission_Percentage}}"
+        p
+          | {{$ctrl.parent.listing.Realtor_Commission_Info}}
     .content-card.bg-dust ng-if="::$ctrl.parent.listing.Repricing_Mechanism"
       h4.content-card_title.t-serif
         | {{'LISTINGS.RE_PRICING' | translate}}
