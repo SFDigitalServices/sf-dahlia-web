@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Force
   # encapsulate all Salesforce ShortForm querying functions
   class ShortFormService
@@ -101,7 +103,7 @@ module Force
       end
     end
 
-    def self.ownership?(contact_id, application)
+    def self.user_owns_app?(contact_id, application)
       contact_id == application['primaryApplicant']['contactId']
     end
 

@@ -6,7 +6,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
 $window) ->
   $scope.loggedIn = AccountService.loggedIn
   $scope.showNavMobile = false
-  $scope.showOwnershipListings = $window.env.showOwnershipListings == 'true'
+  $scope.showSaleListings = $window.env.showSaleListings == 'true'
 
   $scope.signOut = ->
     if ShortFormApplicationService.isShortFormPage($state.current)

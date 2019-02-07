@@ -1,4 +1,4 @@
-.content-group ng-if="::$ctrl.parent.isOwnership($ctrl.parent.listing)"
+.content-group ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
   h4.h-caps-lined
     | Expected move-in date
   p.t-small.caps
@@ -16,7 +16,7 @@
 .content-group ng-if="::$ctrl.parent.agentInfoAvailable($ctrl.parent.listing)"
   ng-include src="'listings/templates/listing/_contact_leasing_agent.html'"
 
-.content-group ng-if="::$ctrl.parent.isOwnership($ctrl.parent.listing)"
+.content-group ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
   h4.h-caps-lined
     | Housing Program
   p
