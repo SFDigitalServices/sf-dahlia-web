@@ -54,7 +54,7 @@
       / General
       .scrollable-table-container
         property-card-rental-stats listing="::$ctrl.listing" ng-if="!$ctrl.listingContainer.isSale($ctrl.listing)"
-        property-card-ownership-stats listing="::$ctrl.listing" ng-if="$ctrl.listingContainer.isSale($ctrl.listing)"
+        property-card-sale-stats listing="::$ctrl.listing" ng-if="$ctrl.listingContainer.isSale($ctrl.listing)"
 
       .property-card_action.small-only-text-center
         button.button.round-icon.has-label data-event="gtm-favorite" ng-click="$ctrl.listingContainer.toggleFavoriteListing($ctrl.listing.Id)"

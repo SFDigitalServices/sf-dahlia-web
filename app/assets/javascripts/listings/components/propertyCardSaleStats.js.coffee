@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
-.component 'propertyCardOwnershipStats',
-  templateUrl: 'listings/components/property-card-ownership-stats.html'
+.component 'propertyCardSaleStats',
+  templateUrl: 'listings/components/property-card-sale-stats.html'
   bindings:
     listing: '<'
   require:
