@@ -34,9 +34,13 @@ accordion-heading
       p.margin-bottom ng-if="!$ctrl.parent.listing.Allows_Realtor_Commission"
         | {{'LISTINGS.REALTOR_COMMISSION_NOT_ELIGIBILE' | translate}}
       div ng-if="$ctrl.parent.listing.Allows_Realtor_Commission"
-        p translate="LISTINGS.REALTOR_COMMISSION_ELIGIBILE" translate-value-percentage="{{$ctrl.parent.listing.Realtor_Commission_Percentage}}"
         p
-          | {{$ctrl.parent.listing.Realtor_Commission_Info}}
+          strong translate="LISTINGS.REALTOR_COMMISSION_HEADER"
+          span
+            | {{$ctrl.realtorCommissionMessage($ctrl.parent.listing)}}
+        p
+          strong translate="LISTINGS.REALTOR_COMMISSION_HOW_TO"
+          |  {{$ctrl.parent.listing.Realtor_Commission_Info}}
     .content-card.bg-dust ng-if="::$ctrl.parent.listing.Repricing_Mechanism"
       h4.content-card_title.t-serif
         | {{'LISTINGS.RE_PRICING' | translate}}
