@@ -36,5 +36,14 @@ angular.module('dahlia.components')
           ListingDataService.priorityLabel(priority, 'name')
         names.join(', ')
 
+      @reservedForLabels = (listing) ->
+        types = []
+        _.each listing.reservedDescriptor, (descriptor) ->
+          if descriptor.name
+            type = descriptor.name
+            types.push(ListingDataService.reservedLabel(listing, type, 'reservedForWhoAre'))
+        if types.length then types.join(' or ') else ''
+
+
       return ctrl
   ]
