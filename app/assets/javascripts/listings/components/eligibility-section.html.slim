@@ -154,7 +154,7 @@ accordion-heading.lead
               ng-pluralize count="units.length" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
           p.c-steel translate="LISTINGS.UNITS_HAVE_ACCESSIBILITY_FEATURES_FOR" translate-value-type="{{::$ctrl.priorityLabel(type, 'description')}}"
 
-    li.custom-counter_item ng-if="::!$ctrl.parent.isOwnership($ctrl.parent.listing)"
+    li.custom-counter_item ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
           h4.custom-counter_title

@@ -22,13 +22,13 @@ angular.module('dahlia.components')
     @closedListings = ListingDataService.closedListings
     @lotteryResultsListings = ListingDataService.lotteryResultsListings
 
-    @isOwnership = (listing) ->
-      ListingIdentityService.isOwnership(listing)
+    @isSale = (listing) ->
+      ListingIdentityService.isSale(listing)
 
-    @hasOwnAndRentFavorited = (listings) ->
+    @hasSaleAndRentalFavorited = (listings) ->
       favoritedListings = @filterByFavorites listings
-      areOwnershipListings = (@isOwnership listing for listing in favoritedListings)
-      (_.some areOwnershipListings) && !(_.every areOwnershipListings)
+      areSaleListings = (@isSale listing for listing in favoritedListings)
+      (_.some areSaleListings) && !(_.every areSaleListings)
 
     @isOpenMatchListing = (listing) ->
       @openMatchListings.indexOf(listing) > -1
@@ -81,6 +81,9 @@ angular.module('dahlia.components')
     @lotteryDateVenueAvailable = (listing) ->
       (listing.Lottery_Date != undefined &&
         listing.Lottery_Venue != undefined && listing.Lottery_Street_Address != undefined)
+
+    @agentInfoAvailable = (listing) ->
+      listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street
 
     return ctrl
   ]

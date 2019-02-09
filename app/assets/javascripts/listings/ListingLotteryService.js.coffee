@@ -40,7 +40,7 @@ ListingLotteryService = ($http, ListingIdentityService, ModalService) ->
 
   Service.lotteryIsUpcoming = (listing) ->
     return false unless listing
-    !listing.Lottery_Results && !Service.lotteryDatePassed(listing)
+    !listing.Lottery_Results && !Service.lotteryDatePassed(listing) && !Service.lotteryComplete(listing)
 
   # Lottery Results being "available" means we have a PDF URL or lotteryBuckets
   Service.listingHasLotteryResults = (listing) ->

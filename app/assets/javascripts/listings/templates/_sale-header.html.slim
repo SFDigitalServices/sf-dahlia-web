@@ -1,0 +1,24 @@
+header.directory-header#listings_header ng-if="!$ctrl.parent.hasEligibilityFilters()"
+  .row
+    .directory-header_title.medium-7.columns
+      h1 translate="PAGE_TITLE.BUY"
+    .directory-header_cta.medium-5.columns
+      a.button.primary.expand href="#listing-results" du-smooth-scroll="true" translate="LISTINGS_FOR_SALE.SEE_THE_LISTINGS"
+  .row
+    .directory-header_primary.medium-7.columns
+      h2.h-caps-lined translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.TITLE"
+      p translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.MAKE_SURE_YOU"
+      ol.numbered-list
+        li translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.STEP_1"
+        li translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.STEP_2" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+        li translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.STEP_3" translate-value-url="https://sfmohcd.org/homebuyer-application-requirements#education"
+        li translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.STEP_4" translate-value-url="https://sfmohcd.org/lender-list"
+        li translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.STEP_5"
+      p translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.READ_FULL_LIST" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+    .directory-header_secondary.medium-5.columns
+      .directory-header_sidebar
+        h2.h-caps-lined translate="LISTINGS_FOR_SALE.GET_HELP.TITLE"
+        p translate="LISTINGS_FOR_SALE.GET_HELP.SOME_PEOPLE_MAY_QUALIFY"
+        p translate="LISTINGS_FOR_SALE.GET_HELP.OTHER_GROUPS_MAY_QUALIFY"
+        p
+          a href="https://sfmohcd.org/loan-programs" translate="LISTINGS_FOR_SALE.GET_HELP.VIEW_FULL_LIST_OF_PROGRAMS"
