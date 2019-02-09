@@ -26,7 +26,7 @@ accordion-heading
         | {{'LISTINGS.CC&R' | translate}}
       p.margin-bottom
         | {{'LISTINGS.CC&R_DESCRIPTION' | translate}}
-      a.button.secondary href="{{ ::$ctrl.parent.listing.CC_and_R_URL }}"
+      a.button.secondary target="_blank" href="{{ ::$ctrl.parent.listing.CC_and_R_URL }}"
         | {{'LISTINGS.DOWNLOAD_PDF' | translate}}
     .content-card.bg-dust ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
       h4.content-card_title.t-serif
