@@ -184,13 +184,10 @@ module Force
       # Add stubbed listing fields
       # rubocop:disable LineLength
       stubbed_listing_data = {
-        'CC_and_R_URL' => 'http://www.google.com',
-        'Repricing_Mechanism' => 'TODO: Replace this with a real example of a repricing mechanism. Here\'s some sample text with links <a href="http://sf-moh.org/index.aspx?page=295" target="_blank">Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013</a>',
         'Expected_Move_in_Date' => '2019-12-20',
         'Appliances' => 'TODO: Replace this with a real example of a list of available appliances.',
         'Parking_Information' => 'TODO: Replace this with a real example of parking information. It might be a fairly long paragraph',
         'Multiple_Listing_Service_URL' => 'http://www.google.com',
-        'Housing_Program_Name' => 'TBD what this is',
       }
       # rubocop:enable LineLength
       listing.merge!(stubbed_listing_data)
