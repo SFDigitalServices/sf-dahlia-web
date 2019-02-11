@@ -757,7 +757,16 @@
         "VIEW_LOTTERY_RESULTS": "View Lottery Results",
         "WAITLIST_IS_OPEN": "Waitlist is open",
         "YOU_DONT_MATCH_ANY": "Based on information you entered, you don't match any current listings.",
-        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property."
+        "YOU_MAY_BE_ELIGIBLE": "Based on information you entered, you may be eligible for units at the following property.",
+        "CC&R": "Covenants, Conditions and Restrictions (CC&R's)",
+        "CC&R_DESCRIPTION": "The CC&R's explain the rules of the homeowners' association, and restrict how you can modify the property.",
+        "DOWNLOAD_PDF": "Download PDF",
+        "RE_PRICING": "Re-Pricing",
+        "REALTOR_COMMISSION": "For the Buyers's Realtor",
+        "REALTOR_COMMISSION_NOT_ELIGIBILE": "Your realtor is not eligible for a commission on this unit",
+        "REALTOR_COMMISSION_PERCENTAGE": " {{percentage}}% of the sales price",
+        "REALTOR_COMMISSION_HEADER": "Your Commission: ",
+        "REALTOR_COMMISSION_HOW_TO": "How to receive it: "
     },
     "LOTTERY": {
         "ANY_REMAINING_UNITS": "Any remaining units",
