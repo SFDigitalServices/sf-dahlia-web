@@ -23,19 +23,13 @@ module Force
       Does_Match
       LastModifiedDate
       imageURL
-      Tenure
     ].freeze
-    TEST_SALE_LISTING_ID = 'a0W21000007AWriEAG'
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
     # returns cached and cleaned listings
     def self.listings(attrs = {})
       params = attrs[:ids].present? ? { ids: attrs[:ids] } : nil
       results = get_listings(params)
-      # TODO: Remove stubbed listing data when fields are available on Salesforce.
-      results.each do |result|
-        stub_sale_listing_data(result) if result['listingID'] == TEST_SALE_LISTING_ID
-      end
       # TODO: Move filtering to saleforce request
       results = filter_listings(results, attrs) if attrs.present?
       clean_listings_for_browse(results)
@@ -63,10 +57,7 @@ module Force
       endpoint = "/ListingDetails/#{CGI.escape(id)}"
       force = opts[:force] || false
       results = Request.new(parse_response: true).cached_get(endpoint, nil, force)
-      result = add_image_urls(results).first
-      # TODO: Remove stubbed out listing when fields are available on Salesforce.
-      stub_sale_listing_data(result) if id == TEST_SALE_LISTING_ID
-      result
+      add_image_urls(results).first
     end
 
     # get all units for a given listing
@@ -156,28 +147,6 @@ module Force
           WHITELIST_BROWSE_FIELDS.include?(key.to_sym) || key.include?('Building')
         end
       end
-    end
-
-    # TODO: Remove this method when we no longer need to stub data.
-    private_class_method def self.stub_sale_listing_data(listing)
-      # Add stubbed listing fields
-      # rubocop:disable LineLength
-      stubbed_listing_data = {
-        'Allows_Realtor_Commission' => true,
-        'Realtor_Commission_Percentage' => 15,
-        'Realtor_Commission_Info' => 'TBD but this will probably be a shortish string',
-        'CC_and_R_URL' => 'http://www.google.com',
-        'Repricing_Mechanism' => 'TODO: Replace this with a real example of a repricing mechanism. Here\'s some sample text with links <a href=\"http://sf-moh.org/index.aspx?page=295\" target=\"_blank\">Inclusionary Affordable Housing Program Monitoring and Procedures Manual 2013</a>',
-        'Expected_Move_in_Date' => '2019-12-20',
-        'Appliances' => 'TODO: Replace this with a real example of a list of available appliances.',
-        'Parking_Information' => 'TODO: Replace this with a real example of parking information. It might be a fairly long paragraph',
-        'Multiple_Listing_Service_URL' => 'http://www.google.com',
-        'Housing_Program_Name' => 'TBD what this is',
-      }
-      # rubocop:enable LineLength
-      listing.merge!(stubbed_listing_data)
-
-      listing
     end
 
     private_class_method def self.filter_listings(results, filter)
