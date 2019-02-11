@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RESTful JSON API to query for listings
 class Api::V1::ListingsController < ApiController
   def index

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # RESTful JSON API to retrieve data for My Account
 class Api::V1::AccountController < ApiController
   before_action :authenticate_user!, except: %i[confirm check_account]

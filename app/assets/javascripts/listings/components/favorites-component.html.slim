@@ -19,7 +19,7 @@ section.row ng-show="!$ctrl.parent.favorites.length"
         | Rental Units
       property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && !$ctrl.parent.isSale(listing)"
       h2.text-center.large-text-left.t-gamma.t-serif ng-if="$ctrl.parent.hasSaleAndRentalFavorited($ctrl.parent.listings)"
-        | Ownership Units
+        | Sale Units
       property-card listing="listing" ng-repeat="listing in ::$ctrl.parent.listings" ng-if="$ctrl.parent.isFavorited(listing.Id) && $ctrl.parent.isSale(listing)"
 
 ng-include src="'pages/templates/_email-updates.html'"
