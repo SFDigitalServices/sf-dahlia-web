@@ -76,7 +76,7 @@ angular.module('dahlia.components')
         @application.preferences[@preference + '_proofOption'] = proofOption
 
       @validateFileNameLength = ($file) ->
-        if $file.name.length > 85
+        if $file.name.length > 80
           'FILE_NAME_TOO_LONG'
         else
           true
