@@ -1,0 +1,29 @@
+table.pricing-table.table-flex.no-margin
+  thead
+    tr
+      th Unit Type
+      th Price
+      th HOA Dues
+      th Availability
+  tr ng-repeat="group in ::unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
+    td.tr data-th="Unit Type"
+      span.h-small
+        ' {{::group.Unit_Type}}
+        span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
+          svg
+            use xlink:href="{{$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
+    td data-th="Price"
+      | {{::group.Price_Without_Parking | currency:"$":0}}
+      br
+      | {{::group.Price_With_Parking | currency:"$":0}}<small> with Parking</small>
+    td data-th="HOA Dues"
+      | {{::group.HOA_Dues_Without_Parking | currency:"$":0}}<small>/month</small>
+      br
+      | {{::group.HOA_Dues_With_Parking | currency:"$":0}}<small>/month with Parking</small>
+    td data-th="Availability"
+      em ng-if="::group.Status == 'Occupied'"
+        | Waitlist
+      span ng-if="::group.Status != 'Occupied'"
+        | {{::group.total}}
+        small
+          ng-pluralize count="group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
