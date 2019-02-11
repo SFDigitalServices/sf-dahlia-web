@@ -100,7 +100,7 @@ module.exports = function(grunt) {
   // load tasks
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-replace');
+  grunt.loadNpmTasks('grunt-replace-regex');
   grunt.loadNpmTasks('grunt-angular-translate');
   grunt.loadNpmTasks('grunt-sort-json');
   grunt.loadNpmTasks('grunt-json-remove-fields');
