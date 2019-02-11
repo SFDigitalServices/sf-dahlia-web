@@ -73,11 +73,8 @@ module Force
     def self.units(listing_id, opts = {})
       esc_listing_id = CGI.escape(listing_id)
       force = opts[:force] || false
-      units = Request.new(parse_response: true)
-                     .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
-      # TODO: Remove stubbed out units when fields are available on Salesforce.
-      stub_unit_data(units) if esc_listing_id == TEST_SALE_LISTING_ID
-      units
+      Request.new(parse_response: true)
+             .cached_get("/Listing/Units/#{esc_listing_id}", nil, force)
     end
 
     # get all preferences for a given listing
@@ -162,20 +159,6 @@ module Force
     end
 
     # TODO: Remove this method when we no longer need to stub data.
-    private_class_method def self.stub_unit_data(units)
-      stubbed_unit_data = {
-        'Price_Without_Parking' => 260_000,
-        'Price_With_Parking' => 289_000,
-        'HOA_Dues_Without_Parking' => 466,
-        'HOA_Dues_With_Parking' => 562,
-      }
-      units.each do |unit|
-        unit.merge!(stubbed_unit_data)
-      end
-      units
-    end
-
-    # TODO: Remove this method when we no longer need to stub data.
     private_class_method def self.stub_sale_listing_data(listing)
       # Add stubbed listing fields
       # rubocop:disable LineLength
@@ -194,23 +177,6 @@ module Force
       # rubocop:enable LineLength
       listing.merge!(stubbed_listing_data)
 
-      # Add stubbed unitSummaries data
-      stubbed_unit_summaries_data = {
-        'minPriceWithoutParking' => 260_000,
-        'maxPriceWithoutParking' => 300_000,
-        'minPriceWithParking' => 289_000,
-        'maxPriceWithParking' => 400_000,
-        'minHoaDuesWithoutParking' => 466,
-        'maxHoaDuesWithoutParking' => 500,
-        'minHoaDuesWithParking' => 562,
-        'maxHoaDuesWithParking' => 700,
-      }
-      listing['unitSummaries']['general'].each do |summary|
-        summary.merge!(stubbed_unit_summaries_data)
-      end
-
-      # Add stubbed unit data
-      listing['Units'] = stub_unit_data(listing['Units'])
       listing
     end
 
