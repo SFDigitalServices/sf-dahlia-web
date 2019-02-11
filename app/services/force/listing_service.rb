@@ -23,6 +23,10 @@ module Force
       Does_Match
       LastModifiedDate
       imageURL
+      Realtor_Commission_Amount
+      Realtor_Commission_Unit
+      Realtor_Commission_Info
+      Allows_Realtor_Commission
     ].freeze
     # get all open listings or specific set of listings by id
     # `ids` is a comma-separated list of ids
