@@ -12,7 +12,7 @@ angular.module('dahlia.components')
       @error = ListingPreferenceService.error
 
       @occupancy = (unitSummary) ->
-        if unitSummary.maxOccupancy == 1 || unitSummary.maxOccupancy == null
+        if unitSummary.minOccupancy == 1 || unitSummary.maxOccupancy == null
           unitSummary.minOccupancy
         else
           unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
