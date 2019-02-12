@@ -6,7 +6,7 @@
       ng-required="{{$ctrl.isRequired}}" ng-class="{ error: $ctrl.inputInvalid('address1') }"
       aria-describedby="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address1_error" ng-pattern="$ctrl.latinRegex" input-error translated-error="ERROR.ADDRESS")
 
-  .form-group-street.form-item.large-12.column ng-class="{ error: $ctrl.inputInvalid('address2') }"
+  .form-group-street.form-item.large-12.column ng-class="{ error: $ctrl.inputInvalid('address2') }" ng-if="!$ctrl.hideAddress2"
     label for="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address2" translate="LABEL.ADDRESS_2"
     input(id="{{$ctrl.modelName}}_{{$ctrl.addressType}}_address2" ng-model="$ctrl.model[$ctrl.addressType].address2"
       ng-change="$ctrl.onChange()" ng-class="{ error: $ctrl.inputInvalid('address2') }" name="{{$ctrl.addressType}}_address2" placeholder="{{'LABEL.ADDRESS_2' | translate}}" maxlength="{{::$ctrl.INPUT_MAX_LENGTH.address}}" type="text" ng-pattern="$ctrl.latinRegex" input-error)
