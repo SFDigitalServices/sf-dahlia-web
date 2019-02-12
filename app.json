@@ -82,6 +82,9 @@
     },
     "S3_ACCESS_KEY_ID":{
       "required":true
+    },
+    "SHOW_SALE_LISTINGS": {
+      "required":true
     }
   }
 }
