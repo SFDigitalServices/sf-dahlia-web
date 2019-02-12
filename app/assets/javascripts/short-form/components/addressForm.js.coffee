@@ -6,6 +6,7 @@ angular.module('dahlia.components')
     model: '<'
     modelName: '@'
     onChange: '&'
+    hideAddress2: '@'
   templateUrl: 'short-form/components/address-form.html'
 
   controller:
