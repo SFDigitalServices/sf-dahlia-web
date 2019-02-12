@@ -2,9 +2,11 @@
 ###################################### CONTROLLER ##########################################
 ############################################################################################
 
-NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, AccountService, ModalService, ShortFormApplicationService) ->
+NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, AccountService, ModalService, ShortFormApplicationService,
+$window) ->
   $scope.loggedIn = AccountService.loggedIn
   $scope.showNavMobile = false
+  $scope.showSaleListings = $window.env.showSaleListings == 'true'
 
   $scope.signOut = ->
     if ShortFormApplicationService.isShortFormPage($state.current)
@@ -63,7 +65,7 @@ NavController = ($document, $rootScope, $scope, $state, $timeout, $translate, Ac
 
 NavController.$inject = [
   '$document', '$rootScope', '$scope', '$state', '$timeout', '$translate',
-  'AccountService', 'ModalService', 'ShortFormApplicationService'
+  'AccountService', 'ModalService', 'ShortFormApplicationService', '$window'
 ]
 
 angular

@@ -6,11 +6,11 @@ ListingConstantsService = () ->
   Service = {}
 
   Service._mohcdPaperAppURLBase = 'https://sfmohcd.org/sites/default/files/Documents/MOH/'
-  Service._mohcdPaperAppURLTemplate =
+  Service._mohcdRentalPaperAppURLTemplate =
     Service._mohcdPaperAppURLBase +
     'BMR%20Rental%20Paper%20Applications/' +
     '{lang}%20BMR%20Rent%20Short%20Form%20Paper%20App.pdf'
-  Service._mohcdOwnershipPaperAppTemplate =
+  Service._mohcdSalePaperAppTemplate =
     Service._mohcdPaperAppURLBase +
     'BMR%20Ownership%20Paper%20Applications/' +
     '{lang}%20BMR%20Own%20Short%20Form%20Paper%20App.pdf'
@@ -24,12 +24,12 @@ ListingConstantsService = () ->
   Service.rentalPaperAppURLs = Service.paperAppLanguages.map((l) -> {
     language: l.language
     label: l.label
-    url: Service._mohcdPaperAppURLTemplate.replace('{lang}', l.slug || l.language)
+    url: Service._mohcdRentalPaperAppURLTemplate.replace('{lang}', l.slug || l.language)
   })
-  Service.ownershipPaperAppURLs = Service.paperAppLanguages.map((l) -> {
+  Service.salePaperAppURLs = Service.paperAppLanguages.map((l) -> {
     language: l.language
     label: l.label
-    url: Service._mohcdOwnershipPaperAppTemplate.replace('{lang}', l.slug || l.language)
+    url: Service._mohcdSalePaperAppTemplate.replace('{lang}', l.slug || l.language)
   })
 
   Service.fieldsForUnitGrouping = [
@@ -38,6 +38,10 @@ ListingConstantsService = () ->
     'BMR_Rent_Monthly',
     'BMR_Rental_Minimum_Monthly_Income_Needed',
     'Rent_percent_of_income',
+    'Price_Without_Parking',
+    'Price_With_Parking',
+    'HOA_Dues_Without_Parking',
+    'HOA_Dues_With_Parking',
     'Status',
   ]
 

@@ -1,6 +1,12 @@
-li
+li ng-if="!showSaleListings"
   a ui-sref="dahlia.listings-for-rent"
     | {{ "NAV.BROWSE_PROPERTIES" | translate}}
+li ng-if-start="showSaleListings"
+  a ui-sref="dahlia.listings-for-rent"
+    | {{ "NAV.RENT" | translate}}
+li ng-if-end="true"
+  a ui-sref="dahlia.listings-for-sale"
+    | {{ "NAV.BUY" | translate}}
 li
   a ui-sref="dahlia.favorites"
     | {{ "NAV.MY_FAVORITES" | translate}}

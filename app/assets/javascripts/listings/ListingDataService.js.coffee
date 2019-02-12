@@ -372,8 +372,8 @@ ListingDataService = (
       "#{Street_Address}#{City} #{State}, #{Zip_Code}"
 
   Service.getListingPaperAppURLs = (listing) ->
-    if ListingIdentityService.isOwnership(listing)
-      urls = angular.copy(ListingConstantsService.ownershipPaperAppURLs)
+    if ListingIdentityService.isSale(listing)
+      urls = angular.copy(ListingConstantsService.salePaperAppURLs)
     else
       urls = angular.copy(ListingConstantsService.rentalPaperAppURLs)
 

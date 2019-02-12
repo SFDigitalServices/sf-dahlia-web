@@ -87,7 +87,8 @@
         /       use xlink:href="#i-info"
         /   |  More Info
 
-      ng-include src="'listings/templates/listing/_property_unit_stats.html'"
+      ng-include src="'listings/templates/listing/_rental-unit-stats.html'" ng-if="!$ctrl.parent.isSale($ctrl.parent.listing)"
+      ng-include src="'listings/templates/listing/_sale-unit-stats.html'" ng-if="$ctrl.parent.isSale($ctrl.parent.listing)"
 
 
   / TODO: remove case for hardcoded listings
@@ -99,7 +100,7 @@
 
   / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print
-    div ng-if="!ctrl.parent.listingApplicationClosed(ctrl.parent.listing)"
+    div ng-if="!$ctrl.parent.listingApplicationClosed(ctrl.parent.listing)"
       .label.flag-label.secondary.text-wrap
         span.ui-icon.ui-medium
           svg

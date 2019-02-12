@@ -44,5 +44,6 @@ angular.module('dahlia.components')
             types.push(ListingDataService.reservedLabel(listing, type, 'reservedForWhoAre'))
         if types.length then types.join(' or ') else ''
 
+
       return ctrl
   ]
