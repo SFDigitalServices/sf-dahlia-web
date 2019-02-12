@@ -49,15 +49,15 @@ do ->
         describe 'maxOccupancy is 1', ->
           it 'returns minOccupancy value', ->
             unitSummary = { minOccupancy: 1 , maxOccupancy: 1 }
-            expect(ctrl.occupancy(unitSummary)).toEqual(1)
+            expect(ctrl.occupancy(unitSummary)).toEqual('at least 1')
         describe 'is an SRO unit', ->
           it 'returns 1', ->
             unitSummary = { minOccupancy: 1 , maxOccupancy: 1 }
-            expect(ctrl.occupancy(unitSummary)).toEqual(1)
+            expect(ctrl.occupancy(unitSummary)).toEqual('at least 1')
         describe 'maxOccupancy is null', ->
           it 'returns minOccupancy value', ->
             unitSummary = { minOccupancy: 3 , maxOccupancy: null }
-            expect(ctrl.occupancy(unitSummary)).toEqual(3)
+            expect(ctrl.occupancy(unitSummary)).toEqual('at least 3')
         describe 'all other unit types', ->
           it 'returns a range for all other unit types', ->
             unitSummary = { minOccupancy: 2 , maxOccupancy: 3 }
