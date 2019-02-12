@@ -68,7 +68,7 @@ describe Force::ListingService do
       }
     end
 
-    it 'returns only rental listing' do
+    it 'returns only rental listings' do
       eligible_listings = Force::ListingService.eligible_listings(filters)
       expect(eligible_listings.size).to eq(2)
       eligible_listings.each do |listing|
