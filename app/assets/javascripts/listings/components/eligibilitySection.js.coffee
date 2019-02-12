@@ -13,9 +13,9 @@ angular.module('dahlia.components')
 
       @occupancy = (unitSummary) ->
         if unitSummary.minOccupancy == 1 || unitSummary.maxOccupancy == null
-          "at least #{unitSummary.minOccupancy}"
+          "at least #{unitSummary.minOccupancy} person"
         else
-          "#{unitSummary.minOccupancy}-#{unitSummary.maxOccupancy}"
+          "#{unitSummary.minOccupancy}-#{unitSummary.maxOccupancy} people"
 
       @occupancyLabel = (maxOccupancy) ->
         return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
