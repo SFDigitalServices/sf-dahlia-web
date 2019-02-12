@@ -70,7 +70,7 @@
           templateUrl: 'listings/templates/listings-for-rent.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'rental'}})
+          ListingDataService.getListings({checkEligibility: true, retranslate: true, clearFilters: false, params: {Tenure: 'rental'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
@@ -84,7 +84,7 @@
           templateUrl: 'listings/templates/listings-for-sale.html'
       resolve:
         listings: ['$stateParams', 'ListingDataService', ($stateParams, ListingDataService) ->
-          ListingDataService.getListings({checkEligibility: true, retranslate: true, params: {Tenure: 'sale'}})
+          ListingDataService.getListings({checkEligibility: false, retranslate: false, clearFilters: true, params: {Tenure: 'sale'}})
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
