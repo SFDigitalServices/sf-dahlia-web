@@ -12,6 +12,7 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeAccountService =
       createAccount: ->
       signIn: ->
@@ -34,6 +35,11 @@ do ->
     fakeSharedService = {}
     fakeModalService =
       closeModal: jasmine.createSpy()
+    fakeListingIdentityService =
+      isSale: jasmine.createSpy()
+    fakeApplication = {
+      listing: fakeListing
+    }
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -76,6 +82,7 @@ do ->
         SharedService: fakeSharedService
         ModalService: fakeModalService
         inputMaxLength: {}
+        ListingIdentityService: fakeListingIdentityService
     )
 
     describe '$scope.closeModal', ->
@@ -217,3 +224,16 @@ do ->
       it 'calls ShortFormApplicationService.importUserData', ->
         scope._createAccountSubmitApplication()
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
+
+    describe '$scope.isSale', ->
+      it 'calls ListingIdentityService.isSale', ->
+        scope.isSale(fakeListing)
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+
+    describe '$scope.hasSaleAndRentalApplications', ->
+      it 'calls ListingIdentityService.isSale', ->
+        scope.hasSaleAndRentalApplications([fakeApplication])
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+      it 'returns false if there are no applications', ->
+        expect(scope.hasSaleAndRentalApplications([])).toEqual(false)
+
