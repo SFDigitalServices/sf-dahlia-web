@@ -44,6 +44,10 @@ do ->
       eligibility_filters: fakeEligibilityFilters
       setEligibilityFilters: jasmine.createSpy()
       hasEligibilityFilters: ->
+      resetEligibilityFilters: jasmine.createSpy()
+    }
+    fakeIncomeCalculatorService = {
+      resetIncomeSources: jasmine.createSpy()
     }
     fakeListingIdentityService =
       listingIs: ->
@@ -77,6 +81,7 @@ do ->
       $provide.value 'ListingIdentityService', fakeListingIdentityService
       $provide.value 'ListingLotteryService', fakeListingLotteryService
       $provide.value 'SharedService', fakeSharedService
+      $provide.value 'IncomeCalculatorService', fakeIncomeCalculatorService
       return
     )
 
@@ -131,8 +136,12 @@ do ->
         spyOn(fakeListingEligibilityService, 'hasEligibilityFilters').and.returnValue(false)
         ListingDataService.getListings(fakeParams)
         httpBackend.flush()
-        httpBackend.verifyNoOutstandingExpectation();
-        httpBackend.verifyNoOutstandingRequest();
+        httpBackend.verifyNoOutstandingExpectation()
+        httpBackend.verifyNoOutstandingRequest()
+      it 'cleans filters', ->
+        ListingDataService.getListings({checkEligibility: false, clearFilters: true})
+        expect(fakeListingEligibilityService.resetEligibilityFilters).toHaveBeenCalled()
+        expect(fakeIncomeCalculatorService.resetIncomeSources).toHaveBeenCalled()
 
     describe 'Service.getListing', ->
       afterEach ->
