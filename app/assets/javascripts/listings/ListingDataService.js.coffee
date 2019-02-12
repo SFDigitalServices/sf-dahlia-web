@@ -5,7 +5,7 @@
 ListingDataService = (
   $http, $localStorage, $q, $state, $translate, $timeout,
   ExternalTranslateService, ListingConstantsService, ListingEligibilityService, ListingIdentityService,
-  ListingLotteryService, ListingPreferenceService, ListingUnitService, SharedService) ->
+  ListingLotteryService, ListingPreferenceService, ListingUnitService, SharedService, IncomeCalculatorService) ->
   Service = {}
   MAINTENANCE_LISTINGS = [] unless MAINTENANCE_LISTINGS
   Service.listing = {}
@@ -109,6 +109,9 @@ ListingDataService = (
 
   Service.getListings = (opts = {}) ->
     # check for eligibility options being set in the session
+    if opts.clearFilters
+      ListingEligibilityService.resetEligibilityFilters()
+      IncomeCalculatorService.resetIncomeSources()
     if opts.checkEligibility && ListingEligibilityService.hasEligibilityFilters()
       return Service.getListingsWithEligibility()
     deferred = $q.defer()
@@ -414,7 +417,7 @@ ListingDataService = (
 ListingDataService.$inject = [
   '$http', '$localStorage', '$q', '$state', '$translate', '$timeout',
   'ExternalTranslateService', 'ListingConstantsService', 'ListingEligibilityService', 'ListingIdentityService',
-  'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService', 'SharedService'
+  'ListingLotteryService', 'ListingPreferenceService', 'ListingUnitService', 'SharedService', 'IncomeCalculatorService'
 ]
 
 angular
