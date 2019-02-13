@@ -12,11 +12,15 @@ angular.module('dahlia.components')
       @error = ListingPreferenceService.error
 
       @occupancy = (unitSummary) ->
-        return '1' if unitSummary.maxOccupancy == 1
-        unitSummary.minOccupancy + '-' + unitSummary.maxOccupancy
+        if unitSummary.maxOccupancy == 1
+          "1"
+        else if unitSummary.maxOccupancy == null
+          "at least #{unitSummary.minOccupancy}"
+        else
+          "#{unitSummary.minOccupancy}-#{unitSummary.maxOccupancy}"
 
-      @occupancyLabel = (maxOccupancy) ->
-        return $translate.instant('LISTINGS.PERSON') if maxOccupancy == 1
+      @occupancyLabel = (numberOfPeople) ->
+        return $translate.instant('LISTINGS.PERSON') if numberOfPeople == 1
         $translate.instant('LISTINGS.PEOPLE')
 
       @showAMItoggler = ->
