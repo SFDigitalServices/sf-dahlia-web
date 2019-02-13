@@ -732,6 +732,7 @@
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "REQUIRED_DOCUMENTS": "Required Documents",
+        "REQUIRED_DOCUMENTS_AFTER_APPLYING": "If you are selected in the lottery, we will ask you to <a href='{{url}}'>provide up to date financial documents</a> on short notice.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
         "RESERVED_FOR": "Reserved for {{type}}",
         "RESERVED_UNITS": "Reserved Units",
