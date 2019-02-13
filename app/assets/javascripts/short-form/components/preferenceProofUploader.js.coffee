@@ -76,10 +76,16 @@ angular.module('dahlia.components')
         @application.preferences[@preference + '_proofOption'] = proofOption
 
       @validateFileNameLength = ($file) ->
-        if $file.name.length > 80
-          'FILE_NAME_TOO_LONG'
+        if $file
+          if $file.name.length > 80
+            @proofDocument.error = 'ERROR.FILE_NAME_TOO_LONG'
+          else
+            if $file.size > 5 * 1000 * 1000 # 5MB
+              @proofDocument.error = 'ERROR.FILE_UPLOAD'
+            else
+              true
         else
-          true
+          @proofDocument.error = 'ERROR.FILE_MISSING'
 
       @uploadProofFile = ($file) =>
         opts = {}
