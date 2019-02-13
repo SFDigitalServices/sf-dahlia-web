@@ -83,7 +83,7 @@ section.results-section#listing-results ng-if="!$ctrl.parent.openListings.length
     / Listings: Open Matched Listings
     .row.margin-top--2x
       .large-12.columns
-        property-card listing='listing' ng-repeat="listing in $ctrl.parent.openListings"
+        property-card listing='listing' ng-repeat="listing in $ctrl.parent.openMatchListings"
 
 ng-include src="'listings/templates/_rental-callout.html'" ng-if="$ctrl.tenureType == 'rental' && (!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length)"
 ng-include src="'listings/templates/_sale-callout.html'" ng-if="$ctrl.tenureType == 'sale' && (!$ctrl.parent.hasEligibilityFilters() || $ctrl.openMatchListings.length)"
