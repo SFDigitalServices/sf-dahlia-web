@@ -9,6 +9,16 @@ accordion-heading.lead
 
 .content-section
   ol.custom-counter
+    li.custom-counter_item ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+      .content-tile
+        header.custom-counter_header
+          h4.custom-counter_title
+            | Before Applying
+          p.custom-counter_text translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.MAKE_SURE_YOU"
+        .content-card
+          ng-include src="'listings/components/before-applying-list.html'"
+        p.custom-counter_text translate="LISTINGS_FOR_SALE.BEFORE_APPLYING.READ_FULL_LIST" translate-value-url="https://sfmohcd.org/homebuyer-program-eligibility"
+
     li.custom-counter_item ng-if="::$ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)"
       .content-tile
         header.custom-counter_header
