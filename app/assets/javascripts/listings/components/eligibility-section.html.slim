@@ -85,9 +85,11 @@ accordion-heading.lead
                 td ng-if="::unit_summary.Unit_Type == 'Flex'"
                   | Flex people
                 td ng-if="::unit_summary.Unit_Type != 'Flex'"
-                  ' {{ $ctrl.occupancy(unit_summary) }}
                   small
-                    | {{ $ctrl.occupancyLabel(unit_summary.maxOccupancy) }}
+                    | {{ $ctrl.occupancy(unit_summary) }}
+                    '
+                  small
+                    | {{$ctrl.occupancyLabel(unit_summary.maxOccupancy || unit_summary.minOccupancy)}}
 
     li.custom-counter_item
       .content-tile
