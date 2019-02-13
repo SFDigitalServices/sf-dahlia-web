@@ -75,4 +75,4 @@ accordion-heading
     p.t-small ng-class="{'margin-bottom--half': $ctrl.parent.listing.Multiple_Listing_Service_URL}"
       | Listing Updated: {{::$ctrl.parent.listing.LastModifiedDate | date : 'MMMM d, yyyy'}}
     p.t-small ng-if="$ctrl.parent.listing.Multiple_Listing_Service_URL"
-      a ng-href="{{$ctrl.parent.listing.Multiple_Listing_Service_URL}}" See this unit on MLS
+      a target="_blank" ng-href="{{$ctrl.parent.listing.Multiple_Listing_Service_URL}}" See this unit on MLS
