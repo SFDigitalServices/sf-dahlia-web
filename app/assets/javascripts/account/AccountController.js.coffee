@@ -1,16 +1,16 @@
 AccountController = (
+  $document,
   $scope,
   $state,
-  $document,
   $translate,
   $window,
   AccountService,
   AnalyticsService,
-  ShortFormApplicationService,
-  SharedService,
-  ModalService,
   inputMaxLength,
-  ListingIdentityService
+  ListingIdentityService,
+  ModalService,
+  SharedService,
+  ShortFormApplicationService
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.showChooseDiffEmailMessage = AccountService.showChooseDiffEmailMessage
@@ -261,16 +261,15 @@ AccountController = (
   $scope.hasSaleAndRentalApplications = (applications) ->
     if _.first(applications)
       firstIsSale = ListingIdentityService.isSale(_.first(applications).listing)
+      # Check if any other application listing is different type than the first one
       _.some applications, (application) ->
         ListingIdentityService.isSale(application.listing) != firstIsSale
     else
       false
 
 AccountController.$inject = [
-  '$scope', '$state', '$document', '$translate', '$window',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
-  'SharedService', 'ModalService',
-  'inputMaxLength', 'ListingIdentityService'
+  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 
 angular

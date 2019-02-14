@@ -36,10 +36,11 @@ do ->
     fakeModalService =
       closeModal: jasmine.createSpy()
     fakeListingIdentityService =
-      isSale: jasmine.createSpy()
+      isSale: ->
     fakeApplication = {
       listing: fakeListing
     }
+    fakeIsSale = false
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -227,13 +228,20 @@ do ->
 
     describe '$scope.isSale', ->
       it 'calls ListingIdentityService.isSale', ->
+        spyOn(fakeListingIdentityService, 'isSale')
         scope.isSale(fakeListing)
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
 
     describe '$scope.hasSaleAndRentalApplications', ->
       it 'calls ListingIdentityService.isSale', ->
+        spyOn(fakeListingIdentityService, 'isSale')
         scope.hasSaleAndRentalApplications([fakeApplication])
         expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
       it 'returns false if there are no applications', ->
         expect(scope.hasSaleAndRentalApplications([])).toEqual(false)
+      it 'returns true if there are at least two different applications', ->
+        fakeListingIdentityService.isSale = ->
+          fakeIsSale = !fakeIsSale
+          fakeIsSale
+        expect(scope.hasSaleAndRentalApplications([fakeApplication, fakeApplication])).toEqual(true)
 
