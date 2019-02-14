@@ -176,7 +176,8 @@ ShortFormNavigationService = (
       'rent-burdened-preference-edit',
       'alice-griffith-verify-address',
       'review-summary',
-      'confirmation'
+      'confirmation',
+      'prerequisites'
     ]
     hideBackButton.indexOf(Service._currentPage()) < 0
 

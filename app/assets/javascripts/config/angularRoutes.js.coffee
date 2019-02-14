@@ -669,6 +669,27 @@
         ]
     })
     # Short form: "You" section
+    .state('dahlia.short-form-application.prerequisites', {
+      url: '/prerequisites'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b0a-prerequisites.html'
+      params:
+        infoChanged:
+          squash: true
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+          ShortFormApplicationService.completeSection('Intro')
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            ShortFormApplicationService.infoChanged = $stateParams.infoChanged
+            # always autosave when you start a new application
+            # TODO: remove hotfix for marking initial autosaves that come from the Name page
+            unless ShortFormApplicationService.application.id
+              ShortFormApplicationService.submitApplication({autosave: true, initialSave: true})
+      ]
+    })
     .state('dahlia.short-form-application.autofill-preview', {
       url: '/autofill-preview'
       views:
