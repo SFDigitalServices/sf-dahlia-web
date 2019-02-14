@@ -74,7 +74,7 @@ module ArcGISService
           c[:score] >= STCLINES_CANDIDATE_SCORE_MIN
       end
       other_acceptable_candidates = candidates.select do |c|
-        %w[eas StClines].include?(c[:attributes][:Loc_name]) &&
+        !%w[eas StClines].include?(c[:attributes][:Loc_name]) &&
           c[:score] >= OTHER_CANDIDATE_SCORE_MIN
       end
 
