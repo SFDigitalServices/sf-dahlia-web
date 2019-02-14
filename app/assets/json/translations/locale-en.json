@@ -645,11 +645,11 @@
         },
         "BEFORE_APPLYING": {
             "MAKE_SURE_YOU": "Make sure you:",
-            "READ_FULL_LIST": "Read <a href='{{url}}'>our full list of requirements</a> for more details.",
+            "READ_FULL_LIST": "Read <a href='{{url}}' target='_blank'>our full list of requirements</a> for more details.",
             "STEP_1": "Haven't owned property in the past 3 years",
-            "STEP_2": "Meet our <a href='{{url}}'>income requirements</a>",
-            "STEP_3": "Complete a <a href='{{url}}'>homebuyers’ education workshop</a>",
-            "STEP_4": "Get pre-approved for a loan by a <a href='{{url}}'>lender on our list</a>",
+            "STEP_2": "Meet our <a href='{{url}}' target='_blank'>income requirements</a>",
+            "STEP_3": "Complete a <a href='{{url}}' target='_blank'>homebuyers’ education workshop</a>",
+            "STEP_4": "Get pre-approved for a loan by a <a href='{{url}}' target='_blank'>lender on our list</a>",
             "STEP_5": "Have enough in savings for closing costs and downpayment",
             "TITLE": "Before applying"
         },
@@ -691,7 +691,7 @@
             "SEND_BY_US_MAIL": "Send Application by US Mail",
             "SUBMIT_A_PAPER_APPLICATION": "Submit a Paper Application",
             "VISIT_A_HOUSING_COUNSELOR": "Visit a local housing counselor for help with your application.",
-            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}'>eligibility requirements</a> for this listing before you begin."
+            "FULFILL_ELIGIBITY_REQUIREMENTS": "Make sure you fulfill the <a href='{{url}}' target='_blank'>eligibility requirements</a> for this listing before you begin."
         },
         "AVAILABLE_AND_WAITLIST": "Available Units & Open Waitlist",
         "AVAILABLE_UNITS": "Available Units",
@@ -732,7 +732,7 @@
         "PRIORITY_UNITS_DESCRIPTION": "This building has units set aside if any of the following apply to you or someone in your household:",
         "REMAINING_UNITS_AFTER_PREFERENCE_CONSIDERATION": "After all preference holders have been considered, any remaining units will be available to qualified applicants in lottery order.",
         "REQUIRED_DOCUMENTS": "Required Documents",
-        "REQUIRED_DOCUMENTS_AFTER_APPLYING": "If you are selected in the lottery, we will ask you to <a href='{{url}}'>provide up to date financial documents</a> on short notice.",
+        "REQUIRED_DOCUMENTS_AFTER_APPLYING": "If you are selected in the lottery, we will ask you to <a href='{{url}}' target='_blank'>provide up to date financial documents</a> on short notice.",
         "RESERVED_COMMUNITY_BUILDING": "{{type}} Building",
         "RESERVED_FOR": "Reserved for {{type}}",
         "RESERVED_UNITS": "Reserved Units",
