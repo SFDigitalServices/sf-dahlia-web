@@ -9,7 +9,7 @@ tr ng-repeat="unit_summary in ::summary" ng-if="::unit_summary.minPriceWithoutPa
       span ng-show="(unit_summary.maxPriceWithoutParking == unit_summary.minPriceWithoutParking)"
         | {{::unit_summary.maxPriceWithoutParking | currency:"$":0}}
       br
-      span
+      span ng-if="unit_summary.minHoaDuesWithoutParking"
         |  plus HOA dues
   td ng-if="$ctrl.listingContainer.hasSaleUnitsWithParking($ctrl.listing)"
     span
@@ -18,5 +18,5 @@ tr ng-repeat="unit_summary in ::summary" ng-if="::unit_summary.minPriceWithoutPa
       span ng-show="(unit_summary.maxPriceWithParking == unit_summary.minPriceWithParking)"
         | {{::unit_summary.maxPriceWithParking | currency:"$":0}}
       br
-      span
+      span ng-if="unit_summary.minHoaDuesWithParking"
         |  plus HOA dues
