@@ -44,6 +44,23 @@ angular.module('dahlia.components')
             types.push(ListingDataService.reservedLabel(listing, type, 'reservedForWhoAre'))
         if types.length then types.join(' or ') else ''
 
+      @hasSaleUnitsWithoutParking = (listing) ->
+        for unitSummary in listing.unitSummaries.general || []
+          if unitSummary.minPriceWithoutParking
+            return true
+        false
+
+      @hasSaleUnitsWithParking = (listing) ->
+        for unitSummary in listing.unitSummaries.general || []
+          if unitSummary.minPriceWithParking
+            return true
+        false
+
+      @hasRangeOfPrices = (unitSummary, withParking) ->
+        if withParking
+          unitSummary.maxPriceWithParking > unitSummary.minPriceWithParking
+        else
+          unitSummary.maxPriceWithoutParking > unitSummary.minPriceWithoutParking
 
       return ctrl
   ]
