@@ -14,24 +14,24 @@ table.pricing-table.table-flex.no-margin
             use xlink:href="{{$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
     td ng-if="$ctrl.groupHasUnitsWithoutParking(unitGroups)" data-th="No Parking"
       | {{::group.Price_Without_Parking | currency:"$":0}}
-      br
-      small
-        |  plus
-      |  {{::group.HOA_Dues_Without_Parking | currency:"$":0}}
-      small
-        | /month
-        br
-        |  in HOA dues
+      div ng-show="::group.HOA_Dues_Without_Parking"
+        small
+          |  plus
+        |  {{::group.HOA_Dues_Without_Parking | currency:"$":0}}
+        small
+          | /month
+          br
+          |  in HOA dues
     td ng-if="$ctrl.groupHasUnitsWithParking(unitGroups)" data-th="With Parking"
       | {{::group.Price_With_Parking | currency:"$":0}}
-      br
-      small
-        |  plus
-      |  {{::group.HOA_Dues_With_Parking | currency:"$":0}}
-      small
-        | /month
-        br
-        |  in HOA dues
+      div ng-show="::group.HOA_Dues_With_Parking"
+        small
+          |  plus
+        |  {{::group.HOA_Dues_With_Parking | currency:"$":0}}
+        small
+          | /month
+          br
+          |  in HOA dues
     td data-th="Availability"
       em ng-if="::group.Status == 'Occupied'"
         | Waitlist
