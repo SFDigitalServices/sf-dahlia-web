@@ -85,5 +85,17 @@ angular.module('dahlia.components')
     @agentInfoAvailable = (listing) ->
       listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street
 
+    @hasSaleUnitsWithoutParking = (listing) ->
+      for unitSummary in listing.unitSummaries.general || []
+        if unitSummary.minPriceWithoutParking
+          return true
+      false
+
+    @hasSaleUnitsWithParking = (listing) ->
+      for unitSummary in listing.unitSummaries.general || []
+        if unitSummary.minPriceWithParking
+          return true
+      false
+
     return ctrl
   ]
