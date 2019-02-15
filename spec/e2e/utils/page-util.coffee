@@ -3,6 +3,7 @@ remote = require('selenium-webdriver/remote')
 PageUtil = {
   testListingId: 'a0W0P00000F8YG4UAN'
   seniorListingId: 'a0W0P00000GwGl3'
+  saleListingId: 'a0W21000007AWriEAG'
   checkCheckbox: (checkboxId, callback) ->
     checkbox = element(By.id(checkboxId))
     checkbox.isSelected().then (selected) ->
