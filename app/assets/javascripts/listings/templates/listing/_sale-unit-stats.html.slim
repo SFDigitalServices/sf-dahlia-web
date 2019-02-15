@@ -2,8 +2,8 @@ table.pricing-table.table-flex.no-margin
   thead
     tr
       th Unit Type
-      th No Parking
-      th With Parking
+      th ng-if="$ctrl.groupHasUnitsWithoutParking(unitGroups)" No Parking
+      th ng-if="$ctrl.groupHasUnitsWithParking(unitGroups)" With Parking
       th Availability
   tr ng-repeat="group in ::unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
     td.tr data-th="Unit Type"
@@ -12,7 +12,7 @@ table.pricing-table.table-flex.no-margin
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
           svg
             use xlink:href="{{$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
-    td data-th="No Parking"
+    td ng-if="$ctrl.groupHasUnitsWithoutParking(unitGroups)" data-th="No Parking"
       | {{::group.Price_Without_Parking | currency:"$":0}}
       br
       small
@@ -22,7 +22,7 @@ table.pricing-table.table-flex.no-margin
         | /month
         br
         |  in HOA dues
-    td data-th="With Parking"
+    td ng-if="$ctrl.groupHasUnitsWithParking(unitGroups)" data-th="With Parking"
       | {{::group.Price_With_Parking | currency:"$":0}}
       br
       small
