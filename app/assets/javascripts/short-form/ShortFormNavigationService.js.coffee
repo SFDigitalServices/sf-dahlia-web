@@ -3,7 +3,8 @@ ShortFormNavigationService = (
   bsLoadingOverlayService,
   ShortFormApplicationService,
   AccountService,
-  ListingConstantsService
+  ListingConstantsService,
+  ListingIdentityService
 ) ->
   Service = {}
   RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
@@ -167,7 +168,6 @@ ShortFormNavigationService = (
       'intro',
       'community-screening',
       'overview',
-      'name',
       'verify-address',
       'household-members',
       'household-member-form',
@@ -179,6 +179,8 @@ ShortFormNavigationService = (
       'confirmation',
       'prerequisites'
     ]
+    if !ListingIdentityService.isSale(ShortFormApplicationService.listing)
+      hideBackButton.push('name')
     hideBackButton.indexOf(Service._currentPage()) < 0
 
   Service.isActiveSection = (section) ->
@@ -273,6 +275,8 @@ ShortFormNavigationService = (
           'preferences-programs'
       when 'review-submitted'
         'confirmation'
+      when 'name'
+        'prerequisites'
       # -- catch all
       else
         'intro'
@@ -409,7 +413,8 @@ ShortFormNavigationService.$inject = [
   'bsLoadingOverlayService',
   'ShortFormApplicationService',
   'AccountService',
-  'ListingConstantsService'
+  'ListingConstantsService',
+  'ListingIdentityService'
 ]
 
 angular
