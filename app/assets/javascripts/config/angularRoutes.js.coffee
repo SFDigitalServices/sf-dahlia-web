@@ -684,10 +684,6 @@
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
-            # always autosave when you start a new application
-            # TODO: remove hotfix for marking initial autosaves that come from the Name page
-            unless ShortFormApplicationService.application.id
-              ShortFormApplicationService.submitApplication({autosave: true, initialSave: true})
       ]
     })
     .state('dahlia.short-form-application.autofill-preview', {
