@@ -2,7 +2,8 @@ accordion-heading
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-features.svg']}}" alt="features-options"
   h3.accordion-name
     | Features
-  span.accordion-subheader Amenities, unit details and additional fees
+  span.accordion-subheader
+    | {{$ctrl.parent.featuresCaption($ctrl.parent.listing)}}
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
