@@ -29,9 +29,7 @@
             h3.listing-header_name
               | Features
             span.listing-header_subheader
-              | Amenities, unit details
-              span ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing)"
-                | and additional fees
+              | {{$ctrl.parent.featuresCaption($ctrl.parent.listing)}}
         features-section
 
       accordion-group.bg-dust data-event="gtm-accordion-neighborhood" ng-if="::$ctrl.parent.formattedBuildingAddress($ctrl.parent.listing)" is-open="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].neighborhood"
