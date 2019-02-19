@@ -900,6 +900,9 @@ ShortFormApplicationController = (
           else
             $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
 
+  $scope.afterPrerequisites = ->
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
+
   $scope.DOBValid = (field, value, model = 'applicant') ->
     values = $scope.DOBValues(model)
     values[field] = parseInt(value)
