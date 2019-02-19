@@ -1,4 +1,4 @@
-.content-group ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
+.content-group ng-if="::$ctrl.parent.isSale($ctrl.parent.listing) && $ctrl.parent.listing.Expected_Move_in_Date"
   h4.h-caps-lined
     | Expected move-in date
   p.t-small.caps
