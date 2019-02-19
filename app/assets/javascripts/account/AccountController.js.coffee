@@ -3,6 +3,7 @@ AccountController = (
   $state,
   $document,
   $translate,
+  $window,
   AccountService,
   AnalyticsService,
   ShortFormApplicationService,
@@ -34,6 +35,7 @@ AccountController = (
 
   $scope.passwordRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])(.+){8,}$/
   $scope.emailRegex = SharedService.emailRegex
+  $scope.showSaleListings = $window.env.showSaleListings == 'true'
 
   $scope.accountForm = ->
     # pick up which ever one is defined (the other will be undefined)
@@ -253,7 +255,7 @@ AccountController = (
     day.$setViewValue(day.$viewValue + ' ')
 
 AccountController.$inject = [
-  '$scope', '$state', '$document', '$translate',
+  '$scope', '$state', '$document', '$translate', '$window',
   'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
   'SharedService', 'ModalService',
   'inputMaxLength'

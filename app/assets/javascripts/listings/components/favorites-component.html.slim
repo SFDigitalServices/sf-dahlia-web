@@ -10,7 +10,14 @@ section.row ng-show="!$ctrl.parent.favorites.length"
       figure.block-icon
         img ng-src="{{::$ctrl.parent.assetPaths['icon-heart.png']}}" alt="Heart Icon"
       p.t-delta.t-serif.c-oil It looks like you haven't favorited any listings yet.
-      a.button ui-sref="dahlia.listings-for-rent" Browse Listings
+      .row
+        .medium-6.medium-centered.columns
+          .medium-6.columns ng-class="{'small-centered': !$ctrl.parent.showSaleListings}"
+            a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
+              | Browse Rentals
+          .medium-6.columns ng-if="$ctrl.parent.showSaleListings"
+            a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
+              | Browse Sales
 
 .results-section
   .row

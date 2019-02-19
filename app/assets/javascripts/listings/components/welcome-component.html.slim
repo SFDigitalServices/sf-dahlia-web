@@ -9,10 +9,10 @@ section.splash-header.bg-image
             | {{'WELCOME.ALL_APPLICATION_CLOSED' | translate}}
       .row
         .medium-6.medium-centered.columns
-          .medium-6.columns ng-class="{'small-centered': !$ctrl.showSaleListings}"
+          .medium-6.columns ng-class="{'small-centered': !$ctrl.parent.showSaleListings}"
             a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
               | {{'WELCOME.SEE_RENTAL_LISTINGS' | translate}}
-          .medium-6.columns ng-if="$ctrl.showSaleListings"
+          .medium-6.columns ng-if="$ctrl.parent.showSaleListings"
             a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
               | {{'WELCOME.SEE_SALE_LISTINGS' | translate}}
 
