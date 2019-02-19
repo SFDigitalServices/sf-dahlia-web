@@ -240,8 +240,6 @@ do ->
       it 'returns false if there are no applications', ->
         expect(scope.hasSaleAndRentalApplications([])).toEqual(false)
       it 'returns true if there are at least two different applications', ->
-        fakeListingIdentityService.isSale = ->
-          fakeIsSale = !fakeIsSale
-          fakeIsSale
+        fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValues(false, true)
         expect(scope.hasSaleAndRentalApplications([fakeApplication, fakeApplication])).toEqual(true)
 
