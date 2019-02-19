@@ -129,3 +129,135 @@ do ->
           fakeListing.reservedDescriptor = null
           spyOn(fakeListingDataService, 'reservedLabel').and.returnValue('fake')
           expect(ctrl.reservedForLabels(fakeListing)).toEqual ''
+
+      describe '$ctrl.hasSaleUnitsWithoutParking', ->
+        it 'returns true if a listing has a general unit with a without-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'minPriceWithoutParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': fakeSummaries}}
+          expect(ctrl.hasSaleUnitsWithoutParking(listing)).toEqual true
+        it 'returns true if a listing has a reserved unit with a without-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'minPriceWithoutParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': null, 'reserved': fakeSummaries}}
+          expect(ctrl.hasSaleUnitsWithoutParking(listing)).toEqual true
+        it 'returns false if a listing has no units with a without-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': fakeSummaries, 'reserved': null}}
+          expect(ctrl.hasSaleUnitsWithoutParking(listing)).toEqual false
+
+        it 'returns false if a listing has no units', ->
+          listing = {'unitSummaries': {'general': null, 'reserved': null}}
+          expect(ctrl.hasSaleUnitsWithoutParking(listing)).toEqual false
+
+      describe '$ctrl.hasSaleUnitsWithParking', ->
+        it 'returns true if a listing has a general unit with a with-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'minPriceWithParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': fakeSummaries}}
+          expect(ctrl.hasSaleUnitsWithParking(listing)).toEqual true
+        it 'returns true if a listing has a reserved unit with a with-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'minPriceWithParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': null, 'reserved': fakeSummaries}}
+          expect(ctrl.hasSaleUnitsWithParking(listing)).toEqual true
+        it 'returns false if a listing has no units with a with-parking price', ->
+          fakeSummaries = [
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'},
+            {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }]
+          listing = {'unitSummaries': {'general': fakeSummaries, 'reserved': null}}
+          expect(ctrl.hasSaleUnitsWithParking(listing)).toEqual false
+
+        it 'returns false if a listing has no units', ->
+          listing = {'unitSummaries': {'general': null, 'reserved': null}}
+          expect(ctrl.hasSaleUnitsWithParking(listing)).toEqual false
+
+      describe '$ctrl.hasRangeOfPrices', ->
+        describe 'with parking', ->
+          it 'returns true if max is greater than min', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'minPriceWithParking': 4000,
+              'maxPriceWithParking': 6000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, true)).toEqual true
+          it 'returns false if max or min is not defined', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, true)).toEqual false
+          it 'returns false if max and min are equal', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'minPriceWithParking': 4000,
+              'maxPriceWithParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, true)).toEqual false
+        describe 'without parking', ->
+          it 'returns true if max is greater than min', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'minPriceWithoutParking': 4000,
+              'maxPriceWithoutParking': 6000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, false)).toEqual true
+          it 'returns false if max or min is not defined', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, false)).toEqual false
+          it 'returns false if max and min are equal', ->
+            fakeSummary = {
+              'unitType': '1 BR',
+              'minPriceWithoutParking': 4000,
+              'maxPriceWithoutParking': 4000,
+              'listingID': 'a0W0P00000F8YG4UAN'
+            }
+            expect(ctrl.hasRangeOfPrices(fakeSummary, false)).toEqual false
+
+
