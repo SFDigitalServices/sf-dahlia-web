@@ -1,10 +1,28 @@
 
 .app-card.form-card
-  short-form-header logged-in-message="{{translateLoggedInMessage('b1-name')}}"
+  short-form-header logged-in-message="{{translateLoggedInMessage('b0a-prerequisites')}}"
     h2.app-card_question
       | {{'B0_PREREQUISITES.TITLE' | translate}}
-  .app-inner.inset.border-bottom
+  .app-inner
+    .form-group
+      .checkbox-group
+        .checkbox-block.margin-bottom--2x
+          input#applicant_is_first_time_homebuyer name="is_first_time_homebuyer" type="checkbox" ng-model="applicant.isFirstTimeHomebuyer"
+          label.checkbox-block_label for="applicant_is_first_time_homebuyer"
+            string.caps.form-label
+              | {{'LABEL.APPLICANT_IS_FIRST_TIME_HOMEBUYER' | translate}}
+      .checkbox-group
+        .checkbox-block.margin-bottom--2x
+          input#applicant_has_completed_homebuyer_education name="applicant_has_completed_homebuyer_education" type="checkbox" ng-model="applicant.hasCompletedHomebuyerEducation"
+          label.checkbox-block_label for="applicant_has_completed_homebuyer_education"
+            strong.form-label.caps translate="LABEL.APPLICANT_HAS_COMPLETED_HOMEBUYER_EDUCATION"
+            p.checkbox-block_note id="applicant_has_completed_homebuyer_education-description" translate="LABEL.APPLICANT_VISIT_HOMEOWNERSHIP_CALENDAR" translate-value-url="http://www.homeownershipsf.org/workshops"
+      .checkbox-group
+        .checkbox-block.margin-bottom--2x
+          input#applicant_has_completed_homebuyer_education name="applicant_has_loan_pre_approval" type="checkbox" ng-model="applicant.hasLoanPreapproval"
+          label.checkbox-block_label for="applicant_has_loan_pre_approval"
+            strong.form-label.caps translate="LABEL.APPLICANT_HAS_LOAN_PRE_APPROVAL"
+            p.checkbox-block_note id="applicant_has_loan_pre_approval-description" translate="LABEL.APPLICANT_VISIT_MOHCD" translate-value-url="https://sfmohcd.org/lender-list"
   .button-pager
     .button-pager_row.primary
-      button#submit.button.primary ui-sref="dahlia.short-form-application.name({id: listing.Id})"
-        | {{'T.NEXT' | translate}}
+      input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}" ng-disabled="isLoading()"

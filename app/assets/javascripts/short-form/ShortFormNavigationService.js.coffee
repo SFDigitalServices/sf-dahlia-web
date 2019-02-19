@@ -9,79 +9,13 @@ ShortFormNavigationService = (
   Service = {}
   RESERVED_TYPES = ListingConstantsService.RESERVED_TYPES
   Service.loading = false
-  Service.sections = [
-    {
-      name: 'You',
-      translatedLabel: 'SHORT_FORM_NAV.YOU',
-      pages: [
-        'name'
-        'welcome-back'
-        'contact'
-        'verify-address'
-        'alternate-contact-type'
-        'alternate-contact-name'
-        'alternate-contact-phone-address'
-      ]
-    },
-    {
-      name: 'Household',
-      translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
-      pages: [
-        'household-intro'
-        'household-overview'
-        'household-members'
-        'household-member-form'
-        'household-member-form-edit'
-        'household-public-housing'
-        'household-monthly-rent'
-        'household-reserved-units-veteran'
-        'household-reserved-units-disabled'
-        'household-priorities'
-      ]
-    },
-    {
-      name: 'Income',
-      translatedLabel: 'SHORT_FORM_NAV.INCOME',
-      pages: [
-        'income-vouchers'
-        'income'
-      ]
-    },
-    {
-      name: 'Preferences',
-      translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
-      pages: [
-        'preferences-intro'
-        'assisted-housing-preference'
-        'rent-burdened-preference'
-        'rent-burdened-preference-edit'
-        'neighborhood-preference'
-        'adhp-preference'
-        'live-work-preference'
-        'alice-griffith-preference'
-        'alice-griffith-verify-address'
-        'preferences-programs'
-        'custom-preferences'
-        'custom-proof-preferences'
-        'general-lottery-notice'
-      ]
-    },
-    {
-      name: 'Review',
-      translatedLabel: 'SHORT_FORM_NAV.REVIEW',
-      pages: [
-        'review-optional'
-        'review-summary'
-        'review-terms'
-      ]
-    }
-  ]
 
   Service.submitActions =
     # intro
     'community-screening': {callback: ['validateCommunityEligibility']}
     # you
     'name': {callback: ['checkAfterNamePage']}
+    'prerequisites': {callback: ['afterPrerequisites']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
@@ -122,6 +56,80 @@ ShortFormNavigationService = (
     # save + finish workflow
     'choose-draft': {callback: ['chooseDraft']}
     'choose-applicant-details': {callback: ['chooseApplicantDetails']}
+
+  Service.sections = () ->
+    sections = [
+      {
+        name: 'You',
+        translatedLabel: 'SHORT_FORM_NAV.YOU',
+        pages: [
+          'prerequisites'
+          'name'
+          'welcome-back'
+          'contact'
+          'verify-address'
+          'alternate-contact-type'
+          'alternate-contact-name'
+          'alternate-contact-phone-address'
+        ]
+      },
+      {
+        name: 'Household',
+        translatedLabel: 'SHORT_FORM_NAV.HOUSEHOLD',
+        pages: [
+          'household-intro'
+          'household-overview'
+          'household-members'
+          'household-member-form'
+          'household-member-form-edit'
+          'household-public-housing'
+          'household-monthly-rent'
+          'household-reserved-units-veteran'
+          'household-reserved-units-disabled'
+          'household-priorities'
+        ]
+      },
+      {
+        name: 'Income',
+        translatedLabel: 'SHORT_FORM_NAV.INCOME',
+        pages: [
+          'income-vouchers'
+          'income'
+        ]
+      },
+      {
+        name: 'Preferences',
+        translatedLabel: 'SHORT_FORM_NAV.PREFERENCES',
+        pages: [
+          'preferences-intro'
+          'assisted-housing-preference'
+          'rent-burdened-preference'
+          'rent-burdened-preference-edit'
+          'neighborhood-preference'
+          'adhp-preference'
+          'live-work-preference'
+          'alice-griffith-preference'
+          'alice-griffith-verify-address'
+          'preferences-programs'
+          'custom-preferences'
+          'custom-proof-preferences'
+          'general-lottery-notice'
+        ]
+      },
+      {
+        name: 'Review',
+        translatedLabel: 'SHORT_FORM_NAV.REVIEW',
+        pages: [
+          'review-optional'
+          'review-summary'
+          'review-terms'
+        ]
+      }
+    ]
+    listing = ShortFormApplicationService.listing
+    if listing && !ListingIdentityService.isSale(listing)
+      sections[0]['pages'].shift()
+    sections
 
   Service.submitOptionsForCurrentPage = ->
     options = angular.copy(Service.submitActions[Service._currentPage()] || {})
@@ -384,7 +392,7 @@ ShortFormNavigationService = (
     stateName.replace(/dahlia.short-form-(welcome|application)\./, "")
 
   Service._getPreviousPage = () ->
-    pages = _.flatten _.map(Service.sections, (section) -> section.pages)
+    pages = _.flatten _.map(Service.sections(), (section) -> section.pages)
     index = pages.indexOf(Service._currentPage())
     return pages[index - 1]
 
@@ -397,13 +405,13 @@ ShortFormNavigationService = (
 
   Service._sectionOfPage = (stateName) ->
     currentSection = null
-    Service.sections.forEach (section) ->
+    Service.sections().forEach (section) ->
       if section.pages.indexOf(stateName) > -1
         currentSection = section
     return currentSection
 
   Service._sectionNames = () ->
-    Service.sections.map (section) ->
+    Service.sections().map (section) ->
       return section.name
 
   return Service
