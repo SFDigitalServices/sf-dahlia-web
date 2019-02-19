@@ -85,5 +85,11 @@ angular.module('dahlia.components')
     @agentInfoAvailable = (listing) ->
       listing.Leasing_Agent_Phone || listing.Leasing_Agent_Email || listing.Leasing_Agent_Street
 
+    @featuresCaption = (listing) ->
+      if ListingIdentityService.isSale(listing)
+        "Amenities and unit details"
+      else
+        "Amenities, unit details and additional fees"
+
     return ctrl
   ]
