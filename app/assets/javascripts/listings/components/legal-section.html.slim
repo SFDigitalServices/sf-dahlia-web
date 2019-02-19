@@ -17,6 +17,7 @@ accordion-heading
       h4.content-card_title.t-serif
         | {{'LISTINGS.REQUIRED_DOCUMENTS' | translate}}
       p ng-text-truncate="::$ctrl.parent.listing.Required_Documents | stripMostTags | nl2br" ng-tt-words-threshold="60"
+      p translate="LISTINGS.REQUIRED_DOCUMENTS_AFTER_APPLYING" translate-value-url="https://sfmohcd.org/after-homebuyer-lottery" ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)"
     .content-card.bg-dust
       h4.content-card_title.t-serif
         | {{'LISTINGS.IMPORTANT_PROGRAM_RULES' | translate}}
