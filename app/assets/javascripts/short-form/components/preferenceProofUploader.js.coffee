@@ -75,6 +75,18 @@ angular.module('dahlia.components')
           proofOption = 'Lease'
         @application.preferences[@preference + '_proofOption'] = proofOption
 
+      @validateFileNameLength = ($file) ->
+        if $file
+          if $file.name.length > 80
+            @proofDocument.error = 'ERROR.FILE_NAME_TOO_LONG'
+          else
+            if $file.size > 5 * 1000 * 1000 # 5MB
+              @proofDocument.error = 'ERROR.FILE_UPLOAD'
+            else
+              true
+        else
+          @proofDocument.error = 'ERROR.FILE_MISSING'
+
       @uploadProofFile = ($file) =>
         opts = {}
         if @preference == 'rentBurden'
