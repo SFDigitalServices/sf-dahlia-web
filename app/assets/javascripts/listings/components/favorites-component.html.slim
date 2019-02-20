@@ -4,13 +4,20 @@ header.lead-header.bg-image
       hgroup.lead-header_group
         h1.lead-header_title.serif.c-white My Favorites
 
-section.row ng-show="!$ctrl.parent.favorites.length"
-  .large-12.columns
-    .block.bg-mist.margin-top--2x.text-center
+.block.bg-mist.margin-top--2x.text-center ng-show="!$ctrl.parent.favorites.length"
+  .row
+    .large-12.columns
       figure.block-icon
         img ng-src="{{::$ctrl.parent.assetPaths['icon-heart.png']}}" alt="Heart Icon"
       p.t-delta.t-serif.c-oil It looks like you haven't favorited any listings yet.
-      a.button ui-sref="dahlia.listings-for-rent" Browse Listings
+  .row
+    .medium-12.large-4.medium-centered.columns
+        .margin-bottom ng-class="{'small-centered': !$ctrl.parent.showSaleListings}"
+          a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
+            | Browse Rentals
+        .margin-bottom ng-if="$ctrl.parent.showSaleListings"
+          a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
+            | Browse Sales
 
 .results-section
   .row

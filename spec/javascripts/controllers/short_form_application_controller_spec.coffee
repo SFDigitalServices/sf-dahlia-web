@@ -138,6 +138,8 @@ do ->
       preventDefault: ->
     fakeHHOpts = {}
     fakeIncomeOpts = {}
+    fakeListingIdentityService =
+      isSale: jasmine.createSpy()
     $q = undefined
     $rootScope = undefined
 
@@ -197,6 +199,7 @@ do ->
         ListingDataService: fakeListingDataService
         SharedService: fakeSharedService
         inputMaxLength: {}
+        ListingIdentityService: fakeListingIdentityService
       return
     )
 

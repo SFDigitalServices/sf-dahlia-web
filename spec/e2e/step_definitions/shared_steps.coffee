@@ -13,6 +13,8 @@ Given /^I go to the first page of the "([^"]*)" application$/, (listing) ->
       "/listings/#{Utils.Page.testListingId}/apply/name"
     when 'Senior Test Listing'
       "/listings/#{Utils.Page.seniorListingId}/apply-welcome/community-screening"
+    when 'Sale Test Listing'
+      "/listings/#{Utils.Page.saleListingId}/apply-welcome/overview"
 
   Utils.Page.goTo(url)
 
@@ -22,6 +24,8 @@ Given /^I go to the welcome page of the "([^"]*)" application$/, (listing) ->
       Utils.Page.testListingId
     when 'Senior Test Listing'
       Utils.Page.seniorListingId
+    when 'Sale Test Listing'
+      Utils.Page.saleListingId
   Utils.Page.goTo("/listings/#{listingId}/apply-welcome/intro")
 
 When /^I go to the "([^"]*)" page$/, (pageName) ->

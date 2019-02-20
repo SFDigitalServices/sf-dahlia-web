@@ -18,7 +18,8 @@ ShortFormApplicationController = (
   AccountService,
   ListingDataService,
   SharedService,
-  inputMaxLength
+  inputMaxLength,
+  ListingIdentityService
 ) ->
 
   $scope.form = ShortFormApplicationService.form
@@ -1010,6 +1011,9 @@ ShortFormApplicationController = (
 
   $scope.$on '$stateChangeStart', $scope.stateChangeStart
 
+  $scope.isSale = (listing) ->
+    ListingIdentityService.isSale(listing)
+
 ShortFormApplicationController.$inject = [
   '$scope', '$state', '$window', '$document', '$translate', 'Idle',
   'ShortFormApplicationService', 'ShortFormNavigationService',
@@ -1019,7 +1023,8 @@ ShortFormApplicationController.$inject = [
   'AccountService',
   'ListingDataService',
   'SharedService',
-  'inputMaxLength'
+  'inputMaxLength',
+  'ListingIdentityService'
 ]
 
 angular

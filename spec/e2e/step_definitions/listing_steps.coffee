@@ -14,6 +14,8 @@ Given /^I go to the "([^"]*)" listing page$/, (listing) ->
       "/listings/#{Utils.Page.testListingId}"
     when 'Senior Test Listing'
       "/listings/#{Utils.Page.seniorListingId}"
+    when 'Sale Test Listing'
+      "/listings/#{Utils.Page.saleListingId}"
   Utils.Page.goTo(url)
 
 When 'I click the Download Application button', ->
@@ -61,3 +63,6 @@ Then 'I should be on the Ownership listings page', ->
 
 Then 'I should be on the Rental listings page', ->
   @expect(browser.getCurrentUrl()).to.eventually.contain('/listings/for-rent')
+
+Then 'I should be on prerequisites page', ->
+  Utils.Expect.urlContains('prerequisites')

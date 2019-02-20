@@ -74,7 +74,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.LISTINGS')
+          $translate('PAGE_TITLE.RENTAL_LISTINGS')
         ]
     })
     .state('dahlia.listings-for-sale', {
@@ -88,7 +88,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.LISTINGS')
+          $translate('PAGE_TITLE.SALE_LISTINGS')
         ]
     })
     .state('dahlia.listing', {
@@ -669,6 +669,23 @@
         ]
     })
     # Short form: "You" section
+    .state('dahlia.short-form-application.prerequisites', {
+      url: '/prerequisites'
+      views:
+        'container':
+          templateUrl: 'short-form/templates/b0a-prerequisites.html'
+      params:
+        infoChanged:
+          squash: true
+      onEnter: [
+        '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
+        ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
+          ShortFormApplicationService.completeSection('Intro')
+          if AccountService.loggedIn()
+            ShortFormApplicationService.importUserData(AccountService.loggedInUser)
+            ShortFormApplicationService.infoChanged = $stateParams.infoChanged
+      ]
+    })
     .state('dahlia.short-form-application.autofill-preview', {
       url: '/autofill-preview'
       views:
