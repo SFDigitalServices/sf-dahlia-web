@@ -66,3 +66,9 @@ Then 'I should be on the Rental listings page', ->
 
 Then 'I should be on prerequisites page', ->
   Utils.Expect.urlContains('prerequisites')
+
+Then 'I should be on application name page', ->
+  Utils.Expect.urlContains('name')
+
+Then 'I check complete homebuyers education', ->
+  Utils.Page.checkCheckbox 'applicant_has_completed_homebuyer_education', Utils.Page.submit
