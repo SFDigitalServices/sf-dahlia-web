@@ -50,7 +50,6 @@ FileUploadService = ($http, $q, Upload, uuid, ListingDataService, ListingPrefere
     proofDocument = Service._proofDocument(pref_type, opts)
 
     if (!file)
-      proofDocument.error = 'ERROR.FILE_MISSING'
       return $q.reject()
 
     uploadedFileParams =
