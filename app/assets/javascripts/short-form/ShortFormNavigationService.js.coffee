@@ -14,8 +14,8 @@ ShortFormNavigationService = (
     # intro
     'community-screening': {callback: ['validateCommunityEligibility']}
     # you
-    'name': {callback: ['checkAfterNamePage']}
     'prerequisites': {callback: ['afterPrerequisites']}
+    'name': {callback: ['checkAfterNamePage']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
@@ -413,6 +413,12 @@ ShortFormNavigationService = (
   Service._sectionNames = () ->
     Service.sections().map (section) ->
       return section.name
+
+  Service.initialState = () ->
+    if ListingIdentityService.isSale(ShortFormApplicationService.listing)
+      'dahlia.short-form-application.prerequisites'
+    else
+      'dahlia.short-form-application.name'
 
   return Service
 

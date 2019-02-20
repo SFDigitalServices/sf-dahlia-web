@@ -7,3 +7,5 @@ Feature: Short Form Application
         Given I go to the first page of the "Sale Test Listing" application
         When I hit the Next button "1" time
         Then I should be on prerequisites page
+        And I check complete homebuyers education
+        Then I should be on application name page

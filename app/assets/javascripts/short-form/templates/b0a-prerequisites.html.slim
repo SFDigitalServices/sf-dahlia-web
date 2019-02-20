@@ -7,7 +7,7 @@
     .form-group
       .checkbox-group
         .checkbox-block.margin-bottom--2x
-          input#applicant_is_first_time_homebuyer name="is_first_time_homebuyer" type="checkbox" ng-model="applicant.isFirstTimeHomebuyer"
+          input#applicant_is_first_time_homebuyer name="applicant_is_first_time_homebuyer" type="checkbox" ng-model="applicant.isFirstTimeHomebuyer"
           label.checkbox-block_label for="applicant_is_first_time_homebuyer"
             string.caps.form-label
               | {{'LABEL.APPLICANT_IS_FIRST_TIME_HOMEBUYER' | translate}}
@@ -19,7 +19,7 @@
             p.checkbox-block_note id="applicant_has_completed_homebuyer_education-description" translate="LABEL.APPLICANT_VISIT_HOMEOWNERSHIP_CALENDAR" translate-value-url="http://www.homeownershipsf.org/workshops"
       .checkbox-group
         .checkbox-block.margin-bottom--2x
-          input#applicant_has_completed_homebuyer_education name="applicant_has_loan_pre_approval" type="checkbox" ng-model="applicant.hasLoanPreapproval"
+          input#applicant_has_loan_pre_approval name="applicant_has_loan_pre_approval" type="checkbox" ng-model="applicant.hasLoanPreapproval"
           label.checkbox-block_label for="applicant_has_loan_pre_approval"
             strong.form-label.caps translate="LABEL.APPLICANT_HAS_LOAN_PRE_APPROVAL"
             p.checkbox-block_note id="applicant_has_loan_pre_approval-description" translate="LABEL.APPLICANT_VISIT_MOHCD" translate-value-url="https://sfmohcd.org/lender-list"

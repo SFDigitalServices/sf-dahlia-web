@@ -109,15 +109,15 @@ do ->
 
     describe 'getLandingPage', ->
       it 'gets the first page of the section if it\'s not Household', ->
-        section = ShortFormNavigationService.sections[0]
+        section = ShortFormNavigationService.sections()[0]
         page = ShortFormNavigationService.getLandingPage(section)
         expect(page).toEqual section.pages[0]
       it 'gets household intro page if no householdMembers', ->
-        householdSection = ShortFormNavigationService.sections[1]
+        householdSection = ShortFormNavigationService.sections()[1]
         page = ShortFormNavigationService.getLandingPage(householdSection)
         expect(page).toEqual 'household-intro'
       it 'gets household members page if householdMembers', ->
-        householdSection = ShortFormNavigationService.sections[1]
+        householdSection = ShortFormNavigationService.sections()[1]
         fakeShortFormApplicationService.application.householdMembers = [{firstName: 'Joe'}]
         page = ShortFormNavigationService.getLandingPage(householdSection)
         expect(page).toEqual 'household-members'
