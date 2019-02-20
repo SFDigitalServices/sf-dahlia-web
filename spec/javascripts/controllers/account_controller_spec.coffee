@@ -6,6 +6,8 @@ do ->
     deferred = undefined
     $translate =
       instant: jasmine.createSpy()
+    fakeWindow = {}
+    fakeWindow['env'] = {showSaleListings: 'true'}
     fakeAnalyticsService =
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
@@ -35,6 +37,7 @@ do ->
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
+      $provide.value '$window', fakeWindow
       return
     )
 
