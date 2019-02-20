@@ -35,7 +35,6 @@ angular.module('dahlia.components')
         @reservedUnitIcons[index]
 
       @groupHasUnitsWithParking = (unitGroups) ->
-        console.log('unitGroups', unitGroups)
         for group in unitGroups
           if group.Price_With_Parking
             return true

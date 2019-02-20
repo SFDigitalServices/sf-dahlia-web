@@ -40,9 +40,7 @@ angular.module('dahlia.components')
       (listing for listing in listings when @isFavorited listing.Id)
 
     @reservedLabel = (listing, type, modifier) ->
-      label = ListingDataService.reservedLabel(listing, type, modifier)
-      console.log('type', type, 'modifier', modifier, 'label', label)
-      label
+      ListingDataService.reservedLabel(listing, type, modifier)
 
     @getListingAMI =(listing) ->
       ListingDataService.getListingAMI(listing)

@@ -4,8 +4,8 @@ table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'tab
   thead
     tr
       th scope="col" Unit Type
-      th scope="col" ng-if="$ctrl.hasSaleUnitsWithoutParking($ctrl.listing)" No Parking
-      th scope="col" ng-if="$ctrl.hasSaleUnitsWithParking($ctrl.listing)" With Parking
+      th scope="col" ng-if="$ctrl.hasUnitsWithoutParking($ctrl.listing)" No Parking
+      th scope="col" ng-if="$ctrl.hasUnitsWithParking($ctrl.listing)" With Parking
   tbody ng-include="'listings/templates/property-card/_sale-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
   / Reserved
 table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"

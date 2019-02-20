@@ -2,20 +2,20 @@ tr ng-repeat="unit_summary in ::summary" ng-if="::unit_summary.minPriceWithoutPa
   / Dollar based rent and min income
   td scope="row"
     | {{::unit_summary.unitType}}
-  td ng-if="$ctrl.hasSaleUnitsWithoutParking($ctrl.listing)"
+  td ng-if="$ctrl.hasUnitsWithoutParking($ctrl.listing)"
     span
-      span ng-show="::$ctrl.hasRangeOfPrices(unit_summary, false)"
+      span ng-show="::$ctrl.hasRangeOfPricesWithoutParking(unit_summary)"
         | {{::unit_summary.minPriceWithoutParking | currency:"$":0}} or more
-      span ng-show="::!$ctrl.hasRangeOfPrices(unit_summary, false)"
+      span ng-show="::!$ctrl.hasRangeOfPricesWithoutParking(unit_summary)"
         | {{::unit_summary.minPriceWithoutParking | currency:"$":0}}
       br
       span ng-if="unit_summary.minHoaDuesWithoutParking"
         |  plus HOA dues
-  td ng-if="$ctrl.hasSaleUnitsWithParking($ctrl.listing)"
+  td ng-if="$ctrl.hasUnitsWithParking($ctrl.listing)"
     span
-      span ng-show="::$ctrl.hasRangeOfPrices(unit_summary, true)"
+      span ng-show="::$ctrl.hasRangeOfPricesWithParking(unit_summary)"
         | {{::unit_summary.minPriceWithParking | currency:"$":0}} or more
-      span ng-show="::!$ctrl.hasRangeOfPrices(unit_summary, true)"
+      span ng-show="::!$ctrl.hasRangeOfPricesWithParking(unit_summary)"
         | {{::unit_summary.minPriceWithParking | currency:"$":0}}
       br
       span ng-if="unit_summary.minHoaDuesWithParking"
