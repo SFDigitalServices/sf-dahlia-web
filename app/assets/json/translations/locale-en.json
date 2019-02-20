@@ -42,6 +42,9 @@
         "MESSAGE": "You have already submitted an application to this listing.",
         "TITLE": "Good news!"
     },
+    "B0_PREREQUISITES": {
+        "TITLE": "First, let’s make sure you’re eligible to apply."
+    },
     "B0_AUTOFILL_PREVIEW": {
         "DESCRIPTION": "We'll simply pre-fill your application with the following details, and you can  make updates as you go.",
         "START_FROM_SCRATCH": "Reset and start fresh",
@@ -56,7 +59,7 @@
     "B1_NAME": {
         "APP_DETAILS_UPDATED": "Your application details were updated to match your account settings.",
         "NAME_EDITABLE_VIA": "These fields are editable via your",
-        "TITLE": "First, what's your name?"
+        "TITLE": "What's your name?"
     },
     "B2A_VERIFY_ADDRESS": {
         "TITLE": "We have located the following address. Please confirm it's correct."
