@@ -100,7 +100,7 @@
 
   / "How To Apply" on mobile browsers gets included here
   .property-hero_apply.hide-for-medium-up.hide-for-print
-    div ng-if="!$ctrl.parent.listingApplicationClosed(ctrl.parent.listing)"
+    div ng-if="!$ctrl.parent.listingApplicationClosed($ctrl.parent.listing)"
       .label.flag-label.secondary.text-wrap
         span.ui-icon.ui-medium
           svg
