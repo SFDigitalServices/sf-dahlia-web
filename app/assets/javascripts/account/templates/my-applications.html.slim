@@ -13,10 +13,11 @@
           h2.t-delta.t-serif.c-oil
             | {{'MY_APPLICATIONS.NO_APPLICATIONS' | translate}}
           .row
-            .medium-6.columns ng-class="{'small-centered': !showSaleListings}"
-              a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
-                | Browse Rentals
-            .medium-6.columns ng-if="showSaleListings"
-              a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
-                | Browse Sales
+            .medium-12.large-8.medium-centered.columns
+              .margin-bottom ng-class="{'small-centered': !showSaleListings}"
+                a.button.secondary.expand ui-sref="dahlia.listings-for-rent"
+                  | Browse Rentals
+              .margin-bottom ng-if="showSaleListings"
+                a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
+                  | Browse Sales
         my-application ng-repeat="application in myApplications" application="application"
