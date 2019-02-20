@@ -74,7 +74,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.LISTINGS')
+          $translate('PAGE_TITLE.RENTAL_LISTINGS')
         ]
     })
     .state('dahlia.listings-for-sale', {
@@ -88,7 +88,7 @@
         ]
         $title: ['$translate', ($translate) ->
           # translate used without ".instant" so that it will async resolve
-          $translate('PAGE_TITLE.LISTINGS')
+          $translate('PAGE_TITLE.SALE_LISTINGS')
         ]
     })
     .state('dahlia.listing', {
