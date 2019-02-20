@@ -34,17 +34,5 @@ angular.module('dahlia.components')
         index = _.findIndex(listing.reservedDescriptor, ['name', descriptor])
         @reservedUnitIcons[index]
 
-      @groupHasUnitsWithParking = (unitGroups) ->
-        for group in unitGroups
-          if group.Price_With_Parking
-            return true
-        false
-
-      @groupHasUnitsWithoutParking = (unitGroups) ->
-        for group in unitGroups
-          if group.Price_Without_Parking
-            return true
-        false
-
       return ctrl
   ]
