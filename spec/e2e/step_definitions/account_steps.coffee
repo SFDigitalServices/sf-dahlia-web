@@ -91,6 +91,8 @@ When /^I delete my application for the "([^"]*)"$/, (listing) ->
       Utils.Page.testListingId
     when 'Senior Test Listing'
       Utils.Page.seniorListingId
+    when 'Sale Test Listing'
+      Utils.Page.saleListingId
 
   element(By.cssContainingText("a[href=\"/listings/#{listingId}\"] + .button-link", 'Delete'))
     .click().then Utils.Page.confirmModal
