@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'propertyHero',
-  templateUrl: 'listings/components/property-hero.html'
+  templateUrl: 'listings/components/listing/property-hero.html'
   require:
     parent: '^listingContainer'
   controller: [
