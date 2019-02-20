@@ -22,6 +22,8 @@ do ->
     fakeModalService =
       modalInstance: {}
     fakeAccountService = {}
+    fakeListingIdentityService =
+      isSale: jasmine.createSpy()
 
     beforeEach module('ui.router')
     beforeEach module('dahlia.services', ($provide)->
@@ -33,6 +35,7 @@ do ->
       $provide.value 'ShortFormApplicationService', fakeShortFormApplicationService
       $provide.value 'AccountService', fakeAccountService
       $provide.value 'ModalService', fakeModalService
+      $provide.value 'ListingIdentityService', fakeListingIdentityService
       return
     )
 
@@ -61,6 +64,20 @@ do ->
         $state.current.name = 'dahlia.short-form-application.contact'
         hasNav = ShortFormNavigationService.hasBackButton()
         expect(hasNav).toEqual true
+      it 'calls ListingIdentityService.isSale', ->
+        $state.current.name = 'dahlia.short-form-welcome.intro'
+        ShortFormNavigationService.hasBackButton()
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+      it 'returns true for name page on sale application', ->
+        fakeListingIdentityService.isSale.and.returnValue(true)
+        $state.current.name = 'dahlia.short-form-application.name'
+        hasNav = ShortFormNavigationService.hasBackButton()
+        expect(hasNav).toEqual true
+      it 'returns false for name page on sale application', ->
+        fakeListingIdentityService.isSale.and.returnValue(false)
+        $state.current.name = 'dahlia.short-form-application.name'
+        hasNav = ShortFormNavigationService.hasBackButton()
+        expect(hasNav).toEqual false
 
     describe 'activeSection', ->
       it 'gets the active section of the current page', ->
