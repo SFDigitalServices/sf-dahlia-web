@@ -259,10 +259,12 @@ AccountController = (
     ListingIdentityService.isSale(listing)
 
   $scope.hasSaleAndRentalApplications = (applications) ->
-    if _.first(applications)
-      firstIsSale = ListingIdentityService.isSale(_.first(applications).listing)
+    activeApplications = _.filter applications, (application) ->
+      !application.deleted
+    if _.first(activeApplications)
+      firstIsSale = ListingIdentityService.isSale(_.first(activeApplications).listing)
       # Check if any other application listing is different type than the first one
-      _.some applications, (application) ->
+      _.some activeApplications, (application) ->
         ListingIdentityService.isSale(application.listing) != firstIsSale
     else
       false
