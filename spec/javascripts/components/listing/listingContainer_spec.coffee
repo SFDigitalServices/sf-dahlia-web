@@ -285,3 +285,14 @@ do ->
         it 'returns defined object if agents info is available', ->
           fakeListing.Leasing_Agent_Street = '1 South Van Ness Ave San Francisco CA 94131'
           expect(ctrl.agentInfoAvailable(fakeListing)).toBeDefined()
+
+      describe '$ctrl.featuresCaption', ->
+        it 'calls ListingIdentityService.isSale', ->
+          ctrl.featuresCaption(fakeListing)
+          expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
+        it 'returns "Amenities and unit details" for sale listing', ->
+          fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(true)
+          expect(ctrl.featuresCaption(fakeListing)).toEqual("Amenities and unit details")
+        it 'returns "Amenities, unit details and additional fees" for rental listing', ->
+          fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValue(false)
+          expect(ctrl.featuresCaption(fakeListing)).toEqual("Amenities, unit details and additional fees")
