@@ -9,16 +9,12 @@ angular.module('dahlia.components')
       ctrl = @
 
       @hasUnitsWithoutParking = (listing) ->
-        for unitSummary in (listing.unitSummaries.general || []).concat(listing.unitSummaries.reserved || [])
-          if unitSummary.minPriceWithoutParking
-            return true
-        false
+        allUnitSummaries = _.concat(listing.unitSummaries.general, listing.unitSummaries.reserved)
+        _.some(allUnitSummaries, 'minPriceWithoutParking')
 
       @hasUnitsWithParking = (listing) ->
-        for unitSummary in (listing.unitSummaries.general || []).concat(listing.unitSummaries.reserved || [])
-          if unitSummary.minPriceWithParking
-            return true
-        false
+        allUnitSummaries = _.concat(listing.unitSummaries.general, listing.unitSummaries.reserved)
+        _.some(allUnitSummaries, 'minPriceWithParking')
 
       @hasRangeOfPricesWithoutParking = (unitSummary) ->
         unitSummary.maxPriceWithoutParking > unitSummary.minPriceWithoutParking

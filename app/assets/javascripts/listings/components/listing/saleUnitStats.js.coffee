@@ -9,15 +9,9 @@ angular.module('dahlia.components')
     ctrl = @
 
     @groupHasUnitsWithParking = (unitGroups) ->
-      for group in unitGroups
-        if group.Price_With_Parking
-          return true
-      false
+      _.some(unitGroups, 'Price_With_Parking')
 
     @groupHasUnitsWithoutParking = (unitGroups) ->
-      for group in unitGroups
-        if group.Price_Without_Parking
-          return true
-      false
+      _.some(unitGroups, 'Price_Without_Parking')
 
     return ctrl

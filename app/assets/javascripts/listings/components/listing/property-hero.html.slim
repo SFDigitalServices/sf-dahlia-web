@@ -86,8 +86,8 @@
         /     svg
         /       use xlink:href="#i-info"
         /   |  More Info
-      rental-unit-stats unit-groups="unitGroups" ng-if="!$ctrl.parent.isSale($ctrl.parent.listing)"
-      sale-unit-stats unit-groups="unitGroups" ng-if="$ctrl.parent.isSale($ctrl.parent.listing)"
+      rental-unit-stats unit-groups="::unitGroups" ng-if="!$ctrl.parent.isSale($ctrl.parent.listing)"
+      sale-unit-stats unit-groups="::unitGroups" ng-if="$ctrl.parent.isSale($ctrl.parent.listing)"
 
 
   / TODO: remove case for hardcoded listings
