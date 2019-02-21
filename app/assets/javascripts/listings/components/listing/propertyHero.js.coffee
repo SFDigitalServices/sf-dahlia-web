@@ -4,9 +4,15 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    'ListingDataService', '$sce', '$timeout', '$window',
-    (ListingDataService, $sce, $timeout, $window) ->
+    'ListingDataService', 'ListingUnitService', '$sce', '$timeout', '$window',
+    (ListingDataService, ListingUnitService, $sce, $timeout, $window) ->
       ctrl = @
+
+      @isLoadingUnits = () ->
+        ListingUnitService.loading.units
+
+      @hasUnitsError = () ->
+        ListingUnitService.error.units
 
       @adjustCarouselHeight = (elem) ->
         $timeout ->

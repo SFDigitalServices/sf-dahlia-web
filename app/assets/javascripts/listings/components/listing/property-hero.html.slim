@@ -67,10 +67,10 @@
             use xlink:href="{{$ctrl.reservedUnitIcons[$index]}}"
         span.message-text translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.parent.reservedLabel($ctrl.parent.listing, descriptor.name, 'reservedForWhoAre')}}"
 
-    .content-card.padding--2x ng-show="$ctrl.parent.loading.units"
+    .content-card.padding--2x ng-show="$ctrl.isLoadingUnits()"
       .padding--2x ng-include="'shared/templates/spinner.html'"
 
-    .content-card.padding--2x ng-show="$ctrl.parent.error.units"
+    .content-card.padding--2x ng-show="$ctrl.hasUnitsError()"
       .padding--2x.text-center
         button.button-link ng-click="$ctrl.parent.getListingUnits($ctrl.parent.listing)"
           | {{'LISTINGS.SEE_UNIT_INFORMATION' | translate}}
