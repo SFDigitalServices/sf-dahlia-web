@@ -111,10 +111,6 @@ do ->
           errorMsg = undefined
           FileUploadService.preferences = fakeShortFormApplicationService.preferences
 
-        it "sets the proof document's error to ERROR.FILE_MISSING", ->
-          FileUploadService.uploadProof(file, prefType)
-          expect(proofDocument.error).toEqual(errorMsg)
-
         it 'returns a rejection', ->
           rejection = FileUploadService.uploadProof(file, prefType)
 
