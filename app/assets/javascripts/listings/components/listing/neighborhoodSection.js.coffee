@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'neighborhoodSection',
-  templateUrl: 'listings/components/neighborhood-section.html'
+  templateUrl: 'listings/components/listing/neighborhood-section.html'
   require:
     parent: '^listingContainer'
   controller: ['ListingDataService', '$sce', (ListingDataService, $sce) ->
