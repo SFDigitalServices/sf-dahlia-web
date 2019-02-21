@@ -11,7 +11,7 @@ table.pricing-table.table-flex.no-margin
         ' {{::group.Unit_Type}}
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
           svg
-            use xlink:href="{{$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
+            use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
     td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="No Parking"
       | {{::group.Price_Without_Parking | currency:"$":0}}
       div ng-show="::group.HOA_Dues_Without_Parking"
@@ -38,4 +38,4 @@ table.pricing-table.table-flex.no-margin
       span ng-if="::group.Status != 'Occupied'"
         | {{::group.total}}
         small
-          ng-pluralize count="group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          ng-pluralize count="::group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"

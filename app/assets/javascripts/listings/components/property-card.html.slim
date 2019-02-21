@@ -53,8 +53,8 @@
       // -- Unit Summary Table(s)
       / General
       .scrollable-table-container
-        rental-stats listing="::$ctrl.listing" ng-if="!$ctrl.listingContainer.isSale($ctrl.listing)"
-        sale-stats listing="::$ctrl.listing" ng-if="$ctrl.listingContainer.isSale($ctrl.listing)"
+        rental-stats listing="::$ctrl.listing" ng-if="::!$ctrl.listingContainer.isSale($ctrl.listing)"
+        sale-stats listing="::$ctrl.listing" ng-if="::$ctrl.listingContainer.isSale($ctrl.listing)"
 
       .property-card_action.small-only-text-center
         button.button.round-icon.has-label data-event="gtm-favorite" ng-click="$ctrl.listingContainer.toggleFavoriteListing($ctrl.listing.Id)"
