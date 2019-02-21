@@ -117,7 +117,7 @@ group :development, :test do
   gem 'jasmine', github: 'pivotal/jasmine-gem'
   gem 'jasmine-jquery-rails' # used for functions like `getJSONFixture`
   gem 'phantomjs', '~> 2.1.1'
-  gem 'pry'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'binding_of_caller'

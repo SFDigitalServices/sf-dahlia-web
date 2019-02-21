@@ -19,9 +19,9 @@ class Api::V1::GisController < ApiController
   # with the application.
   def geocoding_data
     geocoded_addresses = GeocodingService.new(address_params).geocode
+    address = GeocodingService.select_best_candidate(geocoded_addresses[:candidates])
 
-    if geocoded_addresses[:candidates].present?
-      address = geocoded_addresses[:candidates].first
+    if address.present?
       proj_id = params[:project_id]
       match = proj_id ? address_within_boundary?(address, proj_id) : nil
       return address.merge(boundary_match: match)

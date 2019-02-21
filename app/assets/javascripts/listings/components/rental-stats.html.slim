@@ -4,9 +4,9 @@ table.td-small.th-small.td-nowrap.th-nowrap.td-light role="grid" ng-class="{'tab
   thead
     tr
       th scope="col" Unit Type
-      th scope="col" Price
-      th.text-right scope="col" HOA Dues
-  tbody ng-include="'listings/templates/_sale-unit-summary.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
+      th scope="col" Minimum Income
+      th.text-right scope="col" Rent
+  tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.general"
   / Reserved
 table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-reserved ng-if="::$ctrl.listing.unitSummaries.reserved"
   caption ng-if="::$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
@@ -14,4 +14,4 @@ table.td-small.th-small.td-nowrap.th-nowrap.td-light.no-thead.margin-top.table-r
   caption ng-if="::!$ctrl.listingContainer.listingIsReservedCommunity($ctrl.listing)"
     span translate="LISTINGS.RESERVED_FOR" translate-value-type="{{::$ctrl.reservedForLabels($ctrl.listing)}}"
 
-  tbody ng-include="'listings/templates/_sale-unit-summary.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"
+  tbody ng-include="'listings/templates/property-card/_rental-stats-row.html'" ng-init="summary = $ctrl.listing.unitSummaries.reserved"

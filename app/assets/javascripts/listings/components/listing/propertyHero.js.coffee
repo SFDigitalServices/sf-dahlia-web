@@ -1,12 +1,18 @@
 angular.module('dahlia.components')
 .component 'propertyHero',
-  templateUrl: 'listings/components/property-hero.html'
+  templateUrl: 'listings/components/listing/property-hero.html'
   require:
     parent: '^listingContainer'
   controller: [
-    'ListingDataService', '$sce', '$timeout', '$window',
-    (ListingDataService, $sce, $timeout, $window) ->
+    'ListingDataService', 'ListingUnitService', '$sce', '$timeout', '$window',
+    (ListingDataService, ListingUnitService, $sce, $timeout, $window) ->
       ctrl = @
+
+      @isLoadingUnits = () ->
+        ListingUnitService.loading.units
+
+      @hasUnitsError = () ->
+        ListingUnitService.error.units
 
       @adjustCarouselHeight = (elem) ->
         $timeout ->

@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'featuresSection',
-  templateUrl: 'listings/components/features-section.html'
+  templateUrl: 'listings/components/listing/features-section.html'
   require:
     parent: '^listingContainer'
   controller: ['ListingDataService', '$translate', (ListingDataService, $translate) ->
