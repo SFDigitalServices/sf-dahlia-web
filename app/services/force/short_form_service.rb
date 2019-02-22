@@ -120,6 +120,39 @@ module Force
       application['status'] == 'Submitted'
     end
 
+    def self.lending_institutions
+      {
+        'lending institution A' => [
+          {
+            'First Name' => 'Bob',
+            'Last Name' => 'Hope',
+            'id' => 'salesforce_contact_id_1',
+            'Active' => true,
+          },
+          {
+            'First Name' => 'Sue',
+            'Last Name' => 'Me',
+            'id' => 'salesforce_contact_id_2',
+            'Active' => true,
+          },
+        ],
+        'lending institution B' => [
+          {
+            'First Name' => 'Helen',
+            'Last Name' => 'Helper',
+            'id' => 'salesforce_contact_id_3',
+            'Active' => true,
+          },
+          {
+            'First Name' => 'Laura',
+            'Last Name' => 'Loan Officer',
+            'id' => 'salesforce_contact_id_4',
+            'Active' => false,
+          },
+        ],
+      }
+    end
+
     def self._short_form_pref_id(application, file)
       _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
     end
