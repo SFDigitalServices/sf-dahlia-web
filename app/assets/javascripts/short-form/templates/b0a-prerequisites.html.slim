@@ -7,32 +7,22 @@
     .form-group
       .checkbox-group
         .checkbox-block.margin-bottom--2x
-          input#applicant_is_first_time_homebuyer name="applicant_is_first_time_homebuyer" type="checkbox" ng-model="applicant.isFirstTimeHomebuyer" ng-required="true" ng-class="{ error: inputInvalid('applicant_is_first_time_homebuyer')}"
-          label.checkbox-block_label for="applicant_is_first_time_homebuyer" ng-class="{ error: inputInvalid('applicant_is_first_time_homebuyer')}"
-            strong.caps.form-label
+          input#applicant_is_first_time_homebuyer name="applicant_is_first_time_homebuyer" type="checkbox" ng-model="applicant.isFirstTimeHomebuyer"
+          label.checkbox-block_label for="applicant_is_first_time_homebuyer"
+            string.caps.form-label
               | {{'LABEL.APPLICANT_IS_FIRST_TIME_HOMEBUYER' | translate}}
-            small.error id="lendingInstitutionError" ng-show="inputInvalid('applicant_is_first_time_homebuyer')"
-              | {{'LABEL.FIELD_REQUIRED' | translate}}
-
       .checkbox-group
         .checkbox-block.margin-bottom--2x
-          input#applicant_has_completed_homebuyer_education name="applicant_has_completed_homebuyer_education" type="checkbox" ng-model="applicant.hasCompletedHomebuyerEducation" ng-required="true" ng-class="{ error: inputInvalid('applicant_has_completed_homebuyer_education')}"
-          label.checkbox-block_label for="applicant_has_completed_homebuyer_education" ng-class="{ error: inputInvalid('applicant_has_completed_homebuyer_education')}"
+          input#applicant_has_completed_homebuyer_education name="applicant_has_completed_homebuyer_education" type="checkbox" ng-model="applicant.hasCompletedHomebuyerEducation"
+          label.checkbox-block_label for="applicant_has_completed_homebuyer_education"
             strong.form-label.caps translate="LABEL.APPLICANT_HAS_COMPLETED_HOMEBUYER_EDUCATION"
             p.checkbox-block_note id="applicant_has_completed_homebuyer_education-description" translate="LABEL.APPLICANT_VISIT_HOMEOWNERSHIP_CALENDAR" translate-value-url="http://www.homeownershipsf.org/workshops"
-            small.error id="lendingInstitutionError" ng-show="inputInvalid('applicant_has_completed_homebuyer_education')"
-              | {{'LABEL.FIELD_REQUIRED' | translate}}
-
       .checkbox-group
-        .checkbox-block.margin-bottom
-          input#applicant_has_loan_pre_approval name="applicant_has_loan_pre_approval" type="checkbox" ng-model="applicant.hasLoanPreapproval" ng-required="true" ng-class="{ error: inputInvalid('applicant_has_loan_pre_approval')}"
-          label.checkbox-block_label for="applicant_has_loan_pre_approval" ng-class="{ error: inputInvalid('applicant_has_loan_pre_approval')}"
+        .checkbox-block.margin-bottom--2x
+          input#applicant_has_loan_pre_approval name="applicant_has_loan_pre_approval" type="checkbox" ng-model="applicant.hasLoanPreapproval"
+          label.checkbox-block_label for="applicant_has_loan_pre_approval"
             strong.form-label.caps translate="LABEL.APPLICANT_HAS_LOAN_PRE_APPROVAL"
             p.checkbox-block_note id="applicant_has_loan_pre_approval-description" translate="LABEL.APPLICANT_VISIT_MOHCD" translate-value-url="https://sfmohcd.org/lender-list"
-            small.error id="lendingInstitutionError" ng-show="inputInvalid('applicant_has_loan_pre_approval')"
-              | {{'LABEL.FIELD_REQUIRED' | translate}}
-
-      lending-institution applicant="applicant" form="form"
   .button-pager
     .button-pager_row.primary
       input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}" ng-disabled="isLoading()"

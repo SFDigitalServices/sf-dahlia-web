@@ -103,11 +103,6 @@ class Api::V1::ShortFormController < ApiController
     render json: result
   end
 
-  def lending_institutions
-    lending_institutions = Force::ShortFormService.lending_institutions
-    render json: lending_institutions
-  end
-
   private
 
   def process_submit_app_response(response)

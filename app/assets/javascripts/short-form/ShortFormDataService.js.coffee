@@ -31,8 +31,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
       'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
-      'hasCompletedHomebuyerEducation', 'isFirstTimeHomebuyer', 'hasLoanPreapproval',
-      'lendingAgent'
+      'hasCompletedHomebuyerEducation', 'isFirstTimeHomebuyer', 'hasLoanPreapproval'
     ]
     alternateContact: [
       'appMemberId', 'alternateContactType', 'alternateContactTypeOther',
