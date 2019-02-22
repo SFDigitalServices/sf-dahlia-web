@@ -40,7 +40,6 @@ Rails.application.routes.draw do
         delete 'application/:id' => 'short_form#delete_application'
         post 'proof' => 'short_form#upload_proof'
         delete 'proof' => 'short_form#delete_proof'
-        get 'lending_institutions' => 'short_form#lending_institutions'
       end
       scope '/addresses' do
         # address validation

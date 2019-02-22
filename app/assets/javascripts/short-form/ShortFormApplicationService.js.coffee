@@ -78,7 +78,6 @@ ShortFormApplicationService = (
   Service.currentCustomProofPreference = {}
   Service.currentRentBurdenAddress = {}
   Service.current_id = 1
-  Service.lendingInstitutions = []
 
   Service.applicantAccountFields = [
     'email', 'firstName', 'middleName', 'lastName', 'dob_day', 'dob_year', 'dob_month'
@@ -1057,11 +1056,6 @@ ShortFormApplicationService = (
 
   Service.getProjectIdForBoundaryMatching = ->
     ListingDataService.getProjectIdForBoundaryMatching(Service.listing)
-
-  Service.getLendingInstitutions = ->
-    $http.get("/api/v1/short-form/lending_institutions").success((data, status) ->
-      angular.copy(data, Service.lendingInstitutions)
-    )
 
   return Service
 

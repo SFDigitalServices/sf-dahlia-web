@@ -681,7 +681,6 @@
         '$stateParams', 'ShortFormApplicationService', 'AccountService', 'AutosaveService'
         ($stateParams, ShortFormApplicationService, AccountService, AutosaveService) ->
           ShortFormApplicationService.completeSection('Intro')
-          ShortFormApplicationService.getLendingInstitutions()
           if AccountService.loggedIn()
             ShortFormApplicationService.importUserData(AccountService.loggedInUser)
             ShortFormApplicationService.infoChanged = $stateParams.infoChanged
