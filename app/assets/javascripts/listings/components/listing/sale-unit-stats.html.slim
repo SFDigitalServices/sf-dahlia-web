@@ -2,8 +2,8 @@ table.pricing-table.table-flex.no-margin
   thead
     tr
       th Unit Type
-      th ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" No Parking
-      th ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" With Parking
+      th ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" Sales price without parking
+      th ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" Sales price with parking
       th Availability
   tr ng-repeat="group in ::$ctrl.unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
     td.tr data-th="Unit Type"
