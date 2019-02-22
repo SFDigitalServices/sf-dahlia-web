@@ -48,8 +48,6 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
 
     - if ENV['GOOGLE_TAG_MANAGER_KEY']
       /! Google Tag Manager
-      noscript
-        iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
       javascript:
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -58,6 +56,9 @@ html lang="en" ng-app="dahlia" ng-strict-di="" ng-controller="SharedController"
         })(window,document,'script','dataLayer','#{ENV['GOOGLE_TAG_MANAGER_KEY']}');
 
   body id="ng-app" ng-class="hasCenterBody()" keep-scroll-position=""
+    - if ENV['GOOGLE_TAG_MANAGER_KEY']
+      noscript
+        iframe height="0" src="//www.googletagmanager.com/ns.html?id=#{ENV['GOOGLE_TAG_MANAGER_KEY']}" style="display:none;visibility:hidden" width="0"
     #google_translate_element
 
     button.button-link.skip-link.sr-only ng-click="focusOnMainContent()"
