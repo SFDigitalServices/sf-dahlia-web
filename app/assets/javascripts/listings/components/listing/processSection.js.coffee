@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'processSection',
-  templateUrl: 'listings/components/process-section.html'
+  templateUrl: 'listings/components/listing/process-section.html'
   require:
     parent: '^listingContainer'
   controller: ['ListingDataService', (ListingDataService) ->

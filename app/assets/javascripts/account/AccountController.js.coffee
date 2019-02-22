@@ -1,15 +1,16 @@
 AccountController = (
+  $document,
   $scope,
   $state,
-  $document,
   $translate,
   $window,
   AccountService,
   AnalyticsService,
-  ShortFormApplicationService,
-  SharedService,
+  inputMaxLength,
+  ListingIdentityService,
   ModalService,
-  inputMaxLength
+  SharedService,
+  ShortFormApplicationService
 ) ->
   $scope.rememberedShortFormState = AccountService.rememberedShortFormState
   $scope.showChooseDiffEmailMessage = AccountService.showChooseDiffEmailMessage
@@ -254,11 +255,23 @@ AccountController = (
     # which will auto-trigger its ui-validation
     day.$setViewValue(day.$viewValue + ' ')
 
+  $scope.isSale = (listing) ->
+    ListingIdentityService.isSale(listing)
+
+  $scope.hasSaleAndRentalApplications = (applications) ->
+    activeApplications = _.filter applications, (application) ->
+      !application.deleted
+    if _.first(activeApplications)
+      firstIsSale = ListingIdentityService.isSale(_.first(activeApplications).listing)
+      # Check if any other application listing is different type than the first one
+      _.some activeApplications, (application) ->
+        ListingIdentityService.isSale(application.listing) != firstIsSale
+    else
+      false
+
 AccountController.$inject = [
-  '$scope', '$state', '$document', '$translate', '$window',
-  'AccountService', 'AnalyticsService', 'ShortFormApplicationService',
-  'SharedService', 'ModalService',
-  'inputMaxLength'
+  '$document', '$scope', '$state', '$translate', '$window', 'AccountService', 'AnalyticsService', 'inputMaxLength',
+  'ListingIdentityService', 'ModalService', 'SharedService', 'ShortFormApplicationService'
 ]
 
 angular

@@ -1,6 +1,6 @@
 angular.module('dahlia.components')
 .component 'legalSection',
-  templateUrl: 'listings/components/legal-section.html'
+  templateUrl: 'listings/components/listing/legal-section.html'
   require:
     parent: '^listingContainer'
 

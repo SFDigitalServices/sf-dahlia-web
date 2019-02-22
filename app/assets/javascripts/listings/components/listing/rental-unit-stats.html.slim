@@ -5,13 +5,13 @@ table.pricing-table.table-flex.no-margin
       th Minimum Income
       th Rent
       th Availability
-  tr ng-repeat="group in ::unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
+  tr ng-repeat="group in ::$ctrl.unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
     td.tr data-th="Unit Type"
       span.h-small
         ' {{::group.Unit_Type}}
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
           svg
-            use xlink:href="{{$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
+            use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
     td data-th="Min. Income"
       span ng-if="::group.BMR_Rental_Minimum_Monthly_Income_Needed"
         | {{::group.BMR_Rental_Minimum_Monthly_Income_Needed | currency:"$":0}}<small>/month</small>
@@ -28,4 +28,4 @@ table.pricing-table.table-flex.no-margin
       span ng-if="::group.Status != 'Occupied'"
         | {{::group.total}}
         small
-          ng-pluralize count="group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"
+          ng-pluralize count="::group.total" when="{'0': ' units', '1': ' unit', 'other': ' units'}"

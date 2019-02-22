@@ -20,4 +20,13 @@
               .margin-bottom ng-if="showSaleListings"
                 a.button.secondary.expand ui-sref="dahlia.listings-for-sale"
                   | Browse Sales
-        my-application ng-repeat="application in myApplications" application="application"
+        article.feed-item ng-if="hasSaleAndRentalApplications(myApplications)"
+          .feed-item-inner
+            h2.t-delta.t-serif.no-margin
+              | Rental Units
+        my-application ng-repeat="application in myApplications" application="application" ng-if="!isSale(application.listing)"
+        article.feed-item ng-if="hasSaleAndRentalApplications(myApplications)"
+          .feed-item-inner
+            h2.t-delta.t-serif.no-margin
+              | Sale Units
+        my-application ng-repeat="application in myApplications" application="application" ng-if="isSale(application.listing)"

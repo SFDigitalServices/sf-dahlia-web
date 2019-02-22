@@ -12,9 +12,11 @@ do ->
     fakeListingDataService =
         listings: fakeListings
         sortByDate: jasmine.createSpy()
+    fakeUnitService = jasmine.createSpy()
     $sce = {
       trustAsResourceUrl: jasmine.createSpy()
     }
+
     $timeout = {}
     $window = {}
     beforeEach module('dahlia.components')
@@ -22,6 +24,7 @@ do ->
       $componentController = _$componentController_
       locals = {
         ListingDataService: fakeListingDataService
+        ListingUnitService: fakeUnitService
         $sce: $sce
         $window: $window
         $timeout: $timeout

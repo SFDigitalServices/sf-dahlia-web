@@ -12,6 +12,7 @@ do ->
       trackFormSuccess: jasmine.createSpy()
       trackFormError: jasmine.createSpy()
       trackFormAbandon: jasmine.createSpy()
+    fakeListing = getJSONFixture('listings-api-show.json').listing
     fakeAccountService =
       createAccount: ->
       signIn: ->
@@ -34,6 +35,12 @@ do ->
     fakeSharedService = {}
     fakeModalService =
       closeModal: jasmine.createSpy()
+    fakeListingIdentityService =
+      isSale: ->
+    fakeApplication = {
+      listing: fakeListing
+    }
+    fakeIsSale = false
 
     beforeEach module('dahlia.controllers', ($provide) ->
       $provide.value '$translate', $translate
@@ -76,6 +83,7 @@ do ->
         SharedService: fakeSharedService
         ModalService: fakeModalService
         inputMaxLength: {}
+        ListingIdentityService: fakeListingIdentityService
     )
 
     describe '$scope.closeModal', ->
@@ -217,3 +225,21 @@ do ->
       it 'calls ShortFormApplicationService.importUserData', ->
         scope._createAccountSubmitApplication()
         expect(fakeShortFormApplicationService.submitApplication).toHaveBeenCalled()
+
+    describe '$scope.isSale', ->
+      it 'calls ListingIdentityService.isSale', ->
+        spyOn(fakeListingIdentityService, 'isSale')
+        scope.isSale(fakeListing)
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+
+    describe '$scope.hasSaleAndRentalApplications', ->
+      it 'calls ListingIdentityService.isSale', ->
+        spyOn(fakeListingIdentityService, 'isSale')
+        scope.hasSaleAndRentalApplications([fakeApplication])
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalled()
+      it 'returns false if there are no applications', ->
+        expect(scope.hasSaleAndRentalApplications([])).toEqual(false)
+      it 'returns true if there are at least two different applications', ->
+        fakeListingIdentityService.isSale = jasmine.createSpy().and.returnValues(false, true)
+        expect(scope.hasSaleAndRentalApplications([fakeApplication, fakeApplication])).toEqual(true)
+
