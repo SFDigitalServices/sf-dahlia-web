@@ -80,5 +80,7 @@
       | {{'LISTINGS.APPLY.NEED_HELP' | translate}}
     p.c-charcoal.t-small.margin-bottom
       | {{'LISTINGS.APPLY.VISIT_A_HOUSING_COUNSELOR' | translate}}
-    a.button.secondary.expand.no-margin ui-sref="dahlia.housing-counselors"
+    a.button.secondary.expand.no-margin ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing)" ui-sref="dahlia.housing-counselors"
+      | {{'LISTINGS.APPLY.FIND_A_HOUSING_COUNSELOR' | translate}}
+    a.button.secondary.expand.no-margin ng-if="::$ctrl.parent.isSale($ctrl.parent.listing)" href="http://www.homeownershipsf.org/" target="_blank"
       | {{'LISTINGS.APPLY.FIND_A_HOUSING_COUNSELOR' | translate}}
