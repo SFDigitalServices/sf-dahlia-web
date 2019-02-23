@@ -2,7 +2,8 @@ accordion-heading.lead
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
   h3.accordion-name
     | Eligibility
-  span.accordion-subheader Income, occupancy, preferences, and subsidies
+  span.accordion-subheader ng-show="::!$ctrl.parent.isSale($ctrl.parent.listing)"
+    | Income, occupancy, preferences, and subsidies
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"

@@ -15,7 +15,7 @@
             h3.listing-header_name
               | Eligibility
             span.listing-header_subheader
-              | Income, occupancy, preferences, and subsidies
+              | {{ ::$ctrl.parent.isSale($ctrl.parent.listing) ? null : 'Income, occupancy, preferences, and subsidies' }}
         eligibility-section
 
       / sidebar for open listing (larger browser sizes)
