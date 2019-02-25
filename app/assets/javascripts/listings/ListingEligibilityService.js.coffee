@@ -32,17 +32,20 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
     else
       parseFloat(Service.eligibility_filters.income_total)
 
-  Service.occupancyMinMax = (listing) ->
+  Service.occupancyMinMax = (listing, amiLevel) ->
     minMax = [1, 1]
     if listing.unitSummary
       min = _.min(_.map(listing.unitSummary, 'minOccupancy')) || 1
-      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || 2
+      max = _.max(_.map(listing.unitSummary, 'maxOccupancy')) || Service.defaultMaxOccupancy(amiLevel)
       minMax = [min, max]
     return minMax
 
+  Service.defaultMaxOccupancy = (amiLevel) ->
+    _.max(_.map(amiLevel.values, (v) -> v.numOfHousehold))
+
   Service.occupancyIncomeLevels = (listing, amiLevel) ->
     return [] unless amiLevel
-    occupancyMinMax = Service.occupancyMinMax(listing)
+    occupancyMinMax = Service.occupancyMinMax(listing, amiLevel)
     min = occupancyMinMax[0]
     # We add '+ 2' for 2 children under 6 as part of householdsize but not occupancy
     max = occupancyMinMax[1] + 2
@@ -55,6 +58,8 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
       max = 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)
       max = 1
+    # if ListingIdentityService.isSale(listing)
+    #   max = _.max(_.map(amiLevel.values, (v) -> v.numOfHousehold))
     _.filter amiLevel.values, (value) ->
       # where numOfHousehold >= min && <= max
       value.numOfHousehold >= min && value.numOfHousehold <= max
@@ -65,7 +70,7 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
     return unless incomeLevel
     incomeLevel.amount
 
-  Service.householdAMIChartCutoff = (listing) ->
+  Service.householdAMIChartCutoff = (listing, amiLevel) ->
     # TODO: Hardcoded Temp fix, take this and replace with long term solution
     if (
       ListingIdentityService.listingIs('Merry Go Round Shared Housing', listing) ||
@@ -75,7 +80,7 @@ ListingEligibilityService = ($localStorage, ListingIdentityService, ListingUnitS
       return 2
     else if ListingUnitService.listingHasOnlySROUnits(listing)
       return 1
-    occupancyMinMax = Service.occupancyMinMax(listing)
+    occupancyMinMax = Service.occupancyMinMax(listing, amiLevel)
     max = occupancyMinMax[1]
     # cutoff at 2x the num of bedrooms
     Math.floor(max/2) * 2

@@ -6,7 +6,7 @@
         th scope="col"  maximum income/month
         th scope="col"  maximum income/year
     tbody
-      tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff()"
+      tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff($ctrl.parent.AMICharts[0])"
         td scope="row"
           | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::$ctrl.occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
         td

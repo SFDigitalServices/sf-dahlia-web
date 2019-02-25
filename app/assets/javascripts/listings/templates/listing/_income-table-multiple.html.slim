@@ -15,7 +15,7 @@
         th scope="col" ng-repeat="amiChart in $ctrl.parent.AMICharts"
           | {{::amiChart.percent}}% AMI UNITS
     tbody
-      tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff()"
+      tr ng-repeat="householdIncomeLevel in $ctrl.occupancyIncomeLevels($ctrl.parent.AMICharts[0])" ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].amiChartExpanded || householdIncomeLevel.numOfHousehold <= $ctrl.householdAMIChartCutoff($ctrl.parent.AMICharts[0])"
         td scope="row"
           | {{::householdIncomeLevel.numOfHousehold}} <small>{{ ::$ctrl.occupancyLabel(householdIncomeLevel.numOfHousehold) }}</small>
         td ng-repeat="amiChart in $ctrl.parent.AMICharts"
