@@ -12,7 +12,7 @@ table.pricing-table.table-flex.no-margin
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
           svg
             use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
-    td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="Sales price without parking"
+    td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="Sales price w/o parking"
       | {{::group.Price_Without_Parking | currency:"$":0}}
       div ng-show="::group.Price_Without_Parking && group.HOA_Dues_Without_Parking"
         small
@@ -20,7 +20,7 @@ table.pricing-table.table-flex.no-margin
         |  {{::group.HOA_Dues_Without_Parking | currency:"$":0}}
         small
           | /month
-    td ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" data-th="Sales price with parking"
+    td ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" data-th="Sales price w/ parking"
       | {{::group.Price_With_Parking | currency:"$":0}}
       div ng-show="::group.Price_With_Parking && group.HOA_Dues_With_Parking"
         small
