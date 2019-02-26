@@ -2,8 +2,8 @@ table.pricing-table.table-flex.no-margin
   thead
     tr
       th Unit Type
-      th ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" No Parking
-      th ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" With Parking
+      th ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" Sales price - No parking
+      th ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" Sales price with parking
       th Availability
   tr ng-repeat="group in ::$ctrl.unitGroups" ng-class="::{'tr-reserved': group.Reserved_Type || $ctrl.parent.listingIsReservedCommunity($ctrl.parent.listing)}"
     td.tr data-th="Unit Type"
@@ -12,26 +12,22 @@ table.pricing-table.table-flex.no-margin
         span.ui-icon.ui-static.ui-medium.i-splash.message-icon ng-if="::group.Reserved_Type"
           svg
             use xlink:href="{{::$ctrl.reservedDescriptorIcon($ctrl.parent.listing, group.Reserved_Type)}}"
-    td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="No Parking"
+    td ng-if="::$ctrl.groupHasUnitsWithoutParking($ctrl.unitGroups)" data-th="Sales price - No parking"
       | {{::group.Price_Without_Parking | currency:"$":0}}
       div ng-show="::group.Price_Without_Parking && group.HOA_Dues_Without_Parking"
         small
-          |  plus
+          |  HOA dues:
         |  {{::group.HOA_Dues_Without_Parking | currency:"$":0}}
         small
           | /month
-          br
-          |  in HOA dues
-    td ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" data-th="With Parking"
+    td ng-if="::$ctrl.groupHasUnitsWithParking($ctrl.unitGroups)" data-th="Sales price w/ parking"
       | {{::group.Price_With_Parking | currency:"$":0}}
       div ng-show="::group.Price_With_Parking && group.HOA_Dues_With_Parking"
         small
-          |  plus
+          |  HOA dues:
         |  {{::group.HOA_Dues_With_Parking | currency:"$":0}}
         small
           | /month
-          br
-          |  in HOA dues
     td data-th="Availability"
       em ng-if="::group.Status == 'Occupied'"
         | Waitlist
