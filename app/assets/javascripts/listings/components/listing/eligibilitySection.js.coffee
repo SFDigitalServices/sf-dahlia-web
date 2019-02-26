@@ -28,7 +28,7 @@ angular.module('dahlia.components')
         amiLevel = _.last(ListingDataService.AMICharts)
         lastHouseholdIncomeLevel = ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
         maxNumOfHousehold = _.max(_.map(lastHouseholdIncomeLevel, 'numOfHousehold'))
-        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing, amiLevel)
+        maxNumOfHousehold > ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @hasMultipleAMICharts = ->
         ListingDataService.AMICharts.length > 1
@@ -51,8 +51,8 @@ angular.module('dahlia.components')
       @occupancyIncomeLevels = (amiLevel) ->
         ListingEligibilityService.occupancyIncomeLevels(this.parent.listing, amiLevel)
 
-      @householdAMIChartCutoff = (amiLevel) ->
-        ListingEligibilityService.householdAMIChartCutoff(this.parent.listing, amiLevel)
+      @householdAMIChartCutoff = ->
+        ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
       @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
         ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
