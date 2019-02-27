@@ -44,6 +44,11 @@ module Force
       Request.new(parse_response: true).cached_get('/ListingDetails', nil, force)
     end
 
+    def fake_new_method(opts = {})
+      force = opts[:refresh_cache] || false
+      Request.new(parse_response: true).cached_get('/ListingDetails', nil, force)
+    end
+
     # get listings with eligibility matches applied
     # filters:
     #  householdsize: n
