@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.5.3'
 
 # same method is used in https://github.com/rails/rails/blob/master/Gemfile
 git_source(:github) do |repo_name|
@@ -55,8 +55,8 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.2.0'
-gem 'devise_token_auth', '~> 0.1.39'
+gem 'devise', '~> 4.4.0'
+gem 'devise_token_auth', '~> 0.1.43'
 
 # postgresql database
 gem 'pg'
