@@ -350,9 +350,6 @@ class Api::V1::ShortFormController < ApiController
                 yCoordinate
                 whichComponentOfLocatorWasUsed
                 candidateScore
-                hasCompletedHomebuyerEducation
-                isFirstTimeHomebuyer
-                hasLoanPreapproval
               ],
             },
             {
@@ -429,6 +426,9 @@ class Api::V1::ShortFormController < ApiController
             :status,
             :externalSessionId,
             :formMetadata,
+            :hasCompletedHomebuyerEducation,
+            :isFirstTimeHomebuyer,
+            :hasLoanPreapproval,
           )
   end
 
