@@ -6,6 +6,8 @@
   ($rootScope, $state, $window, $translate, $document, $timeout, Idle, bsLoadingOverlayService, ngMeta,
   AnalyticsService, ShortFormApplicationService, AccountService, ShortFormNavigationService, AutosaveService,
   SharedService, ExternalTranslateService, ModalService) ->
+    throw new Error('This is a test error for testing Sentry source maps.');
+
     timeoutRetries = 2
     ngMeta.init()
 
