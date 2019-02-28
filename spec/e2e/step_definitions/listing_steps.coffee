@@ -71,4 +71,4 @@ Then 'I should be on application name page', ->
   Utils.Expect.urlContains('name')
 
 Then 'I check complete homebuyers education', ->
-  Utils.Page.checkCheckbox 'applicant_has_completed_homebuyer_education', Utils.Page.submit
+  Utils.Page.checkCheckbox 'application_has_completed_homebuyer_education', Utils.Page.submit
