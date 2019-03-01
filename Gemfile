@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.7'
+ruby '2.5.3'
 
 # same method is used in https://github.com/rails/rails/blob/master/Gemfile
 git_source(:github) do |repo_name|
@@ -15,9 +15,11 @@ gem 'sass-rails', '~> 5.0'
 # Slim templates generator for Rails 3 and 4
 gem 'slim-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '~> 3.2'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
+# Add ability to generate source maps in Sprockets
+gem 'sprockets_uglifier_with_source_maps'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 gem 'puma'
@@ -55,8 +57,8 @@ gem 'oj'
 gem 'oj_mimic_json'
 
 # user authentication
-gem 'devise', '~> 4.2.0'
-gem 'devise_token_auth', '~> 0.1.39'
+gem 'devise', '~> 4.4.0'
+gem 'devise_token_auth', '~> 0.1.43'
 
 # postgresql database
 gem 'pg'
