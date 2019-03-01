@@ -5,10 +5,6 @@ class ApiController < ActionController::API
   respond_to :json
 
   rescue_from StandardError do |e|
-    render_err(e, status: :service_unavailable, external_capture: true) # 503
-  end
-
-  rescue_from Faraday::ClientError do |e|
     if e.is_a?(Faraday::ConnectionFailed) || e.is_a?(Faraday::TimeoutError)
       render_err(e, status: :gateway_timeout, external_capture: true) # 504
     elsif e.message.include? 'APEX_ERROR: System.StringException: Invalid id'
@@ -27,6 +23,7 @@ class ApiController < ActionController::API
     Raven.capture_exception(e) if external_capture
     message = "#{e.class.name}, #{e.message}"
     logger.error "<< API Error >> #{message}"
+
     render json: { message: message, status: status_code }, status: status
   end
 end
