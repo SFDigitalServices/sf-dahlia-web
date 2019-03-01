@@ -66,7 +66,7 @@ AccountService = (
         # for errors we manually stop the loading overlay
         bsLoadingOverlayService.stop()
         msg = response.errors.full_messages[0]
-        if msg == 'Email already in use'
+        if msg == 'Email has already been taken'
           Service.accountError.messages.user = $translate.instant("ERROR.EMAIL_ALREADY_IN_USE")
         else if msg == 'Salesforce contact can\'t be blank'
           Service.accountError.messages.user = $translate.instant("ERROR.CREATE_ACCOUNT")
