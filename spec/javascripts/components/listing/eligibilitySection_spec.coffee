@@ -155,7 +155,7 @@ do ->
           ctrl.householdAMIChartCutoff()
           expect(fakeListingEligibilityService.householdAMIChartCutoff).toHaveBeenCalled()
 
-      describe 'incomeForHouseholdSize', ->
+      describe 'formatIncomeForHouseholdSize', ->
         it 'calls ListingEligibilityService.incomeForHouseholdSize with the given arguments', ->
-          ctrl.incomeForHouseholdSize(1, 2)
+          ctrl.formatIncomeForHouseholdSize(1, 2)
           expect(fakeListingEligibilityService.incomeForHouseholdSize).toHaveBeenCalledWith(1, 2)

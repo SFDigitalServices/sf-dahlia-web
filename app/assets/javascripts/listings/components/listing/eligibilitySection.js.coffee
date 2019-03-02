@@ -4,8 +4,8 @@ angular.module('dahlia.components')
   require:
     parent: '^listingContainer'
   controller: [
-    '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferenceService', 'ListingUnitService',
-    ($translate, ListingDataService, ListingEligibilityService, ListingPreferenceService, ListingUnitService) ->
+    '$filter', '$translate', 'ListingDataService', 'ListingEligibilityService', 'ListingPreferenceService', 'ListingUnitService',
+    ($filter, $translate, ListingDataService, ListingEligibilityService, ListingPreferenceService, ListingUnitService) ->
       ctrl = @
 
       @loading = ListingPreferenceService.loading
@@ -54,8 +54,10 @@ angular.module('dahlia.components')
       @householdAMIChartCutoff = ->
         ListingEligibilityService.householdAMIChartCutoff(this.parent.listing)
 
-      @incomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
-        ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+      @formatIncomeForHouseholdSize = (amiChart, householdIncomeLevel) ->
+        income = ListingEligibilityService.incomeForHouseholdSize(amiChart, householdIncomeLevel)
+        if income
+          $filter('currency')(income, '$', 0) + '<small>/year</small>'
 
       return ctrl
   ]
