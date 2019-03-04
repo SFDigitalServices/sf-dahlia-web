@@ -1,19 +1,12 @@
 h4.h-caps-lined
   | What to Expect
 p.c-steel.t-small.margin-bottom
-  ' Applicants will be contacted by the property agent
-  span ng-if="!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
-    | in lottery rank order until vacancies are filled.
-  span ng-if="$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
-    | on a first-come, first-serve basis until the vacancy is filled.
+  ' Applicants will be contacted by the property agent in lottery rank order until vacancies are filled.
 .show-for-print ng-show="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].whatToExpectOpen"
   p.c-steel.t-small
     | All of the information that you have provided will be verified and your eligibility confirmed.  Your application will be removed from the lottery if you have made any fraudulent statements, or if any household member appears on more than one application for this listing. If we cannot verify a housing lottery preference that you have claimed, you will not receive the preference but will not be otherwise penalized.
 
   p.c-steel.t-small
-    | Should your application be chosen
-    span ng-if="!$ctrl.parent.isFirstComeFirstServe($ctrl.parent.listing)"
-      |  from the lottery
-    | , be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.
+    | Should your application be chosen from the lottery, be prepared to fill out a more detailed application and provide required supporting documents within 5 business days of being contacted.
 
 show-more-toggler toggle-state="$ctrl.parent.toggleStates[$ctrl.parent.listing.Id].whatToExpectOpen" verb="read"
