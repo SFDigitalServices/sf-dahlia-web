@@ -102,7 +102,6 @@ ListingConstantsService = () ->
     'a0W0P00000DYuFSUA1': '30 Dore'
     'a0W0P00000DYxphUAD': '168 Hyde Relisting'
     'a0W0P00000DZ4dTUAT': 'L Seven'
-    'a0W6C000000DbnZUAS': 'Test Listing'
     'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
     'a0W0P00000DZKPdUAP': 'Abaca'
     'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
