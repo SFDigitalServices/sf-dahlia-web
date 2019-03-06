@@ -9,8 +9,8 @@
 .form-group.margin-left--2x.margin-right--2x
   label.form-label for="loanOfficer" ng-class="{ error: $ctrl.inputInvalid('loanOfficer') }"
     strong.form-label.caps translate="LABEL.APPLICANT_LOAN_OFFICER"
-  select#loanOfficer data-width="auto" name="loanOfficer" ng-disabled="!$ctrl.officesSelectActive()" ng-required="true" ng-model="$ctrl.applicant.lendingAgent" ng-class="{ error: $ctrl.inputInvalid('loanOfficer')}"
+  select#loanOfficer data-width="auto" name="loanOfficer" ng-disabled="!$ctrl.officesSelectActive()" ng-required="true" ng-model="$ctrl.application.lendingAgent" ng-class="{ error: $ctrl.inputInvalid('loanOfficer')}"
     option value="" {{'LABEL.PLEASE_SELECT_ONE' | translate}}
-    option ng-repeat="officer in $ctrl.officers" value="{{officer.id}}" {{$ctrl.officerName(officer)}}
+    option ng-repeat="officer in $ctrl.officers" value="{{officer.Id}}" {{$ctrl.officerName(officer)}}
   small.error id="loanOfficerError" ng-show="$ctrl.inputInvalid('loanOfficer')"
     | {{'LABEL.PLEASE_ENTER' | translate}} {{ 'LABEL.APPLICANT_LOAN_OFFICER' | translate }}

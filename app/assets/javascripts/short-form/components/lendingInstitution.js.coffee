@@ -1,7 +1,7 @@
 angular.module('dahlia.components')
 .component 'lendingInstitution',
   bindings:
-    applicant: '<'
+    application: '<'
     form: '<'
   templateUrl: 'short-form/components/lending-institution.html'
   controller:
@@ -11,6 +11,13 @@ angular.module('dahlia.components')
       @lendingInstitutions = ShortFormApplicationService.lendingInstitutions
       @selectedInstitution = ''
       @officers = []
+
+      @$onInit = ->
+        if @application.lendingAgent
+          @selectedInstitution = _.findKey(@lendingInstitutions, (agents) ->
+            _.some(agents, {'Id': ctrl.application.lendingAgent})
+          )
+          @officers = @lendingInstitutions[@selectedInstitution]
 
       @inputInvalid = (fieldName) ->
         form = @form.applicationForm
@@ -25,14 +32,14 @@ angular.module('dahlia.components')
         _.keys(@lendingInstitutions)
 
       @onChangeLendingInstitution = ->
-        @applicant.lendingAgent = null
-        @officers = _.filter(@lendingInstitutions[@selectedInstitution], (officer) -> officer.Active)
+        @application.lendingAgent = null
+        @officers = @lendingInstitutions[@selectedInstitution]
 
       @officesSelectActive = ->
         !_.isEmpty(@officers)
 
       @officerName = (officer) ->
-        "#{officer['First Name']} #{officer['Last Name']}"
+        "#{officer['FirstName']} #{officer['LastName']}"
 
 
       return ctrl

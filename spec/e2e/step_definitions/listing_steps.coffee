@@ -79,7 +79,7 @@ Then 'I should see an error on the prerequisites form', ->
   Utils.Expect.error(@, 'This field is required')
 
 Then 'I fill in prerequisites form', ->
-  element(By.cssContainingText('option', 'lending institution A')).click()
-  element(By.cssContainingText('option', 'Bob Hope')).click()
+  element(By.cssContainingText('option', 'Homestreet Bank')).click()
+  element(By.cssContainingText('option', 'Thomas Murray')).click()
   Utils.Page.checkCheckbox 'application_is_first_time_homebuyer', ->
     Utils.Page.checkCheckbox 'application_has_loan_pre_approval', Utils.Page.submit

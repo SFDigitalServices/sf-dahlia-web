@@ -29,7 +29,7 @@
             p.checkbox-block_note id="application_has_loan_pre_approval-description" translate="LABEL.APPLICATION_VISIT_MOHCD" translate-value-url="https://sfmohcd.org/lender-list"
             small.error id="application_has_loan_pre_approvalError" ng-show="inputInvalid('application_has_loan_pre_approval')"
               | {{'LABEL.FIELD_REQUIRED' | translate}}
-      lending-institution applicant="applicant" form="form"
+      lending-institution application="application" form="form"
   .button-pager
     .button-pager_row.primary
       input#submit.button.primary.radius type="submit" value="{{'T.NEXT' | translate}}" ng-disabled="isLoading()"

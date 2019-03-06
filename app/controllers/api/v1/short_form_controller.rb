@@ -437,6 +437,7 @@ class Api::V1::ShortFormController < ApiController
             :hasCompletedHomebuyerEducation,
             :isFirstTimeHomebuyer,
             :hasLoanPreapproval,
+            :lendingAgent,
           )
   end
 

@@ -121,36 +121,18 @@ module Force
     end
 
     def self.lending_institutions
-      {
-        'lending institution A' => [
-          {
-            'First Name' => 'Bob',
-            'Last Name' => 'Hope',
-            'id' => 'salesforce_contact_id_1',
-            'Active' => true,
-          },
-          {
-            'First Name' => 'Sue',
-            'Last Name' => 'Me',
-            'id' => 'salesforce_contact_id_2',
-            'Active' => true,
-          },
-        ],
-        'lending institution B' => [
-          {
-            'First Name' => 'Helen',
-            'Last Name' => 'Helper',
-            'id' => 'salesforce_contact_id_3',
-            'Active' => true,
-          },
-          {
-            'First Name' => 'Laura',
-            'Last Name' => 'Loan Officer',
-            'id' => 'salesforce_contact_id_4',
-            'Active' => false,
-          },
-        ],
-      }
+      endpoint = '/services/apexrest/agents/'
+      institutions = {}
+      Request.new.cached_get(endpoint).each do |institution|
+        next unless institution['Contacts'] && institution['Contacts']['records']
+        agents = institution['Contacts']['records'].collect do |agent|
+          status = agent['Lending_Agent_Status__c'].present? &&
+                   agent['Lending_Agent_Status__c'] == 'Active'
+          agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
+        end
+        institutions[institution['Name']] = agents
+      end
+      institutions
     end
 
     def self._short_form_pref_id(application, file)
