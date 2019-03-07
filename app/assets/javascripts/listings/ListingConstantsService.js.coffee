@@ -83,31 +83,8 @@ ListingConstantsService = () ->
 
   # TODO: -- REMOVE HARDCODED FEATURES --
   Service.LISTING_MAP = {
-    # can also serve as slugToId map for applicable listings
-    'a0WU000000DBJ9YMAX': '480 Potrero'
-    'a0WU000000BdZWlMAN': 'Alchemy'
-    'a0W0P00000DYQpCUAX': '21 Clarence'
-    'a0W0P00000DYPP7UAP': '168 Hyde'
-    'a0W0P00000DYN6BUAX': 'Olume'
-    'a0WU000000BcwrAMAR': 'Rincon'
-    'a0WU000000C3hBWMAZ': 'Potrero 1010'
-    'a0WU000000C4FsQMAV': '529 Stevenson'
-    'a0WU000000D9iF8MAJ': '888 Paris'
-    'a0WU000000DB97cMAD': '77 Bluxome'
-    'a0W0P00000DYbAYUA1': '3445 Geary'
-    'a0W0P00000DYgtDUAT': '125 Mason'
-    'a0W0P00000DYiwiUAD': 'Argenta 909'
-    'a0W0P00000DYm1xUAD': 'Northpoint Vistas'
-    'a0W0P00000DYlxMUAT': '280 Brighton'
-    'a0W0P00000DYuFSUA1': '30 Dore'
-    'a0W0P00000DYxphUAD': '168 Hyde Relisting'
-    'a0W0P00000DZ4dTUAT': 'L Seven'
-    'a0W6C000000AXCMUA4': 'AMI Chart Test 477'
-    'a0W0P00000DZKPdUAP': 'Abaca'
-    'a0W0P00000F6lBXUAZ': 'Transbay Block 7'
     'a0W0P00000F7t4uUAB': 'Merry Go Round Shared Housing'
     'a0W0P00000FIuv3UAD': '1335 Folsom Street'
-    'a0W0P00000DhM0wUAF': '750 Harrison Street'
   }
 
   return Service
