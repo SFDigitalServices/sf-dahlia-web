@@ -23,6 +23,9 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'hasDevelopmentalDisability'
       'answeredCommunityScreening'
       'externalSessionId'
+      'hasCompletedHomebuyerEducation'
+      'isFirstTimeHomebuyer'
+      'hasLoanPreapproval'
     ]
     primaryApplicant: [
       'appMemberId', 'contactId',
@@ -30,7 +33,7 @@ ShortFormDataService = (ListingDataService, ListingConstantsService, ListingPref
       'email', 'firstName', 'middleName', 'lastName', 'preferenceAddressMatch',
       'phone', 'phoneType', 'alternatePhone', 'alternatePhoneType', 'ethnicity',
       'gender', 'genderOther', 'race', 'sexualOrientation', 'sexualOrientationOther',
-      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore',
+      'xCoordinate', 'yCoordinate', 'whichComponentOfLocatorWasUsed', 'candidateScore'
     ]
     alternateContact: [
       'appMemberId', 'alternateContactType', 'alternateContactTypeOther',

@@ -633,11 +633,11 @@ ShortFormApplicationService = (
       return false
     # they're "jumping ahead" if they're not coming from a short form page or create-account
     # and they're trying to go to a page that's not either the first page, or their stored lastPage
-    namePage = 'dahlia.short-form-application.name'
+    prerequisitesPage = "dahlia.short-form-application.prerequisites"
     lastPage = "dahlia.short-form-application.#{Service.application.lastPage}"
     jumpAhead = Service.isShortFormPage(toState) &&
                 !Service.isShortFormPage(fromState) &&
-                !_.includes([namePage, lastPage], toState.name)
+                !_.includes([prerequisitesPage, lastPage], toState.name)
     return !jumpAhead
 
   Service.isLeavingShortForm = (toState, fromState) ->

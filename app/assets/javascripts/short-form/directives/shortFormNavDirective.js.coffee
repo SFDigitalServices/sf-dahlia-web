@@ -8,7 +8,7 @@ angular.module('dahlia.directives')
     templateUrl: 'short-form/directives/short-form-nav.html'
 
     link: (scope, elem, attrs) ->
-      scope.sections = ShortFormNavigationService.sections
+      scope.sections = ShortFormNavigationService.sections()
 
       scope.isActiveSection = (section) ->
         ShortFormNavigationService.isActiveSection(section)

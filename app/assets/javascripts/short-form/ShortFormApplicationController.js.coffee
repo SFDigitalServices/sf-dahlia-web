@@ -551,6 +551,9 @@ ShortFormApplicationController = (
       return
     ShortFormApplicationService.checkHouseholdEligiblity($scope.listing)
       .then( (response) ->
+        # TODO remove this when SF household API is fixed for sale listing
+        if ListingIdentityService.isSale($scope.listing)
+          response.data.householdMatch = true
         eligibility = response.data
         if match == 'householdMatch'
           error = eligibility.householdEligibilityResult.toLowerCase()
@@ -899,6 +902,9 @@ ShortFormApplicationController = (
             $scope.goToAndTrackFormSuccess('dahlia.short-form-application.welcome-back')
           else
             $scope.goToAndTrackFormSuccess('dahlia.short-form-application.contact')
+
+  $scope.afterPrerequisites = ->
+    $scope.goToAndTrackFormSuccess('dahlia.short-form-application.name')
 
   $scope.DOBValid = (field, value, model = 'applicant') ->
     values = $scope.DOBValues(model)

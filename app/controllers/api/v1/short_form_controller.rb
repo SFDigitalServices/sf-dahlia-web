@@ -426,6 +426,9 @@ class Api::V1::ShortFormController < ApiController
             :status,
             :externalSessionId,
             :formMetadata,
+            :hasCompletedHomebuyerEducation,
+            :isFirstTimeHomebuyer,
+            :hasLoanPreapproval,
           )
   end
 
