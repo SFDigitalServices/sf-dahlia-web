@@ -16,8 +16,6 @@ ShortFormNavigationService = (
     # you
     'prerequisites': {callback: ['afterPrerequisites']}
     'name': {callback: ['checkAfterNamePage']}
-    'prerequisites': {callback: ['afterPrerequisites']}
-    'name': {callback: ['checkAfterNamePage']}
     'contact': {callback: ['checkIfAddressVerificationNeeded', 'checkPreferenceEligibility']}
     'verify-address': {path: 'alternate-contact-type', callback: ['checkPreferenceEligibility']}
     'alternate-contact-type': {callback: ['checkIfAlternateContactInfoNeeded']}
