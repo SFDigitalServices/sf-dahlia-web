@@ -7,15 +7,9 @@ tr ng-repeat="unitSummary in ::summary" ng-if="::unitSummary.minPriceWithoutPark
         | {{::unitSummary.minPriceWithoutParking | currency:"$":0}} or more
       span ng-show="::!$ctrl.hasRangeOfPricesWithoutParking(unitSummary)"
         | {{::unitSummary.minPriceWithoutParking | currency:"$":0}}
-      br
-      span ng-if="::unitSummary.minPriceWithoutParking && unitSummary.minHoaDuesWithoutParking"
-        |  plus HOA dues
   td ng-if="::$ctrl.hasUnitsWithParking($ctrl.listing)"
     span
       span ng-show="::$ctrl.hasRangeOfPricesWithParking(unitSummary)"
         | {{::unitSummary.minPriceWithParking | currency:"$":0}} or more
       span ng-show="::!$ctrl.hasRangeOfPricesWithParking(unitSummary)"
         | {{::unitSummary.minPriceWithParking | currency:"$":0}}
-      br
-      span ng-if="::unitSummary.minPriceWithParking && unitSummary.minHoaDuesWithParking"
-        |  plus HOA dues

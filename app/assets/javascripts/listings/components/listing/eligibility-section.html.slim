@@ -2,7 +2,8 @@ accordion-heading.lead
   img.accordion-icon ng-src="{{::$ctrl.parent.assetPaths['listing-eligibility.svg']}}" alt="eligibility-notebook"
   h3.accordion-name
     | Eligibility
-  span.accordion-subheader Income, occupancy, preferences, and subsidies
+  span.accordion-subheader ng-show="::!$ctrl.parent.isSale($ctrl.parent.listing)"
+    | Income, occupancy, preferences, and subsidies
   span.ui-control.ui-icon.ui-small
     svg
       use xlink:href="#i-arrow-down"
@@ -77,7 +78,7 @@ accordion-heading.lead
           p.custom-counter_text ng-if="::!$ctrl.listingHasOnlySROUnits($ctrl.parent.listing) && !$ctrl.parent.listingHasSROUnits($ctrl.parent.listing)"
             span ng-if="::$ctrl.parent.listingIs('Transbay Block 7', $ctrl.parent.listing)"
               | {{'LISTINGS.OCCUPANCY_SEE_UNIT_INFO' | translate}}
-            span ng-if="::!$ctrl.parent.listingIs('Transbay Block 7', $ctrl.parent.listing)"
+            span ng-if="::!$ctrl.parent.isSale($ctrl.parent.listing) && !$ctrl.parent.listingIs('Transbay Block 7', $ctrl.parent.listing)"
               | {{'LISTINGS.OCCUPANCY_DESCRIPTION_NO_SRO' | translate}}
 
         .scrollable-table-container
