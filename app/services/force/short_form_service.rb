@@ -123,14 +123,18 @@ module Force
     def self.lending_institutions
       endpoint = '/services/apexrest/agents/'
       institutions = {}
+
       Request.new.cached_get(endpoint).each do |institution|
         next unless institution['Contacts'] && institution['Contacts']['records']
-        agents = institution['Contacts']['records'].collect do |agent|
-          status = agent['Lending_Agent_Status__c'].present? &&
-                   agent['Lending_Agent_Status__c'] == 'Active'
-          agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
+        agents = institution['Contacts']['records'].each_with_object([]) do |array, agent|
+          if agent['BMR_Certified__c']
+            status = agent['Lending_Agent_Status__c'].present? &&
+                     agent['Lending_Agent_Status__c'] == 'Active'
+            array << agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
+          end
+          array
         end
-        institutions[institution['Name']] = agents
+        institutions[institution['Name']] = agents unless agents.blank?
       end
       institutions
     end

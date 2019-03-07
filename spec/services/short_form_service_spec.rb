@@ -51,19 +51,29 @@ describe Force::ShortFormService do
                       'Id' => '0010P00001mM1HcQAK',
                       'Contacts' => {
                         'records' => [
-                          'Id' => '0030P00001vfSmNQAU',
-                          'FirstName' => 'Thomas',
-                          'LastName' => 'Murray',
-                          'Lending_Agent_Status__c' => 'Active',
+                          {
+                            'Id' => 'XYZ',
+                            'FirstName' => 'Jason',
+                            'LastName' => 'Lockhart',
+                            'Lending_Agent_Status__c' => 'Active',
+                            'BMR_Certified__c' => true,
+                          },
+                          {
+                            'Id' => 'ABC',
+                            'FirstName' => 'Tim',
+                            'LastName' => 'Lockhart',
+                            'Lending_Agent_Status__c' => 'Active',
+                            'BMR_Certified__c' => false,
+                          },
                         ],
                       } }
       expect_any_instance_of(Force::Request)
         .to(receive(:cached_get).and_return([institution]))
       VCR.use_cassette('force/initialize') do
         expect(Force::ShortFormService.lending_institutions).to eq 'Homestreet Bank' =>
-          [{ 'Id' => '0030P00001vfSmNQAU',
-             'FirstName' => 'Thomas',
-             'LastName' => 'Murray',
+          [{ 'Id' => 'XYZ',
+             'FirstName' => 'Jason',
+             'LastName' => 'Lockhart',
              'Active' => true }]
       end
     end
