@@ -7,10 +7,10 @@
   small.error id="lendingInstitutionError" ng-show="$ctrl.inputInvalid('lendingInstitution')"
     | {{'LABEL.PLEASE_ENTER' | translate}} {{ 'LABEL.APPLICANT_LENDING_INSTITUTION' | translate }}
 .form-group.margin-left--2x.margin-right--2x
-  label.form-label for="loanOfficer" ng-class="{ error: $ctrl.inputInvalid('loanOfficer') }"
-    strong.form-label.caps translate="LABEL.APPLICANT_LOAN_OFFICER"
-  select#loanOfficer data-width="auto" name="loanOfficer" ng-disabled="!$ctrl.officesSelectActive()" ng-required="true" ng-model="$ctrl.application.lendingAgent" ng-class="{ error: $ctrl.inputInvalid('loanOfficer')}"
+  label.form-label for="lendingAgent" ng-class="{ error: $ctrl.inputInvalid('lendingAgent') }"
+    strong.form-label.caps translate="LABEL.APPLICANT_LENDING_AGENT"
+  select#lendingAgent data-width="auto" name="lendingAgent" ng-disabled="!$ctrl.showLendingAgents()" ng-required="true" ng-model="$ctrl.application.lendingAgent" ng-class="{ error: $ctrl.inputInvalid('lendingAgent')}"
     option value="" {{'LABEL.PLEASE_SELECT_ONE' | translate}}
-    option ng-repeat="officer in $ctrl.officers" value="{{officer.Id}}" {{$ctrl.officerName(officer)}}
-  small.error id="loanOfficerError" ng-show="$ctrl.inputInvalid('loanOfficer')"
-    | {{'LABEL.PLEASE_ENTER' | translate}} {{ 'LABEL.APPLICANT_LOAN_OFFICER' | translate }}
+    option ng-repeat="agent in $ctrl.agents" value="{{agent.Id}}" {{$ctrl.agentName(agent)}}
+  small.error id="lendingAgentError" ng-show="$ctrl.inputInvalid('lendingAgent')"
+    | {{'LABEL.PLEASE_ENTER' | translate}} {{ 'LABEL.APPLICANT_LENDING_AGENT' | translate }}

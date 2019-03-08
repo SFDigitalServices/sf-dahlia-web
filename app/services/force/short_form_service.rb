@@ -121,9 +121,8 @@ module Force
     end
 
     def self.lending_institutions
-      endpoint = '/services/apexrest/agents/'
-      response = Request.new.cached_get(endpoint)
-      format_institutions(response)
+      @institutions ||= load_institutions
+      @institutions
     end
 
     def self._short_form_pref_id(application, file)
@@ -140,23 +139,36 @@ module Force
       end
     end
 
+    def self.load_institutions
+      endpoint = '/services/apexrest/agents/'
+      response = Request.new.cached_get(endpoint)
+      format_institutions(response)
+    end
+
     def self.format_institutions(data)
       return [] unless data
+
       data.each_with_object({}) do |institution, institutions|
-        if institution['Contacts'] && institution['Contacts']['records']
-          agents = institution['Contacts']['records'].each_with_object([]) do |agent, arr|
-            arr << format_agent(agent)
-            arr
-          end.compact
-          institutions[institution['Name']] = agents unless agents.blank?
-        end
+        agents = institution_agents(institution)
+        institutions[institution['Name']] = agents unless agents.blank?
         institutions
       end
     end
     private_class_method :format_institutions
 
+    def self.institution_agents(institution)
+      return unless institution['Contacts'] && institution['Contacts']['records']
+
+      institution['Contacts']['records'].each_with_object([]) do |agent, arr|
+        arr << format_agent(agent)
+        arr
+      end.compact
+    end
+    private_class_method :format_institutions
+
     def self.format_agent(agent)
       return unless agent.present? && agent['BMR_Certified__c']
+
       status = agent['Lending_Agent_Status__c'].present? &&
                agent['Lending_Agent_Status__c'] == 'Active'
       agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)

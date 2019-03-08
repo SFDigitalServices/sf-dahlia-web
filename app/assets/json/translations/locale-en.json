@@ -452,7 +452,7 @@
         "APPLICATION_HAS_LOAN_PRE_APPROVAL": "I am pre-approved for a loan by a MOHCD-approved lender.",
         "APPLICATION_VISIT_MOHCD": "If you haven't done this yet, visit the <a target='_blank' href='{{url}}'>MOHCD website</a> to find a list of approved lenders",
         "APPLICANT_LENDING_INSTITUTION": "lending institution",
-        "APPLICANT_LOAN_OFFICER": "name of loan officer",
+        "APPLICANT_LENDING_AGENT": "name of loan officer",
         "APPLY_ONLINE": "Apply Online",
         "ASIAN": "Asian",
         "ASIAN_WHITE": "Asian and White",
