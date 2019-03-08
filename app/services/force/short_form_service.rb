@@ -121,8 +121,11 @@ module Force
     end
 
     def self.lending_institutions
-      @institutions ||= load_institutions
-      @institutions
+      return @institutions if @institutions
+
+      endpoint = '/services/apexrest/agents/'
+      response = Request.new.cached_get(endpoint)
+      @institutions = format_institutions(response)
     end
 
     def self._short_form_pref_id(application, file)
@@ -137,12 +140,6 @@ module Force
       application['shortFormPreferences'].find do |preference|
         preference['listingPreferenceID'] == file.listing_preference_id
       end
-    end
-
-    def self.load_institutions
-      endpoint = '/services/apexrest/agents/'
-      response = Request.new.cached_get(endpoint)
-      format_institutions(response)
     end
 
     def self.format_institutions(data)
