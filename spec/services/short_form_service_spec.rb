@@ -7,7 +7,7 @@ describe Force::ShortFormService do
   apps = data['applications']
   fake_listing_id = 'xyz0001232x'
 
-  describe '#autofill' do
+  describe '.autofill' do
     it 'should pull in details from the most recently submitted application' do
       # autofill for a made-up listing ID
       autofilled = Force::ShortFormService.autofill(apps, fake_listing_id)
@@ -28,7 +28,7 @@ describe Force::ShortFormService do
     end
   end
 
-  describe '#attach_file' do
+  describe '.attach_file' do
     it 'should call an api_post with correct body' do
       allow_any_instance_of(Force::Request).to receive(:post_with_headers)
         .and_return(file: 'file')
@@ -41,6 +41,40 @@ describe Force::ShortFormService do
         file = OpenStruct.new(file: {}, document_type: 'type', content_type: 'type')
         response = Force::ShortFormService.attach_file(application, file, 'filename')
         expect(response).to eq(file: 'file')
+      end
+    end
+  end
+
+  describe '.lending_institutions' do
+    it 'should call Force::Request and format response properly' do
+      institution = { 'Name' => 'Homestreet Bank',
+                      'Id' => '0010P00001mM1HcQAK',
+                      'Contacts' => {
+                        'records' => [
+                          {
+                            'Id' => 'XYZ',
+                            'FirstName' => 'Jason',
+                            'LastName' => 'Lockhart',
+                            'Lending_Agent_Status__c' => 'Active',
+                            'BMR_Certified__c' => true,
+                          },
+                          {
+                            'Id' => 'ABC',
+                            'FirstName' => 'Tim',
+                            'LastName' => 'Lockhart',
+                            'Lending_Agent_Status__c' => 'Active',
+                            'BMR_Certified__c' => false,
+                          },
+                        ],
+                      } }
+      expect_any_instance_of(Force::Request)
+        .to(receive(:cached_get).and_return([institution]))
+      VCR.use_cassette('force/initialize') do
+        expect(Force::ShortFormService.lending_institutions).to eq 'Homestreet Bank' =>
+          [{ 'Id' => 'XYZ',
+             'FirstName' => 'Jason',
+             'LastName' => 'Lockhart',
+             'Active' => true }]
       end
     end
   end

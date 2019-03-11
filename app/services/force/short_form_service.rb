@@ -120,6 +120,14 @@ module Force
       application['status'] == 'Submitted'
     end
 
+    def self.lending_institutions
+      return @institutions if @institutions
+
+      endpoint = '/services/apexrest/agents/'
+      response = Request.new.cached_get(endpoint)
+      @institutions = format_institutions(response)
+    end
+
     def self._short_form_pref_id(application, file)
       _short_form_pref(application, file).try(:[], 'shortformPreferenceID')
     end
@@ -133,5 +141,35 @@ module Force
         preference['listingPreferenceID'] == file.listing_preference_id
       end
     end
+
+    def self.format_institutions(data)
+      return [] unless data
+
+      data.each_with_object({}) do |institution, institutions|
+        agents = institution_agents(institution)
+        institutions[institution['Name']] = agents unless agents.blank?
+        institutions
+      end
+    end
+    private_class_method :format_institutions
+
+    def self.institution_agents(institution)
+      return unless institution['Contacts'] && institution['Contacts']['records']
+
+      institution['Contacts']['records'].each_with_object([]) do |agent, arr|
+        arr << format_agent(agent)
+        arr
+      end.compact
+    end
+    private_class_method :format_institutions
+
+    def self.format_agent(agent)
+      return unless agent.present? && agent['BMR_Certified__c']
+
+      status = agent['Lending_Agent_Status__c'].present? &&
+               agent['Lending_Agent_Status__c'] == 'Active'
+      agent.slice('Id', 'FirstName', 'LastName').merge('Active' => status)
+    end
+    private_class_method :format_agent
   end
 end
