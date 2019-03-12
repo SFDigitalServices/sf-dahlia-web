@@ -30,6 +30,29 @@ do ->
       it 'returns false if a listing is not given', ->
         expect(ListingIdentityService.listingIs('Fake Listing', null)).toEqual false
 
+    describe 'Service.isRental', ->
+      beforeEach ->
+        testListing = angular.copy(fakeListing)
+
+      describe 'when the listing has a rental tenure', ->
+        it 'returns true', ->
+          testListing.Tenure = 'New rental'
+          expect(ListingIdentityService.isRental(testListing)).toEqual true
+          testListing.Tenure = 'Re-rental'
+          expect(ListingIdentityService.isRental(testListing)).toEqual true
+
+      describe 'when the listing does not have a tenure defined', ->
+        it 'returns false', ->
+          delete testListing.Tenure
+          expect(ListingIdentityService.isRental(testListing)).toEqual false
+
+      describe 'when the listing has a sale tenure', ->
+        it 'returns false', ->
+          testListing.Tenure = 'New sale'
+          expect(ListingIdentityService.isRental(testListing)).toEqual false
+          testListing.Tenure = 'Resale'
+          expect(ListingIdentityService.isRental(testListing)).toEqual false
+
     describe 'Service.isSale', ->
       beforeEach ->
         testListing = angular.copy(fakeListing)
