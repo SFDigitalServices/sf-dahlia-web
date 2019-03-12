@@ -641,6 +641,12 @@ ShortFormApplicationController = (
     link = $state.href('dahlia.listing', { id: $scope.listing.listingID })
     {listingLink: "<a href='#{link}'>#{linkText}</a>"}
 
+  $scope.listingIsRental = ->
+    ShortFormApplicationService.listingIsRental()
+
+  $scope.listingIsSale = ->
+    ShortFormApplicationService.listingIsSale()
+
   $scope.onIncomeValueChange = ->
     ShortFormApplicationService.invalidateIncomeForm()
     return if !ShortFormApplicationService.listingHasPreference('rentBurden') ||
