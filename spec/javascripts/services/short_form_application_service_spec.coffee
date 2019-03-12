@@ -29,6 +29,9 @@ do ->
       city: 'Mount Shasta'
     fakeApplicant = undefined
     fakeHouseholdMember = undefined
+    fakeListingIdentityService =
+      isRental: jasmine.createSpy()
+      isSale: jasmine.createSpy()
     fakeListingDataService =
       listing:
         Id: ''
@@ -94,6 +97,7 @@ do ->
       $provide.value '$translate', $translate
       $provide.value 'uuid', uuid
       $provide.value 'ListingDataService', fakeListingDataService
+      $provide.value 'ListingIdentityService', fakeListingIdentityService
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
@@ -122,6 +126,18 @@ do ->
       it 'initializes alternateContact defaults', ->
         expectedDefault = ShortFormApplicationService.applicationDefaults.alternateContact
         expect(ShortFormApplicationService.alternateContact).toEqual expectedDefault
+
+    describe 'listingIsRental', ->
+      it 'calls on isRental on ListingIdentityService', ->
+        ShortFormApplicationService.listing = fakeListing
+        ShortFormApplicationService.listingIsRental()
+        expect(fakeListingIdentityService.isRental).toHaveBeenCalledWith(fakeListing)
+
+    describe 'listingIsSale', ->
+      it 'calls on isSale on ListingIdentityService', ->
+        ShortFormApplicationService.listing = fakeListing
+        ShortFormApplicationService.listingIsSale()
+        expect(fakeListingIdentityService.isSale).toHaveBeenCalledWith(fakeListing)
 
     describe 'userCanAccessSection', ->
       it 'initializes completedSections defaults', ->
