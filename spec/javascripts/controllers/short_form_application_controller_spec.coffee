@@ -132,6 +132,7 @@ do ->
     }
     fakeFileUploadService =
       deleteFile: jasmine.createSpy()
+    fakeRentBurdenFileService =
       deleteRentBurdenPreferenceFiles: ->
     fakeSharedService = {}
     fakeEvent =
@@ -168,7 +169,7 @@ do ->
       deferred.resolve('resolveData')
       spyOn(fakeAccountService, 'signIn').and.returnValue(deferred.promise)
       spyOn(fakeAccountService, 'signOut').and.returnValue(deferred.promise)
-      spyOn(fakeFileUploadService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
+      spyOn(fakeRentBurdenFileService, 'deleteRentBurdenPreferenceFiles').and.returnValue(deferred.promise)
       spyOn(fakeAddressValidationService, 'validate').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'checkHouseholdEligiblity').and.returnValue(deferred.promise)
       spyOn(fakeShortFormApplicationService, 'keepCurrentDraftApplication').and.returnValue(deferred.promise)
@@ -194,6 +195,7 @@ do ->
         ShortFormHelperService: fakeShortFormHelperService
         AnalyticsService: fakeAnalyticsService
         FileUploadService: fakeFileUploadService
+        RentBurdenFileService: fakeRentBurdenFileService
         AddressValidationService: fakeAddressValidationService
         AccountService: fakeAccountService
         ListingDataService: fakeListingDataService
@@ -650,7 +652,7 @@ do ->
       it 'expects deleteRentBurdenPreferenceFiles to be called on Service', ->
         address = '123 Main St'
         scope.cancelRentBurdenFilesForAddress(address)
-        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
+        expect(fakeRentBurdenFileService.deleteRentBurdenPreferenceFiles).toHaveBeenCalledWith(scope.listing.Id, address)
 
     describe 'hasCompleteRentBurdenFilesForAddress', ->
       it 'expects hasCompleteRentBurdenFilesForAddress to be called on Service', ->

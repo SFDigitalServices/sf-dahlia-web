@@ -47,6 +47,7 @@ do ->
     fakeFileUploadService =
       uploadProof: jasmine.createSpy()
       deleteFile: jasmine.createSpy()
+    fakeRentBurdenFileService =
       deleteRentBurdenPreferenceFiles: jasmine.createSpy()
     fakeSharedService =
       languageMap: {es: 'Spanish'}
@@ -97,6 +98,7 @@ do ->
       $provide.value 'ShortFormDataService', fakeDataService
       $provide.value 'AnalyticsService', fakeAnalyticsService
       $provide.value 'FileUploadService', fakeFileUploadService
+      $provide.value 'RentBurdenFileService', fakeRentBurdenFileService
       $provide.value 'SharedService', fakeSharedService
       $provide.value 'ListingPreferenceService', fakeListingPreferenceService
       return
@@ -1019,7 +1021,7 @@ do ->
         listingId = ShortFormApplicationService.listing.Id
 
         ShortFormApplicationService.unsetPreferenceFields('rentBurden')
-        expect(fakeFileUploadService.deleteRentBurdenPreferenceFiles)
+        expect(fakeRentBurdenFileService.deleteRentBurdenPreferenceFiles)
           .toHaveBeenCalledWith(listingId)
 
       it 'should clear COP certificate number', ->

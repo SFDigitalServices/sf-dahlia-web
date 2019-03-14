@@ -32,9 +32,8 @@ do ->
       title: 'Preference'
       proofDocument: {}
     fakeFileUploadService =
-      uploadedRentBurdenRentFiles: jasmine.createSpy()
-      hasRentBurdenFiles: jasmine.createSpy()
-      deleteRentBurdenPreferenceFiles: ->
+      uploadProof: jasmine.createSpy()
+      deleteFile: jasmine.createSpy()
 
     beforeEach module('dahlia.components')
     beforeEach inject((_$componentController_, $q) ->
